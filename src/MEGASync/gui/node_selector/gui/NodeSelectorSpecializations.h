@@ -47,4 +47,15 @@ private:
     void checkSelection() override;
 };
 
+class MoveBackupNodeSelector : public NodeSelector
+{
+    Q_OBJECT
+
+public:
+    explicit MoveBackupNodeSelector(QWidget *parent = 0);
+
+private:
+    void checkSelection() override;
+};
+
 #endif // NODESELECTORSPECIALIZED_H

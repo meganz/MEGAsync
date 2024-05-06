@@ -233,7 +233,7 @@ ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeim
     rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=36 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150400 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
     %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
 %else
     %define extraqmake %{nil}
@@ -414,6 +414,10 @@ DATA
 
     %if 0%{?sle_version} == 150500
         %define reponame openSUSE_Leap_15.5
+    %endif
+
+    %if 0%{?sle_version} == 150600
+        %define reponame openSUSE_Leap_15.6
     %endif
 
     %if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1550

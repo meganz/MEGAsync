@@ -8,9 +8,9 @@
 #include<iostream>
 using namespace std;
 
-PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::PasteMegaLinksDialog)
+PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::PasteMegaLinksDialog)
 {
     ui->setupUi(this);
 
@@ -144,7 +144,11 @@ QString PasteMegaLinksDialog::checkLink(QString link)
         link.truncate(NEW_FOLDER_LINK_SIZE);
         return urlLink.append(link);
     }
-
+    else if (rxHeaderCollectionNew.indexIn(link) != -1)
+    {
+        link.truncate(NEW_COLLECTION_LINK_SIZE);
+        return urlLink.append(link);
+    }
 
     return QString();
 }

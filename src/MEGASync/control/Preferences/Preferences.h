@@ -32,8 +32,6 @@ signals:
 private:
     Preferences();
 
-    std::map<QString, QVariant> cache;
-
 public:
     //NOT thread-safe. Must be called before creating threads.
     static std::shared_ptr<Preferences> instance();
@@ -52,6 +50,8 @@ public:
     void setFirstName(QString firstName);
     QString lastName();
     void setLastName(QString lastName);
+    QString fileHash(const QString& filePath);
+    void setFileHash(const QString& filePath, const QString& fileHash);
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
     QString getSession();
@@ -293,6 +293,8 @@ public:
     void setMaxMemoryUsage(long long value);
     long long getMaxMemoryReportTime();
     void setMaxMemoryReportTime(long long timestamp);
+    long long lastDailyStatTime();
+    void setLastDailyStatTime(long long time);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -330,6 +332,12 @@ public:
 
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
+    void setSystemTrayPromptSuppressed(bool suppressed);
+    bool isSystemTrayPromptSuppressed();
+    void setAskOnExclusionRemove(bool value);
+    bool isAskOnExclusionRemove();
+    void setSystemTrayLastPromptTimestamp(long long timestamp);
+    long long getSystemTrayLastPromptTimestamp();
 
     bool isOneTimeActionUserDone(int action);
     void setOneTimeActionUserDone(int action, bool done);
@@ -394,10 +402,6 @@ public:
     void clearTempTransfersPath();
     void clearTemporalBandwidth();
     void clearAll();
-    void sync();
-
-    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
-    bool needsDeferredSync();
 
     enum {
         PROXY_TYPE_NONE = 0,
@@ -555,9 +559,6 @@ protected:
     //Not all prefeerences need this, that´s why by default it is set to false
     void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
-    void setCachedValue(const QString &key, const QVariant &value);
-    void cleanCache();
-    void removeFromCache(const QString &key);
 
     std::unique_ptr<EncryptedSettings> mSettings;
 
@@ -723,6 +724,10 @@ protected:
     static const QString notifyDisabledSyncsKey;
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
+    static const QString systemTrayPromptSuppressed;
+    static const QString systemTrayLastPromptTimestamp;
+    static const QString lastDailyStatTimeKey;
+    static const QString askOnExclusionRemove;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -775,6 +780,8 @@ protected:
     static const bool defaultNeverCreateLink;
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
+    static const bool defaultSystemTrayPromptSuppressed;
+    static const bool defaultAskOnExclusionRemove;
 
 private:
     void updateFullName();

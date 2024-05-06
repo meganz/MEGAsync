@@ -12,11 +12,7 @@
 
 #include <QCloseEvent>
 #include <QInputDialog>
-
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
@@ -25,11 +21,11 @@ const uint8_t StreamingFromMegaDialog::NODE_ID = 0;
 
 using namespace mega;
 
-StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent) :
-    QDialog(parent),
-    ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
-    mLinkProcessor(nullptr),
-    lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
+StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent)
+    : QDialog(parent)
+    , ui(std::make_unique<Ui::StreamingFromMegaDialog>())
+    , mLinkProcessor(nullptr)
+    , lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
@@ -51,7 +47,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     ui->bCopyLink->setDisabled(true);
-    delegateTransferListener = ::mega::make_unique<QTMegaTransferListener>(this->megaApi, this);
+    delegateTransferListener = std::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     hideStreamingError();
 }
@@ -154,7 +150,7 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
 //the linkInfoAvailable, for example)
 void StreamingFromMegaDialog::onLinkInfoAvailable()
 {
-    mLinkProcessor->setSelected(NODE_ID, true);
+    mLinkProcessor->onLinkSelected(NODE_ID, true);
     this->mSelectedMegaNode = std::shared_ptr<MegaNode>(mLinkProcessor->getNode(NODE_ID));
 
     if (mSelectedMegaNode)
@@ -253,15 +249,11 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
         }
     #else
         #ifdef __APPLE__
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
-            #else
                 QStringList paths = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
                 if (paths.size())
                 {
                     defaultPath = paths.at(0);
                 }
-            #endif
         #else
             defaultPath = QString::fromUtf8("/usr/bin");
         #endif
@@ -408,7 +400,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else if(LinkStatus::TRANSFER_OVER_QUOTA == status)
         {
@@ -417,7 +409,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
             ui->bOpenOther->setEnabled(true);
             ui->bCopyLink->setEnabled(true);
             ui->bCopyLink->setStyleSheet(QString::fromUtf8("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                           "stop: 0 rgba(246,247,250), stop: 1 rgba(232,233,235));"));
+                                                           "stop: 0 rgb(246,247,250), stop: 1 rgb(232,233,235));"));
         }
         else
         {

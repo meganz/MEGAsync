@@ -86,15 +86,7 @@ void StalledIssueTab::leaveEvent(QEvent*)
 
 void StalledIssueTab::onUpdateCounter()
 {
-    // This is a work around to enable pluralization of resolved string in resolved issues tab
-    if (static_cast<StalledIssueFilterCriterion>(mFilterCriterion) == StalledIssueFilterCriterion::SOLVED_CONFLICTS)
-    {
-       ui->title->setText(createResolvedTitle());
-       return;
-    }
-    ui->counter->setText(
-        QString::number(MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
-            static_cast<StalledIssueFilterCriterion>(mFilterCriterion))));
+    ui->title->setText(createTitle());
 }
 
 bool StalledIssueTab::itsOn() const
@@ -149,18 +141,36 @@ int StalledIssueTab::filterCriterion() const
 void StalledIssueTab::setFilterCriterion(int filterCriterion)
 {
     mFilterCriterion = filterCriterion;
-    // This is a work around to enable pluralization of resolved string in resolved issues tab
-    if(static_cast<StalledIssueFilterCriterion>(mFilterCriterion) == StalledIssueFilterCriterion::SOLVED_CONFLICTS)
+    ui->title->setText(createTitle());
+}
+
+QString StalledIssueTab::createTitle()
+{
+    const auto itemsCount = MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
+        static_cast<StalledIssueFilterCriterion>(mFilterCriterion));
+    switch (static_cast<StalledIssueFilterCriterion>(mFilterCriterion))
     {
-        ui->counter->hide();
-        ui->title->setText(createResolvedTitle());
+        case StalledIssueFilterCriterion::ALL_ISSUES:
+            return tr("All issues: %1").arg(itemsCount);
+        case StalledIssueFilterCriterion::NAME_CONFLICTS:
+            return tr("Name conflict: %n", "", itemsCount).arg(itemsCount);
+        case StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS:
+            return tr("Item type conflict: %n", "", itemsCount).arg(itemsCount);
+        case StalledIssueFilterCriterion::OTHER_CONFLICTS:
+            return tr("Other: %n", "", itemsCount).arg(itemsCount);
+        case StalledIssueFilterCriterion::SOLVED_CONFLICTS:
+            return tr("Resolved: %n", "", itemsCount).arg(itemsCount);
+        default:
+            return QString();
     }
 }
 
-QString StalledIssueTab::createResolvedTitle()
+void StalledIssueTab::changeEvent(QEvent *event)
 {
-    return tr("Resolved: %n",
-              "",
-              MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
-                  static_cast<StalledIssueFilterCriterion>(mFilterCriterion)));
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->title->setText(createTitle());
+    }
+
+    QFrame::changeEvent(event);
 }

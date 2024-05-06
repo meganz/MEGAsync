@@ -271,6 +271,18 @@ string getDistroVersion()
         write(dump_file, oss.str().c_str(), oss.str().size());
         close(dump_file);
 
+        struct sigaction sa;
+        sa.sa_handler = SIG_DFL;
+        sigemptyset (&sa.sa_mask);
+        sigaction(SIGSEGV, &sa, NULL);
+        sigaction(SIGBUS, &sa, NULL);
+        sigaction(SIGILL, &sa, NULL);
+        sigaction(SIGFPE, &sa, NULL);
+        sigaction(SIGABRT, &sa, NULL);
+#if defined(__arm64__)
+        sigaction(SIGTRAP, &sa, NULL);
+#endif
+
         CrashHandler::tryReboot();
         exit(128+sig);
     }

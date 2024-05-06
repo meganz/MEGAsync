@@ -71,7 +71,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
          continue;
      StandardButton buttonType = static_cast<StandardButton>(sb);
      QPushButton *button = msgBox->addButton(buttonType);
-
+#ifdef Q_OS_MACOS
+     // Work-around for default buttons not highlighted correctly in MacOS(
+     button->setFixedHeight(32);
+#endif
      //Change button text if needed
      if(info.buttonsText.contains(buttonType))
      {
@@ -91,6 +94,12 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
     if(!info.iconPixmap.isNull())
     {
         msgBox->setIconPixmap(info.iconPixmap);
+    }
+
+    if (!info.checkboxText.isEmpty())
+    {
+        QCheckBox* checkbox = new QCheckBox(info.checkboxText);
+        msgBox->setCheckBox(checkbox);
     }
 
     DialogOpener::showMessageBox(msgBox, info);

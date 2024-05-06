@@ -249,6 +249,10 @@ const QString Preferences::neverCreateLinkKey       = QString::fromUtf8("neverCr
 const QString Preferences::notifyDisabledSyncsKey = QString::fromLatin1("notifyDisabledSyncs");
 const QString Preferences::importMegaLinksEnabledKey = QString::fromLatin1("importMegaLinksEnabled");
 const QString Preferences::downloadMegaLinksEnabledKey = QString::fromLatin1("downloadMegaLinksEnabled");
+const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("systemTrayPromptSuppressed");
+const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
+const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
+const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -297,6 +301,9 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
+const bool Preferences::defaultSystemTrayPromptSuppressed = false;
+
+const bool Preferences::defaultAskOnExclusionRemove = true;
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -307,10 +314,9 @@ std::shared_ptr<Preferences> Preferences::instance()
 void Preferences::initialize(QString dataPath)
 {
     mDataPath = dataPath;
-#if QT_VERSION >= 0x050000
+
     QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromLatin1("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
-#endif
 
     QDir dir(dataPath);
     dir.mkpath(QString::fromLatin1("."));
@@ -403,8 +409,6 @@ void Preferences::setEmail(QString email)
     mutex.lock();
     login(email);
     mSettings->setValue(emailKey, email);
-    setCachedValue(emailKey, email);
-    mSettings->sync();
     mutex.unlock();
     emit stateChanged();
 }
@@ -417,7 +421,7 @@ QString Preferences::firstName()
 
 void Preferences::setFirstName(QString firstName)
 {
-    setValueAndSyncConcurrent(firstNameKey, firstName);
+    setValueConcurrent(firstNameKey, firstName);
 }
 
 QString Preferences::lastName()
@@ -428,21 +432,31 @@ QString Preferences::lastName()
 
 void Preferences::setLastName(QString lastName)
 {
-    setValueAndSyncConcurrent(lastNameKey, lastName);
+    setValueConcurrent(lastNameKey, lastName);
+}
+
+QString Preferences::fileHash(const QString& filePath)
+{
+    assert(logged());
+    return getValueConcurrent<QString>(filePath, QString());
+}
+
+void Preferences::setFileHash(const QString& filePath, const QString& fileHash)
+{
+    setValueAndSyncConcurrent(filePath, fileHash, true);
 }
 
 void Preferences::setSession(QString session)
 {
     mutex.lock();
     storeSessionInGeneral(session);
-    mSettings->sync();
     mutex.unlock();
 }
 
 void Preferences::setSessionInUserGroup(QString session)
 {
     assert(logged());
-    setValueAndSyncConcurrent(sessionKey, session);
+    setValueConcurrent(sessionKey, session);
 }
 
 void Preferences::storeSessionInGeneral(QString session)
@@ -458,12 +472,10 @@ void Preferences::storeSessionInGeneral(QString session)
     }
 
     mSettings->setValue(sessionKey, session);
-    setCachedValue(sessionKey, session);
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -509,8 +521,6 @@ void Preferences::removeEphemeralCredentials()
 {
     QMutexLocker lock(&mutex);
     mSettings->remove(ephemeralSessionKey);
-    removeFromCache(ephemeralSessionKey);
-    mSettings->sync();
 }
 
 void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
@@ -520,8 +530,6 @@ void Preferences::setEphemeralCredentials(const EphemeralCredentials& cred)
     QDataStream stream(&array, QIODevice::WriteOnly);
     stream << cred;
     mSettings->setValue(ephemeralSessionKey, array.toBase64());
-    setCachedValue(ephemeralSessionKey, array.toBase64());
-    mSettings->sync();
 }
 
 EphemeralCredentials Preferences::getEphemeralCredentials()
@@ -542,7 +550,6 @@ unsigned long long Preferences::transferIdentifier()
     auto value = getValue<unsigned long long>(transferIdentifierKey, defaultTransferIdentifier);
     value++;
     mSettings->setValue(transferIdentifierKey, value);
-    setCachedValue(transferIdentifierKey, value);
     mutex.unlock();
     return value;
 }
@@ -875,31 +882,18 @@ void Preferences::setTimePoint(const QString& key, const std::chrono::system_clo
     assert(logged());
     auto timePointMillis = std::chrono::time_point_cast<std::chrono::milliseconds>(timepoint).time_since_epoch().count();
     mSettings->setValue(key, static_cast<long long>(timePointMillis));
-    setCachedValue(key, static_cast<long long>(timePointMillis));
 }
 
 template<typename T>
 T Preferences::getValue(const QString &key)
 {
-    auto cf = cache.find(key);
-    if (cf != cache.end())
-    {
-        assert(cf->second.value<T>() == mSettings->value(key).value<T>());
-        return cf->second.value<T>();
-    }
-    else return mSettings->value(key).value<T>();
+    return mSettings->value(key).value<T>();
 }
 
 template<typename T>
 T Preferences::getValue(const QString &key, const T &defaultValue)
 {
-    auto cf = cache.find(key);
-    if (cf != cache.end())
-    {
-        assert(cf->second.value<T>() == mSettings->value(key, defaultValue).template value<T>());
-        return cf->second.value<T>();
-    }
-    else return mSettings->value(key, defaultValue).template value<T>();
+    return mSettings->value(key, defaultValue).template value<T>();
 }
 
 template<typename T>
@@ -919,14 +913,12 @@ T Preferences::getValueConcurrent(const QString &key, const T &defaultValue)
 void Preferences::setAndCachedValue(const QString &key, const QVariant &value)
 {
     mSettings->setValue(key, value);
-    setCachedValue(key, value);
 }
 
 void Preferences::setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange)
 {
     QMutexLocker locker(&mutex);
     setAndCachedValue(key, value);
-    mSettings->sync();
     if(notifyChange)
     {
         emit valueChanged(key);
@@ -941,24 +933,6 @@ void Preferences::setValueConcurrent(const QString &key, const QVariant &value, 
     {
         emit valueChanged(key);
     }
-}
-
-void Preferences::setCachedValue(const QString &key, const QVariant &value)
-{
-    if (!key.isEmpty())
-    {
-        cache[key] = value;
-    }
-}
-
-void Preferences::cleanCache()
-{
-    cache.clear();
-}
-
-void Preferences::removeFromCache(const QString &key)
-{
-    cache.erase(key);
 }
 
 std::chrono::system_clock::time_point Preferences::getTransferOverQuotaDialogLastExecution()
@@ -1229,7 +1203,7 @@ void Preferences::enableNotifications(NotificationsTypes type, bool value)
 
     if(!key.isEmpty())
     {
-        setValueAndSyncConcurrent(key, value);
+        setValueConcurrent(key, value);
     }
 }
 
@@ -1246,14 +1220,12 @@ void Preferences::recoverDeprecatedNotificationsSettings()
 
             if(!key.isEmpty())
             {
-               setValueAndSyncConcurrent(key,deprecatedGlobalNotifications);
+               setValueConcurrent(key,deprecatedGlobalNotifications);
             }
         }
 
         QMutexLocker locker(&mutex);
         mSettings->remove(showDeprecatedNotificationsKey);
-        removeFromCache(showDeprecatedNotificationsKey);
-        mSettings->sync();
     }
 }
 
@@ -1276,39 +1248,24 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
     auto currentValue(stalledIssuesMode());
     if(value != currentValue)
     {
-        QString eventMessage;
-        int eventType(0);
+        AppStatsEvents::EventTypes type(AppStatsEvents::NONE);
 
         if(value == StalledIssuesModeType::Smart)
         {
-            if(currentValue == StalledIssuesModeType::None)
-            {
-                eventMessage = QString::fromLatin1("Smart mode selected by default");
-                eventType = AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED;
-            }
-            else
-            {
-                eventMessage = QString::fromLatin1("Smart mode selected");
-                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
-            }
+            type = (currentValue == StalledIssuesModeType::None)
+                    ? AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
         }
         else
         {
-            if(currentValue == StalledIssuesModeType::None)
-            {
-                eventMessage = QString::fromLatin1("Advanced mode selected by default");
-                eventType = AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED;
-            }
-            else
-            {
-                eventMessage = QString::fromLatin1("Advanced mode selected");
-                eventType = AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
-            }
+            type = (currentValue == StalledIssuesModeType::None)
+                    ? AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
         }
 
-        if(eventType != 0)
+        if(type != AppStatsEvents::NONE)
         {
-            MegaSyncApp->getMegaApi()->sendEvent(eventType, eventMessage.toUtf8().constData(), false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(type);
         }
 
         setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
@@ -1334,7 +1291,7 @@ bool Preferences::startOnStartup()
 
 void Preferences::setStartOnStartup(bool value)
 {
-    setValueAndSyncConcurrent(startOnStartupKey, value);
+    setValueConcurrent(startOnStartupKey, value);
 }
 
 bool Preferences::usingHttpsOnly()
@@ -1344,7 +1301,7 @@ bool Preferences::usingHttpsOnly()
 
 void Preferences::setUseHttpsOnly(bool value)
 {
-    setValueAndSyncConcurrent(useHttpsOnlyKey, value);
+    setValueConcurrent(useHttpsOnlyKey, value);
 }
 
 bool Preferences::SSLcertificateException()
@@ -1375,12 +1332,10 @@ void Preferences::setSSLcertificateException(bool value)
         currentAccount = mSettings->value(currentAccountKey).toString();
     }
     mSettings->setValue(SSLcertificateExceptionKey, value);
-    setCachedValue(SSLcertificateExceptionKey, value);
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -1391,7 +1346,7 @@ QString Preferences::language()
 
 void Preferences::setLanguage(QString &value)
 {
-    setValueAndSyncConcurrent(languageKey, value);
+    setValueConcurrent(languageKey, value);
 }
 
 bool Preferences::updateAutomatically()
@@ -1401,7 +1356,7 @@ bool Preferences::updateAutomatically()
 
 void Preferences::setUpdateAutomatically(bool value)
 {
-    setValueAndSyncConcurrent(updateAutomaticallyKey, value);
+    setValueConcurrent(updateAutomaticallyKey, value);
 }
 
 bool Preferences::hasDefaultUploadFolder()
@@ -1421,17 +1376,17 @@ bool Preferences::hasDefaultImportFolder()
 
 void Preferences::setHasDefaultUploadFolder(bool value)
 {
-    setValueAndSyncConcurrent(hasDefaultUploadFolderKey, value);
+    setValueConcurrent(hasDefaultUploadFolderKey, value);
 }
 
 void Preferences::setHasDefaultDownloadFolder(bool value)
 {
-    setValueAndSyncConcurrent(hasDefaultDownloadFolderKey, value);
+    setValueConcurrent(hasDefaultDownloadFolderKey, value);
 }
 
 void Preferences::setHasDefaultImportFolder(bool value)
 {
-    setValueAndSyncConcurrent(hasDefaultImportFolderKey, value);
+    setValueConcurrent(hasDefaultImportFolderKey, value);
 }
 
 bool Preferences::canUpdate(QString filePath)
@@ -1488,13 +1443,11 @@ void Preferences::setAccountStateInGeneral(int value)
     }
 
     mSettings->setValue(currentAccountStatusKey, value);
-    setCachedValue(currentAccountStatusKey, value);
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -1531,13 +1484,11 @@ void Preferences::setNeedsFetchNodesInGeneral(bool value)
     }
 
     mSettings->setValue(needsFetchNodesKey, value);
-    setCachedValue(needsFetchNodesKey, value);
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -1551,7 +1502,7 @@ int Preferences::uploadLimitKB()
 void Preferences::setUploadLimitKB(int value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(uploadLimitKBKey, value);
+    setValueConcurrent(uploadLimitKBKey, value);
 }
 
 int Preferences::downloadLimitKB()
@@ -1577,7 +1528,7 @@ void Preferences::setParallelUploadConnections(int value)
     {
        value = 3;
     }
-    setValueAndSyncConcurrent(parallelUploadConnectionsKey, value);
+    setValueConcurrent(parallelUploadConnectionsKey, value);
 }
 
 void Preferences::setParallelDownloadConnections(int value)
@@ -1587,13 +1538,13 @@ void Preferences::setParallelDownloadConnections(int value)
     {
        value = 4;
     }
-    setValueAndSyncConcurrent(parallelDownloadConnectionsKey, value);
+    setValueConcurrent(parallelDownloadConnectionsKey, value);
 }
 
 void Preferences::setDownloadLimitKB(int value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(downloadLimitKBKey, value);
+    setValueConcurrent(downloadLimitKBKey, value);
 }
 
 bool Preferences::upperSizeLimit()
@@ -1603,7 +1554,7 @@ bool Preferences::upperSizeLimit()
 
 void Preferences::setUpperSizeLimit(bool value)
 {
-    setValueAndSyncConcurrent(upperSizeLimitKey, value);
+    setValueConcurrent(upperSizeLimitKey, value);
 }
 
 long long Preferences::upperSizeLimitValue()
@@ -1615,7 +1566,7 @@ long long Preferences::upperSizeLimitValue()
 void Preferences::setUpperSizeLimitValue(long long value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(upperSizeLimitValueKey, value);
+    setValueConcurrent(upperSizeLimitValueKey, value);
 }
 
 bool Preferences::cleanerDaysLimit()
@@ -1625,7 +1576,7 @@ bool Preferences::cleanerDaysLimit()
 
 void Preferences::setCleanerDaysLimit(bool value)
 {
-    setValueAndSyncConcurrent(cleanerDaysLimitKey, value);
+    setValueConcurrent(cleanerDaysLimitKey, value);
 }
 
 int Preferences::cleanerDaysLimitValue()
@@ -1637,7 +1588,7 @@ int Preferences::cleanerDaysLimitValue()
 void Preferences::setCleanerDaysLimitValue(int value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(cleanerDaysLimitValueKey, value);
+    setValueConcurrent(cleanerDaysLimitValueKey, value);
 }
 
 int Preferences::upperSizeLimitUnit()
@@ -1648,7 +1599,7 @@ int Preferences::upperSizeLimitUnit()
 void Preferences::setUpperSizeLimitUnit(int value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(upperSizeLimitUnitKey, value);
+    setValueConcurrent(upperSizeLimitUnitKey, value);
 }
 
 bool Preferences::lowerSizeLimit()
@@ -1658,7 +1609,7 @@ bool Preferences::lowerSizeLimit()
 
 void Preferences::setLowerSizeLimit(bool value)
 {
-    setValueAndSyncConcurrent(lowerSizeLimitKey, value);
+    setValueConcurrent(lowerSizeLimitKey, value);
 }
 
 long long Preferences::lowerSizeLimitValue()
@@ -1670,7 +1621,7 @@ long long Preferences::lowerSizeLimitValue()
 void Preferences::setLowerSizeLimitValue(long long value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(lowerSizeLimitValueKey, value);
+    setValueConcurrent(lowerSizeLimitValueKey, value);
 }
 
 int Preferences::lowerSizeLimitUnit()
@@ -1682,7 +1633,7 @@ int Preferences::lowerSizeLimitUnit()
 void Preferences::setLowerSizeLimitUnit(int value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(lowerSizeLimitUnitKey, value);
+    setValueConcurrent(lowerSizeLimitUnitKey, value);
 }
 
 int Preferences::folderPermissionsValue()
@@ -1695,7 +1646,7 @@ int Preferences::folderPermissionsValue()
 
 void Preferences::setFolderPermissionsValue(int permissions)
 {
-    setValueAndSyncConcurrent(folderPermissionsKey, permissions);
+    setValueConcurrent(folderPermissionsKey, permissions);
 }
 
 int Preferences::filePermissionsValue()
@@ -1708,7 +1659,7 @@ int Preferences::filePermissionsValue()
 
 void Preferences::setFilePermissionsValue(int permissions)
 {
-    setValueAndSyncConcurrent(filePermissionsKey, permissions);
+    setValueConcurrent(filePermissionsKey, permissions);
 }
 
 int Preferences::proxyType()
@@ -1718,7 +1669,7 @@ int Preferences::proxyType()
 
 void Preferences::setProxyType(int value)
 {
-    setValueAndSyncConcurrent(proxyTypeKey, value);
+    setValueConcurrent(proxyTypeKey, value);
 }
 
 int Preferences::proxyProtocol()
@@ -1728,7 +1679,7 @@ int Preferences::proxyProtocol()
 
 void Preferences::setProxyProtocol(int value)
 {
-    setValueAndSyncConcurrent(proxyProtocolKey, value);
+    setValueConcurrent(proxyProtocolKey, value);
 }
 
 QString Preferences::proxyServer()
@@ -1738,7 +1689,7 @@ QString Preferences::proxyServer()
 
 void Preferences::setProxyServer(const QString &value)
 {
-    setValueAndSyncConcurrent(proxyServerKey, value);
+    setValueConcurrent(proxyServerKey, value);
 }
 
 int Preferences::proxyPort()
@@ -1748,7 +1699,7 @@ int Preferences::proxyPort()
 
 void Preferences::setProxyPort(int value)
 {
-    setValueAndSyncConcurrent(proxyPortKey, value);
+    setValueConcurrent(proxyPortKey, value);
 }
 
 bool Preferences::proxyRequiresAuth()
@@ -1758,7 +1709,7 @@ bool Preferences::proxyRequiresAuth()
 
 void Preferences::setProxyRequiresAuth(bool value)
 {
-    setValueAndSyncConcurrent(proxyRequiresAuthKey, value);
+    setValueConcurrent(proxyRequiresAuthKey, value);
 }
 
 QString Preferences::getProxyUsername()
@@ -1768,7 +1719,7 @@ QString Preferences::getProxyUsername()
 
 void Preferences::setProxyUsername(const QString &value)
 {
-    setValueAndSyncConcurrent(proxyUsernameKey, value);
+    setValueConcurrent(proxyUsernameKey, value);
 }
 
 QString Preferences::getProxyPassword()
@@ -1778,7 +1729,7 @@ QString Preferences::getProxyPassword()
 
 void Preferences::setProxyPassword(const QString &value)
 {
-    setValueAndSyncConcurrent(proxyPasswordKey, value);
+    setValueConcurrent(proxyPasswordKey, value);
 }
 
 QString Preferences::proxyHostAndPort()
@@ -1803,10 +1754,7 @@ QString Preferences::proxyHostAndPort()
 
 long long Preferences::lastExecutionTime()
 {
-    mutex.lock();
-    long long value = getValue<long long>(lastExecutionTimeKey, 0);
-    mutex.unlock();
-    return value;
+    return getValueConcurrent<long long>(lastExecutionTimeKey, 0);
 }
 
 long long Preferences::installationTime()
@@ -1816,7 +1764,7 @@ long long Preferences::installationTime()
 
 void Preferences::setInstallationTime(long long time)
 {
-    setValueAndSyncConcurrent(installationTimeKey, time);
+    setValueConcurrent(installationTimeKey, time);
 }
 
 long long Preferences::accountCreationTime()
@@ -1826,7 +1774,7 @@ long long Preferences::accountCreationTime()
 
 void Preferences::setAccountCreationTime(long long time)
 {
-    setValueAndSyncConcurrent(accountCreationTimeKey, time);
+    setValueConcurrent(accountCreationTimeKey, time);
 
 }
 
@@ -1837,7 +1785,7 @@ long long Preferences::hasLoggedIn()
 
 void Preferences::setHasLoggedIn(long long time)
 {
-    setValueAndSyncConcurrent(hasLoggedInKey, time);
+    setValueConcurrent(hasLoggedInKey, time);
 }
 
 bool Preferences::isFirstStartDone()
@@ -1847,7 +1795,7 @@ bool Preferences::isFirstStartDone()
 
 void Preferences::setFirstStartDone(bool value)
 {
-    setValueAndSyncConcurrent(firstStartDoneKey, value);
+    setValueConcurrent(firstStartDoneKey, value);
 }
 
 bool Preferences::isFirstSyncDone()
@@ -1857,7 +1805,7 @@ bool Preferences::isFirstSyncDone()
 
 void Preferences::setFirstSyncDone(bool value)
 {
-    setValueAndSyncConcurrent(firstSyncDoneKey, value);
+    setValueConcurrent(firstSyncDoneKey, value);
 }
 
 bool Preferences::isFirstBackupDone()
@@ -1867,7 +1815,7 @@ bool Preferences::isFirstBackupDone()
 
 void Preferences::setFirstBackupDone(bool value)
 {
-    setValueAndSyncConcurrent(firstBackupDoneKey, value);
+    setValueConcurrent(firstBackupDoneKey, value);
 }
 
 bool Preferences::isFirstFileSynced()
@@ -1877,7 +1825,7 @@ bool Preferences::isFirstFileSynced()
 
 void Preferences::setFirstFileSynced(bool value)
 {
-    setValueAndSyncConcurrent(firstFileSyncedKey, value);
+    setValueConcurrent(firstFileSyncedKey, value);
 }
 
 bool Preferences::isFirstFileBackedUp()
@@ -1887,7 +1835,7 @@ bool Preferences::isFirstFileBackedUp()
 
 void Preferences::setFirstFileBackedUp(bool value)
 {
-    setValueAndSyncConcurrent(firstFileBackedUpKey, value);
+    setValueConcurrent(firstFileBackedUpKey, value);
 }
 
 bool Preferences::isFirstWebDownloadDone()
@@ -1897,7 +1845,7 @@ bool Preferences::isFirstWebDownloadDone()
 
 void Preferences::setFirstWebDownloadDone(bool value)
 {
-    setValueAndSyncConcurrent(firstWebDownloadKey, value);
+    setValueConcurrent(firstWebDownloadKey, value);
 }
 
 bool Preferences::isFatWarningShown()
@@ -1907,7 +1855,7 @@ bool Preferences::isFatWarningShown()
 
 void Preferences::setFatWarningShown(bool value)
 {
-    setValueAndSyncConcurrent(fatWarningShownKey, value);
+    setValueConcurrent(fatWarningShownKey, value);
 }
 
 QString Preferences::lastCustomStreamingApp()
@@ -1917,7 +1865,7 @@ QString Preferences::lastCustomStreamingApp()
 
 void Preferences::setLastCustomStreamingApp(const QString &value)
 {
-    setValueAndSyncConcurrent(lastCustomStreamingAppKey, value);
+    setValueConcurrent(lastCustomStreamingAppKey, value);
 }
 
 long long Preferences::getMaxMemoryUsage()
@@ -1927,7 +1875,7 @@ long long Preferences::getMaxMemoryUsage()
 
 void Preferences::setMaxMemoryUsage(long long value)
 {
-    setValueAndSyncConcurrent(maxMemoryUsageKey, value);
+    setValueConcurrent(maxMemoryUsageKey, value);
 }
 
 long long Preferences::getMaxMemoryReportTime()
@@ -1937,12 +1885,22 @@ long long Preferences::getMaxMemoryReportTime()
 
 void Preferences::setMaxMemoryReportTime(long long timestamp)
 {
-    setValueAndSyncConcurrent(maxMemoryReportTimeKey, timestamp);
+    setValueConcurrent(maxMemoryReportTimeKey, timestamp);
 }
 
-void Preferences::setLastExecutionTime(qint64 time)
+long long Preferences::lastDailyStatTime()
 {
-    setValueAndSyncConcurrent(lastExecutionTimeKey, time);
+    return getValueConcurrent<long long>(lastDailyStatTimeKey, 0);
+}
+
+void Preferences::setLastDailyStatTime(long long time)
+{
+    setValueAndSyncConcurrent(lastDailyStatTimeKey, time);
+}
+
+void Preferences::setLastExecutionTime(long long time)
+{
+    setValueConcurrent(lastExecutionTimeKey, time);
 }
 
 long long Preferences::lastUpdateTime()
@@ -1953,7 +1911,7 @@ long long Preferences::lastUpdateTime()
 void Preferences::setLastUpdateTime(long long time)
 {
     assert(logged());
-    setValueAndSyncConcurrent(lastUpdateTimeKey, time);
+    setValueConcurrent(lastUpdateTimeKey, time);
 }
 
 int Preferences::lastUpdateVersion()
@@ -1965,7 +1923,7 @@ int Preferences::lastUpdateVersion()
 void Preferences::setLastUpdateVersion(int version)
 {
     assert(logged());
-    setValueAndSyncConcurrent(lastUpdateVersionKey, version);
+    setValueConcurrent(lastUpdateVersionKey, version);
 }
 
 QString Preferences::downloadFolder()
@@ -1978,7 +1936,7 @@ QString Preferences::downloadFolder()
 
 void Preferences::setDownloadFolder(QString value)
 {
-    setValueAndSyncConcurrent(downloadFolderKey, QDir::toNativeSeparators(value));
+    setValueConcurrent(downloadFolderKey, QDir::toNativeSeparators(value));
 }
 
 long long Preferences::uploadFolder()
@@ -1990,7 +1948,7 @@ long long Preferences::uploadFolder()
 void Preferences::setUploadFolder(long long value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(uploadFolderKey, value);
+    setValueConcurrent(uploadFolderKey, value);
 }
 
 long long Preferences::importFolder()
@@ -2002,7 +1960,7 @@ long long Preferences::importFolder()
 void Preferences::setImportFolder(long long value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(importFolderKey, value);
+    setValueConcurrent(importFolderKey, value);
 }
 
 bool Preferences::getImportMegaLinksEnabled()
@@ -2014,7 +1972,7 @@ bool Preferences::getImportMegaLinksEnabled()
 void Preferences::setImportMegaLinksEnabled(const bool value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(importMegaLinksEnabledKey, value);
+    setValueConcurrent(importMegaLinksEnabledKey, value);
 }
 
 bool Preferences::getDownloadMegaLinksEnabled()
@@ -2026,7 +1984,7 @@ bool Preferences::getDownloadMegaLinksEnabled()
 void Preferences::setDownloadMegaLinksEnabled(const bool value)
 {
     assert(logged());
-    setValueAndSyncConcurrent(downloadMegaLinksEnabledKey, value);
+    setValueConcurrent(downloadMegaLinksEnabledKey, value);
 }
 
 bool Preferences::neverCreateLink()
@@ -2036,7 +1994,7 @@ bool Preferences::neverCreateLink()
 
 void Preferences::setNeverCreateLink(bool value)
 {
-    setValueAndSyncConcurrent(neverCreateLinkKey, value);
+    setValueConcurrent(neverCreateLinkKey, value);
 }
 
 
@@ -2051,7 +2009,6 @@ void Preferences::removeAllFolders()
     mSettings->beginGroup(syncsGroupByTagKey);
     mSettings->remove(QLatin1String("")); //remove group and all its settings
     mSettings->endGroup();
-    mSettings->sync();
 }
 
 bool Preferences::isOneTimeActionDone(int action)
@@ -2085,14 +2042,42 @@ void Preferences::setOneTimeActionDone(int action, bool done)
     }
 
     mSettings->setValue(oneTimeActionDoneKey + QString::number(action), done);
-    setCachedValue(oneTimeActionDoneKey + QString::number(action), done);
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
     mutex.unlock();
+}
+
+void Preferences::setSystemTrayPromptSuppressed(bool value)
+{
+    setValueAndSyncConcurrent(systemTrayPromptSuppressed, value);
+}
+
+bool Preferences::isSystemTrayPromptSuppressed()
+{
+    return getValueConcurrent<bool>(systemTrayPromptSuppressed, defaultSystemTrayPromptSuppressed);
+}
+
+void Preferences::setAskOnExclusionRemove(bool value)
+{
+    setValueAndSyncConcurrent(askOnExclusionRemove, value);
+}
+
+bool Preferences::isAskOnExclusionRemove()
+{
+    return getValueConcurrent<bool>(askOnExclusionRemove, defaultAskOnExclusionRemove);
+}
+
+void Preferences::setSystemTrayLastPromptTimestamp(long long timestamp)
+{
+    setValueConcurrent(systemTrayLastPromptTimestamp, timestamp);
+}
+
+long long Preferences::getSystemTrayLastPromptTimestamp()
+{
+    return getValueConcurrent<long long>(systemTrayLastPromptTimestamp, defaultTimeStamp);
 }
 
 
@@ -2110,7 +2095,6 @@ void Preferences::setOneTimeActionUserDone(int action, bool done)
     assert(logged());
 
     mSettings->setValue(oneTimeActionUserDoneKey + QString::number(action), done);
-    setCachedValue(oneTimeActionUserDoneKey + QString::number(action), done);
 }
 
 
@@ -2147,20 +2131,16 @@ void Preferences::setPreviousCrashes(QStringList crashes)
     if (!crashes.size())
     {
         mSettings->remove(previousCrashesKey);
-        removeFromCache(previousCrashesKey);
     }
     else
     {
         mSettings->setValue(previousCrashesKey, crashes.join(QString::fromLatin1("\n")));
-        setCachedValue(previousCrashesKey, crashes.join(QString::fromLatin1("\n")));
     }
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -2196,14 +2176,11 @@ void Preferences::setLastReboot(long long value)
     }
 
     mSettings->setValue(lastRebootKey, value);
-    setCachedValue(lastRebootKey, value);
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -2239,14 +2216,11 @@ void Preferences::setLastExit(long long value)
     }
 
     mSettings->setValue(lastExitKey, value);
-    setCachedValue(lastExitKey, value);
 
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);
     }
-
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -2283,7 +2257,7 @@ void Preferences::setDisabledSyncTags(QSet<mega::MegaHandle> disabledSyncs)
         tags.append(QString::number(tag));
     }
 
-    setValueAndSyncConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
+    setValueConcurrent(disabledSyncsKey, tags.join(QString::fromUtf8("0x1E")));
 }
 
 bool Preferences::getNotifyDisabledSyncsOnLogin()
@@ -2293,7 +2267,7 @@ bool Preferences::getNotifyDisabledSyncsOnLogin()
 
 void Preferences::setNotifyDisabledSyncsOnLogin(bool notify)
 {
-    setValueAndSyncConcurrent(notifyDisabledSyncsKey, notify);
+    setValueConcurrent(notifyDisabledSyncsKey, notify);
 }
 
 void Preferences::getLastHandleInfo(MegaHandle &lastHandle, int &type, long long &timestamp)
@@ -2311,12 +2285,8 @@ void Preferences::setLastPublicHandle(MegaHandle handle, int type)
     mutex.lock();
     assert(logged());
     mSettings->setValue(lastPublicHandleKey, (unsigned long long) handle);
-    setCachedValue(lastPublicHandleKey, (unsigned long long) handle);
     mSettings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
-    setCachedValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
     mSettings->setValue(lastPublicHandleTypeKey, type);
-    setCachedValue(lastPublicHandleTypeKey, type);
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -2397,8 +2367,6 @@ void Preferences::resetGlobalSettings()
     {
         mSettings->beginGroup(currentAccount);
     }
-    mSettings->sync();
-    cleanCache();
     mutex.unlock();
 
     emit stateChanged();
@@ -2414,7 +2382,7 @@ bool Preferences::isCrashed()
 
 void Preferences::setCrashed(bool value)
 {
-    setValueAndSyncConcurrent(isCrashedKey, value);
+    setValueConcurrent(isCrashedKey, value);
 }
 
 bool Preferences::getGlobalPaused()
@@ -2424,7 +2392,7 @@ bool Preferences::getGlobalPaused()
 
 void Preferences::setGlobalPaused(bool value)
 {
-    setValueAndSyncConcurrent(wasPausedKey, value);
+    setValueConcurrent(wasPausedKey, value);
 }
 
 bool Preferences::getUploadsPaused()
@@ -2434,7 +2402,7 @@ bool Preferences::getUploadsPaused()
 
 void Preferences::setUploadsPaused(bool value)
 {
-    setValueAndSyncConcurrent(wasUploadsPausedKey, value);
+    setValueConcurrent(wasUploadsPausedKey, value);
 }
 
 bool Preferences::getDownloadsPaused()
@@ -2444,7 +2412,7 @@ bool Preferences::getDownloadsPaused()
 
 void Preferences::setDownloadsPaused(bool value)
 {
-    setValueAndSyncConcurrent(wasDownloadsPausedKey, value);
+    setValueConcurrent(wasDownloadsPausedKey, value);
 }
 
 long long Preferences::lastStatsRequest()
@@ -2454,7 +2422,7 @@ long long Preferences::lastStatsRequest()
 
 void Preferences::setLastStatsRequest(long long value)
 {
-    setValueAndSyncConcurrent(lastStatsRequestKey, value);
+    setValueConcurrent(lastStatsRequestKey, value);
 }
 
 bool Preferences::awakeIfActiveEnabled()
@@ -2468,7 +2436,7 @@ bool Preferences::awakeIfActiveEnabled()
 
 void Preferences::setAwakeIfActive(bool value)
 {
-    setValueAndSyncConcurrent(awakeIfActiveKey, value);
+    setValueConcurrent(awakeIfActiveKey, value);
 }
 
 bool Preferences::fileVersioningDisabled()
@@ -2482,7 +2450,7 @@ bool Preferences::fileVersioningDisabled()
 
 void Preferences::disableFileVersioning(bool value)
 {
-    setValueAndSyncConcurrent(disableFileVersioningKey, value);
+    setValueConcurrent(disableFileVersioningKey, value);
 }
 
 bool Preferences::overlayIconsDisabled()
@@ -2495,7 +2463,7 @@ bool Preferences::overlayIconsDisabled()
 
 void Preferences::disableOverlayIcons(bool value)
 {
-    setValueAndSyncConcurrent(disableOverlayIconsKey, value);
+    setValueConcurrent(disableOverlayIconsKey, value);
 }
 
 bool Preferences::leftPaneIconsDisabled()
@@ -2508,7 +2476,7 @@ bool Preferences::leftPaneIconsDisabled()
 
 void Preferences::disableLeftPaneIcons(bool value)
 {
-    setValueAndSyncConcurrent(disableLeftPaneIconsKey, value);
+    setValueConcurrent(disableLeftPaneIconsKey, value);
 }
 
 bool Preferences::error()
@@ -2555,30 +2523,7 @@ void Preferences::clearAll()
     }
 
     mSettings->clear();
-    mSettings->sync();
     mutex.unlock();
-}
-
-void Preferences::sync()
-{
-    mutex.lock();
-    mSettings->sync();
-    mutex.unlock();
-}
-
-void Preferences::deferSyncs(bool b)
-{
-    mutex.lock();
-    mSettings->deferSyncs(b);
-    mutex.unlock();
-}
-
-bool Preferences::needsDeferredSync()
-{
-    mutex.lock();
-    bool b = mSettings->needsDeferredSync();
-    mutex.unlock();
-    return b;
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)
@@ -2617,7 +2562,6 @@ void Preferences::login(QString account)
     mutex.lock();
     logout();
     mSettings->setValue(currentAccountKey, account);
-    setCachedValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
@@ -2628,9 +2572,7 @@ void Preferences::login(QString account)
             emit updated(lastVersion);
         }
         mSettings->setValue(lastVersionKey, Preferences::VERSION_CODE);
-        setCachedValue(lastVersionKey, Preferences::VERSION_CODE);
     }
-    mSettings->sync();
     mutex.unlock();
 }
 
@@ -2672,7 +2614,6 @@ void Preferences::logout()
         mSettings->endGroup();
     }
     clearTemporalBandwidth();
-    cleanCache();
     mutex.unlock();
 }
 
@@ -2859,7 +2800,6 @@ void Preferences::saveOldCachedSyncs()
     }
 
     mSettings->endGroup();
-    mSettings->sync();
 }
 
 
@@ -2873,7 +2813,6 @@ void Preferences::removeAllSyncSettings()
     mSettings->remove(QString::fromLatin1("")); //removes group and all its settings
 
     mSettings->endGroup();
-    mSettings->sync();
 }
 
 
@@ -2896,7 +2835,6 @@ void Preferences::removeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
     mSettings->endGroup();
 
     mSettings->endGroup();
-    mSettings->sync();
 }
 
 void Preferences::writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
@@ -2914,7 +2852,6 @@ void Preferences::writeSyncSetting(std::shared_ptr<SyncSettings> syncSettings)
         mSettings->endGroup();
 
         mSettings->endGroup();
-        mSettings->sync();
     }
     else
     {

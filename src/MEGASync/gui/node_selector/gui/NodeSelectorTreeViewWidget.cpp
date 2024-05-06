@@ -565,9 +565,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
 
 void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    ui->bNewFolder->setEnabled(true);
-    ui->bOk->setEnabled(true);
-
     if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() != MegaError::API_OK)
@@ -710,6 +707,10 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                 (!updateNode.node->isFile() || mModel->showFiles()))
             {
                 mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
+            }
+            if(updateNode.node->getChanges() & MegaNode::CHANGE_TYPE_PARENT)
+            {
+                mRemovedNodesByHandle.append(updateNode.previousHandle);
             }
         }
     }

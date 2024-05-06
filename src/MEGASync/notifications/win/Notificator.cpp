@@ -24,7 +24,7 @@ using namespace WinToastLib;
 
 using namespace mega;
 
-const QString& MegaNotificationBase::defaultImage = QString();
+const QString& DesktopAppNotificationBase::defaultImage = QString();
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     NotificatorBase(programName, trayicon, parent)
@@ -47,7 +47,7 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
 
     if (!forceQt && WinToast::instance()->isCompatible())
     {
-        MegaNotification *n = new MegaNotification();
+        DesktopAppNotification *n = new DesktopAppNotification();
         if (title != MegaSyncApp->getMEGAString())
         {
             n->setTitle(title);
@@ -64,7 +64,7 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
     }
 }
 
-void Notificator::notifySystray(MegaNotificationBase *notification)
+void Notificator::notifySystray(DesktopAppNotificationBase *notification)
 {
     if (!notification)
     {
@@ -84,7 +84,7 @@ void Notificator::notifySystray(MegaNotificationBase *notification)
         return;
     }
 
-    connect(notification, &MegaNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
+    connect(notification, &DesktopAppNotificationBase::failed, this, &Notificator::onModernNotificationFailed);
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
     templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
@@ -107,7 +107,7 @@ void Notificator::notifySystray(MegaNotificationBase *notification)
 
 void Notificator::onModernNotificationFailed()
 {
-    MegaNotification *notification = qobject_cast<MegaNotification *>(QObject::sender());
+    DesktopAppNotification *notification = qobject_cast<DesktopAppNotification *>(QObject::sender());
     if (mCurrentNotification)
     {
         mCurrentNotification->deleteLater();
@@ -118,8 +118,8 @@ void Notificator::onModernNotificationFailed()
                   notification->getExpirationTime(), true);
 }
 
-MegaNotification::MegaNotification()
-    : MegaNotificationBase()
+DesktopAppNotification::DesktopAppNotification()
+    : DesktopAppNotificationBase()
 {
     QFile icon(QString::fromUtf8("://images/app_ico.ico"));
     mImagePath = MegaApplication::applicationDataPath() + QString::fromUtf8("\\MEGAsync.ico");
@@ -129,7 +129,7 @@ MegaNotification::MegaNotification()
     }
 }
 
-MegaNotification::~MegaNotification()
+DesktopAppNotification::~DesktopAppNotification()
 {
     if (mId != -1)
     {
@@ -139,7 +139,7 @@ MegaNotification::~MegaNotification()
 
 QMutex WinToastNotification::mMutex;
 
-WinToastNotification::WinToastNotification(QPointer<MegaNotificationBase> megaNotification)
+WinToastNotification::WinToastNotification(QPointer<DesktopAppNotificationBase> megaNotification)
 {
     this->notification = megaNotification;
 }
@@ -153,7 +153,7 @@ void WinToastNotification::toastActivated()
     mMutex.lock();
     if (notification)
     {
-        emit notification->activated(MegaNotification::Action::content);
+        emit notification->activated(DesktopAppNotification::Action::content);
         notification = NULL;
     }
     mMutex.unlock();
@@ -164,7 +164,7 @@ void WinToastNotification::toastActivated(int actionIndex)
     mMutex.lock();
     if (notification)
     {
-        emit notification->activated(static_cast<MegaNotification::Action>(actionIndex));
+        emit notification->activated(static_cast<DesktopAppNotification::Action>(actionIndex));
         notification = NULL;
     }
     mMutex.unlock();
@@ -175,17 +175,17 @@ void WinToastNotification::toastDismissed(WinToastDismissalReason state)
     mMutex.lock();
     if (notification)
     {
-        auto reason = MegaNotification::CloseReason::Unknown;
+        auto reason = DesktopAppNotification::CloseReason::Unknown;
         switch (state)
         {
         case WinToastDismissalReason::UserCanceled:
-            reason = MegaNotification::CloseReason::UserAction;
+            reason = DesktopAppNotification::CloseReason::UserAction;
             break;
         case WinToastDismissalReason::ApplicationHidden:
-            reason = MegaNotification::CloseReason::AppHidden;
+            reason = DesktopAppNotification::CloseReason::AppHidden;
             break;
         case WinToastDismissalReason::TimedOut:
-            reason = MegaNotification::CloseReason::TimedOut;
+            reason = DesktopAppNotification::CloseReason::TimedOut;
             break;
         }
 

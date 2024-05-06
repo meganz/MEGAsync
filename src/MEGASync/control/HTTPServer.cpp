@@ -3,16 +3,18 @@
 #include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "mega/setandelement.h"
 
 #include <QtConcurrent/QtConcurrent>
 
-#include <iostream>
+
 #include <algorithm>
 
 
 using namespace mega;
 
 const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
+const QString PUBLIC_LINK_START = QString::fromUtf8("https://mega.nz/collection/");
 
 bool ts_comparator(RequestData* i, RequestData *j)
 {
@@ -280,6 +282,9 @@ void HTTPServer::processRequest(QPointer<QAbstractSocket> socket, HTTPRequest re
     case EXTERNAL_DOWNLOAD_REQUEST_START:
         externalDownloadRequest(response, request, socket);
         break;
+    case EXTERNAL_DOWNLOAD_SET_REQUEST_START:
+        externalDownloadSetRequest(response, request);
+        break;
     case EXTERNAL_REWIND_REQUEST_START:
         // Set 'undelete' to true
         externalDownloadRequest(response, request, socket, true);
@@ -423,8 +428,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
         if (!isFirstWebDownloadDone && !preferences->isFirstWebDownloadDone())
         {
-            megaApi->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL,
-                               "MEGAsync first webclient download", false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL);
             isFirstWebDownloadDone = true;
         }
     }
@@ -583,6 +587,48 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
             }
         }
     }
+}
+
+void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest& request)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "ExternalDownloadSet command received from the webclient");
+
+    //! Example command: 'megasync.megaSyncRequest({ a: 'ds', auth: "Y7VXFI6b", k: "2e4l7O_oI4qGxDY5eJCojg", e:["4lIlbGvSCBE", "wgILwZTk1T8", "omKB2C-vuEo", "Hj2JPpIgu1I", "QM8IK0MWN9s", "Lutj3MIgxuI"]})'
+    //!     'auth' contains set_ph (set public handle)
+    //!     'k' contains public key
+    //! => Reconstruct link by concatenating:
+    //!     "https://mega.nz/collection/" + auth" + "#" + k
+    //! eg:
+    //!     "https://mega.nz/collection/" + "Y7VXFI6b" + "#" + "2e4l7O_oI4qGxDY5eJCojg"
+    QString auth = Utilities::extractJSONString(request.data, QString::fromUtf8("auth"));
+    QString k = Utilities::extractJSONString(request.data, QString::fromUtf8("k"));
+    if (auth.isEmpty() || k.isEmpty())
+    {
+        response = QString::number(MegaError::API_EARGS);
+        return;
+    }
+
+    QString publicLink = PUBLIC_LINK_START + auth + QString::fromUtf8("#") + k;
+
+    // Get Element IDs
+    QStringList e = Utilities::extractJSONStringList(request.data, QString::fromUtf8("e"));
+
+    QList<mega::MegaHandle> handleList;
+    for(const QString& eId : qAsConst(e))
+    {
+        QByteArray ba = eId.toLocal8Bit();
+        const char *c_str2 = ba.data();
+        size_t size = mega::SetElement::HANDLESIZE;
+        unsigned char* result;
+        megaApi->base64ToBinary(c_str2, &result, &size);
+        const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
+        handleList.append(*myHandlePtr);
+        delete result;
+    }
+
+    emit onExternalDownloadSetRequested(publicLink, handleList);
+
+    response = QString::number(MegaError::API_OK);
 }
 
 void HTTPServer::externalFileUploadRequest(QString &response, const HTTPRequest& request)
@@ -882,6 +928,7 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
 {
     static const QString openLinkRequestStart(QLatin1String("{\"a\":\"l\","));
     static const QString externalDownloadRequestStart(QLatin1String("{\"a\":\"d\","));
+    static const QString externalDownloadSetRequestStart(QLatin1String("{\"a\":\"ds\","));
     static const QString externalRewindRequestStart(QLatin1String("{\"a\":\"gd\","));
     static const QString externalFileUploadRequestStart(QLatin1String("{\"a\":\"ufi\","));
     static const QString externalFolderUploadRequestStart(QLatin1String("{\"a\":\"ufo\","));
@@ -905,6 +952,10 @@ HTTPServer::RequestType HTTPServer::GetRequestType(const HTTPRequest &request)
     else if(request.data.startsWith(externalDownloadRequestStart))
     {
         return EXTERNAL_DOWNLOAD_REQUEST_START;
+    }
+    else if(request.data.startsWith(externalDownloadSetRequestStart))
+    {
+        return EXTERNAL_DOWNLOAD_SET_REQUEST_START;
     }
     else if(request.data.startsWith(externalFileUploadRequestStart))
     {

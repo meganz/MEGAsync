@@ -40,6 +40,7 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
     void enterEvent(QEvent*) override;
     void leaveEvent(QEvent*) override;
+    void changeEvent(QEvent *) override;
 
 private slots:
     void onUpdateCounter();
@@ -50,7 +51,7 @@ private:
 
     void updateIcon();
     void toggleOffSiblings();
-    QString createResolvedTitle();
+    QString createTitle();
 
     Ui::StalledIssueTab *ui;
     QString mIconPrefix;

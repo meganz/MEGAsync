@@ -14,6 +14,7 @@
 #include <megaapi.h>
 
 #include "Utilities.h"
+#include "SetManager.h"
 
 class RequestData
 {
@@ -75,6 +76,7 @@ class HTTPServer: public QTcpServer
         EXTERNAL_ADD_BACKUP,
         UNKNOWN_REQUEST,
         EXTERNAL_REWIND_REQUEST_START,
+        EXTERNAL_DOWNLOAD_SET_REQUEST_START
     };
 
     public:
@@ -103,6 +105,8 @@ class HTTPServer: public QTcpServer
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
         void onExternalAddBackup();
+        void onExternalDownloadSetRequested(const QString& publicLink,
+                                            const QList<mega::MegaHandle>& elementHandleList);
 
     private slots:
         void onVersionCommandFinished();
@@ -134,6 +138,7 @@ class HTTPServer: public QTcpServer
         void versionCommand(const HTTPRequest &request, QPointer<QAbstractSocket> socket);
         void openLinkRequest(QString& response, const HTTPRequest& request);
         void externalDownloadRequest(QString& response, const HTTPRequest& request, QAbstractSocket* socket, bool undelete = false);
+        void externalDownloadSetRequest(QString &response, const HTTPRequest& request);
         void externalFileUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderUploadRequest(QString& response, const HTTPRequest& request);
         void externalFolderSyncRequest(QString& response, const HTTPRequest& request);

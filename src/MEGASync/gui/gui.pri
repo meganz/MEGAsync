@@ -15,6 +15,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/EventHelper.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/MegaDelegateHoverManager.cpp \
+    $$PWD/MegaUserAlertExt.cpp \
     $$PWD/NotificationsSettings.cpp \
     $$PWD/OverQuotaDialog.cpp \
     $$PWD/ScanningWidget.cpp \
@@ -82,7 +83,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/ColorTheme.cpp \
     $$PWD/qml/QmlClipboard.cpp \
     $$PWD/qml/QmlDialog.cpp \
+    $$PWD/qml/QmlDialogManager.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
+    $$PWD/qml/QmlManager.cpp \
     $$PWD/qml/StandardIconProvider.cpp \
     $$PWD/onboarding/ChooseFolder.cpp \
     $$PWD/onboarding/Onboarding.cpp \
@@ -94,7 +97,10 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/BackupsController.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
-    $$PWD/onboarding/GuestContent.cpp
+    $$PWD/onboarding/GuestContent.cpp \
+    $$PWD/SyncExclusions/SyncExclusions.cpp \
+    $$PWD/SyncExclusions/ExclusionsQmlDialog.cpp \
+    $$PWD/SyncExclusions/ExclusionRulesModel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -107,6 +113,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
     $$PWD/MegaDelegateHoverManager.h \
     $$PWD/MegaNodeNames.h \
+    $$PWD/MegaUserAlertExt.h \
     $$PWD/NotificationsSettings.h \
     $$PWD/OverQuotaDialog.h \
     $$PWD/ScanningWidget.h \
@@ -175,8 +182,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/ColorTheme.h \
     $$PWD/qml/QmlClipboard.h \
     $$PWD/qml/QmlDialog.h \
+    $$PWD/qml/QmlDialogManager.h \
     $$PWD/qml/QmlDialogWrapper.h \
     $$PWD/qml/ApiEnums.h \
+    $$PWD/qml/QmlManager.h \
     $$PWD/qml/StandardIconProvider.h \
     $$PWD/onboarding/ChooseFolder.h \
     $$PWD/onboarding/Onboarding.h \
@@ -188,7 +197,11 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/BackupsController.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
-    $$PWD/onboarding/GuestContent.h
+    $$PWD/onboarding/GuestContent.h \
+    $$PWD/SyncExclusions/SyncExclusions.h \
+    $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
+    $$PWD/onboarding/GuestContent.h \
+    $$PWD/SyncExclusions/ExclusionRulesModel.h
 
 INCLUDEPATH += $$PWD
 
@@ -216,7 +229,7 @@ win32 {
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
-                $$PWD/win/RemoteItemUI.ui \
+                $$PWD/win/RemoteItemUi.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
@@ -264,7 +277,7 @@ macx {
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
-                $$PWD/macx/RemoteItemUI.ui\
+                $$PWD/macx/RemoteItemUi.ui\
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \

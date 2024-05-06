@@ -27,7 +27,8 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#include "MegaApplication.h"
+
+#include "control/Version.h"
 #include <ObjBase.h>
 #include <Psapi.h>
 #include <Strsafe.h>
@@ -41,6 +42,9 @@
 #include "client/windows/common/ipc_protocol.h"
 #include "client/windows/handler/exception_handler.h"
 #include "common/windows/guid_string.h"
+
+#include "megaapi.h"
+#include "qdatetime.h"
 
 namespace google_breakpad {
 
@@ -982,8 +986,8 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   int frame_number=0;
 
   oss << "Application: " << QApplication::applicationName().toUtf8().constData() << (sizeof(char*) == 4 ? " [32 bit]" : "") << (sizeof(char*) == 8 ? " [64 bit]" : "") << "\n";
-  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
-         "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
+  oss << "Version code: " << QString::number(VER_FILEVERSION_CODE).toUtf8().constData() <<
+          "." << QString::number(VER_BUILD_ID).toUtf8().constData() << "\n";
   oss << "Timestamp: " << QDateTime::currentMSecsSinceEpoch() << "\n";
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];

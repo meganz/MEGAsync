@@ -146,8 +146,8 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
     {
         return;
     }
-
-    if(syncSettings->getRunState() == mega::MegaSync::RUNSTATE_PAUSED)
+    const auto syncState = syncSettings->getRunState();
+    if(syncState == mega::MegaSync::RUNSTATE_PAUSED || syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
     {
         bool created(false);
 

@@ -26,7 +26,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 
 
     // construct local socket path
-    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
+    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("mega.socket");
 
     //LOG_info << "Starting Ext server";
 
@@ -135,7 +135,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
 
             bool ok;
-            QStringList parameters = QString::fromAscii(content).split(QChar::fromAscii(':'));
+            QStringList parameters = QString::fromLatin1(content).split(QLatin1Char(':'));
 
             if (parameters.size() != 3)
             {

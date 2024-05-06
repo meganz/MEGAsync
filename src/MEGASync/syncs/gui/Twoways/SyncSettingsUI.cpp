@@ -7,7 +7,7 @@
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
-    setTitle(tr("Synced Folders"));
+    setSyncsTitle();
     setTable<SyncTableView,SyncItemModel>();
 
     mSyncElement.initElements(this);
@@ -75,6 +75,22 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
 {
     return tr("Your sync can't be removed. Reason: %1")
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+}
+
+void SyncSettingsUI::setSyncsTitle()
+{
+    setTitle(tr("Synced Folders"));
+}
+
+void SyncSettingsUI::changeEvent(QEvent* event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mSyncElement.retranslateUi();
+        setSyncsTitle();
+    }
+
+    SyncSettingsUIBase::changeEvent(event);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

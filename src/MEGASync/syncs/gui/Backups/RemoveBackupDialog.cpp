@@ -61,7 +61,7 @@ void RemoveBackupDialog::OnMoveSelected()
 
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
-    auto nodeSelector = new UploadNodeSelector(this);
+    auto nodeSelector = new MoveBackupNodeSelector(this);
     DialogOpener::showDialog<NodeSelector>(nodeSelector, [this, nodeSelector]
     {
         if (nodeSelector->result() == QDialog::Accepted)

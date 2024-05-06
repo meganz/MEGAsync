@@ -11,8 +11,9 @@ public:
     bool isAvailable() const;
 
     bool mIsReady;
-    qint64 mAvailableSpace;
-    qint64 mTotalSpace;
+
+    quint64 mAvailableSpace;
+    quint64 mTotalSpace;
 };
 
 struct DriveDisplayData

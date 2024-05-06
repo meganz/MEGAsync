@@ -6,12 +6,13 @@
 
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
-#include <syncs/gui/Twoways/IgnoresEditingDialog.h>
 #include <syncs/model/SyncItemModel.h>
-
+#include "SyncExclusions/SyncExclusions.h"
+#include "SyncExclusions/ExclusionsQmlDialog.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
 #include <DialogOpener.h>
+#include <QScreen>
 #include <PermissionsDialog.h>
 #endif
 
@@ -281,12 +282,8 @@ void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync
     QFileInfo syncDir(sync->getLocalFolder());
     if(syncDir.exists())
     {
-        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(sync->getLocalFolder(), false, this);
-        QObject::connect(exclusionRules, &IgnoresEditingDialog::signalOpenMegaignore, this, [this, sync]()
-                         {
-                             openMegaIgnore(sync);
-                         });
-        DialogOpener::showDialog(exclusionRules);
+        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, sync->getLocalFolder());
+        DialogOpener::showDialog(exclusions);
     }
     else
     {

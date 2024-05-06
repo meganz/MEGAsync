@@ -6,10 +6,7 @@
 #include <QApplication>
 #include <QPointer>
 #include <QFile>
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
 
 #ifndef WIN32
 #include <utime.h>

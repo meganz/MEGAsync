@@ -42,6 +42,7 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->attachStorageObserver(*this);
+    MegaSyncApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
@@ -68,7 +69,7 @@ void AccountDetailsDialog::refresh()
         setProperty("loading", false);
 
         // Separator between used and total.
-        QString sep(QLatin1String(" / "));
+        QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
 
         // ---------- Process storage usage
 
@@ -120,10 +121,14 @@ void AccountDetailsDialog::refresh()
                                          DEFAULT_MIN_PERCENTAGE)
                               : 0);
             mUi->wCircularStorage->setValue(usedStoragePercentage);
-            mUi->lTotalStorage->setText(sep + Utilities::getSizeString(totalStorage));
+
+            mUi->lTotalStorage->setText(Utilities::getSizeString(totalStorage));
         }
 
-        mUi->lUsedStorage->setText(Utilities::getSizeString(usedStorage));
+        QString usedStorageString = Utilities::getSizeString(usedStorage);
+        QString usedStorageWithSep = sepTemplate.arg(usedStorageString, QString());
+        mUi->lUsedStorage->setText(usedStorageWithSep);
+
         long long availableStorage = totalStorage - usedStorage;
         mUi->lAvailableStorage->setText(Utilities::getSizeString(availableStorage < 0 ? 0 : availableStorage));
         // ---------- Process transfer usage
@@ -189,12 +194,15 @@ void AccountDetailsDialog::refresh()
                                              DEFAULT_MIN_PERCENTAGE)
                                   : 0);
                 mUi->wCircularTransfer->setValue(usedQuotaPercentage);
-                mUi->lTotalTransfer->setText(sep + Utilities::getSizeString(totalTransfer));
+
+                mUi->lTotalTransfer->setText(Utilities::getSizeString(totalTransfer));
                 break;
             }
         }
 
-        mUi->lUsedTransfer->setText(Utilities::getSizeString(usedTransfer));
+        QString usedTransferString = Utilities::getSizeString(usedTransfer);
+        QString usedTransferWithSep = sepTemplate.arg(usedTransferString, QString());
+        mUi->lUsedTransfer->setText(usedTransferWithSep);
 
         // ---------- Process detailed storage usage
 

@@ -117,7 +117,7 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
     if (g_hInst)
     {
-        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
         if (hIcon)
         {
             m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
@@ -257,9 +257,19 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
         ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
         if (ok)
         {
-            if (GetFileAttributesExW((LPCWSTR)buffer.data(),GetFileExInfoStandard,(LPVOID)&fad))
+            if (GetFileAttributesExW((LPCWSTR)buffer.data(), GetFileExInfoStandard, (LPVOID)&fad))
+            {
                 type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
-                            MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
+                    MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
+            }
+            else
+            {
+                DWORD error = GetLastError();
+                if(error == ERROR_PATH_NOT_FOUND || error == ERROR_INVALID_NAME)
+                {
+                    type = MegaInterface::TYPE_NOTFOUND;
+                }
+            }
 
             int state = MegaInterface::getPathState((PCWSTR)buffer.data(), false);
             selectedFiles.push_back(buffer);
@@ -275,7 +285,7 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
                 {
                     syncedFiles++;
                 }
-                else
+                else if (type == MegaInterface::TYPE_UNKNOWN)
                 {
                     syncedUnknowns++;
                 }
@@ -290,13 +300,13 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
                 {
                     unsyncedFiles++;
                 }
-                else
+                else if(type == MegaInterface::TYPE_UNKNOWN)
                 {
                     unsyncedUnknowns++;
                 }
             }
 
-            if (type == MegaInterface::TYPE_FOLDER && !inLeftPane.size())
+            if ((type == MegaInterface::TYPE_FOLDER || type == MegaInterface::TYPE_NOTFOUND) && !inLeftPane.size())
             {
                 if (CheckLeftPaneIcon((wchar_t *)buffer.data(), false))
                 {
@@ -984,7 +994,7 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
 
         if (!hIcon)
         {
-            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 16, 16, LR_DEFAULTCOLOR);
+            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
             if (!hIcon)
             {
                 return E_FAIL;

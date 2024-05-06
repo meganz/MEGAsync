@@ -4,7 +4,7 @@ IF [%MEGA_QTPATH%]==[] (
 	IF NOT [%MEGAQTPATH%]==[] (
 		SET MEGA_QTPATH=%MEGAQTPATH%
 	) ELSE (
-		SET MEGA_QTPATH=C:\Qt\5.15.11\x64
+		SET MEGA_QTPATH=C:\Qt\5.15.13\x64
 	)
 )
 
@@ -20,10 +20,7 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\qml\ ^
- build-x64-windows-mega\Release\MEGAsync.exe ^
- build-x64-windows-mega\Release\MEGAupdater.exe ^
- build-x64-windows-mega\Release\MEGAShellExt.dll
-
+ build-x64-windows-mega\src\MEGASync\RelWithDebInfo\MEGAsync.exe
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\bearer
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\scenegraph
 
@@ -45,9 +42,6 @@ mkdir %MEGA_QT_DEPLOY_DIR%
  --no-patchqt --no-designercomponents ^
  --dir %MEGA_QT_DEPLOY_DIR% ^
  --qmldir src\MEGASync\gui\qml\ ^
- build-x86-windows-mega\Release\MEGAsync.exe ^
- build-x86-windows-mega\Release\MEGAShellExt.dll
- build-x86-windows-mega\Release\MEGAupdater.exe ^
-
+ build-x86-windows-mega\src\MEGASync\RelWithDebInfo\MEGAsync.exe
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\bearer
 rmdir /s /q %MEGA_QT_DEPLOY_DIR%\scenegraph

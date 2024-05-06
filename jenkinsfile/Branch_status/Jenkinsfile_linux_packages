@@ -40,15 +40,15 @@ pipeline {
                 script {
                     linux_sources_workspace = WORKSPACE
                     def branchToCheckout = ''
-                    if (env.SDK_BRANCH && env.SDK_BRANCH != ' ') {
+
+                    if (env.SDK_BRANCH != ' ') {
                         branchToCheckout = env.SDK_BRANCH
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
                         branchToCheckout = "develop"
                     } else {
-                        env.SDK_BRANCH = sh(script: "grep 'branch =' ${linux_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
-                        branchToCheckout = env.SDK_BRANCH
+                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
-
                     dir('src/MEGASync/mega') {
                         sh "echo Cloning SDK branch ${branchToCheckout}"
                         checkout([
@@ -78,7 +78,7 @@ pipeline {
                         if ( params.IS_RELEASE_CANDIDATE == true) {
                             def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
                             sh "cd ${env.INTERNAL_REPO_PATH}/repo/private/$DISTRO_TO_BUILD && jf rt upload --regexp '((x86_64|amd64|i386)/megasync.*deb\$|(x86_64|amd64|i386)/megasync.*rpm\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.zst\$|(x86_64|amd64|i386)/megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/"
-                            echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/]"
+                            echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO_TO_BUILD/]"
                         }
                     }
                 }
@@ -97,11 +97,11 @@ pipeline {
                     }
                     axis { 
                         name 'DISTRO'; 
-                        values  'xUbuntu_23.10', 'xUbuntu_23.04','xUbuntu_22.04', 'xUbuntu_20.04', 'xUbuntu_18.04',
+                        values  'xUbuntu_24.04', 'xUbuntu_23.10', 'xUbuntu_23.04','xUbuntu_22.04', 'xUbuntu_20.04',
                                 'Debian_10','Debian_11','Debian_12','Debian_testing',
                                 'DEB_Arch_Extra',
-                                'Fedora_37', 'Fedora_38', 'Fedora_39',
-                                'openSUSE_Leap_15.4','openSUSE_Leap_15.5','openSUSE_Tumbleweed'
+                                'Fedora_37', 'Fedora_38', 'Fedora_39', 'Fedora_40',
+                                'openSUSE_Leap_15.4','openSUSE_Leap_15.5','openSUSE_Leap_15.6', 'openSUSE_Tumbleweed'
                     }
                 }
                 excludes {
@@ -113,12 +113,12 @@ pipeline {
                                 
                         axis { 
                             name 'DISTRO'; 
-                            values  'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
+                            values  'xUbuntu_24.04', 'xUbuntu_23.10', 'xUbuntu_23.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
                                     'Debian_11','Debian_12','Debian_testing',
                                     'DEB_Arch_Extra',
                                     'CentOS_8','CentOS_7',
-                                    'Fedora_37', 'Fedora_38', 'Fedora_39',
-                                    'openSUSE_Leap_15.4','openSUSE_Leap_15.5','openSUSE_Tumbleweed'
+                                    'Fedora_37', 'Fedora_38', 'Fedora_39', 'Fedora_40',
+                                    'openSUSE_Leap_15.4','openSUSE_Leap_15.5', 'openSUSE_Leap_15.6', 'openSUSE_Tumbleweed'
                         }
                     }
                 }

@@ -4,70 +4,115 @@
 #include <QObject>
 #include <QStringList>
 #include <QPointer>
-
 #include <memory>
-
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
+#include "QTMegaTransferListener.h"
+#include <QSharedPointer>
+#include <QQueue>
+#include <QList>
+#include "LinkObject.h"
+#include "SetTypes.h"
 
-class LinkProcessor: public QObject, public mega::MegaRequestListener
+enum class LinkTransferType { UNKNOWN, DOWNLOAD, IMPORT };
+
+struct LinkTransfer
+{
+    LinkTransfer(std::shared_ptr<LinkObject> linkObject, LinkTransferType transferType)
+        : linkObject(linkObject)
+        , transferType(transferType)
+    {}
+
+    std::shared_ptr<LinkObject> linkObject = nullptr;
+    LinkTransferType transferType = LinkTransferType::UNKNOWN;
+};
+
+class LinkProcessor: public QObject, public mega::MegaRequestListener, public mega::MegaTransferListener
 {
     Q_OBJECT
 
 public:
-    LinkProcessor(QStringList linkList, mega::MegaApi *megaApi, mega::MegaApi *megaApiFolders);
+    LinkProcessor(const QStringList& linkList, mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     virtual ~LinkProcessor();
 
-    QString getLink(int id);
-    bool isSelected(int id);
-    int getError(int id);
-    std::shared_ptr<mega::MegaNode> getNode(int id);
-    int size() const;
-
+    QString getLink(int index) const;
+    bool isSelected(int index) const;
+    MegaNodeSPtr getNode(int index) const;
     void requestLinkInfo();
-    void importLinks(QString nodePath);
-    void importLinks(mega::MegaNode* node);
+    void importLinks(const QString& nodePath);
     mega::MegaHandle getImportParentFolder();
-
     void downloadLinks(const QString& localPath);
-    void setSelected(int linkId, bool selected);
-
-    int numSuccessfullImports();
-    int numFailedImports();
-    int getCurrentIndex();
-
-    bool atLeastOneLinkValidAndSelected() const;
-
     void setParentHandler(QObject* parent);
 
-protected:
-    mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiFolders;
-    QStringList linkList;
-    QList<bool> linkSelected;
-    QList<std::shared_ptr<mega::MegaNode>> mLinkNode;
-    QList<int> linkError;
-    int currentIndex;
-    int remainingNodes;
-    int importSuccess;
-    int importFailed;
-    mega::MegaHandle importParentFolder;
-    mega::QTMegaRequestListener *delegateListener;
-
 signals:
-    void onLinkInfoAvailable(int i);
+    void requestFetchSetFromLink(const QString& link);
+    void requestDownloadSet(const AlbumCollection& set,
+                            const QString& downloadPath,
+                            const QList<mega::MegaHandle>& elementHandleList);
+    void requestImportSet(const AlbumCollection& set,
+                          const SetImportParams& sip,
+                          const QList<mega::MegaHandle>& elementHandleList);
     void onLinkInfoRequestFinish();
     void onLinkImportFinish();
-    void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey);
+    void onLinkInfoAvailable(int index,
+                             const QString& name,
+                             int status,
+                             long long size,
+                             bool isFolder);
 
 public slots:
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    void onFetchSetFromLink(const AlbumCollection& collection);
+    void onSetDownloadFinished(const QString& setName,
+                               const QStringList& succeededDownloadedElements,
+                               const QStringList& failedDownloadedElements,
+                               const QString& destinationPath);
+    void onSetImportFinished(const QString& setName,
+                             const QStringList& succeededImportElements,
+                             const QStringList& failedImportElements,
+                             const QStringList& alreadyExistingImportElements,
+                             const SetImportParams& sip);
+    void onLinkSelected(int index, bool selected);
+    void refreshLinkInfo();
 
 private:
-    void startDownload(mega::MegaNode* linkNode, const QString& localPath);
+    template <typename Container>
+    inline bool isValidIndex(const Container& container, int index) const
+    {
+        return (index >= 0 && index < container.size());
+    }
 
+    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error) override;
+
+    // Download
+    void setDownloadPaths(const QString& downloadPath);
+    void startDownload(MegaNodeSPtr linkNode, const QString& localPath);
+
+    // Import
+    void setImportParentNode(MegaNodeSPtr importParentNode);
+    bool copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode);
+
+    inline bool isLinkObjectValid(int index) const;
+    void sendLinkInfoAvailableSignal(int index);
+    void continueOrFinishLinkInfoReq();
+    void createInvalidLinkObject(int index, int error);
+    void markForDeletionIfNoMoreRequests();
+
+    void addTransfersAndStartIfNotStartedYet(LinkTransferType transferType);
+    void processNextTransfer();
+
+private:
+    mega::MegaApi* mMegaApi;
+    mega::MegaApi* mMegaApiFolders;
+    QStringList mLinkList;
+    QList<std::shared_ptr<LinkObject>> mLinkObjects;
+    mega::MegaHandle mImportParentFolder;
+    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
     QPointer<QObject> mParentHandler;
     uint32_t mRequestCounter;
+    int mCurrentIndex;
+    QQueue<LinkTransfer> mTransferQueue;
 };
 
 #endif // LINKPROCESSOR_H

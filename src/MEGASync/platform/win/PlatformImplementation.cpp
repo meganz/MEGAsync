@@ -21,13 +21,11 @@
 #include <dpapi.h>
 #include <shellapi.h>
 
-#if QT_VERSION >= 0x050200
 #include <QtWin>
-#endif
-
 #include <QOperatingSystemVersion>
 #include <QScreen>
 #include <QDesktopWidget>
+#include <QHostInfo>
 
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -78,6 +76,7 @@ using namespace std;
 using namespace mega;
 
 bool WindowsPlatform_exiting = false;
+static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
 void PlatformImplementation::initialize(int, char *[])
 {
@@ -210,9 +209,9 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     notifyItemChange(path, mShellNotifier);
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int, bool stringIsPlatformEncoded)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    QString path = getPreparedPath(localPath, stringIsPlatformEncoded);
+    QString path = QString::fromUtf8(localPath->c_str());
     notifyItemChange(path, mSyncFileNotifier);
 }
 
@@ -1094,14 +1093,12 @@ void PlatformImplementation::enableDialogBlur(QDialog*)
         FreeLibrary(hModule);
     }
 
-#if QT_VERSION >= 0x050200
     if (!win10)
     {
         QtWin::setCompositionEnabled(true);
         QtWin::extendFrameIntoClientArea(dialog, -1, -1, -1, -1);
         QtWin::enableBlurBehindWindow(dialog);
     }
-#endif
 #endif
 }
 
@@ -1409,51 +1406,19 @@ QString PlatformImplementation::getDeviceName()
     // First, try to read maker and model
     QSettings settings (QLatin1String("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
                         QSettings::NativeFormat);
-    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
-                                   QLatin1Literal("0")).toString());
+    QString vendor (settings.value(QLatin1String("BaseBoardManufacturer"),
+                                   QLatin1String("0")).toString());
     QString model (settings.value(QLatin1String("SystemProductName"),
-                                  QLatin1Literal("0")).toString());
-    QString deviceName;
-    // If failure or empty strings, give hostname
-    if (vendor.isEmpty() && model.isEmpty())
+                                  QLatin1String("0")).toString());
+
+    QString deviceName = vendor + QLatin1String(" ") + model;
+    // If failure, empty strings or defaultFactoryBiosName, give hostname.
+    if ((vendor.isEmpty() && model.isEmpty()) || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
-        deviceName = QSysInfo::machineHostName();
-        deviceName.remove(QLatin1Literal(".local"));
-    }
-    else
-    {
-        deviceName = vendor + QLatin1Literal(" ") + model;
+        deviceName = QHostInfo::localHostName();
     }
 
     return deviceName;
-}
-
-QString PlatformImplementation::getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded)
-{
-    if (!stringIsPlatformEncoded)
-    {
-        return QString::fromUtf8(localPath->c_str());
-    }
-
-
-    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
-    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
-                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
-                                                                                         / sizeof (char))));
-    if (!preparedPath.isEmpty())
-    {
-        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
-        {
-            preparedPath = preparedPath.mid(4);
-        }
-
-        if (preparedPath.size() >= MAX_PATH)
-        {
-            preparedPath.clear();
-        }
-    }
-
-    return preparedPath;
 }
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
@@ -1754,17 +1719,15 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
     // so we can't get available space this way.
     const QByteArray pathArray = path.toUtf8();
 
-    DWORD sectorsPerCluster;
-    DWORD bytesPerSector;
-    DWORD freeClustersCount;
-    DWORD totalClustersCount;
-    BOOL ok = GetDiskFreeSpaceA(pathArray.constData(),
-                                &sectorsPerCluster,
-                                &bytesPerSector,
-                                &freeClustersCount,
-                                &totalClustersCount);
+    ULARGE_INTEGER freeBytesAvailableToUser;
+    ULARGE_INTEGER totalBytes;
+    ULARGE_INTEGER totalFreeBytes;
+    BOOL ok = GetDiskFreeSpaceExA(pathArray.constData(),
+                                &freeBytesAvailableToUser,
+                                &totalBytes,
+                                &totalFreeBytes);
     data.mIsReady = (ok == TRUE);
-    data.mAvailableSpace = freeClustersCount * bytesPerSector * sectorsPerCluster;
-    data.mTotalSpace = totalClustersCount * bytesPerSector * sectorsPerCluster;
+    data.mAvailableSpace = totalFreeBytes.QuadPart;
+    data.mTotalSpace = totalBytes.QuadPart;
     return data;
 }

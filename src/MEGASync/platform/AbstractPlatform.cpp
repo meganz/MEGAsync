@@ -269,6 +269,11 @@ bool AbstractPlatform::makePubliclyReadable(const QString& /*fileName*/)
     return false;
 }
 
+bool AbstractPlatform::validateSystemTrayIntegration()
+{
+    return false;
+}
+
 std::shared_ptr<AbstractShellNotifier> AbstractPlatform::getShellNotifier()
 {
     return mShellNotifier;
