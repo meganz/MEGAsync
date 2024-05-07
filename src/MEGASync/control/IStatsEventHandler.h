@@ -17,14 +17,14 @@ public:
 
     virtual ~IStatsEventHandler() = default;
 
-    Q_INVOKABLE virtual void sendEvent(int type,
+    Q_INVOKABLE virtual void sendEvent(AppStatsEvents::EventType type,
                                        const QStringList& args = QStringList(),
                                        bool encode = false) = 0;
 
-    Q_INVOKABLE virtual void sendTrackedEvent(int type,
+    Q_INVOKABLE virtual void sendTrackedEvent(AppStatsEvents::EventType type,
                                               bool fromInfoDialog = false) = 0;
 
-    virtual void sendTrackedEvent(int type,
+    virtual void sendTrackedEvent(AppStatsEvents::EventType type,
                                   const QObject* senderObj,
                                   const QObject* expectedObj,
                                   bool fromInfoDialog = false) = 0;
@@ -37,7 +37,7 @@ protected:
     bool mUpdateViewID;
     bool mLastInfoDialogEventSent;
 
-    virtual void sendEvent(AppStatsEvents::EventTypes type,
+    virtual void sendEvent(AppStatsEvents::EventType type,
                            const char* message,
                            bool addJourneyId = false,
                            const char* viewId = nullptr) = 0;

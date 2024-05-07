@@ -10,20 +10,20 @@ class ProxyStatsEventHandler : public IStatsEventHandler
 public:
     using IStatsEventHandler::IStatsEventHandler;
 
-    Q_INVOKABLE void sendEvent(int type,
+    Q_INVOKABLE void sendEvent(AppStatsEvents::EventType type,
                                const QStringList& args = QStringList(),
                                bool encode = false) override;
 
-    Q_INVOKABLE void sendTrackedEvent(int type,
+    Q_INVOKABLE void sendTrackedEvent(AppStatsEvents::EventType type,
                                       bool fromInfoDialog = false) override;
 
-    void sendTrackedEvent(int type,
+    void sendTrackedEvent(AppStatsEvents::EventType type,
                           const QObject* senderObj,
                           const QObject* expectedObj,
                           bool fromInfoDialog = false) override;
 
 protected:
-    void sendEvent(AppStatsEvents::EventTypes type,
+    void sendEvent(AppStatsEvents::EventType type,
                    const char* message,
                    bool addJourneyId = false,
                    const char* viewId = nullptr) override;

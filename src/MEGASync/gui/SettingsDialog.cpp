@@ -751,7 +751,7 @@ void SettingsDialog::changeEvent(QEvent* event)
 
 void SettingsDialog::on_bGeneral_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_GENERAL_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_GENERAL_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1073,7 +1073,7 @@ void SettingsDialog::on_bFullCheck_clicked()
 
 void SettingsDialog::on_bSendBug_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_REPORT_ISSUE_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_REPORT_ISSUE_CLICKED);
 
     QPointer<BugReportDialog> dialog = new BugReportDialog(this, mApp->getLogger());
     DialogOpener::showDialog(dialog);
@@ -1232,7 +1232,7 @@ void SettingsDialog::updateAccountElements()
 
 void SettingsDialog::on_bAccount_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_ACCOUNT_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_ACCOUNT_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1283,7 +1283,7 @@ void SettingsDialog::on_bStorageDetails_clicked()
 
 void SettingsDialog::on_bLogout_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_LOGOUT_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_LOGOUT_CLICKED);
     QString text;
     bool haveSyncs (false);
     bool haveBackups (false);
@@ -1410,7 +1410,7 @@ void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool ch
 
 void SettingsDialog::on_bSyncs_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_SYNC_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_SYNC_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1433,7 +1433,7 @@ void SettingsDialog::on_bSyncs_clicked()
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::on_bBackup_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_BACKUP_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_BACKUP_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1461,7 +1461,7 @@ void SettingsDialog::on_bBackupCenter_clicked()
 // Security ----------------------------------------------------------------------------------------
 void SettingsDialog::on_bSecurity_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_SECURITY_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_SECURITY_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1481,7 +1481,7 @@ void SettingsDialog::on_bSecurity_clicked()
 
 void SettingsDialog::on_bExportMasterKey_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_EXPORT_KEY_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_EXPORT_KEY_CLICKED);
 
     QString defaultPath = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
 #ifndef _WIN32
@@ -1548,7 +1548,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
 void SettingsDialog::on_bChangePassword_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_CHANGE_PASSWORD_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_CHANGE_PASSWORD_CLICKED);
 
     QPointer<ChangePassword> cPassword = new ChangePassword(this);
     DialogOpener::showDialog<ChangePassword>(cPassword);
@@ -1600,7 +1600,7 @@ void SettingsDialog::updateDownloadFolder()
 
 void SettingsDialog::on_bFolders_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_FOLDERS_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_FOLDERS_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1688,7 +1688,7 @@ void SettingsDialog::onShellNotificationsProcessed()
 // Network -----------------------------------------------------------------------------------------
 void SettingsDialog::on_bNetwork_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_NETWORK_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_NETWORK_TAB_CLICKED);
 
     emit userActivity();
 
@@ -1743,7 +1743,7 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 
 void SettingsDialog::on_bNotifications_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_SETTINGS_NOTIFICATIONS_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_SETTINGS_NOTIFICATIONS_TAB_CLICKED);
 
     emit userActivity();
 

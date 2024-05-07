@@ -68,7 +68,7 @@ void AvatarWidget::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         MegaSyncApp->openSettings(SettingsDialog::ACCOUNT_TAB);
-        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EVENT_AVATAR_CLICKED, true);
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::EVENT_AVATAR_CLICKED, true);
     }
 }
 

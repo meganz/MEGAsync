@@ -25,7 +25,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 
         if(isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
             return true;
         }
     }

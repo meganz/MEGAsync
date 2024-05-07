@@ -5,21 +5,20 @@
 
 #include <QProcessEnvironment>
 
-void ProxyStatsEventHandler::sendEvent(int type,
+void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,
                                        const QStringList& args,
                                        bool encode)
 {
-    auto eventID = static_cast<AppStatsEvents::EventTypes>(type);
-    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(eventID)));
+    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(type)));
     for (const QString& arg : args)
     {
         message = message.arg(arg);
     }
 
-    sendEvent(eventID, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
+    sendEvent(type, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
 }
 
-void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
+void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type, bool fromInfoDialog)
 {
     if(!mMegaApi)
     {
@@ -39,11 +38,10 @@ void ProxyStatsEventHandler::sendTrackedEvent(int type, bool fromInfoDialog)
         }
     }
 
-    auto eventID = static_cast<AppStatsEvents::EventTypes>(type);
-    sendEvent(eventID, AppStatsEvents::getEventMessage(eventID), true, mViewID);
+    sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
 }
 
-void ProxyStatsEventHandler::sendTrackedEvent(int type,
+void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
                                               const QObject* senderObj,
                                               const QObject* expectedObj,
                                               bool fromInfoDialog)
@@ -54,7 +52,7 @@ void ProxyStatsEventHandler::sendTrackedEvent(int type,
     }
 }
 
-void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
+void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,
                                        const char* message,
                                        bool addJourneyId,
                                        const char* viewId)
@@ -64,14 +62,20 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type,
         return;
     }
 
-    if(QString::fromUtf8(message).isEmpty())
+    int eventType = AppStatsEvents::getEventType(type);
+    if(eventType == -1)
+    {
+        mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
+                      "Trying to send an event with not valid type");
+    }
+    else if(QString::fromUtf8(message).isEmpty())
     {
         mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
                       "Trying to send an event with not valid message");
     }
     else
     {
-        mMegaApi->sendEvent(type, message, addJourneyId, viewId);
+        mMegaApi->sendEvent(eventType, message, addJourneyId, viewId);
     }
 }
 

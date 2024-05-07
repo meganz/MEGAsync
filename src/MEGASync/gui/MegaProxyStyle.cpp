@@ -199,11 +199,7 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
-    else if(qobject_cast<QDialog*>(widget))
-    {
-        widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
-    }
-    else if(qobject_cast<QWindow*>(widget))
+    else if(qobject_cast<QDialog*>(widget) || qobject_cast<QWindow*>(widget))
     {
         widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
     }

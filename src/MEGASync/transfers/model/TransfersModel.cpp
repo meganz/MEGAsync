@@ -1256,7 +1256,7 @@ void TransfersModel::processUpdateTransfers()
             else
             {
                 assert(false);
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::EVENT_DUP_FINISHED_TRSF,
                                                                { QString::number(itValue->mTag) });
             }
         }

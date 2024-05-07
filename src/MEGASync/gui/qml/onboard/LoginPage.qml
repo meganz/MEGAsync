@@ -145,7 +145,7 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
-        proxyStatsEventHandlerAccess.sendTrackedEvent(EventTypes.EVENT_LOGIN_CLICKED);
+        proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.EVENT_LOGIN_CLICKED);
 
         var emailValid = email.valid();
         loginControllerAccess.emailError = !emailValid;

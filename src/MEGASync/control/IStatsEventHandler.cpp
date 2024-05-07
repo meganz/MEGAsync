@@ -28,7 +28,7 @@ bool IStatsEventHandler::eventFilter(QObject* obj, QEvent* event)
     }
     else
     {
-        if(!mInfoDialogVisible && MegaSyncApp->isInfoDialogVisible())
+        if(MegaSyncApp->isInfoDialogVisible())
         {
             mInfoDialogVisible = true;
             mUpdateViewID = true;
