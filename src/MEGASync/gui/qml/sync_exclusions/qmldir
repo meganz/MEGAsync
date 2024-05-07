@@ -1,0 +1,5 @@
+module SyncExclusions
+singleton ExclusionsStrings 1.0 ExclusionsStrings.qml
+ExclusionsQmlDialog 1.0 ExclusionsQmlDialog.qml
+RulesTable 1.0 RulesTable.qml
+AddRuleDialog 1.0 AddRuleDialog.qml

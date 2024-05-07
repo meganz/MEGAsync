@@ -121,8 +121,13 @@ public:
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
             connect(mWindow, &QmlDialog::finished, this, [this](){
-                mWrapper->deleteLater();
                 QmlDialogWrapperBase::onWindowFinished();
+            });
+            connect(mWindow, &QmlDialog::accepted, this, [this](){
+                accept();
+            });
+            connect(mWindow, &QmlDialog::rejected, this, [this](){
+                reject();
             });
 
             connect(mWindow, &QQuickWindow::screenChanged, this, [this](){

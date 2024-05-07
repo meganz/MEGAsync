@@ -56,7 +56,6 @@ elseif (APPLE)
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
         RESOURCE "${RESOURCE_FILES}"
     )
-else()
 endif()
 
 target_sources(MEGAsync
@@ -101,13 +100,9 @@ target_compile_definitions(MEGAsync
 if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
-    find_package(Qt5 REQUIRED COMPONENTS MacExtras)
+    find_package(Qt5 REQUIRED COMPONENTS MacExtras Svg)
 else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
-    target_link_libraries(MEGAsync
-        PUBLIC
-        Qt5::Svg
-    )
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
@@ -117,6 +112,7 @@ target_link_libraries(MEGAsync
     PUBLIC
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
+    $<$<BOOL:${UNIX}>:Qt5::Svg>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui

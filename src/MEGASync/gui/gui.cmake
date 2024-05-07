@@ -97,6 +97,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/onboarding/GuestQmlDialog.h
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
+    gui/SyncExclusions/ExclusionRulesModel.h
+    gui/SyncExclusions/ExclusionsQmlDialog.h
+    gui/SyncExclusions/SyncExclusions.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -192,6 +195,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/onboarding/GuestQmlDialog.cpp
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
+    gui/SyncExclusions/ExclusionRulesModel.cpp
+    gui/SyncExclusions/ExclusionsQmlDialog.cpp
+    gui/SyncExclusions/SyncExclusions.cpp
+
 )
 
 # UI files additions

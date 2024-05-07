@@ -17,8 +17,5 @@ if (MSVC)
 
     # Enable build with multiple processes.
     add_compile_options(/MP)
-
-    # Create a separated PDB file with debug symbols.
-    add_compile_options($<$<CONFIG:Release>:/Zi>)
 endif()
 

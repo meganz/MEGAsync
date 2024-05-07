@@ -23,6 +23,7 @@ FocusScope {
     property alias rightIconVisible: rightIcon.visible
     property alias leftIconColor: leftIcon.color
     property alias leftIconVisible: leftIcon.visible
+    property alias horizontalAlignment: textField.horizontalAlignment
 
     property bool error: false
     property string rightIconSource: ""

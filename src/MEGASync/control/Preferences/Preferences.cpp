@@ -252,6 +252,7 @@ const QString Preferences::downloadMegaLinksEnabledKey = QString::fromLatin1("do
 const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("systemTrayPromptSuppressed");
 const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
 const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
+const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -301,6 +302,8 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
+
+const bool Preferences::defaultAskOnExclusionRemove = true;
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -2057,6 +2060,16 @@ bool Preferences::isSystemTrayPromptSuppressed()
     return getValueConcurrent<bool>(systemTrayPromptSuppressed, defaultSystemTrayPromptSuppressed);
 }
 
+void Preferences::setAskOnExclusionRemove(bool value)
+{
+    setValueAndSyncConcurrent(askOnExclusionRemove, value);
+}
+
+bool Preferences::isAskOnExclusionRemove()
+{
+    return getValueConcurrent<bool>(askOnExclusionRemove, defaultAskOnExclusionRemove);
+}
+
 void Preferences::setSystemTrayLastPromptTimestamp(long long timestamp)
 {
     setValueConcurrent(systemTrayLastPromptTimestamp, timestamp);
@@ -2370,6 +2383,7 @@ bool Preferences::isCrashed()
 void Preferences::setCrashed(bool value)
 {
     setValueConcurrent(isCrashedKey, value);
+    sync();
 }
 
 bool Preferences::getGlobalPaused()
@@ -2511,6 +2525,12 @@ void Preferences::clearAll()
 
     mSettings->clear();
     mutex.unlock();
+}
+
+void Preferences::sync()
+{
+    QMutexLocker locker(&mutex);
+    mSettings->sync();
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)
