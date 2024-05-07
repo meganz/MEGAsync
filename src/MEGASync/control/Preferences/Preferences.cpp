@@ -2383,6 +2383,7 @@ bool Preferences::isCrashed()
 void Preferences::setCrashed(bool value)
 {
     setValueConcurrent(isCrashedKey, value);
+    sync();
 }
 
 bool Preferences::getGlobalPaused()
@@ -2524,6 +2525,12 @@ void Preferences::clearAll()
 
     mSettings->clear();
     mutex.unlock();
+}
+
+void Preferences::sync()
+{
+    QMutexLocker locker(&mutex);
+    mSettings->sync();
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)
