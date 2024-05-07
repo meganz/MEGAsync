@@ -37,18 +37,17 @@ protected slots:
     virtual void onRefreshTimerTimeout() = 0;
 };
 
+
+const int REQUEST_FREQUENCY = 5000; /*5 seconds*/
+const int REQUEST_THRESHOLD = 15000; /*15 seconds*/
+
 template <class ISSUE_TYPE>
 class AutoRefreshByCondition : public AutoRefreshByConditionBase
 {
 public:
-    AutoRefreshByCondition(int refreshFrequency, int refreshDeadline)
-        : mRefreshFrequency(refreshFrequency),
-        mDeadlineValue(refreshDeadline)
+    AutoRefreshByCondition()
     {
-        mRefreshFrequency = refreshFrequency;
-        mRefreshTimer.setInterval(mRefreshFrequency);
-
-        mDeadlineValue = refreshDeadline;
+        mRefreshTimer.setInterval(REQUEST_FREQUENCY);
     }
 
     ~AutoRefreshByCondition()
@@ -65,19 +64,13 @@ public:
         }
     }
 
-    void setRefreshDeadline(const int& deadline)
-    {
-        mDeadlineValue = deadline;
-    }
-
     void refresh()
     {
         Utilities::queueFunctionInAppThread(
             [this]()
             {
-                qDebug() << "REFRESH TIMERS";
                 mRefreshTimer.start();
-                mDeadline = QDeadlineTimer(mDeadlineValue);
+                mDeadline = QDeadlineTimer(REQUEST_THRESHOLD);
                 mNeedsAutoRefresh = false;
             });
     }
@@ -85,13 +78,8 @@ public:
 protected:
     void onRefreshTimerTimeout() override
     {
-        qDebug() << "ASK FOR LIST";
         MegaSyncApp->getMegaApi()->getMegaSyncStallList(nullptr);
     }
-
-private:
-    int mRefreshFrequency;
-    int mDeadlineValue;
 };
 
 

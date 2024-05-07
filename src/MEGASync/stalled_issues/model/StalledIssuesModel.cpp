@@ -66,8 +66,6 @@ void StalledIssuesReceiver::onSetIsEventRequest()
 
 const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
 const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
-const int MOVE_OR_RENAME_REQUEST_FREQUENCY = 5000; /*5 seconds*/
-const int MOVE_OR_RENAME_REQUEST_THRESHOLD = 15000; /*15 seconds*/
 
 StalledIssuesModel::StalledIssuesModel(QObject* parent)
     : QAbstractItemModel(parent)
@@ -1189,7 +1187,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
     info.async = true;
     solveListOfIssues(info);
     AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>* autoRefreshDetecter
-        (new AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>(MOVE_OR_RENAME_REQUEST_FREQUENCY, MOVE_OR_RENAME_REQUEST_THRESHOLD));
+        (new AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>());
     mStalledIssuesReceiver->registerAutoRefreshDetector<MoveOrRenameCannotOccurIssue>(autoRefreshDetecter);
 }
 
