@@ -428,7 +428,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
         if (!isFirstWebDownloadDone && !preferences->isFirstWebDownloadDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::EVENT_1ST_WEBCLIENT_DL);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_WEBCLIENT_DL);
             isFirstWebDownloadDone = true;
         }
     }

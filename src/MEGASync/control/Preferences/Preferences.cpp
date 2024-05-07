@@ -1253,14 +1253,14 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
         if(value == StalledIssuesModeType::Smart)
         {
             type = (currentValue == StalledIssuesModeType::None)
-                    ? AppStatsEvents::EventType::EVENT_SI_SMART_MODE_FIRST_SELECTED
-                    : AppStatsEvents::EventType::EVENT_SI_CHANGE_TO_SMART_MODE;
+                    ? AppStatsEvents::EventType::SI_SMART_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EventType::SI_CHANGE_TO_SMART_MODE;
         }
         else
         {
             type = (currentValue == StalledIssuesModeType::None)
-                    ? AppStatsEvents::EventType::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED
-                    : AppStatsEvents::EventType::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
+                    ? AppStatsEvents::EventType::SI_ADVANCED_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EventType::SI_CHANGE_TO_ADVANCED_MODE;
         }
 
         if(type != AppStatsEvents::EventType::NONE)
