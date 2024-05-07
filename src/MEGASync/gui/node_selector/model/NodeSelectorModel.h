@@ -191,7 +191,8 @@ public:
 
     bool showFiles() const;
 
-    bool isModelValid() const {return mValidModel;};
+    bool isBeingModified() const {return mIsBeingModified;}
+    void setIsModelBeingModified(bool state) {mIsBeingModified = state;}
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
@@ -216,7 +217,6 @@ protected:
     mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
-    bool mValidModel; //Used to know if the model state is reliable: Avoid nesting of begininsertrows, beginremoverows as it is not supported by Qt
 
 protected slots:
     virtual void onRootItemAdded();
@@ -231,6 +231,7 @@ private:
     virtual int rootItemsCount() const = 0;
     virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
+    void protectModelWhenPerformingActions();
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
@@ -239,6 +240,7 @@ private:
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
     QThread* mNodeRequesterThread;
+    bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

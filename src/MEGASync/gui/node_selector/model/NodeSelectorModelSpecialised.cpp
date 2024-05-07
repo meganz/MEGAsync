@@ -105,7 +105,6 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
             auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
             if(!folderIndex.isValid())
             {
-                mValidModel = false;
                 auto totalRows = rowCount(QModelIndex());
                 beginInsertRows(QModelIndex(), totalRows, totalRows);
                 emit addIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
@@ -118,7 +117,6 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
                 }
                 else
                 {
-                    mValidModel = false;
                     beginRemoveRows(QModelIndex(), folderIndex.row(), folderIndex.row());
                     emit deleteIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
                     return true;
@@ -135,7 +133,6 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
             auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
             if(index.isValid())
             {
-                mValidModel = false;
                 beginRemoveRows(QModelIndex(), index.row(), index.row());
                 emit deleteIncomingSharesRoot(std::shared_ptr<mega::MegaNode>(node->copy()));
                 return true;
@@ -145,7 +142,6 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
         auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
         if(folderIndex.isValid())
         {
-            mValidModel = false;
             updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
             return true;
         }
@@ -403,7 +399,6 @@ void NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> no
 {
     clearIndexesNodeInfo();
     auto totalRows = rowCount(parent);
-    mValidModel = false;
     beginInsertRows(QModelIndex(), totalRows, totalRows + nodes.size() - 1);
     emit requestAddSearchRootItem(nodes, mAllowedTypes);
 }
@@ -415,7 +410,6 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
         if(node->isInShare())
         {
             auto totalRows = rowCount(QModelIndex());
-            mValidModel = false;
             beginInsertRows(QModelIndex(), totalRows, totalRows);
             QList<std::shared_ptr<mega::MegaNode>> nodes;
             emit requestAddSearchRootItem(nodes << std::shared_ptr<mega::MegaNode>(node->copy()), mAllowedTypes);
@@ -430,7 +424,6 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
             auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
             if(index.isValid())
             {
-                mValidModel = false;
                 beginRemoveRows(QModelIndex(), index.row(), index.row());
                 emit requestDeleteSearchRootItem(std::shared_ptr<mega::MegaNode>(node->copy()));
                 return true;

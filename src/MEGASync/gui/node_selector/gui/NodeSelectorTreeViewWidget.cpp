@@ -799,9 +799,11 @@ void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 
 void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 {
+    //We check if the model is being modified (insert rows, remove rows...etc) before each action in order to avoid
+    //calling twice to begininsertrows (as some of these actions are performed in different threads...)
     if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes() && areThereNodesToUpdate())
     {
-        if(mModel->isModelValid())
+        if(!mModel->isBeingModified())
         {
             foreach(auto info, mRenamedNodesByHandle)
             {
@@ -810,18 +812,18 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mRenamedNodesByHandle.clear();
         }
 
-        if(mModel->isModelValid())
+        if(!mModel->isBeingModified())
         {
             foreach(auto info, mUpdatedNodesByPreviousHandle)
             {
                 updateNode(info, false);
                 //If they have been updated, we don´t need to remove them
                 mMovedNodesByHandle.removeOne(info.node->getHandle());
-                mUpdatedNodesByPreviousHandle.clear();
             }
+            mUpdatedNodesByPreviousHandle.clear();
         }
 
-        if(mModel->isModelValid())
+        if(!mModel->isBeingModified())
         {
             foreach(auto handle, mMovedNodesByHandle)
             {
@@ -830,7 +832,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mMovedNodesByHandle.clear();
         }
 
-        if(mModel->isModelValid())
+        if(!mModel->isBeingModified())
         {
             foreach(auto handle, mRemovedNodesByHandle)
             {
@@ -839,8 +841,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             mRemovedNodesByHandle.clear();
         }
 
-
-        if(mModel->isModelValid())
+        if(!mModel->isBeingModified())
         {
             if(!mAddedNodesByParentHandle.isEmpty())
             {
@@ -853,7 +854,6 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
             }
             mAddedNodesByParentHandle.clear();
         }
-
     }
 }
 
