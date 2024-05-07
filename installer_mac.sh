@@ -157,10 +157,7 @@ if [ ${build_cmake} -eq 1 ]; then
     MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
-    pushd .
-    cd ${MSYNC_PREFIX}MEGAsync.app
-    otool -L Contents/MacOS/MEGAsync
-    popd
+    otool -L ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
 
     #Attach shell extension
     xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
