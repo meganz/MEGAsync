@@ -180,7 +180,7 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        VCPKGPATH = "/users/macstudio3/jenkins/vcpkg"
+                        VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
                         QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
                     }
                     steps {
