@@ -92,6 +92,7 @@ include(UserAttributesRequests/userattributesrequests.cmake)
 
 target_compile_definitions(MEGAsync
     PUBLIC
+    QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
     $<$<CONFIG:Debug>:LOG_TO_STDOUT LOG_TO_LOGGER CREATE_COMPATIBLE_MINIDUMPS>
     $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
 )
