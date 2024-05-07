@@ -97,6 +97,10 @@ pipeline {
             options{
                 timeout(time: 120, unit: 'MINUTES')
             }
+			environment{
+				VCPKGPATH = "/opt/vcpkg"
+				BUILD_DIR = "build_dir"
+			}
             steps {
                 checkout([
                     $class: 'GitSCM', 
@@ -121,13 +125,10 @@ pipeline {
                         ]
                     ])
                 }
-                dir("${linux_sources_workspace}/src") {
-                    sh "./configure -f -g"
-                    sh "qmake \"CONFIG+=with_tests\" ${env.BUILD_OPTIONS}"
-                    sh "lupdate MEGASync/MEGASync.pro"
-                    sh "lrelease MEGASync/MEGASync.pro"
-                    sh "make clean"
-                    sh "make"
+                dir("${linux_sources_workspace}") {
+					sh "rm -rf ${BUILD_DIR}; mkdir ${BUILD_DIR}"
+                    sh "cmake -DCMAKE_BUILD_TYPE=Debug -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_VERBOSE_MAKEFILE=ON -S ${linux_sources_workspace} -B ${linux_sources_workspace}/${BUILD_DIR}"
+					sh "cmake --build ${linux_sources_workspace}/${BUILD_DIR} --target MEGAsync -j1"
                 }                
             }
             post{

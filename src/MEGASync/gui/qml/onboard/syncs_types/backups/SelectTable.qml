@@ -101,7 +101,6 @@ Item {
                     tristate: true
                     sizes.spacing: 8
                     enabled: backupsListView.count > 0
-
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
                             backupsModelAccess.checkAllState = checkState;

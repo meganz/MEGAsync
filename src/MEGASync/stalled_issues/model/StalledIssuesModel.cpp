@@ -916,9 +916,8 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
                 if(item.consultData()->isSolved())
                 {
                     MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY);
+                    return true;
                 }
-
-                return true;
             }
         }
 
@@ -1232,7 +1231,6 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
-    solveListOfIssues(info);
     solveListOfIssues(info);
 }
 

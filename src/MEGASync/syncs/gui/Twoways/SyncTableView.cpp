@@ -235,7 +235,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     QFileInfo syncDir(sync->getLocalFolder());
     if(syncDir.exists())
     {
-        auto addExclusions(new MenuItemAction(tr("Add exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png")));
+        auto addExclusions(new MenuItemAction(tr("Manage exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png")));
         connect(addExclusions, &MenuItemAction::triggered, this, [this, sync]() { emit signaladdExclusions(sync); });
 
         auto openMegaignore (new MenuItemAction(tr("Edit .megaignore"), QLatin1String("://images/sync_context_menu/edit-small.png")));
