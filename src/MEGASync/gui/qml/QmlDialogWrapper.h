@@ -4,7 +4,7 @@
 #include "QmlDialog.h"
 #include "QmlManager.h"
 #include "MegaApplication.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include "megaapi.h"
 

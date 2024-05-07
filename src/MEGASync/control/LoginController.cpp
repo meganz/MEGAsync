@@ -6,7 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
 #include "TextDecorator.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QQmlContext>
 

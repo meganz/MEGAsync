@@ -5,7 +5,7 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include <MegaNodeNames.h>
 #include <mega/types.h>
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <assert.h>
 

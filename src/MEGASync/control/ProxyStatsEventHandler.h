@@ -1,14 +1,14 @@
 #ifndef PROXYSTATSEVENTHANDLER_H
 #define PROXYSTATSEVENTHANDLER_H
 
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
-class ProxyStatsEventHandler : public IStatsEventHandler
+class ProxyStatsEventHandler : public StatsEventHandler
 {
     Q_OBJECT
 
 public:
-    using IStatsEventHandler::IStatsEventHandler;
+    using StatsEventHandler::StatsEventHandler;
 
     Q_INVOKABLE void sendEvent(AppStatsEvents::EventType type,
                                const QStringList& args = QStringList(),

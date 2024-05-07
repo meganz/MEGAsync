@@ -2,7 +2,7 @@
 
 #include "mega/types.h"
 #include "Utilities.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue)

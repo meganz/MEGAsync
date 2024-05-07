@@ -2,7 +2,7 @@
 #include "gui/MegaTransferView.h"
 #include "control/HTTPServer.h"
 #include "MegaApplication.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>

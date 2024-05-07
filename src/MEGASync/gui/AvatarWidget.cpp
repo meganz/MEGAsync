@@ -2,7 +2,7 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/Avatar.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QLinearGradient>
 #include <QPainter>

@@ -19,7 +19,7 @@
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QApplication>
 #include <QDesktopServices>

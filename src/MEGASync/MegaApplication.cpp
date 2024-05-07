@@ -28,7 +28,7 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -1535,7 +1535,7 @@ void MegaApplication::onLogout()
     });
 }
 
-IStatsEventHandler* MegaApplication::getStatsEventHandler() const
+StatsEventHandler* MegaApplication::getStatsEventHandler() const
 {
     return mStatsEventHandler;
 }

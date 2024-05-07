@@ -1,5 +1,5 @@
-#ifndef ISTATSEVENTHANDLER_H
-#define ISTATSEVENTHANDLER_H
+#ifndef STATSEVENTHANDLER_H
+#define STATSEVENTHANDLER_H
 
 #include "AppStatsEvents.h"
 #include "MegaApplication.h"
@@ -8,14 +8,14 @@
 
 #include <QEvent>
 
-class IStatsEventHandler : public QObject
+class StatsEventHandler : public QObject
 {
     Q_OBJECT
 
 public:
-    IStatsEventHandler(mega::MegaApi* megaApi, QObject* parent = nullptr);
+    StatsEventHandler(mega::MegaApi* megaApi, QObject* parent = nullptr);
 
-    virtual ~IStatsEventHandler() = default;
+    virtual ~StatsEventHandler() = default;
 
     Q_INVOKABLE virtual void sendEvent(AppStatsEvents::EventType type,
                                        const QStringList& args = QStringList(),
@@ -46,4 +46,4 @@ protected:
 
 };
 
-#endif // ISTATSEVENTHANDLER_H
+#endif // STATSEVENTHANDLER_H

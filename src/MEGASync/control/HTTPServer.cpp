@@ -3,7 +3,7 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "mega/setandelement.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QtConcurrent/QtConcurrent>
 

@@ -12,7 +12,7 @@
 #include <QMegaMessageBox.h>
 #include "MegaTransferView.h"
 #include "StalledIssuesUtilities.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QSharedData>
 

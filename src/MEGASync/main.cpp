@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
         {
             MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL,
                                            Preferences::USER_AGENT.toUtf8().constData());
-            IStatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
+            StatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
             statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL_STATS,
                                          { QString::number(preferences->installationTime()),
                                            QString::number(preferences->accountCreationTime()),

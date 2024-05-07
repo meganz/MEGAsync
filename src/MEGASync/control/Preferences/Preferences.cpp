@@ -2,7 +2,7 @@
 #include "Version.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
-#include "IStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QDesktopServices>
 #include <QDir>
