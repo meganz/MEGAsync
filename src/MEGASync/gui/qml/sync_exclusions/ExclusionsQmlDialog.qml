@@ -27,13 +27,14 @@ ExclusionsQmlDialog {
     minimumHeight: 680
     minimumWidth: 640
     title: ExclusionsStrings.addExclusions
-    visible: true
+    visible: false
     modality: Qt.NonModal
     color: colorStyle.surface1
 
     Component.onCompleted: {
         x = Screen.width / 2 - width / 2;
         y = Screen.height / 2 - height / 2;
+        visible = true;
     }
 
     AddRuleDialog {
@@ -42,12 +43,10 @@ ExclusionsQmlDialog {
             visible: false
 
             onAccepted: {
-                if(rulesTable.editIndex === -1)
-                {
+                if(rulesTable.editIndex === -1){
                     syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
                 }
-                else
-                {
+                else{
                     syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
                 }
             }
@@ -449,6 +448,14 @@ ExclusionsQmlDialog {
                 addExlcusionRule.targetEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.valueTypeEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.visible = true;
+                if(rulesTable.editIndex === -1) {
+                    addExlcusionRule.title = ExclusionsStrings.addExclusion;
+                    addExlcusionRule.headTitle = ExclusionsStrings.addExclusion;
+                }
+                else {
+                    addExlcusionRule.title = ExclusionsStrings.editExclusion;
+                    addExlcusionRule.headTitle = ExclusionsStrings.editExclusion;
+                }
             }
         }
 

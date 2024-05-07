@@ -22,6 +22,8 @@ Window{
     property alias valueType: valueTypeCombo.currentIndex
     property alias targetEnabled: targetComboBox.enabled
     property alias valueTypeEnabled: valueTypeCombo.enabled
+    property alias title: root.title
+    property alias headTitle: title.text
 
     signal accepted
     signal chooseFile

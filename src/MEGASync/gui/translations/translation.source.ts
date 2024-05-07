@@ -2155,6 +2155,11 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
         <translation></translation>
     </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>

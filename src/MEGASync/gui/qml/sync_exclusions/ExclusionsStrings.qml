@@ -15,6 +15,7 @@ QtObject {
     readonly property string done: qsTr("Done ")
     readonly property string addExclusionDescription: qsTr("Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).")
     readonly property string addExclusion: qsTr("Add Exclusion")
+    readonly property string editExclusion: qsTr("Edit Exclusion")
     readonly property string dropDownsTitle: qsTr("You will exclude:")
     readonly property string files: qsTr("Files")
     readonly property string folders: qsTr("Folders")

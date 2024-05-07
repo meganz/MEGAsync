@@ -107,11 +107,11 @@ SyncExclusions::SizeExclusionStatus SyncExclusions::getSizeExclusionStatus()  co
     }
     if (highLimit  && !highLimit->isCommented())
     {
-        return SyncExclusions::SizeExclusionStatus::SMALLER_THAN;
+        return SyncExclusions::SizeExclusionStatus::BIGGER_THAN;
     }
     if (lowLimit  && !lowLimit->isCommented())
     {
-        return SyncExclusions::SizeExclusionStatus::BIGGER_THAN;
+        return SyncExclusions::SizeExclusionStatus::SMALLER_THAN;
     }
     return SyncExclusions::SizeExclusionStatus::DISABLED;
 }
@@ -150,7 +150,7 @@ void SyncExclusions::setSizeExclusionStatus(SyncExclusions::SizeExclusionStatus 
         }
     }
     break;
-    case SyncExclusions::SizeExclusionStatus::BIGGER_THAN:
+    case SyncExclusions::SizeExclusionStatus::SMALLER_THAN:
     {
         if(highLimit)
         {
@@ -162,7 +162,7 @@ void SyncExclusions::setSizeExclusionStatus(SyncExclusions::SizeExclusionStatus 
         }
     }
     break;
-    case SyncExclusions::SizeExclusionStatus::SMALLER_THAN:
+    case SyncExclusions::SizeExclusionStatus::BIGGER_THAN:
     {
         if(highLimit)
         {
