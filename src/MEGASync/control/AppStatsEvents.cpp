@@ -208,3 +208,8 @@ int AppStatsEvents::getEventType(EventType event)
 
     return mTypeMap[event];
 }
+
+AppStatsEvents::EventType AppStatsEvents::getEventType(int event)
+{
+    return mTypeMap.key(event, AppStatsEvents::EventType::NONE);
+}

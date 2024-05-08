@@ -6085,7 +6085,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_SEND_EVENT:
     {
-        switch (request->getNumber())
+        switch (AppStatsEvents::getEventType(request->getNumber()))
         {
             case AppStatsEvents::EventType::FIRST_START:
                 preferences->setFirstStartDone();

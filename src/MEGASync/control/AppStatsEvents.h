@@ -96,6 +96,7 @@ public:
 
     static const char* getEventMessage(EventType event);
     static int getEventType(EventType event);
+    static EventType getEventType(int event);
 
 private:
     static QMap<EventType, int> mTypeMap;
