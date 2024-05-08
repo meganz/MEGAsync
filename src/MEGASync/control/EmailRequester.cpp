@@ -9,7 +9,7 @@ EmailRequester* EmailRequester::mInstance = nullptr;
 
 EmailRequester::EmailRequester():
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
+    mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addGlobalListener(mGlobalListener.get());
 }

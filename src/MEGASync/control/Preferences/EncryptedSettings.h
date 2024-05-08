@@ -25,17 +25,14 @@ public:
     void clear();
     void sync();
 
-    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
-    bool needsDeferredSync();
-
 protected:
     QByteArray XOR(const QByteArray &key, const QByteArray& data) const;
     QString encrypt(const QString key, const QString value) const;
     QString decrypt(const QString key, const QString value) const;
     QString hash(const QString key) const;
     QByteArray encryptionKey;
-    int mDeferSyncEnableCount = 0;
-    bool mSyncDeferred = false;
+
+    bool event(QEvent* event) override;
 };
 
 #endif // ENCRYPTEDSETTINGS_H

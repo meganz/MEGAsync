@@ -13,6 +13,7 @@
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
 #include "platform/Platform.h"
+#include <QCryptographicHash>
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -48,6 +49,9 @@ const unsigned long long TB = 1024 * GB;
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
 // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
 const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
+
+const qint64 FILE_READ_BUFFER_SIZE = 8192;
+
 
 void Utilities::initializeExtensions()
 {
@@ -1527,6 +1531,20 @@ bool Utilities::isIncommingShare(MegaNode *node)
     return false;
 }
 
+bool Utilities::dayHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.daysTo(currentDate) > 0;
+}
+
+bool Utilities::monthHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.month() < currentDate.month();
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
@@ -1585,6 +1603,34 @@ bool Utilities::isNodeNameValid(const QString& name)
 {
     QString trimmedName (name.trimmed());
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
+}
+
+QString Utilities::getFileHash(const QString& filePath)
+{
+    QFile file(filePath);
+
+    // Verify precondition: the file must exist and be readable
+    if (!QFile::exists(filePath) || (!file.open(QIODevice::ReadOnly)))
+    {
+        // Opening failed
+        return QString::fromLatin1("");
+    }
+
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    QByteArray buffer;
+
+    while (!file.atEnd())
+    {
+        buffer = file.read(FILE_READ_BUFFER_SIZE);
+        hash.addData(buffer);
+    }
+
+    file.close();
+
+    QByteArray resultHash = hash.result();
+    QString hashString = QString::fromUtf8(resultHash.toHex());
+
+    return hashString;
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

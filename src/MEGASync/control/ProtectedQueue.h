@@ -71,6 +71,21 @@ public:
         mQueue.push(std::move(item));
     }
 
+    void push_to_front(const T& element)
+    {
+        std::lock_guard<std::mutex> guard(mMutex);
+        std::queue<T> temp_queue;
+        temp_queue.push(element);
+
+        while (!mQueue.empty())
+        {
+            temp_queue.push(mQueue.front());
+            mQueue.pop();
+        }
+
+        mQueue = std::move(temp_queue);
+    }
+
     bool empty()
     {
         std::lock_guard<std::mutex> guard(mMutex);

@@ -379,3 +379,13 @@ void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
 {
     //For the future, detect if the stalled issues have been removed remotely to close the dialog
 }
+
+void StalledIssuesDialog::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+
+    QWidget::changeEvent(event);
+}

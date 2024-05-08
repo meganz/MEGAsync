@@ -12,11 +12,11 @@ IF [%MEGA_QTPATH%]==[] (
 )
 
 erase MEGAsyncSetup64.exe
-"C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_X64_VERSION %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi
+"C:\Program Files (x86)\NSIS\makensis.exe" /DBUILD_X64_VERSION %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi || exit 1 /b
 
 IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
 	GOTO :EOF
 )
 
 erase MEGAsyncSetup32.exe
-"C:\Program Files (x86)\NSIS\makensis.exe" %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi
+"C:\Program Files (x86)\NSIS\makensis.exe" %SUFFIX_DEF% /DMEGA_QTPATH=%MEGA_QTPATH% installer_win.nsi || exit 1 /b

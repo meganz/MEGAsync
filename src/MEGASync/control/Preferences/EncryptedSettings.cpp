@@ -88,35 +88,7 @@ void EncryptedSettings::clear()
 
 void EncryptedSettings::sync()
 {
-    if (mDeferSyncEnableCount > 0)
-    {
-        mSyncDeferred = true;
-    }
-    else
-    {
-        QSettings::sync();
-        mSyncDeferred = false;
-
-        QFile::remove(this->fileName().append(QString::fromUtf8(".bak")));
-        QFile::copy(this->fileName(), this->fileName().append(QString::fromUtf8(".bak")));
-    }
-}
-
-void EncryptedSettings::deferSyncs(bool b)
-{
-    if (b)
-    {
-        mDeferSyncEnableCount += 1;
-    }
-    else
-    {
-        mDeferSyncEnableCount -= 1;
-    }
-}
-
-bool EncryptedSettings::needsDeferredSync()
-{
-    return mSyncDeferred;
+    QSettings::sync();
 }
  
 //Simplified XOR fun
@@ -176,4 +148,15 @@ QString EncryptedSettings::hash(const QString key) const
     QByteArray keyHash = QCryptographicHash::hash(xPath, QCryptographicHash::Sha1);
     QByteArray xKeyHash = XOR(key.toUtf8(), keyHash);
     return QString::fromLatin1(xKeyHash.toHex());
+}
+
+bool EncryptedSettings::event(QEvent *event)
+{
+    if (event->type() == QEvent::UpdateRequest) {
+        QSettings::sync();
+        QFile::remove(this->fileName().append(QString::fromUtf8(".bak")));
+        QFile::copy(this->fileName(), this->fileName().append(QString::fromUtf8(".bak")));
+        return true;
+    }
+    return QObject::event(event);
 }

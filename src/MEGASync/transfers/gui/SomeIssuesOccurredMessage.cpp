@@ -18,6 +18,16 @@ SomeIssuesOccurredMessage::~SomeIssuesOccurredMessage()
     delete ui;
 }
 
+void SomeIssuesOccurredMessage::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+
+    QWidget::changeEvent(event);
+}
+
 void SomeIssuesOccurredMessage::on_viewIssuesButton_clicked()
 {
     auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();

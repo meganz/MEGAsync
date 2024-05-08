@@ -34,6 +34,10 @@ public:
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
     void sendFinishedTransferNotification(unsigned long long appDataId) const;
+    void sendFinishedSetDownloadNotification(const QString& setName,
+                                             const QStringList& succeededDownloadedElements,
+                                             const QStringList& failedDownloadedElements,
+                                             const QString& destinationPath);
     void sendBusinessWarningNotification(int businessStatus) const;
     void sendInfoNotification(const QString& title, const QString& message) const;
     void sendWarningNotification(const QString& title, const QString& message) const;
@@ -46,6 +50,7 @@ public slots:
     void redirectToPayBusiness(DesktopAppNotification::Action activationButton) const;
     void actionPressedOnDownloadFinishedTransferNotification(DesktopAppNotification::Action action) const;
     void actionPressedOnUploadFinishedTransferNotification(DesktopAppNotification::Action action) const;
+    void actionPressedOnDownloadSetFinished(DesktopAppNotification::Action action);
     void viewShareOnWebClient() const;
     void viewShareOnWebClientByHandle(const QString &nodeBase64Handle) const;
     void getRemoteNodeLink(const QList<std::shared_ptr<mega::MegaNode> > &nodes) const;
@@ -80,4 +85,5 @@ private:
     bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 
     QMultiMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
+    QString mSetDownloadPath;
 };

@@ -215,7 +215,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
-    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/IgnoresEditingDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
@@ -291,20 +290,22 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/CrashHandler.h
     ${MEGAsyncDir}/control/ExportProcessor.h
     ${MEGAsyncDir}/control/HTTPServer.h
+    ${MEGAsyncDir}/control/LinkObject.h
     ${MEGAsyncDir}/control/LinkProcessor.h
     ${MEGAsyncDir}/control/MegaDownloader.h
     ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
-    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/Preferences/Preferences.h
     ${MEGAsyncDir}/control/Preferences/EncryptedSettings.h
     ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.h
+    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
     ${MEGAsyncDir}/control/SetManager.h
+    ${MEGAsyncDir}/control/SetTypes.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
@@ -315,6 +316,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/EmailRequester.h
     ${MEGAsyncDir}/control/IStatsEventHandler.h
     ${MEGAsyncDir}/control/ProxyStatsEventHandler.h
+    ${MEGAsyncDir}/control/AppStatsEvents.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -418,7 +420,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
-    ${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
@@ -745,6 +746,7 @@ set (SRCS
     ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.cpp
     ${MEGAsyncDir}/control/Preferences/Preferences.cpp
     ${MEGAsyncDir}/control/HTTPServer.cpp
+    ${MEGAsyncDir}/control/LinkObject.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
     ${MEGAsyncDir}/control/SetManager.cpp
@@ -767,6 +769,7 @@ set (SRCS
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
     ${MEGAsyncDir}/control/EmailRequester.cpp
     ${MEGAsyncDir}/control/ProxyStatsEventHandler.cpp
+    ${MEGAsyncDir}/control/AppStatsEvents.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -781,7 +784,6 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
-    ${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
@@ -805,6 +807,10 @@ set (SRCS
     ${MEGAsyncDir}/platform/Platform.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
+
+    ${MEGAsyncDir}/gui/SyncExclusions/ExclusionRulesModel.cpp
+    ${MEGAsyncDir}/gui/SyncExclusions/ExclusionsQmlDialog.cpp
+    ${MEGAsyncDir}/gui/SyncExclusions/SyncExclusions.cpp
 )
 
 

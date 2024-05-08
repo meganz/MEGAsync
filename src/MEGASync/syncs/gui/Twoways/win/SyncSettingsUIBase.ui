@@ -161,6 +161,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="title">
+             <string notr="true"/>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_91">
              <property name="spacing">
               <number>0</number>

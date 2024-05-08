@@ -5,11 +5,24 @@
 
 #include <QProcessEnvironment>
 
-void ProxyStatsEventHandler::sendEvent(int eventType, const char* message, bool addJourneyId, const char* viewId, mega::MegaRequestListener* listener)
+void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type)
+{
+    sendEvent(type, AppStatsEvents::getEventMessage(type));
+}
+
+void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventTypes type, const char* message)
 {
     if(canSend())
     {
-        MegaSyncApp->getMegaApi()->sendEvent(eventType, message, addJourneyId, viewId, listener);
+        if(QString::fromUtf8(message).isEmpty())
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               "Trying to send a single event with not valid message");
+        }
+        else
+        {
+            MegaSyncApp->getMegaApi()->sendEvent(type, message, false, nullptr);
+        }
     }
 }
 

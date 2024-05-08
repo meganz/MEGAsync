@@ -9,6 +9,8 @@ import components.images 1.0
 TextField {
     id: root
 
+    property alias iconVisibility: iconImage.visible
+
     property url imageSource
     property bool readOnly: true
 

@@ -626,7 +626,7 @@ bool NameConflictedStalledIssue::autoSolveIssue()
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved())
     {
-        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY, "Name conflict issue solved automatically", false, nullptr);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
         return true;
     }
 

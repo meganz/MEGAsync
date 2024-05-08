@@ -8,7 +8,7 @@ pipeline {
     
 
     environment {
-        VCPKGPATH = "${env.HOME}/jenkins/3rdparty"
+        VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
     }
 
     stages {
@@ -132,13 +132,13 @@ pipeline {
             }
             environment{
                 PATH = "/usr/local/bin:${env.PATH}"
-                BUILD_DIR = "contrib/cmake/build_dir"
+                BUILD_DIR = "build_dir"
                 MEGAQTPATH= "${env.HOME}/Qt-build/5.15.13/5.15.13/arm64"
             }
             steps{
                 dir(macos_sources_workspace){
-                    sh "mkdir contrib/cmake/build_dir"
-                    sh "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=1 -DMega3rdPartyDir=${VCPKGPATH} ${BUILD_OPTIONS} -DUSE_THIRDPARTY_FROM_VCPKG=1 -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -S ${macos_sources_workspace}/contrib/cmake -B ${macos_sources_workspace}/${BUILD_DIR}"
+                    sh "mkdir build_dir"
+                    sh "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=1 -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -S ${macos_sources_workspace} -B ${macos_sources_workspace}/${BUILD_DIR}"
                     sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAsync -j1"
                     sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAupdater -j1"
                     sh "xcodebuild clean build CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO -jobs 1 -configuration Debug -target MEGAShellExtFinder -project src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/"
@@ -180,14 +180,14 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        VCPKGPATH = "/users/macstudio3/jenkins/3rdparty"
+                        VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
                         QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
                     }
                     steps {
                         dir(macos_sources_workspace){
                             sh "sed -i'' -e 's/sysctl -n hw.ncpu/echo 2/g'  installer_mac.sh"
                             script {
-                                def commonArgs = "--build --create-dmg"
+                                def commonArgs = "--build-cmake --create-dmg"
 
                                 if (env.ARCHITECTURE == "arm64") {
                                     env.MEGAQTPATH = "${QT_BASE_PATH}/arm64"

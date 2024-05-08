@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>586</width>
+    <width>587</width>
     <height>90</height>
    </rect>
   </property>
@@ -79,7 +79,7 @@
        <widget class="QLineEdit" name="lBackupFolder">
         <property name="minimumSize">
          <size>
-          <width>234</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
