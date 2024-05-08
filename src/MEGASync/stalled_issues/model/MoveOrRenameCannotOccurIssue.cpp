@@ -237,14 +237,14 @@ MoveOrRenameIssueChosenSide MoveOrRenameCannotOccurIssue::getSyncIdChosenSide() 
     return mChosenSideBySyncId.value(syncId, MoveOrRenameIssueChosenSide::NONE);
 }
 
-bool MoveOrRenameCannotOccurIssue::needsAutomaticRefresh(
+bool MoveOrRenameCannotOccurIssue::findIssue(
     const std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
     auto syncId(issue->syncIds().first());
     return mChosenSideBySyncId.contains(syncId);
 }
 
-void MoveOrRenameCannotOccurIssue::automaticRefreshFinished()
+void MoveOrRenameCannotOccurIssue::solvingIssueInSeveralStepsFinished()
 {
     mChosenSideBySyncId.clear();
 }

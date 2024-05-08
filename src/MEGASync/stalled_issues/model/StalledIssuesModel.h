@@ -27,18 +27,20 @@ public:
     ~StalledIssuesReceiver(){}
 
     template <class ISSUE_TYPE>
-    void registerAutoRefreshDetector(QPointer<AutoRefreshByConditionBase> autoRefreshDetector)
+    void registerMultiStepIssueSolver(QPointer<MultiStepIssueSolverBase> multiStepIssueSolver)
     {
-        if(mAutoRefreshDetector)
+        if(mMultiStepIssueSolver)
         {
-            mAutoRefreshDetector->remove();
+            mMultiStepIssueSolver->remove();
         }
-        mAutoRefreshDetector = autoRefreshDetector;
-        mAutoRefreshDetector->refresh();
+        mMultiStepIssueSolver = multiStepIssueSolver;
+        mMultiStepIssueSolver->moveToThread(thread());
+        mMultiStepIssueSolver->resetDeadline();
     }
 
-public slots:
-    void onSetIsEventRequest();
+    bool multiStepIssueSolveActive() const {return mMultiStepIssueSolver && !mMultiStepIssueSolver->hasExpired();}
+
+    void updateStalledIssues(UpdateType type);
 
 signals:
     void stalledIssuesReady(StalledIssuesVariantList);
@@ -51,9 +53,9 @@ protected:
 private:
     QMutex mCacheMutex;
     StalledIssuesVariantList mStalledIssues;
-    std::atomic_bool mIsEventRequest { false };
     StalledIssuesCreator mIssueCreator;
-    QPointer<AutoRefreshByConditionBase> mAutoRefreshDetector;
+    QPointer<MultiStepIssueSolverBase> mMultiStepIssueSolver;
+    std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
 };
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
@@ -147,7 +149,7 @@ signals:
     void uiBlocked();
     void uiUnblocked();
 
-    void setIsEventRequest();
+    void setUpdateListType(UpdateType type);
 
     void showRawInfoChanged();
 
@@ -210,6 +212,7 @@ private:
     mega::MegaApi* mMegaApi;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
+    bool mIsStalledChanged;
 
     mutable QReadWriteLock mModelMutex;
 

@@ -10,13 +10,20 @@
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
-#include <AutoRefreshStalledIssuesByCondition.h>
+#include <MultiStepIssueSolver.h>
 #include <syncs/control/MegaIgnoreManager.h>
 
 #include <QSortFilterProxyModel>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {
+}
+
+void StalledIssuesReceiver::updateStalledIssues(UpdateType type)
+{
+    QMutexLocker lock(&mCacheMutex);
+    mUpdateType = type;
+    MegaSyncApp->getMegaApi()->getMegaSyncStallList(nullptr);
 }
 
 void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* request, mega::MegaError*)
@@ -30,38 +37,16 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
         connect(&mIssueCreator, &StalledIssuesCreator::moveOrRenameCannotOccurFound, this, &StalledIssuesReceiver::moveOrRenameCannotOccurFound);
 
-        mIssueCreator.createIssues(request->getMegaSyncStallList(), mAutoRefreshDetector);
+        mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType, mMultiStepIssueSolver);
         mStalledIssues = mIssueCreator.issues();
 
         StalledIssuesBySyncFilter::resetFilter();
 
-        if(mIsEventRequest)
-        {
-            mIsEventRequest = false;
-        }
-        else
+        if(mUpdateType == UpdateType::UI)
         {
             emit stalledIssuesReady(mStalledIssues);
         }
-
-        if (mAutoRefreshDetector)
-        {
-            if (mAutoRefreshDetector->needsAutoRefresh())
-            {
-                mAutoRefreshDetector->refresh();
-            }
-            else if (mAutoRefreshDetector->hasExpired())
-            {
-                mAutoRefreshDetector->remove();
-            }
-        }
     }
-}
-
-void StalledIssuesReceiver::onSetIsEventRequest()
-{
-    QMutexLocker lock(&mCacheMutex);
-    mIssueCreator.setIsEventRequest(mIsEventRequest);
 }
 
 const int StalledIssuesModel::ADAPTATIVE_HEIGHT_ROLE = Qt::UserRole;
@@ -71,6 +56,7 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
     : QAbstractItemModel(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mIsStalled(false)
+    , mIsStalledChanged(false)
     , mRawInfoVisible(false)
 {
     mStalledIssuesThread = new QThread();
@@ -96,10 +82,6 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
 
     mStalledIssuesThread->start();
 
-    connect(this, &StalledIssuesModel::setIsEventRequest,
-            mStalledIssuesReceiver, &StalledIssuesReceiver::onSetIsEventRequest,
-            Qt::QueuedConnection);
-
     connect(mStalledIssuesReceiver, &StalledIssuesReceiver::stalledIssuesReady,
             this, &StalledIssuesModel::onProcessStalledIssues,
             Qt::QueuedConnection);
@@ -116,15 +98,27 @@ bool StalledIssuesModel::issuesRequested() const
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     auto isSyncStalled(api->isSyncStalled());
-    if (isSyncStalled && mStalledIssues.size() == mSolvedStalledIssues.size() &&
-        mIsStalled != isSyncStalled)
+    auto isSyncStalledChanged(api->isSyncStalledChanged());
+
+    if(isSyncStalled && (mIsStalled != isSyncStalled || isSyncStalledChanged != mIsStalledChanged)
+        && mStalledIssuesReceiver->multiStepIssueSolveActive())
     {
-        //For Smart mode -> resolve problems as soon as they are received
-        updateStalledIssues();
+        mStalledIssuesReceiver->updateStalledIssues(UpdateType::AUTO_SOLVE);
+    }
+    else
+    {
+        if (isSyncStalled && mStalledIssues.size() == mSolvedStalledIssues.size() &&
+            mIsStalled != isSyncStalled)
+        {
+            //For Smart mode -> resolve problems as soon as they are received
+            updateStalledIssues();
+        }
+
+        emit stalledIssuesChanged();
     }
 
+    mIsStalledChanged = isSyncStalledChanged;
     mIsStalled = isSyncStalled;
-    emit stalledIssuesChanged();
 }
 
 StalledIssuesModel::~StalledIssuesModel()
@@ -219,8 +213,7 @@ void StalledIssuesModel::onSendEvent()
     {
         Preferences::instance()->updateStalledIssuesEventLastDate();
 
-        emit setIsEventRequest();
-        mMegaApi->getMegaSyncStallList(nullptr);
+        mStalledIssuesReceiver->updateStalledIssues(UpdateType::EVENT);
     }
 }
 
@@ -254,7 +247,7 @@ void StalledIssuesModel::updateStalledIssues()
     {
         blockUi();
         mIssuesRequested = true;
-        mMegaApi->getMegaSyncStallList(nullptr);
+        mStalledIssuesReceiver->updateStalledIssues(UpdateType::UI);
     }
 }
 
@@ -1186,9 +1179,9 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
     SolveListInfo info(QModelIndexList() << index, resolveIssue);
     info.async = true;
     solveListOfIssues(info);
-    AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>* autoRefreshDetecter
-        (new AutoRefreshByCondition<MoveOrRenameCannotOccurIssue>());
-    mStalledIssuesReceiver->registerAutoRefreshDetector<MoveOrRenameCannotOccurIssue>(autoRefreshDetecter);
+    MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>* multiStepIssueSolver
+        (new MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>());
+    mStalledIssuesReceiver->registerMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(multiStepIssueSolver);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)

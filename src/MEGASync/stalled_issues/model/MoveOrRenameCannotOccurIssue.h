@@ -63,8 +63,8 @@ public:
     MoveOrRenameIssueChosenSide getChosenSide() const;
     MoveOrRenameIssueChosenSide getSyncIdChosenSide() const;
 
-    static bool needsAutomaticRefresh(const std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
-    static void automaticRefreshFinished();
+    static bool findIssue(const std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
+    static void solvingIssueInSeveralStepsFinished();
 
 signals:
     void issueSolved(bool isSolved);

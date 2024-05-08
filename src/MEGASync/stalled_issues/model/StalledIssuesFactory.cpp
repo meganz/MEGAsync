@@ -10,19 +10,23 @@
 #include <mega/types.h>
 
 StalledIssuesCreator::StalledIssuesCreator() :
-    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>()),
-    mIsEventRequest(false)
+    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
 {
 }
 
-void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointer<AutoRefreshByConditionBase> autoRefreshDetector)
+void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType, QPointer<MultiStepIssueSolverBase> multiStepIssueSolver)
 {
     clear();
+    if (multiStepIssueSolver && multiStepIssueSolver->hasExpired())
+    {
+        multiStepIssueSolver->remove();
+    }
 
     if (stalls)
     {
         StalledIssuesVariantList solvableIssues;
         auto totalSize(stalls->size());
+
 
         for (size_t i = 0; i < totalSize; ++i)
         {
@@ -65,19 +69,15 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointe
                 variant = StalledIssueVariant(d, stall);
             }
 
-            if(!variant.isValid())
+            if(!variant.isValid() ||
+                variant.shouldBeIgnored())
             {
                 continue;
             }
 
-            if(autoRefreshDetector)
+            if(multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
             {
-                autoRefreshDetector->meetsConditionToRefresh(variant);
-            }
-
-            if (variant.shouldBeIgnored())
-            {
-                continue;
+                multiStepIssueSolver->resetDeadlineIfNeeded(variant);
             }
 
             //Check if it is being solved...
@@ -85,7 +85,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointe
             {
                 variant.getData()->endFillingIssue();
 
-                if (mIsEventRequest)
+                if (updateType == UpdateType::EVENT)
                 {
                     if (!variant.getData()->isAutoSolvable())
                     {
@@ -102,7 +102,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointe
                     {
                         solvableIssues.append(variant);
                     }
-                    else
+                    else if(updateType == UpdateType::UI)
                     {
                         mIssues.append(variant);
                     }
@@ -117,7 +117,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, QPointe
             emit solvingIssues(counter, solvableTotalIssues);
             auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
 
-            if(!hasBeenSolved)
+            if(updateType == UpdateType::UI && !hasBeenSolved)
             {
                 mIssues.append(solvableIssue);
             }
@@ -136,11 +136,6 @@ void StalledIssuesCreator::clear()
 {
     mIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
-}
-
-void StalledIssuesCreator::setIsEventRequest(bool newIsEventRequest)
-{
-    mIsEventRequest = newIsEventRequest;
 }
 
 void StalledIssuesCreator::setMoveOrRenameSyncIdBeingFixed(const mega::MegaHandle& syncId, int chosenSide)

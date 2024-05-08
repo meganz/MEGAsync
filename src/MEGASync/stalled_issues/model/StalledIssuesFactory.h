@@ -2,7 +2,7 @@
 #define STALLEDISSUEFACTORY_H
 
 #include <StalledIssue.h>
-#include <AutoRefreshStalledIssuesByCondition.h>
+#include <MultiStepIssueSolver.h>
 
 class MoveOrRenameCannotOccurFactory;
 
@@ -16,18 +16,25 @@ public:
     virtual void clear() = 0;
 };
 
+enum class UpdateType
+{
+    NONE,
+    UI,
+    EVENT,
+    AUTO_SOLVE
+};
+
 class StalledIssuesCreator : public QObject
 {
         Q_OBJECT
 public:
     StalledIssuesCreator();
 
-    void createIssues(mega::MegaSyncStallList* issues, QPointer<AutoRefreshByConditionBase> autoRefreshDetector);
+    void createIssues(mega::MegaSyncStallList* issues, UpdateType updateType, QPointer<MultiStepIssueSolverBase> multiStepIssueSolver);
 
     StalledIssuesVariantList issues() const;
 
     void setMoveOrRenameSyncIdBeingFixed(const mega::MegaHandle& syncId, int chosenSide);
-    void setIsEventRequest(bool newIsEventRequest);
 
 signals:
     void solvingIssues(int current, int total);
@@ -40,7 +47,6 @@ protected:
 
 private:
     std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
-    bool mIsEventRequest;
 };
 
 #endif // STALLEDISSUEFACTORY_H
