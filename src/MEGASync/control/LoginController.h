@@ -170,7 +170,7 @@ private:
     mega::MegaApi * mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
 
-    bool mLogingIn;
+    bool mLoginInWithoutSession;
 };
 
 #endif // LOGINCONTROLLER_H
