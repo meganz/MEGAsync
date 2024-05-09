@@ -1120,12 +1120,14 @@ endif()
 
 set (SHELLEXT_FILES
     ${MEGAShellExtDir}/ShellExt.cpp
+    ${MEGAShellExtDir}/ShellExtNotASync.cpp
     ${MEGAShellExtDir}/RegUtils.cpp
     ${MEGAShellExtDir}/dllmain.cpp
     ${MEGAShellExtDir}/ContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSyncing.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSynced.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtPending.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtNotFound.cpp
     ${MEGAShellExtDir}/ClassFactoryContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactory.cpp
     ${MEGAShellExtDir}/MegaInterface.cpp

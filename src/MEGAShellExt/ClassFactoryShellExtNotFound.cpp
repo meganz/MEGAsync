@@ -1,13 +1,13 @@
-#include "ClassFactoryShellExtSyncing.h"
+#include "ClassFactoryShellExtNotFound.h"
 
-#include "ShellExt.h"
+#include "ShellExtNotASync.h"
 #include "MEGAinterface.h"
 
 #include <new>
 #include <Shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
 
-IFACEMETHODIMP ClassFactoryShellExtSyncing::CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv)
+IFACEMETHODIMP ClassFactoryShellExtNotFound::CreateInstance(IUnknown *pUnkOuter, REFIID riid, void **ppv)
 {
     HRESULT hr = CLASS_E_NOAGGREGATION;
 
@@ -22,7 +22,8 @@ IFACEMETHODIMP ClassFactoryShellExtSyncing::CreateInstance(IUnknown *pUnkOuter, 
         hr = E_OUTOFMEMORY;
 
         // Create the COM component.
-        ShellExt *pExt = new (std::nothrow) ShellExt(MegaInterface::FILE_SYNCING);
+        ShellExt* pExt = new (std::nothrow) ShellExtNotASync(MegaInterface::FILE_NOTFOUND);
+
         if (pExt)
         {
             // Query the specified interface.

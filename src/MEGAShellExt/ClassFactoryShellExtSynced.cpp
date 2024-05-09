@@ -1,5 +1,7 @@
 #include "ClassFactoryShellExtSynced.h"
+
 #include "ShellExt.h"
+#include "MEGAinterface.h"
 
 #include <new>
 #include <Shlwapi.h>
@@ -20,7 +22,7 @@ IFACEMETHODIMP ClassFactoryShellExtSynced::CreateInstance(IUnknown *pUnkOuter, R
         hr = E_OUTOFMEMORY;
 
         // Create the COM component.
-        ShellExt *pExt = new (std::nothrow) ShellExt(0);
+        ShellExt *pExt = new (std::nothrow) ShellExt(MegaInterface::FILE_SYNCED);
         if (pExt)
         {
             // Query the specified interface.
