@@ -2,7 +2,7 @@
 
 #include "mega/types.h"
 #include "Utilities.h"
-#include "AppStatsEvents.h"
+#include "StatsEventHandler.h"
 
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue)
@@ -626,7 +626,7 @@ bool NameConflictedStalledIssue::autoSolveIssue()
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved())
     {
-        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
         return true;
     }
 

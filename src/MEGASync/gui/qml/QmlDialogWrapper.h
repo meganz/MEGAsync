@@ -3,6 +3,8 @@
 
 #include "QmlDialog.h"
 #include "QmlManager.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 
 #include "megaapi.h"
 
@@ -133,6 +135,8 @@ public:
             connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
+
+            mWindow->installEventFilter(MegaSyncApp->getStatsEventHandler());
 
             QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
         }

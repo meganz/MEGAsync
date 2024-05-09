@@ -45,7 +45,6 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
-#include "IStatsEventHandler.h"
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
 
@@ -66,6 +65,7 @@ class TransferMetadata;
 class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
+class StatsEventHandler;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -175,7 +175,7 @@ public:
     void onLoginFinished();
     void onLogout();
 
-    IStatsEventHandler* getStatsEventHandler() const;
+    StatsEventHandler* getStatsEventHandler() const;
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
@@ -509,7 +509,7 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
-    IStatsEventHandler* mStatsEventHandler;
+    StatsEventHandler* mStatsEventHandler;
 
     SetManager* mSetManager;
     QString mLinkToPublicSet;

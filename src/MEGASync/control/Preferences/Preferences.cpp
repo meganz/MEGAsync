@@ -1,8 +1,8 @@
 #include "Preferences/Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
-#include "AppStatsEvents.h"
 #include "UserAttributesRequests/FullName.h"
+#include "StatsEventHandler.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -1248,22 +1248,22 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
     auto currentValue(stalledIssuesMode());
     if(value != currentValue)
     {
-        AppStatsEvents::EventTypes type(AppStatsEvents::NONE);
+        AppStatsEvents::EventType type = AppStatsEvents::EventType::NONE;
 
         if(value == StalledIssuesModeType::Smart)
         {
             type = (currentValue == StalledIssuesModeType::None)
-                    ? AppStatsEvents::EVENT_SI_SMART_MODE_FIRST_SELECTED
-                    : AppStatsEvents::EVENT_SI_CHANGE_TO_SMART_MODE;
+                    ? AppStatsEvents::EventType::SI_SMART_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EventType::SI_CHANGE_TO_SMART_MODE;
         }
         else
         {
             type = (currentValue == StalledIssuesModeType::None)
-                    ? AppStatsEvents::EVENT_SI_ADVANCED_MODE_FIRST_SELECTED
-                    : AppStatsEvents::EVENT_SI_CHANGE_TO_ADVANCED_MODE;
+                    ? AppStatsEvents::EventType::SI_ADVANCED_MODE_FIRST_SELECTED
+                    : AppStatsEvents::EventType::SI_CHANGE_TO_ADVANCED_MODE;
         }
 
-        if(type != AppStatsEvents::NONE)
+        if(type != AppStatsEvents::EventType::NONE)
         {
             MegaSyncApp->getStatsEventHandler()->sendEvent(type);
         }

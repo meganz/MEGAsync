@@ -2,7 +2,7 @@
 #include "gui/MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
-#include "control/AppStatsEvents.h"
+#include "control/ProxyStatsEventHandler.h"
 #include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"
@@ -263,21 +263,14 @@ int main(int argc, char *argv[])
 #ifdef WIN32
         if (preferences->installationTime() != -1)
         {
-            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT.toUtf8().constData());
-            QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
-                    .arg(preferences->installationTime())
-                    .arg(preferences->accountCreationTime())
-                    .arg(preferences->hasLoggedIn());
-
-            QByteArray base64stats = stats.toUtf8().toBase64();
-            base64stats.replace('+', '-');
-            base64stats.replace('/', '_');
-            while (base64stats.size() && base64stats[base64stats.size() - 1] == '=')
-            {
-                base64stats.resize(base64stats.size() - 1);
-            }
-
-            megaApi->sendEvent(AppStatsEvents::EVENT_UNINSTALL_STATS, base64stats.constData(), false, nullptr);
+            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL,
+                                           Preferences::USER_AGENT.toUtf8().constData());
+            StatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
+            statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL_STATS,
+                                         { QString::number(preferences->installationTime()),
+                                           QString::number(preferences->accountCreationTime()),
+                                           QString::number(preferences->hasLoggedIn()) },
+                                         true);
             Sleep(5000);
         }
 #endif
