@@ -655,22 +655,6 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
 
-!ifdef BUILD_X64_VERSION
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3-x64.dll"  "$INSTDIR\libssl-3-x64.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3-x64.dll"  "$INSTDIR\libcrypto-3-x64.dll"
-!else
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libcrypto-3.dll"  "$INSTDIR\libcrypto-3.dll"
-  !insertmacro Install3264DLL "${SRCDIR_MEGASYNC}\libssl-3.dll"  "$INSTDIR\libssl-3.dll"
-!endif
-
-  File "${SRCDIR_MEGASYNC}\libcurl.dll"
-  AccessControl::SetFileOwner "$INSTDIR\libcurl.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\libcurl.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${SRCDIR_MEGASYNC}\cares.dll"
-  AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
-
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
@@ -985,6 +969,10 @@ Section Uninstall
   Delete "$INSTDIR\libssl-1_1-x64.dll"
   Delete "$INSTDIR\libcrypto-1_1.dll"
   Delete "$INSTDIR\libssl-1_1.dll"
+  Delete "$INSTDIR\libssl-3-x64.dll"
+  Delete "$INSTDIR\libcrypto-3-x64.dll"
+  Delete "$INSTDIR\libssl-3.dll"
+  Delete "$INSTDIR\libcrypto-3.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
