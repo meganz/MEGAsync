@@ -34,11 +34,13 @@ struct _MEGAExtClass {
 };
 
 typedef enum {
-    FILE_ERROR = 0,
-    FILE_SYNCED = 1,
-    FILE_PENDING = 2,
-    FILE_SYNCING = 3,
+    FILE_SYNCED = 0,
+    FILE_PENDING = 1,
+    FILE_SYNCING = 2,
+    FILE_IGNORED = 3,
+    FILE_PAUSED = 4,
     FILE_NOTFOUND = 9,
+    FILE_ERROR = 10
 } FileState;
 
 typedef enum {

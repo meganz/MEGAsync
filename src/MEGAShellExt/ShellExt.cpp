@@ -2,6 +2,7 @@
 #include "resource.h"
 #include <strsafe.h>
 #include <Shlwapi.h>
+#include <shellapi.h>
 
 #include "MegaInterface.h"
 
@@ -25,7 +26,6 @@ ShellExt::ShellExt(int id) : m_cRef(1)
     {
     }
 }
-
 
 ShellExt::~ShellExt()
 {
@@ -133,11 +133,13 @@ HRESULT ShellExt::GetOverlayInfo(PWSTR pwszIconFile, int cchMax, int *pIndex, DW
         memcpy(pwszIconFile, szModule, len * sizeof(TCHAR));
         *pIndex = id;
         *pdwFlags = ISIOI_ICONFILE | ISIOI_ICONINDEX;
+
         return S_OK;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)
     {
     }
+
     return E_FAIL;
 }
 
@@ -162,10 +164,12 @@ HRESULT ShellExt::IsMemberOf(PCWSTR pwszPath, DWORD dwAttrib)
     __try
     {
         (void)dwAttrib;
+
         if (MegaInterface::getPathState(pwszPath) == id)
         {
             return S_OK;
         }
+
         return S_FALSE;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)

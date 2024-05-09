@@ -72,8 +72,6 @@ void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
         deactivateSync(cs);
     }
 
-    Platform::getInstance()->syncFolderRemoved(cs->getLocalFolder(), cs->name(true), cs->getSyncID());
-
     assert(preferences->logged());
 
     preferences->removeSyncSetting(cs);
@@ -95,6 +93,8 @@ void SyncInfo::removeSyncedFolderByBackupId(MegaHandle backupId)
     }
 
     removeUnattendedDisabledSync(backupId, type);
+
+    Platform::getInstance()->syncFolderRemoved(cs->getLocalFolder(), cs->name(true), cs->getSyncID());
 
     emit syncRemoved(cs);
 }
