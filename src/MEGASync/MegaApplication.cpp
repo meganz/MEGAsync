@@ -702,8 +702,8 @@ void MegaApplication::initialize()
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
-    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
+    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
@@ -1537,7 +1537,7 @@ void MegaApplication::onLogout()
 
 StatsEventHandler* MegaApplication::getStatsEventHandler() const
 {
-    return mStatsEventHandler;
+    return mStatsEventHandler.get();
 }
 
 void MegaApplication::checkSystemTray()

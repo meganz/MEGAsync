@@ -509,7 +509,7 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
-    StatsEventHandler* mStatsEventHandler;
+    std::unique_ptr<StatsEventHandler> mStatsEventHandler;
 
     SetManager* mSetManager;
     QString mLinkToPublicSet;
