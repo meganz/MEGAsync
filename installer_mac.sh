@@ -131,9 +131,13 @@ if [ ${build_cmake} -eq 1 ]; then
     # Prepare bundle
     cp -R ${MSYNC_PREFIX}MEGAsync.app ${MSYNC_PREFIX}MEGAsync_orig.app
     ${MEGAQTPATH}/bin/macdeployqt ${MSYNC_PREFIX}MEGAsync.app -qmldir=../src/MEGASync/gui/qml -no-strip
-    dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
+    dsymutil ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync -o ${MSYNC_PREFIX}MEGAsync.app.dSYM 
+    zip -r ${MSYNC_PREFIX}MEGAsync.app.dSYM.zip ${MSYNC_PREFIX}MEGAsync.app.dSYM
+    rm -rf ${MSYNC_PREFIX}MEGAsync.app.dSYM
     strip ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAsync
-    dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
+    dsymutil ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater -o ${MUPDATER_PREFIX}MEGAupdater.dSYM 
+    zip -r ${MUPDATER_PREFIX}MEGAupdater.app.dSYM.zip ${MUPDATER_PREFIX}MEGAupdater.dSYM 
+    rm -rf ${MUPDATER_PREFIX}MEGAupdater.dSYM
     strip ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater
 
     mv ${MUPDATER_PREFIX}MEGAupdater.app/Contents/MacOS/MEGAupdater ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/MEGAupdater
