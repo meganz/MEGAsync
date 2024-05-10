@@ -438,6 +438,8 @@ set(DESKTOP_APP_GUI_RESOURCES
     gui/qml/qml.qrc
 )
 
+set(QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml CACHE STRING "Qt Creator extra qml import paths")
+
 if (CMAKE_HOST_APPLE)
     add_custom_command(
             TARGET MEGAsync
