@@ -236,7 +236,7 @@ void StalledIssueActionTitle::setDisable(bool state)
             ui->titleContainer->setGraphicsEffect(mTitleDisableEffect);
         }
 
-        if(ui->extraInfoContainer->isVisible() && !ui->extraInfoContainer->graphicsEffect())
+        if(!ui->extraInfoContainer->graphicsEffect())
         {
             mExtraInfoDisableEffect = new QGraphicsOpacityEffect(this);
             mExtraInfoDisableEffect->setOpacity(0.3);

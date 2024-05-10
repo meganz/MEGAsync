@@ -113,13 +113,13 @@
   <customwidget>
    <class>CloudStalledIssueChooseWidget</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
+   <header>stalled_issues_cases/LocalAndRemoteChooseWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>LocalStalledIssueChooseWidget</class>
    <extends>QWidget</extends>
-   <header>StalledIssueChooseWidget.h</header>
+   <header>stalled_issues_cases/LocalAndRemoteChooseWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

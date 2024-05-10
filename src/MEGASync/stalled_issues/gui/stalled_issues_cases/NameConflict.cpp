@@ -230,7 +230,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
     if(allSolved)
     {
         mSolvedStatusAppliedToUi = true;
-        //setDisabled();
     }
 
     ui->nameConflicts->layout()->activate();
