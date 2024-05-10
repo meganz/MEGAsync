@@ -213,11 +213,11 @@ pipeline {
                             script{
                                 if (env.ARCHITECTURE == "arm64"){
                                     sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64"
-                                    sh "jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64/"                       
+                                    sh "cd Release_arm64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64/"                       
                                 }
                                 if (env.ARCHITECTURE == "x86_64"){
                                     sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/macos/x86_64"
-                                    sh "jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64/"
+                                    sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64/"
                                 } 
                             }
                         }
