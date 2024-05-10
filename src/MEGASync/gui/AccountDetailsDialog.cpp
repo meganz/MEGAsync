@@ -180,11 +180,11 @@ void AccountDetailsDialog::refresh()
                 break;
             }
             case Preferences::ACCOUNT_TYPE_LITE:
-            // Fallthrough
+            case Preferences::ACCOUNT_TYPE_STARTER:
+            case Preferences::ACCOUNT_TYPE_BASIC:
+            case Preferences::ACCOUNT_TYPE_ESSENTIAL:
             case Preferences::ACCOUNT_TYPE_PROI:
-            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROII:
-            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROIII:
             {
                 setProperty("accountType", QLatin1String("pro"));

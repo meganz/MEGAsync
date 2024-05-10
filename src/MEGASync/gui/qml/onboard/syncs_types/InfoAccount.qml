@@ -20,6 +20,9 @@ Item {
     readonly property string accountTypeProII: qsTr("Pro II")
     readonly property string accountTypeProIII: qsTr("Pro III")
     readonly property string accountTypeLite: qsTr("Pro Lite")
+    readonly property string accountTypeStarter: qsTr("Starter")
+    readonly property string accountTypeBasic: qsTr("Basic")
+    readonly property string accountTypeEssential: qsTr("Essential")
     readonly property string accountTypeBusiness: qsTr("Business")
     readonly property string accountTypeProFlexi: qsTr("Pro Flexi")
     readonly property string availableStorage: qsTr("Available storage:")
@@ -42,6 +45,7 @@ Item {
             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
                 return Images.infinity;
             default:
+                // No image displayed for starter, basic and essential accounts
                 return "";
         }
     }
@@ -58,6 +62,12 @@ Item {
                 return accountTypeProIII;
             case AccountInfoData.ACCOUNT_TYPE_LITE:
                 return accountTypeLite;
+            case AccountInfoData.ACCOUNT_TYPE_STARTER:
+                return accountTypeStarter;
+            case AccountInfoData.ACCOUNT_TYPE_BASIC:
+                return accountTypeBasic;
+            case AccountInfoData.ACCOUNT_TYPE_ESSENTIAL:
+                return accountTypeEssential;
             case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
                 return accountTypeBusiness;
             case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
@@ -107,6 +117,9 @@ Item {
                     width: 16
                     sourceSize: Qt.size(width, height)
                     opacity: enabled ? 1.0 : 0.2
+                    visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_STARTER
+                             && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BASIC
+                             && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_ESSENTIAL
                 }
 
                 Texts.Text {
