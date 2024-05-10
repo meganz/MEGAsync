@@ -1,7 +1,6 @@
 import QtQuick 2.15
 
 QtObject {
-
 	readonly property color backgroundBlur: "#33000000"
 	readonly property color backgroundInverse: "#494A4D"
 	readonly property color borderDisabled: "#D8D9DB"

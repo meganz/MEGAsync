@@ -13,7 +13,7 @@
 BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
-    setTitle(tr("Backups"));
+    setBackupsTitle();
     setTable<BackupTableView, BackupItemModel>();
 
     connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
@@ -49,10 +49,12 @@ void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
-{
+{    
     if(event->type() == QEvent::LanguageChange)
     {
-        mElements.updateUI();
+        mElements.retranslateUI();
+        ui->retranslateUi(this);
+        setBackupsTitle();
     }
 
     SyncSettingsUIBase::changeEvent(event);
@@ -116,6 +118,11 @@ QString BackupSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> 
 {
     return tr("Your sync can't be removed. Reason: %1")
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+}
+
+void BackupSettingsUI::setBackupsTitle()
+{
+    setTitle(tr("Backups"));
 }
 
 QString BackupSettingsUI::disableString() const

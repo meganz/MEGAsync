@@ -23,10 +23,6 @@ public:
     bool isGroupEmpty();
     void remove(const QString & key);
     void clear();
-    void sync();
-
-    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
-    bool needsDeferredSync();
 
 protected:
     QByteArray XOR(const QByteArray &key, const QByteArray& data) const;
@@ -34,8 +30,8 @@ protected:
     QString decrypt(const QString key, const QString value) const;
     QString hash(const QString key) const;
     QByteArray encryptionKey;
-    int mDeferSyncEnableCount = 0;
-    bool mSyncDeferred = false;
+
+    bool event(QEvent* event) override;
 };
 
 #endif // ENCRYPTEDSETTINGS_H

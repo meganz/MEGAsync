@@ -18,7 +18,7 @@ typedef int64_t m_off_t;
 #ifndef MEGA_API
  #define MEGA_API
 #endif
-#define USE_CRYPTOPP 1
+
 #include "mega/crypto/cryptopp.h"
 #include "mega/base64.h"
 
@@ -274,9 +274,9 @@ int main(int argc, char *argv[])
         PrnGen rng;
 
         AsymmCipher asymkey;
-        asymkey.genkeypair(rng, asymkey.key,pubk,KEY_LENGTH);
+        asymkey.genkeypair(rng,pubk,KEY_LENGTH);
         AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
-        AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
+        AsymmCipher::serializeintarray(asymkey.getKey(),AsymmCipher::PRIVKEY,&privks);
 
         int len = pubks.size();
         char* pubkstr = new char[len*4/3+4];
@@ -322,10 +322,12 @@ int main(int argc, char *argv[])
         keyFile.close();
 
         //Initialize AsymmCypher
-        string privks;
-        privks.resize(privk.size()/4*3+3);
-        privks.resize(Base64::atob(privk.data(), (::mega::byte *)privks.data(), privks.size()));
-        aprivk.setkey(AsymmCipher::PRIVKEY,(::mega::byte*)privks.data(), privks.size());
+        string privks = Base64::atob(privk);
+        if (!aprivk.setkey(AsymmCipher::PRIVKEY,(::mega::byte*)privks.data(), privks.size()))
+        {
+            cerr << "Priv RSA key problem during initialization.";
+            return 0;
+        }
 
         //Generate update file signature
         vector<string> filesVector;

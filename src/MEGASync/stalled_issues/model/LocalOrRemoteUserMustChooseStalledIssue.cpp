@@ -25,7 +25,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 
         if(isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY, "Local/Remote issue solved automatically", false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
             return true;
         }
     }
@@ -107,14 +107,20 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
         //Check if transfer already exists
         if(!isBeingSolvedByUpload(info))
         {
+            std::shared_ptr<mega::MegaNode> node(getCloudData()->getNode());
             std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
             if(parentNode)
             {
-                //Using appDataId == 0 means that there will be no notification for this upload
-                mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
+                bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
+                StalledIssuesUtilities utilities;
+                if (!versionsDisabled || utilities.removeRemoteFile(node.get()))
+                {
+                    //Using appDataId == 0 means that there will be no notification for this upload
+                    mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
 
-                mChosenSide = ChosenSide::Local;
-                setIsSolved(false);
+                    mChosenSide = ChosenSide::Local;
+                    setIsSolved(false);
+                }
             }
         }
     }

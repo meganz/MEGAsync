@@ -98,6 +98,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestContent.cpp \
+    $$PWD/SyncExclusions/SyncExclusions.cpp \
+    $$PWD/SyncExclusions/ExclusionsQmlDialog.cpp \
+    $$PWD/SyncExclusions/ExclusionRulesModel.cpp \
     $$PWD/themes/ThemeManager.cpp \
     $$PWD/themes/ThemeWidgetManager.cpp \
     $$PWD/themes/ThemeStylesheetParser.cpp
@@ -198,6 +201,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
+    $$PWD/SyncExclusions/SyncExclusions.h \
+    $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
+    $$PWD/onboarding/GuestContent.h \
+    $$PWD/SyncExclusions/ExclusionRulesModel.h \
     $$PWD/themes/ThemeManager.h \
     $$PWD/themes/ThemeWidgetManager.h \
     $$PWD/themes/ThemeStylesheetParser.h
@@ -228,7 +235,7 @@ win32 {
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
-                $$PWD/win/RemoteItemUI.ui \
+                $$PWD/win/RemoteItemUi.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
@@ -276,7 +283,7 @@ macx {
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
-                $$PWD/macx/RemoteItemUI.ui\
+                $$PWD/macx/RemoteItemUi.ui\
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \

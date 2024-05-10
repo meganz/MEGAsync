@@ -66,5 +66,13 @@
         <file>images/qml/guest/setting_up@3x.png</file>
         <file>images/qml/eye.svg</file>
         <file>images/qml/eye-off.svg</file>
+        <file>images/qml/sync_exclusions/x-square.svg</file>
+        <file>images/qml/sync_exclusions/edit.svg</file>
+        <file>images/qml/sync_exclusions/refresh.svg</file>
+        <file>images/qml/sync_exclusions/folder.svg</file>
+        <file>images/qml/sync_exclusions/file.svg</file>
+        <file>images/qml/sync_exclusions/extension.svg</file>
+        <file>images/qml/sync_exclusions/chevron-down.svg</file>
+        <file>images/qml/sync_exclusions/info.svg</file>
     </qresource>
 </RCC>

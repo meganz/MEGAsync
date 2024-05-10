@@ -37,7 +37,7 @@ SyncInfo::SyncInfo() : QObject(),
     mIsFirstTwoWaySyncDone (preferences->isFirstSyncDone()),
     mIsFirstBackupDone (preferences->isFirstBackupDone()),
     syncMutex (QMutex::Recursive),
-    delegateListener(mega::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
+    delegateListener(std::make_unique<QTMegaListener>(MegaSyncApp->getMegaApi(), this))
 {
     MegaSyncApp->getMegaApi()->addListener(delegateListener.get());
 
@@ -134,8 +134,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first sync
         if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC,
-                                                 "MEGAsync first sync", false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_SYNC);
         }
         mIsFirstTwoWaySyncDone = true;
         break;
@@ -145,8 +144,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first backup
         if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP,
-                                                 "MEGAsync first backup", false, nullptr);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_BACKUP);
         }
         mIsFirstBackupDone = true;
         break;
@@ -691,7 +689,7 @@ void SyncInfo::onSyncFileStateChanged(MegaApi*, MegaSync*, std::string *localPat
         return;
     }
 
-    Platform::getInstance()->notifySyncFileChange(localPath, newState, false);
+    Platform::getInstance()->notifySyncFileChange(localPath, newState);
 }
 
 void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats)

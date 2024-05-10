@@ -9,9 +9,11 @@ CONFIG += object_parallel_to_source
 
 SOURCES += $$PWD/HTTPServer.cpp \
     $$PWD/AccountStatusController.cpp \
+    $$PWD/AppStatsEvents.cpp \
     $$PWD/DialogOpener.cpp \
     $$PWD/DownloadQueueController.cpp \
     $$PWD/FileFolderAttributes.cpp \
+    $$PWD/LinkObject.cpp \
     $$PWD/LoginController.cpp \
     $$PWD/Preferences/Preferences.cpp \
     $$PWD/Preferences/EphemeralCredentials.cpp \
@@ -43,6 +45,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/FileFolderAttributes.h \
     $$PWD/DownloadQueueController.h \
     $$PWD/IStatsEventHandler.h \
+    $$PWD/LinkObject.h \
     $$PWD/LoginController.h \
     $$PWD/Preferences/Preferences.h \
     $$PWD/Preferences/EphemeralCredentials.h \
@@ -53,6 +56,7 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/ProtectedQueue.h \
     $$PWD/ProxyStatsEventHandler.h \
     $$PWD/SetManager.h \
+    $$PWD/SetTypes.h \
     $$PWD/TransferRemainingTime.h \
     $$PWD/UpdateTask.h \
     $$PWD/CrashHandler.h \

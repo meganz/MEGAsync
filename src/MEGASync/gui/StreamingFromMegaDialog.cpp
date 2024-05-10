@@ -21,11 +21,11 @@ const uint8_t StreamingFromMegaDialog::NODE_ID = 0;
 
 using namespace mega;
 
-StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent) :
-    QDialog(parent),
-    ui(::mega::make_unique<Ui::StreamingFromMegaDialog>()),
-    mLinkProcessor(nullptr),
-    lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
+StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent)
+    : QDialog(parent)
+    , ui(std::make_unique<Ui::StreamingFromMegaDialog>())
+    , mLinkProcessor(nullptr)
+    , lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
@@ -47,7 +47,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     ui->bCopyLink->setDisabled(true);
-    delegateTransferListener = ::mega::make_unique<QTMegaTransferListener>(this->megaApi, this);
+    delegateTransferListener = std::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     hideStreamingError();
 }
@@ -150,7 +150,7 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
 //the linkInfoAvailable, for example)
 void StreamingFromMegaDialog::onLinkInfoAvailable()
 {
-    mLinkProcessor->setSelected(NODE_ID, true);
+    mLinkProcessor->onLinkSelected(NODE_ID, true);
     this->mSelectedMegaNode = std::shared_ptr<MegaNode>(mLinkProcessor->getNode(NODE_ID));
 
     if (mSelectedMegaNode)

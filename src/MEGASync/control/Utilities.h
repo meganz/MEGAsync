@@ -370,6 +370,9 @@ public:
 
     static bool isIncommingShare(mega::MegaNode* node);
 
+    static bool dayHasChangedSince(qint64 msecs);
+    static bool monthHasChangedSince(qint64 msecs);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
@@ -413,6 +416,8 @@ public:
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
+
+    static QString getFileHash(const QString& filePath);
 
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;

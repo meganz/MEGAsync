@@ -209,9 +209,9 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     notifyItemChange(path, mShellNotifier);
 }
 
-void PlatformImplementation::notifySyncFileChange(std::string *localPath, int, bool stringIsPlatformEncoded)
+void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    QString path = getPreparedPath(localPath, stringIsPlatformEncoded);
+    QString path = QString::fromUtf8(localPath->c_str());
     notifyItemChange(path, mSyncFileNotifier);
 }
 
@@ -1419,34 +1419,6 @@ QString PlatformImplementation::getDeviceName()
     }
 
     return deviceName;
-}
-
-QString PlatformImplementation::getPreparedPath(std::string *localPath, bool stringIsPlatformEncoded)
-{
-    if (!stringIsPlatformEncoded)
-    {
-        return QString::fromUtf8(localPath->c_str());
-    }
-
-
-    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
-    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
-                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
-                                                                                         / sizeof (char))));
-    if (!preparedPath.isEmpty())
-    {
-        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
-        {
-            preparedPath = preparedPath.mid(4);
-        }
-
-        if (preparedPath.size() >= MAX_PATH)
-        {
-            preparedPath.clear();
-        }
-    }
-
-    return preparedPath;
 }
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)

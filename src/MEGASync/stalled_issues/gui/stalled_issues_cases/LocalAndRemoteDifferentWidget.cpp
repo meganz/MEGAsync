@@ -12,6 +12,7 @@
 #include <PlatformStrings.h>
 #include <QMegaMessageBox.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include <Preferences/Preferences.h>
 
 #include "mega/types.h"
 
@@ -152,10 +153,35 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(node->isFile())
     {
-        info.msgInfo.informativeText = (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.\nPlease wait for the upload to complete.").arg(localInfo.fileName())) + QString::fromUtf8("<br>");
-        if(info.selection.size() > 1)
+        if (Preferences::instance()->fileVersioningDisabled())
         {
-            info.msgInfo.informativeText = (tr("The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.\nPlease wait for the upload to complete.").arg(localInfo.fileName())) + QString::fromUtf8("<br>");
+            info.msgInfo.informativeText =
+                (tr("The [B]local file[/B] %1 will be uploaded to MEGA and the remote file "
+                    "will be moved to the rubbish bin.", "", info.selection.size())
+                        .arg(localInfo.fileName())) +
+                QString::fromUtf8("<br>");
+        }
+        else
+        {
+            if (info.selection.size() > 1)
+            {
+
+                info.msgInfo.informativeText =
+                    (tr("The [B]local files[/B] will be uploaded to MEGA and added as a version to "
+                        "the "
+                        "remote files.\nPlease wait for the upload to complete.")
+                            .arg(localInfo.fileName())) +
+                    QString::fromUtf8("<br>");
+            }
+            else
+            {
+                info.msgInfo.informativeText =
+                    (tr("The [B]local file[/B] %1 will be uploaded to MEGA and added as a version "
+                        "to "
+                        "the remote file.\nPlease wait for the upload to complete.")
+                            .arg(localInfo.fileName())) +
+                    QString::fromUtf8("<br>");
+            }
         }
     }
     else
@@ -272,14 +298,8 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     }
     textDecorator.process(info.msgInfo.informativeText);
 
-    QPointer<LocalAndRemoteDifferentWidget> context = this;
-    info.msgInfo.finishFunc = [this, context, info](QMessageBox* msgBox)
+    info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
     {
-        if(!context)
-        {
-            return;
-        }
-
         if(getData().consultData()->getSyncType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
