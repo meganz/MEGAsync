@@ -1343,6 +1343,24 @@ void SettingsDialog::updateAccountElements()
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
+        case Preferences::ACCOUNT_TYPE_STARTER:
+            mUi->lAccountType->setText(tr("Starter"));
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->hide();
+            mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_BASIC:
+            mUi->lAccountType->setText(tr("Basic"));
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->hide();
+            mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_ESSENTIAL:
+            mUi->lAccountType->setText(tr("Essential"));
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->hide();
+            mUi->pTransferQuota->hide();
+            break;
         default:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
             mUi->lAccountType->setText(QString());

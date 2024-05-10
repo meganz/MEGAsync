@@ -1109,16 +1109,25 @@ QString Utilities::getReadablePROplanFromId(int identifier)
     switch (identifier)
     {
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QCoreApplication::translate("Utilities","Pro Lite");
+            return QCoreApplication::translate("Utilities", "Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QCoreApplication::translate("Utilities","Pro I");
+            return QCoreApplication::translate("Utilities", "Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QCoreApplication::translate("Utilities","Pro II");
+            return QCoreApplication::translate("Utilities", "Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QCoreApplication::translate("Utilities","Pro III");
+            return QCoreApplication::translate("Utilities", "Pro III");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
+            return QCoreApplication::translate("Utilities", "Starter");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
+            return QCoreApplication::translate("Utilities", "Basic");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
+            return QCoreApplication::translate("Utilities", "Essential");
             break;
     }
 
