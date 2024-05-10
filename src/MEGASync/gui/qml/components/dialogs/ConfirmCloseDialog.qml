@@ -6,6 +6,7 @@ import common 1.0
 
 import components.texts 1.0 as Texts
 import components.buttons 1.0
+import components.checkBoxes 1.0
 
 Window {
     id: root
@@ -16,10 +17,15 @@ Window {
     readonly property int dialogContentHeight: 100
     readonly property int dialogContentSpacing: 8
 
+    property bool enableBusyIndicator: true
     property alias titleText: title.text
     property alias bodyText: body.text
     property alias cancelButtonText: cancelButton.text
     property alias acceptButtonText: acceptButton.text
+    property alias acceptButtonColors: acceptButton.colors
+    property alias dontAskAgainVisible: dontAskAgainCB.visible
+    property alias dontAskAgainText: dontAskAgainCB.text
+    property alias dontAskAgain: dontAskAgainCB.checked
 
     signal accepted
 
@@ -83,18 +89,37 @@ Window {
 
         } // RowLayout: rowLayout
 
-        RowLayout {
+        Item {
             id: buttonsLayout
 
             anchors {
                 right: mainColumn.right
                 rightMargin: -cancelButton.sizes.focusBorderWidth
+                left: mainColumn.left
             }
-            spacing: 0
+            height: acceptButton.height + 2 * acceptButton.sizes.focusBorderWidth
+
+            CheckBox {
+                id: dontAskAgainCB
+
+                anchors{
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                }
+                implicitWidth: 16
+
+                textWordWrap: Text.NoWrap
+                visible: false
+            }
 
             OutlineButton {
                 id: cancelButton
 
+                anchors{
+                    right: acceptButton.left
+                    verticalCenter: parent.verticalCenter
+                }
+                implicitWidth: 16
                 onClicked: {
                     root.close();
                 }
@@ -103,8 +128,16 @@ Window {
             PrimaryButton {
                 id: acceptButton
 
+
+                anchors{
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                }
                 onClicked: {
-                    icons.busyIndicatorVisible = true;
+                    if(enableBusyIndicator)
+                    {
+                        icons.busyIndicatorVisible = true;
+                    }
                     root.accepted();
                 }
             }

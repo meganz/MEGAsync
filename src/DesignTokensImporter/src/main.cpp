@@ -1,10 +1,10 @@
 #include "TokenManager.h"
 
+#include "PathProvider.h"
+
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
-
-static const QString RELATIVE_MEGASYNC_PATH = QString::fromLatin1("../../MEGASync");
 
 using namespace DTI;
 
@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
     // Point to MEGASync as current working directory
-    QDir::setCurrent(RELATIVE_MEGASYNC_PATH);
+    QDir::setCurrent(PathProvider::RELATIVE_MEGASYNC_PATH);
 
     qDebug() << "Start parsing process";
 

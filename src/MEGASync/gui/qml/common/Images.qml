@@ -12,6 +12,7 @@ QtObject {
     readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
+    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesPath + "/sync_exclusions/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -69,6 +70,14 @@ QtObject {
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
     readonly property url settingUp: imagesGuestPath + "setting_up.png"
+
+    readonly property url refresh: imagesExclusionsPath + "refresh.svg"
+    readonly property url xSquare: imagesExclusionsPath + "x-square.svg"
+    readonly property url editRule: imagesExclusionsPath + "edit.svg"
+    readonly property url chevronDown: imagesExclusionsPath + "chevron-down.svg"
+    readonly property url info: imagesExclusionsPath + "info.svg"
+
+
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

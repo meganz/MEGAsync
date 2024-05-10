@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Введите правильное имя файла или полный путь.</translation>
+        <translation>Введите действительное название файла или абсолютный путь</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>Пожалуйста, чётко опишите проблему, с которой вы столкнулись. Чем больше деталей вы предоставите, тем легче нам будет их решить. Ваша заявка будет рассмотрена нашей командой разработчиков.</translation>
+        <translation>Чётко опишите ошибку, с которой вы столкнулись. Чем больше деталей вы предоставите, тем проще нам будет её исправить. Ваш отчёт будет рассмотрен нашей командой разработчиков.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Вы можете помочь нам улучшить приложение MEGA, отослав этот отчёт об ошибке. Отчёт не содержит каких-либо личных данных. Если вы хотите сообщить нам больше подробностей, то, пожалуйста, напишите ниже:</translation>
+        <translation>Вы можете помочь нам улучшить приложение MEGA, отослав этот отчёт об ошибке. Отчёт не содержит каких-либо личных данных. Если вы хотите сообщить нам больше подробностей, напишите ниже:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation>Ожидается завершение сканирования, чтобы проверить, был ли файл перемещён или удалён.</translation>
+        <translation>Ожидание завершения сканирования, чтобы определить, был ли файл перемещён или удалён.</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>Пожалуйста, решите проблему с платежом как можно скорее, чтобы избежать заморозки вашего бизнес-аккаунта.</translation>
+        <translation>Решите проблему с платежом как можно скорее, чтобы избежать заморозки вашего бизнес-аккаунта.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2322,7 +2322,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Пожалуйста, улучшите аккаунт.</translation>
+        <translation>Улучшите аккаунт.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2658,7 +2658,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить облачную папку [B]%1[/B]?</translation>
+        <translation>Оставить уже сохранённую в MEGA папку [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
@@ -2688,7 +2688,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Будет выбран уже хранящийся в MEGA элемент.</translation>
+        <translation>Будет выбран уже сохранённый в MEGA элемент.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2747,27 +2747,27 @@ Please, refresh the list.</source>
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]Локальные[/B] файлы будут загружены в MEGA и добавлены как версии к облачным файлам.
-Пожалуйста, подождите завершения загрузки.</translation>
+Подождите завершения загрузки.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Облачные[/B] папки будут перемещены в Корзину MEGA.[BR]Оттуда вы сможете восстановить её.</translation>
+        <translation>Облачные папки будут перемещены в Корзину MEGA.[BR]Оттуда вы сможете восстановить их.</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] файлы?</translation>
+        <translation>Оставить уже сохранённые [B]в MEGA[/B] файлы?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] папки?</translation>
+        <translation>Оставить уже сохранённые [B]в MEGA[/B] папки?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Оставить [B]облачные[/B] элементы?</translation>
+        <translation>Оставить уже сохранённые [B]в MEGA[/B] элементы?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2802,12 +2802,12 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>К [B]облачному[/B] файлу будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] файлам будет добавлен суффикс типа (1).</numerusform></translation>
+        <translation><numerusform>К уже сохранённому в MEGA файлу будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA файлам будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA файлам будет добавлен суффикс типа (1).</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>К [B]облачной[/B] папке будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К [B]облачным[/B] папкам будет добавлен суффикс типа (1).</numerusform></translation>
+        <translation><numerusform>К уже сохранённой в MEGA папке будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA папкам будет добавлен суффикс типа (1).</numerusform><numerusform>К уже сохранённым в MEGA папкам будет добавлен суффикс типа (1).</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -2864,7 +2864,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Пожалуйста, введите код, сгенерированный вашим приложением для аутентификации</translation>
+        <translation>Введите код из приложения-аутентификатора</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2912,7 +2912,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>Приложение не может подключиться. Пожалуйста, проверьте подключение к Интернету и локальную конфигурацию межсетевого экрана (файервола). Обратите внимание, что многие антивирусы включают в себя файервол.</translation>
+        <translation>Приложение не может подключиться. Проверьте подключение к Интернету и локальную конфигурацию межсетевого экрана (файервола). Обратите внимание, что многие антивирусы включают в себя файервол.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2930,7 +2930,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>Наш SSL-ключ не может быть проверен. Вы могли подвергнуться атаке «человек посередине», или ваше антивирусное программное обеспечение может перехватывать ваши сообщения и вызывать эту проблему. Пожалуйста, отключите его и попробуйте снова.</translation>
+        <translation>Наш SSL-ключ не может быть проверен. Вы могли подвергнуться атаке «человек посередине», или ваше антивирусное программное обеспечение может перехватывать ваши сообщения и вызывать эту проблему. Отключите его и попробуйте снова.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3067,7 +3067,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Произошла ошибка при установке обновления. Пожалуйста, попробуйте позже или загрузите последнюю версию с: https://mega.nz/sync</translation>
+        <translation>Возникла проблема с установкой обновления. Повторите попытку позже или скачайте последнюю версию с https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3530,7 +3530,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Превышен лимит хранения данных. Пожалуйста, улучшите аккаунт.</translation>
+        <translation>Превышен лимит хранения данных. Улучшите аккаунт.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3660,12 +3660,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>Облачная синхронизируемая папка перемещёна в Корзину</translation>
+        <translation>Папка MEGA перемещёна в Корзину</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>У вас нет полного доступа к облачной синхронизируемой папке</translation>
+        <translation>У вас нет полного доступа к общей папке MEGA</translation>
     </message>
     <message>
         <source>Local fingerprint mismatch</source>
@@ -3695,7 +3695,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>Облачная синхронизируемая папка находится в Корзине</translation>
+        <translation>Папка MEGA находится в Корзине</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -4044,22 +4044,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation>Удалить облачный файл [B]%1[/B]?</translation>
+        <translation>Заменить уже сохранённый в MEGA файл [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation>Удалить облачную папку [B]%1[/B]?</translation>
+        <translation>Заменить уже сохранённую в MEGA папку [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation>Удалить локальный файл [B]%1[/B]?</translation>
+        <translation>Заменить локальный файл [B]%1[/B]?</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation>Удалить локальную папку [B]%1[/B]?</translation>
+        <translation>Заменить локальную папку [B]%1[/B]?</translation>
     </message>
 </context>
 <context>
@@ -5320,7 +5320,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Trash</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation>Элемент перемещён в корзину Linux</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5335,7 +5335,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Rubbish Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation>Элемент перемещён в Корзину MacOS</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5350,7 +5350,7 @@ Enter a different name</source>
     <message>
         <source>Moved to OS Recycle Bin</source>
         <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Перемещено в корзину</translation>
+        <translation>Элемент перемещён в корзину Windows</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5741,9 +5741,8 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-Папка не найдена.
-Пожалуйста, убедитесь, что указано правильное название папки.</translation>
+        <translation>Папка %1 не найдена.
+Убедитесь, что указано правильное название папки.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5757,9 +5756,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-Файл не найден.
-Пожалуйста, проверьте правильность имени файла.</translation>
+        <translation>Файл %1 не найден.
+Убедитесь, что указано правильное название файла.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6125,12 +6123,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папки с резервными копиями файлов, если нужно что-то оставить:</translation>
+        <translation>Резервные копии предыдущих версий синхронизируемых файлов будут безвозвратно удалены с вашего компьютера. Прежде чем продолжить, проверьте папки резервных копий, чтобы узнать, нужно ли что-то оставить.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>Резервные копии ранее синхронизированных файлов на компьютере будут полностью удалены. Проверьте папку «[A]» в Корзине MEGA, если нужно что-то оставить.</translation>
+        <translation>Резервные копии предыдущих версий синхронизируемых файлов будут безвозвратно удалены из MEGA. Прежде чем продолжить, проверьте папку «[A]» в Корзине аккаунта MEGA, если нужно что-то оставить.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6225,7 +6223,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (облачный кеш)</translation>
+        <translation>SyncDebris (в MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6235,7 +6233,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>Пожалуйста, сообщите нам, если найдёте ошибку. Помогите нам, предоставив как можно больше подробностей.</translation>
+        <translation>Сообщите нам, если у вас возникнут какие-либо ошибки. Помогите нам, предоставив как можно больше подробностей.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6320,7 +6318,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (облачный кеш):</translation>
+        <translation>SyncDebris (в MEGA):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6724,7 +6722,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>Перемещено в</translation>
+        <translation>Элемент перемещён в</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6744,7 +6742,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Вычисляются правила исключения. Подождите и повторите попытку.</translation>
+        <translation>Выполняется расчёт правил исключения. Ошибка будет исправлена после его завершения.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6799,7 +6797,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Удалено или перемещено в MEGA</translation>
+        <translation>Элемент удалён или перемещён в MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6901,6 +6899,34 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>Исправлено: %n</numerusform><numerusform>Исправлено: %n</numerusform><numerusform>Исправлено: %n</numerusform><numerusform>Исправлено: %n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>Все ошибки: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>Конфликты названий: %n</numerusform><numerusform>Конфликты названий: %n</numerusform><numerusform>Конфликты названий: %n</numerusform><numerusform>Конфликты названий: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>Конфликты типов элементов: %n</numerusform><numerusform>Конфликты типов элементов: %n</numerusform><numerusform>Конфликты типов элементов: %n</numerusform><numerusform>Конфликты типов элементов: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>Другое: %n</numerusform><numerusform>Другое: %n</numerusform><numerusform>Другое: %n</numerusform><numerusform>Другое: %n</numerusform></translation>
+    </message>
+</context>
+<context>
     <name>StalledIssuesDialog</name>
     <message>
         <source>Stalled Issues</source>
@@ -6960,7 +6986,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Smart mode</source>
         <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
-        <translation>Умный режим</translation>
+        <translation>Интеллектуальный режим</translation>
     </message>
     <message>
         <source>Let Mega solve sync issues
@@ -7470,12 +7496,12 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» была отключена, так как облачная папка находится в Корзине</translation>
+        <translation>Синхронизация «%1» была отключена, так как папка MEGA находится в Корзине</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Синхронизация «%1» отключена. У вас нет полного доступа к облачной папке (или её части).</translation>
+        <translation>Синхронизация «%1» отключена. У вас нет полного доступа к папке MEGA (или её части).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7731,7 +7757,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Smart</source>
         <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
-        <translation>Умный</translation>
+        <translation>Интеллектуальный</translation>
     </message>
     <message>
         <source>Let MEGA solve sync issues automatically</source>
@@ -8620,7 +8646,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Пожалуйста, улучшите аккаунт до Pro, чтобы продолжить немедленно, или подождите %1, чтобы продолжить бесплатно</translation>
+        <translation>Улучшите аккаунт, чтобы продолжить немедленно, или подождите %1, чтобы продолжить бесплатно</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8653,7 +8679,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Пожалуйста, улучшите аккаунт, чтобы получить больше места (загрузки будут автоматически возобновлены).</translation>
+        <translation>Улучшите аккаунт, чтобы получить больше места для хранения (загрузка возобновится автоматически).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8901,7 +8927,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>Ваш аккаунт был временно заблокирован для вашей безопасности. Пожалуйста, проверьте свою электронную почту и следуйте инструкциям, чтобы разблокировать аккаунт.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>

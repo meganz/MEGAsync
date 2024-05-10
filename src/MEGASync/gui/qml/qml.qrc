@@ -54,6 +54,7 @@
         <file>components/texts/SecondaryText.qml</file>
         <file>components/texts/Text.qml</file>
         <file>components/texts/ElidedText.qml</file>
+        <file>components/texts/HighlightedText.qml</file>
         <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/qmldir</file>
@@ -132,5 +133,13 @@
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
         <file>common/ColorTheme.qml</file>
+        <file>sync_exclusions/qmldir</file>
+        <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
+        <file>sync_exclusions/ExclusionsStrings.qml</file>
+        <file>sync_exclusions/RulesTable.qml</file>
+        <file>sync_exclusions/AddRuleDialog.qml</file>
+        <file>components/comboBoxes/qmldir</file>
+        <file>components/comboBoxes/ComboBox.qml</file>
+        <file>components/comboBoxes/Sizes.qml</file>
     </qresource>
 </RCC>

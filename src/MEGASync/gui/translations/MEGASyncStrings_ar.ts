@@ -145,7 +145,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>الرجاء إدخال اسم ملف صالح أو مسار مطلق.</translation>
+        <translation>أدخل اسم ملف صالح أو مسار كامل</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation>يرجى وصف المشكلة التي واجهتها بوضوح. كلما قدمت مزيداً من التفاصيل، كلما كان من الأسهل بالنسبة لنا حلها. سيتم مراجعة تقريرك بواسطة فريق التطوير لدينا.</translation>
+        <translation>قم بوصف المشكلة التي واجهتها بوضوح. كلما زادت التفاصيل التي تقدمها سيكون من الأسهل علينا حلها. سيتم مراجعة طلبك من قبل فريق التطوير لدينا.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -974,7 +974,7 @@
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation>يرجى الانتظار حتى اكتمال الترفيع الحالي.</translation>
+        <translation>انتظر حتى اكتمال الترفيع الحالي.</translation>
     </message>
 </context>
 <context>
@@ -1114,7 +1114,7 @@
     <message>
         <source>You have entered your current password, please enter a new password.</source>
         <translatorcomment>Informative message shown when user is trying to change his password with the current one.</translatorcomment>
-        <translation>لقد أدخلت كلمة المرور الحالية، يرجى إدخال كلمة مرور جديدة.</translation>
+        <translation>لقد أدخلت كلمة المرور الحالية، أدخل كلمة مرور جديدة.</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -1277,7 +1277,7 @@
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>يمكنك مساعدتنا في تحسين تطبيق MEGA عن طريق إرسال تقرير الخطأ هذا. إنه لا يحتوي على أي معلومات شخصية. إذا كنت ترغب في تزويدنا بمزيد من التفاصيل فيرجى كتابتها أدناه:</translation>
+        <translation>يمكنك مساعدتنا في تحسين تطبيق ميغا MEGA عن طريق إرسال تقرير الخطأ هذا. لا تحتوي على أي معلومات شخصية. إذا كنت ترغب في تزويدنا بمزيد من التفاصيل، فاكتبها أدناه:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1332,7 +1332,7 @@
     <message>
         <source>Waiting to finish scan to see if the file was moved or deleted.</source>
         <translatorcomment>Subtitle for the header widget of a sync stall when a file or folder cannot be found.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>في انتظار انتهاء الفحص لتحديد ما إذا كان الملف قد تم نقله أو حذفه.</translation>
     </message>
 </context>
 <context>
@@ -1508,7 +1508,7 @@
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation>يرجى حل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي تعليق لحساب الأعمال الخاص بك</translation>
+        <translation>قم بحل مشكلة الدفع الخاصة بك في أقرب وقت ممكن لتجنب أي توقيف لحساب الأعمال Business الخاص بك</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2320,7 +2320,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>يرجى ترقية حسابك.</translation>
+        <translation>قم بترقية حسابك.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2656,12 +2656,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>احتفظ بالمجلد [B]%1[/B] المخزن بالفعل في ميغا MEGA؟</translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>احتفظ بالعنصر [B]%1[/B] المخزن بالفعل في ميغا MEGA؟</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2681,12 +2681,12 @@ Please wait for the upload to complete.</source>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مع هذا الإجراء، سيتم اختيار العنصر المحلي.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مع هذا الإجراء سيتم اختيار العنصر المخزن بالفعل في ميغا MEGA.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2743,7 +2743,8 @@ Please, refresh the list.</source>
         <source>The [B]local files[/B] will be uploaded to MEGA and added as a version to the remote files.
 Please wait for the upload to complete.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the choosen local versions, [B] is for bold.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم ترفيع الملفات [B]المحلية[/B]  إلى ميغا MEGA وإضافتها كنسخ إلى الملفات الموجودة بالفعل في ميغا MEGA.
+انتظر حتى يكتمل الترفيع.</translation>
     </message>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
@@ -2860,7 +2861,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>يرجى إدخال الرمز الذي تم إنشاؤه بواسطة تطبيق المصادقة الخاص بك</translation>
+        <translation>أدخل الرمز الذي تم إنشاؤه بواسطة تطبيق المصادقة</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2893,22 +2894,22 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
         <translatorcomment>Label text saying the user that he has to go to the email to confirm the account CON-465</translatorcomment>
-        <translation>يُرجى التحقق من البريد الإلكتروني الخاص بك واضغط على الرابط لتأكيد حسابك.</translation>
+        <translation>تحقق من صندوق البريد الإلكتروني الخاص بك وانقر فوق الرابط لتأكيد حسابك.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translatorcomment>Error message displayed when trying to login and too many login attemps have been made before CON-465</translatorcomment>
-        <translation>لقد حاولت تسجيل الدخول عدة مرات.[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية</translation>
+        <translation>لقد حاولت تسجيل الدخول عدة مرات.[BR]انتظر حتى %1 وحاول مرة أخرى.</translation>
     </message>
     <message>
         <source>Invalid email or password. Please try again.</source>
         <translatorcomment>Message box shown when user enters incorrect email and/or password at login CON-465</translatorcomment>
-        <translation>عنوان بريد إلكتروني أو كلمة مرور غير صالحة. يرجى المحاولة مرة أخرى.</translation>
+        <translation>عنوان بريد إلكتروني أو كلمة مرور غير صالحين. حاول مرة أخرى.</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>التطبيق غير قادر على الاتصال. يرجى التحقق من الاتصال بالإنترنت و إعدادات جدار الحماية على جهازك. لاحظ أن معظم برامج مكافحة الفيروسات تشتمل على جدار حماية.</translation>
+        <translation>التطبيق غير قادر على الاتصال. تحقق من اتصال الإنترنت وتكوين جدار الحماية المحلي. لاحظ أن معظم برامج مكافحة الفيروسات تتضمن جدار حماية.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2926,7 +2927,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails. SNC-4122</translatorcomment>
-        <translation>لا يمكن التحقق من مفتاح SSL الخاص بنا. قد تأثرت بهجوم وسيط أو ربما يعترض برنامج مكافحة الفيروسات اتصالاتك ويسبب هذه المشكلة. يرجى تعطيله وحاول مرة أخرى.</translation>
+        <translation>لا يمكن التحقق من مفتاح SSL الخاص بنا. قد تتأثر بهجوم رجل في الوسط أو قد يقوم برنامج مكافحة الفيروسات الخاص بك باعتراض اتصالاتك والتسبب في هذه المشكلة. قم بتعطيله وحاول مرة أخرى.</translation>
     </message>
     <message>
         <source>You have been logged out because of this error: %1</source>
@@ -3063,7 +3064,7 @@ Please wait for the upload to complete.</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>حدث خطأ اثناء تثبيت التحديثات. يرجى إعادة المحاولة أو تحميل الإصدار الأخير من: https://mega.nz/sync</translation>
+        <translation>حدثت مشكلة أثناء تثبيت التحديث. حاول مرة أخرى لاحقًا أو قم بتنزيل أحدث إصدار من: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3528,7 +3529,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>تم تجاوز مساحة التخزين المتاحة. الرجاء الترقية الآن.</translation>
+        <translation>تم تجاوز مساحة التخزين المتاحة. قم بالترقية الآن.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3538,7 +3539,9 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
         <translatorcomment>Error triggered by SDK when an account has been suspended due to copyright violations.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم توقيف حساب ميغا MEGA الخاص بك مؤقتاً بسبب الادعاءات المتكررة بانتهاكات حقوق الطبع والنشر. هذا يعني أنه لا يمكنك الوصول إلى حسابك أو البيانات الموجودة فيه.
+
+تحقق من صندوق البريد الإلكتروني الخاص بك للحصول على مزيد من المعلومات حول كيفية تقديم إشعار مضاد.</translation>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
@@ -4038,22 +4041,22 @@ Please refresh the view</source>
     <message>
         <source>Are you sure you want to remove the remote file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استبدل الملف [B]%1[/B] المخزن بالفعل في ميغا MEGA؟</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the remote folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the remote folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استبدل المجلد [B]%1[/B] المخزن بالفعل في ميغا MEGA؟</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local file %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the local file.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استبدل الملف المحلي [B]%1[/B]؟</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>استبدل المجلد المحلي [B]%1[/B]؟</translation>
     </message>
 </context>
 <context>
@@ -4951,7 +4954,7 @@ Enter a different name</source>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>قم بمزامنة ملفاتك بين أجهزة الكمبيوتر الخاصة بك مع ميغا MEGA أي تغيير من جانب سينطبق على الجانب آخر.</translation>
+        <translation>قم بمزامنة ملفاتك بين أجهزة الكمبيوتر الخاصة بك و ميغا MEGA أي تغيير من جانب سينطبق على الجانب الآخر.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5210,7 +5213,7 @@ Enter a different name</source>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>الملفات والمجلدات لها مالك وتنتمي إلى مجموعة من المستخدمين. باستخدام مربع الحوار هذا يمكنك منح أذونات وصول مختلفة للملفات والمجلدات الجديدة التي تم إنشاؤها بواسطة تطبيق الحاسوب المكتبي للمستخدمين الذين ينتمون إلى نفس المجموعة وبقية المستخدمين في الكمبيوتر. إذا لم تكن بحاجة إلى تغييرهم فالرجاء تركهم على الإعدادات الافتراضية لأسباب أمنية.</translation>
+        <translation>الملفات والمجلدات لها مالك وتنتمي إلى مجموعة من المستخدمين. باستخدام مربع الحوار هذا يمكنك منح أذونات وصول مختلفة للملفات والمجلدات الجديدة التي تم إنشاؤها بواسطة تطبيق الحاسوب المكتبي للمستخدمين الذين ينتمون إلى نفس المجموعة وبقية المستخدمين في الكمبيوتر. إذا لم تكن بحاجة إلى تغييرها، فاتركها في الإعدادات الافتراضية لأسباب أمنية.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5730,9 +5733,8 @@ Enter a different name</source>
 Directory not found.
 Please verify the correct directory name was given.</source>
         <translatorcomment>Warning message when the directory name to open is incorrect</translatorcomment>
-        <translation>%1
-المجلد غير موجود.
-يرجى التأكد من إعطاء اسم المجلد الصحيح.</translation>
+        <translation>لم يتم العثور على المجلد %1.
+تحقق من إعطاء اسم المجلد الصحيح.</translation>
     </message>
     <message>
         <source>%1 already exists.
@@ -5746,9 +5748,8 @@ Do you want to replace it?</source>
 File not found.
 Please verify the correct file name was given.</source>
         <translatorcomment>Warning message when the file name to open is incorrect</translatorcomment>
-        <translation>%1
-الملف غير موجود.
- الرجاء التحقق من إعطاء اسم الملف الصحيح.</translation>
+        <translation>لم يتم العثور على الملف %1.
+تحقق من إعطاء اسم الملف الصحيح.</translation>
     </message>
     <message>
         <source>&apos;%1&apos; is write protected.
@@ -6114,12 +6115,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation>سيتم حذف النسخ الاحتياطية من الإصدارات السابقة من الملفات التي تم مزامنتها مع حاسوبك بشكل دائم. يرجى التدقيق في مجلدات النسخ الاحتياطية الخاصة بك لمعرفة ما اذا كنت بحاجة للاحتفاظ بشيء ما قبل الاستمرار:</translation>
+        <translation>سيتم حذف النسخ الاحتياطية من النسخ السابقة من الملفات المتزامنة نهائيًا من حاسوبك. تحقق من مجلدات النسخ الاحتياطي لمعرفة ما إذا كنت بحاجة إلى إنقاذ شيء ما قبل المتابعة.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation>سيتم حذف النسخ الاحتياطية من الإصدارات السابقة من الملفات التي تم مزامنتها في ميغا MEGA بشكل دائم. يرجى التدقيق في [A] مجلدك في سلة المحذوفات على حسابك في ميغا MEGA لمعرفة ما اذا كنت بحاجة للاحتفاظ بشيء ما قبل الاستمرار.</translation>
+        <translation>سيتم حذف النسخ الاحتياطية من النسخ السابقة من الملفات المتزامنة نهائيًا من ميغا MEGA. تحقق من [A] مجلدك في سلة المحذوفات في حساب ميغا MEGA الخاص بك لمعرفة ما إذا كنت بحاجة إلى إنقاذ شيء ما قبل المتابعة.</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6224,7 +6225,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
-        <translation>يرجى إعلامنا إذا واجهت أي مشاكل. ساعدنا بتقديم أكبر قدر ممكن من التفاصيل.</translation>
+        <translation>أخبرنا إذا واجهت أي مشاكل. ساعدنا من خلال تقديم أكبر قدر ممكن من التفاصيل.</translation>
     </message>
     <message>
         <source>Report Issue</source>
@@ -6886,7 +6887,35 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Solved</source>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم الحل</translation>
+    </message>
+</context>
+<context>
+    <name>StalledIssueTab</name>
+    <message numerus="yes">
+        <source>Resolved: %n</source>
+        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
+        <translation><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform><numerusform>تم الحل: %n</numerusform></translation>
+    </message>
+    <message>
+        <source>All issues: %1</source>
+        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
+        <translation>كل المشاكل: %1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Name conflict: %n</source>
+        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
+        <translation><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform><numerusform>تعارضات الأسماء: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Item type conflict: %n</source>
+        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
+        <translation><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform><numerusform>تعارضات نوع العنصر: %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Other: %n</source>
+        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
+        <translation><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform><numerusform>أخرى: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8604,7 +8633,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>للمتابعة فوراً يرجى الترقية إلى برو Pro، أو انتظر %1 للمتابعة مجانًا</translation>
+        <translation>قم بترقية حسابك للمتابعة فورًا أو الانتظار %1 للمتابعة مجانًا</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
@@ -8637,7 +8666,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>يرجى ترقية حسابك للاستمتاع بمزيد من مساحة التخزين (ستستمر عمليات الترفيع بشكل تلقائي).</translation>
+        <translation>قم بترقية حسابك للاستمتاع بمساحة تخزين أكبر (سيتم استئناف الترفيعات تلقائيًا).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8885,7 +8914,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation>تم قفل حسابك مؤقتًا من أجل سلامتك. يرجى التحقق من بريدك الإلكتروني واتباع خطواته لفتح حسابك.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resend email</source>

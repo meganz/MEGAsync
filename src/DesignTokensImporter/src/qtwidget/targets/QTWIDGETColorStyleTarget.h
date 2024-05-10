@@ -4,7 +4,6 @@
 #include "IQTWIDGETStyleTarget.h"
 
 #include <QMultiMap>
-#include <string>
 
 namespace DTI
 {

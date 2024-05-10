@@ -10,10 +10,10 @@ namespace DTI
     public:
         PathProvider() = delete;
 
+        static const QString RELATIVE_MEGASYNC_PATH;
         static const QString RELATIVE_GENERATED_PATH;
         static const QString RELATIVE_DESIGN_TOKENS_FILE_PATH;
         static const QString RELATIVE_UI_PATH;
-        static const QString RELATIVE_GUI_PRI_PATH;
         static const QString RELATIVE_UI_WIN_PATH;
         static const QString RELATIVE_UI_LINUX_PATH;
         static const QString RELATIVE_UI_MAC_PATH;
@@ -25,7 +25,6 @@ namespace DTI
         static const QString RELATIVE_CSS_LINUX_PATH;
         static const QString RELATIVE_CSS_MAC_PATH;
         static const QString RELATIVE_HASHES_PATH;
-        static const QString RELATIVE_CMAKE_FILE_LIST_DIR_PATH;
 
         static const QString JSON_NAME_FILTER;
         static const QString UI_NAME_FILTER;

@@ -431,41 +431,42 @@ void NameConflict::onActionClicked(int actionId)
 
             renameDialog->init();
 
-            QPointer<NameConflict> context = this;
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                                                       [this, context, issueData, titleFileName, conflictIndex, renameDialog](){
-                if(!context)
+                [this, issueData, titleFileName, conflictIndex, renameDialog]()
                 {
-                    return;
-                }
-
-                if(renameDialog->result() == QDialog::Accepted)
-                {
-                    auto newName = renameDialog->getName();
-
-                    bool areAllSolved(false);
-
-                    if(isCloud())
+                    if (renameDialog->result() == QDialog::Accepted)
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
-                    }
-                    else
-                    {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRename(newName, conflictIndex, mDelegateWidget->getCurrentIndex());
-                    }
+                        auto newName = renameDialog->getName();
 
-                    if(areAllSolved)
-                    {
-                        emit allSolved();
-                    }
+                        bool areAllSolved(false);
 
-                    //Now, close the editor because the action has been finished
-                    if(mDelegateWidget)
-                    {
-                        emit refreshUi();
+                        if (isCloud())
+                        {
+                            areAllSolved = MegaSyncApp->getStalledIssuesModel()
+                                               ->solveCloudConflictedNameByRename(newName,
+                                                   conflictIndex,
+                                                   mDelegateWidget->getCurrentIndex());
+                        }
+                        else
+                        {
+                            areAllSolved = MegaSyncApp->getStalledIssuesModel()
+                                               ->solveLocalConflictedNameByRename(newName,
+                                                   conflictIndex,
+                                                   mDelegateWidget->getCurrentIndex());
+                        }
+
+                        if (areAllSolved)
+                        {
+                            emit allSolved();
+                        }
+
+                        //Now, close the editor because the action has been finished
+                        if (mDelegateWidget)
+                        {
+                            emit refreshUi();
+                        }
                     }
-                }
-            });
+                });
         }
         else if(actionId == REMOVE_ID)
         {
@@ -542,14 +543,9 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
             msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
-            QPointer<NameConflict> context = this;
-            msgInfo.finishFunc = [this, context, issueData, handle, filePath, titleFileName, conflictIndex](QMessageBox* msgBox)
+            msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](
+                                     QMessageBox* msgBox)
             {
-                if(!context)
-                {
-                    return;
-                }
-
                 if (msgBox->result() == QDialogButtonBox::Yes)
                 {
                     bool areAllSolved(false);

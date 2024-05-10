@@ -51,7 +51,6 @@ Item {
         Layout.preferredHeight: height
         radius: 16
         color: ColorTheme.surface2
-
         state: stateDisabled
         states: [
             State {

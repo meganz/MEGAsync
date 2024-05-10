@@ -12,7 +12,9 @@
 SyncSettingsElements::SyncSettingsElements(QObject *parent) :
     QObject(parent),
     syncAccountFullMessageUI(new Ui::SyncAccountFullMessage),
-    syncStallModeSelectorUI(new Ui::SyncStallModeSelector)
+    syncStallModeSelectorUI(new Ui::SyncStallModeSelector),
+    mSyncAccountFull(nullptr),
+    mSyncStallModeSelector(nullptr)
 {
 }
 
@@ -24,14 +26,14 @@ SyncSettingsElements::~SyncSettingsElements()
 
 void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 {
-    QWidget* syncAccountFull(new QWidget());
-    syncAccountFullMessageUI->setupUi(syncAccountFull);
+    mSyncAccountFull = new QWidget();
+    syncAccountFullMessageUI->setupUi(mSyncAccountFull);
     connect(syncAccountFullMessageUI->bBuyMoreSpace, &QPushButton::clicked, this, &SyncSettingsElements::onPurchaseMoreStorage);
 
-    syncSettingsUi->insertUIElement(syncAccountFull, 1);
+    syncSettingsUi->insertUIElement(mSyncAccountFull, 1);
 
-    QWidget* syncStallModeSelector(new QWidget());
-    syncStallModeSelectorUI->setupUi(syncStallModeSelector);
+    mSyncStallModeSelector = new QWidget();
+    syncStallModeSelectorUI->setupUi(mSyncStallModeSelector);
     syncStallModeSelectorUI->LearnMoreButton->setAutoDefault(false);
 
     auto mode = Preferences::instance()->stalledIssuesMode();
@@ -53,12 +55,18 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     connect(Preferences::instance().get(), &Preferences::valueChanged, this, &SyncSettingsElements::onPreferencesValueChanged);
 
-    syncSettingsUi->insertUIElement(syncStallModeSelector, 2);
+    syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
 }
 
 void SyncSettingsElements::setOverQuotaMode(bool mode)
 {
     syncAccountFullMessageUI->wOQError->setVisible(mode);
+}
+
+void SyncSettingsElements::retranslateUi()
+{
+    syncAccountFullMessageUI->retranslateUi(mSyncAccountFull);
+    syncStallModeSelectorUI->retranslateUi(mSyncStallModeSelector);
 }
 
 void SyncSettingsElements::onPurchaseMoreStorage()

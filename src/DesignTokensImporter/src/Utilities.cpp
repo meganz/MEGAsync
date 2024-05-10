@@ -1,5 +1,4 @@
 #include "Utilities.h"
-#include "PathProvider.h"
 
 #include <QByteArray>
 #include <QCryptographicHash>

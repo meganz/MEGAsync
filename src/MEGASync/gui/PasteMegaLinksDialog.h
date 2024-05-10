@@ -24,6 +24,8 @@ public:
     static const int FOLDER_LINK_WITH_FILE_SIZE = 43;
     static const int NEW_FOLDER_LINK_WITH_FILE_SIZE = 52;
 
+    static const int NEW_COLLECTION_LINK_SIZE = 42;
+
 
     QString base64regExp = QString::fromUtf8("A-Za-z0-9_-");
 
@@ -38,6 +40,8 @@ public:
 
     QRegExp rxHeaderFolderFile = QRegExp(QString::fromUtf8("^#F![%1]{8}![%1]{22}\\?[%1]{8}").arg(base64regExp));
     QRegExp rxHeaderFolderFileNew = QRegExp(QString::fromUtf8("^folder\\/[%1]{8}#[%1]{22}\\/file\\/[%1]{8}").arg(base64regExp));
+
+    QRegExp rxHeaderCollectionNew = QRegExp(QString::fromUtf8("^collection\\/[%1]{8}#[%1]{22}").arg(base64regExp));
 
     explicit PasteMegaLinksDialog(QWidget *parent = 0);
     ~PasteMegaLinksDialog();

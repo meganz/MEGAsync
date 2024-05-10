@@ -2,8 +2,6 @@
 #define QTWIDGET_STYLE_TARGET_FACTORY_H
 
 #include "IQTWIDGETStyleTarget.h"
-#include "Types.h"
-
 
 #include <unordered_map>
 #include <memory>
