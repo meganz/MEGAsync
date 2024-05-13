@@ -19,15 +19,15 @@ namespace DTI
 
     private:
         TokenManager();
-        ThemedColorData parseTheme(QFile& designTokensFile, const CoreData& coreData);
-        CoreData parseCore(QFile& designTokensFile);
-        void recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData);
+        ThemedColorData parseTheme(QFile& designTokensFile, const ColorData& coreData);
+        ColorData parseCore(QFile& designTokensFile);
+        void recurseCore(QString category, const QJsonObject& coreColors, ColorData& coreData);
 
         QString mCurrentDir;
     };
-} // namespace DTI
+}
 
-#endif // TOKENMANAGER_H
+#endif
 
 
 

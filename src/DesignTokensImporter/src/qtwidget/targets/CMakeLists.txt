@@ -3,10 +3,10 @@
 ##################################
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/IQTWIDGETStyleTarget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/QTWIDGETColorStyleTarget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/QTWIDGETColorStyleTarget.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/QTWIDGETStyleTargetFactory.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsDesignTarget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsColorDesignTarget.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsColorDesignTarget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsDesignTargetFactory.h
 
     PARENT_SCOPE
 )

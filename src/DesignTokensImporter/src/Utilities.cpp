@@ -115,9 +115,9 @@ bool Utilities::isFileValid(const QString& path)
     return true;
 }
 
-QMap<QString, QString> Utilities::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap)
+ColorData Utilities::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap)
 {
-    QMap<QString, QString> colourMap;
+    ColorData colourData;
 
     const QStringList categoryKeys = jsonThemeObject.keys();
     for (int index = 0; index < categoryKeys.size(); ++index)
@@ -156,7 +156,7 @@ QMap<QString, QString> Utilities::parseColorTheme(const QJsonObject& jsonThemeOb
                         int indexPrefix = token.indexOf(COLOUR_TOKEN_START);
                         if (indexPrefix != -1)
                         {
-                            colourMap.insert(token.mid(indexPrefix + COLOUR_TOKEN_START.size()), color);
+                            colourData.insert(token.mid(indexPrefix + COLOUR_TOKEN_START.size()), color);
                         }
                     }
                     else
@@ -168,7 +168,7 @@ QMap<QString, QString> Utilities::parseColorTheme(const QJsonObject& jsonThemeOb
         }
     }
 
-    return colourMap;
+    return colourData;
 }
 
 void Utilities::traverseDirectory(const QString &directoryPath, const QStringList &filters, QStringList &filePaths)
@@ -179,7 +179,8 @@ void Utilities::traverseDirectory(const QString &directoryPath, const QStringLis
         if (fileInfo.isDir())
         {
             traverseDirectory(fileInfo.absoluteFilePath(), filters, filePaths);
-        } else
+        }
+        else
         {
             for (const QString& filter : filters)
             {
@@ -204,8 +205,7 @@ void Utilities::traverseDirectory(const QString &directoryPath, const QStringLis
 //! OR if path was already present in that file
 //! \returns false otherwise
 //!
-bool Utilities::addToResources(const QString& filePath,
-                               const QString& qrcPath)
+bool Utilities::addToResources(const QString& filePath, const QString& qrcPath)
 {
     QFile qrcFile(qrcPath);
 
@@ -481,18 +481,6 @@ bool Utilities::areAllStringsPresent(const QStringList& list1,
     return (set1 - set2).isEmpty();
 }
 
-Utilities::Theme Utilities::getTheme(const QString& filePath)
-{
-    Theme theme = Theme::LIGHT;
-
-    if (filePath.contains("Dark"))
-    {
-        theme = Theme::DARK;
-    }
-
-    return theme;
-}
-
 QString Utilities::themeToString(Theme theme)
 {
     static const QMap<Utilities::Theme, QLatin1String> themeMap = {
@@ -509,15 +497,6 @@ QString Utilities::resolvePath(const QString& basePath, const QString& relativeP
     QString resolvedAbsolutePath = QDir(combinedPath).absolutePath();
 
     return resolvedAbsolutePath;
-}
-
-QString Utilities::targetToString(Targets target)
-{
-    static const QMap<Targets, QLatin1String> targetsMap = {
-        {Targets::ColorStyle, QLatin1String("ColorStyle")}
-    };
-
-    return targetsMap.value(target);
 }
 
 bool Utilities::writeStyleSheetToFile(const QString& css, const QString& filePath)

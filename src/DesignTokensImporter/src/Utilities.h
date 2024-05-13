@@ -27,7 +27,7 @@ namespace DTI
                                           const QString& nameFilter = QString::fromLatin1("*.*"),
                                           bool findInSubfolders = false);
         static bool isFileValid(const QString& path);
-        static QMap<QString, QString> parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap);
+        static QMap<QString, QString> parseColorTheme(const QJsonObject& jsonThemeObject, const ColorData& colorData);
         static void traverseDirectory(const QString& directoryPath,
                                       const QStringList& filters,
                                       QStringList& filePaths);
@@ -48,10 +48,8 @@ namespace DTI
                                                   const QString& stopMarker);
         static bool areAllStringsPresent(const QStringList& list1, const QStringList& list2);
         static bool writeStyleSheetToFile(const QString& css, const QString& filePath);
-        static Theme getTheme(const QString& filePath);
         static QString themeToString(Utilities::Theme theme);
         static QString resolvePath(const QString& basePath, const QString& relativePath);
-        static QString targetToString(Targets target);
         //!
         //! \brief Utilities::findValueByKey
         //! \param myMap Qmap with key/value pairs

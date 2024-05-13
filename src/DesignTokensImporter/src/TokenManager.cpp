@@ -3,7 +3,7 @@
 #include "PathProvider.h"
 #include "IThemeGenerator.h"
 #include "QMLThemeGenerator.h"
-#include "QTWIDGETStyleGenerator.h"
+#include "WidgetsDesignGenerator.h"
 
 #include <QDebug>
 #include <QDir>
@@ -53,15 +53,15 @@ void TokenManager::run()
     const ThemedColorData& themesData = parseTheme(designTokensFile, coreData);
 
     // qml style generator entry point.
-    std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
-    styleGenerator->start(themesData);
+    std::unique_ptr<IThemeGenerator> qmlDesignGenerator{new QmlThemeGenerator()};
+    qmlDesignGenerator->start(themesData);
 
     // qtwidget style generator entry point.
-    std::unique_ptr<IThemeGenerator> qtWidgetStyleGenerator{new QTWIDGETStyleGenerator()};
-    qtWidgetStyleGenerator->start(themesData);
+    std::unique_ptr<IThemeGenerator> widgetsDesignGenerator{new WidgetsDesignGenerator()};
+    widgetsDesignGenerator->start(themesData);
 }
 
-void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
+void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, ColorData &coreData)
 {
     const QStringList tokenKeys = coreColors.keys();
 
@@ -102,7 +102,7 @@ void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, 
     }
 }
 
-CoreData TokenManager::parseCore(QFile& designTokensFile)
+ColorData TokenManager::parseCore(QFile& designTokensFile)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
@@ -168,8 +168,8 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
         {
             QJsonObject themeObject = jsonObject.value(key).toObject();
 
-            ColourMap colourMap = Utilities::parseColorTheme(themeObject, coreData);
-            if (colourMap.isEmpty())
+            ColorData colorData = Utilities::parseColorTheme(themeObject, coreData);
+            if (colorData.isEmpty())
             {
                 qDebug() << errorPrefix << "no color theme data for " << key;
                 return;
@@ -182,7 +182,7 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
                 return;
             }
 
-            themedColorData.insert(theme, colourMap);
+            themedColorData.insert(theme, colorData);
         }
     });
 

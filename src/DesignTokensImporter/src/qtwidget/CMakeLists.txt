@@ -5,8 +5,8 @@
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/targets)
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/QTWIDGETStyleGenerator.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/QTWIDGETStyleGenerator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsDesignGenerator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/WidgetsDesignGenerator.cpp
 
     PARENT_SCOPE
 )

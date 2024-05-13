@@ -6,15 +6,9 @@
 
 namespace DTI
 {
-typedef QMap<QString, QString> PropertiesMap;
-typedef QMap<QString, QString> ColourMap;
-typedef QMap<QString, QString> CoreData;
-typedef QMap<QString, CoreData> ThemedColorData;
-
-enum class Targets
-{
-    ColorStyle
-};
+    typedef QMap<QString, QString> CoreData;
+    typedef QMap<QString, QString> ColorData;
+    typedef QMap<QString, ColorData> ThemedColorData;
 }
 
 #endif // TYPES_H
