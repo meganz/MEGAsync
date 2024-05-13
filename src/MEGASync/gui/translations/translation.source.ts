@@ -8318,11 +8318,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Deep rescan</translation>
     </message>
     <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>Edit .megaignore</translation>
-    </message>
-    <message>
         <source>Manage exclusions</source>
         <translatorcomment>Action for openning sync exclusions dialog.SAT-449</translatorcomment>
         <translation type="unfinished">Manage exclusions</translation>
