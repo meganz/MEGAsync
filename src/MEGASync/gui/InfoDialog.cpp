@@ -23,6 +23,7 @@
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "StatsEventHandler.h"
 
 #include "control/Utilities.h"
 #include "platform/Platform.h"

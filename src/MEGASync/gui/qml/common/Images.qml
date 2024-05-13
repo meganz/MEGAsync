@@ -13,7 +13,7 @@ QtObject {
     readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
-    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesPath + "/sync_exclusions/")
+    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths

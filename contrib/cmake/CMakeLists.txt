@@ -401,7 +401,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/qml/AccountInfoData.h
     ${MEGAsyncDir}/gui/qml/QmlDeviceName.h
 
->>>>>>> d124faed8 (Update CMakeLists.txt)
     ${MEGAsyncDir}/gui/onboarding/Onboarding.h
     ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
     ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h

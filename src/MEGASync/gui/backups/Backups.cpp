@@ -3,7 +3,7 @@
 #include "BackupsQmlDialog.h"
 #include "BackupsModel.h"
 
-#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
+#include "SyncExclusions/SyncExclusions.h"
 
 #include "DialogOpener.h"
 #include "MegaApplication.h"
@@ -61,7 +61,7 @@ void Backups::openExclusionsDialog(const QStringList& folderPaths) const
     {
         // TODO: Change the code to pass the full list to the exclusions dialog
         QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
-        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(folderPaths.at(0), true, parentWidget);
-        DialogOpener::showDialog(exclusionRules);
+        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(parentWidget, folderPaths.at(0));
+        DialogOpener::showDialog(exclusions);
     }
 }
