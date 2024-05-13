@@ -6,6 +6,7 @@
 
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
+#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"
 #include "SyncExclusions/ExclusionsQmlDialog.h"
@@ -243,8 +244,21 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
     if(mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        showRemoveSyncConfirmationDialog(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
+}
+
+void SyncSettingsUIBase::showRemoveSyncConfirmationDialog(std::shared_ptr<SyncSettings> sync)
+{
+    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
+
+    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog, [dialog, this, sync]()
+    {
+        if (dialog->result() == QDialog::Accepted)
+        {
+            removeSync(sync);
+        }
+    });
 }
 
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)

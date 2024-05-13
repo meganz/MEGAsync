@@ -56,7 +56,7 @@ public:
 
         connect(table, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
         connect(table, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
+        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::showRemoveSyncConfirmationDialog);
         connect(table, &TableType::signaladdExclusions, this, &SyncSettingsUIBase::openExclusionsDialog);
         connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
         connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
@@ -208,6 +208,8 @@ protected slots:
     void openMegaIgnore(std::shared_ptr<SyncSettings>);
     void showOpenMegaIgnoreError();
     void onOpenMegaIgnoreFinished();
+
+    void showRemoveSyncConfirmationDialog(std::shared_ptr<SyncSettings> sync);
 
 private:
     void initTable();
