@@ -134,6 +134,27 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
+# Install stuff
+if (UNIX AND NOT APPLE)
+    install(TARGETS MEGAsync
+        RUNTIME
+        DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
+    #Install vcpkg dynamic libraries in locations defined by GNUInstallDirs.
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        SET(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/debug/lib/")
+    else()
+        SET(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib/")
+    endif()
+
+    install(DIRECTORY "${vcpkg_lib_folder}"
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            FILES_MATCHING
+            PATTERN "lib*.so*"
+            PATTERN "manual-link" EXCLUDE
+            PATTERN "pkgconfig" EXCLUDE)
+endif()
+
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 if (MSVC)
     add_custom_command(
