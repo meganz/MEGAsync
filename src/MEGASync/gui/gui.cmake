@@ -438,7 +438,9 @@ set(DESKTOP_APP_GUI_RESOURCES
     gui/qml/qml.qrc
 )
 
-set(QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml CACHE STRING "Qt Creator extra qml import paths")
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
 
 if (CMAKE_HOST_APPLE)
     add_custom_command(
