@@ -13,9 +13,10 @@
 
 using namespace DTI;
 
-static const QString CoreMain = "Core/Main";
-static const QString CoreColors = "Colors";
-static const QString SemanticTokens = "Semantic tokens";
+static const QString CoreMain = QString::fromLatin1("Core/Main");
+static const QString CoreColors = QString::fromLatin1("Colors");
+static const QString SemanticTokens = QString::fromLatin1("Semantic tokens");
+static const QString ColorTokenStart = QString::fromLatin1("color-");
 
 TokenManager::TokenManager()
 {
@@ -61,7 +62,7 @@ void TokenManager::run()
     widgetsDesignGenerator->start(themesData);
 }
 
-void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, ColorData &coreData)
+void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
 {
     const QStringList tokenKeys = coreColors.keys();
 
@@ -102,7 +103,63 @@ void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, 
     }
 }
 
-ColorData TokenManager::parseCore(QFile& designTokensFile)
+ColorData TokenManager::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreData)
+{
+    ColorData colourData;
+
+    const QStringList categoryKeys = jsonThemeObject.keys();
+    for (int index = 0; index < categoryKeys.size(); ++index)
+    {
+        const QString& category = categoryKeys[index];
+        QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
+
+        const QStringList tokenKeys = categoryObject.keys();
+        for (int index = 0; index < tokenKeys.size(); ++index)
+        {
+            const QString& token = tokenKeys[index];
+
+            QJsonObject tokenObject = categoryObject[token].toObject();
+            QJsonValue jType = tokenObject["type"];
+            QJsonValue jValue = tokenObject["value"];
+            //QJsonValue jAlpha = tokenObject["alpha"];
+
+            if (!jType.isNull() && !jValue.isNull()) // && !jAlpha.isNull())
+            {
+                QString type = jType.toString();
+
+                if (type == "color")
+                {
+                    QString value = jValue.toString();
+                    value.remove("{").remove("}");
+                    //float alpha = jAlpha.toString().toFloat();
+
+                    if (coreData.contains(value))
+                    {
+                        QString coreColor = coreData[value];
+                        //QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
+                        //QString color = "#" + alphaString + coreColor;
+                        QString color = "#" + coreColor;
+
+                        // Strip "--color-" or "-color-" from beginning of token
+                        int indexPrefix = token.indexOf(ColorTokenStart);
+                        if (indexPrefix != -1)
+                        {
+                            colourData.insert(token.mid(indexPrefix + ColorTokenStart.size()), color);
+                        }
+                    }
+                    else
+                    {
+                        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
+                    }
+                }
+            }
+        }
+    }
+
+    return colourData;
+}
+
+CoreData TokenManager::parseCore(QFile& designTokensFile)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
@@ -168,7 +225,7 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
         {
             QJsonObject themeObject = jsonObject.value(key).toObject();
 
-            ColorData colorData = Utilities::parseColorTheme(themeObject, coreData);
+            ColorData colorData = parseColorTheme(themeObject, coreData);
             if (colorData.isEmpty())
             {
                 qDebug() << errorPrefix << "no color theme data for " << key;

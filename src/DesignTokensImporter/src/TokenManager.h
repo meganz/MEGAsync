@@ -1,5 +1,5 @@
-#ifndef TOKENMANAGER_H
-#define TOKENMANAGER_H
+#ifndef DTI_TOKEN_MANAGER_H
+#define DTI_TOKEN_MANAGER_H
 
 #include "Types.h"
 
@@ -20,8 +20,9 @@ namespace DTI
     private:
         TokenManager();
         ThemedColorData parseTheme(QFile& designTokensFile, const ColorData& coreData);
-        ColorData parseCore(QFile& designTokensFile);
-        void recurseCore(QString category, const QJsonObject& coreColors, ColorData& coreData);
+        CoreData parseCore(QFile& designTokensFile);
+        void recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData);
+        ColorData parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& colorData);
 
         QString mCurrentDir;
     };

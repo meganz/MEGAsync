@@ -1,5 +1,5 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef DTI_TYPES_H
+#define DTI_TYPES_H
 
 #include <QMap>
 #include <QString>
@@ -11,4 +11,4 @@ namespace DTI
     typedef QMap<QString, ColorData> ThemedColorData;
 }
 
-#endif // TYPES_H
+#endif

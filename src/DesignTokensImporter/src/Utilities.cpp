@@ -12,10 +12,9 @@
 #include <QTextStream>
 #include <QTemporaryFile>
 
-namespace DTI
-{
-static const QString COLOUR_TOKEN_START = QString::fromLatin1("color-");
 static const qint64 FILE_READ_BUFFER_SIZE = 8192;
+
+using namespace DTI;
 
 //!
 //! \brief Utilities::createDirectory
@@ -115,63 +114,7 @@ bool Utilities::isFileValid(const QString& path)
     return true;
 }
 
-ColorData Utilities::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreMap)
-{
-    ColorData colourData;
-
-    const QStringList categoryKeys = jsonThemeObject.keys();
-    for (int index = 0; index < categoryKeys.size(); ++index)
-    {
-        const QString& category = categoryKeys[index];
-        QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
-
-        const QStringList tokenKeys = categoryObject.keys();
-        for (int index = 0; index < tokenKeys.size(); ++index)
-        {
-            const QString& token = tokenKeys[index];
-
-            QJsonObject tokenObject = categoryObject[token].toObject();
-            QJsonValue jType = tokenObject["type"];
-            QJsonValue jValue = tokenObject["value"];
-            //QJsonValue jAlpha = tokenObject["alpha"];
-
-            if (!jType.isNull() && !jValue.isNull()) // && !jAlpha.isNull())
-            {
-                QString type = jType.toString();
-
-                if (type == "color")
-                {
-                    QString value = jValue.toString();
-                    value.remove("{").remove("}");
-                    //float alpha = jAlpha.toString().toFloat();
-
-                    if (coreMap.contains(value))
-                    {
-                        QString coreColor = coreMap[value];
-                        //QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
-                        //QString color = "#" + alphaString + coreColor;
-                        QString color = "#" + coreColor;
-
-                        // Strip "--color-" or "-color-" from beginning of token
-                        int indexPrefix = token.indexOf(COLOUR_TOKEN_START);
-                        if (indexPrefix != -1)
-                        {
-                            colourData.insert(token.mid(indexPrefix + COLOUR_TOKEN_START.size()), color);
-                        }
-                    }
-                    else
-                    {
-                        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
-                    }
-                }
-            }
-        }
-    }
-
-    return colourData;
-}
-
-void Utilities::traverseDirectory(const QString &directoryPath, const QStringList &filters, QStringList &filePaths)
+void Utilities::traverseDirectory(const QString& directoryPath, const QStringList& filters, QStringList& filePaths)
 {
     QDir dir(directoryPath);
     foreach (const QFileInfo& fileInfo, dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot))
@@ -306,109 +249,6 @@ QString Utilities::getFileHash(const QString& filePath)
     return hashString;
 }
 
-QMap<QString, QMap<QString, QString>> Utilities::readHashesJSONFile(const QString& filePath)
-{
-    QMap<QString, QMap<QString, QString>> result;
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "Utilities::readHashesJSONFile - Error opening file" << filePath;
-        return result;
-    }
-
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
-    if (!jsonDoc.isObject())
-    {
-        qDebug() << "Utilities::readHashesJSONFile - ERROR! Invalid JSON format";
-        return result;
-    }
-
-    QJsonObject rootObj = jsonDoc.object();
-
-
-    for (auto it = rootObj.begin(); it != rootObj.end(); ++it)
-    {
-        QString objectName = it.key();
-        QJsonObject innerObj = it.value().toObject();
-        QMap<QString, QString> fileToHashMap;
-
-        for (auto innerIt = innerObj.begin(); innerIt != innerObj.end(); ++innerIt)
-        {
-            fileToHashMap.insert(innerIt.key(), innerIt.value().toString());
-        }
-
-        result.insert(objectName, fileToHashMap);
-    }
-
-    return result;
-}
-
-bool Utilities::writeHashesJsonFile(const QList<QStringList> &filePaths,
-                                    const QStringList &jsonObjectNames,
-                                    const QString &outputFilePath)
-{
-    // Check if the number of filePaths and names is the same
-    if (filePaths.size() != jsonObjectNames.size())
-    {
-        qDebug() << "Utilities::writeHashesJsonFile - ERROR: The number of filePaths and JSON object names must be the same.";
-        return false;
-    }
-
-    // Verify that all files exist
-    for (const QStringList& pathList : filePaths)
-    {
-        for (const QString& filePath : pathList)
-        {
-            if (!isFileValid(filePath))
-            {
-                qDebug() << "Utilities::writeHashesJsonFile - ERROR: Invalid filePath: " << filePath;
-                return false;
-            }
-        }
-    }
-
-    // Create a JSON object
-    QJsonObject mainJsonObject;
-
-    // Iterate over each set of filePaths and values
-    for (int i = 0; i < filePaths.size(); ++i)
-    {
-        QJsonObject jsonObject;
-
-        // Add data to the JSON object
-        for (const QString& filePath : filePaths[i])
-        {
-            jsonObject[filePath] = getFileHash(filePath);
-        }
-
-        // Add the JSON object to the main JSON object with the specified name
-        mainJsonObject[jsonObjectNames[i]] = jsonObject;
-    }
-
-    return writeJSONToFile(QJsonDocument(mainJsonObject), outputFilePath);
-}
-
-QJsonObject Utilities::createWidgetStyleSheet(const QString& objectName,
-                                              const QMap<QString, QString>& properties)
-{
-    QJsonObject widget;
-    widget["objectName"] = objectName;
-
-    QStringList propertiesValues;
-    for (auto it = properties.constBegin(); it != properties.constEnd(); ++it)
-    {
-        propertiesValues << QString("%1: %2").arg(it.key(), it.value());
-    }
-
-    widget["styleSheet"] = QString("* {\n  %1;\n}\n").arg(propertiesValues.join(";\n  "));
-
-    return widget;
-}
-
 //!
 //! \brief Utilities::writeJSONToFile
 //! \param jsonDoc JSON content
@@ -416,8 +256,7 @@ QJsonObject Utilities::createWidgetStyleSheet(const QString& objectName,
 //! \returns true if file @filePath was written successfully
 //! \returns false otherwise
 //!
-bool Utilities::writeJSONToFile(const QJsonDocument& jsonDoc,
-                                const QString& filePath)
+bool Utilities::writeJSONToFile(const QJsonDocument& jsonDoc, const QString& filePath)
 {
     // Open the file for writing
     QFile file(filePath);
@@ -498,21 +337,3 @@ QString Utilities::resolvePath(const QString& basePath, const QString& relativeP
 
     return resolvedAbsolutePath;
 }
-
-bool Utilities::writeStyleSheetToFile(const QString& css, const QString& filePath)
-{
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Failed to open file for writing:" << filePath;
-        return false;
-    }
-
-    QTextStream out(&file);
-    out << css;
-    file.close();
-
-    return true;
-}
-
-} // namespace DTI
-
