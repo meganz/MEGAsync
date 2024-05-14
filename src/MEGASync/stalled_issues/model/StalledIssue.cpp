@@ -297,7 +297,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         //Check if transfer already exists
         if(isBeingSolvedByDownload(info))
         {
-            setIsSolved(false);
+            setIsSolved(StalledIssue::SolveType::SOLVED);
         }
     }
 }
@@ -434,21 +434,26 @@ void StalledIssue::removeDelegateSize(Type type)
 
 bool StalledIssue::isSolved() const
 {
-    return mIsSolved != SolveType::Unsolved;
+    return mIsSolved != SolveType::UNSOLVED;
 }
 
 bool StalledIssue::isPotentiallySolved() const
 {
-    return mIsSolved == SolveType::PotentiallySolved;
+    return mIsSolved == SolveType::POTENTIALLY_SOLVED;
 }
 
-void StalledIssue::setIsSolved(bool potentially)
+bool StalledIssue::isBeingSolved() const
 {
-    mIsSolved = potentially ? SolveType::PotentiallySolved : SolveType::Solved;
+    return mIsSolved == SolveType::BEING_SOLVED;
+}
+
+void StalledIssue::setIsSolved(SolveType type)
+{
+    mIsSolved = type;
     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
     MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 
-    mNeedsUIUpdate = qMakePair(true, true);
+    resetUIUpdated();
 }
 
 bool StalledIssue::isAutoSolvable() const
@@ -549,7 +554,7 @@ bool StalledIssue::checkForExternalChanges()
             //Issues without fingerprint may contain
             if(!fileInfo.exists() && !missingFingerprint())
             {
-                setIsSolved(true);
+                setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
             }
         }
 
@@ -564,7 +569,7 @@ bool StalledIssue::checkForExternalChanges()
                    currentNode->getParentHandle() != node->getParentHandle() ||
                    (missingFingerprint() && (node->getFingerprint() != nullptr)))
                 {
-                    setIsSolved(true);
+                    setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
                 }
             }
         }
@@ -627,15 +632,27 @@ void StalledIssue::UIUpdated(Type type)
             break;
         case Type::Body:
         {
+            if(mNeedsUIUpdate.second == false)
+            {
+                return;
+            }
             mNeedsUIUpdate.second = false;
             break;
         }
     }
+
+    emit dataUpdated();
 }
 
 void StalledIssue::resetUIUpdated()
 {
+    if(mNeedsUIUpdate.first && mNeedsUIUpdate.second)
+    {
+        return;
+    }
+
     mNeedsUIUpdate = qMakePair(true, true);
+    emit dataUpdated();
 }
 
 //By default, stalled issues don't show file attributes (size, time modified)...´
@@ -714,7 +731,7 @@ void StalledIssue::updateIssue(const mega::MegaSyncStall* stallIssue)
     mLocalData.reset();
     mCloudData.reset();
 
-    mIsSolved = SolveType::Unsolved;
+    mIsSolved = SolveType::UNSOLVED;
 
     fillIssue(stallIssue);
     endFillingIssue();

@@ -24,28 +24,30 @@ class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
     Q_OBJECT
 public:
     explicit StalledIssuesReceiver(QObject* parent = nullptr);
-    ~StalledIssuesReceiver(){}
-
-    template <class ISSUE_TYPE>
-    void registerMultiStepIssueSolver(QPointer<MultiStepIssueSolverBase> multiStepIssueSolver)
+    ~StalledIssuesReceiver()
     {
-        if(mMultiStepIssueSolver)
-        {
-            mMultiStepIssueSolver->remove();
-        }
-        mMultiStepIssueSolver = multiStepIssueSolver;
-        mMultiStepIssueSolver->moveToThread(thread());
-        mMultiStepIssueSolver->resetDeadline();
+        qDeleteAll(mMultiStepIssueSolversByReason);
     }
 
-    bool multiStepIssueSolveActive() const {return mMultiStepIssueSolver && !mMultiStepIssueSolver->hasExpired();}
+    template <class ISSUE_TYPE>
+    void addMultiStepIssueSolver(mega::MegaSyncStall::SyncStallReason reason, QPointer<MultiStepIssueSolverBase> solver)
+    {
+        solver->moveToThread(thread());
+        solver->resetDeadline();
+        connect(solver, &QObject::destroyed, [this, solver, reason](QObject*)
+        {
+            mMultiStepIssueSolversByReason.remove(reason, solver);
+        });
+        mMultiStepIssueSolversByReason.insert(reason, solver);
+    }
+
+    bool multiStepIssueSolveActive() const {return !mMultiStepIssueSolversByReason.isEmpty();}
 
     void updateStalledIssues(UpdateType type);
 
 signals:
     void stalledIssuesReady(StalledIssuesVariantList);
     void solvingIssues(int issueCount, int total);
-    void moveOrRenameCannotOccurFound();
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest* request, ::mega::MegaError*);
@@ -54,7 +56,7 @@ private:
     QMutex mCacheMutex;
     StalledIssuesVariantList mStalledIssues;
     StalledIssuesCreator mIssueCreator;
-    QPointer<MultiStepIssueSolverBase> mMultiStepIssueSolver;
+    QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>> mMultiStepIssueSolversByReason;
     std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
 };
 

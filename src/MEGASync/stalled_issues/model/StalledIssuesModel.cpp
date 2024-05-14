@@ -35,9 +35,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         IgnoredStalledIssue::clearIgnoredSyncs();
 
         connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
-        connect(&mIssueCreator, &StalledIssuesCreator::moveOrRenameCannotOccurFound, this, &StalledIssuesReceiver::moveOrRenameCannotOccurFound);
 
-        mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType, mMultiStepIssueSolver);
+        mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType, mMultiStepIssueSolversByReason);
         mStalledIssues = mIssueCreator.issues();
 
         StalledIssuesBySyncFilter::resetFilter();
@@ -164,6 +163,16 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
                 mStalledIssues.append(issue);
                 mStalledIssuesByOrder.insert(issue.consultData().get(), rowCount(QModelIndex()) - 1);
                 mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it).consultData()->getReason()))]++;
+
+                //Connect issue signals
+                connect(issue.getData().get(),
+                    &StalledIssue::asyncIssueBeingSolved,
+                    this,
+                    [this]()
+                    {
+                        QString solveMessage(tr("Issue being solved."));
+                        finishSolvingIssues(0, true, solveMessage);
+                    });
 
                 it++;
             }
@@ -714,9 +723,9 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                {
                    if(info.solveFunc && info.solveFunc(potentialIndex.row()))
                    {
-                       if(!issue.getData()->isSolved())
+                       if(!issue.getData()->isSolved() && !issue.getData()->isBeingSolved())
                        {
-                           issue.getData()->setIsSolved(false);
+                           issue.getData()->setIsSolved(StalledIssue::SolveType::SOLVED);
                        }
                        issuesFixed++;
                        issueSolved(issue);
@@ -1164,12 +1173,10 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
 
         if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
         {
-            connect(moveOrRemoveIssue.get(), &MoveOrRenameCannotOccurIssue::issueSolved, this, [this, moveOrRemoveIssue](bool isSolved)
-            {
-                QString solveMessage(tr("Issue solved."));
-
-                finishSolvingIssues(isSolved ? 1 : 0, true, solveMessage);
-            });
+            auto solver(new MoveOrRenameMultiStepIssueSolver(moveOrRemoveIssue));
+            mStalledIssuesReceiver->addMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(
+                mega::MegaSyncStall::MoveOrRenameCannotOccur, solver);
+            moveOrRemoveIssue->setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
             moveOrRemoveIssue->solveIssue(side);
 
         }
@@ -1179,9 +1186,6 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
     SolveListInfo info(QModelIndexList() << index, resolveIssue);
     info.async = true;
     solveListOfIssues(info);
-    MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>* multiStepIssueSolver
-        (new MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>());
-    mStalledIssuesReceiver->registerMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(multiStepIssueSolver);
 }
 
 void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)

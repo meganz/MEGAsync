@@ -12,7 +12,7 @@ public:
     StalledIssuesFactory(){}
     virtual ~StalledIssuesFactory() = default;
 
-    virtual StalledIssueVariant createIssue(const mega::MegaSyncStall* stall) = 0;
+    virtual std::shared_ptr<StalledIssue> createIssue(const mega::MegaSyncStall* stall) = 0;
     virtual void clear() = 0;
 };
 
@@ -30,15 +30,13 @@ class StalledIssuesCreator : public QObject
 public:
     StalledIssuesCreator();
 
-    void createIssues(mega::MegaSyncStallList* issues, UpdateType updateType, QPointer<MultiStepIssueSolverBase> multiStepIssueSolver);
+    void createIssues(mega::MegaSyncStallList* issues, UpdateType updateType,
+        const QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>>& multiStepIssueSolversByReason);
 
     StalledIssuesVariantList issues() const;
 
-    void setMoveOrRenameSyncIdBeingFixed(const mega::MegaHandle& syncId, int chosenSide);
-
 signals:
     void solvingIssues(int current, int total);
-    void moveOrRenameCannotOccurFound();
 
 protected:
     void clear();
@@ -46,6 +44,8 @@ protected:
     StalledIssuesVariantList mIssues;
 
 private:
+    QPointer<MultiStepIssueSolverBase> getMultiStepIssueSolverByStall(const QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>>& multiStepIssueSolversByReason,
+        std::shared_ptr<StalledIssue> issue);
     std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
 };
 

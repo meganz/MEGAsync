@@ -610,7 +610,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
 
     if(!isSolved() && unsolvedItems == 0)
     {
-        setIsSolved(isPotentiallySolved);
+        setIsSolved(isPotentiallySolved ? StalledIssue::SolveType::POTENTIALLY_SOLVED : StalledIssue::SolveType::SOLVED);
     }
 
     return mIsSolved;

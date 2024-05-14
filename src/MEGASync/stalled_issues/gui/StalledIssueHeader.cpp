@@ -227,7 +227,13 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 
 void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
-    if(!getData().consultData()->isPotentiallySolved())
+    if(getData().consultData()->isBeingSolved())
+    {
+        QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+        QString defaultSolveMessage(tr("Being solved"));
+        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
+    }
+    else if(getData().consultData()->isSolved() && !getData().consultData()->isPotentiallySolved())
     {
         QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
         QString defaultSolveMessage(tr("Solved"));

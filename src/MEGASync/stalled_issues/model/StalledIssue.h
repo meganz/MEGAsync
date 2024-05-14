@@ -213,8 +213,10 @@ Q_DECLARE_METATYPE(LocalStalledIssueDataList)
 struct UploadTransferInfo;
 struct DownloadTransferInfo;
 
-class StalledIssue
+
+class StalledIssue : public QObject
 {
+    Q_OBJECT
     class FileSystemSignalHandler : public QObject
     {
     public:
@@ -286,14 +288,16 @@ public:
 
     enum SolveType
     {
-        Unsolved,
-        Solved,
-        PotentiallySolved
+        UNSOLVED,
+        BEING_SOLVED,
+        POTENTIALLY_SOLVED,
+        SOLVED
     };
 
     bool isSolved() const;
     bool isPotentiallySolved() const;
-    void setIsSolved(bool potentially);
+    bool isBeingSolved() const;
+    void setIsSolved(SolveType type);
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
     virtual bool refreshListAfterSolving() const {return false;}
@@ -350,6 +354,10 @@ public:
 
     virtual bool shouldBeIgnored() const {return false;}
 
+signals:
+    void asyncIssueBeingSolved();
+    void dataUpdated();
+
 protected:
     bool initLocalIssue();
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
@@ -364,7 +372,7 @@ protected:
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
     QList<mega::MegaHandle> mSyncIds;
-    mutable SolveType mIsSolved = SolveType::Unsolved;
+    mutable SolveType mIsSolved = SolveType::UNSOLVED;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
     QStringList mIgnoredPaths;
@@ -441,7 +449,6 @@ public:
     {
         return StalledIssue::convert<Type>(mData);
     }
-
 
 private:
     friend class StalledIssuesModel;

@@ -80,7 +80,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
     //Check if transfer already exists
     if(isBeingSolvedByUpload(info))
     {
-        setIsSolved(false);
+        setIsSolved(StalledIssue::SolveType::SOLVED);
     }
 }
 
@@ -114,7 +114,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
 
                 mChosenSide = ChosenSide::LOCAL;
-                setIsSolved(false);
+                setIsSolved(StalledIssue::SolveType::SOLVED);
             }
         }
     }
@@ -127,7 +127,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
     utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 
     mChosenSide = ChosenSide::REMOTE;
-    setIsSolved(false);
+    setIsSolved(StalledIssue::SolveType::SOLVED);
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* namesUsed)
@@ -154,7 +154,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
             if (result)
             {
                 mChosenSide = ChosenSide::BOTH;
-                setIsSolved(false);
+                setIsSolved(StalledIssue::SolveType::SOLVED);
             }
         }
     }

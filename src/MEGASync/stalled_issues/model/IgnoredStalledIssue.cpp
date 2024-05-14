@@ -77,7 +77,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 auto changesApplied(ignoreManager.applyChanges());
                 if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
-                    setIsSolved(false);
+                    setIsSolved(StalledIssue::SolveType::SOLVED);
                 }
                 else
                 {
@@ -104,7 +104,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
         //Only done for sym links
         else if(mSymLinksIgnoredInSyncs.value(syncId) == true)
         {
-            setIsSolved(false);
+            setIsSolved(StalledIssue::SolveType::SOLVED);
         }
     }
 
