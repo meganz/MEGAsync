@@ -97,7 +97,7 @@ bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
 
 bool MoveOrRenameCannotOccurIssue::refreshListAfterSolving() const
 {
-    return false;
+    return true;
 }
 
 void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
