@@ -439,6 +439,7 @@ set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION $
 qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 
 set(DESKTOP_APP_GUI_RESOURCES
+    gui/Resources.qrc
     gui/Resources_qml.qrc
     gui/qml/qml.qrc
 )

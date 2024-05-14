@@ -40,7 +40,7 @@ void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
         jsonThemes[themeName] = jsonTheme;
     }
 
-    const QString directoryThemePath = QDir::currentPath() % PathProvider::RELATIVE_THEMES_DIR_PATH;
+    const QString directoryThemePath = QDir::currentPath() % PathProvider::RELATIVE_COLOR_DIR_PATH;
 
     if (Utilities::createDirectory(directoryThemePath))
     {
