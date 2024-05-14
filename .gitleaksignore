@@ -262,3 +262,12 @@ src/MEGASync/gui/onboarding/qml/mockData/LoginController/LoginController.qml:has
 src/MEGASync/gui/themes/styles/data/hashes.txt:generic-api-key:13
 contrib/updater/filesmacosv2arm.txt:generic-api-key:4
 src/MEGASync/control/Preferences.cpp:private-key:50
+
+Source/MEGASync/control/Preferences.cpp:private-key:37
+Source/MEGASync/control/Preferences.cpp:private-key:37
+Source/MEGASync/sdk/sqlite3.c:generic-api-key:55392
+Source/MEGASync/sdk/sqlite3.c:generic-api-key:55394
+Source/MEGASync/utils/Preferences.cpp:hashicorp-tf-password:6
+Source/MEGASync/utils/Preferences.cpp:hashicorp-tf-password:22
+Source/MEGASync/sdk/sqlite3.c:generic-api-key:94219
+Source/MEGASync/sdk/sqlite3.c:generic-api-key:94374
