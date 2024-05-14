@@ -24,6 +24,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
         StalledIssuesVariantList solvableIssues;
         auto totalSize(stalls->size());
 
+        QSet<mega::MegaSyncStall::SyncStallReason> reasonsToFilter;
 
         for (size_t i = 0; i < totalSize; ++i)
         {
@@ -34,6 +35,9 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             if (stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
                 d = mMoveOrRenameCannotOccurFactory->createIssue(stall);
+                //If we find a MoveOrRenameCannotOccur issue, we don´t want to show
+                //the DeleteWaitingOnMove and DeleteOrMoveWaitingOnScanning
+                reasonsToFilter << mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves << mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning;
             }
             else
             {
@@ -62,22 +66,21 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 {
                     d = std::make_shared<StalledIssue>(stall);
                 }
-
             }
 
-            if(d)
+            if (d)
             {
                 variant = StalledIssueVariant(d, stall);
             }
 
-            if(!variant.isValid() ||
-                variant.shouldBeIgnored())
+            if (!variant.isValid() || variant.shouldBeIgnored())
             {
                 continue;
             }
 
-            auto multiStepIssueSolver(getMultiStepIssueSolverByStall(multiStepIssueSolversByReason, d));
-            if(multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
+            auto multiStepIssueSolver(
+                getMultiStepIssueSolverByStall(multiStepIssueSolversByReason, d));
+            if (multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
             {
                 multiStepIssueSolver->resetDeadlineIfNeeded(variant);
             }
@@ -104,7 +107,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                     {
                         solvableIssues.append(variant);
                     }
-                    else if(updateType == UpdateType::UI)
+                    else if (updateType == UpdateType::UI)
                     {
                         mIssues.append(variant);
                     }
@@ -114,17 +117,31 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 
         auto solvableTotalIssues(solvableIssues.size());
         auto counter(1);
-        foreach(auto solvableIssue, solvableIssues)
+        foreach (auto solvableIssue, solvableIssues)
         {
             emit solvingIssues(counter, solvableTotalIssues);
             auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
 
-            if(updateType == UpdateType::UI && !hasBeenSolved)
+            if (updateType == UpdateType::UI && !hasBeenSolved)
             {
                 mIssues.append(solvableIssue);
             }
 
             counter++;
+        }
+
+        //Filter some issues depending on what you have found on the list
+        //We don´t filter the solvable issues as these issues must be solved and not filtered
+        if (!reasonsToFilter.isEmpty())
+        {
+            QMutableListIterator<StalledIssueVariant> issueIt(mIssues);
+            while (issueIt.hasNext())
+            {
+                if (reasonsToFilter.contains(issueIt.next().getData()->getReason()))
+                {
+                    issueIt.remove();
+                }
+            }
         }
     }
 }
