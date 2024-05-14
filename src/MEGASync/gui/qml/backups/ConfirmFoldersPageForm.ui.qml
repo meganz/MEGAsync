@@ -17,6 +17,8 @@ FooterButtonsPage {
         leftSecondary {
             text: Strings.setExclusions
             visible: true
+            enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
+                        || backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
         }
         rightTertiary.visible: true
         rightPrimary {
