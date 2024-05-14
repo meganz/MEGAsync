@@ -101,7 +101,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
     gui/themes/ThemeManager.h
-    gui/themes/ThemeStylesheetParser.h
     gui/themes/ThemeWidgetManager.h
 )
 
@@ -202,7 +201,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
     gui/themes/ThemeManager.cpp
-    gui/themes/ThemeStylesheetParser.cpp
     gui/themes/ThemeWidgetManager.cpp
 )
 
