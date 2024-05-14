@@ -1,5 +1,6 @@
 variables:
   GIT_STRATEGY: clone
+  GIT_DEPTH: 0
 
 stages:
   - scan
