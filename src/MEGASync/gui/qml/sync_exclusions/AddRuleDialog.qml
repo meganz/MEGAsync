@@ -33,8 +33,10 @@ Window{
     height: root.dialogHeight
     minimumWidth: root.dialogWidth
     minimumHeight: root.dialogHeight
+    maximumWidth: root.dialogWidth
+    maximumHeight: root.dialogHeight
+    modality: Qt.ApplicationModal
     flags: Qt.Dialog
-    modality: Qt.WindowModal
     color: colorStyle.surface1
     title: ExclusionsStrings.addExclusion
 
