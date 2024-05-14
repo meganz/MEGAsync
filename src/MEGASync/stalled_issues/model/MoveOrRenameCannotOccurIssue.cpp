@@ -218,7 +218,7 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
             MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getPathHandle()));
         std::unique_ptr<mega::MegaNode> currentNode(
             MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getMovePathHandle()));
-        if (!previousNode || !currentNode)
+        if (previousNode || !currentNode)
         {
             setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
         }
@@ -226,7 +226,7 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
         {
             QFileInfo previousPath(consultLocalData()->getPath().path);
             QFileInfo currentPath(consultLocalData()->getMovePath().path);
-            if (!previousPath.absoluteDir().exists() || !currentPath.exists())
+            if (previousPath.exists() || !currentPath.exists())
             {
                 setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
             }
@@ -278,8 +278,7 @@ void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stal
     {
         initCloudIssue();
         getCloudData()->mPath.path = cloudSourcePath;
-        QFileInfo previousPath(cloudSourcePath);
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(previousPath.absolutePath().toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudSourcePath.toStdString().c_str()));
         if(node)
         {
             getCloudData()->mPathHandle = node->getHandle();
@@ -293,8 +292,7 @@ void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stal
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
 
-        QFileInfo targetPath(cloudTargetPath);
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(targetPath.absoluteFilePath().toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudTargetPath.toStdString().c_str()));
         if(node)
         {
             getCloudData()->mMovePathHandle = node->getHandle();

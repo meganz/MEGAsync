@@ -671,6 +671,10 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage, 
         info->buttonType = MessageInfo::ButtonType::Ok;
         emit updateLoadingMessage(info);
     }
+    else
+    {
+        emit updateLoadingMessage(nullptr);
+    }
 
     emit stalledIssuesCountChanged();
     emit stalledIssuesChanged();
@@ -749,20 +753,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                if(issuesExternallyChanged > 0)
                {
                    issuesFixed = issuesExternallyChanged;
-
-                   QMegaMessageBox::MessageBoxInfo msgInfo;
-                   msgInfo.title = MegaSyncApp->getMEGAString();
-                   msgInfo.textFormat = Qt::RichText;
-                   msgInfo.buttons = QMessageBox::Ok;
-                   QMap<QMessageBox::StandardButton, QString> buttonsText;
-                   buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-                   msgInfo.buttonsText = buttonsText;
-                   msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-                   msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-                       updateStalledIssues();
-                   };
-
-                   runMessageBox(std::move(msgInfo));
+                   showIssueExternallyChangedMessageBox();
                }
            }
 
@@ -773,8 +764,31 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
            finishSolvingIssues(issuesFixed, sendMessage, info.solveMessage);
        }
+       else if(issuesExternallyChanged > 0)
+       {
+           showIssueExternallyChangedMessageBox();
+           finishSolvingIssues(0, false, info.solveMessage);
+       }
    });
 }
+
+void StalledIssuesModel::showIssueExternallyChangedMessageBox()
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok;
+    QMap<QMessageBox::StandardButton, QString> buttonsText;
+    buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+    msgInfo.buttonsText = buttonsText;
+    msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+    msgInfo.finishFunc = [this](QPointer<QMessageBox>){
+        updateStalledIssues();
+    };
+
+    runMessageBox(std::move(msgInfo));
+}
+
 
 int StalledIssuesModel::getCountByFilterCriterion(StalledIssueFilterCriterion criterion)
 {
@@ -1157,7 +1171,6 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
-    solveListOfIssues(info);
     solveListOfIssues(info);
 }
 

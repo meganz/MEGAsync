@@ -169,6 +169,7 @@ private slots:
 
 private:
     void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
+    void showIssueExternallyChangedMessageBox();
 
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
