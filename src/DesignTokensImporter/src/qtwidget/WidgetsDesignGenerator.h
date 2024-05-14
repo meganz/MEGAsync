@@ -1,7 +1,7 @@
 #ifndef WIDGETS_DESIGN_GENERATOR_H
 #define WIDGETS_DESIGN_GENERATOR_H
 
-#include "IThemeGenerator.h"
+#include "IDesignGenerator.h"
 #include "Types.h"
 
 #include <QObject>
@@ -9,13 +9,13 @@
 
 namespace DTI
 {
-    class WidgetsDesignGenerator : public QObject, public IThemeGenerator
+    class WidgetsDesignGenerator : public QObject, public IDesignGenerator
     {
         Q_OBJECT
 
     public:
         explicit WidgetsDesignGenerator(QObject* parent = nullptr);
-        void start(const ThemedColorData& themedColorData) override;
+        void deploy(const DesignAssets& designAssets) override;
     };
 }
 

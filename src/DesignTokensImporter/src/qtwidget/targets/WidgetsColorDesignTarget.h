@@ -10,7 +10,7 @@ namespace DTI
     class WidgetsColorDesignTarget : public IWidgetsDesignTarget
     {
     public:
-        void process(const ThemedColorData& themedColorData) override;
+        void deploy(const DesignAssets& designAssets) const override;
 
     private:
         static bool registered;

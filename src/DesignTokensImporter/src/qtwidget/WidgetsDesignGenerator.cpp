@@ -10,7 +10,7 @@ WidgetsDesignGenerator::WidgetsDesignGenerator(QObject* parent)
 
 }
 
-void WidgetsDesignGenerator::start(const ThemedColorData& themedColorData)
+void WidgetsDesignGenerator::deploy(const DesignAssets& designAssets)
 {
     auto registeredDesignTargets = WidgetsDesignTargetFactory::getRegisteredDesignTargets();
 
@@ -21,7 +21,7 @@ void WidgetsDesignGenerator::start(const ThemedColorData& themedColorData)
         if (designTargetInstance != nullptr)
         {
             std::unique_ptr<IWidgetsDesignTarget> designTargetInstanceSafePtr{designTargetInstance};
-            designTargetInstanceSafePtr->process(themedColorData);
+            designTargetInstanceSafePtr->deploy(designAssets);
         }
     }
 }

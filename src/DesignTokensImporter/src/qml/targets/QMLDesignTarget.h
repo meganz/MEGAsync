@@ -1,5 +1,5 @@
-#ifndef WIDGETS_DESIGN_TARGET_H
-#define WIDGETS_DESIGN_TARGET_H
+#ifndef IQML_DESIGN_TARGET_H
+#define IQML_DESIGN_TARGET_H
 
 #include "Types.h"
 
@@ -7,11 +7,11 @@
 
 namespace  DTI
 {
-    class IWidgetsDesignTarget
+    class IQMLDesignTarget
     {
     public:
         virtual void deploy(const DesignAssets& designAssets) const = 0;
-        virtual ~IWidgetsDesignTarget() = default;
+        virtual ~IQMLDesignTarget() = default;
     };
 }
 

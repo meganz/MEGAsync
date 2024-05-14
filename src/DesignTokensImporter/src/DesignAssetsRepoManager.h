@@ -1,5 +1,5 @@
-#ifndef DTI_TOKEN_MANAGER_H
-#define DTI_TOKEN_MANAGER_H
+#ifndef DESIGN_ASSETS_REPO_MANAGER_H
+#define DESIGN_ASSETS_REPO_MANAGER_H
 
 #include "Types.h"
 
@@ -11,20 +11,18 @@
 
 namespace DTI
 {
-    class TokenManager
+    class DesignAssetsRepoManager
     {
     public:
-        static TokenManager* instance();
-        void run();
+        DesignAssetsRepoManager();
+        DesignAssets getDesignAssets();
 
     private:
-        TokenManager();
+        ThemedColorData getColorData();
         ThemedColorData parseTheme(QFile& designTokensFile, const ColorData& coreData);
         CoreData parseCore(QFile& designTokensFile);
         void recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData);
         ColorData parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& colorData);
-
-        QString mCurrentDir;
     };
 }
 

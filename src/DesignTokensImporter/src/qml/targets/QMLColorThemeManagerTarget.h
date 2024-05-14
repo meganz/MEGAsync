@@ -1,16 +1,16 @@
 #ifndef QML_COLOR_THEME_MANAGER_TARGET_H
 #define QML_COLOR_THEME_MANAGER_TARGET_H
 
-#include "IQMLThemeTarget.h"
+#include "QMLDesignTarget.h"
 
 #include <QString>
 
 namespace DTI
 {
-    class QMLColorThemeManagerTarget : public IQMLThemeTarget
+    class QMLColorThemeManagerTarget : public IQMLDesignTarget
     {
     public:
-        void deploy(const ThemedColorData& themedColourMap) const override;
+        void deploy(const DesignAssets& designAssets) const override;
 
     private:
         static bool registered;

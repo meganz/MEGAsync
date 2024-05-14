@@ -6,11 +6,13 @@ set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
 	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/Utilities.h	
 	${CMAKE_CURRENT_SOURCE_DIR}/Utilities.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/TokenManager.h	
-	${CMAKE_CURRENT_SOURCE_DIR}/TokenManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/IThemeGenerator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/IDesignGenerator.h
 		
 	PARENT_SCOPE
 )

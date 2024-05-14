@@ -3,10 +3,10 @@
 ##################################
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
-    ${CMAKE_CURRENT_SOURCE_DIR}/IQMLThemeTarget.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/QMLDesignTarget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLColorThemeTarget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLColorThemeTarget.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/QMLThemeTargetFactory.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/QMLDesignTargetFactory.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLTargetUtils.h
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLTargetUtils.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/QMLColorThemeManagerTarget.h

@@ -6,9 +6,14 @@
 
 namespace DTI
 {
-    typedef QMap<QString, QString> CoreData;
-    typedef QMap<QString, QString> ColorData;
-    typedef QMap<QString, ColorData> ThemedColorData;
+    using CoreData = QMap<QString, QString>;
+    using ColorData = QMap<QString, QString>;
+    using ThemedColorData = QMap<QString, ColorData>;
+
+    struct DesignAssets
+    {
+        ThemedColorData colorTokens;
+    };
 }
 
 #endif

@@ -16,11 +16,11 @@ using namespace DTI;
 
 bool WidgetsColorDesignTarget::registered = WidgetsDesignFactory<WidgetsColorDesignTarget>::Register("widgetsColorTarget");
 
-void WidgetsColorDesignTarget::process(const ThemedColorData& themedColorData)
+void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
 {
     QJsonObject jsonThemes;
 
-    for (auto themeColorDataIt = themedColorData.constKeyValueBegin(); themeColorDataIt != themedColorData.constKeyValueEnd(); ++themeColorDataIt)
+    for (auto themeColorDataIt = designAssets.colorTokens.constKeyValueBegin(); themeColorDataIt != designAssets.colorTokens.constKeyValueEnd(); ++themeColorDataIt)
     {
         auto themeColorData = *themeColorDataIt;
         const auto& themeName = themeColorData.first;
