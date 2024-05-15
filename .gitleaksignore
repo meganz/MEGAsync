@@ -1,9 +1,3 @@
-contrib/updater/filesmacos.txt:generic-api-key:4
-contrib/updater/filesmacosv2.txt:generic-api-key:4
-contrib/updater/filesmacosemergency.txt:generic-api-key:4
-contrib/updater/fileswin64.txt:generic-api-key:4
-contrib/updater/fileswin.txt:generic-api-key:4
-contrib/updater/filesmacosarm64.txt:generic-api-key:4
 src/MEGASync/control/Preferences.cpp:private-key:68
 src/MEGASync/control/Preferences.cpp:private-key:71
 src/MEGASync/control/Preferences.cpp:private-key:69
@@ -15,7 +9,6 @@ src/MEGASync/DesignTokensImporter/generated/hashes.json:generic-api-key:55
 src/MEGASync/DesignTokensImporter/generated/hashes.json:generic-api-key:134
 src/MEGASync/gui/onboarding/qml/mockData/LoginController/LoginController.qml:hashicorp-tf-password:10
 src/MEGASync/gui/themes/styles/data/hashes.txt:generic-api-key:13
-contrib/updater/filesmacosv2arm.txt:generic-api-key:4
 src/MEGASync/control/Preferences.cpp:private-key:50
 Source/MEGASync/control/Preferences.cpp:private-key:37
 Source/MEGASync/sdk/sqlite3.c:generic-api-key:55392

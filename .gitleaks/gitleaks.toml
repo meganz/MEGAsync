@@ -14,6 +14,7 @@ paths = [
     '''MEGAUnitTests/(.*?)''',
     '''Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
     '''iMEGA/Languages/(.*?)'''
+    '''contrib/updater/(.*?)'''
 ]
 
 [[rules]]
