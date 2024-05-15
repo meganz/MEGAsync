@@ -15,10 +15,6 @@ description = "global allow lists"
 paths = [
     '''gitleaks.toml''',
     '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|vsidx|v2|suo|wsuo|.dll|pdb|exe)$''',
-    '''Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
-    '''MEGAUnitTests/(.*?)''',
-    '''Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
-    '''iMEGA/Languages/(.*?)''',
     '''contrib/updater/(.*?)''',
     '''Source/MEGASync/google_breakpad/(.*?)'''
 ]
