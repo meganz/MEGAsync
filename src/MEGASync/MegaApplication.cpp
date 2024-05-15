@@ -417,7 +417,6 @@ void MegaApplication::showInterface(QString)
         if (mSettingsDialog && mSettingsDialog->isVisible())
         {
             DialogOpener::showDialog(mSettingsDialog);
-
             return;
         }
     }

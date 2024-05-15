@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>715</height>
+    <height>657</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -2639,7 +2639,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -2762,7 +2762,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3814,13 +3814,7 @@ margin-right: 32px;</string>
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>WaitingSpinnerWidget</class>
-   <extends>QWidget</extends>
-   <header>gui/WaitingSpinnerWidget.h</header>
-   <container>1</container>
-  </customwidget>
+  </customwidget>  
  </customwidgets>
  <tabstops>
   <tabstop>cAutoUpdate</tabstop>
@@ -3849,7 +3843,7 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
