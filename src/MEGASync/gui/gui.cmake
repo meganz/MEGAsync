@@ -1,5 +1,3 @@
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
-
 set(DESKTOP_APP_GUI_HEADERS
     gui/SettingsDialog.h
     gui/AutoResizeStackedWidget.h

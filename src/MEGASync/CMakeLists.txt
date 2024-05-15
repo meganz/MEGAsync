@@ -73,6 +73,15 @@ set_target_properties(MEGAsync
     AUTORCC ON # Activates the creation of rules over qrc files
 )
 
+
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/translation.source.ts
+    OPTIONS -locations none -no-ui-lines -no-obsolete)
+
+# Generate ts files before MEGAsync is compiled
+add_custom_target(generate_ts DEPENDS ${QM_OUTPUT})
+add_dependencies(MEGAsync generate_ts)
+
 target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/google_breakpad
 )
