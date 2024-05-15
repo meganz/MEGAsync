@@ -3,6 +3,7 @@
 
 #include <StalledIssue.h>
 #include <StalledIssuesUtilities.h>
+#include <QMegaMessageBox.h>
 
 #include <QWidget>
 #include <QStyleOptionViewItem>
@@ -37,10 +38,20 @@ public:
 
     void updateSizeHint();
 
+    bool checkIssue(bool isSingleSelection);
+
 signals:
     void editorKeepStateChanged(bool state);
 
 protected:
+    struct SelectionInfo
+    {
+        QModelIndexList selection;
+        QModelIndexList similarSelection;
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+    };
+    bool checkSelection(const QList<mega::MegaSyncStall::SyncStallReason>& reasons, SelectionInfo& info);
+
     void resizeEvent(QResizeEvent *event) override;
     bool event(QEvent *event) override;
 

@@ -17,12 +17,6 @@ public:
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
 };
 
-class HeaderCaseIssueChecker : QObject
-{
-public:
-    static bool checkIssue(StalledIssueHeader *header, bool isSingleSelection);
-};
-
 //DefaultHeader failed
 class DefaultHeader : public StalledIssueHeaderCase
 {

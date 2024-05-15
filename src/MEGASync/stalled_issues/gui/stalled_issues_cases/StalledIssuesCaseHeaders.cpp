@@ -36,34 +36,6 @@ StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     header->setData(this);
 }
 
-//Issue checker
-bool HeaderCaseIssueChecker::checkIssue(StalledIssueHeader *header, bool isSingleSelection)
-{
-    if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(header->getCurrentIndex()))
-    {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok;
-        QMap<QMessageBox::StandardButton, QString> buttonsText;
-        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-        msgInfo.buttonsText = buttonsText;
-        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-        msgInfo.finishFunc = [](QPointer<QMessageBox>){
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        };
-        QMegaMessageBox::warning(msgInfo);
-
-        header->updateSizeHint();
-        return true;
-    }
-
-    return false;
-}
-
 //Local folder not scannable
 DefaultHeader::DefaultHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
@@ -91,7 +63,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
 
-    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    if(header->checkIssue(selection.size() == 1))
     {
         return;
     }
@@ -192,7 +164,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(fingerprintMissingChecker);
 
-    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    if(header->checkIssue(selection.size() == 1))
     {
         return;
     }
@@ -620,7 +592,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
         auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
 
-        if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+        if(header->checkIssue(selection.size() == 1))
         {
             return;
         }

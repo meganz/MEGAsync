@@ -3,6 +3,8 @@
 #include "MegaApplication.h"
 #include "WordWrapLabel.h"
 #include "StalledIssueDelegate.h"
+#include "DialogOpener.h"
+#include "StalledIssuesDialog.h"
 
 #include "mega/types.h"
 
@@ -132,4 +134,63 @@ void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegat
 void StalledIssueBaseDelegateWidget::updateSizeHint()
 {
     mResizeNeedTimer.start();
+}
+
+bool StalledIssueBaseDelegateWidget::checkIssue(bool isSingleSelection)
+{
+    if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
+    {
+        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+        msgInfo.title = MegaSyncApp->getMEGAString();
+        msgInfo.textFormat = Qt::RichText;
+        msgInfo.buttons = QMessageBox::Ok;
+        QMap<QMessageBox::StandardButton, QString> buttonsText;
+        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+        msgInfo.buttonsText = buttonsText;
+        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
+        msgInfo.finishFunc = [](QPointer<QMessageBox>){
+            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        };
+        QMegaMessageBox::warning(msgInfo);
+
+        updateSizeHint();
+        return true;
+    }
+
+    return false;
+}
+
+bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncStall::SyncStallReason>& reasons,
+    SelectionInfo& info)
+{
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    info.selection = dialog->getDialog()->getSelection(reasons);
+
+    if(checkIssue(info.selection.size() == 1))
+    {
+        return false;
+    }
+
+    info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    info.msgInfo.title = MegaSyncApp->getMEGAString();
+    info.msgInfo.textFormat = Qt::RichText;
+    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+
+    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::No, tr("Cancel"));
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+
+    info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
+    if(info.similarSelection.size() != info.selection.size())
+    {
+        auto checkBox = new QCheckBox(tr("Apply to all"));
+        info.msgInfo.checkBox = checkBox;
+    }
+    info.msgInfo.buttonsText = textsByButton;
+
+    return true;
 }

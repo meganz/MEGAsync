@@ -24,6 +24,11 @@ Text::Bold boldTextDecorator;
 const Text::Decorator textDecorator(&boldTextDecorator);
 }
 
+QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
+    = QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                                                                                                           << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose;
+
+
 LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     originalStall(originalStall),
@@ -119,7 +124,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
@@ -191,7 +196,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
@@ -305,7 +310,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
@@ -368,7 +373,7 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
 
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
@@ -399,68 +404,4 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     };
 
     QMegaMessageBox::warning(info.msgInfo);
-}
-
-bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
-{
-    if(MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
-    {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok;
-        QMap<QMessageBox::StandardButton, QString> buttonsText;
-        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-        msgInfo.buttonsText = buttonsText;
-        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        };
-
-        QMegaMessageBox::warning(msgInfo);
-
-
-        ui->chooseLocalCopy->hideActionButton();
-        ui->chooseRemoteCopy->hideActionButton();
-
-        updateSizeHint();
-
-        return true;
-    }
-
-    return false;
-}
-
-bool LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
-{
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
-    {
-        return false;
-    }
-
-    info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.title = MegaSyncApp->getMEGAString();
-    info.msgInfo.textFormat = Qt::RichText;
-    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-
-    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                                                               << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-    info.selection = dialog->getDialog()->getSelection(reasons);
-    info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-    if(info.similarSelection.size() != info.selection.size())
-    {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
-        info.msgInfo.checkBox = checkBox;
-    }
-    info.msgInfo.buttonsText = textsByButton;
-
-    return true;
 }

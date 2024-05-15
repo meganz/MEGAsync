@@ -8,6 +8,8 @@
 
 #include <TextDecorator.h>
 
+#include <QDialogButtonBox>
+
 namespace
 {
 Text::Bold boldTextDecorator;
@@ -47,10 +49,78 @@ void MoveOrRenameCannotOccur::refreshUi()
 
 void MoveOrRenameCannotOccur::onLocalButtonClicked()
 {
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameIssueChosenSide::LOCAL);
+    SelectionInfo info;
+    if(!checkSelection(QList<mega::MegaSyncStall::SyncStallReason>()
+                           << mega::MegaSyncStall::MoveOrRenameCannotOccur,info))
+    {
+        return;
+    }
+
+    if(info.similarSelection.size() > 1)
+    {
+        info.msgInfo.text = tr("Are you sure you want to choose the local side?");
+
+        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+                        info.similarSelection, MoveOrRenameIssueChosenSide::LOCAL);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+                        info.selection, MoveOrRenameIssueChosenSide::LOCAL);
+                }
+            }
+        };
+
+        QMegaMessageBox::warning(info.msgInfo);
+    }
+    else
+    {
+        MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+            QModelIndexList() << getCurrentIndex(), MoveOrRenameIssueChosenSide::LOCAL);
+    }
 }
 
 void MoveOrRenameCannotOccur::onRemoteButtonClicked()
 {
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(getCurrentIndex(), MoveOrRenameIssueChosenSide::REMOTE);
+    SelectionInfo info;
+    if(!checkSelection(QList<mega::MegaSyncStall::SyncStallReason>()
+                           << mega::MegaSyncStall::MoveOrRenameCannotOccur, info))
+    {
+        return;
+    }
+
+    if(info.similarSelection.size() > 1)
+    {
+        info.msgInfo.text = tr("Are you sure you want to choose the remote side?");
+
+        info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
+        {
+            if(msgBox->result() == QDialogButtonBox::Ok)
+            {
+                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
+                {
+                    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+                        info.similarSelection, MoveOrRenameIssueChosenSide::REMOTE);
+                }
+                else
+                {
+                    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+                        info.selection, MoveOrRenameIssueChosenSide::REMOTE);
+                }
+            }
+        };
+
+        QMegaMessageBox::warning(info.msgInfo);
+    }
+    else
+    {
+        MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(
+            QModelIndexList() << getCurrentIndex(), MoveOrRenameIssueChosenSide::REMOTE);
+    }
 }

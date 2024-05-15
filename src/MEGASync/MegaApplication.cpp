@@ -3186,10 +3186,14 @@ void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo inf
     if (mOsNotifications)
     {
 #ifdef __APPLE__
-        if (infoDialog && infoDialog->isVisible())
+        //In case this method is called from another thread
+        Utilities::queueFunctionInAppThread([this]()
         {
-            infoDialog->hide();
-        }
+            if (infoDialog && infoDialog->isVisible())
+            {
+                infoDialog->hide();
+            }
+        });
 #endif
         lastTrayMessage = info.message;
         mOsNotifications->sendInfoNotification(info);

@@ -140,7 +140,7 @@ public:
     void fixFingerprint(const QModelIndexList& list);
 
     //MoveOrRename issue
-    void fixMoveOrRenameCannotOccur(const QModelIndex& index, MoveOrRenameIssueChosenSide side);
+    void fixMoveOrRenameCannotOccur(const QModelIndexList& indexes, MoveOrRenameIssueChosenSide side);
 
     bool issuesRequested() const;
 

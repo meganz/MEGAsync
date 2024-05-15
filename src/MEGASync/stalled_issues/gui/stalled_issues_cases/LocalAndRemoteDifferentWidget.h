@@ -4,7 +4,6 @@
 #include "StalledIssueBaseDelegateWidget.h"
 #include "StalledIssueChooseWidget.h"
 
-#include "QMegaMessageBox.h"
 
 #include <QWidget>
 #include <memory>
@@ -32,16 +31,6 @@ private slots:
     void onKeepLastModifiedTimeButtonClicked(int);
 
 private:
-    bool checkIssue(QDialog* dialog);
-
-    struct SelectionInfo
-    {
-        QModelIndexList selection;
-        QModelIndexList similarSelection;
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-    };
-    bool checkSelection(SelectionInfo& info);
-
     Ui::LocalAndRemoteDifferentWidget *ui;
 };
 

@@ -1174,7 +1174,7 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, MoveOrRenameIssueChosenSide side)
+void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& indexes, MoveOrRenameIssueChosenSide side)
 {
     auto resolveIssue = [this, side](int row) -> bool
     {
@@ -1190,12 +1190,12 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
 
             DesktopNotifications::NotificationInfo startNotificationInfo;
             startNotificationInfo.title = tr("Sync stalls");
-            startNotificationInfo.message = tr("(TEMPORARY) We have started solving your issues");
+            startNotificationInfo.message = tr("(TEMPORARY) We have started solving your issues for sync X");
             solver->setStartNotification(startNotificationInfo);
 
             DesktopNotifications::NotificationInfo finishNotificationInfo;
             finishNotificationInfo.title = tr("Sync stalls");
-            finishNotificationInfo.message = tr("(TEMPORARY) We have finished solving your issues");
+            finishNotificationInfo.message = tr("(TEMPORARY) We have finished solving your issues for sync X");
             //Add action to run the widget to show the errors
             solver->setFinishNotification(finishNotificationInfo);
 
@@ -1208,7 +1208,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
         return true;
     };
 
-    SolveListInfo info(QModelIndexList() << index, resolveIssue);
+    SolveListInfo info(indexes, resolveIssue);
     info.async = true;
     solveListOfIssues(info);
 }
