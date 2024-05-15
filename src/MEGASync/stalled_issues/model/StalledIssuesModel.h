@@ -8,6 +8,7 @@
 #include "ViewLoadingScene.h"
 #include <MoveOrRenameCannotOccurIssue.h>
 #include <StalledIssuesFactory.h>
+#include <DesktopNotifications.h>
 #include "QMegaMessageBox.h"
 
 #include <QObject>

@@ -35,10 +35,26 @@ public:
 
     virtual bool checkIssue(std::shared_ptr<StalledIssue>) {return false;}
 
+    void setStartNotification(const DesktopNotifications::NotificationInfo& newStartNotification);
+    void setFinishNotification(const DesktopNotifications::NotificationInfo& newFinishNotification);
+
 protected:
     std::unique_ptr<QTimer> mDeadline;
     std::shared_ptr<StalledIssue> mIssue;
+    DesktopNotifications::NotificationInfo mFinishNotification;
 };
+
+inline void MultiStepIssueSolverBase::setStartNotification(
+    const DesktopNotifications::NotificationInfo& newStartNotification)
+{
+    MegaSyncApp->showInfoMessage(newStartNotification);
+}
+
+inline void MultiStepIssueSolverBase::setFinishNotification(
+    const DesktopNotifications::NotificationInfo& newFinishNotification)
+{
+    mFinishNotification = newFinishNotification;
+}
 
 template <class ISSUE_TYPE>
 class MultiStepIssueSolver : public MultiStepIssueSolverBase
@@ -52,6 +68,12 @@ public:
         if(mIssue)
         {
             mIssue->setIsSolved(StalledIssue::SolveType::SOLVED);
+        }
+
+        //Send notification
+        if(mFinishNotification.isValid())
+        {
+            MegaSyncApp->showInfoMessage(mFinishNotification);
         }
     }
 

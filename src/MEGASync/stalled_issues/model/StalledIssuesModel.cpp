@@ -1187,6 +1187,18 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndex &index, Mo
         if(auto moveOrRemoveIssue = std::dynamic_pointer_cast<MoveOrRenameCannotOccurIssue>(issue.getData()))
         {
             auto solver(new MoveOrRenameMultiStepIssueSolver(moveOrRemoveIssue));
+
+            DesktopNotifications::NotificationInfo startNotificationInfo;
+            startNotificationInfo.title = tr("Sync stalls");
+            startNotificationInfo.message = tr("(TEMPORARY) We have started solving your issues");
+            solver->setStartNotification(startNotificationInfo);
+
+            DesktopNotifications::NotificationInfo finishNotificationInfo;
+            finishNotificationInfo.title = tr("Sync stalls");
+            finishNotificationInfo.message = tr("(TEMPORARY) We have finished solving your issues");
+            //Add action to run the widget to show the errors
+            solver->setFinishNotification(finishNotificationInfo);
+
             mStalledIssuesReceiver->addMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(
                 mega::MegaSyncStall::MoveOrRenameCannotOccur, solver);
             moveOrRemoveIssue->setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
