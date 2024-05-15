@@ -417,6 +417,7 @@ void MegaApplication::showInterface(QString)
         if (mSettingsDialog && mSettingsDialog->isVisible())
         {
             DialogOpener::showDialog(mSettingsDialog);
+
             return;
         }
     }
@@ -550,7 +551,6 @@ void MegaApplication::initialize()
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
-    ThemeWidgetManager::instance();
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);

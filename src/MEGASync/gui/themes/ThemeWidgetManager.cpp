@@ -11,14 +11,16 @@ static const QMap<Preferences::ThemeType, QString> themeNames = {
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
+static QRegularExpression designTokensRE(QLatin1String("(#.*)\\/\\* *colorToken\\.(.*)\\*\\/"));
 static const QString jsonThemedColorFile = QLatin1String(":/colors/ColorThemedTokens.json");
-static const QRegularExpression designTokensRE(QLatin1String("(#\\d*)\\/\\*colorToken\\.(.*)\\*\\/$"));
 
 ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
     : QObject{parent},
     mCurrentWidget{nullptr}
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &ThemeWidgetManager::onThemeChanged);
+
+    designTokensRE.optimize();
 
     loadColorThemeJson();
 }
@@ -59,95 +61,59 @@ void ThemeWidgetManager::loadColorThemeJson()
     }
 }
 
-void ThemeWidgetManager::applyStyleSheet(QWidget* widget)
+void ThemeWidgetManager::applyCurrentTheme(QWidget* widget)
 {
-    if (widget == nullptr || widget == mCurrentWidget)
-    //if (widget == nullptr)
-    {
-        return;
-    }
-
-    auto theme = ThemeManager::instance()->getSelectedTheme();
-    auto currentTheme = themeToString(theme);
-
-    if (!mColorThemedTokens.contains(currentTheme))
+    if (widget == nullptr || widget == mCurrentWidget || widget->styleSheet().isEmpty())
     {
         return;
     }
 
     mCurrentWidget = widget;
 
-    const auto& themedColorTokens = mColorThemedTokens.value(currentTheme);
+    applyTheme(widget);
+}
 
-    QString styleSheet = widget->styleSheet();
-    if (styleSheet.isEmpty())
+void ThemeWidgetManager::applyTheme(QWidget* widget)
+{
+    auto theme = ThemeManager::instance()->getSelectedTheme();
+    auto currentTheme = themeToString(theme);
+
+    if (!mColorThemedTokens.contains(currentTheme))
     {
+        qDebug() << __func__ << " Error theme not found : " << currentTheme;
         return;
     }
 
+    const auto& themedColorTokens = mColorThemedTokens.value(currentTheme);
 
+    QString styleSheet = widget->styleSheet();
 
-    std::cout << "******************************************" << std::endl;
-    const QString className = QString::fromUtf8(widget->metaObject()->className());
-    std::cout << "Widget: " << className.toStdString() << std::endl;
-    std::cout << "StyleSheet : " << styleSheet.toStdString() << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
-
-
-
-    /*
-    auto match = designTokensMatch.match(styleSheet);
-    if (match.hasMatch())
-    {
-        auto value = match.capturedRef(0);
-        QString token = match.captured(1);
-
-        if (themedColorTokens.contains(token))
-        {
-            const QString& tokenValue = themedColorTokens.value(token);
-            //value = QStringRef(tokenValue);
-        }
-
-        //match.lastCapturedIndex()
-    }
-
-    //styleSheet.replace()
-    */
-
-    QRegularExpression testDesignTokensRE(QLatin1String("#(\\d*)\\/\\*colorToken\\.(.*)\\*\\/"));
-    QRegularExpressionMatchIterator matchIteratorTest = testDesignTokensRE.globalMatch(styleSheet);
-    while (matchIteratorTest.hasNext()) {
-        QRegularExpressionMatch match = matchIteratorTest.next();
-        std::cout << "last capture index = " << match.lastCapturedIndex() << std::endl;
-
-        for (int i = 0; i <= match.lastCapturedIndex(); ++i) {
-            QString captured = match.captured(i);
-            std::cout << "****************************************   --> "  << captured.toStdString() << std::endl;
-        }
-    }
-
+    bool updatedStyleSheet = false;
     QRegularExpressionMatchIterator matchIterator = designTokensRE.globalMatch(styleSheet);
     while (matchIterator.hasNext()) {
         QRegularExpressionMatch match = matchIterator.next();
-        std::cout << "last capture index = " << match.lastCapturedIndex() << std::endl;
+
+        /*
+         * Our regular expresion has three captures
+         * 0 - The whole match
+         * 1 - The current hex color value
+         * 2 - The design token name
+        */
+        if (match.lastCapturedIndex() == 2)
+        {
+            const QString& tokenValue = themedColorTokens.value(match.captured(2));
+
+            auto startIndex = match.capturedStart(1);
+            auto endIndex = match.capturedEnd(1);
+            styleSheet.replace(startIndex, endIndex-startIndex, tokenValue);
+            updatedStyleSheet = true;
+        }
     }
 
-
-    /*
-    QRegularExpressionMatch match = designTokensRE.match(styleSheet);
-    if(match.hasMatch())
+    if (updatedStyleSheet)
     {
-        for (int i = 0; i <= match.lastCapturedIndex(); ++i) {
-            QString captured = match.captured(i);
-            std::cout << "****************************************"  << captured.toStdString() << std::endl;
-        }
-
         widget->setStyleSheet(styleSheet);
     }
-    */
-
-
 }
 
 std::shared_ptr<ThemeWidgetManager> ThemeWidgetManager::instance()
@@ -167,7 +133,7 @@ void ThemeWidgetManager::onThemeChanged(Preferences::ThemeType theme)
 
     if (mCurrentWidget != nullptr)
     {
-        applyStyleSheet(mCurrentWidget);
+        applyTheme(mCurrentWidget);
     }
 }
 

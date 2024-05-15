@@ -12,13 +12,14 @@ class ThemeWidgetManager : public QObject
 public:
     static std::shared_ptr<ThemeWidgetManager> instance();
 
-    void applyStyleSheet(QWidget* widget);
+    void applyCurrentTheme(QWidget* widget);
 
 private:
     explicit ThemeWidgetManager(QObject *parent = nullptr);
     QString themeToString(Preferences::ThemeType theme) const;
     void loadColorThemeJson();
     void onThemeChanged(Preferences::ThemeType theme);
+    void applyTheme(QWidget* widget);
 
     QMap<QString, QMap<QString, QString>> mColorThemedTokens;
     QWidget* mCurrentWidget;
