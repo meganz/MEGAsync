@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>675</width>
-    <height>777</height>
+    <height>847</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -23,6 +23,8 @@
    <string notr="true">QWidget
 {
 font-size: 12px;
+background-color: #fafafa; /*colorToken.surface-1*/
+color: #fafafa; /*colorToken.text-primary*/
 }
 
 QComboBox
@@ -2421,6 +2423,12 @@ color: grey;
    <class>BackupSettingsUI</class>
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

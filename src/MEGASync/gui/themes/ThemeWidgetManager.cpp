@@ -11,7 +11,7 @@ static const QMap<Preferences::ThemeType, QString> themeNames = {
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
-static QRegularExpression designTokensRE(QLatin1String("(#.*)\\/\\* *colorToken\\.(.*)\\*\\/"));
+static QRegularExpression designTokensRE(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
 static const QString jsonThemedColorFile = QLatin1String(":/colors/ColorThemedTokens.json");
 
 ThemeWidgetManager::ThemeWidgetManager(QObject *parent)

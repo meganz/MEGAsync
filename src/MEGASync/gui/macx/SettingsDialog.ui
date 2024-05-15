@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>657</height>
+    <height>715</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -32,7 +32,12 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox {
+   <string notr="true">QWidget {
+background-color: #fafafa; /*colorToken.surface-1*/
+color: #fafafa; /*colorToken.text-primary*/
+}
+
+QGroupBox {
   border-radius: 3px;
   border-top: 2px inset rgba(0,0,0,0.05);
   border-left: 1px inset rgba(0,0,0,0.05);
@@ -2634,7 +2639,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/key_big.png</normaloff>:/images/key_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -2757,7 +2762,7 @@ margin-right: 7px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/lock_big.png</normaloff>:/images/lock_big.png</iconset>
             </property>
             <property name="iconSize">
@@ -3810,6 +3815,12 @@ margin-right: 32px;</string>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>cAutoUpdate</tabstop>
@@ -3838,7 +3849,7 @@ margin-right: 32px;</string>
   <tabstop>bSessionHistory</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
