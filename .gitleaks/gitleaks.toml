@@ -13,7 +13,7 @@ paths = [
     '''Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
     '''MEGAUnitTests/(.*?)''',
     '''Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
-    '''iMEGA/Languages/(.*?)'''
+    '''iMEGA/Languages/(.*?)''',
     '''contrib/updater/(.*?)'''
 ]
 
