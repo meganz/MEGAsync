@@ -134,13 +134,11 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
-# Install stuff
+# Install MEGAsync binary, dynamic libraries and, if needed, deploy Qt dependencies.
 if (UNIX AND NOT APPLE)
-    install(TARGETS MEGAsync
-        RUNTIME
-        DESTINATION ${CMAKE_INSTALL_BINDIR}
-    )
-    #Install vcpkg dynamic libraries in locations defined by GNUInstallDirs.
+
+    install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
+
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         SET(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/debug/lib/")
     else()
@@ -148,11 +146,17 @@ if (UNIX AND NOT APPLE)
     endif()
 
     install(DIRECTORY "${vcpkg_lib_folder}"
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            FILES_MATCHING
-            PATTERN "lib*.so*"
-            PATTERN "manual-link" EXCLUDE
-            PATTERN "pkgconfig" EXCLUDE)
+        TYPE LIB # In CMAKE_INSTALL_LIBDIR directory
+        FILES_MATCHING
+        PATTERN "*.so*"
+        PATTERN "manual-link" EXCLUDE
+        PATTERN "pkgconfig" EXCLUDE
+    )
+
+    if(DEPLOY_QT_LIBRARIES)
+        include(desktopapp_deploy_qt)
+    endif()
+
 endif()
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
