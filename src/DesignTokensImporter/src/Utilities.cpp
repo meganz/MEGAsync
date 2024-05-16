@@ -337,3 +337,14 @@ QString Utilities::resolvePath(const QString& basePath, const QString& relativeP
 
     return resolvedAbsolutePath;
 }
+
+QString Utilities::normalizeHexColoursForQtFormat(QString colour)
+{
+    colour.remove(QChar('#'));
+    if (colour.length() == 8)
+    {
+        colour = colour.right(2) + colour.left(6);
+    }
+
+    return colour;
+}

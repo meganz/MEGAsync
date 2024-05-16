@@ -6,7 +6,7 @@
 #include <QWidget>
 #include <QtConcurrent/QtConcurrent>
 
-static const QMap<Preferences::ThemeType, QString> themeNames = {
+static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
     {Preferences::ThemeType::LIGHT_THEME,  QObject::tr("Light")},
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
@@ -75,6 +75,13 @@ void ThemeWidgetManager::applyCurrentTheme(QWidget* widget)
 
 void ThemeWidgetManager::applyTheme(QWidget* widget)
 {
+    enum CaptureIndex
+    {
+        WholeMatch = 0,
+        HexColorValue = 1,
+        DesignTokenName = 2
+    };
+
     auto theme = ThemeManager::instance()->getSelectedTheme();
     auto currentTheme = themeToString(theme);
 
@@ -90,21 +97,16 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
 
     bool updatedStyleSheet = false;
     QRegularExpressionMatchIterator matchIterator = designTokensRE.globalMatch(styleSheet);
-    while (matchIterator.hasNext()) {
+    while (matchIterator.hasNext())
+    {
         QRegularExpressionMatch match = matchIterator.next();
 
-        /*
-         * Our regular expresion has three captures
-         * 0 - The whole match
-         * 1 - The current hex color value
-         * 2 - The design token name
-        */
-        if (match.lastCapturedIndex() == 2)
+        if (match.lastCapturedIndex() == CaptureIndex::DesignTokenName)
         {
-            const QString& tokenValue = themedColorTokens.value(match.captured(2));
+            const QString& tokenValue = themedColorTokens.value(match.captured(CaptureIndex::DesignTokenName));
 
-            auto startIndex = match.capturedStart(1);
-            auto endIndex = match.capturedEnd(1);
+            auto startIndex = match.capturedStart(CaptureIndex::HexColorValue);
+            auto endIndex = match.capturedEnd(CaptureIndex::HexColorValue);
             styleSheet.replace(startIndex, endIndex-startIndex, tokenValue);
             updatedStyleSheet = true;
         }
@@ -124,7 +126,7 @@ std::shared_ptr<ThemeWidgetManager> ThemeWidgetManager::instance()
 
 QString ThemeWidgetManager::themeToString(Preferences::ThemeType theme) const
 {
-    return themeNames.value(theme, QLatin1String("Light"));
+    return THEME_NAMES.value(theme, QLatin1String("Light"));
 }
 
 void ThemeWidgetManager::onThemeChanged(Preferences::ThemeType theme)

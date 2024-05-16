@@ -76,12 +76,7 @@ void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& c
                  * Core color hex value format is #RRGGBBAA,
                  * but we need to convert it to AARRGGBB.
                 */
-                QString coreColorHex = jValue.toString().remove(QChar('#'));
-                if (coreColorHex.length() == 8)
-                {
-                    coreColorHex = coreColorHex.right(2) + coreColorHex.left(6);
-                }
-
+                QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(jValue.toString());
                 coreData.insert(category, coreColorHex);
             }
         }
@@ -103,16 +98,15 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
     ColorData colourData;
 
     const QStringList categoryKeys = jsonThemeObject.keys();
-    for (int categoryIndex = 0; categoryIndex < categoryKeys.size(); ++categoryIndex)
+
+    foreach (auto category, categoryKeys)
     {
-        const QString& category = categoryKeys[categoryIndex];
         QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
 
         const QStringList tokenKeys = categoryObject.keys();
-        for (int tokenIndex = 0; tokenIndex < tokenKeys.size(); ++tokenIndex)
-        {
-            const QString& token = tokenKeys[tokenIndex];
 
+        foreach (auto token, tokenKeys)
+        {
             QJsonObject tokenObject = categoryObject[token].toObject();
             QJsonValue jType = tokenObject["type"];
             QJsonValue jValue = tokenObject["value"];

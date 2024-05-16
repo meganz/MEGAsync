@@ -33,6 +33,7 @@ namespace DTI
         static bool areAllStringsPresent(const QStringList& list1, const QStringList& list2);
         static QString themeToString(Utilities::Theme theme);
         static QString resolvePath(const QString& basePath, const QString& relativePath);
+        static QString normalizeHexColoursForQtFormat(QString colour);
         //!
         //! \brief Utilities::findValueByKey
         //! \param myMap Qmap with key/value pairs
