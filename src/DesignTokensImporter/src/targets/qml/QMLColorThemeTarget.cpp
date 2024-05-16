@@ -1,7 +1,7 @@
 #include "QMLColorThemeTarget.h"
 
 #include "QMLTargetUtils.h"
-#include "QMLDesignTargetFactory.h"
+#include "DesignTargetFactory.h"
 
 #include <QDir>
 #include <QDebug>
@@ -16,7 +16,7 @@ static const QString colorThemeHeader = QString::fromUtf8("import QtQuick 2.15\n
 static const QString colorThemeLine = QString::fromUtf8("\treadonly property color %1: \"%2\"\n");
 static const QString colorThemeFooter = QString::fromUtf8("}\n");
 
-bool QMLColorThemeTarget::registered = ConcreteQMLDesignTargetFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
+bool QMLColorThemeTarget::registered = ConcreteDesignTargetFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
 
 void QMLColorThemeTarget::deploy(const DesignAssets& designAssets) const
 {

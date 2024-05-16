@@ -1,13 +1,13 @@
 #ifndef WIDGETS_COLOR_DESIGN_TARGET_H
 #define WIDGETS_COLOR_DESIGN_TARGET_H
 
-#include "WidgetsDesignTarget.h"
+#include "DesignTarget.h"
 
 #include "Types.h"
 
 namespace DTI
 {
-    class WidgetsColorDesignTarget : public IWidgetsDesignTarget
+    class WidgetsColorDesignTarget : public IDesignTarget
     {
     public:
         void deploy(const DesignAssets& designAssets) const override;

@@ -2,8 +2,7 @@
 
 #include "DesignAssetsRepoManager.h"
 #include "IDesignGenerator.h"
-#include "QMLDesignGenerator.h"
-#include "WidgetsDesignGenerator.h"
+#include "DesignGenerator.h"
 
 using namespace DTI;
 
@@ -13,11 +12,7 @@ void DesignTokensImporter::run()
     DesignAssetsRepoManager tokenManager;
     DesignAssets designAssets = tokenManager.getDesignAssets();
 
-    // qml design generator entry point.
-    std::unique_ptr<IDesignGenerator> qmlDesignGenerator{new QMLDesignGenerator()};
-    qmlDesignGenerator->deploy(designAssets);
-
-    // widgets design generator entry point.
-    std::unique_ptr<IDesignGenerator> widgetsDesignGenerator{new WidgetsDesignGenerator()};
-    widgetsDesignGenerator->deploy(designAssets);
+    // design generator entry point.
+    std::unique_ptr<IDesignGenerator> designGenerator{new DesignGenerator()};
+    designGenerator->deploy(designAssets);
 }

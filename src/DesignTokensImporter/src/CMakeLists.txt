@@ -1,5 +1,4 @@
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/qml)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/qtwidget)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/targets)
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/Types.h
@@ -10,6 +9,8 @@ set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
         ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.h
         ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.h
 	${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/IDesignGenerator.h

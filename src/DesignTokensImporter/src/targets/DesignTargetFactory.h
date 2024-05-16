@@ -1,7 +1,7 @@
-#ifndef QML_DESIGN_TARGET_FACTORY_H
-#define QML_DESIGN_TARGET_FACTORY_H
+#ifndef DTI_DESIGN_TARGET_FACTORY_H
+#define DTI_DESIGN_TARGET_FACTORY_H
 
-#include "QMLDesignTarget.h"
+#include "DesignTarget.h"
 
 #include <QStringList>
 
@@ -13,26 +13,26 @@ namespace DTI
     class IConcreteDesignTargetFactory
     {
         public :
-        virtual IQMLDesignTarget* makeQMLDesignTarget() = 0;
+        virtual IDesignTarget* makeDesignTarget() = 0;
     };
 
-    using QMLDesignTargetFactoryMap = std::unordered_map<std::string, std::unique_ptr<IConcreteDesignTargetFactory>>;
+    using DesignTargetFactoryMap = std::unordered_map<std::string, std::unique_ptr<IConcreteDesignTargetFactory>>;
 
-    class QMLDesignTargetFactory
+    class DesignTargetFactory
     {
     public:
-        QMLDesignTargetFactory() = delete;
+        DesignTargetFactory() = delete;
 
         /*
          * Note on pointer ownership: function caller is responsible for deletion of this pointer.
         */
-        static IQMLDesignTarget* getQMLDesignTarget(const QString& targetId)
+        static IDesignTarget* getDesignTarget(const QString& targetId)
         {
-            const auto& qmlDesignTargetFactories = getDesignTargetFactories();
-            auto foundIt = qmlDesignTargetFactories.find(targetId.toStdString());
-            if (foundIt != qmlDesignTargetFactories.end())
+            const auto& designTargetFactories = getDesignTargetFactories();
+            auto foundIt = designTargetFactories.find(targetId.toStdString());
+            if (foundIt != designTargetFactories.end())
             {
-                return foundIt->second->makeQMLDesignTarget();
+                return foundIt->second->makeDesignTarget();
             }
 
             return nullptr;
@@ -61,25 +61,25 @@ namespace DTI
         }
 
         private:
-        static QMLDesignTargetFactoryMap& getDesignTargetFactories()
+        static DesignTargetFactoryMap& getDesignTargetFactories()
         {
-            static QMLDesignTargetFactoryMap designTargetFactories{};
+            static DesignTargetFactoryMap designTargetFactories{};
             return designTargetFactories;
         }
     };
 
-    template<class TQMLDesignTarget>
-    class ConcreteQMLDesignTargetFactory : public IConcreteDesignTargetFactory
+    template<class TDesignTarget>
+    class ConcreteDesignTargetFactory : public IConcreteDesignTargetFactory
     {
     public:
         static bool Register(const std::string& targetId)
         {
-            return QMLDesignTargetFactory::registerDesignTargetFactory(targetId, new ConcreteQMLDesignTargetFactory<TQMLDesignTarget>());
+            return DesignTargetFactory::registerDesignTargetFactory(targetId, new ConcreteDesignTargetFactory<TDesignTarget>());
         };
 
-        TQMLDesignTarget* makeQMLDesignTarget() override
+        TDesignTarget* makeDesignTarget() override
         {
-            return new TQMLDesignTarget();
+            return new TDesignTarget();
         }
     };
 }

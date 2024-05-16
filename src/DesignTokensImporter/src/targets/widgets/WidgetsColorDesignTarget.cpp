@@ -1,20 +1,18 @@
 #include "WidgetsColorDesignTarget.h"
 
-#include "WidgetsDesignTargetFactory.h"
+#include "DesignTargetFactory.h"
 #include "PathProvider.h"
 #include "Utilities.h"
 
 #include <QDir>
-#include <QDebug>
 #include <QFileInfo>
-#include <QTextStream>
 #include <QStringBuilder>
 #include <QJsonObject>
 #include <QJsonDocument>
 
 using namespace DTI;
 
-bool WidgetsColorDesignTarget::registered = WidgetsDesignFactory<WidgetsColorDesignTarget>::Register("widgetsColorTarget");
+bool WidgetsColorDesignTarget::registered = ConcreteDesignTargetFactory<WidgetsColorDesignTarget>::Register("widgetsColorTarget");
 
 void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
 {
