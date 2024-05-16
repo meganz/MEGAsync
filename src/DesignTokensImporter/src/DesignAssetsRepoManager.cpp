@@ -103,22 +103,21 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
     ColorData colourData;
 
     const QStringList categoryKeys = jsonThemeObject.keys();
-    for (int index = 0; index < categoryKeys.size(); ++index)
+    for (int categoryIndex = 0; categoryIndex < categoryKeys.size(); ++categoryIndex)
     {
-        const QString& category = categoryKeys[index];
+        const QString& category = categoryKeys[categoryIndex];
         QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
 
         const QStringList tokenKeys = categoryObject.keys();
-        for (int index = 0; index < tokenKeys.size(); ++index)
+        for (int tokenIndex = 0; tokenIndex < tokenKeys.size(); ++tokenIndex)
         {
-            const QString& token = tokenKeys[index];
+            const QString& token = tokenKeys[tokenIndex];
 
             QJsonObject tokenObject = categoryObject[token].toObject();
             QJsonValue jType = tokenObject["type"];
             QJsonValue jValue = tokenObject["value"];
-            //QJsonValue jAlpha = tokenObject["alpha"];
 
-            if (!jType.isNull() && !jValue.isNull()) // && !jAlpha.isNull())
+            if (!jType.isNull() && !jValue.isNull())
             {
                 QString type = jType.toString();
 
@@ -126,13 +125,10 @@ ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeO
                 {
                     QString value = jValue.toString();
                     value.remove("{").remove("}");
-                    //float alpha = jAlpha.toString().toFloat();
 
                     if (coreData.contains(value))
                     {
                         QString coreColor = coreData[value];
-                        //QString alphaString = QString::number(static_cast<uint>(alpha * 255), 16).rightJustified(2, '0');
-                        //QString color = "#" + alphaString + coreColor;
                         QString color = "#" + coreColor;
 
                         // Strip "--color-" or "-color-" from beginning of token

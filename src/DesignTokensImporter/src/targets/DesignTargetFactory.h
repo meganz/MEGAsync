@@ -4,6 +4,7 @@
 #include "DesignTarget.h"
 
 #include <QStringList>
+#include <QDebug>
 
 #include <unordered_map>
 #include <memory>
@@ -13,7 +14,7 @@ namespace DTI
     class IConcreteDesignTargetFactory
     {
         public :
-        virtual IDesignTarget* makeDesignTarget() = 0;
+        virtual std::shared_ptr<IDesignTarget> makeDesignTarget() = 0;
     };
 
     using DesignTargetFactoryMap = std::unordered_map<std::string, std::unique_ptr<IConcreteDesignTargetFactory>>;
@@ -23,11 +24,14 @@ namespace DTI
     public:
         DesignTargetFactory() = delete;
 
-        /*
-         * Note on pointer ownership: function caller is responsible for deletion of this pointer.
-        */
-        static IDesignTarget* getDesignTarget(const QString& targetId)
+        static std::shared_ptr<IDesignTarget> getDesignTarget(const QString& targetId)
         {
+            if (targetId.isEmpty())
+            {
+                qWarning() << __func__ << " Error : could not get design target with empty targetId";
+                return nullptr;
+            }
+
             const auto& designTargetFactories = getDesignTargetFactories();
             auto foundIt = designTargetFactories.find(targetId.toStdString());
             if (foundIt != designTargetFactories.end())
@@ -38,12 +42,19 @@ namespace DTI
             return nullptr;
         }
 
-        static bool registerDesignTargetFactory(const std::string& targetId, IConcreteDesignTargetFactory* targetFactory)
+        static bool registerDesignTargetFactoryById(const std::string& targetId, std::unique_ptr<IConcreteDesignTargetFactory> targetFactory)
         {
+            if (targetId.empty() || targetFactory == nullptr)
+            {
+                qWarning() << __func__ << " Error : could not register design target factory with empty targetId or nullptr factory";
+
+                return false;
+            }
+
             auto& DesignTargetFactories = getDesignTargetFactories();
             if (DesignTargetFactories.find(targetId) == DesignTargetFactories.end())
             {
-                auto result = DesignTargetFactories.emplace(targetId, targetFactory);
+                auto result = DesignTargetFactories.emplace(targetId, std::move(targetFactory));
                 return result.second;
             }
 
@@ -74,12 +85,12 @@ namespace DTI
     public:
         static bool Register(const std::string& targetId)
         {
-            return DesignTargetFactory::registerDesignTargetFactory(targetId, new ConcreteDesignTargetFactory<TDesignTarget>());
+            return DesignTargetFactory::registerDesignTargetFactoryById(targetId, std::make_unique<ConcreteDesignTargetFactory<TDesignTarget>>());
         };
 
-        TDesignTarget* makeDesignTarget() override
+        std::shared_ptr<IDesignTarget> makeDesignTarget() override
         {
-            return new TDesignTarget();
+            return std::make_shared<TDesignTarget>();
         }
     };
 }

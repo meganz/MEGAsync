@@ -10,6 +10,14 @@ namespace DTI
     class QMLColorThemeManagerTarget : public IDesignTarget
     {
     public:
+        //!
+        //! \brief Creates the color manager that exposes all the color tokens available for the QML pages.
+        //!
+        //! This function has the responsability to create the color manager qml file with all the color tokens available for the QML pages.
+        //! It knows where to place the file with the design tokens and is able to select the desired data from the repository.
+        //!
+        //! \param designAssets The design assets structure with all the data gathered from the design tokens.
+        //!
         void deploy(const DesignAssets& designAssets) const override;
 
     private:
