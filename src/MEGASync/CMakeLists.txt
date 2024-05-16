@@ -139,11 +139,7 @@ if (UNIX AND NOT APPLE)
 
     install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
 
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        SET(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/debug/lib/")
-    else()
-        SET(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib/")
-    endif()
+    set(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/$<$<CONFIG:Debug>:debug/>lib/")
 
     install(DIRECTORY "${vcpkg_lib_folder}"
         TYPE LIB # In CMAKE_INSTALL_LIBDIR directory
