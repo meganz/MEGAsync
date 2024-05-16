@@ -263,6 +263,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mTransfersModel = nullptr;
     mStalledIssuesModel = nullptr;
     mStatusController = nullptr;
+    mStatsEventHandler = nullptr;
 
     notificationsModel = nullptr;
     notificationsProxyModel = nullptr;
@@ -504,6 +505,9 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
+    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
+
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
     if (fstagingPath.exists())
@@ -701,9 +705,6 @@ void MegaApplication::initialize()
     mLogoutController = new LogoutController(QmlManager::instance()->getEngine());
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
-
-    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
 
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
