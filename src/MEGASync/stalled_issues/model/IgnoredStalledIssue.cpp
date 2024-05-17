@@ -90,7 +90,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                         msgInfo.title = MegaSyncApp->getMEGAString();
                         msgInfo.textFormat = Qt::RichText;
                         msgInfo.buttons = QMessageBox::Ok;
-                        msgInfo.text = MegaSyncApp->getStalledIssuesModel()->tr("We could not update the megaignore file. Please, check if it has write permissions.");
+                        msgInfo.text = QCoreApplication::translate("IgnoredStalledIssue", "We could not update the megaignore file. Please, check if it has write permissions.");
                         QMegaMessageBox::warning(msgInfo);
                     });
 

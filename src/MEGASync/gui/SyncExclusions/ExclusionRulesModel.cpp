@@ -1,5 +1,7 @@
 #include "ExclusionRulesModel.h"
 
+#include <QCoreApplication>
+
 ExclusionRulesModel::ExclusionRulesModel(QObject* parent, std::shared_ptr<MegaIgnoreManager> megaIgnoreManager)
     : QAbstractListModel(parent)
 {
@@ -150,11 +152,11 @@ QString ExclusionRulesModel::getTargetTypeString(std::shared_ptr<MegaIgnoreRule>
     const auto targetType = getTargetType(rule);
     switch (targetType) {
     case ExclusionRulesModel::TargetType::EXTENSION:
-        return tr("file extension");
+        return QCoreApplication::translate("ExclusionsStrings", "file extension");
     case ExclusionRulesModel::TargetType::FILE:
-        return tr("file name");
+        return QCoreApplication::translate("ExclusionsStrings", "file name");
     case ExclusionRulesModel::TargetType::FOLDER:
-        return tr("folder name");
+        return QCoreApplication::translate("ExclusionsStrings", "folder name");
         break;
     default:
         break;
@@ -230,7 +232,7 @@ QString ExclusionRulesModel::getWildCardType(std::shared_ptr<MegaIgnoreRule> rul
 {
     if (rule->ruleType() == MegaIgnoreRule::EXTENSIONRULE)
     {
-        return tr("file type");
+        return QCoreApplication::translate("ExclusionsStrings", "file type");
     }
     else if (rule->ruleType() == MegaIgnoreRule::NAMERULE)
     {
@@ -240,13 +242,13 @@ QString ExclusionRulesModel::getWildCardType(std::shared_ptr<MegaIgnoreRule> rul
             switch (wildCard)
             {
             case MegaIgnoreNameRule::WildCardType::CONTAINS:
-                return tr("contains");
+                return QCoreApplication::translate("ExclusionsStrings", "contains");
             case MegaIgnoreNameRule::WildCardType::ENDSWITH:
-                return tr("ends with");
+                return QCoreApplication::translate("ExclusionsStrings", "ends with");
             case MegaIgnoreNameRule::WildCardType::STARTSWITH:
-                return tr("begins with");
+                return QCoreApplication::translate("ExclusionsStrings", "begins with");
             case MegaIgnoreNameRule::WildCardType::EQUAL:
-                return tr("is equal");
+                return QCoreApplication::translate("ExclusionsStrings", "is equal");
             default:
                 break;
             } 

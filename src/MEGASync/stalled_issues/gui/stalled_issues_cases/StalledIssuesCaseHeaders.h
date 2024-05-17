@@ -19,6 +19,8 @@ public:
 
 class HeaderCaseIssueChecker : QObject
 {
+    Q_OBJECT
+
 public:
     static bool checkIssue(StalledIssueHeader *header, bool isSingleSelection);
 };
