@@ -106,64 +106,6 @@
     </message>
 </context>
 <context>
-    <name>AddExclusionDialog</name>
-    <message>
-        <source>Add exclusion</source>
-        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>Add exclusion</translation>
-    </message>
-    <message>
-        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
-        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronisation.</translation>
-    </message>
-    <message>
-        <source>Choose File</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Choose file</translation>
-    </message>
-    <message>
-        <source>Choose Folder</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Choose folder</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
-        <source>Please enter a valid file name or absolute path.</source>
-        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Enter a valid file name or absolute path</translation>
-    </message>
-    <message>
-        <source>Select the file or folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>Select the file or folder you want to exclude</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>Select the folder you want to exclude</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>Select the file you want to exclude</translation>
-    </message>
-</context>
-<context>
     <name>AlertFilterType</name>
     <message>
         <source>All notifications</source>
@@ -1748,7 +1690,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Shared drive</source>
         <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
-        <translation>Shared drive</translation>
+        <translation>Network drive</translation>
     </message>
     <message>
         <source>Local drive</source>
@@ -1871,49 +1813,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>ExclusionRulesModel</name>
-    <message>
-        <source>file extension</source>
-        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>file name</source>
-        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>folder name</source>
-        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>file type</source>
-        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>contains</source>
-        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ends with</source>
-        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>begins with</source>
-        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>is equal</source>
-        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-</context>
-<context>
     <name>ExclusionsStrings</name>
     <message>
         <source>Add Exclusions</source>
@@ -1953,11 +1852,6 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
         <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Done </source>
-        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
         <translation></translation>
     </message>
     <message>
@@ -2024,26 +1918,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Use comma (“,”) to separate multiple items</source>
         <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
         <translation></translation>
-    </message>
-    <message>
-        <source>Byte</source>
-        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>KB</source>
-        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
-        <translation>KB</translation>
-    </message>
-    <message>
-        <source>MB</source>
-        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
-        <translation>MB</translation>
-    </message>
-    <message>
-        <source>GB</source>
-        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
-        <translation>GB</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -2136,6 +2010,11 @@ In some cases they may contain details about your data, such as file or folder n
         <translation></translation>
     </message>
     <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
         <source>Remove</source>
         <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Remove</translation>
@@ -2151,13 +2030,53 @@ In some cases they may contain details about your data, such as file or folder n
         <translation></translation>
     </message>
     <message>
-        <source>Files with this extension “%1” will be included</source>
-        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
         <translation></translation>
     </message>
     <message>
-        <source>Edit Exclusion</source>
-        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <source>Done</source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation type="unfinished">Done</translation>
+    </message>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation></translation>
     </message>
 </context>
@@ -2441,6 +2360,11 @@ Refresh the list.</translation>
         <source>Select local folder</source>
         <translatorcomment>Title of the dialog in which the user select the local default folder.for downloads.</translatorcomment>
         <translation>Select local folder</translation>
+    </message>
+    <message>
+        <source>Not found</source>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
+        <translation>Not found</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2815,14 +2739,6 @@ Refresh the list.</translation>
     </message>
 </context>
 <context>
-    <name>LinkObject</name>
-    <message>
-        <source>Not found</source>
-        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
-        <translation type="unfinished">Not found</translation>
-    </message>
-</context>
-<context>
     <name>LinuxPlatformNotificationAreaIcon</name>
     <message>
         <source>Install notification area icon</source>
@@ -2972,7 +2888,7 @@ Please log out of your computer to complete the installation.</source>
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Are you sure you want to keep the local folder [B]%1[/B]?</translation>
+        <translation>Keep the local folder [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
@@ -3100,17 +3016,17 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the files already stored in MEGA?</translation>
+        <translation>Keep the files already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the folders already stored in MEGA?</translation>
+        <translation>Keep the folders already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Keep the items already stored in MEGA?</translation>
+        <translation>Keep the items already stored [B]in MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -3600,7 +3516,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account suspended</translation>
+        <translation>Account deactivated</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3763,12 +3679,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     </message>
     <message>
         <source>Storage full</source>
-        <translatorcomment>Label to indicate the full storage for the current account is full. CON-561</translatorcomment>
+        <translatorcomment>Label to indicate the full storage for the current account is full (tray icon tooltip). CON-561</translatorcomment>
         <translation type="unfinished">Storage full</translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
-        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded. CON-561</translatorcomment>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
 </context>
@@ -3946,6 +3862,11 @@ You will not be able to regain access to your stored data or be authorised to re
         <source>Your account has expired</source>
         <translatorcomment>Used when a business account has expired, but this could also be a Pro-Flexi account. Max. 27 characters. SNC-4190 and CON-556</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation type="unfinished">Destination storage is full.</translation>
     </message>
 </context>
 <context>
@@ -4210,6 +4131,16 @@ You will not be able to regain access to your stored data or be authorised to re
         <translation type="unfinished">Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact Support.</translation>
     </message>
     <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
+    </message>
+    <message>
         <source>Could not get the filesystem&apos;s ID.</source>
         <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
         <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
@@ -4223,16 +4154,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <source>Backup source path not below drive path.</source>
         <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mismatch on sync root FSID.</source>
-        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
-    </message>
-    <message>
-        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
-        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
     </message>
 </context>
 <context>
@@ -5880,8 +5801,8 @@ Enter a different name.</translation>
         <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
         <translation>Sync rework beta V2
 - A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
+- Changes are detected and sync issues are updated automatically.
+- Now available in all MEGA-supported languages.
 - User experience for batch fixing sync issues is improved.
 - Minor bugs are fixed.
 - Performance is improved.
@@ -6452,11 +6373,6 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>RemoveSyncConfirmationDialog</name>
     <message>
-        <source>Remove sync</source>
-        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remove this sync?</source>
         <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6475,17 +6391,6 @@ Do you want to delete it anyway?</translation>
         <source>Remove</source>
         <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
         <translation type="unfinished">Remove</translation>
-    </message>
-    <message>
-        <source>Remove sync?</source>
-        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The data on your computer and in MEGA will not be removed,
- but the folders will no longer sync with each other.</source>
-        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7309,7 +7214,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Calculating exclusion rules, wait and try again.</translation>
+        <translation>Calculating exclusion rules, issue will be resolved once completed.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -7364,7 +7269,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Deleted or moved in MEGA</translation>
+        <translation>Item deleted or moved in MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -7470,7 +7375,7 @@ Do you want to delete it anyway?</translation>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Resolved: %n</numerusform>
             <numerusform>Resolved: %n</numerusform>
         </translation>
@@ -7478,13 +7383,13 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>All issues: %1</source>
         <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog, %1 variable is for issues count.DNS-1388</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>All issues: %1</translation>
     </message>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
         <translation>
-            <numerusform>Name conflict: %n</numerusform>
+            <numerusform>Name conflicts: %n</numerusform>
             <numerusform>Name conflicts: %n</numerusform>
         </translation>
     </message>
@@ -7492,15 +7397,15 @@ Do you want to delete it anyway?</translation>
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
         <translation>
-            <numerusform>Item type conflict: %n</numerusform>
+            <numerusform>Item type conflicts: %n</numerusform>
             <numerusform>Item type conflicts: %n</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>Other: %n</numerusform>
+        <translation>
+            <numerusform>Others: %n</numerusform>
             <numerusform>Others: %n</numerusform>
         </translation>
     </message>
@@ -8382,11 +8287,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Deep rescan</translation>
     </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>Action for openning sync exclusions dialog.SAT-449</translatorcomment>
-        <translation type="unfinished">Manage exclusions</translation>
-    </message>
 </context>
 <context>
     <name>SyncTooltip</name>
@@ -8500,11 +8400,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Out of transfer quota</source>
         <translatorcomment>Transfer is paused for out of transfer quota</translatorcomment>
         <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Destination storage is full.</source>
-        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
-        <translation type="unfinished">Destination storage is full.</translation>
     </message>
 </context>
 <context>
@@ -9260,7 +9155,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Estimated price in your local currency. Your account will be billed in euros for all transactions.</translation>
+        <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -9303,7 +9198,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Estimated price in your local currency. Your account will be billed in euros for all transactions.</translation>
+        <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
