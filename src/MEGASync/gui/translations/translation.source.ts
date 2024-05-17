@@ -3173,6 +3173,27 @@ Wait for the upload to complete.</translation>
     </message>
 </context>
 <context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Renaming or removing files can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall, shown when the conflicting names are for files only.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Renaming or removing folders can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stal, shown when the conflicting names are for folders only.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Renaming or removing files or folders can resolve this issue,
+or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.shown when the the conflicting names are for folders and files.SNC-2565</translatorcomment>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
@@ -4149,11 +4170,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <translation type="unfinished">Couldn&apos;t read sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
     <message>
-        <source>Unable to write sync configs to disk.</source>
-        <translatorcomment>SDK error to inform the user that megasync wasn´t able to write sync configuration files. CON-537</translatorcomment>
-        <translation type="unfinished">Couldn&apos;t update sync or backup configuration. Try again later or check folder permissions.</translation>
-    </message>
-    <message>
         <source>Invalid scan interval specified.</source>
         <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
         <translation type="unfinished">Invalid scan interval. Check the scan interval setup and try again.</translation>
@@ -4200,13 +4216,23 @@ You will not be able to regain access to your stored data or be authorised to re
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
-        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815</translatorcomment>
-        <translation></translation>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t update sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
     <message>
         <source>Backup source path not below drive path.</source>
         <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.</translation>
     </message>
 </context>
 <context>
