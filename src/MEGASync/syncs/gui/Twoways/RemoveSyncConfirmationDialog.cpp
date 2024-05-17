@@ -7,13 +7,6 @@ RemoveSyncConfirmationDialog::RemoveSyncConfirmationDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-    // Translations
-    setWindowTitle(tr("Remove sync?"));
-    ui->labelHeader->setText(tr("Remove this sync?"));
-    ui->labelMessage->setText(tr("The data on your computer and in MEGA will not be removed,\n but the folders will no longer sync with each other."));
-    ui->bOK->setText(tr("Remove"));
-    ui->bCancel->setText(tr("Cancel"));
-
     ui->bOK->setDefault(true);
     setFocusProxy(ui->bOK);
 }
@@ -27,4 +20,3 @@ void RemoveSyncConfirmationDialog::on_bOK_clicked()
 {
     accept();
 }
-

@@ -156,6 +156,9 @@ max-height: 96px;
    <property name="text">
     <string>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</string>
    </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="bCancel">
    <property name="geometry">
