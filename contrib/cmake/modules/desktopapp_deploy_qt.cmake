@@ -84,6 +84,7 @@ install(DIRECTORY
     "${DEPLOY_QT_LIBRARIES_PATH}/qml/QtGraphicalEffects"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/../qml"
     REGEX ".debug" EXCLUDE
+    REGEX ".qmlc" EXCLUDE
 )
 
 install(DIRECTORY
@@ -97,10 +98,12 @@ install(DIRECTORY
     "${DEPLOY_QT_LIBRARIES_PATH}/qml/QtQuick/Window.2"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/../qml/QtQuick"
     REGEX ".debug" EXCLUDE
+    REGEX ".qmlc" EXCLUDE
 )
 install(DIRECTORY
     "${DEPLOY_QT_LIBRARIES_PATH}/qml/Qt/labs/folderlistmodel"
     "${DEPLOY_QT_LIBRARIES_PATH}/qml/Qt/labs/settings"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/../qml/Qt/labs"
     REGEX ".debug" EXCLUDE
+    REGEX ".qmlc" EXCLUDE
 )
