@@ -46,9 +46,13 @@ void PlanWidget::updatePlanInfo()
 
     // Set widget opacity for lower plans than the actual one
     int currentAccType (Preferences::instance()->accountType());
-    if (currentAccType != FREE && currentAccType != PRO_LITE)
+    if (currentAccType != FREE && currentAccType != PRO_LITE
+            && currentAccType != PRO_STARTER && currentAccType != PRO_BASIC
+            && currentAccType != PRO_ESSENTIAL)
     {
-        if (mDetails.level == PRO_LITE || mDetails.level < currentAccType)
+        if (mDetails.level == PRO_LITE || currentAccType == PRO_STARTER
+                || currentAccType == PRO_BASIC || currentAccType == PRO_ESSENTIAL
+                || mDetails.level < currentAccType)
         {
             setWidgetOpacity(0.5);
             mDisabled = true;
@@ -118,6 +122,15 @@ void PlanWidget::updatePlanInfo()
 
     switch (mDetails.level)
     {
+        case PRO_STARTER:
+            mUi->lProPlan->setText(QString::fromUtf8("Starter"));
+            break;
+        case PRO_BASIC:
+            mUi->lProPlan->setText(QString::fromUtf8("Basic"));
+            break;
+        case PRO_ESSENTIAL:
+            mUi->lProPlan->setText(QString::fromUtf8("Essential"));
+            break;
         case PRO_LITE:
             mUi->lProPlan->setText(QString::fromUtf8("Pro Lite"));
             break;
@@ -346,6 +359,15 @@ QString PlanWidget::getProURL()
     QString url;
     switch (mDetails.level)
     {
+        case PRO_STARTER:
+            url = QString::fromUtf8("mega://#propay_11");
+            break;
+        case PRO_BASIC:
+            url = QString::fromUtf8("mega://#propay_12");
+            break;
+        case PRO_ESSENTIAL:
+            url = QString::fromUtf8("mega://#propay_13");
+            break;
         case PRO_LITE:
             url = QString::fromUtf8("mega://#propay_4");
             break;

@@ -18,12 +18,15 @@ class PlanWidget : public QWidget
 
     public:
         typedef enum {
-            FREE     = mega::MegaAccountDetails::ACCOUNT_TYPE_FREE,
-            PRO_I    = mega::MegaAccountDetails::ACCOUNT_TYPE_PROI,
-            PRO_II   = mega::MegaAccountDetails::ACCOUNT_TYPE_PROII,
-            PRO_III  = mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII,
-            PRO_LITE = mega::MegaAccountDetails::ACCOUNT_TYPE_LITE,
-            BUSINESS = mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS,
+            FREE          = mega::MegaAccountDetails::ACCOUNT_TYPE_FREE,
+            PRO_I         = mega::MegaAccountDetails::ACCOUNT_TYPE_PROI,
+            PRO_II        = mega::MegaAccountDetails::ACCOUNT_TYPE_PROII,
+            PRO_III       = mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII,
+            PRO_LITE      = mega::MegaAccountDetails::ACCOUNT_TYPE_LITE,
+            PRO_STARTER   = mega::MegaAccountDetails::ACCOUNT_TYPE_STARTER,
+            PRO_BASIC     = mega::MegaAccountDetails::ACCOUNT_TYPE_BASIC,
+            PRO_ESSENTIAL = mega::MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL,
+            BUSINESS      = mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS,
         } ProLevel;
 
         typedef enum {
