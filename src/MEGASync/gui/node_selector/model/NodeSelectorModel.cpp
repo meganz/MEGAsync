@@ -1175,7 +1175,6 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     if(mNodesToLoad.isEmpty())
     {
         loadLevelFinished();
-        endInsertRows();
     }
     return result;
 }
