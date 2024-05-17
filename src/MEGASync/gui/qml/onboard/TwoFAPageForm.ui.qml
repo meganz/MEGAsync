@@ -34,6 +34,7 @@ StackViewPage {
 
             spacing: contentSpacing / 2
             title: OnboardingStrings.twoFATitle
+            titleWrapMode: Text.Wrap
             description: OnboardingStrings.twoFASubtitle
             titleWeight: Font.Normal
             descriptionFontSize: Texts.Text.Size.NORMAL
