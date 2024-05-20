@@ -1178,28 +1178,28 @@ void SettingsDialog::updateAccountElements()
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
-            mUi->lAccountType->setText(tr("Pro I"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
-            mUi->lAccountType->setText(tr("Pro II"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
-            mUi->lAccountType->setText(tr("Pro III"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
-            mUi->lAccountType->setText(tr("Pro Lite"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
@@ -1219,19 +1219,19 @@ void SettingsDialog::updateAccountElements()
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_STARTER:
-            mUi->lAccountType->setText(tr("Starter"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_BASIC:
-            mUi->lAccountType->setText(tr("Basic"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_ESSENTIAL:
-            mUi->lAccountType->setText(tr("Essential"));
+            mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
