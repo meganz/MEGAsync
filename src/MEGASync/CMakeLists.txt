@@ -56,7 +56,6 @@ elseif (APPLE)
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info_MEGA.plist
         RESOURCE "${RESOURCE_FILES}"
     )
-else()
 endif()
 
 target_sources(MEGAsync
@@ -73,6 +72,15 @@ set_target_properties(MEGAsync
     AUTOMOC ON # Activates the meta-object code generator for Qt.
     AUTORCC ON # Activates the creation of rules over qrc files
 )
+
+
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/translation.source.ts
+    OPTIONS -locations none -no-ui-lines -no-obsolete)
+
+# Generate ts files before MEGAsync is compiled
+add_custom_target(generate_ts DEPENDS ${QM_OUTPUT})
+add_dependencies(MEGAsync generate_ts)
 
 target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/google_breakpad
@@ -93,6 +101,7 @@ include(UserAttributesRequests/userattributesrequests.cmake)
 
 target_compile_definitions(MEGAsync
     PUBLIC
+    QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
     $<$<CONFIG:Debug>:LOG_TO_STDOUT LOG_TO_LOGGER CREATE_COMPATIBLE_MINIDUMPS>
     $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
 )
@@ -101,13 +110,9 @@ target_compile_definitions(MEGAsync
 if (WIN32)
     find_package(Qt5 REQUIRED COMPONENTS WinExtras)
 elseif (APPLE)
-    find_package(Qt5 REQUIRED COMPONENTS MacExtras)
+    find_package(Qt5 REQUIRED COMPONENTS MacExtras Svg)
 else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
-    target_link_libraries(MEGAsync
-        PUBLIC
-        Qt5::Svg
-    )
 endif()
 
 find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
@@ -117,6 +122,7 @@ target_link_libraries(MEGAsync
     PUBLIC
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
+    $<$<BOOL:${UNIX}>:Qt5::Svg>
     Qt5::Widgets
     Qt5::Core
     Qt5::Gui

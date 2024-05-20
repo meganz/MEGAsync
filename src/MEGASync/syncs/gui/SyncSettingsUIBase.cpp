@@ -6,12 +6,14 @@
 
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
-#include <syncs/gui/Twoways/IgnoresEditingDialog.h>
+#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
-
+#include "SyncExclusions/SyncExclusions.h"
+#include "SyncExclusions/ExclusionsQmlDialog.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
 #include <DialogOpener.h>
+#include <QScreen>
 #include <PermissionsDialog.h>
 #endif
 
@@ -242,8 +244,21 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
     if(mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        showRemoveSyncConfirmationDialog(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
+}
+
+void SyncSettingsUIBase::showRemoveSyncConfirmationDialog(std::shared_ptr<SyncSettings> sync)
+{
+    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
+
+    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog, [dialog, this, sync]()
+    {
+        if (dialog->result() == QDialog::Accepted)
+        {
+            removeSync(sync);
+        }
+    });
 }
 
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)
@@ -281,8 +296,8 @@ void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync
     QFileInfo syncDir(sync->getLocalFolder());
     if(syncDir.exists())
     {
-        QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(sync->getLocalFolder(), false, this);
-        DialogOpener::showDialog(exclusionRules);
+        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, sync->getLocalFolder());
+        DialogOpener::showDialog(exclusions);
     }
     else
     {

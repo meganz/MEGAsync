@@ -5,6 +5,8 @@ import common 1.0
 Qml.Text {
     id: root
 
+    property alias textMouseArea: mouseArea
+    property bool handlePress: false
     enum Size {
         SMALL = 10,
         NORMAL = 12,
@@ -20,5 +22,11 @@ Qml.Text {
         family: FontStyles.fontFamily
         styleName: FontStyles.fontStyleName
         pixelSize: Text.Size.NORMAL
+    }
+    Qml.MouseArea
+    {
+        id: mouseArea
+        anchors.fill: parent
+        onPressed: mouse.accepted = handlePress
     }
 }

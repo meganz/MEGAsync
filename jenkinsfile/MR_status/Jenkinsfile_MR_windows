@@ -129,12 +129,17 @@ pipeline {
             environment {
                 VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
+                _MSPDBSRV_ENDPOINT_ = "${BUILD_TAG}"
+                TMP       = "${windows_sources_workspace}\\tmp"
+                TEMP      = "${windows_sources_workspace}\\tmp"
+                TMPDIR    = "${windows_sources_workspace}\\tmp"
             }
             steps{
                 sh "echo ${params.SDK_BRANCH}"
                 sh "echo ${env.BUILD_OPTIONS}"
                 dir(windows_sources_workspace){
                     sh "mkdir build_dir"
+                    sh "mkdir tmp"
                     sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DVCPKG_ROOT='${VCPKGPATH}' -S '${windows_sources_workspace}' -B '${windows_sources_workspace}'\\\\build_dir\\\\"
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAsync -j 1"
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
@@ -176,9 +181,8 @@ pipeline {
                         timeout(time: 120, unit: 'MINUTES')
                     }
                     environment{
-                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\3rdparty"
+                        MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                         MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
-                        MEGA_THIRD_PARTY_DLL_DIR = "bin"
                     }
                     steps {
                         dir(windows_sources_workspace){
@@ -188,7 +192,7 @@ pipeline {
                                 set TMP=${Workspace}\\tmp
                                 set TEMP=${Workspace}\\tmp
                                 set TMPDIR=${Workspace}\\tmp   
-                                full_build_process.cmd ${env.ARCHITECTURE} nosign 2                     
+                                full_build_process.cmd ${env.ARCHITECTURE} 2
                             """
                         }
                     }
@@ -208,10 +212,9 @@ pipeline {
                                         ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
                                         cd ${buildDir}
                                         ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload Mega.pdb ${ART_UPLOAD_PATH}
+                                        ${JF_PATH}\\jf rt upload SDKlib.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
                                         ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload legacy.pdb ${ART_UPLOAD_PATH}
                                     """
                                 }
                                 if (env.ARCHITECTURE == "64") {

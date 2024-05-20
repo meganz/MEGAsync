@@ -3,6 +3,8 @@
 
 #include "QmlDialog.h"
 #include "QmlManager.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 
 #include "megaapi.h"
 
@@ -121,13 +123,20 @@ public:
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
             connect(mWindow, &QmlDialog::finished, this, [this](){
-                mWrapper->deleteLater();
                 QmlDialogWrapperBase::onWindowFinished();
+            });
+            connect(mWindow, &QmlDialog::accepted, this, [this](){
+                accept();
+            });
+            connect(mWindow, &QmlDialog::rejected, this, [this](){
+                reject();
             });
 
             connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
+
+            mWindow->installEventFilter(MegaSyncApp->getStatsEventHandler());
 
             QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
         }

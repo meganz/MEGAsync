@@ -4,7 +4,7 @@
 #include <MegaUploader.h>
 #include <TransfersModel.h>
 #include <StalledIssuesUtilities.h>
-#include "AppStatsEvents.h"
+#include "StatsEventHandler.h"
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),
@@ -25,7 +25,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 
         if(isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
             return true;
         }
     }
@@ -107,14 +107,20 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
         //Check if transfer already exists
         if(!isBeingSolvedByUpload(info))
         {
+            std::shared_ptr<mega::MegaNode> node(getCloudData()->getNode());
             std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
             if(parentNode)
             {
-                //Using appDataId == 0 means that there will be no notification for this upload
-                mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
+                bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
+                StalledIssuesUtilities utilities;
+                if (!versionsDisabled || utilities.removeRemoteFile(node.get()))
+                {
+                    //Using appDataId == 0 means that there will be no notification for this upload
+                    mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
 
-                mChosenSide = ChosenSide::LOCAL;
-                setIsSolved(StalledIssue::SolveType::SOLVED);
+                    mChosenSide = ChosenSide::LOCAL;
+                    setIsSolved(StalledIssue::SolveType::SOLVED);
+                }
             }
         }
     }
@@ -123,7 +129,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
 {
     StalledIssuesUtilities utilities;
-    auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : syncIds().first();
+    auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : firstSyncId();
     utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 
     mChosenSide = ChosenSide::REMOTE;

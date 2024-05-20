@@ -6,12 +6,12 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 #include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
-#include <AppStatsEvents.h>
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <MultiStepIssueSolver.h>
 #include <syncs/control/MegaIgnoreManager.h>
+#include "StatsEventHandler.h"
 
 #include <QSortFilterProxyModel>
 
@@ -854,10 +854,9 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
                 remote ? issue->chooseRemoteSide() : issue->chooseLocalSide();
                 if(item.consultData()->isSolved())
                 {
-                    MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY);
+                    MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_MANUALLY);
+                    return true;
                 }
-
-                return true;
             }
         }
 
@@ -885,7 +884,7 @@ void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
 
             if(item.consultData()->isSolved())
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_MANUALLY);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_MANUALLY);
                 return true;
             }
         }
@@ -910,7 +909,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
         {
             if(!item.consultData()->syncIds().isEmpty())
             {
-                auto sync = SyncInfo::instance()->getSyncSettingByTag(item.consultData()->syncIds().first());
+                auto sync = SyncInfo::instance()->getSyncSettingByTag(item.consultData()->firstSyncId());
                 if(sync && !mSyncsToDisable.contains(sync))
                 {
                     mSyncsToDisable.append(sync);
@@ -948,7 +947,7 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& l
 
             if(localRemoteIssue->isSolved())
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_SEMI_AUTOMATICALLY);
                 return true;
             }
         }
@@ -968,20 +967,20 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
         auto item = mStalledIssues.at(row);
         if(!item.getData()->syncIds().isEmpty())
         {
-            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->syncIds().first()));
+            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->firstSyncId()));
             if(sync)
             {
                 auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
                 if(MegaIgnoreManager::isValid(folderPath))
                 {
-                    auto& items = mIgnoredItemsBySync[item.getData()->syncIds().first()];
+                    auto& items = mIgnoredItemsBySync[item.getData()->firstSyncId()];
                     auto ignoredItems = item.getData()->getIgnoredFiles();
                     foreach(auto& ignoredItem, ignoredItems)
                     {
                         if(!items.contains(ignoredItem))
                         {
                             items.append(ignoredItem);
-                            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_SOLVED_MANUALLY);
+                            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_IGNORE_SOLVED_MANUALLY);
                         }
                     }
 
@@ -1062,7 +1061,7 @@ void StalledIssuesModel::ignoreSymLinks()
         {
             if(!item.getData()->syncIds().isEmpty())
             {
-                auto syncId(item.getData()->syncIds().first());
+                auto syncId(item.getData()->firstSyncId());
                 if(!involvedSyncs.contains(syncId))
                 {
                     involvedSyncs.append(syncId);
@@ -1107,7 +1106,7 @@ void StalledIssuesModel::ignoreSymLinks()
         auto item = mStalledIssues.at(row);
         if(!item.getData()->syncIds().isEmpty())
         {
-            return !involvedFailedToIgnoreSyncs.contains(item.getData()->syncIds().first());
+            return !involvedFailedToIgnoreSyncs.contains(item.getData()->firstSyncId());
         }
 
         return false;
@@ -1129,7 +1128,7 @@ void StalledIssuesModel::ignoreSymLinks()
         }
         else if(issuesFixed > 0)
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_IGNORE_ALL_SYMLINK);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_IGNORE_ALL_SYMLINK);
         }
     };
 
@@ -1165,7 +1164,7 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
         auto issue(mStalledIssues.at(row));
         mFingerprintIssuesToFix.append(issue);
 
-        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_FINGERPRINT_MISSING_SOLVED_MANUALLY);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_FINGERPRINT_MISSING_SOLVED_MANUALLY);
         return true;
     };
 
@@ -1227,7 +1226,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
                     nameConflict->semiAutoSolveIssue(option);
                     if(item.consultData()->isSolved())
                     {
-                        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY);
+                        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY);
                         return true;
                     }
                 }
@@ -1255,7 +1254,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
 
         if(nameConflict->isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
             finishConflictManually();
         }
 
@@ -1278,7 +1277,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameT
 
         if(nameConflict->isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
             finishConflictManually();
         }
 
@@ -1309,7 +1308,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
 
         if(nameConflict->isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
             finishConflictManually();
         }
 
@@ -1332,7 +1331,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
 
         if(nameConflict->isSolved())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_SI_NAMECONFLICT_SOLVED_MANUALLY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
             finishConflictManually();
         }
     }

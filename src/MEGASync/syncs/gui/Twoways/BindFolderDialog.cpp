@@ -2,8 +2,10 @@
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "IgnoresEditingDialog.h"
 #include <DialogOpener.h>
+#include <QScreen>
+#include "SyncExclusions/ExclusionsQmlDialog.h"
+#include "SyncExclusions/SyncExclusions.h"
 
 #include <QInputDialog>
 
@@ -127,8 +129,8 @@ void BindFolderDialog::allSelectionsDone()
 
 void BindFolderDialog::onAddExclusionsClicked()
 {
-    QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(ui->wBinder->selectedLocalFolder(), true,  this);
-    DialogOpener::showDialog(exclusionRules);
+    QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, ui->wBinder->selectedLocalFolder());
+    DialogOpener::showDialog(exclusions);
 }
 
 bool BindFolderDialog::focusNextPrevChild(bool next)

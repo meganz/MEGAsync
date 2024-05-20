@@ -5,8 +5,8 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
-#include "AppStatsEvents.h"
 #include "TextDecorator.h"
+#include "StatsEventHandler.h"
 
 #include <QQmlContext>
 
@@ -407,7 +407,7 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::ACC_CREATION_START);
         if (!mPreferences->accountCreationTime())
         {
                 mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -536,6 +536,12 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(e)
     Q_UNUSED(request)
+    int errorCode = e->getErrorCode();
+    int paramType =  request->getParamType();
+    if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL)
+    {
+        return;
+    }
 
     setState(LOGGED_OUT);
 }
@@ -858,7 +864,7 @@ LogoutController::LogoutController(QObject* parent)
     : QObject(parent)
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
-      , mLogingIn(false)
+      , mLoginInWithoutSession(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
 }
@@ -871,6 +877,11 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
 {
     Q_UNUSED(api)
 
+    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    {
+        mLoginInWithoutSession = false;
+    }
+
     if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
     {
         return;
@@ -879,7 +890,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     int paramType =  request->getParamType();
     if (errorCode || paramType)
     {
-        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL && !mLogingIn)
+        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL && !mLoginInWithoutSession)
         {
             //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
             //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
@@ -946,14 +957,14 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     }
 
     emit logout(!request->getFlag());
-    mLogingIn = false;
+    mLoginInWithoutSession = false;
 }
 
 void LogoutController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
 {
     Q_UNUSED(api)
-    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    if(request->getType() == mega::MegaRequest::TYPE_LOGIN && !request->getSessionKey())
     {
-        mLogingIn = true;
+        mLoginInWithoutSession = true;
     }
 }

@@ -17,7 +17,9 @@ RC_FILE = MEGAShellExt.rc
 OTHER_FILES += GlobalExportFunctions.def MEGAShellExt.rc
 
 HEADERS += \
+    ClassFactoryShellExtNotFound.h \
     ShellExt.h \
+    ShellExtNotASync.h \
     resource.h \
     RegUtils.h \
     ContextMenuExt.h \
@@ -29,8 +31,10 @@ HEADERS += \
     MegaInterface.h
 
 SOURCES += \
+    ClassFactoryShellExtNotFound.cpp \
     ShellExt.cpp \
     RegUtils.cpp \
+    ShellExtNotASync.cpp \
     dllmain.cpp \
     ContextMenuExt.cpp \
     ClassFactoryShellExtSyncing.cpp \

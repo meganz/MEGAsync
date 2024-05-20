@@ -1342,6 +1342,45 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>CustomTransferItem</name>
+    <message>
+        <source>failed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>starting...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translation type="unfinished">Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translation type="unfinished">Storage quota exceeded</translation>
+    </message>
+    <message>
+        <source>retrying...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>completing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DateTimeFormatter</name>
     <message>
         <source>Today at %1</source>
@@ -1871,6 +1910,308 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>DynamicTransferQuotaPopOver</name>
+    <message>
+        <source>Dynamic transfer quota</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[A]The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can upgrade to PRO, which will give you your own transfer quota package and also ample extra storage space.[/A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ExclusionRulesModel</name>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ExclusionsStrings</name>
+    <message>
+        <source>Add Exclusions</source>
+        <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
+        <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action that enables openning sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Manage exclusions</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from</source>
+        <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translatorcomment>Column name for value of exclusion rule in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Exclude files by size</source>
+        <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Exclude file sizes</source>
+        <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
+        <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Done </source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).</source>
+        <translatorcomment>Description for the dialog for adding a new exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Add Exclusion</source>
+        <translatorcomment>Button to accept and add a new exclusion rule with the specified values.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>You will exclude:</source>
+        <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Drop down entry for specifying files as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Drop down entry for specifying folders as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Beginning with</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Ending</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Equal to</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button to cancel the dialog for adding rules.SAT-449</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Files beginning with:</source>
+        <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Use comma (“,”) to separate multiple items</source>
+        <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Byte</source>
+        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
+        <translation>KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Units for file size rule.SAT-449</translatorcomment>
+        <translation>GB</translation>
+    </message>
+    <message>
+        <source>Outside of</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Bigger than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Smaller than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment> Label for the end range of file size exclusions section.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Exclude by name</source>
+        <translatorcomment>Section title for name exclusion rules.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Restore defaults</source>
+        <translatorcomment>Button for restoring MEGA ddefault sync exclusion rules.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translatorcomment>Column title for displaying exclusion rule target type.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>property</source>
+        <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Remove this exclusion?</source>
+        <translatorcomment>Title for confirmation dialog before removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Remove</translation>
+    </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box for confirmation message bedore removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Set a minimum and maximum value for file sizes. Files outside this range will be excluded.</source>
+        <translatorcomment>Hint text when specyfing the range to be excluded in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation></translation>
+    </message>
+</context>
+<context>
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
@@ -2094,148 +2435,11 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>HeaderCaseIssueChecker</name>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>The issue may have been resolved externally.
-Refresh the list.</translation>
-    </message>
-</context>
-<context>
     <name>IgnoredStalledIssue</name>
     <message>
         <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
         <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
         <translation>Couldn’t update the .megaignore file. Check if you have write permissions for this file.</translation>
-    </message>
-</context>
-<context>
-    <name>IgnoresEditingDialog</name>
-    <message>
-        <source>Edit exclusions</source>
-        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Edit exclusions</translation>
-    </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Manage exclusions</translation>
-    </message>
-    <message>
-        <source>by size</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Exclude by size</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Exclude files smaller than</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Exclude files bigger than</translation>
-    </message>
-    <message>
-        <source>by name</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Exclude by name</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation>Files or folders to be excluded from synchronisation:</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
-        <translation>Delete</translation>
-    </message>
-    <message>
-        <source>by file type</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Exclude by file type</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Advanced</translation>
-    </message>
-    <message>
-        <source>Open .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Open .megaignore</translation>
-    </message>
-    <message>
-        <source>by size:</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Exclude by size:</translation>
-    </message>
-    <message>
-        <source>by name:</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Exclude by name:</translation>
-    </message>
-    <message>
-        <source>by file type:</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Exclude by file type:</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Edit .megaignore</translation>
-    </message>
-    <message>
-        <source>Advanced:</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Advanced:</translation>
-    </message>
-    <message>
-        <source>Rule already exists.</source>
-        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation>Rule already exists</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
-        <translation>Reload</translation>
-    </message>
-    <message>
-        <source>Current file has been modified by another program. it will be reloaded</source>
-        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation>Current .megaignore file has been modified by another program, it will be reloaded</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation>You can edit the associated .megaignore file with a text editor. This is a task better suited for users who are comfortable with regular expressions.</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation>You can edit the associated .megaignore file with a text editor. This is a task better suited for users who are comfortable with regular expressions.</translation>
-    </message>
-    <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>You can exclude certain files and folders from being synced with your Cloud drive.
-This can be useful for large files, files that you don’t need on all of your devices, or certain file types that need not be synced.</translation>
     </message>
 </context>
 <context>
@@ -2618,6 +2822,45 @@ This can be useful for large files, files that you don’t need on all of your d
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">You are not logged in</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log in</source>
+        <translation type="unfinished">Log&#xa0;in</translation>
+    </message>
+    <message>
+        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -2865,33 +3108,6 @@ Please wait for the upload to complete.</source>
         <translation>With this action, the item already stored in MEGA will be chosen.</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>The issue may have been resolved externally.
-Refresh the list.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
-    </message>
-    <message>
         <source>Keep both files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
         <translation>Keep both files?</translation>
@@ -2994,6 +3210,14 @@ Wait for the upload to complete.</translation>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Keep the [B]local[/B] folders?</translation>
     </message>
+    <message numerus="yes">
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and the remote file will be moved to the rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>The [B]local file[/B] %1 will be uploaded to MEGA and the remote file will be moved to the rubbish bin.</numerusform>
+            <numerusform>The [B]local files[/B] will be uploaded to MEGA and the remote files will be moved to the rubbish bin</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
@@ -3006,6 +3230,51 @@ Wait for the upload to complete.</translation>
         <source>This file has conflicting copies</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
         <translation>This item has conflicting copies</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteStalledIssueBaseChooseWidget</name>
+    <message>
+        <source>Chosen</source>
+        <translation type="unfinished">Chosen</translation>
+    </message>
+    <message>
+        <source>Local file is being uploaded</source>
+        <translation type="unfinished">Local file is being uploaded</translation>
+    </message>
+    <message>
+        <source>Renamed to %1</source>
+        <translation type="unfinished">Renamed</translation>
+    </message>
+</context>
+<context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translation type="unfinished">Remove files older than</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
+    <name>LocalMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Local</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3712,11 +3981,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Terms of Service breached</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Not accessible as it violated our Terms of Service</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Transfer failed due to a recursive folder structure</translation>
@@ -3867,11 +4131,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <translation>You don’t have full access to the shared folder in MEGA</translation>
     </message>
     <message>
-        <source>Local fingerprint mismatch</source>
-        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>A local file system change has been detected</translation>
-    </message>
-    <message>
         <source>Put nodes error</source>
         <translatorcomment>SDK error label shown when a put nodes fails.</translatorcomment>
         <translation>Error creating new items in MEGA</translation>
@@ -3945,6 +4204,117 @@ You will not be able to regain access to your stored data or be authorised to re
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation>Your plan has expired</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
+        <translation type="unfinished">Sync or backup was stopped because you logged out. Re-enable it to resume synchronisation.</translation>
+    </message>
+    <message>
+        <source>Active sync same path</source>
+        <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
+        <translation type="unfinished">This location already contains synced or backed up folders.</translation>
+    </message>
+    <message>
+        <source>Unknown drive path.</source>
+        <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
+        <translation type="unfinished">Sync or backup&apos;s drive path is unknown.</translation>
+    </message>
+    <message>
+        <source>Local filesystem mismatch</source>
+        <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
+        <translation type="unfinished">Files in this folder can&apos;t be synced or backed up. You will need to re-enable the sync or backup from Settings.</translation>
+    </message>
+    <message>
+        <source>Backup externally modified</source>
+        <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
+    </message>
+    <message>
+        <source>Unable to create initial ignore file.</source>
+        <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t create a .megaignore file for this sync or backup.</translation>
+    </message>
+    <message>
+        <source>Unable to read sync configs from disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t read sync or backup configuration. Try again later or check folder permissions.</translation>
+    </message>
+    <message>
+        <source>Unable to write sync configs to disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to write sync configuration files. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t update sync or backup configuration. Try again later or check folder permissions.</translation>
+    </message>
+    <message>
+        <source>Invalid scan interval specified.</source>
+        <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
+        <translation type="unfinished">Invalid scan interval. Check the scan interval setup and try again.</translation>
+    </message>
+    <message>
+        <source>Filesystem notification subsystem unavailable.</source>
+        <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.</translation>
+    </message>
+    <message>
+        <source>Unable to add filesystem watch.</source>
+        <translatorcomment>SDK error indicating that the filesystem watch couldn´t be added. CON-537</translatorcomment>
+        <translation type="unfinished">Unable to add a filesystem watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve sync root FSID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+    </message>
+    <message>
+        <source>Unable to open state cache database.</source>
+        <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
+        <translation type="unfinished">Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
+    </message>
+    <message>
+        <source>Insufficient disk space.</source>
+        <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
+        <translation type="unfinished">Insufficient space for download.</translation>
+    </message>
+    <message>
+        <source>Failure accessing to persistent storage</source>
+        <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve the ID of current device</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
+        <translation type="unfinished">Unable to create backup as the device you&apos;re backing up from doesn&apos;t have a name. Give your device a name and then try again. If issue continues, contact Support.</translation>
+    </message>
+    <message>
+        <source>Could not get the filesystem&apos;s ID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
+        <translation type="unfinished">Couldn&apos;t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Backup source path not below drive path.</source>
+        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup source path not below drive path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4154,26 +4524,44 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
 </context>
 <context>
+    <name>MoveOrRenameCannotOccur</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translation type="unfinished">Select which version you want to keep</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to choose the local side?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to choose the remote side?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Chosen</source>
+        <translation type="unfinished">Chosen</translation>
+    </message>
+    <message>
+        <source>Changes Undone</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MoveOrRenameCannotOccurHeader</name>
     <message>
-        <source>Cannot move or rename [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Can’t move or rename [B]%1[/B]</translation>
+        <source>Can’t move or rename some items on in [B]%1[/B]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>A move or rename was detected in MEGA, but couldn’t be replicated locally.</translation>
-    </message>
-    <message>
-        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>A move or rename action was detected in the local file system, but could not be replicated in MEGA.</translation>
-    </message>
-    <message>
-        <source>Solve</source>
-        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation>Resolve</translation>
+        <source>The local and remote locations have changed at the same time</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6104,6 +6492,13 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Stop backup</source>
@@ -6159,6 +6554,45 @@ Do you want to delete it anyway?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveSyncConfirmationDialog</name>
+    <message>
+        <source>Remove sync</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove this sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished">Remove</translation>
+    </message>
+    <message>
+        <source>Remove sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed,
+ but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6935,26 +7369,36 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>StalledIssueBaseDelegateWidget</name>
+    <message>
+        <source>Refresh</source>
+        <translation type="unfinished">Refresh</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translation type="unfinished">The issue may have been resolved externally.
+Refresh the list.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translation type="unfinished">Apply to all</translation>
+    </message>
+</context>
+<context>
     <name>StalledIssueChooseWidget</name>
     <message>
         <source>Choose</source>
         <translatorcomment>Button to choose either remote or local version.SNC-2565</translatorcomment>
         <translation>Choose</translation>
-    </message>
-    <message>
-        <source>Local file is being uploaded</source>
-        <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
-        <translation>Local file is being uploaded</translation>
-    </message>
-    <message>
-        <source>Renamed to %1</source>
-        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation>Renamed</translation>
-    </message>
-    <message>
-        <source>Chosen</source>
-        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
-        <translation>Chosen</translation>
     </message>
 </context>
 <context>
@@ -7137,6 +7581,10 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
         <translation>Resolved</translation>
     </message>
+    <message>
+        <source>Being solved</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -7300,14 +7748,20 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
 Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
     </message>
     <message>
-        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>File “%1” was moved to “%2”</translation>
+        <source>Issue being solved.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>Folder “%1” was moved to “%2”</translation>
+        <source>Sync stalls</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(TEMPORARY) We have started solving your issues for sync X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(TEMPORARY) We have finished solving your issues for sync X</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7682,6 +8136,19 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     </message>
 </context>
 <context>
+    <name>SyncExclusions</name>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Select the file you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Select the folder you want to exclude</translation>
+    </message>
+</context>
+<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -8033,11 +8500,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pause</translation>
     </message>
     <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
-        <translation>Add exclusions</translation>
-    </message>
-    <message>
         <source>Quick Rescan</source>
         <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Quick rescan</translation>
@@ -8048,9 +8510,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Deep rescan</translation>
     </message>
     <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>Edit .megaignore</translation>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action for openning sync exclusions dialog.SAT-449</translatorcomment>
+        <translation type="unfinished">Manage exclusions</translation>
     </message>
 </context>
 <context>
@@ -8387,6 +8849,41 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
+    <name>TransferManagerItem</name>
+    <message>
+        <source>starting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translation type="unfinished">Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translation type="unfinished">Storage quota exceeded</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">%1 of %2</translation>
+    </message>
+</context>
+<context>
     <name>TransferNotificationBuilder</name>
     <message>
         <source>Retry</source>
@@ -8632,6 +9129,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open the Settings dialog</translatorcomment>
         <translation>Open Settings</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersStateInfoWidget</name>
+    <message>
+        <source>No Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused Transfers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

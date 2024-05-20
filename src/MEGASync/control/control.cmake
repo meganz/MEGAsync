@@ -8,7 +8,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/DialogOpener.h
     control/DownloadQueueController.h
     control/EmailRequester.h
-    control/IStatsEventHandler.h
+    control/StatsEventHandler.h
     control/ProxyStatsEventHandler.h
     control/ExportProcessor.h
     control/FileFolderAttributes.h
@@ -66,6 +66,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/Preferences/EncryptedSettings.cpp
     control/Preferences/EphemeralCredentials.cpp
     control/Preferences/Preferences.cpp
+    control/StatsEventHandler.cpp
 )
 
 target_sources(MEGAsync

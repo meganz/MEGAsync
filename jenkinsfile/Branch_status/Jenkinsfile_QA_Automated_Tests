@@ -70,7 +70,7 @@ pipeline {
                                 Received request from Jenkins, <@U06BFB1EURK>, please test:
                                 ```
                                 TEST_TAG = nightly
-                                APP_URL = ${env.REPOSITORY_URL}/artifactory/MEGAsync-releases/${env.MEGASYNC_VERSION}/QA-automated-tests/macOS/arm64/MEGAsync.dmg
+                                APP_URL = ${env.REPOSITORY_URL}/artifactory/MEGAsync-releases/${env.MEGASYNC_VERSION}/QA-automated-tests/macOS/arm64/src/MEGASync/MEGAsync.dmg
                                 ```
                                 """.stripIndent()
 

@@ -12,7 +12,7 @@ set(DESKTOP_APP_SYNCS_HEADERS
     syncs/gui/SyncTooltipCreator.h
     syncs/gui/SyncsMenu.h
     syncs/gui/Twoways/BindFolderDialog.h
-    syncs/gui/Twoways/IgnoresEditingDialog.h
+    syncs/gui/Twoways/RemoveSyncConfirmationDialog.h
     syncs/gui/Twoways/FolderBinder.h
     syncs/gui/Twoways/SyncTableView.h
     syncs/gui/Twoways/SyncSettingsUI.h
@@ -39,7 +39,7 @@ set(DESKTOP_APP_SYNCS_SOURCES
     syncs/gui/SyncTooltipCreator.cpp
     syncs/gui/SyncsMenu.cpp
     syncs/gui/Twoways/BindFolderDialog.cpp
-    syncs/gui/Twoways/IgnoresEditingDialog.cpp
+    syncs/gui/Twoways/RemoveSyncConfirmationDialog.cpp
     syncs/gui/Twoways/FolderBinder.cpp
     syncs/gui/Twoways/SyncTableView.cpp
     syncs/gui/Twoways/SyncSettingsUI.cpp
@@ -59,7 +59,7 @@ target_sources_conditional(MEGAsync
    PRIVATE
    syncs/gui/Twoways/win/FolderBinder.ui
    syncs/gui/Twoways/win/BindFolderDialog.ui
-   syncs/gui/Twoways/win/IgnoresEditingDialog.ui
+   syncs/gui/Twoways/win/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/win/SyncAccountFullMessage.ui
    syncs/gui/Twoways/win/SyncSettingsUIBase.ui
    syncs/gui/Twoways/win/SyncStallModeSelector.ui
@@ -77,7 +77,7 @@ target_sources_conditional(MEGAsync
    PRIVATE
    syncs/gui/Twoways/macx/FolderBinder.ui
    syncs/gui/Twoways/macx/BindFolderDialog.ui
-   syncs/gui/Twoways/macx/IgnoresEditingDialog.ui
+   syncs/gui/Twoways/macx/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/macx/SyncAccountFullMessage.ui
    syncs/gui/Twoways/macx/SyncSettingsUIBase.ui
    syncs/gui/Twoways/macx/SyncStallModeSelector.ui
@@ -95,7 +95,7 @@ target_sources_conditional(MEGAsync
    PRIVATE
    syncs/gui/Twoways/linux/FolderBinder.ui
    syncs/gui/Twoways/linux/BindFolderDialog.ui
-   syncs/gui/Twoways/linux/IgnoresEditingDialog.ui
+   syncs/gui/Twoways/linux/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
    syncs/gui/Twoways/linux/SyncSettingsUIBase.ui
    syncs/gui/Twoways/linux/SyncStallModeSelector.ui

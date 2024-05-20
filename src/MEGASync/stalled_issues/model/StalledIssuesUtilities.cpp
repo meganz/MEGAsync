@@ -16,45 +16,54 @@
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
-void StalledIssuesUtilities::removeRemoteFile(const QString& path)
+bool StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
     std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
-    removeRemoteFile(fileNode.get());
+    return removeRemoteFile(fileNode.get());
 }
 
-void StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
+bool StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
 {
     if(node)
     {
         std::unique_ptr<MoveToCloudBinUtilities> utilities(new MoveToCloudBinUtilities());
-        utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
+        return utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
     }
+
+    return false;
 }
 
-void StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::MegaHandle& syncId)
+bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::MegaHandle& syncId)
 {
+    bool result(false);
+
     QFile file(path);
     if(file.exists())
     {
         if(syncId != mega::INVALID_HANDLE)
         {
+            QEventLoop moveEventLoop;
             MegaSyncApp->getMegaApi()->moveToDebris(path.toStdString().c_str(),syncId, new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
                                                                                                            this,
-                                                                                                           [=](bool,
+                                                                                                           [=, &result, &moveEventLoop](bool,
                                                                                                            const mega::MegaRequest&,
                                                                                                            const mega::MegaError& e){
                 //In case of error, move to OS trash
                 if (e.getErrorCode() != mega::MegaError::API_OK)
                 {
-                    QFile::moveToTrash(path);
+                    result = QFile::moveToTrash(path);
                 }
+                moveEventLoop.quit();
             }));
+            moveEventLoop.exec();
         }
         else
         {
-            QFile::moveToTrash(path);
+            result = QFile::moveToTrash(path);
         }
     }
+
+    return result;
 }
 
 QIcon StalledIssuesUtilities::getLocalFileIcon(const QFileInfo &fileInfo, bool hasProblem)

@@ -1498,5 +1498,6 @@
         <file>images/StalledIssues/rotate-ccw.png</file>
         <file>images/StalledIssues/rotate-ccw@2x.png</file>
         <file>images/StalledIssues/rotate-ccw@3x.png</file>
+        <file>images/folder.svg</file>
     </qresource>
 </RCC>

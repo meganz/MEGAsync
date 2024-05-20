@@ -1,9 +1,9 @@
 #include "HTTPServer.h"
 #include "Preferences/Preferences.h"
-#include "AppStatsEvents.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "mega/setandelement.h"
+#include "StatsEventHandler.h"
 
 #include <QtConcurrent/QtConcurrent>
 
@@ -428,7 +428,7 @@ void HTTPServer::openLinkRequest(QString &response, const HTTPRequest& request)
 
         if (!isFirstWebDownloadDone && !preferences->isFirstWebDownloadDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_1ST_WEBCLIENT_DL);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_WEBCLIENT_DL);
             isFirstWebDownloadDone = true;
         }
     }

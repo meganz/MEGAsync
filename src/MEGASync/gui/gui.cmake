@@ -1,5 +1,3 @@
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
-
 set(DESKTOP_APP_GUI_HEADERS
     gui/SettingsDialog.h
     gui/AutoResizeStackedWidget.h
@@ -97,6 +95,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/onboarding/GuestQmlDialog.h
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
+    gui/SyncExclusions/ExclusionRulesModel.h
+    gui/SyncExclusions/ExclusionsQmlDialog.h
+    gui/SyncExclusions/SyncExclusions.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -192,6 +193,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/onboarding/GuestQmlDialog.cpp
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
+    gui/SyncExclusions/ExclusionRulesModel.cpp
+    gui/SyncExclusions/ExclusionsQmlDialog.cpp
+    gui/SyncExclusions/SyncExclusions.cpp
+
 )
 
 # UI files additions
@@ -430,6 +435,10 @@ set(DESKTOP_APP_GUI_RESOURCES
     gui/Resources_qml.qrc
     gui/qml/qml.qrc
 )
+
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
 
 if (CMAKE_HOST_APPLE)
     add_custom_command(
