@@ -124,12 +124,15 @@ void PlanWidget::updatePlanInfo()
     {
         case PRO_STARTER:
             mUi->lProPlan->setText(QString::fromUtf8("Starter"));
+            mUi->lHelp->setVisible(false);
             break;
         case PRO_BASIC:
             mUi->lProPlan->setText(QString::fromUtf8("Basic"));
+            mUi->lHelp->setVisible(false);
             break;
         case PRO_ESSENTIAL:
             mUi->lProPlan->setText(QString::fromUtf8("Essential"));
+            mUi->lHelp->setVisible(false);
             break;
         case PRO_LITE:
             mUi->lProPlan->setText(QString::fromUtf8("Pro Lite"));
