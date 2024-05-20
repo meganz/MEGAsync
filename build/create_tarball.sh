@@ -24,27 +24,6 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-
-
-# make sure the source tree is in "clean" state
-cwd=$(pwd)
-cd ../src
-make distclean 2> /dev/null || true
-cd MEGASync
-make distclean 2> /dev/null || true
-cd mega
-make distclean 2> /dev/null || true
-rm -fr bindings/qt/3rdparty || true
-mv include/mega/config.h $cwd/config.h_bktarball || true
-./clean.sh || true
-cd $cwd
-
-# download software archives
-archives=$cwd/archives
-rm -fr $archives
-mkdir $archives
-../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -g -w -s -v -u -W -o $archives
-
 # get current version
 MEGASYNC_VERSION=`grep -Po '#define VER_PRODUCTVERSION_STR[[:space:]]*"\K.*(?=\.)' ../src/MEGASync/control/Version.h`
 export MEGASYNC_NAME=megasync-$MEGASYNC_VERSION
@@ -123,14 +102,16 @@ ln -s ../MEGAsync/MEGAsync/debian.postinst $MEGASYNC_NAME/debian.postinst
 ln -s ../MEGAsync/MEGAsync/debian.prerm $MEGASYNC_NAME/debian.prerm
 ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../MEGAsync/MEGAsync/debian.copyright $MEGASYNC_NAME/debian.copyright
-ln -s ../../src/configure $MEGASYNC_NAME/configure
-ln -s ../../src/MEGA.pro $MEGASYNC_NAME/MEGA.pro
-ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync
-ln -s $archives $MEGASYNC_NAME/archives
+ln -s ../../CMakeLists.txt $MEGASYNC_NAME/CMakeLists.txt
+ln -s ../../vcpkg.json $MEGASYNC_NAME/vcpkg.json
+mkdir $MEGASYNC_NAME/contrib
+ln -s ../../../contrib/cmake $MEGASYNC_NAME/contrib/
+mkdir $MEGASYNC_NAME/src
+ln -s ../../../src/CMakeLists.txt $MEGASYNC_NAME/src/CMakeLists.txt
+ln -s ../../../src/MEGASync $MEGASYNC_NAME/src/
+
 tar czfh $MEGASYNC_NAME.tar.gz --exclude-vcs $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
-
-mv $cwd/config.h_bktarball $cwd/../src/MEGASync/mega/include/mega/config.h || true
 
 # delete any previous archive
 rm -fr MEGAsync/MEGAsync/megasync_*.tar.gz
