@@ -126,3 +126,13 @@ target_sources(MEGAsync
 )
 
 target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/platform)
+
+
+if (UNIX AND NOT APPLE)
+
+    # Install app icons
+    install(DIRECTORY platform/linux/data/icons
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share"
+    )
+
+endif()
