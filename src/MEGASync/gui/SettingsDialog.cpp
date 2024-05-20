@@ -1409,9 +1409,7 @@ void SettingsDialog::on_lAccountType_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    QString url = QString::fromUtf8("mega://#pro");
-    Utilities::getPROurlWithParameters(url);
-    Utilities::openUrl(QUrl(url));
+    Utilities::upgradeClicked();
 }
 
 void SettingsDialog::on_bBuyMoreSpace_clicked()

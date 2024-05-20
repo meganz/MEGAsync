@@ -350,6 +350,8 @@ public:
 
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
 
+    static void upgradeClicked();
+
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
