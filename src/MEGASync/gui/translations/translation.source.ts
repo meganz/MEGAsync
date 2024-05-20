@@ -5790,22 +5790,24 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync rework Beta V2 is released.
-- A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
-- User experience for batch fixing sync issues is improved.
-- Minor bugs are fixed.
-- Performance is improved.
+        <source>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation>Sync rework beta V2
-- A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and sync issues are updated automatically.
-- Now available in all MEGA-supported languages.
-- User experience for batch fixing sync issues is improved.
-- Minor bugs are fixed.
-- Performance is improved.
+        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
+        <translation>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </translation>
     </message>
 </context>
