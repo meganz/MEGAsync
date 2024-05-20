@@ -123,34 +123,34 @@ void PlanWidget::updatePlanInfo()
     switch (mDetails.level)
     {
         case PRO_STARTER:
-            mUi->lProPlan->setText(QString::fromUtf8("Starter"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             mUi->lHelp->setVisible(false);
             break;
         case PRO_BASIC:
-            mUi->lProPlan->setText(QString::fromUtf8("Basic"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             mUi->lHelp->setVisible(false);
             break;
         case PRO_ESSENTIAL:
-            mUi->lProPlan->setText(QString::fromUtf8("Essential"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             mUi->lHelp->setVisible(false);
             break;
         case PRO_LITE:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro Lite"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
         case PRO_I:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro I"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
         case PRO_II:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro II"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
         case PRO_III:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro III"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
         case BUSINESS:
             mUi->lProPlan->setText(QString::fromUtf8("Business"));
             break;
         default:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro"));
+            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
     }
 
