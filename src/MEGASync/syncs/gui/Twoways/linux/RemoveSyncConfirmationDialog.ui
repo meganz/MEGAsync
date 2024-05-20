@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Remove sync</string>
+   <string>Remove this sync?</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget
@@ -155,6 +155,9 @@ max-height: 96px;
    </property>
    <property name="text">
     <string>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="bCancel">

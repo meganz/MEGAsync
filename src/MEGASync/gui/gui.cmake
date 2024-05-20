@@ -33,7 +33,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/QMegaMessageBox.h
     gui/AvatarWidget.h
     gui/MenuItemAction.h
-    gui/AddExclusionDialog.h
     gui/StatusInfo.h
     gui/PSAwidget.h
     gui/ElidedLabel.h
@@ -133,7 +132,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QMegaMessageBox.cpp
     gui/AvatarWidget.cpp
     gui/MenuItemAction.cpp
-    gui/AddExclusionDialog.cpp
     gui/StatusInfo.cpp
     gui/ChangePassword.cpp
     gui/PSAwidget.cpp
@@ -219,7 +217,6 @@ target_sources_conditional(MEGAsync
     gui/win/MegaProgressCustomDialog.ui
     gui/win/PlanWidget.ui
     gui/win/UpgradeDialog.ui
-    gui/win/AddExclusionDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
     gui/win/RemoteItemUi.ui
@@ -269,7 +266,6 @@ target_sources_conditional(MEGAsync
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
    gui/macx/UpgradeDialog.ui
-   gui/macx/AddExclusionDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
    gui/macx/RemoteItemUi.ui
@@ -320,7 +316,6 @@ target_sources_conditional(MEGAsync
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
     gui/linux/UpgradeDialog.ui
-    gui/linux/AddExclusionDialog.ui
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
     gui/linux/UpgradeOverStorage.ui
