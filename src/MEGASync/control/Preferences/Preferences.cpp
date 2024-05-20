@@ -305,6 +305,8 @@ const bool Preferences::defaultSystemTrayPromptSuppressed = false;
 
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
+const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
+
 std::shared_ptr<Preferences> Preferences::instance()
 {
     static std::shared_ptr<Preferences> preferences (new Preferences());

@@ -533,6 +533,8 @@ public:
     static const QString stalledIssuesModeKey;
     //In this section, you need to move the keys to make them accessible from outside
 
+    static const int minSyncStateChangeProcessingIntervalMs;
+
 protected:
     QMutex mutex;
     void login(QString account);

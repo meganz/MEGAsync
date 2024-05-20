@@ -9,6 +9,7 @@
 #include "control/LoginController.h"
 #include "control/AccountStatusController.h"
 #include "control/Preferences/EphemeralCredentials.h"
+#include "control/IntervalExecutioner.h"
 #include "CommonMessages.h"
 #include "EventUpdater.h"
 #include "GuiUtilities.h"
@@ -363,6 +364,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+
+    // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
+    // eg. queueing a folder with 1k items for upload/download
+    mIntervalExecutioner = std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
 }
 
 MegaApplication::~MegaApplication()
@@ -1485,6 +1490,12 @@ if (!preferences->lastExecutionTime())
 
 void MegaApplication::onLoginFinished()
 {
+    if (mIntervalExecutioner)
+    {
+        connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
+                this, &MegaApplication::onScheduledExecution);
+    }
+
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
@@ -1496,6 +1507,12 @@ void MegaApplication::onLoginFinished()
 
 void MegaApplication::onLogout()
 {
+    if (mIntervalExecutioner)
+    {
+        disconnect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
+                   this, &MegaApplication::onScheduledExecution);
+    }
+
     if (infoDialog && infoDialog->isVisible())
     {
         infoDialog->hide();
@@ -6411,39 +6428,25 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //Simply set the crashed flag to force a filesystem reload in the next execution.
 }
 
-void MegaApplication::onGlobalSyncStateChangedTimeout()
+void MegaApplication::onScheduledExecution()
 {
-    onGlobalSyncStateChangedImpl(NULL, true);
+    onGlobalSyncStateChangedImpl();
 }
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
 {
-    onGlobalSyncStateChangedImpl(api, false);
+    // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
+    // eg. queueing a folder with 1k items for upload/download
+    if (mIntervalExecutioner)
+    {
+        mIntervalExecutioner->scheduleExecution();
+    }
 }
 
-void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
+void MegaApplication::onGlobalSyncStateChangedImpl()
 {
     if (appfinished)
     {
-        return;
-    }
-
-    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
-    if (timeout)
-    {
-        onGlobalSyncStateChangedTimer.reset();
-    }
-    else
-    {
-        if (!onGlobalSyncStateChangedTimer)
-        {
-            onGlobalSyncStateChangedTimer.reset(new QTimer(this));
-            connect(onGlobalSyncStateChangedTimer.get(), SIGNAL(timeout()), this, SLOT(onGlobalSyncStateChangedTimeout()));
-
-            onGlobalSyncStateChangedTimer->setSingleShot(true);
-            onGlobalSyncStateChangedTimer->setInterval(200);
-            onGlobalSyncStateChangedTimer->start();
-        }
         return;
     }
 
