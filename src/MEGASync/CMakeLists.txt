@@ -8,6 +8,7 @@ elseif (APPLE)
     add_executable(MEGAsync MACOSX_BUNDLE)
 else()
     add_executable(MEGAsync)
+    set_target_properties(MEGAsync PROPERTIES OUTPUT_NAME "megasync")
 endif()
 
 set(MEGA_DESKTOP_APP_HEADERS

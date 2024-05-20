@@ -134,5 +134,9 @@ if (UNIX AND NOT APPLE)
     install(DIRECTORY platform/linux/data/icons
         DESTINATION "${CMAKE_INSTALL_BINDIR}/../share"
     )
+    # Install .desktop
+    install(FILES platform/linux/data/megasync.desktop
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../share/applications"
+    )
 
 endif()
