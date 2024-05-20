@@ -1,9 +1,6 @@
-#include "TokenManager.h"
+#include "DesignAssetsRepoManager.h"
 #include "Utilities.h"
 #include "PathProvider.h"
-#include "IThemeGenerator.h"
-#include "QMLThemeGenerator.h"
-#include "QTWIDGETStyleGenerator.h"
 
 #include <QDebug>
 #include <QDir>
@@ -13,55 +10,54 @@
 
 using namespace DTI;
 
-static const QString CoreMain = "Core/Main";
-static const QString CoreColors = "Colors";
-static const QString SemanticTokens = "Semantic tokens";
+static const QString CoreMain = QString::fromLatin1("Core/Main");
+static const QString CoreColors = QString::fromLatin1("Colors");
+static const QString SemanticTokens = QString::fromLatin1("Semantic tokens");
+static const QString ColorTokenStart = QString::fromLatin1("color-");
 
-TokenManager::TokenManager()
+DesignAssetsRepoManager::DesignAssetsRepoManager()
 {
-    mCurrentDir = QDir::currentPath();
-    qDebug() << __func__ << " Current working directory : " << mCurrentDir;
+    qDebug() << __func__ << " Current working directory : " << QDir::currentPath();
 }
 
-TokenManager* TokenManager::instance()
+DesignAssets DesignAssetsRepoManager::getDesignAssets()
 {
-    static TokenManager manager;
-    return &manager;
+    DesignAssets returnValue;
+
+    returnValue.colorTokens = getColorData();
+
+    return returnValue;
 }
 
-void TokenManager::run()
+ThemedColorData DesignAssetsRepoManager::getColorData()
 {
+    ThemedColorData returnValue;
+
     // look for tokens.json file
-    QString pathToDesignTokensFile = Utilities::resolvePath(mCurrentDir, PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
+    QString pathToDesignTokensFile = Utilities::resolvePath(QDir::currentPath(), PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
     QFile designTokensFile(pathToDesignTokensFile);
     if (!designTokensFile.exists())
     {
         qCritical() << __func__ << " Error : No tokens.json file found in " << pathToDesignTokensFile;
-        return;
+        return returnValue;
     }
 
     if (!designTokensFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << __func__ << " Error : opening tokens.json file " << pathToDesignTokensFile;
-        return;
+        return returnValue;
     }
 
     // load core data
     const CoreData& coreData = parseCore(designTokensFile);
 
     // parse json color themed files.
-    const ThemedColorData& themesData = parseTheme(designTokensFile, coreData);
+    returnValue = parseTheme(designTokensFile, coreData);
 
-    // qml style generator entry point.
-    std::unique_ptr<IThemeGenerator> styleGenerator{new QmlThemeGenerator()};
-    styleGenerator->start(themesData);
-
-    // qtwidget style generator entry point.
-    std::unique_ptr<IThemeGenerator> qtWidgetStyleGenerator{new QTWIDGETStyleGenerator()};
-    qtWidgetStyleGenerator->start(themesData);
+    return returnValue;
 }
 
-void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
+void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
 {
     const QStringList tokenKeys = coreColors.keys();
 
@@ -80,12 +76,7 @@ void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, 
                  * Core color hex value format is #RRGGBBAA,
                  * but we need to convert it to AARRGGBB.
                 */
-                QString coreColorHex = jValue.toString().remove(QChar('#'));
-                if (coreColorHex.length() == 8)
-                {
-                    coreColorHex = coreColorHex.right(2) + coreColorHex.left(6);
-                }
-
+                QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(jValue.toString());
                 coreData.insert(category, coreColorHex);
             }
         }
@@ -102,7 +93,58 @@ void TokenManager::recurseCore(QString category, const QJsonObject& coreColors, 
     }
 }
 
-CoreData TokenManager::parseCore(QFile& designTokensFile)
+ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreData)
+{
+    ColorData colourData;
+
+    const QStringList categoryKeys = jsonThemeObject.keys();
+
+    foreach (auto category, categoryKeys)
+    {
+        QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
+
+        const QStringList tokenKeys = categoryObject.keys();
+
+        foreach (auto token, tokenKeys)
+        {
+            QJsonObject tokenObject = categoryObject[token].toObject();
+            QJsonValue jType = tokenObject["type"];
+            QJsonValue jValue = tokenObject["value"];
+
+            if (!jType.isNull() && !jValue.isNull())
+            {
+                QString type = jType.toString();
+
+                if (type == "color")
+                {
+                    QString value = jValue.toString();
+                    value.remove("{").remove("}");
+
+                    if (coreData.contains(value))
+                    {
+                        QString coreColor = coreData[value];
+                        QString color = "#" + coreColor;
+
+                        // Strip "--color-" or "-color-" from beginning of token
+                        int indexPrefix = token.indexOf(ColorTokenStart);
+                        if (indexPrefix != -1)
+                        {
+                            colourData.insert(token.mid(indexPrefix + ColorTokenStart.size()), color);
+                        }
+                    }
+                    else
+                    {
+                        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
+                    }
+                }
+            }
+        }
+    }
+
+    return colourData;
+}
+
+CoreData DesignAssetsRepoManager::parseCore(QFile& designTokensFile)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
@@ -146,7 +188,7 @@ CoreData TokenManager::parseCore(QFile& designTokensFile)
     return coreData;
 }
 
-ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData& coreData)
+ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, const CoreData& coreData)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
@@ -168,8 +210,8 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
         {
             QJsonObject themeObject = jsonObject.value(key).toObject();
 
-            ColourMap colourMap = Utilities::parseColorTheme(themeObject, coreData);
-            if (colourMap.isEmpty())
+            ColorData colorData = parseColorTheme(themeObject, coreData);
+            if (colorData.isEmpty())
             {
                 qDebug() << errorPrefix << "no color theme data for " << key;
                 return;
@@ -182,7 +224,7 @@ ThemedColorData TokenManager::parseTheme(QFile& designTokensFile, const CoreData
                 return;
             }
 
-            themedColorData.insert(theme, colourMap);
+            themedColorData.insert(theme, colorData);
         }
     });
 

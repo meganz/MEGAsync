@@ -1,7 +1,7 @@
 #include "QMLColorThemeManagerTarget.h"
 
 #include "QMLTargetUtils.h"
-#include "QMLThemeTargetFactory.h"
+#include "DesignTargetFactory.h"
 
 #include <QDir>
 #include <QDebug>
@@ -15,16 +15,16 @@ static const QString colorThemeManagerHeader = QString::fromUtf8("pragma Singlet
 static const QString colorThemeManagerLine = QString::fromUtf8("\treadonly property color %1: loader.item.%2\n");
 static const QString colorThemeManagerFooter = QString::fromUtf8("}\n");
 
-bool QMLColorThemeManagerTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeManagerTarget>::Register("qmlColorThemeManager");
+bool QMLColorThemeManagerTarget::registered = ConcreteDesignTargetFactory<QMLColorThemeManagerTarget>::Register("qmlColorThemeManager");
 
-void QMLColorThemeManagerTarget::deploy(const ThemedColorData& themeData) const
+void QMLColorThemeManagerTarget::deploy(const DesignAssets& designAssets) const
 {
-    if (themeData.isEmpty())
+    if (designAssets.colorTokens.isEmpty())
     {
         qWarning() << __func__ << " Error : empty theme data.";
         return;
     }
-    else if (!checkThemeData(themeData))
+    else if (!checkThemeData(designAssets.colorTokens))
     {
         qWarning() << __func__ << " Error : themes have different tokens.";
         return;
@@ -37,7 +37,7 @@ void QMLColorThemeManagerTarget::deploy(const ThemedColorData& themeData) const
         stream << colorThemeManagerHeader;
 
         // we just need the first theme, all themes should have the same tokens, verified in checkThemeData.
-        auto themeIt = themeData.constBegin();
+        auto themeIt = designAssets.colorTokens.constBegin();
         const auto& themeData = themeIt.value();
 
         auto theme = themeIt.key().toLower();

@@ -23,6 +23,8 @@
    <string notr="true">QWidget
 {
 font-size: 12px;
+background-color: #fafafa; /*colorToken.surface-1*/
+color: #fafafa; /*colorToken.text-primary*/
 }
 
 QComboBox

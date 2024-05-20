@@ -1495,7 +1495,5 @@
         <file>images/copy@3x.png</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
-        <file>themes/linux/dark/SettingsDialog.css</file>
-        <file>themes/linux/light/SettingsDialog.css</file>
     </qresource>
 </RCC>

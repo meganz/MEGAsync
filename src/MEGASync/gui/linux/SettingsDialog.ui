@@ -20,6 +20,8 @@
    <string notr="true">QWidget
 {
 font-size: 12px;
+background-color: #fafafa; /*colorToken.surface-1*/
+color: #fafafa; /*colorToken.text-primary*/
 }
 
 QPushButton
@@ -1252,7 +1254,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2383,15 +2385,6 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>

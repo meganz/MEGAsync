@@ -16,6 +16,8 @@
 #include <QQueue>
 #include <QApplication>
 
+#include "themes/ThemeWidgetManager.h"
+
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
 {
@@ -514,6 +516,8 @@ private:
             }
 
             info->raise(true);
+
+            ThemeWidgetManager::instance()->applyCurrentTheme(dialog);
 
             return info;
         }

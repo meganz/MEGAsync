@@ -1,7 +1,6 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
 #include "control/HTTPServer.h"
-#include "themes/ThemeWidgetManager.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -203,11 +202,6 @@ void MegaProxyStyle::polish(QWidget *widget)
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
 
-    if (ThemeWidgetManager::instance()->registerWidgetForTheming(widget))
-    {
-        widget->installEventFilter(this);
-    }
-
     QProxyStyle::polish(widget);
 }
 
@@ -235,24 +229,3 @@ bool MegaProxyStyle::event(QEvent *e)
 {
     return QProxyStyle::event(e);
 }
-
-bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
-{
-    if (event->type() != QEvent::Paint)
-    {
-        return QProxyStyle::eventFilter(watched, event);
-    }
-
-    QWidget *widget = qobject_cast<QWidget*>(watched);
-    if (!widget || widget->property("stylesheetApplied").toBool())
-    {
-        return QProxyStyle::eventFilter(watched, event);
-    }
-
-    ThemeWidgetManager::instance()->applyStyleSheet(widget);
-    widget->setProperty("stylesheetApplied", true);
-    widget->removeEventFilter(this);
-
-    return QProxyStyle::eventFilter(watched, event);
-}
-

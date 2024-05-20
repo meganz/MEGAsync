@@ -1,20 +1,19 @@
-#ifndef TYPES_H
-#define TYPES_H
+#ifndef DTI_TYPES_H
+#define DTI_TYPES_H
 
 #include <QMap>
 #include <QString>
 
 namespace DTI
 {
-typedef QMap<QString, QString> PropertiesMap;
-typedef QMap<QString, QString> ColourMap;
-typedef QMap<QString, QString> CoreData;
-typedef QMap<QString, CoreData> ThemedColorData;
+    using CoreData = QMap<QString, QString>;
+    using ColorData = QMap<QString, QString>;
+    using ThemedColorData = QMap<QString, ColorData>;
 
-enum class Targets
-{
-    ColorStyle
-};
+    struct DesignAssets
+    {
+        ThemedColorData colorTokens;
+    };
 }
 
-#endif // TYPES_H
+#endif

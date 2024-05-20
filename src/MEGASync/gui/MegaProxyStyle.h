@@ -43,7 +43,6 @@ public:
 
 protected:
     bool event(QEvent *e) override;
-    bool eventFilter(QObject *watched, QEvent *event) override;
 };
 
 #endif // MEGAPROXYSTYLE_H

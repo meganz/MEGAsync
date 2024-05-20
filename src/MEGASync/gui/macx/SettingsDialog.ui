@@ -32,7 +32,12 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox {
+   <string notr="true">QWidget {
+background-color: #fafafa; /*colorToken.surface-1*/
+color: #fafafa; /*colorToken.text-primary*/
+}
+
+QGroupBox {
   border-radius: 3px;
   border-top: 2px inset rgba(0,0,0,0.05);
   border-left: 1px inset rgba(0,0,0,0.05);
@@ -3809,7 +3814,7 @@ margin-right: 32px;</string>
    <extends>QWidget</extends>
    <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
-  </customwidget>
+  </customwidget>  
  </customwidgets>
  <tabstops>
   <tabstop>cAutoUpdate</tabstop>

@@ -1,4 +1,4 @@
-#include "TokenManager.h"
+#include "DesignTokensImporter.h"
 
 #include "PathProvider.h"
 
@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 
     qDebug() << "Start parsing process";
 
-    TokenManager::instance()->run();
+    DesignTokensImporter::run();
 
     qDebug() << "Finished";
 

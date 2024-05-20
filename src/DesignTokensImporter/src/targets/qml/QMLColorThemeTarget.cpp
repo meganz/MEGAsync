@@ -1,7 +1,7 @@
 #include "QMLColorThemeTarget.h"
 
 #include "QMLTargetUtils.h"
-#include "QMLThemeTargetFactory.h"
+#include "DesignTargetFactory.h"
 
 #include <QDir>
 #include <QDebug>
@@ -16,18 +16,18 @@ static const QString colorThemeHeader = QString::fromUtf8("import QtQuick 2.15\n
 static const QString colorThemeLine = QString::fromUtf8("\treadonly property color %1: \"%2\"\n");
 static const QString colorThemeFooter = QString::fromUtf8("}\n");
 
-bool QMLColorThemeTarget::registered = ConcreteQMLThemeFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
+bool QMLColorThemeTarget::registered = ConcreteDesignTargetFactory<QMLColorThemeTarget>::Register("qmlColorTheme");
 
-void QMLColorThemeTarget::deploy(const ThemedColorData& themeColorData) const
+void QMLColorThemeTarget::deploy(const DesignAssets& designAssets) const
 {
-    if (themeColorData.isEmpty())
+    if (designAssets.colorTokens.isEmpty())
     {
         qWarning() << "Error : No themed colour data to deploy/process.";
 
         return;
     }
 
-    for (auto themeIt = themeColorData.constBegin(); themeIt != themeColorData.constEnd(); ++themeIt)
+    for (auto themeIt = designAssets.colorTokens.constBegin(); themeIt != designAssets.colorTokens.constEnd(); ++themeIt)
     {
         const auto& colourMap = themeIt.value();
 

@@ -101,7 +101,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
     gui/themes/ThemeManager.h
-    gui/themes/ThemeStylesheetParser.h
     gui/themes/ThemeWidgetManager.h
 )
 
@@ -202,7 +201,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
     gui/themes/ThemeManager.cpp
-    gui/themes/ThemeStylesheetParser.cpp
     gui/themes/ThemeWidgetManager.cpp
 )
 
@@ -439,9 +437,12 @@ set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION $
 qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 
 set(DESKTOP_APP_GUI_RESOURCES
+    gui/Resources.qrc
     gui/Resources_qml.qrc
     gui/qml/qml.qrc
 )
+
+set(QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml CACHE STRING "Qt Creator extra qml import paths")
 
 if (CMAKE_HOST_APPLE)
     add_custom_command(

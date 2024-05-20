@@ -1,8 +1,7 @@
-#ifndef THEMEWIDGET_H
-#define THEMEWIDGET_H
+#ifndef THEME_WIDGET_MANAGER_H
+#define THEME_WIDGET_MANAGER_H
 
 #include "Preferences/Preferences.h"
-#include "ThemeStylesheetParser.h"
 
 #include <QObject>
 
@@ -13,27 +12,17 @@ class ThemeWidgetManager : public QObject
 public:
     static std::shared_ptr<ThemeWidgetManager> instance();
 
-    bool registerWidgetForTheming(QWidget* widget);
-    void applyStyleSheet(QWidget* widget);
+    void applyCurrentTheme(QWidget* widget);
 
 private:
     explicit ThemeWidgetManager(QObject *parent = nullptr);
-
-    void loadStylesheets();
-    QStringList getCSSFiles() const;
-    QString getCSSPath() const;
-    QString getFilePath(const QString& themeFilePath) const;
     QString themeToString(Preferences::ThemeType theme) const;
-    void loadStylesheetAsync(const QString& filename, const QString& key);
-    void parseStyleSheet(const QString& stylesheet, const QString& uiFileName);
-    void addToStyleCache(QObject* item);
-    QSet<QString> getObjectNamesInCSSFile(const QString& widgetThemeKey) const;
-    QString getThemeStylesheet(const QString& key) const;
+    void loadColorThemeJson();
     void onThemeChanged(Preferences::ThemeType theme);
+    void applyTheme(QWidget* widget);
 
-    static const QMap<Preferences::ThemeType, QString> mThemePaths;
-    ThemeStylesheetParser mThemeStylesheetParser;
-    QList<QObject*> mWidgetsStyledByCSSFile;
+    QMap<QString, QMap<QString, QString>> mColorThemedTokens;
+    QWidget* mCurrentWidget;
 };
 
 #endif // THEMEWIDGET_H
