@@ -97,7 +97,7 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     ui->chooseTitle->setHTML(tr("Remote"));
     ui->name->setIsCloud(true);
 
-    if(issue->isSolved())
+    if(issue->isSolved() || issue->isBeingSolved())
     {
         setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::REMOTE);
     }
