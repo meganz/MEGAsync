@@ -9392,19 +9392,19 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation type="unfinished">%1/%2</translation>
     </message>
     <message>
-        <source>Starter</source>
-        <translatorcomment>Label to refer to Starter account type CON-719</translatorcomment>
-        <translation type="unfinished">Starter</translation>
+        <source>MEGA Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
+        <translation type="unfinished">MEGA Starter</translation>
     </message>
     <message>
-        <source>Basic</source>
-        <translatorcomment>Label to refer to Basic account type CON-719</translatorcomment>
-        <translation type="unfinished">Basic</translation>
+        <source>MEGA Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
+        <translation type="unfinished">MEGA Basic</translation>
     </message>
     <message>
-        <source>Essential</source>
-        <translatorcomment>Label to refer to Essential account type CON-719</translatorcomment>
-        <translation type="unfinished">Essential</translation>
+        <source>MEGA Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
+        <translation type="unfinished">MEGA Essential</translation>
     </message>
 </context>
 <context>
