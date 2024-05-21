@@ -46,26 +46,20 @@ void PlanWidget::updatePlanInfo()
 
     // Set widget opacity for lower plans than the actual one
     int currentAccType (Preferences::instance()->accountType());
-    if (currentAccType != FREE && currentAccType != PRO_LITE
-            && currentAccType != PRO_STARTER && currentAccType != PRO_BASIC
-            && currentAccType != PRO_ESSENTIAL)
+    if (visiblePlanOrder[accountType] < visiblePlanOrder[currentAccType])
     {
-        if (mDetails.level == PRO_LITE || currentAccType == PRO_STARTER
-                || currentAccType == PRO_BASIC || currentAccType == PRO_ESSENTIAL
-                || mDetails.level < currentAccType)
-        {
-            setWidgetOpacity(0.5);
-            mDisabled = true;
-        }
+        setWidgetOpacity(0.5);
+        mDisabled = true;
     }
+
 
     // Set css props for different pro plans
     setCursor(!mDisabled ? Qt::PointingHandCursor : Qt::ArrowCursor);
     setProperty("disabled", mDisabled);
-    setProperty("currentPlan", mDetails.level == currentAccType);
+    setProperty("currentPlan", accountType == currentAccType);
 
     // Draw colored border and tag if this is the current plan
-    if (mDetails.level == currentAccType)
+    if (accountType == currentAccType)
     {
         QLabel* tag = new QLabel(tr("Current plan"), this);
         tag->setObjectName(QString::fromLatin1("lCurrentPlanTag"));
