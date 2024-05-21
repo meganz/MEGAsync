@@ -136,7 +136,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
                         }
 #else
-                        mToolBarItem->setIcon(QIcon(getFinishIconString()));
+                        // @jsubi.
+                        //mToolBarItem->setIcon(QIcon(getFinishIconString()));
 #endif
                     }
                 }

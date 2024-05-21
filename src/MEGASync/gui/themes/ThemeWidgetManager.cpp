@@ -4,6 +4,8 @@
 
 #include <QDir>
 #include <QWidget>
+#include <QToolButton>
+#include <QBitmap>
 #include <QtConcurrent/QtConcurrent>
 
 static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
@@ -11,8 +13,10 @@ static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
-static QRegularExpression designTokensRE(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
+static QRegularExpression colorThemeRE(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
+static QRegularExpression imageThemeRE(QLatin1String(" *\\/\\* *ThemeImage;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
 static const QString jsonThemedColorFile = QLatin1String(":/colors/ColorThemedTokens.json");
+static const QString themeToolButtonIcon = "ToolButtonIcon";
 
 ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
     : QObject{parent},
@@ -20,7 +24,8 @@ ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &ThemeWidgetManager::onThemeChanged);
 
-    designTokensRE.optimize();
+    colorThemeRE.optimize();
+    imageThemeRE.optimize();
 
     loadColorThemeJson();
 }
@@ -75,11 +80,21 @@ void ThemeWidgetManager::applyCurrentTheme(QWidget* widget)
 
 void ThemeWidgetManager::applyTheme(QWidget* widget)
 {
-    enum CaptureIndex
+    enum ColorThemeCaptureIndex
     {
-        WholeMatch = 0,
-        HexColorValue = 1,
-        DesignTokenName = 2
+        ColorWholeMatch = 0,
+        ColorHexColorValue = 1,
+        ColorDesignTokenName = 2
+    };
+
+    enum ImageThemeCaptureIndex
+    {
+        ImageWholeMatch = 0,
+        ImageTargetProperty = 1,
+        ImageTargetElementId = 2,
+        ImageTargetMode = 3,
+        ImageTargetState = 4,
+        ImageDesignTokenName = 5
     };
 
     auto theme = ThemeManager::instance()->getSelectedTheme();
@@ -91,24 +106,41 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
         return;
     }
 
-    const auto& themedColorTokens = mColorThemedTokens.value(currentTheme);
+    const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
     QString styleSheet = widget->styleSheet();
 
     bool updatedStyleSheet = false;
-    QRegularExpressionMatchIterator matchIterator = designTokensRE.globalMatch(styleSheet);
+    QRegularExpressionMatchIterator matchIterator = colorThemeRE.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
         QRegularExpressionMatch match = matchIterator.next();
 
-        if (match.lastCapturedIndex() == CaptureIndex::DesignTokenName)
+        if (match.lastCapturedIndex() == ColorThemeCaptureIndex::ColorDesignTokenName)
         {
-            const QString& tokenValue = themedColorTokens.value(match.captured(CaptureIndex::DesignTokenName));
+            const QString& tokenValue = colorTokens.value(match.captured(ColorThemeCaptureIndex::ColorDesignTokenName));
 
-            auto startIndex = match.capturedStart(CaptureIndex::HexColorValue);
-            auto endIndex = match.capturedEnd(CaptureIndex::HexColorValue);
+            auto startIndex = match.capturedStart(ColorThemeCaptureIndex::ColorHexColorValue);
+            auto endIndex = match.capturedEnd(ColorThemeCaptureIndex::ColorHexColorValue);
             styleSheet.replace(startIndex, endIndex-startIndex, tokenValue);
             updatedStyleSheet = true;
+        }
+    }
+
+    matchIterator = imageThemeRE.globalMatch(styleSheet);
+    while (matchIterator.hasNext())
+    {
+        QRegularExpressionMatch match = matchIterator.next();
+
+        if (match.lastCapturedIndex() == ImageThemeCaptureIndex::ImageDesignTokenName)
+        {
+            const QString& targetElementProperty = match.captured(ImageThemeCaptureIndex::ImageTargetProperty);
+            const QString& targetElementId = match.captured(ImageThemeCaptureIndex::ImageTargetElementId);
+            const QString& mode = match.captured(ImageThemeCaptureIndex::ImageTargetMode);
+            const QString& state = match.captured(ImageThemeCaptureIndex::ImageTargetState);
+            const QString& tokenId = match.captured(ImageThemeCaptureIndex::ImageDesignTokenName);
+
+            changeImageColor(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
         }
     }
 
@@ -116,6 +148,87 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
     {
         widget->setStyleSheet(styleSheet);
     }
+}
+
+void ThemeWidgetManager::changeImageColor(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId)
+{
+    if(widget== nullptr || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
+    {
+        return;
+    }
+
+    if (targetElementProperty == themeToolButtonIcon)
+    {
+        if (targetElementId == "bBackup")
+        {
+            std::cout << "backup found" << std::endl;
+        }
+
+        auto buttons = widget->findChildren<QToolButton*>(targetElementId);
+
+        if (!buttons.isEmpty())
+        {
+            auto button = buttons.at(0);
+
+            QIcon::State iconState = QIcon::On;
+            if (state == "off")
+            {
+                iconState = QIcon::Off;
+            }
+
+            QIcon::Mode iconMode = QIcon::Normal;
+            if (mode == "disabled")
+            {
+                iconMode = QIcon::Disabled;
+            }
+            else if (mode == "active")
+            {
+                iconMode =  QIcon::Active;
+            }
+            else if (mode == "selected")
+            {
+                iconMode = QIcon::Selected;
+            }
+
+            QIcon buttonIcons = button->icon();
+
+            auto pixmap = buttonIcons.pixmap(button->iconSize());
+
+            QColor toColor(colorTokens.value(tokenId));
+
+            changePixmapColor(pixmap, toColor);
+
+            buttonIcons.addPixmap(pixmap, iconMode, iconState);
+
+            button->setIcon(buttonIcons);
+        }
+    }
+}
+
+void ThemeWidgetManager::changePixmapColor(QPixmap& pixmap, QColor toColor)
+{
+    if (pixmap.isNull())
+    {
+        return;
+    }
+
+    QImage image = pixmap.toImage();
+    if (image.isNull())
+    {
+        return;
+    }
+
+    for(auto x=0; x<image.width(); x++)
+    {
+        for(auto y=0; y<image.height(); y++)
+        {
+            QColor color = image.pixelColor(x, y);
+            toColor.setAlpha(color.alpha());
+            image.setPixelColor(x, y, toColor);
+        }
+    }
+
+    pixmap = QPixmap::fromImage(image);
 }
 
 std::shared_ptr<ThemeWidgetManager> ThemeWidgetManager::instance()
