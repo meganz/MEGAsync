@@ -1835,11 +1835,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation></translation>
     </message>
     <message>
-        <source>Value</source>
-        <translatorcomment>Column name for value of exclusion rule in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Exclude files by size</source>
         <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
         <translation></translation>

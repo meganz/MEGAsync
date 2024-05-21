@@ -8,7 +8,6 @@ QtObject {
     readonly property string manageExclusionsDescription: qsTr("Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.")
     readonly property string manageExclusions: qsTr("Manage exclusions")
     readonly property string nameRulesDescription: qsTr("Choose which files or folders you want to exclude from")
-    readonly property string value: qsTr("Value")
     readonly property string sizeRulesTitle: qsTr("Exclude files by size")
     readonly property string sizeRule: qsTr("Exclude file sizes")
     readonly property string sizeRuleDescription: qsTr("Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.")
