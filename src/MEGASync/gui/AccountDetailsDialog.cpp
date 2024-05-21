@@ -161,6 +161,7 @@ void AccountDetailsDialog::refresh()
         switch (accType)
         {
             case Preferences::ACCOUNT_TYPE_BUSINESS:
+             // Fallthrough
             case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             {
                 setProperty("accountType", QLatin1String("business"));
@@ -175,11 +176,17 @@ void AccountDetailsDialog::refresh()
                 break;
             }
             case Preferences::ACCOUNT_TYPE_LITE:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_STARTER:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_BASIC:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_ESSENTIAL:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROI:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROII:
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROIII:
             {
                 setProperty("accountType", QLatin1String("pro"));
