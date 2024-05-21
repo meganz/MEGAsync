@@ -1168,6 +1168,18 @@ QString Utilities::getReadablePROplanFromId(int identifier)
 {
     switch (identifier)
     {
+        case MegaAccountDetails::ACCOUNT_TYPE_FREE:
+            return QCoreApplication::translate("Utilities", "Free");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
+            return QCoreApplication::translate("Utilities", "MEGA Starter");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
+            return QCoreApplication::translate("Utilities", "MEGA Basic");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
+            return QCoreApplication::translate("Utilities", "MEGA Essential");
+            break;
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
             return QCoreApplication::translate("Utilities", "Pro Lite");
             break;
@@ -1180,14 +1192,11 @@ QString Utilities::getReadablePROplanFromId(int identifier)
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
             return QCoreApplication::translate("Utilities", "Pro III");
             break;
-        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
-            return QCoreApplication::translate("Utilities", "MEGA Starter");
+        case MegaAccountDetails::ACCOUNT_TYPE_BUSINESS:
+            return QCoreApplication::translate("Utilities", "Business");
             break;
-        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
-            return QCoreApplication::translate("Utilities", "MEGA Basic");
-            break;
-        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
-            return QCoreApplication::translate("Utilities", "MEGA Essential");
+        case MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI:
+            return QCoreApplication::translate("Utilities", "Pro Flexi");
             break;
     }
 
