@@ -267,6 +267,8 @@ public:
     StalledIssue(const mega::MegaSyncStall* stallIssue);
     virtual ~StalledIssue(){}
 
+    virtual bool isValid() const{ return true;}
+
     const LocalStalledIssueDataPtr consultLocalData() const;
     const CloudStalledIssueDataPtr consultCloudData() const;
 

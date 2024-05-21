@@ -80,7 +80,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 }
             }
 
-            if(d)
+            if(d && d->isValid())
             {
                 variant = StalledIssueVariant(d, stall);
             }

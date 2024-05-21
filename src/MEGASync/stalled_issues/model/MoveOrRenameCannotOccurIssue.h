@@ -24,6 +24,8 @@ public:
     MoveOrRenameCannotOccurIssue(const mega::MegaSyncStall *stall);
     ~MoveOrRenameCannotOccurIssue() override{}
 
+    bool isValid() const override;
+
     void fillIssue(const mega::MegaSyncStall*) override;
     void fillCloudSide(const mega::MegaSyncStall* stall);
     void fillLocalSide(const mega::MegaSyncStall* stall);
