@@ -6813,16 +6813,6 @@ Do you want to delete it anyway?</translation>
         <translation>Install update</translation>
     </message>
     <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Free</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Business</translation>
-    </message>
-    <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
         <translation>No limit</translation>
@@ -6927,11 +6917,6 @@ Do you want to delete it anyway?</translation>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>Want to log out?</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -9410,6 +9395,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
         <translation type="unfinished">MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation type="unfinished">Free</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation type="unfinished">Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;Flexi</translation>
     </message>
 </context>
 <context>
