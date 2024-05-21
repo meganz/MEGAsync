@@ -1292,7 +1292,7 @@ void SettingsDialog::updateBandwidthElements()
 void SettingsDialog::updateAccountElements()
 {
     QIcon icon;
-    mUi->lAccountType->setText(Utilities::getReadablePROplanFromId(mPreferences->accountType()));
+    mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
 
     switch(mPreferences->accountType())
     {
