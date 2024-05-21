@@ -3,7 +3,7 @@ NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
 export VCPKG_DEFAULT_BINARY_CACHE := /opt/persistent/vcpkg_cache
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "-E env CXXFLAGS=\"-DMEGASYNC_DEPRECATED_OS \${CXXFLAGS}\"" || echo "")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "ON" || echo "OFF")
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
@@ -17,7 +17,7 @@ build-stamp:
 
 	[ -n "${VCPKG_ROOT}" ] && tar xzf /opt/vcpkg.tar.gz; mkdir -p $(VCPKG_DEFAULT_BINARY_CACHE) || :
 
-	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=$(QTINSTALL) -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	cmake $(EXTRADEFINES) $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=$(QTINSTALL) -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
 	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
 	cmake --install $(CURDIR)/build_dir --prefix=$(CURDIR)/install_dir
 
