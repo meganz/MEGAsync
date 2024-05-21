@@ -241,14 +241,14 @@ void SyncSettingsUIBase::setDisabledSyncsText()
 
 void SyncSettingsUIBase::removeSyncButtonClicked()
 {
-    if(mTable->selectionModel()->hasSelection())
+    if (mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        showRemoveSyncConfirmationDialog(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        reqRemoveSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
 }
 
-void SyncSettingsUIBase::showRemoveSyncConfirmationDialog(std::shared_ptr<SyncSettings> sync)
+void SyncSettingsUIBase::reqRemoveSync(std::shared_ptr<SyncSettings> sync)
 {
     QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
 
