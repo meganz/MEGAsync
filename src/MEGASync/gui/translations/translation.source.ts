@@ -5653,16 +5653,6 @@ Do you want to restart MEGAsync now?</source>
         <translation>Install update</translation>
     </message>
     <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Free</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Business</translation>
-    </message>
-    <message>
         <source>Restart MEGAsync</source>
         <translatorcomment>Title text of dialog shown when clicking on Restart application button. Keep as short as possible.</translatorcomment>
         <translation>Restart</translation>
@@ -5872,11 +5862,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Error disabling backup</source>
         <translatorcomment>Title of the dialog shown when enabling a backup failed</translatorcomment>
         <translation>Error disabling backup</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Your backup &quot;%1&quot; can&apos;t be disabled. Reason: %2</source>
@@ -7607,6 +7592,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
         <translation type="unfinished">MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation type="unfinished">Free</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation type="unfinished">Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
+        <translation type="unfinished">Pro&#xa0;Flexi</translation>
     </message>
 </context>
 <context>
