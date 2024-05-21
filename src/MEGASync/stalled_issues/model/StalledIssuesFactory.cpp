@@ -80,7 +80,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 }
             }
 
-            if(d && d->isValid())
+            if(d)
             {
                 variant = StalledIssueVariant(d, stall);
             }
@@ -153,17 +153,16 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             counter++;
         }
 
-        //Filter some issues depending on what you have found on the list
+        //Filter some issues depending on what you have found on the list or if the issue is invalid
         //We don´t filter the solvable issues as these issues must be solved and not filtered
-        if(!reasonsToFilter.isEmpty())
+        QMutableListIterator<StalledIssueVariant> issueIt(mPendingIssues);
+        while(issueIt.hasNext())
         {
-            QMutableListIterator<StalledIssueVariant> issueIt(mPendingIssues);
-            while(issueIt.hasNext())
+            auto issueToCheck(issueIt.next());
+            if(!issueToCheck.consultData()->isValid() ||
+                reasonsToFilter.contains(issueToCheck.getData()->getReason()))
             {
-                if(reasonsToFilter.contains(issueIt.next().getData()->getReason()))
-                {
-                    issueIt.remove();
-                }
+                issueIt.remove();
             }
         }
     }
