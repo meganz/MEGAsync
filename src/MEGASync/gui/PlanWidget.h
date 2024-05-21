@@ -27,6 +27,7 @@ class PlanWidget : public QWidget
             PRO_BASIC     = mega::MegaAccountDetails::ACCOUNT_TYPE_BASIC,
             PRO_ESSENTIAL = mega::MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL,
             BUSINESS      = mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS,
+            PRO_FLEXI     = mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI,
         } ProLevel;
 
         typedef enum {
@@ -54,6 +55,18 @@ class PlanWidget : public QWidget
         std::unique_ptr<BalloonToolTip> mTooltip;
         bool mDisabled;
         bool mIsBillingCurrency;
+
+        //Map to fix order issues of Pro level list from SDK.
+        std::map<int, int> visiblePlanOrder = {{FREE, 0},
+                                               {PRO_STARTER, 1},
+                                               {PRO_BASIC, 2},
+                                               {PRO_ESSENTIAL, 3},
+                                               {PRO_LITE, 4},
+                                               {PRO_I, 5},
+                                               {PRO_II, 6},
+                                               {PRO_III, 7},
+                                               {BUSINESS, 8},
+                                               {PRO_FLEXI, 9}                                               };
 
         void updatePlanInfo();
         void setWidgetOpacity(qreal opacity);
