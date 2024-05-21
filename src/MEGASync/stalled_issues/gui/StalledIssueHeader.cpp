@@ -230,7 +230,7 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
     if(getData().consultData()->isBeingSolved())
     {
         QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-        QString defaultSolveMessage(tr("Being solved"));
+        QString defaultSolveMessage(StalledIssuesModel::fixingIssuesString());
         showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
     }
     else if(getData().consultData()->isSolved() && !getData().consultData()->isPotentiallySolved())
@@ -369,27 +369,25 @@ void StalledIssueHeader::refreshUi()
 
     resetSolvingWidgets();
 
-    if(getData().consultData()->isSolved())
+    if(getData().consultData()->canBeIgnored())
     {
-        if(getData().consultData()->canBeIgnored())
+        if(getData().consultData()->isSolved())
         {
             issueIgnored();
         }
         else
         {
-            showSolvedMessage();
-        }
-    }
-    else
-    {
-        if(getData().consultData()->canBeIgnored())
-        {
             showIgnoreFile();
         }
     }
+    else if(getData().consultData()->isSolved() ||
+            getData().consultData()->isBeingSolved())
+    {
+            showSolvedMessage();
+    }
 
-   //By default it is expandable
-   setIsExpandable(true);
+    //By default it is expandable
+    setIsExpandable(true);
 }
 
 void StalledIssueHeader::resetSolvingWidgets()

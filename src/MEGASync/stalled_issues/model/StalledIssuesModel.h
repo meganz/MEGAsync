@@ -137,6 +137,9 @@ public:
 
     bool issuesRequested() const;
 
+    //Common strings methods
+    static QString fixingIssuesString(int numberOfIssues = 0);
+
 signals:
     void stalledIssuesChanged();
     void stalledIssuesCountChanged();

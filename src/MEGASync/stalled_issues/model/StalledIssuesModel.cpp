@@ -99,6 +99,11 @@ bool StalledIssuesModel::issuesRequested() const
     return mIssuesRequested.load();
 }
 
+QString StalledIssuesModel::fixingIssuesString(int numberOfIssues)
+{
+    return tr("Fixing issues", "", numberOfIssues);
+}
+
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 {
     auto isSyncStalled(api->isSyncStalled());
@@ -704,7 +709,7 @@ void StalledIssuesModel::finishSolvingIssues(int issuesFixed, bool sendMessage, 
 void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 {
     auto info = std::make_shared<MessageInfo>();
-    info->message = tr("Fixing issues");
+    info->message = fixingIssuesString();
     info->count = issue;
     info->total = totalIssues;
     info->buttonType = MessageInfo::ButtonType::Stop;
