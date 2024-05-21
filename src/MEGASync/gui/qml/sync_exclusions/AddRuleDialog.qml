@@ -9,8 +9,9 @@ import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
+import QmlDialog 1.0
 
-Window{
+QmlDialog{
     id: root
 
     readonly property int dialogWidth: 480
@@ -209,6 +210,9 @@ Window{
                 enabled: valueTextField.text.trim().length !== 0
                 icons.position: Icon.Position.LEFT
                 onClicked: {
+                    if(addRuleDialogAccess){
+                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType,  root.ruleValue);
+                    }
                     root.accepted();
                     root.close();
                 }

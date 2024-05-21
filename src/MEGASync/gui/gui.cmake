@@ -100,6 +100,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
     gui/backups/BackupsQmlDialog.h
+    gui/SyncExclusions/AddExclusionRule.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -200,6 +201,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
     gui/backups/BackupsQmlDialog.cpp
+    gui/SyncExclusions/AddExclusionRule.cpp
+
 )
 
 # UI files additions
