@@ -2385,26 +2385,6 @@ Refresh the list.</translation>
         <translation>Free</translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
         <translation>Business</translation>
@@ -6833,11 +6813,6 @@ Do you want to delete it anyway?</translation>
         <translation>Free</translation>
     </message>
     <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
         <translation>Business</translation>
@@ -6871,21 +6846,6 @@ Do you want to delete it anyway?</translation>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Issue report</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -9430,6 +9390,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>%1/%2</source>
         <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
         <translation type="unfinished">%1/%2</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to Starter account type CON-719</translatorcomment>
+        <translation type="unfinished">Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to Basic account type CON-719</translatorcomment>
+        <translation type="unfinished">Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to Essential account type CON-719</translatorcomment>
+        <translation type="unfinished">Essential</translation>
     </message>
 </context>
 <context>
