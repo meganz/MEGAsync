@@ -117,36 +117,15 @@ void PlanWidget::updatePlanInfo()
     switch (mDetails.level)
     {
         case PRO_STARTER:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            mUi->lHelp->setVisible(false);
-            break;
+        // Fallthrough
         case PRO_BASIC:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            mUi->lHelp->setVisible(false);
-            break;
+        // Fallthrough
         case PRO_ESSENTIAL:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             mUi->lHelp->setVisible(false);
-            break;
-        case PRO_LITE:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            break;
-        case PRO_I:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            break;
-        case PRO_II:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            break;
-        case PRO_III:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
-            break;
-        case BUSINESS:
-            mUi->lProPlan->setText(QString::fromUtf8("Business"));
-            break;
-        default:
-            mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
             break;
     }
+
+    mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
 
     // Show/hide widgets according to plans/currency
     mUi->lGreatValue->setVisible(accountType == PRO_I);
