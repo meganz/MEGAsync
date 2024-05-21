@@ -1181,13 +1181,13 @@ QString Utilities::getReadablePROplanFromId(int identifier)
             return QCoreApplication::translate("Utilities", "Pro III");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
-            return QCoreApplication::translate("Utilities", "Starter");
+            return QCoreApplication::translate("Utilities", "MEGA Starter");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
-            return QCoreApplication::translate("Utilities", "Basic");
+            return QCoreApplication::translate("Utilities", "MEGA Basic");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
-            return QCoreApplication::translate("Utilities", "Essential");
+            return QCoreApplication::translate("Utilities", "MEGA Essential");
             break;
     }
 
