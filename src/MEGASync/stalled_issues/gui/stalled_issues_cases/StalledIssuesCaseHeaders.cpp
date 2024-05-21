@@ -271,16 +271,16 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]");
-    textDecorator.process(headerText);
-    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(header->getData().consultData()->firstSyncId()));
-    if(sync)
+    if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        header->setText(headerText.arg(QString::fromUtf8(sync->getName())));
-    }
+        QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]")
+                                 .arg(moveOrRenameIssue->syncName());
+        textDecorator.process(headerText);
+        header->setText(headerText);
 
-    header->setTitleDescriptionText(
-        tr("The local and remote locations have changed at the same time"));
+        header->setTitleDescriptionText(
+            tr("The local and remote locations have changed at the same time"));
+    }
 }
 
 //Delete or Move Waiting onScanning

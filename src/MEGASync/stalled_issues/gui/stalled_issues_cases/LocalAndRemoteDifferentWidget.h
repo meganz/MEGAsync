@@ -24,6 +24,17 @@ public:
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
 
+    //Commong strings for Local/Remote selection
+    struct KeepSideInfo
+    {
+        bool isFile = false;
+        int numberOfIssues = 1;
+        QString itemName;
+    };
+
+    static QString keepLocalSideString(const KeepSideInfo& info);
+    static QString keepRemoteSideString(const KeepSideInfo& info);
+
 private slots:
     void onLocalButtonClicked(int);
     void onRemoteButtonClicked(int);

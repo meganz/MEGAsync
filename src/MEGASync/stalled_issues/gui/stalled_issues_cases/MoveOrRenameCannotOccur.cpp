@@ -6,6 +6,8 @@
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
 
+#include "LocalAndRemoteDifferentWidget.h"
+
 #include <TextDecorator.h>
 
 #include <QDialogButtonBox>
@@ -58,7 +60,11 @@ void MoveOrRenameCannotOccur::onLocalButtonClicked()
 
     if(info.similarSelection.size() > 1)
     {
-        info.msgInfo.text = tr("Are you sure you want to choose the local side?");
+        LocalAndRemoteDifferentWidget::KeepSideInfo stringInfo;
+        stringInfo.numberOfIssues = info.selection.size();
+        stringInfo.itemName = getData().convert<MoveOrRenameCannotOccurIssue>()->syncName();
+        info.msgInfo.text = LocalAndRemoteDifferentWidget::keepLocalSideString(stringInfo);
+        textDecorator.process(info.msgInfo.text);
 
         info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
         {
@@ -97,7 +103,11 @@ void MoveOrRenameCannotOccur::onRemoteButtonClicked()
 
     if(info.similarSelection.size() > 1)
     {
-        info.msgInfo.text = tr("Are you sure you want to choose the remote side?");
+        LocalAndRemoteDifferentWidget::KeepSideInfo stringInfo;
+        stringInfo.numberOfIssues = info.selection.size();
+        stringInfo.itemName = getData().convert<MoveOrRenameCannotOccurIssue>()->syncName();
+        info.msgInfo.text = LocalAndRemoteDifferentWidget::keepRemoteSideString(stringInfo);
+        textDecorator.process(info.msgInfo.text);
 
         info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
         {

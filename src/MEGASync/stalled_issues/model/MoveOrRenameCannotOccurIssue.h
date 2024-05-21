@@ -38,6 +38,8 @@ public:
     MoveOrRenameIssueChosenSide getChosenSide() const;
     MoveOrRenameIssueChosenSide getSyncIdChosenSide() const;
 
+    QString syncName() const;
+
     void increaseCombinedNumberOfIssues();
     int combinedNumberOfIssues() const;
 

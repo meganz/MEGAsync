@@ -122,6 +122,58 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     }
 }
 
+QString LocalAndRemoteDifferentWidget::keepLocalSideString(const KeepSideInfo& info)
+{
+    if(info.numberOfIssues > 1)
+    {
+        if(info.isFile)
+        {
+            return tr("Keep the [B]local files[/B]?");
+        }
+        else
+        {
+            return tr("Keep the [B]local folders[/B]?");
+        }
+    }
+    else
+    {
+        if(info.isFile)
+        {
+            return tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(info.itemName);
+        }
+        else
+        {
+            return tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(info.itemName);
+        }
+    }
+}
+
+QString LocalAndRemoteDifferentWidget::keepRemoteSideString(const KeepSideInfo& info)
+{
+    if(info.numberOfIssues > 1)
+    {
+        if(info.isFile)
+        {
+            return tr("Keep the [B]remote files[/B]?");
+        }
+        else
+        {
+            return tr("Keep the [B]remote folders[/B]?");
+        }
+    }
+    else
+    {
+        if(info.isFile)
+        {
+            return tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(info.itemName);
+        }
+        else
+        {
+            return tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(info.itemName);
+        }
+    }
+}
+
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
     SelectionInfo info;
@@ -132,23 +184,12 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-    if(localInfo.isFile())
-    {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
-        if(info.selection.size() > 1)
-        {
-            info.msgInfo.text = tr("Keep the [B]local files[/B]?");
-        }
-    }
-    else
-    {
 
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
-        if(info.selection.size() > 1)
-        {
-            info.msgInfo.text = tr("Keep the [B]local folders[/B]?");
-        }
-    }
+    KeepSideInfo stringInfo;
+    stringInfo.isFile = localInfo.isFile();
+    stringInfo.itemName = ui->chooseLocalCopy->data()->getFileName();
+    stringInfo.numberOfIssues = info.selection.size();
+    info.msgInfo.text = keepLocalSideString(stringInfo);
     textDecorator.process(info.msgInfo.text);
 
     if(node->isFile())
@@ -231,22 +272,11 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(node)
     {
-        if(node->isFile())
-        {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
-            if (info.selection.size() > 1)
-            {
-                info.msgInfo.text = tr("Keep the [B]remote files[/B]?");
-            }
-        }
-        else
-        {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
-            if (info.selection.size() > 1)
-            {
-                info.msgInfo.text = tr("Keep the [B]remote folders[/B]?");
-            }
-        }
+        KeepSideInfo stringInfo;
+        stringInfo.isFile = node->isFile();
+        stringInfo.itemName = ui->chooseRemoteCopy->data()->getFileName();
+        stringInfo.numberOfIssues = info.selection.size();
+        info.msgInfo.text = keepRemoteSideString(stringInfo);
     }
     else
     {

@@ -266,6 +266,17 @@ MoveOrRenameIssueChosenSide MoveOrRenameCannotOccurIssue::getSyncIdChosenSide() 
     return mChosenSideBySyncId.value(syncId, MoveOrRenameIssueChosenSide::NONE);
 }
 
+QString MoveOrRenameCannotOccurIssue::syncName() const
+{
+    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(firstSyncId()));
+    if(sync)
+    {
+        return QString::fromUtf8(sync->getName());
+    }
+
+    return QString();
+}
+
 void MoveOrRenameCannotOccurIssue::increaseCombinedNumberOfIssues()
 {
     mCombinedNumberOfIssues++;
