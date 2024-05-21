@@ -125,7 +125,7 @@ void PlanWidget::updatePlanInfo()
             break;
     }
 
-    mUi->lProPlan->setText(Utilities::getReadablePROplanFromId(mDetails.level));
+    mUi->lProPlan->setText(Utilities::getReadablePlanFromId(mDetails.level));
 
     // Show/hide widgets according to plans/currency
     mUi->lGreatValue->setVisible(accountType == PRO_I);

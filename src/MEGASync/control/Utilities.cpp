@@ -1138,7 +1138,7 @@ QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long l
         }
     }
 
-    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
+    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
 }
 
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
@@ -1164,7 +1164,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
-QString Utilities::getReadablePROplanFromId(int identifier)
+QString Utilities::getReadablePlanFromId(int identifier)
 {
     switch (identifier)
     {
