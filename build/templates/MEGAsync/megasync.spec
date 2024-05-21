@@ -9,9 +9,8 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: zlib-devel, autoconf, automake, libtool, gcc-c++, libicu-devel
-BuildRequires: hicolor-icon-theme, unzip, wget
-BuildRequires: ffmpeg-mega
+BuildRequires: zlib-devel, pkg-config, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
+BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl, lsb_release
 
 #OpenSUSE
 %if 0%{?suse_version} || 0%{?sle_version}
@@ -139,57 +138,10 @@ BuildRequires: ffmpeg-mega
 %endif
 
 
-#Pdfium: required for 64 bits only
-%if "%{_target_cpu}" != "i586" &&  "%{_target_cpu}" != "i686"
-    BuildRequires: pdfium-mega
-%endif
-
 ### Specific buildable dependencies ###
-
-#Media info
-%define flag_disablemediainfo -i
 
 %if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
     BuildRequires: libzen-devel, libmediainfo-devel
-%endif
-
-%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?fedora_version}==38 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
-    %define flag_disablemediainfo %{nil}
-%endif
-
-#Build sqlite3?
-%define flag_disablesqlite3 -L
-
-%if 0%{?centos_version} == 700
-    %define flag_disablesqlite3 %{nil}
-%endif
-
-#Build cryptopp?
-%define flag_cryptopp %{nil}
-
-%if 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || 0%{?suse_version} > 1320 || 0%{?fedora_version} >= 33
-    %define flag_cryptopp -q
-%endif
-
-#Build cares?
-%define flag_cares %{nil}
-
-%if 0%{?rhel_version}
-    %define flag_cares -e
-%endif
-
-#Build libraw?
-%define flag_libraw %{nil}
-
-%if ( "%{_target_cpu}" == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?centos_version} >= 800 || 0%{?rhel_version}
-    %define flag_libraw -W
-%endif
-
-#Build zlib?
-%define flag_disablezlib %{nil}
-
-%if 0%{?fedora_version} == 23
-    %define flag_disablezlib -z
 %endif
 
 %description
@@ -203,8 +155,29 @@ BuildRequires: ffmpeg-mega
 %setup -q
 
 mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s/[^0-9]//g"`
-sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" MEGASync/control/Version.h
-sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" MEGASync/control/Version.h
+sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" src/MEGASync/control/Version.h
+sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" src/MEGASync/control/Version.h
+
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
+    %define extradefines "-E env CXXFLAGS=-DMEGASYNC_DEPRECATED_OS ${CXXFLAGS}"
+%else
+    %define extradefines %{nil}
+%endif
+
+%if 0%{?centos_version} && 0%{?centos_version} < 800
+    %define qtinstall ON
+%else
+    %define qtinstall OFF
+%endif
+
+if [ -f /opt/vcpkg.tar.gz ]; then
+    export VCPKG_DEFAULT_BINARY_CACHE=/opt/persistent/vcpkg_cache
+    mkdir -p ${VCPKG_DEFAULT_BINARY_CACHE}
+    tar xzf /opt/vcpkg.tar.gz
+    vcpkg_root="-DVCPKG_ROOT=vcpkg"
+fi
+
+cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=%{qtinstall} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
 
 %build
 
@@ -216,67 +189,11 @@ sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g
     export PATH=`pwd`/userPath:$PATH
 %endif
 
-%if 0%{?centos_version} && 0%{?centos_version} < 800
-    export PATH=/opt/mega/bin:${PATH}
-%endif
-
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
-./configure %{flag_cryptopp} -g %{flag_disablesqlite3} %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
-
-# Link dynamically with freeimage
-ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3
-ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so
-
-# Fedora uses system Crypto++ header files
-%if 0%{?fedora_version} && 0%{?fedora_version} < 33
-    rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
-%endif
-
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
-    %define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
-%else
-    %define extraqmake %{nil}
-%endif
-
-%if 0%{?fedora_version} >= 33 || 0%{?centos_version} == 800
-    %define extraconfig CONFIG+=FFMPEG_WITH_LZMA
-%else
-    %define extraconfig %{nil}
-%endif
-
-
-%if 0%{?suse_version} != 1230
-    %define fullreqs "CONFIG += FULLREQUIREMENTS"
-%else
-    sed -i "s/USE_LIBRAW/NOT_USE_LIBRAW/" MEGASync/MEGASync.pro
-    %define fullreqs %{nil}
-%endif
-
-
-%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-    %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
-        qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
-        lrelease-qt5  MEGASync/MEGASync.pro
-    %else
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
-        lrelease-qt4  MEGASync/MEGASync.pro
-    %endif
-%else
-    %if 0%{?rhel_version} || 0%{?scientificlinux_version}
-        qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
-        lrelease-qt4  MEGASync/MEGASync.pro
-    %else
-        qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake} QMAKE_RPATHDIR="/opt/mega/lib" %{extraconfig}
-        lrelease MEGASync/MEGASync.pro
-    %endif
-%endif
-
-make %{?_smp_mflags}
-
+cmake --build %{_builddir}/build_dir %{?_smp_mflags}
 
 %install
-make install DESTDIR=%{buildroot}%{_bindir}
+
+cmake --install %{_builddir}/build_dir --prefix=%{buildroot}
 
 %if 0%{?suse_version}
     %suse_update_desktop_file -n -i %{name} Network System
@@ -287,45 +204,15 @@ make install DESTDIR=%{buildroot}%{_bindir}
     %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
-%if 0%{?centos_version} && 0%{?centos_version} < 800
-    for i in `ldd %{buildroot}%{_bindir}/megasync | grep opt | awk '{print $3}'`; do
-        install -D $i %{buildroot}/$i
-    done
-    install -pD /opt/mega/lib/libQt5XcbQpa.so.*.*.* %{buildroot}/opt/mega/lib/libQt5XcbQpa.so.5 || :
-    install -D /opt/mega/plugins/platforms/libqxcb.so %{buildroot}/opt/mega/plugins/platforms/libqxcb.so
-    install -D /opt/mega/plugins/platforms/libqvnc.so %{buildroot}/opt/mega/plugins/platforms/libqvnc.so
-    install -D /opt/mega/plugins/platforms/libqoffscreen.so %{buildroot}/opt/mega/plugins/platforms/libqoffscreen.so
-    install -D /opt/mega/plugins/platforms/libqminimal.so %{buildroot}/opt/mega/plugins/platforms/libqminimal.so
-    install -D /opt/mega/plugins/platforms/libqlinuxfb.so %{buildroot}/opt/mega/plugins/platforms/libqlinuxfb.so
-    install -D /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so
-    install -D /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so %{buildroot}/opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so
-    install -D /opt/mega/plugins/imageformats/libqwebp.so %{buildroot}/opt/mega/plugins/imageformats/libqwebp.so
-    install -D /opt/mega/plugins/imageformats/libqwbmp.so %{buildroot}/opt/mega/plugins/imageformats/libqwbmp.so
-    install -D /opt/mega/plugins/imageformats/libqtiff.so %{buildroot}/opt/mega/plugins/imageformats/libqtiff.so
-    install -D /opt/mega/plugins/imageformats/libqtga.so %{buildroot}/opt/mega/plugins/imageformats/libqtga.so
-    install -D /opt/mega/plugins/imageformats/libqsvg.so %{buildroot}/opt/mega/plugins/imageformats/libqsvg.so
-    install -D /opt/mega/plugins/imageformats/libqjpeg.so %{buildroot}/opt/mega/plugins/imageformats/libqjpeg.so
-    install -D /opt/mega/plugins/imageformats/libqico.so %{buildroot}/opt/mega/plugins/imageformats/libqico.so
-    install -D /opt/mega/plugins/imageformats/libqicns.so %{buildroot}/opt/mega/plugins/imageformats/libqicns.so
-    install -D /opt/mega/plugins/imageformats/libqgif.so %{buildroot}/opt/mega/plugins/imageformats/libqgif.so
-    install -D /opt/mega/plugins/iconengines/libqsvgicon.so %{buildroot}/opt/mega/plugins/iconengines/libqsvgicon.so
-    install -D /opt/mega/plugins/bearer/libqnmbearer.so %{buildroot}/opt/mega/plugins/bearer/libqnmbearer.so
-    install -D /opt/mega/plugins/bearer/libqgenericbearer.so %{buildroot}/opt/mega/plugins/bearer/libqgenericbearer.so
-    install -D /opt/mega/plugins/bearer/libqconnmanbearer.so %{buildroot}/opt/mega/plugins/bearer/libqconnmanbearer.so
-
-    install -D /opt/mega/lib/libQt5Qml.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Qml.so.5
-    install -D /opt/mega/lib/libQt5Quick.so.*.*.* %{buildroot}/opt/mega/lib/libQt5Quick.so.5
-
-%endif
-
-mkdir -p  %{buildroot}/opt/mega/lib
-install -D MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* %{buildroot}/opt/mega/lib
-
 mkdir -p  %{buildroot}/etc/sysctl.d/
 echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/99-megasync-inotify-limit.conf
 
 mkdir -p  %{buildroot}/etc/udev/rules.d/
 echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > %{buildroot}/etc/udev/rules.d/99-megasync-udev.rules
+
+mkdir -p  %{buildroot}%{_docdir}/%{name}
+lsb_release -ds > %{buildroot}%{_docdir}/%{name}/distro
+lsb_release -rs > %{buildroot}%{_docdir}/%{name}/version
 
 %post
 %if 0%{?suse_version} >= 1140
