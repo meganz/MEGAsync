@@ -25,24 +25,18 @@ class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
     Q_OBJECT
 public:
     explicit StalledIssuesReceiver(QObject* parent = nullptr);
-    ~StalledIssuesReceiver()
-    {
-        qDeleteAll(mMultiStepIssueSolversByReason);
-    }
+    ~StalledIssuesReceiver(){}
+
+    bool multiStepIssueSolveActive() const;
 
     template <class ISSUE_TYPE>
-    void addMultiStepIssueSolver(mega::MegaSyncStall::SyncStallReason reason, QPointer<MultiStepIssueSolverBase> solver)
+    void addMultiStepIssueSolver(MultiStepIssueSolverBase* solver)
     {
         solver->moveToThread(thread());
-        solver->resetDeadline();
-        connect(solver, &QObject::destroyed, [this, solver, reason](QObject*)
-        {
-            mMultiStepIssueSolversByReason.remove(reason, solver);
-        });
-        mMultiStepIssueSolversByReason.insert(reason, solver);
+        solver->start();
+        mIssueCreator.addMultiStepIssueSolver(solver);
     }
 
-    bool multiStepIssueSolveActive() const {return !mMultiStepIssueSolversByReason.isEmpty();}
 
     void updateStalledIssues(UpdateType type);
 
@@ -57,7 +51,6 @@ private:
     QMutex mCacheMutex;
     StalledIssuesVariantList mStalledIssues;
     StalledIssuesCreator mIssueCreator;
-    QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>> mMultiStepIssueSolversByReason;
     std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
 };
 

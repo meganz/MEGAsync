@@ -19,24 +19,26 @@ public:
     {
         mDeadline->setInterval(REQUEST_THRESHOLD);
         mDeadline->setSingleShot(true);
+
         //Auto destroy class when the timer finishes
-        connect(mDeadline.get(), &QTimer::timeout, this, [this]()
-        {
-            deleteLater();
-        });
+        connect(mDeadline.get(), &QTimer::timeout, this, [this]() { deleteLater(); });
     }
     virtual ~MultiStepIssueSolverBase() = default;
 
     virtual void resetDeadlineIfNeeded(const StalledIssueVariant& issue) = 0;
-    virtual void resetDeadline()
+    virtual void start()
     {
         mDeadline->start();
     }
 
-    virtual bool checkIssue(std::shared_ptr<StalledIssue>) {return false;}
+    bool isActive() const {return mDeadline->isActive();}
+
+    virtual bool checkIssue(const mega::MegaSyncStall*) const {return false;}
 
     void setStartNotification(const DesktopNotifications::NotificationInfo& newStartNotification);
     void setFinishNotification(const DesktopNotifications::NotificationInfo& newFinishNotification);
+
+    std::shared_ptr<StalledIssue> getIssue() const {return mIssue;}
 
 protected:
     std::unique_ptr<QTimer> mDeadline;
@@ -62,12 +64,11 @@ class MultiStepIssueSolver : public MultiStepIssueSolverBase
 public:
     MultiStepIssueSolver(std::shared_ptr<ISSUE_TYPE> issue)
         : MultiStepIssueSolverBase(issue){}
-    ~MultiStepIssueSolver()
+    virtual ~MultiStepIssueSolver() override
     {
-        ISSUE_TYPE::solvingIssueInSeveralStepsFinished();
         if(mIssue)
         {
-            mIssue->setIsSolved(StalledIssue::SolveType::SOLVED);
+            mIssue->finishAsyncIssueSolving();
         }
 
         //Send notification
@@ -86,7 +87,7 @@ public:
             //Don´t reset the deadline if it was reset less than one second ago
             if(found && ((REQUEST_THRESHOLD - mDeadline->remainingTime()) > 1000))
             {
-                resetDeadline();
+                start();
             }
         }
     }

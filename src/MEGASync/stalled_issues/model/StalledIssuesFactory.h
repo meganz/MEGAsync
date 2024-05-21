@@ -12,8 +12,8 @@ public:
     StalledIssuesFactory(){}
     virtual ~StalledIssuesFactory() = default;
 
-    virtual std::shared_ptr<StalledIssue> createIssue(const mega::MegaSyncStall* stall) = 0;
-    virtual void clear() = 0;
+    virtual std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall) = 0;
+    virtual void clear(){}
 };
 
 enum class UpdateType
@@ -30,10 +30,12 @@ class StalledIssuesCreator : public QObject
 public:
     StalledIssuesCreator();
 
-    void createIssues(mega::MegaSyncStallList* issues, UpdateType updateType,
-        const QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>>& multiStepIssueSolversByReason);
+    void createIssues(mega::MegaSyncStallList* issues,
+        UpdateType updateType);
 
     StalledIssuesVariantList issues() const;
+    bool multiStepIssueSolveActive() const;
+    void addMultiStepIssueSolver(MultiStepIssueSolverBase* issue);
 
 signals:
     void solvingIssues(int current, int total);
@@ -41,11 +43,15 @@ signals:
 protected:
     void clear();
 
-    StalledIssuesVariantList mIssues;
+    StalledIssuesVariantList mPendingIssues;
+    StalledIssuesVariantList mBeingSolvedIssues;
+    StalledIssuesVariantList mSolvedIssues;
 
 private:
-    QPointer<MultiStepIssueSolverBase> getMultiStepIssueSolverByStall(const QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>>& multiStepIssueSolversByReason,
-        std::shared_ptr<StalledIssue> issue);
+    QPointer<MultiStepIssueSolverBase> getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall);
+
+    QMultiMap<mega::MegaSyncStall::SyncStallReason,
+        MultiStepIssueSolverBase*> mMultiStepIssueSolversByReason;
     std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
 };
 

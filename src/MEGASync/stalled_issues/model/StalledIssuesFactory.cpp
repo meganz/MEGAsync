@@ -6,6 +6,7 @@
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 #include <IgnoredStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
+#include <StatsEventHandler.h>
 
 #include <mega/types.h>
 
@@ -14,8 +15,7 @@ StalledIssuesCreator::StalledIssuesCreator() :
 {
 }
 
-void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType, const QMultiMap<mega::MegaSyncStall::SyncStallReason,
-                                                                                                    QPointer<MultiStepIssueSolverBase>>& multiStepIssueSolversByReason)
+void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType)
 {
     clear();
 
@@ -25,16 +25,27 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
         auto totalSize(stalls->size());
 
         QSet<mega::MegaSyncStall::SyncStallReason> reasonsToFilter;
+        QList<MultiStepIssueSolverBase*> solversWithStall;
 
         for(size_t i = 0; i < totalSize; ++i)
         {
             auto stall = stalls->get(i);
+
+            //Just in case this is not the first issue of a multistep issue solver
+            auto multiStepIssueSolver(getMultiStepIssueSolverByStall(stall));
+
+            if(multiStepIssueSolver)
+            {
+                solversWithStall.append(multiStepIssueSolver);
+            }
+
             StalledIssueVariant variant;
             std::shared_ptr<StalledIssue> d;
 
             if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
-                d = mMoveOrRenameCannotOccurFactory->createIssue(stall);
+                d = mMoveOrRenameCannotOccurFactory->createIssue(multiStepIssueSolver, stall);
+
                 //If we find a MoveOrRenameCannotOccur issue, we don´t want to show
                 //the DeleteWaitingOnMove and DeleteOrMoveWaitingOnScanning
                 reasonsToFilter << mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves
@@ -79,12 +90,12 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 continue;
             }
 
-            auto multiStepIssueSolver(
-                getMultiStepIssueSolverByStall(multiStepIssueSolversByReason, d));
+            //If multiStepIssueSolver is nullptr but a new one was created and added in the previous line, we don´t need to reset it
             if(multiStepIssueSolver && updateType == UpdateType::AUTO_SOLVE)
             {
                 multiStepIssueSolver->resetDeadlineIfNeeded(variant);
             }
+
 
             //Check if it is being solved...
             if(!variant.getData()->isSolved())
@@ -98,8 +109,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                         QString eventMessage(QString::fromLatin1("Stalled issue received: Type %1")
                                                  .arg(QString::number(stall->reason())));
                         MegaSyncApp->getStatsEventHandler()->sendEvent(
-                            AppStatsEvents::EVENT_SI_STALLED_ISSUE_RECEIVED,
-                            eventMessage.toUtf8().constData());
+                            AppStatsEvents::EventType::SI_STALLED_ISSUE_RECEIVED, QStringList() << eventMessage);
                     }
                 }
                 else
@@ -110,9 +120,21 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                     }
                     else if(updateType == UpdateType::UI)
                     {
-                        mIssues.append(variant);
+                        mPendingIssues.append(variant);
                     }
                 }
+            }
+        }
+
+        //Add being solved issues taken from the MultiStepIssueSolvers
+        for (auto it = mMultiStepIssueSolversByReason.keyValueBegin(); it != mMultiStepIssueSolversByReason.keyValueEnd(); ++it)
+        {
+            if(it->second->isActive() && !solversWithStall.contains(it->second))
+            {
+                auto issue(it->second->getIssue());
+                auto variant = StalledIssueVariant(issue, issue->getOriginalStall().get());
+                variant.getData()->endFillingIssue();
+                mPendingIssues.append(variant);
             }
         }
 
@@ -125,7 +147,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 
             if(updateType == UpdateType::UI && !hasBeenSolved)
             {
-                mIssues.append(solvableIssue);
+                mPendingIssues.append(solvableIssue);
             }
 
             counter++;
@@ -135,7 +157,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
         //We don´t filter the solvable issues as these issues must be solved and not filtered
         if(!reasonsToFilter.isEmpty())
         {
-            QMutableListIterator<StalledIssueVariant> issueIt(mIssues);
+            QMutableListIterator<StalledIssueVariant> issueIt(mPendingIssues);
             while(issueIt.hasNext())
             {
                 if(reasonsToFilter.contains(issueIt.next().getData()->getReason()))
@@ -149,28 +171,57 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 
 StalledIssuesVariantList StalledIssuesCreator::issues() const
 {
-    return mIssues;
+    return mPendingIssues;
+}
+
+bool StalledIssuesCreator::multiStepIssueSolveActive() const
+{
+    for (auto it = mMultiStepIssueSolversByReason.keyValueBegin(); it != mMultiStepIssueSolversByReason.keyValueEnd(); ++it)
+    {
+        if(it->second->isActive())
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void StalledIssuesCreator::clear()
 {
-    mIssues.clear();
+    mPendingIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
 }
 
-QPointer<MultiStepIssueSolverBase> StalledIssuesCreator::getMultiStepIssueSolverByStall(
-    const QMultiMap<mega::MegaSyncStall::SyncStallReason, QPointer<MultiStepIssueSolverBase>>&
-        multiStepIssueSolversByReason,
-    std::shared_ptr<StalledIssue> issue)
+void StalledIssuesCreator::addMultiStepIssueSolver(MultiStepIssueSolverBase* solver)
 {
-    auto multiStepIssueSolvers(multiStepIssueSolversByReason.values(issue->getReason()));
-    if (!multiStepIssueSolvers.isEmpty())
+    if(solver)
     {
-        auto solverFound = std::find_if(multiStepIssueSolvers.begin(),
-            multiStepIssueSolvers.end(),
-            [issue](const QPointer<MultiStepIssueSolverBase>& solver)
-            { return solver->checkIssue(issue); });
-        if (solverFound != multiStepIssueSolvers.end())
+        auto issue(solver->getIssue());
+        auto reason(issue->getReason());
+
+        connect(solver,
+            &QObject::destroyed,
+            this,
+            [this, solver, reason](QObject*)
+            {
+                mMultiStepIssueSolversByReason.remove(reason, solver);
+            });
+
+        mMultiStepIssueSolversByReason.insert(reason, solver);
+    }
+}
+
+QPointer<MultiStepIssueSolverBase> StalledIssuesCreator::getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall)
+{
+    if (!mMultiStepIssueSolversByReason.isEmpty())
+    {
+        auto solverFound = std::find_if(mMultiStepIssueSolversByReason.begin(),
+            mMultiStepIssueSolversByReason.end(),
+            [stall](const MultiStepIssueSolverBase* solver)
+            { return solver->checkIssue(stall); });
+
+        if (solverFound != mMultiStepIssueSolversByReason.end() )
         {
             return (*solverFound);
         }

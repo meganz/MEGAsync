@@ -72,7 +72,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
         setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::LOCAL);
     }
 
-    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->syncIds().first()));
+    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->firstSyncId()));
     if(sync)
     {
         QString pathStr(QString::fromUtf8(sync->getLocalFolder()));
@@ -102,7 +102,7 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
         setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::REMOTE);
     }
 
-    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->syncIds().first()));
+    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->firstSyncId()));
     if(sync)
     {
         std::unique_ptr<mega::MegaNode> remoteFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(sync->getMegaHandle()));

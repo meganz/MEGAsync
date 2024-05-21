@@ -3,6 +3,7 @@
 #include <syncs/control/SyncInfo.h>
 #include <syncs/control/SyncController.h>
 #include <syncs/control/SyncSettings.h>
+#include <StalledIssuesUtilities.h>
 
 #include <MegaApplication.h>
 #include <Utilities.h>
@@ -11,35 +12,57 @@
 
 QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> MoveOrRenameCannotOccurIssue::mChosenSideBySyncId = QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide>();
 
-std::shared_ptr<StalledIssue> MoveOrRenameCannotOccurFactory::createIssue(const mega::MegaSyncStall* stall)
+std::shared_ptr<StalledIssue> MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall)
 {
-    auto newIssue = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
-    if(!newIssue->syncIds().isEmpty())
+    auto updateIssue = [](const mega::MegaSyncStall* stall, std::shared_ptr<MoveOrRenameCannotOccurIssue> issue){
+        stall->detectedCloudSide() ? issue->fillCloudSide(stall)
+                                   : issue->fillLocalSide(stall);
+    };
+
+    auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
+    if(!syncIds.isEmpty())
     {
-        auto newIssueSyncId(newIssue->syncIds().first());
-        std::shared_ptr<MoveOrRenameCannotOccurIssue> previousIssue(mIssueBySyncId.value(newIssueSyncId));
+        auto syncId(*syncIds.begin());
 
-        if (previousIssue)
+        if(mIssueBySyncId.contains(syncId))
         {
-
-            stall->detectedCloudSide() ? previousIssue->fillCloudSide(stall)
-                                       : previousIssue->fillLocalSide(stall);
-            previousIssue->increaseCombinedNumberOfIssues();
-
-            //We don´t need to add it to the model, we just need to update it
-            //So, we don´t return anything (a nullptr)
+            auto previousIssue(mIssueBySyncId.value(syncId));
+            updateIssue(stall, previousIssue);
         }
         else
         {
-            stall->detectedCloudSide() ? newIssue->fillCloudSide(stall)
-                                       : newIssue->fillLocalSide(stall);
-            mIssueBySyncId.insert(newIssue->syncIds().first(), newIssue);
-            return newIssue;
-        }
+            std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
 
+            if(solver)
+            {
+                auto moveOrRenameSolver(dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
+                if(moveOrRenameSolver)
+                {
+                    moveIssue = moveOrRenameSolver->getIssue();
+                    moveIssue->increaseCombinedNumberOfIssues();
+                }
+            }
+            else if(syncId != mega::INVALID_HANDLE)
+            {
+                moveIssue =std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
+            }
+
+            if(moveIssue)
+            {
+                updateIssue(stall, moveIssue);
+                mIssueBySyncId.insert(syncId, moveIssue);
+                return moveIssue;
+            }
+        }
     }
 
+    //We don´t want to add it to the model, just update it
     return nullptr;
+}
+
+void MoveOrRenameCannotOccurFactory::clear()
+{
+    mIssueBySyncId.clear();
 }
 
 //////////////////////////////////////
@@ -51,10 +74,6 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
     , mChosenSide(MoveOrRenameIssueChosenSide::NONE)
     , mCombinedNumberOfIssues(1)
 {
-    connect(SyncInfo::instance(), &SyncInfo::syncStateChanged,
-            this, &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
-
-    fillBasicInfo(stall);
 }
 
 //We don´t fill the issue as usual
@@ -104,17 +123,22 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 {
     if(!syncIds().isEmpty())
     {
-        auto syncId(syncIds().first());
+        auto syncId(firstSyncId());
         mChosenSideBySyncId.insert(syncId, side);
         mChosenSide = side;
         auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(syncId);
         if(syncSettings)
         {
+            connect(SyncInfo::instance(), &SyncInfo::syncStateChanged,
+                this, &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
+
             mSolvingStarted = true;
 
             //We pause the sync and when it is really paused, we continue solving the issue
             //This step is needed as the SDK acts differently if the sync is not paused
             mSyncController->setSyncToPause(syncSettings);
+
+            startAsyncIssueSolving();
         }
     }
 }
@@ -124,7 +148,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
 {
     if (!syncIds().isEmpty())
     {
-        auto syncId(syncIds().first());
+        auto syncId(firstSyncId());
 
         if (syncSettings->backupId() != syncId)
         {
@@ -181,18 +205,13 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                 }
             }
 
-            if (created)
-            {
-                disconnect(SyncInfo::instance(),
-                    &SyncInfo::syncStateChanged,
-                    this,
-                    &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
-                setIsSolved(SolveType::BEING_SOLVED);
-            }
-
-            emit asyncIssueBeingSolved();
             mSyncController->setSyncToRun(syncSettings);
         }
+
+        disconnect(SyncInfo::instance(),
+            &SyncInfo::syncStateChanged,
+            this,
+            &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 
         mSolvingStarted = false;
     }
@@ -243,7 +262,7 @@ MoveOrRenameIssueChosenSide MoveOrRenameCannotOccurIssue::getChosenSide() const
 
 MoveOrRenameIssueChosenSide MoveOrRenameCannotOccurIssue::getSyncIdChosenSide() const
 {
-    auto syncId(syncIds().first());
+    auto syncId(firstSyncId());
     return mChosenSideBySyncId.value(syncId, MoveOrRenameIssueChosenSide::NONE);
 }
 
@@ -260,13 +279,14 @@ int MoveOrRenameCannotOccurIssue::combinedNumberOfIssues() const
 bool MoveOrRenameCannotOccurIssue::findIssue(
     const std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
-    auto syncId(issue->syncIds().first());
+    auto syncId(issue->firstSyncId());
     return mChosenSideBySyncId.contains(syncId);
 }
 
-void MoveOrRenameCannotOccurIssue::solvingIssueInSeveralStepsFinished()
+void MoveOrRenameCannotOccurIssue::finishAsyncIssueSolving()
 {
     mChosenSideBySyncId.clear();
+    StalledIssue::finishAsyncIssueSolving();
 }
 
 void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stall)

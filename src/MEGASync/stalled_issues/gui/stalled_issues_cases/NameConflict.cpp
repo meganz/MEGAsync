@@ -565,7 +565,7 @@ void NameConflict::onActionClicked(int actionId)
                     else
                     {
                         areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
-                        auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->syncIds().first();
+                        auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->firstSyncId();
                         mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
                     }
 

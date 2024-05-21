@@ -173,8 +173,45 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
 
 //////////////////////////////////////////////////
 QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
+QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();
 
-mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString &path, bool cloud)
+void StalledIssuesBySyncFilter::resetFilter()
+{
+    mSyncIdCache.clear();
+    mSyncIdCacheByStall.clear();
+}
+
+QSet<mega::MegaHandle> StalledIssuesBySyncFilter::getSyncIdsByStall(const mega::MegaSyncStall* stall)
+{
+    if(!mSyncIdCacheByStall.contains(stall))
+    {
+        QSet<mega::MegaHandle> syncIds;
+
+        auto addToSet = [&syncIds](mega::MegaHandle value){
+            if(value != mega::INVALID_HANDLE)
+            {
+                syncIds.insert(value);
+            }
+        };
+
+
+        auto localSourcePath = QString::fromUtf8(stall->path(false, 0));
+        addToSet(filterByPath(localSourcePath, false));
+        auto localTargetPath = QString::fromUtf8(stall->path(false, 1));
+        addToSet(filterByPath(localTargetPath, false));
+
+        auto cloudSourcePath = QString::fromUtf8(stall->path(true, 0));
+        addToSet(filterByPath(cloudSourcePath, true));
+        auto cloudTargetPath = QString::fromUtf8(stall->path(true, 1));
+        addToSet(filterByPath(cloudTargetPath, true));
+
+        mSyncIdCacheByStall.insert(stall, syncIds);
+    }
+
+    return mSyncIdCacheByStall.value(stall);
+}
+
+mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString& path, bool cloud)
 {
     QVariant key;
 

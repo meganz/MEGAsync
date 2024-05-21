@@ -47,7 +47,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
 {
     if(!syncIds().isEmpty())
     {
-        auto syncId(syncIds().first());
+        auto syncId(firstSyncId());
         //We could do it without this static list
         //as the MegaIgnoreManager checks if the rule already exists
         //but with the list we save the megaignore parser, so it is more efficient

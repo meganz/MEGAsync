@@ -3,6 +3,7 @@
 
 #include <StalledIssue.h>
 #include <StalledIssuesFactory.h>
+#include <StalledIssuesUtilities.h>
 
 class SyncController;
 class SyncSettings;
@@ -21,6 +22,7 @@ class MoveOrRenameCannotOccurIssue : public StalledIssue
 public:
 
     MoveOrRenameCannotOccurIssue(const mega::MegaSyncStall *stall);
+    ~MoveOrRenameCannotOccurIssue() override{}
 
     void fillIssue(const mega::MegaSyncStall*) override;
     void fillCloudSide(const mega::MegaSyncStall* stall);
@@ -40,7 +42,8 @@ public:
     int combinedNumberOfIssues() const;
 
     static bool findIssue(const std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
-    static void solvingIssueInSeveralStepsFinished();
+
+    void finishAsyncIssueSolving() override;
 
 signals:
     void issueBeingSolved();
@@ -62,8 +65,8 @@ public:
     MoveOrRenameCannotOccurFactory(){}
     ~MoveOrRenameCannotOccurFactory() = default;
 
-    std::shared_ptr<StalledIssue> createIssue(const mega::MegaSyncStall* stall) override;
-    void clear() override { mIssueBySyncId.clear(); }
+    std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall) override;
+    void clear() override;
 
 private:
     QHash<mega::MegaHandle, std::shared_ptr<MoveOrRenameCannotOccurIssue>> mIssueBySyncId;
@@ -75,16 +78,25 @@ class MoveOrRenameMultiStepIssueSolver : public MultiStepIssueSolver<MoveOrRenam
 
 public:
     MoveOrRenameMultiStepIssueSolver(
-     std::shared_ptr<MoveOrRenameCannotOccurIssue> issue)
+        std::shared_ptr<MoveOrRenameCannotOccurIssue> issue)
         : MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(issue)
     {
-        mSyncId = issue->syncIds().first();
+        mSyncId = issue->firstSyncId();
     }
 
-    bool checkIssue(std::shared_ptr<StalledIssue> d) override
+    ~MoveOrRenameMultiStepIssueSolver() override{}
+
+    bool checkIssue(const mega::MegaSyncStall* stall) const override
     {
-        return d->syncIds().contains(mSyncId);
+        if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
+        {
+            auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
+            return syncIds.contains(mSyncId);
+        }
+        return false;
     }
+
+    mega::MegaHandle syncId() const {return mSyncId;}
 
 private:
     mega::MegaHandle mSyncId;

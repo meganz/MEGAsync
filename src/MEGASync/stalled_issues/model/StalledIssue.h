@@ -213,6 +213,7 @@ Q_DECLARE_METATYPE(LocalStalledIssueDataList)
 struct UploadTransferInfo;
 struct DownloadTransferInfo;
 
+class MultiStepIssueSolverBase;
 
 class StalledIssue : public QObject
 {
@@ -304,6 +305,9 @@ public:
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
+    virtual void finishAsyncIssueSolving();
+    virtual void startAsyncIssueSolving();
+
     virtual bool isSymLink() const {return false;}
     bool missingFingerprint() const;
     bool canBeIgnored() const;
@@ -348,7 +352,8 @@ public:
     void createFileWatcher();
     void removeFileWatcher();
 
-    const QList<mega::MegaHandle> &syncIds() const;
+    mega::MegaHandle firstSyncId() const;
+    const QSet<mega::MegaHandle>& syncIds() const;
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 
@@ -356,6 +361,7 @@ public:
 
 signals:
     void asyncIssueBeingSolved();
+    void asyncIssueSolved();
     void dataUpdated();
 
 protected:
@@ -365,13 +371,11 @@ protected:
     bool initCloudIssue();
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
-    void fillSyncId(const QString& path, bool cloud);
-
     void setIsFile(const QString& path, bool isLocal);
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
-    QList<mega::MegaHandle> mSyncIds;
+    QSet<mega::MegaHandle> mSyncIds;
     mutable SolveType mIsSolved = SolveType::UNSOLVED;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;

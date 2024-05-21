@@ -47,15 +47,16 @@ class StalledIssuesBySyncFilter
 public:
     StalledIssuesBySyncFilter(){}
 
-    static void resetFilter(){mSyncIdCache.clear();}
-
-    mega::MegaHandle filterByPath(const QString& path, bool cloud);
+    static void resetFilter();
+    static QSet<mega::MegaHandle> getSyncIdsByStall(const mega::MegaSyncStall* stall);
 
 private:
-    bool isBelow(mega::MegaHandle syncRootNode, mega::MegaHandle checkNode);
-    bool isBelow(const QString& syncRootPath, const QString& checkPath);
+    static mega::MegaHandle filterByPath(const QString& path, bool cloud);
+    static bool isBelow(mega::MegaHandle syncRootNode, mega::MegaHandle checkNode);
+    static bool isBelow(const QString& syncRootPath, const QString& checkPath);
 
     static QMap<QVariant, mega::MegaHandle> mSyncIdCache;
+    static QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> mSyncIdCacheByStall;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

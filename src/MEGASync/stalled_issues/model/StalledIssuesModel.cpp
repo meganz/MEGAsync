@@ -19,6 +19,11 @@ StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent),
 {
 }
 
+bool StalledIssuesReceiver::multiStepIssueSolveActive() const
+{
+    return mIssueCreator.multiStepIssueSolveActive();
+}
+
 void StalledIssuesReceiver::updateStalledIssues(UpdateType type)
 {
     QMutexLocker lock(&mCacheMutex);
@@ -36,7 +41,7 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
 
         connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
 
-        mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType, mMultiStepIssueSolversByReason);
+        mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType);
         mStalledIssues = mIssueCreator.issues();
 
         StalledIssuesBySyncFilter::resetFilter();
@@ -164,15 +169,31 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
                 mStalledIssuesByOrder.insert(issue.consultData().get(), rowCount(QModelIndex()) - 1);
                 mCountByFilterCriterion[static_cast<int>(StalledIssue::getCriterionByReason((*it).consultData()->getReason()))]++;
 
-                //Connect issue signals
-                connect(issue.getData().get(),
-                    &StalledIssue::asyncIssueBeingSolved,
-                    this,
-                    [this]()
-                    {
-                        QString solveMessage(tr("Issue being solved."));
-                        finishSolvingIssues(0, true, solveMessage);
-                    });
+                if(!(*it).consultData()->isBeingSolved())
+                {
+                    //Connect issue signals
+                    connect(
+                        issue.getData().get(),
+                        &StalledIssue::asyncIssueBeingSolved,
+                        this,
+                        [this]()
+                        {
+                            //In case we want to implement it in the future
+                        },
+                        Qt::UniqueConnection);
+
+                    connect(
+                        issue.getData().get(),
+                        &StalledIssue::asyncIssueSolved,
+                        this,
+                        [this, issue]()
+                        {
+                            issueSolved(issue);
+                            emit stalledIssuesCountChanged();
+                            emit refreshFilter();
+                        },
+                        Qt::UniqueConnection);
+                }
 
                 it++;
             }
@@ -692,7 +713,12 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 
 void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 {
-    startSolvingIssues();
+    //Don´t block UI if the issue is being solved async
+    if(! info.async)
+    {
+        startSolvingIssues();
+    }
+
     Utilities::queueFunctionInObjectThread(mStalledIssuesReceiver, [this, info]()
     {
        if(info.startFunc)
@@ -713,7 +739,11 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
            mModelMutex.lockForWrite();
 
-           sendFixingIssuesMessage(issueCounter, totalRows);
+           //Don´t block the UI if the issue is being solve asynchronously
+           if(!info.async)
+           {
+               sendFixingIssuesMessage(issueCounter, totalRows);
+           }
 
            auto potentialIndex = getSolveIssueIndex(index);
            auto issue(mStalledIssues.at(potentialIndex.row()));
@@ -1198,8 +1228,8 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& index
             //Add action to run the widget to show the errors
             solver->setFinishNotification(finishNotificationInfo);
 
-            mStalledIssuesReceiver->addMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(
-                mega::MegaSyncStall::MoveOrRenameCannotOccur, solver);
+            mStalledIssuesReceiver->addMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(solver);
+
             moveOrRemoveIssue->setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
             moveOrRemoveIssue->solveIssue(side);
 
