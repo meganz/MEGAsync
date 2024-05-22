@@ -3,6 +3,7 @@
 #include "AccountInfoData.h"
 #include "ApiEnums.h"
 #include "ChooseFolder.h"
+#include "ChooseFile.h"
 #include "ColorTheme.h"
 #include "QmlClipboard.h"
 #include "AppStatsEvents.h"
@@ -62,6 +63,7 @@ void QmlManager::registerCommonQmlElements()
     qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
     setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
 }
