@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION             4, 12, 2, 0
-#define VER_FILEVERSION_CODE        41202
-#define VER_PRODUCTVERSION          4, 12, 2, 0
+#define VER_FILEVERSION             4, 13, 0, 0
+#define VER_FILEVERSION_CODE        41300
+#define VER_PRODUCTVERSION          4, 13, 0, 0
 // Update scrips relying on this value if you move it
-#define VER_PRODUCTVERSION_STR      "4.12.2.0\0"
+#define VER_PRODUCTVERSION_STR      "4.13.0.0\0"
 
 #define VER_BUILD_ID                0
 
@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "2e9307d"
+#define VER_SDK_ID                  "dac426c"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
