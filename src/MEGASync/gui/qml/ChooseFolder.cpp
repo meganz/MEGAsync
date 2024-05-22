@@ -11,6 +11,12 @@
 
 #include <QDir>
 
+ChooseLocalFolder::ChooseLocalFolder(QObject *parent)
+    : QObject(parent)
+    , mTitle(tr("Select local folder"))
+{
+}
+
 void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
 {
     auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
@@ -30,12 +36,13 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
     }
 
     SelectorInfo info;
-    info.title = tr("Select local folder");
+    info.title = mTitle;
     info.defaultDir = openFromFolder;
     info.canCreateDirectories = true;
 
     QPointer<const QObject> context = this;
-    info.func = [this, context](QStringList selection){
+    info.func = [this, context, openFromFolder](QStringList selection)
+    {
         if(context && !selection.isEmpty())
         {
             QString fPath = selection.first();
@@ -43,6 +50,36 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
             if(!folder.isNull() && !folder.isEmpty())
             {
                 emit folderChoosen(folder);
+            }
+        }
+    };
+
+    Platform::getInstance()->folderSelector(info);
+}
+
+void ChooseLocalFolder::openRelativeFolderSelector(const QString& folderPath)
+{
+    auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+    if (!folderPath.isEmpty())
+    {
+        openFromFolder = QDir::toNativeSeparators(folderPath);
+    }
+
+    SelectorInfo info;
+    info.title = mTitle;
+    info.multiSelection = false;
+    info.defaultDir = openFromFolder;
+
+    QPointer<const QObject> context = this;
+    info.func = [this, context, openFromFolder](QStringList selection)
+    {
+        if(context && !selection.isEmpty())
+        {
+            QString fPath = selection.first();
+            auto folder = QDir::toNativeSeparators(QDir(fPath).canonicalPath());
+            if(!folder.isNull() && !folder.isEmpty())
+            {
+                emit folderChoosen(QDir(openFromFolder).relativeFilePath(folder));
             }
         }
     };
