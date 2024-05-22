@@ -19,7 +19,7 @@
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
-#include "themes/ThemeManager.h"
+#include "ThemeManager.h"
 
 #include <QApplication>
 #include <QDesktopServices>

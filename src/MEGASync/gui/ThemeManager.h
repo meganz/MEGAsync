@@ -1,5 +1,5 @@
-#ifndef THEMEMANAGER_H
-#define THEMEMANAGER_H
+#ifndef THEME_MANAGER_H
+#define THEME_MANAGER_H
 
 #include "Preferences/Preferences.h"
 
@@ -26,4 +26,4 @@ private:
     static const QMap<Preferences::ThemeType, QString> mThemesMap;
 };
 
-#endif // THEMEMANAGER_H
+#endif

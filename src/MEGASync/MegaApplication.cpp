@@ -28,7 +28,6 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
-#include "themes/ThemeWidgetManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
