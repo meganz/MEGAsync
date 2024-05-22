@@ -103,10 +103,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
 
-    bool needsUpdate(!item ||
+    bool isNew(!item ||
                item->getCurrentIndex() != sourceIndex);
 
-    if(needsUpdate)
+    if(isNew)
     {
         if(item)
         {
@@ -122,12 +122,30 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 
         itemsByRowMap.insert(row, item);
     }
-    else if(needsUpdate || issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
+    else if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
     {
         item->updateUi(sourceIndex, issue);
     }
 
     return item;
+}
+
+void StalledIssuesDelegateWidgetsCache::updateEditor(const QModelIndex& sourceIndex, StalledIssueBaseDelegateWidget* item, const StalledIssueVariant& issue) const
+{
+    if(sourceIndex.parent().isValid())
+    {
+        if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
+        {
+            item->updateUi(sourceIndex, issue);
+        }
+    }
+    else
+    {
+        if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Header))
+        {
+            item->updateUi(sourceIndex, issue);
+        }
+    }
 }
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(QWidget *parent, const StalledIssueVariant &issue) const

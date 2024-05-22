@@ -171,6 +171,7 @@ private:
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
+    int getRowByStalledIssue(const std::shared_ptr<const StalledIssue> issue) const;
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();

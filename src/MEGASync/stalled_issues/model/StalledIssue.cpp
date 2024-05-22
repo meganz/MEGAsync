@@ -425,6 +425,11 @@ bool StalledIssue::isBeingSolved() const
     return mIsSolved == SolveType::BEING_SOLVED;
 }
 
+bool StalledIssue::isFailed() const
+{
+    return mIsSolved == SolveType::FAILED;
+}
+
 void StalledIssue::setIsSolved(SolveType type)
 {
     mIsSolved = type;
@@ -473,16 +478,16 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     return result;
 }
 
-void StalledIssue::finishAsyncIssueSolving()
+void StalledIssue::performFinishAsyncIssueSolving(bool hasFailed)
 {
-    setIsSolved(StalledIssue::SolveType::SOLVED);
-    emit asyncIssueSolved();
+    hasFailed ? setIsSolved(StalledIssue::SolveType::FAILED) : setIsSolved(StalledIssue::SolveType::SOLVED);
+    emit asyncIssueSolvingFinished();
 }
 
 void StalledIssue::startAsyncIssueSolving()
 {
     setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
-    emit asyncIssueBeingSolved();
+    emit asyncIssueSolvingStarted();
 }
 
 bool StalledIssue::missingFingerprint() const
@@ -630,8 +635,6 @@ void StalledIssue::UIUpdated(Type type)
             break;
         }
     }
-
-    emit dataUpdated();
 }
 
 void StalledIssue::resetUIUpdated()

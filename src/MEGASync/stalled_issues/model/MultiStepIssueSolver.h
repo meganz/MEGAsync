@@ -7,7 +7,7 @@
 #include <QTimer>
 #include <QDeadlineTimer>
 
-const int REQUEST_THRESHOLD = 60000; /*60 seconds*/
+const int REQUEST_THRESHOLD = 20000; /*60 seconds*/
 
 class MultiStepIssueSolverBase : public QObject
 {
@@ -78,7 +78,7 @@ public:
         }
     }
 
-    void resetDeadlineIfNeeded(const StalledIssueVariant& issue) override
+    virtual void resetDeadlineIfNeeded(const StalledIssueVariant& issue) override
     {
         auto issueType = issue.convert<ISSUE_TYPE>();
         if(issueType)

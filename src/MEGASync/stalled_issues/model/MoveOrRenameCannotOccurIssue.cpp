@@ -10,69 +10,20 @@
 
 #include <QDir>
 
-QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> MoveOrRenameCannotOccurIssue::mChosenSideBySyncId = QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide>();
-
-std::shared_ptr<StalledIssue> MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall)
-{
-    auto updateIssue = [](const mega::MegaSyncStall* stall, std::shared_ptr<MoveOrRenameCannotOccurIssue> issue){
-        stall->detectedCloudSide() ? issue->fillCloudSide(stall)
-                                   : issue->fillLocalSide(stall);
-    };
-
-    auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
-    if(!syncIds.isEmpty())
-    {
-        auto syncId(*syncIds.begin());
-
-        if(mIssueBySyncId.contains(syncId))
-        {
-            auto previousIssue(mIssueBySyncId.value(syncId));
-            updateIssue(stall, previousIssue);
-        }
-        else
-        {
-            std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
-
-            if(solver)
-            {
-                auto moveOrRenameSolver(dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
-                if(moveOrRenameSolver)
-                {
-                    moveIssue = moveOrRenameSolver->getIssue();
-                    moveIssue->increaseCombinedNumberOfIssues();
-                }
-            }
-            else if(syncId != mega::INVALID_HANDLE)
-            {
-                moveIssue =std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
-            }
-
-            if(moveIssue)
-            {
-                updateIssue(stall, moveIssue);
-                mIssueBySyncId.insert(syncId, moveIssue);
-                return moveIssue;
-            }
-        }
-    }
-
-    //We don´t want to add it to the model, just update it
-    return nullptr;
-}
-
-void MoveOrRenameCannotOccurFactory::clear()
-{
-    mIssueBySyncId.clear();
-}
-
 //////////////////////////////////////
+
+const int MAX_RETRIES = 1;
 
 MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncStall* stall)
     : StalledIssue(stall)
+    , mega::MegaRequestListener()
     , mSolvingStarted(false)
+    , mUndoSuccessfull(false)
     , mSyncController(new SyncController())
     , mChosenSide(MoveOrRenameIssueChosenSide::NONE)
     , mCombinedNumberOfIssues(1)
+    , mSolveAttempts(0)
+    , mListener(std::make_shared<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
 {
 }
 
@@ -82,13 +33,19 @@ bool MoveOrRenameCannotOccurIssue::isValid() const
 }
 
 //We don´t fill the issue as usual
-void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall*)
+void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
-
+    stall->detectedCloudSide() ? fillCloudSide(stall)
+                               : fillLocalSide(stall);
 }
 
 bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
 {
+    if(solveAttemptsAchieved())
+    {
+        return false;
+    }
+
     //If it is unsolved but the chosen side is set, it is because user has started solving these issues in this sync id
     if(!isSolved() && !(getSyncIdChosenSide() == MoveOrRenameIssueChosenSide::NONE))
     {
@@ -131,6 +88,8 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
         auto syncId(firstSyncId());
         mChosenSideBySyncId.insert(syncId, side);
         mChosenSide = side;
+        mUndoSuccessfull = false;
+
         auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(syncId);
         if(syncSettings)
         {
@@ -138,6 +97,7 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
                 this, &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 
             mSolvingStarted = true;
+            mSolveAttempts++;
 
             //We pause the sync and when it is really paused, we continue solving the issue
             //This step is needed as the SDK acts differently if the sync is not paused
@@ -169,26 +129,32 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
         if (syncState == mega::MegaSync::RUNSTATE_PAUSED ||
             syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
         {
-            bool created(false);
-
             //We perform the undo in the opposite side
             if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE)
             {
                 QFileInfo previousPath(consultLocalData()->getFilePath());
                 QFileInfo previousDirectory(previousPath.absolutePath());
+                QString currentPath(consultLocalData()->getNativeMoveFilePath());
 
-                created = previousDirectory.exists();
+                mUndoSuccessfull = previousDirectory.exists();
 
-                if (!created)
+                if (!mUndoSuccessfull)
                 {
-                    created = QDir().mkpath(previousDirectory.absoluteFilePath());
+                    mUndoSuccessfull = QDir().mkpath(previousDirectory.absolutePath());
                 }
 
-                if (created)
+                if (mUndoSuccessfull)
                 {
-                    QFile file(consultLocalData()->getNativeMoveFilePath());
-                    created = file.rename(previousPath.absoluteFilePath());
+                    QFile file(currentPath);
+                    mUndoSuccessfull = file.rename(previousPath.absoluteFilePath());
                 }
+
+                if(!mUndoSuccessfull)
+                {
+                    mFailedLocalPaths.insert(currentPath);
+                }
+
+                onUndoFinished(syncSettings);
             }
             else
             {
@@ -197,28 +163,52 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                         consultCloudData()->getMovePathHandle()));
                 if (nodeToMove)
                 {
+                    QFileInfo targetPath(consultCloudData()->getNativeFilePath());
                     std::unique_ptr<mega::MegaNode> newParent(
-                        MegaSyncApp->getMegaApi()->getNodeByHandle(
-                            consultCloudData()->getPathHandle()));
+                        MegaSyncApp->getMegaApi()->getNodeByPath(
+                            targetPath.path().toStdString().c_str()));
+
                     if (!newParent)
                     {
                         PathCreator dirCreator;
-                        dirCreator.mkDir(QString(), consultCloudData()->getNativeFilePath());
+                        dirCreator.mkDir(QString(), targetPath.path());
                     }
-                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get());
-                    created = true;
+                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get(), mListener.get());
                 }
             }
-
-            mSyncController->setSyncToRun(syncSettings);
         }
+    }
+}
 
-        disconnect(SyncInfo::instance(),
-            &SyncInfo::syncStateChanged,
-            this,
-            &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
+void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> syncSettings)
+{
+    mSyncController->setSyncToRun(syncSettings);
+    disconnect(SyncInfo::instance(),
+        &SyncInfo::syncStateChanged,
+        this,
+        &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 
-        mSolvingStarted = false;
+    mSolvingStarted = false;
+}
+
+bool MoveOrRenameCannotOccurIssue::solveAttemptsAchieved() const
+{
+    return mSolveAttempts >= MAX_RETRIES;
+}
+
+void MoveOrRenameCannotOccurIssue::onRequestFinish(
+    mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* e)
+{
+    if(request->getType() == mega::MegaRequest::TYPE_MOVE)
+    {
+        mUndoSuccessfull = !e || (e->getErrorCode() == mega::MegaError::API_OK);
+
+        auto syncId(firstSyncId());
+        auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(syncId);
+        if(syncSettings)
+        {
+           onUndoFinished(syncSettings);
+        }
     }
 }
 
@@ -302,7 +292,7 @@ bool MoveOrRenameCannotOccurIssue::findIssue(
 void MoveOrRenameCannotOccurIssue::finishAsyncIssueSolving()
 {
     mChosenSideBySyncId.clear();
-    StalledIssue::finishAsyncIssueSolving();
+    StalledIssue::performFinishAsyncIssueSolving(!mUndoSuccessfull);
 }
 
 void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stall)
@@ -358,4 +348,55 @@ void MoveOrRenameCannotOccurIssue::fillLocalSide(const mega::MegaSyncStall* stal
 
         setIsFile(localTargetPath, true);
     }
+}
+
+/////////////////////////
+QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> MoveOrRenameCannotOccurIssue::mChosenSideBySyncId = QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide>();
+
+std::shared_ptr<StalledIssue> MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall)
+{
+    auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
+    if(!syncIds.isEmpty())
+    {
+        auto syncId(*syncIds.begin());
+
+        if(mIssueBySyncId.contains(syncId))
+        {
+            auto previousIssue(mIssueBySyncId.value(syncId));
+            previousIssue->fillIssue(stall);
+        }
+        else
+        {
+            std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
+
+            if(solver)
+            {
+                auto moveOrRenameSolver(dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
+                if(moveOrRenameSolver)
+                {
+                    moveIssue = moveOrRenameSolver->getIssue();
+                    moveIssue->increaseCombinedNumberOfIssues();
+                }
+            }
+            else if(syncId != mega::INVALID_HANDLE)
+            {
+                moveIssue =std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
+            }
+
+            if(moveIssue)
+            {
+                moveIssue->fillIssue(stall);
+                mIssueBySyncId.insert(syncId, moveIssue);
+                return moveIssue;
+            }
+        }
+    }
+
+    //We don´t want to add it to the model, just update it
+    return nullptr;
+}
+
+void MoveOrRenameCannotOccurFactory::clear()
+{
+    mIssueBySyncId.clear();
 }

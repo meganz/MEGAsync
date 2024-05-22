@@ -370,9 +370,9 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         bool renderDelegate(editorCurrentIndex != index);
 
+        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
         if(renderDelegate)
         {
-            auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, geometry.size()));
             if(!w)
             {
@@ -389,6 +389,11 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             painter->drawPixmap(0,0,w->width(), w->height(),pixmap);
 
             painter->restore();
+        }
+        else if(mEditor)
+        {
+            auto sourceIndex = mProxyModel->mapToSource(index);
+            mCacheManager.updateEditor(sourceIndex, mEditor, stalledIssueItem);
         }
 
         bool drawBottomLine(false);
@@ -426,7 +431,7 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
-QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem &, const QModelIndex &index) const
 {
     auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 

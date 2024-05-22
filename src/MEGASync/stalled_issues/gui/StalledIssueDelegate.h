@@ -20,7 +20,7 @@ class StalledIssueDelegate : public QStyledItemDelegate
 public:
     StalledIssueDelegate(StalledIssuesProxyModel* proxyModel,  StalledIssuesView* view);
     ~StalledIssueDelegate() = default;
-    QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const;
+    QSize sizeHint(const QStyleOptionViewItem&option, const QModelIndex&index) const override;
     void resetCache();
 
     void updateSizeHint();
@@ -28,7 +28,7 @@ public:
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index) override;
-    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
+    QWidget* createEditor(QWidget *parent, const QStyleOptionViewItem &, const QModelIndex &index) const override;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const override;
     bool event(QEvent *event) override;
     bool eventFilter(QObject *object, QEvent *event) override;

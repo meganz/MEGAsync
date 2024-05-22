@@ -179,25 +179,38 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
                     //Connect issue signals
                     connect(
                         issue.getData().get(),
-                        &StalledIssue::asyncIssueBeingSolved,
+                        &StalledIssue::asyncIssueSolvingStarted,
                         this,
                         [this]()
                         {
                             //In case we want to implement it in the future
-                        },
-                        Qt::UniqueConnection);
+                        });
 
                     connect(
                         issue.getData().get(),
-                        &StalledIssue::asyncIssueSolved,
+                        &StalledIssue::asyncIssueSolvingFinished,
                         this,
                         [this, issue]()
                         {
                             issueSolved(issue);
                             emit stalledIssuesCountChanged();
                             emit refreshFilter();
-                        },
-                        Qt::UniqueConnection);
+                        });
+
+                    connect(
+                        issue.getData().get(),
+                        &StalledIssue::dataUpdated,
+                        this,
+                        [this, issue](){
+                            auto row(getRowByStalledIssue(issue.consultData()));
+                            if(row >= 0)
+                            {
+                                auto headerIndex(index(row,0));
+                                auto bodyIndex(index(0,0,headerIndex));
+                                updateIndex(headerIndex);
+                                updateIndex(bodyIndex);
+                            }
+                        });
                 }
 
                 it++;
@@ -422,7 +435,7 @@ QModelIndex StalledIssuesModel::parent(const QModelIndex& index) const
         return QModelIndex();
     }
 
-    auto row = mStalledIssuesByOrder.value(stalledIssueItem->consultData().get(),-1);
+    auto row(getRowByStalledIssue(stalledIssueItem->consultData()));
     if(row >= 0)
     {
         return createIndex(row, 0);
@@ -547,6 +560,11 @@ void StalledIssuesModel::updateStalledIssuedByOrder()
     emit stalledIssuesCountChanged();
 }
 
+int StalledIssuesModel::getRowByStalledIssue(const std::shared_ptr<const StalledIssue> issue) const
+{
+    return mStalledIssuesByOrder.value(issue.get(), -1);
+}
+
 void StalledIssuesModel::blockUi()
 {
     emit uiBlocked();
@@ -612,14 +630,22 @@ void StalledIssuesModel::UiItemUpdate(const QModelIndex& oldIndex, const QModelI
         oldIssue.getData()->removeFileWatcher();
     }
 
+    auto row(-1);
+
     if(newIndex.parent().isValid())
     {
-        auto row(newIndex.parent().row());
-        auto newIssue(getStalledIssueByRow(row));
-        auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body : StalledIssue::Type::Header;
-        newIssue.getData()->UIUpdated(newType);
-        newIssue.getData()->createFileWatcher();
+        row = newIndex.parent().row();
     }
+    else
+    {
+        row = newIndex.row();
+    }
+
+    auto newIssue(getStalledIssueByRow(row));
+    auto newType = newIndex.parent().isValid() ? StalledIssue::Type::Body
+                                               : StalledIssue::Type::Header;
+    newIssue.getData()->UIUpdated(newType);
+    newIssue.getData()->createFileWatcher();
 }
 
 void StalledIssuesModel::reset()
@@ -719,7 +745,7 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
 void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 {
     //Don´t block UI if the issue is being solved async
-    if(! info.async)
+    if(!info.async)
     {
         startSolvingIssues();
     }
@@ -1235,7 +1261,6 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& index
 
             mStalledIssuesReceiver->addMultiStepIssueSolver<MoveOrRenameCannotOccurIssue>(solver);
 
-            moveOrRemoveIssue->setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
             moveOrRemoveIssue->solveIssue(side);
 
         }

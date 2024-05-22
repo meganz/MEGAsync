@@ -292,6 +292,7 @@ public:
     enum SolveType
     {
         UNSOLVED,
+        FAILED,
         BEING_SOLVED,
         POTENTIALLY_SOLVED,
         SOLVED
@@ -300,6 +301,7 @@ public:
     bool isSolved() const;
     bool isPotentiallySolved() const;
     bool isBeingSolved() const;
+    bool isFailed() const;
     void setIsSolved(SolveType type);
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
@@ -307,7 +309,7 @@ public:
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
-    virtual void finishAsyncIssueSolving();
+    virtual void finishAsyncIssueSolving(){}
     virtual void startAsyncIssueSolving();
 
     virtual bool isSymLink() const {return false;}
@@ -362,8 +364,8 @@ public:
     virtual bool shouldBeIgnored() const {return false;}
 
 signals:
-    void asyncIssueBeingSolved();
-    void asyncIssueSolved();
+    void asyncIssueSolvingStarted();
+    void asyncIssueSolvingFinished();
     void dataUpdated();
 
 protected:
@@ -374,6 +376,8 @@ protected:
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void setIsFile(const QString& path, bool isLocal);
+
+    void performFinishAsyncIssueSolving(bool hasFailed);
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
