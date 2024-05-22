@@ -1078,7 +1078,7 @@ QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long l
         }
     }
 
-    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
+    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
 }
 
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
@@ -1104,21 +1104,45 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
-QString Utilities::getReadablePROplanFromId(int identifier)
+QString Utilities::getReadablePlanFromId(int identifier, bool shortPlan)
 {
     switch (identifier)
     {
+        case MegaAccountDetails::ACCOUNT_TYPE_FREE:
+            return QCoreApplication::translate("Utilities", "Free");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Starter")
+                       : QCoreApplication::translate("Utilities", "MEGA Starter");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Basic")
+                       : QCoreApplication::translate("Utilities", "MEGA Basic");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Essential")
+                       : QCoreApplication::translate("Utilities", "MEGA Essential");
+            break;
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QCoreApplication::translate("Utilities","Pro Lite");
+            return QCoreApplication::translate("Utilities", "Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QCoreApplication::translate("Utilities","Pro I");
+            return QCoreApplication::translate("Utilities", "Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QCoreApplication::translate("Utilities","Pro II");
+            return QCoreApplication::translate("Utilities", "Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QCoreApplication::translate("Utilities","Pro III");
+            return QCoreApplication::translate("Utilities", "Pro III");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BUSINESS:
+            return QCoreApplication::translate("Utilities", "Business");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI:
+            return QCoreApplication::translate("Utilities", "Pro Flexi");
             break;
     }
 
@@ -1352,6 +1376,20 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
     }
 
     return result;
+}
+
+void Utilities::upgradeClicked()
+{
+    QString url = QString::fromUtf8("mega://#pro");
+    int accountType = Preferences::instance()->accountType();
+    if(accountType == Preferences::ACCOUNT_TYPE_STARTER
+        || accountType == Preferences::ACCOUNT_TYPE_BASIC
+        || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
+    {
+        url.append(QString::fromUtf8("?tab=exc"));
+    }
+    getPROurlWithParameters(url);
+    openUrl(QUrl(url));
 }
 
 QString Utilities::getNodePath(MegaTransfer* transfer)
