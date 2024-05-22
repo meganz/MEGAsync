@@ -14,9 +14,9 @@ static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
-static QRegularExpression colorTokenRegularExpression(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
-static QRegularExpression iconColorTokenRegularExpression(QLatin1String(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
-static const QString jsonThemedColorTokenFile = QLatin1String(":/colors/ColorThemedTokens.json");
+static QRegularExpression colorTokenRegularExpression(QString::fromUtf8("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
+static QRegularExpression iconColorTokenRegularExpression(QString::fromUtf8(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
+static const QString jsonThemedColorTokenFile = QString::fromUtf8(":/colors/ColorThemedTokens.json");
 
 TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
     : QObject{parent},
@@ -140,8 +140,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
             const QString& state = match.captured(IconTokenCaptureIndex::IconTokenTargetState);
             const QString& tokenId = match.captured(IconTokenCaptureIndex::IconTokenDesignTokenName);
 
-            IconTokenizer tokenizer;
-            tokenizer.process(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
+            IconTokenizer::process(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
         }
     }
 

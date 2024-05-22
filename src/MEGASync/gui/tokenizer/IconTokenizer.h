@@ -13,14 +13,14 @@ class IconTokenizer : public QObject
     using ColorTokens = QMap<QString, QString>;
 
 public:
-    explicit IconTokenizer(QObject *parent = nullptr);
-    void process(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId);
+    static void process(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId);
 
 private:
-    void changePixmapColor(QPixmap& pixmap, QColor toColor);
+    explicit IconTokenizer(QObject *parent = nullptr);
 
-    std::optional<QIcon::Mode> getIconMode(const QString& mode);
-    std::optional<QIcon::State> getIconState(const QString& state);
+    static std::optional<QPixmap> changePixmapColor(const QPixmap& pixmap, QColor toColor);
+    static std::optional<QIcon::Mode> getIconMode(const QString& mode);
+    static std::optional<QIcon::State> getIconState(const QString& state);
 };
 
 #endif

@@ -5,7 +5,7 @@
 #include <QBitmap>
 #include <QToolButton>
 
-static const QString ToolButtonId = "ToolButton";
+static const QString ToolButtonId = QString::fromUtf8("ToolButton");
 
 IconTokenizer::IconTokenizer(QObject* parent)
     : QObject{parent}
@@ -81,11 +81,13 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 
         QColor toColor(colorTokens.value(tokenId));
 
-        changePixmapColor(pixmap, toColor);
+        auto tintedPixmap = changePixmapColor(pixmap, toColor);
 
-        buttonIcons.addPixmap(pixmap, iconMode.value(), iconState.value());
-
-        button->setIcon(buttonIcons);
+        if (tintedPixmap.has_value())
+        {
+            buttonIcons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
+            button->setIcon(buttonIcons);
+        }
     }
 }
 
@@ -137,17 +139,21 @@ std::optional<QIcon::State> IconTokenizer::getIconState(const QString& state)
     return iconState;
 }
 
-void IconTokenizer::changePixmapColor(QPixmap& pixmap, QColor toColor)
+std::optional<QPixmap> IconTokenizer::changePixmapColor(const QPixmap& pixmap, QColor toColor)
 {
     if (pixmap.isNull())
     {
-        return;
+        qDebug() << __func__ << " Error pixmap argument is invalid";
+
+        return std::nullopt;
     }
 
     QImage image = pixmap.toImage();
     if (image.isNull())
     {
-        return;
+        qDebug() << __func__ << " Error image from pixmap is invalid";
+
+        return std::nullopt;
     }
 
     /*
@@ -164,5 +170,5 @@ void IconTokenizer::changePixmapColor(QPixmap& pixmap, QColor toColor)
         }
     }
 
-    pixmap = QPixmap::fromImage(image);
+    return QPixmap::fromImage(image);
 }
