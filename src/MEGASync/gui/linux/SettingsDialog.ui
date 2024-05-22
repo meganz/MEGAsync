@@ -24,29 +24,29 @@ background-color: #fafafa; /*colorToken.surface-1*/
 color: #000000; /*colorToken.text-primary*/
 }
 
-/*ThemeImage;ToolButtonIcon;bAccount;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bAccount;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bBackup;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bBackup;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bBackup;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bFolders;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bFolders;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bFolders;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bFolders;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bGeneral;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bGeneral;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bGeneral;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bGeneral;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bNetwork;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bNetwork;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bNetwork;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNetwork;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bNotifications;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bNotifications;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bNotifications;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNotifications;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bSecurity;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bSecurity;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bSecurity;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSecurity;normal;off;colorToken.icon-secondary*/
 
-/*ThemeImage;ToolButtonIcon;bSyncs;normal;on;colorToken.icon-primary*/
-/*ThemeImage;ToolButtonIcon;bSyncs;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;ToolButton;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSyncs;normal;off;colorToken.icon-secondary*/
 
 QPushButton
 {

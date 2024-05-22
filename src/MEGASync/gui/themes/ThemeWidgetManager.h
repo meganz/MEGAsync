@@ -4,6 +4,9 @@
 #include "Preferences/Preferences.h"
 
 #include <QObject>
+#include <QIcon>
+
+#include <optional>
 
 class ThemeWidgetManager : public QObject
 {
@@ -23,7 +26,9 @@ private:
     void onThemeChanged(Preferences::ThemeType theme);
     void applyTheme(QWidget* widget);
     void changePixmapColor(QPixmap& pixmap, QColor toColor);
-    void changeImageColor(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId);
+    void changeIconColor(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId);
+    std::optional<QIcon::Mode> getIconMode(const QString& mode);
+    std::optional<QIcon::State> getIconState(const QString& state);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QWidget* mCurrentWidget;

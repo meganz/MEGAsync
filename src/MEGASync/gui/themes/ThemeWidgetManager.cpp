@@ -13,10 +13,10 @@ static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
     {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
 };
 
-static QRegularExpression colorThemeRE(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
-static QRegularExpression imageThemeRE(QLatin1String(" *\\/\\* *ThemeImage;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
-static const QString jsonThemedColorFile = QLatin1String(":/colors/ColorThemedTokens.json");
-static const QString themeToolButtonIcon = "ToolButtonIcon";
+static QRegularExpression colorTokenRegularExpression(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
+static QRegularExpression iconColorTokenRegularExpression(QLatin1String(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
+static const QString jsonThemedColorTokenFile = QLatin1String(":/colors/ColorThemedTokens.json");
+static const QString ToolButtonId = "ToolButton";
 
 ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
     : QObject{parent},
@@ -24,8 +24,8 @@ ThemeWidgetManager::ThemeWidgetManager(QObject *parent)
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &ThemeWidgetManager::onThemeChanged);
 
-    colorThemeRE.optimize();
-    imageThemeRE.optimize();
+    colorTokenRegularExpression.optimize();
+    iconColorTokenRegularExpression.optimize();
 
     loadColorThemeJson();
 }
@@ -34,7 +34,7 @@ void ThemeWidgetManager::loadColorThemeJson()
 {
     mColorThemedTokens.clear();
 
-    QFile file(jsonThemedColorFile);
+    QFile file(jsonThemedColorTokenFile);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qDebug() << __func__ << " Error opening file : " << file.fileName();
@@ -111,7 +111,7 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
     QString styleSheet = widget->styleSheet();
 
     bool updatedStyleSheet = false;
-    QRegularExpressionMatchIterator matchIterator = colorThemeRE.globalMatch(styleSheet);
+    QRegularExpressionMatchIterator matchIterator = colorTokenRegularExpression.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
         QRegularExpressionMatch match = matchIterator.next();
@@ -127,7 +127,7 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
         }
     }
 
-    matchIterator = imageThemeRE.globalMatch(styleSheet);
+    matchIterator = iconColorTokenRegularExpression.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
         QRegularExpressionMatch match = matchIterator.next();
@@ -140,7 +140,7 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
             const QString& state = match.captured(ImageThemeCaptureIndex::ImageTargetState);
             const QString& tokenId = match.captured(ImageThemeCaptureIndex::ImageDesignTokenName);
 
-            changeImageColor(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
+            changeIconColor(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
         }
     }
 
@@ -150,59 +150,129 @@ void ThemeWidgetManager::applyTheme(QWidget* widget)
     }
 }
 
-void ThemeWidgetManager::changeImageColor(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId)
+void ThemeWidgetManager::changeIconColor(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens, const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId)
 {
-    if(widget== nullptr || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
+    if (widget == nullptr|| mode.isEmpty() || state.isEmpty() || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
     {
+        qDebug() << __func__ << " Error on function arguments :"
+                 << "\n widget is nullptr : " << QVariant(widget == nullptr).toString()
+                 << "\n mode is empty : " << QVariant(mode.isEmpty()).toString()
+                 << "\n state is empty : " << QVariant(state.isEmpty()).toString()
+                 << "\n colorTokens are empty : " << QVariant(colorTokens.isEmpty()).toString()
+                 << "\n targetElementId is empty : " << QVariant(targetElementId.isEmpty()).toString()
+                 << "\n targetElementProperty is empty : " << QVariant(targetElementProperty.isEmpty()).toString()
+                 << "\n tokenId is empty : " << QVariant(tokenId.isEmpty()).toString();
+
         return;
     }
 
-    if (targetElementProperty == themeToolButtonIcon)
+    auto widgets = widget->findChildren<QWidget*>(targetElementId);
+    if (widgets.isEmpty())
     {
-        if (targetElementId == "bBackup")
-        {
-            std::cout << "backup found" << std::endl;
-        }
+        qDebug() << __func__ << " Error children widget not found for  : " << targetElementId;
 
-        auto buttons = widget->findChildren<QToolButton*>(targetElementId);
-
-        if (!buttons.isEmpty())
-        {
-            auto button = buttons.at(0);
-
-            QIcon::State iconState = QIcon::On;
-            if (state == "off")
-            {
-                iconState = QIcon::Off;
-            }
-
-            QIcon::Mode iconMode = QIcon::Normal;
-            if (mode == "disabled")
-            {
-                iconMode = QIcon::Disabled;
-            }
-            else if (mode == "active")
-            {
-                iconMode =  QIcon::Active;
-            }
-            else if (mode == "selected")
-            {
-                iconMode = QIcon::Selected;
-            }
-
-            QIcon buttonIcons = button->icon();
-
-            auto pixmap = buttonIcons.pixmap(button->iconSize());
-
-            QColor toColor(colorTokens.value(tokenId));
-
-            changePixmapColor(pixmap, toColor);
-
-            buttonIcons.addPixmap(pixmap, iconMode, iconState);
-
-            button->setIcon(buttonIcons);
-        }
+        return;
     }
+
+    if (targetElementProperty == ToolButtonId)
+    {
+        auto iconState = getIconState(state);
+        if (!iconState.has_value())
+        {
+            // error log created on getIconState
+            return;
+        }
+
+        auto iconMode = getIconMode(mode);
+        if (!iconMode.has_value())
+        {
+            // error log created on getIconMode
+            return;
+        }
+
+        auto button = dynamic_cast<QToolButton*>(widgets.constFirst());
+        if (button == nullptr)
+        {
+            qDebug() << __func__ << " Error dynamic cast failed for Widget* to QToolButton* : " << targetElementId;
+            return;
+        }
+
+        QIcon buttonIcons = button->icon();
+        if (buttonIcons.isNull())
+        {
+            qDebug() << __func__ << " Error button icon is null : " << targetElementId;
+            return;
+        }
+
+        auto pixmap = buttonIcons.pixmap(button->iconSize());
+        if (pixmap.isNull())
+        {
+            qDebug() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
+            return;
+        }
+
+        if (!colorTokens.contains(tokenId))
+        {
+            qDebug() << __func__ << " Error token id not found : " << tokenId;
+            return;
+        }
+
+        QColor toColor(colorTokens.value(tokenId));
+
+        changePixmapColor(pixmap, toColor);
+
+        buttonIcons.addPixmap(pixmap, iconMode.value(), iconState.value());
+
+        button->setIcon(buttonIcons);
+    }
+}
+
+std::optional<QIcon::Mode> ThemeWidgetManager::getIconMode(const QString& mode)
+{
+    std::optional<QIcon::Mode> iconMode;
+
+    if (mode == "normal")
+    {
+        iconMode = QIcon::Normal;
+    }
+    else if (mode == "disabled")
+    {
+        iconMode = QIcon::Disabled;
+    }
+    else if (mode == "active")
+    {
+        iconMode =  QIcon::Active;
+    }
+    else if (mode == "selected")
+    {
+        iconMode = QIcon::Selected;
+    }
+    else
+    {
+        qDebug() << __func__ << " Error unknown icon mode : " << mode;
+    }
+
+    return iconMode;
+}
+
+std::optional<QIcon::State> ThemeWidgetManager::getIconState(const QString& state)
+{
+    std::optional<QIcon::State> iconState;
+
+    if (state == "on")
+    {
+        iconState = QIcon::On;
+    }
+    else if (state == "off")
+    {
+        iconState = QIcon::Off;
+    }
+    else
+    {
+        qDebug() << __func__ << " Error unknown icon state : " << state;
+    }
+
+    return iconState;
 }
 
 void ThemeWidgetManager::changePixmapColor(QPixmap& pixmap, QColor toColor)
@@ -218,13 +288,17 @@ void ThemeWidgetManager::changePixmapColor(QPixmap& pixmap, QColor toColor)
         return;
     }
 
-    for(auto x=0; x<image.width(); x++)
+    /*
+     * we are using the requested color for every pixel on the image
+     * only the alpha channel is preserved.
+    */
+    for(auto widthIndex = 0; widthIndex < image.width(); ++widthIndex)
     {
-        for(auto y=0; y<image.height(); y++)
+        for(auto heightIndex = 0; heightIndex < image.height(); ++heightIndex)
         {
-            QColor color = image.pixelColor(x, y);
+            QColor color = image.pixelColor(widthIndex, heightIndex);
             toColor.setAlpha(color.alpha());
-            image.setPixelColor(x, y, toColor);
+            image.setPixelColor(widthIndex, heightIndex, toColor);
         }
     }
 
