@@ -30,7 +30,7 @@ QString SyncSettingsUI::getFinishWarningIconString() const
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-syncs-error");
 #else
-    return QString::fromUtf8(":/images/settings-syncs-warn.png");
+    return QString::fromUtf8(":/images/settings-syncs-warn.svg");
 #endif
 }
 
@@ -39,7 +39,7 @@ QString SyncSettingsUI::getFinishIconString() const
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-syncs");
 #else
-    return QString::fromUtf8(":/images/settings-syncs.png");
+    return QString::fromUtf8(":/images/settings-syncs.svg");
 #endif
 }
 

@@ -79,7 +79,7 @@ QString BackupSettingsUI::getFinishWarningIconString() const
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-backups-error");
 #else
-    return QString::fromUtf8(":/images/settings-backups-warn.png");
+    return QString::fromUtf8(":/images/settings-backup-warn.svg");
 #endif
 }
 
@@ -88,7 +88,7 @@ QString BackupSettingsUI::getFinishIconString() const
 #ifdef Q_OS_MACOS
     return QString::fromUtf8("settings-backup");
 #else
-    return QString::fromUtf8(":/images/settings-backup.png");
+    return QString::fromUtf8(":/images/settings-backup.svg");
 #endif
 }
 

@@ -1497,13 +1497,13 @@
         <file>images/copy@2x.png</file>
         <file>images/settings-account.svg</file>
         <file>images/settings-backup.svg</file>
-        <file>images/settings-backup-off.svg</file>
         <file>images/settings-folders.svg</file>
         <file>images/settings-general.svg</file>
         <file>images/settings-network.svg</file>
         <file>images/settings-notifications.svg</file>
         <file>images/settings-shield.svg</file>
         <file>images/settings-sync.svg</file>
-        <file>images/settings-sync-off.svg</file>
+        <file>images/settings-sync-warn.svg</file>
+        <file>images/settings-backup-warn.svg</file>
     </qresource>
 </RCC>
