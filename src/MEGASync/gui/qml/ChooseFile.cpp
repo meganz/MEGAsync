@@ -8,7 +8,7 @@
 
 ChooseLocalFile::ChooseLocalFile(QObject *parent)
     : QObject(parent)
-    , mTitle("")
+    , mTitle(QString::fromUtf8(""))
 {
 }
 

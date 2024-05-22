@@ -43,8 +43,6 @@ public:
     QString getFolderName() const { return mFolderName; }
     void setFolder(const QString& folderName);
     Q_INVOKABLE void restoreDefaults();
-    Q_INVOKABLE void chooseFile();
-    Q_INVOKABLE void chooseFolder();
 
     bool isAskOnExclusionRemove()  const;
     void setAskOnExclusionRemove(bool);
@@ -64,8 +62,6 @@ signals:
     void maximumAllowedUnitChanged(int);
     void sizeExclusionStatusChanged(SizeExclusionStatus);
     void folderNameChanged(QString);
-    void fileChoosen(QString relativeFileName);
-    void folderChoosen(QString relativeFolderName);
     void askOnExclusionRemoveChanged(bool);
 
 private:
