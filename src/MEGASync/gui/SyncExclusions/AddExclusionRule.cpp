@@ -31,13 +31,24 @@ void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString
         for (auto value : splitted)
         {
             value = value.trimmed();
-            if (value.isEmpty()) {
+            if (value.isEmpty())
+            {
                 continue;
             }
-            if (targetType == ExclusionRulesModel::TargetType::EXTENSION) {
+
+            if (targetType == ExclusionRulesModel::TargetType::EXTENSION)
+            {
                 megaIgnoreLoader.addExtensionRule(MegaIgnoreNameRule::Class::EXCLUDE, value);
                 continue;
             }
+
+            if((targetType == ExclusionRulesModel::TargetType::FILE
+                    || targetType == ExclusionRulesModel::TargetType::FOLDER)
+                && wildCard == MegaIgnoreNameRule::WildCardType::EQUAL)
+            {
+                value = getRelative(folder, value);
+            }
+
             megaIgnoreLoader.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
                                          value,
                                          targetType == ExclusionRulesModel::TargetType::FILE
@@ -47,4 +58,15 @@ void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString
         }
         megaIgnoreLoader.applyChanges();
     }
+}
+
+QString AddExclusionRule::getRelative(const QString& path, const QString& fullPath)
+{
+    auto folder = QDir::toNativeSeparators(QDir(path).canonicalPath());
+    if(!folder.isNull() && !folder.isEmpty())
+    {
+        QString relativePath = QDir(folder).relativeFilePath(fullPath);
+        return relativePath;
+    }
+    return path;
 }

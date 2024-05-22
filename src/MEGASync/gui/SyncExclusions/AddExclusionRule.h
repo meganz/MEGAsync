@@ -6,6 +6,7 @@
 class AddExclusionRule : public QMLComponent
 {
     Q_OBJECT
+
 public:
     explicit AddExclusionRule(QObject *parent = nullptr, const QStringList &folders = {});
 
@@ -14,8 +15,12 @@ public:
     QString contextName() override;
 
     Q_INVOKABLE void appendRuleToFolders(int targetType, int wildCard, QString ruleVale);
+
 private:
     QStringList mFolders;
+
+    QString getRelative(const QString& path, const QString& fullPath);
+
 };
 
 #endif // ADDEXCLUSIONRULE_H

@@ -9,7 +9,10 @@ import components.texts 1.0 as Texts
 import components.buttons 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
+
 import QmlDialog 1.0
+import ChooseLocalFolder 1.0
+import ChooseLocalFile 1.0
 
 QmlDialog{
     id: root
@@ -158,11 +161,21 @@ QmlDialog{
                     root.ruleValue = text;
                 }
                 rightIconMouseArea.onClicked: {
-                    if(targetComboBox.currentText === ExclusionsStrings.files){
-                        chooseFile();
+                    if(targetComboBox.currentText === ExclusionsStrings.files) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            fileDialog.openRelativeFileSelector(syncExclusionsAccess.folderPath);
+                        }
+                        else {
+                            fileDialog.openFileSelector();
+                        }
                     }
-                    else if(targetComboBox.currentText === ExclusionsStrings.folders){
-                        chooseFolder();
+                    else if(targetComboBox.currentText === ExclusionsStrings.folders) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            folderDialog.openRelativeFolderSelector(syncExclusionsAccess.folderPath);
+                        }
+                        else {
+                            folderDialog.openFolderSelector();
+                        }
                     }
                 }
             } // TextField: valueTextField
@@ -210,8 +223,8 @@ QmlDialog{
                 enabled: valueTextField.text.trim().length !== 0
                 icons.position: Icon.Position.LEFT
                 onClicked: {
-                    if(addRuleDialogAccess){
-                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType,  root.ruleValue);
+                    if(typeof addRuleDialogAccess !== "undefined" && addRuleDialogAccess !== null) {
+                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType, root.ruleValue);
                     }
                     root.accepted();
                     root.close();
@@ -219,4 +232,25 @@ QmlDialog{
             }
         } //RowLayou: buttonsLayout
     } // Column: mainColumn
+
+    ChooseLocalFolder {
+        id: folderDialog
+
+        title: ExclusionsStrings.selectFolderTitle
+
+        onFolderChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
+    ChooseLocalFile {
+        id: fileDialog
+
+        title: ExclusionsStrings.selectFileTitle
+
+        onFileChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
 } // Item: root

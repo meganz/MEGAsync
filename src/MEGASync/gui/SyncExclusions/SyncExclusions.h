@@ -15,6 +15,7 @@ class SyncExclusions : public QMLComponent
     Q_PROPERTY(ExclusionRulesModel* rulesModel MEMBER mRulesModel CONSTANT)
     Q_PROPERTY(SizeExclusionStatus sizeExclusionStatus READ getSizeExclusionStatus WRITE setSizeExclusionStatus NOTIFY sizeExclusionStatusChanged)
     Q_PROPERTY(QString folderName READ getFolderName NOTIFY folderNameChanged)
+    Q_PROPERTY(QString folderPath MEMBER mFolderFullPath)
     Q_PROPERTY(bool askOnExclusionRemove READ isAskOnExclusionRemove WRITE setAskOnExclusionRemove NOTIFY askOnExclusionRemoveChanged)
 
 public:
