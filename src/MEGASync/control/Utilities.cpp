@@ -1104,7 +1104,7 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
-QString Utilities::getReadablePlanFromId(int identifier)
+QString Utilities::getReadablePlanFromId(int identifier, bool shortPlan)
 {
     switch (identifier)
     {
@@ -1112,13 +1112,19 @@ QString Utilities::getReadablePlanFromId(int identifier)
             return QCoreApplication::translate("Utilities", "Free");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
-            return QCoreApplication::translate("Utilities", "MEGA Starter");
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Starter")
+                       : QCoreApplication::translate("Utilities", "MEGA Starter");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
-            return QCoreApplication::translate("Utilities", "MEGA Basic");
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Basic")
+                       : QCoreApplication::translate("Utilities", "MEGA Basic");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
-            return QCoreApplication::translate("Utilities", "MEGA Essential");
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Essential")
+                       : QCoreApplication::translate("Utilities", "MEGA Essential");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
             return QCoreApplication::translate("Utilities", "Pro Lite");

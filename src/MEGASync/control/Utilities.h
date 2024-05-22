@@ -332,7 +332,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
-    static QString getReadablePlanFromId(int identifier);
+    static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
     static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
