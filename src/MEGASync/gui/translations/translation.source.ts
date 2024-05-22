@@ -1173,19 +1173,6 @@
     </message>
 </context>
 <context>
-    <name>CloudNodeUndecryptedHeader</name>
-    <message>
-        <source>Cloude node undecrypted [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Item in MEGA unable to be decrypted [B]%1[/B]</translation>
-    </message>
-    <message>
-        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
-        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
-        <translation>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</translation>
-    </message>
-</context>
-<context>
     <name>CloudStalledIssueChooseWidget</name>
     <message>
         <source>Moved to MEGA Bin</source>
@@ -7237,11 +7224,6 @@ Do you want to delete it anyway?</translation>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
         <translation>Error identifying folder content in local file system</translation>
-    </message>
-    <message>
-        <source>Cloud node undecrypted.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
-        <translation>Item in Cloud drive can’t be decrypted.</translation>
     </message>
     <message>
         <source>Waiting for scanning to complete.</source>
