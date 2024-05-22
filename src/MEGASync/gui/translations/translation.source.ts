@@ -9406,6 +9406,21 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation type="unfinished">Pro&#xa0;Flexi</translation>
     </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation type="unfinished">Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation type="unfinished">Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation type="unfinished">Essential</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
