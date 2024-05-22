@@ -193,7 +193,7 @@ cmake --build %{_builddir}/build_dir %{?_smp_mflags}
 
 %install
 
-cmake --install %{_builddir}/build_dir --prefix=%{buildroot}
+cmake --install %{_builddir}/build_dir --prefix %{buildroot}
 
 %if 0%{?suse_version}
     %suse_update_desktop_file -n -i %{name} Network System

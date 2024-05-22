@@ -19,7 +19,7 @@ build-stamp:
 
 	cmake $(EXTRADEFINES) $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=$(QTINSTALL) -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
 	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
-	cmake --install $(CURDIR)/build_dir --prefix=$(CURDIR)/install_dir
+	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
 
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
