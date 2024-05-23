@@ -59,7 +59,6 @@ void Backups::openExclusionsDialog(const QStringList& folderPaths) const
 {
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
-        // TODO: Change the code to pass the full list to the exclusions dialog
         QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
         QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions = new QmlDialogWrapper<AddExclusionRule>(parentWidget, folderPaths);
         DialogOpener::showDialog(exclusions);
