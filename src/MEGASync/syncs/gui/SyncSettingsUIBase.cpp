@@ -120,7 +120,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
                         }
 #else
-                        mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+                        // TODO: @jsubi
+                        //mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
 #endif
                     }
                 }
@@ -137,7 +138,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
                         }
 #else
-                        mToolBarItem->setIcon(QIcon(getFinishIconString()));
+                        // TODO: @jsubi
+                        //mToolBarItem->setIcon(QIcon(getFinishIconString()));
 #endif
                     }
                 }
