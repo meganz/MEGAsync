@@ -9,7 +9,7 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: zlib-devel, pkg-config, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
+BuildRequires: zlib-devel, pkgconf-pkg-config, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
 BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl, lsb_release
 
 #OpenSUSE
@@ -177,6 +177,14 @@ if [ -f /opt/vcpkg.tar.gz ]; then
     vcpkg_root="-DVCPKG_ROOT=vcpkg"
 fi
 
+if [ -f /opt/cmake.tar.gz ]; then
+    echo "8dc99be7ba94ad6e14256b049e396b40  /opt/cmake.tar.gz" | md5sum -c -
+    tar xzf /opt/cmake.tar.gz
+    ln -s cmake-*-Linux* cmake_inst
+    export PATH="${PWD}/cmake_inst/bin:${PATH}"
+fi
+
+cmake --version
 cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=%{qtinstall} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
 
 %build
@@ -189,9 +197,17 @@ cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_
     export PATH=`pwd`/userPath:$PATH
 %endif
 
+if [ -f /opt/cmake.tar.gz ]; then
+    export PATH="${PWD}/cmake_inst/bin:${PATH}"
+fi
+
 cmake --build %{_builddir}/build_dir %{?_smp_mflags}
 
 %install
+
+if [ -f /opt/cmake.tar.gz ]; then
+    export PATH="${PWD}/cmake_inst/bin:${PATH}"
+fi
 
 cmake --install %{_builddir}/build_dir --prefix %{buildroot}
 
