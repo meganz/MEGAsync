@@ -84,7 +84,7 @@ QWidget::title
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(&quot;:/images/folder.svg&quot;);
+    <string notr="true">border-image: url(&quot;:/images/icons/folder/synced-folder.png&quot;);
 max-width: 96px;
 max-height: 96px;
 </string>
@@ -165,8 +165,8 @@ max-height: 96px;
     <rect>
      <x>422</x>
      <y>144</y>
-     <width>70</width>
-     <height>36</height>
+     <width>72</width>
+     <height>38</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -177,23 +177,23 @@ max-height: 96px;
    </property>
    <property name="maximumSize">
     <size>
-     <width>72</width>
-     <height>38</height>
+     <width>74</width>
+     <height>40</height>
     </size>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton 
 {   
-     /* Layout */
-    width: 70px;	/* Slightly wider than Sigma, to show entire text */
-    height: 36px; /* Made same as OK button */
-    max-width: 70px;
-    max-height: 36px;
+    /* Layout */
+    width: 72px;	 /* Figma specifies Width: 68 =&gt; add 4 for border-radius */
+    height: 38px; /* Figma specifies Height: 34 =&gt; add 4 for border-radius */
+    max-width: 72px;
+    max-height: 38px;
 
     /* Style */
-    border-radius: 3px;
-    background-color:#ffffff;
-    border: 1px solid rgba(0, 0, 0, 10%); /* rgba(0, 0, 0, 0.10) */
+    border-radius: 4px;
+    background-color: #fafafa;
+    border: 1px solid rgba(0, 0, 0, 0.10); /* rgba(0, 0, 0, 0.10) */
 
     /* Typography */
     color: #333333;
@@ -208,13 +208,16 @@ max-height: 96px;
 QPushButton:hover 
 {
     /* Button hover effect if needed */
+    background-color: #F2F2F2; /* Background color for hover state */
+    opacity: 1.0; /* Opacity for hover state */
 }
 
 QPushButton:pressed 
 {
-    /* Button pressed effect if needed */
+    /* Button pressed effect */
+    background-color: #FFFFFF; /* Background color for pressed state */
+    opacity: 1.0; /* Opacity for pressed state */
 }
-
 </string>
    </property>
    <property name="text">
@@ -246,7 +249,7 @@ QPushButton:pressed
     <string notr="true">QPushButton#bOK
 {    
     width: 77px;
-    height: 36px;
+    height: 38px; /* Figma specifies Height: 34 =&gt; add 4 for border-radius */
 
     /* Style */
     border-radius: 4px;
@@ -266,15 +269,13 @@ QPushButton:pressed
 
 QPushButton#bOK:hover 
 {
-    /* Button hover effect if needed */
+    background: #00A787;
 }
 
 QPushButton#bOK:pressed 
 {
-    /* Button pressed effect if needed */
+    background: #00D7C2;
 }
-
-
 </string>
    </property>
    <property name="text">
