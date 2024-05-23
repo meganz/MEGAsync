@@ -3,7 +3,8 @@
 #include "ClassFactoryContextMenuExt.h"
 #include "ClassFactoryShellExtSynced.h" 
 #include "ClassFactoryShellExtPending.h"
-#include "ClassFactoryShellExtSyncing.h" 
+#include "ClassFactoryShellExtSyncing.h"
+#include "ClassFactoryShellExtNotFound.h"
 #include "RegUtils.h"
 
 #include <new>
@@ -23,7 +24,7 @@ const CLSID CLSID_ShellExtSynced =
 const TCHAR ShellExtSyncedFriendlyNameOld[] = L"###MegaShellExtSynced";
 const TCHAR ShellExtSyncedFriendlyName[] = L"\x01 MEGA (Synced)";
 
-//{056D528D-CE28-4194-9BA3-BA2E9197FF8C}
+// {056D528D-CE28-4194-9BA3-BA2E9197FF8C}
 const CLSID CLSID_ShellExtPending = 
 { 0x56D528D, 0xCE28, 0x4194, { 0x9B, 0xA3, 0xBA, 0x2E, 0x91, 0x97, 0xFF, 0x8C } };
 const TCHAR ShellExtPendingFriendlyNameOld[] = L"###MegaShellExtPending";
@@ -31,9 +32,15 @@ const TCHAR ShellExtPendingFriendlyName[] = L"\x01 MEGA (Pending)";
 
 // {0596C850-7BDD-4C9D-AFDF-873BE6890637}
 const CLSID CLSID_ShellExtSyncing =
-{ 0x596c850, 0x7bdd, 0x4c9d, { 0xaf, 0xdf, 0x87, 0x3b, 0xe6, 0x89, 0x6, 0x37 } };
+{ 0x596C850, 0x7BDD, 0x4C9D, { 0xAF, 0xDF, 0x87, 0x3B, 0xE6, 0x89, 0x6, 0x37 } };
 const TCHAR ShellExtSyncingFriendlyNameOld[] = L"###MegaShellExtSyncing";
 const TCHAR ShellExtSyncingFriendlyName[] = L"\x01 MEGA (Syncing)";
+
+// {0596C850-7BDD-4C9D-AFDF-873BE6890635}
+const CLSID CLSID_ShellExtNotFound =
+{ 0x596C850, 0x7BDD, 0x4C9D, { 0xAF, 0xDF, 0x87, 0x3B, 0xE6, 0x89, 0x6, 0x35 } };
+const TCHAR ShellExtNotFoundFriendlyNameOld[] = L"###MegaShellExtNotFound";
+const TCHAR ShellExtNotFoundFriendlyName[] = L"\x01 MEGA (NotFound)";
 
 HINSTANCE   g_hInst     = NULL;
 long        g_cDllRef   = 0;
@@ -86,6 +93,11 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
         hr = E_OUTOFMEMORY;
         pClassFactory = new (std::nothrow) ClassFactoryShellExtSyncing();
     }
+    else if (IsEqualCLSID(CLSID_ShellExtNotFound, rclsid))
+    {
+        hr = E_OUTOFMEMORY;
+        pClassFactory = new (std::nothrow) ClassFactoryShellExtNotFound();
+    }
 
     if (pClassFactory)
     {
@@ -95,7 +107,6 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
 
     return hr;
 }
-
 
 //
 //   FUNCTION: DllCanUnloadNow
@@ -109,7 +120,6 @@ STDAPI DllCanUnloadNow(void)
 {
     return g_cDllRef > 0 ? S_FALSE : S_OK;
 }
-
 
 //
 //   FUNCTION: DllRegisterServer
@@ -159,7 +169,7 @@ STDAPI DllRegisterServer(void)
             L"Apartment");
         if (!SUCCEEDED(hr)) return hr;
 
-        hr = RegisterShellExtIconHandler(CLSID_ShellExtSynced,
+        hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName);
         if (!SUCCEEDED(hr)) return hr;
 
@@ -168,7 +178,7 @@ STDAPI DllRegisterServer(void)
             L"Apartment");
         if (!SUCCEEDED(hr)) return hr;
 
-        hr = RegisterShellExtIconHandler(CLSID_ShellExtPending,
+        hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtPending,
             ShellExtPendingFriendlyName);
         if (!SUCCEEDED(hr)) return hr;
 
@@ -177,8 +187,18 @@ STDAPI DllRegisterServer(void)
             L"Apartment");
         if (!SUCCEEDED(hr)) return hr;
 
-        hr = RegisterShellExtIconHandler(CLSID_ShellExtSyncing,
+        hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtSyncing,
             ShellExtSyncingFriendlyName);
+        if (!SUCCEEDED(hr)) return hr;
+
+        hr = RegisterInprocServer(szModule, CLSID_ShellExtNotFound,
+            ShellExtNotFoundFriendlyName,
+            L"Apartment");
+        if (!SUCCEEDED(hr)) return hr;
+
+        hr = RegisterShellExtIconOverlayHandler(CLSID_ShellExtNotFound,
+            ShellExtNotFoundFriendlyName);
+        if (!SUCCEEDED(hr)) return hr;
 
         return hr;
     }
@@ -220,16 +240,22 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtSyncing);
         if (!SUCCEEDED(hr)) return hr;
 
+        hr = UnregisterInprocServer(CLSID_ShellExtNotFound);
+        if (!SUCCEEDED(hr)) return hr;
+
         UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyNameOld);
         UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
         UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
         UnregisterShellExtContextMenuHandler(L"Drive", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        UnregisterShellExtIconHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyNameOld);
-        UnregisterShellExtIconHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyName);
-        UnregisterShellExtIconHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyNameOld);
-        UnregisterShellExtIconHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyName);
-        UnregisterShellExtIconHandler(CLSID_ShellExtSyncing, ShellExtSyncingFriendlyNameOld);
-        UnregisterShellExtIconHandler(CLSID_ShellExtSyncing, ShellExtSyncingFriendlyName);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyNameOld);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyName);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyNameOld);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyName);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtSyncing, ShellExtSyncingFriendlyNameOld);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtSyncing, ShellExtSyncingFriendlyName);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtNotFound, ShellExtNotFoundFriendlyNameOld);
+        UnregisterShellExtOverlayHandler(CLSID_ShellExtNotFound, ShellExtNotFoundFriendlyName);
+
         return hr;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)

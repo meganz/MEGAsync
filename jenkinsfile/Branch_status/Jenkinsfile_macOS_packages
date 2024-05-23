@@ -65,7 +65,7 @@ pipeline {
         }
         stage ('Build macOS packages'){
             environment{
-                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty"
+                VCPKGPATH  = "${env.HOME}/jenkins/vcpkg"
                 QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
             }
             steps {
@@ -73,7 +73,7 @@ pipeline {
                     dir(macos_sources_workspace){
                         sh "sed -i'' -e 's/sysctl -n hw.ncpu/echo 2/g'  installer_mac.sh"
                         script {
-                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build --create-dmg" : "--build"
+                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build-cmake --create-dmg" : "--build-cmake"
 
                             if (params.ARM64 == true) {
                                 env.MEGAQTPATH = "${QT_BASE_PATH}/arm64"
@@ -107,11 +107,11 @@ pipeline {
                         sh "echo $MEGASYNC_VERSION > version.txt"
                         if (params.ARM64 == true){
                             sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64"
-                            sh "cd Release_arm64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
+                            sh "cd Release_arm64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
                         }
                         if (params.X86_64 == true){
                             sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64"
-                            sh "cd Release_x86_64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
+                            sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
                         } 
                     }
                     archiveArtifacts artifacts: 'version.txt', onlyIfSuccessful: true

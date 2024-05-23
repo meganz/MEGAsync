@@ -11,8 +11,8 @@
 #include "TransferMetaData.h"
 #include <QMegaMessageBox.h>
 #include "MegaTransferView.h"
-#include "control/AppStatsEvents.h"
 #include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
 
 #include <QSharedData>
 
@@ -1256,11 +1256,8 @@ void TransfersModel::processUpdateTransfers()
             else
             {
                 assert(false);
-                const char* eventMessage = QString::fromUtf8("Duplicated finished transfer: %1")
-                                               .arg(QString::number(itValue->mTag))
-                                               .toUtf8().constData();
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EVENT_DUP_FINISHED_TRSF,
-                                                                     eventMessage);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::DUP_FINISHED_TRSF,
+                                                               { QString::number(itValue->mTag) });
             }
         }
     }

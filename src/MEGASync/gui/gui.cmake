@@ -1,5 +1,3 @@
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
-
 set(DESKTOP_APP_GUI_HEADERS
     gui/SettingsDialog.h
     gui/AutoResizeStackedWidget.h
@@ -35,7 +33,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/QMegaMessageBox.h
     gui/AvatarWidget.h
     gui/MenuItemAction.h
-    gui/AddExclusionDialog.h
     gui/StatusInfo.h
     gui/PSAwidget.h
     gui/ElidedLabel.h
@@ -137,7 +134,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QMegaMessageBox.cpp
     gui/AvatarWidget.cpp
     gui/MenuItemAction.cpp
-    gui/AddExclusionDialog.cpp
     gui/StatusInfo.cpp
     gui/ChangePassword.cpp
     gui/PSAwidget.cpp
@@ -224,7 +220,6 @@ target_sources_conditional(MEGAsync
     gui/win/MegaProgressCustomDialog.ui
     gui/win/PlanWidget.ui
     gui/win/UpgradeDialog.ui
-    gui/win/AddExclusionDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
     gui/win/RemoteItemUi.ui
@@ -274,7 +269,6 @@ target_sources_conditional(MEGAsync
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
    gui/macx/UpgradeDialog.ui
-   gui/macx/AddExclusionDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
    gui/macx/RemoteItemUi.ui
@@ -325,7 +319,6 @@ target_sources_conditional(MEGAsync
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
     gui/linux/UpgradeDialog.ui
-    gui/linux/AddExclusionDialog.ui
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
     gui/linux/UpgradeOverStorage.ui
@@ -442,7 +435,9 @@ set(DESKTOP_APP_GUI_RESOURCES
     gui/qml/qml.qrc
 )
 
-set(QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml CACHE STRING "Qt Creator extra qml import paths")
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
 
 if (CMAKE_HOST_APPLE)
     add_custom_command(

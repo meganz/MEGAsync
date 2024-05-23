@@ -8,11 +8,12 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/DialogOpener.h
     control/DownloadQueueController.h
     control/EmailRequester.h
-    control/IStatsEventHandler.h
+    control/StatsEventHandler.h
     control/ProxyStatsEventHandler.h
     control/ExportProcessor.h
     control/FileFolderAttributes.h
     control/HTTPServer.h
+    control/IntervalExecutioner.h
     control/LinkProcessor.h
     control/LinkObject.h
     control/LoginController.h
@@ -48,6 +49,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/ExportProcessor.cpp
     control/FileFolderAttributes.cpp
     control/HTTPServer.cpp
+    control/IntervalExecutioner.cpp
     control/LinkProcessor.cpp
     control/LinkObject.cpp
     control/LoginController.cpp
@@ -66,6 +68,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/Preferences/EncryptedSettings.cpp
     control/Preferences/EphemeralCredentials.cpp
     control/Preferences/Preferences.cpp
+    control/StatsEventHandler.cpp
 )
 
 target_sources(MEGAsync

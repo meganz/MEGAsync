@@ -1262,5 +1262,6 @@
         <file>images/copy@2x.png</file>
         <file>images/copy@3x.png</file>
         <file>images/clock_ico@3x.png</file>
+        <file>images/folder.svg</file>
     </qresource>
 </RCC>

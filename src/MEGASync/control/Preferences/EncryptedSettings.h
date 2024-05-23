@@ -23,6 +23,7 @@ public:
     bool isGroupEmpty();
     void remove(const QString & key);
     void clear();
+    void sync();
 
 protected:
     QByteArray XOR(const QByteArray &key, const QByteArray& data) const;
