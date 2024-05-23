@@ -27,6 +27,30 @@ background-color: #fafafa; /*colorToken.surface-1*/
 color: #fafafa; /*colorToken.text-primary*/
 }
 
+/*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bBackup;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bFolders;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bFolders;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bGeneral;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bGeneral;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bNetwork;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNetwork;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bNotifications;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNotifications;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bSecurity;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSecurity;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSyncs;normal;off;colorToken.icon-secondary*/
+
 QComboBox
 {
 min-height: 24px;
@@ -43,15 +67,15 @@ padding: 12px 13px 10px 13px;
 border-left: 0px;
 border-top: 0px;
 border-right: 0px;
-border-bottom: 3px solid #f1f1f1;
+border-bottom: 3px solid #f1f1f1; /*colorToken.border-strong*/
 background-color: transparent;
-color: #333333;
+color: #333333; /*colorToken.text-primary*/
 }
 
 #wTabHeader QToolButton:checked
 {
 background-color: #FFFFFF;
-border-bottom: 3px solid #0078D7;
+border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
 }
 
 #bChangePasswordPic, #bRecoveryKeyPic
@@ -147,9 +171,7 @@ margin-top: 4px;
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -555,9 +577,7 @@ margin-top: 4px;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -2160,9 +2180,7 @@ min-height: 72px;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">
