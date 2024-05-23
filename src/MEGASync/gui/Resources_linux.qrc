@@ -1495,6 +1495,8 @@
         <file>images/copy@3x.png</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
-        <file>images/folder.svg</file>
+        <file>images/icons/folder/synced-folder.png</file>
+        <file>images/icons/folder/synced-folder@2x.png</file>
+        <file>images/icons/folder/synced-folder@3x.png</file>
     </qresource>
 </RCC>
