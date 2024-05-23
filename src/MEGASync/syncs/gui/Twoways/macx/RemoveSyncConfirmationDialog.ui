@@ -84,7 +84,7 @@ QWidget::title
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(&quot;:/images/folder.png&quot;);
+    <string notr="true">border-image: url(&quot;:/images/icons/folder/synced-folder.png&quot;);
 max-width: 96px;
 max-height: 96px;
 </string>
