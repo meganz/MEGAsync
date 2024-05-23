@@ -14,6 +14,7 @@ ColumnLayout {
     property alias descriptionWeight: description.font.weight
     property alias descriptionColor: description.color
     property alias descriptionFontSize: description.font.pixelSize
+    property alias titleWrapMode: title.wrapMode
 
     spacing: 8
 

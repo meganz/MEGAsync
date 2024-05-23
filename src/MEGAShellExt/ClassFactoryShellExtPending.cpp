@@ -1,5 +1,7 @@
 #include "ClassFactoryShellExtPending.h"
+
 #include "ShellExt.h"
+#include "MEGAinterface.h"
 
 #include <new>
 #include <Shlwapi.h>
@@ -20,7 +22,7 @@ IFACEMETHODIMP ClassFactoryShellExtPending::CreateInstance(IUnknown *pUnkOuter, 
         hr = E_OUTOFMEMORY;
 
         // Create the COM component.
-        ShellExt *pExt = new (std::nothrow) ShellExt(1);
+        ShellExt *pExt = new (std::nothrow) ShellExt(MegaInterface::FILE_PENDING);
         if (pExt)
         {
             // Query the specified interface.

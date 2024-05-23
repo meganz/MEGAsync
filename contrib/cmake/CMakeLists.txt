@@ -215,6 +215,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/RemoveSyncConfirmationDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
@@ -423,6 +424,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/RemoveSyncConfirmationDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
@@ -788,6 +790,7 @@ set (SRCS
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.cpp
     ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/RemoveSyncConfirmationDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
@@ -1127,12 +1130,14 @@ endif()
 
 set (SHELLEXT_FILES
     ${MEGAShellExtDir}/ShellExt.cpp
+    ${MEGAShellExtDir}/ShellExtNotASync.cpp
     ${MEGAShellExtDir}/RegUtils.cpp
     ${MEGAShellExtDir}/dllmain.cpp
     ${MEGAShellExtDir}/ContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSyncing.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSynced.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtPending.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtNotFound.cpp
     ${MEGAShellExtDir}/ClassFactoryContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactory.cpp
     ${MEGAShellExtDir}/MegaInterface.cpp

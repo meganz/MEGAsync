@@ -30,29 +30,35 @@ Rectangle {
     function getConfirmationMessage(target, wildcard, value) {
         if (target === root.extensionsTargetIndex){
             return ExclusionsStrings.removeExtension.arg(value);
-        }else if (wildcard === WildCard.CONTAINS && target === filesTargetIndex){
+        }else if (wildcard === WildCard.CONTAINS){
             if(target === filesTargetIndex){
                 return ExclusionsStrings.removeFilesContaining.arg(value)
-            }else{
+            }
+            else{
                 return ExclusionsStrings.removeFoldersContaining.arg(value)
             }
         }
         else if (wildcard === WildCard.ENDSWITH){
             if(target === filesTargetIndex){
                 return ExclusionsStrings.removeFilesEnding.arg(value)
-            }else{
+            }
+            else{
                 return ExclusionsStrings.removeFoldersEnding.arg(value)
             }
-        }else if (wildcard === WildCard.STARTSWITH){
+        }
+        else if (wildcard === WildCard.STARTSWITH){
             if(target === filesTargetIndex){
                 return ExclusionsStrings.removeFilesBeginning.arg(value)
-            }else{
+            }
+            else{
                 return ExclusionsStrings.removeFoldersBeginning.arg(value)
             }
-        }else if (wildcard === WildCard.EQUAL){
+        }
+        else if (wildcard === WildCard.EQUAL){
             if(target === filesTargetIndex){
                 return ExclusionsStrings.removeFilesEqual.arg(value)
-            }else{
+            }
+            else{
                 return ExclusionsStrings.removeFoldersEqual.arg(value)
             }
         }
@@ -84,8 +90,7 @@ Rectangle {
         enableBusyIndicator: false
         visible: false
         onAccepted: {
-            if(removedIndex !== -1)
-            {
+            if(removedIndex !== -1){
                 tableView.model.removeRow(removedIndex);
                 removeRuleConfirmation.close();
                 removedIndex = -1;

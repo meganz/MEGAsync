@@ -2,7 +2,7 @@
 
 # Windows instructions
 
-For MEGA Desktop App development we are targeting Windows 10, although we are providing
+For MEGA Desktop App development we are targeting Windows 10 and 11, although we are providing
 packages for other versions as well; please check the main README file for a definitive
 list.
 
@@ -18,19 +18,15 @@ will need to install the extra Workload Component for `Desktop Development with 
 
 ## CMake
 
-For MEGA Desktop development, we have a working headless build system via CMake
-which we are using the build the installer packages, however, for day-to-day
-development we are primarily using QMake as a team, due to having good Qt
-tooling support and a working system for all the supported platforms. That being
-said, we are using CMake right now to build the 3rdParty dependencies required
-for both SDK and MEGA Desktop and then switching over to QMake + Qt Creator for
-developer convenience.
+We use CMake as our exclusive build system.
 
 Please download and install using the Windows x64 Installer from:
 https://cmake.org/download/
 
-It is useful to add CMake to the system path in the installer wizard. (for
-current user only is fine)
+It is useful to add CMake to the system path in the installer wizard (for
+current user only is fine).
+
+Note that you may already have installed CMake through the `Qt Maintenance Tool` or `Visual Studio Installer`.
 
 ## Git
 
@@ -66,86 +62,82 @@ https://www.qt.io/download-qt-installer
 You will have to create an account, even if you only install the Community
 Editions.
 
-We are currently using Qt 5.15.13, for which the Qt Company does not provide pre-built
-binaries. You can build Qt using:
+We are currently using Qt 5.15 (LTS). The latest pre-built version provided by the Qt company is 5.15.2,
+and is available from the Qt Maintenance Tool (in the "Archive" category).
+
+You can also build a more recent version of Qt using:
+
 ```
-$ cd contrib\build_qt\windows
-$ .\build-qt.cmd
+cd contrib\build_qt\windows
+.\build-qt.cmd
 ```
-A good installation path is `C:\Qt\`.
+The scripts expects to find `python` (version 3), `perl` and `jom` in the `PATH` environment variable.
 
 ## VCPKG
 
-Along with Qt, MEGA Desktop and the MEGA SDK require another dozen or more
+Along with Qt, MEGA Desktop app and the MEGA SDK require another dozen or more
 third party libraries to cover all the functionality exposed to our users. We are
-using Microsoft's VCPKG C++ Library Manager for managing our dependencies and we
-employ it automagically from our CMake scripts. You don't have to install it
-manually.
+using Microsoft's VCPKG C++ Library Manager for managing our dependencies.
+
+You need to clone the VCPKG git repo (you can of course choose the local directory, `c:\mega\` is given as an example):
+```
+mkdir c:\mega\
+cd c:\mega\
+git clone https://github.com/microsoft/vcpkg
+```
 
 # Get the source
 
 Open Windows Terminal and clone the Desktop repository:
 ```
-$ mkdir c:\mega\
-$ cd c:\mega\
-$ git clone --recursive https://github.com/meganz/MEGAsync.git desktop
+cd c:\mega\
+git clone --recursive https://github.com/meganz/MEGAsync.git desktop
 ```
 
 The MEGA SDK is fetched recursively from https://github.com/meganz/sdk.git
 
 # Build everything
 
-This step, will check-out all the 3rdParty dependencies via VCPKG and then
-proceed to build those, the SDK and MEGA Desktop in that order, via CMake.
-
+## Run CMake
+Run CMake to configure the project. We will build in a separate directory, outside of the source tree.
 ```
-$ cd c:\mega\desktop\contrib\cmake
-$ cmake -DEXTRA_ARGS="-DCMAKE_PREFIX_PATH=C:\Qt\5.15.13\x64" -DEXTRA_ARGS="-DQT_DIR=C:\Qt\5.15.13\x64" -DTARGET=MEGAsync -DTRIPLET=x64-windows-mega -P build_from_scratch.cmake
+cd c:\mega\
+cmake -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='C:\Qt\5.15.13\x64' -DVCPKG_ROOT='c:\mega\vcpkg' -S 'c:\mega\desktop' -B 'c:\mega\build-x64'
+```
+Adapt with the paths from your system:
+```
+cmake -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='<Qt path>' -DVCPKG_ROOT='<VCPKG root path>' -S '<desktop app repository path>' -B '<build directory>'
 ```
 
-To change the target (to x86 for e.g.), choose another triplet name from:
-`c:\mega\desktop\src\MEGASync\mega\contrib\cmake\vcpkg_extra_triplets\`
-To change the Visual Studio version used, edit the target triplet file.
+The dependencies will be built at this stage from VCPKG.
 
+The instructions above are to build for a 64 bit target. If you want to build for 32 bit, use:
+```
+cd c:\mega\
+cmake -DCMAKE_GENERATOR_PLATFORM=Win32 -DCMAKE_PREFIX_PATH='C:\Qt\5.15.13\x86' -DVCPKG_ROOT='c:\mega\vcpkg' -S 'c:\mega\desktop' -B 'c:\mega\build-x86'
+```
+
+## Build the Desktop App
+To build the Desktop App, use target `MEGAsync`.
+You can build in `Debug` or `Release` configuration.
+Example:
+```
+cmake --build 'c:\mega\build-x64' --config Debug --target MEGAsync
+```
+
+The built executable will be in `.\src\MEGASync\Debug\`
 
 # Development using Qt Creator
-
 For development with an IDE, we recommend Qt Creator, though Visual Studio
-should work fine with the CMake generated solution file. Opening the CMakeLists
-in both IDE's should be fine too, though we are not using this approach right
-For development with an IDE, we recommend Qt Creator, though Visual Studio
-should work fine with the CMake generated solution file. Opening the CMakeLists
-in both IDE's should be fine too.
+should work fine. 
 
-If needed, add the Qt version you built.
+## Configure the project
+Open the `CMakeLists.txt` located at the root of the repository.
 
-Open `desktop\src\MEGAsync\MEGAsync.pro` in Qt Creator.
-Set it up as any other Qt QMake based project, using the Qt 5.15.13 kit you built/installed
-and set matching target architecture. 
 
-Some recommended options:
-- disable `Run in terminal`
-- check `Add build library search path to PATH`
-- in the `Build environment` section, set the library search path added
-by the previous option to use the `\bin` directory instead of `\lib`, like
-so:
-`c:\mega\desktop\src\MEGASync\..\..\..\3rdParty_desktop\vcpkg\installed\x64-windows-mega\debug\bin`
+Select the configuration that you want for the project, and set their build path (you can keep the defaults).
 
-This ensures that MEGASync will find the required dynamic libraries at run-time
-when started from inside the IDE. Change the parent directory to release if
-you're targeting that.
+You will need to add the path to VCPKG to the CMake configuration. For each configuration, add a new `VCPKG_ROOT` key (in the "Initial Configuration" tab), and set the value to the VCPKG root directory (for instance `c:\mega\vcpkg`).
 
-When building using the QMake project, both the application and the SDK are
-being rebuilt since the latter has its own QMake project files in the
-sub-project at `bindings/qt/sdk.pri`. Whereas the 3rdParty libs remain the ones
-being already built by CMake.
-
-You might have to generate the initial set of language files so they are found
-by the build system onwards. To do that, in Qt Creator, in the application menu,
-go to Tools -> External -> Linguist and click on Release Translations action.
-You can achieve the same, from the command-line:
-```
-$ cd c:\mega\desktop\src
-$ c:\Qt\5.15.13\x64\bin\lrelease.exe MEGASync/MEGASync.pro
-```
-
+Then click the "Re-configure with Initial Parameters" button. Wait for this process to finish (you can follow the progress in the "General messages" output).
+You're good to go!

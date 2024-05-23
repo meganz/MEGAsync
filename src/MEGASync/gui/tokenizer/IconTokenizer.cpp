@@ -95,19 +95,19 @@ std::optional<QIcon::Mode> IconTokenizer::getIconMode(const QString& mode)
 {
     std::optional<QIcon::Mode> iconMode;
 
-    if (mode == "normal")
+    if (mode == QString::fromUtf8("normal"))
     {
         iconMode = QIcon::Normal;
     }
-    else if (mode == "disabled")
+    else if (mode == QString::fromUtf8("disabled"))
     {
         iconMode = QIcon::Disabled;
     }
-    else if (mode == "active")
+    else if (mode == QString::fromUtf8("active"))
     {
         iconMode =  QIcon::Active;
     }
-    else if (mode == "selected")
+    else if (mode == QString::fromUtf8("selected"))
     {
         iconMode = QIcon::Selected;
     }
@@ -123,11 +123,11 @@ std::optional<QIcon::State> IconTokenizer::getIconState(const QString& state)
 {
     std::optional<QIcon::State> iconState;
 
-    if (state == "on")
+    if (state == QString::fromUtf8("on"))
     {
         iconState = QIcon::On;
     }
-    else if (state == "off")
+    else if (state == QString::fromUtf8("off"))
     {
         iconState = QIcon::Off;
     }

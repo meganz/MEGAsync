@@ -22,11 +22,11 @@ HRESULT UnregisterInprocServer(const CLSID& clsid);
 HRESULT RegisterShellExtContextMenuHandler(
     PCWSTR pszFileType, const CLSID& clsid, PCWSTR pszFriendlyName);
 
-HRESULT RegisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName);
+HRESULT RegisterShellExtIconOverlayHandler(const CLSID& clsid, PCWSTR pszFriendlyName);
 
 HRESULT UnregisterShellExtContextMenuHandler(
     PCWSTR pszFileType, const CLSID& clsid, PCWSTR pszFriendlyName);
 
-HRESULT UnregisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName);
+HRESULT UnregisterShellExtOverlayHandler(const CLSID& clsid, PCWSTR pszFriendlyName);
 
 #endif

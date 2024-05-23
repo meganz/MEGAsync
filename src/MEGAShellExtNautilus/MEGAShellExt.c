@@ -503,13 +503,23 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
         return NAUTILUS_OPERATION_COMPLETE;
     }
 
-    // process items located in sync folders
-    if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path))
+    gboolean has_mega_icon = FALSE;
+    GFileInfo* file_info = g_file_query_info(fp, "metadata::custom-icon", G_FILE_QUERY_INFO_NONE, NULL, NULL);
+    if (file_info != NULL)
     {
-        g_free(path);
-        return NAUTILUS_OPERATION_COMPLETE;
+        char* icon_path = g_file_info_get_attribute_as_string (file_info, "metadata::custom-icon");
+        if (icon_path != NULL)
+        {
+            if (strstr(icon_path, "/usr/share/icons") && strstr(icon_path, "apps/mega.png"))
+            {
+                has_mega_icon = TRUE;
+            }
+
+            g_free(icon_path);
+        }
+
+        g_object_unref(file_info);
     }
-    g_debug("mega_ext_update_file_info %s", path);
 
     state = mega_ext_client_get_path_state(mega_ext, path, 0);
     if (state == FILE_NOTFOUND)
@@ -520,9 +530,23 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     }
 
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
+
+    // process items located in sync folders
+    if (state == FILE_NOTFOUND || state == FILE_IGNORED)
+    {
+        if (has_mega_icon)
+        {
+            g_file_set_attribute(fp, "metadata::custom-icon", G_FILE_ATTRIBUTE_TYPE_INVALID, NULL, G_FILE_QUERY_INFO_NONE, NULL, NULL);
+            g_debug("mega_ext_update_file_info. removed mega-icon on %s", path);
+        }
+
+        g_free(path);
+        return NAUTILUS_OPERATION_COMPLETE;
+    }
+
     g_free(path);
 
-    if (state == FILE_ERROR || state == FILE_NOTFOUND)
+    if (state == FILE_ERROR)
     {
         return NAUTILUS_OPERATION_COMPLETE;
     }

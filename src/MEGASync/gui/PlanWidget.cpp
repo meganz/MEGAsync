@@ -46,22 +46,20 @@ void PlanWidget::updatePlanInfo()
 
     // Set widget opacity for lower plans than the actual one
     int currentAccType (Preferences::instance()->accountType());
-    if (currentAccType != FREE && currentAccType != PRO_LITE)
+    if (visiblePlanOrder[accountType] < visiblePlanOrder[currentAccType])
     {
-        if (mDetails.level == PRO_LITE || mDetails.level < currentAccType)
-        {
-            setWidgetOpacity(0.5);
-            mDisabled = true;
-        }
+        setWidgetOpacity(0.5);
+        mDisabled = true;
     }
+
 
     // Set css props for different pro plans
     setCursor(!mDisabled ? Qt::PointingHandCursor : Qt::ArrowCursor);
     setProperty("disabled", mDisabled);
-    setProperty("currentPlan", mDetails.level == currentAccType);
+    setProperty("currentPlan", accountType == currentAccType);
 
     // Draw colored border and tag if this is the current plan
-    if (mDetails.level == currentAccType)
+    if (accountType == currentAccType)
     {
         QLabel* tag = new QLabel(tr("Current plan"), this);
         tag->setObjectName(QString::fromLatin1("lCurrentPlanTag"));
@@ -118,25 +116,16 @@ void PlanWidget::updatePlanInfo()
 
     switch (mDetails.level)
     {
-        case PRO_LITE:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro Lite"));
-            break;
-        case PRO_I:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro I"));
-            break;
-        case PRO_II:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro II"));
-            break;
-        case PRO_III:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro III"));
-            break;
-        case BUSINESS:
-            mUi->lProPlan->setText(QString::fromUtf8("Business"));
-            break;
-        default:
-            mUi->lProPlan->setText(QString::fromUtf8("Pro"));
+        case PRO_STARTER:
+        // Fallthrough
+        case PRO_BASIC:
+        // Fallthrough
+        case PRO_ESSENTIAL:
+            mUi->lHelp->setVisible(false);
             break;
     }
+
+    mUi->lProPlan->setText(Utilities::getReadablePlanFromId(mDetails.level, true));
 
     // Show/hide widgets according to plans/currency
     mUi->lGreatValue->setVisible(accountType == PRO_I);
@@ -346,6 +335,15 @@ QString PlanWidget::getProURL()
     QString url;
     switch (mDetails.level)
     {
+        case PRO_STARTER:
+            url = QString::fromUtf8("mega://#propay_11");
+            break;
+        case PRO_BASIC:
+            url = QString::fromUtf8("mega://#propay_12");
+            break;
+        case PRO_ESSENTIAL:
+            url = QString::fromUtf8("mega://#propay_13");
+            break;
         case PRO_LITE:
             url = QString::fromUtf8("mega://#propay_4");
             break;

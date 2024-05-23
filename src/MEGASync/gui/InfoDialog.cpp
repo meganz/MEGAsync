@@ -725,11 +725,13 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
     {
         case mega::MegaSync::TYPE_TWOWAY:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
             addSync(INVALID_HANDLE);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_BACKUP_CLICKED, true);
             addBackup();
             break;
         }
@@ -949,11 +951,14 @@ void InfoDialog::on_bSettings_clicked()
         this->hide();
     }
 #endif
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLICKED, true);
 }
 
 void InfoDialog::on_bUpgrade_clicked()
 {
     Utilities::upgradeClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED, true);
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
@@ -1067,16 +1072,19 @@ void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
     app->transferManagerActionClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
 }
 
 void InfoDialog::on_bAddSync_clicked()
 {
     showSyncsMenu(ui->bAddSync, MegaSync::TYPE_TWOWAY);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_SYNC_CLICKED, true);
 }
 
 void InfoDialog::on_bAddBackup_clicked()
 {
     showSyncsMenu(ui->bAddBackup, MegaSync::TYPE_BACKUP);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_BACKUP_CLICKED, true);
 }
 
 void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
@@ -1103,6 +1111,7 @@ SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabl
 void InfoDialog::on_bUpload_clicked()
 {
     app->uploadActionClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPLOAD_CLICKED, true);
 }
 
 void InfoDialog::clearUserAttributes()
@@ -1341,6 +1350,9 @@ void InfoDialog::on_tTransfers_clicked()
     ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::TRANSFER_TAB_CLICKED,
+                                                          sender(), ui->tTransfers, true);
 }
 
 void InfoDialog::on_tNotifications_clicked()
@@ -1352,6 +1364,8 @@ void InfoDialog::on_tNotifications_clicked()
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
 
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_TAB_CLICKED, true);
 }
 
 void InfoDialog::onActualFilterClicked()
@@ -1445,6 +1459,7 @@ void InfoDialog::applyFilterOption(int opt)
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
     Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED, true);
 }
 
 void InfoDialog::on_bDiscard_clicked()
