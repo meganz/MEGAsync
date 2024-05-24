@@ -20,8 +20,56 @@
    <string notr="true">QWidget
 {
 font-size: 12px;
-background-color: #fafafa; /*colorToken.surface-1*/
-color: #000000; /*colorToken.text-primary*/
+background-color: #FFFFFF; /*colorToken.page-background*/
+color: #303233; /*colorToken.text-primary*/
+}
+
+QCheckBox
+{
+height: 16px;
+width: 16px;
+}
+
+#bUpdate, #bSendBug
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+}
+
+#cLanguage, #cbTheme
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+padding: 1px 1px 1px 5px;
+}
+
+#bClearCache, #bClearRemoteCache, #bClearFileVersions
+{
+background-color:  #F3F4F4; /*colorToken.button-secondary*/
+color: #616366; /*colorToken.text-secondary*/
+border-color:  #F3F4F4; /*colorToken.button-secondary*/
+border-width: 0px;
+border-style: outset;
+border-radius: 5px;
+padding: 3px 10px 3px 10px;
+}
+
+#sCacheSchedulerDays
+{
+border-style: solid;
+border-color: #D8D9DB; /*colorToken.border-strong*/
+border-width: 1px;
+border-radius: 5px;
+background-color: #FFFFFF; /* colorToken.page-background*/
+padding: 6px;
 }
 
 /*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
@@ -68,12 +116,6 @@ height: 20px;
 QLineEdit
 {
 height: 20px;
-}
-
-QCheckBox::indicator
-{
-height: 16px;
-width: 16px;
 }
 
 #wTabHeader

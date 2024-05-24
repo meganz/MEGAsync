@@ -38,7 +38,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
-    $$PWD/AddExclusionDialog.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
     $$PWD/PSAwidget.cpp \
@@ -140,7 +139,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
-    $$PWD/AddExclusionDialog.h \
     $$PWD/StatusInfo.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
@@ -233,7 +231,6 @@ win32 {
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
-                $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/RemoteItemUi.ui \
@@ -281,7 +278,6 @@ macx {
                 $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
-                $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/RemoteItemUi.ui\
@@ -352,7 +348,6 @@ unix:!macx {
                 $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
-                $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
