@@ -20,12 +20,14 @@ set(MEGAShellExt_HEADERS
 
 set(MEGAShellExt_SOURCES
     ShellExt.cpp
+    ShellExtNotASync.cpp
     RegUtils.cpp
     dllmain.cpp
     ContextMenuExt.cpp
     ClassFactoryShellExtSyncing.cpp
     ClassFactoryShellExtSynced.cpp
     ClassFactoryShellExtPending.cpp
+    ClassFactoryShellExtNotFound.cpp
     ClassFactoryContextMenuExt.cpp
     ClassFactory.cpp
     MegaInterface.cpp

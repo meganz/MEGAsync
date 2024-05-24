@@ -12,7 +12,10 @@ public:
            FILE_SYNCED = 0,
            FILE_PENDING = 1,
            FILE_SYNCING = 2,
-           FILE_NOTFOUND = 9
+           FILE_IGNORED = 3,
+           FILE_PAUSED = 4, // used for paused & suspendend syncs.
+           FILE_NOTFOUND = 9,
+           FILE_ERROR = 10
     } FileState;
 
     typedef enum {

@@ -2,7 +2,7 @@
 #include "gui/MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
-#include "control/AppStatsEvents.h"
+#include "control/ProxyStatsEventHandler.h"
 #include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"
@@ -263,21 +263,14 @@ int main(int argc, char *argv[])
 #ifdef WIN32
         if (preferences->installationTime() != -1)
         {
-            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL, Preferences::USER_AGENT.toUtf8().constData());
-            QString stats = QString::fromUtf8("{\"it\":%1,\"act\":%2,\"lt\":%3}")
-                    .arg(preferences->installationTime())
-                    .arg(preferences->accountCreationTime())
-                    .arg(preferences->hasLoggedIn());
-
-            QByteArray base64stats = stats.toUtf8().toBase64();
-            base64stats.replace('+', '-');
-            base64stats.replace('/', '_');
-            while (base64stats.size() && base64stats[base64stats.size() - 1] == '=')
-            {
-                base64stats.resize(base64stats.size() - 1);
-            }
-
-            megaApi->sendEvent(AppStatsEvents::EVENT_UNINSTALL_STATS, base64stats.constData(), false, nullptr);
+            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL,
+                                           Preferences::USER_AGENT.toUtf8().constData());
+            StatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
+            statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL_STATS,
+                                         { QString::number(preferences->installationTime()),
+                                           QString::number(preferences->accountCreationTime()),
+                                           QString::number(preferences->hasLoggedIn()) },
+                                         true);
             Sleep(5000);
         }
 #endif
@@ -780,15 +773,12 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Too many changes in account, local state invalid");
     QT_TRANSLATE_NOOP("MegaSyncError", "Session closed");
     QT_TRANSLATE_NOOP("MegaSyncError", "Undefined error");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk");
     QT_TRANSLATE_NOOP("MegaSyncError", "Active sync same path");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unknown drive path.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Local filesystem mismatch");
     QT_TRANSLATE_NOOP("MegaSyncError", "Backup externally modified");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to create initial ignore file.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to read sync configs from disk.");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync configs to disk.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Invalid scan interval specified.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Filesystem notification subsystem unavailable.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to add filesystem watch.");
@@ -798,7 +788,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Failure accessing to persistent storage");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to retrieve the ID of current device");
     QT_TRANSLATE_NOOP("MegaSyncError", "Mismatch on sync root FSID.");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS");
+    QT_TRANSLATE_NOOP("MegaSyncError", "Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Could not get the filesystem's ID.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path.");

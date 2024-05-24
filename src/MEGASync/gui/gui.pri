@@ -104,6 +104,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/themes/ThemeManager.cpp \
     $$PWD/themes/ThemeWidgetManager.cpp \
     $$PWD/themes/ThemeStylesheetParser.cpp
+    $$PWD/SyncExclusions/ExclusionRulesModel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -204,10 +205,10 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SyncExclusions/SyncExclusions.h \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
-    $$PWD/SyncExclusions/ExclusionRulesModel.h \
     $$PWD/themes/ThemeManager.h \
     $$PWD/themes/ThemeWidgetManager.h \
     $$PWD/themes/ThemeStylesheetParser.h
+    $$PWD/SyncExclusions/ExclusionRulesModel.h
 
 INCLUDEPATH += $$PWD
 

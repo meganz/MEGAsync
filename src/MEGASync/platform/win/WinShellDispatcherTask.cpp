@@ -335,10 +335,14 @@ BOOL ConnectToNewClient(HANDLE hPipe, LPOVERLAPPED lpo)
    return fPendingIO;
 }
 
-#define RESPONSE_DEFAULT    L"9"
 #define RESPONSE_SYNCED     L"0"
 #define RESPONSE_PENDING    L"1"
 #define RESPONSE_SYNCING    L"2"
+#define RESPONSE_IGNORED    L"3"
+#define RESPONSE_PAUSED     L"4"
+#define RESPONSE_DEFAULT    L"9"
+#define RESPONSE_ERROR      L"10"
+
 
 VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 {
@@ -509,8 +513,26 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case MegaApi::STATE_PENDING:
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
                     break;
-                case MegaApi::STATE_NONE:
                 case MegaApi::STATE_IGNORED:
+                {
+                    int runState = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
+                    auto megaSync = MegaSyncApp->getMegaApi()->getSyncByPath(temp.toStdString().c_str());
+                    if (megaSync != nullptr)
+                    {
+                        runState = megaSync->getRunState();
+                    }
+
+                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED || runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
+                    {
+                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PAUSED );
+                    }
+                    else
+                    {
+                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
+                    }
+                    break;
+                }
+                case MegaApi::STATE_NONE:
                 default:
                     wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
             }

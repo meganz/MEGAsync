@@ -85,6 +85,11 @@ void EncryptedSettings::clear()
 {
     QSettings::clear();
 }
+
+void EncryptedSettings::sync()
+{
+    QSettings::sync();
+}
  
 //Simplified XOR fun
 QByteArray EncryptedSettings::XOR(const QByteArray& key, const QByteArray& data) const

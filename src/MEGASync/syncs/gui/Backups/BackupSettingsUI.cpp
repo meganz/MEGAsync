@@ -60,6 +60,11 @@ void BackupSettingsUI::changeEvent(QEvent *event)
     SyncSettingsUIBase::changeEvent(event);
 }
 
+void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
+{
+    removeSync(backup);
+}
+
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
     QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);

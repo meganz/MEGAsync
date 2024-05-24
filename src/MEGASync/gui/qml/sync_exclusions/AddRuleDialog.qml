@@ -22,6 +22,8 @@ Window{
     property alias valueType: valueTypeCombo.currentIndex
     property alias targetEnabled: targetComboBox.enabled
     property alias valueTypeEnabled: valueTypeCombo.enabled
+    property alias title: root.title
+    property alias headTitle: title.text
 
     signal accepted
     signal chooseFile
@@ -31,8 +33,10 @@ Window{
     height: root.dialogHeight
     minimumWidth: root.dialogWidth
     minimumHeight: root.dialogHeight
+    maximumWidth: root.dialogWidth
+    maximumHeight: root.dialogHeight
+    modality: Qt.ApplicationModal
     flags: Qt.Dialog
-    modality: Qt.WindowModal
     color: colorStyle.surface1
     title: ExclusionsStrings.addExclusion
 

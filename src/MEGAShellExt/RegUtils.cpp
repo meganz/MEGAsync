@@ -474,8 +474,7 @@ HRESULT RegisterShellExtContextMenuHandler(
     return hr;
 }
 
-
-HRESULT RegisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
+HRESULT RegisterShellExtIconOverlayHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
 {
     HRESULT hr;
 
@@ -487,7 +486,6 @@ HRESULT RegisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
     hr = StringCchPrintf(szSubkey, ARRAYSIZE(szSubkey),
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\ShellIconOverlayIdentifiers\\%s", pszFriendlyName);
     if (!SUCCEEDED(hr)) return hr;
-
 
     // Set the default value of the key.
     hr = SetRegistryKeyAndValue(HKEY_LOCAL_MACHINE, szSubkey, NULL, szCLSID);
@@ -541,7 +539,7 @@ HRESULT UnregisterShellExtContextMenuHandler(
 }
 
 
-HRESULT UnregisterShellExtIconHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
+HRESULT UnregisterShellExtOverlayHandler(const CLSID& clsid, PCWSTR pszFriendlyName)
 {
     HRESULT hr;
     wchar_t szCLSID[MAX_PATH];

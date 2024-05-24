@@ -89,7 +89,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
     if (event->type() == QEvent::ToolTip)
     {
         QRect rect = view->visualRect(index);
-        QString tooltipText = index.data(Qt::DisplayRole).toString();
+        QString tooltipText = index.data(Qt::DisplayRole).toString().toHtmlEscaped();
         QFontMetrics fm = option.fontMetrics;
 
         int margin = MARGIN;

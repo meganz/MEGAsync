@@ -1528,5 +1528,6 @@
         <file>images/settings-shield.svg</file>
         <file>images/settings-sync.svg</file>
         <file>images/settings-sync-warn.svg</file>
+        <file>images/folder.svg</file>
     </qresource>
 </RCC>

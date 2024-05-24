@@ -45,10 +45,10 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
-#include "IStatsEventHandler.h"
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
 
+class IntervalExecutioner;
 class TransfersModel;
 class StalledIssuesModel;
 
@@ -66,6 +66,7 @@ class TransferMetadata;
 class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
+class StatsEventHandler;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -121,7 +122,7 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
-    void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
+    void onGlobalSyncStateChangedImpl();
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
@@ -175,7 +176,7 @@ public:
     void onLoginFinished();
     void onLogout();
 
-    IStatsEventHandler* getStatsEventHandler() const;
+    StatsEventHandler* getStatsEventHandler() const;
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
@@ -307,7 +308,6 @@ public slots:
                              const QStringList& failedDownloadedElements,
                              const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
-    void onGlobalSyncStateChangedTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
@@ -509,11 +509,12 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
-    IStatsEventHandler* mStatsEventHandler;
+    StatsEventHandler* mStatsEventHandler;
 
     SetManager* mSetManager;
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
+    std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -617,6 +618,7 @@ private:
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+    void onScheduledExecution();
 
 private:
     QFutureWatcher<NodeCount> mWatcher;

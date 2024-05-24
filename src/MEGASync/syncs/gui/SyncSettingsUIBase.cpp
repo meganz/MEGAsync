@@ -6,6 +6,7 @@
 
 #include <syncs/gui/Twoways/SyncTableView.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
+#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"
 #include "SyncExclusions/ExclusionsQmlDialog.h"
@@ -119,7 +120,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
                         }
 #else
-                        mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+                        // TODO: @jsubi
+                        //mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
 #endif
                     }
                 }
@@ -136,7 +138,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
                         }
 #else
-                        mToolBarItem->setIcon(QIcon(getFinishIconString()));
+                        // TODO: @jsubi
+                        //mToolBarItem->setIcon(QIcon(getFinishIconString()));
 #endif
                     }
                 }
@@ -240,11 +243,24 @@ void SyncSettingsUIBase::setDisabledSyncsText()
 
 void SyncSettingsUIBase::removeSyncButtonClicked()
 {
-    if(mTable->selectionModel()->hasSelection())
+    if (mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        reqRemoveSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
+}
+
+void SyncSettingsUIBase::reqRemoveSync(std::shared_ptr<SyncSettings> sync)
+{
+    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
+
+    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog, [dialog, this, sync]()
+    {
+        if (dialog->result() == QDialog::Accepted)
+        {
+            removeSync(sync);
+        }
+    });
 }
 
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)

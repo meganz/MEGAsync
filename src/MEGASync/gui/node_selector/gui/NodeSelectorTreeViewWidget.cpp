@@ -799,48 +799,60 @@ void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 
 void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 {
-    if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes())
+    //We check if the model is being modified (insert rows, remove rows...etc) before each action in order to avoid
+    //calling twice to begininsertrows (as some of these actions are performed in different threads...)
+    if(!mProxyModel->isModelProcessing() && !mModel->isRequestingNodes() && areThereNodesToUpdate())
     {
-        if(areThereNodesToUpdate())
+        if(!mModel->isBeingModified())
         {
             foreach(auto info, mRenamedNodesByHandle)
             {
                 updateNode(info, true);
             }
+            mRenamedNodesByHandle.clear();
+        }
 
+        if(!mModel->isBeingModified())
+        {
             foreach(auto info, mUpdatedNodesByPreviousHandle)
             {
                 updateNode(info, false);
                 //If they have been updated, we don´t need to remove them
                 mMovedNodesByHandle.removeOne(info.node->getHandle());
             }
+            mUpdatedNodesByPreviousHandle.clear();
+        }
 
+        if(!mModel->isBeingModified())
+        {
             foreach(auto handle, mMovedNodesByHandle)
             {
                 removeItemByHandle(handle);
             }
+            mMovedNodesByHandle.clear();
+        }
 
+        if(!mModel->isBeingModified())
+        {
+            foreach(auto handle, mRemovedNodesByHandle)
+            {
+                removeItemByHandle(handle);
+            }
+            mRemovedNodesByHandle.clear();
+        }
+
+        if(!mModel->isBeingModified())
+        {
             if(!mAddedNodesByParentHandle.isEmpty())
             {
                 mProxyModel->setExpandMapped(true);
             }
-
             foreach(auto& parentHandle, mAddedNodesByParentHandle.uniqueKeys())
             {
                 auto parentIndex = getAddedNodeParent(parentHandle);
                 mModel->addNodes(mAddedNodesByParentHandle.values(parentHandle), parentIndex);
             }
-
-            foreach(auto handle, mRemovedNodesByHandle)
-            {
-                removeItemByHandle(handle);
-            }
-
-            mRemovedNodesByHandle.clear();
             mAddedNodesByParentHandle.clear();
-            mRenamedNodesByHandle.clear();
-            mUpdatedNodesByPreviousHandle.clear();
-            mMovedNodesByHandle.clear();
         }
     }
 }

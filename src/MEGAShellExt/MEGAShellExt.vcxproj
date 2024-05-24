@@ -164,9 +164,11 @@
     <ClInclude Include="ClassFactoryShellExtSyncing.h" />
     <ClInclude Include="ContextMenuExt.h" />
     <ClInclude Include="ClassFactoryContextMenuExt.h" />
+    <ClInclude Include="MEGAinterface.h" />
     <ClInclude Include="RegUtils.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShellExt.h" />
+    <ClInclude Include="ShellExtNotASync.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClassFactory.cpp" />
@@ -189,8 +191,10 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ContextMenuExt.cpp" />
+    <ClCompile Include="MEGAinterface.cpp" />
     <ClCompile Include="RegUtils.cpp" />
     <ClCompile Include="ShellExt.cpp" />
+    <ClCompile Include="ShellExtNotASync.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MEGAShellExt.rc" />

@@ -27,6 +27,38 @@ background-color: #fafafa; /*colorToken.surface-1*/
 color: #fafafa; /*colorToken.text-primary*/
 }
 
+#bUpdate, #bSendBug
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+}
+
+#cLanguage, #cbTheme
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+padding: 1px 1px 1px 5px;
+}
+
+#bClearCache, #bClearRemoteCache, #bClearFileVersions
+{
+background-color:  #F3F4F4; /*colorToken.button-secondary*/
+color: #616366; /*colorToken.text-secondary*/
+border-color:  #F3F4F4; /*colorToken.button-secondary*/
+border-width: 0px;
+border-style: outset;
+border-radius: 5px;
+padding: 3px 10px 3px 10px;
+}
+
 /*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
 /*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
 
@@ -74,7 +106,6 @@ color: #333333; /*colorToken.text-primary*/
 
 #wTabHeader QToolButton:checked
 {
-background-color: #FFFFFF;
 border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
 }
 
@@ -131,8 +162,7 @@ font-weight: bold;
 #cbSleepMode 
 {
 margin-top: 4px;
-}
-</string>
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <property name="spacing">
@@ -219,7 +249,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
+          <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -268,7 +298,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
+          <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -314,7 +344,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
+          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -360,7 +390,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
+          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -406,7 +436,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
+          <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -452,7 +482,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
+          <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -498,7 +528,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
+          <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -539,7 +569,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
+          <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
          <size>

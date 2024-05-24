@@ -402,6 +402,7 @@ public:
     void clearTempTransfersPath();
     void clearTemporalBandwidth();
     void clearAll();
+    void sync();
 
     enum class ThemeType
     {
@@ -438,6 +439,9 @@ public:
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
         ACCOUNT_TYPE_LITE = 4,
+        ACCOUNT_TYPE_STARTER = 11,
+        ACCOUNT_TYPE_BASIC = 12,
+        ACCOUNT_TYPE_ESSENTIAL = 13,
         ACCOUNT_TYPE_BUSINESS = 100,
         ACCOUNT_TYPE_PRO_FLEXI = 101
     };
@@ -542,6 +546,8 @@ public:
     //Public keys for valueChanged signals
     static const QString stalledIssuesModeKey;
     //In this section, you need to move the keys to make them accessible from outside
+
+    static const int minSyncStateChangeProcessingIntervalMs;
 
 protected:
     QMutex mutex;
