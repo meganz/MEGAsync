@@ -122,7 +122,7 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& t
     ui->actionContainer->show();
 }
 
-void StalledIssueActionTitle::hideActionButton(int id)
+void StalledIssueActionTitle::setActionButtonVisibility(int id, bool state)
 {
     bool allHidden(true);
 
@@ -131,7 +131,12 @@ void StalledIssueActionTitle::hideActionButton(int id)
     {
         if(button->property(BUTTON_ID).toInt() == id)
         {
-            button->hide();
+            button->setVisible(state);
+            if(state)
+            {
+                setMessage(QString(), QPixmap());
+                allHidden = false;
+            }
         }
         else if(button->isVisible())
         {
@@ -142,6 +147,10 @@ void StalledIssueActionTitle::hideActionButton(int id)
     if(allHidden)
     {
         ui->actionContainer->hide();
+    }
+    else if(ui->actionContainer->isHidden())
+    {
+        ui->actionContainer->show();
     }
 }
 
@@ -178,10 +187,7 @@ void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& 
     ui->messageContainer->show();
     ui->messageContainer->installEventFilter(this);
 
-    if(!pixmap.isNull())
-    {
-        ui->iconLabel->setPixmap(pixmap);
-    }
+    ui->iconLabel->setPixmap(pixmap);
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);

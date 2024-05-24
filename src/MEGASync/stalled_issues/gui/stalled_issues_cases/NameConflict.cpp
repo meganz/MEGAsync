@@ -169,8 +169,8 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         if(info->isSolved() && !mSolvedStatusAppliedToUi)
         {
             title->setDisable(true);
-            title->hideActionButton(RENAME_ID);
-            title->hideActionButton(REMOVE_ID);
+            title->setActionButtonVisibility(RENAME_ID, false);
+            title->setActionButtonVisibility(REMOVE_ID, false);
 
             QIcon icon;
             QString titleText;
@@ -548,25 +548,34 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
+                        auto removed(false);
                         if(handle != mega::INVALID_HANDLE)
                         {
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                             if(node)
                             {
-                                mUtilities.removeRemoteFile(node.get());
+                                removed = mUtilities.removeRemoteFile(node.get());
                             }
                         }
                         else
                         {
-                            mUtilities.removeRemoteFile(filePath);
+                            removed = mUtilities.removeRemoteFile(filePath);
+                        }
+
+                        if(removed)
+                        {
+                            areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         }
                     }
                     else
                     {
-                        areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->firstSyncId();
-                        mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
+                        if(mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId))
+                        {
+                            areAllSolved = MegaSyncApp->getStalledIssuesModel()
+                                               ->solveLocalConflictedNameByRemove(conflictIndex,
+                                                   mDelegateWidget->getCurrentIndex());
+                        }
                     }
 
                     if(areAllSolved)

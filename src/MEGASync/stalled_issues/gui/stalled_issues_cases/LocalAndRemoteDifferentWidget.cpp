@@ -109,17 +109,24 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     if (issue->isSolved())
     {
-        ui->keepBothOption->setSolved(issue->getChosenSide() != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
+        ui->keepBothOption->setSolved(true, issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
         ui->keepLastModifiedOption->hide();
 
         if (issue->isPotentiallySolved())
         {
-            ui->chooseLocalCopy->hideActionButton();
-            ui->chooseRemoteCopy->hideActionButton();
+            ui->chooseLocalCopy->setActionButtonVisibility(false);
+            ui->chooseRemoteCopy->setActionButtonVisibility(false);
         }
-
-        updateSizeHint();
     }
+    else if(issue->isFailed())
+    {
+        ui->keepBothOption->setSolved(false, false);
+        ui->keepLastModifiedOption->show();
+        ui->chooseLocalCopy->setActionButtonVisibility(true);
+        ui->chooseRemoteCopy->setActionButtonVisibility(true);
+
+    }
+    updateSizeHint();
 }
 
 QString LocalAndRemoteDifferentWidget::keepLocalSideString(const KeepSideInfo& info)

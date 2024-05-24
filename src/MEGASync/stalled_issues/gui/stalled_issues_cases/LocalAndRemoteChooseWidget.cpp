@@ -43,10 +43,9 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
     ui->path->show();
     ui->path->updateUi(data);
 
-    if(!isSolved() &&
-        side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
+    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
-        ui->chooseTitle->hideActionButton(StalledIssueChooseWidget::BUTTON_ID);
+        ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, false);
 
         QIcon icon;
         if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE)
@@ -94,6 +93,10 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             }
         }
     }
+    else
+    {
+        ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, true);
+    }
 
     mData = data;
 }
@@ -118,9 +121,9 @@ void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(localData,side);
 
-    if(!isSolved() && side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
+    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
-        setSolved(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL);
+        setSolved(true, side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL);
     }
 }
 
@@ -173,9 +176,13 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(cloudData, side);
 
-    if(!isSolved() && side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
+    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE)
     {
-        setSolved(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE);
+        setSolved(true, side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE);
+    }
+    else
+    {
+        setSolved(false, false);
     }
 }
 

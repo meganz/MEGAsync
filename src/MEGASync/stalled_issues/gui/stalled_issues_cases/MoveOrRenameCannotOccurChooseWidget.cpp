@@ -28,9 +28,13 @@ void MoveOrRenameCannotOccurChooseWidget::updateUi(
 
     auto side(issue->getChosenSide());
 
-    if(!isSolved() && side != MoveOrRenameIssueChosenSide::NONE)
+    if(issue->isFailed())
     {
-        ui->chooseTitle->hideActionButton(StalledIssueChooseWidget::BUTTON_ID);
+        ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, true);
+    }
+    else if(!issue->isUnsolved() && side != MoveOrRenameIssueChosenSide::NONE)
+    {
+        ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, false);
 
         QIcon icon;
         if(side == mChosenSide)
@@ -67,9 +71,13 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     ui->chooseTitle->setHTML(tr("Local"));
     ui->name->setIsCloud(false);
 
-    if(issue->isSolved())
+    if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {
-        setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::LOCAL);
+        setSolved(true, issue->getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL);
+    }
+    else
+    {
+        setSolved(false, false);
     }
 
     std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->firstSyncId()));
@@ -97,9 +105,13 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     ui->chooseTitle->setHTML(tr("Remote"));
     ui->name->setIsCloud(true);
 
-    if(issue->isSolved() || issue->isBeingSolved())
+    if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {
-        setSolved(issue->getChosenSide() != MoveOrRenameIssueChosenSide::REMOTE);
+        setSolved(true, issue->getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE);
+    }
+    else
+    {
+        setSolved(false, false);
     }
 
     std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(mData->firstSyncId()));

@@ -17,6 +17,16 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
     mUploader->deleteLater();
 }
 
+void LocalOrRemoteUserMustChooseStalledIssue::setIsSolved(SolveType type)
+{
+    if(type == SolveType::FAILED)
+    {
+        mChosenSide = ChosenSide::NONE;
+    }
+
+    StalledIssue::setIsSolved(type);
+}
+
 bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     if(isAutoSolvable())
@@ -33,15 +43,15 @@ bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
     return false;
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
+bool LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 {
     if(consultLocalData()->getAttributes()->modifiedTime() >= consultCloudData()->getAttributes()->modifiedTime())
     {
-        chooseLocalSide();
+        return chooseLocalSide();
     }
     else
     {
-        chooseRemoteSide();
+        return chooseRemoteSide();
     }
 }
 
@@ -99,7 +109,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
     }
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
+bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 {
     if(getCloudData())
     {
@@ -117,26 +127,26 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 {
                     //Using appDataId == 0 means that there will be no notification for this upload
                     mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
-
                     mChosenSide = ChosenSide::LOCAL;
-                    setIsSolved(StalledIssue::SolveType::SOLVED);
+
+                    return true;
                 }
             }
         }
     }
+
+    return false;
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
+bool LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
 {
     StalledIssuesUtilities utilities;
     auto syncId = syncIds().isEmpty() ? mega::INVALID_HANDLE : firstSyncId();
-    utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
-
     mChosenSide = ChosenSide::REMOTE;
-    setIsSolved(StalledIssue::SolveType::SOLVED);
+    return utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 }
 
-void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* namesUsed)
+bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* namesUsed)
 {
     auto node(getCloudData()->getNode());
     if(node)
@@ -157,13 +167,12 @@ void LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
                         eventLoop.quit();
                     }));
             eventLoop.exec();
-            if (result)
-            {
-                mChosenSide = ChosenSide::BOTH;
-                setIsSolved(StalledIssue::SolveType::SOLVED);
-            }
+            mChosenSide = ChosenSide::BOTH;
+            return result;
         }
     }
+
+    return false;
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::lastModifiedSide() const

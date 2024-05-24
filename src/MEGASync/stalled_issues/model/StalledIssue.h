@@ -21,6 +21,7 @@ enum class StalledIssueFilterCriterion
     NAME_CONFLICTS,
     ITEM_TYPE_CONFLICTS,
     OTHER_CONFLICTS,
+    FAILED_CONFLICTS,
     SOLVED_CONFLICTS
 };
 
@@ -298,11 +299,12 @@ public:
         SOLVED
     };
 
+    bool isUnsolved() const;
     bool isSolved() const;
     bool isPotentiallySolved() const;
     bool isBeingSolved() const;
     bool isFailed() const;
-    void setIsSolved(SolveType type);
+    virtual void setIsSolved(SolveType type);
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
     virtual bool refreshListAfterSolving() const {return false;}
@@ -365,8 +367,8 @@ public:
 
 signals:
     void asyncIssueSolvingStarted();
-    void asyncIssueSolvingFinished();
-    void dataUpdated();
+    void asyncIssueSolvingFinished(StalledIssue*);
+    void dataUpdated(StalledIssue*);
 
 protected:
     bool initLocalIssue();

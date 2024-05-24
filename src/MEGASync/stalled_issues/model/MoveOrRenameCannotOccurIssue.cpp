@@ -350,6 +350,16 @@ void MoveOrRenameCannotOccurIssue::fillLocalSide(const mega::MegaSyncStall* stal
     }
 }
 
+void MoveOrRenameCannotOccurIssue::setIsSolved(SolveType type)
+{
+    if(type == SolveType::FAILED)
+    {
+        mChosenSide = MoveOrRenameIssueChosenSide::NONE;
+    }
+
+    StalledIssue::setIsSolved(type);
+}
+
 /////////////////////////
 QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> MoveOrRenameCannotOccurIssue::mChosenSideBySyncId = QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide>();
 

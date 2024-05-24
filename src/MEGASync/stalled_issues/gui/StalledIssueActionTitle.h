@@ -32,7 +32,7 @@ public:
     void setHyperLinkMode();
 
     void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
-    void hideActionButton(int id);
+    void setActionButtonVisibility(int id, bool state);
     void setActionButtonInfo(const QIcon& icon, const QString& text, int id);
 
     virtual void showIcon();

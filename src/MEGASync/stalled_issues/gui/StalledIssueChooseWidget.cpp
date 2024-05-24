@@ -12,7 +12,6 @@ const int StalledIssueChooseWidget::BUTTON_ID = 0;
 StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     QFrame(parent),
     ui(new Ui::StalledIssueChooseWidget),
-    mIsSolved(false),
     mPathDisableEffect(nullptr)
 {
     ui->setupUi(this);
@@ -33,14 +32,9 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
     delete ui;
 }
 
-void StalledIssueChooseWidget::hideActionButton()
+void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
 {
-    ui->chooseTitle->hideActionButton(BUTTON_ID);
-}
-
-bool StalledIssueChooseWidget::isSolved() const
-{
-    return mIsSolved;
+    ui->chooseTitle->setActionButtonVisibility(BUTTON_ID, state);
 }
 
 void StalledIssueChooseWidget::onActionClicked(int button_id)
@@ -51,14 +45,14 @@ void StalledIssueChooseWidget::onActionClicked(int button_id)
     emit chooseButtonClicked(button_id);
 }
 
-void StalledIssueChooseWidget::setSolved(bool isDiscarded)
+void StalledIssueChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    ui->chooseTitle->setDisable(isDiscarded);
-    ui->name->setDisable(isDiscarded);
-
-    if (isDiscarded)
+    if (isSolved)
     {
-        if (!ui->pathContainer->graphicsEffect())
+        ui->chooseTitle->setDisable(!isSelected);
+        ui->name->setDisable(!isSelected);
+
+        if (!isSelected && !ui->pathContainer->graphicsEffect())
         {
             mPathDisableEffect = new QGraphicsOpacityEffect(this);
             mPathDisableEffect->setOpacity(0.3);
@@ -67,6 +61,9 @@ void StalledIssueChooseWidget::setSolved(bool isDiscarded)
     }
     else
     {
+        ui->chooseTitle->setDisable(false);
+        ui->name->setDisable(false);
+
         ui->pathContainer->setGraphicsEffect(nullptr);
     }
 }
@@ -77,21 +74,20 @@ QString GenericChooseWidget::solvedString() const
     return mInfo.solvedText;
 }
 
-void GenericChooseWidget::setSolved(bool isDiscarded)
+void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    if(isDiscarded)
-    {
-        ui->chooseTitle->setMessage(QString());
-    }
-    else
+    if(isSelected)
     {
         QIcon solvedIcon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
         ui->chooseTitle->setMessage(mInfo.solvedText, solvedIcon.pixmap(16,16));
     }
+    else
+    {
+        ui->chooseTitle->setMessage(QString());
+    }
 
-    StalledIssueChooseWidget::setSolved(isDiscarded);
-    hideActionButton();
-
+    StalledIssueChooseWidget::setSolved(isSolved, isSelected);
+    setActionButtonVisibility(!isSolved);
 }
 
 void GenericChooseWidget::setInfo(const GenericInfo &info)

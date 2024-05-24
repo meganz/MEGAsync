@@ -32,6 +32,7 @@ public:
     void fillCloudSide(const mega::MegaSyncStall* stall);
     void fillLocalSide(const mega::MegaSyncStall* stall);
 
+    void setIsSolved(SolveType type) override;
     bool isAutoSolvable() const override;
     bool refreshListAfterSolving() const override;
     void solveIssue(MoveOrRenameIssueChosenSide side);

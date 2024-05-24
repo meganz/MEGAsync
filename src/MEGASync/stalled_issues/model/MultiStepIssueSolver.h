@@ -21,7 +21,7 @@ public:
         mDeadline->setSingleShot(true);
 
         //Auto destroy class when the timer finishes
-        connect(mDeadline.get(), &QTimer::timeout, this, [this]() { deleteLater(); });
+        connect(mDeadline.get(), &QTimer::timeout, this, &MultiStepIssueSolverBase::onDeadLineFinished);
     }
     virtual ~MultiStepIssueSolverBase() = default;
 
@@ -39,6 +39,9 @@ public:
     void setFinishNotification(const DesktopNotifications::NotificationInfo& newFinishNotification);
 
     std::shared_ptr<StalledIssue> getIssue() const {return mIssue;}
+
+protected slots:
+    virtual void onDeadLineFinished() = 0;
 
 protected:
     std::unique_ptr<QTimer> mDeadline;
@@ -66,16 +69,6 @@ public:
         : MultiStepIssueSolverBase(issue){}
     virtual ~MultiStepIssueSolver() override
     {
-        if(mIssue)
-        {
-            mIssue->finishAsyncIssueSolving();
-        }
-
-        //Send notification
-        if(mFinishNotification.isValid())
-        {
-            MegaSyncApp->showInfoMessage(mFinishNotification);
-        }
     }
 
     virtual void resetDeadlineIfNeeded(const StalledIssueVariant& issue) override
@@ -93,6 +86,23 @@ public:
     }
 
     std::shared_ptr<ISSUE_TYPE> getIssue() {return std::dynamic_pointer_cast<ISSUE_TYPE>(mIssue);}
+
+protected:
+    void onDeadLineFinished() override
+    {
+        if(mIssue)
+        {
+            mIssue->finishAsyncIssueSolving();
+        }
+
+        //Send notification
+        if(mFinishNotification.isValid())
+        {
+            MegaSyncApp->showInfoMessage(mFinishNotification);
+        }
+
+        deleteLater();
+    }
 };
 
 

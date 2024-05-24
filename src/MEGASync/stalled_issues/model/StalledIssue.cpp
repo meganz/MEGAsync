@@ -481,7 +481,7 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
 void StalledIssue::performFinishAsyncIssueSolving(bool hasFailed)
 {
     hasFailed ? setIsSolved(StalledIssue::SolveType::FAILED) : setIsSolved(StalledIssue::SolveType::SOLVED);
-    emit asyncIssueSolvingFinished();
+    emit asyncIssueSolvingFinished(this);
 }
 
 void StalledIssue::startAsyncIssueSolving()
@@ -645,7 +645,7 @@ void StalledIssue::resetUIUpdated()
     }
 
     mNeedsUIUpdate = qMakePair(true, true);
-    emit dataUpdated();
+    emit dataUpdated(this);
 }
 
 //By default, stalled issues don't show file attributes (size, time modified)...´
@@ -738,6 +738,11 @@ void StalledIssue::updateIssue(const mega::MegaSyncStall* stallIssue)
 
     fillIssue(stallIssue);
     endFillingIssue();
+}
+
+bool StalledIssue::isUnsolved() const
+{
+    return mIsSolved == SolveType::UNSOLVED;
 }
 
 StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason)

@@ -158,6 +158,8 @@ QString StalledIssueTab::createTitle()
             return tr("Item type conflict: %n", "", itemsCount);
         case StalledIssueFilterCriterion::OTHER_CONFLICTS:
             return tr("Other: %n", "", itemsCount);
+        case StalledIssueFilterCriterion::FAILED_CONFLICTS:
+            return tr("Failed: %n", "", itemsCount);
         case StalledIssueFilterCriterion::SOLVED_CONFLICTS:
             return tr("Resolved: %n", "", itemsCount);
         default:

@@ -161,6 +161,8 @@ protected slots:
     void onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes) override;
 
 private slots:
+    void onStalledIssueUpdated(StalledIssue* issue);
+    void onAsyncIssueSolvingFinished(StalledIssue* issue);
     void onProcessStalledIssues(StalledIssuesVariantList issuesReceived);
     void onSendEvent();
 
@@ -168,17 +170,30 @@ private:
     void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
     void showIssueExternallyChangedMessageBox();
 
+    void appendCachedIssuesToModel(const StalledIssuesVariantList& list, StalledIssueFilterCriterion type);
+
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
     int getRowByStalledIssue(const std::shared_ptr<const StalledIssue> issue) const;
+    int getRowByStalledIssue(const StalledIssue* issue) const;
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();
 
+    StalledIssueVariant getIssueVariantByIssue(const StalledIssue* issue);
+
     bool checkIfUserStopSolving();
     void startSolvingIssues();
-    void finishSolvingIssues(int issuesFixed, bool sendMessage = true, const QString& message = QString());
+
+    struct IssuesCount
+    {
+        int currentIssueBeingSolved = 0;
+        int issuesFixed = 0;
+        int issuesFailed = 0;
+    };
+
+    void finishSolvingIssues(const IssuesCount& count, bool sendMessage = true);
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
@@ -196,11 +211,13 @@ private:
         std::function<bool(int)> solveFunc = nullptr;
         std::function<void ()> startFunc = nullptr;
         std::function<void (int, bool)> finishFunc = nullptr;
-        QString solveMessage;
     };
 
     void solveListOfIssues(const SolveListInfo& info);
-    void issueSolved(const StalledIssueVariant &issue);
+    bool issueSolvingFinished(const StalledIssue* issue);
+    bool issueSolvingFinished(StalledIssue* issue, bool wasSuccessful);
+    bool issueSolved(const StalledIssue* issue);
+    bool issueFailed(const StalledIssue* issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
@@ -219,6 +236,7 @@ private:
 
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
+    mutable StalledIssuesVariantList mFailedStalledIssues;
     mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 

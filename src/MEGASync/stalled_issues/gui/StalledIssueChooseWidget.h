@@ -22,8 +22,7 @@ public:
     explicit StalledIssueChooseWidget(QWidget *parent = nullptr);
     virtual ~StalledIssueChooseWidget();
 
-    void hideActionButton();
-    bool isSolved() const;
+    void setActionButtonVisibility(bool state);
 
 signals:
     void chooseButtonClicked(int id);
@@ -32,7 +31,7 @@ protected slots:
     virtual void onRawInfoToggled(){}
 
 protected:
-    virtual void setSolved(bool isDiscarded);
+    virtual void setSolved(bool isSolved, bool isSelected);
     virtual QString solvedString() const = 0;
     Ui::StalledIssueChooseWidget *ui;
 
@@ -40,7 +39,6 @@ private slots:
     void onActionClicked(int button_id);
 
 private:
-    bool mIsSolved;
     QPointer<QGraphicsOpacityEffect> mPathDisableEffect;
 };
 
@@ -55,7 +53,7 @@ public:
 
     QString solvedString() const override;
 
-    void setSolved(bool isDiscarded) override;
+    void setSolved(bool isSolved, bool isSelected) override;
 
     struct GenericInfo
     {
