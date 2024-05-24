@@ -1,5 +1,7 @@
 #include "LinkObject.h"
 
+#include <QCoreApplication>
+
 LinkObject::LinkObject(mega::MegaApi* megaApi, MegaNodeSPtr node, const QString& link)
     : mMegaApi(megaApi)
     , mLink(link)
@@ -17,7 +19,7 @@ LinkObject::~LinkObject() {}
 
 const QString LinkObject::getDefaultName() const
 {
-    return tr("Not found");
+    return QCoreApplication::translate("ImportMegaLinksDialog", "Not found");
 }
 
 QString LinkObject::getLink() const { return mLink; }

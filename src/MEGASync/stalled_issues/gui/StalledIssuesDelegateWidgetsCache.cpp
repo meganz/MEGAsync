@@ -227,10 +227,6 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             {
                 headerCase = new SymLinkHeader(header);
             }
-            else if(issue.consultData()->isUndecrypted())
-            {
-                headerCase = new CloudNodeUndecryptedHeader(header);
-            }
             else
             {
                 headerCase = new FileIssueHeader(header);

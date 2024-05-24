@@ -154,7 +154,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
     }
 
     // Show in Mega web action
-    auto showRemoteAction (new MenuItemAction(tr("Open in MEGA"),
+    auto showRemoteAction (new MenuItemAction(QCoreApplication::translate("SyncTableView", "Open in MEGA"),
                                              QLatin1String("://images/sync_context_menu/MEGA-small.png"), menu));
     connect(showRemoteAction, &MenuItemAction::triggered, this, [sync]()
     {
@@ -189,7 +189,7 @@ void SyncTableView::showContextMenu(const QPoint &pos, const QModelIndex index)
 
 QString SyncTableView::getRemoveActionString()
 {
-    return tr("Remove synced folder");
+    return QCoreApplication::translate("SyncTableView", "Remove synced folder");
 }
 
 void SyncTableView::removeActionClicked(std::shared_ptr<SyncSettings> settings)
@@ -201,7 +201,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
 {
     auto addRun = [this, sync, menu]()
     {
-        auto syncRun (new MenuItemAction(tr("Run"), QLatin1String("://images/sync_context_menu/play-circle.png"), menu));
+        auto syncRun (new MenuItemAction(QCoreApplication::translate("SyncTableView", "Run"), QLatin1String("://images/sync_context_menu/play-circle.png"), menu));
         connect(syncRun, &MenuItemAction::triggered, this, [this, sync]() { emit signalRunSync(sync); });
         menu->addAction(syncRun);
     };
@@ -215,7 +215,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
         if(sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_DISABLED &&
            sync->getSync()->getRunState() != mega::MegaSync::RUNSTATE_SUSPENDED)
         {
-            auto syncSuspend (new MenuItemAction(tr("Pause"), QLatin1String("://images/sync_states/pause-circle.png"), menu));
+            auto syncSuspend (new MenuItemAction(QCoreApplication::translate("SyncTableView", "Pause"), QLatin1String("://images/sync_states/pause-circle.png"), menu));
             connect(syncSuspend, &MenuItemAction::triggered, this, [this, sync]() { emit signalSuspendSync(sync); });
             menu->addAction(syncSuspend);
         }
@@ -228,7 +228,7 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
     QFileInfo syncDir(sync->getLocalFolder());
     if(syncDir.exists())
     {
-        auto addExclusions(new MenuItemAction(tr("Manage exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png"), menu));
+        auto addExclusions(new MenuItemAction(QCoreApplication::translate("ExclusionsStrings", "Manage exclusions"), QLatin1String("://images/sync_context_menu/slash-circle.png"), menu));
         connect(addExclusions, &MenuItemAction::triggered, this, [this, sync]() { emit signaladdExclusions(sync); });
 
         menu->addSeparator();
@@ -237,10 +237,10 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
 
     if(sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
     {
-        auto rescanQuick (new MenuItemAction(tr("Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png"), menu));
+        auto rescanQuick (new MenuItemAction(QCoreApplication::translate("SyncTableView", "Quick Rescan"), QLatin1String("://images/sync_context_menu/search-small.png"), menu));
         connect(rescanQuick, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanQuick(sync); });
 
-        auto rescanDeep (new MenuItemAction(tr("Deep Rescan"), QLatin1String("://images/sync_context_menu/search-dark-small.png"), menu));
+        auto rescanDeep (new MenuItemAction(QCoreApplication::translate("SyncTableView", "Deep Rescan"), QLatin1String("://images/sync_context_menu/search-dark-small.png"), menu));
         connect(rescanDeep, &MenuItemAction::triggered, this, [this, sync]() { emit signalRescanDeep(sync); });
 
         menu->addSeparator();

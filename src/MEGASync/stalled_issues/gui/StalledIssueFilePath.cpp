@@ -447,10 +447,6 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         {
             return tr("Error identifying folder content in filesystem.");
         }
-        case mega::MegaSyncStall::UndecryptedCloudNode:
-        {
-            return tr("Cloud node undecrypted.");
-        }
         case mega::MegaSyncStall::WaitingForScanningToComplete:
         {
             return tr("Waiting for scanning to complete.");

@@ -139,8 +139,8 @@ pipeline {
                 dir(macos_sources_workspace){
                     sh "mkdir build_dir"
                     sh "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=1 -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -S ${macos_sources_workspace} -B ${macos_sources_workspace}/${BUILD_DIR}"
-                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAsync -j1"
-                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAupdater -j1"
+                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAsync -j2"
+                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAupdater -j2"
                     sh "xcodebuild clean build CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO -jobs 1 -configuration Debug -target MEGAShellExtFinder -project src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/"
                 }
             }

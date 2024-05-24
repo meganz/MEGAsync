@@ -12,6 +12,8 @@ class NameConflict;
 
 class NameDuplicatedContainer : public QWidget
 {
+    Q_OBJECT
+
 public:
     NameDuplicatedContainer(QWidget* parent)
         : QWidget(parent)

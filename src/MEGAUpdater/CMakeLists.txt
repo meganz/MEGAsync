@@ -44,7 +44,8 @@ endif()
 target_link_libraries(MEGAupdater
     PRIVATE
     cryptopp::cryptopp
-    $<$<BOOL:${WIN32}>:urlmon Shlwapi>
+    $<$<BOOL:${WIN32}>:urlmon>
+    $<$<BOOL:${WIN32}>:Shlwapi>
     "$<$<BOOL:${APPLE}>:-framework CoreServices -framework Cocoa>"
 )
 

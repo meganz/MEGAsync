@@ -320,8 +320,6 @@ public:
     virtual QStringList getLocalFiles();
     QStringList getIgnoredFiles() const;
 
-    bool isUndecrypted() const;
-
     bool mDetectedMEGASide = false;
 
     bool isFile() const;

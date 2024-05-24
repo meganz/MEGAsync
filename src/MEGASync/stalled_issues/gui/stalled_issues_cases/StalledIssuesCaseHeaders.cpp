@@ -225,25 +225,6 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
     }
 }
 
-//Cloud node undecrypted
-CloudNodeUndecryptedHeader::CloudNodeUndecryptedHeader(StalledIssueHeader* header)
-    : StalledIssueHeaderCase(header)
-{}
-
-void CloudNodeUndecryptedHeader::refreshCaseTitles(StalledIssueHeader* header)
-{
-    //Do not fix the typo as it would incurre in translation costs, its already fixed in translations.source.ts
-    QString headerText =tr("Cloude node undecrypted [B]%1[/B]");
-    textDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
-    QString titleDescriptionText = tr("Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].");
-    titleDescriptionText.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"http://mega.io/\">"));
-    titleDescriptionText.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-    titleDescriptionText.replace(QString::fromUtf8("[A1]"), QString::fromUtf8("<a href=mailto:support@mega.nz>"));
-    titleDescriptionText.replace(QString::fromUtf8("[/A1]"), QString::fromUtf8("</a>"));
-    header->setTitleDescriptionText(titleDescriptionText);
-}
-
 //Local folder not scannable
 FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)

@@ -4,12 +4,12 @@
 #include <StalledIssueHeader.h>
 #include <NameConflictStalledIssue.h>
 
-const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files can resolve this issue,"
-                                                                                                     "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing folders can resolve this issue,"
-                                                                                                       "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
-                                                                                                       "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
+const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TRANSLATE_NOOP("LocalAndRemoteNameConflicts", "Renaming or removing files can resolve this issue,"
+                                                                                              "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
+const QString FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TRANSLATE_NOOP("LocalAndRemoteNameConflicts", "Renaming or removing folders can resolve this issue,"
+                                                                                                "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
+const QString FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TRANSLATE_NOOP("LocalAndRemoteNameConflicts", "Renaming or removing files or folders can resolve this issue,"
+                                                                                                          "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
 
 LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),

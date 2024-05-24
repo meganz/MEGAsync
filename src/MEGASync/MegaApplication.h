@@ -48,6 +48,7 @@
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
 
+class IntervalExecutioner;
 class TransfersModel;
 class StalledIssuesModel;
 
@@ -121,7 +122,7 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
-    void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
+    void onGlobalSyncStateChangedImpl();
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
@@ -308,7 +309,6 @@ public slots:
                              const QStringList& failedDownloadedElements,
                              const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
-    void onGlobalSyncStateChangedTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
@@ -515,6 +515,7 @@ protected:
     SetManager* mSetManager;
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
+    std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -618,6 +619,7 @@ private:
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+    void onScheduledExecution();
 
 private:
     QFutureWatcher<NodeCount> mWatcher;

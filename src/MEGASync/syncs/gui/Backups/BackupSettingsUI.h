@@ -38,7 +38,8 @@ protected:
     void changeEvent(QEvent* event);
 
 protected slots:
-    void removeSync(std::shared_ptr<SyncSettings> sync) override;
+    void reqRemoveSync(std::shared_ptr<SyncSettings> backup) override;
+    void removeSync(std::shared_ptr<SyncSettings> backup) override;
 
 private:
     BackupSettingsElements mElements;

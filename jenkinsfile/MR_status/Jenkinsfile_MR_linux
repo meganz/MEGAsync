@@ -128,7 +128,7 @@ pipeline {
                 dir("${linux_sources_workspace}") {
 					sh "rm -rf ${BUILD_DIR}; mkdir ${BUILD_DIR}"
                     sh "cmake -DCMAKE_BUILD_TYPE=Debug -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_VERBOSE_MAKEFILE=ON -S ${linux_sources_workspace} -B ${linux_sources_workspace}/${BUILD_DIR}"
-					sh "cmake --build ${linux_sources_workspace}/${BUILD_DIR} --target MEGAsync -j1"
+					sh "cmake --build ${linux_sources_workspace}/${BUILD_DIR} --target MEGAsync -j2"
                 }                
             }
             post{

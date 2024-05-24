@@ -528,7 +528,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     }
                     else
                     {
-                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_IGNORED );
+                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
                     }
                     break;
                 }

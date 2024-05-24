@@ -507,13 +507,6 @@ QStringList StalledIssue::getIgnoredFiles() const
     return mIgnoredPaths;
 }
 
-bool StalledIssue::isUndecrypted() const
-{
-    return getReason() == mega::MegaSyncStall::FileIssue &&
-           consultCloudData() &&
-           consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::UndecryptedCloudNode;
-}
-
 bool StalledIssue::isFile() const
 {
     return mFiles > 0 && mFolders == 0;
