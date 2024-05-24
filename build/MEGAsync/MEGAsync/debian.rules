@@ -2,7 +2,7 @@
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "-E env CXXFLAGS=\"-DMEGASYNC_DEPRECATED_OS \${CXXFLAGS}\"" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
@@ -10,6 +10,7 @@ MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 
 export VCPKG_DEFAULT_BINARY_CACHE := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "/opt/persistent/vcpkg_cache" || echo "")
 export PATH := $(shell [ -f /opt/cmake.tar.gz ] && echo "`pwd`/cmake_inst/bin:${PATH}" || echo "${PATH}")
+export CXXFLAGS := $(shell [ -n "${EXTRADEFINES}" ] && echo "${EXTRADEFINES} ${CXXFLAGS}" || echo "${CXXFLAGS}")
 
 build: build-stamp
 build-stamp:
@@ -30,7 +31,7 @@ build-stamp:
 	fi
 
 	cmake --version
-	cmake $(EXTRADEFINES) $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF $(QTDEFINES) -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
 	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
 	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
 

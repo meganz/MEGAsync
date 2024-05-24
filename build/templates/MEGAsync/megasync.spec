@@ -159,7 +159,7 @@ sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VE
 sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" src/MEGASync/control/Version.h
 
 %if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
-    %define extradefines "-E env CXXFLAGS=-DMEGASYNC_DEPRECATED_OS ${CXXFLAGS}"
+    %define extradefines -DMEGASYNC_DEPRECATED_OS
 %else
     %define extradefines %{nil}
 %endif
@@ -190,8 +190,12 @@ if [ -f /opt/mega/bin/qmake ]; then
     qtdefinitions="%{qtprefix} %{qtinstall}"
 fi
 
+if [ -n "%{extradefines}" ]; then
+    export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
+fi
+
 cmake --version
-cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF ${qtdefinitions} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
+cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF ${qtdefinitions} -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
 
 %build
 
