@@ -3041,13 +3041,15 @@ Wait for the upload to complete.</translation>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Keep the [B]local[/B] folders?</translation>
     </message>
-    <message numerus="yes">
-        <source>The [B]local file[/B] %1 will be uploaded to MEGA and the remote file will be moved to the rubbish bin.</source>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>The [B]local file[/B] %1 will be uploaded to MEGA and the remote file will be moved to the rubbish bin.</numerusform>
-            <numerusform>The [B]local files[/B] will be uploaded to MEGA and the remote files will be moved to the rubbish bin</numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
