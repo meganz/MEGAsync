@@ -28,6 +28,7 @@ install(DIRECTORY "${DEPLOY_QT_LIBRARIES_PATH}/lib/"
     PATTERN "libQt5QuickTemplates2.so*"
     PATTERN "libQt5XcbQpa.so*"
     PATTERN "libQt5DBus.so*"
+    PATTERN "libQt5RemoteObjects.so*"
     REGEX "/cmake|/metatypes|/pkgconfig" EXCLUDE
 )
 

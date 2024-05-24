@@ -42,7 +42,7 @@ build-stamp:
 		echo $(DEB_TESTING) > version; \
 	else                               \
 		lsb_release -rs > version;     \
-	fi;                                \
+	fi
 	touch build-stamp
 
 clean:
