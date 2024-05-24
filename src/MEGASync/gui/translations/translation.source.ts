@@ -3074,22 +3074,9 @@ Wait for the upload to complete.</translation>
 <context>
     <name>LocalAndRemoteNameConflicts</name>
     <message>
-        <source>Renaming or removing files can resolve this issue,
-or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
-        <translatorcomment>Label descriping the way to solve a name conflict sync stall, shown when the conflicting names are for files only.SNC-2565</translatorcomment>
-        <translation>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</translation>
-    </message>
-    <message>
-        <source>Renaming or removing folders can resolve this issue,
-or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
-        <translatorcomment>Label descriping the way to solve a name conflict sync stal, shown when the conflicting names are for folders only.SNC-2565</translatorcomment>
-        <translation>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</translation>
-    </message>
-    <message>
-        <source>Renaming or removing files or folders can resolve this issue,
-or click the Folders below to make adjustments in the local filesystem or in MEGA</source>
-        <translatorcomment>Label descriping the way to solve a name conflict sync stall.shown when the the conflicting names are for folders and files.SNC-2565</translatorcomment>
-        <translation>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</translation>
+        <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
