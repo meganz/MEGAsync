@@ -165,9 +165,11 @@ sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g
 %endif
 
 %if 0%{?centos_version} && 0%{?centos_version} < 800
-    %define qtinstall ON
+    %define qtinstall "-DDEPLOY_QT_LIBRARIES=ON"
+    %define qtprefix "-DCMAKE_PREFIX_PATH=/opt/mega/"
 %else
-    %define qtinstall OFF
+    %define qtinstall %{nil}
+    %define qtprefix %{nil}
 %endif
 
 if [ -f /opt/vcpkg.tar.gz ]; then
@@ -184,8 +186,12 @@ if [ -f /opt/cmake.tar.gz ]; then
     export PATH="${PWD}/cmake_inst/bin:${PATH}"
 fi
 
+if [ -f /opt/mega/bin/qmake ]; then
+    qtdefinitions="%{qtprefix} %{qtinstall}"
+fi
+
 cmake --version
-cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DDEPLOY_QT_LIBRARIES=%{qtinstall} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
+cmake %{extradefines} ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF ${qtdefinitions} -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
 
 %build
 

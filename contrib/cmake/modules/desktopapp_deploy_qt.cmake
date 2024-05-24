@@ -1,6 +1,10 @@
-# Guess the libraries path based on the qmake executable path.
-string(REPLACE "/bin/qmake" "" DEPLOY_QT_LIBRARIES_PATH ${QT_QMAKE_EXECUTABLE})
-message(STATUS "Qt libraries to be deployed: \"${DEPLOY_QT_LIBRARIES_PATH}\"")
+# Guess the libraries path based on the Qt5_DIR path.
+string(REGEX REPLACE "/lib/[^ ]*" "" DEPLOY_QT_LIBRARIES_PATH "${Qt5_DIR}")
+if(NOT DEPLOY_QT_LIBRARIES_PATH)
+    message(FATAL "Path to deploy the Qt libraries not found. Qt dir path used as base: ${Qt5_DIR}")
+else()
+    message(STATUS "Qt libraries to be deployed: \"${DEPLOY_QT_LIBRARIES_PATH}\"")
+endif()
 
 install(DIRECTORY "${DEPLOY_QT_LIBRARIES_PATH}/lib/"
     TYPE LIB # In CMAKE_INSTALL_LIBDIR directory
