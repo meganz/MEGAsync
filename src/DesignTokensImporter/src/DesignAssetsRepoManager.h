@@ -32,6 +32,18 @@ namespace DTI
         //! \param designAssets The design assets structure with all the data gathered from the design tokens.
         //!
         ColorData parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& colorData);
+
+        void parseCategory(const QJsonObject& categoryObject,
+                           const CoreData& coreData,
+                           ColorData& colorData);
+        void processToken(const QString& token,
+                          const QJsonObject& tokenObject,
+                          const CoreData& coreData,
+                          ColorData& colorData);
+        void processColorToken(const QString& token,
+                               QString& value,
+                               const CoreData& coreData,
+                               ColorData& colorData);
     };
 }
 
