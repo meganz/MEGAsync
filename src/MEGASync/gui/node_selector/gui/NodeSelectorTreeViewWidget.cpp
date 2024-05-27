@@ -1238,3 +1238,8 @@ NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
     return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE
             | NodeSelectorModelItemSearch::Type::INCOMING_SHARE;
 }
+
+NodeSelectorModelItemSearch::Types MoveBackupType::allowedTypes()
+{
+    return NodeSelectorModelItemSearch::Type::CLOUD_DRIVE;
+}
