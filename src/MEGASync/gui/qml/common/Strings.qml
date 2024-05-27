@@ -4,13 +4,13 @@ import QtQuick 2.15
 QtObject {
     id: root
 
-    readonly property string cancel: qsTr("Cancel")
-    readonly property string done: qsTr("Done")
-    readonly property string next: qsTr("Next")
-    readonly property string skip: qsTr("Skip")
-    readonly property string previous: qsTr("Previous")
-    readonly property string tryAgain: qsTr("Try again")
-    readonly property string viewInSettings: qsTr("View in Settings")
-    readonly property string setExclusions: qsTr("Set Exclusions")
+    readonly property string cancel: qsTranslate("OnboardingStrings", "Cancel")
+    readonly property string done: qsTranslate("OnboardingStrings", "Done")
+    readonly property string next: qsTranslate("OnboardingStrings", "Next")
+    readonly property string skip: qsTranslate("OnboardingStrings", "Skip")
+    readonly property string previous: qsTranslate("OnboardingStrings", "Previous")
+    readonly property string tryAgain: qsTranslate("OnboardingStrings", "Try again")
+    readonly property string viewInSettings: qsTranslate("OnboardingStrings", "View in Settings")
+    readonly property string setExclusions: qsTranslate("OnboardingStrings", "Set Exclusions")
 
 }

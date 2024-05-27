@@ -129,7 +129,7 @@ FocusScope {
             Layout.leftMargin: Constants.focusAdjustment
             Layout.preferredWidth: root.width + Constants.focusAdjustment
             Layout.preferredHeight: notification.height
-            title: qsTr("Incorrect 2FA code")
+            title: qsTranslate("OnboardingStrings", "Incorrect 2FA code")
             text: Strings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
@@ -152,7 +152,7 @@ FocusScope {
             id: helpButtonItem
 
             Layout.leftMargin: -sizes.horizontalPadding
-            text: qsTr("Problem with two-factor authentication?")
+            text: qsTranslate("OnboardingStrings", "Problem with two-factor authentication?")
             url: Links.recovery
             icons {
                 source: Images.helpCircle

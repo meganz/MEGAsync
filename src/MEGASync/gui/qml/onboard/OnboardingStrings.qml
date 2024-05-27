@@ -93,4 +93,35 @@ QtObject {
     readonly property string errorEmptyDeviceName: qsTr("Enter a device name")
     readonly property string errorDeviceNameLimit: qsTr("Names longer than 32 characters are not supported")
 
+    // Backups
+    // Not moved to avoid change of context and generate new strings in the ts file
+    readonly property string addFolder: qsTr("Add folder")
+    readonly property string backUp: qsTr("Back up")
+    readonly property string backupFolders: qsTr("Backup Folders")
+    readonly property string backupTo: qsTr("Backup to:")
+    readonly property string changeFolder: qsTr("Change folder")
+    readonly property string confirmBackupErrorDuplicated: qsTr("There is already a folder with the same name in this backup")
+    readonly property string confirmBackupErrorRemote: qsTr("A folder with the same name already exists on your backups")
+    readonly property string rename: qsTr("Rename")
+    readonly property string selectAll: qsTr("[B]Select all[/B]")
+    readonly property string selectBackupFoldersDescription: qsTr("Selected folders will automatically back up to the cloud when the desktop app is running.")
+    readonly property string finalStepBackup: qsTr("Your backup has been set up and selected data will automatically backup whenever the desktop app is running.")
+    readonly property string finalStepBackup2: qsTr("You can view your backups and their statuses under the Backup tab in Settings.")
+    readonly property string finalStepBackupTitle: qsTr("Your backup is set up")
+
+    // Common
+    // Not moved to avoid change of context and generate new strings in the ts file
+    readonly property string cancel: qsTr("Cancel")
+    readonly property string done: qsTr("Done")
+    readonly property string next: qsTr("Next")
+    readonly property string skip: qsTr("Skip")
+    readonly property string previous: qsTr("Previous")
+    readonly property string tryAgain: qsTr("Try again")
+    readonly property string viewInSettings: qsTr("View in Settings")
+    readonly property string setExclusions: qsTr("Set Exclusions")
+
+    // Two Factor Authentication
+    // Not moved to avoid change of context and generate new strings in the ts file
+    readonly property string incorrect2FACode: qsTr("Incorrect 2FA code")
+
 }
