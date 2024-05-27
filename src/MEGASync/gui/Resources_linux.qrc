@@ -1506,5 +1506,7 @@
         <file>images/settings-sync-warn.svg</file>
         <file>images/settings-backup-warn.svg</file>
         <file>images/folder.svg</file>
+        <file>images/themed/light/checkbox_checked_light.svg</file>
+        <file>images/themed/dark/checkbox_checked_light.svg</file>
     </qresource>
 </RCC>

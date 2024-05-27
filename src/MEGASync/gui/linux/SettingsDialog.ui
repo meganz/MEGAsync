@@ -24,10 +24,36 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
-QCheckBox
+QCheckBox::indicator
 {
-height: 16px;
-width: 16px;
+height: 14px;
+width: 14px;
+}
+
+QCheckBox::indicator:checked
+{
+padding: 2px;
+border-style: solid;
+border-color: black;
+border-width: 2px;
+border-radius: 4px;
+background-color: black;
+image: url(:/images/themed/light/checkbox_checked_light.svg);
+image-width:8px;
+image-height:6px;
+}
+
+QCheckBox::indicator:unchecked
+{
+padding: 2px;
+border-style: solid;
+border-color: black;
+border-width: 2px;
+border-radius: 4px;
+background-color: white;
+image: url(:/images/themed/light/checkbox_checked_light.svg);
+image-width:8px;
+image-height:6px;
 }
 
 #bUpdate, #bSendBug
@@ -283,7 +309,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
@@ -332,7 +358,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
@@ -378,7 +404,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
@@ -424,7 +450,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
@@ -470,7 +496,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
@@ -516,7 +542,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
@@ -562,7 +588,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
@@ -608,7 +634,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
@@ -1315,7 +1341,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2201,7 +2227,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2444,7 +2470,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
