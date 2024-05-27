@@ -7,7 +7,7 @@ TextField {
 
     function valid() {
         var validEmailRegex = RegexExpressions.email;
-        return text.match(validEmailRegex);
+        return text.trim().match(validEmailRegex);
     }
 
     hint.icon: Images.alertTriangle
