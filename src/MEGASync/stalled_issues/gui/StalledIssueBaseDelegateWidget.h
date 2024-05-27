@@ -10,7 +10,6 @@
 #include <QStyledItemDelegate>
 #include <QTimer>
 
-
 class StalledIssueBaseDelegateWidget : public QWidget
 {
     Q_OBJECT
@@ -42,6 +41,7 @@ public:
 
 signals:
     void editorKeepStateChanged(bool state);
+    void needsUpdate();
 
 protected:
     struct SelectionInfo

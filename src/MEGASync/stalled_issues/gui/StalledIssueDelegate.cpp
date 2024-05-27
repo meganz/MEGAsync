@@ -224,6 +224,11 @@ void StalledIssueDelegate::resetCache()
     mCacheManager.reset();
 }
 
+void StalledIssueDelegate::updateView()
+{
+    mView->viewport()->update();
+}
+
 void StalledIssueDelegate::updateSizeHint()
 {
     mUpdateSizeHintTimer.start(UPDATE_SIZE_TIMER);

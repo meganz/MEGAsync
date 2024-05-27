@@ -422,6 +422,22 @@
           <number>0</number>
          </property>
          <item>
+          <widget class="WaitingSpinnerWidget" name="actionWaitingSpinner" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLabel" name="actionMessageIcon">
            <property name="text">
             <string notr="true"/>

@@ -33,6 +33,7 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     mIsExpandable(true)
 {
     ui->setupUi(this);
+    connect(ui->actionWaitingSpinner, &WaitingSpinnerWidget::needsUpdate, this, &StalledIssueHeader::needsUpdate);
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
     ui->fileNameTitle->setTextFormat(Qt::TextFormat::AutoText);
     ui->errorDescriptionText->setTextFormat(Qt::TextFormat::AutoText);
@@ -221,7 +222,12 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
 
     if(!pixmap.isNull())
     {
+        ui->actionMessageIcon->show();
         ui->actionMessageIcon->setPixmap(pixmap);
+    }
+    else
+    {
+        ui->actionMessageIcon->hide();
     }
 }
 
@@ -229,21 +235,30 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
 {
     if(getData().consultData()->isBeingSolved())
     {
-        QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
         QString defaultSolveMessage(StalledIssuesModel::fixingIssuesString());
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
+        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, QPixmap());
+
+        ui->actionWaitingSpinner->start();
     }
-    else if(getData().consultData()->isSolved() && !getData().consultData()->isPotentiallySolved())
+    else
     {
-        QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-        QString defaultSolveMessage(tr("Solved"));
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
-    }
-    else if(getData().consultData()->isFailed())
-    {
-        QIcon icon(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-        QString defaultSolveMessage(tr("Failed"));
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16,16));
+        ui->actionWaitingSpinner->stop();
+
+        if(getData().consultData()->isSolved() &&
+                !getData().consultData()->isPotentiallySolved())
+        {
+            QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
+            QString defaultSolveMessage(tr("Solved"));
+            showMessage(
+                customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16, 16));
+        }
+        else if(getData().consultData()->isFailed())
+        {
+            QIcon icon(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+            QString defaultSolveMessage(tr("Failed"));
+            showMessage(
+                customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16, 16));
+        }
     }
 
     ui->multipleActionButton->hide();

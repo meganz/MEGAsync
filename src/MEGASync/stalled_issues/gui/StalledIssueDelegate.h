@@ -27,6 +27,9 @@ public:
 
     void expandIssue(const QModelIndex& sourceIndex);
 
+public slots:
+    void updateView();
+
 signals:
     bool goToIssue(StalledIssueFilterCriterion filter, const QModelIndex& sourceIndex);
 

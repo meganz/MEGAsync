@@ -126,9 +126,16 @@ void StalledIssueBaseDelegateWidget::checkForSizeHintChanges()
     }
 }
 
-void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate *newDelegate)
+void StalledIssueBaseDelegateWidget::setDelegate(QStyledItemDelegate* newDelegate)
 {
     mDelegate = newDelegate;
+    if(auto stalledDelegate = dynamic_cast<StalledIssueDelegate*>(mDelegate))
+    {
+        connect(this,
+            &StalledIssueBaseDelegateWidget::needsUpdate,
+            stalledDelegate,
+            &StalledIssueDelegate::updateView);
+    }
 }
 
 void StalledIssueBaseDelegateWidget::updateSizeHint()
