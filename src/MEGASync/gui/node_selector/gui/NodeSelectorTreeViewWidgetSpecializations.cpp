@@ -130,7 +130,7 @@ NodeSelectorTreeViewWidgetSearch::NodeSelectorTreeViewWidgetSearch(SelectTypeSPt
     , mHasRows(false)
 
 {
-    ui->lFolderName->setText(tr("Searching:"));
+    setTitleText(tr("Searching:"));
     ui->bBack->hide();
     ui->bForward->hide();
     connect(ui->cloudDriveSearch, &QToolButton::clicked, this, &NodeSelectorTreeViewWidgetSearch::onCloudDriveSearchClicked);
