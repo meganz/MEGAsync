@@ -17,3 +17,11 @@ Source/MEGASync/utils/Preferences.cpp:hashicorp-tf-password:6
 Source/MEGASync/utils/Preferences.cpp:hashicorp-tf-password:22
 Source/MEGASync/sdk/sqlite3.c:generic-api-key:94219
 Source/MEGASync/sdk/sqlite3.c:generic-api-key:94374
+
+contrib/updater/filesmacosarm64.txt:generic-api-key:4
+contrib/updater/filesmacosv2arm.txt:generic-api-key:4
+contrib/updater/filesmacosv2.txt:generic-api-key:4
+contrib/updater/filesmacosemergency.txt:generic-api-key:4
+contrib/updater/fileswin64.txt:generic-api-key:4
+contrib/updater/filesmacos.txt:generic-api-key:4
+contrib/updater/fileswin.txt:generic-api-key:4
