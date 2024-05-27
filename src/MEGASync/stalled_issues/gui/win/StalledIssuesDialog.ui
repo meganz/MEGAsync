@@ -1077,6 +1077,22 @@ color: #2C5BEB;
               </widget>
              </item>
              <item>
+              <widget class="StalledIssueTab" name="failedTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string/>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <UInt>4</UInt>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string>solved-issues</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="StalledIssueTab" name="solvedIssuesTab">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -1091,7 +1107,7 @@ color: #2C5BEB;
                 <string notr="true">solved-issues</string>
                </property>
                <property name="filterCriterion" stdset="0">
-                <UInt>4</UInt>
+                <UInt>5</UInt>
                </property>
               </widget>
              </item>
