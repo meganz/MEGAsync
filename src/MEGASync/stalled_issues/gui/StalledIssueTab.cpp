@@ -41,15 +41,8 @@ void StalledIssueTab::mouseReleaseEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton)
     {
-        //If turned off, turn on and turn off siblings
-        if(!itsOn())
+        if(toggleTab())
         {
-            toggleOffSiblings();
-
-            setItsOn(true);
-
-            updateIcon();
-
             //We don´t want to propagate it to the stalled issue dialog
             return;
         }
@@ -92,6 +85,23 @@ void StalledIssueTab::onUpdateCounter()
 bool StalledIssueTab::itsOn() const
 {
     return mItsOn;
+}
+
+bool StalledIssueTab::toggleTab()
+{
+    //If turned off, turn on and turn off siblings
+    if(!itsOn())
+    {
+        toggleOffSiblings();
+
+        setItsOn(true);
+
+        updateIcon();
+
+        return true;
+    }
+
+    return false;
 }
 
 void StalledIssueTab::setItsOn(bool itsOn)

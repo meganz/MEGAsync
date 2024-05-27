@@ -61,6 +61,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
+    connect(mDelegate, &StalledIssueDelegate::goToIssue, this, &StalledIssuesDialog::toggleTabAndScroll);
     connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneVisibilityChange);
 
     connect(ui->SettingsButton, &QPushButton::clicked, this, [](){
@@ -216,6 +217,48 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
       ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
       proxyModel->filter(filterCriterion);
   }
+}
+
+bool StalledIssuesDialog::toggleTabAndScroll(
+    StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex)
+{
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() != filterCriterion)
+        {
+            //Show the view to show the loading view
+            ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+            proxyModel->filter(filterCriterion);
+
+            auto tabs = ui->header->findChildren<StalledIssueTab*>();
+            auto foundTab = std::find_if(tabs.begin(),
+                tabs.end(),
+                [filterCriterion](const StalledIssueTab* tabToCheck)
+                { return tabToCheck->filterCriterion() == static_cast<int>(filterCriterion); });
+            if(foundTab != tabs.end())
+            {
+                (*foundTab)->toggleTab();
+            }
+
+            QObject* tempObject(new QObject());
+            connect(proxyModel,
+                &StalledIssuesProxyModel::modelFiltered,
+                tempObject,
+                [this, proxyModel, tempObject, sourceIndex]()
+                {
+                    auto proxyIndex(proxyModel->mapFromSource(sourceIndex));
+                    if(proxyIndex.isValid())
+                    {
+                        ui->stalledIssuesTree->scrollTo(sourceIndex);
+                        mDelegate->expandIssue(proxyIndex);
+                    }
+                    tempObject->deleteLater();
+                });
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void StalledIssuesDialog::onUiBlocked()

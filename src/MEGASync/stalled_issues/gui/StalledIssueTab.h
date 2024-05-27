@@ -31,6 +31,7 @@ public:
     int filterCriterion() const;
     void setFilterCriterion(int filterCriterion);
 
+    bool toggleTab();
     void setItsOn(bool itsOn);
 
 signals:

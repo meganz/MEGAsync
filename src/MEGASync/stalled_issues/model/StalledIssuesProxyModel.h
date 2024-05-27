@@ -21,6 +21,8 @@ public:
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void updateStalledIssues();
 
+    StalledIssueFilterCriterion filterCriterion() const;
+
 public slots:
     void updateFilter();
 

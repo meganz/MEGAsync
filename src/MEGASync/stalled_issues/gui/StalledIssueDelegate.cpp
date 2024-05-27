@@ -229,6 +229,11 @@ void StalledIssueDelegate::updateSizeHint()
     mUpdateSizeHintTimer.start(UPDATE_SIZE_TIMER);
 }
 
+void StalledIssueDelegate::expandIssue(const QModelIndex& sourceIndex)
+{
+    mView->expand(sourceIndex);
+}
+
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     mFreshStart = false;
@@ -519,24 +524,40 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                 {
                     if(auto header = dynamic_cast<StalledIssueHeader*>(mEditor.data()))
                     {
-                        if(header->isExpandable())
+                        auto data(header->getData());
+                        if(data.isValid())
                         {
                             auto currentState = mView->isExpanded(index);
-                            currentState ? mView->collapse(index) : mView->expand(index);
 
-                            mEditor->expand(!currentState);
-
-                            auto childIndex = index.model()->index(0,0,index);
-                            //If it is going to be expanded
-                            if(!currentState)
+                            //Allow to collapse, but when expanded, change the category
+                            if(!currentState && data.consultData()->isFailed())
                             {
-                                if(childIndex.isValid())
+                                auto sourceIndex(mProxyModel->mapToSource(index));
+                                //Don´t expand if we really change the tab, otherwise we need to expand it
+                                if(emit goToIssue(StalledIssueFilterCriterion::FAILED_CONFLICTS, sourceIndex))
                                 {
-                                    mView->scrollTo(childIndex);
+                                    return true;
                                 }
                             }
 
-                            return true;
+                            if(header->isExpandable())
+                            {
+                                currentState ? mView->collapse(index) : mView->expand(index);
+
+                                mEditor->expand(!currentState);
+
+                                auto childIndex = index.model()->index(0, 0, index);
+                                //If it is going to be expanded
+                                if(!currentState)
+                                {
+                                    if(childIndex.isValid())
+                                    {
+                                        mView->scrollTo(childIndex);
+                                    }
+                                }
+
+                                return true;
+                            }
                         }
                     }
                 }

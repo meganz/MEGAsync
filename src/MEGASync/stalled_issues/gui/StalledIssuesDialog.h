@@ -41,6 +41,7 @@ private slots:
     void onGlobalSyncStateChanged(bool);
 
     void toggleTab(StalledIssueFilterCriterion filterCriterion);
+    bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
     void onUiUnblocked();

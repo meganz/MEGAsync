@@ -134,3 +134,8 @@ void StalledIssuesProxyModel::onModelSortedFiltered()
     emit layoutChanged();
     emit modelFiltered();
 }
+
+StalledIssueFilterCriterion StalledIssuesProxyModel::filterCriterion() const
+{
+    return mFilterCriterion;
+}
