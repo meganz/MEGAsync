@@ -15,6 +15,5 @@ description = "global allow lists"
 paths = [
     '''gitleaks.toml''',
     '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|vsidx|v2|suo|wsuo|.dll|pdb|exe)$''',
-    '''contrib/updater/(.*?)''',
     '''Source/MEGASync/google_breakpad/(.*?)'''
 ]
