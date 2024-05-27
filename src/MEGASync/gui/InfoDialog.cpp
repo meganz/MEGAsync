@@ -697,12 +697,13 @@ void InfoDialog::updateState()
     if(ui->wStatus->getState() != mState)
     {
         ui->wStatus->setState(mState);
-        ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
         if(mTransferManager)
         {
             mTransferManager->setTransferState(mState);
         }
     }
+
+    ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
 }
 
 bool InfoDialog::checkFailedState()
