@@ -216,5 +216,12 @@ public:
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
+class MoveBackupType : public UploadType
+{
+public:
+    explicit MoveBackupType() = default;
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
+};
+
 #endif // NODESELECTORTREEVIEWWIDGET_H
 
