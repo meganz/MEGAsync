@@ -2395,7 +2395,7 @@ bool Preferences::getGlobalPaused()
 
 void Preferences::setGlobalPaused(bool value)
 {
-    setValueConcurrent(wasPausedKey, value);
+    setValueConcurrent(wasPausedKey, value, true);
 }
 
 bool Preferences::getUploadsPaused()

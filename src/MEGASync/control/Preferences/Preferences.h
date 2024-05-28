@@ -534,8 +534,9 @@ public:
 
     //Public keys for valueChanged signals
     static const QString stalledIssuesModeKey;
-    //In this section, you need to move the keys to make them accessible from outside
+    static const QString wasPausedKey;
 
+    //In this section, you need to move the keys to make them accessible from outside
     static const int minSyncStateChangeProcessingIntervalMs;
 
 protected:
@@ -689,7 +690,6 @@ protected:
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
-    static const QString wasPausedKey;
     static const QString wasUploadsPausedKey;
     static const QString wasDownloadsPausedKey;
     static const QString lastUpdateTimeKey;
