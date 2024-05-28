@@ -38,6 +38,9 @@ QtObject {
     readonly property url twofa: imagesPath + "lock.png"
     readonly property url eye: imagesPath + "eye.svg"
     readonly property url eyeOff: imagesPath + "eye-off.svg"
+    readonly property url rocket: imagesPath + "rocket.png"
+    readonly property url megaCloud: imagesPath + "mega-cloud.png"
+    readonly property url contols: imagesPath + "controls.png"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"

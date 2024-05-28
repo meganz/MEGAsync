@@ -9,7 +9,6 @@
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"
-#include "SyncExclusions/ExclusionsQmlDialog.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
 #include <DialogOpener.h>

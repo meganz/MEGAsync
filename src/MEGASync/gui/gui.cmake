@@ -97,6 +97,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
+    gui/onboarding/WhatsNewWindow.h
+
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -194,6 +196,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
+    gui/onboarding/WhatsNewWindow.cpp
 
 )
 

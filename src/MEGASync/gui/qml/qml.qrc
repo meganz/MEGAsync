@@ -140,5 +140,9 @@
         <file>components/comboBoxes/qmldir</file>
         <file>components/comboBoxes/ComboBox.qml</file>
         <file>components/comboBoxes/Sizes.qml</file>
+        <file>whatsNew/WhatsNewStrings.qml</file>
+        <file>whatsNew/qmldir</file>
+        <file>whatsNew/WhatsNewDialog.qml</file>
+        <file>whatsNew/UpdatesElement.qml</file>
     </qresource>
 </RCC>
