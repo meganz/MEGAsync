@@ -66,7 +66,7 @@ public:
     void updateDownloadFolder();
 
     // Backups
-    void setBackupsAddButtonEnabled(const bool enabled);
+    void setBackupsAddButtonEnabled(bool enabled);
 
 signals:
     void userActivity();

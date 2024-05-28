@@ -18,14 +18,15 @@ QString AddExclusionRule::contextName()
     return QString::fromUtf8("addRuleDialogAccess");
 }
 
-void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString ruleVale)
+void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString ruleValue)
 {
-    if(ruleVale.trimmed().isEmpty())
+    if(ruleValue.trimmed().isEmpty())
     {
         return;
     }
-    auto splitted = ruleVale.split(QString::fromUtf8(","));
-    for (const auto folder : mFolders)
+
+    auto splitted = ruleValue.split(QString::fromUtf8(","));
+    for (const auto& folder : mFolders)
     {
         MegaIgnoreManager megaIgnoreLoader(folder, true);
         for (auto value : splitted)

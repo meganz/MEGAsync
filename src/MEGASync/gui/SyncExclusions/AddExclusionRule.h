@@ -14,7 +14,7 @@ public:
 
     QString contextName() override;
 
-    Q_INVOKABLE void appendRuleToFolders(int targetType, int wildCard, QString ruleVale);
+    Q_INVOKABLE void appendRuleToFolders(int targetType, int wildCard, QString ruleValue);
 
 private:
     QStringList mFolders;

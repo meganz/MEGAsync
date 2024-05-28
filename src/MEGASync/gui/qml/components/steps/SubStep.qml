@@ -30,11 +30,11 @@ Item {
     Item {
         id: substepContent
 
-        readonly property string stateDisabled: "stateDisabled"
-        readonly property string stateCurrent: "stateCurrent"
-        readonly property string stateDone: "stateDone"
-        readonly property string stateWarning: "stateWarning"
-        readonly property string stateError: "stateError"
+        readonly property string stateDisabled: "disabled"
+        readonly property string stateCurrent: "current"
+        readonly property string stateDone: "done"
+        readonly property string stateWarning: "warning"
+        readonly property string stateError: "error"
 
         property var statesMap: new Map([
             [SubStep.ToStates.DISABLED, stateDisabled],

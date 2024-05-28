@@ -36,13 +36,13 @@ Item {
     Rectangle {
         id: stepContent
 
-        readonly property string stateDisabled: "stateDisabled"
-        readonly property string stateCurrent: "stateCurrent"
-        readonly property string stateCurrentSubstep: "stateCurrentSubstep"
-        readonly property string stateCurrentDone: "stateCurrentDone"
-        readonly property string stateDone: "stateDone"
-        readonly property string stateWarning: "stateWarning"
-        readonly property string stateError: "stateError"
+        readonly property string stateDisabled: "disabled"
+        readonly property string stateCurrent: "current"
+        readonly property string stateCurrentSubstep: "currentSubstep"
+        readonly property string stateCurrentDone: "currentDone"
+        readonly property string stateDone: "done"
+        readonly property string stateWarning: "warning"
+        readonly property string stateError: "error"
 
         property var statesMap: new Map([
             [Step.ToStates.DISABLED, stateDisabled],

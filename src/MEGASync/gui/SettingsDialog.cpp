@@ -1367,7 +1367,7 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
-void SettingsDialog::setBackupsAddButtonEnabled(const bool enabled)
+void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
 {
     if(mUi->backupSettings)
     {

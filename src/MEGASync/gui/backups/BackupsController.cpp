@@ -37,7 +37,7 @@ bool BackupsController::existsName(const QString& name) const
 {
     auto foundIt = std::find_if(mBackupsToDoList.constBegin(),
                                 mBackupsToDoList.constEnd(),
-                                [&name](const QPair<QString, QString>& backupToDo)
+                                [&name](const auto& backupToDo)
                                 {
                                     return (backupToDo.first == name);
                                 });
