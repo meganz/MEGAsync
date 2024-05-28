@@ -26,7 +26,8 @@ public:
 
     // Back (without role)
     qint64 mFolderSize;
-    QPair<int, int> mSdkError;
+    int mSdkError;
+    int mSyncError;
 
     BackupFolder();
 

@@ -26,7 +26,8 @@ BackupFolder::BackupFolder(const QString& folder,
     , mFolderAttr(nullptr)
     , mFolder(folder)
     , mFolderSize(FileFolderAttributes::NOT_READY)
-    , mSdkError(-1, -1)
+    , mSdkError(-1)
+    , mSyncError(-1)
 {
 }
 
@@ -292,7 +293,7 @@ QString BackupsModel::getSdkErrorString() const
 
     if (itFound != mBackupFolderList.cend())
     {
-        message = SyncController::getErrorString((*itFound)->mSdkError.first, (*itFound)->mSdkError.second);
+        message = SyncController::getErrorString((*itFound)->mSdkError, (*itFound)->mSyncError);
     }
 
     return message;
@@ -964,7 +965,8 @@ void BackupsModel::onBackupFinished(const QString& folder, int errorCode, int sy
     }
     else
     {
-        mBackupFolderList[row]->mSdkError = QPair<int,int>(errorCode, syncErrorCode);
+        mBackupFolderList[row]->mSdkError = errorCode;
+        mBackupFolderList[row]->mSyncError = syncErrorCode;
         setData(index(row, 0), QVariant(BackupErrorCode::SDK_CREATION), ERROR_ROLE);
     }
 }
