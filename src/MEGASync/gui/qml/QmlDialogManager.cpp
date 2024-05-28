@@ -6,6 +6,7 @@
 #include "onboarding/GuestContent.h"
 #include "onboarding/OnboardingQmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
+#include "onboarding/WhatsNewWindow.h"
 
 #include "DialogOpener.h"
 #include "LoginController.h"
@@ -116,3 +117,25 @@ void QmlDialogManager::forceCloseOnboardingDialog()
         static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
     }
 }
+
+bool QmlDialogManager::openWhatsNewDialog()
+{
+    if(MegaSyncApp->finished())
+    {
+        return false;
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<WhatsNewWindow>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
+    }
+    else
+    {
+        QPointer<QmlDialogWrapper<WhatsNewWindow>> whatsNew = new QmlDialogWrapper<WhatsNewWindow>();
+        DialogOpener::showDialog(whatsNew);
+        whatsNew->raise();
+    }
+    return true;
+}
+
