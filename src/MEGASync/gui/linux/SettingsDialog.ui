@@ -24,6 +24,16 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QGroupBox
+{
+font-weight: bold;
+}
+
+QGroupBox::title
+{
+color: #DD1405; /*colorToken.button-brand*/
+}
+
 QCheckBox::indicator
 {
 height: 10px;
