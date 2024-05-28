@@ -23,6 +23,9 @@ private:
     void loadColorThemeJson();
     void onThemeChanged(Preferences::ThemeType theme);
     void applyTheme(QWidget* widget);
+    bool replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
+    bool replaceIconColorTokens(QWidget* widget, QString& styleSheet, const ColorTokens& colorTokens);
+    bool replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QWidget* mCurrentWidget;

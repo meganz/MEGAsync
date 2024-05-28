@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>675</width>
-    <height>769</height>
+    <height>807</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -26,19 +26,19 @@ color: #303233; /*colorToken.text-primary*/
 
 QCheckBox::indicator
 {
-height: 14px;
-width: 14px;
+height: 12px;
+width: 12px;
 }
 
 QCheckBox::indicator:checked
 {
 padding: 2px;
 border-style: solid;
-border-color: black;
+border-color: #04101E;
 border-width: 2px;
 border-radius: 4px;
-background-color: black;
-image: url(:/images/themed/light/checkbox_checked_light.svg);
+background-color: #04101E; /*colorToken.button-primary*/
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 image-width:8px;
 image-height:6px;
 }
@@ -47,11 +47,11 @@ QCheckBox::indicator:unchecked
 {
 padding: 2px;
 border-style: solid;
-border-color: black;
+border-color: #04101E;
 border-width: 2px;
 border-radius: 4px;
-background-color: white;
-image: url(:/images/themed/light/checkbox_checked_light.svg);
+background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 image-width:8px;
 image-height:6px;
 }
