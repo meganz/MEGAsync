@@ -717,7 +717,7 @@ color: #2C5BEB;
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string notr="true"/>
                   </property>
                   <property name="openExternalLinks">
                    <bool>true</bool>
