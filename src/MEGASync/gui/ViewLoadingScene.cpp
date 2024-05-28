@@ -28,7 +28,12 @@ ViewLoadingSceneBase::ViewLoadingSceneBase() :
     ui->wMessageContainer->hide();
     ui->wParentViewCopy->hide();
 
-    connect(ui->bStopButton, &QPushButton::clicked, mMessageHandler, &LoadingSceneMessageHandler::onStopPressed);
+    connect(
+        ui->bStopButton, &QPushButton::clicked, mMessageHandler, [this]()
+        {
+            mMessageHandler->hideLoadingMessage();
+            emit mMessageHandler->onStopPressed();
+        });
 }
 
 void ViewLoadingSceneBase::show()
@@ -124,6 +129,11 @@ LoadingSceneMessageHandler::~LoadingSceneMessageHandler()
     mFadeOutWidget->deleteLater();
 }
 
+bool LoadingSceneMessageHandler::needsAnswerFromUser() const
+{
+    return ui->bStopButton->isVisible();
+}
+
 void LoadingSceneMessageHandler::hideLoadingMessage()
 {
     updateMessage(nullptr);
@@ -189,6 +199,7 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
         else
         {
             ui->bStopButton->hide();
+            ui->bStopButton->setText(QString());
         }
 
         ui->wMessageContainer->adjustSize();

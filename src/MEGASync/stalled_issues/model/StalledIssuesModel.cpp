@@ -17,6 +17,8 @@
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {
+    connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
+    connect(&mIssueCreator, &StalledIssuesCreator::solvingIssuesFinished, this, &StalledIssuesReceiver::solvingIssuesFinished);
 }
 
 bool StalledIssuesReceiver::multiStepIssueSolveActive() const
@@ -39,10 +41,8 @@ void StalledIssuesReceiver::onRequestFinish(mega::MegaApi*, mega::MegaRequest* r
         mStalledIssues.clear();
         IgnoredStalledIssue::clearIgnoredSyncs();
 
-        connect(&mIssueCreator, &StalledIssuesCreator::solvingIssues, this, &StalledIssuesReceiver::solvingIssues);
-
         mIssueCreator.createIssues(request->getMegaSyncStallList(), mUpdateType);
-        mStalledIssues = mIssueCreator.issues();
+        mStalledIssues = mIssueCreator.getStalledIssues();
 
         StalledIssuesBySyncFilter::resetFilter();
 
@@ -74,15 +74,20 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
     mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
     mMegaApi->addGlobalListener(mGlobalListener);
 
-    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](int issueCounter, int totalIssues)
+    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](StalledIssuesCreator::IssuesCount count)
     {
         auto info = std::make_shared<MessageInfo>();
-        info->message = tr("Processing issues");
+        info->message = processingIssuesString();
         info->buttonType = MessageInfo::ButtonType::None;
-        info->count = issueCounter;
-        info->total = totalIssues;
+        info->count = count.currentIssueBeingSolved;
+        info->total = count.totalIssues;
         emit updateLoadingMessage(info);
     }, Qt::QueuedConnection);
+
+    connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssuesFinished, this, [this](StalledIssuesCreator::IssuesCount count)
+        {
+            sendFinishSolvingMessage(count, true);
+        }, Qt::QueuedConnection);
 
     mStalledIssuesThread->start();
 
@@ -102,6 +107,11 @@ bool StalledIssuesModel::issuesRequested() const
 QString StalledIssuesModel::fixingIssuesString(int numberOfIssues)
 {
     return tr("Fixing issues", "", numberOfIssues);
+}
+
+QString StalledIssuesModel::processingIssuesString()
+{
+    return tr("Processing issues");
 }
 
 void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
@@ -141,7 +151,7 @@ StalledIssuesModel::~StalledIssuesModel()
     mStalledIssuesReceiver->deleteLater();
 }
 
-void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesReceived)
+void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesReceived)
 {
     if(!issuesReceived.isEmpty() && !mEventTimer.isActive())
     {
@@ -156,13 +166,14 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
         blockSignals(true);
 
         auto totalRows = rowCount(QModelIndex());
-        auto rowsToBeInserted(static_cast<int>(issuesReceived.size()));
+        auto activeIssues(issuesReceived.activeStalledIssues());
+        auto rowsToBeInserted(static_cast<int>(activeIssues.size()));
 
         if(rowsToBeInserted > 0)
         {
             beginInsertRows(QModelIndex(), totalRows, totalRows + rowsToBeInserted - 1);
 
-            for (auto it = issuesReceived.begin(); it != issuesReceived.end();)
+            for (auto it = activeIssues.begin(); it != activeIssues.end();)
             {
                 if(mThreadFinished)
                 {
@@ -203,8 +214,11 @@ void StalledIssuesModel::onProcessStalledIssues(StalledIssuesVariantList issuesR
             endInsertRows();
         }
 
+        mSolvedStalledIssues.append(issuesReceived.autoSolvedStalledIssues());
         appendCachedIssuesToModel(mSolvedStalledIssues, StalledIssueFilterCriterion::SOLVED_CONFLICTS);
-        //appendCachedIssuesToModel(mFailedStalledIssues, StalledIssueFilterCriterion::FAILED_CONFLICTS);
+
+        mFailedStalledIssues.append(issuesReceived.failedAutoSolvedStalledIssues());
+        appendCachedIssuesToModel(mFailedStalledIssues, StalledIssueFilterCriterion::FAILED_CONFLICTS);
 
         blockSignals(false);
         mModelMutex.unlock();
@@ -721,6 +735,7 @@ void StalledIssuesModel::stopSolvingIssues()
     else
     {
         mSolvingIssuesStopped = true;
+        unBlockUi();
     }
 }
 
@@ -730,11 +745,17 @@ void StalledIssuesModel::startSolvingIssues()
     blockUi();
 }
 
-void StalledIssuesModel::finishSolvingIssues(const IssuesCount& count, bool sendMessage)
+void StalledIssuesModel::finishSolvingIssues(StalledIssuesCreator::IssuesCount count, bool sendMessage)
 {
     mSolvingIssues = false;
     mIssuesSolved = true;
 
+    sendFinishSolvingMessage(count, sendMessage);
+}
+
+void StalledIssuesModel::sendFinishSolvingMessage(
+    StalledIssuesCreator::IssuesCount count, bool sendMessage)
+{
     if(sendMessage)
     {
         auto info = std::make_shared<MessageInfo>();
@@ -785,7 +806,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
            info.startFunc();
        }
 
-       IssuesCount count;
+       StalledIssuesCreator::IssuesCount count;
        auto issuesExternallyChanged(0);
        auto totalRows(info.indexes.size());
        foreach(auto index, info.indexes)
@@ -1358,7 +1379,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& index
 
             DesktopNotifications::NotificationInfo startNotificationInfo;
             startNotificationInfo.title = tr("Sync stalls");
-            startNotificationInfo.message = tr("(TEMPORARY) We have started solving your issues for sync X");
+            startNotificationInfo.message = processingIssuesString();
             solver->setStartNotification(startNotificationInfo);
 
             DesktopNotifications::NotificationInfo finishNotificationInfo;
@@ -1510,7 +1531,7 @@ void StalledIssuesModel::finishConflictManually()
 {
     blockUi();
     //Only was issue was fixed
-    IssuesCount count;
+    StalledIssuesCreator::IssuesCount count;
     count.issuesFixed = 1;
     finishSolvingIssues(count);
 }

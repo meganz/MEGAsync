@@ -86,6 +86,7 @@ private:
     void showIgnoreFile();
     void issueIgnored();
     void onIgnoreFileActionClicked();
+    void showState(StalledIssue::SolveType state);
 
     void propagateButtonClick();
 

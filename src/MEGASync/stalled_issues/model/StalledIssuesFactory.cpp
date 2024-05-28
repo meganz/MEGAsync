@@ -10,9 +10,16 @@
 
 #include <mega/types.h>
 
+StalledIssuesFactory::StalledIssuesFactory()
+{
+    qRegisterMetaType<ReceivedStalledIssues>("ReceivedStalledIssues");
+}
+
+//////////////////////////////////
 StalledIssuesCreator::StalledIssuesCreator() :
     mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
 {
+    qRegisterMetaType<IssuesCount>("IssuesCount");
 }
 
 void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType)
@@ -120,7 +127,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                     }
                     else if(updateType == UpdateType::UI)
                     {
-                        mPendingIssues.append(variant);
+                        mStalledIssues.mActiveStalledIssues.append(variant);
                     }
                 }
             }
@@ -134,28 +141,45 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 auto issue(it->second->getIssue());
                 auto variant = StalledIssueVariant(issue, issue->getOriginalStall().get());
                 variant.getData()->endFillingIssue();
-                mPendingIssues.append(variant);
+                mStalledIssues.mActiveStalledIssues.append(variant);
             }
         }
 
-        auto solvableTotalIssues(solvableIssues.size());
-        auto counter(1);
+        IssuesCount solvingIssuesStats;
+        solvingIssuesStats.totalIssues = solvableIssues.size();
+        solvingIssuesStats.currentIssueBeingSolved = 1;
         foreach(auto solvableIssue, solvableIssues)
         {
-            emit solvingIssues(counter, solvableTotalIssues);
+            emit solvingIssues(solvingIssuesStats);
             auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
 
-            if(updateType == UpdateType::UI && !hasBeenSolved)
+            if(updateType == UpdateType::UI)
             {
-                mPendingIssues.append(solvableIssue);
+                if(!hasBeenSolved)
+                {
+                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::FAILED);
+                    mStalledIssues.mFailedAutoSolvedStalledIssues.append(solvableIssue);
+                    solvingIssuesStats.issuesFailed++;
+                }
+                else
+                {
+                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::AUTO_SOLVED);
+                    mStalledIssues.mAutoSolvedStalledIssues.append(solvableIssue);
+                    solvingIssuesStats.issuesFixed++;
+                }
             }
 
-            counter++;
+            solvingIssuesStats.currentIssueBeingSolved++;
+        }
+
+        if((solvingIssuesStats.issuesFailed + solvingIssuesStats.issuesFixed) != 0)
+        {
+            emit solvingIssuesFinished(solvingIssuesStats);
         }
 
         //Filter some issues depending on what you have found on the list or if the issue is invalid
         //We don´t filter the solvable issues as these issues must be solved and not filtered
-        QMutableListIterator<StalledIssueVariant> issueIt(mPendingIssues);
+        QMutableListIterator<StalledIssueVariant> issueIt(mStalledIssues.mActiveStalledIssues);
         while(issueIt.hasNext())
         {
             auto issueToCheck(issueIt.next());
@@ -166,11 +190,6 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
         }
     }
-}
-
-StalledIssuesVariantList StalledIssuesCreator::issues() const
-{
-    return mPendingIssues;
 }
 
 bool StalledIssuesCreator::multiStepIssueSolveActive() const
@@ -188,7 +207,7 @@ bool StalledIssuesCreator::multiStepIssueSolveActive() const
 
 void StalledIssuesCreator::clear()
 {
-    mPendingIssues.clear();
+    mStalledIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
 }
 
@@ -209,6 +228,11 @@ void StalledIssuesCreator::addMultiStepIssueSolver(MultiStepIssueSolverBase* sol
 
         mMultiStepIssueSolversByReason.insert(reason, solver);
     }
+}
+
+ReceivedStalledIssues StalledIssuesCreator::getStalledIssues() const
+{
+    return mStalledIssues;
 }
 
 QPointer<MultiStepIssueSolverBase> StalledIssuesCreator::getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall)

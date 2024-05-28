@@ -53,6 +53,10 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                 {
                     result = QFile::moveToTrash(path);
                 }
+                else
+                {
+                    result = true;
+                }
                 moveEventLoop.quit();
             }));
             moveEventLoop.exec();

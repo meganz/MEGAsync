@@ -296,6 +296,7 @@ public:
         FAILED,
         BEING_SOLVED,
         POTENTIALLY_SOLVED,
+        AUTO_SOLVED,
         SOLVED
     };
 
@@ -304,7 +305,10 @@ public:
     bool isPotentiallySolved() const;
     bool isBeingSolved() const;
     bool isFailed() const;
+
+    SolveType getIsSolved() const {return mIsSolved;}
     virtual void setIsSolved(SolveType type);
+
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
     virtual bool refreshListAfterSolving() const {return false;}

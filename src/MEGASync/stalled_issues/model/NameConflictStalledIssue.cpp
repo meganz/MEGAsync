@@ -606,10 +606,10 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
 
     if(!isSolved() && unsolvedItems == 0)
     {
-        setIsSolved(isPotentiallySolved ? StalledIssue::SolveType::POTENTIALLY_SOLVED : StalledIssue::SolveType::SOLVED);
+        setIsSolved(isPotentiallySolved ? SolveType::POTENTIALLY_SOLVED : SolveType::SOLVED);
     }
 
-    return mIsSolved;
+    return isSolved();
 }
 
 void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
@@ -617,11 +617,13 @@ void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
     solveIssue(option);
 }
 
+//This code is never called. NameConflict, for the moment, are not autosolvable.
 bool NameConflictedStalledIssue::autoSolveIssue()
 {
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
-    if(isSolved())
+    if(isSolved() && !isPotentiallySolved())
     {
+        setIsSolved(SolveType::AUTO_SOLVED);
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
         return true;
     }

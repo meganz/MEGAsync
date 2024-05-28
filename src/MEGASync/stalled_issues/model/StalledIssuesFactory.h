@@ -6,10 +6,52 @@
 
 class MoveOrRenameCannotOccurFactory;
 
+class ReceivedStalledIssues
+{
+public:
+    ReceivedStalledIssues() = default;
+    ~ReceivedStalledIssues() = default;
+
+    bool isEmpty() const
+    {
+        return mAutoSolvedStalledIssues.isEmpty() && mActiveStalledIssues.isEmpty();
+    }
+    void clear()
+    {
+        mActiveStalledIssues.clear();
+        mAutoSolvedStalledIssues.clear();
+        mFailedAutoSolvedStalledIssues.clear();
+    }
+
+    StalledIssuesVariantList autoSolvedStalledIssues() const
+    {
+        return mAutoSolvedStalledIssues;
+    }
+
+    StalledIssuesVariantList activeStalledIssues() const
+    {
+        return mActiveStalledIssues;
+    }
+
+    StalledIssuesVariantList failedAutoSolvedStalledIssues() const
+    {
+        return mFailedAutoSolvedStalledIssues;
+    }
+
+private:
+    friend class StalledIssuesCreator;
+
+    StalledIssuesVariantList mActiveStalledIssues;
+    StalledIssuesVariantList mAutoSolvedStalledIssues;
+    StalledIssuesVariantList mFailedAutoSolvedStalledIssues;
+};
+
+Q_DECLARE_METATYPE(ReceivedStalledIssues)
+
 class StalledIssuesFactory
 {
 public:
-    StalledIssuesFactory(){}
+    StalledIssuesFactory();
     virtual ~StalledIssuesFactory() = default;
 
     virtual std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall) = 0;
@@ -28,24 +70,34 @@ class StalledIssuesCreator : public QObject
 {
         Q_OBJECT
 public:
+    struct IssuesCount
+    {
+        int totalIssues = 0;
+        int currentIssueBeingSolved = 0;
+        int issuesFixed = 0;
+        int issuesFailed = 0;
+
+        bool isEmpty(){return totalIssues + currentIssueBeingSolved + issuesFailed + issuesFixed == 0;}
+    };
+
     StalledIssuesCreator();
 
     void createIssues(mega::MegaSyncStallList* issues,
         UpdateType updateType);
 
-    StalledIssuesVariantList issues() const;
     bool multiStepIssueSolveActive() const;
     void addMultiStepIssueSolver(MultiStepIssueSolverBase* issue);
 
+    ReceivedStalledIssues getStalledIssues() const;
+
 signals:
-    void solvingIssues(int current, int total);
+    void solvingIssues(IssuesCount count);
+    void solvingIssuesFinished(IssuesCount count);
 
 protected:
     void clear();
 
-    StalledIssuesVariantList mPendingIssues;
-    StalledIssuesVariantList mBeingSolvedIssues;
-    StalledIssuesVariantList mSolvedIssues;
+    ReceivedStalledIssues mStalledIssues;
 
 private:
     QPointer<MultiStepIssueSolverBase> getMultiStepIssueSolverByStall(const mega::MegaSyncStall* stall);
@@ -54,5 +106,7 @@ private:
         MultiStepIssueSolverBase*> mMultiStepIssueSolversByReason;
     std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
 };
+
+Q_DECLARE_METATYPE(StalledIssuesCreator::IssuesCount);
 
 #endif // STALLEDISSUEFACTORY_H

@@ -118,6 +118,21 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
 }
 
+void StalledIssueHeader::showState(StalledIssue::SolveType state)
+{
+    switch(state)
+    {
+        case StalledIssue::SolveType::AUTO_SOLVED:
+        {
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
 void StalledIssueHeader::showIgnoreFile()
 {
     StalledIssueHeader::ActionInfo action(tr("Ignore"), ActionsId::Ignore);
@@ -380,11 +395,11 @@ void StalledIssueHeader::refreshUi()
     if(getData().consultData()->filesCount() > 0)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().consultData()->getFileName(false), QLatin1Literal(":/images/drag_")));
+                                                      getData().consultData()->getFileName(false), QLatin1String(":/images/drag_")));
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default@2x.png"));
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default@2x.png"));
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
@@ -408,6 +423,8 @@ void StalledIssueHeader::refreshUi()
     {
             showSolvedMessage();
     }
+
+    showState(getData().consultData()->getIsSolved());
 
     //By default it is expandable
     setIsExpandable(true);

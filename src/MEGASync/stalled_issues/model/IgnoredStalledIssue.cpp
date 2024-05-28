@@ -45,6 +45,8 @@ bool IgnoredStalledIssue::isSpecialLink() const
 
 bool IgnoredStalledIssue::autoSolveIssue()
 {
+    auto result(false);
+
     if(!syncIds().isEmpty())
     {
         auto syncId(firstSyncId());
@@ -77,7 +79,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 auto changesApplied(ignoreManager.applyChanges());
                 if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
-                    setIsSolved(StalledIssue::SolveType::SOLVED);
+                    result = true;
                 }
                 else
                 {
@@ -104,9 +106,9 @@ bool IgnoredStalledIssue::autoSolveIssue()
         //Only done for sym links
         else if(mSymLinksIgnoredInSyncs.value(syncId) == true)
         {
-            setIsSolved(StalledIssue::SolveType::SOLVED);
+            result = true;
         }
     }
 
-    return isSolved();
+    return result;
 }

@@ -37,19 +37,19 @@ public:
         mIssueCreator.addMultiStepIssueSolver(solver);
     }
 
-
     void updateStalledIssues(UpdateType type);
 
 signals:
-    void stalledIssuesReady(StalledIssuesVariantList);
-    void solvingIssues(int issueCount, int total);
+    void stalledIssuesReady(ReceivedStalledIssues);
+    void solvingIssues(StalledIssuesCreator::IssuesCount count);
+    void solvingIssuesFinished(StalledIssuesCreator::IssuesCount count);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest* request, ::mega::MegaError*);
 
 private:
     QMutex mCacheMutex;
-    StalledIssuesVariantList mStalledIssues;
+    ReceivedStalledIssues mStalledIssues;
     StalledIssuesCreator mIssueCreator;
     std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
 };
@@ -139,6 +139,7 @@ public:
 
     //Common strings methods
     static QString fixingIssuesString(int numberOfIssues = 0);
+    static QString processingIssuesString();
 
 signals:
     void stalledIssuesChanged();
@@ -163,7 +164,7 @@ protected slots:
 private slots:
     void onStalledIssueUpdated(StalledIssue* issue);
     void onAsyncIssueSolvingFinished(StalledIssue* issue);
-    void onProcessStalledIssues(StalledIssuesVariantList issuesReceived);
+    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived);
     void onSendEvent();
 
 private:
@@ -186,14 +187,8 @@ private:
     bool checkIfUserStopSolving();
     void startSolvingIssues();
 
-    struct IssuesCount
-    {
-        int currentIssueBeingSolved = 0;
-        int issuesFixed = 0;
-        int issuesFailed = 0;
-    };
-
-    void finishSolvingIssues(const IssuesCount& count, bool sendMessage = true);
+    void finishSolvingIssues(StalledIssuesCreator::IssuesCount count, bool sendMessage = true);
+    void sendFinishSolvingMessage(StalledIssuesCreator::IssuesCount count, bool sendMessage = true);
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
@@ -231,6 +226,7 @@ private:
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
     bool mIsStalledChanged;
+    StalledIssuesCreator::IssuesCount mReceivedIssuesStats;
 
     mutable QReadWriteLock mModelMutex;
 

@@ -226,6 +226,7 @@ public:
     LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
     ~LoadingSceneMessageHandler();
 
+    bool needsAnswerFromUser() const;
 
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
@@ -388,6 +389,12 @@ public:
             {
                 mDelayTimerToShow.stop();
             }
+            return;
+        }
+
+        //Don´t close the loading view if we need interaction from the user (like clicking ok or stop...)
+        if(!state && getLoadingMessageHandler() && getLoadingMessageHandler()->needsAnswerFromUser())
+        {
             return;
         }
 
