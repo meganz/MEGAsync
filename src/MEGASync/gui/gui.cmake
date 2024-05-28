@@ -60,6 +60,11 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/NotificationItem.h
+    gui/QNotificationsModel.h
+    gui/MegaNotificationDelegate.h
+    gui/NotificationAlertModel.h
+    gui/NotificationAlertDelegate.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -163,6 +168,11 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/NotificationItem.cpp
+    gui/QNotificationsModel.cpp
+    gui/MegaNotificationDelegate.cpp
+    gui/NotificationAlertModel.cpp
+    gui/NotificationAlertDelegate.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -249,6 +259,7 @@ target_sources_conditional(MEGAsync
     gui/win/NotificationsSettings.ui
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
+    gui/win/NotificationItem.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/win/NodeSelector.ui

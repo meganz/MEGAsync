@@ -48,6 +48,10 @@
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
 
+#include "MegaNotificationDelegate.h"
+#include "NotificationAlertModel.h"
+#include "NotificationAlertDelegate.h"
+
 class IntervalExecutioner;
 class TransfersModel;
 class StalledIssuesModel;
@@ -411,6 +415,10 @@ protected:
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
     MegaAlertDelegate *notificationsDelegate;
+    QNotificationsModel *notifModel;
+    MegaNotificationDelegate *notifDelegate;
+    NotificationAlertModel* mNotificationAlertModel;
+    NotificationAlertDelegate* mNotificationAlertDelegate;
     QObject *context;
     QString crashReportFilePath;
 

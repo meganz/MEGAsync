@@ -1278,12 +1278,17 @@ void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRe
         notificationsProxyModel = new QFilterAlertsModel();
         notificationsProxyModel->setSourceModel(notificationsModel);
         notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+        notificationsDelegate = new MegaAlertDelegate(notificationsModel, false, this);
 
-        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
+        notifModel = new QNotificationsModel();
+        notifDelegate = new MegaNotificationDelegate(notifModel, this);
+
+        mNotificationAlertModel = new NotificationAlertModel(notifModel, notificationsModel);
+        mNotificationAlertDelegate = new NotificationAlertDelegate(notifDelegate, notificationsDelegate);
 
         if (infoDialog)
         {
-            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+            infoDialog->updateNotificationsTreeView(mNotificationAlertModel, mNotificationAlertDelegate);
         }
     }
 

@@ -27,7 +27,12 @@ MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QO
 void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid())
-    {       
+    {
+        AlertNotificationModelItem *item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer) {
+            QStyledItemDelegate::paint(painter, option, index);
+            return;
+        }
 
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
@@ -45,7 +50,8 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         }
         else
         {
-            alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
+            //alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
+            alert = static_cast<MegaUserAlertExt*>(item->pointer);
         }
 
         if (!alert)
@@ -101,7 +107,13 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
     if (QEvent::MouseButtonPress ==  event->type())
     {
-        MegaUserAlert *alert = NULL;
+        AlertNotificationModelItem *item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer)
+        {
+            return true;
+        }
+
+        MegaUserAlertExt *alert = NULL;
         if (mUseProxy)
         {
             QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
@@ -110,11 +122,12 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                 return true;
             }
 
-            alert = (MegaUserAlert *)actualId.internalPointer();
+            //alert = (MegaUserAlert *)actualId.internalPointer();
         }
         else
         {
-            alert = (MegaUserAlert *)index.internalPointer();
+            //alert = (MegaUserAlert *)index.internalPointer();
+            alert = static_cast<MegaUserAlertExt*>(item->pointer);
         }
 
         if (!alert)
@@ -142,7 +155,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
                             }
 
                             const char* email = request->getSourceEmail();
-                            if (!strcmp(alert->getEmail(), email))
+                            if (alert->getEmail().toStdString().c_str() == email)
                             {
                                 found = true;
                                 Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
@@ -164,7 +177,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
                 {
 
-                    MegaUser *user = api->getContact(alert->getEmail());
+                    MegaUser *user = api->getContact(alert->getEmail().toStdString().c_str());
                     if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
                     {
                         Utilities::openUrl(
@@ -224,6 +237,12 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
 
     if (event->type() == QEvent::ToolTip)
     {
+        AlertNotificationModelItem *item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer)
+        {
+            return true;
+        }
+
         MegaUserAlertExt* alert = nullptr;
         if (mUseProxy)
         {
@@ -237,7 +256,8 @@ bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, co
         }
         else
         {
-            alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
+            //alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
+            alert = static_cast<MegaUserAlertExt*>(item->pointer);
         }
 
         if (!alert)
