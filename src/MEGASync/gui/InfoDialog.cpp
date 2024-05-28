@@ -127,6 +127,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
 
+    connect(mPreferences.get(),
+            &Preferences::valueChanged,
+            this,
+            [this](const QString& key)
+            {
+                if(key == Preferences::wasPausedKey)
+                {
+                    ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
+                }
+            });
+
     //Set window properties
 #ifdef Q_OS_LINUX
     doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
@@ -702,8 +713,6 @@ void InfoDialog::updateState()
             mTransferManager->setTransferState(mState);
         }
     }
-
-    ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
 }
 
 bool InfoDialog::checkFailedState()
