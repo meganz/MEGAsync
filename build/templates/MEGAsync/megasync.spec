@@ -9,15 +9,15 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: zlib-devel, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
-BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl
+BuildRequires: autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
+BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
 #OpenSUSE
 %if 0%{?suse_version} || 0%{?sle_version}
 
     BuildRequires: libopenssl-devel, sqlite3-devel
-    BuildRequires: libbz2-devel
-    BuildRequires: lsb-release
+    BuildRequires: libbz2-devel, zlib-devel
+    BuildRequires: lsb-release, wget
 
     # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
     # plus it speeds up building process
@@ -95,6 +95,12 @@ BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl
         BuildRequires: fonts-filesystem
     %else
         BuildRequires: fontpackages-filesystem
+    %endif
+
+    %if 0%{?fedora_version} >= 40
+        BuildRequires: wget2, wget2-wget, zlib-ng-compat
+    %else
+        BuildRequires: wget, zlib-devel
     %endif
 
     # allowing for rpaths (taken as invalid, as if they were not absolute paths when they are)
