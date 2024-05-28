@@ -51,7 +51,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
         BuildRequires: update-desktop-files
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-        BuildRequires: libqt5-qtbase-devel, libqt5-linguist, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
+        BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
         Requires: libQt5Core5
     %else
         BuildRequires: libqt4-devel, qt-devel
@@ -518,8 +518,8 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/icons/hicolor/*/*/*
 %{_datadir}/icons/*/*/*/*
-%{_datadir}/doc/megasync
-%{_datadir}/doc/megasync/*
+%{_docdir}/megasync
+%{_docdir}/megasync/*
 /etc/sysctl.d/99-megasync-inotify-limit.conf
 /etc/udev/rules.d/99-megasync-udev.rules
 /opt/*
