@@ -9,14 +9,15 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: zlib-devel, pkgconf-pkg-config, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
-BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl, lsb_release
+BuildRequires: zlib-devel, autoconf, autoconf-archive, automake, libtool, gcc-c++, libicu-devel
+BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl
 
 #OpenSUSE
 %if 0%{?suse_version} || 0%{?sle_version}
 
     BuildRequires: libopenssl-devel, sqlite3-devel
     BuildRequires: libbz2-devel
+    BuildRequires: lsb-release
 
     # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
     # plus it speeds up building process
@@ -32,7 +33,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl, lsb_rele
         BuildRequires: libudev-devel
     %endif
 
-    %if 0%{?suse_version} > 1500
+    %if 0%{?suse_version} > 1600
         BuildRequires: pkgconf-pkg-config
     %else
         BuildRequires: pkg-config
@@ -79,6 +80,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, wget, nasm, cmake, perl, lsb_rele
     BuildRequires: desktop-file-utils
     BuildRequires: bzip2-devel
     BuildRequires: systemd-devel
+    BuildRequires: lsb_release, pkgconf-pkg-config
 
     %if 0%{?fedora_version} < 33
         BuildRequires: cryptopp-devel
