@@ -24,10 +24,18 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QLabel
+{
+background-color: transparent;
+}
+
 QGroupBox
 {
 font-weight: bold;
-margin-top: 15px;
+margin-top: 25px;
+background-color: #fafafa; /*colorToken.surface-1*/
+border: 0px solid gray;
+border-radius: 10px;
 }
 
 QGroupBox::title
@@ -35,7 +43,12 @@ QGroupBox::title
 color: #DD1405; /*colorToken.button-brand*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
-padding: 0 15 0 0px;
+padding: 7 0 0 5px;
+}
+
+QCheckBox
+{
+background-color: transparent;
 }
 
 QCheckBox::indicator
@@ -48,7 +61,7 @@ QCheckBox::indicator:checked
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E;
+border-color: #04101E; /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #04101E; /*colorToken.button-primary*/
@@ -61,7 +74,7 @@ QCheckBox::indicator:unchecked
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E;
+border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
