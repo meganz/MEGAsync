@@ -117,6 +117,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         return;
     }
 
+    auto start = std::chrono::high_resolution_clock::now();
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
     QString styleSheet = widget->styleSheet();
@@ -131,6 +132,10 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     {
         widget->setStyleSheet(styleSheet);
     }
+
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<float> elapsed = end - start;
+    std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
 }
 
 bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens)

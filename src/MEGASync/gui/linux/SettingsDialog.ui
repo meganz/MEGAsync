@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>675</width>
-    <height>807</height>
+    <height>832</height>
    </rect>
   </property>
   <property name="contextMenuPolicy">
@@ -22,6 +22,21 @@
 font-size: 12px;
 background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
+}
+
+#wControlButtons
+{
+background-color: #fafafa; /*colorToken.surface-1*/
+}
+
+#wDetails
+{
+background-color: #fafafa; /*colorToken.surface-1*/
+}
+
+#wUpdateSection
+{
+background-color: transparent;
 }
 
 QLabel
@@ -40,7 +55,7 @@ border-radius: 10px;
 
 QGroupBox::title
 {
-color: #DD1405; /*colorToken.button-brand*/
+color: #04101E; /*colorToken.text-accent*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
 padding: 7 0 0 5px;
@@ -66,8 +81,6 @@ border-width: 2px;
 border-radius: 4px;
 background-color: #04101E; /*colorToken.button-primary*/
 image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
-image-width:8px;
-image-height:6px;
 }
 
 QCheckBox::indicator:unchecked
@@ -223,6 +236,7 @@ border: none;
 #lAccountType, #lName
 {
 font-size: 13px;
+background-color: #fafafa; /*colorToken.surface-1*/
 }
 
 #lAccountType
