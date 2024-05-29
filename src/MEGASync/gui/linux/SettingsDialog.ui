@@ -35,17 +35,19 @@ border-radius: 5px;
 padding: 1px 1px 1px 5px;
 }
 
-QComboBox::down-arrow {
-    image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
+QComboBox::down-arrow
+{
+image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
 }
 
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
+QComboBox::drop-down
+{
+subcontrol-origin: padding;
+subcontrol-position: top right;
+width: 15px;
 
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
 }
 
 #wControlButtons
