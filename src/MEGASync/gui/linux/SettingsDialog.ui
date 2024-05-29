@@ -24,6 +24,20 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QProgressBar
+{
+border-width: 0px;
+border-style: solid;
+background-color: #0D000000; /* NEED TO FIX ALPHA CHANNEL colorToken.indicator-background*/
+max-height: 8px;
+}
+
+QProgressBar::chunk
+{
+background-color: #477EF7; /*colorToken.indicator-indigo*/
+border-radius: 4px;
+}
+
 QCheckBox::indicator:checked
 {
 padding: 2px;
