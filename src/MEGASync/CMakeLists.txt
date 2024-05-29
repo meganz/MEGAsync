@@ -121,6 +121,8 @@ message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5
 
 target_link_libraries(MEGAsync
     PUBLIC
+    MEGA::SDKlib
+    MEGA::SDKQtBindings
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     $<$<BOOL:${UNIX}>:Qt5::Svg>
@@ -130,8 +132,6 @@ target_link_libraries(MEGAsync
     Qt5::Network
     Qt5::Qml
     Qt5::Quick
-    MEGA::SDKlib
-    MEGA::SDKQtBindings
     MEGA::google_breakpad
 )
 
