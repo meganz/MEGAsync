@@ -24,6 +24,30 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QComboBox
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+padding: 1px 1px 1px 5px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
 #wControlButtons
 {
 background-color: #fafafa; /*colorToken.surface-1*/
@@ -91,6 +115,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 }
 
 #bUpdate, #bSendBug
@@ -101,17 +126,6 @@ border-color: #333333; /*colorToken.text-primary*/
 border-width: 2px;
 border-style: outset;
 border-radius: 5px;
-}
-
-#cLanguage, #cbTheme
-{
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
-border-width: 2px;
-border-style: outset;
-border-radius: 5px;
-padding: 1px 1px 1px 5px;
 }
 
 #bClearCache, #bClearRemoteCache, #bClearFileVersions

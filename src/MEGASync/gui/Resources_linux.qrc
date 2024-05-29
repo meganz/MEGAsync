@@ -1508,5 +1508,7 @@
         <file>images/folder.svg</file>
         <file>images/themed/dark/checkbox_checked.svg</file>
         <file>images/themed/light/checkbox_checked.svg</file>
+        <file>images/themed/light/combobox_down_arrow.svg</file>
+        <file>images/themed/dark/combobox_down_arrow.svg</file>
     </qresource>
 </RCC>
