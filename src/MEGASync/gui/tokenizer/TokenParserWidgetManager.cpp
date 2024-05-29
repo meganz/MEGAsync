@@ -189,6 +189,8 @@ bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
 {
     bool updated = false;
 
+    int adjustIndexOffset = 0;
+
     QRegularExpressionMatchIterator matchIterator = replaceThemeTokenRegularExpression.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
@@ -196,9 +198,37 @@ bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
 
         if (match.lastCapturedIndex() == ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme)
         {
-            auto startIndex = match.capturedStart(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
-            auto endIndex = match.capturedEnd(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
-            styleSheet.replace(startIndex, endIndex-startIndex, currentTheme.toLower());
+            if (match.captured(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme) == currentTheme.toLower())
+            {
+                continue;
+            }
+
+            std::cout << "*****************************" << std::endl;
+            std::cout << match.captured(0).toStdString() << std::endl;
+            std::cout << "going to replace to : " << currentTheme.toLower().toStdString() << std::endl;
+            std::cout << "*****************************" << std::endl;
+
+            auto startIndex = adjustIndexOffset + match.capturedStart(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
+            auto endIndex = adjustIndexOffset + match.capturedEnd(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
+
+            auto capturedLength = endIndex - startIndex;
+            if (capturedLength > currentTheme.length())
+            {
+                // need to remove chars
+                auto diff = capturedLength - currentTheme.length();
+                styleSheet.remove(startIndex, diff);
+                adjustIndexOffset -= diff;
+            }
+            else if (capturedLength < currentTheme.length())
+            {
+                // need to add chars
+                auto diff = currentTheme.length() - capturedLength;
+                const QChar fillchar = QLatin1Char(' ');
+                styleSheet.insert(startIndex, &fillchar, diff);
+                adjustIndexOffset += diff;
+            }
+
+            styleSheet.replace(startIndex, currentTheme.toLower().length(), currentTheme.toLower());
             updated = true;
         }
     }

@@ -536,6 +536,7 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->addItems(languages);
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
+    mUi->cbTheme->clear();
     mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
     mUi->cbTheme->setCurrentIndex(static_cast<int>(mPreferences->getThemeType()));
 

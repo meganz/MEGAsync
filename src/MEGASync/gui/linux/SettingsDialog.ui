@@ -24,6 +24,27 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QCheckBox::indicator:checked
+{
+padding: 2px;
+border-style: solid;
+border-color: #04101E; /*colorToken.button-primary*/
+border-width: 2px;
+border-radius: 4px;
+background-color: #04101E; /*colorToken.button-primary*/
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked
+{
+padding: 2px;
+border-style: solid;
+border-color: #04101E;  /*colorToken.button-primary*/
+border-width: 2px;
+border-radius: 4px;
+background-color: #f3f4f4;
+}
+
 QComboBox
 {
 background-color:  #fafafa; /*colorToken.surface-1*/
@@ -96,28 +117,6 @@ QCheckBox::indicator
 {
 height: 10px;
 width: 12px;
-}
-
-QCheckBox::indicator:checked
-{
-padding: 2px;
-border-style: solid;
-border-color: #04101E; /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #04101E; /*colorToken.button-primary*/
-image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
-}
-
-QCheckBox::indicator:unchecked
-{
-padding: 2px;
-border-style: solid;
-border-color: #04101E;  /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #f3f4f4;
-image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 }
 
 #bUpdate, #bSendBug
