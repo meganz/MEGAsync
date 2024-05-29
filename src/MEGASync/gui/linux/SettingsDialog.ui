@@ -362,7 +362,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
@@ -411,7 +411,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
@@ -457,7 +457,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
@@ -503,7 +503,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
@@ -549,7 +549,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
@@ -595,7 +595,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
@@ -641,7 +641,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
@@ -687,7 +687,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
@@ -1395,7 +1395,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2281,7 +2281,7 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -2524,7 +2524,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

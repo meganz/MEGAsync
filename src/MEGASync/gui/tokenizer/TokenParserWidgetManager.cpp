@@ -190,6 +190,9 @@ bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
     bool updated = false;
 
     int adjustIndexOffset = 0;
+    auto toReplaceTheme = currentTheme.toLower();
+    auto toReplaceThemeLenght = toReplaceTheme.length();
+    const QChar fillChar = QLatin1Char(' ');
 
     QRegularExpressionMatchIterator matchIterator = replaceThemeTokenRegularExpression.globalMatch(styleSheet);
     while (matchIterator.hasNext())
@@ -198,37 +201,31 @@ bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
 
         if (match.lastCapturedIndex() == ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme)
         {
-            if (match.captured(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme) == currentTheme.toLower())
+            if (match.captured(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme) == toReplaceTheme)
             {
                 continue;
             }
-
-            std::cout << "*****************************" << std::endl;
-            std::cout << match.captured(0).toStdString() << std::endl;
-            std::cout << "going to replace to : " << currentTheme.toLower().toStdString() << std::endl;
-            std::cout << "*****************************" << std::endl;
 
             auto startIndex = adjustIndexOffset + match.capturedStart(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
             auto endIndex = adjustIndexOffset + match.capturedEnd(ReplaceThemeTokenCaptureIndex::ReplaceThemeTokenTheme);
 
             auto capturedLength = endIndex - startIndex;
-            if (capturedLength > currentTheme.length())
+            if (capturedLength > toReplaceThemeLenght)
             {
                 // need to remove chars
-                auto diff = capturedLength - currentTheme.length();
+                auto diff = capturedLength - toReplaceThemeLenght;
                 styleSheet.remove(startIndex, diff);
                 adjustIndexOffset -= diff;
             }
-            else if (capturedLength < currentTheme.length())
+            else if (capturedLength < toReplaceThemeLenght)
             {
                 // need to add chars
-                auto diff = currentTheme.length() - capturedLength;
-                const QChar fillchar = QLatin1Char(' ');
-                styleSheet.insert(startIndex, &fillchar, diff);
+                auto diff = toReplaceThemeLenght - capturedLength;
+                styleSheet.insert(startIndex, &fillChar, diff);
                 adjustIndexOffset += diff;
             }
 
-            styleSheet.replace(startIndex, currentTheme.toLower().length(), currentTheme.toLower());
+            styleSheet.replace(startIndex, toReplaceThemeLenght, toReplaceTheme);
             updated = true;
         }
     }
