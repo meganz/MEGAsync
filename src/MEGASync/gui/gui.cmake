@@ -459,7 +459,7 @@ target_include_directories(MEGAsync PRIVATE
 
 if (UNIX AND NOT APPLE)
 
-    # Install try icons for Linux
+    # Install tray icons for Linux
 
     # color
     set(HICOLOR "share/icons/hicolor/scalable/status")
