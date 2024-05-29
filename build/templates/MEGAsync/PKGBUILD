@@ -30,10 +30,10 @@ url="http://mega.nz/#sync"
 license=() #TODO
 groups=()
 depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' 'qt5-tools>=5.15' 'icu>=69.1' 'sqlite' 'openssl>=3.0.0' 'zlib' 'qt5-svg>=5.15' 'qt5-x11extras' 'bzip2' 'xz' 'libraw' 'double-conversion>=3.1.5' 'systemd' 'qt5-graphicaleffects' 'qt5-quickcontrols2' 'qt5-quickcontrols')
-makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'ffmpeg-mega' 'pdfium-mega' 'bzip2' 'xz' 'qt5-declarative')
+makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'bzip2' 'xz' 'qt5-declarative' 'cmake' 'zip' 'python3' 'autoconf-archive' 'nasm')
 checkdepends=()
 optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
-provides=("megasync=${pkgver}" 'ffmpeg-mega')
+provides=("megasync=${pkgver}")
 conflicts=('megatools')
 replaces=()
 backup=()
@@ -48,38 +48,42 @@ validpgpkeys=()
 
 prepare() {
 	cd "$pkgname-$pkgver"
-	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${pkgrel}\"/g" MEGASync/control/Version.h
-	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${pkgrel}/g" MEGASync/control/Version.h
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${pkgrel}\"/g" src/MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${pkgrel}/g" src/MEGASync/control/Version.h
+
+	if [ -f /opt/vcpkg.tar.gz ]; then
+		tar xzf /opt/vcpkg.tar.gz
+	fi
 }
 
 build() {
-	_bindir=$pkgdir/usr/bin
 	cd "$pkgname-$pkgver"
-	./configure -e -q -g -L
-	# Link dynamically with freeimage if pdfium is required.
-	ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3; \
-	ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so; \
-	qmake-qt5 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro || qmake-qt4 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
-	lrelease-qt5 MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
-	make ${BUILD_PARALLEL_JOBS}
+
+	megasrcdir="${PWD}"
+	megabuilddir="${megasrcdir}/build_dir"
+
+	if [ -d "${megasrcdir}/vcpkg" ]; then
+		export VCPKG_DEFAULT_BINARY_CACHE=/opt/persistent/vcpkg_cache
+		mkdir -p ${VCPKG_DEFAULT_BINARY_CACHE}
+		vcpkg_root="-DVCPKG_ROOT=${megasrcdir}/vcpkg"
+	fi
+
+	cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF -DCMAKE_BUILD_TYPE=RelWithDebInfo -S "${megasrcdir}" -B "${megabuilddir}"
+	cmake --build "${megasrcdir}"/build_dir ${BUILD_PARALLEL_JOBS}
 }
 
 check() {
 	cd "$pkgname-$pkgver"
-#	make -k check  DESTDIR=$_bindir THE_RPM_BUILD_ROOT=$pkgdir
 }
 
 package() {
-	_bindir=$pkgdir/usr/bin
-	mkdir -p $_bindir
+	megasrcdir="${srcdir}/${pkgname}-${pkgver}"
+	megabuilddir="${megasrcdir}/build_dir"
 
-	cd "$pkgname-$pkgver"
-	make install TARGET=$_bindir/megasync INSTALL_ROOT=$pkgdir
-	install -m 755 -p MEGASync/megasync $_bindir/megasync
+	cmake --install "${megabuilddir}" --prefix $pkgdir
+
 	mkdir -p $pkgdir/etc/sysctl.d/
 	echo "fs.inotify.max_user_watches = 524288" > $pkgdir/etc/sysctl.d/99-megasync-inotify-limit.conf
 	mkdir -p $pkgdir/etc/udev/rules.d/
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > $pkgdir/etc/udev/rules.d/99-megasync-udev.rules
-	mkdir -p $pkgdir/opt/mega/lib
-	install -D MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $pkgdir/opt/mega/lib
 }
