@@ -2,6 +2,7 @@
 
 #include "ThemeManager.h"
 #include "IconTokenizer.h"
+#include "MegaApplication.h"
 
 #include <QDir>
 #include <QWidget>
@@ -51,6 +52,7 @@ TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
     mCurrentWidget{nullptr}
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &TokenParserWidgetManager::onThemeChanged);
+    connect(MegaSyncApp, &MegaApplication::updateUserInterface, this, &TokenParserWidgetManager::onUpdateRequested, Qt::QueuedConnection);
 
     colorTokenRegularExpression.optimize();
     iconColorTokenRegularExpression.optimize();
@@ -106,6 +108,11 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* widget)
     applyTheme(widget);
 }
 
+void TokenParserWidgetManager::onUpdateRequested()
+{
+    applyTheme(mCurrentWidget);
+}
+
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
     auto theme = ThemeManager::instance()->getSelectedTheme();
@@ -133,9 +140,31 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         widget->setStyleSheet(styleSheet);
     }
 
+    test(widget);
+
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> elapsed = end - start;
     std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
+}
+
+void TokenParserWidgetManager::test(QWidget* widget)
+{
+    auto widgets = widget->findChildren<QWidget*>(QLatin1String("findGroup"));
+    if (widgets.isEmpty())
+    {
+        std::cout << "node not found" << std::endl;
+        return;
+    }
+
+    auto foundWidget = widgets.first();
+    //foundWidget->setStyleSheet(QLatin1String("background-color: blue;"));
+    std::cout << "foundWidget : " << foundWidget->objectName().toStdString() << std::endl;
+
+    auto widgetParent = widgets.first()->parentWidget();
+
+    std::cout << "widgetParent : " << widgetParent->objectName().toStdString() << std::endl;
+
+    widgetParent->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
 }
 
 bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens)

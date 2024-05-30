@@ -56,6 +56,9 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     connect(Preferences::instance().get(), &Preferences::valueChanged, this, &SyncSettingsElements::onPreferencesValueChanged);
 
     syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
+
+    // @jsubi : throw a update ui signal.
+    emit MegaSyncApp->updateUserInterface();
 }
 
 void SyncSettingsElements::setOverQuotaMode(bool mode)

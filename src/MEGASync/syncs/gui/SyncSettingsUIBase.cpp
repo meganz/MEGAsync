@@ -120,7 +120,9 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
                         }
 #else
+                        // @jsubi : throw a update ui signal.
                         mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+                        emit MegaSyncApp->updateUserInterface();
 #endif
                     }
                 }
@@ -137,7 +139,9 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                             toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
                         }
 #else
+                        // @jsubi : throw a update ui signal.
                         mToolBarItem->setIcon(QIcon(getFinishIconString()));
+                        emit MegaSyncApp->updateUserInterface();
 #endif
                     }
                 }

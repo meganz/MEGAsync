@@ -22,10 +22,12 @@ private:
     QString themeToString(Preferences::ThemeType theme) const;
     void loadColorThemeJson();
     void onThemeChanged(Preferences::ThemeType theme);
+    void onUpdateRequested();
     void applyTheme(QWidget* widget);
     bool replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
     bool replaceIconColorTokens(QWidget* widget, QString& styleSheet, const ColorTokens& colorTokens);
     bool replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
+    void test(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
     QWidget* mCurrentWidget;

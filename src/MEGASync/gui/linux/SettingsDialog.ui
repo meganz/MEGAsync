@@ -2298,14 +2298,7 @@ min-height: 72px;
       <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="bHelp">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-border: none;
-color: #0078D7;
-}
-
-QPushButton::!enabled {
-color: grey;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Help</string>
