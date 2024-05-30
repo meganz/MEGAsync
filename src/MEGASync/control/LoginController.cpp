@@ -682,12 +682,44 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         {
             return;
         }
+        mPreferences->loadExcludedSyncNames(); //to attend the corner case:
+            // comming from old versions that didn't include some defaults
+
     }
     assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
 
     if (!mPreferences->logged())
     {
         return;
+    }
+    const QStringList exclusions = mPreferences->getExcludedSyncNames();
+    if(!exclusions.isEmpty())
+    {
+        std::vector<std::string> vExclusions;
+        for (const QString& exclusion : exclusions)
+        {
+            vExclusions.push_back(exclusion.toStdString());
+        }
+        mMegaApi->setLegacyExcludedNames(&vExclusions);
+    }
+    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
+    if(!exclusionPaths.isEmpty())
+    {
+        std::vector<std::string> vExclusionPaths;
+        for (const QString& exclusionPath : exclusionPaths)
+        {
+            vExclusionPaths.push_back(exclusionPath.toStdString());
+        }
+        mMegaApi->setLegacyExcludedPaths(&vExclusionPaths);
+    }
+    if (mPreferences->lowerSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
+    }
+
+    if (mPreferences->upperSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
     }
 
     if (temporarilyLoggedPrefs)

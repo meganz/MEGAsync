@@ -330,6 +330,11 @@ public:
                                        int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
+    QStringList getExcludedSyncNames();
+    QStringList getExcludedSyncPaths();
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
+
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
     void setSystemTrayPromptSuppressed(bool suppressed);
@@ -577,6 +582,8 @@ protected:
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
+    QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
