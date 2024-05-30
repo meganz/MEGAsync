@@ -24,6 +24,14 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+#bHelp
+{
+border: none;
+color: #2C5BEB; /*colorToken.link-primary*/
+background-color: transparent;
+font-weight: bold;
+}
+
 QProgressBar
 {
 border-width: 0px;
@@ -133,8 +141,11 @@ height: 10px;
 width: 12px;
 }
 
-#bUpdate, #bSendBug
+QPushButton
 {
+padding-left: 10px;
+padding-right: 10px;
+height: 22px;
 background-color:  #fafafa; /*colorToken.surface-1*/
 color: #333333; /*colorToken.text-primary*/
 border-color: #333333; /*colorToken.text-primary*/
@@ -164,36 +175,31 @@ background-color: #FFFFFF; /* colorToken.page-background*/
 padding: 6px;
 }
 
-/*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bBackup;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bBackup;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bFolders;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bFolders;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bGeneral;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bGeneral;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bGeneral;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bGeneral;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bNetwork;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bNetwork;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bNetwork;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bNetwork;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bNotifications;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bNotifications;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bNotifications;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bNotifications;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bSecurity;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bSecurity;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
 
-/*ColorTokenIcon;ToolButton;bSyncs;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bSyncs;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
 
-QPushButton
-{
-padding-left: 10px;
-padding-right: 10px;
-height: 22px;
-}
+/*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
 QComboBox
 {
@@ -376,7 +382,7 @@ margin-top: 4px;
          <string>General</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
@@ -425,7 +431,7 @@ margin-top: 4px;
          <string>Account</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
@@ -471,7 +477,7 @@ margin-top: 4px;
          <string>Sync</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
@@ -517,7 +523,7 @@ margin-top: 4px;
          <string>Backup</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
@@ -563,7 +569,7 @@ margin-top: 4px;
          <string>Security</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
@@ -609,7 +615,7 @@ margin-top: 4px;
          <string>Folders</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
@@ -655,7 +661,7 @@ margin-top: 4px;
          <string>Network</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
@@ -701,7 +707,7 @@ margin-top: 4px;
          <string>Notifications</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
@@ -1409,7 +1415,7 @@ margin-top: 4px;
                 </sizepolicy>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                </property>
                <property name="iconSize">
@@ -2295,13 +2301,13 @@ color: grey;
          <string>Help</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/help-icon.svg</normaloff>:/images/help-icon.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>24</width>
-          <height>24</height>
+          <width>16</width>
+          <height>16</height>
          </size>
         </property>
         <property name="flat">
@@ -2538,7 +2544,7 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

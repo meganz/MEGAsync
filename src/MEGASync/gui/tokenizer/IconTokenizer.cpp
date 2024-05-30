@@ -5,7 +5,7 @@
 #include <QBitmap>
 #include <QToolButton>
 
-static const QString ToolButtonId = QString::fromUtf8("ToolButton");
+static const QString ToolButtonId = QString::fromUtf8("Button");
 
 IconTokenizer::IconTokenizer(QObject* parent)
     : QObject{parent}
@@ -14,7 +14,7 @@ IconTokenizer::IconTokenizer(QObject* parent)
 void IconTokenizer::process(QWidget* widget, const QString& mode, const QString& state, const ColorTokens& colorTokens,
                             const QString& targetElementId, const QString& targetElementProperty, const QString& tokenId)
 {
-    if (widget == nullptr|| mode.isEmpty() || state.isEmpty() || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
+    if (widget == nullptr || mode.isEmpty() || state.isEmpty() || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
     {
         qDebug() << __func__ << " Error on function arguments :"
                  << "\n widget is nullptr : " << QVariant(widget == nullptr).toString()
@@ -52,10 +52,10 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             return;
         }
 
-        auto button = dynamic_cast<QToolButton*>(widgets.constFirst());
+        auto button = dynamic_cast<QAbstractButton*>(widgets.constFirst());
         if (button == nullptr)
         {
-            qDebug() << __func__ << " Error dynamic cast failed for Widget* to QToolButton* : " << targetElementId;
+            qDebug() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
             return;
         }
 
