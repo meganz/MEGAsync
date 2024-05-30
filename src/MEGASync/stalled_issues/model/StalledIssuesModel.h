@@ -100,7 +100,7 @@ public:
     void UiItemUpdate(const QModelIndex& oldIndex, const QModelIndex& newIndex);
 
     //SOLVE PROBLEMS
-    void stopSolvingIssues();
+    void stopSolvingIssues(MessageInfo::ButtonType buttonType);
 
     //Solve all issues
     void solveAllIssues();

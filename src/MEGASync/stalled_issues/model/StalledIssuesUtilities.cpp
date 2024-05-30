@@ -177,7 +177,7 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
 
 //////////////////////////////////////////////////
 QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
-QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();
+QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();
 
 void StalledIssuesBySyncFilter::resetFilter()
 {

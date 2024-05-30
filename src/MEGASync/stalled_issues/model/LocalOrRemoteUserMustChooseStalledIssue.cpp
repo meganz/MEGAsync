@@ -60,8 +60,6 @@ bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
 {
-    return true;
-
     //In case it is a backup, we cannot automatically solve it
     if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
     {
@@ -156,17 +154,11 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
         {
             mNewName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, (*namesUsed));
             namesUsed->append(mNewName);
-            bool result(false);
-            QEventLoop eventLoop;
-            MegaSyncApp->getMegaApi()->renameNode(node.get(),
-                mNewName.toUtf8().constData(),
-                new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                    [&eventLoop, &result](bool, const mega::MegaRequest&, const mega::MegaError& e)
-                    {
-                        result = e.getErrorCode() == mega::MegaError::API_OK;
-                        eventLoop.quit();
-                    }));
-            eventLoop.exec();
+
+            bool result = SyncMegaRequestListener::runRequest(&mega::MegaApi::renameNode,
+                              MegaSyncApp->getMegaApi(),
+                              node.get(),
+                              mNewName.toUtf8().constData()) == mega::MegaError::API_OK;
             mChosenSide = ChosenSide::BOTH;
             return result;
         }

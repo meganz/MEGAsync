@@ -36,9 +36,14 @@ public:
     virtual bool checkIssue(const mega::MegaSyncStall*) const {return false;}
 
     void setStartNotification(const DesktopNotifications::NotificationInfo& newStartNotification);
+
+    void sendFinishNotification();
     void setFinishNotification(const DesktopNotifications::NotificationInfo& newFinishNotification);
 
     std::shared_ptr<StalledIssue> getIssue() const {return mIssue;}
+
+signals:
+    void solverFinished(MultiStepIssueSolverBase*);
 
 protected slots:
     virtual void onDeadLineFinished() = 0;
@@ -53,6 +58,14 @@ inline void MultiStepIssueSolverBase::setStartNotification(
     const DesktopNotifications::NotificationInfo& newStartNotification)
 {
     MegaSyncApp->showInfoMessage(newStartNotification);
+}
+
+inline void MultiStepIssueSolverBase::sendFinishNotification()
+{
+    if(mFinishNotification.isValid())
+    {
+        MegaSyncApp->showInfoMessage(mFinishNotification);
+    }
 }
 
 inline void MultiStepIssueSolverBase::setFinishNotification(
@@ -95,13 +108,7 @@ protected:
             mIssue->finishAsyncIssueSolving();
         }
 
-        //Send notification
-        if(mFinishNotification.isValid())
-        {
-            MegaSyncApp->showInfoMessage(mFinishNotification);
-        }
-
-        deleteLater();
+        emit solverFinished(this);
     }
 };
 

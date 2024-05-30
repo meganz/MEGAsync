@@ -21,6 +21,7 @@ public:
             SOLVED_BY_OTHER_SIDE,
             MERGED,
             CHANGED_EXTERNALLY,
+            FAILED,
             UNSOLVED
         };
 
@@ -105,6 +106,11 @@ public:
             {
                 localAttributes->setPath(mConflictedPath);
             }
+        }
+
+        void failed()
+        {
+            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::FAILED;
         }
 
     private:
@@ -525,7 +531,7 @@ public:
 
     bool hasFoldersToMerge() const;
 
-    void renameNodesAutomatically();
+    bool renameNodesAutomatically();
 
     void semiAutoSolveIssue(int option);
     bool autoSolveIssue() override;
@@ -549,18 +555,18 @@ private:
 
     void solveIssue(int option);
 
-    void renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
+    bool renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
                                        bool ignoreLastModifiedName,
                                        QStringList &cloudItemsBeingRenamed);
-    void renameLocalItemsAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
+    bool renameLocalItemsAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
                                        bool ignoreLastModifiedName,
                                        QStringList &cloudItemsBeingRenamed);
 
     //Rename siblings
-    void renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
-    void renameLocalSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
+    bool renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
+    bool renameLocalSibling(std::shared_ptr<ConflictedNameInfo> item, const QString& newName);
 
     //Find local or remote sibling
     std::shared_ptr<ConflictedNameInfo> findOtherSideItem(const QList<std::shared_ptr<ConflictedNameInfo>>& items, std::shared_ptr<ConflictedNameInfo> check);

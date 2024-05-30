@@ -219,11 +219,17 @@ void StalledIssuesCreator::addMultiStepIssueSolver(MultiStepIssueSolverBase* sol
         auto reason(issue->getReason());
 
         connect(solver,
-            &QObject::destroyed,
+            &MultiStepIssueSolverBase::solverFinished,
             this,
-            [this, solver, reason](QObject*)
+            [this, reason](MultiStepIssueSolverBase* solver)
             {
                 mMultiStepIssueSolversByReason.remove(reason, solver);
+                //Send finish notification only when the last one has finished
+                if(mMultiStepIssueSolversByReason.isEmpty())
+                {
+                    solver->sendFinishNotification();
+                }
+                solver->deleteLater();
             });
 
         mMultiStepIssueSolversByReason.insert(reason, solver);

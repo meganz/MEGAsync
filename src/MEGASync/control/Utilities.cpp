@@ -1722,21 +1722,23 @@ TimeInterval::TimeInterval(long long secs, bool secondPrecision)
 //Create Folders
 std::shared_ptr<MegaNode> PathCreator::createFolder(MegaNode* parentNode, const QString &folderName)
 {
-    std::shared_ptr<MegaNode> node(MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
+    std::shared_ptr<MegaNode> node(
+        MegaSyncApp->getMegaApi()->getChildNode(parentNode, folderName.toUtf8().constData()));
     if(!node)
     {
-        MegaSyncApp->getMegaApi()->createFolder(folderName.toUtf8().constData(), parentNode,
-                                                new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,[this, &node]
-                                                                    (bool, const MegaRequest& request,const MegaError& e)
-                                                                    {
-                                                                        if(e.getErrorCode() == MegaError::API_OK)
-                                                                        {
-                                                                            node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
-                                                                        }
-                                                                        mEventLoop.quit();
-                                                                    }));
-        //In order to execute in synchronously
-        mEventLoop.exec();
+        SyncMegaRequestListener::runRequestWithResult(
+            &MegaApi::createFolder,
+            MegaSyncApp->getMegaApi(),
+            this,
+            [&node](const MegaRequest& request, const MegaError& e)
+            {
+                if(e.getErrorCode() == MegaError::API_OK)
+                {
+                    node.reset(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
+                }
+            },
+            folderName.toUtf8().constData(),
+            parentNode);
     }
 
     return node;
@@ -1777,126 +1779,43 @@ std::shared_ptr<MegaNode> PathCreator::mkDir(const QString& root, const QString 
 /// \param binFolderName
 /// \param addDateFolder
 /// This method is run synchronously. So, it waits for the SDK to create the folders, and only then we move the files
-/// As the SDK createFolder is async, we need to use QEventLoop to stop the thread (which is not the main thread, so UI will not be frozen)
+/// As the SDK createFolder is async, we need to use QEventLoop to stop the thread (the UI thread will be frozen only if you run this method in the UI thread)
 /// When the createFolder returns we continue or stop the eventloop.
 /// When all files are moved, we stop the eventloop and we continue
 bool MoveToCloudBinUtilities::moveToBin(const QList<MegaHandle>& handles, const QString& binFolderName, bool addDateFolder)
 {
     mHandles = handles;
 
-    auto moveLambda = [this](std::unique_ptr<MegaNode> rubbishNode){
+    auto moveLambda = [this](std::shared_ptr<MegaNode> rubbishNode){
         foreach(auto handle, mHandles)
         {
             std::unique_ptr<MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if(nodeToMove)
             {
-                QEventLoop moveEventLoop;
-                MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),rubbishNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                            [&moveEventLoop]
-                                                                                                            (bool,
-                                                                                                            const MegaRequest&,
-                                                                                                            const MegaError&)
-                {
-                    moveEventLoop.quit();
-                }));
-                moveEventLoop.exec();
+                SyncMegaRequestListener::runRequestLambda(
+                    [this](MegaNode* node, MegaNode* targetNode, MegaRequestListener* listener)
+                    { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
+                    MegaSyncApp->getMegaApi(),
+                    nodeToMove.get(),
+                    rubbishNode.get());
             }
         }
 
         mResult = true;
-        mEventLoop.quit();
     };
 
-    auto moveToDateFolder = [this, moveLambda](std::unique_ptr<MegaNode> parentNode, const QString& duplicatedSyncFolderPath)
+    QString folderPath(binFolderName);
+    if(addDateFolder)
     {
         QString dateFolder(QDate::currentDate().toString(Qt::DateFormat::ISODate));
-        QString dateFolderPath(QString::fromLatin1("%1/%2").arg(duplicatedSyncFolderPath, dateFolder));
-        std::unique_ptr<MegaNode> duplicatedRubbishDateNode(MegaSyncApp->getMegaApi()->getNodeByPath(dateFolderPath.toUtf8().constData()));
-        if(!duplicatedRubbishDateNode)
-        {
-            MegaSyncApp->getMegaApi()->createFolder(dateFolder.toUtf8().constData(), parentNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
-                                                      [this, moveLambda]
-                                                      (bool isContextValid, const MegaRequest& request,const MegaError& e)
-            {
-                if(!isContextValid)
-                {
-                    return;
-                }
-
-                if (e.getErrorCode() == MegaError::API_OK)
-                {
-                    std::unique_ptr<MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
-                    if(newFolder)
-                    {
-                        moveLambda(std::move(newFolder));
-                        return;
-                    }
-                }
-
-                mEventLoop.quit();
-            }));
-
-            if(!mEventLoop.isRunning())
-            {
-                //In order to execute in synchronously
-                mEventLoop.exec();
-            }
-        }
-        else
-        {
-            moveLambda(std::move(duplicatedRubbishDateNode));
-        }
-    };
-
-    auto binNode = MegaSyncApp->getRubbishNode();
-
-    QString fullDuplicatedFolderPath(QString::fromLatin1("//bin/%1").arg(binFolderName));
-
-    std::unique_ptr<MegaNode> duplicatedRubbishNode(MegaSyncApp->getMegaApi()->getNodeByPath(fullDuplicatedFolderPath.toUtf8().constData()));
-    if(!duplicatedRubbishNode)
-    {
-        MegaSyncApp->getMegaApi()->createFolder(binFolderName.toUtf8().constData(), binNode.get(), new OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
-                                                                                                                                [this, fullDuplicatedFolderPath, moveLambda, moveToDateFolder, addDateFolder]
-                                                                                                                                (bool isContextValid, const MegaRequest& request,const MegaError& e)
-        {
-            if(!isContextValid)
-            {
-                return;
-            }
-
-            if (e.getErrorCode() == MegaError::API_OK)
-            {
-                std::unique_ptr<MegaNode> newFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
-                if(newFolder)
-                {
-                    if(addDateFolder)
-                    {
-                        moveToDateFolder(std::move(newFolder),fullDuplicatedFolderPath);
-                    }
-                    else
-                    {
-                        moveLambda(std::move(newFolder));
-                    }
-                    return;
-                }
-            }
-
-            mEventLoop.quit();
-        }));
-
-        //In order to execute in synchronously
-        mEventLoop.exec();
+        folderPath = QString::fromLatin1("%1/%2").arg(folderPath, dateFolder);
     }
-    else
+
+    PathCreator creator;
+    auto folderNode = creator.mkDir(QString::fromLatin1("//bin"), folderPath);
+    if(folderNode)
     {
-        if(addDateFolder)
-        {
-            moveToDateFolder(std::move(duplicatedRubbishNode),fullDuplicatedFolderPath);
-        }
-        else
-        {
-            moveLambda(std::move(duplicatedRubbishNode));
-        }
+        moveLambda(folderNode);
     }
 
     return mResult;
@@ -1915,20 +1834,19 @@ bool MoveToCloudBinUtilities::moveToBin(const QList<MegaHandle>& handles, const 
             i.  We run this algorithm recursively but updating the main and the secondary folders pointer.
         d. If the secondary folder has a folder which is not in the main folder, we move it directly
 */
-void CloudFoldersMerge::merge(ActionForDuplicates action)
+bool CloudFoldersMerge::merge(ActionForDuplicates action)
 {
+    auto failedRequests(0);
 
     QStringList itemsBeingRenamed;
 
     std::unique_ptr<MegaNodeList> folderTargetNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderTarget));
-    QMap<QString, int> nodesIndexesByName;
+    QMultiMap<QString, int> nodesIndexesByName;
     for(int index = 0; index < folderTargetNodes->size(); ++index)
     {
         auto node(folderTargetNodes->get(index));
-        nodesIndexesByName.insertMulti(QString::fromUtf8(node->getName()), index);
+        nodesIndexesByName.insert(QString::fromUtf8(node->getName()), index);
     }
-
-    QEventLoop eventLoop;
 
     std::unique_ptr<MegaNodeList> folderToMergeNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
     for(int index = 0; index < folderToMergeNodes->size(); ++index)
@@ -1961,13 +1879,10 @@ void CloudFoldersMerge::merge(ActionForDuplicates action)
                     std::unique_ptr<MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(node));
                     if(action == ActionForDuplicates::IgnoreAndRemove || folderChild->size() == 0)
                     {
-                        MegaSyncApp->getMegaApi()->remove(node, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                    [&eventLoop]
-                                                                                    (bool, const MegaRequest&,const MegaError&)
+                        if(SyncMegaRequestListener::runRequest(&MegaApi::remove, MegaSyncApp->getMegaApi(), node) != MegaError::API_OK)
                         {
-                            eventLoop.quit();
-                        }));
-                        eventLoop.exec();
+                            failedRequests++;
+                        }
                     }
                     else
                     {
@@ -1978,25 +1893,35 @@ void CloudFoldersMerge::merge(ActionForDuplicates action)
 
             if(!duplicateFound || action == ActionForDuplicates::Rename)
             {
-                auto newName = Utilities::getNonDuplicatedNodeName(node, mFolderTarget, nodeName, true, itemsBeingRenamed);
-                MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget,newName.toUtf8().constData(), new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                                                [&eventLoop]
-                                                                                                                                (bool, const MegaRequest&,const MegaError&)
+                auto newName = Utilities::getNonDuplicatedNodeName(
+                    node, mFolderTarget, nodeName, true, itemsBeingRenamed);
+
+                if(SyncMegaRequestListener::runRequestLambda([this](MegaNode* node,
+                                                           MegaNode* targetNode,
+                                                           const char* newName,
+                                                           MegaRequestListener* listener)
+                       { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener); },
+                       MegaSyncApp->getMegaApi(),
+                       node,
+                       mFolderTarget,
+                       newName.toStdString().c_str()) != MegaError::API_OK)
                 {
-                    eventLoop.quit();
-                }));
-                eventLoop.exec();
+                    failedRequests++;
+                }
             }
         }
         else
         {
-            MegaSyncApp->getMegaApi()->moveNode(node, mFolderTarget, new OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                        [&eventLoop]
-                                                                                                        (bool, const MegaRequest&,const MegaError&)
+            if(SyncMegaRequestListener::runRequestLambda([this](MegaNode* node,
+                                                       MegaNode* targetNode,
+                                                       MegaRequestListener* listener)
+                   { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
+                   MegaSyncApp->getMegaApi(),
+                   node,
+                   mFolderTarget) != MegaError::API_OK)
             {
-                eventLoop.quit();
-            }));
-            eventLoop.exec();
+                failedRequests++;
+            }
         }
     }
 
@@ -2007,11 +1932,19 @@ void CloudFoldersMerge::merge(ActionForDuplicates action)
         if(folderChild->size() != 0)
         {
             MoveToCloudBinUtilities toBin;
-            toBin.moveToBin(QList<MegaHandle>() << mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
+            if(!toBin.moveToBin(QList<MegaHandle>() << mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true))
+            {
+                failedRequests++;
+            }
         }
         else
         {
-            MegaSyncApp->getMegaApi()->remove(mFolderToMerge);
+            if(SyncMegaRequestListener::runRequest(&MegaApi::remove, MegaSyncApp->getMegaApi(), mFolderToMerge) != MegaError::API_OK)
+            {
+                failedRequests++;
+            }
         }
     }
+
+    return failedRequests == 0;
 }

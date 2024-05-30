@@ -78,7 +78,7 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
     {
         auto info = std::make_shared<MessageInfo>();
         info->message = processingIssuesString();
-        info->buttonType = MessageInfo::ButtonType::None;
+        info->buttonType = MessageInfo::ButtonType::NONE;
         info->count = count.currentIssueBeingSolved;
         info->total = count.totalIssues;
         emit updateLoadingMessage(info);
@@ -716,7 +716,7 @@ bool StalledIssuesModel::checkIfUserStopSolving()
     return false;
 }
 
-void StalledIssuesModel::stopSolvingIssues()
+void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
 {
     if(mIssuesSolved)
     {
@@ -734,8 +734,14 @@ void StalledIssuesModel::stopSolvingIssues()
     }
     else
     {
-        mSolvingIssuesStopped = true;
-        unBlockUi();
+        if(buttonType == MessageInfo::ButtonType::STOP)
+        {
+            mSolvingIssuesStopped = true;
+        }
+        else
+        {
+            unBlockUi();
+        }
     }
 }
 
@@ -772,7 +778,7 @@ void StalledIssuesModel::sendFinishSolvingMessage(
             QString successItems = tr("%n issues fixed", "", count.issuesFixed);
             info->message = tr("%1, but %n issues failed.", "", count.issuesFailed).arg(successItems);
         }
-        info->buttonType = MessageInfo::ButtonType::Ok;
+        info->buttonType = MessageInfo::ButtonType::OK;
         emit updateLoadingMessage(info);
     }
     else
@@ -787,7 +793,7 @@ void StalledIssuesModel::sendFixingIssuesMessage(int issue, int totalIssues)
     info->message = fixingIssuesString();
     info->count = issue;
     info->total = totalIssues;
-    info->buttonType = MessageInfo::ButtonType::Stop;
+    info->buttonType = MessageInfo::ButtonType::STOP;
     emit updateLoadingMessage(info);
 }
 
@@ -1377,10 +1383,14 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& index
         {
             auto solver(new MoveOrRenameMultiStepIssueSolver(moveOrRemoveIssue));
 
-            DesktopNotifications::NotificationInfo startNotificationInfo;
-            startNotificationInfo.title = tr("Sync stalls");
-            startNotificationInfo.message = processingIssuesString();
-            solver->setStartNotification(startNotificationInfo);
+            //Don´t send a new notification if a previous one was sent
+            if(!mStalledIssuesReceiver->multiStepIssueSolveActive())
+            {
+                DesktopNotifications::NotificationInfo startNotificationInfo;
+                startNotificationInfo.title = tr("Sync stalls");
+                startNotificationInfo.message = processingIssuesString();
+                solver->setStartNotification(startNotificationInfo);
+            }
 
             DesktopNotifications::NotificationInfo finishNotificationInfo;
             finishNotificationInfo.title = tr("Sync stalls");

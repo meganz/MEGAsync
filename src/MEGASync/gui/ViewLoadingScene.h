@@ -205,9 +205,9 @@ struct MessageInfo
 {
     enum ButtonType
     {
-        None,
-        Stop,
-        Ok
+        NONE,
+        STOP,
+        OK
     };
 
     QString message;
@@ -228,6 +228,8 @@ public:
 
     bool needsAnswerFromUser() const;
 
+    MessageInfo::ButtonType getButtonType() const;
+
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
 
@@ -237,7 +239,7 @@ public slots:
     void updateMessage(std::shared_ptr<MessageInfo> info);
 
 signals:
-    void onStopPressed();
+    void onButtonPressed(MessageInfo::ButtonType);
     void loadingMessageVisibilityChange(bool value);
 
 protected:

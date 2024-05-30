@@ -198,6 +198,12 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                 titleText = tr("Modified externally");
             }
+            else if (info->mSolved ==
+                    NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::FAILED)
+            {
+                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
+                titleText = tr("Failed");
+            }
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));

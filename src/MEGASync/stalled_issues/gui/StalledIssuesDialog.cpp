@@ -55,8 +55,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::updateLoadingMessage, ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::updateMessage, Qt::QueuedConnection);
-    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onStopPressed, this, [this](){
-        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues();
+    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onButtonPressed, this, [this](MessageInfo::ButtonType buttonType){
+        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(buttonType);
     });
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);

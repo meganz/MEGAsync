@@ -56,7 +56,7 @@ private:
     static bool isBelow(const QString& syncRootPath, const QString& checkPath);
 
     static QMap<QVariant, mega::MegaHandle> mSyncIdCache;
-    static QMap<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> mSyncIdCacheByStall;
+    static QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> mSyncIdCacheByStall;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
