@@ -84,6 +84,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
     gui/onboarding/ChooseFolder.h
+    gui/qml/ChooseFile.h
     gui/onboarding/Onboarding.h
     gui/onboarding/AccountInfoData.h
     gui/onboarding/BackupsModel.h
@@ -182,6 +183,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/StandardIconProvider.cpp
     gui/onboarding/ChooseFolder.cpp
     gui/onboarding/Onboarding.cpp
+    gui/qml/ChooseFile.cpp
     gui/onboarding/AccountInfoData.cpp
     gui/onboarding/BackupsModel.cpp
     gui/onboarding/Syncs.cpp

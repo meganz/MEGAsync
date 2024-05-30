@@ -10,6 +10,9 @@ import components.buttons 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
 
+import ChooseLocalFolder 1.0
+import ChooseLocalFile 1.0
+
 Window{
     id: root
 
@@ -25,17 +28,57 @@ Window{
     property alias title: root.title
     property alias headTitle: title.text
 
-    signal accepted
-    signal chooseFile
-    signal chooseFolder
+    function getTextFieldTitle() {
+        if (targetComboBox.currentText === ExclusionsStrings.extensions){
+            return ExclusionsStrings.filesWithExtension;
+        }else if (valueTypeCombo.currentText === ExclusionsStrings.containing){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                return ExclusionsStrings.filesContaining
+            }
+            else{
+                return ExclusionsStrings.foldersContaining
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.endingWith){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                return ExclusionsStrings.filesEndingWith
+            }
+            else{
+                return ExclusionsStrings.foldersEndingWith
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.beginningWith){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                return ExclusionsStrings.filesBeginningWith
+            }
+            else{
+                return ExclusionsStrings.foldersBeginningWith
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.equalTo){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                return ExclusionsStrings.filesEqualTo
+            }
+            else{
+                return ExclusionsStrings.foldersEqualTo
+            }
+        }
+    }
 
+    signal accepted
+
+    onVisibleChanged: {
+        if(visible){
+            valueTextField.title = getTextFieldTitle();
+        }
+    }
     width: root.dialogWidth
     height: root.dialogHeight
     minimumWidth: root.dialogWidth
     minimumHeight: root.dialogHeight
     maximumWidth: root.dialogWidth
     maximumHeight: root.dialogHeight
-    modality: Qt.ApplicationModal
+    modality: Qt.WindowModal
     flags: Qt.Dialog
     color: colorStyle.surface1
     title: ExclusionsStrings.addExclusion
@@ -124,7 +167,10 @@ Window{
                     implicitWidth: 210
                     model: [ExclusionsStrings.files, ExclusionsStrings.folders, ExclusionsStrings.extensions]
                     onActivated:
-                        valueTypeCombo.enabled = currentText != ExclusionsStrings.extensions
+                    {
+                        valueTypeCombo.enabled = currentText != ExclusionsStrings.extensions;
+                        valueTextField.title = getTextFieldTitle();
+                    }
                 }
                 ComboBox {
                     id: valueTypeCombo
@@ -135,9 +181,39 @@ Window{
                         ExclusionsStrings.containing,
                         ExclusionsStrings.endingWith,
                         ExclusionsStrings.equalTo]
+                    onActivated: {
+                        valueTextField.title = getTextFieldTitle();
+                    }
                 }
             }
+            ChooseLocalFolder {
+                id: folderDialog
 
+                title: ExclusionsStrings.selectFolderTitle
+            }
+            ChooseLocalFile {
+                id: fileDialog
+
+                title: ExclusionsStrings.selectFileTitle
+            }
+            Connections {
+                id: chooseLocalFolderConnection
+
+                target: folderDialog
+
+                function onFolderChoosen(folderPath) {
+                    valueTextField.text = folderPath;
+                }
+            }
+            Connections {
+                id: chooseLocalFileConnection
+
+                target: fileDialog
+
+                function onFileChoosen(filePath) {
+                    valueTextField.text = filePath;
+                }
+            }
             TextField {
                 id: valueTextField
 
@@ -158,10 +234,10 @@ Window{
                 }
                 rightIconMouseArea.onClicked: {
                     if(targetComboBox.currentText === ExclusionsStrings.files){
-                        chooseFile();
+                        fileDialog.openRelativeFileSelector(syncExclusionsAccess.folderPath)
                     }
                     else if(targetComboBox.currentText === ExclusionsStrings.folders){
-                        chooseFolder();
+                        folderDialog.openFolderSelector(syncExclusionsAccess.folderPath, false);
                     }
                 }
             } // TextField: valueTextField

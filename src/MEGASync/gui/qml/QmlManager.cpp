@@ -1,6 +1,8 @@
 #include "QmlManager.h"
 
 #include "ApiEnums.h"
+#include "onboarding/ChooseFolder.h"
+#include "ChooseFile.h"
 #include "ColorTheme.h"
 #include "QmlClipboard.h"
 #include "AppStatsEvents.h"
@@ -51,6 +53,8 @@ void QmlManager::registerCommonQmlElements()
                                                QString::fromUtf8("Not creatable as it is an enum type"));
     qRegisterMetaType<AppStatsEvents::EventType>();
 
+    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
     setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
 }
 

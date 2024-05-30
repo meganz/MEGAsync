@@ -8,13 +8,14 @@
 class SyncExclusions : public QMLComponent
 {
     Q_OBJECT
-    Q_PROPERTY(int minimumAllowedSize MEMBER mMinimumAllowedSize READ getMinimumAllowedSize WRITE setMinimumAllowedSize NOTIFY minimumAllowedSizeChanged)
-    Q_PROPERTY(int maximumAllowedSize MEMBER mMaximumAllowedSize READ getMaximumAllowedSize WRITE setMaximumAllowedSize NOTIFY maximumAllowedSizeChanged)
+    Q_PROPERTY(double minimumAllowedSize MEMBER mMinimumAllowedSize READ getMinimumAllowedSize WRITE setMinimumAllowedSize NOTIFY minimumAllowedSizeChanged)
+    Q_PROPERTY(double maximumAllowedSize MEMBER mMaximumAllowedSize READ getMaximumAllowedSize WRITE setMaximumAllowedSize NOTIFY maximumAllowedSizeChanged)
     Q_PROPERTY(int minimumAllowedUnit MEMBER mMinimumAllowedUnit READ getMinimumAllowedUnit WRITE setMinimumAllowedUnit NOTIFY minimumAllowedUnitChanged)
     Q_PROPERTY(int maximumAllowedUnit MEMBER mMaximumAllowedUnit READ getMaximumAllowedUnit WRITE setMaximumAllowedUnit NOTIFY maximumAllowedUnitChanged)
     Q_PROPERTY(ExclusionRulesModel* rulesModel MEMBER mRulesModel CONSTANT)
     Q_PROPERTY(SizeExclusionStatus sizeExclusionStatus READ getSizeExclusionStatus WRITE setSizeExclusionStatus NOTIFY sizeExclusionStatusChanged)
     Q_PROPERTY(QString folderName READ getFolderName NOTIFY folderNameChanged)
+    Q_PROPERTY(QString folderPath MEMBER mFolderFullPath)
     Q_PROPERTY(bool askOnExclusionRemove READ isAskOnExclusionRemove WRITE setAskOnExclusionRemove NOTIFY askOnExclusionRemoveChanged)
 
 public:
@@ -29,11 +30,11 @@ public:
     };
     Q_ENUM(SizeExclusionStatus)
 
-    int getMinimumAllowedSize() const {return mMinimumAllowedSize;}
-    void setMinimumAllowedSize(int minimumSize);
+    double getMinimumAllowedSize() const { return mMinimumAllowedSize; }
+    void setMinimumAllowedSize(double minimumSize);
     double getMaximumAllowedSize()  const {return mMaximumAllowedSize;}
-    void setMaximumAllowedSize(int maximumSize);
-    int getMinimumAllowedUnit() const {return mMinimumAllowedUnit;}
+    void setMaximumAllowedSize(double maximumSize);
+    double getMinimumAllowedUnit() const {return mMinimumAllowedUnit;}
     void setMinimumAllowedUnit(int minimumUnit);
     int getMaximumAllowedUnit()  const {return mMaximumAllowedUnit;}
     void setMaximumAllowedUnit(int maximumUnit);
@@ -42,11 +43,12 @@ public:
     QString getFolderName() const { return mFolderName; }
     void setFolder(const QString& folderName);
     Q_INVOKABLE void restoreDefaults();
-    Q_INVOKABLE void chooseFile();
-    Q_INVOKABLE void chooseFolder();
 
     bool isAskOnExclusionRemove()  const;
     void setAskOnExclusionRemove(bool);
+
+    std::pair<int, int> fromDisplay(double value , int unit) const;
+    std::pair<double, int> toDisplay(int value , int unit) const;
 
     QUrl getQmlUrl() override;
 
@@ -68,10 +70,10 @@ signals:
     void askOnExclusionRemoveChanged(bool);
 
 private:
-    int mMinimumAllowedSize;
-    int mMaximumAllowedSize;
-    MegaIgnoreSizeRule::UnitTypes mMinimumAllowedUnit;
-    MegaIgnoreSizeRule::UnitTypes mMaximumAllowedUnit;
+    double mMinimumAllowedSize;
+    double mMaximumAllowedSize;
+    MegaIgnoreSizeRule::UnitTypes mMinimumAllowedUnit = MegaIgnoreSizeRule::B;
+    MegaIgnoreSizeRule::UnitTypes mMaximumAllowedUnit = MegaIgnoreSizeRule::B;
     std::shared_ptr<MegaIgnoreManager> mMegaIgnoreManager; // TODO: Remove this and make all usage through the model
     ExclusionRulesModel* mRulesModel;
     QString mFolderName;
