@@ -1511,5 +1511,7 @@
         <file>images/themed/light/combobox_down_arrow.svg</file>
         <file>images/themed/dark/combobox_down_arrow.svg</file>
         <file>images/help-icon.svg</file>
+        <file>images/plus.svg</file>
+        <file>images/minus.svg</file>
     </qresource>
 </RCC>

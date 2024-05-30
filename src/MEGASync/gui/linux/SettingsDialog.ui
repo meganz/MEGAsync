@@ -24,6 +24,12 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+#bAdd
+{
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
+}
+
 #bHelp
 {
 border: none;
@@ -73,7 +79,7 @@ background-color:  #fafafa; /*colorToken.surface-1*/
 color: #333333; /*colorToken.text-primary*/
 border-color: #333333; /*colorToken.text-primary*/
 border-width: 2px;
-border-style: outset;
+border-style: solid;
 border-radius: 5px;
 padding: 1px 1px 1px 5px;
 }
@@ -148,10 +154,11 @@ padding-right: 10px;
 height: 22px;
 background-color:  #fafafa; /*colorToken.surface-1*/
 color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
+border-color: #04101E; /*colorToken.button-outline*/
 border-width: 2px;
-border-style: outset;
+border-style: solid;
 border-radius: 5px;
+font-weight: bold;
 }
 
 #bClearCache, #bClearRemoteCache, #bClearFileVersions
@@ -160,7 +167,7 @@ background-color:  #F3F4F4; /*colorToken.button-secondary*/
 color: #616366; /*colorToken.text-secondary*/
 border-color:  #F3F4F4; /*colorToken.button-secondary*/
 border-width: 0px;
-border-style: outset;
+border-style: solid;
 border-radius: 5px;
 padding: 3px 10px 3px 10px;
 }
@@ -200,6 +207,9 @@ padding: 6px;
 /*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
+
+/*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
 
 QComboBox
 {

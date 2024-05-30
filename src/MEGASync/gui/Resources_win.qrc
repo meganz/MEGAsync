@@ -1530,5 +1530,7 @@
         <file>images/settings-sync-warn.svg</file>
         <file>images/folder.svg</file>
         <file>images/help-icon.svg</file>
+        <file>images/minus.svg</file>
+        <file>images/plus.svg</file>
     </qresource>
 </RCC>

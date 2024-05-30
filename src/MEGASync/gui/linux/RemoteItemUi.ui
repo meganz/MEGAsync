@@ -188,6 +188,10 @@ border-right:0px;
            <property name="text">
             <string>Add</string>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/plus.svg</normaloff>:/images/plus.svg</iconset>
+           </property>
            <property name="autoDefault">
             <bool>false</bool>
            </property>
@@ -204,6 +208,10 @@ border-right:0px;
            <property name="text">
             <string>Delete</string>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/minus.svg</normaloff>:/images/minus.svg</iconset>
+           </property>
            <property name="autoDefault">
             <bool>false</bool>
            </property>
@@ -217,6 +225,8 @@ border-right:0px;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
  <connections/>
 </ui>

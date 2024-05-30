@@ -5,7 +5,7 @@
 #include <QBitmap>
 #include <QToolButton>
 
-static const QString ToolButtonId = QString::fromUtf8("Button");
+static const QString ButtonId = QString::fromUtf8("Button");
 
 IconTokenizer::IconTokenizer(QObject* parent)
     : QObject{parent}
@@ -36,7 +36,7 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
         return;
     }
 
-    if (targetElementProperty == ToolButtonId)
+    if (targetElementProperty == ButtonId)
     {
         auto iconState = getIconState(state);
         if (!iconState.has_value())
@@ -52,41 +52,44 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             return;
         }
 
-        auto button = dynamic_cast<QAbstractButton*>(widgets.constFirst());
-        if (button == nullptr)
+        for (auto widget : widgets)
         {
-            qDebug() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
-            return;
-        }
+            auto button = dynamic_cast<QAbstractButton*>(widget);
+            if (button == nullptr)
+            {
+                qDebug() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
+                return;
+            }
 
-        QIcon buttonIcons = button->icon();
-        if (buttonIcons.isNull())
-        {
-            qDebug() << __func__ << " Error button icon is null : " << targetElementId;
-            return;
-        }
+            QIcon buttonIcons = button->icon();
+            if (buttonIcons.isNull())
+            {
+                qDebug() << __func__ << " Error button icon is null : " << targetElementId;
+                return;
+            }
 
-        auto pixmap = buttonIcons.pixmap(button->iconSize());
-        if (pixmap.isNull())
-        {
-            qDebug() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
-            return;
-        }
+            auto pixmap = buttonIcons.pixmap(button->iconSize());
+            if (pixmap.isNull())
+            {
+                qDebug() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
+                return;
+            }
 
-        if (!colorTokens.contains(tokenId))
-        {
-            qDebug() << __func__ << " Error token id not found : " << tokenId;
-            return;
-        }
+            if (!colorTokens.contains(tokenId))
+            {
+                qDebug() << __func__ << " Error token id not found : " << tokenId;
+                return;
+            }
 
-        QColor toColor(colorTokens.value(tokenId));
+            QColor toColor(colorTokens.value(tokenId));
 
-        auto tintedPixmap = changePixmapColor(pixmap, toColor);
+            auto tintedPixmap = changePixmapColor(pixmap, toColor);
 
-        if (tintedPixmap.has_value())
-        {
-            buttonIcons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
-            button->setIcon(buttonIcons);
+            if (tintedPixmap.has_value())
+            {
+                buttonIcons.addPixmap(tintedPixmap.value(), iconMode.value(), iconState.value());
+                button->setIcon(buttonIcons);
+            }
         }
     }
 }
