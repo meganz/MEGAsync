@@ -20,6 +20,14 @@ ExclusionsQmlDialog {
     readonly property int dialogMargins: 24
     readonly property int disabledExclusionStatusIndex: 3
 
+    function formatNumber(value, decimalPoints) {
+        let str = value.toFixed(decimalPoints);
+        if (str.indexOf('.') !== -1) {
+            str = str.replace(/\.?0+$/, ''); // Remove trailing zeros and decimal point if no decimals
+        }
+        return str;
+    }
+
     width: 640
     height: 680
     maximumHeight: 680
@@ -50,20 +58,6 @@ ExclusionsQmlDialog {
                     syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
                 }
             }
-            onChooseFile: syncExclusionsAccess.chooseFile();
-            onChooseFolder: syncExclusionsAccess.chooseFolder();
-    }
-
-    Connections {
-        target: syncExclusionsAccess
-
-        function onFileChoosen(relativeFileName) {
-            addExlcusionRule.ruleValue = relativeFileName;
-        }
-
-        function onFolderChoosen(relativeFolderName) {
-            addExlcusionRule.ruleValue = relativeFolderName;
-        }
     }
 
     Item {
@@ -246,14 +240,30 @@ ExclusionsQmlDialog {
                     left: sizeLimitComboBox.right
                     leftMargin: 8 - sizeLimitComboBox.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
-                text: syncExclusionsAccess.minimumAllowedSize
+                sizes.iconMargin: 6
+                text:  formatNumber(syncExclusionsAccess.minimumAllowedSize, 2)
                 enabled: sizeRuleCheckbox.checked
                 implicitWidth: 48
                 colors.border: colorStyle.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
-                validator: IntValidator { bottom: 0 }
+                // RegExpValidator to validate numbers from 1 to 999 with up to two decimal places
+                validator: RegExpValidator {
+                    regExp:/^(\d{0,3}(?:\.\d{0,2})?)?$/
+                }
+
                 onTextChanged: {
-                    syncExclusionsAccess.minimumAllowedSize = text;
+                    var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
+                    if(text.length > maxLength){
+                        text = text.substring(0, maxLength)
+                    }
+                }
+                onEditingFinished: {
+                    if(text.trim() !== ""){
+                        syncExclusionsAccess.minimumAllowedSize = text;
+                    }
+                    else{
+                        text = syncExclusionsAccess.minimumAllowedSize;
+                    }
                 }
             }
 
@@ -304,13 +314,34 @@ ExclusionsQmlDialog {
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth
                 }
                 implicitWidth: 48
-                text: syncExclusionsAccess.maximumAllowedSize
+                text: formatNumber(syncExclusionsAccess.maximumAllowedSize, 2)
                 colors.border: colorStyle.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
-                validator: IntValidator{}
+                validator: RegExpValidator {
+                    regExp: /^(\d{0,3}(?:\.\d{0,2})?)?$/
+                }
+                sizes.iconMargin: 6
                 onTextChanged: {
-                    syncExclusionsAccess.maximumAllowedSize = text;
+                    var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
+                    if(text.length > maxLength){
+                        text = text.substring(0, maxLength)
+                    }
+
+                    if(text.trim() !== ""){
+                        syncExclusionsAccess.maximumAllowedSize = text;
+                    }
+                    else{
+                        text = syncExclusionsAccess.maximumAllowedSize;
+                    }
+                }
+                onEditingFinished: {
+                    if(text.trim() !== ""){
+                        syncExclusionsAccess.maximumAllowedSize = text;
+                    }
+                    else{
+                        text = syncExclusionsAccess.maximumAllowedSize;
+                    }
                 }
             }
 
@@ -443,8 +474,8 @@ ExclusionsQmlDialog {
             }
             onEditRuleClicked: {
                 addExlcusionRule.targetType = rulesTable.editRuleTarget
-                addExlcusionRule.valueType = 0;
-                addExlcusionRule.ruleValue =rulesTable.editRuleValue;
+                addExlcusionRule.valueType = rulesTable.editRuleProperty;
+                addExlcusionRule.ruleValue = rulesTable.editRuleValue;
                 addExlcusionRule.targetEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.valueTypeEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.visible = true;
