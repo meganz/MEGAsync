@@ -1,43 +1,48 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
-FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
-FSQLITE3 := $(shell cat /etc/issue | grep "Ubuntu 18\|Ubuntu 20.04\|Debian.* [789]\|Debian.* 10" >/dev/null && echo "" || echo "-L")
-FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 1[4-8]\|Ubuntu 19.04\|Debian.* [8]" >/dev/null && echo "" || echo "-q")
+VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
-FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
-INSTALL3RD := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'install3rd')
-EXTRAQMAKEFREEIMAGE := $(shell dpkg --print-architecture | grep -i "i386\|arm" >/dev/null && echo "" || echo 'QMAKE_RPATHDIR="/opt/mega/lib"')
-export PATH := /opt/mega/bin:$(PATH)
-QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Debian.* 8\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
-QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "installqt" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
+QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
-export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
-
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+
+export VCPKG_DEFAULT_BINARY_CACHE := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "/opt/persistent/vcpkg_cache" || echo "")
+export PATH := $(shell [ -f /opt/cmake.tar.gz ] && echo "`pwd`/cmake_inst/bin:${PATH}" || echo "${PATH}")
+export CXXFLAGS := $(shell [ -n "${EXTRADEFINES}" ] && echo "${EXTRADEFINES} ${CXXFLAGS}" || echo "${CXXFLAGS}")
 
 build: build-stamp
 build-stamp:
 	dh_testdir
-	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" MEGASync/control/Version.h
-	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" MEGASync/control/Version.h
-	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
-	./configure -g $(FSQLITE3) $(FCRYPTOPP) $(FMEDIAINFO)
+	sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2$(MEGA_BUILD_ID)\"/g" src/MEGASync/control/Version.h
+	sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1$(MEGA_BUILD_ID)/g" src/MEGASync/control/Version.h
+	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian/changelog || :
 
-	# Link dynamically with freeimage if pdfium is required.
-	if [ -n "$(INSTALL3RD)" ]; then  \
-	  ln -sfr $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3; \
-	  ln -sfn libfreeimage.so.3 $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so; \
-	else \
-	  rm $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3 || : ; \
+	if [ -f /opt/vcpkg.tar.gz ]; then           \
+		tar xzf /opt/vcpkg.tar.gz;              \
+		mkdir -p $(VCPKG_DEFAULT_BINARY_CACHE); \
 	fi
 
-	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE) $(EXTRAQMAKEFREEIMAGE)
-	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
-	make -j$(NJOBS)
+	if [ -f /opt/cmake.tar.gz ]; then echo "8dc99be7ba94ad6e14256b049e396b40  /opt/cmake.tar.gz" | md5sum -c -; fi
+	if [ -f /opt/cmake.tar.gz ]; then     \
+		tar xzf /opt/cmake.tar.gz;        \
+		ln -s cmake-*-Linux* cmake_inst;  \
+	fi
+
+	cmake --version
+	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
+	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
+
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
-	if [ -n "$(DEB_TESTING)" ]; then echo $(DEB_TESTING) > version; fi
+	lsb_release -ds > distro
+	if [ -n "$(DEB_TESTING)" ]; then   \
+		echo $(DEB_TESTING) > version; \
+	else                               \
+		lsb_release -rs > version;     \
+	fi
 	touch build-stamp
 
 clean:
@@ -47,54 +52,14 @@ clean:
 
 install: build
 	dh_auto_install --destdir=debian/megasync -- INSTALL_ROOT=$(CURDIR)/debian/megasync
-	dh_install MEGASync/megasync /usr/bin/
+	dh_install install_dir/* /
 	dh_install 99-megasync-inotify-limit.conf /etc/sysctl.d/
 	dh_install 99-megasync-udev.rules /etc/udev/rules.d/
-	if [ -n "$(DEB_TESTING)" ]; then dh_install version /usr/share/doc/megasync; fi
-
-installqt:
-	# To install the whole Qt distribution:
-	#find /opt/mega -type f -exec install -D {} $(CURDIR)/debian/megasync/{} \;
-
-	for i in `ldd MEGASync/megasync | grep opt | awk '{print $$3}'`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; mkdir -p $(CURDIR)/debian/megasync/$$a; install $$i $(CURDIR)/debian/megasync/$$a; done
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/iconengines/
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
-	install -p /opt/mega/lib/libQt5XcbQpa.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5XcbQpa.so.5 || :
-	install /opt/mega/plugins/platforms/libqxcb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforms/libqvnc.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforms/libqoffscreen.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforms/libqminimal.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforms/libqlinuxfb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
-	install /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
-	install /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
-	install /opt/mega/plugins/imageformats/libqwebp.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqwbmp.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqtiff.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqtga.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqsvg.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqjpeg.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqico.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqicns.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/imageformats/libqgif.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
-	install /opt/mega/plugins/iconengines/libqsvgicon.so $(CURDIR)/debian/megasync/opt/mega/plugins/iconengines/
-	install /opt/mega/plugins/bearer/libqnmbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
-	install /opt/mega/plugins/bearer/libqgenericbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
-	install /opt/mega/plugins/bearer/libqconnmanbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
-	install /opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so -D $(CURDIR)/debian/megasync/opt/mega/plugins/xcbglintegrations/libqxcb-glx-integration.so
-	install -p /opt/mega/lib/libQt5QuickControls2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickControls2.so.5
-	install -p /opt/mega/lib/libQt5QmlWorkerScript.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QmlWorkerScript.so.5
-	install -p /opt/mega/lib/libQt5QuickTemplates2.so.*.*.* $(CURDIR)/debian/megasync/opt/mega/lib/libQt5QuickTemplates2.so.5
-	for m in QtQml QtQuick.2 QtGraphicalEffects QtQuick/Controls QtQuick/Controls.2 QtQuick/Dialogs QtQuick/Extras QtQuick/Layouts QtQuick/PrivateWidgets QtQuick/Templates.2 QtQuick/Window.2 Qt/labs/folderlistmodel Qt/labs/settings; do find /opt/mega/qml/$$m -type f ! -name "*.debug" -exec install -D {} $(CURDIR)/debian/megasync/{} \; ; done
-
-install3rd:
-	mkdir -p $(CURDIR)/debian/megasync/opt/mega/lib
-	install $(CURDIR)/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.* $(CURDIR)/debian/megasync/opt/mega/lib
+	dh_install distro /usr/share/doc/megasync
+	dh_install version /usr/share/doc/megasync
 
 # Build architecture-independent files here.
-binary-indep: build install $(QTINSTALL) $(INSTALL3RD)
+binary-indep: build install
 	# We have nothing to do by default.
 
 # Build architecture-dependent files here.
