@@ -458,3 +458,51 @@ target_sources(MEGAsync
 target_include_directories(MEGAsync PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
+
+if (UNIX AND NOT APPLE)
+
+    # Install tray icons for Linux
+
+    # color
+    set(HICOLOR "share/icons/hicolor/scalable/status")
+    install(FILES gui/images/synching.svg RENAME megasynching.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/warning.svg RENAME megawarning.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/alert.svg RENAME megaalert.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/paused.svg RENAME megapaused.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/logging.svg RENAME megalogging.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/uptodate.svg RENAME megauptodate.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+
+    # mono-dark
+    set(MONOCOLOR "share/icons/ubuntu-mono-dark/status/24")
+    install(FILES gui/images/synching_clear.svg RENAME megasynching.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/warning_clear.svg RENAME megawarning.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/alert_clear.svg RENAME megaalert.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/paused_clear.svg RENAME megapaused.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/logging_clear.svg RENAME megalogging.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/uptodate_clear.svg RENAME megauptodate.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+
+endif()

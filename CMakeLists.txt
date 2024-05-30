@@ -53,6 +53,7 @@ endif()
 
 message(STATUS "Building MEGA Desktop App project v${PROJECT_VERSION}")
 
+include(GNUInstallDirs) # Values for installation directories. All platforms
 include(target_sources_conditional) # function to add files to the project without building them
 include(target_platform_compile_options) # To add compile options depeding on the platform
 
