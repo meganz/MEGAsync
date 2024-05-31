@@ -85,11 +85,12 @@ background-color: transparent;
 font-weight: bold;
 }
 
+/* FIX ALPHA CHANNEL */
 QProgressBar
 {
 border-width: 0px;
 border-style: solid;
-background-color: #0D000000; /* NEED TO FIX ALPHA CHANNEL colorToken.indicator-background*/
+background-color: #0D000000; /*PENDING TO ADD TO REPO : colorToken.indicator-background*/
 max-height: 8px;
 }
 
@@ -792,7 +793,7 @@ margin-top: 4px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
