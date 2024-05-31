@@ -92,6 +92,16 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     QList<QAction*> actions;
     int state = RESPONSE_ERROR;
 
+    // Check if the Desktop App is running
+    selectedFilePath = QString::fromLatin1("~");
+    state = getState();
+
+    if (state == RESPONSE_ERROR)
+    {
+        qDebug("MEGASYNCPLUGIN : Desktop App not running");
+        return actions;
+    }
+
     int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
     syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
 
