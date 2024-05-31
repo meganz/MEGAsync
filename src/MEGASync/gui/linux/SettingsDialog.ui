@@ -24,6 +24,26 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QRadioButton::indicator::unchecked
+{
+image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator::checked
+{
+image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
+}
+
+QRadioButton
+{
+color: #303233; /*colorToken.text-primary*/
+}
+
+#SmartDescription, #AdvanceDescription
+{
+color: #616366; /*colorToken.text-secondary*/
+}
+
 QGroupBox {
 font-weight: bold;
 margin-top: 25px;

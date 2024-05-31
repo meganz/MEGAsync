@@ -140,8 +140,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         widget->setStyleSheet(styleSheet);
     }
 
-    //test(widget);
-
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> elapsed = end - start;
     std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
