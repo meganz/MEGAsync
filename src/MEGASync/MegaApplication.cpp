@@ -1216,6 +1216,7 @@ void MegaApplication::start()
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
+    updateTrayIcon();
 }
 
 void MegaApplication::requestUserData()
@@ -1496,7 +1497,10 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+}
 
+void MegaApplication::onFetchNodesFinished()
+{
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
