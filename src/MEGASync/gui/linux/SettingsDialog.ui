@@ -24,6 +24,33 @@ background-color: #FFFFFF; /*colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QGroupBox {
+font-weight: bold;
+margin-top: 25px;
+background-color: #fafafa; /*colorToken.surface-1*/
+border: 0px solid gray;
+border-radius: 10px;
+}
+
+QGroupBox::title
+{
+color: #04101E; /*colorToken.text-accent*/
+subcontrol-origin: margin;
+subcontrol-position: top left;
+padding: 7 0 0 5px;
+}
+
+#LearnMoreContainer, #SelectorsContainer, #ButtonContainer, #widget_21, #widget_6, #AdvanceSelector, #SmartSelector
+{
+background-color: transparent;
+}
+
+QLineEdit
+{
+background-color: #fafafa; /*colorToken.surface-1*/
+border: none;
+}
+
 #bAdd
 {
 color: #04101E; /*colorToken.text-inverse-accent*/
@@ -117,23 +144,6 @@ background-color: transparent;
 QLabel
 {
 background-color: transparent;
-}
-
-QGroupBox
-{
-font-weight: bold;
-margin-top: 25px;
-background-color: #fafafa; /*colorToken.surface-1*/
-border: 0px solid gray;
-border-radius: 10px;
-}
-
-QGroupBox::title
-{
-color: #04101E; /*colorToken.text-accent*/
-subcontrol-origin: margin;
-subcontrol-position: top left;
-padding: 7 0 0 5px;
 }
 
 QCheckBox

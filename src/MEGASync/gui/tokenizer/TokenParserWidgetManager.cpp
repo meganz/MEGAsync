@@ -140,7 +140,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         widget->setStyleSheet(styleSheet);
     }
 
-    test(widget);
+    //test(widget);
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> elapsed = end - start;
@@ -157,14 +157,14 @@ void TokenParserWidgetManager::test(QWidget* widget)
     }
 
     auto foundWidget = widgets.first();
-    //foundWidget->setStyleSheet(QLatin1String("background-color: blue;"));
+    //foundWidget->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
     std::cout << "foundWidget : " << foundWidget->objectName().toStdString() << std::endl;
 
     auto widgetParent = widgets.first()->parentWidget();
 
     std::cout << "widgetParent : " << widgetParent->objectName().toStdString() << std::endl;
 
-    widgetParent->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
+    //widgetParent->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
 }
 
 bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens)
