@@ -95,13 +95,19 @@ static void mega_ext_menu_provider_init(ThunarxMenuProviderIface *iface)
 static const gchar *file_state_to_str(FileState state)
 {
     switch(state) {
-        case FILE_SYNCED:
+        case RESPONSE_SYNCED:
             return "synced";
-        case FILE_PENDING:
+        case RESPONSE_PENDING:
             return "pending";
-        case FILE_SYNCING:
+        case RESPONSE_SYNCING:
             return "syncing";
-        case FILE_NOTFOUND:
+        case RESPONSE_IGNORED:
+            return "ignored";
+        case RESPONSE_PAUSED:
+            return "paused";
+        case RESPONSE_ERROR:
+            return "error";
+        case RESPONSE_DEFAULT:
         default:
             return "notfound";
     }
@@ -132,7 +138,8 @@ static void mega_ext_on_upload_selected(THUNARITEM *item, gpointer user_data)
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state != FILE_SYNCED && state != FILE_PENDING && state != FILE_SYNCING) {
+        if (state != RESPONSE_SYNCED && state != RESPONSE_PENDING && state != RESPONSE_SYNCING)
+        {
             if (mega_ext_client_upload(mega_ext, path))
                 flag = TRUE;
         }
@@ -183,7 +190,7 @@ static void mega_ext_on_get_link_selected(THUNARITEM *item, gpointer user_data)
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_paste_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -220,7 +227,7 @@ static void mega_ext_on_view_on_mega_selected(THUNARITEM *item, gpointer user_da
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -256,7 +263,7 @@ static void mega_ext_on_open_previous_selected(THUNARITEM *item, gpointer user_d
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_previous(mega_ext, path))
                 flag = TRUE;
         }
@@ -287,7 +294,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         ThunarxFileInfo *file = THUNARX_FILE_INFO(l->data);
         gchar *path;
         GFile *fp;
-        FileState state;
+        FileState state = RESPONSE_ERROR;
 
         fp = thunarx_file_info_get_location(file);
         if (!fp)
@@ -305,12 +312,12 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         // but make sure we received the list of synced folders first
         if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path))
         {
-            state = FILE_NOTFOUND;
+            state = RESPONSE_DEFAULT;
         }
         else
         {
             state = mega_ext_client_get_path_state(mega_ext, path, 1);
-            if (state == FILE_NOTFOUND)
+            if (state == RESPONSE_DEFAULT)
             {
                 char canonical[PATH_MAX];
                 expanselocalpath(path,canonical);
@@ -319,7 +326,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         }
         g_free(path);
 
-        if (state == FILE_ERROR)
+        if (state == RESPONSE_ERROR)
         {
             continue;
         }
@@ -329,7 +336,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         g_object_set_data_full((GObject*)file, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) 
+        if (state == RESPONSE_SYNCED || state == RESPONSE_SYNCING || state == RESPONSE_PENDING)
         {
             if (thunarx_file_info_is_directory(file)) 
             {
@@ -493,12 +500,12 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     // but make sure we received the list of synced folders first
     if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) 
     {
-        state = FILE_NOTFOUND;
+        state = RESPONSE_DEFAULT;
     } 
     else
     {
         state = mega_ext_client_get_path_state(mega_ext, path, 0);
-        if (state == FILE_NOTFOUND)
+        if (state == RESPONSE_DEFAULT)
         {
             char canonical[PATH_MAX];
             expanselocalpath(path,canonical);
@@ -507,7 +514,7 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     }
     g_free(path);
 
-    if (state == FILE_ERROR)
+    if (state == RESPONSE_ERROR)
     {
         return NULL;
     }
@@ -517,7 +524,7 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     g_object_set_data_full((GObject*)folder, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
     // count the number of synced / unsynced files and folders
-    if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+    if (state == RESPONSE_SYNCED || state == RESPONSE_SYNCING || state == RESPONSE_PENDING)
     {
         syncedFolders++;
     } else
