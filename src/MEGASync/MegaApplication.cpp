@@ -1218,10 +1218,15 @@ void MegaApplication::start()
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
+<<<<<<< HEAD
     if(updated && !preferences->getSession().isEmpty())
     {
         QmlDialogManager::instance()->openWhatsNewDialog();
     }
+||||||| parent of da375fb91 (update tray icon and tray icon tooltip when necessary)
+=======
+    updateTrayIcon();
+>>>>>>> da375fb91 (update tray icon and tray icon tooltip when necessary)
 }
 
 void MegaApplication::requestUserData()
@@ -1502,7 +1507,10 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+}
 
+void MegaApplication::onFetchNodesFinished()
+{
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
