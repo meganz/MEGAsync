@@ -68,6 +68,7 @@ Item {
 	readonly property color surface1: loader.item.surface1
 	readonly property color surface2: loader.item.surface2
 	readonly property color surface3: loader.item.surface3
+	readonly property color surfaceInverseAccent: loader.item.surfaceInverseAccent
 	readonly property color textAccent: loader.item.textAccent
 	readonly property color textDisabled: loader.item.textDisabled
 	readonly property color textError: loader.item.textError

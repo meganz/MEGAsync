@@ -1,6 +1,6 @@
 {
     "Dark": {
-        "background-blur": "#33000000",
+        "background-blur": "#80000000",
         "background-inverse": "#f3f4f4",
         "border-disabled": "#494a4d",
         "border-interactive": "#fb6361",
@@ -58,6 +58,7 @@
         "surface-1": "#303233",
         "surface-2": "#494a4d",
         "surface-3": "#616366",
+        "surface-inverse-accent": "#bdc0c4",
         "text-accent": "#fafafb",
         "text-disabled": "#797c80",
         "text-error": "#fd6f90",
@@ -132,6 +133,7 @@
         "surface-1": "#fafafa",
         "surface-2": "#f3f4f4",
         "surface-3": "#d8d9db",
+        "surface-inverse-accent": "#39424e",
         "text-accent": "#04101e",
         "text-disabled": "#c1c2c4",
         "text-error": "#e31b57",
