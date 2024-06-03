@@ -20,8 +20,47 @@
    <string notr="true">QWidget
 {
 font-size: 12px;
-background-color: #FFFFFF; /*colorToken.page-background*/
+background-color: #FFFFFF; /* colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
+}
+
+QComboBox
+{
+height: 18px;
+background-color:  #fafafa; /* colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: solid;
+border-radius: 5px;
+padding: 1px 1px 1px 5px;
+}
+
+QComboBox::on
+{
+padding: 0px 0px 0px 0px;
+}
+
+QComboBox::down-arrow
+{
+image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down
+{
+subcontrol-origin: padding;
+subcontrol-position: top right;
+width: 15px;
+
+border-top-right-radius: 5px;
+border-bottom-right-radius: 5px;
+}
+
+QComboBox QAbstractItemView
+{
+border: 2px solid #04101E; /*colorToken.button-outline*/
+border-radius: 5px;
+background-color: #FFFFFF; /*colorToken.page-background*/
 }
 
 QRadioButton::indicator::unchecked
@@ -44,7 +83,8 @@ color: #303233; /*colorToken.text-primary*/
 color: #616366; /*colorToken.text-secondary*/
 }
 
-QGroupBox {
+QGroupBox
+{
 font-weight: bold;
 margin-top: 25px;
 background-color: #fafafa; /*colorToken.surface-1*/
@@ -119,32 +159,6 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
-}
-
-QComboBox
-{
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
-border-width: 2px;
-border-style: solid;
-border-radius: 5px;
-padding: 1px 1px 1px 5px;
-}
-
-QComboBox::down-arrow
-{
-image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
-}
-
-QComboBox::drop-down
-{
-subcontrol-origin: padding;
-subcontrol-position: top right;
-width: 15px;
-
-border-top-right-radius: 5px;
-border-bottom-right-radius: 5px;
 }
 
 #wControlButtons
@@ -241,11 +255,6 @@ padding: 6px;
 
 /*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
 /*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
-
-QComboBox
-{
-height: 18px;
-}
 
 QSpinBox
 {
