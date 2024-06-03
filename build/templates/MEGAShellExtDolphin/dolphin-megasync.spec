@@ -28,7 +28,7 @@ BuildRequires: kdelibs-devel gcc-c++
 BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
 %endif
 
-Requires:       megasync >= 3.5
+Requires:       megasync >= 5.3.0
 
 %description
 - Easily see and track your sync statuses.
