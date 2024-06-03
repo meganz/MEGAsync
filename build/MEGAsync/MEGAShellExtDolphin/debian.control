@@ -1,5 +1,5 @@
 Source: dolphin-megasync
-Section: gnome
+Section: kde
 Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
