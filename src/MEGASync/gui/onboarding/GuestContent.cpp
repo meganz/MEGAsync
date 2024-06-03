@@ -1,6 +1,8 @@
 #include "GuestContent.h"
-#include "MegaApplication.h"
+
 #include "GuestQmlDialog.h"
+
+#include "MegaApplication.h"
 
 #include <QQmlEngine>
 

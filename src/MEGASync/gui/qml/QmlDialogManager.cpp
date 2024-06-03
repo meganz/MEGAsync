@@ -2,6 +2,8 @@
 
 #include "QmlDialogWrapper.h"
 
+#include "backups/Backups.h"
+
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 #include "onboarding/OnboardingQmlDialog.h"
@@ -57,6 +59,21 @@ bool QmlDialogManager::openOnboardingDialog()
         DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
     }
     return true;
+}
+
+void QmlDialogManager::openBackupsDialog(bool fromSettings)
+{
+    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        backupsDialog = dialog->getDialog();
+    }
+    else
+    {
+        backupsDialog = new QmlDialogWrapper<Backups>();
+    }
+    DialogOpener::showDialog(backupsDialog);
+    backupsDialog->wrapper()->setComesFromSettings(fromSettings);
 }
 
 bool QmlDialogManager::raiseGuestDialog()

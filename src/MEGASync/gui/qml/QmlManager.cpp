@@ -1,9 +1,14 @@
 #include "QmlManager.h"
 
+#include "AccountInfoData.h"
 #include "ApiEnums.h"
+#include "ChooseFolder.h"
+#include "ChooseFile.h"
 #include "ColorTheme.h"
 #include "QmlClipboard.h"
 #include "AppStatsEvents.h"
+#include "QmlDeviceName.h"
+#include "QmlDialog.h"
 
 #include "LoginController.h"
 
@@ -42,14 +47,23 @@ void QmlManager::registerCommonQmlElements()
     mEngine->addImportPath(QString::fromUtf8("qrc:/"));
 
     qRegisterMetaTypeStreamOperators<QQueue<QString>>("QQueueQString");
-    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+
     qmlRegisterUncreatableMetaObject(ApiEnums::staticMetaObject, "ApiEnums", 1, 0, "ApiEnums",
                                      QString::fromUtf8("Cannot create ApiEnums in QML"));
+
     qmlRegisterUncreatableType<LoginController>("LoginController", 1, 0, "LoginController",
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterUncreatableType<AppStatsEvents>("AppStatsEvents", 1, 0, "AppStatsEvents",
                                                QString::fromUtf8("Not creatable as it is an enum type"));
     qRegisterMetaType<AppStatsEvents::EventType>();
+
+    qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
+    qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
+
+    qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
+    qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
+    qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
+    qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
     setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
 }

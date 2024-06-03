@@ -9,38 +9,42 @@ QtObject {
     //   Paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    readonly property url imagesPath: Qt.resolvedUrl("../../images/qml/")
-    readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesPath + "/onboarding/")
-    readonly property url imagesGuestPath: Qt.resolvedUrl(imagesPath + "/guest/")
-    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesPath + "/sync_exclusions/")
+    readonly property url imagesPath: Qt.resolvedUrl("../../images/")
+    readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
+    readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
+    readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
+    readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    readonly property url alertCircle: imagesPath + "alert_circle.svg"
-    readonly property url alertTriangle: imagesPath + "alert_triangle.svg"
-    readonly property url arrowRight: imagesPath + "arrow_right.svg"
-    readonly property url check: imagesPath + "check.svg"
-    readonly property url helpCircle: imagesPath + "help_circle.svg"
-    readonly property url indeterminate: imagesPath + "indeterminate.svg"
-    readonly property url lock: imagesPath + "lock.svg"
-    readonly property url loader: imagesPath + "loader.svg"
-    readonly property url smallCircle: imagesPath + "small_circle.svg"
-    readonly property url tip: imagesPath + "tip.svg"
-    readonly property url megaOutline: imagesPath + "mega_outline.svg"
-    readonly property url mega: imagesPath + "mega.svg"
-    readonly property url trash: imagesPath + "trash.svg"
-    readonly property url xCircle: imagesPath + "x_circle.svg"
-    readonly property url smallCheck: imagesPath + "small_check.svg"
-    readonly property url checkCircle: imagesPath + "check_circle.svg"
-    readonly property url warning: imagesPath + "warning.png"
-    readonly property url twofa: imagesPath + "lock.png"
-    readonly property url eye: imagesPath + "eye.svg"
-    readonly property url eyeOff: imagesPath + "eye-off.svg"
-    readonly property url rocket: imagesPath + "rocket.png"
-    readonly property url megaCloud: imagesPath + "mega-cloud.png"
-    readonly property url contols: imagesPath + "controls.png"
+    readonly property url alertCircle: imagesQmlPath + "alert_circle.svg"
+    readonly property url alertCircleFilled: imagesQmlPath + "alert_circle_filled.svg"
+    readonly property url alertTriangle: imagesQmlPath + "alert_triangle.svg"
+    readonly property url arrowRight: imagesQmlPath + "arrow_right.svg"
+    readonly property url check: imagesQmlPath + "check.svg"
+    readonly property url helpCircle: imagesQmlPath + "help_circle.svg"
+    readonly property url indeterminate: imagesQmlPath + "indeterminate.svg"
+    readonly property url lock: imagesQmlPath + "lock.svg"
+    readonly property url loader: imagesQmlPath + "loader.svg"
+    readonly property url smallCircle: imagesQmlPath + "small_circle.svg"
+    readonly property url tip: imagesQmlPath + "tip.svg"
+    readonly property url megaOutline: imagesQmlPath + "mega_outline.svg"
+    readonly property url mega: imagesQmlPath + "mega.svg"
+    readonly property url trash: imagesQmlPath + "trash.svg"
+    readonly property url xCircle: imagesQmlPath + "x_circle.svg"
+    readonly property url smallCheck: imagesQmlPath + "small_check.svg"
+    readonly property url checkCircle: imagesQmlPath + "check_circle.svg"
+    readonly property url checkCircleFilled: imagesQmlPath + "check_circle_filled.svg"
+    readonly property url warning: imagesQmlPath + "warning.png"
+    readonly property url twofa: imagesQmlPath + "lock.png"
+    readonly property url eye: imagesQmlPath + "eye.svg"
+    readonly property url eyeOff: imagesQmlPath + "eye-off.svg"
+    readonly property url rocket: imagesQmlPath + "rocket.png"
+    readonly property url megaCloud: imagesQmlPath + "mega-cloud.png"
+    readonly property url contols: imagesQmlPath + "controls.png"
+    readonly property url ok: imagesQmlPath + "ok.png"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
@@ -65,7 +69,6 @@ QtObject {
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
     readonly property url sync: imagesOnboardingPath + "sync.svg"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
-    readonly property url okIcon: imagesOnboardingPath + "OKIcon.png"
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"
@@ -79,8 +82,6 @@ QtObject {
     readonly property url editRule: imagesExclusionsPath + "edit.svg"
     readonly property url chevronDown: imagesExclusionsPath + "chevron-down.svg"
     readonly property url info: imagesExclusionsPath + "info.svg"
-
-
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

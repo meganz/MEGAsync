@@ -56,9 +56,10 @@ public:
     //Error strings
     static QString getErrStrCurrentBackupOverExistingBackup();
     static QString getErrStrCurrentBackupInsideExistingBackup();
+    static QString getErrorString(int errorCode, int syncErrorCode);
 
 signals:
-    void syncAddStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
+    void syncAddStatus(int errorCode, int syncErrorCode, QString name);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void signalSyncOperationBegins(std::shared_ptr<SyncSettings> sync);
     void signalSyncOperationEnds(std::shared_ptr<SyncSettings> sync);

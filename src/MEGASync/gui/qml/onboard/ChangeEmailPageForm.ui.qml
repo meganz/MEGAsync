@@ -10,8 +10,6 @@ import components.textFields 1.0
 StackViewPage {
     id: root
 
-    readonly property int buttonsLayoutSpacing: 2
-
     property alias emailTextField: emailTextField
     property alias cancelButton: cancelButton
     property alias resendButton: resendButton
@@ -46,8 +44,8 @@ StackViewPage {
             id: emailTextField
 
             title: OnboardingStrings.email
-            Layout.preferredWidth: layout.width + 2 * emailTextField.sizes.focusBorderWidth
-            Layout.leftMargin: -emailTextField.sizes.focusBorderWidth
+            Layout.preferredWidth: layout.width + 2 * Constants.focusBorderWidth
+            Layout.leftMargin: Constants.focusAdjustment
         }
     }
 
@@ -57,15 +55,15 @@ StackViewPage {
         anchors {
             right: root.right
             bottom: root.bottom
-            rightMargin: -resendButton.sizes.focusBorderWidth
-            bottomMargin: buttonsBottomMargin
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
-        spacing: buttonsLayoutSpacing
+        spacing: 0
 
         OutlineButton {
             id: cancelButton
 
-            text: OnboardingStrings.cancel
+            text: Strings.cancel
         }
 
         PrimaryButton {

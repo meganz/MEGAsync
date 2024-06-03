@@ -206,41 +206,6 @@ void SyncExclusions::restoreDefaults()
     mMegaIgnoreManager->restreDefaults();
 }
 
-void SyncExclusions::chooseFile()
-{
-    SelectorInfo info;
-    info.defaultDir = mFolderFullPath;
-    info.multiSelection = false;
-    info.title = tr("Select the file you want to exclude");
-    info.func = [this](QStringList selection){
-        if(!selection.isEmpty())
-        {
-            const auto absolutePath = QDir::toNativeSeparators(selection.first());
-            const auto relativePath = QDir (mFolderFullPath).relativeFilePath(absolutePath);
-            emit fileChoosen(relativePath);
-        }
-    };
-    Platform::getInstance()->fileSelector(info);
-}
-
-void SyncExclusions::chooseFolder()
-{
-    auto processResult = [this](const QStringList& selection){
-        if(!selection.isEmpty())
-        {
-            const auto absolutePath = QDir::toNativeSeparators(selection.first());
-            const auto relativePath = QDir(mFolderFullPath).relativeFilePath(absolutePath);
-            emit folderChoosen(relativePath);
-        }
-    };
-    SelectorInfo info;
-    info.defaultDir = mFolderFullPath;
-    info.multiSelection = false;
-    info.func = processResult;
-    info.title = tr("Select the folder you want to exclude");
-    Platform::getInstance()->folderSelector(info);
-}
-
 bool SyncExclusions::isAskOnExclusionRemove()  const
 {
     return Preferences::instance()->isAskOnExclusionRemove();

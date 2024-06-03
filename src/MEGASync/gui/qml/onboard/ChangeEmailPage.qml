@@ -39,7 +39,7 @@ ChangeEmailPageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             emailTextField.forceActiveFocus();

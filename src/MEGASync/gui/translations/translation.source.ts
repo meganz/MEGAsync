@@ -58,54 +58,6 @@
     </message>
 </context>
 <context>
-    <name>AddBackupDialog</name>
-    <message>
-        <source>Add backup folder</source>
-        <translatorcomment>Window title for add backup dialog (not backup wizard)</translatorcomment>
-        <translation>Add backup folder</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Line edit title label that shows the path that is going to be backed up</translatorcomment>
-        <translation>Backup folder:</translation>
-    </message>
-    <message>
-        <source>Choose folder</source>
-        <translatorcomment>Line edit placeholder, here the path of the backup will be displayed once the user select it</translatorcomment>
-        <translation>Choose folder</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text that opens a dialog to choose a folder</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
-        <source>Backup to:</source>
-        <translatorcomment>Remote path where the backup is going to be stored</translatorcomment>
-        <translation>Back up to:</translation>
-    </message>
-    <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button that allows users to add exclusion rules for their new backups.SNC-2565</translatorcomment>
-        <translation>Add exclusions</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button text to add a backup</translatorcomment>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel the addition of a backup</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Do you want to continue?</translation>
-    </message>
-</context>
-<context>
     <name>AlertFilterType</name>
     <message>
         <source>All notifications</source>
@@ -389,57 +341,6 @@
     </message>
 </context>
 <context>
-    <name>BackupNameConflictDialog</name>
-    <message>
-        <source>Rename folder</source>
-        <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
-        <translation>Rename folder</translation>
-    </message>
-    <message>
-        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
-        <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>A folder named “%1” already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</translation>
-    </message>
-    <message>
-        <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
-        <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>If you don’t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then set up the backup for the new folder again.</translation>
-    </message>
-    <message>
-        <source>Rename and backup</source>
-        <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-        <translation>Rename and back up</translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
-    </message>
-</context>
-<context>
-    <name>BackupRenameWidget</name>
-    <message>
-        <source>Local folder %1:</source>
-        <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation>Local folder %1:</translation>
-    </message>
-    <message>
-        <source>Rename backup folder</source>
-        <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation>Rename backup folder</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
-        <translation>Backup folder:</translation>
-    </message>
-    <message>
-        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
-        <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>A folder named “%1” already exists in your Backups. Rename the new folder to continue with the backup.</translation>
-    </message>
-</context>
-<context>
     <name>BackupSettingsUI</name>
     <message>
         <source>Backups</source>
@@ -543,171 +444,21 @@
     </message>
 </context>
 <context>
-    <name>BackupsWizard</name>
+    <name>BackupsStrings</name>
     <message>
-        <source>Setup backups</source>
-        <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation>Set up backups</translation>
-    </message>
-    <message>
-        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
-        <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</translation>
+        <source>Add backup</source>
+        <translatorcomment>Add backup window title CON-738</translatorcomment>
+        <translation type="unfinished">Add backup</translation>
     </message>
     <message>
-        <source>No folders available</source>
-        <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation>No folders available</translation>
+        <source>Confirm folders</source>
+        <translatorcomment>Step label indicating the user that he is in the backup confirm step CON-738</translatorcomment>
+        <translation type="unfinished">Confirm folders</translation>
     </message>
     <message>
-        <source>More folders</source>
-        <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation>More folders</translation>
-    </message>
-    <message>
-        <source>All folders have been synced or backed up.</source>
-        <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation>All folders have been synced or backed up.</translation>
-    </message>
-    <message>
-        <source>Selected backup folders</source>
-        <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
-        <translation>Selected backup folders</translation>
-    </message>
-    <message>
-        <source>Backup to</source>
-        <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation>Back up to</translation>
-    </message>
-    <message>
-        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
-        <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Folders will be stored in Backups and you can check the status of your backups in Backup centre.</translation>
-    </message>
-    <message>
-        <source>Show more…</source>
-        <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation>Show more</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Back</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Next</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translatorcomment>Button text shown in error dialog, it allows the user to go to first step on backup wizard and start the process again</translatorcomment>
-        <translation>Try again</translation>
-    </message>
-    <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
-        <translation>Dismiss</translation>
-    </message>
-    <message>
-        <source>Setup</source>
-        <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation>Set up</translation>
-    </message>
-    <message>
-        <source>Collapse</source>
-        <translatorcomment>Error dialog button text that will collapse the list of failed backups.</translatorcomment>
-        <translation>Collapse</translation>
-    </message>
-    <message>
-        <source>Add folders</source>
-        <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation>Add folders</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation>
-            <numerusform>%n folder</numerusform>
-            <numerusform>%n folders</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Backup created</source>
-        <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation>
-            <numerusform>Backup created</numerusform>
-            <numerusform>Backups created</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
-        <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation>
-            <numerusform>We’re backing up your folder. The time this takes depends on the files in this folder.</numerusform>
-            <numerusform>We’re backing up your folders. The time this takes depends on the files in the folders.</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>Problem backing up folder</source>
-        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation>
-            <numerusform>Problem backing up folder</numerusform>
-            <numerusform>Problem backing up folders</numerusform>
-        </translation>
-    </message>
-    <message numerus="yes">
-        <source>This folder wasn&apos;t backed up. Try again.</source>
-        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation>
-            <numerusform>This folder wasn’t backed up. Try again.</numerusform>
-            <numerusform>These folders weren’t backed up. Try again.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Folder is already selected. Select a different folder.</source>
-        <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation>Folder is already selected. Select a different folder.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Text shown at the end of a warning dialog, asking the user if they want to proceed with the action in spite of the warning</translatorcomment>
-        <translation>Do you want to continue?</translation>
-    </message>
-    <message>
-        <source>1. [B]Select[/B] folders to backup</source>
-        <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation>1. [B]Select[/B] folders to back up</translation>
-    </message>
-    <message>
-        <source>2. [B]Confirm[/B] backup settings</source>
-        <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation>2. [B]Confirm[/B] backup settings</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel? All changes will be lost.</source>
-        <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Want to cancel? All changes will be lost.</translation>
-    </message>
-    <message>
-        <source>Choose directory</source>
-        <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Select folder</translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation>Error: %1</translation>
-    </message>
-    <message>
-        <source>View in backup centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>View in Backup centre</translation>
+        <source>Select folders</source>
+        <translatorcomment>Step label indicating the user that he is in the backup select step CON-738</translatorcomment>
+        <translation type="unfinished">Select folders</translation>
     </message>
 </context>
 <context>
@@ -2060,6 +1811,16 @@ In some cases they may contain details about your data, such as file or folder n
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation></translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule SNC-4243</translatorcomment>
+        <translation type="unfinished">Select the folder you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule SNC-4243</translatorcomment>
+        <translation type="unfinished">Select the file you want to exclude</translation>
     </message>
 </context>
 <context>
@@ -5364,14 +5125,24 @@ Enter a different name.</translation>
         <translation>Incorrect 2FA code</translation>
     </message>
     <message>
-        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>Your backup has been set up and selected data will automatically back up whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
         <translation>Try again</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
+        <translation type="unfinished">Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</translation>
+    </message>
+    <message>
+        <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
+        <translation type="unfinished">You can view your backups and their statuses under the Backup tab in Settings.</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7819,19 +7590,6 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>This folder is already being synced</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Select the file you want to exclude</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Select the folder you want to exclude</translation>
     </message>
 </context>
 <context>
