@@ -338,6 +338,7 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
+        MegaSyncApp->onLoginFinished();
     }
     else
     {
@@ -468,7 +469,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
-        MegaSyncApp->onLoginFinished();
+        MegaSyncApp->onFetchNodesFinished();
     }
     else
     {
@@ -864,6 +865,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         int errorCode = e->getErrorCode();
         if (errorCode == mega::MegaError::API_OK)
         {
+            MegaSyncApp->onLoginFinished();
             if (!mPreferences->getSession().isEmpty())
             {
                 //Successful login, fetch nodes
