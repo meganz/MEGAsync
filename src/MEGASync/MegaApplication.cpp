@@ -1218,10 +1218,13 @@ void MegaApplication::start()
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
+
     if(updated && !preferences->getSession().isEmpty())
     {
         QmlDialogManager::instance()->openWhatsNewDialog();
     }
+
+    updateTrayIcon();
 }
 
 void MegaApplication::requestUserData()
@@ -1502,7 +1505,10 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+}
 
+void MegaApplication::onFetchNodesFinished()
+{
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
