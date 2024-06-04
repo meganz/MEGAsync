@@ -136,43 +136,37 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     updatedStyleSheet |= replaceIconColorTokens(widget, styleSheet, colorTokens);
     updatedStyleSheet |= replaceThemeTokens(styleSheet, currentTheme);
 
+    removeFrameOnDialogCombos(widget);
+
     if (updatedStyleSheet)
     {
         widget->setStyleSheet(styleSheet);
     }
-
-    test(widget);
 
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<float> elapsed = end - start;
     std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
 }
 
-void TokenParserWidgetManager::test(QWidget* widget)
+void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
 {
-    auto widgets = widget->findChildren<QComboBox*>(QLatin1String("cLanguage"));
-    if (widgets.isEmpty())
+    auto comboBoxes = widget->findChildren<QComboBox*>();
+    if (comboBoxes.isEmpty())
     {
-        std::cout << "node not found" << std::endl;
         return;
     }
 
-    auto cLang = widgets.first();
-    cLang->view()->window()->setStyleSheet(QLatin1String("border-type: none;"));
-    cLang->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
-    cLang->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
+    for (auto comboBox : comboBoxes)
+    {
+        /*
+         * WARNING HACK : this line will generate an error on widget, so the frame will be removed.
+         * border-type is not a valid property.
+        */
+        comboBox->view()->window()->setStyleSheet(QLatin1String("border-type: none;"));
 
-
-
-
-    //foundWidget->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
-    //std::cout << "foundWidget : " << foundWidget->objectName().toStdString() << std::endl;
-
-    //auto widgetParent = widgets.first()->parentWidget();
-
-    //std::cout << "widgetParent : " << widgetParent->objectName().toStdString() << std::endl;
-
-    //widgetParent->setStyleSheet(QLatin1String("QGroupBox * { background-color: red; } "));
+        comboBox->view()->window()->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+        comboBox->view()->window()->setAttribute(Qt::WA_TranslucentBackground);
+    }
 }
 
 bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens)

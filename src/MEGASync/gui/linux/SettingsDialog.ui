@@ -32,7 +32,7 @@ color: #333333; /*colorToken.text-primary*/
 border-color: #333333; /*colorToken.text-primary*/
 border-width: 2px;
 border-style: solid;
-border-radius: 6px;
+border-radius: 5px;
 padding: 1px 1px 1px 5px;
 }
 
@@ -59,8 +59,8 @@ border-bottom-right-radius: 5px;
 QComboBox QAbstractItemView
 {
 border: 2px solid #04101E; /*colorToken.button-outline*/
-border-radius: 16px;
-background-color: #FFFFFF; /*colorToken.page-background*/
+border-radius: 4px;
+background-color: transparent;
 }
 
 QRadioButton::indicator::unchecked

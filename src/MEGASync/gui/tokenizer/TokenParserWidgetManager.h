@@ -27,6 +27,7 @@ private:
     bool replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
     bool replaceIconColorTokens(QWidget* widget, QString& styleSheet, const ColorTokens& colorTokens);
     bool replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
+    void removeFrameOnDialogCombos(QWidget* widget);
     void test(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
