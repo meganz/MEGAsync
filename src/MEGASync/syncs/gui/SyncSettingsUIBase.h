@@ -110,8 +110,13 @@ public:
             if (Preferences::instance()->accountType() == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
                 syncErrorCode == mega::MegaSync::ACCOUNT_EXPIRED)
             {
+                Text::Bold bold;
+                Text::Decorator dec(&bold);
+
+
                 QString message = tr("%1 can't be added as your Pro Flexi account has been deactivated due to payment failure "
                              "or you've cancelled your subscription. To continue, make a payment and reactivate your subscription.").arg(localPath);
+                dec.process(message);
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
             }
             else
