@@ -58,6 +58,8 @@ private:
     void hoverMode(Preferences::StalledIssuesModeType mode);
     void unhoverMode(Preferences::StalledIssuesModeType mode);
 
+    void setLearnMoreLabel();
+
     bool setNewModeToPreferences();
 
     Ui::StalledIssuesDialog *ui;
