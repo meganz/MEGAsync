@@ -11,7 +11,6 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
@@ -1380,6 +1379,14 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->pNotifications->setEnabled(enabled);
 
     mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+{
+    if(mUi->backupSettings)
+    {
+        mUi->backupSettings->setAddButtonEnabled(enabled);
+    }
 }
 
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)

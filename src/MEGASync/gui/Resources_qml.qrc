@@ -36,7 +36,9 @@
         <file>images/qml/onboarding/shield_account_proIII.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
-        <file>images/qml/onboarding/OKIcon.png</file>
+        <file>images/qml/ok.png</file>
+        <file>images/qml/ok@2x.png</file>
+        <file>images/qml/ok@3x.png</file>
         <file>images/qml/mega.svg</file>
         <file>images/qml/mega_outline.svg</file>
         <file>images/qml/guest/exit.svg</file>
@@ -74,5 +76,16 @@
         <file>images/qml/sync_exclusions/extension.svg</file>
         <file>images/qml/sync_exclusions/chevron-down.svg</file>
         <file>images/qml/sync_exclusions/info.svg</file>
+        <file>images/qml/rocket.png</file>
+        <file>images/qml/rocket@2x.png</file>
+        <file>images/qml/rocket@3x.png</file>
+        <file>images/qml/controls.png</file>
+        <file>images/qml/controls@2x.png</file>
+        <file>images/qml/controls@3x.png</file>
+        <file>images/qml/mega-cloud.png</file>
+        <file>images/qml/mega-cloud@2x.png</file>
+        <file>images/qml/mega-cloud@3x.png</file>
+        <file>images/qml/alert_circle_filled.svg</file>
+        <file>images/qml/check_circle_filled.svg</file>
     </qresource>
 </RCC>

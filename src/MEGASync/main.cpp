@@ -791,6 +791,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaSyncError", "Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Could not get the filesystem's ID.");
     QT_TRANSLATE_NOOP("MegaSyncError", "Unable to write sync config to disk.");
-    QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path.");
+    // This string is not used yet, restore it when applicable.
+    // QT_TRANSLATE_NOOP("MegaSyncError", "Backup source path not below drive path.");
 #endif
 }

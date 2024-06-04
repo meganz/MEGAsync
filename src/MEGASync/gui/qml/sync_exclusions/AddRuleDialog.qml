@@ -10,7 +10,11 @@ import components.buttons 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
 
-Window{
+import QmlDialog 1.0
+import ChooseLocalFolder 1.0
+import ChooseLocalFile 1.0
+
+QmlDialog{
     id: root
 
     readonly property int dialogWidth: 480
@@ -37,7 +41,7 @@ Window{
     maximumHeight: root.dialogHeight
     modality: Qt.ApplicationModal
     flags: Qt.Dialog
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     title: ExclusionsStrings.addExclusion
 
     Item {
@@ -157,11 +161,21 @@ Window{
                     root.ruleValue = text;
                 }
                 rightIconMouseArea.onClicked: {
-                    if(targetComboBox.currentText === ExclusionsStrings.files){
-                        chooseFile();
+                    if(targetComboBox.currentText === ExclusionsStrings.files) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            fileDialog.openRelativeFileSelector(syncExclusionsAccess.folderPath);
+                        }
+                        else {
+                            fileDialog.openFileSelector();
+                        }
                     }
-                    else if(targetComboBox.currentText === ExclusionsStrings.folders){
-                        chooseFolder();
+                    else if(targetComboBox.currentText === ExclusionsStrings.folders) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            folderDialog.openRelativeFolderSelector(syncExclusionsAccess.folderPath);
+                        }
+                        else {
+                            folderDialog.openFolderSelector();
+                        }
                     }
                 }
             } // TextField: valueTextField
@@ -178,7 +192,7 @@ Window{
                     topMargin: 18
                 }
                 height: 1
-                color: colorStyle.borderDisabled
+                color: ColorTheme.borderDisabled
             }
         } // Item: content
         RowLayout {
@@ -209,10 +223,34 @@ Window{
                 enabled: valueTextField.text.trim().length !== 0
                 icons.position: Icon.Position.LEFT
                 onClicked: {
+                    if(typeof addRuleDialogAccess !== "undefined" && addRuleDialogAccess !== null) {
+                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType, root.ruleValue);
+                    }
                     root.accepted();
                     root.close();
                 }
             }
         } //RowLayou: buttonsLayout
     } // Column: mainColumn
+
+    ChooseLocalFolder {
+        id: folderDialog
+
+        title: ExclusionsStrings.selectFolderTitle
+
+        onFolderChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
+    ChooseLocalFile {
+        id: fileDialog
+
+        title: ExclusionsStrings.selectFileTitle
+
+        onFileChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
 } // Item: root

@@ -6,6 +6,8 @@
 #include <QProcess>
 #include <QDateTime>
 #include <QPainter>
+#include <QAbstractItemDelegate>
+
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "control/Preferences/Preferences.h"
@@ -20,8 +22,6 @@
 #include "StatusInfo.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "syncs/control/SyncController.h"
-#include "syncs/gui/Backups/AddBackupDialog.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -217,7 +217,6 @@ private:
 
     QPointer<TransferManager> mTransferManager;
 
-    QPointer<AddBackupDialog> mAddBackupDialog;
     QPointer<BindFolderDialog> mAddSyncDialog;
 
 #ifdef Q_OS_LINUX

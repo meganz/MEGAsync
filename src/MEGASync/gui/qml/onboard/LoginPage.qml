@@ -1,7 +1,8 @@
 import QtQuick 2.15
 
-import onboard 1.0
 import common 1.0
+
+import onboard 1.0
 
 import ApiEnums 1.0
 import AppStatsEvents 1.0
@@ -61,7 +62,7 @@ LoginPageForm {
                 progressValue: 0;
             }
             PropertyChanges {
-                target: onboardingWindow
+                target: window
                 loggingIn: false;
                 creatingAccount: false;
             }
@@ -77,7 +78,7 @@ LoginPageForm {
                 icons.busyIndicatorVisible: true;
             }
             PropertyChanges {
-                target: onboardingWindow
+                target: window
                 loggingIn: true;
                 creatingAccount: false;
             }
@@ -98,7 +99,7 @@ LoginPageForm {
             name: stateInProgressCreatingAccount
             extend: stateInProgress
             PropertyChanges {
-                target: onboardingWindow
+                target: window
                 loggingIn: false;
                 creatingAccount: true;
             }
@@ -107,7 +108,7 @@ LoginPageForm {
             name: stateInProgressWaitingEmailConfirm
             extend: stateInProgress
             PropertyChanges {
-                target: onboardingWindow
+                target: window
                 loggingIn: false;
                 creatingAccount: true;
             }
@@ -118,7 +119,7 @@ LoginPageForm {
             StateChangeScript {
                 script: {
                     cancelLogin.close();
-                    onboardingWindow.forceClose();
+                    window.forceClose();
                 }
             }
         },
@@ -204,7 +205,7 @@ LoginPageForm {
         function onBlockedStateChanged(blockState) {
             if(blockState >= ApiEnums.ACCOUNT_BLOCKED_VERIFICATION_EMAIL) {
                 cancelLogin.close();
-                onboardingWindow.forceClose();
+                window.forceClose();
             }
         }
     }
@@ -215,7 +216,7 @@ LoginPageForm {
         function onLogout() {
             password.text = "";
             cancelLogin.close();
-            onboardingWindow.forceClose();
+            window.forceClose();
         }
     }
 
@@ -230,7 +231,7 @@ LoginPageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             if (loginControllerAccess.newAccount) {

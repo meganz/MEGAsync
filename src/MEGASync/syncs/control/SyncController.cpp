@@ -50,6 +50,24 @@ void SyncController::addBackup(const QString& localFolder, const QString& syncNa
     }
 }
 
+QString SyncController::getErrorString(int errorCode, int syncErrorCode)
+{
+    QString errorMsg;
+    if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+    {
+        errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
+    }
+    else if (errorCode != MegaError::API_OK)
+    {
+        errorMsg = getSyncAPIErrorMsg(errorCode);
+        if(errorMsg.isEmpty())
+        {
+            errorMsg = QCoreApplication::translate("MegaError", MegaError::getErrorString(errorCode));
+        }
+    }
+    return errorMsg;
+}
+
 void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
                              const QString& syncName, MegaSync::SyncType type)
 {
@@ -69,39 +87,22 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
     {
         auto errorCode (e.getErrorCode());
         auto syncErrorCode (request.getNumDetails());
-        QString errorMsg;
-        bool error = false;
 
-        if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
-        {
-            errorMsg = QCoreApplication::translate("MegaSyncError", MegaSync::getMegaSyncErrorCode(syncErrorCode));
-            error = true;
-        }
-        else if (errorCode != MegaError::API_OK)
-        {
-            errorMsg = getSyncAPIErrorMsg(errorCode);
-            if(errorMsg.isEmpty())
-            {
-                errorMsg = QCoreApplication::translate("MegaError", e.getErrorString());
-            }
-            error = true;
-        }
-
-        if(error)
+        if(syncErrorCode != MegaSync::NO_SYNC_ERROR || errorCode != MegaError::API_OK)
         {
             std::unique_ptr<MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByHandle(request.getNodeHandle()));
             QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
-                        getSyncTypeString(type),
-                        QString::fromUtf8(request.getName()),
-                        localFolder,
-                        QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
-                        errorMsg);
+                                getSyncTypeString(type),
+                                QString::fromUtf8(request.getName()),
+                                localFolder,
+                                QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
+                                getErrorString(errorCode, syncErrorCode));
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
         }
 
         if(isContextValid)
         {
-            emit syncAddStatus(errorCode, syncErrorCode, errorMsg, localFolder);
+            emit syncAddStatus(errorCode, syncErrorCode, localFolder);
         }
     }));
 }

@@ -25,6 +25,7 @@ public:
     void configureTableSegment();
     void configureTabSegment(QStringList options);
     void clicked(int segment);
+    void setTableButtonEnable(int segment, bool enable);
     ~QSegmentedControl();
 
 private:

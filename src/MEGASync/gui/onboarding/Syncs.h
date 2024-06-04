@@ -1,9 +1,10 @@
 #ifndef SYNCS_H
 #define SYNCS_H
 
+#include "syncs/control/SyncController.h"
+
 #include "megaapi.h"
 #include "mega/bindings/qt/QTMegaRequestListener.h"
-#include "syncs/control/SyncController.h"
 
 #include <QObject>
 
@@ -46,7 +47,7 @@ private:
     bool helperCheckRemoteSync(const QString& path, QString& errorMessage) const;
 
 private slots:
-    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name);
+    void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
 };
 
