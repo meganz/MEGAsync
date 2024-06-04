@@ -24,6 +24,45 @@ background-color: #FFFFFF; /* colorToken.page-background*/
 color: #303233; /*colorToken.text-primary*/
 }
 
+QTableView
+{
+background: #18191A; /* colorToken.page-background*/
+outline: 0;
+border: 1px solid #18191A; /* colorToken.page-background*/
+border-radius: 5px;
+}
+
+QTableView::item
+{
+border: none;
+padding-left:4px;
+}
+
+QTableView::item::selected
+{
+color: #F3F4F4; /* colorToken.text-primary*/
+}
+
+QHeaderView
+{
+background: #18191A; /* colorToken.page-background*/
+padding-top: 2px;
+}
+
+QHeaderView::section {
+background: #18191A; /* colorToken.page-background*/
+color: #F3F4F4; /* colorToken.text-primary*/
+padding-left:6px;
+border-top:0 px;
+border-bottom:0px;
+border-left:0px;
+border-right:0px ;
+}
+
+QHeaderView::section:last {
+border-right:0px;
+}
+
 QComboBox
 {
 height: 18px;
@@ -140,6 +179,17 @@ background-color: #477EF7; /*colorToken.indicator-indigo*/
 border-radius: 4px;
 }
 
+QCheckBox
+{
+background-color: transparent;
+}
+
+QCheckBox::indicator
+{
+height: 10px;
+width: 12px;
+}
+
 QCheckBox::indicator:checked
 {
 padding: 2px;
@@ -179,17 +229,6 @@ background-color: transparent;
 QLabel
 {
 background-color: transparent;
-}
-
-QCheckBox
-{
-background-color: transparent;
-}
-
-QCheckBox::indicator
-{
-height: 10px;
-width: 12px;
 }
 
 QPushButton
