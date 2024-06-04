@@ -37,7 +37,7 @@ provides=("megasync=${pkgver}")
 conflicts=('megatools')
 replaces=()
 backup=()
-options=(debug strip)
+options=(debug strip !lto)
 install=megasync.install
 changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
