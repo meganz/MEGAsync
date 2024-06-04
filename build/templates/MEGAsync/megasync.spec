@@ -33,10 +33,12 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
         BuildRequires: libudev-devel
     %endif
 
-    %if 0%{?suse_version} > 1600
+    %if 0%{?suse_version} > 1500
         BuildRequires: pkgconf-pkg-config
     %else
         BuildRequires: pkg-config
+        BuildRequires: gcc13 gcc13-c++
+        BuildRequires: python311
     %endif
 
     %if 0%{?suse_version} > 1500 || 0%{?sle_version} >= 150300 || (0%{?is_opensuse} && 0%{?sle_version} >= 150000)
@@ -201,6 +203,16 @@ fi
 if [ -n "%{extradefines}" ]; then
     export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
 fi
+
+# OpenSuse Leap 15.x defaults to gcc7.
+# Python>=10 needed for VCPKG pkgconf
+%if 0%{?suse_version} <= 1500
+    export CC=gcc-13
+    export CXX=g++-13
+    mkdir python311
+    ln -sf /usr/bin/python3.11 python311/python3
+    export PATH=$PWD/python311:$PATH
+%endif
 
 cmake --version
 cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF ${qtdefinitions} -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
