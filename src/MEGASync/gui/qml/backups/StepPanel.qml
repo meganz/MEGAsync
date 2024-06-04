@@ -22,21 +22,21 @@ Rectangle {
     readonly property int lineRadius: 1
 
     height: 104
-    color: colorStyle.pageBackground
+    color: ColorTheme.pageBackground
 
     state: root.step1
     states: [
         State {
             name: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: line; color: colorStyle.iconButtonDisabled; }
+            PropertyChanges { target: line; color: ColorTheme.iconButtonDisabled; }
             PropertyChanges { target: step2; toState: Step.ToStates.DISABLED; }
         },
         State {
             name: root.step2
             extend: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: line; color: colorStyle.iconButton; }
+            PropertyChanges { target: line; color: ColorTheme.iconButton; }
             PropertyChanges { target: step2; toState: Step.ToStates.CURRENT; }
         },
         State {
@@ -87,7 +87,7 @@ Rectangle {
 
                 Layout.preferredWidth: root.lineWidth
                 Layout.preferredHeight: root.lineHeight
-                color: colorStyle.buttonSecondaryPressed
+                color: ColorTheme.buttonSecondaryPressed
                 radius: root.lineRadius
             }
 
