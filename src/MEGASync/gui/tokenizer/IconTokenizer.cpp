@@ -96,50 +96,38 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 
 std::optional<QIcon::Mode> IconTokenizer::getIconMode(const QString& mode)
 {
-    std::optional<QIcon::Mode> iconMode;
+    static const QHash<QString, QIcon::Mode> modeMap {
+        {QString::fromUtf8("normal"), QIcon::Normal},
+        {QString::fromUtf8("disabled"), QIcon::Disabled},
+        {QString::fromUtf8("active"), QIcon::Active},
+        {QString::fromUtf8("selected"), QIcon::Selected}
+    };
 
-    if (mode == QString::fromUtf8("normal"))
+    auto it = modeMap.find(mode);
+    if (it != modeMap.end())
     {
-        iconMode = QIcon::Normal;
-    }
-    else if (mode == QString::fromUtf8("disabled"))
-    {
-        iconMode = QIcon::Disabled;
-    }
-    else if (mode == QString::fromUtf8("active"))
-    {
-        iconMode =  QIcon::Active;
-    }
-    else if (mode == QString::fromUtf8("selected"))
-    {
-        iconMode = QIcon::Selected;
-    }
-    else
-    {
-        qDebug() << __func__ << " Error unknown icon mode : " << mode;
+        return it.value();
     }
 
-    return iconMode;
+    qDebug() << __func__ << " Error unknown icon mode: " << mode;
+    return std::nullopt;
 }
 
 std::optional<QIcon::State> IconTokenizer::getIconState(const QString& state)
 {
-    std::optional<QIcon::State> iconState;
+    static const QHash<QString, QIcon::State> stateMap {
+        {QStringLiteral("on"), QIcon::On},
+        {QStringLiteral("off"), QIcon::Off}
+    };
 
-    if (state == QString::fromUtf8("on"))
+    auto it = stateMap.find(state);
+    if (it != stateMap.end())
     {
-        iconState = QIcon::On;
-    }
-    else if (state == QString::fromUtf8("off"))
-    {
-        iconState = QIcon::Off;
-    }
-    else
-    {
-        qDebug() << __func__ << " Error unknown icon state : " << state;
+        return it.value();
     }
 
-    return iconState;
+    qDebug() << __func__ << " Error unknown icon state: " << state;
+    return std::nullopt;
 }
 
 std::optional<QPixmap> IconTokenizer::changePixmapColor(const QPixmap& pixmap, QColor toColor)
