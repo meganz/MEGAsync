@@ -1550,6 +1550,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                infoDialog->deleteLater();
+                infoDialog = nullptr;
                 start();
                 periodicTasks();
             }
