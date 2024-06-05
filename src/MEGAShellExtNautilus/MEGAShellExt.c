@@ -47,13 +47,19 @@ static void mega_ext_instance_init(MEGAExt *mega_ext, G_GNUC_UNUSED gpointer g_c
 static const gchar *file_state_to_str(FileState state)
 {
     switch(state) {
-        case FILE_SYNCED:
+        case RESPONSE_SYNCED:
             return "synced";
-        case FILE_PENDING:
+        case RESPONSE_PENDING:
             return "pending";
-        case FILE_SYNCING:
+        case RESPONSE_SYNCING:
             return "syncing";
-        case FILE_NOTFOUND:
+        case RESPONSE_IGNORED:
+            return "ignored";
+        case RESPONSE_PAUSED:
+            return "paused";
+        case RESPONSE_ERROR:
+            return "error";
+        case RESPONSE_DEFAULT:
         default:
             return "notfound";
     }
@@ -103,7 +109,8 @@ static void mega_ext_on_upload_selected(NautilusMenuItem *item, gpointer user_da
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state != FILE_SYNCED && state != FILE_PENDING && state != FILE_SYNCING) {
+        if (state != RESPONSE_SYNCED && state != RESPONSE_PENDING && state != RESPONSE_SYNCING)
+        {
             if (mega_ext_client_upload(mega_ext, path))
                 flag = TRUE;
         }
@@ -203,7 +210,7 @@ static void mega_ext_on_get_link_selected(NautilusMenuItem *item, gpointer user_
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_paste_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -240,7 +247,7 @@ static void mega_ext_on_view_on_mega_selected(NautilusMenuItem *item, gpointer u
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -276,7 +283,7 @@ static void mega_ext_on_open_previous_selected(NautilusMenuItem *item, gpointer 
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_previous(mega_ext, path))
                 flag = TRUE;
         }
@@ -332,12 +339,12 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
         // but make sure we received the list of synced folders first
         if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path))
         {
-            state = FILE_NOTFOUND;
+            state = RESPONSE_DEFAULT;
         }
         else
         {
             state = mega_ext_client_get_path_state(mega_ext, path, 1);
-            if (state == FILE_NOTFOUND)
+            if (state == RESPONSE_DEFAULT)
             {
                 char canonical[PATH_MAX];
                 expanselocalpath(path,canonical);
@@ -346,7 +353,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
         }
         g_free(path);
 
-        if (state == FILE_ERROR)
+        if (state == RESPONSE_ERROR)
         {
             continue;
         }
@@ -356,7 +363,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
         g_object_set_data_full((GObject*)file, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+        if (state == RESPONSE_SYNCED || state == RESPONSE_SYNCING || state == RESPONSE_PENDING)
         {
             if (nautilus_file_info_get_file_type(file) == G_FILE_TYPE_DIRECTORY)
             {
@@ -389,7 +396,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
 
     nautilus_menu_item_set_submenu(root_menu_item, subMenu); //Connect submenu to root menu item
 
-    // if there any unsynced files / folders selected
+    // if there are any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders)
     {
         NautilusMenuItem *item;
@@ -398,7 +405,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider,
 
         if(out)
         {
-            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to your MEGA account", "mega");
             g_free(mega_ext->string_upload);
             mega_ext->string_upload = g_strdup(out);
             g_free(out);
@@ -522,7 +529,7 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     }
 
     state = mega_ext_client_get_path_state(mega_ext, path, 0);
-    if (state == FILE_NOTFOUND)
+    if (state == RESPONSE_DEFAULT)
     {
         char canonical[PATH_MAX];
         expanselocalpath(path,canonical);
@@ -532,7 +539,7 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
 
     // process items located in sync folders
-    if (state == FILE_NOTFOUND || state == FILE_IGNORED)
+    if (state == RESPONSE_DEFAULT || state == RESPONSE_IGNORED)
     {
         if (has_mega_icon)
         {
@@ -546,20 +553,20 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
 
     g_free(path);
 
-    if (state == FILE_ERROR)
+    if (state == RESPONSE_ERROR)
     {
         return NAUTILUS_OPERATION_COMPLETE;
     }
 
     switch (state)
     {
-        case FILE_SYNCED:
+        case RESPONSE_SYNCED:
             nautilus_file_info_add_emblem(file, "mega-synced");
             break;
-        case FILE_PENDING:
+        case RESPONSE_PENDING:
             nautilus_file_info_add_emblem(file, "mega-pending");
             break;
-        case FILE_SYNCING:
+        case RESPONSE_SYNCING:
             nautilus_file_info_add_emblem(file, "mega-syncing");
             break;
         default:
