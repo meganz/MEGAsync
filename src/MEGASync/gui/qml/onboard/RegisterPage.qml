@@ -14,7 +14,7 @@ RegisterPageForm {
                                             registerContent.password.text,
                                             registerContent.firstName.text,
                                             registerContent.lastName.text);
-        onboardingWindow.creatingAccount = true;
+        window.creatingAccount = true;
     }
 
     loginButton.onClicked: {
@@ -22,7 +22,7 @@ RegisterPageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             registerContent.firstName.forceActiveFocus();

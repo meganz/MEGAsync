@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import common 1.0
 
 import components.dialogs 1.0
+import components.views 1.0
 
 import LoginController 1.0
 
@@ -141,10 +142,11 @@ Rectangle {
         anchors {
             left: leftItem.right
             top: root.top
-            topMargin: 48
+            bottom: root.bottom
+            topMargin: Constants.defaultWindowMargin
+            bottomMargin: Constants.defaultWindowMargin
         }
         width: 1
-        height: 464
         radius: 2
         color: ColorTheme.borderDisabled
     }
@@ -157,8 +159,8 @@ Rectangle {
             top: root.top
             bottom: root.bottom
             right: root.right
-            margins: 48
-            bottomMargin: 16
+            margins: Constants.defaultWindowMargin
+            bottomMargin: 0
         }
 
         onCurrentItemChanged: {
@@ -200,14 +202,14 @@ Rectangle {
         target: loginControllerAccess
 
         function onAccountCreationCancelled() {
-            onboardingWindow.creatingAccount = false;
+            window.creatingAccount = false;
             cancelCreateAccount.close();
-            onboardingWindow.forceClose();
+            window.forceClose();
         }
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onClosingButLoggingIn() {
             cancelLogin.visible = true;

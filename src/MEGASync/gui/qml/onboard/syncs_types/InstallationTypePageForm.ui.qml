@@ -5,12 +5,13 @@ import QtQuick.Controls 2.15
 import common 1.0
 
 import components.texts 1.0 as Texts
+import components.pages 1.0
 
 import onboard 1.0
 
 import LoginController 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
     property alias buttonGroup: buttonGroupComp
@@ -28,7 +29,7 @@ SyncsPage {
         }
         spacing: 24
 
-        Header {
+        HeaderTexts {
             id: headerItem
 
             title: loginControllerAccess.newAccount

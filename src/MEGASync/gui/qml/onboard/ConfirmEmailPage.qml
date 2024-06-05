@@ -13,12 +13,12 @@ ConfirmEmailPageForm {
         target: loginControllerAccess
 
         function onEmailConfirmed() {
-            onboardingWindow.raise();
+            window.raise();
         }
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             bodyText2.forceActiveFocus();

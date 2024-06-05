@@ -8,12 +8,11 @@ import components.textFields 1.0
 Column {
     id: root
 
-    readonly property int contentWidth: 403
     readonly property int contentMargin: 48
     readonly property int checkboxSpacing: 16
     readonly property int mainFormLayoutSpacing: 14
     readonly property int nameLayoutSpacing: 8
-    readonly property int xPositionPasswordPopup: -335
+    readonly property int xPositionPasswordPopup: -333
 
     property alias firstName: firstNameItem
     property alias lastName: lastNameItem
@@ -74,8 +73,7 @@ Column {
         termsCheckBoxItem.checked = false;
     }
 
-    width: contentWidth
-    spacing: contentMargin / 2 - termsCheckBoxItem.sizes.focusBorderWidth
+    spacing: contentMargin / 2 + Constants.focusAdjustment
 
     Component.onDestruction: {
         loginControllerAccess.createAccountErrorMsg = "";
@@ -87,14 +85,15 @@ Column {
         anchors {
             left: root.left
             right: root.right
-            leftMargin: -firstNameItem.sizes.focusBorderWidth
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
         }
         spacing: mainFormLayoutSpacing
 
         Row {
             id: nameLayout
 
-            width: emailItem.width
+            width: parent.width
             spacing: nameLayoutSpacing
 
             TextField {
@@ -119,7 +118,7 @@ Column {
         EmailTextField {
             id: emailItem
 
-            width: contentWidth + emailItem.sizes.focusBorderWidth
+            width: parent.width
             title: OnboardingStrings.email
             hint.icon: Images.mail
             hint.text: loginControllerAccess.createAccountErrorMsg;
@@ -133,7 +132,7 @@ Column {
             property bool validPassword: passwordItem.textField.text.length >= 8
                                             && passwordInfoPopup.validPassword
 
-            width: emailItem.width
+            width: parent.width
             title: OnboardingStrings.password
             cleanWhenError: false
 
@@ -179,7 +178,7 @@ Column {
         PasswordTextField {
             id: confirmPasswordItem
 
-            width: emailItem.width
+            width: parent.width
             title: OnboardingStrings.confirmPassword
             hint.icon: Images.key
             cleanWhenError: false
@@ -190,7 +189,7 @@ Column {
         id: termsCheckBoxItem
 
         anchors.left: root.left
-        anchors.leftMargin: -termsCheckBoxItem.sizes.focusBorderWidth
+        anchors.leftMargin: Constants.focusAdjustment
         url: Links.terms
         text: OnboardingStrings.agreeTerms
         KeyNavigation.tab: contentItem

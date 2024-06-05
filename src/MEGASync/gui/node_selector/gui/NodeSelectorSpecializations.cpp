@@ -210,7 +210,7 @@ MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget *parent) : NodeSelector(p
 {
     ui->fBackups->hide();
     ui->fIncomingShares->hide();
-    SelectTypeSPtr selectType = SelectTypeSPtr(new UploadType);
+    SelectTypeSPtr selectType = SelectTypeSPtr(new MoveBackupType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     mCloudDriveWidget->setShowEmptyView(false);

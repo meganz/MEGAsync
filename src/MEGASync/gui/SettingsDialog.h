@@ -65,6 +65,9 @@ public:
     void updateUploadFolder();
     void updateDownloadFolder();
 
+    // Backups
+    void setBackupsAddButtonEnabled(bool enabled);
+
 signals:
     void userActivity();
 

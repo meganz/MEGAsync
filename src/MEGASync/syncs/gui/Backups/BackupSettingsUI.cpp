@@ -3,6 +3,11 @@
 #include "syncs/gui/Backups/BackupTableView.h"
 #include "syncs/model/BackupItemModel.h"
 
+#include "qml/QmlDialogWrapper.h"
+#include "qml/QmlDialogManager.h"
+#include "backups/Backups.h"
+#include "onboarding/Onboarding.h"
+
 #include "Utilities.h"
 #include "DialogOpener.h"
 #include "RemoveBackupDialog.h"
@@ -29,23 +34,30 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
 
     mElements.initElements(this);
     ui->gSyncs->setUsePermissions(false);
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(), &QmlDialogWrapper<Onboarding>::finished, this, [this]()
+        {
+            setAddButtonEnabled(true);
+        });
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+    }
 }
 
 BackupSettingsUI::~BackupSettingsUI()
 {
 }
 
-void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
+void BackupSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    QPointer<AddBackupDialog> addBackup = new AddBackupDialog(this);
-    DialogOpener::showDialog(addBackup,[this, addBackup]()
-    {
-        if(addBackup->result() == QDialog::Accepted)
-        {
-            mSyncController->addBackup(addBackup->getSelectedFolder(), addBackup->getBackupName());
-            syncsStateInformation(SyncStateInformation::SAVING);
-        }
-    });
+    Q_UNUSED(megaFolderHandle)
+    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)

@@ -174,6 +174,7 @@ public:
     void initLocalServer();
     void onboardingFinished(bool fastLogin);
     void onLoginFinished();
+    void onFetchNodesFinished();
     void onLogout();
 
     StatsEventHandler* getStatsEventHandler() const;

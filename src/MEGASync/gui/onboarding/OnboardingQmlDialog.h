@@ -12,7 +12,7 @@ class OnboardingQmlDialog : public QmlDialog
 
 public:
     explicit OnboardingQmlDialog(QWindow *parent = nullptr);
-    ~OnboardingQmlDialog() override;
+    ~OnboardingQmlDialog() override = default;
 
     bool getCreatingAccount() const;
     void setCreatingAccount(bool value);
@@ -26,11 +26,9 @@ signals:
     void creatingAccountChanged();
     void closingButLoggingIn();
     void closingButCreatingAccount();
-    void requestPageFocus();
-    void initializePageFocus();
 
 protected:
-    bool event(QEvent *) override;
+    bool event(QEvent*) override;
 
 private:
     bool mLoggingIn;
@@ -38,10 +36,6 @@ private:
     bool mForceClose;
     bool mCreatingAccount;
 
-    void onRequestPageFocus()
-    {
-        emit initializePageFocus();
-    }
 };
 
 #endif // ONBOARDINGQMLDIALOG_H

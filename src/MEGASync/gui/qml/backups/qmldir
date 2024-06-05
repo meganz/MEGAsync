@@ -1,0 +1,10 @@
+module backups
+singleton BackupsStrings 1.0 BackupsStrings.qml
+BackupsDialog 1.0 BackupsDialog.qml
+BackupsFlow 1.0 BackupsFlow.qml
+FolderRow 1.0 FolderRow.qml
+SelectTable 1.0 SelectTable.qml
+ResumePageForm 1.0 ResumePageForm.ui.qml
+ResumePage 1.0 ResumePage.qml
+BackupsPage 1.0 BackupsPage.qml
+ConfirmFoldersContent 1.0 ConfirmFoldersContent.qml

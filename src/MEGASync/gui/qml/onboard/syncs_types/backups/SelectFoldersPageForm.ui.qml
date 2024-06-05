@@ -3,16 +3,23 @@ import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import onboard 1.0
-import onboard.syncs_types 1.0
+import components.accountData 1.0
+import components.pages 1.0
 
+import backups 1.0
+
+import onboard 1.0
+
+import BackupsProxyModel 1.0
 import BackupsModel 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
+    required property BackupsProxyModel backupsProxyModelRef
+
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backUp
+        text: BackupsStrings.backUp
         icons.source: Images.database
         enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
     }
@@ -27,11 +34,11 @@ SyncsPage {
         }
         spacing: 24
 
-        Header {
+        HeaderTexts {
             id: headerItem
 
             title: OnboardingStrings.selectBackupFoldersTitle
-            description: OnboardingStrings.selectBackupFoldersDescription
+            description: BackupsStrings.selectBackupFoldersDescription
         }
 
         InfoAccount {
@@ -49,8 +56,9 @@ SyncsPage {
             left: parent.left
             right: parent.right
             bottom: footerButtons.top
-            topMargin: 8 // value by design
+            topMargin: 8
             bottomMargin: selectFolderLayout.spacing
         }
+        backupsProxyModelRef: root.backupsProxyModelRef
     }
 }

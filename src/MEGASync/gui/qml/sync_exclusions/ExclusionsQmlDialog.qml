@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import QtQuick.Window 2.15
 
 import common 1.0
 
@@ -10,7 +11,6 @@ import components.buttons 1.0 as Buttons
 import components.checkBoxes 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
-import QtQuick.Window 2.15
 
 import ExclusionsQmlDialog 1.0
 
@@ -29,7 +29,7 @@ ExclusionsQmlDialog {
     title: ExclusionsStrings.addExclusions
     visible: false
     modality: Qt.NonModal
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
 
     Component.onCompleted: {
         x = Screen.width / 2 - width / 2;
@@ -38,31 +38,17 @@ ExclusionsQmlDialog {
     }
 
     AddRuleDialog {
-            id: addExlcusionRule
+        id: addExlcusionRule
 
-            visible: false
+        visible: false
 
-            onAccepted: {
-                if(rulesTable.editIndex === -1){
-                    syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
-                }
-                else{
-                    syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
-                }
+        onAccepted: {
+            if(rulesTable.editIndex === -1){
+                syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
             }
-            onChooseFile: syncExclusionsAccess.chooseFile();
-            onChooseFolder: syncExclusionsAccess.chooseFolder();
-    }
-
-    Connections {
-        target: syncExclusionsAccess
-
-        function onFileChoosen(relativeFileName) {
-            addExlcusionRule.ruleValue = relativeFileName;
-        }
-
-        function onFolderChoosen(relativeFolderName) {
-            addExlcusionRule.ruleValue = relativeFolderName;
+            else{
+                syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
+            }
         }
     }
 
@@ -123,7 +109,7 @@ ExclusionsQmlDialog {
                 topMargin: 12
             }
             height: 1
-            color: colorStyle.borderDisabled
+            color: ColorTheme.borderDisabled
         }
 
         Texts.RichText {
@@ -249,7 +235,7 @@ ExclusionsQmlDialog {
                 text: syncExclusionsAccess.minimumAllowedSize
                 enabled: sizeRuleCheckbox.checked
                 implicitWidth: 48
-                colors.border: colorStyle.borderStrongSelected
+                colors.border: ColorTheme.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 validator: IntValidator { bottom: 0 }
                 onTextChanged: {
@@ -305,7 +291,7 @@ ExclusionsQmlDialog {
                 }
                 implicitWidth: 48
                 text: syncExclusionsAccess.maximumAllowedSize
-                colors.border: colorStyle.borderStrongSelected
+                colors.border: ColorTheme.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
                 validator: IntValidator{}
@@ -427,7 +413,7 @@ ExclusionsQmlDialog {
                 }
                 font.bold: Font.DemiBold
                 iconSource: Images.refresh
-                backgroundColor: colorStyle.indicatorBackground
+                backgroundColor: ColorTheme.indicatorBackground
                 text: syncExclusionsAccess.folderName
             }
         } //nameRulesDescriptionItem

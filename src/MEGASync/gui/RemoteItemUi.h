@@ -24,6 +24,8 @@ public:
 
     QTableView* getView();
 
+    void setAddButtonEnabled(bool enabled);
+
 signals:
     void addClicked(mega::MegaHandle);
     void deleteClicked();

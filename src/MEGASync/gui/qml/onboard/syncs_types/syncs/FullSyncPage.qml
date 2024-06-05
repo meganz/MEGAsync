@@ -71,7 +71,7 @@ FullSyncPageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();

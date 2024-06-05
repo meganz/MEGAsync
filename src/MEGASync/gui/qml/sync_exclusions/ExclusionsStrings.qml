@@ -52,4 +52,7 @@ QtObject {
     readonly property string removeButon: qsTr("Remove")
     readonly property string askAgainText: qsTr("Don’t ask me again")
     readonly property string hintText: qsTr("Set a minimum and maximum value for file sizes. Files outside this range will be excluded.")
+    readonly property string selectFolderTitle: qsTr("Select the folder you want to exclude")
+    readonly property string selectFileTitle: qsTr("Select the file you want to exclude")
+
 }

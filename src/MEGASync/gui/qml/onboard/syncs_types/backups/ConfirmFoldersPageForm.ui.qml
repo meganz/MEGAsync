@@ -1,27 +1,30 @@
-import QtQuick 2.15
 import QtQuick.Layouts 1.15
 
 import common 1.0
 
-import components.textFields 1.0
+import components.pages 1.0
+
+import backups 1.0
 
 import onboard 1.0
-import onboard.syncs_types 1.0
 
+import BackupsProxyModel 1.0
 import BackupsModel 1.0
-import QmlDeviceName 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
+
+    required property BackupsProxyModel backupsProxyModelRef
 
     property alias enableConfirmHeader: confirmHeader.enabled
 
+    readonly property int spacing: 24
+
     footerButtons.rightPrimary {
-        text: OnboardingStrings.backUp
+        text: BackupsStrings.backUp
         icons.source: Images.database
         enabled: backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.NONE
-                    || (backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                            && backupsModelAccess.existsOnlyGlobalError)
+                    || backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION
     }
 
     ColumnLayout {
@@ -32,39 +35,21 @@ SyncsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24
+        spacing: root.spacing
 
-        Header {
+        HeaderTexts {
             id: confirmHeader
 
             title: OnboardingStrings.confirmBackupFoldersTitle
         }
 
-        ColumnLayout {
-            id: mainLayout
+        ConfirmFoldersContent {
+            id: contentItem
 
             Layout.preferredWidth: parent.width
-            spacing: 24
 
-            ConfirmTable {
-                id: confirmFoldersTable
-            }
-
-            TextField {
-                id: deviceField
-
-                colors.text: ColorTheme.textPlaceholder
-                Layout.preferredWidth: parent.width
-                Layout.leftMargin: -deviceField.sizes.focusBorderWidth
-                title: OnboardingStrings.backupTo
-                leftIconSource: Images.database
-                textField.readOnly: true
-                textField.text: "/" + deviceName.name
-            }
+            backupsProxyModelRef: root.backupsProxyModelRef
         }
     }
 
-    QmlDeviceName {
-        id: deviceName
-    }
 }

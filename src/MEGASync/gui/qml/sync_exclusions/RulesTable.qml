@@ -72,7 +72,7 @@ Rectangle {
     height: 242
     width: parent.width
 
-    color: colorStyle.pageBackground
+    color: ColorTheme.pageBackground
 
 
     ConfirmCloseDialog {
@@ -81,9 +81,9 @@ Rectangle {
         titleText: ExclusionsStrings.removeConfirmationTitle
         cancelButtonText: ExclusionsStrings.cancel
         acceptButtonText: ExclusionsStrings.removeButon
-        acceptButtonColors.background: colorStyle.buttonError
-        acceptButtonColors.hover: colorStyle.buttonErrorHover
-        acceptButtonColors.pressed: colorStyle.buttonErrorPressed
+        acceptButtonColors.background: ColorTheme.buttonError
+        acceptButtonColors.hover: ColorTheme.buttonErrorHover
+        acceptButtonColors.pressed: ColorTheme.buttonErrorPressed
         dontAskAgainVisible: true
         dontAskAgainText:  ExclusionsStrings.askAgainText
         dontAskAgain: true
@@ -109,11 +109,11 @@ Rectangle {
             top: parent.top
         }
         implicitHeight: 24 + tableRadius
-        color: colorStyle.surface2
+        color: ColorTheme.surface2
         z: 1
         radius: tableRadius
         border{
-            color: colorStyle.borderSubtle
+            color: ColorTheme.borderSubtle
             width: 1
         }
         Item{
@@ -245,7 +245,7 @@ Rectangle {
         }
 
         border{
-            color: colorStyle.borderSubtle
+            color: ColorTheme.borderSubtle
             width: 1
         }
         z: 2
@@ -258,7 +258,7 @@ Rectangle {
             rowDelegate: Rectangle {
                 height: 32
                 width: parent.width
-                color: styleData.row % 2 === 0 ? colorStyle.pageBackground : colorStyle.surface1// Alternating colors
+                color: styleData.row % 2 === 0 ? ColorTheme.pageBackground : ColorTheme.surface1// Alternating colors
             }
             headerDelegate: Rectangle {
                 visible: false
@@ -307,7 +307,7 @@ Rectangle {
                             leftMargin: 12
                             verticalCenter: parent.verticalCenter
                         }
-                        backgroundColor: colorStyle.indicatorBackground
+                        backgroundColor: ColorTheme.indicatorBackground
                         radius: 4
                         iconSource: model? Images.imagesExclusionsPath + model.iconName + '.svg': ""
                         iconSize:  Qt.size(16, 16)
@@ -334,7 +334,7 @@ Rectangle {
                             left: parent.left
                             verticalCenter: parent.verticalCenter
                         }
-                        backgroundColor: colorStyle.notificationInfo
+                        backgroundColor: ColorTheme.notificationInfo
                         radius: 4
                         text: model? model.property : ""
                     }
@@ -361,7 +361,7 @@ Rectangle {
                         width: valueColumn.width
                         font.pixelSize: Texts.Text.Size.SMALL
                         text: model ? model.value: ""
-                        color: colorStyle.textPrimary
+                        color: ColorTheme.textPrimary
                     }
                 }
             }
@@ -441,9 +441,9 @@ Rectangle {
         height: addRuleButton.height + tableRadius + 2 * 8
 
         radius: tableRadius
-        color: colorStyle.surface1
+        color: ColorTheme.surface1
         border{
-            color: colorStyle.borderSubtle
+            color: ColorTheme.borderSubtle
             width: 1
         }
 

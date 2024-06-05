@@ -93,55 +93,120 @@ void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& c
     }
 }
 
-ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeObject, const CoreData& coreData)
+//!
+//! \brief Parses the color theme from the given JSON object.
+//!
+//! This function iterates through the categories in the JSON object and processes
+//! each category to extract color information. The extracted color data is then
+//! stored in a ColorData object.
+//!
+//! \param jsonThemeObject The JSON object representing the color theme.
+//! \param coreData The core data mapping color IDs to color values.
+//! \return A ColorData object containing the parsed color information.
+ColorData DesignAssetsRepoManager::parseColorTheme(const QJsonObject& jsonThemeObject,
+                                                   const CoreData& coreData)
 {
-    ColorData colourData;
-
+    ColorData colorData;
     const QStringList categoryKeys = jsonThemeObject.keys();
 
-    foreach (auto category, categoryKeys)
+    for (const auto& category : categoryKeys)
     {
         QJsonObject categoryObject = jsonThemeObject.value(category).toObject();
-
-        const QStringList tokenKeys = categoryObject.keys();
-
-        foreach (auto token, tokenKeys)
-        {
-            QJsonObject tokenObject = categoryObject[token].toObject();
-            QJsonValue jType = tokenObject["type"];
-            QJsonValue jValue = tokenObject["value"];
-
-            if (!jType.isNull() && !jValue.isNull())
-            {
-                QString type = jType.toString();
-
-                if (type == "color")
-                {
-                    QString value = jValue.toString();
-                    value.remove("{").remove("}");
-
-                    if (coreData.contains(value))
-                    {
-                        QString coreColor = coreData[value];
-                        QString color = "#" + coreColor;
-
-                        // Strip "--color-" or "-color-" from beginning of token
-                        int indexPrefix = token.indexOf(ColorTokenStart);
-                        if (indexPrefix != -1)
-                        {
-                            colourData.insert(token.mid(indexPrefix + ColorTokenStart.size()), color);
-                        }
-                    }
-                    else
-                    {
-                        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
-                    }
-                }
-            }
-        }
+        parseCategory(categoryObject, coreData, colorData);
     }
 
-    return colourData;
+    return colorData;
+}
+
+//!
+//! \brief Parses a category in the JSON object to extract color information.
+//!
+//! This function iterates through the tokens in the category object and processes
+//! each token to extract color information. The extracted color data is added to
+//! the provided ColorData object.
+//!
+//! \param categoryObject The JSON object representing a category in the color theme.
+//! \param coreData The core data mapping color IDs to color values.
+//! \param colorData The ColorData object to store the extracted color information.
+void DesignAssetsRepoManager::parseCategory(const QJsonObject& categoryObject,
+                                            const CoreData& coreData,
+                                            ColorData& colorData)
+{
+    const QStringList tokenKeys = categoryObject.keys();
+
+    for (const auto& token : tokenKeys)
+    {
+        QJsonObject tokenObject = categoryObject[token].toObject();
+        processToken(token, tokenObject, coreData, colorData);
+    }
+}
+
+//!
+//! \brief Processes a token in the JSON object to extract color information.
+//!
+//! This function checks the type of the token and, if the type is "color",
+//! processes the token to extract the color value. The extracted color value
+//! is added to the provided ColorData object.
+//!
+//! \param token The token key in the category object.
+//! \param tokenObject The JSON object representing the token.
+//! \param coreData The core data mapping color IDs to color values.
+//! \param colorData The ColorData object to store the extracted color information.
+void DesignAssetsRepoManager::processToken(const QString& token,
+                                           const QJsonObject& tokenObject,
+                                           const CoreData& coreData,
+                                           ColorData& colorData)
+{
+    QJsonValue jType = tokenObject["type"];
+    QJsonValue jValue = tokenObject["value"];
+
+    if (jType.isNull() || jValue.isNull())
+    {
+        return;
+    }
+
+    QString type = jType.toString();
+
+    if (type == "color")
+    {
+        QString value = jValue.toString();
+        processColorToken(token, value, coreData, colorData);
+    }
+}
+
+//!
+//! \brief Processes a color token to extract the color value.
+//!
+//! This function removes curly braces from the color value, checks if the value
+//! exists in the core data, and if so, inserts the corresponding color value
+//! into the ColorData object. It also strips specific prefixes from the token.
+//!
+//! \param token The token key in the category object.
+//! \param value The color value from the token.
+//! \param coreData The core data mapping color IDs to color values.
+//! \param colorData The ColorData object to store the extracted color information.
+void DesignAssetsRepoManager::processColorToken(const QString& token,
+                                                QString& value,
+                                                const CoreData& coreData,
+                                                ColorData& colorData)
+{
+    value.remove("{").remove("}");
+
+    if (!coreData.contains(value))
+    {
+        qDebug() << __func__ << " Core map doesn't contain the color id " << value;
+        return;
+    }
+
+    QString coreColor = coreData[value];
+    QString color = "#" + coreColor;
+
+    // Strip "--color-" or "-color-" from the beginning of the token
+    int indexPrefix = token.indexOf(ColorTokenStart);
+    if (indexPrefix != -1)
+    {
+        colorData.insert(token.mid(indexPrefix + ColorTokenStart.size()), color);
+    }
 }
 
 CoreData DesignAssetsRepoManager::parseCore(QFile& designTokensFile)
