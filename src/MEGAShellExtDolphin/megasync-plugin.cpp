@@ -44,11 +44,13 @@ typedef enum {
 } StringID;
 
 enum {
-    FILE_ERROR = 0,
-    FILE_SYNCED = 1,
-    FILE_PENDING = 2,
-    FILE_SYNCING = 3,
-    FILE_NOTFOUND = 9,
+    RESPONSE_SYNCED  = 0,
+    RESPONSE_PENDING = 1,
+    RESPONSE_SYNCING = 2,
+    RESPONSE_IGNORED = 3,
+    RESPONSE_PAUSED  = 4,
+    RESPONSE_DEFAULT = 9,
+    RESPONSE_ERROR   = 10,
 };
 
 const char OP_PATH_STATE  = 'P'; //Path state
@@ -88,7 +90,17 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 {
     Q_UNUSED(parentWidget);
     QList<QAction*> actions;
-    int state;
+    int state = RESPONSE_ERROR;
+
+    // Check if the Desktop App is running
+    selectedFilePath = QString::fromLatin1("~");
+    state = getState();
+
+    if (state == RESPONSE_ERROR)
+    {
+        qDebug("MEGASYNCPLUGIN : Desktop App not running");
+        return actions;
+    }
 
     int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
     syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
@@ -99,7 +111,6 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 
     for( int i = 0; i < fileItemInfos.items().count(); i++)
     {
-
         KFileItem item = fileItemInfos.items().at(i);
         selectedFilePath = item.localPath();
         selectedFilePaths << selectedFilePath;
@@ -108,7 +119,7 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         state = getState();
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+        if (state == RESPONSE_SYNCED || state == RESPONSE_SYNCING || state == RESPONSE_PENDING)
         {
             if (item.isDir())
             {
@@ -154,11 +165,11 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         if (act)
         {
             // set menu icon //TODO: state refers to the last file. Does it make any sense??
-            if (state == FILE_SYNCED)
+            if (state == RESPONSE_SYNCED)
                 act->setIcon(KIcon("mega-synced"));
-            else if (state == FILE_PENDING)
+            else if (state == RESPONSE_PENDING)
                 act->setIcon(KIcon("mega-pending"));
-            else if (state == FILE_SYNCING)
+            else if (state == RESPONSE_SYNCING)
                 act->setIcon(KIcon("mega-syncing"));
 
             connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
@@ -199,7 +210,7 @@ int MEGASyncPlugin::getState()
     cannonicalpath.append('1');
     res = sendRequest(OP_PATH_STATE,cannonicalpath);
 
-    return res.toInt();
+    return res.isEmpty() ? RESPONSE_ERROR : res.toInt();
 }
 
 void MEGASyncPlugin::getLink()
@@ -265,7 +276,9 @@ QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
     queryString.sprintf("%d:%d:%d", type, numFiles, numFolders);
 
     res = sendRequest(OP_STRING, queryString);
-    if(res.compare("9") == 0)
+    int responseCode = res.isEmpty() ? RESPONSE_ERROR : res.toInt();
+
+    if(responseCode == RESPONSE_ERROR || responseCode == RESPONSE_DEFAULT)
     {
         res.clear();
     }
