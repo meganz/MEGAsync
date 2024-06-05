@@ -1349,19 +1349,19 @@ if (!preferences->lastExecutionTime())
     if (!infoDialog)
     {
         createInfoDialog();
-
-        if (!QSystemTrayIcon::isSystemTrayAvailable())
-        {
-            checkSystemTray();
-            if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
-            {
-                showInfoDialog();
-            }
-        }
     }
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
+
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        checkSystemTray();
+        if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+        {
+            showInfoDialog();
+        }
+    }
 
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
