@@ -3,12 +3,14 @@
 #include "ThemeManager.h"
 #include "IconTokenizer.h"
 #include "MegaApplication.h"
-#include "qcombobox.h"
+#include "DialogOpener.h"
 
 #include <QDir>
 #include <QWidget>
-#include <QToolButton>
 #include <QBitmap>
+#include <QComboBox>
+#include <QToolButton>
+
 #include <QtConcurrent/QtConcurrent>
 
 namespace // anonymous namespace to hide names from other translation units
@@ -50,8 +52,7 @@ namespace // anonymous namespace to hide names from other translation units
 }
 
 TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
-    : QObject{parent},
-    mCurrentWidget{nullptr}
+    : QObject{parent}
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &TokenParserWidgetManager::onThemeChanged);
     connect(MegaSyncApp, &MegaApplication::updateUserInterface, this, &TokenParserWidgetManager::onUpdateRequested, Qt::QueuedConnection);
@@ -120,21 +121,21 @@ void TokenParserWidgetManager::loadColorThemeJson()
     }
 }
 
-void TokenParserWidgetManager::applyCurrentTheme(QWidget* widget)
-{
-    if (widget == nullptr || widget == mCurrentWidget || widget->styleSheet().isEmpty())
-    {
-        return;
-    }
-
-    mCurrentWidget = widget;
-
-    applyTheme(widget);
-}
-
 void TokenParserWidgetManager::onUpdateRequested()
 {
-    applyTheme(mCurrentWidget);
+    applyCurrentTheme();
+}
+
+void TokenParserWidgetManager::applyCurrentTheme()
+{
+    auto start = std::chrono::high_resolution_clock::now();
+    foreach(auto dialogInfo, DialogOpener::getAllOpenedDialogs())
+    {
+        applyTheme(dialogInfo->getDialog());
+    }
+    auto end = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<float> elapsed = end - start;
+    std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
@@ -148,7 +149,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
         return;
     }
 
-    auto start = std::chrono::high_resolution_clock::now();
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
     QString styleSheet = mStandardComponentsStyleSheet % widget->styleSheet();
@@ -165,10 +165,6 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     {
         widget->setStyleSheet(styleSheet);
     }
-
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<float> elapsed = end - start;
-    std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
 }
 
 void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
@@ -302,8 +298,5 @@ void TokenParserWidgetManager::onThemeChanged(Preferences::ThemeType theme)
 {
     Q_UNUSED(theme)
 
-    if (mCurrentWidget != nullptr)
-    {
-        applyTheme(mCurrentWidget);
-    }
+    applyCurrentTheme();
 }

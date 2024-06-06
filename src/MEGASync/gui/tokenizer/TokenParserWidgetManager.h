@@ -13,7 +13,7 @@ class TokenParserWidgetManager : public QObject
 public:
     static std::shared_ptr<TokenParserWidgetManager> instance();
 
-    void applyCurrentTheme(QWidget* widget);
+    void applyCurrentTheme();
 
 private:
     using ColorTokens = QMap<QString, QString>;
@@ -31,7 +31,6 @@ private:
     void removeFrameOnDialogCombos(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
-    QWidget* mCurrentWidget;
     QString mStandardComponentsStyleSheet;
 };
 

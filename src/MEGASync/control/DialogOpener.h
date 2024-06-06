@@ -426,6 +426,22 @@ public:
         }
     }
 
+    static auto getAllOpenedDialogs()
+    {
+        QList<std::shared_ptr<DialogOpener::DialogInfo<QWidget>>> dialogs;
+
+        foreach(auto dialogInfo, mOpenedDialogs)
+        {
+            auto dialogPtr = std::static_pointer_cast<DialogOpener::DialogInfo<QWidget>>(dialogInfo);
+            if (dialogPtr)
+            {
+                dialogs.append(dialogPtr);
+            }
+        }
+
+        return dialogs;
+    }
+
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
     static QQueue<std::shared_ptr<DialogInfoBase>> mDialogsQueue;
@@ -517,7 +533,7 @@ private:
 
             info->raise(true);
 
-            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
+            TokenParserWidgetManager::instance()->applyCurrentTheme();
 
             return info;
         }
