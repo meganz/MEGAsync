@@ -1436,27 +1436,6 @@
         <file>images/sync_states/hand-error.png</file>
         <file>images/sync_states/hand-error@2x.png</file>
         <file>images/sync_states/hand-error@3x.png</file>
-        <file>images/StalledIssues/advanced-mode.png</file>
-        <file>images/StalledIssues/advanced-mode@2x.png</file>
-        <file>images/StalledIssues/advanced-mode@3x.png</file>
-        <file>images/StalledIssues/smart-mode.png</file>
-        <file>images/StalledIssues/smart-mode@2x.png</file>
-        <file>images/StalledIssues/smart-mode@3x.png</file>
-        <file>images/StalledIssues/solve-issues-button.png</file>
-        <file>images/StalledIssues/solve-issues-button@2x.png</file>
-        <file>images/StalledIssues/solve-issues-button@3x.png</file>
-        <file>images/StalledIssues/solved-issues-outline.png</file>
-        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
-        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
-        <file>images/StalledIssues/solved-issues-solid.png</file>
-        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
-        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
-        <file>images/StalledIssues/help-circle-link.png</file>
-        <file>images/StalledIssues/help-circle-link@2x.png</file>
-        <file>images/StalledIssues/help-circle-link@3x.png</file>
-        <file>images/StalledIssues/help-stalled-issues.png</file>
-        <file>images/StalledIssues/help-stalled-issues@2x.png</file>
-        <file>images/StalledIssues/help-stalled-issues@3x.png</file>
         <file>images/StalledIssues/settings-stalled-issues.png</file>
         <file>images/StalledIssues/settings-stalled-issues@2x.png</file>
         <file>images/StalledIssues/settings-stalled-issues@3x.png</file>

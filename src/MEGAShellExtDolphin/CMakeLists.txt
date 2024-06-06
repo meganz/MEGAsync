@@ -1,6 +1,6 @@
 project(megasyncplugin)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.16.0)
 include(FeatureSummary)
 set(QT_MIN_VERSION "5.0.0")
 set(KF5_MIN_VERSION "5.0.0")

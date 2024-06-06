@@ -33,10 +33,12 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
         BuildRequires: libudev-devel
     %endif
 
-    %if 0%{?suse_version} > 1600
+    %if 0%{?suse_version} > 1500
         BuildRequires: pkgconf-pkg-config
     %else
         BuildRequires: pkg-config
+        BuildRequires: gcc13 gcc13-c++
+        BuildRequires: python311
     %endif
 
     %if 0%{?suse_version} > 1500 || 0%{?sle_version} >= 150300 || (0%{?is_opensuse} && 0%{?sle_version} >= 150000)
@@ -166,7 +168,7 @@ mega_build_id=`echo %{release} | sed "s/\.[^.]*$//" | sed "s/[^.]*\.//" | sed "s
 sed -i -E "s/VER_PRODUCTVERSION_STR([[:space:]]+)\"(([0-9][0-9]*\.){3})(.*)\"/VER_PRODUCTVERSION_STR\1\"\2${mega_build_id}\"/g" src/MEGASync/control/Version.h
 sed -i -E "s/VER_BUILD_ID([[:space:]]+)([0-9]*)/VER_BUILD_ID\1${mega_build_id}/g" src/MEGASync/control/Version.h
 
-%if ( 0%{?fedora_version} && 0%{?fedora_version}<=37 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=38 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?centos_version} == 800 ) || ( 0%{?sle_version} && 0%{?sle_version} < 150500 )
     %define extradefines -DMEGASYNC_DEPRECATED_OS
 %else
     %define extradefines %{nil}
@@ -201,6 +203,16 @@ fi
 if [ -n "%{extradefines}" ]; then
     export CXXFLAGS="%{extradefines} ${CXXFLAGS}"
 fi
+
+# OpenSuse Leap 15.x defaults to gcc7.
+# Python>=10 needed for VCPKG pkgconf
+%if 0%{?suse_version} <= 1500
+    export CC=gcc-13
+    export CXX=g++-13
+    mkdir python311
+    ln -sf /usr/bin/python3.11 python311/python3
+    export PATH=$PWD/python311:$PATH
+%endif
 
 cmake --version
 cmake ${vcpkg_root} -DENABLE_DESKTOP_UPDATE_GEN=OFF ${qtdefinitions} -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S . -B %{_builddir}/build_dir
