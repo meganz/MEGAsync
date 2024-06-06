@@ -30,7 +30,7 @@ url="http://mega.nz/#sync"
 license=() #TODO
 groups=()
 depends=('glibc>=2.33' 'gcc-libs>=10.2.0' 'qt5-base>=5.15' 'qt5-tools>=5.15' 'icu>=69.1' 'sqlite' 'openssl>=3.0.0' 'zlib' 'qt5-svg>=5.15' 'qt5-x11extras' 'bzip2' 'xz' 'libraw' 'double-conversion>=3.1.5' 'systemd' 'qt5-graphicaleffects' 'qt5-quickcontrols2' 'qt5-quickcontrols')
-makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'ffmpeg-mega' 'pdfium-mega' 'bzip2' 'xz' 'qt5-declarative')
+makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools' 'ffmpeg-mega' 'pdfium-mega' 'bzip2' 'xz' 'qt5-declarative' 'gcc13')
 checkdepends=()
 optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
 provides=("megasync=${pkgver}" 'ffmpeg-mega')
@@ -53,13 +53,18 @@ prepare() {
 }
 
 build() {
+	set -x
+	# Set env variables to use gcc 13 compiler instead of system's
+	export CC=/usr/bin/gcc-13
+	export CXX=/usr/bin/g++-13
+	
 	_bindir=$pkgdir/usr/bin
 	cd "$pkgname-$pkgver"
 	./configure -e -q -g -L
 	# Link dynamically with freeimage if pdfium is required.
 	ln -sfr $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage*.so $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so.3; \
 	ln -sfn libfreeimage.so.3 $PWD/MEGASync/mega/bindings/qt/3rdparty/libs/libfreeimage.so; \
-	qmake-qt5 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro || qmake-qt4 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
+	qmake-qt5 "CONFIG += FULLREQUIREMENTS" QMAKE_CC=${CC} QMAKE_CXX=${CXX} QMAKE_LINK_C=${CC} QMAKE_LINK=${CXX} QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro || qmake-qt4 "CONFIG += FULLREQUIREMENTS" QMAKE_RPATHDIR="/opt/mega/lib" MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
 	make ${BUILD_PARALLEL_JOBS}
 }
