@@ -152,7 +152,7 @@ const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromLatin1("showNotifications");
 
 //Stalled Issues
-const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::Smart;
 const QString Preferences::stalledIssuesModeKey   = QString::fromLatin1("stalledIssuesSmartMode");
 
 const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stalledIssuesEventDate");
