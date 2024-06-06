@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>359</width>
+    <width>360</width>
     <height>154</height>
    </rect>
   </property>
@@ -16,14 +16,11 @@
   <property name="styleSheet">
    <string notr="true">#SmartSelector, #AdvanceSelector
 {
-color: #3D3D3D;
 font-size: 13px;
 }
 
-
 #SmartDescription, #AdvanceDescription
 {
-color: #7B7876;
 font-size: 12px;
 }</string>
   </property>
@@ -44,7 +41,7 @@ font-size: 12px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="findGroup">
      <property name="styleSheet">
       <string notr="true">#SmartSelector, #AdvanceSelector
 {

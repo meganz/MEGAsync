@@ -27,6 +27,62 @@ background-color: #fafafa; /*colorToken.surface-1*/
 color: #fafafa; /*colorToken.text-primary*/
 }
 
+#bUpdate, #bSendBug
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+}
+
+#cLanguage, #cbTheme
+{
+background-color:  #fafafa; /*colorToken.surface-1*/
+color: #333333; /*colorToken.text-primary*/
+border-color: #333333; /*colorToken.text-primary*/
+border-width: 2px;
+border-style: outset;
+border-radius: 5px;
+padding: 1px 1px 1px 5px;
+}
+
+#bClearCache, #bClearRemoteCache, #bClearFileVersions
+{
+background-color:  #F3F4F4; /*colorToken.button-secondary*/
+color: #616366; /*colorToken.text-secondary*/
+border-color:  #F3F4F4; /*colorToken.button-secondary*/
+border-width: 0px;
+border-style: outset;
+border-radius: 5px;
+padding: 3px 10px 3px 10px;
+}
+
+/*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bBackup;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bFolders;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bFolders;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bGeneral;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bGeneral;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bNetwork;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNetwork;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bNotifications;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bNotifications;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bSecurity;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSecurity;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;ToolButton;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;ToolButton;bSyncs;normal;off;colorToken.icon-secondary*/
+
 QComboBox
 {
 min-height: 24px;
@@ -43,15 +99,14 @@ padding: 12px 13px 10px 13px;
 border-left: 0px;
 border-top: 0px;
 border-right: 0px;
-border-bottom: 3px solid #f1f1f1;
+border-bottom: 3px solid #f1f1f1; /*colorToken.border-strong*/
 background-color: transparent;
-color: #333333;
+color: #333333; /*colorToken.text-primary*/
 }
 
 #wTabHeader QToolButton:checked
 {
-background-color: #FFFFFF;
-border-bottom: 3px solid #0078D7;
+border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
 }
 
 #bChangePasswordPic, #bRecoveryKeyPic
@@ -107,8 +162,7 @@ font-weight: bold;
 #cbSleepMode 
 {
 margin-top: 4px;
-}
-</string>
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <property name="spacing">
@@ -147,9 +201,7 @@ margin-top: 4px;
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
@@ -197,7 +249,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
+          <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -246,7 +298,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
+          <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -292,7 +344,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
+          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -338,7 +390,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
+          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -384,7 +436,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
+          <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -430,7 +482,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
+          <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -476,7 +528,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
+          <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -517,7 +569,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
+          <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -555,9 +607,7 @@ margin-top: 4px;
    <item>
     <widget class="QStackedWidget" name="wStack">
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <property name="currentIndex">
       <number>0</number>
@@ -2160,9 +2210,7 @@ min-height: 72px;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">*{
-/*token_background-color: {{surface-1}};*/
-}</string>
+      <string notr="true"/>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">

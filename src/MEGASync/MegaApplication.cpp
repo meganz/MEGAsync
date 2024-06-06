@@ -31,7 +31,6 @@
 #include "syncs/gui/SyncsMenu.h"
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
-#include "themes/ThemeWidgetManager.h"
 #include "StatsEventHandler.h"
 
 #include "qml/QmlManager.h"

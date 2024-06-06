@@ -16,7 +16,7 @@
 #include <QQueue>
 #include <QApplication>
 
-#include "themes/ThemeWidgetManager.h"
+#include "tokenizer/TokenParserWidgetManager.h"
 
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
@@ -517,7 +517,7 @@ private:
 
             info->raise(true);
 
-            ThemeWidgetManager::instance()->applyCurrentTheme(dialog);
+            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
 
             return info;
         }

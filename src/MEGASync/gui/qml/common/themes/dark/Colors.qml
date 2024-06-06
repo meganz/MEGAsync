@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 QtObject {
 
-	readonly property color backgroundBlur: "#33000000"
+	readonly property color backgroundBlur: "#80000000"
 	readonly property color backgroundInverse: "#F3F4F4"
 	readonly property color borderDisabled: "#494A4D"
 	readonly property color borderInteractive: "#FB6361"
@@ -60,6 +60,7 @@ QtObject {
 	readonly property color surface1: "#303233"
 	readonly property color surface2: "#494A4D"
 	readonly property color surface3: "#616366"
+	readonly property color surfaceInverseAccent: "#BDC0C4"
 	readonly property color textAccent: "#FAFAFB"
 	readonly property color textDisabled: "#797C80"
 	readonly property color textError: "#FD6F90"

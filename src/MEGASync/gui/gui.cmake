@@ -60,6 +60,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/ThemeManager.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -96,8 +97,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
-    gui/themes/ThemeManager.h
-    gui/themes/ThemeWidgetManager.h
+    gui/tokenizer/TokenParserWidgetManager.h
+    gui/tokenizer/IconTokenizer.h
     gui/onboarding/WhatsNewWindow.h
     gui/backups/Backups.h
     gui/backups/BackupsController.h
@@ -165,6 +166,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/ThemeManager.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -200,8 +202,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
-    gui/themes/ThemeManager.cpp
-    gui/themes/ThemeWidgetManager.cpp
+    gui/tokenizer/TokenParserWidgetManager.cpp
+    gui/tokenizer/IconTokenizer.cpp
     gui/onboarding/WhatsNewWindow.cpp
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp

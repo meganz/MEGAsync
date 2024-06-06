@@ -228,6 +228,7 @@ signals:
     void pauseStateChanged();
     void addBackup();
     void shellNotificationsProcessed();
+    void updateUserInterface();
 
 public slots:
     void updateTrayIcon();

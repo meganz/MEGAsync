@@ -1,6 +1,6 @@
 #include "QmlTheme.h"
 
-#include "themes/ThemeManager.h"
+#include "ThemeManager.h"
 
 #include <QTimer>
 
