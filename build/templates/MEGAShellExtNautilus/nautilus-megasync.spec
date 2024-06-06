@@ -27,7 +27,7 @@ BuildRequires: fedora-logos
 BuildRequires: sl-logos, gcc-c++
 %endif
 
-Requires:       nautilus, megasync >= 3.5
+Requires:       nautilus, megasync >= 5.3.0
 
 %description
 - Easily see and track your sync statuses.

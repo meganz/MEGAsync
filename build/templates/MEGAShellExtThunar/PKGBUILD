@@ -27,7 +27,7 @@ pkgdesc="MEGA Desktop App plugin for Thunar"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
-depends=('thunar' 'megasync>=3.5')
+depends=('thunar' 'megasync>=5.3.0')
 makedepends=('ca-certificates' 'qt5-tools' 'thunar')
 provides=("thunar-megasync=${pkgver}")
 conflicts=()
