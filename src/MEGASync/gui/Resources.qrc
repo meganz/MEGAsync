@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>colors/ColorThemedTokens.json</file>
+        <file>style/WidgetsComponentsStyleSheets.css</file>
     </qresource>
 </RCC>
