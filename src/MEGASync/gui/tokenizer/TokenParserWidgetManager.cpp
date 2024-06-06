@@ -23,6 +23,7 @@ namespace // anonymous namespace to hide names from other translation units
     static QRegularExpression REPLACE_THEME_TOKEN_REGULAR_EXPRESSION(QString::fromUtf8(".*\\/(light|dark)\\/.*; *\\/\\* *replaceThemeToken *\\*\\/"));
 
     static const QString JSON_THEMED_COLOR_TOKEN_FILE = QString::fromUtf8(":/colors/ColorThemedTokens.json");
+    static const QString CSS_STANDARD_WIDGETS_COMPONENTS_FILE = QString::fromUtf8(":/style/WidgetsComponentsStyleSheets.css");
 
     enum COLOR_TOKEN_CAPTURE_INDEX
     {
@@ -59,6 +60,28 @@ TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
     ICON_COLOR_TOKEN_REGULAR_EXPRESSION.optimize();
 
     loadColorThemeJson();
+    loadStandardStyleSheetComponents();
+}
+
+void TokenParserWidgetManager::loadStandardStyleSheetComponents()
+{
+    mStandardComponentsStyleSheet.clear();
+
+    QFile file(CSS_STANDARD_WIDGETS_COMPONENTS_FILE);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << __func__ << " Error opening file : " << file.fileName();
+        return;
+    }
+
+    QByteArray data = file.readAll();
+    if (data.isEmpty())
+    {
+        qDebug() << __func__ << " Error reading file : " << file.fileName();
+        return;
+    }
+
+    mStandardComponentsStyleSheet = QString::fromUtf8(data);
 }
 
 void TokenParserWidgetManager::loadColorThemeJson()
@@ -128,7 +151,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
     auto start = std::chrono::high_resolution_clock::now();
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
-    QString styleSheet = widget->styleSheet();
+    QString styleSheet = mStandardComponentsStyleSheet % widget->styleSheet();
 
     bool updatedStyleSheet = false;
 
