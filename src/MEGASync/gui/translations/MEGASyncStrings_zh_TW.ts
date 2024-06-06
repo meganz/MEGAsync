@@ -1838,7 +1838,7 @@
     <message>
         <source>Files beginning with:</source>
         <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>檔名開頭為：</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
