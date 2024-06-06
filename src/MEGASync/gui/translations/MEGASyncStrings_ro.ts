@@ -1838,7 +1838,7 @@
     <message>
         <source>Files beginning with:</source>
         <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișiere care încep cu:</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -2970,7 +2970,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierul local [B]%1[/B] va fi încărcat în MEGA și va înlocui fișierul curent, care va fi mutat în folderul SyncDebris din Coșul de gunoi MEGA.</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
@@ -7093,7 +7093,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Conținutul acestui folder nu a putut fi citit. Verificați permisiunile folderului și dacă niciunul dintre elemente nu este folosit de alte aplicații.</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -7824,7 +7824,8 @@ Verificați permisiunile fișierului.megaignore în locațiile folderului local 
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Ținta se află prea adânc în structura folderelor. Opriți sincronizarea, mutați folderul într-o locație mai mică de 64 de foldere și reluați sincronizarea.
+Dacă problema persistă, contactați support@mega.nz</translation>
     </message>
 </context>
 <context>
