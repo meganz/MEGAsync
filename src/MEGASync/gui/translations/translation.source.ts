@@ -1822,7 +1822,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
         <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
-        <translation>Here you can exclude files and folders from being synced with your Cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices, or certain file types that need not be synced.</translation>
+        <translation>Here you can exclude files and folders from being synced with your Cloud drive. This can be useful for large files, files that you don’t need on all of your devices, or certain file types that need not be synced.</translation>
     </message>
     <message>
         <source>Manage exclusions</source>
@@ -1842,7 +1842,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Exclude file sizes</source>
         <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
-        <translation>Exclude file sizes</translation>
+        <translation>Exclude files</translation>
     </message>
     <message>
         <source>Exclude&#xa0;files by specifying the lower and upper size limit, or just the files that are&#xa0;greater than or&#xa0;lesser than a specific size.</source>
@@ -1882,22 +1882,22 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Beginning with</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
-        <translation>Beginning with</translation>
+        <translation>beginning with</translation>
     </message>
     <message>
         <source>Containing</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
-        <translation>Containing</translation>
+        <translation>containing</translation>
     </message>
     <message>
         <source>Ending</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
-        <translation>Ending with</translation>
+        <translation>ending with</translation>
     </message>
     <message>
         <source>Equal to</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
-        <translation>Equal to</translation>
+        <translation>equal to</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1907,7 +1907,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Files beginning with:</source>
         <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation>File types beginning with:</translation>
+        <translation>Files beginning with:</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -1917,17 +1917,17 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Outside of</source>
         <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
-        <translation>Outside of</translation>
+        <translation>outside of</translation>
     </message>
     <message>
         <source>Bigger than</source>
         <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
-        <translation>Bigger than</translation>
+        <translation>bigger than</translation>
     </message>
     <message>
         <source>Smaller than</source>
         <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
-        <translation>Smaller than</translation>
+        <translation>smaller than</translation>
     </message>
     <message>
         <source>and</source>
@@ -1952,12 +1952,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>property</source>
         <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
-        <translation>Property</translation>
+        <translation>Criteria</translation>
     </message>
     <message>
         <source>value</source>
         <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
-        <translation>Value</translation>
+        <translation>Target</translation>
     </message>
     <message>
         <source>Remove this exclusion?</source>
@@ -2075,16 +2075,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Is equal to</translation>
     </message>
     <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Files containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
         <translation></translation>
@@ -2123,6 +2113,16 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Files with extension:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
         <translation></translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation type="unfinished">Select the folder you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation type="unfinished">Select the file you want to exclude</translation>
     </message>
 </context>
 <context>
@@ -2785,7 +2785,7 @@ Would you like to install the necessary components now?</translation>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>Installing notification area icon...</translation>
+        <translation>Installing notification area icon…</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2824,7 +2824,7 @@ sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
         <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
-        <translation>To install manually, please run the following commands:
+        <translation>To install manually, run the following commands:
 
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
@@ -2833,7 +2833,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
     <message>
         <source>Install complete</source>
         <translatorcomment>This is the title of a message indicating that the Notification Area Icon Support has been installed without any issues. SNC-2270</translatorcomment>
-        <translation>Install complete</translation>
+        <translation>Install completed</translation>
     </message>
     <message>
         <source>The notification area icon was installed successfully.
@@ -3113,12 +3113,12 @@ Wait for the upload to complete.</translation>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The local file [B]%1[/B] will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The [B]local[/B] files will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</translation>
     </message>
 </context>
 <context>
@@ -3126,7 +3126,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
         <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation></translation>
+        <translation>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</translation>
     </message>
 </context>
 <context>
@@ -3254,7 +3254,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
         <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
-        <translation>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</translation>
+        <translation>You have been logged out. Contact [A]support@mega.nz[/A] if this issue persists.</translation>
     </message>
 </context>
 <context>
@@ -3886,7 +3886,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
-        <translation>Destination storage is full.</translation>
+        <translation>Destination storage is full</translation>
     </message>
 </context>
 <context>
@@ -3983,7 +3983,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Foreign target storage quota reached</source>
         <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
-        <translation>Folder can’t be synced as the user who shared this folder has reached their storage quota.</translation>
+        <translation>Folder can’t be synced as the user who shared this folder has reached their storage quota</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -4078,17 +4078,17 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Session closed</source>
         <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
-        <translation>Sync or backup was stopped because you logged out. Re-enable from the Settings to resume synchronisation.</translation>
+        <translation>Sync or backup was stopped because you logged out. To resume synchronisation, re-enable the sync or backup from Settings.</translation>
     </message>
     <message>
         <source>Active sync same path</source>
         <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
-        <translation>This location already contains synced or backed up folders.</translation>
+        <translation>This location already contains synced or backed up folders</translation>
     </message>
     <message>
         <source>Unknown drive path.</source>
         <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
-        <translation>Sync or backup’s drive path is unknown.</translation>
+        <translation>Sync or backup’s drive path is unknown</translation>
     </message>
     <message>
         <source>Local filesystem mismatch</source>
@@ -4103,7 +4103,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Unable to create initial ignore file.</source>
         <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
-        <translation>Couldn’t create a .megaignore file for this sync or backup.</translation>
+        <translation>Couldn’t create a .megaignore file for this sync or backup</translation>
     </message>
     <message>
         <source>Unable to read sync configs from disk.</source>
@@ -4128,7 +4128,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Unable to retrieve sync root FSID.</source>
         <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
-        <translation>Couldn’t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation>Couldn’t read sync or backup location. Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to open state cache database.</source>
@@ -4143,7 +4143,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Failure accessing to persistent storage</source>
         <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
-        <translation>Couldn’t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation>Couldn’t read sync or backup location. Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to retrieve the ID of current device</source>
@@ -4163,7 +4163,7 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
         <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
-        <translation>Couldn’t read sync or backup location.  Check the location is accessible and permissions for the folder location are granted.</translation>
+        <translation>Couldn’t read sync or backup location. Check the location is accessible and permissions for the folder location are granted.</translation>
     </message>
     <message>
         <source>Unable to write sync config to disk.</source>
@@ -7276,7 +7276,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>Error identifying folder content in local file system</translation>
+        <translation>The contents of this folder could not be read. Check the folder permissions and that none of the items are in use by other applications.</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -8009,8 +8009,8 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>Target is too deep in your folder structure.
-Move it to a location that is less than 64 folders deep.</translation>
+        <translation>The target is too deep in your folder structure. Stop the sync, move the folder to a location that is less than 64 folders deep, and recreate your sync.
+If this doesn&apos;t resolve the issue, contact support@mega.nz.</translation>
     </message>
 </context>
 <context>
@@ -9406,47 +9406,47 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>MEGA Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
-        <translation type="unfinished">MEGA Starter</translation>
+        <translation>MEGA&#xa0;Starter</translation>
     </message>
     <message>
         <source>MEGA Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
-        <translation type="unfinished">MEGA Basic</translation>
+        <translation>MEGA&#xa0;Basic</translation>
     </message>
     <message>
         <source>MEGA Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
-        <translation type="unfinished">MEGA Essential</translation>
+        <translation>MEGA&#xa0;Essential</translation>
     </message>
     <message>
         <source>Free</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation type="unfinished">Free</translation>
+        <translation>Free</translation>
     </message>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation type="unfinished">Starter</translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation type="unfinished">Basic</translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation type="unfinished">Essential</translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation type="unfinished">Business</translation>
+        <translation>Business</translation>
     </message>
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation type="unfinished">Pro&#xa0;Flexi</translation>
+        <translation>Pro&#xa0;Flexi</translation>
     </message>
 </context>
 <context>
