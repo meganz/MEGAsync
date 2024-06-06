@@ -206,7 +206,7 @@ fi
 
 # OpenSuse Leap 15.x defaults to gcc7.
 # Python>=10 needed for VCPKG pkgconf
-%if 0%{?suse_version} <= 1500
+%if 0%{?suse_version} && 0%{?suse_version} <= 1500
     export CC=gcc-13
     export CXX=g++-13
     mkdir python311
