@@ -112,39 +112,12 @@ QLabel
   background-color: #FF5646;
 }
 
-#AccountDetailsDialog[storageState=&quot;warning&quot;] #lUsedStorage
-{
-  color: #F98400;
-}
-
-#AccountDetailsDialog[storageState=&quot;full&quot;] #lUsedStorage
-{
-  color: #D90007;
-}
-
-#AccountDetailsDialog[transferState=&quot;warning&quot;] #lUsedTransfer
-{
-  color: #F98400;
-}
-
-#AccountDetailsDialog[transferState=&quot;full&quot;] #lUsedTransfer
-{
-  color: #D90007;
-}
-
 #lUsedStorage, #lUsedTransfer
-{
-  color: #333333;
-  font-size: 13px;
-  qproperty-alignment: AlignRight;
-}
-
-#lTotalStorage, #lTotalTransfer
 {
   color: #8d8d8e;
   font-size: 13px;
-  qproperty-alignment: AlignLeft;
 }
+
 
 #wDetailedUsage QPushButton
 {
@@ -542,9 +515,6 @@ QProgressBar::chunk
                 <widget class="QLabel" name="lUsedStorage"/>
                </item>
                <item>
-                <widget class="QLabel" name="lTotalStorage"/>
-               </item>
-               <item>
                 <spacer name="horizontalSpacer">
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
@@ -668,9 +638,6 @@ QProgressBar::chunk
                </property>
                <item>
                 <widget class="QLabel" name="lUsedTransfer"/>
-               </item>
-               <item>
-                <widget class="QLabel" name="lTotalTransfer"/>
                </item>
                <item>
                 <spacer name="horizontalSpacer_2">
