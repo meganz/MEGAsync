@@ -7113,50 +7113,9 @@ Do you want to delete it anyway?</translation>
         <translation>Close</translation>
     </message>
     <message>
-        <source>Sync stall mode</source>
-        <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation>Issue resolution mode</translation>
-    </message>
-    <message>
-        <source>Choose:</source>
-        <translatorcomment>Label tellong the user to choose the sync stall mode.DNS-1388</translatorcomment>
-        <translation>Choose:</translation>
-    </message>
-    <message>
-        <source>Smart mode</source>
-        <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
-        <translation>Smart mode</translation>
-    </message>
-    <message>
-        <source>Let Mega solve sync issues
-automatically</source>
-        <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation>Let MEGA resolve sync issues automatically</translation>
-    </message>
-    <message>
-        <source>Advanced mode</source>
-        <translatorcomment>Button for choosing advanced (manual) mode for solving stalled issues. DNS-1388</translatorcomment>
-        <translation>Advanced mode</translation>
-    </message>
-    <message>
-        <source>Get full control of the sync issues</source>
-        <translatorcomment>Description of the advanced mode of sync stalls.DNS-1388</translatorcomment>
-        <translation>Get full control of the sync issues</translation>
-    </message>
-    <message>
-        <source>Solve issues</source>
-        <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation>Resolve issues</translation>
-    </message>
-    <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
         <translation>No issues</translation>
-    </message>
-    <message>
-        <source>[A]Learn more[/A]</source>
-        <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
-        <translation>[A]Learn more[/A]</translation>
     </message>
     <message>
         <source>Help</source>
