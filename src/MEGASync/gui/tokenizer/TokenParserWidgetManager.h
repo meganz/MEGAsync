@@ -14,6 +14,7 @@ public:
     static std::shared_ptr<TokenParserWidgetManager> instance();
 
     void applyCurrentTheme();
+    void applyCurrentTheme(QWidget* dialog);
 
 private:
     using ColorTokens = QMap<QString, QString>;
