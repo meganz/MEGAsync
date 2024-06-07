@@ -635,7 +635,7 @@ public:
 
     bool shouldBeIgnored() const override;
 
-    static void showLocalRenameHasFailedMessageBox(const QString& itemName, bool isFile);
+    static void showLocalRenameHasFailedMessageBox(bool isFile);
     static void showRemoteRenameHasFailedMessageBox(const mega::MegaError& error, bool isFile);
 
 private:

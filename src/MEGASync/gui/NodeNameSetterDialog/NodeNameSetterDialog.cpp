@@ -99,8 +99,11 @@ void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
 
 void NodeNameSetterDialog::showRenamedFailedError(bool isFile)
 {
-    isFile ? showError(tr("File rename failed.\nCheck file or file permissions."))
-           : showError(tr("Folder rename failed.\nCheck folder or folder permissions."));
+    QString error = isFile ? tr("Unable to rename this file.[BR]Check the name and the permissions of the file, then try again.")
+           : tr("Unable to rename this folder.[BR]Check the name and the folder permissions, then try again.");
+
+    error.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"));
+    showError(error);
 }
 
 void NodeNameSetterDialog::changeEvent(QEvent *event)

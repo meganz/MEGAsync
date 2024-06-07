@@ -124,18 +124,18 @@ void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega:
     failedInfo.buttons = QMessageBox::Yes;
     if(isFile)
     {
-        failedInfo.text = tr("File removal failed");
+        failedInfo.text = tr("Unable to remove this file.");
     }
     else
     {
-        failedInfo.text = tr("Folder removal failed");
+        failedInfo.text = tr("Unable to remove this folder.");
     }
     failedInfo.informativeText = tr("Reason: %1").arg(QString::fromUtf8(error.getErrorString()));
 
     StalledIssuesModel::runMessageBox(failedInfo);
 }
 
-void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(const QString& itemName, bool isFile)
+void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(bool isFile)
 {
     QMegaMessageBox::MessageBoxInfo failedInfo;
     failedInfo.title = MegaSyncApp->getMEGAString();
@@ -143,13 +143,13 @@ void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(const QStrin
     failedInfo.buttons = QMessageBox::Yes;
     if(isFile)
     {
-        failedInfo.text = tr("File %1 removal failed").arg(itemName);
-        failedInfo.informativeText = tr("Please check file or file permissions");
+        failedInfo.text = tr("Unable to remove this file.");
+        failedInfo.informativeText = tr("Check if the file is in use, and the permissions of the file, then try again.");
     }
     else
     {
-        failedInfo.text = tr("Folder %1 removal failed").arg(itemName);
-        failedInfo.informativeText = tr("Please check folder or folder permissions");
+        failedInfo.text = tr("Unable to remove this folder.");
+        failedInfo.informativeText = tr("Check if the folder is in use, and the permissions of the folder, then try again.");
     }
 
     StalledIssuesModel::runMessageBox(failedInfo);

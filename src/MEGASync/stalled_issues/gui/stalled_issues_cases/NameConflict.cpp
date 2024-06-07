@@ -618,7 +618,7 @@ void NameConflict::onActionClicked(int actionId)
                                                           : tr("Folder could not be removed");
 
                             MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), errorContext);
-                            NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(fileName, isFile);
+                            NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(isFile);
                         }
                         else
                         {
