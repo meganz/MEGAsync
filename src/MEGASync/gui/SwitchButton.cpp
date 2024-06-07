@@ -32,9 +32,10 @@ SwitchButton::SwitchButton(QWidget* parent)
 
 #else
     auto generalSwitch = new QCheckBox(this);
+    generalSwitch->setObjectName(QLatin1String("switch"));
     connect(generalSwitch, &QCheckBox::toggled, this, &SwitchButton::onSwitchToggled);
     mSwitchButton = generalSwitch;
-    applyWinLinuxStyleSheet();
+    //applyWinLinuxStyleSheet();
 #endif
 
     //Done with code to avoid creating an empty .ui
@@ -61,6 +62,7 @@ bool SwitchButton::isChecked()
 
 void SwitchButton::paintEvent(QPaintEvent* event)
 {
+    /*
     //Only change text is necessary (NEVER in MAC, as it has no text)
 #ifndef Q_OS_MACX
     auto text = mSwitchButton->property("text").toString();
@@ -70,6 +72,7 @@ void SwitchButton::paintEvent(QPaintEvent* event)
         mSwitchButton->setProperty("text", isChecked() ? tr("On") : tr("Off"));
     }
 #endif
+*/
 
     QWidget::paintEvent(event);
 }

@@ -17,7 +17,51 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#SmartDescription, #AdvanceDescription
+   <string notr="true">#switch
+{
+border-style: none;
+background-color: transparent;
+}
+
+#switch::indicator
+{
+border-style: none;
+background-color: transparent;
+width: 40px;
+height: 19px;
+}
+
+#switch::indicator:checked
+{
+image: url(:/images/themed/light/switch_on.svg);
+}
+
+#switch::indicator:checked:hover
+{
+image: url(:/images/themed/light/switch_on_hover.svg);
+}
+
+#switch::indicator:checked:pressed
+{
+image: url(:/images/themed/light/switch_on_pressed.svg);
+}
+
+#switch::indicator:unchecked
+{
+image: url(:/images/themed/light/switch_off.svg);
+}
+
+#switch::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/switch_off_hover.svg);
+}
+
+#switch::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/switch_off_pressed.svg);
+}
+
+#SmartDescription, #AdvanceDescription
 {
 color: #616366; /*colorToken.text-secondary*/
 }
