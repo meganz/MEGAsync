@@ -65,4 +65,6 @@ void  mega_ext_register_type(ThunarxProviderPlugin *plugin);
 
 G_END_DECLS;
 
+void expanselocalpath(const char *path, char *absolutepath);
+
 #endif
