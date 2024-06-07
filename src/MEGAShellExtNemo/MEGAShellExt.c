@@ -127,7 +127,7 @@ void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path)
 }
 
 
-void expanselocalpath(char *path, char *absolutepath)
+void expanselocalpath(const char *path, char *absolutepath)
 {
     if (strlen(path) && path[0] == '/')
     {
