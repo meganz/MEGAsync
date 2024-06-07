@@ -338,6 +338,9 @@
 }</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>20</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -384,7 +387,7 @@
        <widget class="QWidget" name="actionMessageContainer" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
-          <number>5</number>
+          <number>2</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -416,6 +419,18 @@
          </item>
          <item>
           <widget class="QLabel" name="actionMessageIcon">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
            <property name="text">
             <string notr="true"/>
            </property>
@@ -441,6 +456,12 @@
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>
    <header>WordWrapLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>waitingspinnerwidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
