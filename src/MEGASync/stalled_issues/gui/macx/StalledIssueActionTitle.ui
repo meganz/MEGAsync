@@ -208,12 +208,6 @@ QPushButton[main=true]
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="cursor">
-               <cursorShape>ArrowCursor</cursorShape>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <property name="spacing">
                 <number>8</number>

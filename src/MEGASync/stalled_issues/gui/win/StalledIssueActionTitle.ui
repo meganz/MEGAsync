@@ -31,14 +31,19 @@
     border-radius: 4px;
 }
 
-#backgroundWidget[discarded=false][disable_background=false]
+#backgroundWidget[discarded=false][disable_background=false][failed=false]
 {
 	background-color: #F5F5F5;
 }
 
-#backgroundWidget[discarded=true][disable_background=false]
+#backgroundWidget[discarded=true][disable_background=false][failed=false]
 {
 	background-color: #4DF5F5F5;
+}
+
+#backgroundWidget[discarded=false][failed=true]
+{
+	background-color: #FDEBEB;
 }
 
 #extraInfoContainer QLabel
