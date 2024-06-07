@@ -11,13 +11,22 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 AutoReq: 0
 
-%if 0%{?sle_version} >= 120100 || 0%{?suse_version}
+#OpenSUSE
+%if 0%{?suse_version} || 0%{?sle_version}
+%if 0%{?sle_version} >= 120100 || 0%{?suse_version} < 1500
 BuildRequires:  kdelibs4support extra-cmake-modules libQt5Core-devel libQt5Network-devel kio-devel
 %global debug_package %{nil}
 %endif
 
+%if 0%{?sle_version} == 0 && 0%{?suse_version} >= 1500
+BuildRequires:  kdelibs4support libQt5Core-devel libQt5Network-devel kio-devel kf6-extra-cmake-modules
+%global debug_package %{nil}
+%endif
+%endif
+
+#Fedora specific
 %if 0%{?fedora}
-BuildRequires:  kf5-kdelibs4support-devel, kdelibs, kdelibs-devel, extra-cmake-modules
+BuildRequires: extra-cmake-modules, kf5-kdelibs4support, kf5-kio-devel
 %endif
 
 %if 0%{?rhel_version} || 0%{?scientificlinux_version}
