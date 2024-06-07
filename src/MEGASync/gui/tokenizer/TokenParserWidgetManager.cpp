@@ -16,16 +16,16 @@
 namespace // anonymous namespace to hide names from other translation units
 {
     static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
-        {Preferences::ThemeType::LIGHT_THEME,  QObject::tr("Light")},
-        {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
+        {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
+        {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
     };
 
-    static QRegularExpression COLOR_TOKEN_REGULAR_EXPRESSION(QString::fromUtf8("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
-    static QRegularExpression ICON_COLOR_TOKEN_REGULAR_EXPRESSION(QString::fromUtf8(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
-    static QRegularExpression REPLACE_THEME_TOKEN_REGULAR_EXPRESSION(QString::fromUtf8(".*\\/(light|dark)\\/.*; *\\/\\* *replaceThemeToken *\\*\\/"));
+    static QRegularExpression COLOR_TOKEN_REGULAR_EXPRESSION(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
+    static QRegularExpression ICON_COLOR_TOKEN_REGULAR_EXPRESSION(QLatin1String(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
+    static QRegularExpression REPLACE_THEME_TOKEN_REGULAR_EXPRESSION(QLatin1String(".*\\/(light|dark)\\/.*; *\\/\\* *replaceThemeToken *\\*\\/"));
 
-    static const QString JSON_THEMED_COLOR_TOKEN_FILE = QString::fromUtf8(":/colors/ColorThemedTokens.json");
-    static const QString CSS_STANDARD_WIDGETS_COMPONENTS_FILE = QString::fromUtf8(":/style/WidgetsComponentsStyleSheets.css");
+    static const QString JSON_THEMED_COLOR_TOKEN_FILE = QLatin1String(":/colors/ColorThemedTokens.json");
+    static const QString CSS_STANDARD_WIDGETS_COMPONENTS_FILE = QLatin1String(":/style/WidgetsComponentsStyleSheets.css");
 
     enum COLOR_TOKEN_CAPTURE_INDEX
     {
@@ -82,7 +82,7 @@ void TokenParserWidgetManager::loadStandardStyleSheetComponents()
         return;
     }
 
-    mStandardComponentsStyleSheet = QString::fromUtf8(data);
+    mStandardComponentsStyleSheet = QLatin1String(data);
 }
 
 void TokenParserWidgetManager::loadColorThemeJson()
@@ -128,14 +128,23 @@ void TokenParserWidgetManager::onUpdateRequested()
 
 void TokenParserWidgetManager::applyCurrentTheme()
 {
-    auto start = std::chrono::high_resolution_clock::now();
-    foreach(auto dialogInfo, DialogOpener::getAllOpenedDialogs())
+#if DEBUG
+    auto start = std::chrono::steady_clock::now();
+#endif
+
+    foreach(auto dialog, DialogOpener::getAllOpenedDialogs())
     {
-        applyTheme(dialogInfo->getDialog());
+        if (dialog)
+        {
+            applyTheme(dialog);
+        }
     }
-    auto end = std::chrono::high_resolution_clock::now();
+
+#if DEBUG
+    auto end = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsed = end - start;
-    std::cout << "********************** " << " time to apply theme : " << elapsed.count() << " s " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
+    std::cout << " TIME USED TO APPLY THEME : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
+#endif
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
