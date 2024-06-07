@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
 
 const gchar OP_PATH_STATE  = 'P'; //Path state
@@ -269,4 +270,3 @@ gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path)
 
     return TRUE;
 }
-
