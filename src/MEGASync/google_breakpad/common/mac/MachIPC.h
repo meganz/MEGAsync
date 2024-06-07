@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -73,7 +72,7 @@
 //          mach_port_t task = message.GetTranslatedPort(0);
 //          mach_port_t thread = message.GetTranslatedPort(1);
 //
-//          char *messageString = message.GetData();
+//          char* messageString = message.GetData();
 //
 //          printf("message string = %s\n", messageString);
 //        }
@@ -164,7 +163,7 @@ class MachMessage {
  public:
 
   // The receiver of the message can retrieve the raw data this way
-  uint8_t *GetData() {
+  uint8_t* GetData() {
     return GetDataLength() > 0 ? GetDataPacket()->data : NULL;
   }
 
@@ -181,10 +180,10 @@ class MachMessage {
 
   // Adds a descriptor (typically a mach port) to be translated
   // returns true if successful, otherwise not enough space
-  bool AddDescriptor(const MachMsgPortDescriptor &desc);
+  bool AddDescriptor(const MachMsgPortDescriptor& desc);
 
   int GetDescriptorCount() const { return body.msgh_descriptor_count; }
-  MachMsgPortDescriptor *GetDescriptor(int n);
+  MachMsgPortDescriptor* GetDescriptor(int n);
 
   // Convenience method which gets the mach port described by the descriptor
   mach_port_t GetTranslatedPort(int n);
@@ -193,7 +192,7 @@ class MachMessage {
   bool IsSimpleMessage() const { return GetDescriptorCount() == 0; }
 
   // Sets raw data for the message (returns false if not enough space)
-  bool SetData(void *data, int32_t data_length);
+  bool SetData(void* data, int32_t data_length);
 
  protected:
   // Consider this an abstract base class - must create an actual instance
@@ -216,7 +215,7 @@ class MachMessage {
   MessageDataPacket* GetDataPacket();
 
   void SetDescriptorCount(int n);
-  void SetDescriptor(int n, const MachMsgPortDescriptor &desc);
+  void SetDescriptor(int n, const MachMsgPortDescriptor& desc);
 
   // Returns total message size setting msgh_size in the header to this value
   mach_msg_size_t CalculateSize();
@@ -236,7 +235,7 @@ class MachMessage {
 //==============================================================================
 class MachReceiveMessage : public MachMessage {
  public:
-  MachReceiveMessage() : MachMessage() {};
+  MachReceiveMessage() : MachMessage() {}
 };
 
 //==============================================================================
@@ -250,7 +249,7 @@ class MachSendMessage : public MachMessage {
 class ReceivePort {
  public:
   // Creates a new mach port for receiving messages and registers a name for it
-  explicit ReceivePort(const char *receive_port_name);
+  explicit ReceivePort(const char* receive_port_name);
 
   // Given an already existing mach port, use it.  We take ownership of the
   // port and deallocate it in our destructor.
@@ -262,7 +261,7 @@ class ReceivePort {
   ~ReceivePort();
 
   // Waits on the mach port until message received or timeout
-  kern_return_t WaitForMessage(MachReceiveMessage *out_message,
+  kern_return_t WaitForMessage(MachReceiveMessage* out_message,
                                mach_msg_timeout_t timeout);
 
   // The underlying mach port that we wrap
@@ -280,13 +279,13 @@ class ReceivePort {
 class MachPortSender {
  public:
   // get a port with send rights corresponding to a named registered service
-  explicit MachPortSender(const char *receive_port_name);
+  explicit MachPortSender(const char* receive_port_name);
 
 
   // Given an already existing mach port, use it.
   explicit MachPortSender(mach_port_t send_port);
 
-  kern_return_t SendMessage(MachSendMessage &message,
+  kern_return_t SendMessage(MachSendMessage& message,
                             mach_msg_timeout_t timeout);
 
  private:

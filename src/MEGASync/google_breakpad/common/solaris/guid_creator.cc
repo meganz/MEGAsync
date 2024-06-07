@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -28,6 +27,10 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 // Author: Alfred Peng
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <cassert>
 #include <ctime>
@@ -66,7 +69,7 @@ const GUIDGenerator kGuidGenerator;
 
 bool CreateGUID(GUID *guid) {
   return kGuidGenerator.CreateGUID(guid);
-};
+}
 
 // Parse guid to string.
 bool GUIDToString(const GUID *guid, char *buf, int buf_len) {
@@ -74,8 +77,8 @@ bool GUIDToString(const GUID *guid, char *buf, int buf_len) {
   assert(buf_len > kGUIDStringLength);
   int num = snprintf(buf, buf_len, kGUIDFormatString,
                      guid->data1, guid->data2, guid->data3,
-                     *reinterpret_cast<const uint32_t *>(&(guid->data4[0])),
-                     *reinterpret_cast<const uint32_t *>(&(guid->data4[4])));
+                     *reinterpret_cast<const uint32_t*>(&(guid->data4[0])),
+                     *reinterpret_cast<const uint32_t*>(&(guid->data4[4])));
   if (num != kGUIDStringLength)
     return false;
 

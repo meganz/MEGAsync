@@ -1,5 +1,4 @@
-// Copyright (c) 2010 Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -41,6 +40,7 @@
 #ifndef GOOGLE_BREAKPAD_PROCESSOR_SOURCE_LINE_RESOLVER_BASE_H__
 #define GOOGLE_BREAKPAD_PROCESSOR_SOURCE_LINE_RESOLVER_BASE_H__
 
+#include <deque>
 #include <map>
 #include <set>
 #include <string>
@@ -64,36 +64,40 @@ class SourceLineResolverBase : public SourceLineResolverInterface {
   // LoadMap() method.
   // Place dynamically allocated heap buffer in symbol_data. Caller has the
   // ownership of the buffer, and should call delete [] to free the buffer.
-  static bool ReadSymbolFile(const string &file_name,
-                             char **symbol_data,
-                             size_t *symbol_data_size);
+  static bool ReadSymbolFile(const string& file_name,
+                             char** symbol_data,
+                             size_t* symbol_data_size);
 
  protected:
   // Users are not allowed create SourceLineResolverBase instance directly.
-  SourceLineResolverBase(ModuleFactory *module_factory);
+  SourceLineResolverBase(ModuleFactory* module_factory);
   virtual ~SourceLineResolverBase();
 
   // Virtual methods inherited from SourceLineResolverInterface.
-  virtual bool LoadModule(const CodeModule *module, const string &map_file);
-  virtual bool LoadModuleUsingMapBuffer(const CodeModule *module,
-                                        const string &map_buffer);
-  virtual bool LoadModuleUsingMemoryBuffer(const CodeModule *module,
-                                           char *memory_buffer,
+  virtual bool LoadModule(const CodeModule* module, const string& map_file);
+  virtual bool LoadModuleUsingMapBuffer(const CodeModule* module,
+                                        const string& map_buffer);
+  virtual bool LoadModuleUsingMemoryBuffer(const CodeModule* module,
+                                           char* memory_buffer,
                                            size_t memory_buffer_size);
   virtual bool ShouldDeleteMemoryBufferAfterLoadModule();
-  virtual void UnloadModule(const CodeModule *module);
-  virtual bool HasModule(const CodeModule *module);
-  virtual bool IsModuleCorrupt(const CodeModule *module);
-  virtual void FillSourceLineInfo(StackFrame *frame);
-  virtual WindowsFrameInfo *FindWindowsFrameInfo(const StackFrame *frame);
-  virtual CFIFrameInfo *FindCFIFrameInfo(const StackFrame *frame);
+  virtual void UnloadModule(const CodeModule* module);
+  virtual bool HasModule(const CodeModule* module);
+  virtual bool IsModuleCorrupt(const CodeModule* module);
+  virtual void FillSourceLineInfo(
+      StackFrame* frame,
+      std::deque<std::unique_ptr<StackFrame>>* inlined_frames);
+  virtual WindowsFrameInfo* FindWindowsFrameInfo(const StackFrame* frame);
+  virtual CFIFrameInfo* FindCFIFrameInfo(const StackFrame* frame);
 
   // Nested structs and classes.
+  struct InlineOrigin;
+  struct Inline;
   struct Line;
   struct Function;
   struct PublicSymbol;
   struct CompareString {
-    bool operator()(const string &s1, const string &s2) const;
+    bool operator()(const string& s1, const string& s2) const;
   };
   // Module is an interface for an in-memory symbol file.
   class Module;
@@ -101,18 +105,18 @@ class SourceLineResolverBase : public SourceLineResolverInterface {
 
   // All of the modules that are loaded.
   typedef map<string, Module*, CompareString> ModuleMap;
-  ModuleMap *modules_;
+  ModuleMap* modules_;
 
   // The loaded modules that were detecting to be corrupt during load.
   typedef set<string, CompareString> ModuleSet;
-  ModuleSet *corrupt_modules_;
+  ModuleSet* corrupt_modules_;
 
   // All of heap-allocated buffers that are owned locally by resolver.
   typedef std::map<string, char*, CompareString> MemoryMap;
-  MemoryMap *memory_buffers_;
+  MemoryMap* memory_buffers_;
 
   // Creates a concrete module at run-time.
-  ModuleFactory *module_factory_;
+  ModuleFactory* module_factory_;
 
  private:
   // ModuleFactory needs to have access to protected type Module.

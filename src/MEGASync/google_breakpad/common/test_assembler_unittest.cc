@@ -1,5 +1,4 @@
-// Copyright (c) 2010, Google Inc.
-// All rights reserved.
+// Copyright 2010 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,6 +29,10 @@
 // Original author: Jim Blandy <jimb@mozilla.com> <jimb@red-bean.com>
 
 // test_assembler_unittest.cc: Unit tests for google_breakpad::TestAssembler.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include <string>
 #include <string.h>
@@ -755,7 +758,7 @@ const uint8_t SectionFixture::data[] = {
     {                                                                   \
       static const uint8_t expected_bytes[] = b;                       \
       ASSERT_EQ(sizeof(expected_bytes), s.size());                      \
-      ASSERT_TRUE(memcmp(s.data(), (const char *) expected_bytes,       \
+      ASSERT_TRUE(memcmp(s.data(), (const char*) expected_bytes,       \
                          sizeof(expected_bytes)) == 0);                 \
     }                                                                   \
   while(0)
@@ -766,7 +769,7 @@ TEST_F(Append, Bytes) {
   section.Append(data, sizeof(data));
   ASSERT_TRUE(section.GetContents(&contents));
   ASSERT_EQ(sizeof(data), contents.size());
-  EXPECT_TRUE(0 == memcmp(contents.data(), (const char *) data, sizeof(data)));
+  EXPECT_TRUE(0 == memcmp(contents.data(), (const char*) data, sizeof(data)));
 }
 
 TEST_F(Append, BytesTwice) {
@@ -774,9 +777,9 @@ TEST_F(Append, BytesTwice) {
   section.Append(data, sizeof(data));
   ASSERT_TRUE(section.GetContents(&contents));
   ASSERT_EQ(2 * sizeof(data), contents.size());
-  ASSERT_TRUE(0 == memcmp(contents.data(), (const char *) data, sizeof(data)));
+  ASSERT_TRUE(0 == memcmp(contents.data(), (const char*) data, sizeof(data)));
   ASSERT_TRUE(0 == memcmp(contents.data() + sizeof(data),
-                          (const char *) data, sizeof(data)));
+                          (const char*) data, sizeof(data)));
 }
 
 TEST_F(Append, String) {

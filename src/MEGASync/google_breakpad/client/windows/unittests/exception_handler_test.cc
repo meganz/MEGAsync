@@ -1,5 +1,4 @@
-// Copyright 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -26,6 +25,10 @@
 // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
 
 #include "client/windows/unittests/exception_handler_test.h"
 
@@ -87,13 +90,13 @@ class ExceptionHandlerTest : public ::testing::Test {
   void DoCrashPureVirtualCall();
 
   // Utility function to test for a path's existence.
-  static BOOL DoesPathExist(const TCHAR *path_name);
+  static BOOL DoesPathExist(const TCHAR* path_name);
 
   // Client callback.
   static void ClientDumpCallback(
-      void *dump_context,
-      const google_breakpad::ClientInfo *client_info,
-      const std::wstring *dump_path);
+      void* dump_context,
+      const google_breakpad::ClientInfo* client_info,
+      const std::wstring* dump_path);
 
   static bool DumpCallback(const wchar_t* dump_path,
                            const wchar_t* minidump_id,
@@ -120,7 +123,7 @@ void ExceptionHandlerTest::SetUp() {
   // THe test case name is exposed to use as a c-style string,
   // But we might be working in UNICODE here on Windows.
   int dwRet = MultiByteToWideChar(CP_ACP, 0, test_info->name(),
-                                  strlen(test_info->name()),
+                                  static_cast<int>(strlen(test_info->name())),
                                   test_name_wide,
                                   MAX_PATH);
   if (!dwRet) {
@@ -141,7 +144,7 @@ void ExceptionHandlerTest::TearDown() {
   }
 }
 
-BOOL ExceptionHandlerTest::DoesPathExist(const TCHAR *path_name) {
+BOOL ExceptionHandlerTest::DoesPathExist(const TCHAR* path_name) {
   DWORD flags = GetFileAttributes(path_name);
   if (flags == INVALID_FILE_ATTRIBUTES) {
     return FALSE;
@@ -151,9 +154,9 @@ BOOL ExceptionHandlerTest::DoesPathExist(const TCHAR *path_name) {
 
 // static
 void ExceptionHandlerTest::ClientDumpCallback(
-    void *dump_context,
-    const google_breakpad::ClientInfo *client_info,
-    const wstring *dump_path) {
+    void* dump_context,
+    const google_breakpad::ClientInfo* client_info,
+    const wstring* dump_path) {
   dump_file = *dump_path;
   // Create the full dump file name from the dump path.
   full_dump_file = dump_file.substr(0, dump_file.length() - 4) + L"-full.dmp";
@@ -174,7 +177,7 @@ bool ExceptionHandlerTest::DumpCallback(const wchar_t* dump_path,
 }
 
 void ExceptionHandlerTest::DoCrashInvalidParameter() {
-  google_breakpad::ExceptionHandler *exc =
+  google_breakpad::ExceptionHandler* exc =
       new google_breakpad::ExceptionHandler(
           temp_path_, NULL, NULL, NULL,
           google_breakpad::ExceptionHandler::HANDLER_INVALID_PARAMETER,
@@ -206,7 +209,7 @@ struct PureVirtualCall : public PureVirtualCallBase {
 };
 
 void ExceptionHandlerTest::DoCrashPureVirtualCall() {
-  google_breakpad::ExceptionHandler *exc =
+  google_breakpad::ExceptionHandler* exc =
       new google_breakpad::ExceptionHandler(
           temp_path_, NULL, NULL, NULL,
           google_breakpad::ExceptionHandler::HANDLER_PURECALL,
@@ -247,6 +250,7 @@ TEST_F(ExceptionHandlerTest, InvalidParameterMiniDumpTest) {
   EXPECT_EXIT(DoCrashInvalidParameter(), ::testing::ExitedWithCode(0), "");
   ASSERT_TRUE(!dump_file.empty() && !full_dump_file.empty());
   ASSERT_TRUE(DoesPathExist(dump_file.c_str()));
+  ASSERT_TRUE(DoesPathExist(full_dump_file.c_str()));
 
   // Verify the dump for infos.
   DumpAnalysis mini(dump_file);
@@ -318,6 +322,7 @@ TEST_F(ExceptionHandlerTest, PureVirtualCallMiniDumpTest) {
   EXPECT_EXIT(DoCrashPureVirtualCall(), ::testing::ExitedWithCode(0), "");
   ASSERT_TRUE(!dump_file.empty() && !full_dump_file.empty());
   ASSERT_TRUE(DoesPathExist(dump_file.c_str()));
+  ASSERT_TRUE(DoesPathExist(full_dump_file.c_str()));
 
   // Verify the dump for infos.
   DumpAnalysis mini(dump_file);

@@ -1,5 +1,4 @@
-// Copyright (c) 2009, Google Inc.
-// All rights reserved.
+// Copyright 2009 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -32,9 +31,11 @@
 
 #include <stdint.h>
 #include <sys/types.h>
+#include <sys/ucontext.h>
 #include <unistd.h>
 
 #include <list>
+#include <type_traits>
 #include <utility>
 
 #include "client/linux/minidump_writer/linux_dumper.h"
@@ -44,13 +45,11 @@ namespace google_breakpad {
 
 class ExceptionHandler;
 
-struct MappingEntry {
-  MappingInfo first;
-  uint8_t second[sizeof(MDGUID)];
-};
-
-// A list of <MappingInfo, GUID>
-typedef std::list<MappingEntry> MappingList;
+#if defined(__aarch64__)
+typedef struct fpsimd_context fpstate_t;
+#elif !defined(__ARM_EABI__) && !defined(__mips__)
+typedef std::remove_pointer<fpregset_t>::type fpstate_t;
+#endif
 
 // These entries store a list of memory regions that the client wants included
 // in the minidump.
@@ -79,10 +78,16 @@ typedef std::list<AppMemory> AppMemoryList;
 //
 // Returns true iff successful.
 bool WriteMinidump(const char* minidump_path, pid_t crashing_process,
-                   const void* blob, size_t blob_size);
+                   const void* blob, size_t blob_size,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 // Same as above but takes an open file descriptor instead of a path.
 bool WriteMinidump(int minidump_fd, pid_t crashing_process,
-                   const void* blob, size_t blob_size);
+                   const void* blob, size_t blob_size,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 
 // Alternate form of WriteMinidump() that works with processes that
 // are not expected to have crashed.  If |process_blamed_thread| is
@@ -97,23 +102,35 @@ bool WriteMinidump(const char* minidump_path, pid_t process,
 bool WriteMinidump(const char* minidump_path, pid_t crashing_process,
                    const void* blob, size_t blob_size,
                    const MappingList& mappings,
-                   const AppMemoryList& appdata);
+                   const AppMemoryList& appdata,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 bool WriteMinidump(int minidump_fd, pid_t crashing_process,
                    const void* blob, size_t blob_size,
                    const MappingList& mappings,
-                   const AppMemoryList& appdata);
+                   const AppMemoryList& appdata,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 
 // These overloads also allow passing a file size limit for the minidump.
 bool WriteMinidump(const char* minidump_path, off_t minidump_size_limit,
                    pid_t crashing_process,
                    const void* blob, size_t blob_size,
                    const MappingList& mappings,
-                   const AppMemoryList& appdata);
+                   const AppMemoryList& appdata,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 bool WriteMinidump(int minidump_fd, off_t minidump_size_limit,
                    pid_t crashing_process,
                    const void* blob, size_t blob_size,
                    const MappingList& mappings,
-                   const AppMemoryList& appdata);
+                   const AppMemoryList& appdata,
+                   bool skip_stacks_if_mapping_unreferenced = false,
+                   uintptr_t principal_mapping_address = 0,
+                   bool sanitize_stacks = false);
 
 bool WriteMinidump(const char* filename,
                    const MappingList& mappings,

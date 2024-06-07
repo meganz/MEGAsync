@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -36,16 +35,16 @@
 #include <sys/time.h>
 
 #import "client/apple/Framework/BreakpadDefines.h"
-#import "GTMDefines.h"
+#import "common/mac/GTMDefines.h"
 
 
 namespace google_breakpad {
 
 //=============================================================================
-BOOL EnsureDirectoryPathExists(NSString *dirPath) {
-  NSFileManager *mgr = [NSFileManager defaultManager];
+BOOL EnsureDirectoryPathExists(NSString* dirPath) {
+  NSFileManager* mgr = [NSFileManager defaultManager];
 
-  NSDictionary *attrs =
+  NSDictionary* attrs =
     [NSDictionary dictionaryWithObject:[NSNumber numberWithUnsignedLong:0750]
                                 forKey:NSFilePosixPermissions];
 
@@ -56,15 +55,15 @@ BOOL EnsureDirectoryPathExists(NSString *dirPath) {
 }
 
 //=============================================================================
-BOOL ConfigFile::WriteData(const void *data, size_t length) {
+BOOL ConfigFile::WriteData(const void* data, size_t length) {
   size_t result = write(config_file_, data, length);
 
   return result == length;
 }
 
 //=============================================================================
-BOOL ConfigFile::AppendConfigData(const char *key,
-                                  const void *data, size_t length) {
+BOOL ConfigFile::AppendConfigData(const char* key,
+                                  const void* data, size_t length) {
   assert(config_file_ != -1);
 
   if (!key) {
@@ -88,13 +87,13 @@ BOOL ConfigFile::AppendConfigData(const char *key,
 }
 
 //=============================================================================
-BOOL ConfigFile::AppendConfigString(const char *key,
-                                    const char *value) {
+BOOL ConfigFile::AppendConfigString(const char* key,
+                                    const char* value) {
   return AppendConfigData(key, value, strlen(value));
 }
 
 //=============================================================================
-BOOL ConfigFile::AppendCrashTimeParameters(const char *processStartTimeString) {
+BOOL ConfigFile::AppendCrashTimeParameters(const char* processStartTimeString) {
   // Set process uptime parameter
   struct timeval tv;
   gettimeofday(&tv, NULL);
@@ -105,22 +104,23 @@ BOOL ConfigFile::AppendCrashTimeParameters(const char *processStartTimeString) {
     time_t processStartTime = strtol(processStartTimeString, NULL, 10);
     time_t processUptime = tv.tv_sec - processStartTime;
     // Store the uptime in milliseconds.
-    sprintf(processUptimeString, "%llu",
-        static_cast<unsigned long long int>(processUptime) * 1000);
+    snprintf(processUptimeString, sizeof(processUptimeString), "%llu",
+             static_cast<unsigned long long int>(processUptime) * 1000);
     if (!AppendConfigString(BREAKPAD_PROCESS_UP_TIME, processUptimeString))
       return false;
   }
 
-  sprintf(processCrashtimeString, "%zd", tv.tv_sec);
+  snprintf(processCrashtimeString, sizeof(processCrashtimeString), "%llu",
+           static_cast<unsigned long long int>(tv.tv_sec));
   return AppendConfigString(BREAKPAD_PROCESS_CRASH_TIME,
                             processCrashtimeString);
 }
 
 //=============================================================================
 void ConfigFile::WriteFile(const char* directory,
-                           const SimpleStringDictionary *configurationParameters,
-                           const char *dump_dir,
-                           const char *minidump_id) {
+                           const SimpleStringDictionary* configurationParameters,
+                           const char* dump_dir,
+                           const char* minidump_id) {
 
   assert(config_file_ == -1);
 
@@ -146,9 +146,9 @@ void ConfigFile::WriteFile(const char* directory,
 
   // Write out the configuration parameters
   BOOL result = YES;
-  const SimpleStringDictionary &dictionary = *configurationParameters;
+  const SimpleStringDictionary& dictionary = *configurationParameters;
 
-  const SimpleStringDictionary::Entry *entry = NULL;
+  const SimpleStringDictionary::Entry* entry = NULL;
   SimpleStringDictionary::Iterator iter(dictionary);
 
   while ((entry = iter.Next())) {

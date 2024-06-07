@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -37,7 +36,7 @@
 //
 // These files can then be uploaded to a server.
 
-typedef void *BreakpadRef;
+typedef void* BreakpadRef;
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,7 +59,15 @@ extern "C" {
 typedef bool (*BreakpadFilterCallback)(int exception_type,
                                        int exception_code,
                                        mach_port_t crashing_thread,
-                                       void *context);
+                                       void* context);
+
+// Optional user-defined function that will be called after a network upload
+// of a crash report.
+// |report_id| will be the id returned by the server, or "ERR" if an error
+// occurred.
+// |error| will contain the error, or nil if no error occured.
+typedef void (*BreakpadUploadCompletionCallback)(NSString* report_id,
+                                                 NSError* error);
 
 // Create a new BreakpadRef object and install it as an exception
 // handler.  The |parameters| will typically be the contents of your
@@ -155,7 +162,7 @@ typedef bool (*BreakpadFilterCallback)(int exception_type,
 //                                   internal values.
 
 // Returns a new BreakpadRef object on success, NULL otherwise.
-BreakpadRef BreakpadCreate(NSDictionary *parameters);
+BreakpadRef BreakpadCreate(NSDictionary* parameters);
 
 // Uninstall and release the data associated with |ref|.
 void BreakpadRelease(BreakpadRef ref);
@@ -179,40 +186,73 @@ void BreakpadRelease(BreakpadRef ref);
 // TODO (nealsid): separate server parameter dictionary from the
 // dictionary used to configure Breakpad, and document limits for each
 // independently.
-void BreakpadSetKeyValue(BreakpadRef ref, NSString *key, NSString *value);
-NSString *BreakpadKeyValue(BreakpadRef ref, NSString *key);
-void BreakpadRemoveKeyValue(BreakpadRef ref, NSString *key);
+void BreakpadSetKeyValue(BreakpadRef ref, NSString* key, NSString* value);
+NSString* BreakpadKeyValue(BreakpadRef ref, NSString* key);
+void BreakpadRemoveKeyValue(BreakpadRef ref, NSString* key);
 
 // You can use this method to specify parameters that will be uploaded
 // to the crash server.  They will be automatically encoded as
 // necessary.  Note that as mentioned above there are limits on both
 // the number of keys and their length.
-void BreakpadAddUploadParameter(BreakpadRef ref, NSString *key,
-                                NSString *value);
+void BreakpadAddUploadParameter(BreakpadRef ref, NSString* key,
+                                NSString* value);
 
 // This method will remove a previously-added parameter from the
 // upload parameter set.
-void BreakpadRemoveUploadParameter(BreakpadRef ref, NSString *key);
+void BreakpadRemoveUploadParameter(BreakpadRef ref, NSString* key);
 
 // Method to handle uploading data to the server
 
 // Returns the number of crash reports waiting to send to the server.
 int BreakpadGetCrashReportCount(BreakpadRef ref);
 
+// Returns the next upload configuration. The report file is deleted.
+NSDictionary* BreakpadGetNextReportConfiguration(BreakpadRef ref);
+
+// Returns the date of the most recent crash report.
+NSDate* BreakpadGetDateOfMostRecentCrashReport(BreakpadRef ref);
+
 // Upload next report to the server.
 void BreakpadUploadNextReport(BreakpadRef ref);
 
+// Upload next report to the server.
+// |server_parameters| is additional server parameters to send.
+void BreakpadUploadNextReportWithParameters(
+    BreakpadRef ref,
+    NSDictionary* server_parameters,
+    BreakpadUploadCompletionCallback callback);
+
+// Upload a report to the server.
+// |server_parameters| is additional server parameters to send.
+// |configuration| is the configuration of the breakpad report to send.
+void BreakpadUploadReportWithParametersAndConfiguration(
+    BreakpadRef ref,
+    NSDictionary* server_parameters,
+    NSDictionary* configuration,
+    BreakpadUploadCompletionCallback callback);
+
+// Handles the network response of a breakpad upload. This function is needed if
+// the actual upload is done by the Breakpad client.
+// |configuration| is the configuration of the upload. It must contain the same
+// fields as the configuration passed to
+// BreakpadUploadReportWithParametersAndConfiguration.
+// |data| and |error| contain the network response.
+void BreakpadHandleNetworkResponse(BreakpadRef ref,
+                                   NSDictionary* configuration,
+                                   NSData* data,
+                                   NSError* error);
+
 // Upload a file to the server. |data| is the content of the file to sent.
 // |server_parameters| is additional server parameters to send.
-void BreakpadUploadData(BreakpadRef ref, NSData *data, NSString *name,
-                        NSDictionary *server_parameters);
+void BreakpadUploadData(BreakpadRef ref, NSData* data, NSString* name,
+                        NSDictionary* server_parameters);
 
 // Generate a breakpad minidump and configuration file in the dump directory.
 // The report will be available for uploading. The paths of the created files
 // are returned in the dictionary. |server_parameters| is additional server
 // parameters to add in the config file.
-NSDictionary *BreakpadGenerateReport(BreakpadRef ref,
-                                     NSDictionary *server_parameters);
+NSDictionary* BreakpadGenerateReport(BreakpadRef ref,
+                                     NSDictionary* server_parameters);
 
 #ifdef __cplusplus
 }

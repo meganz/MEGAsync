@@ -1,5 +1,4 @@
-// Copyright (c) 2007, Google Inc.
-// All rights reserved.
+// Copyright 2007 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -49,11 +48,11 @@
 #endif
 
 //==============================================================================
-OnDemandServer *OnDemandServer::Create(const char *server_command,
-                                       const char *service_name,
+OnDemandServer* OnDemandServer::Create(const char* server_command,
+                                       const char* service_name,
                                        bool unregister_on_cleanup,
-                                       kern_return_t *out_result) {
-  OnDemandServer *server = new OnDemandServer();
+                                       kern_return_t* out_result) {
+  OnDemandServer* server = new OnDemandServer();
 
   if (!server) return NULL;
 
@@ -71,25 +70,25 @@ OnDemandServer *OnDemandServer::Create(const char *server_command,
 
   delete server;
   return NULL;
-};
+}
 
 //==============================================================================
-kern_return_t OnDemandServer::Initialize(const char *server_command,
-                                         const char *service_name,
+kern_return_t OnDemandServer::Initialize(const char* server_command,
+                                         const char* service_name,
                                          bool unregister_on_cleanup) {
   unregister_on_cleanup_ = unregister_on_cleanup;
 
   mach_port_t self_task = mach_task_self();
 
-  mach_port_t bootstrap_port;
-  kern_return_t kr = task_get_bootstrap_port(self_task, &bootstrap_port);
+  mach_port_t self_bootstrap_port;
+  kern_return_t kr = task_get_bootstrap_port(self_task, &self_bootstrap_port);
   if (kr != KERN_SUCCESS) {
     PRINT_MACH_RESULT(kr, "task_get_bootstrap_port(): ");
     return kr;
   }
 
   mach_port_t bootstrap_subset_port;
-  kr = bootstrap_subset(bootstrap_port, self_task, &bootstrap_subset_port);
+  kr = bootstrap_subset(self_bootstrap_port, self_task, &bootstrap_subset_port);
   if (kr != BOOTSTRAP_SUCCESS) {
     PRINT_BOOTSTRAP_RESULT(kr, "bootstrap_subset(): ");
     return kr;
@@ -105,7 +104,7 @@ kern_return_t OnDemandServer::Initialize(const char *server_command,
   kr = breakpad::BootstrapRegister(
       bootstrap_subset_port,
       const_cast<char*>(BREAKPAD_BOOTSTRAP_PARENT_PORT),
-      bootstrap_port);
+      self_bootstrap_port);
   if (kr != BOOTSTRAP_SUCCESS) {
     PRINT_BOOTSTRAP_RESULT(kr, "bootstrap_register(): ");
     return kr;
@@ -135,7 +134,8 @@ kern_return_t OnDemandServer::Initialize(const char *server_command,
     PRINT_BOOTSTRAP_RESULT(kr, "bootstrap_create_service(): ");
 
     // perhaps the service has already been created - try to look it up
-    kr = bootstrap_look_up(bootstrap_port, (char*)service_name, &service_port_);
+    kr = bootstrap_look_up(self_bootstrap_port, (char*)service_name,
+                           &service_port_);
 
     if (kr != BOOTSTRAP_SUCCESS) {
       PRINT_BOOTSTRAP_RESULT(kr, "bootstrap_look_up(): ");

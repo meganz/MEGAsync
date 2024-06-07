@@ -1,7 +1,6 @@
 // -*- mode: c++ -*-
 
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -13,7 +12,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -47,13 +46,16 @@ namespace google_breakpad {
 class Module;
 
 struct DumpOptions {
-  DumpOptions(SymbolData symbol_data, bool handle_inter_cu_refs)
+  DumpOptions(SymbolData symbol_data,
+              bool handle_inter_cu_refs,
+              bool enable_multiple_field)
       : symbol_data(symbol_data),
-        handle_inter_cu_refs(handle_inter_cu_refs) {
-  }
+        handle_inter_cu_refs(handle_inter_cu_refs),
+        enable_multiple_field(enable_multiple_field) {}
 
   SymbolData symbol_data;
   bool handle_inter_cu_refs;
+  bool enable_multiple_field;
 };
 
 // Find all the debugging information in OBJ_FILE, an ELF executable
@@ -62,15 +64,28 @@ struct DumpOptions {
 // If OBJ_FILE has been stripped but contains a .gnu_debuglink section,
 // then look for the debug file in DEBUG_DIRS.
 // SYMBOL_DATA allows limiting the type of symbol data written.
-bool WriteSymbolFile(const string &obj_file,
+bool WriteSymbolFile(const string& load_path,
+                     const string& obj_file,
+                     const string& obj_os,
                      const std::vector<string>& debug_dirs,
                      const DumpOptions& options,
-                     std::ostream &sym_stream);
+                     std::ostream& sym_stream);
+
+// Read the selected object file's debugging information, and write out the
+// header only to |stream|. Return true on success; if an error occurs, report
+// it and return false. |obj_file| becomes the MODULE file name and |obj_os|
+// becomes the MODULE operating system.
+bool WriteSymbolFileHeader(const string& load_path,
+                           const string& obj_file,
+                           const string& obj_os,
+                           std::ostream& sym_stream);
 
 // As above, but simply return the debugging information in MODULE
 // instead of writing it to a stream. The caller owns the resulting
 // Module object and must delete it when finished.
-bool ReadSymbolData(const string& obj_file,
+bool ReadSymbolData(const string& load_path,
+                    const string& obj_file,
+                    const string& obj_os,
                     const std::vector<string>& debug_dirs,
                     const DumpOptions& options,
                     Module** module);

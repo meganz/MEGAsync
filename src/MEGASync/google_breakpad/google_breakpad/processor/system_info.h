@@ -1,5 +1,4 @@
-// Copyright (c) 2006, Google Inc.
-// All rights reserved.
+// Copyright 2006 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -44,7 +43,7 @@ namespace google_breakpad {
 struct SystemInfo {
  public:
   SystemInfo() : os(), os_short(), os_version(), cpu(), cpu_info(),
-    cpu_count(0) {}
+    cpu_count(0), gl_version(), gl_vendor(), gl_renderer() {}
 
   // Resets the SystemInfo object to its default values.
   void Clear() {
@@ -54,6 +53,9 @@ struct SystemInfo {
     cpu.clear();
     cpu_info.clear();
     cpu_count = 0;
+    gl_version.clear();
+    gl_vendor.clear();
+    gl_renderer.clear();
   }
 
   // A string identifying the operating system, such as "Windows NT",
@@ -91,6 +93,11 @@ struct SystemInfo {
   // The number of processors in the system.  Will be greater than one for
   // multi-core systems.
   int cpu_count;
+
+  // The GPU information. Currently only populated in microdumps.
+  string gl_version;
+  string gl_vendor;
+  string gl_renderer;
 };
 
 }  // namespace google_breakpad

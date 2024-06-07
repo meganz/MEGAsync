@@ -1,5 +1,4 @@
-// Copyright (c) 2011, Google Inc.
-// All rights reserved.
+// Copyright 2011 Google LLC
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -11,7 +10,7 @@
 // copyright notice, this list of conditions and the following disclaimer
 // in the documentation and/or other materials provided with the
 // distribution.
-//     * Neither the name of Google Inc. nor the names of its
+//     * Neither the name of Google LLC nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
 //
@@ -30,6 +29,10 @@
 // memory_mapped_file.cc: Implement google_breakpad::MemoryMappedFile.
 // See memory_mapped_file.h for details.
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>  // Must come first
+#endif
+
 #include "common/linux/memory_mapped_file.h"
 
 #include <fcntl.h>
@@ -46,23 +49,31 @@ namespace google_breakpad {
 
 MemoryMappedFile::MemoryMappedFile() {}
 
-MemoryMappedFile::MemoryMappedFile(const char* path) {
-  Map(path);
+MemoryMappedFile::MemoryMappedFile(const char* path, size_t offset) {
+  Map(path, offset);
 }
 
 MemoryMappedFile::~MemoryMappedFile() {
   Unmap();
 }
 
-bool MemoryMappedFile::Map(const char* path) {
-  Unmap();
+#include <unistd.h>
 
-  int fd = sys_open(path, O_RDONLY, 0);
+bool MemoryMappedFile::Map(const char* path, size_t offset) {
+  Unmap();
+  // Based on https://pubs.opengroup.org/onlinepubs/7908799/xsh/open.html
+  // If O_NONBLOCK is set: The open() function will return without blocking
+  // for the device to be ready or available. Setting this value will provent
+  // hanging if file is not avilable.
+  int fd = sys_open(path, O_RDONLY | O_NONBLOCK, 0);
   if (fd == -1) {
     return false;
   }
 
-#if defined(__x86_64__)
+#if defined(__x86_64__) || defined(__aarch64__) || \
+   (defined(__mips__) && _MIPS_SIM == _ABI64) || \
+   (defined(__riscv) && __riscv_xlen == 64)
+
   struct kernel_stat st;
   if (sys_fstat(fd, &st) == -1 || st.st_size < 0) {
 #else
@@ -73,25 +84,24 @@ bool MemoryMappedFile::Map(const char* path) {
     return false;
   }
 
-  // If the file size is zero, simply use an empty MemoryRange and return
-  // true. Don't bother to call mmap() even though mmap() can handle an
-  // empty file on some platforms.
-  if (st.st_size == 0) {
+  // Strangely file size can be negative, but we check above that it is not.
+  size_t file_len = static_cast<size_t>(st.st_size);
+  // If the file does not extend beyond the offset, simply use an empty
+  // MemoryRange and return true. Don't bother to call mmap()
+  // even though mmap() can handle an empty file on some platforms.
+  if (offset >= file_len) {
     sys_close(fd);
     return true;
   }
 
-#if defined(__x86_64__)
-  void* data = sys_mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-#else
-  void* data = sys_mmap2(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-#endif
+  size_t content_len = file_len - offset;
+  void* data = sys_mmap(NULL, content_len, PROT_READ, MAP_PRIVATE, fd, offset);
   sys_close(fd);
   if (data == MAP_FAILED) {
     return false;
   }
 
-  content_.Set(data, st.st_size);
+  content_.Set(data, content_len);
   return true;
 }
 
