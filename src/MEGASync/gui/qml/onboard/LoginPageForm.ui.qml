@@ -59,9 +59,9 @@ StackViewPage {
 
             anchors {
                 left: parent.left
-                leftMargin: -emailItem.sizes.focusBorderWidth
+                leftMargin: Constants.focusAdjustment
             }
-            width: parent.width + 2 * emailItem.sizes.focusBorderWidth
+            width: parent.width + 2 * Constants.focusBorderWidth
             spacing: contentSpacing / 2
 
             TextFields.EmailTextField {
@@ -100,7 +100,6 @@ StackViewPage {
         anchors.leftMargin: -sizes.horizontalAlignWidth
         anchors.topMargin: contentSpacing - sizes.verticalAlignWidth
         text: OnboardingStrings.forgotPassword
-        url: Links.recovery
         icons {
             source: Images.helpCircle
             position: Icon.Position.LEFT
@@ -116,9 +115,9 @@ StackViewPage {
             left: root.left
             right: root.right
             bottom: root.bottom
-            leftMargin: -signUpButtonItem.sizes.focusBorderWidth
-            rightMargin: -signUpButtonItem.sizes.focusBorderWidth
-            bottomMargin: buttonsBottomMargin
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
 
         OutlineButton {
@@ -132,7 +131,7 @@ StackViewPage {
         PrimaryButton {
             id: loginButtonItem
 
-            text: loginControllerAccess.newAccount ? OnboardingStrings.next : OnboardingStrings.login
+            text: loginControllerAccess.newAccount ? Strings.next : OnboardingStrings.login
             progressValue: loginControllerAccess.progress
             icons.source: loginControllerAccess.newAccount ? Images.arrowRight : Images.none
             Layout.alignment: Qt.AlignRight

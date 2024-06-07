@@ -11,7 +11,6 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
@@ -56,7 +55,7 @@ constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
 constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
-constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
+constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{240};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
 constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 #endif
@@ -1366,6 +1365,14 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->pNotifications->setEnabled(enabled);
 
     mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+{
+    if(mUi->backupSettings)
+    {
+        mUi->backupSettings->setAddButtonEnabled(enabled);
+    }
 }
 
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)

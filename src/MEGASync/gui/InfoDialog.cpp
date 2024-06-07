@@ -10,25 +10,25 @@
 #include <QFileInfo>
 #include <QEvent>
 #include <QScrollBar>
-#include "qml/QmlDialogWrapper.h"
 
 #include "InfoDialog.h"
 #include "AccountDetailsDialog.h"
 #include "ui_InfoDialog.h"
-#include "control/Utilities.h"
 #include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "TransferManager.h"
 #include "MenuItemAction.h"
 #include "StalledIssuesModel.h"
-#include "platform/Platform.h"
 #include "assert.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 #include "QMegaMessageBox.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
+#include "StatsEventHandler.h"
+
+#include "control/Utilities.h"
+#include "platform/Platform.h"
+#include "qml/QmlDialogManager.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
-#include "onboarding/Onboarding.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -88,7 +88,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mAddBackupDialog (nullptr),
     mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
@@ -126,6 +125,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
+
+    connect(mPreferences.get(),
+            &Preferences::valueChanged,
+            this,
+            [this](const QString& key)
+            {
+                if(key == Preferences::wasPausedKey)
+                {
+                    ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
+                }
+            });
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -697,7 +707,6 @@ void InfoDialog::updateState()
     if(ui->wStatus->getState() != mState)
     {
         ui->wStatus->setState(mState);
-        ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
         if(mTransferManager)
         {
             mTransferManager->setTransferState(mState);
@@ -1021,41 +1030,17 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
 void InfoDialog::addBackup()
 {
     auto overQuotaDialog = app->showSyncOverquotaDialog();
-
     auto addBackupLambda = [overQuotaDialog, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            bool showWizardIfNoBackups(SyncInfo::instance()->getNumSyncedFolders(mega::MegaSync::TYPE_BACKUP) == 0);
-            if(showWizardIfNoBackups)
-            {
-                auto backupsWizard = new BackupsWizard();
-                DialogOpener::showDialog<BackupsWizard>(backupsWizard);
-            }
-            else
-            {
-                auto backupDialog = new AddBackupDialog();
-
-                setupSyncController();
-
-                DialogOpener::showDialog<AddBackupDialog>(backupDialog,[this, backupDialog]
-                {
-                    if(backupDialog && backupDialog->result() == QDialog::Accepted)
-                    {
-                        QString dirToBackup (backupDialog->getSelectedFolder());
-                        QString backupName (backupDialog->getBackupName());
-                        mSyncController->addBackup(dirToBackup, backupName);
-
-                        app->createAppMenus();
-                    }
-                });
-            }
+            QmlDialogManager::instance()->openBackupsDialog();
         }
     };
 
     if(overQuotaDialog)
     {
-        DialogOpener::showDialog(overQuotaDialog,addBackupLambda);
+        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
     }
     else
     {

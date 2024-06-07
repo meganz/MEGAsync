@@ -152,7 +152,7 @@ const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromLatin1("showNotifications");
 
 //Stalled Issues
-const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::Smart;
 const QString Preferences::stalledIssuesModeKey   = QString::fromLatin1("stalledIssuesSmartMode");
 
 const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stalledIssuesEventDate");
@@ -212,6 +212,8 @@ const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPa
 const QString Preferences::wasUploadsPausedKey      = QString::fromLatin1("wasUploadsPaused");
 const QString Preferences::wasDownloadsPausedKey    = QString::fromLatin1("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromLatin1("lastExecutionTime");
+const QString Preferences::excludedSyncNamesKey     = QString::fromLatin1("excludedSyncNames");
+const QString Preferences::excludedSyncPathsKey     = QString::fromLatin1("excludedSyncPaths");
 const QString Preferences::lastVersionKey           = QString::fromLatin1("lastVersion");
 const QString Preferences::lastStatsRequestKey      = QString::fromLatin1("lastStatsRequest");
 const QString Preferences::lastUpdateTimeKey        = QString::fromLatin1("lastUpdateTime");
@@ -2012,6 +2014,19 @@ void Preferences::removeAllFolders()
     mSettings->remove(QLatin1String("")); //remove group and all its settings
     mSettings->endGroup();
 }
+QStringList Preferences::getExcludedSyncNames()
+{
+    assert(logged());
+    QStringList value = excludedSyncNames;
+    return value;
+}
+
+QStringList Preferences::getExcludedSyncPaths()
+{
+    assert(logged());
+    QStringList value = excludedSyncPaths;
+    return value;
+}
 
 bool Preferences::isOneTimeActionDone(int action)
 {
@@ -2395,7 +2410,7 @@ bool Preferences::getGlobalPaused()
 
 void Preferences::setGlobalPaused(bool value)
 {
-    setValueConcurrent(wasPausedKey, value);
+    setValueConcurrent(wasPausedKey, value, true);
 }
 
 bool Preferences::getUploadsPaused()
@@ -2573,6 +2588,7 @@ void Preferences::login(QString account)
     mSettings->setValue(currentAccountKey, account);
     mSettings->beginGroup(account);
     readFolders();
+    loadExcludedSyncNames();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
     if (lastVersion != Preferences::VERSION_CODE)
     {
@@ -2629,6 +2645,25 @@ void Preferences::logout()
 static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
 {
     return s1.toLower() < s2.toLower();
+}
+void Preferences::loadExcludedSyncNames()
+{
+    excludedSyncNames = getValue<QString>(excludedSyncNamesKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
+    if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
+    {
+        excludedSyncNames.clear();
+    }
+
+    excludedSyncPaths = getValue<QString>(excludedSyncPathsKey).split(QString::fromLatin1("\n", Qt::SkipEmptyParts));
+    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
+    {
+        excludedSyncPaths.clear();
+    }
+    excludedSyncNames.removeDuplicates();
+    std::sort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
+
+    excludedSyncPaths.removeDuplicates();
+    std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
 }
 
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const

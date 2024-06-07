@@ -237,11 +237,23 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     {
         if (Preferences::instance()->fileVersioningDisabled())
         {
-            info.msgInfo.informativeText =
-                (tr("The [B]local file[/B] %1 will be uploaded to MEGA and the remote file "
-                    "will be moved to the rubbish bin.", "", info.selection.size())
-                        .arg(localInfo.fileName())) +
-                QString::fromUtf8("<br>");
+            if(info.selection.size() == 1)
+            {
+                info.msgInfo.informativeText =
+                    tr("The [B]local file[/B] %1 will be uploaded to MEGA and replace the "
+                        "current file, which will be moved to the SyncDebris folder in your MEGA "
+                        "Rubbish bin.")
+                            .arg(localInfo.fileName()) +
+                    QString::fromUtf8("<br>");
+            }
+            else
+            {
+                info.msgInfo.informativeText =
+                    tr("The [B]local files[/B] will be uploaded to MEGA and replace the "
+                        "current files, which will be moved to the SyncDebris folder in your MEGA "
+                        "Rubbish bin.") +
+                    QString::fromUtf8("<br>");
+            }
         }
         else
         {

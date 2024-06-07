@@ -21,6 +21,8 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
+#include "onboarding/WhatsNewWindow.h"
+
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
@@ -30,6 +32,9 @@
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
+
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -1216,6 +1221,13 @@ void MegaApplication::start()
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
+
+    if(updated && !preferences->getSession().isEmpty())
+    {
+        QmlDialogManager::instance()->openWhatsNewDialog();
+    }
+
+    updateTrayIcon();
 }
 
 void MegaApplication::requestUserData()
@@ -1348,19 +1360,19 @@ if (!preferences->lastExecutionTime())
     if (!infoDialog)
     {
         createInfoDialog();
-
-        if (!QSystemTrayIcon::isSystemTrayAvailable())
-        {
-            checkSystemTray();
-            if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
-            {
-                showInfoDialog();
-            }
-        }
     }
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
+
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        checkSystemTray();
+        if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+        {
+            showInfoDialog();
+        }
+    }
 
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
@@ -1496,7 +1508,10 @@ void MegaApplication::onLoginFinished()
         connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
                 this, &MegaApplication::onScheduledExecution);
     }
+}
 
+void MegaApplication::onFetchNodesFinished()
+{
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
@@ -1546,6 +1561,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                infoDialog->deleteLater();
+                infoDialog = nullptr;
                 start();
                 periodicTasks();
             }

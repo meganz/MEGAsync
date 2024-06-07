@@ -53,9 +53,9 @@ StackViewPage {
             left: root.left
             right: root.right
             bottom: root.bottom
-            leftMargin: -loginButtonItem.sizes.focusBorderWidth
-            rightMargin: -loginButtonItem.sizes.focusBorderWidth
-            bottomMargin: buttonsBottomMargin
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
 
         OutlineButton {
@@ -74,7 +74,7 @@ StackViewPage {
                         && registerContentItem.password.validPassword
                         && registerContentItem.confirmPassword.text !== ""
                         && registerContentItem.termsCheckBox.checked
-            text: OnboardingStrings.next
+            text: Strings.next
             icons {
                 source: Images.arrowRight
                 busyIndicatorVisible: loginControllerAccess.state === LoginController.CREATING_ACCOUNT

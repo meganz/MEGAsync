@@ -29,7 +29,7 @@ arch=('i686' 'x86_64')
 url=""
 license=() #TODO
 groups=()
-depends=('ca-certificates' 'megasync>=3.5' 'nemo')
+depends=('ca-certificates' 'megasync>=5.3.0' 'nemo')
 makedepends=('ca-certificates' 'qt5-tools' 'nemo')
 checkdepends=()
 optdepends=()

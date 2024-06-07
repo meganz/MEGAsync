@@ -103,3 +103,12 @@ void RemoteItemUi::setTableViewProperties(QTableView *view) const
     view->verticalHeader()->setMinimumSectionSize(24);
     view->verticalHeader()->setDefaultSectionSize(24);
 }
+
+void RemoteItemUi::setAddButtonEnabled(bool enabled)
+{
+#ifdef Q_OS_MACOS
+    ui->tableSegementedControl->setTableButtonEnable(QSegmentedControl::ADD_BUTTON, enabled);
+#else
+    ui->bAdd->setEnabled(enabled);
+#endif
+}

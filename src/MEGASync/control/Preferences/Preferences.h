@@ -330,6 +330,11 @@ public:
                                        int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
+    QStringList getExcludedSyncNames();
+    QStringList getExcludedSyncPaths();
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
+
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
     void setSystemTrayPromptSuppressed(bool suppressed);
@@ -534,8 +539,9 @@ public:
 
     //Public keys for valueChanged signals
     static const QString stalledIssuesModeKey;
-    //In this section, you need to move the keys to make them accessible from outside
+    static const QString wasPausedKey;
 
+    //In this section, you need to move the keys to make them accessible from outside
     static const int minSyncStateChangeProcessingIntervalMs;
 
 protected:
@@ -576,6 +582,8 @@ protected:
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
+    QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -689,7 +697,6 @@ protected:
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
-    static const QString wasPausedKey;
     static const QString wasUploadsPausedKey;
     static const QString wasDownloadsPausedKey;
     static const QString lastUpdateTimeKey;

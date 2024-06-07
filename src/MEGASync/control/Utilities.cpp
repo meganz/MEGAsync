@@ -402,7 +402,7 @@ double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long un
 {
     double decimalMultiplier = 100.0;
     double multipliedValue = decimalMultiplier * static_cast<double>(bytes);
-    return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
+    return static_cast<int>(round(multipliedValue / static_cast<double>(unit))) / decimalMultiplier;
 }
 
 QString Utilities::getTimeFormat(const TimeInterval &interval)

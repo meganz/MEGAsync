@@ -7,3 +7,4 @@ SecondaryText 1.0 SecondaryText.qml
 HighlightedText 1.0 HighlightedText.qml
 Text 1.0 Text.qml
 singleton Sizes 1.0 Sizes.qml
+BannerText 1.0 BannerText.qml

@@ -1,10 +1,9 @@
 #include "Syncs.h"
 
-#include <memory>
-
-#include "mega/types.h"
 #include "MegaApplication.h"
 #include "TextDecorator.h"
+
+#include "mega/types.h"
 
 const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
 const QString Syncs::DEFAULT_MEGA_PATH = QString::fromUtf8("/") + Syncs::DEFAULT_MEGA_FOLDER;
@@ -209,16 +208,15 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
     }
 }
 
-void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString errorMsg, QString name)
+void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)
 {
     Q_UNUSED(name)
-    Q_UNUSED(syncErrorCode)
 
     if (errorCode != mega::MegaError::API_OK)
     {
         Text::Link link(Utilities::SUPPORT_URL);
         Text::Decorator dec(&link);
-        QString msg = errorMsg;
+        QString msg = SyncController::getErrorString(errorCode, syncErrorCode);
         dec.process(msg);
 
         emit cantSync(msg, false);

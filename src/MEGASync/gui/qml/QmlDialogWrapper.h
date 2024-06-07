@@ -122,17 +122,34 @@ public:
             }
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
-            connect(mWindow, &QmlDialog::finished, this, [this](){
+
+            connect(mWindow, &QmlDialog::finished, this, [this]()
+            {
                 QmlDialogWrapperBase::onWindowFinished();
             });
-            connect(mWindow, &QmlDialog::accepted, this, [this](){
+
+            connect(mWindow, &QmlDialog::accepted, this, [this]()
+            {
                 accept();
             });
-            connect(mWindow, &QmlDialog::rejected, this, [this](){
+
+            connect(mWindow, &QmlDialog::rejected, this, [this]()
+            {
                 reject();
             });
 
-            connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
+            connect(mWindow, &QmlDialog::accept, this, [this]()
+            {
+                QmlDialogWrapperBase::accept();
+            });
+
+            connect(mWindow, &QmlDialog::reject, this, [this]()
+            {
+                QmlDialogWrapperBase::reject();
+            });
+
+            connect(mWindow, &QQuickWindow::screenChanged, this, [this]()
+            {
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
 

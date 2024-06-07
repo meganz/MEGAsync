@@ -1,7 +1,7 @@
+#include "QmlClipboard.h"
+
 #include <QClipboard>
 #include <QApplication>
-
-#include "QmlClipboard.h"
 
 QmlClipboard::QmlClipboard(QObject *parent)
     : QObject(parent) {}

@@ -7,46 +7,55 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
+import components.pages 1.0
+
+import backups 1.0
 
 import onboard 1.0
 
-SyncsPage {
+FooterButtonsPage {
     id: root
 
-    readonly property string stateFullSync: "FULL"
-    readonly property string stateSelectiveSync: "SELECTIVE"
-    readonly property string stateBackup: "BACKUP"
+    required property StepPanel stepPanelRef
+
+    readonly property string stateFullSync: "stateFullSync"
+    readonly property string stateSelectiveSync: "stateSelectiveSync"
+    readonly property string stateBackup: "stateBackup"
     readonly property int maxSizeDescription: 80
     readonly property int buttonQuestionMargin: 24
 
     property alias buttonGroup: buttonGroupItem
     property alias syncButton: syncButtonItem
 
-    property string title
-    property string description
     property bool fullSyncDone
     property bool selectiveSyncDone
 
     footerButtons {
         leftSecondary.visible: false
-        rightSecondary.text: OnboardingStrings.viewInSettings
+        rightSecondary.text: Strings.viewInSettings
         rightPrimary {
-            text: OnboardingStrings.done
+            text: Strings.done
             icons: Icon {}
         }
     }
 
     states: [
         State {
-            name: stateFullSync
+            name: root.stateFullSync
             PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
             PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButtonItem; visible: false; }
+            PropertyChanges {
+                target: stepPanelRef;
+                state: stepPanelRef.stepAllDone;
+                step3Text: OnboardingStrings.syncChooseType;
+                step4Text: OnboardingStrings.syncSetUp;
+            }
         },
         State {
-            name: stateSelectiveSync
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            name: root.stateSelectiveSync
+            extend: root.stateFullSync
             PropertyChanges {
                 target: syncButtonItem;
                 type: SyncsType.Types.SELECTIVE_SYNC;
@@ -54,9 +63,14 @@ SyncsPage {
             }
         },
         State {
-            name: stateBackup
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepBackupTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepBackup; }
+            name: root.stateBackup
+            PropertyChanges { target: titleItem; text: BackupsStrings.finalStepBackupTitle; }
+            PropertyChanges { target: descriptionItem; text: BackupsStrings.finalStepBackup; }
+            PropertyChanges {
+                target: descriptionItem2;
+                text: BackupsStrings.finalStepBackup2;
+                visible: true;
+            }
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone
@@ -69,6 +83,12 @@ SyncsPage {
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
+            }
+            PropertyChanges {
+                target: stepPanelRef;
+                state: stepPanelRef.stepAllDone;
+                step3Text: OnboardingStrings.backupSelectFolders;
+                step4Text: OnboardingStrings.backupConfirm;
             }
         }
     ]
@@ -86,7 +106,6 @@ SyncsPage {
             id: titleItem
 
             Layout.preferredWidth: parent.width
-            text: title
             font {
                 pixelSize: Texts.Text.Size.LARGE
                 weight: Font.Bold
@@ -94,12 +113,19 @@ SyncsPage {
             wrapMode: Text.Wrap
         }
 
-        Texts.Text {
+        Texts.SecondaryText {
             id: descriptionItem
 
             Layout.preferredWidth: parent.width
             Layout.topMargin: 8
-            text: description
+            font.pixelSize: Texts.Text.Size.MEDIUM
+            wrapMode: Text.Wrap
+        }
+
+        Texts.SecondaryText {
+            id: descriptionItem2
+
+            Layout.preferredWidth: parent.width
             font.pixelSize: Texts.Text.Size.MEDIUM
             wrapMode: Text.Wrap
         }

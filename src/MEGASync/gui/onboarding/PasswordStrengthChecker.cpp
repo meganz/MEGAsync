@@ -1,4 +1,5 @@
 #include "PasswordStrengthChecker.h"
+
 #include "MegaApplication.h"
 
 PasswordStrengthChecker::PasswordStrengthChecker(QObject* parent)

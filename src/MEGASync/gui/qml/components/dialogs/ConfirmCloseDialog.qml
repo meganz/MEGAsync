@@ -45,7 +45,7 @@ Window {
             fill: parent
             margins: dialogMargin
         }
-        spacing: dialogMargin / 2 - cancelButton.sizes.focusBorderWidth
+        spacing: dialogMargin / 2 + Constants.focusAdjustment
 
         RowLayout {
             id: rowLayout
@@ -94,7 +94,7 @@ Window {
 
             anchors {
                 right: mainColumn.right
-                rightMargin: -cancelButton.sizes.focusBorderWidth
+                rightMargin: Constants.focusAdjustment
                 left: mainColumn.left
             }
             height: acceptButton.height + 2 * acceptButton.sizes.focusBorderWidth
@@ -107,7 +107,6 @@ Window {
                     verticalCenter: parent.verticalCenter
                 }
                 implicitWidth: 16
-
                 textWordWrap: Text.NoWrap
                 visible: false
             }

@@ -1,0 +1,4 @@
+module whatsNew
+singleton WhatsNewStrings 1.0 WhatsNewStrings.qml
+UpdatesElement 1.0 UpdatesElement.qml
+WhatsNewDialog 1.0 WhatsNewDialog.qml
