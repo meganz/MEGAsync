@@ -23,6 +23,8 @@ public:
     virtual ~StalledIssueChooseWidget();
 
     void setActionButtonVisibility(bool state);
+    void setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip);
+    void setFailed(bool state, const QString& tooltip = QString());
 
 signals:
     void chooseButtonClicked(int id);
@@ -47,9 +49,7 @@ class GenericChooseWidget : public StalledIssueChooseWidget
     Q_OBJECT
 
 public:
-    explicit GenericChooseWidget(QWidget *parent = nullptr)
-        : StalledIssueChooseWidget(parent)
-    {}
+    explicit GenericChooseWidget(QWidget *parent = nullptr);
 
     QString solvedString() const override;
 

@@ -62,6 +62,7 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/model/StalledIssuesModel.cpp
     stalled_issues/model/StalledIssuesProxyModel.cpp
     stalled_issues/model/StalledIssuesFactory.cpp
+    stalled_issues/model/MultiStepIssueSolver.cpp
 )
 
 target_sources_conditional(MEGAsync

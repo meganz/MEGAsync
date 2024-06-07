@@ -36,10 +36,11 @@ public:
     void setActionButtonInfo(const QIcon& icon, const QString& text, int id);
 
     virtual void showIcon();
-    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap());
+    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap(), const QString& tooltip = QString());
 
     QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
+    void setFailed(bool state, const QString& errorTooltip);
     void setDisable(bool state);
     bool isSolved() const;
 

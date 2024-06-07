@@ -247,50 +247,54 @@ class SyncMegaRequestListener
 {
 public:
     template<typename REQUEST_FUNC, typename... Params>
-    static int runRequestLambdaWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, Params&&... args)
+    static std::shared_ptr<mega::MegaError> runRequestLambdaWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, Params&&... args)
     {
-        int result(mega::MegaError::API_OK);
+        std::shared_ptr<mega::MegaError> error(nullptr);
         QEventLoop eventLoop;
-        func(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, result, eventLoop));
+        func(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, error, eventLoop));
         eventLoop.exec();
-        return result;
+        return error;
     }
 
     template<typename REQUEST_FUNC, typename... Params>
-    static int runRequestLambda(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
+    static std::shared_ptr<mega::MegaError> runRequestLambda(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
     {
         return runRequestLambdaWithResult(func, api, nullptr, nullptr, std::forward<Params>(args)...);
     }
 
     template<typename REQUEST_FUNC, typename... Params>
-    static int runRequestWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc,
+    static std::shared_ptr<mega::MegaError> runRequestWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc,
         Params&&... args)
     {
-        int result(mega::MegaError::API_OK);
+        std::shared_ptr<mega::MegaError> error(nullptr);
         QEventLoop eventLoop;
-        (api->*func)(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, result, eventLoop));
+        (api->*func)(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, error, eventLoop));
         eventLoop.exec();
-        return result;
+        return error;
     }
 
     template<typename REQUEST_FUNC, typename... Params>
-    static int runRequest(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
+    static std::shared_ptr<mega::MegaError> runRequest(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
     {
         return runRequestWithResult(func, api, nullptr, nullptr, std::forward<Params>(args) ...);
     }
 
 private:
     static mega::OnFinishOneShot* listenerMethod(
-        mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, int& result, QEventLoop& eventLoop)
+        mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, std::shared_ptr<mega::MegaError>& error, QEventLoop& eventLoop)
     {
         return new mega::OnFinishOneShot(api, context,
-            [resultFunc, &result, &eventLoop](
+            [resultFunc, &error, &eventLoop](
                 bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
             {
                 eventLoop.quit();
 
                 //In case of error, move to OS trash
-                result = e.getErrorCode();
+                if(e.getErrorCode() != mega::MegaError::API_OK)
+                {
+                    error.reset(e.copy());
+                }
+
                 if(isContextValid && resultFunc)
                 {
                     resultFunc(request, e);
@@ -571,10 +575,10 @@ class PathCreator : public QObject
 {
 public:
     PathCreator() = default;
-    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
+    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path, std::shared_ptr<mega::MegaError>& error);
 
 private:
-    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName);
+    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName, std::shared_ptr<mega::MegaError>& error);
 
     QStringList mPathCreated;
 };
@@ -583,13 +587,15 @@ private:
 class MoveToCloudBinUtilities : public QObject
 {
 public:
+    struct MoveToBinError
+    {
+        std::shared_ptr<mega::MegaError> moveError;
+        std::shared_ptr<mega::MegaError> binFolderCreationError;
+    };
+
     MoveToCloudBinUtilities(){}
 
-    bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
-
-private:
-    QList<mega::MegaHandle> mHandles;
-    bool mResult = false;
+    MoveToBinError moveToBin(mega::MegaHandle handle, const QString& binFolderName, bool addDateFolder);
 };
 
 //This class is use to merge two remote folders
@@ -610,7 +616,7 @@ public:
         IgnoreAndRemove,
         IgnoreAndMoveToBin,
     };
-    bool merge(ActionForDuplicates action);
+    std::shared_ptr<mega::MegaError> merge(ActionForDuplicates action);
 
 signals:
     void progressIndicator(const QString& nodeName);

@@ -77,15 +77,9 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH)
         {
             icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-
-            if(data->isCloud())
+            if(!data->renamedFileName().isEmpty())
             {
-                auto cloudData = data->convert<CloudStalledIssueData>();
-                auto node(cloudData->getNode(true));
-                if(node)
-                {
-                    ui->chooseTitle->setMessage(tr("Renamed to %1").arg(QString::fromUtf8(node->getName())), icon.pixmap(16,16));
-                }
+                ui->chooseTitle->setMessage(tr("Renamed to %1").arg(data->renamedFileName()), icon.pixmap(16,16));
             }
             else
             {

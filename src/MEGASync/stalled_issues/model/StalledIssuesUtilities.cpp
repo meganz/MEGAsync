@@ -16,21 +16,31 @@
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
-bool StalledIssuesUtilities::removeRemoteFile(const QString& path)
+std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
     std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
     return removeRemoteFile(fileNode.get());
 }
 
-bool StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
+std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
 {
+    std::shared_ptr<mega::MegaError> error;
+
     if(node)
     {
-        std::unique_ptr<MoveToCloudBinUtilities> utilities(new MoveToCloudBinUtilities());
-        return utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
+        MoveToCloudBinUtilities utilities;
+        auto moveToBinError = utilities.moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
+        if(moveToBinError.binFolderCreationError)
+        {
+            error = moveToBinError.binFolderCreationError;
+        }
+        else if(moveToBinError.moveError)
+        {
+            error = moveToBinError.moveError;
+        }
     }
 
-    return false;
+    return error;
 }
 
 bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::MegaHandle& syncId)

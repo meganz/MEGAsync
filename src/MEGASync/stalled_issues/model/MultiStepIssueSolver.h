@@ -7,40 +7,28 @@
 #include <QTimer>
 #include <QDeadlineTimer>
 
-const int REQUEST_THRESHOLD = 20000; /*60 seconds*/
+const int REQUEST_THRESHOLD = 60000; /*60 seconds*/
 
 class MultiStepIssueSolverBase : public QObject
 {
     Q_OBJECT
 public:
-    MultiStepIssueSolverBase(std::shared_ptr<StalledIssue> issue)
-        : mDeadline(std::make_unique<QTimer>(this))
-        , mIssue(issue)
-    {
-        mDeadline->setInterval(REQUEST_THRESHOLD);
-        mDeadline->setSingleShot(true);
-
-        //Auto destroy class when the timer finishes
-        connect(mDeadline.get(), &QTimer::timeout, this, &MultiStepIssueSolverBase::onDeadLineFinished);
-    }
+    MultiStepIssueSolverBase(std::shared_ptr<StalledIssue> issue);
     virtual ~MultiStepIssueSolverBase() = default;
 
     virtual void resetDeadlineIfNeeded(const StalledIssueVariant& issue) = 0;
-    virtual void start()
-    {
-        mDeadline->start();
-    }
-
-    bool isActive() const {return mDeadline->isActive();}
+    virtual void start();
+    bool isActive() const;
 
     virtual bool checkIssue(const mega::MegaSyncStall*) const {return false;}
 
-    void setStartNotification(const DesktopNotifications::NotificationInfo& newStartNotification);
-
+    void sendStartNotification();
     void sendFinishNotification();
-    void setFinishNotification(const DesktopNotifications::NotificationInfo& newFinishNotification);
 
     std::shared_ptr<StalledIssue> getIssue() const {return mIssue;}
+
+    void setFailed();
+    void setFinished();
 
 signals:
     void solverFinished(MultiStepIssueSolverBase*);
@@ -51,28 +39,11 @@ protected slots:
 protected:
     std::unique_ptr<QTimer> mDeadline;
     std::shared_ptr<StalledIssue> mIssue;
-    DesktopNotifications::NotificationInfo mFinishNotification;
+    bool mFailed;
+    static uint mSolversFixedInTheSameNotification;
+    static uint mSolversFailedInTheSameNotification;
+    static uint mSolversBeingFixedInTheSameNotification;
 };
-
-inline void MultiStepIssueSolverBase::setStartNotification(
-    const DesktopNotifications::NotificationInfo& newStartNotification)
-{
-    MegaSyncApp->showInfoMessage(newStartNotification);
-}
-
-inline void MultiStepIssueSolverBase::sendFinishNotification()
-{
-    if(mFinishNotification.isValid())
-    {
-        MegaSyncApp->showInfoMessage(mFinishNotification);
-    }
-}
-
-inline void MultiStepIssueSolverBase::setFinishNotification(
-    const DesktopNotifications::NotificationInfo& newFinishNotification)
-{
-    mFinishNotification = newFinishNotification;
-}
 
 template <class ISSUE_TYPE>
 class MultiStepIssueSolver : public MultiStepIssueSolverBase
@@ -107,6 +78,8 @@ protected:
         {
             mIssue->finishAsyncIssueSolving();
         }
+
+        setFinished();
 
         emit solverFinished(this);
     }

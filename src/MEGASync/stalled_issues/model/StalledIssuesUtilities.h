@@ -24,8 +24,8 @@ class StalledIssuesUtilities : public QObject
 public:
     StalledIssuesUtilities();
 
-    bool removeRemoteFile(const QString& path);
-    bool removeRemoteFile(mega::MegaNode* node);
+    std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    std::shared_ptr<mega::MegaError> removeRemoteFile(mega::MegaNode* node);
     bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);

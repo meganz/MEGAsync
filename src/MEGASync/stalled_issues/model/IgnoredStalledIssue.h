@@ -14,7 +14,7 @@ public:
     bool isAutoSolvable() const override;
 
     bool isSymLink() const override;
-    bool isSpecialLink() const;
+    bool isSpecialLink() const override;
 
     static void clearIgnoredSyncs();
 

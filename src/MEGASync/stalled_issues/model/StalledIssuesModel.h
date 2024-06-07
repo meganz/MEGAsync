@@ -37,7 +37,8 @@ public:
         mIssueCreator.addMultiStepIssueSolver(solver);
     }
 
-    void updateStalledIssues(UpdateType type);
+public slots:
+    void onUpdateStalledISsues(UpdateType type);
 
 signals:
     void stalledIssuesReady(ReceivedStalledIssues);
@@ -52,6 +53,7 @@ private:
     ReceivedStalledIssues mStalledIssues;
     StalledIssuesCreator mIssueCreator;
     std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
+    std::atomic_int mUpdateRequests {0};
 };
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
@@ -92,6 +94,8 @@ public:
     QModelIndexList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
     QModelIndexList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
 
+    static void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
+
     //SHOW RAW INFO
     void showRawInfo(bool state);
     bool isRawInfoVisible() const;
@@ -110,9 +114,11 @@ public:
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    void solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    void solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, std::shared_ptr<mega::MegaError> error, const QString& errorContext);
 
     void finishConflictManually();
 
@@ -140,6 +146,7 @@ public:
     //Common strings methods
     static QString fixingIssuesString(int numberOfIssues = 0);
     static QString processingIssuesString();
+    static QString issuesFixedString(StalledIssuesCreator::IssuesCount numberOfIssues);
 
 signals:
     void stalledIssuesChanged();
@@ -149,7 +156,7 @@ signals:
     void uiBlocked();
     void uiUnblocked();
 
-    void setUpdateListType(UpdateType type);
+    void updateStalledIssuesOnReceiver(UpdateType type);
 
     void showRawInfoChanged();
 
@@ -168,7 +175,6 @@ private slots:
     void onSendEvent();
 
 private:
-    void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
     void showIssueExternallyChangedMessageBox();
 
     void appendCachedIssuesToModel(const StalledIssuesVariantList& list, StalledIssueFilterCriterion type);

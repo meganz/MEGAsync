@@ -20,6 +20,7 @@ StalledIssuesCreator::StalledIssuesCreator() :
     mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
 {
     qRegisterMetaType<IssuesCount>("IssuesCount");
+    qRegisterMetaType<UpdateType>("UpdateType");
 }
 
 void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType)
@@ -225,7 +226,7 @@ void StalledIssuesCreator::addMultiStepIssueSolver(MultiStepIssueSolverBase* sol
             {
                 mMultiStepIssueSolversByReason.remove(reason, solver);
                 //Send finish notification only when the last one has finished
-                if(mMultiStepIssueSolversByReason.isEmpty())
+                if(!mMultiStepIssueSolversByReason.contains(reason))
                 {
                     solver->sendFinishNotification();
                 }

@@ -134,10 +134,11 @@ void RenameLocalNodeDialog::onDialogAccepted()
         if(file.exists())
         {
             QFileInfo fileInfo(mNodePath);
+            bool isFile(fileInfo.isFile());
             fileInfo.setFile(fileInfo.path(), newFileName);
             if(fileInfo.exists())
             {
-                showAlreadyExistingNodeError(fileInfo.isFile());
+                showAlreadyExistingNodeError(isFile);
                 return;
             }
             else
@@ -145,6 +146,11 @@ void RenameLocalNodeDialog::onDialogAccepted()
                 if(file.rename(QDir::toNativeSeparators(fileInfo.filePath())))
                 {
                     done(QDialog::Accepted);
+                    return;
+                }
+                else
+                {
+                    showRenamedFailedError(isFile);
                     return;
                 }
             }

@@ -67,7 +67,7 @@ private:
     void onUndoFinished(std::shared_ptr<SyncSettings> syncSettings);
 
     bool mSolvingStarted;
-    bool mUndoSuccessfull;
+    bool mUndoSuccessful;
 
     std::shared_ptr<SyncController> mSyncController;
     static QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> mChosenSideBySyncId;
@@ -119,9 +119,16 @@ public:
      void resetDeadlineIfNeeded(const StalledIssueVariant& issue) override
     {
         auto issueType = issue.convert<MoveOrRenameCannotOccurIssue>();
-        if(issueType && !issueType->solveAttemptsAchieved())
+        if(issueType)
         {
-            MultiStepIssueSolver::resetDeadlineIfNeeded(issue);
+            if(issueType->solveAttemptsAchieved())
+            {
+                setFailed();
+            }
+            else
+            {
+                MultiStepIssueSolver::resetDeadlineIfNeeded(issue);
+            }
         }
     }
 

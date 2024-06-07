@@ -45,7 +45,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
     {
-        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::toggleTab);
+        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::onTabToggled);
     }
 
     ui->allIssuesTab->setItsOn(true);
@@ -198,6 +198,14 @@ void StalledIssuesDialog::on_doneButton_clicked()
 void StalledIssuesDialog::on_refreshButton_clicked()
 {
     mProxyModel->updateStalledIssues();
+
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() == StalledIssueFilterCriterion::FAILED_CONFLICTS)
+        {
+            toggleTabAndScroll(StalledIssueFilterCriterion::ALL_ISSUES, QModelIndex());
+        }
+    }
 }
 
 void StalledIssuesDialog::checkIfViewIsEmpty()
@@ -209,7 +217,7 @@ void StalledIssuesDialog::checkIfViewIsEmpty()
     }
 }
 
-void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
+void StalledIssuesDialog::onTabToggled(StalledIssueFilterCriterion filterCriterion)
 {
   if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
   {
@@ -240,20 +248,24 @@ bool StalledIssuesDialog::toggleTabAndScroll(
                 (*foundTab)->toggleTab();
             }
 
-            QObject* tempObject(new QObject());
-            connect(proxyModel,
-                &StalledIssuesProxyModel::modelFiltered,
-                tempObject,
-                [this, proxyModel, tempObject, sourceIndex]()
-                {
-                    auto proxyIndex(proxyModel->mapFromSource(sourceIndex));
-                    if(proxyIndex.isValid())
+            if(sourceIndex.isValid())
+            {
+                QObject* tempObject(new QObject());
+                connect(proxyModel,
+                    &StalledIssuesProxyModel::modelFiltered,
+                    tempObject,
+                    [this, proxyModel, tempObject, sourceIndex]()
                     {
-                        ui->stalledIssuesTree->scrollTo(sourceIndex);
-                        mDelegate->expandIssue(proxyIndex);
-                    }
-                    tempObject->deleteLater();
-                });
+                        auto proxyIndex(proxyModel->mapFromSource(sourceIndex));
+                        if(proxyIndex.isValid())
+                        {
+                            ui->stalledIssuesTree->scrollTo(sourceIndex);
+                            mDelegate->expandIssue(proxyIndex);
+                        }
+                        tempObject->deleteLater();
+                    });
+            }
+
             return true;
         }
     }

@@ -83,19 +83,6 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 }
                 else
                 {
-                    Utilities::queueFunctionInAppThread([]()
-                    {
-                        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-                        QMegaMessageBox::MessageBoxInfo msgInfo;
-                        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                        msgInfo.title = MegaSyncApp->getMEGAString();
-                        msgInfo.textFormat = Qt::RichText;
-                        msgInfo.buttons = QMessageBox::Ok;
-                        msgInfo.text = QCoreApplication::translate("IgnoredStalledIssue", "We could not update the megaignore file. Please, check if it has write permissions.");
-                        QMegaMessageBox::warning(msgInfo);
-                    });
-
                     if(isSymLink())
                     {
                         mSymLinksIgnoredInSyncs.remove(syncId);

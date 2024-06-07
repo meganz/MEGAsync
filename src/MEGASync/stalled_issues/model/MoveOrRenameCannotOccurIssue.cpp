@@ -5,6 +5,8 @@
 #include <syncs/control/SyncSettings.h>
 #include <StalledIssuesUtilities.h>
 
+#include <StatsEventHandler.h>
+
 #include <MegaApplication.h>
 #include <Utilities.h>
 
@@ -12,13 +14,13 @@
 
 //////////////////////////////////////
 
-const int MAX_RETRIES = 1;
+const int MAX_RETRIES = 5;
 
 MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncStall* stall)
     : StalledIssue(stall)
     , mega::MegaRequestListener()
     , mSolvingStarted(false)
-    , mUndoSuccessfull(false)
+    , mUndoSuccessful(false)
     , mSyncController(new SyncController())
     , mChosenSide(MoveOrRenameIssueChosenSide::NONE)
     , mCombinedNumberOfIssues(1)
@@ -88,7 +90,7 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
         auto syncId(firstSyncId());
         mChosenSideBySyncId.insert(syncId, side);
         mChosenSide = side;
-        mUndoSuccessfull = false;
+        mUndoSuccessful = false;
 
         auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(syncId);
         if(syncSettings)
@@ -136,20 +138,20 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                 QFileInfo previousDirectory(previousPath.absolutePath());
                 QString currentPath(consultLocalData()->getNativeMoveFilePath());
 
-                mUndoSuccessfull = previousDirectory.exists();
+                mUndoSuccessful = previousDirectory.exists();
 
-                if (!mUndoSuccessfull)
+                if (!mUndoSuccessful)
                 {
-                    mUndoSuccessfull = QDir().mkpath(previousDirectory.absolutePath());
+                    mUndoSuccessful = QDir().mkpath(previousDirectory.absolutePath());
                 }
 
-                if (mUndoSuccessfull)
+                if (mUndoSuccessful)
                 {
                     QFile file(currentPath);
-                    mUndoSuccessfull = file.rename(previousPath.absoluteFilePath());
+                    mUndoSuccessful = file.rename(previousPath.absoluteFilePath());
                 }
 
-                if(!mUndoSuccessfull)
+                if(!mUndoSuccessful)
                 {
                     mFailedLocalPaths.insert(currentPath);
                 }
@@ -170,12 +172,25 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
 
                     if (!newParent)
                     {
+                        std::shared_ptr<mega::MegaError> error(nullptr);
                         PathCreator dirCreator;
-                        dirCreator.mkDir(QString(), targetPath.path());
+                        dirCreator.mkDir(QString(), targetPath.path(), error);
+
+                        if(error)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            newParent.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
+                                targetPath.path().toStdString().c_str()));
+                        }
                     }
                     MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get(), mListener.get());
                 }
             }
+
+            MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
         }
     }
 }
@@ -201,7 +216,7 @@ void MoveOrRenameCannotOccurIssue::onRequestFinish(
 {
     if(request->getType() == mega::MegaRequest::TYPE_MOVE)
     {
-        mUndoSuccessfull = !e || (e->getErrorCode() == mega::MegaError::API_OK);
+        mUndoSuccessful = !e || (e->getErrorCode() == mega::MegaError::API_OK);
 
         auto syncId(firstSyncId());
         auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(syncId);
@@ -292,7 +307,7 @@ bool MoveOrRenameCannotOccurIssue::findIssue(
 void MoveOrRenameCannotOccurIssue::finishAsyncIssueSolving()
 {
     mChosenSideBySyncId.clear();
-    StalledIssue::performFinishAsyncIssueSolving(!mUndoSuccessfull);
+    StalledIssue::performFinishAsyncIssueSolving(!mUndoSuccessful);
 }
 
 void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stall)
@@ -355,6 +370,10 @@ void MoveOrRenameCannotOccurIssue::setIsSolved(SolveType type)
     if(type == SolveType::FAILED)
     {
         mChosenSide = MoveOrRenameIssueChosenSide::NONE;
+    }
+    else if(type == SolveType::SOLVED)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_MOVERENAME_CANNOT_OCCUR_SOLVED_MANUALLY);
     }
 
     StalledIssue::setIsSolved(type);

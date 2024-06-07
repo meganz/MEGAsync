@@ -18,6 +18,7 @@ const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
+const char* FAILED_BACKGROUND = "failed";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
 const char* EXTRAINFO_INFO = "extrainfo_info";
@@ -43,6 +44,7 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
     ui->backgroundWidget->setProperty(DISCARDED,false);
+    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, false);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -181,11 +183,12 @@ void StalledIssueActionTitle::showIcon()
     }
 }
 
-void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap)
+void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap, const QString& tooltip)
 {
     updateSizeHints();
     ui->messageContainer->show();
     ui->messageContainer->installEventFilter(this);
+    ui->messageContainer->setToolTip(tooltip);
 
     ui->iconLabel->setPixmap(pixmap);
 
@@ -228,9 +231,17 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     return infoLabel;
 }
 
+void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
+{
+    setToolTip(errorTooltip);
+    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
+    setStyleSheet(styleSheet());
+}
+
 void StalledIssueActionTitle::setDisable(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
+
     setStyleSheet(styleSheet());
 
     if(state)

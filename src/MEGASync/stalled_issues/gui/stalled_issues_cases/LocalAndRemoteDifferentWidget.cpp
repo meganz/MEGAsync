@@ -33,7 +33,8 @@ QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
 LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     originalStall(originalStall),
-    ui(new Ui::LocalAndRemoteDifferentWidget)
+    ui(new Ui::LocalAndRemoteDifferentWidget),
+    mFailedItem(nullptr)
 {
     ui->setupUi(this);
 
@@ -57,10 +58,12 @@ LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 void LocalAndRemoteDifferentWidget::refreshUi()
 {
     auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
+    auto isFailed(issue->isFailed());
+    auto chosenSide(isFailed ? LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE : issue->getChosenSide());
 
     if(issue->consultLocalData())
     {
-        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), issue->getChosenSide());
+        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), chosenSide);
 
         ui->chooseLocalCopy->show();
     }
@@ -71,7 +74,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     if(issue->consultCloudData())
     {
-        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), issue->getChosenSide());
+        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), chosenSide);
 
         ui->chooseRemoteCopy->show();
     }
@@ -109,6 +112,8 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     if (issue->isSolved())
     {
+        unSetFailedChooseWidget();
+
         ui->keepBothOption->setSolved(true, issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
         ui->keepLastModifiedOption->hide();
 
@@ -117,6 +122,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
             ui->chooseLocalCopy->setActionButtonVisibility(false);
             ui->chooseRemoteCopy->setActionButtonVisibility(false);
         }
+
     }
     else if(issue->isFailed())
     {
@@ -124,6 +130,34 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->keepLastModifiedOption->show();
         ui->chooseLocalCopy->setActionButtonVisibility(true);
         ui->chooseRemoteCopy->setActionButtonVisibility(true);
+
+        unSetFailedChooseWidget();
+
+        switch(issue->getChosenSide())
+        {
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
+            {
+                ui->chooseRemoteCopy->setFailed(true, tr("Local item could not be removed"));
+                mFailedItem = ui->chooseRemoteCopy;
+                break;
+            }
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
+            {
+                ui->chooseLocalCopy->setFailed(true, tr("Remote item could not be removed"));
+                mFailedItem = ui->chooseLocalCopy;
+                break;
+            }
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
+            {
+                ui->keepBothOption->setFailed(true, tr("Item could not be renamed"));
+                mFailedItem = ui->keepBothOption;
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
 
     }
     updateSizeHint();
@@ -467,4 +501,13 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     };
 
     QMegaMessageBox::warning(info.msgInfo);
+}
+
+void LocalAndRemoteDifferentWidget::unSetFailedChooseWidget()
+{
+    if(mFailedItem)
+    {
+        mFailedItem->setFailed(false);
+        mFailedItem = nullptr;
+    }
 }

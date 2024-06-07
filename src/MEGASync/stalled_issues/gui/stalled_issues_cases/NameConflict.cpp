@@ -165,6 +165,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         title->setInfo(info->mConflictedPath, info->mHandle);
         title->setIsFile(info->mIsFile);
         title->showIcon();
+        title->setFailed(false, QString());
 
         if(info->isSolved() && !mSolvedStatusAppliedToUi)
         {
@@ -175,34 +176,28 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
             QIcon icon;
             QString titleText;
 
-            if (info->mSolved == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
+            if (info->getSolvedType() == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::REMOVE)
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
                 titleText = tr("Removed");
             }
-            else if (info->mSolved ==
+            else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::RENAME)
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                 titleText = tr("Renamed to \"%1\"").arg(info->mRenameTo);
             }
-            else if (info->mSolved ==
+            else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::MERGED)
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                 titleText = tr("Merged");
             }
-            else if (info->mSolved ==
+            else if (info->getSolvedType() ==
                      NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY)
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
                 titleText = tr("Modified externally");
-            }
-            else if (info->mSolved ==
-                    NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::FAILED)
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                titleText = tr("Failed");
             }
             else
             {
@@ -212,6 +207,28 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
 
             titleLayout->activate();
             title->setMessage(titleText, icon.pixmap(16, 16));
+        }
+        else if(info->isFailed())
+        {
+            titleLayout->activate();
+
+            QString errorString;
+            if(!info->mErrorContext.isEmpty())
+            {
+                errorString.append(info->mErrorContext);
+                //Add space
+                errorString.append(QLatin1String(" "));
+            }
+            if(isCloud())
+            {
+                errorString.append(QString::fromUtf8(info->mError->getErrorString()));
+            }
+            else
+            {
+                errorString.append(tr("Check file permissions"));
+            }
+
+            title->setFailed(true, errorString);
         }
 
         allSolved &= info->isSolved();
@@ -396,6 +413,17 @@ void NameConflict::onActionClicked(int actionId)
         auto conflictedNames(getConflictedNamesInfo());
         auto conflictIndex(chooseTitle->property(TITLE_INDEX).toInt());
 
+        if(conflictedNames.size() <= conflictIndex)
+        {
+            return;
+        }
+
+        auto conflictedName(conflictedNames.at(conflictIndex));
+        if(!conflictedName)
+        {
+            return;
+        }
+
         if(actionId == RENAME_ID)
         {
             RenameNodeDialog* renameDialog(nullptr);
@@ -434,7 +462,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                [this, issueData, titleFileName, conflictIndex, renameDialog]()
+                [=, this]()
                 {
                     if (renameDialog->result() == QDialog::Accepted)
                     {
@@ -466,6 +494,7 @@ void NameConflict::onActionClicked(int actionId)
                         if (mDelegateWidget)
                         {
                             emit refreshUi();
+
                         }
                     }
                 });
@@ -478,7 +507,6 @@ void NameConflict::onActionClicked(int actionId)
 
             if(isCloud())
             {
-                auto conflictedName(conflictedNames.at(conflictIndex));
                 if(conflictedName)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
@@ -545,7 +573,7 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
             msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
-            msgInfo.finishFunc = [this, issueData, handle, filePath, titleFileName, conflictIndex](
+            msgInfo.finishFunc = [=, this](
                                      QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)
@@ -554,21 +582,27 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(isCloud())
                     {
-                        auto removed(false);
+                        std::shared_ptr<mega::MegaError> error;
                         if(handle != mega::INVALID_HANDLE)
                         {
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                             if(node)
                             {
-                                removed = mUtilities.removeRemoteFile(node.get());
+                                error = mUtilities.removeRemoteFile(node.get());
                             }
                         }
                         else
                         {
-                            removed = mUtilities.removeRemoteFile(filePath);
+                            error = mUtilities.removeRemoteFile(filePath);
                         }
 
-                        if(removed)
+                        if(error)
+                        {
+                            QString errorContext = isFile ?  tr("File could not be removed.") : tr("Folder could not be removed");
+                            MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), error, errorContext);
+                            NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox((*error.get()), isFile);
+                        }
+                        else
                         {
                             areAllSolved = MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameByRemove(conflictIndex, mDelegateWidget->getCurrentIndex());
                         }
@@ -576,11 +610,21 @@ void NameConflict::onActionClicked(int actionId)
                     else
                     {
                         auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->firstSyncId();
-                        if(mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId))
+                        auto failed = !mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
+
+                        if(failed)
                         {
-                            areAllSolved = MegaSyncApp->getStalledIssuesModel()
-                                               ->solveLocalConflictedNameByRemove(conflictIndex,
-                                                   mDelegateWidget->getCurrentIndex());
+                            QString errorContext = isFile ? tr("File could not be removed.")
+                                                          : tr("Folder could not be removed");
+
+                            MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), errorContext);
+                            NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(fileName, isFile);
+                        }
+                        else
+                        {
+                            areAllSolved =
+                                MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameByRemove(
+                                    conflictIndex, mDelegateWidget->getCurrentIndex());
                         }
                     }
 

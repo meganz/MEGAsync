@@ -279,7 +279,7 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
     ui->multipleActionButton->hide();
 }
 
-void StalledIssueHeader::setText(const QString &text)
+void StalledIssueHeader::setText(const QString &text, const QString& tooltip)
 {
     if(text.isEmpty())
     {
@@ -289,6 +289,7 @@ void StalledIssueHeader::setText(const QString &text)
     {
         ui->fileNameTitle->show();
         ui->fileNameTitle->setText(text);
+        ui->fileNameTitle->setToolTip(tooltip);
     }
 }
 
@@ -414,8 +415,12 @@ void StalledIssueHeader::refreshUi()
         }
         else
         {
+            if(getData().consultData()->isFailed())
+            {
+                showSolvedMessage();
+            }
             showIgnoreFile();
-        }
+        }        
     }
     else if(getData().consultData()->isSolved() ||
             getData().consultData()->isBeingSolved() ||

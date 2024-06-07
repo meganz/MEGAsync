@@ -117,7 +117,7 @@ QString StalledIssueData::getFileName() const
         }
         else
         {
-            auto splittedIndexPath = mPath.path.split(QString::fromUtf8("\\"));
+            auto splittedIndexPath = mPath.path.split(QDir::separator());
             fileName = splittedIndexPath.last();
         }
     }
@@ -770,5 +770,3 @@ StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncSta
         }
     }
 }
-
-

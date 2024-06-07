@@ -71,6 +71,16 @@ public:
     virtual void initFileFolderAttributes()
     {}
 
+    void setRenamedFileName(const QString& newRenamedFileName)
+    {
+        mRenamedFileName = newRenamedFileName;
+    }
+
+    const QString& renamedFileName() const
+    {
+        return mRenamedFileName;
+    }
+
 protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
@@ -80,6 +90,9 @@ protected:
     Path mPath;
 
     std::shared_ptr<FileFolderAttributes> mAttributes;
+
+private:
+    QString mRenamedFileName;
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -231,7 +244,7 @@ class StalledIssue : public QObject
 
         void createFileWatcher()
         {
-            if(!mFileWatcher)
+            if(!mFileWatcher && !mIssue->getLocalFiles().isEmpty())
             {
                 auto deleter = [](QFileSystemWatcher* object){
                     object->deleteLater();
@@ -319,6 +332,7 @@ public:
     virtual void startAsyncIssueSolving();
 
     virtual bool isSymLink() const {return false;}
+    virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
     bool canBeIgnored() const;
     virtual QStringList getLocalFiles();

@@ -42,7 +42,10 @@ private slots:
     void onKeepLastModifiedTimeButtonClicked(int);
 
 private:
+    void unSetFailedChooseWidget();
+
     Ui::LocalAndRemoteDifferentWidget *ui;
+    StalledIssueChooseWidget* mFailedItem;
 };
 
 #endif // LOCALANDREMOTEDIFFERENTWIDGET_H

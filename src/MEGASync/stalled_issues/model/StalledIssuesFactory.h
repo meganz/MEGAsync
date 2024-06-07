@@ -66,6 +66,8 @@ enum class UpdateType
     AUTO_SOLVE
 };
 
+Q_DECLARE_METATYPE(UpdateType)
+
 class StalledIssuesCreator : public QObject
 {
         Q_OBJECT

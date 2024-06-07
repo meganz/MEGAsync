@@ -37,6 +37,16 @@ void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
     ui->chooseTitle->setActionButtonVisibility(BUTTON_ID, state);
 }
 
+void StalledIssueChooseWidget::setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip)
+{
+    ui->chooseTitle->setMessage(string, pixmap, tooltip);
+}
+
+void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
+{
+    ui->chooseTitle->setFailed(state, tooltip);
+}
+
 void StalledIssueChooseWidget::onActionClicked(int button_id)
 {
     QApplication::postEvent(this, new QMouseEvent(QEvent::MouseButtonPress, QPointF(), Qt::LeftButton, Qt::NoButton, Qt::KeyboardModifier::AltModifier));
@@ -69,6 +79,19 @@ void StalledIssueChooseWidget::setSolved(bool isSolved, bool isSelected)
 }
 
 //Generic options
+GenericChooseWidget::GenericChooseWidget(QWidget* parent)
+    : StalledIssueChooseWidget(parent)
+{
+    ui->pathContainer->hide();
+    ui->nameContainer->hide();
+
+    auto margins(ui->titleContainer->layout()->contentsMargins());
+    margins.setTop(4);
+    margins.setBottom(4);
+    ui->titleContainer->layout()->setContentsMargins(margins);
+    ui->chooseTitle->removeBackgroundColor();
+}
+
 QString GenericChooseWidget::solvedString() const
 {
     return mInfo.solvedText;
@@ -93,15 +116,6 @@ void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 void GenericChooseWidget::setInfo(const GenericInfo &info)
 {
     mInfo = info;
-
-    ui->pathContainer->hide();
-    ui->nameContainer->hide();
-
-    auto margins(ui->titleContainer->layout()->contentsMargins());
-    margins.setTop(0);
-    margins.setBottom(0);
-    ui->titleContainer->layout()->setContentsMargins(margins);
-    ui->chooseTitle->removeBackgroundColor();
 
     QIcon icon(info.icon);
     auto iconPixmap(icon.pixmap(QSize(16,16)));

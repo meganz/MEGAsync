@@ -12,7 +12,6 @@ public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
     ~LocalOrRemoteUserMustChooseStalledIssue();
 
-    void setIsSolved(SolveType type) override;
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
