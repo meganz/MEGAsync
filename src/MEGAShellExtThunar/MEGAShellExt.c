@@ -150,7 +150,7 @@ static void mega_ext_on_upload_selected(THUNARITEM *item, gpointer user_data)
         mega_ext_client_end_request(mega_ext);
 }
 
-void expanselocalpath(char *path, char *absolutepath)
+void expanselocalpath(const char *path, char *absolutepath)
 {
     if (strlen(path) && path[0] == '/')
     {
