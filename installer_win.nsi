@@ -68,7 +68,7 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define VcRedist64BasePath "${VcRedistBasePath}\x64"
 !define VcRedist64Path "${VcRedist64BasePath}\Microsoft.VC142.CRT"
 
-!define WinRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs"
+!define WinRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\${WINKITVER}\ucrt\DLLs"
 !define WinRedist32BasePath "${winRedistBasePath}\x86"
 !define WinRedist64BasePath "${winRedistBasePath}\x64"
 
