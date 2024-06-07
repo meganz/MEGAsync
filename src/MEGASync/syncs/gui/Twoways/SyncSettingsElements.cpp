@@ -57,7 +57,6 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
 
-    // @jsubi : throw a update ui signal.
     emit MegaSyncApp->updateUserInterface();
 }
 
