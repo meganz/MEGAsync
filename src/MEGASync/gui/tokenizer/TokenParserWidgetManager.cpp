@@ -126,25 +126,28 @@ void TokenParserWidgetManager::onUpdateRequested()
     applyCurrentTheme();
 }
 
+void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
+{
+    std::cout << "************************** theme applied to dialog : " << dialog->objectName().toStdString() << std::endl;;
+
+    applyTheme(dialog);
+}
+
 void TokenParserWidgetManager::applyCurrentTheme()
 {
-#if DEBUG
     auto start = std::chrono::steady_clock::now();
-#endif
 
-    foreach(auto dialog, DialogOpener::getAllOpenedDialogs())
+    foreach (const auto& dialog, DialogOpener::getAllOpenedDialogs())
     {
-        if (dialog)
+        if (!dialog.isNull())
         {
-            applyTheme(dialog);
+            applyCurrentTheme(dialog);
         }
     }
 
-#if DEBUG
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsed = end - start;
-    std::cout << " TIME USED TO APPLY THEME : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
-#endif
+    std::cout << "***************************** time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)

@@ -519,7 +519,7 @@ private:
 
             info->raise(true);
 
-            TokenParserWidgetManager::instance()->applyCurrentTheme();
+            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
 
             return info;
         }
