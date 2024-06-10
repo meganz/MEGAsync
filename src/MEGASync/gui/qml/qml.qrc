@@ -161,5 +161,6 @@
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
         <file>backups/StepPanel.qml</file>
+        <file>common/Utilities.qml</file>
     </qresource>
 </RCC>
