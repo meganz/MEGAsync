@@ -1473,5 +1473,14 @@
         <file>images/StalledIssues/solved-issues-solid.png</file>
         <file>images/StalledIssues/solved-issues-solid@2x.png</file>
         <file>images/StalledIssues/solved-issues-solid@3x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@2x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@3x.png</file>
+        <file>images/StalledIssues/states/failed_state.png</file>
+        <file>images/StalledIssues/states/failed_state@2x.png</file>
+        <file>images/StalledIssues/states/failed_state@3x.png</file>
+        <file>images/StalledIssues/states/solved_state.png</file>
+        <file>images/StalledIssues/states/solved_state@2x.png</file>
+        <file>images/StalledIssues/states/solved_state@3x.png</file>
     </qresource>
 </RCC>

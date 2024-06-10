@@ -333,8 +333,40 @@
      <property name="styleSheet">
       <string notr="true">#actionMessage
 {
-   font-size:14px;
-   color: #333333;
+   font-size:12px;
+}
+
+#actionMessageContainer[state=&quot;being solved&quot;]
+{
+	background-color: #F3F4F4;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[state=&quot;being solved&quot;] QLabel
+{
+    color: #616366;
+}
+
+#actionMessageContainer[state=&quot;solved&quot;]
+{
+	background-color: #CFFCDB;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[state=&quot;solved&quot;] QLabel
+{
+    color: #007C3E;
+}
+
+#actionMessageContainer[state=&quot;failed&quot;]
+{
+	background-color: #FFE4E8;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[state=&quot;failed&quot;] QLabel
+{
+	color: #E31B57;
 }</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -385,18 +417,30 @@
       </item>
       <item>
        <widget class="QWidget" name="actionMessageContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>24</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
-          <number>2</number>
+          <number>5</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>

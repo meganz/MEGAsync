@@ -400,14 +400,6 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolved())
-    {
-        header->showSolvedMessage();
-    }
-}
-
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
@@ -420,14 +412,6 @@ void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssu
 LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
 {
-}
-
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolved())
-    {
-        header->showSolvedMessage();
-    }
 }
 
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledIssueHeader* header)

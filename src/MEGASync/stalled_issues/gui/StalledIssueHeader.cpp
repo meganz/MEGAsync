@@ -118,30 +118,10 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
 }
 
-void StalledIssueHeader::showState(StalledIssue::SolveType state)
-{
-    switch(state)
-    {
-        case StalledIssue::SolveType::AUTO_SOLVED:
-        {
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
-}
-
 void StalledIssueHeader::showIgnoreFile()
 {
     StalledIssueHeader::ActionInfo action(tr("Ignore"), ActionsId::Ignore);
     showAction(action);
-}
-
-void StalledIssueHeader::issueIgnored()
-{
-    showSolvedMessage(tr("Ignored"));
 }
 
 void StalledIssueHeader::propagateButtonClick()
@@ -279,6 +259,84 @@ void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
     ui->multipleActionButton->hide();
 }
 
+void StalledIssueHeader::updateIssueState()
+{
+    auto type(getData().consultData()->getIsSolved());
+
+    if(type == StalledIssue::SolveType::BEING_SOLVED)
+    {
+        ui->actionWaitingSpinner->start();
+    }
+    else
+    {
+        ui->actionWaitingSpinner->stop();
+    }
+
+    QIcon icon;
+    QString message;
+
+    switch(type)
+    {
+        case StalledIssue::SolveType::BEING_SOLVED:
+        {
+            ui->actionMessageContainer->setProperty("state", QLatin1String("being solved"));
+            message = tr("Being solved");
+            break;
+        }
+        case StalledIssue::SolveType::SOLVED:
+        {
+            ui->actionMessageContainer->setProperty("state", QLatin1String("solved"));
+            if(getData().consultData()->canBeIgnored())
+            {
+                icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                message = tr("Ignored");
+            }
+            else
+            {
+                if(getData().consultData()->wasAutoResolutionApplied())
+                {
+                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/auto_solved_state.png"));
+                    message = tr("Auto-solved");
+                }
+                else
+                {
+                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                    message = tr("Solved");
+                }
+            }
+
+            break;
+        }
+        case StalledIssue::SolveType::FAILED:
+        {
+            ui->actionMessageContainer->setProperty("state", QLatin1String("failed"));
+            icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
+            if(getData().consultData()->wasAutoResolutionApplied())
+            {
+                message = tr("Auto-failed");
+            }
+            else
+            {
+                message = tr("Failed");
+            }
+
+            break;
+        }
+        case StalledIssue::SolveType::UNSOLVED:
+        {
+            if(getData().consultData()->canBeIgnored())
+            {
+                showIgnoreFile();
+            }
+            break;
+        }
+    }
+
+    showMessage(message, icon.pixmap(16, 16));
+    ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
+    ui->multipleActionButton->hide();
+}
+
 void StalledIssueHeader::setText(const QString &text, const QString& tooltip)
 {
     if(text.isEmpty())
@@ -407,29 +465,7 @@ void StalledIssueHeader::refreshUi()
 
     resetSolvingWidgets();
 
-    if(getData().consultData()->canBeIgnored())
-    {
-        if(getData().consultData()->isSolved())
-        {
-            issueIgnored();
-        }
-        else
-        {
-            if(getData().consultData()->isFailed())
-            {
-                showSolvedMessage();
-            }
-            showIgnoreFile();
-        }        
-    }
-    else if(getData().consultData()->isSolved() ||
-            getData().consultData()->isBeingSolved() ||
-            getData().consultData()->isFailed())
-    {
-            showSolvedMessage();
-    }
-
-    showState(getData().consultData()->getIsSolved());
+    updateIssueState();
 
     //By default it is expandable
     setIsExpandable(true);

@@ -757,7 +757,6 @@ bool NameConflictedStalledIssue::autoSolveIssue()
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved() && !isPotentiallySolved())
     {
-        setIsSolved(SolveType::AUTO_SOLVED);
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
         return true;
     }
@@ -786,7 +785,7 @@ void NameConflictedStalledIssue::solveIssue(int option)
 
     if(!result & option & ActionSelected::RemoveDuplicated)
     {
-        result = mCloudConflictedNames.removeDuplicatedNodes() != nullptr;
+        result = mCloudConflictedNames.removeDuplicatedNodes() == nullptr;
         if(result)
         {
             result = checkAndSolveConflictedNamesSolved();

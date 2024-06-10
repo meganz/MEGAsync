@@ -202,7 +202,6 @@ public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseActions(StalledIssueHeader *header) override;
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
@@ -215,7 +214,6 @@ public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseActions(StalledIssueHeader *header) override;
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 

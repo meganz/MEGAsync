@@ -112,8 +112,11 @@ void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay, bool fo
                     mVisibleIndexesRange.append(row);
 
                     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-                    stalledIssueItem.removeDelegateSize(StalledIssue::Header);
-                    stalledIssueItem.removeDelegateSize(StalledIssue::Body);
+                    if(stalledIssueItem.isValid())
+                    {
+                        stalledIssueItem.removeDelegateSize(StalledIssue::Header);
+                        stalledIssueItem.removeDelegateSize(StalledIssue::Body);
+                    }
 
                     sizeHintUpdateNeeded = true;
                 }

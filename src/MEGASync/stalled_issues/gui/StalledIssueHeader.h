@@ -64,6 +64,7 @@ public:
 
     void showMessage(const QString& message, const QPixmap &pixmap);
     void showSolvedMessage(const QString& customMessage = QString());
+    void updateIssueState();
 
     void setText(const QString& text, const QString& tooltip = QString());
     QString displayFileName(bool preferCloud = false);
@@ -84,9 +85,7 @@ private slots:
 
 private:
     void showIgnoreFile();
-    void issueIgnored();
     void onIgnoreFileActionClicked();
-    void showState(StalledIssue::SolveType state);
 
     void propagateButtonClick();
 

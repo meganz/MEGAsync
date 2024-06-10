@@ -309,7 +309,6 @@ public:
         FAILED,
         BEING_SOLVED,
         POTENTIALLY_SOLVED,
-        AUTO_SOLVED,
         SOLVED
     };
 
@@ -381,6 +380,9 @@ public:
 
     virtual bool shouldBeIgnored() const {return false;}
 
+    bool wasAutoResolutionApplied() const;
+    void setAutoResolutionApplied(bool newAutoResolutionApplied);
+
 signals:
     void asyncIssueSolvingStarted();
     void asyncIssueSolvingFinished(StalledIssue*);
@@ -408,6 +410,7 @@ protected:
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
     std::shared_ptr<FileSystemSignalHandler> mFileSystemWatcher;
+    bool mAutoResolutionApplied;
 };
 
 class StalledIssueVariant

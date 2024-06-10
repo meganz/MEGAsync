@@ -191,6 +191,7 @@ void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall* stallIssue)
     : mFileSystemWatcher(new FileSystemSignalHandler(this))
+    , mAutoResolutionApplied(false)
 {
     originalStall.reset(stallIssue->copy());
     fillBasicInfo(stallIssue);
@@ -482,6 +483,16 @@ void StalledIssue::performFinishAsyncIssueSolving(bool hasFailed)
 {
     hasFailed ? setIsSolved(StalledIssue::SolveType::FAILED) : setIsSolved(StalledIssue::SolveType::SOLVED);
     emit asyncIssueSolvingFinished(this);
+}
+
+bool StalledIssue::wasAutoResolutionApplied() const
+{
+    return mAutoResolutionApplied;
+}
+
+void StalledIssue::setAutoResolutionApplied(bool newAutoResolutionApplied)
+{
+    mAutoResolutionApplied = newAutoResolutionApplied;
 }
 
 void StalledIssue::startAsyncIssueSolving()
