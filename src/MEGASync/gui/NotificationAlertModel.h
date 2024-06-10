@@ -32,6 +32,8 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
 
+    QAlertsModel* alertsModel() const;
+
 private slots:
     void onDataChanged(const QModelIndex &topLeft,
                        const QModelIndex &bottomRight,

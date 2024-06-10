@@ -22,6 +22,7 @@
 #include "StatusInfo.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "syncs/control/SyncController.h"
+#include "QAlertsModel.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -35,6 +36,7 @@ class InfoDialog;
 class MegaApplication;
 class TransferManager;
 class BindFolderDialog;
+
 class InfoDialog : public QDialog
 {
     Q_OBJECT
@@ -75,7 +77,6 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
-    void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();
 
@@ -128,6 +129,9 @@ public slots:
    void enableTransferOverquotaAlert();
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
+
+   void updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate);
+   void onUnseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts);
 
 private slots:
     void on_bSettings_clicked();

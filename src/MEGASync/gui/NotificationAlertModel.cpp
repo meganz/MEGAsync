@@ -86,6 +86,11 @@ QVariant NotificationAlertModel::data(const QModelIndex &index, int role) const
     return result;
 }
 
+QAlertsModel* NotificationAlertModel::alertsModel() const
+{
+    return mAlertsModel;
+}
+
 void NotificationAlertModel::onDataChanged(const QModelIndex &topLeft,
                                               const QModelIndex &bottomRight,
                                               const QVector<int> &roles)

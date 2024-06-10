@@ -18,7 +18,7 @@ class QAlertsModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    enum {
+    enum AlertType {
         ALERT_CONTACTS = 0,
         ALERT_SHARES,
         ALERT_PAYMENT,
@@ -44,7 +44,7 @@ public:
     void refreshAlerts();
     void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
 
-    long long getUnseenNotifications(int type) const;
+    QMap<AlertType, long long> getUnseenNotifications() const;
     bool existsNotifications(int type) const;
     void refreshAlertItem(unsigned item);
 

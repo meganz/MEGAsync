@@ -138,7 +138,7 @@ int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
     return count;
 }
 
-void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
+void DesktopNotifications::onUserAlertsUpdated(mega::MegaUserAlertList* alertList)
 {
     if(mPreferences->isAnyNotificationEnabled())
     {

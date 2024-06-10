@@ -271,9 +271,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mStatusController = nullptr;
     mStatsEventHandler = nullptr;
 
-    notificationsModel = nullptr;
-    notificationsProxyModel = nullptr;
-    notificationsDelegate = nullptr;
+    mNotificationController = nullptr;
 
     context = new QObject(this);
 
@@ -1102,13 +1100,6 @@ void MegaApplication::start()
     transferOverQuotaWaitTimeExpiredReceived = false;
     updateTrayIconMenu();
 
-    if(notificationsModel) notificationsModel->deleteLater();
-    notificationsModel = nullptr;
-    if (notificationsProxyModel) notificationsProxyModel->deleteLater();
-    notificationsProxyModel = nullptr;
-    if (notificationsDelegate) notificationsDelegate->deleteLater();
-    notificationsDelegate = nullptr;
-
 #ifndef __APPLE__
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromUtf8("://images/tray_sync.ico")));
@@ -1239,6 +1230,10 @@ void MegaApplication::start()
     }
 
     updateTrayIcon();
+
+    mNotificationController = std::make_unique<NotificationController>(this);
+    connect(mNotificationController.get(), &NotificationController::userAlertsUpdated,
+            mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }
 
 void MegaApplication::requestUserData()
@@ -1254,58 +1249,6 @@ void MegaApplication::requestUserData()
     megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
-}
-
-void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRequired)
-{
-    if (!theList)
-    {
-        return;
-    }
-
-    if (mOsNotifications)
-    {
-        mOsNotifications->addUserAlertList(theList);
-    }
-
-    if (notificationsModel)
-    {
-        notificationsModel->insertAlerts(theList, copyRequired);
-    }
-    else
-    {
-        notificationsModel = new QAlertsModel(theList, copyRequired);
-        notificationsProxyModel = new QFilterAlertsModel();
-        notificationsProxyModel->setSourceModel(notificationsModel);
-        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-        notificationsDelegate = new MegaAlertDelegate(notificationsModel, false, this);
-
-        notifModel = new QNotificationsModel();
-        notifDelegate = new MegaNotificationDelegate(notifModel, this);
-
-        mNotificationAlertModel = new NotificationAlertModel(notifModel, notificationsModel);
-        mNotificationAlertDelegate = new NotificationAlertDelegate(notifDelegate, notificationsDelegate);
-
-        if (infoDialog)
-        {
-            infoDialog->updateNotificationsTreeView(mNotificationAlertModel, mNotificationAlertDelegate);
-        }
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
-        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-    }
-
-    if (!copyRequired)
-    {
-        theList->clear(); //empty the list otherwise they will be deleted
-        delete theList;
-    }
 }
 
 void MegaApplication::onboardingFinished(bool fastLogin)
@@ -2262,14 +2205,6 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
-    // Delete notifications stuff
-    delete notificationsModel;
-    notificationsModel = nullptr;
-    delete notificationsProxyModel;
-    notificationsProxyModel = nullptr;
-    delete notificationsDelegate;
-    notificationsDelegate = nullptr;
-
     delete EmailRequester::instance();
 
     infoDialog->deleteLater();
@@ -2539,6 +2474,8 @@ void MegaApplication::createInfoDialog()
     connect(mTransferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
+    connect(mNotificationController.get(), &NotificationController::notificationAlertCreated, infoDialog.data(), &InfoDialog::updateNotificationsTreeView);
+    connect(mNotificationController.get(), &NotificationController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
 }
 
@@ -4305,14 +4242,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     }
 
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
-}
-
-void MegaApplication::applyNotificationFilter(int opt)
-{
-    if (notificationsProxyModel)
-    {
-        notificationsProxyModel->setFilterAlertType(opt);
-    }
 }
 
 void MegaApplication::changeState()
@@ -6341,22 +6270,6 @@ void MegaApplication::onAccountUpdate(MegaApi *)
     updateUserStats(true, true, true, true, USERSTATS_ACCOUNTUPDATE);
 }
 
-
-bool MegaApplication::notificationsAreFiltered()
-{
-    return notificationsProxyModel && notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
-}
-
-bool MegaApplication::hasNotifications()
-{
-    return notificationsModel && notificationsModel->rowCount(QModelIndex());
-}
-
-bool MegaApplication::hasNotificationsOfType(int type)
-{
-    return notificationsModel && notificationsModel->existsNotifications(type);
-}
-
 MegaSyncLogger& MegaApplication::getLogger() const
 {
     return *logger;
@@ -6365,36 +6278,6 @@ MegaSyncLogger& MegaApplication::getLogger() const
 void MegaApplication::pushToThreadPool(std::function<void()> functor)
 {
     mThreadPool->push(std::move(functor));
-}
-
-void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
-{
-    Q_UNUSED(api)
-
-    if (appfinished)
-    {
-        return;
-    }
-
-    // if we have a list, we don't need to query megaApi for it and block the sdk mutex, we do this
-    // synchronously, since we are not copying the list, and we need to process it before it goes out of scope.
-    bool doSynchronously{list != NULL};
-
-    if (doSynchronously)
-    {
-        populateUserAlerts(list, true);
-    }
-    else
-    {
-        auto funcToThreadPool = [this]()
-        { //thread pool function
-            MegaUserAlertList *theList;
-            theList = megaApi->getUserAlerts();
-            //queued function
-            Utilities::queueFunctionInAppThread([this, theList]() { populateUserAlerts(theList, false); });
-        }; // end of thread pool function
-        mThreadPool->push(funcToThreadPool);
-    }
 }
 
 //Called when contacts have been updated in MEGA

@@ -218,9 +218,15 @@ void QAlertsModel::refreshAlerts()
     }
 }
 
-long long QAlertsModel::getUnseenNotifications(int type) const
+QMap<QAlertsModel::AlertType, long long> QAlertsModel::getUnseenNotifications() const
 {
-    return type == ALERT_ALL ? std::accumulate(unSeenNotifications.begin(), unSeenNotifications.end(), 0) : unSeenNotifications[type];
+    QMap<QAlertsModel::AlertType, long long> unseen;
+    for (int i = 0; i < ALERT_ALL; i++)
+    {
+        unseen[static_cast<AlertType>(i)] = unSeenNotifications[i];
+    }
+    unseen[ALERT_ALL] = std::accumulate(unSeenNotifications.begin(), unSeenNotifications.end(), 0);
+    return unseen;
 }
 
 bool QAlertsModel::existsNotifications(int type) const
