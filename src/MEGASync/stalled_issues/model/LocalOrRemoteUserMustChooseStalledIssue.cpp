@@ -5,6 +5,7 @@
 #include <TransfersModel.h>
 #include <StalledIssuesUtilities.h>
 #include "StatsEventHandler.h"
+#include <MegaApiSynchronizedRequest.h>
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),
@@ -148,7 +149,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
             mNewName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, (*namesUsed));
             namesUsed->append(mNewName);
 
-            auto error = SyncMegaRequestListener::runRequest(&mega::MegaApi::renameNode,
+            auto error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::renameNode,
                               MegaSyncApp->getMegaApi(),
                               node.get(),
                               mNewName.toUtf8().constData());

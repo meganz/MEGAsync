@@ -9,6 +9,7 @@
 
 #include <MegaApplication.h>
 #include <Utilities.h>
+#include <MEGAPathCreator.h>
 
 #include <QDir>
 
@@ -173,7 +174,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                     if (!newParent)
                     {
                         std::shared_ptr<mega::MegaError> error(nullptr);
-                        PathCreator dirCreator;
+                        MEGAPathCreator dirCreator;
                         dirCreator.mkDir(QString(), targetPath.path(), error);
 
                         if(error)

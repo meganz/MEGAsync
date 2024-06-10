@@ -21,7 +21,7 @@ public:
     explicit StalledIssueTab(QWidget *parent = nullptr);
     ~StalledIssueTab();
 
-    Q_PROPERTY(QString title MEMBER mTitle WRITE setTitle)
+    Q_PROPERTY(QString title MEMBER mTitle)
     void setTitle(const QString& title);
 
     Q_PROPERTY(QString iconPrefix MEMBER mIconPrefix WRITE setIconPrefix)
@@ -42,6 +42,8 @@ protected:
     void enterEvent(QEvent*) override;
     void leaveEvent(QEvent*) override;
     void changeEvent(QEvent *) override;
+    void resizeEvent(QResizeEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private slots:
     void onUpdateCounter();
@@ -52,7 +54,7 @@ private:
 
     void updateIcon();
     void toggleOffSiblings();
-    QString createTitle();
+    void createTitle();
 
     Ui::StalledIssueTab *ui;
     QString mIconPrefix;

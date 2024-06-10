@@ -32,6 +32,10 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/Version.h
     control/gzjoin.h
     control/qrcodegen.h
+    control/MegaApiSynchronizedRequest.h
+    control/MergeMEGAFolders.h
+    control/MEGAPathCreator.h
+    control/MoveToMEGABin.h
     control/Preferences/EncryptedSettings.h
     control/Preferences/EphemeralCredentials.h
     control/Preferences/Preferences.h
@@ -65,6 +69,9 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/UserAttributesManager.cpp
     control/Utilities.cpp
     control/qrcodegen.c
+    control/MergeMEGAFolders.cpp
+    control/MEGAPathCreator.cpp
+    control/MoveToMEGABin.cpp
     control/Preferences/EncryptedSettings.cpp
     control/Preferences/EphemeralCredentials.cpp
     control/Preferences/Preferences.cpp

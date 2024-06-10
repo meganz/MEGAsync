@@ -243,66 +243,6 @@ public:
     void setExecuteInAppThread(bool executeInAppThread);
 };
 
-class SyncMegaRequestListener
-{
-public:
-    template<typename REQUEST_FUNC, typename... Params>
-    static std::shared_ptr<mega::MegaError> runRequestLambdaWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, Params&&... args)
-    {
-        std::shared_ptr<mega::MegaError> error(nullptr);
-        QEventLoop eventLoop;
-        func(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, error, eventLoop));
-        eventLoop.exec();
-        return error;
-    }
-
-    template<typename REQUEST_FUNC, typename... Params>
-    static std::shared_ptr<mega::MegaError> runRequestLambda(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
-    {
-        return runRequestLambdaWithResult(func, api, nullptr, nullptr, std::forward<Params>(args)...);
-    }
-
-    template<typename REQUEST_FUNC, typename... Params>
-    static std::shared_ptr<mega::MegaError> runRequestWithResult(REQUEST_FUNC func, mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc,
-        Params&&... args)
-    {
-        std::shared_ptr<mega::MegaError> error(nullptr);
-        QEventLoop eventLoop;
-        (api->*func)(std::forward<Params>(args)...,listenerMethod(api, context, resultFunc, error, eventLoop));
-        eventLoop.exec();
-        return error;
-    }
-
-    template<typename REQUEST_FUNC, typename... Params>
-    static std::shared_ptr<mega::MegaError> runRequest(REQUEST_FUNC func, mega::MegaApi* api, Params&&... args)
-    {
-        return runRequestWithResult(func, api, nullptr, nullptr, std::forward<Params>(args) ...);
-    }
-
-private:
-    static mega::OnFinishOneShot* listenerMethod(
-        mega::MegaApi* api, QPointer<const QObject> context, std::function<void(const mega::MegaRequest&, const mega::MegaError&)> resultFunc, std::shared_ptr<mega::MegaError>& error, QEventLoop& eventLoop)
-    {
-        return new mega::OnFinishOneShot(api, context,
-            [resultFunc, &error, &eventLoop](
-                bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-            {
-                eventLoop.quit();
-
-                //In case of error, move to OS trash
-                if(e.getErrorCode() != mega::MegaError::API_OK)
-                {
-                    error.reset(e.copy());
-                }
-
-                if(isContextValid && resultFunc)
-                {
-                    resultFunc(request, e);
-                }
-            });
-    }
-};
-
 class ClickableLabel : public QLabel
 {
     Q_OBJECT
@@ -569,62 +509,5 @@ private:
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
-
-//This class is used to create complex paths in MEGA
-class PathCreator : public QObject
-{
-public:
-    PathCreator() = default;
-    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path, std::shared_ptr<mega::MegaError>& error);
-
-private:
-    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName, std::shared_ptr<mega::MegaError>& error);
-
-    QStringList mPathCreated;
-};
-
-//This class is used to move a handle to the MEGA bin
-class MoveToCloudBinUtilities : public QObject
-{
-public:
-    struct MoveToBinError
-    {
-        std::shared_ptr<mega::MegaError> moveError;
-        std::shared_ptr<mega::MegaError> binFolderCreationError;
-    };
-
-    MoveToCloudBinUtilities(){}
-
-    MoveToBinError moveToBin(mega::MegaHandle handle, const QString& binFolderName, bool addDateFolder);
-};
-
-//This class is use to merge two remote folders
-class CloudFoldersMerge : public QObject
-{
-    Q_OBJECT
-
-public:
-    CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
-        : mFolderTarget(folderTarget),
-          mFolderToMerge(folderToMerge),
-          mDepth(0)
-    {}
-
-    enum ActionForDuplicates
-    {
-        Rename,
-        IgnoreAndRemove,
-        IgnoreAndMoveToBin,
-    };
-    std::shared_ptr<mega::MegaError> merge(ActionForDuplicates action);
-
-signals:
-    void progressIndicator(const QString& nodeName);
-
-private:
-    mega::MegaNode* mFolderTarget;
-    mega::MegaNode* mFolderToMerge;
-    int mDepth;
-};
 
 #endif // UTILITIES_H

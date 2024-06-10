@@ -15,6 +15,8 @@ StalledIssueTab::StalledIssueTab(QWidget *parent) :
     mShadowTab (new QGraphicsDropShadowEffect(nullptr))
 {
     ui->setupUi(this);
+    ui->title->installEventFilter(this);
+
 
     connect(MegaSyncApp->getStalledIssuesModel(),
             &StalledIssuesModel::stalledIssuesCountChanged, this, &StalledIssueTab::onUpdateCounter);
@@ -23,12 +25,6 @@ StalledIssueTab::StalledIssueTab(QWidget *parent) :
 StalledIssueTab::~StalledIssueTab()
 {
     delete ui;
-}
-
-void StalledIssueTab::setTitle(const QString &title)
-{
-    mTitle = title;
-    ui->title->setText(title);
 }
 
 void StalledIssueTab::setIconPrefix(const QString &iconPrefix)
@@ -79,7 +75,7 @@ void StalledIssueTab::leaveEvent(QEvent*)
 
 void StalledIssueTab::onUpdateCounter()
 {
-    ui->title->setText(createTitle());
+    createTitle();
 }
 
 bool StalledIssueTab::itsOn() const
@@ -151,38 +147,65 @@ int StalledIssueTab::filterCriterion() const
 void StalledIssueTab::setFilterCriterion(int filterCriterion)
 {
     mFilterCriterion = filterCriterion;
-    ui->title->setText(createTitle());
+    createTitle();
 }
 
-QString StalledIssueTab::createTitle()
+void StalledIssueTab::createTitle()
 {
     const auto itemsCount = MegaSyncApp->getStalledIssuesModel()->getCountByFilterCriterion(
         static_cast<StalledIssueFilterCriterion>(mFilterCriterion));
     switch (static_cast<StalledIssueFilterCriterion>(mFilterCriterion))
     {
         case StalledIssueFilterCriterion::ALL_ISSUES:
-            return tr("All issues: %1").arg(itemsCount);
+            mTitle = tr("All issues: %1").arg(itemsCount);
+            break;
         case StalledIssueFilterCriterion::NAME_CONFLICTS:
-            return tr("Name conflict: %n", "", itemsCount);
+            mTitle = tr("Name conflict: %n", "", itemsCount);
+            break;
         case StalledIssueFilterCriterion::ITEM_TYPE_CONFLICTS:
-            return tr("Item type conflict: %n", "", itemsCount);
+            mTitle = tr("Item type conflict: %n", "", itemsCount);
+            break;
         case StalledIssueFilterCriterion::OTHER_CONFLICTS:
-            return tr("Other: %n", "", itemsCount);
+            mTitle = tr("Other: %n", "", itemsCount);
+            break;
         case StalledIssueFilterCriterion::FAILED_CONFLICTS:
-            return tr("Failed: %n", "", itemsCount);
+            mTitle = tr("Failed: %n", "", itemsCount);
+            break;
         case StalledIssueFilterCriterion::SOLVED_CONFLICTS:
-            return tr("Resolved: %n", "", itemsCount);
+            mTitle = tr("Resolved: %n", "", itemsCount);
+            break;
         default:
-            return QString();
+            mTitle = QString();
     }
+
+    ui->title->setText(mTitle);
 }
 
 void StalledIssueTab::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)
     {
-        ui->title->setText(createTitle());
+        createTitle();
     }
 
     QFrame::changeEvent(event);
+}
+
+void StalledIssueTab::resizeEvent(QResizeEvent *event)
+{
+    createTitle();
+}
+
+bool StalledIssueTab::eventFilter(QObject *watched, QEvent *event)
+{
+    if(watched == ui->title && event->type() == QEvent::Paint)
+    {
+        QPainter painter(ui->title);
+        QRect rect = ui->title->contentsRect();
+        QString elidedText = ui->title->fontMetrics().elidedText(mTitle, Qt::ElideMiddle, rect.width());
+        painter.drawText(rect, Qt::AlignVCenter, elidedText);
+        return true;
+    }
+
+    return QFrame::eventFilter(watched, event);
 }

@@ -1487,9 +1487,14 @@
         <file>images/StalledIssues/rotate-ccw.png</file>
         <file>images/StalledIssues/rotate-ccw@2x.png</file>
         <file>images/StalledIssues/rotate-ccw@3x.png</file>
-        <file>images/folder.svg</file>
         <file>images/icons/folder/synced-folder.png</file>
         <file>images/icons/folder/synced-folder@2x.png</file>
         <file>images/icons/folder/synced-folder@3x.png</file>
+        <file>images/StalledIssues/solved-issues-outline.png</file>
+        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
+        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
+        <file>images/StalledIssues/solved-issues-solid.png</file>
+        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
+        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
     </qresource>
 </RCC>

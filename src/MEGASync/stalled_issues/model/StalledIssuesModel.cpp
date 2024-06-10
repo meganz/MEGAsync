@@ -984,7 +984,7 @@ bool StalledIssuesModel::issueSolvingFinished(StalledIssue* issue, bool wasSucce
         issue->setIsSolved(StalledIssue::SolveType::FAILED);
     }
 
-    issueSolvingFinished(issue);
+    return issueSolvingFinished(issue);
 }
 
 bool StalledIssuesModel::issueSolved(const StalledIssue* issue)

@@ -5,6 +5,8 @@
 #include "StatsEventHandler.h"
 #include "StalledIssuesModel.h"
 
+#include <MegaApiSynchronizedRequest.h>
+
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue)
 {}
@@ -502,7 +504,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
 
                     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNode->getParentHandle()));
                     auto newName = Utilities::getNonDuplicatedNodeName(conflictedNode.get(), parentNode.get(), cloudConflictedName->getConflictedName(), true, cloudItemsBeingRenamed);
-                    SyncMegaRequestListener::runRequestWithResult(
+                    MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
                         this,
@@ -599,7 +601,7 @@ bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNa
         if(conflictedNode)
         {
             std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNode->getParentHandle()));
-            SyncMegaRequestListener::runRequestWithResult(
+            MegaApiSynchronizedRequest::runRequestWithResult(
                 &mega::MegaApi::renameNode,
                 MegaSyncApp->getMegaApi(),
                 this,

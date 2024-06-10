@@ -462,7 +462,7 @@ void NameConflict::onActionClicked(int actionId)
             renameDialog->init();
 
             DialogOpener::showDialog<RenameNodeDialog>(renameDialog,
-                [=, this]()
+                [=]()
                 {
                     if (renameDialog->result() == QDialog::Accepted)
                     {
@@ -573,7 +573,7 @@ void NameConflict::onActionClicked(int actionId)
             msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
             msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
-            msgInfo.finishFunc = [=, this](
+            msgInfo.finishFunc = [=](
                                      QMessageBox* msgBox)
             {
                 if (msgBox->result() == QDialogButtonBox::Yes)

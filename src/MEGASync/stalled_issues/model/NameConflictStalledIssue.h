@@ -6,7 +6,9 @@
 #include <FileFolderAttributes.h>
 #include <StalledIssuesUtilities.h>
 #include <Utilities.h>
+#include <MoveToMEGABin.h>
 #include <MegaNodeNames.h>
+#include <MergeMegaFolders.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {
@@ -454,7 +456,7 @@ public:
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes()
         {
-            MoveToCloudBinUtilities utilities;
+            MoveToMEGABin utilities;
 
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
@@ -546,8 +548,8 @@ public:
                     std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
                     if(folderToMerge && folderToMerge->isFolder())
                     {
-                        CloudFoldersMerge mergeItem(targetFolder.get(), folderToMerge.get());
-                        auto error = mergeItem.merge(CloudFoldersMerge::ActionForDuplicates::IgnoreAndMoveToBin);
+                        MergeMEGAFolders mergeItem(targetFolder.get(), folderToMerge.get());
+                        auto error = mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                         if(error)
                         {
                             errorInfo.error = error;

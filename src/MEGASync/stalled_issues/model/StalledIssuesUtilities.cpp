@@ -7,6 +7,7 @@
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
+#include <MoveToMEGABin.h>
 
 
 #include <QFile>
@@ -28,7 +29,7 @@ std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(mega::
 
     if(node)
     {
-        MoveToCloudBinUtilities utilities;
+        MoveToMEGABin utilities;
         auto moveToBinError = utilities.moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
         if(moveToBinError.binFolderCreationError)
         {
