@@ -12,4 +12,5 @@ QtObject {
     readonly property var specialCharacters: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
     readonly property var betweenCommas: /"([^"]*)"/g
     readonly property var allowedFolderChars: /^(?!\s)[^*><?"\/\\\|:]{1,255}$/
+    readonly property var allow3DigitsOnly: /^(\d{0,3}(?:\.\d{0,2})?)?$/
 }
