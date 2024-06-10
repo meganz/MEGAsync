@@ -33,7 +33,7 @@ height: 19px;
 
 #switch::indicator:checked
 {
-image: url(:/images/themed/light/switch_on.svg);
+image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
 }
 
 #switch::indicator:checked:hover
@@ -48,7 +48,7 @@ image: url(:/images/themed/light/switch_on_pressed.svg);
 
 #switch::indicator:unchecked
 {
-image: url(:/images/themed/light/switch_off.svg);
+image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
 }
 
 #switch::indicator:unchecked:hover

@@ -1535,5 +1535,7 @@
         <file>images/themed/light/switch_on_pressed.svg</file>
         <file>images/themed/light/switch_off.svg</file>
         <file>images/themed/light/switch_on.svg</file>
+        <file>images/themed/dark/switch_on.svg</file>
+        <file>images/themed/dark/switch_off.svg</file>
     </qresource>
 </RCC>
