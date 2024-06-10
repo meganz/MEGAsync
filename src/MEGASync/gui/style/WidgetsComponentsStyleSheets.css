@@ -24,6 +24,33 @@ QTableView::item::selected
 color: #F3F4F4; /* colorToken.text-primary*/
 }
 
+QTableView::indicator
+{
+height: 16px;
+width: 18px;
+}
+
+QTableView::indicator:checked
+{
+padding: 2px;
+border-style: solid;
+border-color: #04101E; /*colorToken.button-primary*/
+border-width: 2px;
+border-radius: 4px;
+background-color: #04101E; /*colorToken.button-primary*/
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked
+{
+padding: 2px;
+border-style: solid;
+border-color: #04101E;  /*colorToken.button-primary*/
+border-width: 2px;
+border-radius: 4px;
+background-color: #f3f4f4;
+}
+
 QHeaderView
 {
 background: #18191A; /* colorToken.page-background*/
@@ -191,6 +218,3 @@ height: 20px;
 background-color: #fafafa; /*colorToken.surface-1*/
 border: none;
 }
-
-
-
