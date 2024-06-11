@@ -62,7 +62,6 @@ Rectangle {
                 return ExclusionsStrings.removeFoldersEqual.arg(value)
             }
         }
-
     }
 
     signal editRuleClicked
@@ -358,10 +357,12 @@ Rectangle {
                             verticalCenter: parent.verticalCenter
                             leftMargin: 8
                         }
-                        width: valueColumn.width
+                        width: valueColumn.width - 5
                         font.pixelSize: Texts.Text.Size.SMALL
                         text: model ? model.value: ""
                         color: ColorTheme.textPrimary
+                        elide: Text.ElideMiddle
+                        wrapMode: Text.NoWrap
                     }
                 }
             }
@@ -386,7 +387,7 @@ Rectangle {
                         }
                         colors.background: "transparent"
                         onClicked: {
-                            editRuleProperty = 0;
+                            editRuleProperty = model.wildcard;
                             editIndex = model.index;
                             editRuleTarget = model.targetTypeIndex;
                             editRuleValue = model.value;

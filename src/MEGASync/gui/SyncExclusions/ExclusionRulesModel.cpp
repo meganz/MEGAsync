@@ -303,14 +303,23 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
     {
         return;
     }
-    // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
-    if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
+    // Switching from name rule to extension rule
+    if(rule->ruleType() != MegaIgnoreRule::RuleType::EXTENSIONRULE && targetType == TargetType::EXTENSION)
     {
-        rule->setTarget((targetType != TargetType::FOLDER) ? (MegaIgnoreNameRule::Target::f)
-                                                           : (MegaIgnoreNameRule::Target::d));
+        removeRow(index);
+        addNewRule(targetType, wildCard, splitted[0]);
     }
-    rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
-    rule->setPattern(splitted[0]);
+    else
+    {
+        // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
+        if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
+        {
+            rule->setTarget((targetType != TargetType::FOLDER) ? (MegaIgnoreNameRule::Target::f)
+                                                               : (MegaIgnoreNameRule::Target::d));
+        }
+        rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
+        rule->setPattern(splitted[0]);
+    }
     emit dataChanged(createIndex(index, 0), createIndex(index, 0));
     // Remove the first value and add the rest
     splitted.pop_front();

@@ -78,7 +78,7 @@ pipeline {
                     }
                     axis {
                         name 'DISTRO'
-                        values  'xUbuntu_24.04','xUbuntu_23.10' 'xUbuntu_22.04', 'xUbuntu_20.04',
+                        values  'xUbuntu_24.04', 'xUbuntu_23.10', 'xUbuntu_22.04', 'xUbuntu_20.04',
                                 'Debian_11','Debian_12','Debian_testing',
                                 'DEB_Arch_Extra',
                                 'Fedora_38', 'Fedora_39','Fedora_40',
@@ -121,8 +121,8 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
                             }
@@ -148,8 +148,8 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
                             }
@@ -175,8 +175,8 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
                             }
@@ -202,8 +202,8 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/"
-                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO/extensions/]"
+                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
                             }

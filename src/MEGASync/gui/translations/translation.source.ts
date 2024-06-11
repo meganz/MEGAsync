@@ -1822,6 +1822,38 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule SNC-4243</translatorcomment>
         <translation type="unfinished">Select the file you want to exclude</translation>
     </message>
+    <message>
+        <source>Files containing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>

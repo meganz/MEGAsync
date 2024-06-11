@@ -6,6 +6,11 @@
 
 using namespace mega;
 
+bool isEqual(double a, double b, double epsilon = 1e-2) {
+    return fabs(a - b) < epsilon;
+}
+
+
 SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
     : QMLComponent(parent)
     , mMinimumAllowedSize(0)
@@ -34,27 +39,34 @@ QString SyncExclusions::contextName()
     return QString::fromUtf8("syncExclusionsAccess");
 }
 
-void SyncExclusions::setMaximumAllowedSize(int maximumSize)
+void SyncExclusions::setMaximumAllowedSize(double maximumSize)
 {
-    if(maximumSize == mMaximumAllowedSize)
+    if(isEqual(maximumSize, mMaximumAllowedSize))
     {
         return;
     }
     mMaximumAllowedSize = maximumSize;
 
     auto highLimit = mMegaIgnoreManager->getHighLimitRule();
-    highLimit->setValue(maximumSize);
+    if(highLimit)
+    {
+        auto value = fromDisplay(mMaximumAllowedSize, mMaximumAllowedUnit);
+        highLimit->setValue(value.first);
+        highLimit->setUnit(value.second);
+    }
     emit maximumAllowedSizeChanged(mMaximumAllowedSize);
 }
 
-void SyncExclusions::setMinimumAllowedSize(int minimumSize)
+void SyncExclusions::setMinimumAllowedSize(double minimumSize)
 {
-    if(minimumSize == mMinimumAllowedSize)
+    if(isEqual(minimumSize, mMinimumAllowedSize))
     {
         return;
     }
     mMinimumAllowedSize = minimumSize;
-    mMegaIgnoreManager->getLowLimitRule()->setValue(mMinimumAllowedSize);
+    auto value = fromDisplay(mMinimumAllowedSize, mMinimumAllowedUnit);
+    mMegaIgnoreManager->getLowLimitRule()->setValue(value.first);
+    mMegaIgnoreManager->getLowLimitRule()->setUnit(value.second);
     emit minimumAllowedSizeChanged(mMinimumAllowedSize);
 }
 
@@ -68,7 +80,9 @@ void SyncExclusions::setMaximumAllowedUnit(int maximumUnit)
     auto highLimit = mMegaIgnoreManager->getHighLimitRule();
     if (highLimit)
     {
-        highLimit->setUnit(mMaximumAllowedUnit);
+        auto value = fromDisplay(mMaximumAllowedSize, mMaximumAllowedUnit);
+        highLimit->setValue(value.first);
+        highLimit->setUnit(value.second);
     }
     emit maximumAllowedUnitChanged(mMaximumAllowedUnit);
 }
@@ -83,7 +97,9 @@ void SyncExclusions::setMinimumAllowedUnit(int minimumUnit)
     auto lowLimit = mMegaIgnoreManager->getLowLimitRule();
     if (lowLimit)
     {
-        lowLimit->setUnit(mMinimumAllowedUnit);
+        auto value = fromDisplay(mMinimumAllowedSize, mMinimumAllowedUnit);
+        lowLimit->setValue(value.first);
+        lowLimit->setUnit(value.second);
     }
     emit minimumAllowedUnitChanged(mMinimumAllowedUnit);
 }
@@ -190,14 +206,16 @@ void SyncExclusions::setFolder(const QString& folderName)
     emit folderNameChanged(mFolderName);
     if (highLimit)
     {
-        setMaximumAllowedSize(highLimit->value());
-        setMaximumAllowedUnit(highLimit->unit());
+        auto displayValue = toDisplay(highLimit->value(), highLimit->unit());
+        setMaximumAllowedSize(displayValue.first);
+        setMaximumAllowedUnit(displayValue.second);
     }
     auto lowLimit = mMegaIgnoreManager->getLowLimitRule();
     if (lowLimit)
     {
-        setMinimumAllowedSize(lowLimit->value());
-        setMinimumAllowedUnit(lowLimit->unit());
+        auto displayValue = toDisplay(lowLimit->value(), lowLimit->unit());
+        setMinimumAllowedSize(displayValue.first);
+        setMinimumAllowedUnit(displayValue.second);
     }
 }
 
@@ -214,4 +232,34 @@ bool SyncExclusions::isAskOnExclusionRemove()  const
 void SyncExclusions::setAskOnExclusionRemove(bool value)
 {
     Preferences::instance()->setAskOnExclusionRemove(value);
+}
+
+std::pair<int, int> SyncExclusions::fromDisplay(double value , int unit) const
+{
+    int intgerValue = value * 100;
+    if(unit == MegaIgnoreSizeRule::B || (intgerValue % 100) == 0)
+    {
+        return {value , unit};
+    }
+
+    intgerValue = value * 1024.0;
+    --unit;
+    return {intgerValue, unit};
+}
+
+
+std::pair<double, int> SyncExclusions::toDisplay(int value , int unit) const
+{
+    double doubleValue = value;
+    int updatedUnit = unit;
+    for (int unitIterator = unit; unitIterator < MegaIgnoreSizeRule::G; unitIterator++)
+    {
+        if(doubleValue <= 999)
+        {
+            return {doubleValue, unitIterator};
+        }
+        doubleValue = doubleValue/1024.;
+        ++updatedUnit;
+    }
+    return {doubleValue, updatedUnit};
 }
