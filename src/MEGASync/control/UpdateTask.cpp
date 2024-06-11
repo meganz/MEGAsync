@@ -1,6 +1,8 @@
 #include "UpdateTask.h"
 
 #include "Utilities.h"
+#include "Platform.h"
+
 #include <QAuthenticator>
 #include <QDesktopServices>
 

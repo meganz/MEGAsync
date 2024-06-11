@@ -4,6 +4,8 @@
 #include "qtlockedfile/qtlockedfile.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"
+#include "ProxyStatsEventHandler.h"
+#include "StatsEventHandler.h"
 
 #include <QFontDatabase>
 #include <assert.h>
