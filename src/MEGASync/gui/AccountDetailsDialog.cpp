@@ -269,6 +269,7 @@ void AccountDetailsDialog::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
+        refresh();
     }
 
     QDialog::changeEvent(event);
