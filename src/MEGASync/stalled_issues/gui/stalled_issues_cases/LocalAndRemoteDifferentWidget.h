@@ -43,6 +43,7 @@ private slots:
 
 private:
     void unSetFailedChooseWidget();
+    std::unique_ptr<mega::MegaNode> getNode();
 
     Ui::LocalAndRemoteDifferentWidget *ui;
     StalledIssueChooseWidget* mFailedItem;

@@ -223,7 +223,13 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         return;
     }
 
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    auto node(getNode());
+
+    if(!node)
+    {
+        return;
+    }
+
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
 
     KeepSideInfo stringInfo;
@@ -321,7 +327,13 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
         return;
     }
     
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    auto node(getNode());
+
+    if(!node)
+    {
+        return;
+    }
+
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(node)
     {
@@ -424,7 +436,13 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
         return;
     }
 
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    auto node(getNode());
+
+    if(!node)
+    {
+        return;
+    }
+
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
         if(localInfo.isFile())
     {
@@ -522,4 +540,19 @@ void LocalAndRemoteDifferentWidget::unSetFailedChooseWidget()
         mFailedItem->setFailed(false);
         mFailedItem = nullptr;
     }
+}
+
+std::unique_ptr<mega::MegaNode> LocalAndRemoteDifferentWidget::getNode()
+{
+    auto cloudData = ui->chooseRemoteCopy->data()->convert<CloudStalledIssueData>();
+
+    if(!cloudData)
+    {
+        return nullptr;
+    }
+
+    std::unique_ptr<mega::MegaNode> node(
+        MegaSyncApp->getMegaApi()->getNodeByHandle(cloudData->getPathHandle()));
+
+    return node;
 }

@@ -52,9 +52,9 @@ bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
 bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
 {
     //Only in smart mode
-    auto result(StalledIssue::isAutoSolvable());
+    auto result(false);
 
-    if(result)
+    if(StalledIssue::isAutoSolvable())
     {
         //In case it is a backup, we cannot automatically solve it
         if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
@@ -116,6 +116,8 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
             std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
             if(parentNode)
             {
+                mChosenSide = ChosenSide::LOCAL;
+
                 bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
                 StalledIssuesUtilities utilities;
                 if(versionsDisabled && utilities.removeRemoteFile(node.get()))
@@ -125,7 +127,6 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 
                 //Using appDataId == 0 means that there will be no notification for this upload
                 mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
-                mChosenSide = ChosenSide::LOCAL;
 
                 return true;
             }

@@ -213,7 +213,11 @@ void StalledIssueHeader::onMultipleActionClicked()
 void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
 {
     ui->actionContainer->show();
-    ui->actionMessageContainer->setVisible(true);
+    if(!message.isEmpty() || !pixmap.isNull())
+    {
+        ui->actionMessageContainer->setVisible(true);
+    }
+
     ui->actionMessage->setText(message);
 
     if(!pixmap.isNull())

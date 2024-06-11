@@ -44,18 +44,13 @@ void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall* stall)
 
 bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
 {
-    if(solveAttemptsAchieved())
-    {
-        return false;
-    }
-
     //If it is unsolved but the chosen side is set, it is because user has started solving these issues in this sync id
     if(!isSolved() && !(getSyncIdChosenSide() == MoveOrRenameIssueChosenSide::NONE))
     {
-        return true;
+        return !solveAttemptsAchieved();
     }
 
-    return StalledIssue::isAutoSolvable();
+    return false;
 }
 
 bool MoveOrRenameCannotOccurIssue::refreshListAfterSolving() const
