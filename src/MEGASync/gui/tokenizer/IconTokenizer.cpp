@@ -16,7 +16,7 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
 {
     if (widget == nullptr || mode.isEmpty() || state.isEmpty() || colorTokens.empty()|| targetElementId.isEmpty() || targetElementProperty.isEmpty() || tokenId.isEmpty())
     {
-        qDebug() << __func__ << " Error on function arguments :"
+        qWarning() << __func__ << " Error on function arguments :"
                  << "\n widget is nullptr : " << QVariant(widget == nullptr).toString()
                  << "\n mode is empty : " << QVariant(mode.isEmpty()).toString()
                  << "\n state is empty : " << QVariant(state.isEmpty()).toString()
@@ -31,7 +31,7 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
     auto widgets = widget->findChildren<QWidget*>(targetElementId);
     if (widgets.isEmpty())
     {
-        qDebug() << __func__ << " Error children widget not found for  : " << targetElementId;
+        qWarning() << __func__ << " Error children widget not found for  : " << targetElementId;
 
         return;
     }
@@ -57,27 +57,27 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             auto button = dynamic_cast<QAbstractButton*>(widget);
             if (button == nullptr)
             {
-                qDebug() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
+                qWarning() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
                 return;
             }
 
             QIcon buttonIcons = button->icon();
             if (buttonIcons.isNull())
             {
-                qDebug() << __func__ << " Error button icon is null : " << targetElementId;
+                qWarning() << __func__ << " Error button icon is null : " << targetElementId;
                 return;
             }
 
             auto pixmap = buttonIcons.pixmap(button->iconSize());
             if (pixmap.isNull())
             {
-                qDebug() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
+                qWarning() << __func__ << " Error default pixmap for icon is null : " << targetElementId;
                 return;
             }
 
             if (!colorTokens.contains(tokenId))
             {
-                qDebug() << __func__ << " Error token id not found : " << tokenId;
+                qWarning() << __func__ << " Error token id not found : " << tokenId;
                 return;
             }
 
@@ -109,7 +109,7 @@ std::optional<QIcon::Mode> IconTokenizer::getIconMode(const QString& mode)
         return it.value();
     }
 
-    qDebug() << __func__ << " Error unknown icon mode: " << mode;
+    qWarning() << __func__ << " Error unknown icon mode: " << mode;
     return std::nullopt;
 }
 
@@ -126,7 +126,7 @@ std::optional<QIcon::State> IconTokenizer::getIconState(const QString& state)
         return it.value();
     }
 
-    qDebug() << __func__ << " Error unknown icon state: " << state;
+    qWarning() << __func__ << " Error unknown icon state: " << state;
     return std::nullopt;
 }
 
@@ -134,7 +134,7 @@ std::optional<QPixmap> IconTokenizer::changePixmapColor(const QPixmap& pixmap, Q
 {
     if (pixmap.isNull())
     {
-        qDebug() << __func__ << " Error pixmap argument is invalid";
+        qWarning() << __func__ << " Error pixmap argument is invalid";
 
         return std::nullopt;
     }
@@ -142,7 +142,7 @@ std::optional<QPixmap> IconTokenizer::changePixmapColor(const QPixmap& pixmap, Q
     QImage image = pixmap.toImage();
     if (image.isNull())
     {
-        qDebug() << __func__ << " Error image from pixmap is invalid";
+        qWarning() << __func__ << " Error image from pixmap is invalid";
 
         return std::nullopt;
     }

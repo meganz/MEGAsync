@@ -71,14 +71,14 @@ void TokenParserWidgetManager::loadStandardStyleSheetComponents()
     QFile file(CSS_STANDARD_WIDGETS_COMPONENTS_FILE);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << __func__ << " Error opening file : " << file.fileName();
+        qWarning() << __func__ << " Error opening file : " << file.fileName();
         return;
     }
 
     QByteArray data = file.readAll();
     if (data.isEmpty())
     {
-        qDebug() << __func__ << " Error reading file : " << file.fileName();
+        qWarning() << __func__ << " Error reading file : " << file.fileName();
         return;
     }
 
@@ -92,7 +92,7 @@ void TokenParserWidgetManager::loadColorThemeJson()
     QFile file(JSON_THEMED_COLOR_TOKEN_FILE);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        qDebug() << __func__ << " Error opening file : " << file.fileName();
+        qWarning() << __func__ << " Error opening file : " << file.fileName();
         return;
     }
 
@@ -100,7 +100,7 @@ void TokenParserWidgetManager::loadColorThemeJson()
     QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonData);
     if (!jsonDoc.isObject())
     {
-        qDebug() << __func__ << " Error invalid json format on file : " << file.fileName();
+        qWarning() << __func__ << " Error invalid json format on file : " << file.fileName();
         return;
     }
 
@@ -126,28 +126,40 @@ void TokenParserWidgetManager::onUpdateRequested()
     applyCurrentTheme();
 }
 
+// performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 {
-    std::cout << "************************** theme applied to dialog : " << dialog->objectName().toStdString() << std::endl;;
-
+    auto start = std::chrono::steady_clock::now();
     applyTheme(dialog);
+
+    auto end = std::chrono::steady_clock::now();
+    std::chrono::duration<float> elapsed = end - start;
+
+    qDebug() << "Time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
+    qDebug() << "to the following dialog : " << dialog->objectName();
 }
 
+// performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme()
 {
     auto start = std::chrono::steady_clock::now();
 
+    QStringList dialogsName;
     foreach (const auto& dialog, DialogOpener::getAllOpenedDialogs())
     {
         if (!dialog.isNull())
         {
-            applyCurrentTheme(dialog);
+            applyTheme(dialog);
+
+            dialogsName << dialog->objectName();
         }
     }
 
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsed = end - start;
-    std::cout << "***************************** time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms" << std::endl;
+
+    qDebug() << "Time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
+    qDebug() << "to the following dialogs : " << dialogsName;
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
@@ -157,7 +169,7 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 
     if (!mColorThemedTokens.contains(currentTheme))
     {
-        qDebug() << __func__ << " Error theme not found : " << currentTheme;
+        qWarning() << __func__ << " Error theme not found : " << currentTheme;
         return;
     }
 
