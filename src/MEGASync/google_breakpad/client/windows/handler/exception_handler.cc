@@ -28,7 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-#include "Version.h"
+#include "control/Version.h"
 #include <ObjBase.h>
 #include <Psapi.h>
 #include <Strsafe.h>
