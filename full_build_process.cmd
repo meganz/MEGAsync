@@ -44,6 +44,11 @@ IF [%MEGA_QTPATH%]==[] (
 	)
 )
 
+IF [%MEGA_WIN_KITVER%]==[] (
+	SET MEGA_WIN_KITVER=10.0.19041.0
+)
+
+
 :: CHECK ARCHITECTURE
 IF "%MEGA_ARCH%" EQU "64" (
 	echo "Info: Building x64 only"
@@ -109,4 +114,5 @@ echo 	- Cores: the number of cores to build the project, or 0 for default value 
 echo 	- Suffix for installer: The installer will add this suffix to the version. [OPTIONAl]
 echo MEGA_VCPKGPATH environment variable should be set to the root of the 3rd party dir.
 echo MEGA_QTPATH environment variable should be set to the Qt install dir. Takes the value of MEGAQTPATH, or defaults to C:\Qt\5.15.13\x64
+echo MEGA_WIN_KITVER environment variable can be used to set the Windows sdk to use. Value defaults to "10.0.19041.0". Set to "." to use the Universal Kit
 exit /B
