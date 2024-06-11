@@ -1035,6 +1035,7 @@ void InfoDialog::addBackup()
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             QmlDialogManager::instance()->openBackupsDialog();
+            this->hide();
         }
     };
 
