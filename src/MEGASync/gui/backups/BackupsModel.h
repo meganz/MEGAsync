@@ -3,7 +3,7 @@
 
 #include "BackupsController.h"
 
-#include "control/FileFolderAttributes.h"
+#include "FileFolderAttributes.h"
 #include "syncs/control/SyncController.h"
 
 #include <QAbstractListModel>

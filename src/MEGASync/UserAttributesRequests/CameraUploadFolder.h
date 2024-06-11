@@ -1,7 +1,7 @@
 #ifndef CAMERAUPLOADFOLDER_H
 #define CAMERAUPLOADFOLDER_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 namespace UserAttributes
 {

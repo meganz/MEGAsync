@@ -1,7 +1,7 @@
 #ifndef MYBACKUPSHANDLEATTRIBUTESREQUEST_H
 #define MYBACKUPSHANDLEATTRIBUTESREQUEST_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 #include <mega/bindings/qt/QTMegaRequestListener.h>
 
 Q_DECLARE_METATYPE(mega::MegaHandle)

@@ -1,7 +1,7 @@
 #include "AccountDetailsDialog.h"
 #include "ui_AccountDetailsDialog.h"
 
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "MegaApplication.h"
 #include "TransferQuota.h"
 

@@ -1,19 +1,20 @@
-
 #include "Utilities.h"
-#include "control/Preferences/Preferences.h"
+
+#include "Preferences.h"
+#include "MegaApplication.h"
+#include "gzjoin.h"
+#include "platform/Platform.h"
 
 #include <QApplication>
 #include <QImageReader>
 #include <QDirIterator>
 #include <QTextStream>
 #include <QDateTime>
-#include <iostream>
 #include <QDesktopWidget>
 #include <QScreen>
-#include "MegaApplication.h"
-#include "control/gzjoin.h"
-#include "platform/Platform.h"
 #include <QCryptographicHash>
+
+#include <iostream>
 
 #ifndef WIN32
 #include "megaapi.h"

@@ -1,6 +1,6 @@
 #include <platform/PowerOptions.h>
 
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "megaapi.h"
 
 #include <QString>

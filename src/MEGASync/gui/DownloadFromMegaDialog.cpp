@@ -1,6 +1,6 @@
 #include "DownloadFromMegaDialog.h"
 #include "ui_DownloadFromMegaDialog.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "Platform.h"
 #include "CommonMessages.h"
 

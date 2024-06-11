@@ -1,7 +1,7 @@
 #ifndef AVATARATTRIBUTESREQUESTS_H
 #define AVATARATTRIBUTESREQUESTS_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 #include <QColor>
 #include <QPixmap>

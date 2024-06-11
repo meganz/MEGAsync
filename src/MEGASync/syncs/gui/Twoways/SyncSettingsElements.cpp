@@ -5,7 +5,7 @@
 #include <syncs/gui/SyncSettingsUIBase.h>
 
 #include <Utilities.h>
-#include "control/Preferences/Preferences.h"
+#include "Preferences.h"
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
 

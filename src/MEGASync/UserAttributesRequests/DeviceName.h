@@ -1,7 +1,7 @@
 #ifndef DEVICENAMEATTRIBUTESREQUESTS_H
 #define DEVICENAMEATTRIBUTESREQUESTS_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 namespace UserAttributes
 {

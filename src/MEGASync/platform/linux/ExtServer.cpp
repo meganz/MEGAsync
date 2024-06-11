@@ -4,7 +4,7 @@
 #include <pwd.h>
 #include <unistd.h>
 #include "CommonMessages.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 
 using namespace mega;
 using namespace std;

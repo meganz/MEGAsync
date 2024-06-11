@@ -2,7 +2,7 @@
 
 #include <Utilities.h>
 
-#include "control/Preferences/Preferences.h"
+#include "Preferences.h"
 #include "MegaApplication.h"
 
 #include <QDir>

@@ -9,10 +9,8 @@
 #include "TextDecorator.h"
 #include "StatsEventHandler.h"
 
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "qml/QmlDialogManager.h"
-
-#include "mega/types.h"
 
 #include <QQmlContext>
 
