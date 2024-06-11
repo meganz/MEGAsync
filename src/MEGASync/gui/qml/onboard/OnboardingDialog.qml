@@ -3,7 +3,7 @@ import common 1.0
 import OnboardingQmlDialog 1.0
 
 OnboardingQmlDialog {
-    id: onboardingWindow
+    id: window
 
     title: OnboardingStrings.setUpMEGA
     visible: true

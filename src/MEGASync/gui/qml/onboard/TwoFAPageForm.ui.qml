@@ -6,8 +6,7 @@ import common 1.0
 import components.buttons 1.0
 import components.textFields 1.0
 import components.texts 1.0 as Texts
-
-import onboard.syncs_types 1.0
+import components.pages 1.0
 
 import LoginController 1.0
 
@@ -29,11 +28,12 @@ StackViewPage {
         }
         spacing: contentSpacing
 
-        Header {
+        HeaderTexts {
             id: headerItem
 
             spacing: contentSpacing / 2
             title: OnboardingStrings.twoFATitle
+            titleWrapMode: Text.Wrap
             description: OnboardingStrings.twoFASubtitle
             titleWeight: Font.Normal
             descriptionFontSize: Texts.Text.Size.NORMAL
@@ -54,9 +54,9 @@ StackViewPage {
             left: root.left
             right: root.right
             bottom: root.bottom
-            leftMargin: -signUpButtonItem.sizes.focusBorderWidth
-            rightMargin: -signUpButtonItem.sizes.focusBorderWidth
-            bottomMargin: buttonsBottomMargin
+            leftMargin: Constants.focusAdjustment
+            rightMargin: Constants.focusAdjustment
+            bottomMargin: Constants.defaultWindowMargin + Constants.focusAdjustment
         }
 
         OutlineButton {

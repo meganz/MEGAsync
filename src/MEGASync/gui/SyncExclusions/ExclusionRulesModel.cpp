@@ -1,5 +1,7 @@
 #include "ExclusionRulesModel.h"
 
+#include <QCoreApplication>
+
 ExclusionRulesModel::ExclusionRulesModel(QObject* parent, std::shared_ptr<MegaIgnoreManager> megaIgnoreManager)
     : QAbstractListModel(parent)
 {
@@ -150,11 +152,11 @@ QString ExclusionRulesModel::getTargetTypeString(std::shared_ptr<MegaIgnoreRule>
     const auto targetType = getTargetType(rule);
     switch (targetType) {
     case ExclusionRulesModel::TargetType::EXTENSION:
-        return tr("file extension");
+        return QCoreApplication::translate("ExclusionsStrings", "file extension");
     case ExclusionRulesModel::TargetType::FILE:
-        return tr("file name");
+        return QCoreApplication::translate("ExclusionsStrings", "file name");
     case ExclusionRulesModel::TargetType::FOLDER:
-        return tr("folder name");
+        return QCoreApplication::translate("ExclusionsStrings", "folder name");
         break;
     default:
         break;
@@ -230,7 +232,7 @@ QString ExclusionRulesModel::getWildCardType(std::shared_ptr<MegaIgnoreRule> rul
 {
     if (rule->ruleType() == MegaIgnoreRule::EXTENSIONRULE)
     {
-        return tr("file type");
+        return QCoreApplication::translate("ExclusionsStrings", "file type");
     }
     else if (rule->ruleType() == MegaIgnoreRule::NAMERULE)
     {
@@ -240,13 +242,13 @@ QString ExclusionRulesModel::getWildCardType(std::shared_ptr<MegaIgnoreRule> rul
             switch (wildCard)
             {
             case MegaIgnoreNameRule::WildCardType::CONTAINS:
-                return tr("contains");
+                return QCoreApplication::translate("ExclusionsStrings", "contains");
             case MegaIgnoreNameRule::WildCardType::ENDSWITH:
-                return tr("ends with");
+                return QCoreApplication::translate("ExclusionsStrings", "ends with");
             case MegaIgnoreNameRule::WildCardType::STARTSWITH:
-                return tr("begins with");
+                return QCoreApplication::translate("ExclusionsStrings", "begins with");
             case MegaIgnoreNameRule::WildCardType::EQUAL:
-                return tr("is equal");
+                return QCoreApplication::translate("ExclusionsStrings", "is equal");
             default:
                 break;
             } 
@@ -302,14 +304,23 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
     {
         return;
     }
-    // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
-    if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
+    // Switching from name rule to extension rule
+    if(rule->ruleType() != MegaIgnoreRule::RuleType::EXTENSIONRULE && targetType == TargetType::EXTENSION)
     {
-        rule->setTarget((targetType != TargetType::FOLDER) ? (MegaIgnoreNameRule::Target::f)
-                                                           : (MegaIgnoreNameRule::Target::d));
+        removeRow(index);
+        addNewRule(targetType, wildCard, splitted[0]);
     }
-    rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
-    rule->setPattern(splitted[0]);
+    else
+    {
+        // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
+        if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
+        {
+            rule->setTarget((targetType != TargetType::FOLDER) ? (MegaIgnoreNameRule::Target::f)
+                                                               : (MegaIgnoreNameRule::Target::d));
+        }
+        rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
+        rule->setPattern(splitted[0]);
+    }
     emit dataChanged(createIndex(index, 0), createIndex(index, 0));
     // Remove the first value and add the rest
     splitted.pop_front();

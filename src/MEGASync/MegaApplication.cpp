@@ -9,6 +9,7 @@
 #include "control/LoginController.h"
 #include "control/AccountStatusController.h"
 #include "control/Preferences/EphemeralCredentials.h"
+#include "control/IntervalExecutioner.h"
 #include "CommonMessages.h"
 #include "EventUpdater.h"
 #include "GuiUtilities.h"
@@ -20,6 +21,8 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
+#include "onboarding/WhatsNewWindow.h"
+
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
@@ -29,6 +32,9 @@
 #include "gui/UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
+
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -263,6 +269,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mTransfersModel = nullptr;
     mStalledIssuesModel = nullptr;
     mStatusController = nullptr;
+    mStatsEventHandler = nullptr;
 
     notificationsModel = nullptr;
     notificationsProxyModel = nullptr;
@@ -363,6 +370,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
             &scanStageController, &ScanStageController::onFolderTransferUpdate);
 
     setAttribute(Qt::AA_DisableWindowContextHelpButton);
+
+    // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
+    // eg. queueing a folder with 1k items for upload/download
+    mIntervalExecutioner = std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
 }
 
 MegaApplication::~MegaApplication()
@@ -503,6 +514,9 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Establishing max payload log size: %1").arg(newPayLoadLogSize).toUtf8().constData());
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
+
+    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -701,9 +715,6 @@ void MegaApplication::initialize()
     mLogoutController = new LogoutController(QmlManager::instance()->getEngine());
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
-
-    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
@@ -1210,6 +1221,13 @@ void MegaApplication::start()
     {
         QmlDialogManager::instance()->openOnboardingDialog();
     }
+
+    if(updated && !preferences->getSession().isEmpty())
+    {
+        QmlDialogManager::instance()->openWhatsNewDialog();
+    }
+
+    updateTrayIcon();
 }
 
 void MegaApplication::requestUserData()
@@ -1342,19 +1360,19 @@ if (!preferences->lastExecutionTime())
     if (!infoDialog)
     {
         createInfoDialog();
-
-        if (!QSystemTrayIcon::isSystemTrayAvailable())
-        {
-            checkSystemTray();
-            if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
-            {
-                showInfoDialog();
-            }
-        }
     }
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
+
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        checkSystemTray();
+        if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+        {
+            showInfoDialog();
+        }
+    }
 
     model->setUnattendedDisabledSyncs(preferences->getDisabledSyncTags());
 
@@ -1485,6 +1503,15 @@ if (!preferences->lastExecutionTime())
 
 void MegaApplication::onLoginFinished()
 {
+    if (mIntervalExecutioner)
+    {
+        connect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
+                this, &MegaApplication::onScheduledExecution);
+    }
+}
+
+void MegaApplication::onFetchNodesFinished()
+{
     onGlobalSyncStateChanged(megaApi);
 
     if(mSettingsDialog)
@@ -1496,6 +1523,12 @@ void MegaApplication::onLoginFinished()
 
 void MegaApplication::onLogout()
 {
+    if (mIntervalExecutioner)
+    {
+        disconnect(mIntervalExecutioner.get(), &IntervalExecutioner::execute,
+                   this, &MegaApplication::onScheduledExecution);
+    }
+
     if (infoDialog && infoDialog->isVisible())
     {
         infoDialog->hide();
@@ -1528,6 +1561,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                infoDialog->deleteLater();
+                infoDialog = nullptr;
                 start();
                 periodicTasks();
             }
@@ -6411,39 +6446,25 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //Simply set the crashed flag to force a filesystem reload in the next execution.
 }
 
-void MegaApplication::onGlobalSyncStateChangedTimeout()
+void MegaApplication::onScheduledExecution()
 {
-    onGlobalSyncStateChangedImpl(NULL, true);
+    onGlobalSyncStateChangedImpl();
 }
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
 {
-    onGlobalSyncStateChangedImpl(api, false);
+    // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
+    // eg. queueing a folder with 1k items for upload/download
+    if (mIntervalExecutioner)
+    {
+        mIntervalExecutioner->scheduleExecution();
+    }
 }
 
-void MegaApplication::onGlobalSyncStateChangedImpl(MegaApi *, bool timeout)
+void MegaApplication::onGlobalSyncStateChangedImpl()
 {
     if (appfinished)
     {
-        return;
-    }
-
-    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
-    if (timeout)
-    {
-        onGlobalSyncStateChangedTimer.reset();
-    }
-    else
-    {
-        if (!onGlobalSyncStateChangedTimer)
-        {
-            onGlobalSyncStateChangedTimer.reset(new QTimer(this));
-            connect(onGlobalSyncStateChangedTimer.get(), SIGNAL(timeout()), this, SLOT(onGlobalSyncStateChangedTimeout()));
-
-            onGlobalSyncStateChangedTimer->setSingleShot(true);
-            onGlobalSyncStateChangedTimer->setInterval(200);
-            onGlobalSyncStateChangedTimer->start();
-        }
         return;
     }
 

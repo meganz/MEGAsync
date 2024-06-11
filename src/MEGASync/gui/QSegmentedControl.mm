@@ -113,6 +113,24 @@ void QSegmentedControl::clicked(int segment)
     }
 }
 
+void QSegmentedControl::setTableButtonEnable(int segment, bool enable)
+{
+    if(segmentType != TYPE_TABLE || (segment != ADD_BUTTON && segment != REMOVE_BUTTON))
+    {
+        return;
+    }
+
+    @autoreleasepool {
+        NSSegmentedControl* segControl = nil;
+
+        if ([cocoaContainer->cocoaView() isKindOfClass:[NSSegmentedControl class]]) {
+          segControl = (NSSegmentedControl*) cocoaContainer->cocoaView();
+
+          [segControl setEnabled:enable forSegment:segment];
+        }
+    }
+}
+
 QSegmentedControl::~QSegmentedControl()
 {
     delete cocoaContainer;

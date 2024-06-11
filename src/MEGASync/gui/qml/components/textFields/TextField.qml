@@ -36,6 +36,7 @@ FocusScope {
     signal pastePressed
     signal returnPressed
     signal accepted
+    signal editingFinished
 
     height: textField.height
                 + ((titleItem.text !== "" && titleItem.visible)
@@ -112,7 +113,9 @@ FocusScope {
         onAccepted: {
             root.accepted();
         }
-
+        onEditingFinished: {
+            root.editingFinished();
+        }
         background: Rectangle {
             id: focusBorder
 

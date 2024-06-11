@@ -1,2 +1,3 @@
 module components.views
 ScrollPanel 1.0 ScrollPanel.qml
+StackViewBase 1.0 StackViewBase.qml

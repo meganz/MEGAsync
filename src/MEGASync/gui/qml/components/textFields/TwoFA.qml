@@ -7,8 +7,6 @@ import components.texts 1.0 as Texts
 import components.textFields 1.0
 import components.buttons 1.0
 
-import onboard 1.0
-
 import QmlClipboard 1.0
 
 FocusScope {
@@ -36,7 +34,7 @@ FocusScope {
         digit6.text = pin.charAt(5);
     }
 
-    Layout.leftMargin: -digit1.sizes.focusBorderWidth
+    Layout.leftMargin: Constants.focusAdjustment
 
     onKeyChanged: {
         if(key.length === 6) {
@@ -128,11 +126,11 @@ FocusScope {
         Texts.NotificationText {
             id: notification
 
-            Layout.leftMargin: digit1.sizes.focusBorderWidth
-            Layout.preferredWidth: root.width - digit1.sizes.focusBorderWidth
+            Layout.leftMargin: Constants.focusAdjustment
+            Layout.preferredWidth: root.width + Constants.focusAdjustment
             Layout.preferredHeight: notification.height
-            title: OnboardingStrings.incorrect2FACode
-            text: OnboardingStrings.tryAgain
+            title: qsTranslate("OnboardingStrings", "Incorrect 2FA code")
+            text: Strings.tryAgain
             type: Constants.MessageType.ERROR
             icon: Images.lock
             time: 2000
@@ -154,7 +152,7 @@ FocusScope {
             id: helpButtonItem
 
             Layout.leftMargin: -sizes.horizontalPadding
-            text: OnboardingStrings.twoFANeedHelp
+            text: qsTranslate("OnboardingStrings", "Problem with two-factor authentication?")
             url: Links.recovery
             icons {
                 source: Images.helpCircle

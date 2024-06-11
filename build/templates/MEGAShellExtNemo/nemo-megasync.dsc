@@ -7,7 +7,7 @@ Version: EXT_VERSION
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
 Build-Depends: debhelper, cdbs, qtbase5-dev, intltool, autotools-dev, libnemo-extension-dev, libgtk2.0-bin, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
-Depends: megasync (>= 3.5.0)
+Depends: megasync (>= 5.3.0)
 Package-List:
   nemo-megasync deb gnome optional
 Files:

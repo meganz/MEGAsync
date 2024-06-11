@@ -38,7 +38,7 @@ SyncTypePageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             fullSyncButton.forceActiveFocus();

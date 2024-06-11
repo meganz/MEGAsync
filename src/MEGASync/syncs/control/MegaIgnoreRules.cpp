@@ -316,13 +316,22 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
         if (match.hasMatch())
         {
             auto value = match.captured(0);
-            mValue = value.toUInt();
+            try
+            {
+                mValue = std::stoull(value.toStdString());
+            }
+            catch (...)
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading .megaignore").toUtf8());
+            }
+
             auto unit = size.remove(value).toUpper().trimmed();
             if (!unit.isEmpty())
             {
                 EnumConversions<UnitTypes> convertEnum;
                 mUnit = convertEnum.getEnum(unit);
             }
+            computeMaximumUnit();
         }
     }
 }
@@ -402,5 +411,21 @@ void MegaIgnoreSizeRule::setUnit(int newUnit)
     {
         mIsDirty = true;
         mUnit = static_cast<UnitTypes>(newUnit);
+    }
+}
+
+void MegaIgnoreSizeRule::computeMaximumUnit()
+{
+    for(int unitIterator = mUnit + 1; unitIterator <= UnitTypes::G; ++unitIterator)
+    {
+        if((long long)mValue % (1024) ==0)
+        {
+            mValue /= 1024;
+            mUnit = static_cast<UnitTypes>(unitIterator);
+        }
+        else
+        {
+            break;
+        }
     }
 }

@@ -20,12 +20,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     mDelegate(nullptr)
 {
     ui->setupUi(this);
-
-    QString learnMoretext = tr("[A]Learn more[/A]");
-    learnMoretext.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.io/installs-apps/desktop-syncing/sync-v2\" \n   style=\"text-decoration: none\">"));
-    learnMoretext.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-
-    ui->LearnMoreLabel->setText(learnMoretext);
 #ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
@@ -71,25 +65,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
     });
 
-    connect(ui->SelectButton, &QPushButton::clicked, this, [this](){
-        auto valueChanged = setNewModeToPreferences();
-        showView(valueChanged);
-    });
-
-    if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
+    showView();
+    if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
     {
-        connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-        showModeSelector();
+        onUiBlocked();
     }
-    else
-    {
-        showView(true);
-        if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
-        {
-            onUiBlocked();
-        }
-    }
-    selectNewMode();
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -129,56 +109,6 @@ QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std:
     }
 
     return list;
-}
-
-bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
-{
-    if(event->type() == QEvent::MouseButtonRelease)
-    {
-        if(auto wid = dynamic_cast<QWidget*>(obj))
-        {
-            if(wid->isEnabled())
-            {
-                if(obj == ui->Advance)
-                {
-                    mModeSelected = Preferences::StalledIssuesModeType::Advance;
-                }
-                else if(obj == ui->Smart)
-                {
-                    mModeSelected = Preferences::StalledIssuesModeType::Smart;
-                }
-
-                selectNewMode();
-            }
-        }
-    }
-    else if(mModeSelected == Preferences::StalledIssuesModeType::None)
-    {
-        if(event->type() == QEvent::Enter)
-        {
-            if(obj == ui->Advance)
-            {
-                hoverMode(Preferences::StalledIssuesModeType::Advance);
-            }
-            else if(obj == ui->Smart)
-            {
-                hoverMode(Preferences::StalledIssuesModeType::Smart);
-            }
-        }
-        else if(event->type() == QEvent::Leave)
-        {
-            if(obj == ui->Advance)
-            {
-                unhoverMode(Preferences::StalledIssuesModeType::Advance);
-            }
-            else if(obj == ui->Smart)
-            {
-                unhoverMode(Preferences::StalledIssuesModeType::Smart);
-            }
-        }
-    }
-
-    return QDialog::eventFilter(obj, event);
 }
 
 void StalledIssuesDialog::mouseReleaseEvent(QMouseEvent *event)
@@ -259,120 +189,10 @@ void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
     ui->header->setDisabled(state);
 }
 
-void StalledIssuesDialog::showModeSelector()
-{
-    auto mode = Preferences::instance()->stalledIssuesMode();
-    if(mode != Preferences::StalledIssuesModeType::None)
-    {
-        if(mode == Preferences::StalledIssuesModeType::Smart)
-        {
-            ui->Smart->setProperty(MODE_SELECTED, true);
-            ui->Advance->setProperty(MODE_SELECTED, false);
-        }
-        else
-        {
-            ui->Smart->setProperty(MODE_SELECTED, false);
-            ui->Advance->setProperty(MODE_SELECTED, true);
-        }
-
-        ui->SelectButton->setEnabled(true);
-        mModeSelected = mode;
-        mModeSelected = Preferences::StalledIssuesModeType::Advance;
-    }
-    else
-    {
-        ui->Smart->setProperty(MODE_SELECTED, false);
-        ui->Advance->setProperty(MODE_SELECTED, false);
-    }
-
-    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
-    ui->stackedWidget->setCurrentWidget(ui->ModeSelector);
-    ui->Advance->installEventFilter(this);
-    ui->Advance->setMouseTracking(true);
-    ui->Smart->installEventFilter(this);
-    ui->Smart->setMouseTracking(true);
-
-    ui->AdvanceIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->SmartIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-}
-
-void StalledIssuesDialog::onPreferencesValueChanged(QString key)
-{
-    if(ui->ModeSelector->isVisible() && key == Preferences::stalledIssuesModeKey)
-    {
-        auto newModeSelected = Preferences::instance()->stalledIssuesMode();
-
-        if(newModeSelected != mModeSelected)
-        {
-            mModeSelected = newModeSelected;
-            mModeSelected = Preferences::StalledIssuesModeType::Advance;
-            selectNewMode();
-        }
-    }
-}
-
-void StalledIssuesDialog::showView(bool update)
+void StalledIssuesDialog::showView()
 {
     ui->stackedWidget->setCurrentWidget(ui->View);
-
-    if(update)
-    {
-        on_refreshButton_clicked();
-    }
-}
-
-void StalledIssuesDialog::selectNewMode()
-{
-    bool smartSelected(mModeSelected == Preferences::StalledIssuesModeType::Smart);
-
-    ui->Smart->setProperty(MODE_SELECTED, smartSelected);
-    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    ui->Advance->setProperty(MODE_SELECTED, !smartSelected);
-    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
-    ui->SelectButton->setEnabled(mModeSelected != Preferences::StalledIssuesModeType::None);
-}
-
-void StalledIssuesDialog::hoverMode(Preferences::StalledIssuesModeType mode)
-{
-    if(mode == Preferences::StalledIssuesModeType::Advance)
-    {
-        ui->Advance->setProperty(MODE_SELECTED, true);
-        ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-    }
-    else if(mode == Preferences::StalledIssuesModeType::Smart)
-    {
-        ui->Smart->setProperty(MODE_SELECTED, true);
-        ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    }
-}
-
-void StalledIssuesDialog::unhoverMode(Preferences::StalledIssuesModeType mode)
-{
-    if(mode == Preferences::StalledIssuesModeType::Advance)
-    {
-        ui->Advance->setProperty(MODE_SELECTED, false);
-        ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-    }
-    else if(mode == Preferences::StalledIssuesModeType::Smart)
-    {
-        ui->Smart->setProperty(MODE_SELECTED, false);
-        ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    }
-}
-
-bool StalledIssuesDialog::setNewModeToPreferences()
-{
-    disconnect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-    auto valueChanged(mModeSelected != Preferences::instance()->stalledIssuesMode());
-    if(valueChanged)
-    {
-        Preferences::instance()->setStalledIssuesMode(mModeSelected);
-    }
-    connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-    return valueChanged;
+    on_refreshButton_clicked();
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)

@@ -37,13 +37,19 @@ static void mega_ext_instance_init(MEGAExt *mega_ext)
 static const gchar *file_state_to_str(FileState state)
 {
     switch(state) {
-        case FILE_SYNCED:
+        case RESPONSE_SYNCED:
             return "synced";
-        case FILE_PENDING:
+        case RESPONSE_PENDING:
             return "pending";
-        case FILE_SYNCING:
+        case RESPONSE_SYNCING:
             return "syncing";
-        case FILE_NOTFOUND:
+        case RESPONSE_IGNORED:
+            return "ignored";
+        case RESPONSE_PAUSED:
+            return "paused";
+        case RESPONSE_ERROR:
+            return "error";
+        case RESPONSE_DEFAULT:
         default:
             return "notfound";
     }
@@ -93,7 +99,8 @@ static void mega_ext_on_upload_selected(NemoMenuItem *item, gpointer user_data)
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state != FILE_SYNCED && state != FILE_PENDING && state != FILE_SYNCING) {
+        if (state != RESPONSE_SYNCED && state != RESPONSE_PENDING && state != RESPONSE_SYNCING)
+        {
             if (mega_ext_client_upload(mega_ext, path))
                 flag = TRUE;
         }
@@ -120,7 +127,7 @@ void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path)
 }
 
 
-void expanselocalpath(char *path, char *absolutepath)
+void expanselocalpath(const char *path, char *absolutepath)
 {
     if (strlen(path) && path[0] == '/')
     {
@@ -194,7 +201,7 @@ static void mega_ext_on_get_link_selected(NemoMenuItem *item, gpointer user_data
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_paste_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -231,7 +238,7 @@ static void mega_ext_on_view_on_mega_selected(NemoMenuItem *item, gpointer user_
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_link(mega_ext, path))
                 flag = TRUE;
         }
@@ -267,7 +274,7 @@ static void mega_ext_on_open_previous_selected(NemoMenuItem *item, gpointer user
 
         state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
 
-        if (state == FILE_SYNCED) {
+        if (state == RESPONSE_SYNCED) {
             if (mega_ext_client_open_previous(mega_ext, path))
                 flag = TRUE;
         }
@@ -319,12 +326,12 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         // but make sure we received the list of synced folders first
         if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path))
         {
-            state = FILE_NOTFOUND;
+            state = RESPONSE_DEFAULT;
         }
         else
         {
             state = mega_ext_client_get_path_state(mega_ext, path, 1);
-            if (state == FILE_NOTFOUND)
+            if (state == RESPONSE_DEFAULT)
             {
                 char canonical[PATH_MAX];
                 expanselocalpath(path,canonical);
@@ -333,7 +340,7 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         }
         g_free(path);
 
-        if (state == FILE_ERROR)
+        if (state == RESPONSE_ERROR)
         {
             continue;
         }
@@ -343,7 +350,7 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         g_object_set_data_full((GObject*)file, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+        if (state == RESPONSE_SYNCED || state == RESPONSE_SYNCING || state == RESPONSE_PENDING)
         {
             if (nemo_file_info_get_file_type(file) == G_FILE_TYPE_DIRECTORY)
             {
@@ -384,7 +391,7 @@ static GList *mega_ext_get_file_items(NemoMenuProvider *provider, G_GNUC_UNUSED 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
         if(out)
         {
-            item = nemo_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+            item = nemo_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to your MEGA account", "mega");
             g_free(mega_ext->string_upload);
             mega_ext->string_upload = g_strdup(out);
             g_free(out);
@@ -505,7 +512,7 @@ static NemoOperationResult mega_ext_update_file_info(NemoInfoProvider *provider,
     }
 
     state = mega_ext_client_get_path_state(mega_ext, path, 0);
-    if (state == FILE_NOTFOUND)
+    if (state == RESPONSE_DEFAULT)
     {
         char canonical[PATH_MAX];
         expanselocalpath(path,canonical);
@@ -515,7 +522,7 @@ static NemoOperationResult mega_ext_update_file_info(NemoInfoProvider *provider,
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
 
     // process items located in sync folders
-    if (state == FILE_NOTFOUND || state == FILE_IGNORED)
+    if (state == RESPONSE_DEFAULT || state == RESPONSE_IGNORED)
     {
         if (has_mega_icon)
         {
@@ -532,20 +539,20 @@ static NemoOperationResult mega_ext_update_file_info(NemoInfoProvider *provider,
     // reset
     nemo_file_info_invalidate_extension_info(file);
 
-    if (state == FILE_ERROR)
+    if (state == RESPONSE_ERROR)
     {
         return NEMO_OPERATION_COMPLETE;
     }
 
     switch (state)
     {
-        case FILE_SYNCED:
+        case RESPONSE_SYNCED:
             nemo_file_info_add_emblem(file, "mega-nemosynced");
             break;
-        case FILE_PENDING:
+        case RESPONSE_PENDING:
             nemo_file_info_add_emblem(file, "mega-nemopending");
             break;
-        case FILE_SYNCING:
+        case RESPONSE_SYNCING:
             nemo_file_info_add_emblem(file, "mega-nemosyncing");
             break;
         default:

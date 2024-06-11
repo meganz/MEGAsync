@@ -1,0 +1,4 @@
+module components.pages
+HeaderTexts 1.0 HeaderTexts.qml
+FooterButtons 1.0 FooterButtons.qml
+FooterButtonsPage 1.0 FooterButtonsPage.qml

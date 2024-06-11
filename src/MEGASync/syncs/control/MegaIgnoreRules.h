@@ -214,9 +214,10 @@ public:
 
     void setValue(int newValue);
     void setUnit(int newUnit);
+    void computeMaximumUnit();
 
 private:
-    double mValue = 1;
+    unsigned long long mValue = 1;
     UnitTypes mUnit = UnitTypes::B;
     Threshold mThreshold = LOW;
 };

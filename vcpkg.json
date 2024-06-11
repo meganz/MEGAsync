@@ -16,7 +16,10 @@
         "use-freeimage": {
             "description": "FreeImage library",
             "dependencies": [
-                "freeimage",
+                {
+                    "name": "freeimage",
+                    "version>=" : "3.18.0#27"
+                },
                 {
                     "name": "jasper",
                     "default-features": false
@@ -62,5 +65,8 @@
       { "name": "curl", "version>=": "8.4.0" },
       "icu"
     ],
-    "builtin-baseline" : "7476f0d4e77d3333fbb249657df8251c28c4faae"
+    "builtin-baseline" : "7476f0d4e77d3333fbb249657df8251c28c4faae",
+    "overrides": [
+        { "name" : "libuv", "version": "1.44.2" }
+    ]
 }

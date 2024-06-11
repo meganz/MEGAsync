@@ -1,5 +1,3 @@
-find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
-
 set(DESKTOP_APP_GUI_HEADERS
     gui/SettingsDialog.h
     gui/AutoResizeStackedWidget.h
@@ -35,7 +33,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/QMegaMessageBox.h
     gui/AvatarWidget.h
     gui/MenuItemAction.h
-    gui/AddExclusionDialog.h
     gui/StatusInfo.h
     gui/PSAwidget.h
     gui/ElidedLabel.h
@@ -86,20 +83,25 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlManager.h
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
-    gui/onboarding/ChooseFolder.h
+    gui/qml/ChooseFolder.h
+    gui/qml/ChooseFile.h
+    gui/qml/QmlDeviceName.h
+    gui/qml/AccountInfoData.h
     gui/onboarding/Onboarding.h
-    gui/onboarding/AccountInfoData.h
-    gui/onboarding/BackupsModel.h
     gui/onboarding/Syncs.h
-    gui/onboarding/QmlDeviceName.h
     gui/onboarding/PasswordStrengthChecker.h
-    gui/onboarding/BackupsController.h
     gui/onboarding/GuestQmlDialog.h
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
+    gui/onboarding/WhatsNewWindow.h
+    gui/backups/Backups.h
+    gui/backups/BackupsController.h
+    gui/backups/BackupsModel.h
+    gui/backups/BackupsQmlDialog.h
+    gui/SyncExclusions/AddExclusionRule.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -135,7 +137,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QMegaMessageBox.cpp
     gui/AvatarWidget.cpp
     gui/MenuItemAction.cpp
-    gui/AddExclusionDialog.cpp
     gui/StatusInfo.cpp
     gui/ChangePassword.cpp
     gui/PSAwidget.cpp
@@ -184,20 +185,25 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp
     gui/qml/StandardIconProvider.cpp
-    gui/onboarding/ChooseFolder.cpp
+    gui/qml/ChooseFolder.cpp
+    gui/qml/ChooseFile.cpp
+    gui/qml/QmlDeviceName.cpp
+    gui/qml/AccountInfoData.cpp
     gui/onboarding/Onboarding.cpp
-    gui/onboarding/AccountInfoData.cpp
-    gui/onboarding/BackupsModel.cpp
     gui/onboarding/Syncs.cpp
-    gui/onboarding/QmlDeviceName.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
-    gui/onboarding/BackupsController.cpp
     gui/onboarding/GuestQmlDialog.cpp
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
+    gui/onboarding/WhatsNewWindow.cpp
+    gui/backups/Backups.cpp
+    gui/backups/BackupsController.cpp
+    gui/backups/BackupsModel.cpp
+    gui/backups/BackupsQmlDialog.cpp
+    gui/SyncExclusions/AddExclusionRule.cpp
 
 )
 
@@ -221,7 +227,6 @@ target_sources_conditional(MEGAsync
     gui/win/MegaProgressCustomDialog.ui
     gui/win/PlanWidget.ui
     gui/win/UpgradeDialog.ui
-    gui/win/AddExclusionDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
     gui/win/RemoteItemUi.ui
@@ -271,7 +276,6 @@ target_sources_conditional(MEGAsync
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
    gui/macx/UpgradeDialog.ui
-   gui/macx/AddExclusionDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
    gui/macx/RemoteItemUi.ui
@@ -322,7 +326,6 @@ target_sources_conditional(MEGAsync
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
     gui/linux/UpgradeDialog.ui
-    gui/linux/AddExclusionDialog.ui
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
     gui/linux/UpgradeOverStorage.ui
@@ -438,6 +441,10 @@ set(DESKTOP_APP_GUI_RESOURCES
     gui/qml/qml.qrc
 )
 
+list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
+list(REMOVE_DUPLICATES QML_IMPORT_PATH)
+set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
+
 if (CMAKE_HOST_APPLE)
     add_custom_command(
             TARGET MEGAsync
@@ -459,3 +466,51 @@ target_sources(MEGAsync
 target_include_directories(MEGAsync PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
+
+if (UNIX AND NOT APPLE)
+
+    # Install tray icons for Linux
+
+    # color
+    set(HICOLOR "share/icons/hicolor/scalable/status")
+    install(FILES gui/images/synching.svg RENAME megasynching.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/warning.svg RENAME megawarning.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/alert.svg RENAME megaalert.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/paused.svg RENAME megapaused.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/logging.svg RENAME megalogging.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+    install(FILES gui/images/uptodate.svg RENAME megauptodate.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${HICOLOR}"
+    )
+
+    # mono-dark
+    set(MONOCOLOR "share/icons/ubuntu-mono-dark/status/24")
+    install(FILES gui/images/synching_clear.svg RENAME megasynching.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/warning_clear.svg RENAME megawarning.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/alert_clear.svg RENAME megaalert.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/paused_clear.svg RENAME megapaused.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/logging_clear.svg RENAME megalogging.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+    install(FILES gui/images/uptodate_clear.svg RENAME megauptodate.svg
+        DESTINATION "${CMAKE_INSTALL_BINDIR}/../${MONOCOLOR}"
+    )
+
+endif()

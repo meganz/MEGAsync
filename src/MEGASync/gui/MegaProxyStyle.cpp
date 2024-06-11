@@ -201,7 +201,10 @@ void MegaProxyStyle::polish(QWidget *widget)
     }
     else if(qobject_cast<QDialog*>(widget) || qobject_cast<QWindow*>(widget))
     {
-        widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
+        if(MegaSyncApp->getStatsEventHandler())
+        {
+            widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
+        }
     }
 
     QProxyStyle::polish(widget);

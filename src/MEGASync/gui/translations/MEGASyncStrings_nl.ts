@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="nl" sourcelanguage="en">
 <context>
@@ -103,64 +103,6 @@
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
         <translation>Wilt u doorgaan?</translation>
-    </message>
-</context>
-<context>
-    <name>AddExclusionDialog</name>
-    <message>
-        <source>Add exclusion</source>
-        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>Uitsluiting toevoegen</translation>
-    </message>
-    <message>
-        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
-        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Voer een naam in, een absoluut pad (jokertekens * en ? zijn toegestaan) of kies welk bestand of map u wilt uitsluiten van de synchronisatie.</translation>
-    </message>
-    <message>
-        <source>Choose File</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Kies bestand</translation>
-    </message>
-    <message>
-        <source>Choose Folder</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Kies map</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Kiezen</translation>
-    </message>
-    <message>
-        <source>Please enter a valid file name or absolute path.</source>
-        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Voer een geldige bestandsnaam of absoluut pad in</translation>
-    </message>
-    <message>
-        <source>Select the file or folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>Selecteer het bestand of de map die u wilt uitsluiten</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>Selecteer de map die u wilt uitsluiten</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>Selecteer het bestand dat u wilt uitsluiten</translation>
     </message>
 </context>
 <context>
@@ -447,7 +389,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Er bestaat al een map met de naam &#8220;%1&#8221; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up. De mapnaam verandert niet op uw computer.</translation>
+        <translation>Er bestaat al een map met de naam &quot;%1&quot; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up. De mapnaam verandert niet op uw computer.</translation>
     </message>
     <message>
         <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
@@ -461,7 +403,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can't have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>U kunt geen back-up maken van mappen met dezelfde naam. Hernoem ze om door te gaan met de back-up. Mapnamen veranderen niet op uw computer.</translation>
     </message>
 </context>
@@ -485,7 +427,7 @@
     <message>
         <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
         <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Er bestaat al een map met de naam &#8220;%1&#8221; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up.</translation>
+        <translation>Er bestaat al een map met de naam &quot;%1&quot; in uw Back-ups. Hernoem de nieuwe map om door te gaan met de back-up.</translation>
     </message>
 </context>
 <context>
@@ -833,7 +775,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
         <translation>Schakel deze optie alleen in als de overdracht niet start. Onder alle andere omstandigheden is het gebruik van HTTP bevredigend, aangezien MEGA alle gegevens al codeert.</translation>
     </message>
 </context>
@@ -1163,13 +1105,13 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
         <translation><numerusform>Het probleem oplossen?</numerusform><numerusform>De problemen oplossen?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Met deze actie wordt het bestand naar een tijdelijke lokatie gedownload, wordt het probleem opgelost en dan wordt het verwijderd.</numerusform><numerusform>Met deze actie worden de bestanden naar een tijdelijke lokatie gedownload, worden de problemen opgelost en dan worden ze verwijderd.</numerusform></translation>
+        <translation><numerusform>Met deze actie wordt het bestand naar een tijdelijke lokatie gedownload, wordt het probleem opgelost en wordt dan het tijdelijke bestand verwijderd.</numerusform><numerusform>Met deze actie worden de bestanden naar een tijdelijke lokatie gedownload, worden de problemen opgelost en worden dan de tijdelijke bestanden verwijderd.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -1188,7 +1130,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Oplossen</translation>
     </message>
 </context>
@@ -1215,7 +1157,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Remote Copy</source>
         <translatorcomment>Title of the choosen version of the remote local conflict.SNC-2565</translatorcomment>
-        <translation>Kopie op afstand</translation>
+        <translation>Kopiëren in MEGA</translation>
     </message>
 </context>
 <context>
@@ -1345,7 +1287,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>Wachten tot andere processen zijn voltooid.</translation>
     </message>
 </context>
@@ -1626,7 +1568,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>U heeft geen schrijf rechten voor deze lokale map.</translation>
     </message>
 </context>
@@ -1676,8 +1618,18 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
 <context>
     <name>DownloadQueueController</name>
     <message>
-        <source>Local Disk</source>
-        <translatorcomment>Default drive name shown on the low space dialog when downloading files</translatorcomment>
+        <source>Removable drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Removable drive. See SNC-3506.</translatorcomment>
+        <translation>Verwijderbare schijf</translation>
+    </message>
+    <message>
+        <source>Shared drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when the drive is a Network drive. See SNC-3506.</translatorcomment>
+        <translation>Netwerkschijf</translation>
+    </message>
+    <message>
+        <source>Local drive</source>
+        <translatorcomment>Default drive name shown on the low space dialog when downloading files. See SNC-3506.</translatorcomment>
         <translation>Lokale schijf</translation>
     </message>
 </context>
@@ -1793,6 +1745,269 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     </message>
 </context>
 <context>
+    <name>ExclusionsStrings</name>
+    <message>
+        <source>Add Exclusions</source>
+        <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Uitsluitingen toevoegen</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
+        <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Hier kunt u voorkomen dat bestanden en mappen worden gesynchroniseerd met uw Cloud-schijf. Dit kan handig zijn voor grote bestanden, bestanden die u niet op al uw apparaten nodig heeft, of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action that enables openning sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Uitsluitingen beheren</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from</source>
+        <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>Kies uit welke bestanden of mappen u wilt uitsluiten</translation>
+    </message>
+    <message>
+        <source>Exclude files by size</source>
+        <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>Bestanden op grootte uitsluiten</translation>
+    </message>
+    <message>
+        <source>Exclude file sizes</source>
+        <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
+        <translation>Bestanden uitsluiten</translation>
+    </message>
+    <message>
+        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>Sluit bestanden uit door een minimale en maximale groottelimiet in te stellen, of bestanden die groter of kleiner zijn dan een bepaalde grootte.</translation>
+    </message>
+    <message>
+        <source>Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).</source>
+        <translatorcomment>Description for the dialog for adding a new exclusion rule.SAT-449</translatorcomment>
+        <translation>Kies of u een bestand of map wilt uitsluiten. U kunt specifieke bestandstypen uitsluiten of een bestand of map die begint, eindigt, bevat of gelijk is aan een naam (of een deel van een naam).</translation>
+    </message>
+    <message>
+        <source>Add Exclusion</source>
+        <translatorcomment>Button to accept and add a new exclusion rule with the specified values.SAT-449</translatorcomment>
+        <translation>Uitsluitingen toevoegen</translation>
+    </message>
+    <message>
+        <source>You will exclude:</source>
+        <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
+        <translation>U sluit het volgende uit:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Drop down entry for specifying files as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Bestanden</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Drop down entry for specifying folders as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Mappen</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Extensies</translation>
+    </message>
+    <message>
+        <source>Beginning with</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>beginnend met</translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>bevat</translation>
+    </message>
+    <message>
+        <source>Ending</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>eindigt op</translation>
+    </message>
+    <message>
+        <source>Equal to</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>gelijk aan</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button to cancel the dialog for adding rules.SAT-449</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Files beginning with:</source>
+        <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>Bestanden die beginnen met:</translation>
+    </message>
+    <message>
+        <source>Use comma (“,”) to separate multiple items</source>
+        <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>Gebruik een komma (“,”, om meerdere items van elkaar te scheiden</translation>
+    </message>
+    <message>
+        <source>Outside of</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>buiten de</translation>
+    </message>
+    <message>
+        <source>Bigger than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>groter dan</translation>
+    </message>
+    <message>
+        <source>Smaller than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>kleiner dan</translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment> Label for the end range of file size exclusions section.SAT-449</translatorcomment>
+        <translation>en</translation>
+    </message>
+    <message>
+        <source>Exclude by name</source>
+        <translatorcomment>Section title for name exclusion rules.SAT-449</translatorcomment>
+        <translation>Uitsluiten op naam</translation>
+    </message>
+    <message>
+        <source>Restore defaults</source>
+        <translatorcomment>Button for restoring MEGA ddefault sync exclusion rules.SAT-449</translatorcomment>
+        <translation>Standaardwaarden herstellen</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translatorcomment>Column title for displaying exclusion rule target type.SAT-449</translatorcomment>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>property</source>
+        <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
+        <translation>Criteria</translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
+        <translation>Doelwit</translation>
+    </message>
+    <message>
+        <source>Remove this exclusion?</source>
+        <translatorcomment>Title for confirmation dialog before removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Deze uitsluitingsuitsluiting verwijderen?</translation>
+    </message>
+    <message>
+        <source>Files beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>Bestanden die beginnen met  “%1”worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Mappen die beginnen met “%1” worden opgenomen in deze synchronisatie</translation>
+    </message>
+    <message>
+        <source>Files containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>Bestanden die “%1” bevatten worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Mappen die “%1” bevatten worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Files ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>Bestanden die eindigen op “%1” worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Mappen die eindigen op “%1” worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Files equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>Bestanden gelijk aan “%1” wordt opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Mappen gelijk aan “%1” worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation>Bestanden met de extensie “%1” worden opgenomen in deze synchronisatie.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box for confirmation message bedore removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Vraag niet nogmaals</translation>
+    </message>
+    <message>
+        <source>Set a minimum and maximum value for file sizes. Files outside this range will be excluded.</source>
+        <translatorcomment>Hint text when specyfing the range to be excluded in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>Stel een minimum- en maximumwaarde in voor de bestandsgrootte. Bestanden buiten dit bereik worden uitgesloten.</translation>
+    </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation>Uitsluitingen bewerken</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation>Klaar</translation>
+    </message>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Bestandsextensie</translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Bestand Naam</translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Map naam</translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Bestandstype</translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Bevat</translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Eindigt met</translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Begint met</translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Is gelijk aan</translation>
+    </message>
+</context>
+<context>
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
@@ -1804,17 +2019,17 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <name>FileIssueHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet synchroniseren</translation>
     </message>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
         <translation>Een bestand heeft een probleem waarvoor uw besluit nodig is om het op te lossen</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
         <translation>Een map heeft een probleem waarvoor uw besluit nodig is om het op te lossen</translation>
     </message>
 </context>
@@ -1916,12 +2131,12 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet synchroniseren</translation>
     </message>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>Het bestand dat u probeert te synchroniseren heeft geen extensie en heeft dezelfde naam als een bestaande map</translation>
     </message>
 </context>
@@ -2033,129 +2248,6 @@ Vernieuw de lijst.</translation>
     </message>
 </context>
 <context>
-    <name>IgnoresEditingDialog</name>
-    <message>
-        <source>Edit exclusions</source>
-        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Uitsluitingen wijzigen</translation>
-    </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Uitsluitingen beheren</translation>
-    </message>
-    <message>
-        <source>by size</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Uitsluiten op grootte</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Sluit bestanden uit die kleiner zijn dan</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Sluit bestanden uit die groter zijn dan</translation>
-    </message>
-    <message>
-        <source>by name</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Uitsluiten op naam</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation>Bestanden of mappen die moeten worden uitgesloten van synchronisatie:</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
-        <translation>Toevoegen</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
-        <translation>Verwijderen</translation>
-    </message>
-    <message>
-        <source>by file type</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Uitsluiten op bestandstype</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Geavanceerd</translation>
-    </message>
-    <message>
-        <source>Open .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Open .megaignore</translation>
-    </message>
-    <message>
-        <source>by size:</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Uitsluiten op grootte:</translation>
-    </message>
-    <message>
-        <source>by name:</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Uitsluiten op naam:</translation>
-    </message>
-    <message>
-        <source>by file type:</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Uitsluiten op bestandstype:</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Wijzig .megaignore</translation>
-    </message>
-    <message>
-        <source>Advanced:</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Geavanceerd:</translation>
-    </message>
-    <message>
-        <source>Rule already exists.</source>
-        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation>Regel bestaat al</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
-        <translation>Herladen</translation>
-    </message>
-    <message>
-        <source>Current file has been modified by another program. it will be reloaded</source>
-        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation>Het huidige .megaignore-bestand is gewijzigd door een ander programma en wordt opnieuw geladen</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation>U kunt het bijbehorende .megaignore-bestand bewerken met een teksteditor. Dit is een taak die beter geschikt is voor gebruikers die vertrouwd zijn met reguliere expressies. </translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation>U kunt het bijbehorende .megaignore-bestand bewerken met een teksteditor. Dit is een taak die beter geschikt is voor gebruikers die vertrouwd zijn met reguliere expressies. </translation>
-    </message>
-    <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>U kunt bestanden en mappen uitsluiten van synchronisatie met uw Cloud Schijf.
-Dit kan handig zijn voor grote bestanden, bestanden die u niet op al uw apparaten nodig hebt,
-of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translation>
-    </message>
-</context>
-<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
@@ -2192,7 +2284,7 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
         <translation>Niet gevonden</translation>
     </message>
     <message>
@@ -2219,26 +2311,6 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
         <translation>Gratis</translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
         <translation>Zakelijk</translation>
@@ -2246,7 +2318,7 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Available storage:</source>
@@ -2358,7 +2430,7 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
         <translation>Geen meldingen</translation>
     </message>
     <message>
@@ -2378,17 +2450,17 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
         <translation>Geen meldingen voor contacten</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
         <translation>Geen meldingen voor binnenkomende delingen</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
         <translation>Geen meldingen voor betalingen</translation>
     </message>
     <message>
@@ -2559,6 +2631,86 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     </message>
 </context>
 <context>
+    <name>LinuxPlatformNotificationAreaIcon</name>
+    <message>
+        <source>Install notification area icon</source>
+        <translatorcomment>This is the title of a notification message prompting the user about enabling the Notification Area Icon. The &quot;Notification Area Icon&quot; refers to the option to display an icon in the system tray or notification area of the taskbar. SNC-2270</translatorcomment>
+        <translation>Installatie icoon voor het meldingsgebied</translation>
+    </message>
+    <message>
+        <source>For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.
+Would you like to install the necessary components now?</source>
+        <translatorcomment>This is the text of a notification message displayed to users on Fedora with GNOME, advising them to consider activating the Notification Area Icon for an optimized experience. It also inquires if they wish to proceed with the installation of the required components for enabling the Notification Area Icon. SNC-2270</translatorcomment>
+        <translation>Voor een betere ervaring op Fedora met GNOME raden we u aan het icoon van het meldingsgebied in te schakelen.
+Wilt u nu de benodigde componenten installeren?</translation>
+    </message>
+    <message>
+        <source>Do not show again</source>
+        <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
+        <translation>Niet opnieuw weergeven</translation>
+    </message>
+    <message>
+        <source>Installing notification area icon...</source>
+        <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
+        <translation>Meldingsgebiedicoon installeren...</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>This is the option provided in the Notification Area Icon installation progress bar to the user to cancel the Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Installing</source>
+        <translatorcomment>This is the title  for the Notification Area Icon installation progress bar which provide the feedback to the user about Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>Installeren</translation>
+    </message>
+    <message>
+        <source>Installation Cancelled</source>
+        <translatorcomment>This is the title of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>Installatie geannuleerd</translation>
+    </message>
+    <message>
+        <source>The notification area icon installation was cancelled.</source>
+        <translatorcomment>This is the text of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>De installatie van het icoon in het meldingsgebied is geannuleerd.</translation>
+    </message>
+    <message>
+        <source>Error installing components</source>
+        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
+        <translation>Fout bij het installeren van componenten</translation>
+    </message>
+    <message>
+        <source>Failed to install the necessary components.</source>
+        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translation>Het installeren van de benodigde onderdelen is mislukt.</translation>
+    </message>
+    <message>
+        <source>To install manually, please run the following commands:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translation>Voer de volgende opdrachten uit om handmatig te installeren:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
+    </message>
+    <message>
+        <source>Install complete</source>
+        <translatorcomment>This is the title of a message indicating that the Notification Area Icon Support has been installed without any issues. SNC-2270</translatorcomment>
+        <translation>Installatie voltooid</translation>
+    </message>
+    <message>
+        <source>The notification area icon was installed successfully.
+Please log out of your computer to complete the installation.</source>
+        <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
+        <translation>Het icoon van het meldingsgebied is succesvol geïnstalleerd.
+Meld u af bij uw computer om de installatie te voltooien.</translation>
+    </message>
+</context>
+<context>
     <name>LoadingSceneMessageHandler</name>
     <message>
         <source>%1 of %2</source>
@@ -2634,7 +2786,7 @@ of bepaalde bestandstypen die niet hoeven te worden gesynchroniseerd.</translati
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Weet u zeker dat u de lokale map [B]%1[/B] wilt behouden?</translation>
+        <translation>De lokale map [B]%1[/B] bewaren?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
@@ -2645,7 +2797,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>The [B]remote folder[/B] %1 will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, %1 is a placeholder for folder name, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>De afzonderlijke map [B]%1[/B] wordt verplaatst naar de MEGA Prullenbak. [BR]Van daaruit kunt u de map herstellen.</translation>
+        <translation>De map in MEGA [B]%1[/B] wordt naar de MEGA-prullenbak verplaatst.[BR]Van daaruit kunt u de map herstellen.</translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
@@ -2737,7 +2889,7 @@ Vernieuw de lijst.</translation>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Bewaar laatst gewijzigd[/B] (extern)</translation>
+        <translation>[B]Laatst gewijzigd behouden[/B] (in MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2754,22 +2906,22 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]</source>
         <translatorcomment>Informative text in a message box shown when the user chooses a version explaining what happens to the other version, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>De [B]externe[/B] mappen worden verplaatst naar uw MEGA-Prullenbak. U kunt de mappen daar herstellen.</translation>
+        <translation>De mappen die al in MEGA zijn opgeslagen, worden naar uw MEGA-prullenbak verplaatst.[BR]Van daaruit kunt u de mappen herstellen.</translation>
     </message>
     <message>
         <source>Keep the [B]remote files[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Wilt u de [B]externe[/B] bestanden bewaren?</translation>
+        <translation>Bewaar de bestanden die al zijn opgeslagen [B]bij MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Wilt u de [B]externe[/B] mappen bewaren?</translation>
+        <translation>Bewaar de mappen die al zijn opgeslagen [B]bij MEGA[/B]?</translation>
     </message>
     <message>
         <source>Keep the [B]remote items[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote versions of a local and remote changed stall, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Wilt u de [B]externe[/B] items bewaren?</translation>
+        <translation>Bewaar de items die al zijn opgeslagen [B]bij MEGA[/B]?</translation>
     </message>
     <message>
         <source>The [B]local files[/B] will be moved to the sync debris folder</source>
@@ -2804,17 +2956,35 @@ Wacht tot het uploaden is voltooid.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Het [B]externe[/B] bestand krijgt een achtervoegsel (1) toegevoegd.</numerusform><numerusform>De [B]externe[/B] bestanden krijgen een achtervoegsel (1) toegevoegd.</numerusform></translation>
+        <translation><numerusform>Aan het bestand in MEGA wordt een achtervoegsel zoals (1) toegevoegd.</numerusform><numerusform>Aan de bestanden die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>De[B]externe[/B] map krijgt een achtervoegsel (1) toegevoegd.</numerusform><numerusform>De [B]externe[/B] mappen krijgen een achtervoegsel (1) toegevoegd.</numerusform></translation>
+        <translation><numerusform>Aan de map die al in MEGA is opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform><numerusform>Aan de mappen die al in MEGA zijn opgeslagen, wordt een achtervoegsel zoals (1) toegevoegd.</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Wilt u de [B]lokale[/B] mappen bewaren?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
+        <translation>Het lokale bestand [B]%1[/B] wordt geüpload naar MEGA en vervangt het huidige bestand, dat wordt verplaatst naar de map SyncDebris in uw MEGA-prullenbak.</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
+        <translation>De [B]lokale[/B] bestanden worden geüpload naar MEGA en vervangen de huidige bestanden, die worden verplaatst naar de map SyncDebris in uw MEGA-Prullenbak.</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Klik op Hernoemen om dit probleem op te lossen, of klik op de onderstaande mappen om aanpassingen aan te brengen in het lokale bestandssysteem of in MEGA</translation>
     </message>
 </context>
 <context>
@@ -2939,6 +3109,11 @@ Wacht tot het uploaden is voltooid.</translation>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>U bent afgemeld vanwege deze fout: %1</translation>
     </message>
+    <message>
+        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
+        <translation>U bent uitgelogd. Neem contact op [A]support@mega.nz[/A] als dit probleem zich blijft voordoen.</translation>
+    </message>
 </context>
 <context>
     <name>LowDiskSpaceDialog</name>
@@ -3007,7 +3182,7 @@ Wacht tot het uploaden is voltooid.</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
         <translation>Bijgewerkt</translation>
     </message>
     <message>
@@ -3037,7 +3212,7 @@ Wacht tot het uploaden is voltooid.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
         <translation>Probleem gedetecteerd</translation>
     </message>
     <message>
@@ -3110,11 +3285,6 @@ https://mega.co.nz/#sync</source>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>Uw configuratie is corrupt, begin opnieuw</translation>
-    </message>
-    <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>Tegoed over</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3224,7 +3394,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account geschorst</translation>
+        <translation>Account gedeactiveerd</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3234,7 +3404,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>Uw uploads kunnen niet doorgaan omdat %1&#8217;s account vol is.</translation>
+        <translation>Uw uploads kunnen niet doorgaan omdat %1&apos;s account vol is.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3379,6 +3549,16 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
         <translation>ProFlexi-account gedeactiveerd</translation>
     </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full (tray icon tooltip). CON-561</translatorcomment>
+        <translation>Opslagruimte vol</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
+        <translation>Overdrachtstegoed overschreden</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -3518,11 +3698,6 @@ Overdrachten worden automatisch hervat wanneer u de applicatie heropend.</numeru
         <translation>Algemene Voorwaarden geschonden</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Niet toegankelijk vanwege schending van de Algemene Voorwaarden</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Overdracht is mislukt vanwege een recursieve mapstructuur</translation>
@@ -3546,7 +3721,7 @@ Kijk in uw e-mailinbox voor meer informatie over hoe u een tegenmelding kunt ind
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA.
 U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijgen om een ​​nieuw MEGA-account te registreren. </translation>
     </message>
@@ -3554,6 +3729,16 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
         <translation>Algemene Voorwaarden geschonden.</translation>
+    </message>
+    <message>
+        <source>Your account has expired</source>
+        <translatorcomment>Used when a business account has expired, but this could also be a Pro-Flexi account. Max. 27 characters. SNC-4190 and CON-556</translatorcomment>
+        <translation>Uw account is verlopen</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation>De opslag op de bestemming is vol</translation>
     </message>
 </context>
 <context>
@@ -3649,8 +3834,8 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>Het account van de eigenaar van de synchronisatiemap heeft zijn opslagtegoed overschreden.</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>De map kan niet worden gesynchroniseerd omdat de gebruiker die deze map heeft gedeeld zijn of haar opslagtegoed heeft bereikt</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3660,17 +3845,12 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
     <message>
         <source>Remote node moved to Rubbish Bin</source>
         <translatorcomment>Label to show that remote node has been moved to Rubbish bin.</translatorcomment>
-        <translation>De map voor externe synchronisatie is verplaatst naar de Prullenbak</translation>
+        <translation>De map in MEGA is verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
-        <translation>U hebt geen volledige toegang tot de externe synchronisatiemap</translation>
-    </message>
-    <message>
-        <source>Local fingerprint mismatch</source>
-        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>Er is een wijziging in het lokale bestandssysteem gedetecteerd</translation>
+        <translation>U heeft geen volledige toegang tot de gedeelde map in MEGA</translation>
     </message>
     <message>
         <source>Put nodes error</source>
@@ -3695,7 +3875,7 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
     <message>
         <source>Remote node is inside Rubbish Bin</source>
         <translatorcomment>SDK error label shown when remote node is inside Rubbish bin.</translatorcomment>
-        <translation>De map voor externe synchronisatie bevindt zich in uw Prullenbak</translation>
+        <translation>De map in MEGA bevindt zich in uw Prullenbak</translation>
     </message>
     <message>
         <source>Unsupported VBoxSharedFolderFS filesystem</source>
@@ -3746,6 +3926,106 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation>Uw abonnement was verlopen</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
+        <translation>Synchronisatie of backup is gestopt omdat u bent uitgelogd. Om de synchronisatie te hervatten, schakelt u de synchronisatie of backup opnieuw in via Instellingen.</translation>
+    </message>
+    <message>
+        <source>Active sync same path</source>
+        <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
+        <translation>Deze lokatie bevat al gesynchroniseerde of mappen die al een back-up hebben</translation>
+    </message>
+    <message>
+        <source>Unknown drive path.</source>
+        <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
+        <translation>Het schijfpad voor synchronisatie of back-up is onbekend</translation>
+    </message>
+    <message>
+        <source>Local filesystem mismatch</source>
+        <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
+        <translation>Bestanden in deze map kunnen niet worden gesynchroniseerd of er kan geen back-up van worden gemaakt. U moet de synchronisatie of backup opnieuw inschakelen via Instellingen.</translation>
+    </message>
+    <message>
+        <source>Backup externally modified</source>
+        <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
+        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map vanwege wijzigingen in de MEGA-map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+    </message>
+    <message>
+        <source>Unable to create initial ignore file.</source>
+        <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
+        <translation>Kon geen .megaignore bestand aanmaken voor deze synchronisatie of backup</translation>
+    </message>
+    <message>
+        <source>Unable to read sync configs from disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
+        <translation>Kon de synchronisatie- of backupconfiguratie niet lezen. Probeer het later opnieuw of controleer de mapmachtigingen.</translation>
+    </message>
+    <message>
+        <source>Invalid scan interval specified.</source>
+        <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
+        <translation>Ongeldig scaninterval. Controleer de instellingen voor het scaninterval en probeer het opnieuw.</translation>
+    </message>
+    <message>
+        <source>Filesystem notification subsystem unavailable.</source>
+        <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
+        <translation>Did you mean: Couldn&apos;t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted. Kan niet communiceren met de maplocatie. Controleer of de locatie toegankelijk is en of er machtigingen voor de maplocatie zijn verleend.</translation>
+    </message>
+    <message>
+        <source>Unable to add filesystem watch.</source>
+        <translatorcomment>SDK error indicating that the filesystem watch couldn´t be added. CON-537</translatorcomment>
+        <translation>Kan geen bestandssysteembewaking toevoegen. Zorg ervoor dat er voldoende vrije ruimte en geheugen is en dat u machtigingen hebt verleend voor de maplocatie.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve sync root FSID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
+        <translation>Kon de synchronisatie- of backuplokatie niet lezen. Controleer of de lokatie toegankelijk is en de machtigingen voor de maplokatie zijn toegekend.</translation>
+    </message>
+    <message>
+        <source>Unable to open state cache database.</source>
+        <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
+        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+    </message>
+    <message>
+        <source>Insufficient disk space.</source>
+        <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
+        <translation>Onvoldoende ruimte om te downloaden.</translation>
+    </message>
+    <message>
+        <source>Failure accessing to persistent storage</source>
+        <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
+        <translation>Kon de synchronisatie- of backuplokatie niet lezen. Controleer of de lokatie toegankelijk is en de machtigingen voor de maplokatie zijn toegekend.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve the ID of current device</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
+        <translation>Kan geen back-up maken omdat het apparaat waarvan u een back-up maakt geen naam heeft. Geef uw apparaat een naam en probeer het dan opnieuw. Als het probleem zich blijft voordoen, neem contact op met de Ondersteuning.</translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+    </message>
+    <message>
+        <source>Could not get the filesystem&apos;s ID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
+        <translation>Kon de synchronisatie- of backuplokatie niet lezen. Controleer of de lokatie toegankelijk is en de machtigingen voor de maplokatie zijn toegekend.</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
+        <translation>De synchronisatie- of backupconfiguratie kon niet worden bijgewerkt. Probeer het later opnieuw of controleer de mapmachtigingen.</translation>
+    </message>
+    <message>
+        <source>Backup source path not below drive path.</source>
+        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3989,7 +4269,7 @@ Alle andere geselecteerde overdrachten worden geannuleerd.</translation>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
         <translation>Extern gewijzigd</translation>
     </message>
     <message>
@@ -4029,16 +4309,16 @@ ververs de weergave.</translation>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the file from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Het bestand wordt verplaatst naar de map .rubbish of .debris op uw lokale synchronisatielocatie. [BR]U kunt het bestand vanaf daar herstellen.[/BR]</translation>
+        <translation>Het wordt verplaatst naar de map .rubbish of .debris op uw lokale synchronisatielokatie.[BR]Van daaruit kunt u het bestand herstellen.[/BR]</translation>
     </message>
     <message>
         <source>It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]</source>
         <translatorcomment>Confirmation message for sync stall solve option, [BR] is for line break .SNC-2565</translatorcomment>
-        <translation>Dit wordt verplaatst naar de map .rubbish of .debris op uw lokale synchronisatielocatie.[BR] U kunt de map vanaf daar herstellen.[/BR]</translation>
+        <translation>Het wordt verplaatst naar de map .rubbish of .debris op uw lokale synchronisatielokatie.[BR]Van daaruit kunt u de map herstellen.[/BR]</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
         <translation>Geen actie nodig</translation>
     </message>
     <message>
@@ -4328,7 +4608,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
         <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
-        <translation>Weet u zeker dat u “%1” wilt verwijderen?</translation>
+        <translation>Weet u zeker dat u wilt verwijderen “%1”?</translation>
     </message>
     <message>
         <source>Error:</source>
@@ -5292,12 +5572,12 @@ Voer een andere naam in.</translation>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>Extra opslagtegoed in rekening gebracht op %1 per %2&#xa0;TB.</translation>
+        <translation>Extra opslagtegoed in rekening gebracht op %1 per %2 TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>Extra overdrachtstegoed in rekening gebracht op %1 per %2&#xa0;TB.</translation>
+        <translation>Extra overdrachtstegoed in rekening gebracht op %1 per %2 TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -5319,8 +5599,8 @@ Voer een andere naam in.</translation>
     <name>PlatformStrings</name>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
-        <translation>Verplaatst naar Prullenbak</translation>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -5334,8 +5614,8 @@ Voer een andere naam in.</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
-        <translation>Verplaatst naar Prullenbak</translation>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Show in Finder</source>
@@ -5349,8 +5629,8 @@ Voer een andere naam in.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
-        <translation>Verplaatst naar Prullenbak</translation>
+        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translation>Item verplaatst naar de Prullenbak</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
@@ -5361,21 +5641,25 @@ Voer een andere naam in.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync Rework Beta V1 version.
-- New Exclusions dialog for syncs.
-- New header for undecrypted cloud issues.
-- Minor changes in issues description. 
-- Auto solve reparse points and hard/sym links in Smart Mode. 
-- Minor bugs fixed. 
-- Performance improved. 
+        <source>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 2.SNC-2565</translatorcomment>
-        <translation>Synchroniseer Rework Beta V1.
-- Nieuw dialoogvenster voor uitsluitingen voor synchronisaties.
-- Kleine wijzigingen in de beschrijvingen van problemen.
-- Kan nu reparatiepunten, harde links en symkoppelingen automatisch oplossen in de slimme modus.
-- Kleine bugs opgelost.
-- Prestaties verbeterd. </translation>
+        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
+        <translation>- Ondersteuning toegevoegd voor links naar albums en Verzamelingen.
+- Qt bijgewerkt naar v5.15.13.
+- Bijgewerkte afhankelijkheden.
+- Verbeterde foutmeldingen.
+- De interface voor uitsluitingen is verbeterd.
+- Ondersteuning toegevoegd voor openSUSE Leap 15.6, Ubuntu 24.04 en Fedora 40.
+- Verbeterde systeemintegratie voor alle besturingssystemen.
+- Bugfixes en andere verbeteringen.
+</translation>
     </message>
 </context>
 <context>
@@ -5760,7 +6044,7 @@ Please verify the correct file name was given.</source>
 Controleer of de juiste bestandsnaam is opgegeven.</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” is beveiligd tegen schrijven.
@@ -5772,27 +6056,27 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1&#xa0;TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1&#xa0;GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1&#xa0;MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1&#xa0;KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;bytes</translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -5937,6 +6221,29 @@ Wilt u deze toch verwijderen?</translation>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveSyncConfirmationDialog</name>
+    <message>
+        <source>Remove this sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Deze synchronisatie verwijderen?</translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>De gegevens op je computer en in MEGA worden niet verwijderd, maar de mappen worden niet meer met elkaar gesynchroniseerd.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
@@ -6223,7 +6530,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
-        <translation>SyncDebris (externe cache)</translation>
+        <translation>SyncDebris (in MEGA)</translation>
     </message>
     <message>
         <source>Enable file versioning</source>
@@ -6318,7 +6625,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>SyncDebris (remote cache):</source>
         <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (externe cache):</translation>
+        <translation>SyncDebris (in MEGA):</translation>
     </message>
     <message>
         <source>File versions:</source>
@@ -6371,21 +6678,6 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Update installeren</translation>
     </message>
     <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Gratis</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Zakelijk</translation>
-    </message>
-    <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
         <translation>Geen limiet</translation>
@@ -6414,21 +6706,6 @@ Wilt u deze toch verwijderen?</translation>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>Rapporteer probleem</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -6499,11 +6776,6 @@ Wilt u deze toch verwijderen?</translation>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>Wilt u uitloggen?</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -6646,7 +6918,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>gebruiker ophalen&#8230;</translation>
+        <translation>gebruiker ophalen...</translation>
     </message>
     <message>
         <source>Upload by:</source>
@@ -6661,7 +6933,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>Laadgrootte&#8230;</translation>
+        <translation>Laadgrootte...</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -6722,7 +6994,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>move</source>
         <translatorcomment>Subtitle for the section containg move file details.SNC-2565</translatorcomment>
-        <translation>Verplaatst naar</translation>
+        <translation>Item is verplaatst naar</translation>
     </message>
     <message>
         <source>on MEGA:</source>
@@ -6742,7 +7014,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Ignore rules unknown.</source>
         <translatorcomment>Label descriping a temporary sync stall is happening because the exclusion state is being computed for the file.SNC-2565</translatorcomment>
-        <translation>Uitsluitingsregels berekenen, wacht en probeer het opnieuw.</translation>
+        <translation>Bij het berekenen van de uitsluitingsregels wordt het probleem opgelost zodra dit is voltooid.</translation>
     </message>
     <message>
         <source>Detected Sym link.</source>
@@ -6771,7 +7043,7 @@ Wilt u deze toch verwijderen?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
         <translation>Naam te lang voor bestandssysteem</translation>
     </message>
     <message>
@@ -6791,13 +7063,13 @@ Wilt u deze toch verwijderen?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC-verificatie mislukt</translation>
     </message>
     <message>
         <source>Deleted or moved by user.</source>
         <translatorcomment>Label descriping a sync stall is happening because the cloud node is moved or deleted by the user.SNC-2565</translatorcomment>
-        <translation>Verwijderd of verplaatst in MEGA</translation>
+        <translation>Item verwijderd of verplaatst in MEGA</translation>
     </message>
     <message>
         <source>Deleted by user.</source>
@@ -6822,7 +7094,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>Fout bij het identificeren van mapinhoud in het lokale bestandssysteem</translation>
+        <translation>De inhoud van deze map kon niet worden gelezen. Controleer de maprechten en of geen van de items door andere toepassingen wordt gebruikt.</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -6939,36 +7211,6 @@ Wilt u deze toch verwijderen?</translation>
         <translation>Synchronisatie problemen</translation>
     </message>
     <message>
-        <source>All issues:</source>
-        <translatorcomment>Name of the tab containing all sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Alle problemen:</translation>
-    </message>
-    <message>
-        <source>Name conflicts:</source>
-        <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Naam conflicten:</translation>
-    </message>
-    <message>
-        <source>Item type conflicts:</source>
-        <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog.SNC-2565</translatorcomment>
-        <translation>Item type conflicten:</translation>
-    </message>
-    <message>
-        <source>Other:</source>
-        <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Anders:</translation>
-    </message>
-    <message>
-        <source>Solved:</source>
-        <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Opgelost:</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls dialog.DNS-1388</translatorcomment>
-        <translation>Vernieuw</translation>
-    </message>
-    <message>
         <source>Close</source>
         <translatorcomment>Button to close sync stalls dialog</translatorcomment>
         <translation>Sluiten</translation>
@@ -7019,13 +7261,18 @@ automatically</source>
         <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
         <translation>[A]Meer leren[/A]</translation>
     </message>
+    <message>
+        <source>Help</source>
+        <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
+        <translation>Help</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>Problemen oplossen&#8230;</translation>
+        <translation>Problemen oplossen...</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -7046,7 +7293,7 @@ Vernieuw de weergave.</translation>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>Problemen oplossen&#8230;</translation>
+        <translation>Problemen oplossen...</translation>
     </message>
     <message>
         <source>The issue may have been solved externally.
@@ -7056,14 +7303,14 @@ Please, refresh the list.</source>
 Vernieuw de lijst.</translation>
     </message>
     <message>
-        <source>Some issues can&apos;t be fixed.
+        <source>Some issues can't be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Sommige problemen kunnen niet worden opgelost.
 Controleer de machtigingen van het .megaignore bestand op de locaties van uw lokale synchronisatiemap.</translation>
     </message>
     <message>
-        <source>Issues can&apos;t be fixed.
+        <source>Issues can't be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Sommige problemen kunnen niet worden opgelost.
@@ -7276,7 +7523,7 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>Met deze actie worden alle huidige en toekomstige symbolische links in al uw synchronisaties genegeerd.</translation>
     </message>
     <message>
@@ -7286,7 +7533,7 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>Deze actie negeert deze symbolische link en wordt niet gesynchroniseerd.</translation>
     </message>
     <message>
@@ -7452,6 +7699,19 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
     </message>
 </context>
 <context>
+    <name>SyncExclusions</name>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecteer het bestand dat u wilt uitsluiten</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecteer de map die u wilt uitsluiten</translation>
+    </message>
+</context>
+<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -7496,12 +7756,12 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld omdat de externe map zich in de Prullenbak bevindt</translation>
+        <translation>Uw synchronisatie”%1” is uitgeschakeld omdat de map in MEGA zich in de Prullenbak bevindt</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.SNC-3654</translatorcomment>
-        <translation>Uw synchronisatie “%1” is uitgeschakeld. U heeft geen volledige toegang tot de externe map (of een deel ervan).</translation>
+        <translation>Uw synchronisatie”%1” is uitgeschakeld. U heeft geen volledige toegang tot de map in MEGA (of een deel ervan).</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -7565,8 +7825,8 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>Het doel bevindt zich te diep in uw mapstructuur.
-Verplaats het naar een locatie die minder dan 64 mappen diep is.</translation>
+        <translation>Het doel zit te diep in uw mappenstructuur. Stop de synchronisatie, verplaats de map naar een lokatie met minder dan 64 mappen diep en maak de synchronisatie opnieuw.
+Als het probleem hiermee niet is opgelost, neem contact op met support@mega.nz.</translation>
     </message>
 </context>
 <context>
@@ -7744,7 +8004,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B]kan niet worden toegevoegd omdat uw Pro&#xa0;Flexi-account is gedeactiveerd vanwege een mislukte betaling of omdat u uw abonnement heeft opgezegd. Om door te gaan, voert u een betaling uit en activeert u uw abonnement opnieuw.</translation>
+        <translation>[B]%1[/B]kan niet worden toegevoegd omdat uw Pro Flexi-account is gedeactiveerd vanwege een mislukte betaling of omdat u uw abonnement heeft opgezegd. Om door te gaan, voert u een betaling uit en activeert u uw abonnement opnieuw.</translation>
     </message>
 </context>
 <context>
@@ -7803,11 +8063,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pauzeren</translation>
     </message>
     <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
-        <translation>Uitsluitingen toevoegen</translation>
-    </message>
-    <message>
         <source>Quick Rescan</source>
         <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Snel opnieuw scannen</translation>
@@ -7816,11 +8071,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Deep Rescan</source>
         <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Volledig opnieuw scannen</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>Wijzig .megaignore</translation>
     </message>
 </context>
 <context>
@@ -8120,7 +8370,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Uw MEGA-account is vol</translation>
     </message>
     <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+        <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>U kunt niet doorgaan met downloaden omdat u niet genoeg overdrachtstegoed meer heeft voor dit IP-adres.
@@ -8420,7 +8670,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Clear all videos</source>
         <translatorcomment>Tooltip for clear button when the user is in the videos category</translatorcomment>
-        <translation>Alle overdrachten in Video&#8217;s wissen</translation>
+        <translation>Alle overdrachten in Video&apos;s wissen</translation>
     </message>
     <message>
         <source>Clear all archives</source>
@@ -8500,12 +8750,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Cancel and clear all audios</source>
         <translatorcomment>Tooltip for cancel button when the user is in the audios category and there are completed transfers</translatorcomment>
-        <translation>Annuleer en wis alle audio&#8217;s</translation>
+        <translation>Annuleer en wis alle audio&apos;s</translation>
     </message>
     <message>
         <source>Cancel and clear all videos</source>
         <translatorcomment>Tooltip for cancel button when the user is in the videos category and there are completed transfers</translatorcomment>
-        <translation>Annuleer en wis alle video&#8217;s</translation>
+        <translation>Annuleer en wis alle video&apos;s</translation>
     </message>
     <message>
         <source>Cancel and clear all archives</source>
@@ -8545,12 +8795,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Resume all audios</source>
         <translatorcomment>Tooltip for Resume button when the user is in the audios category</translatorcomment>
-        <translation>Alle audio&#8217;s hervatten</translation>
+        <translation>Alle audio&apos;s hervatten</translation>
     </message>
     <message>
         <source>Resume all videos</source>
         <translatorcomment>Tooltip for Resume button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&#8217;s hervatten</translation>
+        <translation>Alle video&apos;s hervatten</translation>
     </message>
     <message>
         <source>Resume all archives</source>
@@ -8590,12 +8840,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pause all audios</source>
         <translatorcomment>Tooltip for Pause button when the user is in the audios category</translatorcomment>
-        <translation>Alle audio&#8217;s pauzeren</translation>
+        <translation>Alle audio&apos;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all videos</source>
         <translatorcomment>Tooltip for Pause button when the user is in the videos category</translatorcomment>
-        <translation>Alle video&#8217;s pauzeren</translation>
+        <translation>Alle video&apos;s pauzeren</translation>
     </message>
     <message>
         <source>Pause all archives</source>
@@ -8651,7 +8901,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Voor alle transacties wordt u in euro in rekening gebracht.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -8694,7 +8944,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Geschatte prijs in uw lokale valuta. Uw account wordt gefactureerd in euro’s voor alle transacties.</translation>
+        <translation>* Geschatte prijs in uw lokale valuta. Voor alle transacties wordt u in euro in rekening gebracht.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -8711,12 +8961,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Kan [B]%1[/B] niet uploaden naar de geselecteerde locatie</translation>
     </message>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Kan de doelmap niet bereiken</translation>
     </message>
 </context>
@@ -8804,22 +9054,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -8839,22 +9089,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]d[/A]</translation>
+        <translation>%1 [A]d[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]u[/A]</translation>
+        <translation>%1 [A]u[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]m[/A]</translation>
+        <translation>%1 [A]m[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]s[/A]</translation>
+        <translation>%1 [A]s[/A]</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -8900,6 +9150,56 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
         <translation><numerusform>Overdracht %n jaar geleden voltooid</numerusform><numerusform>Overdracht %n jaar geleden voltooid</numerusform></translation>
+    </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>MEGA Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
+        <translation>MEGA Starter</translation>
+    </message>
+    <message>
+        <source>MEGA Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
+        <translation>MEGA Basic</translation>
+    </message>
+    <message>
+        <source>MEGA Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
+        <translation>MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation>Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation>Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation>Essential</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Zakelijk</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Pro Flexi</translation>
     </message>
 </context>
 <context>

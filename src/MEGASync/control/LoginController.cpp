@@ -1,12 +1,18 @@
 #include "LoginController.h"
+
 #include "MegaApplication.h"
-#include "Preferences/Preferences.h"
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
+
 #include "TextDecorator.h"
 #include "StatsEventHandler.h"
+
+#include "Preferences/Preferences.h"
+#include "qml/QmlDialogManager.h"
+
+#include "mega/types.h"
 
 #include <QQmlContext>
 
@@ -338,6 +344,7 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
+        MegaSyncApp->onLoginFinished();
     }
     else
     {
@@ -468,7 +475,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
-        MegaSyncApp->onLoginFinished();
+        MegaSyncApp->onFetchNodesFinished();
     }
     else
     {
@@ -682,12 +689,44 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         {
             return;
         }
+        mPreferences->loadExcludedSyncNames(); //to attend the corner case:
+            // comming from old versions that didn't include some defaults
+
     }
     assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
 
     if (!mPreferences->logged())
     {
         return;
+    }
+    const QStringList exclusions = mPreferences->getExcludedSyncNames();
+    if(!exclusions.isEmpty())
+    {
+        std::vector<std::string> vExclusions;
+        for (const QString& exclusion : exclusions)
+        {
+            vExclusions.push_back(exclusion.toStdString());
+        }
+        mMegaApi->setLegacyExcludedNames(&vExclusions);
+    }
+    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
+    if(!exclusionPaths.isEmpty())
+    {
+        std::vector<std::string> vExclusionPaths;
+        for (const QString& exclusionPath : exclusionPaths)
+        {
+            vExclusionPaths.push_back(exclusionPath.toStdString());
+        }
+        mMegaApi->setLegacyExcludedPaths(&vExclusionPaths);
+    }
+    if (mPreferences->lowerSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
+    }
+
+    if (mPreferences->upperSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
     }
 
     if (temporarilyLoggedPrefs)
@@ -832,6 +871,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         int errorCode = e->getErrorCode();
         if (errorCode == mega::MegaError::API_OK)
         {
+            MegaSyncApp->onLoginFinished();
             if (!mPreferences->getSession().isEmpty())
             {
                 //Successful login, fetch nodes

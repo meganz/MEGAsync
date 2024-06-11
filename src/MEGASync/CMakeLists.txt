@@ -8,6 +8,7 @@ elseif (APPLE)
     add_executable(MEGAsync MACOSX_BUNDLE)
 else()
     add_executable(MEGAsync)
+    set_target_properties(MEGAsync PROPERTIES OUTPUT_NAME "megasync")
 endif()
 
 set(MEGA_DESKTOP_APP_HEADERS
@@ -73,6 +74,15 @@ set_target_properties(MEGAsync
     AUTORCC ON # Activates the creation of rules over qrc files
 )
 
+
+find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
+qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/translation.source.ts
+    OPTIONS -locations none -no-ui-lines -no-obsolete)
+
+# Generate ts files before MEGAsync is compiled
+add_custom_target(generate_ts DEPENDS ${QM_OUTPUT})
+add_dependencies(MEGAsync generate_ts)
+
 target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/google_breakpad
 )
@@ -111,6 +121,8 @@ message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5
 
 target_link_libraries(MEGAsync
     PUBLIC
+    MEGA::SDKlib
+    MEGA::SDKQtBindings
     $<$<BOOL:${WIN32}>:Qt5::WinExtras>
     $<$<BOOL:${APPLE}>:Qt5::MacExtras>
     $<$<BOOL:${UNIX}>:Qt5::Svg>
@@ -120,10 +132,29 @@ target_link_libraries(MEGAsync
     Qt5::Network
     Qt5::Qml
     Qt5::Quick
-    MEGA::SDKlib
-    MEGA::SDKQtBindings
     MEGA::google_breakpad
 )
+
+# Install MEGAsync binary, dynamic libraries and, if needed, deploy Qt dependencies.
+if (UNIX AND NOT APPLE)
+
+    install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
+
+    set(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/$<$<CONFIG:Debug>:debug/>lib/")
+
+    install(DIRECTORY "${vcpkg_lib_folder}"
+        TYPE LIB # In CMAKE_INSTALL_LIBDIR directory
+        FILES_MATCHING
+        PATTERN "*.so*"
+        PATTERN "manual-link" EXCLUDE
+        PATTERN "pkgconfig" EXCLUDE
+    )
+
+    if(DEPLOY_QT_LIBRARIES)
+        include(desktopapp_deploy_qt)
+    endif()
+
+endif()
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 if (MSVC)

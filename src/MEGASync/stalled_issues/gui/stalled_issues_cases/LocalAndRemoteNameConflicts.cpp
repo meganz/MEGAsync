@@ -4,12 +4,8 @@
 #include <StalledIssueHeader.h>
 #include <NameConflictStalledIssue.h>
 
-const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files can resolve this issue,"
-                                                                                                     "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing folders can resolve this issue,"
-                                                                                                       "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
-const QString FILES_AND_FOLDERS_DESCRIPTION = QString::fromLatin1(QT_TR_NOOP("Renaming or removing files or folders can resolve this issue,"
-                                                                                                       "\nor click the Folders below to make adjustments in the local filesystem or in MEGA"));
+const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TRANSLATE_NOOP("LocalAndRemoteNameConflicts",
+                                                                        "Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA"));
 
 LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -61,19 +57,7 @@ void LocalAndRemoteNameConflicts::refreshUi()
             ui->localConflictNames->updateUi(nameConflict);
             ui->localConflictNames->show();
         }
-
-        if(getData().consultData()->filesCount() > 0 && getData().consultData()->foldersCount() > 0)
-        {
-            ui->selectLabel->setText(FILES_AND_FOLDERS_DESCRIPTION);
-        }
-        else if(getData().consultData()->filesCount() > 0)
-        {
-            ui->selectLabel->setText(FILES_DESCRIPTION);
-        }
-        else if(getData().consultData()->foldersCount() > 0)
-        {
-            ui->selectLabel->setText(FOLDERS_DESCRIPTION);
-        }
+        ui->selectLabel->setText(FILES_DESCRIPTION);
     }
 }
 

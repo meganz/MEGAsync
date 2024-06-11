@@ -11,7 +11,6 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/BackupsWizard.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
@@ -56,7 +55,7 @@ constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
 constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
 constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
 constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
-constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{513};
+constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{240};
 constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
 constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 #endif
@@ -1167,56 +1166,66 @@ void SettingsDialog::updateBandwidthElements()
 void SettingsDialog::updateAccountElements()
 {
     QIcon icon;
+    mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
+
     switch(mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
-            mUi->lAccountType->setText(tr("Free"));
             mUi->bUpgrade->show();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
-            mUi->lAccountType->setText(tr("Pro I"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
-            mUi->lAccountType->setText(tr("Pro II"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
-            mUi->lAccountType->setText(tr("Pro III"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
-            mUi->lAccountType->setText(tr("Pro Lite"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Business.png"));
-            mUi->lAccountType->setText(tr("Business"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_Flexi.png"));
-            mUi->lAccountType->setText(tr("Pro Flexi"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_STARTER:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
+            break;
+        case Preferences::ACCOUNT_TYPE_BASIC:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
+            break;
+        case Preferences::ACCOUNT_TYPE_ESSENTIAL:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
             break;
         default:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
@@ -1356,6 +1365,14 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->pNotifications->setEnabled(enabled);
 
     mUi->wStackFooter->setEnabled(enabled);
+}
+
+void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+{
+    if(mUi->backupSettings)
+    {
+        mUi->backupSettings->setAddButtonEnabled(enabled);
+    }
 }
 
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)
