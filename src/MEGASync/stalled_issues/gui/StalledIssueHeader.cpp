@@ -227,39 +227,6 @@ void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixm
     }
 }
 
-void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
-{
-    if(getData().consultData()->isBeingSolved())
-    {
-        QString defaultSolveMessage(StalledIssuesModel::fixingIssuesString());
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, QPixmap());
-
-        ui->actionWaitingSpinner->start();
-    }
-    else
-    {
-        ui->actionWaitingSpinner->stop();
-
-        if(getData().consultData()->isSolved() &&
-                !getData().consultData()->isPotentiallySolved())
-        {
-            QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-            QString defaultSolveMessage(tr("Solved"));
-            showMessage(
-                customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16, 16));
-        }
-        else if(getData().consultData()->isFailed())
-        {
-            QIcon icon(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-            QString defaultSolveMessage(tr("Failed"));
-            showMessage(
-                customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(16, 16));
-        }
-    }
-
-    ui->multipleActionButton->hide();
-}
-
 void StalledIssueHeader::updateIssueState()
 {
     auto type(getData().consultData()->getIsSolved());
