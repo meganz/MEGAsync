@@ -35,8 +35,10 @@ SwitchButton::SwitchButton(QWidget* parent)
     generalSwitch->setObjectName(QLatin1String("switch"));
     connect(generalSwitch, &QCheckBox::toggled, this, &SwitchButton::onSwitchToggled);
     mSwitchButton = generalSwitch;
-    //applyWinLinuxStyleSheet();
+
 #endif
+
+    mSwitchButton->setProperty("showText", false);
 
     //Done with code to avoid creating an empty .ui
     auto layout  = new QVBoxLayout();
@@ -62,17 +64,13 @@ bool SwitchButton::isChecked()
 
 void SwitchButton::paintEvent(QPaintEvent* event)
 {
-    /*
-    //Only change text is necessary (NEVER in MAC, as it has no text)
+    // Only change text is necessary (NEVER in MAC, as it has no text)
 #ifndef Q_OS_MACX
-    auto text = mSwitchButton->property("text").toString();
-    if(text.isEmpty() || ((isChecked() && text == tr("Off"))
-                          || (!isChecked() && text == tr("On"))))
+    if(mSwitchButton->property("showText").toBool())
     {
         mSwitchButton->setProperty("text", isChecked() ? tr("On") : tr("Off"));
     }
 #endif
-*/
 
     QWidget::paintEvent(event);
 }
@@ -80,17 +78,6 @@ void SwitchButton::paintEvent(QPaintEvent* event)
 void SwitchButton::onSwitchToggled(bool state)
 {
     emit toggled(state);
-}
-
-void SwitchButton::applyWinLinuxStyleSheet()
-{
-    setStyleSheet(QString::fromUtf8("QCheckBox::indicator {width: 40px;height: 19px;}"
-    "QCheckBox::indicator:checked {image: url(:/images/Switches/switch_checked_rest.svg);}"
-    "QCheckBox::indicator:checked:hover {image: url(:/images/Switches/switch_checked_hover.svg);}"
-    "QCheckBox::indicator:checked:pressed {image: url(:/images/Switches/switch_checked_down.svg);}"
-    "QCheckBox::indicator:unchecked {image: url(:/images/Switches/switch_unchecked_rest.svg);}"
-    "QCheckBox::indicator:unchecked:hover {image: url(:/images/Switches/switch_unchecked_hover.svg);}"
-    "QCheckBox::indicator:unchecked:pressed {image: url(:/images/Switches/switch_unchecked_down.svg);}"));
 }
 
 void SwitchButton::applyMacStyleSheet()

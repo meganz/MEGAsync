@@ -23,7 +23,6 @@ private slots:
     void onSwitchToggled(bool state);
 
 private:
-    void applyWinLinuxStyleSheet();
     void applyMacStyleSheet();
 
     QWidget* mSwitchButton;
