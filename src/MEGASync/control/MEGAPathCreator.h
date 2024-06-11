@@ -12,12 +12,10 @@ class MEGAPathCreator : QObject
 {
 public:
     MEGAPathCreator() = default;
-    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path, std::shared_ptr<mega::MegaError>& error);
+    static std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path, std::shared_ptr<mega::MegaError>& error);
 
 private:
-    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName, std::shared_ptr<mega::MegaError>& error);
-
-    QStringList mPathCreated;
+    static std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName, std::shared_ptr<mega::MegaError>& error);
 };
 
 #endif // MEGAPATHCREATOR_H

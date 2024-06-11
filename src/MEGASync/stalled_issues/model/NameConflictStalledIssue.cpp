@@ -507,7 +507,6 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                     MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
-                        this,
                         [this, &error](const mega::MegaRequest&, const mega::MegaError& e)
                         {
                             if(e.getErrorCode() != mega::MegaError::API_OK)
@@ -604,7 +603,6 @@ bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNa
             MegaApiSynchronizedRequest::runRequestWithResult(
                 &mega::MegaApi::renameNode,
                 MegaSyncApp->getMegaApi(),
-                this,
                 [&error](const mega::MegaRequest&, const mega::MegaError& e)
                 {
                     if(e.getErrorCode() != mega::MegaError::API_OK)

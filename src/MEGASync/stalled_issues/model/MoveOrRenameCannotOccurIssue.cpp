@@ -55,28 +55,7 @@ bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
         return true;
     }
 
-    if (consultLocalData() && consultCloudData())
-    {
-        std::unique_ptr<mega::MegaNode> previousNode(
-            MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getPathHandle()));
-        std::unique_ptr<mega::MegaNode> currentNode(
-            MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getMovePathHandle()));
-        if (previousNode && currentNode)
-        {
-            return !isSolved();
-        }
-        else
-        {
-            QFileInfo previousPath(consultLocalData()->getPath().path);
-            QFileInfo currentPath(consultLocalData()->getMovePath().path);
-            if (previousPath.exists() && currentPath.exists())
-            {
-                return !isSolved();
-            }
-        }
-    }
-
-    return false;
+    return StalledIssue::isAutoSolvable();
 }
 
 bool MoveOrRenameCannotOccurIssue::refreshListAfterSolving() const
@@ -174,8 +153,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                     if (!newParent)
                     {
                         std::shared_ptr<mega::MegaError> error(nullptr);
-                        MEGAPathCreator dirCreator;
-                        dirCreator.mkDir(QString(), targetPath.path(), error);
+                        MEGAPathCreator::mkDir(QString(), targetPath.path(), error);
 
                         if(error)
                         {

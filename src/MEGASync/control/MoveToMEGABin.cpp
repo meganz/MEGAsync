@@ -24,7 +24,6 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle, 
                 [this](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
                 { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
                 MegaSyncApp->getMegaApi(),
-                this,
                 [handle, &error](const mega::MegaRequest&, const mega::MegaError& e)
                 {
                     if(e.getErrorCode() != mega::MegaError::API_OK)
@@ -44,8 +43,7 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle, 
         folderPath = QString::fromLatin1("%1/%2").arg(folderPath, dateFolder);
     }
 
-    MEGAPathCreator creator;
-    auto folderNode = creator.mkDir(QString::fromLatin1("//bin"), folderPath, error.binFolderCreationError);
+    auto folderNode = MEGAPathCreator::mkDir(QString::fromLatin1("//bin"), folderPath, error.binFolderCreationError);
     if(folderNode)
     {
         moveLambda(folderNode);

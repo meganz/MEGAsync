@@ -13,7 +13,6 @@ std::shared_ptr<mega::MegaNode> MEGAPathCreator::createFolder(mega::MegaNode* pa
         MegaApiSynchronizedRequest::runRequestWithResult(
             &mega::MegaApi::createFolder,
             MegaSyncApp->getMegaApi(),
-            this,
             [&node, &error](const mega::MegaRequest& request, const mega::MegaError& e)
             {
                 if(e.getErrorCode() == mega::MegaError::API_OK)
@@ -44,13 +43,11 @@ std::shared_ptr<mega::MegaNode> MEGAPathCreator::mkDir(const QString& root, cons
     std::shared_ptr<mega::MegaNode> nodeCreated(root.isEmpty() ? MegaSyncApp->getMegaApi()->getRootNode() :
                                            MegaSyncApp->getMegaApi()->getNodeByPath(root.toUtf8().constData()));
 
-    auto auxPath(path);
+    auto pathSplitted = path.split(QLatin1String("/"));
 
-    mPathCreated = auxPath.split(QLatin1String("/"));
-
-    while(!mPathCreated.isEmpty())
+    while(!pathSplitted.isEmpty())
     {
-        auto followingPath(mPathCreated.takeFirst());
+        const auto followingPath(pathSplitted.takeFirst());
         if(followingPath.isEmpty())
         {
             continue;
@@ -59,7 +56,7 @@ std::shared_ptr<mega::MegaNode> MEGAPathCreator::mkDir(const QString& root, cons
         nodeCreated = createFolder(nodeCreated.get(), followingPath, error);
         if(!nodeCreated)
         {
-            mPathCreated.clear();
+            pathSplitted.clear();
         }
     }
 

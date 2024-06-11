@@ -51,24 +51,30 @@ bool LocalOrRemoteUserMustChooseStalledIssue::UIShowFileAttributes() const
 
 bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
 {
-    //In case it is a backup, we cannot automatically solve it
-    if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
-    {
-        return false;
-    }
+    //Only in smart mode
+    auto result(StalledIssue::isAutoSolvable());
 
-    if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
+    if(result)
     {
-        //Check names
-        auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
-        auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
-        if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
+        //In case it is a backup, we cannot automatically solve it
+        if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
         {
-            return true;
+            return false;
+        }
+
+        if(isFile() && (consultLocalData()->getAttributes()->size() == consultCloudData()->getAttributes()->size()))
+        {
+            //Check names
+            auto localName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultLocalData()->getFileName().toUtf8().constData())));
+            auto cloudName(QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(consultCloudData()->getFileName().toUtf8().constData())));
+            if(localName.compare(cloudName, Qt::CaseSensitive) == 0)
+            {
+                result = true;
+            }
         }
     }
 
-    return false;
+    return result;
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
