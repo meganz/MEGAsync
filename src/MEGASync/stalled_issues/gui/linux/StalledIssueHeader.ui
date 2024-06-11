@@ -336,35 +336,35 @@
    font-size:12px;
 }
 
-#actionMessageContainer[state=&quot;being solved&quot;]
+#actionMessageContainer[STATE=&quot;being solved&quot;]
 {
 	background-color: #F3F4F4;
 	border-radius: 4px;
 }
 
-#actionMessageContainer[state=&quot;being solved&quot;] QLabel
+#actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
 {
     color: #616366;
 }
 
-#actionMessageContainer[state=&quot;solved&quot;]
+#actionMessageContainer[STATE=&quot;solved&quot;]
 {
 	background-color: #CFFCDB;
 	border-radius: 4px;
 }
 
-#actionMessageContainer[state=&quot;solved&quot;] QLabel
+#actionMessageContainer[STATE=&quot;solved&quot;] QLabel
 {
     color: #007C3E;
 }
 
-#actionMessageContainer[state=&quot;failed&quot;]
+#actionMessageContainer[STATE=&quot;failed&quot;]
 {
 	background-color: #FFE4E8;
 	border-radius: 4px;
 }
 
-#actionMessageContainer[state=&quot;failed&quot;] QLabel
+#actionMessageContainer[STATE=&quot;failed&quot;] QLabel
 {
 	color: #E31B57;
 }</string>

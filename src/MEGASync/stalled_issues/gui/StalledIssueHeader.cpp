@@ -26,6 +26,7 @@ const int StalledIssueHeader::HEIGHT = 60;
 const char* MULTIACTION_ICON = "MULTIACTION_ICON";
 const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
+const char* ISSUE_STATE = "STATE";
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -279,13 +280,13 @@ void StalledIssueHeader::updateIssueState()
     {
         case StalledIssue::SolveType::BEING_SOLVED:
         {
-            ui->actionMessageContainer->setProperty("state", QLatin1String("being solved"));
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("being solved"));
             message = tr("Being solved");
             break;
         }
         case StalledIssue::SolveType::SOLVED:
         {
-            ui->actionMessageContainer->setProperty("state", QLatin1String("solved"));
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
             if(getData().consultData()->canBeIgnored())
             {
                 icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
@@ -309,7 +310,7 @@ void StalledIssueHeader::updateIssueState()
         }
         case StalledIssue::SolveType::FAILED:
         {
-            ui->actionMessageContainer->setProperty("state", QLatin1String("failed"));
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
             icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
             if(getData().consultData()->wasAutoResolutionApplied())
             {
@@ -324,6 +325,7 @@ void StalledIssueHeader::updateIssueState()
         }
         case StalledIssue::SolveType::UNSOLVED:
         {
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
             if(getData().consultData()->canBeIgnored())
             {
                 showIgnoreFile();

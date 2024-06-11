@@ -63,7 +63,6 @@ public:
     void hideAction();
 
     void showMessage(const QString& message, const QPixmap &pixmap);
-    void showSolvedMessage(const QString& customMessage = QString());
     void updateIssueState();
 
     void setText(const QString& text, const QString& tooltip = QString());
