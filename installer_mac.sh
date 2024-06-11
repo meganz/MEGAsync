@@ -174,11 +174,11 @@ fi
 if [ "$sign" = "1" ]; then
     sign_time_start=`date +%s`
 	cd Release_${target_arch}
-	cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
+	cp -R ${MSYNC_PREFIX}$APP_NAME.app ${MSYNC_PREFIX}${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
-	codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
+	codesign --force --verify --verbose --preserve-metadata=entitlements --options runtime --sign "Developer ID Application: Mega Limited" --deep ${MSYNC_PREFIX}$APP_NAME.app
 	echo "Checking signature"
-	spctl -vv -a $APP_NAME.app
+	spctl -vv -a ${MSYNC_PREFIX}$APP_NAME.app
 	cd ..
     sign_time=`expr $(date +%s) - $sign_time_start`
 fi
@@ -229,7 +229,7 @@ fi
 if [ "$notarize" = "1" ]; then
     notarize_time_start=`date +%s`
 	cd Release_${target_arch}
-	if [ ! -f $APP_NAME.dmg ];then
+	if [ ! -f ${MSYNC_PREFIX}$APP_NAME.dmg ];then
 		echo ""
 		echo "There is no dmg to be notarized."
 		echo ""
@@ -238,17 +238,17 @@ if [ "$notarize" = "1" ]; then
 
 	echo "Sending dmg for notarization (1/3)"
 
-	xcrun notarytool submit $APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait 2>&1 | tee notarylog.txt
+	xcrun notarytool submit ${MSYNC_PREFIX}$APP_NAME.dmg  --keychain-profile "AC_PASSWORD" --wait 2>&1 | tee notarylog.txt
     echo >> notarylog.txt
 
-	xcrun stapler staple -v $APP_NAME.dmg 2>&1 | tee -a notarylog.txt
+	xcrun stapler staple -v ${MSYNC_PREFIX}$APP_NAME.dmg 2>&1 | tee -a notarylog.txt
     
     echo "Stapling ok (2/3)"
 
     #Mount dmg volume to check if app bundle is notarized
     echo "Checking signature and notarization (3/3)"
     mkdir $MOUNTDIR || :
-    hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
+    hdiutil attach ${MSYNC_PREFIX}$APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
     spctl --assess -vv -a $MOUNTDIR/$VOLUME_NAME/$APP_NAME.app
     hdiutil detach $MOUNTDIR/$VOLUME_NAME >/dev/null
     rmdir $MOUNTDIR
