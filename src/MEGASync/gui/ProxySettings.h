@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "MegaProgressCustomDialog.h"
 #include "MegaApplication.h"
 #include "ConnectivityChecker.h"

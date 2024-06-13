@@ -4,7 +4,6 @@
 #include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
 
 #include <MegaApplication.h>
-#include "control/Preferences/Preferences.h"
 
 #include <QDialogButtonBox>
 #include "Utilities.h"

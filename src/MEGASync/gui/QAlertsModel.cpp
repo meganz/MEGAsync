@@ -1,6 +1,6 @@
 #include "QAlertsModel.h"
 
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 #include <QDateTime>
 

@@ -2,7 +2,7 @@
 #define ACCOUNTSTATUSCONTROLLER_H
 
 #include "QTMegaListener.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 #include <QObject>
 #include <megaapi.h>

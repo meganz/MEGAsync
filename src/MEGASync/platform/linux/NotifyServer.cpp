@@ -2,7 +2,6 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <unistd.h>
-#include "control/Utilities.h"
 
 using namespace mega;
 using namespace std;

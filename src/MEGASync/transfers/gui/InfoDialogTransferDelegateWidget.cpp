@@ -1,7 +1,7 @@
 #include "InfoDialogTransferDelegateWidget.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "MegaApplication.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "platform/Platform.h"
 #include <TransferItem.h>
 

@@ -4,7 +4,7 @@
 #include <QDialog>
 
 #include "MegaApplication.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 namespace Ui {
 class BandwidthSettings;
