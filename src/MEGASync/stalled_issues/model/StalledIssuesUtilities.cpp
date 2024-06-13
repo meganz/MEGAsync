@@ -32,8 +32,7 @@ std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(mega::
 
     if(node)
     {
-        MoveToMEGABin utilities;
-        auto moveToBinError = utilities.moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
+        auto moveToBinError = MoveToMEGABin::moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
         if(moveToBinError.binFolderCreationError)
         {
             error = moveToBinError.binFolderCreationError;

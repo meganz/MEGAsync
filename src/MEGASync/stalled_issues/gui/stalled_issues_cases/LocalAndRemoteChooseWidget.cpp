@@ -13,10 +13,6 @@ LocalAndRemoteStalledIssueBaseChooseWidget::LocalAndRemoteStalledIssueBaseChoose
 {
 }
 
-LocalAndRemoteStalledIssueBaseChooseWidget::~LocalAndRemoteStalledIssueBaseChooseWidget()
-{
-}
-
 void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr data,
     LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
 {

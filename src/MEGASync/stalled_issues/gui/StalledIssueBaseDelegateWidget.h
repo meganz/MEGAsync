@@ -37,7 +37,7 @@ public:
 
     void updateSizeHint();
 
-    bool checkIssue(bool isSingleSelection);
+    bool checkForExternalChanges(bool isSingleSelection);
 
 signals:
     void editorKeepStateChanged(bool state);

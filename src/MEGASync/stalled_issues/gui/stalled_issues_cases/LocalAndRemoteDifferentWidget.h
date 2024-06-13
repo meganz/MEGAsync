@@ -2,15 +2,14 @@
 #define LOCALANDREMOTEDIFFERENTWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
-#include "StalledIssueChooseWidget.h"
 
-
-#include <QWidget>
 #include <memory>
 
 namespace Ui {
 class LocalAndRemoteDifferentWidget;
 }
+
+class StalledIssueChooseWidget;
 
 class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget
 {

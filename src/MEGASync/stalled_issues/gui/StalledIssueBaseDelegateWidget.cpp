@@ -143,7 +143,7 @@ void StalledIssueBaseDelegateWidget::updateSizeHint()
     mResizeNeedTimer.start();
 }
 
-bool StalledIssueBaseDelegateWidget::checkIssue(bool isSingleSelection)
+bool StalledIssueBaseDelegateWidget::checkForExternalChanges(bool isSingleSelection)
 {
     if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
     {
@@ -176,7 +176,7 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     info.selection = dialog->getDialog()->getSelection(reasons);
 
-    if(checkIssue(info.selection.size() == 1))
+    if(checkForExternalChanges(info.selection.size() == 1))
     {
         return false;
     }

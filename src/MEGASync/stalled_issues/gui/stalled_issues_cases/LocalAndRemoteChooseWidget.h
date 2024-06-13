@@ -3,13 +3,15 @@
 
 #include <StalledIssueChooseWidget.h>
 
+class StalledIssueChooseWidget;
+
 class LocalAndRemoteStalledIssueBaseChooseWidget : public StalledIssueChooseWidget
 {
     Q_OBJECT
 
 public:
     explicit LocalAndRemoteStalledIssueBaseChooseWidget(QWidget *parent = nullptr);
-    virtual ~LocalAndRemoteStalledIssueBaseChooseWidget();
+    virtual ~LocalAndRemoteStalledIssueBaseChooseWidget() = default;
 
     void updateUi(StalledIssueDataPtr data, LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side);
     const StalledIssueDataPtr& data();

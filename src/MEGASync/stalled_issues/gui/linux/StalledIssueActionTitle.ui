@@ -286,7 +286,7 @@ QPushButton[main=true]
                   <string notr="true"/>
                  </property>
                  <property name="pixmap">
-                  <pixmap resource="../../../gui/Resources_win.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
+                  <pixmap resource="../../../gui/Resources_lin.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
                  </property>
                 </widget>
                </item>

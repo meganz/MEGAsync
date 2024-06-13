@@ -10,7 +10,7 @@ class MoveOrRenameCannotOccurChooseWidget : public StalledIssueChooseWidget
 
 public:
     explicit MoveOrRenameCannotOccurChooseWidget(QWidget *parent = nullptr);
-    virtual ~MoveOrRenameCannotOccurChooseWidget();
+    virtual ~MoveOrRenameCannotOccurChooseWidget() = default;
 
     void updateUi(std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
 
@@ -26,7 +26,7 @@ class LocalMoveOrRenameCannotOccurChooseWidget : public MoveOrRenameCannotOccurC
 
 public:
     explicit LocalMoveOrRenameCannotOccurChooseWidget(QWidget *parent = nullptr);
-    ~LocalMoveOrRenameCannotOccurChooseWidget();
+    ~LocalMoveOrRenameCannotOccurChooseWidget() = default;
 
     void updateUi(std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
 };
@@ -37,7 +37,7 @@ class RemoteMoveOrRenameCannotOccurChooseWidget : public MoveOrRenameCannotOccur
 
 public:
     explicit RemoteMoveOrRenameCannotOccurChooseWidget(QWidget *parent = nullptr);
-    ~RemoteMoveOrRenameCannotOccurChooseWidget();
+    ~RemoteMoveOrRenameCannotOccurChooseWidget() = default;
 
     void updateUi(std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue);
 };

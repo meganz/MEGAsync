@@ -28,9 +28,7 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     QWidget(parent),
     ui(new Ui::StalledIssueActionTitle),
     mIsCloud(false),
-    mIsFile(false),
-    mTitleDisableEffect(nullptr),
-    mExtraInfoDisableEffect(nullptr)
+    mIsFile(false)
 {
     ui->setupUi(this);
 
@@ -248,16 +246,16 @@ void StalledIssueActionTitle::setDisable(bool state)
     {
         if(!ui->titleContainer->graphicsEffect())
         {
-            mTitleDisableEffect = new QGraphicsOpacityEffect(this);
-            mTitleDisableEffect->setOpacity(0.3);
-            ui->titleContainer->setGraphicsEffect(mTitleDisableEffect);
+            auto titleEffect = new QGraphicsOpacityEffect(this);
+            titleEffect->setOpacity(0.3);
+            ui->titleContainer->setGraphicsEffect(titleEffect);
         }
 
         if(!ui->extraInfoContainer->graphicsEffect())
         {
-            mExtraInfoDisableEffect = new QGraphicsOpacityEffect(this);
-            mExtraInfoDisableEffect->setOpacity(0.3);
-            ui->extraInfoContainer->setGraphicsEffect(mExtraInfoDisableEffect);
+            auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
+            extraInfoDisableEffect->setOpacity(0.3);
+            ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
         }
     }
     else

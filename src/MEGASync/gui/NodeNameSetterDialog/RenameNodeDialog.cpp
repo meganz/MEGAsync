@@ -155,7 +155,7 @@ void RenameLocalNodeDialog::onDialogAccepted()
         if(file.exists())
         {
             QFileInfo fileInfo(mNodePath);
-            bool isFile(fileInfo.isFile());
+            const bool isFile(fileInfo.isFile());
             fileInfo.setFile(fileInfo.path(), newFileName);
             if(fileInfo.exists())
             {

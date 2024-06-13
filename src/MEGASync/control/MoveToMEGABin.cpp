@@ -15,13 +15,13 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle, 
 {
     MoveToBinError error;
 
-    auto moveLambda = [this, handle, &error](std::shared_ptr<mega::MegaNode> rubbishNode)
+    auto moveLambda = [handle, &error](std::shared_ptr<mega::MegaNode> rubbishNode)
     {
         std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
         if(nodeToMove)
         {
             MegaApiSynchronizedRequest::runRequestLambdaWithResult(
-                [this](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
+                [](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
                 { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
                 MegaSyncApp->getMegaApi(),
                 [handle, &error](const mega::MegaRequest&, const mega::MegaError& e)

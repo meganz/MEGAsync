@@ -10,10 +10,6 @@ MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget
 {
 }
 
-MoveOrRenameCannotOccurChooseWidget::~MoveOrRenameCannotOccurChooseWidget()
-{
-}
-
 void MoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
@@ -62,8 +58,6 @@ LocalMoveOrRenameCannotOccurChooseWidget::LocalMoveOrRenameCannotOccurChooseWidg
     mChosenSide = MoveOrRenameIssueChosenSide::LOCAL;
 }
 
-LocalMoveOrRenameCannotOccurChooseWidget::~LocalMoveOrRenameCannotOccurChooseWidget() {}
-
 void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
 {
@@ -95,8 +89,6 @@ RemoteMoveOrRenameCannotOccurChooseWidget::RemoteMoveOrRenameCannotOccurChooseWi
 {
      mChosenSide = MoveOrRenameIssueChosenSide::REMOTE;
 }
-
-RemoteMoveOrRenameCannotOccurChooseWidget::~RemoteMoveOrRenameCannotOccurChooseWidget() {}
 
 void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)

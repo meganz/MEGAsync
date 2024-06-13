@@ -456,8 +456,6 @@ public:
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes()
         {
-            MoveToMEGABin utilities;
-
             for(int index = 0; index < mConflictedNames.size(); ++index)
             {
                 auto& conflictedNamesGroup = mConflictedNames[index];
@@ -470,7 +468,7 @@ public:
                         if(conflictedName->getSolvedType() == NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED &&
                            conflictedName != (*(conflictedNamesGroup.conflictedNames.end()-1)))
                         {
-                            auto moveToBinErrors = utilities.moveToBin(conflictedName->mHandle, QLatin1String("SyncDuplicated"), true);
+                            auto moveToBinErrors = MoveToMEGABin::moveToBin(conflictedName->mHandle, QLatin1String("SyncDuplicated"), true);
                             if(!moveToBinErrors.binFolderCreationError && !moveToBinErrors.moveError)
                             {
                                 conflictedName->solveByRemove();

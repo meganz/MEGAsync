@@ -12,6 +12,7 @@
 #include <PlatformStrings.h>
 #include <QMegaMessageBox.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include "StalledIssueChooseWidget.h"
 #include <Preferences/Preferences.h>
 
 #include "mega/types.h"
@@ -20,7 +21,7 @@
 #include <QFile>
 
 
-QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
+const QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
     = QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
                                                                                                            << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose;
 
@@ -52,9 +53,9 @@ LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 
 void LocalAndRemoteDifferentWidget::refreshUi()
 {
-    auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
-    auto isFailed(issue->isFailed());
-    auto chosenSide(isFailed ? LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE : issue->getChosenSide());
+    const auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
+    const auto isFailed(issue->isFailed());
+    const auto chosenSide(isFailed ? LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE : issue->getChosenSide());
 
     if(issue->consultLocalData())
     {

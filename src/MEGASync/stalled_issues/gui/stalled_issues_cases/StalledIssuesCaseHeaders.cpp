@@ -57,7 +57,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
 
-    if(header->checkIssue(selection.size() == 1))
+    if(header->checkForExternalChanges(selection.size() == 1))
     {
         return;
     }
@@ -158,7 +158,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(fingerprintMissingChecker);
 
-    if(header->checkIssue(selection.size() == 1))
+    if(header->checkForExternalChanges(selection.size() == 1))
     {
         return;
     }
@@ -552,7 +552,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
         auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
 
-        if(header->checkIssue(selection.size() == 1))
+        if(header->checkForExternalChanges(selection.size() == 1))
         {
             return;
         }

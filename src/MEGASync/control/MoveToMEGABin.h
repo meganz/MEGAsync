@@ -8,7 +8,7 @@
 #include <memory>
 
 //This class is used to move a handle to the MEGA bin
-class MoveToMEGABin : QObject
+class MoveToMEGABin
 {
 public:
     struct MoveToBinError
@@ -17,9 +17,7 @@ public:
         std::shared_ptr<mega::MegaError> binFolderCreationError;
     };
 
-    MoveToMEGABin(){}
-
-    MoveToBinError moveToBin(mega::MegaHandle handle, const QString& binFolderName, bool addDateFolder);
+    static MoveToBinError moveToBin(mega::MegaHandle handle, const QString& binFolderName, bool addDateFolder);
 };
 
 
