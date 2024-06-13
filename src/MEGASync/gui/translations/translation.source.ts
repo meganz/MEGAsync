@@ -1022,45 +1022,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>CustomTransferItem</name>
-    <message>
-        <source>failed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>starting...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PAUSED</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>queued</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translation type="unfinished">Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translation type="unfinished">Storage quota exceeded</translation>
-    </message>
-    <message>
-        <source>retrying...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>completing...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Added [A]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>DateTimeFormatter</name>
     <message>
         <source>Today at %1</source>
@@ -1590,7 +1551,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-     <name>ExclusionsStrings</name>
+    <name>ExclusionsStrings</name>
     <message>
         <source>Add Exclusions</source>
         <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
@@ -2086,6 +2047,21 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>HeaderCaseIssueChecker</name>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
+        <translation>The issue may have been resolved externally.
+Refresh the list.</translation>
+    </message>
+</context>
+<context>
     <name>IgnoredStalledIssue</name>
     <message>
         <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
@@ -2458,45 +2434,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>InfoWizard</name>
-    <message>
-        <source>You are not logged in</source>
-        <translation type="unfinished">You are not logged in</translation>
-    </message>
-    <message>
-        <source>MEGA Desktop app</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Login or create an account to start using MEGA Desktop app.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Log in</source>
-        <translation type="unfinished">Log&#xa0;in</translation>
-    </message>
-    <message>
-        <source>You need to log into MEGA account to use the MEGA desktop app.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create account to join MEGA collaboration platform.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Create Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -2742,6 +2679,33 @@ Please wait for the upload to complete.</source>
         <translation>With this action, the item already stored in MEGA will be chosen.</translation>
     </message>
     <message>
+        <source>Refresh</source>
+        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>Refresh</translation>
+    </message>
+    <message>
+        <source>The issue may have been solved externally.
+Please, refresh the list.</source>
+        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
+        <translation>The issue may have been resolved externally.
+Refresh the list.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Apply to all</translation>
+    </message>
+    <message>
         <source>Keep both files?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep both versions of a local and remote changed stall.SNC-2565</translatorcomment>
         <translation>Keep both files?</translation>
@@ -2874,51 +2838,6 @@ Wait for the upload to complete.</translation>
         <source>This file has conflicting copies</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
         <translation>This item has conflicting copies</translation>
-    </message>
-</context>
-<context>
-    <name>LocalAndRemoteStalledIssueBaseChooseWidget</name>
-    <message>
-        <source>Chosen</source>
-        <translation type="unfinished">Chosen</translation>
-    </message>
-    <message>
-        <source>Local file is being uploaded</source>
-        <translation type="unfinished">Local file is being uploaded</translation>
-    </message>
-    <message>
-        <source>Renamed to %1</source>
-        <translation type="unfinished">Renamed</translation>
-    </message>
-</context>
-<context>
-    <name>LocalCleanScheduler</name>
-    <message>
-        <source>%1 clearing scheduler</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remove files older than</source>
-        <translation type="unfinished">Remove files older than</translation>
-    </message>
-    <message>
-        <source>days</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="unfinished">OK</translation>
-    </message>
-</context>
-<context>
-    <name>LocalMoveOrRenameCannotOccurChooseWidget</name>
-    <message>
-        <source>Local</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3949,22 +3868,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Couldn’t update sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
-    <message>
-        <source>Backup source path not below drive path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to write sync config to disk</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Mismatch on sync root FSID.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MegaTransferView</name>
@@ -4173,44 +4076,26 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
 </context>
 <context>
-    <name>MoveOrRenameCannotOccur</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please select which version you want to keep</source>
-        <translation type="unfinished">Select which version you want to keep</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to choose the local side?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Are you sure you want to choose the remote side?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MoveOrRenameCannotOccurChooseWidget</name>
-    <message>
-        <source>Chosen</source>
-        <translation type="unfinished">Chosen</translation>
-    </message>
-    <message>
-        <source>Changes Undone</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MoveOrRenameCannotOccurHeader</name>
     <message>
-        <source>Can’t move or rename some items on in [B]%1[/B]</source>
-        <translation type="unfinished"></translation>
+        <source>Cannot move or rename [B]%1[/B]</source>
+        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
+        <translation>Can’t move or rename [B]%1[/B]</translation>
     </message>
     <message>
-        <source>The local and remote locations have changed at the same time</source>
-        <translation type="unfinished"></translation>
+        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>A move or rename was detected in MEGA, but couldn’t be replicated locally.</translation>
+    </message>
+    <message>
+        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
+        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
+        <translation>A move or rename action was detected in the local file system, but could not be replicated in MEGA.</translation>
+    </message>
+    <message>
+        <source>Solve</source>
+        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
+        <translation>Resolve</translation>
     </message>
 </context>
 <context>
@@ -6153,13 +6038,6 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
-    <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
-    <message>
-        <source>Remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Stop backup</source>
@@ -6979,36 +6857,26 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
-    <name>StalledIssueBaseDelegateWidget</name>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished">Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translation type="unfinished">The issue may have been resolved externally.
-Refresh the list.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translation type="unfinished">Apply to all</translation>
-    </message>
-</context>
-<context>
     <name>StalledIssueChooseWidget</name>
     <message>
         <source>Choose</source>
         <translatorcomment>Button to choose either remote or local version.SNC-2565</translatorcomment>
         <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Local file is being uploaded</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
+        <translation>Local file is being uploaded</translation>
+    </message>
+    <message>
+        <source>Renamed to %1</source>
+        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
+        <translation>Renamed</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation>Chosen</translation>
     </message>
 </context>
 <context>
@@ -7186,10 +7054,6 @@ Refresh the list.</translation>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
         <translation>Resolved</translation>
     </message>
-    <message>
-        <source>Being solved</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -7312,20 +7176,14 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
 Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
     </message>
     <message>
-        <source>Issue being solved.</source>
-        <translation type="unfinished"></translation>
+        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>File “%1” was moved to “%2”</translation>
     </message>
     <message>
-        <source>Sync stalls</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(TEMPORARY) We have started solving your issues for sync X</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(TEMPORARY) We have finished solving your issues for sync X</source>
-        <translation type="unfinished"></translation>
+        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
+        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
+        <translation>Folder “%1” was moved to “%2”</translation>
     </message>
 </context>
 <context>
@@ -8390,41 +8248,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
 </context>
 <context>
-    <name>TransferManagerItem</name>
-    <message>
-        <source>starting</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>paused</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>queued</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translation type="unfinished">Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Out of storage space</source>
-        <translation type="unfinished">Storage quota exceeded</translation>
-    </message>
-    <message>
-        <source>retrying</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>completing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 of %2</source>
-        <translation type="unfinished">%1 of %2</translation>
-    </message>
-</context>
-<context>
     <name>TransferNotificationBuilder</name>
     <message>
         <source>Retry</source>
@@ -8670,21 +8493,6 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Open settings</source>
         <translatorcomment>Button label to open the Settings dialog</translatorcomment>
         <translation>Open Settings</translation>
-    </message>
-</context>
-<context>
-    <name>TransfersStateInfoWidget</name>
-    <message>
-        <source>No Downloads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Uploads</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Paused Transfers</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
