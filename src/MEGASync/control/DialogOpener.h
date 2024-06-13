@@ -426,6 +426,8 @@ public:
         }
     }
 
+    static QList<QPointer<QWidget>> getAllOpenedDialogs();
+
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;
     static QQueue<std::shared_ptr<DialogInfoBase>> mDialogsQueue;
