@@ -230,7 +230,7 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
                 MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getPathHandle()));
             std::unique_ptr<mega::MegaNode> currentNode(
                 MegaSyncApp->getMegaApi()->getNodeByHandle(consultCloudData()->getMovePathHandle()));
-            if (previousNode || !currentNode)
+            if (previousNode && !currentNode)
             {
                 setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
             }
@@ -241,7 +241,7 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
     {
         QFileInfo previousPath(consultLocalData()->getPath().path);
         QFileInfo currentPath(consultLocalData()->getMovePath().path);
-        if (previousPath.exists() || !currentPath.exists())
+        if (previousPath.exists() && !currentPath.exists())
         {
             setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
         }

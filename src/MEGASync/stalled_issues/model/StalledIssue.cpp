@@ -442,7 +442,7 @@ void StalledIssue::setIsSolved(SolveType type)
 
 bool StalledIssue::isAutoSolvable() const
 {
-    return Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart;
+    return false;
 }
 
 bool StalledIssue::isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const

@@ -763,6 +763,11 @@ bool NameConflictedStalledIssue::autoSolveIssue()
     return false;
 }
 
+bool NameConflictedStalledIssue::isAutoSolvable() const
+{
+    return Preferences::instance()->isStalledIssueSmartModeActivated();
+}
+
 void NameConflictedStalledIssue::solveIssue(int option)
 {
     auto result(false);

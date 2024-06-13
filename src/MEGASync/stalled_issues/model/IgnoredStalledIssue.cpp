@@ -22,6 +22,7 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
 
 bool IgnoredStalledIssue::isAutoSolvable() const
 {
+    //Always autosolvable, we don´t need to check if smart mode is active
     return !isSolved() &&
            !syncIds().isEmpty() &&
            isSpecialLink();

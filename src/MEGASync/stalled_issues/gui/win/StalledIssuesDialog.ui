@@ -422,7 +422,7 @@ background-color: #F3F4F4;
                 <UInt>4</UInt>
                </property>
                <property name="iconPrefix" stdset="0">
-                <string>solved-issues</string>
+                <string>x-circle</string>
                </property>
               </widget>
              </item>

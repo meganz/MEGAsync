@@ -109,6 +109,9 @@ void RenameRemoteNodeDialog::onRequestFinish(mega::MegaApi *, mega::MegaRequest 
             }
             else
             {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Rename node failed. Error: %1")
+                                                           .arg(QString::fromUtf8(e->getErrorString()))
+                                                           .toUtf8().constData());
                 showRenamedFailedError(e);
             }
         }

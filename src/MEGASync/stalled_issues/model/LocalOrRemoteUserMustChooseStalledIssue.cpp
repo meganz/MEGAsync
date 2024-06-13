@@ -20,13 +20,11 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
 
 bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
-    if(isAutoSolvable())
+    if(chooseLastMTimeSide())
     {
-        if(chooseLastMTimeSide())
-        {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
-            return true;
-        }
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
+        return true;
     }
 
     return false;
@@ -54,7 +52,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
     //Only in smart mode
     auto result(false);
 
-    if(StalledIssue::isAutoSolvable())
+    if(Preferences::instance()->isStalledIssueSmartModeActivated())
     {
         //In case it is a backup, we cannot automatically solve it
         if(getSyncType() == mega::MegaSync::SyncType::TYPE_BACKUP)
@@ -134,6 +132,9 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                     mError = utilities.removeRemoteFile(node.get());
                     if(mError)
                     {
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                                                                   .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(mError.get()))
+                                                                   .toUtf8().constData());
                         return false;
                     }
                 }
@@ -176,6 +177,10 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* names
 
             if(error)
             {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                                                                       .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(error.get()))
+                                                                       .toUtf8().constData());
+
                 QFileInfo currentFile(getLocalData()->getNativeFilePath());
                 QFile file(currentFile.filePath());
                 if(file.exists())

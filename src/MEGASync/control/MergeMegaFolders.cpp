@@ -125,5 +125,10 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
         }
     }
 
+    if(error)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Merge folders failed. Error: %1").arg(Utilities::getTranslatedError(error.get()))
+                                                   .toUtf8().constData());
+    }
     return error;
 }

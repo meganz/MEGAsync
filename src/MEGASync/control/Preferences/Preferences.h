@@ -188,6 +188,7 @@ public:
     };
     StalledIssuesModeType stalledIssuesMode();
     void setStalledIssuesMode(StalledIssuesModeType value);
+    bool isStalledIssueSmartModeActivated();
 
     QDate stalledIssuesEventLastDate();
     void updateStalledIssuesEventLastDate();

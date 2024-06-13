@@ -64,6 +64,9 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                 //In case of error, move to OS trash
                 if (e.getErrorCode() != mega::MegaError::API_OK)
                 {
+                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
+                                                                           .arg(path, Utilities::getTranslatedError(&e))
+                                                                           .toUtf8().constData());
                     result = QFile::moveToTrash(path);
                 }
                 else
