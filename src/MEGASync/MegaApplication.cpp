@@ -18,23 +18,18 @@
 #include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
-#include "onboarding/WhatsNewWindow.h"
-
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
-#include "gui/UploadToMegaDialog.h"
+#include "UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
-
-#include "qml/QmlManager.h"
-#include "qml/QmlDialogManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"

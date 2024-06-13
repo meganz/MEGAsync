@@ -3,9 +3,9 @@
 
 #include "StalledIssueHeader.h"
 
-#include <MegaApplication.h>
-#include <StalledIssuesModel.h>
-#include "NodeNameSetterDialog/RenameNodeDialog.h"
+#include "MegaApplication.h"
+#include "StalledIssuesModel.h"
+#include "RenameNodeDialog.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"

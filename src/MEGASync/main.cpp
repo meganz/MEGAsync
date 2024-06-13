@@ -1,5 +1,5 @@
 #include "MegaApplication.h"
-#include "gui/MegaProxyStyle.h"
+#include "MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "ScaleFactorManager.h"
