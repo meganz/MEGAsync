@@ -59,5 +59,6 @@ G_END_DECLS
 void mega_ext_on_item_changed(MEGAExt *mega_ext, const gchar *path);
 void mega_ext_on_sync_add(MEGAExt *mega_ext, const gchar *path);
 void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path);
+void expanselocalpath(char *path, char *absolutepath);
 
 #endif
