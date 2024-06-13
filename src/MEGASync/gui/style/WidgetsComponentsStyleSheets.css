@@ -191,6 +191,7 @@ background-color: #f3f4f4;
 QLabel
 {
 background-color: transparent;
+color: #303233; /*colorToken.text-primary*/
 }
 
 QPushButton

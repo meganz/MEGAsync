@@ -17,22 +17,34 @@
    <string>Account usage details</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="mega">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset theme="mega"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">
-#AccountDetailsDialog
+   <string notr="true">#AccountDetailsDialog
 {
     border-radius: 0 0 4px 4px;
-    background-color: #FFFFFF;
 }
 
 /* Config all labels */
 QLabel
 {
-    font-family: &quot;Lato&quot;;
+font-family: &quot;Lato&quot;;
+background-color: transparent;
+color: #303233; /*colorToken.text-primary*/
+font-size: 13px;
 }
+
+/*ColorTokenIcon;Button;bCloudDrive;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bCloudDrive;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bVault;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bVault;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bRubbish;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bRubbish;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bAvailable;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bAvailable;normal;off;colorToken.icon-secondary*/
 
 #sHeader
 {
@@ -49,8 +61,6 @@ QLabel
 
 #lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
-  color: #333333;
-  font-size: 13px;
   font-weight: bold;
 }
 
@@ -77,12 +87,6 @@ QLabel
 #lStorage, #lTransfer
 {
     padding-bottom: 4px;
-}
-
-#lUsedCloudDrive, #lUsedInbox,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
-{
-  color: #333333;
-  font-size: 13px;
 }
 
 #lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
@@ -128,26 +132,6 @@ QLabel
 #bCloudDrive, #bVault, #bRubbish
 {
     qproperty-iconSize: 24px;
-}
-
-#bCloudDrive
-{
-    qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
-}
-
-#bVault
-{
-    qproperty-icon : url(:/images/Backups_24_ico.png);
-}
-
-#bRubbish
-{
-    qproperty-icon : url(:/images/account_details/Bin_24_ico.png);
-}
-
-#bAvailable
-{
-    qproperty-icon : url(:/images/account_details/available_storage.png);
 }
 
 #lVersionIcon
@@ -757,6 +741,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/account_details/Cloud_Drive_24_ico.png</normaloff>:/images/account_details/Cloud_Drive_24_ico.png</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -857,6 +845,10 @@ QProgressBar::chunk
              <width>32</width>
              <height>32</height>
             </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/Backups_24_ico.png</normaloff>:/images/Backups_24_ico.png</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -959,6 +951,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/account_details/Bin_24_ico.png</normaloff>:/images/account_details/Bin_24_ico.png</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -1060,6 +1056,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/account_details/available_storage.png</normaloff>:/images/account_details/available_storage.png</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -1151,6 +1151,8 @@ QProgressBar::chunk
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="../Resources_linux.qrc"/>
+ </resources>
  <connections/>
 </ui>
