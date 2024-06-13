@@ -79,32 +79,41 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->chooseRemoteCopy->hide();
     }
 
-    GenericChooseWidget::GenericInfo bothInfo;
-    bothInfo.buttonText = tr("Choose both");
-    QString bothInfoTitle = tr("[B]Keep both[/B]");
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
-    bothInfo.title = bothInfoTitle;
-    bothInfo.icon = QLatin1String(":/images/copy.png");
-    bothInfo.solvedText = tr("Chosen");
-    ui->keepBothOption->setInfo(bothInfo);
-
-    GenericChooseWidget::GenericInfo lastModifiedInfo;
-    lastModifiedInfo.buttonText = tr("Choose");
-    QString lastModifiedInfoTitle;
-    if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
+    if(issue->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
-        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
+        GenericChooseWidget::GenericInfo bothInfo;
+        bothInfo.buttonText = tr("Choose both");
+        QString bothInfoTitle = tr("[B]Keep both[/B]");
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
+        bothInfo.title = bothInfoTitle;
+        bothInfo.icon = QLatin1String(":/images/copy.png");
+        bothInfo.solvedText = tr("Chosen");
+        ui->keepBothOption->setInfo(bothInfo);
+
+        GenericChooseWidget::GenericInfo lastModifiedInfo;
+        lastModifiedInfo.buttonText = tr("Choose");
+        QString lastModifiedInfoTitle;
+        if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
+        {
+            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
+        }
+        else
+        {
+            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
+        }
+
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
+        lastModifiedInfo.title = lastModifiedInfoTitle;
+        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.solvedText = tr("Chosen");
+        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
     }
     else
     {
-        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
+        ui->chooseRemoteCopy->setActionButtonVisibility(false);
+        ui->keepBothOption->hide();
+        ui->keepLastModifiedOption->hide();
     }
-
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
-    lastModifiedInfo.title = lastModifiedInfoTitle;
-    lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-    lastModifiedInfo.solvedText = tr("Chosen");
-    ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
 
     if (issue->isSolved())
     {
@@ -161,6 +170,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         }
 
     }
+
     updateSizeHint();
     ui->retranslateUi(this);
 }
