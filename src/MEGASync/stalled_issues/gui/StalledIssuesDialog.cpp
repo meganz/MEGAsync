@@ -260,6 +260,8 @@ void StalledIssuesDialog::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        MegaSyncApp->getStalledIssuesModel()->languageChanged();
+        ui->stalledIssuesTree->update();
     }
 
     QWidget::changeEvent(event);

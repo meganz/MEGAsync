@@ -3,8 +3,6 @@
 
 #include "StalledIssueBaseDelegateWidget.h"
 
-#include <memory>
-
 namespace Ui {
 class LocalAndRemoteDifferentWidget;
 }

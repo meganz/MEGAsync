@@ -26,6 +26,8 @@ public:
     void setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip);
     void setFailed(bool state, const QString& tooltip = QString());
 
+    void addDefaultButton();
+
 signals:
     void chooseButtonClicked(int id);
 

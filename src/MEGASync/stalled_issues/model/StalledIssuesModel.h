@@ -138,6 +138,8 @@ public:
 
     static void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
 
+    void languageChanged();
+
     //SHOW RAW INFO
     void showRawInfo(bool state);
     bool isRawInfoVisible() const;

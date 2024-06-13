@@ -33,12 +33,10 @@ public:
 
     void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
     void setActionButtonVisibility(int id, bool state);
-    void setActionButtonInfo(const QIcon& icon, const QString& text, int id);
 
     virtual void showIcon();
     void setMessage(const QString& message, const QPixmap& pixmap = QPixmap(), const QString& tooltip = QString());
 
-    QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
     void setFailed(bool state, const QString& errorTooltip);
     void setDisable(bool state);
@@ -65,6 +63,7 @@ public:
         Versions,
         CRC
     };
+    void addExtraInfo(AttributeType type, const QString& title, const QString& info, int level);
     void hideAttribute(AttributeType type);
 
     void updateExtraInfoLayout();
@@ -90,6 +89,7 @@ private:
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
+    QMap<AttributeType, QPointer<QLabel>> mTitleLabels;
 };
 
 #endif // STALLEDISSUEACTIONTITLE_H

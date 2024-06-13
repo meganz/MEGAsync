@@ -22,9 +22,6 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
 
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
-
-    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
 }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
@@ -45,6 +42,12 @@ void StalledIssueChooseWidget::setMessage(const QString& string, const QPixmap& 
 void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
 {
     ui->chooseTitle->setFailed(state, tooltip);
+}
+
+void StalledIssueChooseWidget::addDefaultButton()
+{
+    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked, Qt::UniqueConnection);
 }
 
 void StalledIssueChooseWidget::onActionClicked(int button_id)
@@ -120,5 +123,5 @@ void GenericChooseWidget::setInfo(const GenericInfo &info)
     QIcon icon(info.icon);
     auto iconPixmap(icon.pixmap(QSize(16,16)));
     ui->chooseTitle->setHTML(info.title, iconPixmap);
-    ui->chooseTitle->setActionButtonInfo(QIcon(), info.buttonText, BUTTON_ID);
+    ui->chooseTitle->addActionButton(QIcon(), info.buttonText, BUTTON_ID, true);
 }

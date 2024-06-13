@@ -108,6 +108,7 @@ void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
     updateExtraInfo(localData);
     ui->chooseTitle->setTitle(tr("Local Copy"));
     ui->chooseTitle->setIsCloud(false);
+    addDefaultButton();
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(localData,side);
 
@@ -163,6 +164,7 @@ void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
     updateExtraInfo(cloudData);
     ui->chooseTitle->setTitle(tr("Remote Copy"));
     ui->chooseTitle->setIsCloud(true);
+    addDefaultButton();
 
     LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(cloudData, side);
 

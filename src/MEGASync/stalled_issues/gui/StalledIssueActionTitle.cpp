@@ -93,6 +93,18 @@ void StalledIssueActionTitle::setHyperLinkMode()
 
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
 {
+    //Update existing buttons
+    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    foreach(auto& button, buttons)
+    {
+        if(button->property(BUTTON_ID).toInt() == id)
+        {
+            button->setIcon(icon);
+            button->setText(text);
+            return;;
+        }
+    }
+
     auto button = new QPushButton(icon, text, this);
 
     button->setProperty(BUTTON_ID, id);
@@ -154,20 +166,6 @@ void StalledIssueActionTitle::setActionButtonVisibility(int id, bool state)
     }
 }
 
-void StalledIssueActionTitle::setActionButtonInfo(const QIcon &icon, const QString &text, int id)
-{
-    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
-    foreach(auto& button, buttons)
-    {
-        if(button->property(BUTTON_ID).toInt() == id)
-        {
-            button->setIcon(icon);
-            button->setText(text);
-            break;
-        }
-    }
-}
-
 void StalledIssueActionTitle::showIcon()
 {
     QFileInfo fileInfo(mPath);
@@ -194,7 +192,7 @@ void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& 
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);
 }
 
-QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QString& info, int level)
+void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& title, const QString& info, int level)
 {
     ui->extraInfoContainer->show();
 
@@ -202,6 +200,9 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     auto infoLabel = new QLabel(info, this);
     infoLabel->setProperty(MESSAGE_TEXT, info);
     infoLabel->setProperty(EXTRAINFO_INFO, true);
+
+    mTitleLabels[type] = titleLabel;
+    mUpdateLabels[type] = infoLabel;
 
     QHBoxLayout* rowLayout(nullptr);
     auto rowItem = ui->extraInfoLayout->itemAt(level);
@@ -225,8 +226,6 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     rowLayout->insertItem(rowLayout->count()-1, new QSpacerItem(20,10,QSizePolicy::Fixed, QSizePolicy::Fixed));
 
     setStyleSheet(styleSheet());
-
-    return infoLabel;
 }
 
 void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
@@ -312,18 +311,20 @@ bool StalledIssueActionTitle::eventFilter(QObject* watched, QEvent* event)
 
 bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
 {
-    auto& userLabel = mUpdateLabels[AttributeType::User];
+    auto userLabel = mUpdateLabels.value(AttributeType::User);
     bool visible(userLabel && !userLabel->text().isEmpty());
 
     if(show)
     {
+        auto titleString(tr("Upload by:"));
         auto userText = user.isEmpty() ? tr("Loading user…") : user;
         if(!userLabel)
         {
-            userLabel = addExtraInfo(tr("Upload by:"), userText, 1);
+            addExtraInfo(AttributeType::User, titleString, userText, 1);
         }
         else
         {
+            mTitleLabels[AttributeType::User]->setText(titleString);
             updateLabel(userLabel, userText);
         }
 
@@ -345,19 +346,21 @@ bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
 
 bool StalledIssueActionTitle::updateVersionsCount(int versions)
 {
-    auto& versionsLabel = mUpdateLabels[AttributeType::Versions];
+    auto versionsLabel = mUpdateLabels.value(AttributeType::Versions);
     bool visible(versionsLabel && !versionsLabel->text().isEmpty());
     bool show(versions > 1);
 
     if(show)
     {
+        auto titleString(tr("Versions:"));
         QString versionsText(QString::number(versions));
         if(!versionsLabel)
         {
-            versionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
+            addExtraInfo(AttributeType::Versions, titleString, versionsText, 1);
         }
         else
         {
+            mTitleLabels[AttributeType::Versions]->setText(titleString);
             updateLabel(versionsLabel, versionsText);
         }
 
@@ -391,13 +394,15 @@ void StalledIssueActionTitle::updateSize(int64_t size)
         sizeText = tr("Loading size");
     }
 
-    auto& sizeLabel = mUpdateLabels[AttributeType::Size];
+    auto titleString(tr("Size:"));
+    auto sizeLabel = mUpdateLabels.value(AttributeType::Size);
     if(!sizeLabel)
     {
-        sizeLabel = addExtraInfo(tr("Size:"), sizeText, 0);
+        addExtraInfo(AttributeType::Size, titleString, sizeText, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::Size]->setText(titleString);
         updateLabel(sizeLabel, sizeText);
     }
 
@@ -412,13 +417,15 @@ void StalledIssueActionTitle::updateCRC(const QString& fp)
     {
         QString fpText = fp.isEmpty() ? QLatin1String("-") : fp;
 
-        auto& fpLabel = mUpdateLabels[AttributeType::CRC];
+        auto titleString(tr("CRC:"));
+        auto fpLabel = mUpdateLabels.value(AttributeType::CRC);
         if(!fpLabel)
         {
-            fpLabel = addExtraInfo(tr("CRC:"), fpText, 0);
+            addExtraInfo(AttributeType::CRC, titleString, fpText, 0);
         }
         else
         {
+            mTitleLabels[AttributeType::CRC]->setText(titleString);
             updateLabel(fpLabel, fpText);
         }
 
@@ -443,13 +450,15 @@ void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
         timeString = tr("Loading time…");
     }
 
-    auto& lastTimeLabel = mUpdateLabels[AttributeType::LastModified];
+    auto titleString(tr("Last modified:"));
+    auto lastTimeLabel = mUpdateLabels.value(AttributeType::LastModified);
     if(!lastTimeLabel)
     {
-        lastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
+        addExtraInfo(AttributeType::LastModified, titleString, timeString, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::LastModified]->setText(titleString);
         updateLabel(lastTimeLabel, timeString);
     }
 
@@ -469,13 +478,16 @@ void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
         timeString = tr("Loading time…");
     }
 
-    auto& createdTimeLabel = mUpdateLabels[AttributeType::CreatedTime];
+    auto titleString(mIsCloud ? tr("Upload at:") : tr("Created at:"));
+
+    auto createdTimeLabel = mUpdateLabels.value(AttributeType::CreatedTime);
     if(!createdTimeLabel)
     {
-        createdTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"),  timeString, 0);
+        addExtraInfo(AttributeType::CreatedTime, titleString, timeString, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::CreatedTime]->setText(titleString);
         updateLabel(createdTimeLabel, timeString);
     }
 

@@ -162,6 +162,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     }
     updateSizeHint();
+    ui->retranslateUi(this);
 }
 
 QString LocalAndRemoteDifferentWidget::keepLocalSideString(const KeepSideInfo& info)

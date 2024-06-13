@@ -310,6 +310,16 @@ void StalledIssuesModel::runMessageBox(QMegaMessageBox::MessageBoxInfo info)
     QMegaMessageBox::warning(info);
 }
 
+void StalledIssuesModel::languageChanged()
+{
+    //We need to update all the UI
+    for(int row = 0; row < rowCount(QModelIndex()); ++row)
+    {
+        auto item(getStalledIssueByRow(row));
+        item.getData()->resetUIUpdated();
+    }
+}
+
 StalledIssueVariant StalledIssuesModel::getStalledIssueByRow(int row) const
 {
     StalledIssueVariant issue;

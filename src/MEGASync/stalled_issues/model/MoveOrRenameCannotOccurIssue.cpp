@@ -32,7 +32,7 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
 
 bool MoveOrRenameCannotOccurIssue::isValid() const
 {
-    return consultCloudData() && consultLocalData();
+    return consultCloudData() || consultLocalData();
 }
 
 //We don´t fill the issue as usual
@@ -222,7 +222,7 @@ bool MoveOrRenameCannotOccurIssue::autoSolveIssue()
 
 bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
 {
-    if(!isSolved())
+    if(!isSolved() && consultCloudData())
     {
         if(consultCloudData()->getPathHandle() != mega::INVALID_HANDLE || consultCloudData()->getMovePathHandle() != mega::INVALID_HANDLE)
         {
@@ -237,7 +237,7 @@ bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
         }
     }
 
-    if(!isSolved())
+    if(!isSolved() && consultLocalData())
     {
         QFileInfo previousPath(consultLocalData()->getPath().path);
         QFileInfo currentPath(consultLocalData()->getMovePath().path);

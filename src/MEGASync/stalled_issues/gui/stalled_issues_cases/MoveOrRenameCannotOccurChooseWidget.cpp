@@ -65,6 +65,11 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     ui->chooseTitle->setHTML(tr("Local"));
     ui->name->setIsCloud(false);
 
+    if(issue->consultCloudData())
+    {
+        addDefaultButton();
+    }
+
     if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {
         setSolved(true, issue->getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL);
@@ -96,6 +101,11 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     MoveOrRenameCannotOccurChooseWidget::updateUi(issue);
     ui->chooseTitle->setHTML(tr("Remote"));
     ui->name->setIsCloud(true);
+
+    if(issue->consultLocalData())
+    {
+        addDefaultButton();
+    }
 
     if(!issue->isUnsolved() && issue->getChosenSide() != MoveOrRenameIssueChosenSide::NONE)
     {
