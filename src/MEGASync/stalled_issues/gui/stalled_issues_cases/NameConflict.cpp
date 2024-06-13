@@ -24,12 +24,6 @@ static const int REMOVE_ID = 1;
 const char* TITLE_FILENAME = "TITLE_FILENAME";
 const char* TITLE_INDEX = "TITLE_INDEX";
 
-namespace
-{
-Text::Bold boldTextDecorator;
-const Text::Decorator textDecorator(&boldTextDecorator);
-}
-
 //NAME DUPLICATED
 void NameDuplicatedContainer::paintEvent(QPaintEvent*)
 {
@@ -211,24 +205,7 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         else if(info->isFailed())
         {
             titleLayout->activate();
-
-            QString errorString;
-            if(!info->mErrorContext.isEmpty())
-            {
-                errorString.append(info->mErrorContext);
-                //Add space
-                errorString.append(QLatin1String(" "));
-            }
-            if(isCloud())
-            {
-                errorString.append(QString::fromUtf8(info->mError->getErrorString()));
-            }
-            else
-            {
-                errorString.append(tr("Check file permissions"));
-            }
-
-            title->setFailed(true, errorString);
+            title->setFailed(true, info->mError);
         }
 
         allSolved &= info->isSolved();
@@ -570,8 +547,6 @@ void NameConflict::onActionClicked(int actionId)
                     msgInfo.informativeText = tr("It will be moved to the sync rubbish folder.[BR]You will be able to retrieve the folder from there.[/BR]");
                 }
             }
-            msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
-            msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
 
             msgInfo.finishFunc = [=](
                                      QMessageBox* msgBox)
@@ -598,8 +573,8 @@ void NameConflict::onActionClicked(int actionId)
 
                         if(error)
                         {
-                            QString errorContext = isFile ?  tr("File could not be removed.") : tr("Folder could not be removed");
-                            MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), error, errorContext);
+                            QString errorStr = isFile ?  StalledIssuesStrings::RemoveRemoteFailedFile(error.get()) : StalledIssuesStrings::RemoveRemoteFailedFolder(error.get());
+                            MegaSyncApp->getStalledIssuesModel()->solveCloudConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), errorStr);
                             NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox((*error.get()), isFile);
                         }
                         else
@@ -614,10 +589,9 @@ void NameConflict::onActionClicked(int actionId)
 
                         if(failed)
                         {
-                            QString errorContext = isFile ? tr("File could not be removed.")
-                                                          : tr("Folder could not be removed");
+                            QString errorStr = isFile ?  StalledIssuesStrings::RemoveLocalFailedFile() : StalledIssuesStrings::RemoveLocalFailedFolder();
 
-                            MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), errorContext);
+                            MegaSyncApp->getStalledIssuesModel()->solveLocalConflictedNameFailed(conflictIndex, mDelegateWidget->getCurrentIndex(), errorStr);
                             NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(isFile);
                         }
                         else
@@ -640,8 +614,9 @@ void NameConflict::onActionClicked(int actionId)
                     }
                 }
             };
-            textDecorator.process(msgInfo.informativeText);
-            textDecorator.process(msgInfo.text);
+            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.informativeText);
+            StalledIssuesBoldTextDecorator::boldTextDecorator.process(msgInfo.text);
+            StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(msgInfo.informativeText);
             QMegaMessageBox::warning(msgInfo);
         }
     }

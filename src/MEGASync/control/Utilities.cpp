@@ -1577,6 +1577,11 @@ bool Utilities::monthHasChangedSince(qint64 msecs)
     return lastExecutionDate.month() < currentDate.month();
 }
 
+QString Utilities::getTranslatedError(const MegaError* error)
+{
+    return QCoreApplication::translate("MegaError", error->getErrorString());
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;

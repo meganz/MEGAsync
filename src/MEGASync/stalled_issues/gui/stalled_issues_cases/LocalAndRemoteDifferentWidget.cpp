@@ -19,11 +19,6 @@
 #include <QMessageBox>
 #include <QFile>
 
-namespace
-{
-Text::Bold boldTextDecorator;
-const Text::Decorator textDecorator(&boldTextDecorator);
-}
 
 QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
     = QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
@@ -86,7 +81,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
     GenericChooseWidget::GenericInfo bothInfo;
     bothInfo.buttonText = tr("Choose both");
     QString bothInfoTitle = tr("[B]Keep both[/B]");
-    textDecorator.process(bothInfoTitle);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
     bothInfo.title = bothInfoTitle;
     bothInfo.icon = QLatin1String(":/images/copy.png");
     bothInfo.solvedText = tr("Chosen");
@@ -104,7 +99,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
     }
 
-    textDecorator.process(lastModifiedInfoTitle);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
     lastModifiedInfo.title = lastModifiedInfoTitle;
     lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
     lastModifiedInfo.solvedText = tr("Chosen");
@@ -137,19 +132,24 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         {
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
             {
-                ui->chooseRemoteCopy->setFailed(true, tr("Local item could not be removed"));
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the local file") : tr("Unable to remove the local folder");
+                ui->chooseRemoteCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseRemoteCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
             {
-                ui->chooseLocalCopy->setFailed(true, tr("Remote item could not be removed"));
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the file stored in MEGA")
+                                                                    : tr("Unable to remove the folder stored in MEGA");
+                ui->chooseLocalCopy->setFailed(true, errorStr);
                 mFailedItem = ui->chooseLocalCopy;
                 break;
             }
             case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
             {
-                ui->keepBothOption->setFailed(true, tr("Item could not be renamed"));
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to update both local and MEGA files")
+                                                                    : tr("Unable to update both local and MEGA folders");
+                ui->keepBothOption->setFailed(true, errorStr);
                 mFailedItem = ui->keepBothOption;
                 break;
             }
@@ -237,7 +237,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
     stringInfo.itemName = ui->chooseLocalCopy->data()->getFileName();
     stringInfo.numberOfIssues = info.selection.size();
     info.msgInfo.text = keepLocalSideString(stringInfo);
-    textDecorator.process(info.msgInfo.text);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
 
     if(node->isFile())
     {
@@ -291,15 +291,14 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         {
             info.msgInfo.informativeText = tr("The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]");
         }
-        info.msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
-        info.msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
     }
 
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
         info.msgInfo.informativeText.append(QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("<br>"));
     }
-    textDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.informativeText);
 
     info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
     {
@@ -351,7 +350,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             info.msgInfo.text = tr("Keep the [B]remote items[/B]?");
         }
     }
-    textDecorator.process(info.msgInfo.text);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
     if(getData().consultData()->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
@@ -391,7 +390,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             }
         }
     }
-    textDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
     info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
     {
@@ -474,7 +473,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
         {
             info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size());
         }
-        textDecorator.process(info.msgInfo.informativeText);
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
         info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
         {

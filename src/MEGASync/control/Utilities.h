@@ -373,6 +373,8 @@ public:
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);
 
+    static QString getTranslatedError(const mega::MegaError* error);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

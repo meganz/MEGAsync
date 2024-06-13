@@ -4,6 +4,7 @@
 #include "Utilities.h"
 #include "StatsEventHandler.h"
 #include "StalledIssuesModel.h"
+#include "gui/NodeNameSetterDialog/RenameNodeDialog.h"
 
 #include <MegaApiSynchronizedRequest.h>
 
@@ -126,13 +127,13 @@ void NameConflictedStalledIssue::showRemoteRenameHasFailedMessageBox(const mega:
     failedInfo.buttons = QMessageBox::Yes;
     if(isFile)
     {
-        failedInfo.text = tr("Unable to remove this file.");
+        failedInfo.text = StalledIssuesStrings::RemoveFileFailedTitle();
     }
     else
     {
-        failedInfo.text = tr("Unable to remove this folder.");
+        failedInfo.text = StalledIssuesStrings::RemoveFolderFailedTitle();
     }
-    failedInfo.informativeText = tr("Reason: %1").arg(QString::fromUtf8(error.getErrorString()));
+    failedInfo.informativeText = StalledIssuesStrings::RemoveRemoteFailedDescription(&error);
 
     StalledIssuesModel::runMessageBox(failedInfo);
 }
@@ -145,13 +146,13 @@ void NameConflictedStalledIssue::showLocalRenameHasFailedMessageBox(bool isFile)
     failedInfo.buttons = QMessageBox::Yes;
     if(isFile)
     {
-        failedInfo.text = tr("Unable to remove this file.");
-        failedInfo.informativeText = tr("Check if the file is in use, and the permissions of the file, then try again.");
+        failedInfo.text = StalledIssuesStrings::RemoveFileFailedTitle();
+        failedInfo.informativeText = StalledIssuesStrings::RemoveLocalFileFailedDescription();
     }
     else
     {
-        failedInfo.text = tr("Unable to remove this folder.");
-        failedInfo.informativeText = tr("Check if the folder is in use, and the permissions of the folder, then try again.");
+        failedInfo.text = StalledIssuesStrings::RemoveFolderFailedTitle();
+        failedInfo.informativeText = StalledIssuesStrings::RemoveLocalFolderFailedDescription();
     }
 
     StalledIssuesModel::runMessageBox(failedInfo);
@@ -198,18 +199,18 @@ void NameConflictedStalledIssue::setLocalFailed(int errorConflictIndex, const QS
     auto conflictedNames(mLocalConflictedNames);
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
-        index == errorConflictIndex ? conflictedNames.at(index)->setFailed(nullptr, error)
-                                    : conflictedNames.at(index)->setFailed(nullptr);
+        index == errorConflictIndex ? conflictedNames.at(index)->setFailed(error)
+                                    : conflictedNames.at(index)->setFailed();
     }
 }
 
-void NameConflictedStalledIssue::setCloudFailed(int errorConflictIndex, std::shared_ptr<mega::MegaError> error, const QString& errorContext)
+void NameConflictedStalledIssue::setCloudFailed(int errorConflictIndex, const QString& error)
 {
     auto conflictedNames(mCloudConflictedNames.getConflictedNames());
     for(int index = 0; index < conflictedNames.size(); ++index)
     {
-        index == errorConflictIndex ? conflictedNames.at(index)->setFailed(error, errorContext)
-                                    : conflictedNames.at(index)->setFailed(nullptr);
+        index == errorConflictIndex ? conflictedNames.at(index)->setFailed(error)
+                                    : conflictedNames.at(index)->setFailed();
     }
 }
 
@@ -519,7 +520,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
 
                     if(error)
                     {
-                        cloudConflictedName->setFailed(error);
+                        cloudConflictedName->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(error.get(), conflictedNode->isFile()));
                         break;
                     }
                     else
@@ -580,7 +581,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                     }
                     else
                     {
-                        localConflictedName->setFailed(nullptr);
+                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
                         break;
                     }
                 }
@@ -613,7 +614,7 @@ bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNa
                 conflictedNode.get(),
                 newName.toStdString().c_str());
 
-            error ? item->setFailed(error) : item->solveByRename(newName);
+            error ? item->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(error.get(), conflictedNode->isFile())) : item->solveByRename(newName);
         }
     }
 
@@ -633,7 +634,7 @@ bool NameConflictedStalledIssue::renameLocalSibling(std::shared_ptr<ConflictedNa
         {
             fileInfo.setFile(fileInfo.path(), newName);
             result = file.rename(QDir::toNativeSeparators(fileInfo.filePath()));
-            result ?  item->solveByRename(newName) : item->setFailed(nullptr);
+            result ?  item->solveByRename(newName) : item->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
         }
     }
 
@@ -769,9 +770,9 @@ void NameConflictedStalledIssue::solveIssue(int option)
     if(option & ActionSelected::MergeFolders && foldersCount() > 1)
     {
         auto errorInfo = mCloudConflictedNames.mergeFolders();
-        if(errorInfo.error)
+        if(!errorInfo.error.isEmpty())
         {
-            setCloudFailed(errorInfo.conflictIndex, errorInfo.error, errorInfo.errorContext);
+            setCloudFailed(errorInfo.conflictIndex, errorInfo.error);
             result= false;
         }
 

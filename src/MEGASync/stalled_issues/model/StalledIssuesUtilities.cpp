@@ -13,6 +13,9 @@
 #include <QFile>
 #include <QDir>
 
+const Text::Decorator StalledIssuesBoldTextDecorator::boldTextDecorator = Text::Decorator(new Text::Bold());
+const Text::Decorator StalledIssuesNewLineTextDecorator::newLineTextDecorator = Text::Decorator(new Text::NewLine());
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}

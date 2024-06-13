@@ -36,6 +36,13 @@ public:
    explicit Bold(QObject* parent = nullptr);
    void process(QString& input) const override;
 };
+
+class NewLine : public Decorator
+{
+public:
+    explicit NewLine(QObject* parent = nullptr);
+    void process(QString& input) const override;
+};
 }
 
 #endif // TEXTDECORATOR_H

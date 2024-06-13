@@ -77,6 +77,15 @@ bool LocalOrRemoteUserMustChooseStalledIssue::isAutoSolvable() const
     return result;
 }
 
+void LocalOrRemoteUserMustChooseStalledIssue::setIsSolved(SolveType type)
+{
+    StalledIssue::setIsSolved(type);
+    if(isSolved())
+    {
+        mError.reset();
+    }
+}
+
 void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     StalledIssue::fillIssue(stall);
@@ -120,9 +129,13 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
 
                 bool versionsDisabled(Preferences::instance()->fileVersioningDisabled());
                 StalledIssuesUtilities utilities;
-                if(versionsDisabled && utilities.removeRemoteFile(node.get()))
+                if(versionsDisabled)
                 {
-                    return false;
+                    mError = utilities.removeRemoteFile(node.get());
+                    if(mError)
+                    {
+                        return false;
+                    }
                 }
 
                 //Using appDataId == 0 means that there will be no notification for this upload
@@ -199,6 +212,11 @@ LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseS
     }
 
     return ChosenSide::NONE;
+}
+
+std::shared_ptr<mega::MegaError> LocalOrRemoteUserMustChooseStalledIssue::getRemoveRemoteError() const
+{
+    return mError;
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::getChosenSide() const

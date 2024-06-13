@@ -8,7 +8,8 @@
 #include <Utilities.h>
 #include <MoveToMEGABin.h>
 #include <MegaNodeNames.h>
-#include <MergeMegaFolders.h>
+#include <MergeMEGAFolders.h>
+#include <TextDecorator.h>
 
 class NameConflictedStalledIssue : public StalledIssue
 {
@@ -49,8 +50,7 @@ public:
         int mDuplicatedGroupId;
         bool mIsFile;
         std::shared_ptr<FileFolderAttributes>  mItemAttributes;
-        std::shared_ptr<mega::MegaError> mError;
-        QString mErrorContext;
+        QString mError;
 
         ConflictedNameInfo(const QFileInfo& fileInfo,
             bool isFile,
@@ -113,20 +113,20 @@ public:
                 localAttributes->setPath(mConflictedPath);
             }
 
-            mError.reset();
+            mError.clear();
         }
 
         void solveByRemove()
         {
             mSolved = ConflictedNameInfo::SolvedType::REMOVE;
-            mError.reset();
+            mError.clear();
         }
 
-        void setFailed(std::shared_ptr<mega::MegaError> error, const QString& context = QString())
+        void setFailed(const QString& error = QString())
         {
             mError = error;
-            mErrorContext = context;
-            if(error || !context.isEmpty())
+
+            if(!mError.isEmpty())
             {
                 mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::FAILED;
             }
@@ -139,7 +139,7 @@ public:
         void solveByMerge()
         {
             mSolved = ConflictedNameInfo::SolvedType::MERGED;
-            mError.reset();
+            mError.clear();
         }
 
         void solveByOtherSide()
@@ -477,21 +477,21 @@ public:
                             }
                             else
                             {
+                                std::shared_ptr<mega::MegaError> error;
                                 if(moveToBinErrors.binFolderCreationError)
-                                {
-                                    conflictedName->setFailed(
-                                        moveToBinErrors.binFolderCreationError, tr("Bin folder could not be created."));
-
-                                    return moveToBinErrors.binFolderCreationError;
+                                {                                    
+                                    error = moveToBinErrors.binFolderCreationError;
                                 }
                                 else
                                 {
-                                    QString errorContext = conflictedName->mIsFile ? tr("File could not be moved.") : tr("Folder could not be moved");
-
-                                    conflictedName->setFailed(moveToBinErrors.moveError, errorContext);
-
-                                    return moveToBinErrors.moveError;
+                                    error = moveToBinErrors.moveError;
                                 }
+
+                                auto errorStr = tr("Unable to remove this file.[BR]Error: %1[/BR]").arg(Utilities::getTranslatedError(error.get()));
+                                StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+                                conflictedName->setFailed(errorStr);
+
+                                return error;
                             }
                         }
                     }
@@ -508,8 +508,7 @@ public:
 
         struct MergeFoldersError
         {
-            std::shared_ptr<mega::MegaError> error;
-            QString errorContext;
+            QString error;
             int conflictIndex;
         };
 
@@ -552,9 +551,8 @@ public:
                         auto error = mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                         if(error)
                         {
-                            errorInfo.error = error;
                             errorInfo.conflictIndex = index;
-                            errorInfo.errorContext = tr("Error merging folder.");
+                            errorInfo.error = tr("Unable to merge this folder.");
                             break;
                         }
                         else
@@ -601,7 +599,7 @@ public:
     const QList<std::shared_ptr<ConflictedNameInfo>>& getNameConflictLocalData() const;
     const CloudConflictedNames& getNameConflictCloudData() const;
 
-    void setCloudFailed(int errorConflictIndex, std::shared_ptr<mega::MegaError> error, const QString& errorContext);
+    void setCloudFailed(int errorConflictIndex, const QString& error);
     void setLocalFailed(int errorConflictIndex, const QString& error);
 
     bool containsHandle(mega::MegaHandle handle) override;

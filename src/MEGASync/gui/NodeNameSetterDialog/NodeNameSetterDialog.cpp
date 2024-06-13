@@ -97,15 +97,6 @@ void NodeNameSetterDialog::showAlreadyExistingNodeError(bool isFile)
            : showError(tr("A folder with this name already exists in this location.\nEnter a different name"));
 }
 
-void NodeNameSetterDialog::showRenamedFailedError(bool isFile)
-{
-    QString error = isFile ? tr("Unable to rename this file.[BR]Check the name and the permissions of the file, then try again.")
-           : tr("Unable to rename this folder.[BR]Check the name and the folder permissions, then try again.");
-
-    error.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"));
-    showError(error);
-}
-
 void NodeNameSetterDialog::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)

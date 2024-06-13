@@ -7,6 +7,7 @@
 #include <MegaApplication.h>
 #include <Utilities.h>
 #include <syncs/control/SyncInfo.h>
+#include <TextDecorator.h>
 
 #include <QObject>
 #include <QString>
@@ -16,6 +17,27 @@
 #include <QEventLoop>
 
 #include <memory>
+
+class StalledIssuesBoldTextDecorator
+{
+public:
+    StalledIssuesBoldTextDecorator() = default;
+    static const Text::Decorator boldTextDecorator;
+
+private:
+    Text::Bold boldTD;
+};
+
+class StalledIssuesNewLineTextDecorator
+{
+public:
+    StalledIssuesNewLineTextDecorator() = default;
+
+    static const Text::Decorator newLineTextDecorator;
+
+private:
+    Text::NewLine newLineTD;
+};
 
 class StalledIssuesUtilities : public QObject
 {

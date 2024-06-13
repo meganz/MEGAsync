@@ -3,9 +3,17 @@
 #include <Utilities.h>
 #include <MegaApplication.h>
 #include <mega/types.h>
+#include <TextDecorator.h>
 
 #include <QFileInfo>
 #include <memory>
+
+
+namespace RenameNodeDecorator
+{
+Text::NewLine newLineTextDecorator;
+const Text::Decorator textDecorator(&newLineTextDecorator);
+}
 
 ///RENAME REMOTE FILE/FOLDER REIMPLMENETATION
 RenameNodeDialog::RenameNodeDialog(QWidget *parent)
@@ -101,7 +109,7 @@ void RenameRemoteNodeDialog::onRequestFinish(mega::MegaApi *, mega::MegaRequest 
             }
             else
             {
-                showError(QString::fromStdString(e->getErrorString()));
+                showRenamedFailedError(e);
             }
         }
     }
@@ -117,6 +125,19 @@ QString RenameRemoteNodeDialog::lineEditText()
     return mNodeName;
 }
 
+QString RenameRemoteNodeDialog::renamedFailedErrorString(mega::MegaError* error, bool isFile)
+{
+    QString errorMsg = isFile ? tr("Unable to rename this file.[BR]Error: %1.[/BR]").arg(Utilities::getTranslatedError(error))
+                              : tr("Unable to rename this folder.[BR]Error: %1.[/BR]").arg(Utilities::getTranslatedError(error));
+
+    RenameNodeDecorator::textDecorator.process(errorMsg);
+    return errorMsg;
+}
+
+void RenameRemoteNodeDialog::showRenamedFailedError(mega::MegaError* error)
+{
+    showError(renamedFailedErrorString(error, isFile()));
+}
 
 ///RENAME LOCAL FILE/FOLDER
 RenameLocalNodeDialog::RenameLocalNodeDialog(const QString& path, QWidget *parent)
@@ -150,7 +171,7 @@ void RenameLocalNodeDialog::onDialogAccepted()
                 }
                 else
                 {
-                    showRenamedFailedError(isFile);
+                    showRenamedFailedError();
                     return;
                 }
             }
@@ -186,4 +207,18 @@ QString RenameLocalNodeDialog::lineEditText()
         QDir dir(mNodePath);
         return dir.dirName();
     }
+}
+
+QString RenameLocalNodeDialog::renamedFailedErrorString(bool isFile)
+{
+    QString errorMsg = isFile ? tr("Unable to rename this file.[BR]Check the name and the file permissions, then try again.")
+                             : tr("Unable to rename this folder.[BR]Check the name and the folder permissions, then try again.");
+
+    RenameNodeDecorator::textDecorator.process(errorMsg);
+    return errorMsg;
+}
+
+void RenameLocalNodeDialog::showRenamedFailedError()
+{
+    showError(renamedFailedErrorString(isFile()));
 }

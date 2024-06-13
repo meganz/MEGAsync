@@ -1548,14 +1548,14 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
     return result;
 }
 
-void StalledIssuesModel::solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, std::shared_ptr<mega::MegaError> error, const QString& errorContext)
+void StalledIssuesModel::solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error)
 {
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        nameConflict->setCloudFailed(conflictIndex, error, errorContext);
+        nameConflict->setCloudFailed(conflictIndex, error);
     }
 }
 
