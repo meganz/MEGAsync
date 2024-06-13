@@ -1824,35 +1824,43 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Files containing:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files ending with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files equal to:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders beginning with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders containing:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders ending with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders equal to:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files with extension:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>

@@ -2,7 +2,6 @@
 #include "syncs/gui/SyncTooltipCreator.h"
 #include "syncs/control/SyncInfo.h"
 
-#include "control/Utilities.h"
 #include "MegaApplication.h"
 
 #include <QCoreApplication>

@@ -1,5 +1,5 @@
 #include "AvatarWidget.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "StatsEventHandler.h"
@@ -8,8 +8,6 @@
 #include <QPainter>
 #include <QWindow>
 #include <QMouseEvent>
-
-#include <math.h>
 
 static const int AVATAR_DIAMETER (60);
 static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);

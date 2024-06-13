@@ -1,7 +1,7 @@
 #include "AccountDetailsDialog.h"
 #include "ui_AccountDetailsDialog.h"
 
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "MegaApplication.h"
 #include "TransferQuota.h"
 
@@ -309,6 +309,7 @@ void AccountDetailsDialog::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
+        refresh();
     }
 
     QDialog::changeEvent(event);

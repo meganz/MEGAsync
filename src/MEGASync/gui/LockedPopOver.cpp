@@ -4,11 +4,6 @@
 #include <QMouseEvent>
 #include <QPropertyAnimation>
 #include <QTimer>
-#include "megaapi.h"
-#include "control/Utilities.h"
-#include "Preferences/Preferences.h"
-
-using namespace mega;
 
 LockedPopOver::LockedPopOver(QDialog *) :
     ui(new Ui::LockedPopOver)

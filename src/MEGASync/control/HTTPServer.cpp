@@ -1,5 +1,5 @@
 #include "HTTPServer.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "mega/setandelement.h"

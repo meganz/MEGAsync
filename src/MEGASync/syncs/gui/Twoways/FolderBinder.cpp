@@ -3,7 +3,7 @@
 #include "node_selector/gui/NodeSelectorSpecializations.h"
 
 #include "MegaApplication.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "DialogOpener.h"
 #include "Platform.h"
 

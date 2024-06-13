@@ -2,7 +2,7 @@
 #include "ExclusionsQmlDialog.h"
 #include <QQmlEngine>
 #include "Platform.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 using namespace mega;
 

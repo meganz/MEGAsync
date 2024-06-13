@@ -77,4 +77,8 @@ target_sources(MEGAsync
     ${DESKTOP_APP_CONTROL_SOURCES}
 )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/Preferences
+)
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

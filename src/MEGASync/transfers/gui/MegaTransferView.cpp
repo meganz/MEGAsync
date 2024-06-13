@@ -1,7 +1,7 @@
 #include "MegaTransferView.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "gui/QMegaMessageBox.h"
 #include "TransfersWidget.h"
 
