@@ -29,17 +29,60 @@ QmlDialog{
     property alias title: root.title
     property alias headTitle: title.text
 
-    signal accepted
-    signal chooseFile
-    signal chooseFolder
+    function getTextFieldTitle() {
+        let result = "";
+        if (targetComboBox.currentText === ExclusionsStrings.extensions){
+            result = ExclusionsStrings.filesWithExtension;
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.containing){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                result = ExclusionsStrings.filesContaining
+            }
+            else{
+                result = ExclusionsStrings.foldersContaining;
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.endingWith){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                result = ExclusionsStrings.filesEndingWith;
+            }
+            else{
+                result = ExclusionsStrings.foldersEndingWith;
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.beginningWith){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                result = ExclusionsStrings.filesBeginningWith
+            }
+            else{
+                result = ExclusionsStrings.foldersBeginningWith;
+            }
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.equalTo){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                result = ExclusionsStrings.filesEqualTo;
+            }
+            else{
+                result = ExclusionsStrings.foldersEqualTo;
+            }
+        }
+        return result;
+    }
 
+    signal accepted
+
+    onVisibleChanged: {
+        if(visible){
+            valueTextField.title = getTextFieldTitle();
+        }
+    }
     width: root.dialogWidth
     height: root.dialogHeight
     minimumWidth: root.dialogWidth
     minimumHeight: root.dialogHeight
     maximumWidth: root.dialogWidth
     maximumHeight: root.dialogHeight
-    modality: Qt.ApplicationModal
+    modality: Qt.WindowModal
     flags: Qt.Dialog
     color: colorStyle.surface1
     title: ExclusionsStrings.addExclusion
@@ -128,7 +171,10 @@ QmlDialog{
                     implicitWidth: 210
                     model: [ExclusionsStrings.files, ExclusionsStrings.folders, ExclusionsStrings.extensions]
                     onActivated:
-                        valueTypeCombo.enabled = currentText != ExclusionsStrings.extensions
+                    {
+                        valueTypeCombo.enabled = currentText != ExclusionsStrings.extensions;
+                        valueTextField.title = getTextFieldTitle();
+                    }
                 }
                 ComboBox {
                     id: valueTypeCombo
@@ -139,9 +185,11 @@ QmlDialog{
                         ExclusionsStrings.containing,
                         ExclusionsStrings.endingWith,
                         ExclusionsStrings.equalTo]
+                    onActivated: {
+                        valueTextField.title = getTextFieldTitle();
+                    }
                 }
             }
-
             TextField {
                 id: valueTextField
 
@@ -171,7 +219,7 @@ QmlDialog{
                     }
                     else if(targetComboBox.currentText === ExclusionsStrings.folders) {
                         if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
-                            folderDialog.openRelativeFolderSelector(syncExclusionsAccess.folderPath);
+                            folderDialog.openRelativeFolderSelector(syncExclusionsAccess.folderPath, false);
                         }
                         else {
                             folderDialog.openFolderSelector();

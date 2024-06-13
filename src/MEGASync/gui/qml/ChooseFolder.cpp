@@ -17,7 +17,7 @@ ChooseLocalFolder::ChooseLocalFolder(QObject *parent)
 {
 }
 
-void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
+void ChooseLocalFolder::openFolderSelector(const QString& folderPath, bool folderUp)
 {
     auto openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
 
@@ -25,13 +25,17 @@ void ChooseLocalFolder::openFolderSelector(const QString& folderPath)
     {
         openFromFolder = QDir::toNativeSeparators(folderPath);
         QDir openFromFolderDir(openFromFolder);
-        if (openFromFolderDir.cdUp())
+
+        if(folderUp)
         {
-            openFromFolder = openFromFolderDir.path();
-        }
-        else
-        {
-            openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+            if (openFromFolderDir.cdUp())
+            {
+                openFromFolder = openFromFolderDir.path();
+            }
+            else
+            {
+                openFromFolder = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+            }
         }
     }
 
