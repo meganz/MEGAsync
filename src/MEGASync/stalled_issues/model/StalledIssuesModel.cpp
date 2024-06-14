@@ -115,9 +115,9 @@ bool StalledIssuesModel::issuesRequested() const
     return mIssuesRequested.load();
 }
 
-QString StalledIssuesModel::fixingIssuesString(int numberOfIssues)
+QString StalledIssuesModel::fixingIssuesString()
 {
-    return tr("Fixing issues", "", numberOfIssues);
+    return tr("Fixing issues");
 }
 
 QString StalledIssuesModel::processingIssuesString()
@@ -137,10 +137,18 @@ QString StalledIssuesModel::issuesFixedString(StalledIssuesCreator::IssuesCount 
     {
         message = tr("%n issues failed", "", numberOfIssues.issuesFailed);
     }
+    else if(numberOfIssues.issuesFailed > 0 && numberOfIssues.issuesFixed == 1)
+    {
+        message = tr("1 issue fixed and %n issues failed", "", numberOfIssues.issuesFailed);
+    }
+    else if(numberOfIssues.issuesFailed == 1 && numberOfIssues.issuesFixed > 0)
+    {
+        message = tr("%n issues fixed and 1 issue failed", "", numberOfIssues.issuesFixed);
+    }
     else
     {
         QString successItems = tr("%n issues fixed", "", numberOfIssues.issuesFixed);
-        message = tr("%1, but %n issues failed.", "", numberOfIssues.issuesFailed).arg(successItems);
+        message = tr("%1 and %n issues failed.", "", numberOfIssues.issuesFailed).arg(successItems);
     }
 
     return message;
@@ -400,18 +408,7 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
         auto stalledIssuesDialog = DialogOpener::findDialog<StalledIssuesDialog>();
         if (stalledIssuesDialog && stalledIssuesDialog->getDialog()->isActiveWindow())
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.textFormat = Qt::RichText;
-            msgInfo.buttons = QMessageBox::Ok;
-            QMap<QMessageBox::StandardButton, QString> buttonsText;
-            buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-            msgInfo.buttonsText = buttonsText;
-            msgInfo.text = tr("Some external changes were detected. Please, refresh the view.");
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>) {
-                updateStalledIssues();
-            };
-            runMessageBox(std::move(msgInfo));
+            showIssueExternallyChangedMessageBox();
         }
     }
 }
@@ -1510,7 +1507,13 @@ bool StalledIssuesModel::checkForExternalChanges(const QModelIndex& index)
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
-    return issue.getData()->checkForExternalChanges();
+    auto result = issue.getData()->checkForExternalChanges();
+    if(result)
+    {
+        showIssueExternallyChangedMessageBox();
+    }
+
+    return result;
 }
 
 bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index)

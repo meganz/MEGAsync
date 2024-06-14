@@ -87,7 +87,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
         bothInfo.title = bothInfoTitle;
         bothInfo.icon = QLatin1String(":/images/copy.png");
-        bothInfo.solvedText = tr("Chosen");
+        bothInfo.solvedText = ui->keepBothOption->chosenString();
         ui->keepBothOption->setInfo(bothInfo);
 
         GenericChooseWidget::GenericInfo lastModifiedInfo;
@@ -105,7 +105,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
         lastModifiedInfo.title = lastModifiedInfoTitle;
         lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-        lastModifiedInfo.solvedText = tr("Chosen");
+        lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
         ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
     }
     else

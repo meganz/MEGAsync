@@ -81,6 +81,11 @@ void StalledIssueChooseWidget::setSolved(bool isSolved, bool isSelected)
     }
 }
 
+QString StalledIssueChooseWidget::chosenString() const
+{
+    return tr("Chosen");
+}
+
 //Generic options
 GenericChooseWidget::GenericChooseWidget(QWidget* parent)
     : StalledIssueChooseWidget(parent)

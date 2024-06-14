@@ -54,7 +54,8 @@ void MultiStepIssueSolverBase::sendFinishNotification()
     {
         finishNotificationInfo.message = tr(
             "Some issues couldn't be resolved.[BR]Check the Issues screen for resolution options, "
-            "and try to resolve the issues again.").replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"));
+            "and try to resolve the issues again.[/BR]");
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(finishNotificationInfo.message);
         //Add action to run the widget to show the errors (future feature)
     }
     else

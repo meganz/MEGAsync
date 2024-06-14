@@ -17,17 +17,20 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle, 
 
     auto moveLambda = [handle, &error](std::shared_ptr<mega::MegaNode> rubbishNode)
     {
-        std::unique_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        std::shared_ptr<mega::MegaNode> nodeToMove(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
         if(nodeToMove)
         {
             MegaApiSynchronizedRequest::runRequestLambdaWithResult(
                 [](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
                 { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
                 MegaSyncApp->getMegaApi(),
-                [handle, &error](const mega::MegaRequest&, const mega::MegaError& e)
+                [nodeToMove, handle, &error](const mega::MegaRequest&, const mega::MegaError& e)
                 {
                     if(e.getErrorCode() != mega::MegaError::API_OK)
                     {
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to move MEGA item to bin: %1. Error: %2")
+                                                                               .arg(QString::fromUtf8(nodeToMove->getName()), Utilities::getTranslatedError(&e))
+                                                                               .toUtf8().constData());
                         error.moveError = std::shared_ptr<mega::MegaError>(e.copy());
                     }
                 },
@@ -47,6 +50,12 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle, 
     if(folderNode)
     {
         moveLambda(folderNode);
+    }
+    else
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to create %1 folder into MEGA bin: %1")
+                                                               .arg(folderPath)
+                                                               .toUtf8().constData());
     }
 
     return error;

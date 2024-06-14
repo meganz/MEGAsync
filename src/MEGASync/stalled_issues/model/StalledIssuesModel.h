@@ -188,7 +188,7 @@ public:
     bool issuesRequested() const;
 
     //Common strings methods
-    static QString fixingIssuesString(int numberOfIssues = 0);
+    static QString fixingIssuesString();
     static QString processingIssuesString();
     static QString issuesFixedString(StalledIssuesCreator::IssuesCount numberOfIssues);
 

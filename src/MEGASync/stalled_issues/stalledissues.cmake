@@ -80,6 +80,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/win/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/win/MoveOrRenameCannotOccur.ui
 )
 
 target_sources_conditional(MEGAsync
@@ -97,6 +98,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/macx/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/macx/MoveOrRenameCannotOccur.ui
 )
 
 target_sources_conditional(MEGAsync
@@ -114,6 +116,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/linux/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/linux/MoveOrRenameCannotOccur.ui
 )
 
 

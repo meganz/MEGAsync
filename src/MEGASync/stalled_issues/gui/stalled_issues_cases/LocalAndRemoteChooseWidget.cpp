@@ -43,13 +43,14 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
     {
         ui->chooseTitle->setActionButtonVisibility(StalledIssueChooseWidget::BUTTON_ID, false);
 
+        //In order to keep the old context, we use QApplication::translate even when the strings are only used here
         QIcon icon;
         if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE)
         {
             if(data->isCloud())
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(chosenString(), icon.pixmap(16,16));
             }
             else
             {
@@ -67,7 +68,7 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             else
             {
                 icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("Local file is being uploaded"), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(QApplication::translate("StalledIssueChooseWidget", "Local file is being uploaded"), icon.pixmap(16,16));
             }
         }
         else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH)
@@ -75,7 +76,7 @@ void LocalAndRemoteStalledIssueBaseChooseWidget::updateUi(StalledIssueDataPtr da
             icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
             if(!data->renamedFileName().isEmpty())
             {
-                ui->chooseTitle->setMessage(tr("Renamed to %1").arg(data->renamedFileName()), icon.pixmap(16,16));
+                ui->chooseTitle->setMessage(QApplication::translate("StalledIssueChooseWidget", "Renamed to %1").arg(data->renamedFileName()), icon.pixmap(16,16));
             }
             else
             {

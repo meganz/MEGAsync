@@ -147,22 +147,6 @@ bool StalledIssueBaseDelegateWidget::checkForExternalChanges(bool isSingleSelect
 {
     if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
     {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok;
-        QMap<QMessageBox::StandardButton, QString> buttonsText;
-        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-        msgInfo.buttonsText = buttonsText;
-        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-        msgInfo.finishFunc = [](QPointer<QMessageBox>){
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        };
-        QMegaMessageBox::warning(msgInfo);
-
         updateSizeHint();
         return true;
     }
@@ -188,13 +172,15 @@ bool StalledIssueBaseDelegateWidget::checkSelection(const QList<mega::MegaSyncSt
 
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
     QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+
+    //In order to keep the same context as before
+    textsByButton.insert(QMessageBox::No, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Cancel"));
+    textsByButton.insert(QMessageBox::Ok, QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply"));
 
     info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
     if(info.similarSelection.size() != info.selection.size())
     {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
+        auto checkBox = new QCheckBox(QCoreApplication::translate("LocalAndRemoteDifferentWidget", "Apply to all"));
         info.msgInfo.checkBox = checkBox;
     }
     info.msgInfo.buttonsText = textsByButton;

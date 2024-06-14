@@ -28,6 +28,8 @@ public:
 
     void addDefaultButton();
 
+    QString chosenString() const;
+
 signals:
     void chooseButtonClicked(int id);
 

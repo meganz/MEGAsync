@@ -810,3 +810,111 @@ void NameConflictedStalledIssue::solveIssue(int option)
         setIsSolved(SolveType::FAILED);
     }
 }
+
+//CloudConflictedNames logic
+std::shared_ptr<mega::MegaError>
+NameConflictedStalledIssue::CloudConflictedNames::removeDuplicatedNodes()
+{
+    for(int index = 0; index < mConflictedNames.size(); ++index)
+    {
+        auto& conflictedNamesGroup = mConflictedNames[index];
+
+        if(conflictedNamesGroup.conflictedNames.size() > 1)
+        {
+            //The object is auto deleted when finished (as it needs to survive this issue)
+            foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
+            {
+                if(conflictedName->getSolvedType() ==
+                        NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED &&
+                    conflictedName != (*(conflictedNamesGroup.conflictedNames.end() - 1)))
+                {
+                    auto moveToBinErrors = MoveToMEGABin::moveToBin(
+                        conflictedName->mHandle, QLatin1String("SyncDuplicated"), true);
+                    if(!moveToBinErrors.binFolderCreationError && !moveToBinErrors.moveError)
+                    {
+                        conflictedName->solveByRemove();
+                    }
+                    else
+                    {
+                        std::shared_ptr<mega::MegaError> error;
+                        if(moveToBinErrors.binFolderCreationError)
+                        {
+                            error = moveToBinErrors.binFolderCreationError;
+                        }
+                        else
+                        {
+                            error = moveToBinErrors.moveError;
+                        }
+
+                        auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(error.get());
+                        conflictedName->setFailed(errorStr);
+
+                        return error;
+                    }
+                }
+            }
+
+            conflictedNamesGroup.solved = true;
+        }
+    }
+
+    mDuplicatedSolved = true;
+
+    //No error to return
+    return nullptr;
+}
+
+NameConflictedStalledIssue::CloudConflictedNames::MergeFoldersError
+NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
+{
+    MergeFoldersError errorInfo;
+
+    auto conflictedNames = getConflictedNames();
+    if(!conflictedNames.isEmpty())
+    {
+        std::sort(conflictedNames.begin(), conflictedNames.end(),
+            [](std::shared_ptr<ConflictedNameInfo> info1, std::shared_ptr<ConflictedNameInfo> info2)
+            {
+                auto info1FileCount(-1);
+                if(!info1->mIsFile)
+                {
+                    auto file1Attr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info1->mItemAttributes);
+                    info1FileCount = file1Attr->fileCount();
+                }
+
+                auto info2FileCount(-1);
+                if(!info2->mIsFile)
+                {
+                    auto fileAttr = std::dynamic_pointer_cast<RemoteFileFolderAttributes>(info2->mItemAttributes);
+                    info2FileCount = fileAttr->fileCount();
+                }
+
+                return info1FileCount > info2FileCount;
+            });
+
+        auto biggestFolder(conflictedNames.takeFirst());
+        std::unique_ptr<mega::MegaNode> targetFolder(MegaSyncApp->getMegaApi()->getNodeByHandle(biggestFolder->mHandle));
+        for(int index = 0; index < conflictedNames.size(); ++index)
+        {
+            auto conflictedFolder(conflictedNames.at(index));
+            std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
+            if(folderToMerge && folderToMerge->isFolder())
+            {
+                MergeMEGAFolders mergeItem(targetFolder.get(), folderToMerge.get());
+                auto error = mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
+                if(error)
+                {
+                    errorInfo.conflictIndex = index;
+                    errorInfo.error = tr("Unable to merge this folder.");
+                    break;
+                }
+                else
+                {
+                    conflictedFolder->solveByMerge();
+                }
+            }
+        }
+    }
+
+    return errorInfo;
+}
