@@ -28,6 +28,14 @@ ExclusionsQmlDialog {
         return str;
     }
 
+    function allowThreeDigits(text){
+        var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
+        if(text.length > maxLength){
+            return text.substring(0, maxLength);
+        }
+        return text;
+    }
+
     width: 640
     height: 680
     maximumHeight: 680
@@ -252,19 +260,18 @@ ExclusionsQmlDialog {
                 }
 
                 onTextChanged: {
-                    var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
-                    if(text.length > maxLength){
-                        text = text.substring(0, maxLength)
-                    }
+                    syncExclusionsAccess.minimumAllowedSize = text;
+                    text = allowThreeDigits(text);
                 }
                 onEditingFinished: {
-                    if(text.trim() !== ""){
+                    if(text.trim() !== "" && parseFloat(text) > 0){
                         syncExclusionsAccess.minimumAllowedSize = text;
                     }
-                    else{
-                        text = syncExclusionsAccess.minimumAllowedSize;
+                    else {
+                        text = "1";
                     }
                 }
+
             }
 
             ComboBox {
@@ -323,24 +330,16 @@ ExclusionsQmlDialog {
                 }
                 sizes.iconMargin: 6
                 onTextChanged: {
+                    syncExclusionsAccess.maximumAllowedSize = text;
                     var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
-                    if(text.length > maxLength){
-                        text = text.substring(0, maxLength)
-                    }
-
-                    if(text.trim() !== ""){
-                        syncExclusionsAccess.maximumAllowedSize = text;
-                    }
-                    else{
-                        text = syncExclusionsAccess.maximumAllowedSize;
-                    }
+                    text = allowThreeDigits(text);
                 }
                 onEditingFinished: {
-                    if(text.trim() !== ""){
+                    if(text.trim() !== "" && parseFloat(text) > 0){
                         syncExclusionsAccess.maximumAllowedSize = text;
                     }
-                    else{
-                        text = syncExclusionsAccess.maximumAllowedSize;
+                    else {
+                        text = "1";
                     }
                 }
             }
