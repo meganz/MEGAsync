@@ -354,7 +354,7 @@ QString MegaIgnoreSizeRule::getModifiedRule() const
         }
         rule.append(mThreshold == Threshold::LOW ? LOW_STRING : HIGH_STRING);
         rule.append(QLatin1String(":"));
-        rule.append(QString::number(mValue));
+        rule.append(QString::number(mValue == 0 ? 1 : mValue));
         EnumConversions<UnitTypes> convertEnum;
         rule.append(mUnit == UnitTypes::B ? QString() : convertEnum.getString(mUnit));
         return rule;
