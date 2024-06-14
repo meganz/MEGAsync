@@ -1,7 +1,7 @@
 #pragma once
 #include "Notificator.h"
 #include "NotificationDelayer.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 #include <QObject>
 

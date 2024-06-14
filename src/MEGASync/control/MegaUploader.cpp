@@ -1,6 +1,4 @@
 #include "MegaUploader.h"
-#include "control/Utilities.h"
-#include "MegaApplication.h"
 
 #include <QtCore>
 #include <QApplication>

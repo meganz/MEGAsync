@@ -4,7 +4,6 @@
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
 #include "StalledIssueLoadingItem.h"
-#include "control/Preferences/Preferences.h"
 
 #include <ViewLoadingScene.h>
 

@@ -3,7 +3,6 @@
 #include <QCheckBox>
 
 #include <Utilities.h>
-#include "control/Preferences/Preferences.h"
 #include <MegaApplication.h>
 #include "TextDecorator.h"
 

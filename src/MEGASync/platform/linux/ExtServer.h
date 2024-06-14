@@ -3,7 +3,6 @@
 
 #include "MegaApplication.h"
 #include "megaapi.h"
-#include "control/Preferences/Preferences.h"
 
 typedef enum {
    STRING_UPLOAD = 0,

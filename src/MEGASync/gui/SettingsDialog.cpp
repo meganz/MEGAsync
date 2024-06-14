@@ -2,7 +2,7 @@
 #include "SettingsDialog.h"
 #include "QMegaMessageBox.h"
 #include "ui_SettingsDialog.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "platform/Platform.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"

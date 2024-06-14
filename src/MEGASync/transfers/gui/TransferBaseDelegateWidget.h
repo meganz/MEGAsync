@@ -2,7 +2,7 @@
 #define TRANSFERBASEDELEGATEWIDGET
 
 #include "TransferRemainingTime.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "TransferItem.h"
 
 #include <QModelIndex>

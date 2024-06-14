@@ -4,7 +4,7 @@
 #include "mega/types.h"
 #include "AvatarWidget.h"
 #include "MegaApplication.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 
 namespace UserAttributes
 {

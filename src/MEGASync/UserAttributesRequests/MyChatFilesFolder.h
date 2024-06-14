@@ -1,7 +1,7 @@
 #ifndef MYCHATFILESFOLDER_A
 #define MYCHATFILESFOLDER_A
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 namespace UserAttributes
 {

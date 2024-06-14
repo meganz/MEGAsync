@@ -1,6 +1,5 @@
 #include "MegaTransferDelegate.h"
-#include "control/Utilities.h"
-#include "Preferences/Preferences.h"
+#include "Utilities.h"
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "TransfersModel.h"
