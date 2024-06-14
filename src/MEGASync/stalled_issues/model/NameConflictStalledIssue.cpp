@@ -455,7 +455,7 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
             if((result = renameCloudNodesAutomatically(
                    cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
             {
-                renameLocalItemsAutomatically(
+                result = renameLocalItemsAutomatically(
                     cloudConflictedNames, localConflictedNames, false, itemsBeingRenamed);
             }
         }
@@ -464,7 +464,7 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
             if((result = renameLocalItemsAutomatically(
                     cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
             {
-                renameCloudNodesAutomatically(
+                result = renameCloudNodesAutomatically(
                     cloudConflictedNames, localConflictedNames, false, itemsBeingRenamed);
             }
         }
@@ -478,7 +478,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                                                                bool ignoreLastModifiedName,
                                                                QStringList& cloudItemsBeingRenamed)
 {
-    auto result(0);
+    auto result(true);
     for(int index = cloudConflictedNames.size() - 1; index >= 0; --index)
     {
         auto& cloudConflictedName = cloudConflictedNames.at(index);
@@ -520,6 +520,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
 
                     if(error)
                     {
+                        result = false;
                         cloudConflictedName->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(error.get(), conflictedNode->isFile()));
                         break;
                     }
@@ -534,7 +535,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
         }
     }
 
-    return result == cloudConflictedNames.size();
+    return result;
 }
 
 bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,

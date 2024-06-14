@@ -52,10 +52,11 @@ void MultiStepIssueSolverBase::sendFinishNotification()
 
     if(mSolversFailedInTheSameNotification > 0)
     {
-        finishNotificationInfo.message = tr(
+        auto message = tr(
             "Some issues couldn't be resolved.[BR]Check the Issues screen for resolution options, "
             "and try to resolve the issues again.[/BR]");
-        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(finishNotificationInfo.message);
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(message);
+        finishNotificationInfo.message = message;
         //Add action to run the widget to show the errors (future feature)
     }
     else
