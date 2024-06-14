@@ -91,6 +91,36 @@ QAlertsModel* NotificationAlertModel::alertsModel() const
     return mAlertsModel;
 }
 
+bool NotificationAlertModel::hasAlerts()
+{
+    return (mAlertsModel && mAlertsModel->rowCount(QModelIndex()))
+           || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
+}
+
+bool NotificationAlertModel::hasAlertsOfType(int type)
+{
+    return (mAlertsModel && mAlertsModel->existsNotifications(type))
+            || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
+}
+
+QMap<QAlertsModel::AlertType, long long> NotificationAlertModel::getUnseenNotifications() const
+{
+    QMap<QAlertsModel::AlertType, long long> unseenNotifications;
+    if (mAlertsModel)
+    {
+        unseenNotifications = mAlertsModel->getUnseenNotifications();
+    }
+    return unseenNotifications;
+}
+
+void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts, bool copy)
+{
+    if (mAlertsModel)
+    {
+        mAlertsModel->insertAlerts(alerts, copy);
+    }
+}
+
 void NotificationAlertModel::onDataChanged(const QModelIndex &topLeft,
                                               const QModelIndex &bottomRight,
                                               const QVector<int> &roles)

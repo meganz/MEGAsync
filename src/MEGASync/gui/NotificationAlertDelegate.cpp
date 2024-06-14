@@ -15,7 +15,8 @@ void NotificationAlertDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
     switch (item->type)
     {
         case AlertNotificationModelItem::ALERT:
@@ -39,7 +40,8 @@ void NotificationAlertDelegate::paint(QPainter* painter,
 QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
                                           const QModelIndex& index) const
 {
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
     auto result = QStyledItemDelegate::sizeHint(option, index);
     switch (item->type)
     {
@@ -67,7 +69,8 @@ bool NotificationAlertDelegate::editorEvent(QEvent* event,
                                             const QStyleOptionViewItem& option,
                                             const QModelIndex& index)
 {
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
     auto result = QStyledItemDelegate::editorEvent(event, model, option, index);
     switch (item->type)
     {
@@ -94,7 +97,8 @@ bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
                                           const QStyleOptionViewItem& option,
                                           const QModelIndex& index)
 {
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
     auto result = QStyledItemDelegate::helpEvent(event, view, option, index);
     switch (item->type)
     {

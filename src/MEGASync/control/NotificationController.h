@@ -4,7 +4,6 @@
 #include "MegaNotificationDelegate.h"
 #include "NotificationAlertModel.h"
 #include "NotificationAlertDelegate.h"
-#include "gui/QFilterAlertsModel.h"
 
 #include "megaapi.h"
 #include "mega/bindings/qt/QTMegaGlobalListener.h"
@@ -31,7 +30,7 @@ public slots:
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
-    void notificationAlertCreated(NotificationAlertModel* model, NotificationAlertDelegate* delegate);
+    void notificationAlertCreated(QFilterAlertsModel* model, NotificationAlertDelegate* delegate);
     void unseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts);
 
 private:
@@ -39,8 +38,8 @@ private:
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     NotificationAlertModel* mNotificationAlertModel;
-    NotificationAlertDelegate* mNotificationAlertDelegate;
     QFilterAlertsModel* mAlertsProxyModel;
+    NotificationAlertDelegate* mNotificationAlertDelegate;
 
 };
 

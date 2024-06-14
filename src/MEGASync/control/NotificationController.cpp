@@ -8,7 +8,6 @@ NotificationController::NotificationController(QObject* parent)
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
     , mNotificationAlertModel(nullptr)
     , mNotificationAlertDelegate(nullptr)
-    , mAlertsProxyModel(nullptr)
 {
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
@@ -22,17 +21,14 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
 
     emit userAlertsUpdated(alertList);
 
-    if (mNotificationAlertModel && mNotificationAlertModel->alertsModel())
+    if (mNotificationAlertModel)
     {
-        mNotificationAlertModel->alertsModel()->insertAlerts(alertList, copyRequired);
+        mNotificationAlertModel->insertAlerts(alertList, copyRequired);
     }
     else
     {
         QAlertsModel* alertsModel = new QAlertsModel(alertList, copyRequired);
-        mAlertsProxyModel = new QFilterAlertsModel();
-        mAlertsProxyModel->setSourceModel(alertsModel);
-        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-        MegaAlertDelegate* alertDelegate = new MegaAlertDelegate(alertsModel, false, this);
+        MegaAlertDelegate* alertDelegate = new MegaAlertDelegate(alertsModel, true, this);
 
         QNotificationsModel* notificationsModel = new QNotificationsModel();
         MegaNotificationDelegate* notificationDelegate = new MegaNotificationDelegate(notificationsModel, this);
@@ -40,10 +36,14 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
         mNotificationAlertModel = new NotificationAlertModel(notificationsModel, alertsModel);
         mNotificationAlertDelegate = new NotificationAlertDelegate(notificationDelegate, alertDelegate);
 
-        emit notificationAlertCreated(mNotificationAlertModel, mNotificationAlertDelegate);
+        mAlertsProxyModel = new QFilterAlertsModel();
+        mAlertsProxyModel->setSourceModel(mNotificationAlertModel);
+        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+        emit notificationAlertCreated(mAlertsProxyModel, mNotificationAlertDelegate);
     }
 
-    emit unseenAlertsChanged(mNotificationAlertModel->alertsModel()->getUnseenNotifications());
+    emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());
 
     if (!copyRequired)
     {
@@ -87,20 +87,17 @@ void NotificationController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUs
 
 bool NotificationController::alertsAreFiltered()
 {
-    return mAlertsProxyModel
-            && mAlertsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
 }
 
 bool NotificationController::hasAlerts()
 {
-    return mNotificationAlertModel->alertsModel()
-            && mNotificationAlertModel->alertsModel()->rowCount(QModelIndex());
+    return mNotificationAlertModel->hasAlerts();
 }
 
 bool NotificationController::hasAlertsOfType(int type)
 {
-    return mNotificationAlertModel->alertsModel()
-            && mNotificationAlertModel->alertsModel()->existsNotifications(type);
+    return mNotificationAlertModel->hasAlertsOfType(type);
 }
 
 void NotificationController::applyNotificationFilter(int opt)

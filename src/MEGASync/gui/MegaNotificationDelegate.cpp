@@ -15,7 +15,8 @@ void MegaNotificationDelegate::paint(QPainter *painter, const QStyleOptionViewIt
 {
     if (index.isValid())
     {
-        AlertNotificationModelItem *item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
         if (item->type != AlertNotificationModelItem::NOTIFICATION || !item->pointer)
         {
             QStyledItemDelegate::paint(painter, option, index);
@@ -60,7 +61,8 @@ QSize MegaNotificationDelegate::sizeHint(const QStyleOptionViewItem &option, con
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
     if (item->type != AlertNotificationModelItem::NOTIFICATION || !item->pointer)
     {
         return QStyledItemDelegate::sizeHint(option, index);

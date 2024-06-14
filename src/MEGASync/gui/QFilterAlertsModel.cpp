@@ -1,6 +1,6 @@
 #include "QFilterAlertsModel.h"
 
-#include "MegaUserAlertExt.h"
+#include "NotificationAlertModel.h"
 
 using namespace mega;
 
@@ -78,8 +78,30 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
 
 bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
 {
+    bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
-    MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(index.internalPointer());
-
-    return alert ? checkFilterType(alert->getType()) : true;
+    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+    if(item)
+    {
+        switch (item->type)
+        {
+            case AlertNotificationModelItem::ALERT:
+            {
+                MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
+                filter = checkFilterType(alert->getType());
+                break;
+            }
+            case AlertNotificationModelItem::NOTIFICATION:
+            {
+                filter = true;
+                break;
+            }
+            default:
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type.");
+                break;
+            }
+        }
+    }
+    return filter;
 }

@@ -3,6 +3,7 @@
 
 #include "QNotificationsModel.h"
 #include "QAlertsModel.h"
+#include "QFilterAlertsModel.h"
 
 struct AlertNotificationModelItem
 {
@@ -33,6 +34,10 @@ public:
     QVariant data(const QModelIndex &index, int role) const override;
 
     QAlertsModel* alertsModel() const;
+    bool hasAlerts();
+    bool hasAlertsOfType(int type);
+    QMap<QAlertsModel::AlertType, long long> getUnseenNotifications() const;
+    void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
 
 private slots:
     void onDataChanged(const QModelIndex &topLeft,
