@@ -87,6 +87,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/ChooseFile.h
     gui/qml/QmlDeviceName.h
     gui/qml/AccountInfoData.h
+    gui/qml/WhatsNewWindow.h
     gui/onboarding/Onboarding.h
     gui/onboarding/Syncs.h
     gui/onboarding/PasswordStrengthChecker.h
@@ -96,7 +97,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
-    gui/onboarding/WhatsNewWindow.h
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
@@ -189,6 +189,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/ChooseFile.cpp
     gui/qml/QmlDeviceName.cpp
     gui/qml/AccountInfoData.cpp
+    gui/qml/WhatsNewWindow.cpp
     gui/onboarding/Onboarding.cpp
     gui/onboarding/Syncs.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
@@ -198,7 +199,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
-    gui/onboarding/WhatsNewWindow.cpp
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp

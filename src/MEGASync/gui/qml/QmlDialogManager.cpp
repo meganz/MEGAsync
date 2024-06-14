@@ -8,8 +8,8 @@
 #include "onboarding/GuestContent.h"
 #include "onboarding/OnboardingQmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
-#include "onboarding/WhatsNewWindow.h"
 
+#include "WhatsNewWindow.h"
 #include "DialogOpener.h"
 #include "LoginController.h"
 #include "AccountStatusController.h"

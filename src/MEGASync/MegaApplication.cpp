@@ -21,7 +21,6 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
-#include "onboarding/WhatsNewWindow.h"
 
 
 #include "UserAttributesManager.h"
