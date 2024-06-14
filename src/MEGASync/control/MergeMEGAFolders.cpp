@@ -1,4 +1,4 @@
-#include "MergeMegaFolders.h"
+#include "MergeMEGAFolders.h"
 
 #include <MegaApiSynchronizedRequest.h>
 #include <MegaApplication.h>
