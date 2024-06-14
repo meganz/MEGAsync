@@ -54,6 +54,7 @@ void GuiUtilities::showPayOrDismiss(const QString &title, const QString &message
     msgInfo.buttonsText.insert(QMessageBox::Yes, payButtonLabel);
     msgInfo.buttonsText.insert(QMessageBox::No, dismissLabel);
     msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.textFormat = Qt::TextFormat::RichText;
 
     msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
     {
