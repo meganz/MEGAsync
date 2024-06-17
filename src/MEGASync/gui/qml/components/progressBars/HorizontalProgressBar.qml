@@ -14,7 +14,7 @@ Qml.ProgressBar {
 
         anchors.fill: parent
         radius: height
-        color: ColorTheme.indicatorBackground
+        color: ColorTheme.surface2
     }
 
     contentItem: Item {

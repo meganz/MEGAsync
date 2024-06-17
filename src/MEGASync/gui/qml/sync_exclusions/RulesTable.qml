@@ -306,7 +306,7 @@ Rectangle {
                             leftMargin: 12
                             verticalCenter: parent.verticalCenter
                         }
-                        backgroundColor: ColorTheme.indicatorBackground
+                        backgroundColor: ColorTheme.surface2
                         radius: 4
                         iconSource: model? Images.imagesExclusionsPath + model.iconName + '.svg': ""
                         iconSize:  Qt.size(16, 16)
