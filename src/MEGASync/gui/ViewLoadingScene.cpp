@@ -28,7 +28,13 @@ ViewLoadingSceneBase::ViewLoadingSceneBase() :
     ui->wMessageContainer->hide();
     ui->wParentViewCopy->hide();
 
-    connect(ui->bStopButton, &QPushButton::clicked, mMessageHandler, &LoadingSceneMessageHandler::onStopPressed);
+    connect(
+        ui->bStopButton, &QPushButton::clicked, mMessageHandler, [this]()
+        {
+            auto buttonType(mMessageHandler->getButtonType());
+            mMessageHandler->hideLoadingMessage();
+            emit mMessageHandler->onButtonPressed(buttonType);
+        });
 }
 
 void ViewLoadingSceneBase::show()
@@ -124,6 +130,16 @@ LoadingSceneMessageHandler::~LoadingSceneMessageHandler()
     mFadeOutWidget->deleteLater();
 }
 
+bool LoadingSceneMessageHandler::needsAnswerFromUser() const
+{
+    return ui->bStopButton->isVisible();
+}
+
+MessageInfo::ButtonType LoadingSceneMessageHandler::getButtonType() const
+{
+    return mCurrentInfo ? mCurrentInfo->buttonType : MessageInfo::ButtonType::NONE;
+}
+
 void LoadingSceneMessageHandler::hideLoadingMessage()
 {
     updateMessage(nullptr);
@@ -173,14 +189,14 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
             ui->pbProgressBar->setValue(info->count);
         }
 
-        if(info->buttonType != MessageInfo::ButtonType::None)
+        if(info->buttonType != MessageInfo::ButtonType::NONE)
         {
-            if(info->buttonType == MessageInfo::ButtonType::Stop)
+            if(info->buttonType == MessageInfo::ButtonType::STOP)
             {
                 ui->bStopButton->setVisible(info->total > 1);
                 ui->bStopButton->setText(tr("Stop"));
             }
-            else if(info->buttonType == MessageInfo::ButtonType::Ok)
+            else if(info->buttonType == MessageInfo::ButtonType::OK)
             {
                 ui->bStopButton->setVisible(true);
                 ui->bStopButton->setText(tr("Ok"));
@@ -189,6 +205,7 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
         else
         {
             ui->bStopButton->hide();
+            ui->bStopButton->setText(QString());
         }
 
         ui->wMessageContainer->adjustSize();

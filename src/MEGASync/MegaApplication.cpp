@@ -3205,29 +3205,41 @@ void MegaApplication::cleanLocalCaches(bool all)
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
+    DesktopNotifications::NotificationInfo info;
+    info.message = message;
+    info.title = title;
+    showInfoMessage(info);
+}
+
+void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo info)
+{
     if (appfinished)
     {
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, info.message.toUtf8().constData());
 
     if (mOsNotifications)
     {
 #ifdef __APPLE__
-        if (infoDialog && infoDialog->isVisible())
+        //In case this method is called from another thread
+        Utilities::queueFunctionInAppThread([this]()
         {
-            infoDialog->hide();
-        }
+            if (infoDialog && infoDialog->isVisible())
+            {
+                infoDialog->hide();
+            }
+        });
 #endif
-        lastTrayMessage = message;
-        mOsNotifications->sendInfoNotification(title, message);
+        lastTrayMessage = info.message;
+        mOsNotifications->sendInfoNotification(info);
     }
     else
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = title;
-        msgInfo.text = message;
+        msgInfo.title = info.title;
+        msgInfo.text = info.message;
         QMegaMessageBox::information(msgInfo);
     }
 }

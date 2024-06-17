@@ -57,4 +57,16 @@ void Bold::process(QString &input) const
     input.replace(QLatin1String("[B]"), QLatin1String("<b>"));
     input.replace(QLatin1String("[/B]"), QLatin1String("</b>"));
 }
+
+NewLine::NewLine(QObject *parent) : Decorator(parent)
+{
+}
+
+//Use [BR] for new line tags replacement
+void NewLine::process(QString &input) const
+{
+    Decorator::process(input);
+    input.replace(QLatin1String("[BR]"), QLatin1String("<br>"));
+    input.replace(QLatin1String("[/BR]"), QLatin1String("</br>"));
+}
 }

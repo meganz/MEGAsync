@@ -17,6 +17,9 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     stalled_issues/gui/stalled_issues_cases/NameConflict.h
     stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
     stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h
+    stalled_issues/gui/stalled_issues_cases/MoveOrRenameCannotOccur.h
+    stalled_issues/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.h
+    stalled_issues/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.h 
     stalled_issues/model/IgnoredStalledIssue.h
     stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
     stalled_issues/model/MoveOrRenameCannotOccurIssue.h
@@ -25,6 +28,8 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     stalled_issues/model/StalledIssuesModel.h
     stalled_issues/model/StalledIssue.h
     stalled_issues/model/StalledIssuesProxyModel.h
+    stalled_issues/model/StalledIssuesFactory.h
+    stalled_issues/model/MultiStepIssueSolver.h
 )
 
 set(DESKTOP_APP_STALLED_ISSUES_SOURCES
@@ -45,6 +50,9 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
     stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
     stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
+    stalled_issues/gui/stalled_issues_cases/MoveOrRenameCannotOccur.cpp
+    stalled_issues/gui/stalled_issues_cases/LocalAndRemoteChooseWidget.cpp
+    stalled_issues/gui/stalled_issues_cases/MoveOrRenameCannotOccurChooseWidget.cpp
     stalled_issues/model/IgnoredStalledIssue.cpp
     stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
     stalled_issues/model/MoveOrRenameCannotOccurIssue.cpp
@@ -53,6 +61,8 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/model/StalledIssue.cpp
     stalled_issues/model/StalledIssuesModel.cpp
     stalled_issues/model/StalledIssuesProxyModel.cpp
+    stalled_issues/model/StalledIssuesFactory.cpp
+    stalled_issues/model/MultiStepIssueSolver.cpp
 )
 
 target_sources_conditional(MEGAsync
@@ -70,6 +80,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/win/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/win/MoveOrRenameCannotOccur.ui
 )
 
 target_sources_conditional(MEGAsync
@@ -87,6 +98,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/macx/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/macx/MoveOrRenameCannotOccur.ui
 )
 
 target_sources_conditional(MEGAsync
@@ -104,6 +116,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/linux/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
+   stalled_issues/gui/stalled_issues_cases/linux/MoveOrRenameCannotOccur.ui
 )
 
 
