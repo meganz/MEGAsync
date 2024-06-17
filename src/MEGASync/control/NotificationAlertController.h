@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONCONTROLLER_H
-#define NOTIFICATIONCONTROLLER_H
+#ifndef NOTIFICATIONALERTCONTROLLER_H
+#define NOTIFICATIONALERTCONTROLLER_H
 
 #include "NotificationDelegate.h"
 #include "NotificationAlertModel.h"
@@ -10,13 +10,13 @@
 
 #include <QObject>
 
-class NotificationController : public QObject, public mega::MegaGlobalListener
+class NotificationAlertController : public QObject, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
 public:
-    explicit NotificationController(QObject *parent = nullptr);
-    virtual ~NotificationController() = default;
+    explicit NotificationAlertController(QObject *parent = nullptr);
+    virtual ~NotificationAlertController() = default;
 
     void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
 
@@ -43,4 +43,4 @@ private:
 
 };
 
-#endif // NOTIFICATIONCONTROLLER_H
+#endif // NOTIFICATIONALERTCONTROLLER_H

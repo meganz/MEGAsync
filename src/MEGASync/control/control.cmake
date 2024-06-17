@@ -40,7 +40,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/Preferences/EncryptedSettings.h
     control/Preferences/EphemeralCredentials.h
     control/Preferences/Preferences.h
-	control/NotificationController.h
+    control/NotificationAlertController.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -79,7 +79,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/Preferences/EphemeralCredentials.cpp
     control/Preferences/Preferences.cpp
     control/StatsEventHandler.cpp
-	control/NotificationController.cpp
+    control/NotificationAlertController.cpp
 )
 
 target_sources(MEGAsync

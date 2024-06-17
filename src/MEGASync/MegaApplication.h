@@ -45,7 +45,7 @@
 #include "BlockingStageProgressController.h"
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
-#include "NotificationController.h"
+#include "NotificationAlertController.h"
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -66,7 +66,7 @@ class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
-class NotificationController;
+class NotificationAlertController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -181,7 +181,7 @@ public:
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
     StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
-    NotificationController* getNotificationController() { return mNotificationController.get(); }
+    NotificationAlertController* getNotificationController() { return mNotificationController.get(); }
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -513,7 +513,7 @@ protected:
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
 
-    std::unique_ptr<NotificationController> mNotificationController;
+    std::unique_ptr<NotificationAlertController> mNotificationController;
 
 private:
     void loadSyncExclusionRules(QString email = QString());

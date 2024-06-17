@@ -1,8 +1,8 @@
-#include "NotificationController.h"
+#include "NotificationAlertController.h"
 
 #include "MegaApplication.h"
 
-NotificationController::NotificationController(QObject* parent)
+NotificationAlertController::NotificationAlertController(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
@@ -12,7 +12,7 @@ NotificationController::NotificationController(QObject* parent)
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
-void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired)
+void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired)
 {
     if (!alertList)
     {
@@ -52,7 +52,7 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
     }
 }
 
-void NotificationController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
+void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
 {
     Q_UNUSED(api)
 
@@ -85,22 +85,22 @@ void NotificationController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUs
     }
 }
 
-bool NotificationController::alertsAreFiltered()
+bool NotificationAlertController::alertsAreFiltered()
 {
     return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != NotificationAlertProxyModel::FilterType::ALL;
 }
 
-bool NotificationController::hasAlerts()
+bool NotificationAlertController::hasAlerts()
 {
     return mNotificationAlertModel->hasAlerts();
 }
 
-bool NotificationController::hasAlertsOfType(int type)
+bool NotificationAlertController::hasAlertsOfType(int type)
 {
     return mNotificationAlertModel->hasAlertsOfType(type);
 }
 
-void NotificationController::applyNotificationFilter(NotificationAlertProxyModel::FilterType opt)
+void NotificationAlertController::applyNotificationFilter(NotificationAlertProxyModel::FilterType opt)
 {
     if (mAlertsProxyModel)
     {
