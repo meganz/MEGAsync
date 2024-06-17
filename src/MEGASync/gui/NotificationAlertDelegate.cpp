@@ -3,7 +3,7 @@
 #include "NotificationAlertModel.h"
 
 NotificationAlertDelegate::NotificationAlertDelegate(MegaNotificationDelegate* notificationsDelegate,
-                                                     MegaAlertDelegate* alertsDelegate,
+                                                     AlertDelegate* alertsDelegate,
                                                      QObject* parent)
     : QStyledItemDelegate(parent)
     , mNotificationsDelegate(notificationsDelegate)

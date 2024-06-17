@@ -1,4 +1,4 @@
-#include "MegaAlertDelegate.h"
+#include "AlertDelegate.h"
 
 #include "MegaApplication.h"
 
@@ -17,14 +17,14 @@
 
 using namespace mega;
 
-MegaAlertDelegate::MegaAlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent)
+AlertDelegate::AlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent)
     : QStyledItemDelegate(parent),
       mAlertsModel(model),
       mUseProxy(useProxyModel)
 {
 }
 
-void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void AlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid())
     {
@@ -67,7 +67,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
     }
 }
 
-QSize MegaAlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize AlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid())
     {
@@ -79,7 +79,7 @@ QSize MegaAlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
     }
 }
 
-bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool AlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if (!index.isValid())
     {
@@ -194,7 +194,7 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
     return QAbstractItemDelegate::editorEvent(event, model, option, index);
 }
 
-bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool AlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if (!index.isValid())
     {

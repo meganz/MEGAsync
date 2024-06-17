@@ -2,7 +2,7 @@
 #define NOTIFICATIONALERTDELEGATE_H
 
 #include "MegaNotificationDelegate.h"
-#include "MegaAlertDelegate.h"
+#include "AlertDelegate.h"
 
 class NotificationAlertDelegate : public QStyledItemDelegate
 {
@@ -10,7 +10,7 @@ class NotificationAlertDelegate : public QStyledItemDelegate
 
 public:
     NotificationAlertDelegate(MegaNotificationDelegate* notificationsDelegate,
-                              MegaAlertDelegate* alertsDelegate,
+                              AlertDelegate* alertsDelegate,
                               QObject *parent = nullptr);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
@@ -20,7 +20,7 @@ public:
 
 private:
     MegaNotificationDelegate* mNotificationsDelegate;
-    MegaAlertDelegate* mAlertsDelegate;
+    AlertDelegate* mAlertsDelegate;
 
 };
 

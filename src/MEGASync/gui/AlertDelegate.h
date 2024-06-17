@@ -1,16 +1,16 @@
-#ifndef MEGAALERTDELEGATE_H
-#define MEGAALERTDELEGATE_H
+#ifndef ALERTDELEGATE_H
+#define ALERTDELEGATE_H
 
 #include <QStyledItemDelegate>
 #include "AlertModel.h"
 #include "AlertItem.h"
 
-class MegaAlertDelegate : public QStyledItemDelegate
+class AlertDelegate : public QStyledItemDelegate
 {
     Q_OBJECT
 
 public:
-    MegaAlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent = 0);
+    AlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent = 0);
     void paint(QPainter *painter, const QStyleOptionViewItem &option,const QModelIndex &index) const;
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
     bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index);
@@ -21,4 +21,4 @@ protected:
     bool mUseProxy;
 };
 
-#endif // MEGAALERTDELEGATE_H
+#endif // ALERTDELEGATE_H

@@ -44,7 +44,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/HighDpiResize.h
     gui/AlertItem.h
     gui/AlertModel.h
-    gui/MegaAlertDelegate.h
+    gui/AlertDelegate.h
     gui/NotificationAlertProxyModel.h
     gui/FilterAlertWidget.h
     gui/AlertFilterType.h
@@ -152,7 +152,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CircularUsageProgressBar.cpp
     gui/AlertItem.cpp
     gui/AlertModel.cpp
-    gui/MegaAlertDelegate.cpp
+    gui/AlertDelegate.cpp
     gui/NotificationAlertProxyModel.cpp
     gui/FilterAlertWidget.cpp
     gui/AlertFilterType.cpp
