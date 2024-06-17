@@ -78,7 +78,7 @@ Item {
             State {
                 name: stepContent.stateCurrent
                 PropertyChanges { target: stepContent; color: ColorTheme.iconButtonPressedBackground; }
-                PropertyChanges { target: stepCircle; color: ColorTheme.iconButton; border.width: 0; }
+                PropertyChanges { target: stepCircle; color: ColorTheme.buttonPrimary; border.width: 0; }
                 PropertyChanges { target: stepCircleImage; visible: false; }
                 PropertyChanges { target: stepCircleText; color: ColorTheme.textInverseAccent; }
                 PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
@@ -102,7 +102,7 @@ Item {
                     color: ColorTheme.supportSuccess;
                 }
                 PropertyChanges { target: stepCircleText; visible: false; }
-                PropertyChanges { target: stepText; color: ColorTheme.iconButton; }
+                PropertyChanges { target: stepText; color: ColorTheme.buttonPrimary; }
             },
             State {
                 name: stepContent.stateCurrentDone

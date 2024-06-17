@@ -38,12 +38,12 @@ image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
 
 #switch::indicator:checked:hover
 {
-image: url(:/images/themed/light/switch_on_hover.svg);
+image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
 }
 
 #switch::indicator:checked:pressed
 {
-image: url(:/images/themed/light/switch_on_pressed.svg);
+image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
 }
 
 #switch::indicator:unchecked
@@ -53,12 +53,12 @@ image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
 
 #switch::indicator:unchecked:hover
 {
-image: url(:/images/themed/light/switch_off_hover.svg);
+image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
 }
 
 #switch::indicator:unchecked:pressed
 {
-image: url(:/images/themed/light/switch_off_pressed.svg);
+image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
 }
 
 #SmartDescription, #AdvanceDescription
