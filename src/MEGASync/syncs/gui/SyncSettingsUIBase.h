@@ -118,12 +118,15 @@ public:
                              "or you've cancelled your subscription. To continue, make a payment and reactivate your subscription.").arg(localPath);
                 dec.process(message);
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
+
+                onSavingSyncsCompleted(SAVING_FINISHED);
             }
             else
             {
                 if (errorCode != mega::MegaError::API_OK)
                 {
                     onSavingSyncsCompleted(SAVING_FINISHED);
+
                     Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
                     Text::Decorator dec(&link);
                     QString msg = errorMsg;
