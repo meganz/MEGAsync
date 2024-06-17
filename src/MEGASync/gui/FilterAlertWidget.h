@@ -1,8 +1,9 @@
 #ifndef FILTERALERTWIDGET_H
 #define FILTERALERTWIDGET_H
 
-#include <QWidget>
 #include "QFilterAlertsModel.h"
+
+#include <QWidget>
 
 namespace Ui {
 class FilterAlertWidget;
@@ -26,7 +27,7 @@ private slots:
     void on_bPayment_clicked();
 
 signals:
-    void onFilterClicked(int);
+    void onFilterClicked(QFilterAlertsModel::FilterType);
 
 private:
     Ui::FilterAlertWidget *ui;

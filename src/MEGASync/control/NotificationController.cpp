@@ -87,7 +87,7 @@ void NotificationController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUs
 
 bool NotificationController::alertsAreFiltered()
 {
-    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != QFilterAlertsModel::FilterType::ALL;
 }
 
 bool NotificationController::hasAlerts()
@@ -100,7 +100,7 @@ bool NotificationController::hasAlertsOfType(int type)
     return mNotificationAlertModel->hasAlertsOfType(type);
 }
 
-void NotificationController::applyNotificationFilter(int opt)
+void NotificationController::applyNotificationFilter(QFilterAlertsModel::FilterType opt)
 {
     if (mAlertsProxyModel)
     {

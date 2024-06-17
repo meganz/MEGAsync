@@ -9,6 +9,8 @@ AlertFilterType::AlertFilterType(QWidget *parent) :
     ui->lFilterActive->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->bDropDownArrow->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->liconType->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    setActualFilter(QFilterAlertsModel::FilterType::ALL);
 }
 
 AlertFilterType::~AlertFilterType()
@@ -16,38 +18,39 @@ AlertFilterType::~AlertFilterType()
     delete ui;
 }
 
-void AlertFilterType::setActualFilter(ALERT_TYPE type)
+void AlertFilterType::setActualFilter(QFilterAlertsModel::FilterType type)
 {
     switch (type)
     {
-        case TYPE_CONTACTS:
-            {
-                ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
-                ui->wIconType->show();
-                ui->lFilterActive->setText(tr("Contacts"));
-            }
+        case QFilterAlertsModel::FilterType::CONTACTS:
+        {
+            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+            ui->wIconType->show();
+            ui->lFilterActive->setText(tr("Contacts"));
             break;
-        case TYPE_PAYMENTS:
-            {
-                ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
-                ui->wIconType->show();
-                ui->lFilterActive->setText(tr("Payment"));
-            }
+        }
+        case QFilterAlertsModel::FilterType::PAYMENTS:
+        {
+            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+            ui->wIconType->show();
+            ui->lFilterActive->setText(tr("Payment"));
             break;
-        case TYPE_SHARES:
-            {
-                ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
-                ui->wIconType->show();
-                ui->lFilterActive->setText(tr("Incoming Shares"));
-            }
+        }
+        case QFilterAlertsModel::FilterType::SHARES:
+        {
+            ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+            ui->wIconType->show();
+            ui->lFilterActive->setText(tr("Incoming Shares"));
             break;
-        case ALL_TYPES:
+        }
+        case QFilterAlertsModel::FilterType::ALL:
+        case QFilterAlertsModel::FilterType::TAKEDOWNS:
         default:
-            {
-                ui->wIconType->hide();
-                ui->lFilterActive->setText(tr("All notifications"));
-            }
+        {
+            ui->wIconType->hide();
+            ui->lFilterActive->setText(tr("All notifications"));
             break;
+        }
     }
     mType = type;
 }

@@ -1,8 +1,6 @@
 #ifndef QFILTERALERTSMODEL_H
 #define QFILTERALERTSMODEL_H
 
-#include <megaapi.h>
-
 #include <QSortFilterProxyModel>
 
 class QFilterAlertsModel : public QSortFilterProxyModel
@@ -10,27 +8,28 @@ class QFilterAlertsModel : public QSortFilterProxyModel
     Q_OBJECT
 
 public:
-
-    enum {
-        FILTER_CONTACTS = 0,
-        FILTER_SHARES,
-        FILTER_PAYMENT,
-        FILTER_TAKEDOWNS,
-        NO_FILTER,
+    enum class FilterType
+    {
+        ALL = 0,
+        CONTACTS,
+        SHARES,
+        PAYMENTS,
+        TAKEDOWNS
     };
 
     QFilterAlertsModel(QObject *parent = 0);
-    virtual ~QFilterAlertsModel();
+    virtual ~QFilterAlertsModel() = default;
 
-    int filterAlertType();
-    void setFilterAlertType(int filterType);
-    bool checkFilterType(int typeToCheck) const;
+    FilterType filterAlertType();
+    void setFilterAlertType(FilterType filterType);
+    bool checkFilterType(int sdkType) const;
 
 protected:
     bool filterAcceptsRow(int row, const QModelIndex &sourceParent) const override;
 
 private:
-    int actualFilter;
+    FilterType actualFilter;
+
 };
 
 #endif // QFILTERALERTSMODEL_H

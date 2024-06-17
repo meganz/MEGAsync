@@ -26,7 +26,7 @@ public:
     bool hasAlertsOfType(int type);
 
 public slots:
-    void applyNotificationFilter(int opt);
+    void applyNotificationFilter(QFilterAlertsModel::FilterType opt);
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);

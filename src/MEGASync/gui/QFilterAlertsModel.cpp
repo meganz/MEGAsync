@@ -5,36 +5,33 @@
 using namespace mega;
 
 QFilterAlertsModel::QFilterAlertsModel(QObject *parent)
-    :  QSortFilterProxyModel(parent)
+    : QSortFilterProxyModel(parent)
+    , actualFilter(FilterType::ALL)
 {
-    actualFilter = NO_FILTER;
 }
 
-QFilterAlertsModel::~QFilterAlertsModel()
-{
-
-}
-
-int QFilterAlertsModel::filterAlertType()
+QFilterAlertsModel::FilterType QFilterAlertsModel::filterAlertType()
 {
     return actualFilter;
 }
 
-void QFilterAlertsModel::setFilterAlertType(int filterType)
+void QFilterAlertsModel::setFilterAlertType(FilterType filterType)
 {
     actualFilter = filterType;
     invalidateFilter();
 }
 
-bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
+bool QFilterAlertsModel::checkFilterType(int sdkType) const
 {
-    if (actualFilter == NO_FILTER)
+    bool success = false;
+    if (actualFilter == FilterType::ALL)
     {
-        return true;
+        success = true;
     }
-
-    switch (typeToCheck)
+    else
     {
+        switch (sdkType)
+        {
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
@@ -47,33 +44,40 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
-                return actualFilter == FILTER_CONTACTS;
+            {
+                success = actualFilter == FilterType::CONTACTS;
                 break;
-
+            }
             case MegaUserAlert::TYPE_NEWSHARE:
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
-                return actualFilter == FILTER_SHARES;
+            {
+                success = actualFilter == FilterType::SHARES;
                 break;
-
+            }
             case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
             case MegaUserAlert::TYPE_PAYMENT_FAILED:
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
-                return actualFilter == FILTER_PAYMENT;
+            {
+                success = actualFilter == FilterType::PAYMENTS;
                 break;
-
+            }
             case MegaUserAlert::TYPE_TAKEDOWN:
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
-                return actualFilter == FILTER_TAKEDOWNS;
+            {
+                success = actualFilter == FilterType::TAKEDOWNS;
                 break;
-
+            }
             default:
+            {
                 break;
+            }
+        }
     }
 
-    return false;
+    return success;
 }
 
 bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
@@ -98,7 +102,7 @@ bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourcePare
             }
             default:
             {
-                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type.");
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type (filterAcceptsRow).");
                 break;
             }
         }

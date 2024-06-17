@@ -148,7 +148,7 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
     void onActualFilterClicked();
-    void applyFilterOption(int opt);
+    void applyFilterOption(QFilterAlertsModel::FilterType opt);
     void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();
