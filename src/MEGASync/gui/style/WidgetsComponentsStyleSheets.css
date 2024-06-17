@@ -142,11 +142,12 @@ padding: 7 0 0 5px;
 }
 
 /* FIX ALPHA CHANNEL */
+/* PENDING TO ADD TO REPO : colorToken.indicator-background */
 QProgressBar
 {
 border-width: 0px;
 border-style: solid;
-background-color: #0D000000; /*PENDING TO ADD TO REPO : colorToken.indicator-background*/
+background-color: #f3f4f4; /*colorToken.surface-2*/
 max-height: 8px;
 }
 
