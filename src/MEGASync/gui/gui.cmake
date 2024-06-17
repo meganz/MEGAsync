@@ -61,7 +61,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/NotificationItem.h
-    gui/QNotificationsModel.h
+    gui/NotificationModel.h
     gui/MegaNotificationDelegate.h
     gui/NotificationAlertModel.h
     gui/NotificationAlertDelegate.h
@@ -169,7 +169,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/NotificationItem.cpp
-    gui/QNotificationsModel.cpp
+    gui/NotificationModel.cpp
     gui/MegaNotificationDelegate.cpp
     gui/NotificationAlertModel.cpp
     gui/NotificationAlertDelegate.cpp

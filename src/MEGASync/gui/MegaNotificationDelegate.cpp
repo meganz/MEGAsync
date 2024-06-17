@@ -6,7 +6,7 @@
 #include <QEvent>
 #include <QAbstractItemModel>
 
-MegaNotificationDelegate::MegaNotificationDelegate(QNotificationsModel* notificationModel, QObject *parent)
+MegaNotificationDelegate::MegaNotificationDelegate(NotificationModel* notificationModel, QObject *parent)
     : QStyledItemDelegate(parent), mNotificationModel(notificationModel)
 {
 }

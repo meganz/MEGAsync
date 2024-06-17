@@ -21,13 +21,13 @@ struct NotifTest
     std::map<std::string, std::string> callToAction2{};
 };
 
-class QNotificationsModel : public QAbstractItemModel
+class NotificationModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    explicit QNotificationsModel(QObject *parent = 0);
-    virtual ~QNotificationsModel();
+    explicit NotificationModel(QObject *parent = 0);
+    virtual ~NotificationModel();
 
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const override;

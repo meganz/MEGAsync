@@ -30,7 +30,7 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
         AlertModel* alertsModel = new AlertModel(alertList, copyRequired);
         AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, true, this);
 
-        QNotificationsModel* notificationsModel = new QNotificationsModel();
+        NotificationModel* notificationsModel = new NotificationModel();
         MegaNotificationDelegate* notificationDelegate = new MegaNotificationDelegate(notificationsModel, this);
 
         mNotificationAlertModel = new NotificationAlertModel(notificationsModel, alertsModel);

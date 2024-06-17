@@ -1,7 +1,7 @@
 #ifndef NOTIFICATIONALERTMODEL_H
 #define NOTIFICATIONALERTMODEL_H
 
-#include "QNotificationsModel.h"
+#include "NotificationModel.h"
 #include "AlertModel.h"
 #include "NotificationAlertProxyModel.h"
 
@@ -23,7 +23,7 @@ class NotificationAlertModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    NotificationAlertModel(QNotificationsModel* notificationsModel,
+    NotificationAlertModel(NotificationModel* notificationsModel,
                            AlertModel* alertsModel,
                            QObject *parent = nullptr);
 
@@ -45,7 +45,7 @@ private slots:
                        const QVector<int> &roles = QVector<int>());
 
 private:
-    QNotificationsModel* mNotificationsModel;
+    NotificationModel* mNotificationsModel;
     AlertModel* mAlertsModel;
 
 };

@@ -1,6 +1,6 @@
-#include "QNotificationsModel.h"
+#include "NotificationModel.h"
 
-QNotificationsModel::QNotificationsModel(QObject *parent)
+NotificationModel::NotificationModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     notificationItems.setMaxCost(16);
@@ -25,11 +25,11 @@ QNotificationsModel::QNotificationsModel(QObject *parent)
     endInsertRows();
 }
 
-QNotificationsModel::~QNotificationsModel()
+NotificationModel::~NotificationModel()
 {
 }
 
-QModelIndex QNotificationsModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex NotificationModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
     {
@@ -39,17 +39,17 @@ QModelIndex QNotificationsModel::index(int row, int column, const QModelIndex &p
     return createIndex(row, column, mNotifMap.value(row));
 }
 
-QModelIndex QNotificationsModel::parent(const QModelIndex&) const
+QModelIndex NotificationModel::parent(const QModelIndex&) const
 {
     return QModelIndex();
 }
 
-int QNotificationsModel::columnCount(const QModelIndex&) const
+int NotificationModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }
 
-int QNotificationsModel::rowCount(const QModelIndex &parent) const
+int NotificationModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
     {
@@ -58,7 +58,7 @@ int QNotificationsModel::rowCount(const QModelIndex &parent) const
     return mNotifMap.size();
 }
 
-QVariant QNotificationsModel::data(const QModelIndex &index, int role) const
+QVariant NotificationModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || index.row() < 0)
     {

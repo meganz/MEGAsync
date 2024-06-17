@@ -1,7 +1,7 @@
 #include "NotificationItem.h"
 #include "ui_NotificationItem.h"
 
-#include "QNotificationsModel.h"
+#include "NotificationModel.h"
 
 NotificationItem::NotificationItem(QWidget *parent)
     : QWidget(parent)

@@ -1,6 +1,6 @@
 #include "NotificationAlertModel.h"
 
-NotificationAlertModel::NotificationAlertModel(QNotificationsModel* notificationsModel,
+NotificationAlertModel::NotificationAlertModel(NotificationModel* notificationsModel,
                                                AlertModel* alertsModel,
                                                QObject* parent)
     : QAbstractItemModel(parent)
