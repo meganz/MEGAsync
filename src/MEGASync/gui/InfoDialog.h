@@ -22,7 +22,7 @@
 #include "StatusInfo.h"
 #include "syncs/gui/SyncsMenu.h"
 #include "syncs/control/SyncController.h"
-#include "QAlertsModel.h"
+#include "AlertModel.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -131,7 +131,7 @@ public slots:
    void setBandwidthOverquotaState(QuotaState state);
 
    void updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate);
-   void onUnseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts);
+   void onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
 
 private slots:
     void on_bSettings_clicked();

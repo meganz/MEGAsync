@@ -1,5 +1,5 @@
-#ifndef QALERTSMODEL_H
-#define QALERTSMODEL_H
+#ifndef ALERTMODEL_H
+#define ALERTMODEL_H
 
 #include "AlertItem.h"
 #include "MegaUserAlertExt.h"
@@ -13,22 +13,23 @@
 #include <deque>
 #include <array>
 
-class QAlertsModel : public QAbstractItemModel
+class AlertModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
-    enum AlertType {
+    enum AlertType
+    {
         ALERT_CONTACTS = 0,
         ALERT_SHARES,
         ALERT_PAYMENT,
         ALERT_TAKEDOWNS,
         ALERT_UNKNOWN,
-        ALERT_ALL, //this must be the last on the enum
+        ALERT_ALL //this must be the last on the enum
     };
 
-    explicit QAlertsModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
-    virtual ~QAlertsModel();
+    explicit AlertModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
+    virtual ~AlertModel();
 
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const override;
@@ -57,4 +58,4 @@ private:
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
 };
 
-#endif // QALERTSMODEL_H
+#endif // ALERTMODEL_H

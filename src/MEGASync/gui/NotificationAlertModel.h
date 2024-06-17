@@ -2,7 +2,7 @@
 #define NOTIFICATIONALERTMODEL_H
 
 #include "QNotificationsModel.h"
-#include "QAlertsModel.h"
+#include "AlertModel.h"
 #include "NotificationAlertProxyModel.h"
 
 struct AlertNotificationModelItem
@@ -24,7 +24,7 @@ class NotificationAlertModel : public QAbstractItemModel
 
 public:
     NotificationAlertModel(QNotificationsModel* notificationsModel,
-                           QAlertsModel* alertsModel,
+                           AlertModel* alertsModel,
                            QObject *parent = nullptr);
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
@@ -33,10 +33,10 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role) const override;
 
-    QAlertsModel* alertsModel() const;
+    AlertModel* alertsModel() const;
     bool hasAlerts();
     bool hasAlertsOfType(int type);
-    QMap<QAlertsModel::AlertType, long long> getUnseenNotifications() const;
+    QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
     void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
 
 private slots:
@@ -46,7 +46,7 @@ private slots:
 
 private:
     QNotificationsModel* mNotificationsModel;
-    QAlertsModel* mAlertsModel;
+    AlertModel* mAlertsModel;
 
 };
 

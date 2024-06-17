@@ -17,7 +17,7 @@
 
 using namespace mega;
 
-MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QObject *parent)
+MegaAlertDelegate::MegaAlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent)
     : QStyledItemDelegate(parent),
       mAlertsModel(model),
       mUseProxy(useProxyModel)
@@ -48,11 +48,9 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         if (!ti)
         {
             ti = new AlertItem();
-            connect(ti, &AlertItem::refreshAlertItem, mAlertsModel, &QAlertsModel::refreshAlertItem);
-
+            connect(ti, &AlertItem::refreshAlertItem, mAlertsModel, &AlertModel::refreshAlertItem);
             mAlertsModel->alertItems.insert(alert->getId(), ti);
-
-            ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
+            ti->setAlertData(alert);
         }
 
         painter->save();

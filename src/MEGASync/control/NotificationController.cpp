@@ -27,7 +27,7 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
     }
     else
     {
-        QAlertsModel* alertsModel = new QAlertsModel(alertList, copyRequired);
+        AlertModel* alertsModel = new AlertModel(alertList, copyRequired);
         MegaAlertDelegate* alertDelegate = new MegaAlertDelegate(alertsModel, true, this);
 
         QNotificationsModel* notificationsModel = new QNotificationsModel();

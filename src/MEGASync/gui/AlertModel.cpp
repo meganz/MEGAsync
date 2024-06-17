@@ -1,4 +1,4 @@
-#include "QAlertsModel.h"
+#include "AlertModel.h"
 
 #include "Preferences.h"
 
@@ -8,7 +8,7 @@
 
 using namespace mega;
 
-QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
+AlertModel::AlertModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
     for(int i = 0; i < ALERT_ALL; i++)
@@ -21,7 +21,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
     insertAlerts(alerts, copy);
 }
 
-void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
+void AlertModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 {
     int numAlerts = alerts ? alerts->size() : 0;
     int actualNumberOfAlertsToInsert = 0;
@@ -33,7 +33,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             if (alertsMap.find(alert->getId()) == alertsMap.end())
             {
                 ++actualNumberOfAlertsToInsert;
-                if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
+                if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                 {
                     hasNotificationsOfType[checkAlertType(alert->getType())] = true;
                 }
@@ -50,7 +50,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             {
                 if (!alertToDelete->getSeen())
                 {
-                    if (checkAlertType(alertToDelete->getType()) != QAlertsModel::ALERT_UNKNOWN)
+                    if (checkAlertType(alertToDelete->getType()) != AlertModel::ALERT_UNKNOWN)
                     {
                         unSeenNotifications[checkAlertType(alertToDelete->getType())]--;
                     }
@@ -82,7 +82,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                     if (!alert->getSeen())
                     {
-                        if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
+                        if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                         {
                             unSeenNotifications[checkAlertType(alert->getType())]++;
                         }
@@ -101,7 +101,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         alertsMap[alert->getId()] = new MegaUserAlertExt(alert);
                         if (alert->getSeen() != oldAlert->getSeen())
                         {
-                            if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
+                            if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                             {
                                 unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
                             }
@@ -125,7 +125,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                             }
                             else
                             {
-                                Q_ASSERT_X(false, "QAlertsModel::insertAlerts()", "unexpected row to update");
+                                Q_ASSERT_X(false, "AlertModel::insertAlerts()", "unexpected row to update");
                             }
                         }
                     }
@@ -135,7 +135,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         alertsMap.insert(alert->getId(), new MegaUserAlertExt(alert));
                         if (!alert->getSeen())
                         {
-                            if (checkAlertType(alert->getType()) != QAlertsModel::ALERT_UNKNOWN)
+                            if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                             {
                                 unSeenNotifications[checkAlertType(alert->getType())]++;
                             }
@@ -152,12 +152,12 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
     }
 }
 
-QAlertsModel::~QAlertsModel()
+AlertModel::~AlertModel()
 {
     qDeleteAll(alertsMap);
 }
 
-QModelIndex QAlertsModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex AlertModel::index(int row, int column, const QModelIndex &parent) const
 {
     if (!hasIndex(row, column, parent))
     {
@@ -167,17 +167,17 @@ QModelIndex QAlertsModel::index(int row, int column, const QModelIndex &parent) 
     return createIndex(row, column, alertsMap.value(alertOrder[row]));
 }
 
-QModelIndex QAlertsModel::parent(const QModelIndex&) const
+QModelIndex AlertModel::parent(const QModelIndex&) const
 {
     return QModelIndex();
 }
 
-int QAlertsModel::columnCount(const QModelIndex&) const
+int AlertModel::columnCount(const QModelIndex&) const
 {
     return 1;
 }
 
-int QAlertsModel::rowCount(const QModelIndex &parent) const
+int AlertModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
     {
@@ -186,7 +186,7 @@ int QAlertsModel::rowCount(const QModelIndex &parent) const
     return int(alertOrder.size());
 }
 
-QVariant QAlertsModel::data(const QModelIndex &index, int role) const
+QVariant AlertModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid() || (index.row() < 0 || (int)alertOrder.size() <= index.row()))
     {
@@ -210,7 +210,7 @@ QVariant QAlertsModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-void QAlertsModel::refreshAlerts()
+void AlertModel::refreshAlerts()
 {
     if (alertOrder.size())
     {
@@ -218,9 +218,9 @@ void QAlertsModel::refreshAlerts()
     }
 }
 
-QMap<QAlertsModel::AlertType, long long> QAlertsModel::getUnseenNotifications() const
+QMap<AlertModel::AlertType, long long> AlertModel::getUnseenNotifications() const
 {
-    QMap<QAlertsModel::AlertType, long long> unseen;
+    QMap<AlertModel::AlertType, long long> unseen;
     for (int i = 0; i < ALERT_ALL; i++)
     {
         unseen[static_cast<AlertType>(i)] = unSeenNotifications[i];
@@ -229,12 +229,12 @@ QMap<QAlertsModel::AlertType, long long> QAlertsModel::getUnseenNotifications() 
     return unseen;
 }
 
-bool QAlertsModel::existsNotifications(int type) const
+bool AlertModel::existsNotifications(int type) const
 {
     return hasNotificationsOfType[type];
 }
 
-int QAlertsModel::checkAlertType(int alertType) const
+int AlertModel::checkAlertType(int alertType) const
 {
     switch (alertType)
     {
@@ -273,7 +273,7 @@ int QAlertsModel::checkAlertType(int alertType) const
     }
 }
 
-void QAlertsModel::refreshAlertItem(unsigned id)
+void AlertModel::refreshAlertItem(unsigned id)
 {
     int row = 0;
     for (auto it = alertOrder.begin(); it != alertOrder.end() && *it != id; ++it)

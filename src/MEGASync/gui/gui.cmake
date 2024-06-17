@@ -43,7 +43,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
     gui/AlertItem.h
-    gui/QAlertsModel.h
+    gui/AlertModel.h
     gui/MegaAlertDelegate.h
     gui/NotificationAlertProxyModel.h
     gui/FilterAlertWidget.h
@@ -151,7 +151,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
     gui/AlertItem.cpp
-    gui/QAlertsModel.cpp
+    gui/AlertModel.cpp
     gui/MegaAlertDelegate.cpp
     gui/NotificationAlertProxyModel.cpp
     gui/FilterAlertWidget.cpp

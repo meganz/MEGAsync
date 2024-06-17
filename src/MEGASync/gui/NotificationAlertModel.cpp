@@ -1,7 +1,7 @@
 #include "NotificationAlertModel.h"
 
 NotificationAlertModel::NotificationAlertModel(QNotificationsModel* notificationsModel,
-                                               QAlertsModel* alertsModel,
+                                               AlertModel* alertsModel,
                                                QObject* parent)
     : QAbstractItemModel(parent)
     , mNotificationsModel(notificationsModel)
@@ -86,7 +86,7 @@ QVariant NotificationAlertModel::data(const QModelIndex &index, int role) const
     return result;
 }
 
-QAlertsModel* NotificationAlertModel::alertsModel() const
+AlertModel* NotificationAlertModel::alertsModel() const
 {
     return mAlertsModel;
 }
@@ -103,9 +103,9 @@ bool NotificationAlertModel::hasAlertsOfType(int type)
             || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
 }
 
-QMap<QAlertsModel::AlertType, long long> NotificationAlertModel::getUnseenNotifications() const
+QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifications() const
 {
-    QMap<QAlertsModel::AlertType, long long> unseenNotifications;
+    QMap<AlertModel::AlertType, long long> unseenNotifications;
     if (mAlertsModel)
     {
         unseenNotifications = mAlertsModel->getUnseenNotifications();

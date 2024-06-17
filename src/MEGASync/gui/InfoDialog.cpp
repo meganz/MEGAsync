@@ -1186,13 +1186,13 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
 }
 
-void InfoDialog::onUnseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts)
+void InfoDialog::onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts)
 {
-    setUnseenNotifications(alerts[QAlertsModel::ALERT_ALL]);
-    setUnseenTypeNotifications(alerts[QAlertsModel::ALERT_ALL],
-                               alerts[QAlertsModel::ALERT_CONTACTS],
-                               alerts[QAlertsModel::ALERT_SHARES],
-                               alerts[QAlertsModel::ALERT_PAYMENT]);
+    setUnseenNotifications(alerts[AlertModel::ALERT_ALL]);
+    setUnseenTypeNotifications(alerts[AlertModel::ALERT_ALL],
+                               alerts[AlertModel::ALERT_CONTACTS],
+                               alerts[AlertModel::ALERT_SHARES],
+                               alerts[AlertModel::ALERT_PAYMENT]);
 }
 
 void InfoDialog::reset()
@@ -1450,7 +1450,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(QAlertsModel::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1466,7 +1466,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(QAlertsModel::ALERT_SHARES))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1482,7 +1482,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(QAlertsModel::ALERT_PAYMENT))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_PAYMENT))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }

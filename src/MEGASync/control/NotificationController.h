@@ -31,7 +31,7 @@ public slots:
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
     void notificationAlertCreated(NotificationAlertProxyModel* model, NotificationAlertDelegate* delegate);
-    void unseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts);
+    void unseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
 
 private:
     mega::MegaApi * mMegaApi;
