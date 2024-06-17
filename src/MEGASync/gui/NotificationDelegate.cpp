@@ -1,17 +1,16 @@
-#include "MegaNotificationDelegate.h"
+#include "NotificationDelegate.h"
 
-#include "MegaApplication.h"
+#include "NotificationAlertModel.h"
 
 #include <QPainter>
-#include <QEvent>
-#include <QAbstractItemModel>
 
-MegaNotificationDelegate::MegaNotificationDelegate(NotificationModel* notificationModel, QObject *parent)
-    : QStyledItemDelegate(parent), mNotificationModel(notificationModel)
+NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject *parent)
+    : QStyledItemDelegate(parent)
+    , mNotificationModel(notificationModel)
 {
 }
 
-void MegaNotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void NotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (index.isValid())
     {
@@ -54,7 +53,7 @@ void MegaNotificationDelegate::paint(QPainter *painter, const QStyleOptionViewIt
     }
 }
 
-QSize MegaNotificationDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     if (!index.isValid())
     {

@@ -1,7 +1,7 @@
 #ifndef NOTIFICATIONCONTROLLER_H
 #define NOTIFICATIONCONTROLLER_H
 
-#include "MegaNotificationDelegate.h"
+#include "NotificationDelegate.h"
 #include "NotificationAlertModel.h"
 #include "NotificationAlertDelegate.h"
 

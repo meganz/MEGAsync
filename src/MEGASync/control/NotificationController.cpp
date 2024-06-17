@@ -31,7 +31,7 @@ void NotificationController::populateUserAlerts(mega::MegaUserAlertList* alertLi
         AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, true, this);
 
         NotificationModel* notificationsModel = new NotificationModel();
-        MegaNotificationDelegate* notificationDelegate = new MegaNotificationDelegate(notificationsModel, this);
+        NotificationDelegate* notificationDelegate = new NotificationDelegate(notificationsModel, this);
 
         mNotificationAlertModel = new NotificationAlertModel(notificationsModel, alertsModel);
         mNotificationAlertDelegate = new NotificationAlertDelegate(notificationDelegate, alertDelegate);

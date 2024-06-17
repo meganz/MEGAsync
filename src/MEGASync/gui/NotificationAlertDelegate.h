@@ -1,7 +1,7 @@
 #ifndef NOTIFICATIONALERTDELEGATE_H
 #define NOTIFICATIONALERTDELEGATE_H
 
-#include "MegaNotificationDelegate.h"
+#include "NotificationDelegate.h"
 #include "AlertDelegate.h"
 
 class NotificationAlertDelegate : public QStyledItemDelegate
@@ -9,7 +9,7 @@ class NotificationAlertDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    NotificationAlertDelegate(MegaNotificationDelegate* notificationsDelegate,
+    NotificationAlertDelegate(NotificationDelegate* notificationsDelegate,
                               AlertDelegate* alertsDelegate,
                               QObject *parent = nullptr);
 
@@ -19,7 +19,7 @@ public:
     bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 
 private:
-    MegaNotificationDelegate* mNotificationsDelegate;
+    NotificationDelegate* mNotificationsDelegate;
     AlertDelegate* mAlertsDelegate;
 
 };

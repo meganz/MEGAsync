@@ -62,7 +62,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/WordWrapLabel.h
     gui/NotificationItem.h
     gui/NotificationModel.h
-    gui/MegaNotificationDelegate.h
+    gui/NotificationDelegate.h
     gui/NotificationAlertModel.h
     gui/NotificationAlertDelegate.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
@@ -170,7 +170,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/WordWrapLabel.cpp
     gui/NotificationItem.cpp
     gui/NotificationModel.cpp
-    gui/MegaNotificationDelegate.cpp
+    gui/NotificationDelegate.cpp
     gui/NotificationAlertModel.cpp
     gui/NotificationAlertDelegate.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp

@@ -9,9 +9,9 @@ struct AlertNotificationModelItem
 {
     enum ModelType
     {
-        NONE = -1,
-        ALERT = 0,
-        NOTIFICATION = 1
+        NONE = 0,
+        ALERT,
+        NOTIFICATION
     };
 
     ModelType type;
