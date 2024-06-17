@@ -32,7 +32,7 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
 
 bool MoveOrRenameCannotOccurIssue::isValid() const
 {
-    return consultCloudData() || consultLocalData();
+    return consultCloudData() && consultLocalData();
 }
 
 //We don´t fill the issue as usual

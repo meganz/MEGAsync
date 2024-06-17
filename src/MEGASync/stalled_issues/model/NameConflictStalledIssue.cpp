@@ -543,7 +543,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                                                                bool ignoreLastModifiedName,
                                                                QStringList& cloudItemsBeingRenamed)
 {
-    auto result(0);
+    auto result(true);
     for(int index = localConflictedNames.size() - 1; index >= 0; --index)
     {
         auto& localConflictedName = localConflictedNames.at(index);
@@ -560,8 +560,6 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                 {
                     cloudConflictedName->solveByOtherSide();
                 }
-
-                result++;
             }
             else
             {
@@ -578,10 +576,10 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                     {
                         localConflictedName->solveByRename(newName);
                         renameCloudSibling(cloudConflictedName, newName);
-                        result++;
                     }
                     else
                     {
+                        result = false;
                         localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
                         break;
                     }
@@ -590,7 +588,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
         }
     }
 
-    return result == localConflictedNames.size();
+    return result;
 }
 
 bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item, const QString &newName)
