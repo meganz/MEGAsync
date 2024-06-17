@@ -153,7 +153,6 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
         {
             emit solvingIssues(solvingIssuesStats);
             auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
-            solvableIssue.getData()->setAutoResolutionApplied(true);
 
             if(updateType == UpdateType::UI)
             {

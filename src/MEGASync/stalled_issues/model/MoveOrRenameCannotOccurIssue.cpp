@@ -185,6 +185,11 @@ void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> 
         &MoveOrRenameCannotOccurIssue::onSyncPausedEnds);
 
     mSolvingStarted = false;
+
+    if(mUndoSuccessful)
+    {
+        mSolveAttempts = 0;
+    }
 }
 
 bool MoveOrRenameCannotOccurIssue::solveAttemptsAchieved() const

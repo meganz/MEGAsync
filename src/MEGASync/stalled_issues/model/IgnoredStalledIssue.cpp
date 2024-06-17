@@ -46,6 +46,7 @@ bool IgnoredStalledIssue::isSpecialLink() const
 
 bool IgnoredStalledIssue::autoSolveIssue()
 {
+    setAutoResolutionApplied(true);
     auto result(false);
 
     if(!syncIds().isEmpty())

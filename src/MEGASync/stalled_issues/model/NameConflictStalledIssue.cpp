@@ -754,6 +754,7 @@ void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 //This code is never called. NameConflict, for the moment, are not autosolvable.
 bool NameConflictedStalledIssue::autoSolveIssue()
 {
+    setAutoResolutionApplied(true);
     solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
     if(isSolved() && !isPotentiallySolved())
     {

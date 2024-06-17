@@ -2,6 +2,7 @@
 #define MERGEMEGAFOLDERS_H
 
 #include <megaapi.h>
+#include <memory>
 
 #include <QObject>
 

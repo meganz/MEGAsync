@@ -20,6 +20,7 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
 
 bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
+    setAutoResolutionApplied(true);
     if(chooseLastMTimeSide())
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(
