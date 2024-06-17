@@ -10,7 +10,7 @@ AlertFilterType::AlertFilterType(QWidget *parent) :
     ui->bDropDownArrow->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->liconType->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    setActualFilter(QFilterAlertsModel::FilterType::ALL);
+    setActualFilter(NotificationAlertProxyModel::FilterType::ALL);
 }
 
 AlertFilterType::~AlertFilterType()
@@ -18,33 +18,33 @@ AlertFilterType::~AlertFilterType()
     delete ui;
 }
 
-void AlertFilterType::setActualFilter(QFilterAlertsModel::FilterType type)
+void AlertFilterType::setActualFilter(NotificationAlertProxyModel::FilterType type)
 {
     switch (type)
     {
-        case QFilterAlertsModel::FilterType::CONTACTS:
+        case NotificationAlertProxyModel::FilterType::CONTACTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Contacts"));
             break;
         }
-        case QFilterAlertsModel::FilterType::PAYMENTS:
+        case NotificationAlertProxyModel::FilterType::PAYMENTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Payment"));
             break;
         }
-        case QFilterAlertsModel::FilterType::SHARES:
+        case NotificationAlertProxyModel::FilterType::SHARES:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Incoming Shares"));
             break;
         }
-        case QFilterAlertsModel::FilterType::ALL:
-        case QFilterAlertsModel::FilterType::TAKEDOWNS:
+        case NotificationAlertProxyModel::FilterType::ALL:
+        case NotificationAlertProxyModel::FilterType::TAKEDOWNS:
         default:
         {
             ui->wIconType->hide();

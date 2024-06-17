@@ -1,27 +1,27 @@
-#include "QFilterAlertsModel.h"
+#include "NotificationAlertProxyModel.h"
 
 #include "NotificationAlertModel.h"
 
 using namespace mega;
 
-QFilterAlertsModel::QFilterAlertsModel(QObject *parent)
+NotificationAlertProxyModel::NotificationAlertProxyModel(QObject *parent)
     : QSortFilterProxyModel(parent)
     , actualFilter(FilterType::ALL)
 {
 }
 
-QFilterAlertsModel::FilterType QFilterAlertsModel::filterAlertType()
+NotificationAlertProxyModel::FilterType NotificationAlertProxyModel::filterAlertType()
 {
     return actualFilter;
 }
 
-void QFilterAlertsModel::setFilterAlertType(FilterType filterType)
+void NotificationAlertProxyModel::setFilterAlertType(FilterType filterType)
 {
     actualFilter = filterType;
     invalidateFilter();
 }
 
-bool QFilterAlertsModel::checkFilterType(int sdkType) const
+bool NotificationAlertProxyModel::checkFilterType(int sdkType) const
 {
     bool success = false;
     if (actualFilter == FilterType::ALL)
@@ -80,7 +80,7 @@ bool QFilterAlertsModel::checkFilterType(int sdkType) const
     return success;
 }
 
-bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
+bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
 {
     bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);

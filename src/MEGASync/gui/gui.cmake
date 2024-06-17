@@ -45,7 +45,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/AlertItem.h
     gui/QAlertsModel.h
     gui/MegaAlertDelegate.h
-    gui/QFilterAlertsModel.h
+    gui/NotificationAlertProxyModel.h
     gui/FilterAlertWidget.h
     gui/AlertFilterType.h
     gui/BugReportDialog.h
@@ -153,7 +153,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/AlertItem.cpp
     gui/QAlertsModel.cpp
     gui/MegaAlertDelegate.cpp
-    gui/QFilterAlertsModel.cpp
+    gui/NotificationAlertProxyModel.cpp
     gui/FilterAlertWidget.cpp
     gui/AlertFilterType.cpp
     gui/BugReportDialog.cpp

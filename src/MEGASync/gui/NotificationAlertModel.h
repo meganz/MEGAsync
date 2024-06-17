@@ -3,7 +3,7 @@
 
 #include "QNotificationsModel.h"
 #include "QAlertsModel.h"
-#include "QFilterAlertsModel.h"
+#include "NotificationAlertProxyModel.h"
 
 struct AlertNotificationModelItem
 {

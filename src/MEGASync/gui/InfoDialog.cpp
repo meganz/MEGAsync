@@ -102,8 +102,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(onFilterClicked(QFilterAlertsModel::FilterType)),
-            this, SLOT(applyFilterOption(QFilterAlertsModel::FilterType)));
+    connect(filterMenu, SIGNAL(onFilterClicked(NotificationAlertProxyModel::FilterType)),
+            this, SLOT(applyFilterOption(NotificationAlertProxyModel::FilterType)));
 
     setUnseenNotifications(0);
 
@@ -1199,7 +1199,7 @@ void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(QFilterAlertsModel::FilterType::ALL);
+    ui->wSortNotifications->setActualFilter(NotificationAlertProxyModel::FilterType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1437,7 +1437,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(QFilterAlertsModel::FilterType opt)
+void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1446,7 +1446,7 @@ void InfoDialog::applyFilterOption(QFilterAlertsModel::FilterType opt)
 
     switch (opt)
     {
-        case QFilterAlertsModel::FilterType::CONTACTS:
+        case NotificationAlertProxyModel::FilterType::CONTACTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1462,7 +1462,7 @@ void InfoDialog::applyFilterOption(QFilterAlertsModel::FilterType opt)
 
             break;
         }
-        case QFilterAlertsModel::FilterType::SHARES:
+        case NotificationAlertProxyModel::FilterType::SHARES:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1478,7 +1478,7 @@ void InfoDialog::applyFilterOption(QFilterAlertsModel::FilterType opt)
 
             break;
         }
-        case QFilterAlertsModel::FilterType::PAYMENTS:
+        case NotificationAlertProxyModel::FilterType::PAYMENTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1493,8 +1493,8 @@ void InfoDialog::applyFilterOption(QFilterAlertsModel::FilterType opt)
             }
             break;
         }
-        case QFilterAlertsModel::FilterType::ALL:
-        case QFilterAlertsModel::FilterType::TAKEDOWNS:
+        case NotificationAlertProxyModel::FilterType::ALL:
+        case NotificationAlertProxyModel::FilterType::TAKEDOWNS:
         default:
         {
             ui->wSortNotifications->setActualFilter(opt);

@@ -1,9 +1,9 @@
-#ifndef QFILTERALERTSMODEL_H
-#define QFILTERALERTSMODEL_H
+#ifndef NOTIFICATIONALERTPROXYMODEL_H
+#define NOTIFICATIONALERTPROXYMODEL_H
 
 #include <QSortFilterProxyModel>
 
-class QFilterAlertsModel : public QSortFilterProxyModel
+class NotificationAlertProxyModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
@@ -17,8 +17,8 @@ public:
         TAKEDOWNS
     };
 
-    QFilterAlertsModel(QObject *parent = 0);
-    virtual ~QFilterAlertsModel() = default;
+    NotificationAlertProxyModel(QObject *parent = 0);
+    virtual ~NotificationAlertProxyModel() = default;
 
     FilterType filterAlertType();
     void setFilterAlertType(FilterType filterType);
@@ -32,4 +32,4 @@ private:
 
 };
 
-#endif // QFILTERALERTSMODEL_H
+#endif // NOTIFICATIONALERTPROXYMODEL_H

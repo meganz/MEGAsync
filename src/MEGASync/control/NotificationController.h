@@ -26,11 +26,11 @@ public:
     bool hasAlertsOfType(int type);
 
 public slots:
-    void applyNotificationFilter(QFilterAlertsModel::FilterType opt);
+    void applyNotificationFilter(NotificationAlertProxyModel::FilterType opt);
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
-    void notificationAlertCreated(QFilterAlertsModel* model, NotificationAlertDelegate* delegate);
+    void notificationAlertCreated(NotificationAlertProxyModel* model, NotificationAlertDelegate* delegate);
     void unseenAlertsChanged(const QMap<QAlertsModel::AlertType, long long>& alerts);
 
 private:
@@ -38,7 +38,7 @@ private:
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
     NotificationAlertModel* mNotificationAlertModel;
-    QFilterAlertsModel* mAlertsProxyModel;
+    NotificationAlertProxyModel* mAlertsProxyModel;
     NotificationAlertDelegate* mNotificationAlertDelegate;
 
 };
