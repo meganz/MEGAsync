@@ -6,6 +6,8 @@
 #include <StalledIssuesUtilities.h>
 #include "StatsEventHandler.h"
 #include <MegaApiSynchronizedRequest.h>
+#include <FileFolderAttributes.h>
+
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),
@@ -85,6 +87,27 @@ void LocalOrRemoteUserMustChooseStalledIssue::setIsSolved(SolveType type)
     }
 }
 
+bool LocalOrRemoteUserMustChooseStalledIssue::checkForExternalChanges()
+{
+    QString localFingerprint;
+    QString remoteFingerprint;
+
+    getLocalData()->getAttributes()->requestCRC(this, [&localFingerprint](const QString& fp){
+        localFingerprint = fp;
+    });
+
+    getCloudData()->getAttributes()->requestCRC(this, [&remoteFingerprint](const QString& fp){
+        remoteFingerprint = fp;
+    });
+
+    if(localFingerprint.compare(mLocalFingerprintAtStart) != 0 || remoteFingerprint.compare(mRemoteFingerprintAtStart) != 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     StalledIssue::fillIssue(stall);
@@ -95,6 +118,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
     {
         setIsSolved(StalledIssue::SolveType::SOLVED);
     }
+
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
@@ -109,6 +133,14 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
 
         getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
         getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+
+        getLocalData()->getAttributes()->requestCRC(this, [this](const QString& fp){
+            mLocalFingerprintAtStart = fp;
+            });
+
+        getCloudData()->getAttributes()->requestCRC(this, [this](const QString& fp){
+            mRemoteFingerprintAtStart = fp;
+        });
     }
 }
 
