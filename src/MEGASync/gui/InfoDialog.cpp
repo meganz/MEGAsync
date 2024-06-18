@@ -430,10 +430,12 @@ void InfoDialog::setUsage()
         {
             switch (mPreferences->getStorageState())
             {
-                case MegaApi::STORAGE_STATE_GREEN:
+                case MegaApi::STORAGE_STATE_PAYWALL:
+                // Fallthrough
+                case MegaApi::STORAGE_STATE_RED:
                 {
-                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    usageColorS = QString::fromLatin1("#666666");
+                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
+                    usageColorS = QString::fromLatin1("#D90007");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
@@ -442,12 +444,14 @@ void InfoDialog::setUsage()
                     usageColorS = QString::fromLatin1("#F98400");
                     break;
                 }
-                case MegaApi::STORAGE_STATE_PAYWALL:
+                case MegaApi::STORAGE_STATE_UNKNOWN:
                 // Fallthrough
-                case MegaApi::STORAGE_STATE_RED:
+                case MegaApi::STORAGE_STATE_GREEN:
+                // Fallthrough
+                default:
                 {
-                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                    usageColorS = QString::fromLatin1("#D90007");
+                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+                    usageColorS = QString::fromLatin1("#666666");
                     break;
                 }
             }

@@ -104,13 +104,13 @@ void AccountDetailsDialog::refresh()
             // Check storage state and set property accordingly
             switch (preferences->getStorageState())
             {
-                case MegaApi::STORAGE_STATE_UNKNOWN:
+                case MegaApi::STORAGE_STATE_PAYWALL:
                 // Fallthrough
-                case MegaApi::STORAGE_STATE_GREEN:
+                case MegaApi::STORAGE_STATE_RED:
                 {
-                    mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    setProperty("storageState", QLatin1String("ok"));
-                    usageColorS = QString::fromLatin1("#333333");
+                    mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
+                    setProperty("storageState", QLatin1String("full"));
+                    usageColorS = QString::fromLatin1("#D90007");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
@@ -120,13 +120,15 @@ void AccountDetailsDialog::refresh()
                     usageColorS = QString::fromLatin1("#F98400");
                     break;
                 }
-                case MegaApi::STORAGE_STATE_PAYWALL:
+                case MegaApi::STORAGE_STATE_UNKNOWN:
                 // Fallthrough
-                case MegaApi::STORAGE_STATE_RED:
+                case MegaApi::STORAGE_STATE_GREEN:
+                // Fallthrough
+                default:
                 {
-                    mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                    setProperty("storageState", QLatin1String("full"));
-                    usageColorS = QString::fromLatin1("#D90007");
+                    mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+                    setProperty("storageState", QLatin1String("ok"));
+                    usageColorS = QString::fromLatin1("#333333");
                     break;
                 }
             }
@@ -190,7 +192,6 @@ void AccountDetailsDialog::refresh()
         // Set progress bar
         switch (accType)
         {
-
             case Preferences::ACCOUNT_TYPE_BUSINESS:
              // Fallthrough
             case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
@@ -219,7 +220,7 @@ void AccountDetailsDialog::refresh()
             case Preferences::ACCOUNT_TYPE_PROII:
             // Fallthrough
             case Preferences::ACCOUNT_TYPE_PROIII:
-            {                
+            {
                 setProperty("accountType", QLatin1String("pro"));
 
                 auto partsT = usedTransfer ?
