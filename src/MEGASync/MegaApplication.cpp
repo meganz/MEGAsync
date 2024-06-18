@@ -728,6 +728,10 @@ void MegaApplication::initialize()
     connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
+
+    mNotificationAlertController = std::make_unique<NotificationAlertController>(this);
+    connect(mNotificationAlertController.get(), &NotificationAlertController::userAlertsUpdated,
+            mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1229,10 +1233,6 @@ void MegaApplication::start()
     }
 
     updateTrayIcon();
-
-    mNotificationAlertController = std::make_unique<NotificationAlertController>(this);
-    connect(mNotificationAlertController.get(), &NotificationAlertController::userAlertsUpdated,
-            mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }
 
 void MegaApplication::requestUserData()
@@ -1495,6 +1495,7 @@ void MegaApplication::onLogout()
     mTransfersModel->resetModel();
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
+    mNotificationAlertController->reset();
     EmailRequester::instance()->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
@@ -2203,6 +2204,7 @@ void MegaApplication::cleanAll()
     delegateListener = nullptr;
     mPricing.reset();
     mCurrency.reset();
+    mNotificationAlertController.reset();
 
     delete EmailRequester::instance();
 

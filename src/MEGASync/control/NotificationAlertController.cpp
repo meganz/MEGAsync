@@ -85,6 +85,24 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
     }
 }
 
+void NotificationAlertController::reset()
+{
+    if (mNotificationAlertModel)
+    {
+        mNotificationAlertModel.reset();
+    }
+
+    if (mAlertsProxyModel)
+    {
+        mAlertsProxyModel.reset();
+    }
+
+    if (mNotificationAlertDelegate)
+    {
+        mNotificationAlertDelegate.reset();
+    }
+}
+
 bool NotificationAlertController::alertsAreFiltered()
 {
     return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != NotificationAlertProxyModel::FilterType::ALL;
