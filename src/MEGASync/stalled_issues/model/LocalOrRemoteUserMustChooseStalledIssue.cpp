@@ -6,6 +6,8 @@
 #include <StalledIssuesUtilities.h>
 #include "StatsEventHandler.h"
 #include <MegaApiSynchronizedRequest.h>
+#include <FileFolderAttributes.h>
+
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue),
@@ -85,6 +87,27 @@ void LocalOrRemoteUserMustChooseStalledIssue::setIsSolved(SolveType type)
     }
 }
 
+bool LocalOrRemoteUserMustChooseStalledIssue::checkForExternalChanges()
+{
+    QString localCRC;
+    QString remoteCRC;
+
+    getLocalData()->getAttributes()->requestCRC(this, [&localCRC](const QString& crc){
+        localCRC = crc;
+    });
+
+    getCloudData()->getAttributes()->requestCRC(this, [&remoteCRC](const QString& crc){
+        remoteCRC = crc;
+    });
+
+    if(localCRC.compare(mLocalCRCAtStart) != 0 || remoteCRC.compare(mRemoteCRCAtStart) != 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
     StalledIssue::fillIssue(stall);
@@ -95,6 +118,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
     {
         setIsSolved(StalledIssue::SolveType::SOLVED);
     }
+
 }
 
 void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
@@ -109,6 +133,14 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
 
         getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
         getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+
+        getLocalData()->getAttributes()->requestCRC(this, [this](const QString& crc){
+            mLocalCRCAtStart = crc;
+            });
+
+        getCloudData()->getAttributes()->requestCRC(this, [this](const QString& crc){
+            mRemoteCRCAtStart = crc;
+        });
     }
 }
 
