@@ -17,14 +17,6 @@ public:
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
 };
 
-class HeaderCaseIssueChecker : QObject
-{
-    Q_OBJECT
-
-public:
-    static bool checkIssue(StalledIssueHeader *header, bool isSingleSelection);
-};
-
 //DefaultHeader failed
 class DefaultHeader : public StalledIssueHeaderCase
 {
@@ -93,8 +85,6 @@ public:
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
-    void refreshCaseActions(StalledIssueHeader *header) override;
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
 };
 
 //Delete or Move Waiting onScanning
@@ -212,7 +202,6 @@ public:
     LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseActions(StalledIssueHeader *header) override;
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
@@ -225,7 +214,6 @@ public:
     LocalAndRemoteChangedSinceLastSyncedStateHeader(StalledIssueHeader* header);
 
 protected slots:
-    void refreshCaseActions(StalledIssueHeader *header) override;
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 

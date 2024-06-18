@@ -38,7 +38,8 @@ private slots:
     void checkIfViewIsEmpty();
     void onGlobalSyncStateChanged(bool);
 
-    void toggleTab(StalledIssueFilterCriterion filterCriterion);
+    void onTabToggled(StalledIssueFilterCriterion filterCriterion);
+    bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
     void onUiUnblocked();

@@ -3,6 +3,7 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
+#include "QTMegaRequestListener.h"
 
 #include <QString>
 #include <QHash>
@@ -242,8 +243,8 @@ public:
     void setExecuteInAppThread(bool executeInAppThread);
 };
 
-
-class ClickableLabel : public QLabel {
+class ClickableLabel : public QLabel
+{
     Q_OBJECT
 
 public:
@@ -277,7 +278,6 @@ protected:
         setCursor(Qt::ArrowCursor);
     }
 #endif
-
 };
 
 struct TimeInterval
@@ -372,6 +372,8 @@ public:
 
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);
+
+    static QString getTranslatedError(const mega::MegaError* error);
 
 private:
     Utilities() {}
@@ -509,63 +511,5 @@ private:
 };
 
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
-
-//This class is used to create complex paths in MEGA
-class PathCreator : public QObject
-{
-public:
-    PathCreator() = default;
-    std::shared_ptr<mega::MegaNode> mkDir(const QString& root, const QString& path);
-
-private:
-    std::shared_ptr<mega::MegaNode> createFolder(mega::MegaNode *parentNode, const QString& folderName);
-
-    QStringList mPathCreated;
-    QEventLoop mEventLoop;
-    bool mResult = false;
-};
-
-//This class is used to move a handle to the MEGA bin
-class MoveToCloudBinUtilities : public QObject
-{
-public:
-    MoveToCloudBinUtilities(){}
-
-    bool moveToBin(const QList<mega::MegaHandle>& handles, const QString& binFolderName, bool addDateFolder);
-
-private:
-    QList<mega::MegaHandle> mHandles;
-    QEventLoop mEventLoop;
-    bool mResult = false;
-};
-
-//This class is use to merge two remote folders
-class CloudFoldersMerge : public QObject
-{
-    Q_OBJECT
-
-public:
-    CloudFoldersMerge(mega::MegaNode* folderTarget, mega::MegaNode* folderToMerge)
-        : mFolderTarget(folderTarget),
-          mFolderToMerge(folderToMerge),
-          mDepth(0)
-    {}
-
-    enum ActionForDuplicates
-    {
-        Rename,
-        IgnoreAndRemove,
-        IgnoreAndMoveToBin,
-    };
-    void merge(ActionForDuplicates action);
-
-signals:
-    void progressIndicator(const QString& nodeName);
-
-private:
-    mega::MegaNode* mFolderTarget;
-    mega::MegaNode* mFolderToMerge;
-    int mDepth;
-};
 
 #endif // UTILITIES_H

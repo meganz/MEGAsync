@@ -141,6 +141,7 @@ public:
 
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showInfoMessage(DesktopNotifications::NotificationInfo info);
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());

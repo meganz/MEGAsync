@@ -20,9 +20,6 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     connect(ui->cloudConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
     connect(ui->localConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
 
-    connect(ui->cloudConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
-    connect(ui->localConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
-
     ui->cloudConflictNames->setDelegate(this);
     ui->localConflictNames->setDelegate(this);
 }
@@ -59,10 +56,4 @@ void LocalAndRemoteNameConflicts::refreshUi()
         }
         ui->selectLabel->setText(FILES_DESCRIPTION);
     }
-}
-
-void LocalAndRemoteNameConflicts::onNameConflictSolved()
-{
-    ui->cloudConflictNames->setDisabled();
-    ui->localConflictNames->setDisabled();
 }

@@ -1277,6 +1277,11 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
     }
 }
 
+bool Preferences::isStalledIssueSmartModeActivated()
+{
+    return stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart;
+}
+
 QDate Preferences::stalledIssuesEventLastDate()
 {
     return getValueConcurrent<QDate>(stalledIssuesEventDateKey, QDate());

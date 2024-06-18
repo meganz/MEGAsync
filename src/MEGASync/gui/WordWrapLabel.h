@@ -44,7 +44,6 @@ private:
     QTimer mAdaptHeightTimer;
     int mParentHeight;
     QTextDocument mTextDocument; // This is only to remove html tags from tooltips
-
 };
 
 #endif // WORDWRAPLABEL_H

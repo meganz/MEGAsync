@@ -7,12 +7,12 @@
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
 
-
-static const int BUTTON_ID = 0;
+const int StalledIssueChooseWidget::BUTTON_ID = 0;
 
 StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::StalledIssueChooseWidget)
+    ui(new Ui::StalledIssueChooseWidget),
+    mPathDisableEffect(nullptr)
 {
     ui->setupUi(this);
 
@@ -22,9 +22,6 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
 
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
-
-    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked);
 }
 
 StalledIssueChooseWidget::~StalledIssueChooseWidget()
@@ -32,107 +29,25 @@ StalledIssueChooseWidget::~StalledIssueChooseWidget()
     delete ui;
 }
 
-void StalledIssueChooseWidget::updateUi(StalledIssueDataPtr data,
-                                        LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
+void StalledIssueChooseWidget::setActionButtonVisibility(bool state)
 {
-    auto fileName = data->getFileName();
-    ui->chooseTitle->showIcon();
-
-    ui->name->setTitle(fileName);
-
-    mega::MegaHandle handle(mega::INVALID_HANDLE);
-    if(data->isCloud())
-    {
-        auto cloudData = data->convert<CloudStalledIssueData>();
-        if(cloudData)
-        {
-            handle = cloudData->getPathHandle();
-        }
-    }
-
-    ui->name->setInfo(data->getNativeFilePath(), handle);
-    ui->name->setIsFile(data->isFile());
-    ui->name->setIsCloud(data->isCloud());
-    ui->name->showIcon();
-
-    ui->path->show();
-    ui->path->updateUi(data);
-
-    if((side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::None) !=
-                  ui->chooseTitle->isSolved())
-    {
-        ui->chooseTitle->hideActionButton(BUTTON_ID);
-
-        QIcon icon;
-        if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Remote)
-        {
-            if(data->isCloud())
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("Chosen"), icon.pixmap(24,24));
-            }
-            else
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
-            }
-        }
-        else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
-        {
-            if(data->isCloud())
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/remove_default.png"));
-                ui->chooseTitle->setMessage(solvedString(), icon.pixmap(24,24));
-            }
-            else
-            {
-                icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-                ui->chooseTitle->setMessage(tr("Local file is being uploaded"), icon.pixmap(16,16));
-            }
-        }
-        else if(side == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Both)
-        {
-            icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-
-            if(data->isCloud())
-            {
-                auto cloudData = data->convert<CloudStalledIssueData>();
-                auto node(cloudData->getNode(true));
-                if(node)
-                {
-                    ui->chooseTitle->setMessage(tr("Renamed to %1").arg(QString::fromUtf8(node->getName())), icon.pixmap(24,24));
-                }
-            }
-            else
-            {
-                ui->chooseTitle->setMessage(QString());
-            }
-        }
-    }
-
-    if(side != LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::None)
-    {
-        setSolved();
-    }
-
-    update();
-
-    mData = data;
+    ui->chooseTitle->setActionButtonVisibility(BUTTON_ID, state);
 }
 
-const StalledIssueDataPtr &StalledIssueChooseWidget::data()
+void StalledIssueChooseWidget::setMessage(const QString& string, const QPixmap& pixmap, const QString& tooltip)
 {
-    return mData;
+    ui->chooseTitle->setMessage(string, pixmap, tooltip);
 }
 
-void StalledIssueChooseWidget::hideActionButton()
+void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
 {
-    ui->chooseTitle->hideActionButton(BUTTON_ID);
+    ui->chooseTitle->setFailed(state, tooltip);
 }
 
-bool StalledIssueChooseWidget::eventFilter(QObject *watched, QEvent *event)
+void StalledIssueChooseWidget::addDefaultButton()
 {
-    return QFrame::eventFilter(watched, event);
+    ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked, Qt::UniqueConnection);
 }
 
 void StalledIssueChooseWidget::onActionClicked(int button_id)
@@ -143,134 +58,56 @@ void StalledIssueChooseWidget::onActionClicked(int button_id)
     emit chooseButtonClicked(button_id);
 }
 
-void StalledIssueChooseWidget::setSolved()
+void StalledIssueChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    if(!ui->pathContainer->graphicsEffect())
+    if (isSolved)
     {
-        ui->chooseTitle->setSolved(true);
-        ui->name->setSolved(true);
-    }
-}
+        ui->chooseTitle->setDisable(!isSelected);
+        ui->name->setDisable(!isSelected);
 
-//LOCAL
-QString LocalStalledIssueChooseWidget::solvedString() const
-{
-    return PlatformStrings::movedFileToBin();
-}
-
-void LocalStalledIssueChooseWidget::updateUi(LocalStalledIssueDataPtr localData,
-                                             LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
-{
-   updateExtraInfo(localData);
-   ui->chooseTitle->setTitle(tr("Local Copy"));
-   ui->chooseTitle->setIsCloud(false);
-
-   StalledIssueChooseWidget::updateUi(localData,side);
-}
-
-void LocalStalledIssueChooseWidget::onRawInfoToggled()
-{
-    updateExtraInfo(mData->convert<LocalStalledIssueData>());
-}
-
-void LocalStalledIssueChooseWidget::updateExtraInfo(LocalStalledIssueDataPtr localData)
-{
-    localData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
-        ui->name->updateLastTimeModified(time);
-    });
-
-#ifndef Q_OS_LINUX
-    localData->getFileFolderAttributes()->requestCreatedTime(this, [this](const QDateTime& time){
-        ui->name->updateCreatedTime(time);
-    });
-#endif
-
-    localData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
-        ui->name->updateSize(size);
-    });
-
-    if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
-    {
-        localData->getFileFolderAttributes()->requestCRC(this, [this](const QString& fp)
+        if (!isSelected && !ui->pathContainer->graphicsEffect())
         {
-            ui->name->updateCRC(fp);
-        });
+            mPathDisableEffect = new QGraphicsOpacityEffect(this);
+            mPathDisableEffect->setOpacity(0.3);
+            ui->pathContainer->setGraphicsEffect(mPathDisableEffect);
+        }
     }
     else
     {
-        ui->name->updateCRC(QString());
+        ui->chooseTitle->setDisable(false);
+        ui->name->setDisable(false);
+
+        ui->pathContainer->setGraphicsEffect(nullptr);
     }
 }
 
-//CLOUD
-QString CloudStalledIssueChooseWidget::solvedString() const
+QString StalledIssueChooseWidget::chosenString() const
 {
-    return tr("Moved to MEGA Bin");
-}
-
-void CloudStalledIssueChooseWidget::updateUi(CloudStalledIssueDataPtr cloudData,
-                                             LocalOrRemoteUserMustChooseStalledIssue::ChosenSide side)
-{
-    updateExtraInfo(cloudData);
-    ui->chooseTitle->setTitle(tr("Remote Copy"));
-    ui->chooseTitle->setIsCloud(true);
-
-    StalledIssueChooseWidget::updateUi(cloudData, side);
-}
-
-void CloudStalledIssueChooseWidget::onRawInfoToggled()
-{
-    updateExtraInfo(mData->convert<CloudStalledIssueData>());
-}
-
-void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr cloudData)
-{
-    auto node = cloudData->getNode();
-    if(node)
-    {
-        cloudData->getFileFolderAttributes()->requestModifiedTime(this, [this](const QDateTime& time){
-            ui->name->updateLastTimeModified(time);
-        });
-
-        cloudData->getFileFolderAttributes()->requestCreatedTime(this, [this](const QDateTime& time){
-            ui->name->updateCreatedTime(time);
-        });
-
-        cloudData->getFileFolderAttributes()->requestSize(this, [this](qint64 size){
-            ui->name->updateSize(size);
-        });
-
-        if(MegaSyncApp->getStalledIssuesModel()->isRawInfoVisible())
-        {
-            cloudData->getFileFolderAttributes()->requestCRC(this, [this](const QString& fp)
-            {
-                ui->name->updateCRC(fp);
-            });
-        }
-        else
-        {
-            ui->name->updateCRC(QString());
-        }
-
-        cloudData->getFileFolderAttributes()->requestVersions(this, [this](int versions){
-                ui->name->updateVersionsCount(versions);
-        });
-
-        cloudData->getFileFolderAttributes()->requestUser(this, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this](QString user, bool show){
-            ui->name->updateUser(user, show);
-        });
-    }
+    return tr("Chosen");
 }
 
 //Generic options
+GenericChooseWidget::GenericChooseWidget(QWidget* parent)
+    : StalledIssueChooseWidget(parent)
+{
+    ui->pathContainer->hide();
+    ui->nameContainer->hide();
+
+    auto margins(ui->titleContainer->layout()->contentsMargins());
+    margins.setTop(4);
+    margins.setBottom(4);
+    ui->titleContainer->layout()->setContentsMargins(margins);
+    ui->chooseTitle->removeBackgroundColor();
+}
+
 QString GenericChooseWidget::solvedString() const
 {
     return mInfo.solvedText;
 }
 
-void GenericChooseWidget::setChosen(bool state)
+void GenericChooseWidget::setSolved(bool isSolved, bool isSelected)
 {
-    if(state)
+    if(isSelected)
     {
         QIcon solvedIcon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
         ui->chooseTitle->setMessage(mInfo.solvedText, solvedIcon.pixmap(16,16));
@@ -280,24 +117,16 @@ void GenericChooseWidget::setChosen(bool state)
         ui->chooseTitle->setMessage(QString());
     }
 
-    hideActionButton();
+    StalledIssueChooseWidget::setSolved(isSolved, isSelected);
+    setActionButtonVisibility(!isSolved);
 }
 
 void GenericChooseWidget::setInfo(const GenericInfo &info)
 {
     mInfo = info;
 
-    ui->pathContainer->hide();
-    ui->nameContainer->hide();
-
-    auto margins(ui->titleContainer->layout()->contentsMargins());
-    margins.setTop(0);
-    margins.setBottom(0);
-    ui->titleContainer->layout()->setContentsMargins(margins);
-    ui->chooseTitle->removeBackgroundColor();
-
     QIcon icon(info.icon);
     auto iconPixmap(icon.pixmap(QSize(16,16)));
     ui->chooseTitle->setHTML(info.title, iconPixmap);
-    ui->chooseTitle->setActionButtonInfo(QIcon(), info.buttonText, BUTTON_ID);
+    ui->chooseTitle->addActionButton(QIcon(), info.buttonText, BUTTON_ID, true);
 }

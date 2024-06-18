@@ -4,6 +4,7 @@
 #include "UserAttributesRequests/FullName.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
+#include "MultiStepIssueSolver.h"
 
 StalledIssueData::StalledIssueData()
 {
@@ -116,7 +117,7 @@ QString StalledIssueData::getFileName() const
         }
         else
         {
-            auto splittedIndexPath = mPath.path.split(QString::fromUtf8("\\"));
+            auto splittedIndexPath = mPath.path.split(QDir::separator());
             fileName = splittedIndexPath.last();
         }
     }
@@ -190,8 +191,10 @@ void CloudStalledIssueData::setPathHandle(mega::MegaHandle newPathHandle)
 ///
 StalledIssue::StalledIssue(const mega::MegaSyncStall* stallIssue)
     : mFileSystemWatcher(new FileSystemSignalHandler(this))
+    , mAutoResolutionApplied(false)
 {
     originalStall.reset(stallIssue->copy());
+    fillBasicInfo(stallIssue);
 }
 
 bool StalledIssue::initLocalIssue()
@@ -219,16 +222,11 @@ bool StalledIssue::initCloudIssue()
 
 void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
-    mReason = stall->reason();
-    mDetectedMEGASide = stall->detectedCloudSide();
-
     auto localSourcePathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false, 0));
     auto localTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(false, 1));
 
     auto localSourcePath = QString::fromUtf8(stall->path(false, 0));
-    fillSyncId(localSourcePath, false);
     auto localTargetPath = QString::fromUtf8(stall->path(false, 1));
-    fillSyncId(localTargetPath, false);
 
     if(localSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !localSourcePath.isEmpty())
     {
@@ -262,9 +260,7 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
     auto cloudTargetPathProblem = static_cast<mega::MegaSyncStall::SyncPathProblem>(stall->pathProblem(true, 1));
 
     auto cloudSourcePath = QString::fromUtf8(stall->path(true, 0));
-    fillSyncId(cloudSourcePath, true);
     auto cloudTargetPath = QString::fromUtf8(stall->path(true, 1));
-    fillSyncId(cloudTargetPath, true);
 
     if(cloudSourcePathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem || !cloudSourcePath.isEmpty())
     {
@@ -302,9 +298,17 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         //Check if transfer already exists
         if(isBeingSolvedByDownload(info))
         {
-            setIsSolved(false);
+            setIsSolved(StalledIssue::SolveType::SOLVED);
         }
     }
+}
+
+void StalledIssue::fillBasicInfo(const mega::MegaSyncStall* stall)
+{
+    mReason = stall->reason();
+    mDetectedMEGASide = stall->detectedCloudSide();
+
+    mSyncIds = StalledIssuesBySyncFilter::getSyncIdsByStall(stall);
 }
 
 void StalledIssue::endFillingIssue()
@@ -323,7 +327,7 @@ void StalledIssue::endFillingIssue()
     mNeedsUIUpdate = qMakePair(true, true);
 }
 
-const QList<mega::MegaHandle>& StalledIssue::syncIds() const
+const QSet<mega::MegaHandle>& StalledIssue::syncIds() const
 {
     return mSyncIds;
 }
@@ -352,20 +356,6 @@ mega::MegaSync::SyncType StalledIssue::getSyncType() const
     }
 
     return type;
-}
-
-void StalledIssue::fillSyncId(const QString& path, bool cloud)
-{
-    if(!path.isEmpty())
-    {
-        StalledIssuesBySyncFilter filter;
-        auto syncId = filter.filterByPath(path, cloud);
-        if(syncId != mega::INVALID_HANDLE &&
-           !mSyncIds.contains(syncId))
-        {
-            mSyncIds.append(syncId);
-        }
-    }
 }
 
 const std::shared_ptr<mega::MegaSyncStall>& StalledIssue::getOriginalStall() const
@@ -423,21 +413,36 @@ void StalledIssue::removeDelegateSize(Type type)
 
 bool StalledIssue::isSolved() const
 {
-    return mIsSolved != SolveType::Unsolved;
+    return mIsSolved >= SolveType::POTENTIALLY_SOLVED;
 }
 
 bool StalledIssue::isPotentiallySolved() const
 {
-    return mIsSolved == SolveType::PotentiallySolved;
+    return mIsSolved == SolveType::POTENTIALLY_SOLVED;
 }
 
-void StalledIssue::setIsSolved(bool potentially)
+bool StalledIssue::isBeingSolved() const
 {
-    mIsSolved = potentially ? SolveType::PotentiallySolved : SolveType::Solved;
+    return mIsSolved == SolveType::BEING_SOLVED;
+}
+
+bool StalledIssue::isFailed() const
+{
+    return mIsSolved == SolveType::FAILED;
+}
+
+void StalledIssue::setIsSolved(SolveType type)
+{
+    mIsSolved = type;
     // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
     MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 
-    mNeedsUIUpdate = qMakePair(true, true);
+    resetUIUpdated();
+}
+
+bool StalledIssue::isAutoSolvable() const
+{
+    return false;
 }
 
 bool StalledIssue::isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const
@@ -472,6 +477,28 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     }
 
     return result;
+}
+
+void StalledIssue::performFinishAsyncIssueSolving(bool hasFailed)
+{
+    hasFailed ? setIsSolved(StalledIssue::SolveType::FAILED) : setIsSolved(StalledIssue::SolveType::SOLVED);
+    emit asyncIssueSolvingFinished(this);
+}
+
+bool StalledIssue::wasAutoResolutionApplied() const
+{
+    return mAutoResolutionApplied;
+}
+
+void StalledIssue::setAutoResolutionApplied(bool newAutoResolutionApplied)
+{
+    mAutoResolutionApplied = newAutoResolutionApplied;
+}
+
+void StalledIssue::startAsyncIssueSolving()
+{
+    setIsSolved(StalledIssue::SolveType::BEING_SOLVED);
+    emit asyncIssueSolvingStarted();
 }
 
 bool StalledIssue::missingFingerprint() const
@@ -526,7 +553,7 @@ bool StalledIssue::checkForExternalChanges()
             //Issues without fingerprint may contain
             if(!fileInfo.exists() && !missingFingerprint())
             {
-                setIsSolved(true);
+                setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
             }
         }
 
@@ -541,7 +568,7 @@ bool StalledIssue::checkForExternalChanges()
                    currentNode->getParentHandle() != node->getParentHandle() ||
                    (missingFingerprint() && (node->getFingerprint() != nullptr)))
                 {
-                    setIsSolved(true);
+                    setIsSolved(StalledIssue::SolveType::POTENTIALLY_SOLVED);
                 }
             }
         }
@@ -604,6 +631,10 @@ void StalledIssue::UIUpdated(Type type)
             break;
         case Type::Body:
         {
+            if(mNeedsUIUpdate.second == false)
+            {
+                return;
+            }
             mNeedsUIUpdate.second = false;
             break;
         }
@@ -612,7 +643,13 @@ void StalledIssue::UIUpdated(Type type)
 
 void StalledIssue::resetUIUpdated()
 {
+    if(mNeedsUIUpdate.first && mNeedsUIUpdate.second)
+    {
+        return;
+    }
+
     mNeedsUIUpdate = qMakePair(true, true);
+    emit dataUpdated(this);
 }
 
 //By default, stalled issues don't show file attributes (size, time modified)...´
@@ -635,6 +672,16 @@ void StalledIssue::removeFileWatcher()
     {
         mFileSystemWatcher->removeFileWatcher();
     }
+}
+
+mega::MegaHandle StalledIssue::firstSyncId() const
+{
+    if(mSyncIds.isEmpty())
+    {
+        return mega::INVALID_HANDLE;
+    }
+
+    return (*mSyncIds.begin());
 }
 
 mega::MegaSyncStall::SyncStallReason StalledIssue::getReason() const
@@ -691,10 +738,15 @@ void StalledIssue::updateIssue(const mega::MegaSyncStall* stallIssue)
     mLocalData.reset();
     mCloudData.reset();
 
-    mIsSolved = SolveType::Unsolved;
+    mIsSolved = SolveType::UNSOLVED;
 
     fillIssue(stallIssue);
     endFillingIssue();
+}
+
+bool StalledIssue::isUnsolved() const
+{
+    return mIsSolved == SolveType::UNSOLVED;
 }
 
 StalledIssueFilterCriterion StalledIssue::getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason)

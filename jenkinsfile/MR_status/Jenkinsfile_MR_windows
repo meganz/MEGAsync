@@ -27,30 +27,12 @@ pipeline {
                             println ARCHITECTURE
                         }
                     }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the additional build parameters :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
-                        }
-                    }
                 }
                 stage('Get SDK branch'){
                     steps {
                         script{
                             env.SDK_BRANCH = sh(script: 'echo "$gitlabMergeRequestDescription" | grep SDK_SUBMODULE_TEST | awk -F "SDK_SUBMODULE_TEST="  \'{print \$2}\' | cut -d" " -f1', returnStdout: true).trim()
                             println SDK_BRANCH
-                        }
-                    }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the SDK branch :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
                         }
                     }
                 }
@@ -65,15 +47,6 @@ pipeline {
                             println "${env.gitlabMergeRequestDescription}"
                             env.MEGASYNC_TEAM = sh(script: 'echo "$gitlabMergeRequestDescription" | grep MEGASYNC_TEAM | awk -F "MEGASYNC_TEAM="  \'{print \$2}\' | cut -d" " -f1', returnStdout: true).trim()
                             println MEGASYNC_TEAM
-                        }
-                    }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the MEGASYNC team :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
                         }
                     }
                 }
@@ -145,28 +118,10 @@ pipeline {
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
                     sh "cmake --build '${windows_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
                 }
-            }
-            post{
-                always {
-                    script{
-                        if (currentBuild.currentResult == 'SUCCESS'){
-                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build windows', state: 'success')
-                        }                                
-                        if (currentBuild.currentResult == 'FAILURE'){
-                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build windows', state: 'failed')
-                        }
-                        if (currentBuild.currentResult == 'ABORTED'){
-                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} <b>Windows</b> ABORTED  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build windows', state: 'canceled')
-                        }                                
-                        if (currentBuild.currentResult == 'UNSTABLE'){
-                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} <b>Windows</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build windows', state: 'failed')
-                        }
-                    }
+                script {
+                    uploadInstallersExecuted = false
                 }
+
             }
         }
 
@@ -223,26 +178,36 @@ pipeline {
                                     windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
                                     windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built32/", "built32", "32")
                                 }
+                                uploadInstallersExecuted = true
                             }
-                        }
-                    }
-                }
-            }
-            post {
-                always {
-                    script{
-                        if (currentBuild.currentResult == 'SUCCESS'){
-                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL: [${env.REPO_URL}/MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows]" )
-                            updateGitlabCommitStatus(name: 'Windows compilation', state: 'success')
-                        }
-                        if (currentBuild.currentResult == 'FAILURE'){
-                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Windows compilation', state: 'failed')
-                            error "Job failed"
                         }
                     }
                 }
             }
         }
     }
+    post{
+        always {
+            deleteDir()
+        }
+        success {
+            script{
+                if (uploadInstallersExecuted){
+                    addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL: [${env.REPO_URL}/MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows]" )
+                } else{
+                    addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} <b>Windows</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                }
+                updateGitlabCommitStatus(name: 'Build windows', state: 'success')
+            }
+        }
+        failure {
+            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} <b>Windows</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+            updateGitlabCommitStatus(name: 'Build windows', state: 'failed')
+        }
+        aborted{
+            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} <b>Windows</b> ABORTED  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+            updateGitlabCommitStatus(name: 'Build windows', state: 'canceled')
+        }
+    }
 }
+

@@ -6,6 +6,7 @@
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
 #include "StatsEventHandler.h"
+#include "CrashHandler.h"
 
 #include <QFontDatabase>
 #include <assert.h>
