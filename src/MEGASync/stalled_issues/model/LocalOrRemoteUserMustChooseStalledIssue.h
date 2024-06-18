@@ -46,8 +46,8 @@ private:
     QString mNewName;
     std::shared_ptr<mega::MegaError> mError;
 
-    QString mLocalFingerprintAtStart;
-    QString mRemoteFingerprintAtStart;
+    QString mLocalCRCAtStart;
+    QString mRemoteCRCAtStart;
 };
 
 #endif // LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H

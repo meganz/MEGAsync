@@ -89,18 +89,18 @@ void LocalOrRemoteUserMustChooseStalledIssue::setIsSolved(SolveType type)
 
 bool LocalOrRemoteUserMustChooseStalledIssue::checkForExternalChanges()
 {
-    QString localFingerprint;
-    QString remoteFingerprint;
+    QString localCRC;
+    QString remoteCRC;
 
-    getLocalData()->getAttributes()->requestCRC(this, [&localFingerprint](const QString& fp){
-        localFingerprint = fp;
+    getLocalData()->getAttributes()->requestCRC(this, [&localCRC](const QString& crc){
+        localCRC = crc;
     });
 
-    getCloudData()->getAttributes()->requestCRC(this, [&remoteFingerprint](const QString& fp){
-        remoteFingerprint = fp;
+    getCloudData()->getAttributes()->requestCRC(this, [&remoteCRC](const QString& crc){
+        remoteCRC = crc;
     });
 
-    if(localFingerprint.compare(mLocalFingerprintAtStart) != 0 || remoteFingerprint.compare(mRemoteFingerprintAtStart) != 0)
+    if(localCRC.compare(mLocalCRCAtStart) != 0 || remoteCRC.compare(mRemoteCRCAtStart) != 0)
     {
         return true;
     }
@@ -134,12 +134,12 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
         getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
         getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
 
-        getLocalData()->getAttributes()->requestCRC(this, [this](const QString& fp){
-            mLocalFingerprintAtStart = fp;
+        getLocalData()->getAttributes()->requestCRC(this, [this](const QString& crc){
+            mLocalCRCAtStart = crc;
             });
 
-        getCloudData()->getAttributes()->requestCRC(this, [this](const QString& fp){
-            mRemoteFingerprintAtStart = fp;
+        getCloudData()->getAttributes()->requestCRC(this, [this](const QString& crc){
+            mRemoteCRCAtStart = crc;
         });
     }
 }
