@@ -12,6 +12,3 @@ namespace DTI
 }
 
 #endif
-
-
-
