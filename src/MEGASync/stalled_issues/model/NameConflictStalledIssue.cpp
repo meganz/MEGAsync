@@ -287,13 +287,12 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
 
                 if(conflictedName->isSolved())
                 {
-                    checkAndSolveConflictedNamesSolved(true);
+                    if(checkAndSolveConflictedNamesSolved())
+                    {
+                        setIsSolved(SolveType::POTENTIALLY_SOLVED);
+                        break;
+                    }
                 }
-            }
-
-            if(isPotentiallySolved())
-            {
-                break;
             }
         }
     }
@@ -311,13 +310,12 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
 
                     if(conflictedName->isSolved())
                     {
-                        checkAndSolveConflictedNamesSolved(true);
+                        if(checkAndSolveConflictedNamesSolved())
+                        {
+                            setIsSolved(SolveType::POTENTIALLY_SOLVED);
+                            break;
+                        }
                     }
-                }
-
-                if(isPotentiallySolved())
-                {
-                    break;
                 }
             }
         }
@@ -689,7 +687,7 @@ std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> NameConflictedSt
     }
 }
 
-bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPotentiallySolved)
+bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved()
 {
     auto checkLogic = [](const QList<std::shared_ptr<ConflictedNameInfo>>& conflicts) -> int
     {
@@ -736,12 +734,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
         }
     }
 
-    if(!isSolved() && unsolvedItems == 0)
-    {
-        setIsSolved(isPotentiallySolved ? SolveType::POTENTIALLY_SOLVED : SolveType::SOLVED);
-    }
-
-    return isSolved();
+    return unsolvedItems == 0;
 }
 
 void NameConflictedStalledIssue::semiAutoSolveIssue(int option)

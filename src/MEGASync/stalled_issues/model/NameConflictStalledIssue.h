@@ -80,12 +80,19 @@ public:
                 if(mHandle != mega::INVALID_HANDLE)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
-                    if(node && node->isNodeKeyDecrypted())
+                    auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
+                    if(!node || !node->isNodeKeyDecrypted() || nodePath != mConflictedPath)
                     {
-                        auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
-                        if(nodePath != mConflictedPath)
+                        mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::
+                            CHANGED_EXTERNALLY;
+                    }
+                    else if(node)
+                    {
+                        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                        if(!parentNode || parentNode->getType() == mega::MegaNode::TYPE_FILE)
                         {
-                            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY;
+                            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::
+                                CHANGED_EXTERNALLY;
                         }
                     }
                 }
@@ -538,7 +545,7 @@ public:
     static void showRemoteRenameHasFailedMessageBox(const mega::MegaError& error, bool isFile);
 
 private:
-    bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);
+    bool checkAndSolveConflictedNamesSolved();
 
     void solveIssue(int option);
 

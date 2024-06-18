@@ -868,6 +868,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                if(issue.getData()->checkForExternalChanges())
                {
                    issuesExternallyChanged++;
+                   count.issuesFailed++;
                }
                else
                {
@@ -896,16 +897,11 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
        {
            bool sendMessage(true);
 
-           if(count.issuesFixed == 0 && count.issuesFailed == 0)
+           if(issuesExternallyChanged > 0)
            {
                sendMessage = false;
                unBlockUi();
-
-               if(issuesExternallyChanged > 0)
-               {
-                   count.issuesFixed = issuesExternallyChanged;
-                   showIssueExternallyChangedMessageBox();
-               }
+               showIssueExternallyChangedMessageBox();
            }
 
            if(info.finishFunc)
