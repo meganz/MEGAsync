@@ -2005,6 +2005,56 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Es igual a</translation>
     </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Archivos que contienen:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Archivos que acaban con:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Archivos iguales a:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Carpetas que empiezan por:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Carpetas que contienen:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Carpetas que acaban con:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Carpetas iguales a:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Archivos con extensión:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecciona la carpeta que quieres excluir</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecciona el archivo que quieres excluir</translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
@@ -2706,7 +2756,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>El icono del área de notificación se ha instalado correctamente.
-Cierra sesión en tu equipo para completar la instalación.</translation>
+Reinicia el equipo para completar la instalación.</translation>
     </message>
 </context>
 <context>
@@ -4021,11 +4071,6 @@ No podrás recuperar el acceso a tus datos ni estás autorizado a registrar una 
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>No se ha podido actualizar la configuración de la sincronización o del backup. Vuelve a intentarlo más tarde o comprueba los permisos de la carpeta.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7696,19 +7741,6 @@ Comprueba los permisos del archivo .megaignore en tus carpetas sincronizadas loc
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>Esta carpeta ya se está sincronizando</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selecciona el archivo que quieres excluir</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selecciona la carpeta que quieres excluir</translation>
     </message>
 </context>
 <context>
