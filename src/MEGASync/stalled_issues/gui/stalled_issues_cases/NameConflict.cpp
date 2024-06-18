@@ -343,7 +343,6 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
     title->updateExtraInfoLayout();
 }
 
-
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {
     mDelegateWidget = newDelegate;
@@ -451,13 +450,7 @@ void NameConflict::onActionClicked(int actionId)
 
 
 
-                        if (areAllSolved)
-                        {
-                            MegaSyncApp->getStatsEventHandler()->sendEvent(
-                                AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
-                            MegaSyncApp->getStalledIssuesModel()->finishConflictManually();
-                            emit allSolved();
-                        }
+                        checkIfAreAllSolved(areAllSolved);
 
                         //Now, close the editor because the action has been finished
                         if (mDelegateWidget)
@@ -594,13 +587,7 @@ void NameConflict::onActionClicked(int actionId)
                         }
                     }
 
-                    if(areAllSolved)
-                    {
-                        MegaSyncApp->getStatsEventHandler()->sendEvent(
-                            AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
-                        MegaSyncApp->getStalledIssuesModel()->finishConflictManually();
-                        emit allSolved();
-                    }
+                    checkIfAreAllSolved(areAllSolved);
 
                     //Now, close the editor because the action has been finished
                     if(mDelegateWidget)
@@ -614,5 +601,15 @@ void NameConflict::onActionClicked(int actionId)
             StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(msgInfo.informativeText);
             QMegaMessageBox::warning(msgInfo);
         }
+    }
+}
+
+void NameConflict::checkIfAreAllSolved(bool areAllSolved)
+{
+    if(areAllSolved)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+        emit allSolved();
     }
 }

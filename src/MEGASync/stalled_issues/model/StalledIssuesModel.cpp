@@ -1459,6 +1459,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);
+            finishConflictManually();
         }
     }
 
@@ -1478,6 +1479,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameT
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);
+            finishConflictManually();
         }
     }
 
@@ -1522,6 +1524,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);
+            finishConflictManually();
         }
     }
 
@@ -1541,6 +1544,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);
+            finishConflictManually();
         }
     }
 
