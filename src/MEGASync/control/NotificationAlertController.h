@@ -8,7 +8,7 @@
 #include "megaapi.h"
 #include "mega/bindings/qt/QTMegaGlobalListener.h"
 
-#include <QObject>
+#include <QMap>
 
 class NotificationAlertController : public QObject, public mega::MegaGlobalListener
 {
@@ -20,12 +20,9 @@ public:
 
     void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
 
-    void populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired);
     bool alertsAreFiltered();
     bool hasAlerts();
     bool hasAlertsOfType(int type);
-
-public slots:
     void applyNotificationFilter(NotificationAlertProxyModel::FilterType opt);
 
 signals:
@@ -34,12 +31,14 @@ signals:
     void unseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
 
 private:
-    mega::MegaApi * mMegaApi;
+    mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
 
-    NotificationAlertModel* mNotificationAlertModel;
-    NotificationAlertProxyModel* mAlertsProxyModel;
-    NotificationAlertDelegate* mNotificationAlertDelegate;
+    std::unique_ptr<NotificationAlertModel> mNotificationAlertModel;
+    std::unique_ptr<NotificationAlertProxyModel> mAlertsProxyModel;
+    std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
+
+    void populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired);
 
 };
 

@@ -1,5 +1,7 @@
 #include "NotificationModel.h"
 
+#include <QDateTime>
+
 NotificationModel::NotificationModel(QObject *parent)
     : QAbstractItemModel(parent)
 {

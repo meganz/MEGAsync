@@ -17,10 +17,9 @@
 
 using namespace mega;
 
-AlertDelegate::AlertDelegate(AlertModel *model, bool useProxyModel, QObject *parent)
-    : QStyledItemDelegate(parent),
-      mAlertsModel(model),
-      mUseProxy(useProxyModel)
+AlertDelegate::AlertDelegate(AlertModel* model, QObject* parent)
+    : QStyledItemDelegate(parent)
+    , mAlertsModel(model)
 {
 }
 

@@ -25,7 +25,7 @@ class NotificationAlertModel : public QAbstractItemModel
 public:
     NotificationAlertModel(NotificationModel* notificationsModel,
                            AlertModel* alertsModel,
-                           QObject *parent = nullptr);
+                           QObject* parent = nullptr);
 
     QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex &index) const override;

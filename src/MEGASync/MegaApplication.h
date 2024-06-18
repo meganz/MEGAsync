@@ -181,7 +181,7 @@ public:
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
     StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
-    NotificationAlertController* getNotificationController() { return mNotificationController.get(); }
+    NotificationAlertController* getNotificationController() { return mNotificationAlertController.get(); }
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -345,7 +345,6 @@ protected:
     void startHttpsServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
-    void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -513,7 +512,7 @@ protected:
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
 
-    std::unique_ptr<NotificationAlertController> mNotificationController;
+    std::unique_ptr<NotificationAlertController> mNotificationAlertController;
 
 private:
     void loadSyncExclusionRules(QString email = QString());

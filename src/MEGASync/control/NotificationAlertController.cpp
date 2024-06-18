@@ -27,20 +27,20 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     }
     else
     {
-        AlertModel* alertsModel = new AlertModel(alertList, copyRequired);
-        AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, true, this);
+        AlertModel* alertsModel = new AlertModel(alertList, copyRequired, this);
+        AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, this);
 
-        NotificationModel* notificationsModel = new NotificationModel();
+        NotificationModel* notificationsModel = new NotificationModel(this);
         NotificationDelegate* notificationDelegate = new NotificationDelegate(notificationsModel, this);
 
-        mNotificationAlertModel = new NotificationAlertModel(notificationsModel, alertsModel);
-        mNotificationAlertDelegate = new NotificationAlertDelegate(notificationDelegate, alertDelegate);
+        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(notificationsModel, alertsModel, this);
+        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(notificationDelegate, alertDelegate, this);
 
-        mAlertsProxyModel = new NotificationAlertProxyModel();
-        mAlertsProxyModel->setSourceModel(mNotificationAlertModel);
+        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
+        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
         mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
 
-        emit notificationAlertCreated(mAlertsProxyModel, mNotificationAlertDelegate);
+        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
     }
 
     emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());

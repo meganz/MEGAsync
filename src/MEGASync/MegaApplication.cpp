@@ -126,6 +126,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
+    mNotificationAlertController(nullptr),
     scanStageController(this),
     mDisableGfx (false)
 {
@@ -270,8 +271,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mStalledIssuesModel = nullptr;
     mStatusController = nullptr;
     mStatsEventHandler = nullptr;
-
-    mNotificationController = nullptr;
 
     context = new QObject(this);
 
@@ -1231,8 +1230,8 @@ void MegaApplication::start()
 
     updateTrayIcon();
 
-    mNotificationController = std::make_unique<NotificationAlertController>(this);
-    connect(mNotificationController.get(), &NotificationAlertController::userAlertsUpdated,
+    mNotificationAlertController = std::make_unique<NotificationAlertController>(this);
+    connect(mNotificationAlertController.get(), &NotificationAlertController::userAlertsUpdated,
             mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }
 
@@ -2474,8 +2473,8 @@ void MegaApplication::createInfoDialog()
     connect(mTransferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
-    connect(mNotificationController.get(), &NotificationAlertController::notificationAlertCreated, infoDialog.data(), &InfoDialog::updateNotificationsTreeView);
-    connect(mNotificationController.get(), &NotificationAlertController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
+    connect(mNotificationAlertController.get(), &NotificationAlertController::notificationAlertCreated, infoDialog.data(), &InfoDialog::updateNotificationsTreeView);
+    connect(mNotificationAlertController.get(), &NotificationAlertController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
 }
 
