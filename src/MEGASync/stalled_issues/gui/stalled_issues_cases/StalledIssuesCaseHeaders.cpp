@@ -460,7 +460,12 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
         }
 
         actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
-        actions << StalledIssueHeader::ActionInfo(tr("Keep most recently modified file"), NameConflictedStalledIssue::KeepMostRecentlyModifiedNode);
+
+        if(nameConflict->getNameConflictCloudData().size() > 1)
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Keep most recently modified file"),
+                NameConflictedStalledIssue::KeepMostRecentlyModifiedNode | NameConflictedStalledIssue::Rename);
+        }
     }
     else if(header->getData().consultData()->foldersCount() > 1)
     {
