@@ -868,6 +868,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                if(issue.getData()->checkForExternalChanges())
                {
                    issuesExternallyChanged++;
+                   count.issuesFailed++;
                }
                else
                {
@@ -896,16 +897,11 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
        {
            bool sendMessage(true);
 
-           if(count.issuesFixed == 0 && count.issuesFailed == 0)
+           if(issuesExternallyChanged > 0)
            {
                sendMessage = false;
                unBlockUi();
-
-               if(issuesExternallyChanged > 0)
-               {
-                   count.issuesFixed = issuesExternallyChanged;
-                   showIssueExternallyChangedMessageBox();
-               }
+               showIssueExternallyChangedMessageBox();
            }
 
            if(info.finishFunc)
@@ -982,13 +978,16 @@ bool StalledIssuesModel::issueSolvingFinished(const StalledIssue* issue)
 
 bool StalledIssuesModel::issueSolvingFinished(StalledIssue* issue, bool wasSuccessful)
 {
-    if(wasSuccessful)
+    if(issue->isUnsolved())
     {
-        issue->setIsSolved(StalledIssue::SolveType::SOLVED);
-    }
-    else
-    {
-        issue->setIsSolved(StalledIssue::SolveType::FAILED);
+        if(wasSuccessful)
+        {
+            issue->setIsSolved(StalledIssue::SolveType::SOLVED);
+        }
+        else
+        {
+            issue->setIsSolved(StalledIssue::SolveType::FAILED);
+        }
     }
 
     return issueSolvingFinished(issue);
@@ -1422,6 +1421,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
 {
     auto resolveIssue = [this, option](int row) -> bool
     {
+        auto result(false);
         auto item(getStalledIssueByRow(row));
         if(!item.getData()->checkForExternalChanges())
         {
@@ -1429,17 +1429,17 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
             {
                 if(auto nameConflict = item.convert<NameConflictedStalledIssue>())
                 {
-                    nameConflict->semiAutoSolveIssue(option);
-                    if(item.consultData()->isSolved())
+                    result = nameConflict->semiAutoSolveIssue(option);
+
+                    if(result)
                     {
                         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY);
-                        return true;
                     }
                 }
             }
         }
 
-        return false;
+        return result;
     };
 
     SolveListInfo info(list, resolveIssue);

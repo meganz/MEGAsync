@@ -19,6 +19,7 @@ StalledIssueChooseWidget::StalledIssueChooseWidget(QWidget *parent) :
     ui->name->removeBackgroundColor();
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::showRawInfoChanged, this, &StalledIssueChooseWidget::onRawInfoToggled);
+    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked, Qt::UniqueConnection);
 
     ui->path->setIndent(StalledIssueHeader::GROUPBOX_CONTENTS_INDENT);
     ui->path->hideLocalOrRemoteTitle();
@@ -47,7 +48,6 @@ void StalledIssueChooseWidget::setFailed(bool state, const QString& tooltip)
 void StalledIssueChooseWidget::addDefaultButton()
 {
     ui->chooseTitle->addActionButton(QIcon(), tr("Choose"), BUTTON_ID, true);
-    connect(ui->chooseTitle, &StalledIssueActionTitle::actionClicked, this, &StalledIssueChooseWidget::onActionClicked, Qt::UniqueConnection);
 }
 
 void StalledIssueChooseWidget::onActionClicked(int button_id)
