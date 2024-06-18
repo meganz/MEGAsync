@@ -118,6 +118,7 @@ bool NotificationAlertProxyModel::lessThan(const QModelIndex &left, const QModel
     AlertNotificationModelItem* rightItem = static_cast<AlertNotificationModelItem*>(right.internalPointer());
 
     bool isLess;
+    // If the types are different, prioritise notifications over alerts
     if (leftItem->type == AlertNotificationModelItem::NOTIFICATION && rightItem->type == AlertNotificationModelItem::ALERT)
     {
         isLess = true;
@@ -128,6 +129,7 @@ bool NotificationAlertProxyModel::lessThan(const QModelIndex &left, const QModel
     }
     else if (leftItem->type == AlertNotificationModelItem::ALERT && rightItem->type == AlertNotificationModelItem::ALERT)
     {
+        // If both are of type alert, order by date
         QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();
         QDateTime rightDate = sourceModel()->data(right, Qt::UserRole).toDateTime();
         isLess = leftDate > rightDate;

@@ -68,7 +68,8 @@ QVariant NotificationAlertModel::data(const QModelIndex &index, int role) const
         {
             case AlertNotificationModelItem::ALERT:
             {
-                result = mAlertsModel->data(mAlertsModel->index(index.row(), index.column()), role);
+                int alertRow = index.row() - mNotificationsModel->rowCount();
+                result = mAlertsModel->data(mAlertsModel->index(alertRow, index.column()), role);
                 break;
             }
             case AlertNotificationModelItem::NOTIFICATION:

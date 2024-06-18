@@ -92,12 +92,12 @@ bool NotificationAlertController::alertsAreFiltered()
 
 bool NotificationAlertController::hasAlerts()
 {
-    return mNotificationAlertModel->hasAlerts();
+    return mNotificationAlertModel && mNotificationAlertModel->hasAlerts();
 }
 
 bool NotificationAlertController::hasAlertsOfType(int type)
 {
-    return mNotificationAlertModel->hasAlertsOfType(type);
+    return mNotificationAlertModel && mNotificationAlertModel->hasAlertsOfType(type);
 }
 
 void NotificationAlertController::applyNotificationFilter(NotificationAlertProxyModel::FilterType opt)
