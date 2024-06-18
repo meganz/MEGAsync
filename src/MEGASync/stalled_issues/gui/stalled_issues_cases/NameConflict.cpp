@@ -12,9 +12,10 @@
 #include "MegaNodeNames.h"
 #include "DateTimeFormatter.h"
 #include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
+#include "TextDecorator.h"
 
 #include <megaapi.h>
-#include "TextDecorator.h"
 #include <QDialogButtonBox>
 #include <QPainter>
 
@@ -448,8 +449,13 @@ void NameConflict::onActionClicked(int actionId)
                                                    mDelegateWidget->getCurrentIndex());
                         }
 
+
+
                         if (areAllSolved)
                         {
+                            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                                AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+                            MegaSyncApp->getStalledIssuesModel()->finishConflictManually();
                             emit allSolved();
                         }
 
@@ -590,6 +596,9 @@ void NameConflict::onActionClicked(int actionId)
 
                     if(areAllSolved)
                     {
+                        MegaSyncApp->getStatsEventHandler()->sendEvent(
+                            AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+                        MegaSyncApp->getStalledIssuesModel()->finishConflictManually();
                         emit allSolved();
                     }
 
