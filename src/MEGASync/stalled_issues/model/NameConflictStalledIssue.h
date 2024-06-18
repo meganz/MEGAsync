@@ -462,6 +462,8 @@ public:
         }
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes();
+        std::shared_ptr<mega::MegaError> keepMostRecentlyModifiedNode();
+        std::shared_ptr<ConflictedNameInfo> findLastModifiedNode() const;
 
         struct MergeFoldersError
         {
@@ -492,7 +494,8 @@ public:
         None = 0,
         RemoveDuplicated = 0x01,
         Rename = 0x02,
-        MergeFolders = 0x04
+        MergeFolders = 0x04,
+        KeepMostRecentlyModifiedNode = 0x08
     };
     Q_DECLARE_FLAGS(ActionsSelected, ActionSelected)
 

@@ -4357,6 +4357,16 @@ and rename the files with the same name but different content (adding a suffix l
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
         <translation>This action will delete the duplicate files, merge all folders into a single one, and rename the remaining items in case of name conflict by adding a suffix like (1).</translation>
     </message>
+    <message>
+        <source>This action will replace the older files with the same name with the most recently modified file (%1).</source>
+        <translatorcomment>Info text for confirmation message for picked solution (keep most recently modified file) in a name conflict sync stall.SAT-1147</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep most recently modified file</source>
+        <translatorcomment>Button to solve a name conflict sync stall by keeping the most recently modified file.SAT-1147</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NameDuplicatedContainer</name>

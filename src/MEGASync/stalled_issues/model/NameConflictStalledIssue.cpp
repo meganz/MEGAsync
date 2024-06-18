@@ -794,9 +794,18 @@ bool NameConflictedStalledIssue::solveIssue(int option)
         }
     }
 
-    if(!result & option & ActionSelected::RemoveDuplicated)
+    if(!result && option & ActionSelected::RemoveDuplicated)
     {
         result = mCloudConflictedNames.removeDuplicatedNodes() == nullptr;
+        if(result)
+        {
+            result = checkAndSolveConflictedNamesSolved();
+        }
+    }
+
+    if(!result && option & ActionSelected::KeepMostRecentlyModifiedNode)
+    {
+        result = mCloudConflictedNames.keepMostRecentlyModifiedNode() == nullptr;
         if(result)
         {
             result = checkAndSolveConflictedNamesSolved();
@@ -866,6 +875,125 @@ NameConflictedStalledIssue::CloudConflictedNames::removeDuplicatedNodes()
 
     //No error to return
     return nullptr;
+}
+
+std::shared_ptr<mega::MegaError>
+NameConflictedStalledIssue::CloudConflictedNames::keepMostRecentlyModifiedNode()
+{
+
+    std::shared_ptr<ConflictedNameInfo> previousConflictedName;
+
+    for(int index = 0; index < mConflictedNames.size(); ++index)
+    {
+        auto& conflictedNamesGroup = mConflictedNames[index];
+
+        //The object is auto deleted when finished (as it needs to survive this issue)
+        foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
+        {
+            if(conflictedName->getSolvedType() ==
+                    NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+            {
+                if(previousConflictedName == nullptr)
+                {
+                    previousConflictedName = conflictedName;
+                }
+                else
+                {
+                    QDateTime previousConflictDate;
+                    QDateTime currentConflictDate;
+
+                    previousConflictedName->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&previousConflictDate](const QDateTime& time)
+                        { previousConflictDate = time; });
+                    conflictedName->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&currentConflictDate](const QDateTime& time)
+                        { currentConflictDate = time; });
+
+                    std::shared_ptr<ConflictedNameInfo> conflictToRemove;
+
+                    if(currentConflictDate >= previousConflictDate)
+                    {
+                        conflictToRemove = previousConflictedName;
+                        previousConflictedName = conflictedName;
+                    }
+                    else
+                    {
+                        conflictToRemove = conflictedName;
+                    }
+
+                    if(conflictToRemove)
+                    {
+                        std::unique_ptr<mega::MegaNode> conflictNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictToRemove->mHandle));
+                        if(conflictNode)
+                        {
+                            auto error = StalledIssuesUtilities::removeRemoteFile(
+                                conflictNode.get());
+                            if(error)
+                            {
+                                auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(
+                                    error.get());
+                                conflictToRemove->setFailed(errorStr);
+
+                                return error;
+                            }
+                            else
+                            {
+                                conflictToRemove->solveByRemove();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        conflictedNamesGroup.solved = true;
+    }
+
+    //No error to return
+    return nullptr;
+}
+
+std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>
+NameConflictedStalledIssue::CloudConflictedNames::findLastModifiedNode() const
+{
+    std::shared_ptr<ConflictedNameInfo> lastModifiedConflict;
+
+    for(int index = 0; index < mConflictedNames.size(); ++index)
+    {
+        auto& conflictedNamesGroup = mConflictedNames[index];
+
+        //The object is auto deleted when finished (as it needs to survive this issue)
+        foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
+        {
+            if(conflictedName->getSolvedType() ==
+                NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+            {
+                if(lastModifiedConflict == nullptr)
+                {
+                    lastModifiedConflict = conflictedName;
+                }
+                else
+                {
+                    QDateTime previousConflictDate;
+                    QDateTime currentConflictDate;
+
+                    lastModifiedConflict->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&previousConflictDate](const QDateTime& time)
+                        { previousConflictDate = time; });
+                    conflictedName->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&currentConflictDate](const QDateTime& time)
+                        { currentConflictDate = time; });
+
+                    if(currentConflictDate >= previousConflictDate)
+                    {
+                        lastModifiedConflict = conflictedName;
+                    }
+                }
+            }
+        }
+    }
+
+    return lastModifiedConflict;
 }
 
 NameConflictedStalledIssue::CloudConflictedNames::MergeFoldersError
