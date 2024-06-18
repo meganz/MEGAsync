@@ -116,7 +116,6 @@ void TransferQuota::checkExecuteDialog()
     {
         mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::TRSF_OVER_QUOTA_DIAL);
-
         if (!mUpgradeDialog)
         {
             mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
