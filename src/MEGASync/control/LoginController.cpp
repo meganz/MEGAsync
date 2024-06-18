@@ -411,9 +411,7 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::ACC_CREATION_START);
-
         if (!mPreferences->accountCreationTime())
         {
                 mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
