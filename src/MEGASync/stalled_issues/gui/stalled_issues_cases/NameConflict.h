@@ -58,6 +58,7 @@ private:
     void initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName);
     void initActionButtons(StalledIssueActionTitle* title);
     void updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
+    void checkIfAreAllSolved(bool areAllSolved);
 
     Ui::NameConflict *ui;
     StalledIssuesUtilities mUtilities;

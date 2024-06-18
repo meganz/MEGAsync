@@ -6960,11 +6960,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
         <translation type="unfinished">Local file is being uploaded</translation>
     </message>
-    <message>
-        <source>Renamed to %1</source>
-        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation type="unfinished">Renamed</translation>
-    </message>
 </context>
 <context>
     <name>StalledIssueFilePath</name>
