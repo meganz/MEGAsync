@@ -1182,6 +1182,7 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 {
     notificationsReady = true;
     ui->tvNotifications->setModel(model);
+    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
     ui->tvNotifications->setItemDelegate(delegate);
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
 }

@@ -2,6 +2,8 @@
 
 #include "NotificationAlertModel.h"
 
+#include <QDateTime>
+
 using namespace mega;
 
 NotificationAlertProxyModel::NotificationAlertProxyModel(QObject *parent)
@@ -108,4 +110,31 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex &s
         }
     }
     return filter;
+}
+
+bool NotificationAlertProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    AlertNotificationModelItem* leftItem = static_cast<AlertNotificationModelItem*>(left.internalPointer());
+    AlertNotificationModelItem* rightItem = static_cast<AlertNotificationModelItem*>(right.internalPointer());
+
+    bool isLess;
+    if (leftItem->type == AlertNotificationModelItem::NOTIFICATION && rightItem->type == AlertNotificationModelItem::ALERT)
+    {
+        isLess = true;
+    }
+    else if (leftItem->type == AlertNotificationModelItem::ALERT && rightItem->type == AlertNotificationModelItem::NOTIFICATION)
+    {
+        isLess = false;
+    }
+    else if (leftItem->type == AlertNotificationModelItem::ALERT && rightItem->type == AlertNotificationModelItem::ALERT)
+    {
+        QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();
+        QDateTime rightDate = sourceModel()->data(right, Qt::UserRole).toDateTime();
+        isLess = leftDate > rightDate;
+    }
+    else
+    {
+        isLess = QSortFilterProxyModel::lessThan(left, right);
+    }
+    return isLess;
 }
