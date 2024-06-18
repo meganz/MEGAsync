@@ -1094,15 +1094,6 @@ font-size: 13px;
                                    <height>24</height>
                                   </size>
                                  </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">#lUsedStorage
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}
-</string>
-                                 </property>
                                  <property name="text">
                                   <string/>
                                  </property>
@@ -1289,14 +1280,6 @@ font-size: 13px;
                                    <width>16777215</width>
                                    <height>24</height>
                                   </size>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">#lUsedQuota
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}</string>
                                  </property>
                                  <property name="text">
                                   <string/>
