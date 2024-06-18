@@ -596,10 +596,14 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
             else if(index == NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
-                msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(nameConflict->getNameConflictCloudData().findLastModifiedNode()->getConflictedName());
+                auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
+                                                  .findMostRecentlyModifiedNode()
+                                                  .mostRecentlyModified->getConflictedName());
+                msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
+
                 msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
             else

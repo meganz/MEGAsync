@@ -462,8 +462,15 @@ public:
         }
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes();
+
+        struct MostRecentlyModifiedInfo
+        {
+            std::shared_ptr<ConflictedNameInfo> mostRecentlyModified;
+            QList<std::shared_ptr<ConflictedNameInfo>> oldVersions;
+        };
+
         std::shared_ptr<mega::MegaError> keepMostRecentlyModifiedNode();
-        std::shared_ptr<ConflictedNameInfo> findLastModifiedNode() const;
+        MostRecentlyModifiedInfo findMostRecentlyModifiedNode() const;
 
         struct MergeFoldersError
         {
