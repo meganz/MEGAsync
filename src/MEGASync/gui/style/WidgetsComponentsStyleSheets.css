@@ -141,12 +141,12 @@ subcontrol-position: top left;
 padding: 7 0 0 5px;
 }
 
-/* FIX ALPHA CHANNEL */
+/* TODO: surface-2 should be replaced by --color-indicator-background */
 QProgressBar
 {
-border-width: 0px;
-border-style: solid;
-background-color: #0D000000; /*PENDING TO ADD TO REPO : colorToken.indicator-background*/
+border-style: none;
+border-radius: 4px;
+background-color: #f3f4f4; /*colorToken.surface-2*/
 max-height: 8px;
 }
 

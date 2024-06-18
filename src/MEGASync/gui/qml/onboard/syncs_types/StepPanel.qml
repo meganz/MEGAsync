@@ -65,7 +65,7 @@ Rectangle {
             name: root.step4
             extend: root.step3
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; }
-            PropertyChanges { target: step4_line; color: ColorTheme.iconButton; }
+            PropertyChanges { target: step4_line; color: ColorTheme.buttonPrimary; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; }
         },
         State {

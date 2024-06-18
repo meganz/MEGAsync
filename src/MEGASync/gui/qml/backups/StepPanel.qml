@@ -29,14 +29,14 @@ Rectangle {
         State {
             name: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: line; color: ColorTheme.iconButtonDisabled; }
+            PropertyChanges { target: line; color: ColorTheme.buttonDisabled; }
             PropertyChanges { target: step2; toState: Step.ToStates.DISABLED; }
         },
         State {
             name: root.step2
             extend: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: line; color: ColorTheme.iconButton; }
+            PropertyChanges { target: line; color: ColorTheme.buttonPrimary; }
             PropertyChanges { target: step2; toState: Step.ToStates.CURRENT; }
         },
         State {
