@@ -751,7 +751,7 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved()
     return unsolvedItems == 0;
 }
 
-bool NameConflictedStalledIssue::semiAutoSolveIssue(int option)
+bool NameConflictedStalledIssue::semiAutoSolveIssue(ActionsSelected option)
 {
     return solveIssue(option);
 }
@@ -760,7 +760,8 @@ bool NameConflictedStalledIssue::semiAutoSolveIssue(int option)
 bool NameConflictedStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
-    auto result = solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
+    ActionsSelected options(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
+    auto result = solveIssue(options);
     if(result)
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
@@ -775,7 +776,7 @@ bool NameConflictedStalledIssue::isAutoSolvable() const
     return Preferences::instance()->isStalledIssueSmartModeActivated();
 }
 
-bool NameConflictedStalledIssue::solveIssue(int option)
+bool NameConflictedStalledIssue::solveIssue(ActionsSelected option)
 {
     auto result(false);
 
@@ -914,9 +915,7 @@ NameConflictedStalledIssue::CloudConflictedNames::findMostRecentlyModifiedNode()
 
     for(int index = 0; index < mConflictedNames.size(); ++index)
     {
-        auto& conflictedNamesGroup = mConflictedNames[index];
-
-        //The object is auto deleted when finished (as it needs to survive this issue)
+        const auto conflictedNamesGroup = mConflictedNames[index];
         foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
         {
             if(conflictedName->getSolvedType() ==

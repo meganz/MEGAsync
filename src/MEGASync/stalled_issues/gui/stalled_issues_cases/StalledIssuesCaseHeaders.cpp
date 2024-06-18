@@ -603,7 +603,6 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
-
                 msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
             else
