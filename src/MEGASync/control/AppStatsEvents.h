@@ -102,6 +102,7 @@ public:
 private:
     static QMap<EventType, int> mTypeMap;
     static QMap<EventType, const char*> mMessageMap;
+
 };
 
 #endif // APPSTATSEVENTS_H
