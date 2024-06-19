@@ -308,6 +308,7 @@ target_sources_conditional(MEGAsync
    gui/macx/NotificationsSettings.ui
    gui/macx/LowDiskSpaceDialog.ui
    gui/macx/ViewLoadingScene.ui
+   gui/macx/NotificationItem.ui
    gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
    gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
    gui/node_selector/gui/macx/NodeSelector.ui
@@ -359,6 +360,7 @@ target_sources_conditional(MEGAsync
     gui/linux/LowDiskSpaceDialog.ui
     gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
+    gui/linux/NotificationItem.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui
