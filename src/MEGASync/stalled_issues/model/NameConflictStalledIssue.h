@@ -463,6 +463,15 @@ public:
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes();
 
+        struct MostRecentlyModifiedInfo
+        {
+            std::shared_ptr<ConflictedNameInfo> mostRecentlyModified;
+            QList<std::shared_ptr<ConflictedNameInfo>> oldVersions;
+        };
+
+        std::shared_ptr<mega::MegaError> keepMostRecentlyModifiedNode();
+        MostRecentlyModifiedInfo findMostRecentlyModifiedNode() const;
+
         struct MergeFoldersError
         {
             QString error;
@@ -492,7 +501,8 @@ public:
         None = 0,
         RemoveDuplicated = 0x01,
         Rename = 0x02,
-        MergeFolders = 0x04
+        MergeFolders = 0x04,
+        KeepMostRecentlyModifiedNode = 0x08,
     };
     Q_DECLARE_FLAGS(ActionsSelected, ActionSelected)
 
@@ -523,7 +533,7 @@ public:
 
     bool renameNodesAutomatically();
 
-    bool semiAutoSolveIssue(int option);
+    bool semiAutoSolveIssue(ActionsSelected option);
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
@@ -547,7 +557,7 @@ public:
 private:
     bool checkAndSolveConflictedNamesSolved();
 
-    bool solveIssue(int option);
+    bool solveIssue(NameConflictedStalledIssue::ActionsSelected option);
 
     bool renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,

@@ -460,6 +460,12 @@ void NameConflictsHeader::refreshCaseActions(StalledIssueHeader *header)
         }
 
         actions << StalledIssueHeader::ActionInfo(tr("Rename all items"), NameConflictedStalledIssue::Rename);
+
+        if(nameConflict->getNameConflictCloudData().size() > 1)
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Keep most recently modified file"),
+                NameConflictedStalledIssue::KeepMostRecentlyModifiedNode | NameConflictedStalledIssue::Rename);
+        }
     }
     else if(header->getData().consultData()->foldersCount() > 1)
     {
@@ -587,6 +593,13 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             if(index == NameConflictedStalledIssue::RemoveDuplicated)
             {
                msgInfo.informativeText = tr("This action will delete the duplicate files.");
+            }
+            else if(index == NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
+            {
+                auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
+                                                  .findMostRecentlyModifiedNode()
+                                                  .mostRecentlyModified->getConflictedName());
+                msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
