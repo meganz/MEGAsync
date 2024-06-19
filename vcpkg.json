@@ -61,7 +61,7 @@
     "dependencies": [
       { "name": "cryptopp", "version>=": "8.9.0" },
       "libsodium",
-      "sqlite3",
+      { "name": "sqlite3", "version>=": "3.46.0#1" },
       { "name": "curl", "version>=": "8.4.0" },
       "icu"
     ],
