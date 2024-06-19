@@ -187,7 +187,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
-image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
+image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
 QLabel

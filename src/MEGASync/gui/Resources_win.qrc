@@ -1544,5 +1544,7 @@
         <file>images/StalledIssues/x-circle-solid.png</file>
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
+        <file>images/themed/dark/checkbox_unchecked.svg</file>
+        <file>images/themed/light/checkbox_unchecked.svg</file>
     </qresource>
 </RCC>
