@@ -334,7 +334,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -369,7 +369,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -401,7 +401,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -442,7 +442,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1099,15 +1099,6 @@ font-size: 13px;
                                    <height>24</height>
                                   </size>
                                  </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">#lUsedStorage
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}
-</string>
-                                 </property>
                                  <property name="text">
                                   <string/>
                                  </property>
@@ -1295,14 +1286,6 @@ font-size: 13px;
                                    <height>24</height>
                                   </size>
                                  </property>
-                                 <property name="styleSheet">
-                                  <string notr="true">#lUsedQuota
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}</string>
-                                 </property>
                                  <property name="text">
                                   <string/>
                                  </property>
@@ -1454,7 +1437,7 @@ background-color: transparent;
                                <string/>
                               </property>
                               <property name="icon">
-                               <iconset resource="../Resources_linux.qrc">
+                               <iconset resource="../Resources_macx.qrc">
                                 <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                               </property>
                               <property name="iconSize">
@@ -2675,7 +2658,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 <string/>
                                </property>
                                <property name="icon">
-                                <iconset resource="../Resources_linux.qrc">
+                                <iconset resource="../Resources_macx.qrc">
                                  <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
                                </property>
                                <property name="iconSize">
@@ -3813,10 +3796,7 @@ background-color: #F4F6F8;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

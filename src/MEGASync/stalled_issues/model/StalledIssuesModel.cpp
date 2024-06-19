@@ -978,13 +978,16 @@ bool StalledIssuesModel::issueSolvingFinished(const StalledIssue* issue)
 
 bool StalledIssuesModel::issueSolvingFinished(StalledIssue* issue, bool wasSuccessful)
 {
-    if(wasSuccessful)
+    if(issue->isUnsolved())
     {
-        issue->setIsSolved(StalledIssue::SolveType::SOLVED);
-    }
-    else
-    {
-        issue->setIsSolved(StalledIssue::SolveType::FAILED);
+        if(wasSuccessful)
+        {
+            issue->setIsSolved(StalledIssue::SolveType::SOLVED);
+        }
+        else
+        {
+            issue->setIsSolved(StalledIssue::SolveType::FAILED);
+        }
     }
 
     return issueSolvingFinished(issue);
@@ -1418,6 +1421,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
 {
     auto resolveIssue = [this, option](int row) -> bool
     {
+        auto result(false);
         auto item(getStalledIssueByRow(row));
         if(!item.getData()->checkForExternalChanges())
         {
@@ -1425,17 +1429,17 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
             {
                 if(auto nameConflict = item.convert<NameConflictedStalledIssue>())
                 {
-                    nameConflict->semiAutoSolveIssue(option);
-                    if(item.consultData()->isSolved())
+                    result = nameConflict->semiAutoSolveIssue(option);
+
+                    if(result)
                     {
                         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_SEMI_AUTOMATICALLY);
-                        return true;
                     }
                 }
             }
         }
 
-        return false;
+        return result;
     };
 
     SolveListInfo info(list, resolveIssue);
@@ -1444,47 +1448,42 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
 
 bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index)
 {
-    auto result(false);
+    auto areAllSolved(false);
 
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        result = nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
-        issueSolvingFinished(issue.getData().get(), result);
-
-        if(nameConflict->isSolved())
+        areAllSolved = nameConflict->solveLocalConflictedNameByRemove(conflictIndex);
+        if(areAllSolved)
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+            issueSolvingFinished(issue.getData().get(), true);
             finishConflictManually();
         }
-
     }
 
-    return result;
+    return areAllSolved;
 }
 
 bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
 {
-    auto result(false);
+    auto areAllSolved(false);
 
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        result = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
-        issueSolvingFinished(issue.getData().get(), result);
-
-        if(nameConflict->isSolved())
+        areAllSolved = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
+        if(areAllSolved)
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+            issueSolvingFinished(issue.getData().get(), true);
             finishConflictManually();
         }
     }
 
-    return result;
+    return areAllSolved;
 }
 
 void StalledIssuesModel::solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error)
@@ -1514,47 +1513,42 @@ bool StalledIssuesModel::checkForExternalChanges(const QModelIndex& index)
 
 bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index)
 {
-    auto result(false);
+    auto areAllSolved(false);
 
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        result = nameConflict->solveCloudConflictedNameByRemove(conflictIndex);
-        issueSolvingFinished(issue.getData().get(), result);
-
-        if(nameConflict->isSolved())
+        areAllSolved = nameConflict->solveCloudConflictedNameByRemove(conflictIndex);
+        if(areAllSolved)
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+            issueSolvingFinished(issue.getData().get(), true);
             finishConflictManually();
         }
-
     }
 
-    return result;
+    return areAllSolved;
 }
 
 bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
 {
-    auto result(false);
+    auto areAllSolved(false);
 
     auto potentialIndex = getSolveIssueIndex(index);
 
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        result = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
-        issueSolvingFinished(issue.getData().get(), result);
-
-        if(nameConflict->isSolved())
+        areAllSolved = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
+        if(areAllSolved)
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+            issueSolvingFinished(issue.getData().get(), true);
             finishConflictManually();
         }
     }
 
-    return result;
+    return areAllSolved;
 }
 
 void StalledIssuesModel::solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error)

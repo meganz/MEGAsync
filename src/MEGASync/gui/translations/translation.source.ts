@@ -6960,11 +6960,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
         <translation type="unfinished">Local file is being uploaded</translation>
     </message>
-    <message>
-        <source>Renamed to %1</source>
-        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation type="unfinished">Renamed</translation>
-    </message>
 </context>
 <context>
     <name>StalledIssueFilePath</name>
@@ -9295,35 +9290,43 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <name>WhatsNewStrings</name>
     <message>
         <source>What&apos;s new</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Updates</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files now sync up to 5x faster than before</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Got it</source>

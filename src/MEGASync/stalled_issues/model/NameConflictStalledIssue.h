@@ -523,7 +523,7 @@ public:
 
     bool renameNodesAutomatically();
 
-    void semiAutoSolveIssue(int option);
+    bool semiAutoSolveIssue(int option);
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
@@ -547,7 +547,7 @@ public:
 private:
     bool checkAndSolveConflictedNamesSolved();
 
-    void solveIssue(int option);
+    bool solveIssue(int option);
 
     bool renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,
