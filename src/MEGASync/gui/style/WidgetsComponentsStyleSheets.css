@@ -106,7 +106,7 @@ QComboBox QAbstractItemView
 {
 border: 2px solid #04101E; /*colorToken.button-outline*/
 border-radius: 4px;
-background-color: transparent;
+background-color:  #fafafa; /* colorToken.surface-1*/
 }
 
 QRadioButton::indicator::unchecked
@@ -186,6 +186,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 }
 
 QLabel
