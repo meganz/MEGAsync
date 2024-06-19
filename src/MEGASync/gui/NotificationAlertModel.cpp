@@ -18,7 +18,7 @@ QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex
     {
         if (row < mNotificationsModel->rowCount())
         {
-            AlertNotificationModelItem* item = new AlertNotificationModelItem{AlertNotificationModelItem::NOTIFICATION,
+            NotificationAlertModelItem* item = new NotificationAlertModelItem{NotificationAlertModelItem::NOTIFICATION,
                                             mNotificationsModel->index(row, column).internalPointer()};
             result = createIndex(row, column, item);
         }
@@ -26,7 +26,7 @@ QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex
         {
             int alertRow = row - mNotificationsModel->rowCount();
             MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(mAlertsModel->index(alertRow, column).internalPointer());
-            AlertNotificationModelItem* item = new AlertNotificationModelItem{AlertNotificationModelItem::ALERT, alert};
+            NotificationAlertModelItem* item = new NotificationAlertModelItem{NotificationAlertModelItem::ALERT, alert};
             result = createIndex(row, column, item);
         }
     }
@@ -63,16 +63,16 @@ QVariant NotificationAlertModel::data(const QModelIndex &index, int role) const
     QVariant result;
     if (index.isValid())
     {
-        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(index.internalPointer());
+        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(index.internalPointer());
         switch (item->type)
         {
-            case AlertNotificationModelItem::ALERT:
+            case NotificationAlertModelItem::ALERT:
             {
                 int alertRow = index.row() - mNotificationsModel->rowCount();
                 result = mAlertsModel->data(mAlertsModel->index(alertRow, index.column()), role);
                 break;
             }
-            case AlertNotificationModelItem::NOTIFICATION:
+            case NotificationAlertModelItem::NOTIFICATION:
             {
                 result = mNotificationsModel->data(mNotificationsModel->index(index.row(), index.column()), role);
                 break;

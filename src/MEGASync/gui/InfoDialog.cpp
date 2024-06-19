@@ -102,8 +102,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(onFilterClicked(NotificationAlertProxyModel::FilterType)),
-            this, SLOT(applyFilterOption(NotificationAlertProxyModel::FilterType)));
+    connect(filterMenu, SIGNAL(onFilterClicked(AlertType)),
+            this, SLOT(applyFilterOption(AlertType)));
 
     setUnseenNotifications(0);
 
@@ -1200,7 +1200,7 @@ void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(NotificationAlertProxyModel::FilterType::ALL);
+    ui->wSortNotifications->setActualFilter(AlertType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1438,7 +1438,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
+void InfoDialog::applyFilterOption(AlertType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1447,7 +1447,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
 
     switch (opt)
     {
-        case NotificationAlertProxyModel::FilterType::CONTACTS:
+        case AlertType::CONTACTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1463,7 +1463,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
 
             break;
         }
-        case NotificationAlertProxyModel::FilterType::SHARES:
+        case AlertType::SHARES:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1479,7 +1479,7 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
 
             break;
         }
-        case NotificationAlertProxyModel::FilterType::PAYMENTS:
+        case AlertType::PAYMENTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
@@ -1494,8 +1494,8 @@ void InfoDialog::applyFilterOption(NotificationAlertProxyModel::FilterType opt)
             }
             break;
         }
-        case NotificationAlertProxyModel::FilterType::ALL:
-        case NotificationAlertProxyModel::FilterType::TAKEDOWNS:
+        case AlertType::ALL:
+        case AlertType::TAKEDOWNS:
         default:
         {
             ui->wSortNotifications->setActualFilter(opt);

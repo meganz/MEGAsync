@@ -105,7 +105,7 @@ void NotificationAlertController::reset()
 
 bool NotificationAlertController::alertsAreFiltered()
 {
-    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != NotificationAlertProxyModel::FilterType::ALL;
+    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != AlertType::ALL;
 }
 
 bool NotificationAlertController::hasAlerts()
@@ -118,7 +118,7 @@ bool NotificationAlertController::hasAlertsOfType(int type)
     return mNotificationAlertModel && mNotificationAlertModel->hasAlertsOfType(type);
 }
 
-void NotificationAlertController::applyNotificationFilter(NotificationAlertProxyModel::FilterType opt)
+void NotificationAlertController::applyNotificationFilter(AlertType opt)
 {
     if (mAlertsProxyModel)
     {

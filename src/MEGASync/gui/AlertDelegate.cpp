@@ -28,8 +28,8 @@ void AlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     if (index.isValid())
     {
         QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
-        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
         {
             QStyledItemDelegate::paint(painter, option, index);
             return;
@@ -88,8 +88,8 @@ bool AlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const 
     if (QEvent::MouseButtonPress ==  event->type())
     {
         QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
-        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
         {
             return true;
         }
@@ -203,8 +203,8 @@ bool AlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const 
     if (event->type() == QEvent::ToolTip)
     {
         QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
-        if (item->type != AlertNotificationModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
         {
             return true;
         }

@@ -1,6 +1,8 @@
 #ifndef NOTIFICATIONALERTPROXYMODEL_H
 #define NOTIFICATIONALERTPROXYMODEL_H
 
+#include "NotificationAlertTypes.h"
+
 #include <QSortFilterProxyModel>
 
 class NotificationAlertProxyModel : public QSortFilterProxyModel
@@ -8,20 +10,11 @@ class NotificationAlertProxyModel : public QSortFilterProxyModel
     Q_OBJECT
 
 public:
-    enum class FilterType
-    {
-        ALL = 0,
-        CONTACTS,
-        SHARES,
-        PAYMENTS,
-        TAKEDOWNS
-    };
-
     NotificationAlertProxyModel(QObject *parent = 0);
     virtual ~NotificationAlertProxyModel() = default;
 
-    FilterType filterAlertType();
-    void setFilterAlertType(FilterType filterType);
+    AlertType filterAlertType();
+    void setFilterAlertType(AlertType filterType);
     bool checkFilterType(int sdkType) const;
 
 protected:
@@ -29,7 +22,7 @@ protected:
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
-    FilterType actualFilter;
+    AlertType actualFilter;
 
 };
 

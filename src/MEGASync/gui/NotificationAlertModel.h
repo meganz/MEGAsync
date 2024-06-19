@@ -5,19 +5,6 @@
 #include "AlertModel.h"
 #include "NotificationAlertProxyModel.h"
 
-struct AlertNotificationModelItem
-{
-    enum ModelType
-    {
-        NONE = 0,
-        ALERT,
-        NOTIFICATION
-    };
-
-    ModelType type;
-    void* pointer;
-};
-
 class NotificationAlertModel : public QAbstractItemModel
 {
     Q_OBJECT

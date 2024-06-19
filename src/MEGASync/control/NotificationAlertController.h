@@ -24,7 +24,7 @@ public:
     bool alertsAreFiltered();
     bool hasAlerts();
     bool hasAlertsOfType(int type);
-    void applyNotificationFilter(NotificationAlertProxyModel::FilterType opt);
+    void applyNotificationFilter(AlertType opt);
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);

@@ -1,7 +1,7 @@
 #ifndef ALERTFILTERTYPE_H
 #define ALERTFILTERTYPE_H
 
-#include "NotificationAlertProxyModel.h"
+#include "NotificationAlertTypes.h"
 
 #include <QWidget>
 
@@ -17,7 +17,7 @@ public:
     explicit AlertFilterType(QWidget *parent = 0);
     ~AlertFilterType();
 
-    void setActualFilter(NotificationAlertProxyModel::FilterType type);
+    void setActualFilter(AlertType type);
 
 signals:
     void clicked();
@@ -28,7 +28,7 @@ protected:
 
 private:
     Ui::AlertFilterType *ui;
-    NotificationAlertProxyModel::FilterType mType;
+    AlertType mType;
 
 };
 

@@ -41,6 +41,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/Preferences/EphemeralCredentials.h
     control/Preferences/Preferences.h
     control/NotificationAlertController.h
+    control/NotificationAlertTypes.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES

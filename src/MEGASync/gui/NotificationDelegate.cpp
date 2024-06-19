@@ -4,6 +4,13 @@
 
 #include <QPainter>
 
+namespace
+{
+constexpr int DEFAULT_WIDTH = 400;
+constexpr int HEIGHT_WITHOUT_IMAGE = 219;
+constexpr int HEIGHT_WITH_IMAGE = 346;
+}
+
 NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject *parent)
     : QStyledItemDelegate(parent)
     , mNotificationModel(notificationModel)
@@ -15,8 +22,8 @@ void NotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     if (index.isValid())
     {
         QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
-        if (item->type != AlertNotificationModelItem::NOTIFICATION || !item->pointer)
+        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item->type != NotificationAlertModelItem::NOTIFICATION || !item->pointer)
         {
             QStyledItemDelegate::paint(painter, option, index);
             return;
@@ -61,14 +68,12 @@ QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     }
 
     QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    AlertNotificationModelItem* item = static_cast<AlertNotificationModelItem*>(filteredIndex.internalPointer());
-    if (item->type != AlertNotificationModelItem::NOTIFICATION || !item->pointer)
+    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+    if (item->type != NotificationAlertModelItem::NOTIFICATION || !item->pointer)
     {
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
     NotifTest* notif = static_cast<NotifTest*>(item->pointer);
-    int height = notif->imageName.empty() ? 219 : 346;
-
-    return QSize(400, height);
+    return QSize(DEFAULT_WIDTH, notif->imageName.empty() ? HEIGHT_WITHOUT_IMAGE : HEIGHT_WITH_IMAGE);
 }

@@ -2,10 +2,15 @@
 
 #include <QDateTime>
 
+namespace
+{
+constexpr int MAX_COST = 16;
+}
+
 NotificationModel::NotificationModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
-    notificationItems.setMaxCost(16);
+    notificationItems.setMaxCost(MAX_COST);
 
     beginInsertRows(QModelIndex(), 0, 0);
     NotifTest* notif = new NotifTest();
