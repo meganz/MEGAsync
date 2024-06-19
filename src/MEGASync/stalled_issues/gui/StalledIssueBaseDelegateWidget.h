@@ -3,12 +3,12 @@
 
 #include <StalledIssue.h>
 #include <StalledIssuesUtilities.h>
+#include <QMegaMessageBox.h>
 
 #include <QWidget>
 #include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
 #include <QTimer>
-
 
 class StalledIssueBaseDelegateWidget : public QWidget
 {
@@ -37,10 +37,21 @@ public:
 
     void updateSizeHint();
 
+    bool checkForExternalChanges(bool isSingleSelection);
+
 signals:
     void editorKeepStateChanged(bool state);
+    void needsUpdate();
 
 protected:
+    struct SelectionInfo
+    {
+        QModelIndexList selection;
+        QModelIndexList similarSelection;
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+    };
+    bool checkSelection(const QList<mega::MegaSyncStall::SyncStallReason>& reasons, SelectionInfo& info);
+
     void resizeEvent(QResizeEvent *event) override;
     bool event(QEvent *event) override;
 

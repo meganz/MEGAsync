@@ -36,6 +36,8 @@ public:
 
     ~RenameRemoteNodeDialog() = default;
 
+    static QString renamedFailedErrorString(mega::MegaError* error, bool isFile);
+
 protected:
     void onDialogAccepted() override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
@@ -43,6 +45,8 @@ protected:
     QString lineEditText() override;
 
 private:
+    void showRenamedFailedError(mega::MegaError* error);
+
     std::unique_ptr<mega::MegaNode> mNodeToRename;
     QString mNodeName;
 };
@@ -55,12 +59,16 @@ public:
     RenameLocalNodeDialog(const QString& nodePath, QWidget* parent);
     ~RenameLocalNodeDialog() = default;
 
+    static QString renamedFailedErrorString(bool isFile);
+
 protected:
     void onDialogAccepted() override;
     bool isFile() override;
     QString lineEditText() override;
 
 private:
+    void showRenamedFailedError();
+
     QString mNodePath;
 };
 

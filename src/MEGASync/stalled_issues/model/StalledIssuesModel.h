@@ -6,51 +6,97 @@
 #include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
 #include "ViewLoadingScene.h"
+#include <MoveOrRenameCannotOccurIssue.h>
+#include <StalledIssuesFactory.h>
+#include <DesktopNotifications.h>
 #include "QMegaMessageBox.h"
+#include "TextDecorator.h"
 
 #include <QObject>
 #include <QReadWriteLock>
 #include <QAbstractItemModel>
 #include <QTimer>
 #include <QPointer>
+
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
+
+namespace StalledIssuesStrings
+{
+static QString RemoveFileFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
+static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
+static QString RemoveLocalFileFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the file is in use, and the permissions of the file, then try again."));}
+static QString RemoveLocalFolderFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the folder is in use, and the permissions of the file, then try again."));}
+static QString RemoveRemoteFailedDescription(const mega::MegaError* error){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));}
+
+static QString RemoveRemoteFailedFile(const mega::MegaError* error)
+{
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+                           .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+    return errorStr;
+}
+
+static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
+{
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+                           .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+    return errorStr;
+}
+
+static QString RemoveLocalFailedFile()
+{
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+    return errorStr;
+}
+
+static QString RemoveLocalFailedFolder()
+{
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+    return errorStr;
+}
+}
 
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
     Q_OBJECT
 public:
-    struct StalledIssuesReceived
-    {
-        StalledIssuesVariantList stalledIssues;
-
-        bool isEmpty(){return stalledIssues.isEmpty();}
-        void clear()
-        {
-            stalledIssues.clear();
-        }
-    };
-
     explicit StalledIssuesReceiver(QObject* parent = nullptr);
     ~StalledIssuesReceiver(){}
 
+    bool multiStepIssueSolveActive() const;
+
+    template <class ISSUE_TYPE>
+    void addMultiStepIssueSolver(MultiStepIssueSolverBase* solver)
+    {
+        solver->moveToThread(thread());
+        solver->start();
+        mIssueCreator.addMultiStepIssueSolver(solver);
+    }
+
 public slots:
-    void onSetIsEventRequest();
+    void onUpdateStalledISsues(UpdateType type);
 
 signals:
-    void stalledIssuesReady(StalledIssuesReceiver::StalledIssuesReceived);
-    void solvingIssues(int issueCount, int total);
+    void stalledIssuesReady(ReceivedStalledIssues);
+    void solvingIssues(StalledIssuesCreator::IssuesCount count);
+    void solvingIssuesFinished(StalledIssuesCreator::IssuesCount count);
 
 protected:
     void onRequestFinish(::mega::MegaApi*, ::mega::MegaRequest* request, ::mega::MegaError*);
 
 private:
     QMutex mCacheMutex;
-    StalledIssuesReceived mCacheStalledIssues;
-    std::atomic_bool mIsEventRequest { false };
+    ReceivedStalledIssues mStalledIssues;
+    StalledIssuesCreator mIssueCreator;
+    std::atomic<UpdateType> mUpdateType {UpdateType::NONE};
+    std::atomic_int mUpdateRequests {0};
 };
-
-Q_DECLARE_METATYPE(StalledIssuesReceiver::StalledIssuesReceived);
 
 class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalListener
 {
@@ -90,6 +136,10 @@ public:
     QModelIndexList getIssuesByReason(QList<mega::MegaSyncStall::SyncStallReason> reasons);
     QModelIndexList getIssues(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
 
+    static void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
+
+    void languageChanged();
+
     //SHOW RAW INFO
     void showRawInfo(bool state);
     bool isRawInfoVisible() const;
@@ -98,7 +148,7 @@ public:
     void UiItemUpdate(const QModelIndex& oldIndex, const QModelIndex& newIndex);
 
     //SOLVE PROBLEMS
-    void stopSolvingIssues();
+    void stopSolvingIssues(MessageInfo::ButtonType buttonType);
 
     //Solve all issues
     void solveAllIssues();
@@ -108,9 +158,11 @@ public:
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    void solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
     bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    void solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     void finishConflictManually();
 
@@ -131,9 +183,14 @@ public:
     void fixFingerprint(const QModelIndexList& list);
 
     //MoveOrRename issue
-    void fixMoveOrRenameCannotOccur(const QModelIndex& index);
+    void fixMoveOrRenameCannotOccur(const QModelIndexList& indexes, MoveOrRenameIssueChosenSide side);
 
     bool issuesRequested() const;
+
+    //Common strings methods
+    static QString fixingIssuesString();
+    static QString processingIssuesString();
+    static QString issuesFixedString(StalledIssuesCreator::IssuesCount numberOfIssues);
 
 signals:
     void stalledIssuesChanged();
@@ -143,7 +200,7 @@ signals:
     void uiBlocked();
     void uiUnblocked();
 
-    void setIsEventRequest();
+    void updateStalledIssuesOnReceiver(UpdateType type);
 
     void showRawInfoChanged();
 
@@ -156,22 +213,32 @@ protected slots:
     void onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes) override;
 
 private slots:
-    void onProcessStalledIssues(StalledIssuesReceiver::StalledIssuesReceived issuesReceived);
+    void onStalledIssueUpdated(StalledIssue* issue);
+    void onAsyncIssueSolvingFinished(StalledIssue* issue);
+    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived);
     void onSendEvent();
 
 private:
-    void runMessageBox(QMegaMessageBox::MessageBoxInfo info);
+    void showIssueExternallyChangedMessageBox();
+
+    void appendCachedIssuesToModel(const StalledIssuesVariantList& list, StalledIssueFilterCriterion type);
 
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
     void updateStalledIssuedByOrder();
+    int getRowByStalledIssue(const std::shared_ptr<const StalledIssue> issue) const;
+    int getRowByStalledIssue(const StalledIssue* issue) const;
     void reset();
     QModelIndex getSolveIssueIndex(const QModelIndex& index);
     void quitReceiverThread();
 
+    StalledIssueVariant getIssueVariantByIssue(const StalledIssue* issue);
+
     bool checkIfUserStopSolving();
     void startSolvingIssues();
-    void finishSolvingIssues(int issuesFixed, bool sendMessage = true, const QString& message = QString());
+
+    void finishSolvingIssues(StalledIssuesCreator::IssuesCount count, bool sendMessage = true);
+    void sendFinishSolvingMessage(StalledIssuesCreator::IssuesCount count, bool sendMessage = true);
 
     void sendFixingIssuesMessage(int issue, int totalIssues);
 
@@ -189,28 +256,33 @@ private:
         std::function<bool(int)> solveFunc = nullptr;
         std::function<void ()> startFunc = nullptr;
         std::function<void (int, bool)> finishFunc = nullptr;
-        QString solveMessage;
     };
 
     void solveListOfIssues(const SolveListInfo& info);
-    void issueSolved(const StalledIssueVariant &issue);
+    bool issueSolvingFinished(const StalledIssue* issue);
+    bool issueSolvingFinished(StalledIssue* issue, bool wasSuccessful);
+    bool issueSolved(const StalledIssue* issue);
+    bool issueFailed(const StalledIssue* issue);
     
     StalledIssuesModel(const StalledIssuesModel&) = delete;
     void operator=(const StalledIssuesModel&) = delete;
     
     QThread* mStalledIssuesThread;
-    StalledIssuesReceiver* mStalledIssuedReceiver;
+    StalledIssuesReceiver* mStalledIssuesReceiver;
     std::atomic_bool mThreadFinished { false };
     mega::QTMegaRequestListener* mRequestListener;
     mega::QTMegaGlobalListener* mGlobalListener;
     mega::MegaApi* mMegaApi;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
+    bool mIsStalledChanged;
+    StalledIssuesCreator::IssuesCount mReceivedIssuesStats;
 
     mutable QReadWriteLock mModelMutex;
 
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
+    mutable StalledIssuesVariantList mFailedStalledIssues;
     mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 

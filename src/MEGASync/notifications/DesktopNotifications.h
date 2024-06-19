@@ -26,7 +26,21 @@ public:
         NEW_SHARED_NODES = 2,
         REMOVED_SHARED_NODES = 3
     };
+
+    struct NotificationInfo
+    {
+        QString title;
+        QString message;
+        QString imagePath;
+        QStringList actions;
+        std::function<void(DesktopAppNotificationBase::Action)> activatedFunction = nullptr;
+        NotificationInfo();
+
+        bool isValid(){return !title.isEmpty() && !message.isEmpty();}
+    };
+
     DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
+
     void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendAlert(mega::MegaUserAlert* alert);
     void requestFullName(mega::MegaUserAlert* alert, QString email);
@@ -40,6 +54,7 @@ public:
                                              const QString& destinationPath);
     void sendBusinessWarningNotification(int businessStatus) const;
     void sendInfoNotification(const QString& title, const QString& message) const;
+    void sendInfoNotification(const NotificationInfo& info) const;
     void sendWarningNotification(const QString& title, const QString& message) const;
     void sendErrorNotification(const QString& title, const QString& message) const;
 
@@ -75,7 +90,6 @@ private:
     DesktopAppNotification* CreateContactNotification(const QString& title,
                                                const QString& message,
                                                const QString& email, const QStringList &actions = QStringList());
-    void setActionsToNotification(DesktopAppNotification* notification, QStringList actions) const;
 
     std::unique_ptr<Notificator> mNotificator;
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;

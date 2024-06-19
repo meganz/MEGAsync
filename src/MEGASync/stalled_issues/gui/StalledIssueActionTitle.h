@@ -5,6 +5,7 @@
 #include <QMap>
 #include <QLabel>
 #include <QPointer>
+#include <QGraphicsOpacityEffect>
 
 #include <megaapi.h>
 
@@ -25,19 +26,20 @@ public:
     void removeBackgroundColor();
 
     void setHTML(const QString& title, const QPixmap& icon = QPixmap());
-    void setTitle(const QString& title, const QPixmap &icon = QPixmap());
+    void setTitle(const QString& title, const QPixmap& icon = QPixmap());
     QString title() const;
 
+    void setHyperLinkMode();
+
     void addActionButton(const QIcon& icon, const QString& text, int id, bool mainButton);
-    void hideActionButton(int id);
-    void setActionButtonInfo(const QIcon& icon, const QString& text, int id);
+    void setActionButtonVisibility(int id, bool state);
 
     virtual void showIcon();
-    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap());
+    void setMessage(const QString& message, const QPixmap& pixmap = QPixmap(), const QString& tooltip = QString());
 
-    QLabel* addExtraInfo(const QString& title, const QString& info, int level);
 
-    void setSolved(bool state);
+    void setFailed(bool state, const QString& errorTooltip);
+    void setDisable(bool state);
     bool isSolved() const;
 
     void setIsCloud(bool state);
@@ -45,8 +47,8 @@ public:
     void setInfo(const QString& newPath, mega::MegaHandle handle);
     void setHandle(mega::MegaHandle handle);
 
-    void updateLastTimeModified(const QDateTime &time);
-    void updateCreatedTime(const QDateTime &time);
+    void updateLastTimeModified(const QDateTime& time);
+    void updateCreatedTime(const QDateTime& time);
     bool updateUser(const QString& user, bool show);
     bool updateVersionsCount(int versions);
     void updateSize(int64_t size);
@@ -61,6 +63,7 @@ public:
         Versions,
         CRC
     };
+    void addExtraInfo(AttributeType type, const QString& title, const QString& info, int level);
     void hideAttribute(AttributeType type);
 
     void updateExtraInfoLayout();
@@ -86,6 +89,7 @@ private:
     void showAttribute(AttributeType type);
     void updateLabel(QLabel* label, const QString& text);
     QMap<AttributeType, QPointer<QLabel>> mUpdateLabels;
+    QMap<AttributeType, QPointer<QLabel>> mTitleLabels;
 };
 
 #endif // STALLEDISSUEACTIONTITLE_H

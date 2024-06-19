@@ -75,6 +75,9 @@ public:
 
     bool isSpinning() const;
 
+signals:
+    void needsUpdate();
+
 private slots:
     void rotate();
 

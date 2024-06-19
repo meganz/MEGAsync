@@ -39,7 +39,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
     {
-        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::toggleTab);
+        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::onTabToggled);
     }
 
     ui->allIssuesTab->setItsOn(true);
@@ -49,12 +49,13 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::updateLoadingMessage, ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::updateMessage, Qt::QueuedConnection);
-    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onStopPressed, this, [this](){
-        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues();
+    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onButtonPressed, this, [this](MessageInfo::ButtonType buttonType){
+        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(buttonType);
     });
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
+    connect(mDelegate, &StalledIssueDelegate::goToIssue, this, &StalledIssuesDialog::toggleTabAndScroll);
     connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneVisibilityChange);
 
     connect(ui->SettingsButton, &QPushButton::clicked, this, [](){
@@ -127,6 +128,14 @@ void StalledIssuesDialog::on_doneButton_clicked()
 void StalledIssuesDialog::on_refreshButton_clicked()
 {
     mProxyModel->updateStalledIssues();
+
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() == StalledIssueFilterCriterion::FAILED_CONFLICTS)
+        {
+            toggleTabAndScroll(StalledIssueFilterCriterion::ALL_ISSUES, QModelIndex());
+        }
+    }
 }
 
 void StalledIssuesDialog::checkIfViewIsEmpty()
@@ -138,7 +147,7 @@ void StalledIssuesDialog::checkIfViewIsEmpty()
     }
 }
 
-void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
+void StalledIssuesDialog::onTabToggled(StalledIssueFilterCriterion filterCriterion)
 {
   if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
   {
@@ -146,6 +155,52 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
       ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
       proxyModel->filter(filterCriterion);
   }
+}
+
+bool StalledIssuesDialog::toggleTabAndScroll(
+    StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex)
+{
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() != filterCriterion)
+        {
+            //Show the view to show the loading view
+            ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+            proxyModel->filter(filterCriterion);
+
+            auto tabs = ui->header->findChildren<StalledIssueTab*>();
+            auto foundTab = std::find_if(tabs.begin(),
+                tabs.end(),
+                [filterCriterion](const StalledIssueTab* tabToCheck)
+                { return tabToCheck->filterCriterion() == static_cast<int>(filterCriterion); });
+            if(foundTab != tabs.end())
+            {
+                (*foundTab)->toggleTab();
+            }
+
+            if(sourceIndex.isValid())
+            {
+                QObject* tempObject(new QObject());
+                connect(proxyModel,
+                    &StalledIssuesProxyModel::modelFiltered,
+                    tempObject,
+                    [this, proxyModel, tempObject, sourceIndex]()
+                    {
+                        auto proxyIndex(proxyModel->mapFromSource(sourceIndex));
+                        if(proxyIndex.isValid())
+                        {
+                            ui->stalledIssuesTree->scrollTo(sourceIndex);
+                            mDelegate->expandIssue(proxyIndex);
+                        }
+                        tempObject->deleteLater();
+                    });
+            }
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void StalledIssuesDialog::onUiBlocked()
@@ -205,6 +260,8 @@ void StalledIssuesDialog::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        MegaSyncApp->getStalledIssuesModel()->languageChanged();
+        ui->stalledIssuesTree->update();
     }
 
     QWidget::changeEvent(event);
