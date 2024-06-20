@@ -31,6 +31,30 @@
 /*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
 /*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
 
+#line
+{
+background-color: #f3f4f4; /*colorToken.surface-2*/
+border-style: none;
+}
+
+QProgressBar
+{
+height: 4px;
+min-height: 4px;
+max-height: 4px;
+border:0px;
+border-radius: 2px;
+background-color: #f3f4f4; /*colorToken.surface-2*/
+margin-bottom: 4px;
+}
+
+QProgressBar::chunk
+{
+background-color: #477EF7; /*colorToken.indicator-indigo*/
+border-radius: 2px;
+border:0px;
+}
+
 #wDetailedUsage QPushButton, #bVersionIcon
 {
 border-style: none;
@@ -137,12 +161,6 @@ font-size: 13px;
     qproperty-iconSize: 24px;
 }
 
-#lVersionIcon
-{
-    qproperty-icon : url(:/images/account_details/versions.png);
-	padding-left:4px;
-}
-
 #lLoading
 {
     border-radius: 16px;
@@ -167,13 +185,6 @@ font-size: 13px;
     min-height: 96px;
     max-width:440px;
     min-width:440px;
-}
-
-#lVersions
-{
-    color: #333333;
-    font-size: 13px;
-    padding-left: 8px;
 }
 
 #AccountDetailsDialog[loading=true]  #sHeader
@@ -635,7 +646,7 @@ font-size: 13px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>97</height>
+       <height>120</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -737,7 +748,7 @@ font-size: 13px;
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -842,7 +853,7 @@ font-size: 13px;
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_20">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_30">
@@ -947,7 +958,7 @@ font-size: 13px;
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1074,6 +1085,18 @@ font-size: 13px;
       </item>
       <item>
        <widget class="Line" name="line">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
