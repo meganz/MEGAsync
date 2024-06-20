@@ -13,7 +13,7 @@ constexpr int MAX_COST = 16;
 
 using namespace mega;
 
-AlertModel::AlertModel(MegaUserAlertList* alerts, bool copy, QObject* parent)
+AlertModel::AlertModel(MegaUserAlertList* alerts, QObject* parent)
     : QAbstractItemModel(parent)
 {
     for(int i = 0; i < ALERT_ALL; i++)
@@ -23,7 +23,7 @@ AlertModel::AlertModel(MegaUserAlertList* alerts, bool copy, QObject* parent)
     }
 
     alertItems.setMaxCost(MAX_COST);
-    insertAlerts(alerts, copy);
+    insertAlerts(alerts);
 }
 
 void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)

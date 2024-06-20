@@ -38,7 +38,7 @@ private:
     std::unique_ptr<NotificationAlertProxyModel> mAlertsProxyModel;
     std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
 
-    void populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired);
+    void populateUserAlerts(mega::MegaUserAlertList* alertList);
 
 };
 

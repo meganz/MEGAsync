@@ -111,11 +111,11 @@ QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifica
     return unseenNotifications;
 }
 
-void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts, bool copy)
+void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
 {
     if (mAlertsModel)
     {
-        mAlertsModel->insertAlerts(alerts, copy);
+        mAlertsModel->insertAlerts(alerts, true);
     }
 }
 

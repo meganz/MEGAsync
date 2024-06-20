@@ -21,7 +21,7 @@ public:
 
     bool hasAlerts();
     bool hasAlertsOfType(int type);
-    void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
+    void insertAlerts(mega::MegaUserAlertList* alerts);
     QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
 
 private slots:

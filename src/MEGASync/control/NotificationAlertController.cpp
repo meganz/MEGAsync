@@ -12,7 +12,7 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
-void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList, bool copyRequired)
+void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList)
 {
     if (!alertList)
     {
@@ -23,11 +23,11 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
 
     if (mNotificationAlertModel)
     {
-        mNotificationAlertModel->insertAlerts(alertList, copyRequired);
+        mNotificationAlertModel->insertAlerts(alertList);
     }
     else
     {
-        AlertModel* alertsModel = new AlertModel(alertList, copyRequired, this);
+        AlertModel* alertsModel = new AlertModel(alertList, this);
         AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, this);
 
         NotificationModel* notificationsModel = new NotificationModel(this);
@@ -44,12 +44,6 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     }
 
     emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());
-
-    if (!copyRequired)
-    {
-        alertList->clear(); //empty the list otherwise they will be deleted
-        delete alertList;
-    }
 }
 
 void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
@@ -64,7 +58,7 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
     if (list != nullptr)
     {
         // Process synchronously if list is provided
-        populateUserAlerts(list, true);
+        populateUserAlerts(list);
     }
     else
     {
@@ -77,7 +71,9 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
             // Queue the processing back to the main thread
             Utilities::queueFunctionInAppThread([this, alertList]()
             {
-                populateUserAlerts(alertList, false);
+                populateUserAlerts(alertList);
+                alertList->clear();
+                delete alertList;
             });
         });
     }

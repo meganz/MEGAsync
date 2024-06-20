@@ -25,7 +25,7 @@ public:
         ALERT_ALL //this must be the last on the enum
     };
 
-    explicit AlertModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject* parent = 0);
+    explicit AlertModel(mega::MegaUserAlertList* alerts, QObject* parent = 0);
     virtual ~AlertModel();
 
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
