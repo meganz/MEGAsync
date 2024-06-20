@@ -19,11 +19,10 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
 
-    AlertModel* alertsModel() const;
     bool hasAlerts();
     bool hasAlertsOfType(int type);
-    QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
     void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
+    QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
 
 private slots:
     void onDataChanged(const QModelIndex& topLeft,
@@ -31,8 +30,8 @@ private slots:
                        const QVector<int>& roles = QVector<int>());
 
 private:
-    NotificationModel* mNotificationsModel;
-    AlertModel* mAlertsModel;
+    std::unique_ptr<NotificationModel> mNotificationsModel;
+    std::unique_ptr<AlertModel> mAlertsModel;
 
 };
 

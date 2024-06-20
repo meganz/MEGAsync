@@ -6,11 +6,11 @@ NotificationAlertModel::NotificationAlertModel(NotificationModel* notificationsM
                                                AlertModel* alertsModel,
                                                QObject* parent)
     : QAbstractItemModel(parent)
-    , mNotificationsModel(notificationsModel)
-    , mAlertsModel(alertsModel)
+    , mNotificationsModel(std::unique_ptr<NotificationModel>(notificationsModel))
+    , mAlertsModel(std::unique_ptr<AlertModel>(alertsModel))
 {
-    connect(mNotificationsModel, &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
-    connect(mAlertsModel, &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
+    connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
+    connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
 }
 
 QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex& parent) const
@@ -87,11 +87,6 @@ QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
         }
     }
     return result;
-}
-
-AlertModel* NotificationAlertModel::alertsModel() const
-{
-    return mAlertsModel;
 }
 
 bool NotificationAlertModel::hasAlerts()

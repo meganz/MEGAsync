@@ -34,6 +34,7 @@ NotificationModel::NotificationModel(QObject *parent)
 
 NotificationModel::~NotificationModel()
 {
+    qDeleteAll(mNotifMap);
 }
 
 QModelIndex NotificationModel::index(int row, int column, const QModelIndex &parent) const

@@ -19,8 +19,8 @@ public:
     bool helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 
 private:
-    NotificationDelegate* mNotificationsDelegate;
-    AlertDelegate* mAlertsDelegate;
+    std::unique_ptr<NotificationDelegate> mNotificationsDelegate;
+    std::unique_ptr<AlertDelegate> mAlertsDelegate;
 
 };
 

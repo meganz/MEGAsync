@@ -9,8 +9,8 @@ NotificationAlertDelegate::NotificationAlertDelegate(NotificationDelegate* notif
                                                      AlertDelegate* alertsDelegate,
                                                      QObject* parent)
     : QStyledItemDelegate(parent)
-    , mNotificationsDelegate(notificationsDelegate)
-    , mAlertsDelegate(alertsDelegate)
+    , mNotificationsDelegate(std::unique_ptr<NotificationDelegate>(notificationsDelegate))
+    , mAlertsDelegate(std::unique_ptr<AlertDelegate>(alertsDelegate))
 {
 }
 

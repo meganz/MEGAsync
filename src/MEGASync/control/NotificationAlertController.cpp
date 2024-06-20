@@ -61,27 +61,25 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
         return;
     }
 
-    // if we have a list, we don't need to query megaApi for it and block the sdk mutex, we do this
-    // synchronously, since we are not copying the list, and we need to process it before it goes out of scope.
-    bool doSynchronously{list != NULL};
-
-    if (doSynchronously)
+    if (list != nullptr)
     {
+        // Process synchronously if list is provided
         populateUserAlerts(list, true);
     }
     else
     {
-        auto funcToThreadPool = [this]()
-        { //thread pool function
-            mega::MegaUserAlertList* theList;
-            theList = mMegaApi->getUserAlerts();
-            //queued function
-            Utilities::queueFunctionInAppThread([this, theList]()
+        // Process asynchronously if list is not provided
+        ThreadPoolSingleton::getInstance()->push([this]()
+        {
+            // Retrieve the alerts in a separate thread
+            mega::MegaUserAlertList* alertList = mMegaApi->getUserAlerts();
+
+            // Queue the processing back to the main thread
+            Utilities::queueFunctionInAppThread([this, alertList]()
             {
-                populateUserAlerts(theList, false);
+                populateUserAlerts(alertList, false);
             });
-        }; // end of thread pool function
-        ThreadPoolSingleton::getInstance()->push(funcToThreadPool);
+        });
     }
 }
 
