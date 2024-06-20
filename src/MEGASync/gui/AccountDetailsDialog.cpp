@@ -28,9 +28,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     // Set transfer quota progress bar color to blue
     mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
 
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/images/account_details/versions.png"));
-    mUi->lVersionIcon->setPixmap(icon.pixmap(24, 24));
     // Get fresh data
     refresh();
 

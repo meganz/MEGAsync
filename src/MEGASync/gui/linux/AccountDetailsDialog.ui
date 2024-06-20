@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>440</width>
-    <height>314</height>
+    <height>397</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,29 @@
    <iconset theme="mega"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#AccountDetailsDialog
+   <string notr="true">/*ColorTokenIcon;Button;bCloudDrive;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bCloudDrive;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
+
+#wDetailedUsage QPushButton, #bVersionIcon
+{
+border-style: none;
+background-color: transparent;
+padding-left: 10px;
+padding-right: 10px;
+height: 22px;
+color: transparent;
+font-weight: bold;
+}
+
+#AccountDetailsDialog
 {
     border-radius: 0 0 4px 4px;
 }
@@ -33,18 +55,6 @@ background-color: transparent;
 color: #303233; /*colorToken.text-primary*/
 font-size: 13px;
 }
-
-/*ColorTokenIcon;Button;bCloudDrive;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bCloudDrive;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bVault;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bVault;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bRubbish;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bRubbish;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bAvailable;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bAvailable;normal;off;colorToken.icon-secondary*/
 
 #sHeader
 {
@@ -122,13 +132,6 @@ font-size: 13px;
   font-size: 13px;
 }
 
-
-#wDetailedUsage QPushButton
-{
-    border-radius: 8px;
-    background-color: #EEEEEE;
-}
-
 #bCloudDrive, #bVault, #bRubbish
 {
     qproperty-iconSize: 24px;
@@ -164,40 +167,6 @@ font-size: 13px;
     min-height: 96px;
     max-width:440px;
     min-width:440px;
-}
-
-QProgressBar
-{
-    height: 4px;
-    min-height: 4px;
-    max-height: 4px;
-    border:0px;
-    border-radius: 2px;
-    background-color: #EEEEEE;
-    margin-bottom: 4px;
-}
-
-QProgressBar::chunk
-{
-  background-color: #6FD7FF;
-  border-radius: 2px;
-  border:0px;
-}
-
-#wSizeVersions
-{
-    background-color: #F2F2F2;
-    border-radius: 8px;
-    margin-left: 24px;
-    margin-right: 23px;
-    margin-bottom: 26px;
-    height: 32px;
-    max-height: 32px;
-    min-height: 32px;
-    border-top: 2px inset #ECECEC;
-    border-left: 1px inset #ECECEC;
-    border-right: 1px inset #ECECEC;
-    border-bottom: 1px inset #ECECEC;
 }
 
 #lVersions
@@ -663,27 +632,27 @@ QProgressBar::chunk
    </item>
    <item>
     <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>97</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="wDetailedUsageLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>8</number>
+       <number>17</number>
       </property>
       <property name="leftMargin">
-       <number>24</number>
-      </property>
-      <property name="topMargin">
-       <number>24</number>
+       <number>23</number>
       </property>
       <property name="rightMargin">
-       <number>24</number>
-      </property>
-      <property name="bottomMargin">
-       <number>24</number>
+       <number>9</number>
       </property>
       <item>
        <widget class="QWidget" name="wCloudDrive" native="true">
@@ -723,6 +692,9 @@ QProgressBar::chunk
          </property>
          <item>
           <widget class="QPushButton" name="bCloudDrive">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -742,14 +714,23 @@ QProgressBar::chunk
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/account_details/Cloud_Drive_24_ico.png</normaloff>:/images/account_details/Cloud_Drive_24_ico.png</iconset>
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
              <width>24</width>
              <height>24</height>
             </size>
+           </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -847,8 +828,8 @@ QProgressBar::chunk
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/Backups_24_ico.png</normaloff>:/images/Backups_24_ico.png</iconset>
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/database.svg</normaloff>:/images/account_details/database.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -952,8 +933,8 @@ QProgressBar::chunk
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/account_details/Bin_24_ico.png</normaloff>:/images/account_details/Bin_24_ico.png</iconset>
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/trash.svg</normaloff>:/images/account_details/trash.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1057,8 +1038,8 @@ QProgressBar::chunk
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/account_details/available_storage.png</normaloff>:/images/account_details/available_storage.png</iconset>
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/pie.svg</normaloff>:/images/account_details/pie.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -1091,31 +1072,60 @@ QProgressBar::chunk
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wSizeVersions" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <property name="spacing">
-       <number>0</number>
-      </property>
       <property name="leftMargin">
-       <number>24</number>
+       <number>25</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>11</number>
       </property>
       <property name="rightMargin">
-       <number>24</number>
+       <number>7</number>
       </property>
       <property name="bottomMargin">
-       <number>26</number>
+       <number>17</number>
       </property>
       <item>
-       <widget class="QLabel" name="lVersionIcon">
-        <property name="text">
-         <string/>
+       <widget class="QPushButton" name="bVersionIcon">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/account_details/versions.svg</normaloff>:/images/account_details/versions.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -1152,7 +1162,7 @@ QProgressBar::chunk
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
