@@ -49,6 +49,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
 QHeaderView
@@ -85,7 +86,7 @@ padding: 1px 1px 1px 5px;
 
 QComboBox::on
 {
-padding: 0px 0px 0px 0px;
+padding: 1px 1px 1px 5px;
 }
 
 QComboBox::down-arrow
@@ -106,7 +107,7 @@ QComboBox QAbstractItemView
 {
 border: 2px solid #04101E; /*colorToken.button-outline*/
 border-radius: 4px;
-background-color: transparent;
+background-color:  #fafafa; /* colorToken.surface-1*/
 }
 
 QRadioButton::indicator::unchecked
@@ -186,6 +187,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
 QLabel
