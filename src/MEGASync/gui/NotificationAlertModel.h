@@ -3,7 +3,6 @@
 
 #include "NotificationModel.h"
 #include "AlertModel.h"
-#include "NotificationAlertProxyModel.h"
 
 class NotificationAlertModel : public QAbstractItemModel
 {
@@ -14,11 +13,11 @@ public:
                            AlertModel* alertsModel,
                            QObject* parent = nullptr);
 
-    QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
-    QModelIndex parent(const QModelIndex &index) const override;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    QVariant data(const QModelIndex &index, int role) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& index) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role) const override;
 
     AlertModel* alertsModel() const;
     bool hasAlerts();
@@ -27,9 +26,9 @@ public:
     void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
 
 private slots:
-    void onDataChanged(const QModelIndex &topLeft,
-                       const QModelIndex &bottomRight,
-                       const QVector<int> &roles = QVector<int>());
+    void onDataChanged(const QModelIndex& topLeft,
+                       const QModelIndex& bottomRight,
+                       const QVector<int>& roles = QVector<int>());
 
 private:
     NotificationModel* mNotificationsModel;

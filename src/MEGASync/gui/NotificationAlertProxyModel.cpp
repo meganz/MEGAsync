@@ -1,6 +1,6 @@
 #include "NotificationAlertProxyModel.h"
 
-#include "NotificationAlertModel.h"
+#include "MegaUserAlertExt.h"
 
 #include "megaapi.h"
 
@@ -55,33 +55,33 @@ const std::map<AlertType, std::vector<int>> MEGAUSER_ALERTS_BY_TYPE
 };
 }
 
-NotificationAlertProxyModel::NotificationAlertProxyModel(QObject *parent)
+NotificationAlertProxyModel::NotificationAlertProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
-    , actualFilter(AlertType::ALL)
+    , mActualFilter(AlertType::ALL)
 {
 }
 
 AlertType NotificationAlertProxyModel::filterAlertType()
 {
-    return actualFilter;
+    return mActualFilter;
 }
 
 void NotificationAlertProxyModel::setFilterAlertType(AlertType filterType)
 {
-    actualFilter = filterType;
+    mActualFilter = filterType;
     invalidateFilter();
 }
 
 bool NotificationAlertProxyModel::checkFilterType(int sdkType) const
 {
     bool success = false;
-    if(actualFilter == AlertType::ALL)
+    if(mActualFilter == AlertType::ALL)
     {
         success = true;
     }
     else
     {
-        auto it = MEGAUSER_ALERTS_BY_TYPE.find(actualFilter);
+        auto it = MEGAUSER_ALERTS_BY_TYPE.find(mActualFilter);
         if (it != MEGAUSER_ALERTS_BY_TYPE.end())
         {
             success = std::find(it->second.begin(), it->second.end(), sdkType) != it->second.end();
@@ -90,7 +90,7 @@ bool NotificationAlertProxyModel::checkFilterType(int sdkType) const
     return success;
 }
 
-bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
+bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceParent) const
 {
     bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
@@ -112,7 +112,8 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex &s
             }
             default:
             {
-                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type (filterAcceptsRow).");
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                                   "Invalid notification item type (filterAcceptsRow).");
                 break;
             }
         }
@@ -120,22 +121,25 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex &s
     return filter;
 }
 
-bool NotificationAlertProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const
+bool NotificationAlertProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
     NotificationAlertModelItem* leftItem = static_cast<NotificationAlertModelItem*>(left.internalPointer());
     NotificationAlertModelItem* rightItem = static_cast<NotificationAlertModelItem*>(right.internalPointer());
 
     bool isLess;
     // If the types are different, prioritise notifications over alerts
-    if (leftItem->type == NotificationAlertModelItem::NOTIFICATION && rightItem->type == NotificationAlertModelItem::ALERT)
+    if (leftItem->type == NotificationAlertModelItem::NOTIFICATION
+        && rightItem->type == NotificationAlertModelItem::ALERT)
     {
         isLess = true;
     }
-    else if (leftItem->type == NotificationAlertModelItem::ALERT && rightItem->type == NotificationAlertModelItem::NOTIFICATION)
+    else if (leftItem->type == NotificationAlertModelItem::ALERT
+               && rightItem->type == NotificationAlertModelItem::NOTIFICATION)
     {
         isLess = false;
     }
-    else if (leftItem->type == NotificationAlertModelItem::ALERT && rightItem->type == NotificationAlertModelItem::ALERT)
+    else if (leftItem->type == NotificationAlertModelItem::ALERT
+               && rightItem->type == NotificationAlertModelItem::ALERT)
     {
         // If both are of type alert, order by date
         QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();

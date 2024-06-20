@@ -15,6 +15,12 @@
 
 #include <cassert>
 
+namespace
+{
+constexpr int DEFAULT_WIDTH = 400;
+constexpr int DEFAULT_HEIGHT = 122;
+}
+
 using namespace mega;
 
 AlertDelegate::AlertDelegate(AlertModel* model, QObject* parent)
@@ -23,7 +29,7 @@ AlertDelegate::AlertDelegate(AlertModel* model, QObject* parent)
 {
 }
 
-void AlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid())
     {
@@ -35,7 +41,7 @@ void AlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
             return;
         }
 
-        MegaUserAlertExt* alert = alert = static_cast<MegaUserAlertExt*>(item->pointer);
+        MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
         if (!alert)
         {
             assert(false || "No alert found");
@@ -66,11 +72,11 @@ void AlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     }
 }
 
-QSize AlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize AlertDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid())
     {
-        return QSize(400, 122);
+        return QSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
     else
     {
@@ -78,7 +84,7 @@ QSize AlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIn
     }
 }
 
-bool AlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool AlertDelegate::editorEvent(QEvent* event, QAbstractItemModel *model, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
     if (!index.isValid())
     {
@@ -100,62 +106,61 @@ bool AlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const 
             return true;
         }
 
-        MegaApi *api = ((MegaApplication*)qApp)->getMegaApi();
+        MegaApi* api = MegaSyncApp->getMegaApi();
 
         switch (alert->getType())
         {
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+            {
+                bool found = false;
+                std::unique_ptr<MegaContactRequestList> icr(api->getIncomingContactRequests());
+                if (icr)
                 {
-                    bool found = false;
-                    std::unique_ptr<MegaContactRequestList> icr(api->getIncomingContactRequests());
-                    if (icr)
+                    for (int i = 0; i < icr->size(); i++)
                     {
-                        for (int i = 0; i < icr->size(); i++)
+                        MegaContactRequest* request = icr->get(i);
+                        if (!request)
                         {
-                            MegaContactRequest *request = icr->get(i);
-                            if (!request)
-                            {
-                                continue;
-                            }
+                            continue;
+                        }
 
-                            const char* email = request->getSourceEmail();
-                            if (alert->getEmail().toStdString().c_str() == email)
-                            {
-                                found = true;
-                                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
-                                break;
-                            }
+                        const char* email = request->getSourceEmail();
+                        if (alert->getEmail().toStdString().c_str() == email)
+                        {
+                            found = true;
+                            Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                            break;
                         }
                     }
-
-                    if (!found)
-                    {
-                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
-                    }
-
-                    break;
                 }
 
+                if (!found)
+                {
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                }
+
+                break;
+            }
             case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+            {
+
+                MegaUser* user = api->getContact(alert->getEmail().toStdString().c_str());
+                if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
                 {
-
-                    MegaUser *user = api->getContact(alert->getEmail().toStdString().c_str());
-                    if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
-                    {
-                        Utilities::openUrl(
-                                          QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(api->userHandleToBase64(user->getHandle())))));
-                        delete user;
-                    }
-                    else
-                    {
-                        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
-                    }
-
-                    break;
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
+                                            .arg(QString::fromUtf8(api->userHandleToBase64(user->getHandle())))));
+                    delete user;
                 }
+                else
+                {
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                }
+
+                break;
+            }
             case MegaUserAlert::TYPE_NEWSHARE:
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
@@ -164,36 +169,34 @@ bool AlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const 
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
             // Disabled case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
             // due to alert node is always NULL. If this behaviour changes, adapt to include update case
-
+            {
+                MegaNode* node = api->getNodeByHandle(alert->getNodeHandle());
+                if (node)
                 {
-                    MegaNode *node = api->getNodeByHandle(alert->getNodeHandle());
-                    if (node)
-                    {
-                        Utilities::openUrl(
-                                          QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(node->getBase64Handle()))));
-                        delete node;
-                    }
-
-                    break;
+                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
+                                            .arg(QString::fromUtf8(node->getBase64Handle()))));
+                    delete node;
                 }
 
+                break;
+            }
             case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
             case MegaUserAlert::TYPE_PAYMENT_FAILED:
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
-                {
-                    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
-                    break;
-                }
-
-            default:
+            {
+                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
                 break;
-
+            }
+            default:
+            {
+                break;
+            }
         }
     }
     return QAbstractItemDelegate::editorEvent(event, model, option, index);
 }
 
-bool AlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool AlertDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index)
 {
     if (!index.isValid())
     {
@@ -215,7 +218,7 @@ bool AlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const 
             return QStyledItemDelegate::helpEvent(event, view, option, index);
         }
 
-        AlertItem *ti = mAlertsModel->alertItems[alert->getId()];
+        AlertItem* ti = mAlertsModel->alertItems[alert->getId()];
         if (!ti)
         {
             return QStyledItemDelegate::helpEvent(event, view, option, index);

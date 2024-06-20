@@ -1,12 +1,12 @@
 #ifndef NOTIFICATIONALERTCONTROLLER_H
 #define NOTIFICATIONALERTCONTROLLER_H
 
-#include "NotificationDelegate.h"
 #include "NotificationAlertModel.h"
 #include "NotificationAlertDelegate.h"
+#include "NotificationAlertProxyModel.h"
 
 #include "megaapi.h"
-#include "mega/bindings/qt/QTMegaGlobalListener.h"
+#include "QTMegaGlobalListener.h"
 
 #include <QMap>
 
@@ -15,10 +15,10 @@ class NotificationAlertController : public QObject, public mega::MegaGlobalListe
     Q_OBJECT
 
 public:
-    explicit NotificationAlertController(QObject *parent = nullptr);
+    explicit NotificationAlertController(QObject* parent = nullptr);
     virtual ~NotificationAlertController() = default;
 
-    void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
+    void onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList *list) override;
 
     void reset();
     bool alertsAreFiltered();
@@ -34,7 +34,6 @@ signals:
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
-
     std::unique_ptr<NotificationAlertModel> mNotificationAlertModel;
     std::unique_ptr<NotificationAlertProxyModel> mAlertsProxyModel;
     std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;

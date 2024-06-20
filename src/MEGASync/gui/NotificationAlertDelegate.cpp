@@ -1,6 +1,9 @@
 #include "NotificationAlertDelegate.h"
 
 #include "NotificationAlertModel.h"
+#include "NotificationAlertTypes.h"
+
+#include <QSortFilterProxyModel>
 
 NotificationAlertDelegate::NotificationAlertDelegate(NotificationDelegate* notificationsDelegate,
                                                      AlertDelegate* alertsDelegate,
@@ -31,7 +34,8 @@ void NotificationAlertDelegate::paint(QPainter* painter,
         }
         default:
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type in delegate (paint).");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Invalid notification item type in delegate (paint).");
             break;
         }
     }
@@ -57,7 +61,8 @@ QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
         }
         default:
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type in delegate (sizeHint).");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Invalid notification item type in delegate (sizeHint).");
             break;
         }
     }
@@ -85,7 +90,8 @@ bool NotificationAlertDelegate::editorEvent(QEvent* event,
         }
         default:
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type in delegate (editorEvent).");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Invalid notification item type in delegate (editorEvent).");
             break;
         }
     }
@@ -113,7 +119,8 @@ bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
         }
         default:
         {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid notification item type in delegate (helpEvent).");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                               "Invalid notification item type in delegate (helpEvent).");
             break;
         }
     }

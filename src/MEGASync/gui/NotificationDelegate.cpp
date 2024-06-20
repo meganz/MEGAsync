@@ -1,8 +1,10 @@
 #include "NotificationDelegate.h"
 
 #include "NotificationAlertModel.h"
+#include "NotificationAlertTypes.h"
 
 #include <QPainter>
+#include <QSortFilterProxyModel>
 
 namespace
 {
@@ -11,13 +13,13 @@ constexpr int HEIGHT_WITHOUT_IMAGE = 219;
 constexpr int HEIGHT_WITH_IMAGE = 346;
 }
 
-NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject *parent)
+NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject* parent)
     : QStyledItemDelegate(parent)
     , mNotificationModel(notificationModel)
 {
 }
 
-void NotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid())
     {
@@ -48,9 +50,7 @@ void NotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         painter->save();
         painter->translate(option.rect.topLeft());
-
         notifItem->resize(option.rect.width(), option.rect.height());
-
         notifItem->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
@@ -60,7 +60,7 @@ void NotificationDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
     }
 }
 
-QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
+QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (!index.isValid())
     {

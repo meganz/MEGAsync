@@ -10,10 +10,10 @@ class NotificationDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 public:
-    NotificationDelegate(NotificationModel* notificationModel, QObject *parent = 0);
+    NotificationDelegate(NotificationModel* notificationModel, QObject* parent = 0);
 
-    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const;
+    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
 private:
     NotificationModel* mNotificationModel;

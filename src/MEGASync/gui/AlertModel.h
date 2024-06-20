@@ -4,9 +4,6 @@
 #include "AlertItem.h"
 #include "MegaUserAlertExt.h"
 
-#include <megaapi.h>
-#include <mega/bindings/qt/QTMegaGlobalListener.h>
-
 #include <QCache>
 #include <QAbstractItemModel>
 
@@ -28,34 +25,31 @@ public:
         ALERT_ALL //this must be the last on the enum
     };
 
-    explicit AlertModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
+    explicit AlertModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject* parent = 0);
     virtual ~AlertModel();
 
-    QModelIndex index(int row, int column,
-                      const QModelIndex &parent = QModelIndex()) const override;
-    QModelIndex parent(const QModelIndex &index) const override;
+    QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
+    QModelIndex parent(const QModelIndex& index) const override;
+    int columnCount(const QModelIndex& parent = QModelIndex()) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
-
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    void refreshAlerts();
+    void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
+    void refreshAlertItem(unsigned id);
+    bool existsNotifications(int type) const;
+    QMap<AlertType, long long> getUnseenNotifications() const;
 
     QCache<int, AlertItem> alertItems;
 
-    void refreshAlerts();
-    void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
-
-    QMap<AlertType, long long> getUnseenNotifications() const;
-    bool existsNotifications(int type) const;
-    void refreshAlertItem(unsigned item);
-
 private:
+    QMap<int, MegaUserAlertExt*> mAlertsMap;
+    std::deque<unsigned int> mAlertOrder;
+    std::array<int, ALERT_ALL> mUnSeenNotifications;
+    std::array<bool, ALERT_ALL> mHasNotificationsOfType;
+
     int checkAlertType(int alertType) const;
 
-    QMap<int, MegaUserAlertExt*> alertsMap;
-    std::deque<unsigned int> alertOrder;
-    std::array<int, ALERT_ALL> unSeenNotifications;
-    std::array<bool, ALERT_ALL> hasNotificationsOfType;
 };
 
 #endif // ALERTMODEL_H
