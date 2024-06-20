@@ -25,15 +25,15 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
-#include "control/Preferences/Preferences.h"
-#include "control/HTTPServer.h"
-#include "control/MegaUploader.h"
-#include "control/MegaDownloader.h"
-#include "control/UpdateTask.h"
-#include "control/MegaSyncLogger.h"
-#include "control/ThreadPool.h"
-#include "control/Utilities.h"
-#include "control/SetManager.h"
+#include "Preferences.h"
+#include "HTTPServer.h"
+#include "MegaUploader.h"
+#include "MegaDownloader.h"
+#include "UpdateTask.h"
+#include "MegaSyncLogger.h"
+#include "ThreadPool.h"
+#include "Utilities.h"
+#include "SetManager.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
@@ -141,6 +141,7 @@ public:
 
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showInfoMessage(DesktopNotifications::NotificationInfo info);
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());

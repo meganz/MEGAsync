@@ -56,6 +56,7 @@ public:
         SI_CHANGE_TO_SMART_MODE,
         SI_CHANGE_TO_ADVANCED_MODE,
         SI_FINGERPRINT_MISSING_SOLVED_MANUALLY,
+        SI_MOVERENAME_CANNOT_OCCUR_SOLVED_MANUALLY,
         DAILY_ACTIVE_USER,
         MONTHLY_ACTIVE_USER,
         LOGIN_CLICKED,
@@ -101,6 +102,7 @@ public:
 private:
     static QMap<EventType, int> mTypeMap;
     static QMap<EventType, const char*> mMessageMap;
+
 };
 
 #endif // APPSTATSEVENTS_H

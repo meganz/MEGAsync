@@ -20,8 +20,9 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
     mSymLinksIgnoredInSyncs.clear();
 }
 
-bool IgnoredStalledIssue::isSolvable() const
+bool IgnoredStalledIssue::isAutoSolvable() const
 {
+    //Always autosolvable, we don´t need to check if smart mode is active
     return !isSolved() &&
            !syncIds().isEmpty() &&
            isSpecialLink();
@@ -45,9 +46,12 @@ bool IgnoredStalledIssue::isSpecialLink() const
 
 bool IgnoredStalledIssue::autoSolveIssue()
 {
+    setAutoResolutionApplied(true);
+    auto result(false);
+
     if(!syncIds().isEmpty())
     {
-        auto syncId(syncIds().first());
+        auto syncId(firstSyncId());
         //We could do it without this static list
         //as the MegaIgnoreManager checks if the rule already exists
         //but with the list we save the megaignore parser, so it is more efficient
@@ -77,23 +81,10 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 auto changesApplied(ignoreManager.applyChanges());
                 if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
-                    setIsSolved(false);
+                    result = true;
                 }
                 else
                 {
-                    Utilities::queueFunctionInAppThread([]()
-                    {
-                        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-                        QMegaMessageBox::MessageBoxInfo msgInfo;
-                        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                        msgInfo.title = MegaSyncApp->getMEGAString();
-                        msgInfo.textFormat = Qt::RichText;
-                        msgInfo.buttons = QMessageBox::Ok;
-                        msgInfo.text = QCoreApplication::translate("IgnoredStalledIssue", "We could not update the megaignore file. Please, check if it has write permissions.");
-                        QMegaMessageBox::warning(msgInfo);
-                    });
-
                     if(isSymLink())
                     {
                         mSymLinksIgnoredInSyncs.remove(syncId);
@@ -104,9 +95,9 @@ bool IgnoredStalledIssue::autoSolveIssue()
         //Only done for sym links
         else if(mSymLinksIgnoredInSyncs.value(syncId) == true)
         {
-            setIsSolved(false);
+            result = true;
         }
     }
 
-    return isSolved();
+    return result;
 }

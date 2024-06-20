@@ -3,7 +3,6 @@
 #include <QCheckBox>
 
 #include <Utilities.h>
-#include "control/Preferences/Preferences.h"
 #include <MegaApplication.h>
 #include "TextDecorator.h"
 
@@ -24,44 +23,10 @@
     #include "limits.h"
 #endif
 
-namespace
-{
-Text::Bold boldTextDecorator;
-const Text::Decorator textDecorator(&boldTextDecorator);
-}
-
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     :QObject(header)
 {
     header->setData(this);
-}
-
-//Issue checker
-bool HeaderCaseIssueChecker::checkIssue(StalledIssueHeader *header, bool isSingleSelection)
-{
-    if(isSingleSelection && MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(header->getCurrentIndex()))
-    {
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok;
-        QMap<QMessageBox::StandardButton, QString> buttonsText;
-        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-        msgInfo.buttonsText = buttonsText;
-        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-        msgInfo.finishFunc = [](QPointer<QMessageBox>){
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        };
-        QMegaMessageBox::warning(msgInfo);
-
-        header->updateSizeHint();
-        return true;
-    }
-
-    return false;
 }
 
 //Local folder not scannable
@@ -72,7 +37,7 @@ DefaultHeader::DefaultHeader(StalledIssueHeader* header)
 void DefaultHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Error detected with [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Reason not found."));
 }
@@ -91,7 +56,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
 
-    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    if(header->checkForExternalChanges(selection.size() == 1))
     {
         return;
     }
@@ -160,7 +125,7 @@ void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* hea
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Detected sym link: [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
     header->setIsExpandable(false);
@@ -192,7 +157,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     auto selection = dialog->getDialog()->getSelection(fingerprintMissingChecker);
 
-    if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+    if(header->checkForExternalChanges(selection.size() == 1))
     {
         return;
     }
@@ -218,7 +183,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
         QString informativeMessage = QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber) + QString::fromUtf8("</br>");
-        textDecorator.process(informativeMessage);
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
         msgInfo.informativeText.append(informativeMessage);
     }
 
@@ -239,7 +204,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
 void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText =tr("Can´t download [B]%1[/B] to the selected location");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
     header->setIsExpandable(false);
@@ -261,7 +226,7 @@ FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
 void FileIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText =tr("Can´t sync [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     if(header->getData().consultData()->filesCount() > 0)
     {
@@ -280,35 +245,16 @@ MoveOrRenameCannotOccurHeader::MoveOrRenameCannotOccurHeader(StalledIssueHeader*
 
 void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    QString headerText = tr("Cannot move or rename [B]%1[/B]");
-    textDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName()));
-    if (header->getData().consultData()->mDetectedMEGASide)
+    if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        header->setTitleDescriptionText(tr("A move or rename was detected in MEGA, but could not be replicated in the local filesystem."));
-    }
-    else
-    {
-        header->setTitleDescriptionText(tr("A move or rename was detected in the local filesystem, but could not be replicated in MEGA."));
-    }
-}
+        QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]")
+                                 .arg(moveOrRenameIssue->syncName());
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
+        header->setText(headerText);
 
-void MoveOrRenameCannotOccurHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolvable())
-    {
-        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
+        header->setTitleDescriptionText(
+            tr("The local and remote locations have changed at the same time"));
     }
-}
-
-void MoveOrRenameCannotOccurHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader *header, int)
-{    
-    if(HeaderCaseIssueChecker::checkIssue(header, true))
-    {
-        return;
-    }
-
-    MegaSyncApp->getStalledIssuesModel()->fixMoveOrRenameCannotOccur(header->getCurrentIndex());
 }
 
 //Delete or Move Waiting onScanning
@@ -319,7 +265,7 @@ DeleteOrMoveWaitingOnScanningHeader::DeleteOrMoveWaitingOnScanningHeader(Stalled
 void DeleteOrMoveWaitingOnScanningHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t find [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting to finish scan to see if the file was moved or deleted."));
 }
@@ -332,7 +278,7 @@ DeleteWaitingOnMovesHeader::DeleteWaitingOnMovesHeader(StalledIssueHeader* heade
 void DeleteWaitingOnMovesHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Waiting to move [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Waiting for other processes to complete."));
 }
@@ -346,7 +292,7 @@ UploadIssueHeader::UploadIssueHeader(StalledIssueHeader* header)
 void UploadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t upload [B]%1[/B] to the selected location");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot reach the destination folder."));
 }
@@ -360,7 +306,7 @@ DownloadIssueHeader::DownloadIssueHeader(StalledIssueHeader* header)
 void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t download [B]%1[/B] to the selected location");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName(true)));
     header->setTitleDescriptionText(tr("A failure occurred either downloading the file, or moving the downloaded temporary file to its final name and location."));
 }
@@ -373,7 +319,7 @@ CannotCreateFolderHeader::CannotCreateFolderHeader(StalledIssueHeader* header)
 void CannotCreateFolderHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Cannot create [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
@@ -386,7 +332,7 @@ CannotPerformDeletionHeader::CannotPerformDeletionHeader(StalledIssueHeader* hea
 void CannotPerformDeletionHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Cannot perform deletion [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Filesystem error preventing folder access."));
 }
@@ -400,7 +346,7 @@ SyncItemExceedsSupoortedTreeDepthHeader::SyncItemExceedsSupoortedTreeDepthHeader
 void SyncItemExceedsSupoortedTreeDepthHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Unable to sync [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Target is too deep on your folder structure.\nPlease move it to a location that is less than 64 folders deep."));
 }
@@ -437,7 +383,7 @@ FolderMatchedAgainstFileHeader::FolderMatchedAgainstFileHeader(StalledIssueHeade
 void FolderMatchedAgainstFileHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
@@ -447,18 +393,10 @@ LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDi
 {
 }
 
-void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolved())
-    {
-        header->showSolvedMessage();
-    }
-}
-
 void LocalAndRemotePreviouslyUnsyncedDifferHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has conflicting copies"));
 }
@@ -469,18 +407,10 @@ LocalAndRemoteChangedSinceLastSyncedStateHeader::LocalAndRemoteChangedSinceLastS
 {
 }
 
-void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(header->getData().consultData()->isSolved())
-    {
-        header->showSolvedMessage();
-    }
-}
-
 void LocalAndRemoteChangedSinceLastSyncedStateHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Can´t sync [B]%1[/B]");
-    textDecorator.process(headerText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->displayFileName()));
     header->setTitleDescriptionText(tr("This file has been changed both in MEGA and locally since it it was last synced."));
 }
@@ -551,7 +481,7 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
         QString text(tr("Name Conflicts: [B]%1[/B]"));
-        textDecorator.process(text);
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(text);
         auto cloudData = nameConflict->getNameConflictCloudData();
         if(cloudData.firstNameConflict())
         {
@@ -621,7 +551,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
         auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
         auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
 
-        if(HeaderCaseIssueChecker::checkIssue(header, selection.size() == 1))
+        if(header->checkForExternalChanges(selection.size() == 1))
         {
             return;
         }

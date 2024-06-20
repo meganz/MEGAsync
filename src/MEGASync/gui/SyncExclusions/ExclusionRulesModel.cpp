@@ -157,6 +157,7 @@ QString ExclusionRulesModel::getTargetTypeString(std::shared_ptr<MegaIgnoreRule>
         return QCoreApplication::translate("ExclusionsStrings", "file name");
     case ExclusionRulesModel::TargetType::FOLDER:
         return QCoreApplication::translate("ExclusionsStrings", "folder name");
+        break;
     default:
         break;
     }

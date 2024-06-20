@@ -2,14 +2,14 @@
 #include "CrashReportDialog.h"
 #include "MegaProxyStyle.h"
 #include "QMegaMessageBox.h"
-#include "control/AppStatsEvents.h"
-#include "control/Utilities.h"
-#include "control/CrashHandler.h"
-#include "control/ExportProcessor.h"
-#include "control/LoginController.h"
-#include "control/AccountStatusController.h"
-#include "control/Preferences/EphemeralCredentials.h"
-#include "control/IntervalExecutioner.h"
+#include "AppStatsEvents.h"
+#include "Utilities.h"
+#include "CrashHandler.h"
+#include "ExportProcessor.h"
+#include "LoginController.h"
+#include "AccountStatusController.h"
+#include "EphemeralCredentials.h"
+#include "IntervalExecutioner.h"
 #include "CommonMessages.h"
 #include "EventUpdater.h"
 #include "GuiUtilities.h"
@@ -21,7 +21,6 @@
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
-#include "onboarding/WhatsNewWindow.h"
 
 
 #include "UserAttributesManager.h"
@@ -3206,29 +3205,41 @@ void MegaApplication::cleanLocalCaches(bool all)
 
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
+    DesktopNotifications::NotificationInfo info;
+    info.message = message;
+    info.title = title;
+    showInfoMessage(info);
+}
+
+void MegaApplication::showInfoMessage(DesktopNotifications::NotificationInfo info)
+{
     if (appfinished)
     {
         return;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, message.toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, info.message.toUtf8().constData());
 
     if (mOsNotifications)
     {
 #ifdef __APPLE__
-        if (infoDialog && infoDialog->isVisible())
+        //In case this method is called from another thread
+        Utilities::queueFunctionInAppThread([this]()
         {
-            infoDialog->hide();
-        }
+            if (infoDialog && infoDialog->isVisible())
+            {
+                infoDialog->hide();
+            }
+        });
 #endif
-        lastTrayMessage = message;
-        mOsNotifications->sendInfoNotification(title, message);
+        lastTrayMessage = info.message;
+        mOsNotifications->sendInfoNotification(info);
     }
     else
     {
         QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.title = title;
-        msgInfo.text = message;
+        msgInfo.title = info.title;
+        msgInfo.text = info.message;
         QMegaMessageBox::information(msgInfo);
     }
 }

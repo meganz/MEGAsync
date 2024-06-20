@@ -37,14 +37,19 @@
     border-radius: 4px;
 }
 
-#backgroundWidget[discarded=false][disable_background=false]
+#backgroundWidget[discarded=false][disable_background=false][failed=false]
 {
 	background-color: #F5F5F5;
 }
 
-#backgroundWidget[discarded=true][disable_background=false]
+#backgroundWidget[discarded=true][disable_background=false][failed=false]
 {
-	background-color: #FCFCFC;
+	background-color: #4DF5F5F5;
+}
+
+#backgroundWidget[discarded=false][failed=true]
+{
+	background-color: #FDEBEB;
 }
 
 #extraInfoContainer QLabel
@@ -132,7 +137,7 @@ QPushButton[main=true]
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -257,6 +262,34 @@ QPushButton[main=true]
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QLabel" name="hoverIcon">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16</width>
+                   <height>16</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string notr="true"/>
+                 </property>
+                 <property name="pixmap">
+                  <pixmap resource="../../../gui/Resources_lin.qrc">:/images/StalledIssues/ic-open-outside.png</pixmap>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </widget>
             </item>
@@ -270,7 +303,7 @@ QPushButton[main=true]
               </property>
               <layout class="QHBoxLayout" name="messageLayout">
                <property name="spacing">
-                <number>0</number>
+                <number>5</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -326,7 +359,7 @@ QPushButton[main=true]
              <number>0</number>
             </property>
             <property name="bottomMargin">
-             <number>0</number>
+             <number>4</number>
             </property>
            </layout>
           </widget>

@@ -1,7 +1,7 @@
 #include "AbstractPlatform.h"
 
 #include "MultiQFileDialog.h"
-#include "control/DialogOpener.h"
+#include "DialogOpener.h"
 
 #include <QScreen>
 #include <QDesktopWidget>

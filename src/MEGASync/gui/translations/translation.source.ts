@@ -1824,35 +1824,43 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Files containing:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files ending with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files equal to:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders beginning with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders containing:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders ending with:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Folders equal to:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
     <message>
         <source>Files with extension:</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -2076,29 +2084,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Your download has started</translation>
-    </message>
-</context>
-<context>
-    <name>HeaderCaseIssueChecker</name>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>The issue may have been resolved externally.
-Refresh the list.</translation>
-    </message>
-</context>
-<context>
-    <name>IgnoredStalledIssue</name>
-    <message>
-        <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
-        <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
-        <translation>Couldn’t update the .megaignore file. Check if you have write permissions for this file.</translation>
     </message>
 </context>
 <context>
@@ -2617,11 +2602,6 @@ Please log out of your computer to complete the installation.</translation>
         <translation>Choose both</translation>
     </message>
     <message>
-        <source>Chosen</source>
-        <translatorcomment>TText shown on the choosen version (local, remote, both) in a solved local remote stall.SNC-2565</translatorcomment>
-        <translation>Chosen</translation>
-    </message>
-    <message>
         <source>Choose</source>
         <translatorcomment>Button text to choose either local or remote versions in the local remote changed stall body widget. will be follwed by &quot;Local&quot; or &quot;Remote&quot;.SNC-2565</translatorcomment>
         <translation>Choose</translation>
@@ -2709,33 +2689,6 @@ Please wait for the upload to complete.</source>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
         <translation>With this action, the item already stored in MEGA will be chosen.</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>The issue may have been resolved externally.
-Refresh the list.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
     </message>
     <message>
         <source>Keep both files?</source>
@@ -2850,6 +2803,51 @@ Wait for the upload to complete.</translation>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
         <translation>The [B]local[/B] files will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</translation>
     </message>
+    <message>
+        <source>Unable to remove the local file</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to remove the local folder</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to remove the file stored in MEGA</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to remove the folder stored in MEGA</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to update both local and MEGA files</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep both local and remote files, but the process failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to update both local and MEGA folders</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep both local and remote folders, but the process failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation type="unfinished">Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation type="unfinished">Apply to all</translation>
+    </message>
 </context>
 <context>
     <name>LocalAndRemoteNameConflicts</name>
@@ -2870,6 +2868,14 @@ Wait for the upload to complete.</translation>
         <source>This file has conflicting copies</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
         <translation>This item has conflicting copies</translation>
+    </message>
+</context>
+<context>
+    <name>LocalMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Local</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur. SAT-973</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4108,26 +4114,32 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
 </context>
 <context>
+    <name>MoveOrRenameCannotOccur</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translatorcomment>Title for the solve options in a move or rename conflict stalled issue. SAT-973</translatorcomment>
+        <translation type="unfinished">Select which version you want to keep</translation>
+    </message>
+</context>
+<context>
+    <name>MoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Changes Undone</source>
+        <translatorcomment>Informative message shown when the user selects local or remote option, explaining that the local or remote changes are undone in order to keep the other side changes. SAT-973</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MoveOrRenameCannotOccurHeader</name>
     <message>
-        <source>Cannot move or rename [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Can’t move or rename [B]%1[/B]</translation>
+        <source>Can’t move or rename some items on in [B]%1[/B]</source>
+        <translatorcomment>Title description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>A move or rename was detected in MEGA, but couldn’t be replicated locally.</translation>
-    </message>
-    <message>
-        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>A move or rename action was detected in the local file system, but could not be replicated in MEGA.</translation>
-    </message>
-    <message>
-        <source>Solve</source>
-        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation>Resolve</translation>
+        <source>The local and remote locations have changed at the same time</source>
+        <translatorcomment>Subtitle description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4136,6 +4148,19 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
         <translation>Too many items selected. To continue, deselect some or select the parent folder instead.</translation>
+    </message>
+</context>
+<context>
+    <name>MultiStepIssueSolverBase</name>
+    <message>
+        <source>Solve issues</source>
+        <translatorcomment>Notification title for MoveOrRenameCannotOccur stalled issue notifications. SAT-1016.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.[/BR]</source>
+        <translatorcomment>Notification sent when at least one MoveOrRenameCannotOccur has failed. SAT-1016.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4164,18 +4189,6 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
         <source>Rename</source>
         <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
         <translation>Rename</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
-        <translation>Refresh</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation>The issue may have been resolved externally.
-Refresh the list.</translation>
     </message>
     <message>
         <source>%1 no longer exists.
@@ -4228,6 +4241,14 @@ Refresh the view.</translation>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
         <translation>Replace the local folder [B]%1[/B]?</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictedStalledIssue::CloudConflictedNames</name>
+    <message>
+        <source>Unable to merge this folder.</source>
+        <translatorcomment>Error message shown as a tooltip when merging folders failed in a name conflict stalled issue. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6081,6 +6102,14 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Remote</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Stop backup</source>
@@ -6162,6 +6191,19 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>Unable to rename this file.[BR]Check the name and the file permissions, then try again.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a local file has failed. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename this folder.[BR]Check the name and the folder permissions, then try again.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a local folder has failed. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RenameNodeDialog</name>
     <message>
         <source>Enter new file name</source>
@@ -6182,6 +6224,19 @@ Do you want to delete it anyway?</translation>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
         <translation>Rename folder</translation>
+    </message>
+</context>
+<context>
+    <name>RenameRemoteNodeDialog</name>
+    <message>
+        <source>Unable to rename this file.[BR]Error: %1.[/BR]</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA file has failed. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename this folder.[BR]Error: %1.[/BR]</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA folder has failed. SAT-1110</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6915,19 +6970,19 @@ Do you want to delete it anyway?</translation>
         <translation>Choose</translation>
     </message>
     <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation type="unfinished">Chosen</translation>
+    </message>
+    <message>
         <source>Local file is being uploaded</source>
         <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
-        <translation>Local file is being uploaded</translation>
+        <translation type="unfinished">Local file is being uploaded</translation>
     </message>
     <message>
         <source>Renamed to %1</source>
         <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation>Renamed</translation>
-    </message>
-    <message>
-        <source>Chosen</source>
-        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
-        <translation>Chosen</translation>
+        <translation type="unfinished">Renamed</translation>
     </message>
 </context>
 <context>
@@ -7105,6 +7160,26 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
         <translation>Resolved</translation>
     </message>
+    <message>
+        <source>Being solved</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-solved</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-failed</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue was manually solved but it has failed. SAT-1140</translatorcomment>
+        <translation type="unfinished">Failed</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -7143,6 +7218,14 @@ Do you want to delete it anyway?</translation>
         <translation>
             <numerusform>Others: %n</numerusform>
             <numerusform>Others: %n</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Failed: %n</source>
+        <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Failed: %n</numerusform>
+            <numerusform>Failed: %n</numerusform>
         </translation>
     </message>
 </context>
@@ -7186,15 +7269,10 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
         <translation>Refresh</translation>
     </message>
-    <message>
-        <source>Some external changes were detected. Please, refresh the view.</source>
-        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation>Some external changes were detected.
-Refresh the view.</translation>
-    </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
-        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
+        when several issues have failed. SNC-2565</translatorcomment>
         <translation>
             <numerusform>%n issue resolved</numerusform>
             <numerusform>%n issues resolved</numerusform>
@@ -7226,15 +7304,38 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <translation>Some issues can’t be resolved.
 Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
     </message>
-    <message>
-        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>File “%1” was moved to “%2”</translation>
+    <message numerus="yes">
+        <source>%n issues failed</source>
+        <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n issue failed</numerusform>
+            <numerusform>%n issues failed</numerusform>
+        </translation>
     </message>
-    <message>
-        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>Folder “%1” was moved to “%2”</translation>
+    <message numerus="yes">
+        <source>1 issue fixed and %n issues failed</source>
+        <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>1 issue fixed and %n issue failed</numerusform>
+            <numerusform>1 issue fixed and %n issues failed</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%n issues fixed and 1 issue failed</source>
+        <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%n issue fixed and 1 issue failed</numerusform>
+            <numerusform>%n issues fixed and 1 issue failed</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 and %n issues failed.</source>
+        <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
+        being the first part about the issues fixed. SAT-1034</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 and %n issue failed</numerusform>
+            <numerusform>%1 and %n issues failed</numerusform>
+        </translation>
     </message>
 </context>
 <context>

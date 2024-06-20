@@ -307,7 +307,7 @@ ExclusionsQmlDialog {
                 }
                 implicitWidth: 48
                 text: Utilities.formatNumber(syncExclusionsAccess.maximumAllowedSize, 2)
-                colors.border: colorStyle.borderStrongSelected
+                colors.border: ColorTheme.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
                 validator: RegExpValidator {
@@ -443,7 +443,7 @@ ExclusionsQmlDialog {
                 }
                 font.bold: Font.DemiBold
                 iconSource: Images.refresh
-                backgroundColor: ColorTheme.indicatorBackground
+                backgroundColor: ColorTheme.surface2
                 text: syncExclusionsAccess.folderName
             }
         } //nameRulesDescriptionItem

@@ -23,6 +23,3 @@ void DesignGenerator::deploy(const DesignAssets& designAssets)
         }
     }
 }
-
-
-

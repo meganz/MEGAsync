@@ -10,7 +10,7 @@
 
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
-#include "control/Preferences/Preferences.h"
+#include "Preferences.h"
 #include "syncs/control/SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"

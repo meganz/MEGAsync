@@ -1,9 +1,9 @@
 #ifndef MEGADOWNLOADER_H
 #define MEGADOWNLOADER_H
 
-#include "control/DownloadQueueController.h"
-#include "control/Utilities.h"
-#include "control/TransferBatch.h"
+#include "DownloadQueueController.h"
+#include "Utilities.h"
+#include "TransferBatch.h"
 #include "FolderTransferListener.h"
 #include "TransferMetaData.h"
 #include <QTMegaRequestListener.h>

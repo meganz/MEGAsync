@@ -3,7 +3,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
-#include <control/qrcodegen.h>
+#include "qrcodegen.h"
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent)
 {

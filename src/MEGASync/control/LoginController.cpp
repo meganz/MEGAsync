@@ -4,15 +4,12 @@
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "mega/types.h"
 
 #include "TextDecorator.h"
 #include "StatsEventHandler.h"
 
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "qml/QmlDialogManager.h"
-
-#include "mega/types.h"
 
 #include <QQmlContext>
 
@@ -414,9 +411,7 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::ACC_CREATION_START);
-
         if (!mPreferences->accountCreationTime())
         {
                 mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);

@@ -1,4 +1,4 @@
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
@@ -1275,6 +1275,11 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
 
         setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
     }
+}
+
+bool Preferences::isStalledIssueSmartModeActivated()
+{
+    return stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart;
 }
 
 QDate Preferences::stalledIssuesEventLastDate()

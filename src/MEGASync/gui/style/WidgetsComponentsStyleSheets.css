@@ -49,6 +49,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
 QHeaderView
@@ -85,7 +86,7 @@ padding: 1px 1px 1px 5px;
 
 QComboBox::on
 {
-padding: 0px 0px 0px 0px;
+padding: 1px 1px 1px 5px;
 }
 
 QComboBox::down-arrow
@@ -106,7 +107,7 @@ QComboBox QAbstractItemView
 {
 border: 2px solid #04101E; /*colorToken.button-outline*/
 border-radius: 4px;
-background-color: transparent;
+background-color:  #fafafa; /* colorToken.surface-1*/
 }
 
 QRadioButton::indicator::unchecked
@@ -141,12 +142,12 @@ subcontrol-position: top left;
 padding: 7 0 0 5px;
 }
 
-/* FIX ALPHA CHANNEL */
+/* TODO: surface-2 should be replaced by --color-indicator-background */
 QProgressBar
 {
-border-width: 0px;
-border-style: solid;
-background-color: #0D000000; /*PENDING TO ADD TO REPO : colorToken.indicator-background*/
+border-style: none;
+border-radius: 4px;
+background-color: #f3f4f4; /*colorToken.surface-2*/
 max-height: 8px;
 }
 
@@ -186,6 +187,7 @@ border-color: #04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
 background-color: #f3f4f4;
+image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
 QLabel

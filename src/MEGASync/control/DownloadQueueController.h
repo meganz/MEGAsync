@@ -1,8 +1,8 @@
 #ifndef DOWNLOADQUEUECONTROLLER_H
 #define DOWNLOADQUEUECONTROLLER_H
 
-#include "control/TransferBatch.h"
-#include "control/Utilities.h"
+#include "TransferBatch.h"
+#include "Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
 #include "drivedata.h"

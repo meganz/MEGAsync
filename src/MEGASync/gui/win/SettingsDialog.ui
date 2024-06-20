@@ -20,32 +20,87 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget
+   <string notr="true">#switch
 {
-font-size: 12px;
+border-style: none;
+background-color: transparent;
+}
+
+#switch::indicator
+{
+border-style: none;
+background-color: transparent;
+width: 40px;
+height: 19px;
+}
+
+#switch::indicator:checked
+{
+image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:hover
+{
+image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:pressed
+{
+image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked
+{
+image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
+}
+
+#SmartDescription, #AdvanceDescription
+{
+color: #616366; /*colorToken.text-secondary*/
+}
+
+#LearnMoreContainer, #SelectorsContainer, #ButtonContainer, #widget_21, #widget_6, #AdvanceSelector, #SmartSelector
+{
+background-color: transparent;
+}
+
+#bAdd
+{
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
+}
+
+#bHelp
+{
+border: none;
+color: #2C5BEB; /*colorToken.link-primary*/
+background-color: transparent;
+font-weight: bold;
+}
+
+#wControlButtons
+{
 background-color: #fafafa; /*colorToken.surface-1*/
-color: #fafafa; /*colorToken.text-primary*/
 }
 
-#bUpdate, #bSendBug
+#wDetails
 {
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
-border-width: 2px;
-border-style: outset;
-border-radius: 5px;
+background-color: #fafafa; /*colorToken.surface-1*/
 }
 
-#cLanguage, #cbTheme
+#wUpdateSection
 {
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
-border-width: 2px;
-border-style: outset;
-border-radius: 5px;
-padding: 1px 1px 1px 5px;
+background-color: transparent;
 }
 
 #bClearCache, #bClearRemoteCache, #bClearFileVersions
@@ -54,42 +109,54 @@ background-color:  #F3F4F4; /*colorToken.button-secondary*/
 color: #616366; /*colorToken.text-secondary*/
 border-color:  #F3F4F4; /*colorToken.button-secondary*/
 border-width: 0px;
-border-style: outset;
+border-style: solid;
 border-radius: 5px;
 padding: 3px 10px 3px 10px;
 }
 
-/*ColorTokenIcon;ToolButton;bAccount;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bAccount;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bBackup;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bBackup;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bFolders;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bFolders;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bGeneral;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bGeneral;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bNetwork;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bNetwork;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bNotifications;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bNotifications;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bSecurity;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bSecurity;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;ToolButton;bSyncs;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;ToolButton;bSyncs;normal;off;colorToken.icon-secondary*/
-
-QComboBox
+#sCacheSchedulerDays
 {
-min-height: 24px;
+border-style: solid;
+border-color: #D8D9DB; /*colorToken.border-strong*/
+border-width: 1px;
+border-radius: 5px;
+background-color: #FFFFFF; /* colorToken.page-background*/
+padding: 6px;
 }
+
+/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bGeneral;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bGeneral;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bNetwork;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bNetwork;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bNotifications;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bNotifications;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
+
+/*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
 
 #wTabHeader
 {
+margin-left: 12px;
+margin-right: 12px;
 border-bottom: 1px solid rgba(0,0,0,0.1);;
 }
 
@@ -99,7 +166,7 @@ padding: 12px 13px 10px 13px;
 border-left: 0px;
 border-top: 0px;
 border-right: 0px;
-border-bottom: 3px solid #f1f1f1; /*colorToken.border-strong*/
+border-bottom: 3px solid #f1f1f1; /* colorToken.border-strong*/
 background-color: transparent;
 color: #333333; /*colorToken.text-primary*/
 }
@@ -114,15 +181,22 @@ border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
 border: none;
 }
 
-#lSyncType
+#pUsedBandwidth
 {
-font-weight: bold;
-font-size: 15px;
+margin-right: 6px;
+margin-left: 1px;
 }
 
-#lSyncText
+#cProxyRequiresPassword
 {
-font-style: italic;
+spacing: 11px;
+padding-top: 1px;
+padding-bottom: 0px;
+}
+
+#lProxyType
+{
+padding-bottom: -1px;
 }
 
 #lHeader
@@ -134,11 +208,7 @@ border: none;
 #lAccountType, #lName
 {
 font-size: 13px;
-}
-
-#lBandwidthFree
-{
-color: #0078D7;
+background-color: #fafafa; /*colorToken.surface-1*/
 }
 
 #lAccountType
@@ -149,20 +219,21 @@ padding: 0px;
 margin: 0px;
 }
 
-QTableView::item:selected
+#lBandwidthFree
 {
-background-color: rgba(0,120,215,0.8);
+	 color: #0078D7;
 }
 
 #lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
 {
-font-weight: bold;
+    font-weight: bold;
 }
 
-#cbSleepMode 
+#cbSleepSettings
 {
 margin-top: 4px;
-}</string>
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_15">
    <property name="spacing">
@@ -1220,30 +1291,13 @@ margin-top: 4px;
        <item>
         <widget class="QGroupBox" name="gAccountDetails">
          <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-          </font>
+          <font/>
          </property>
          <property name="title">
           <string>Account</string>
          </property>
-         <layout class="QHBoxLayout" name="gAccountDetailsLayout">
-          <property name="spacing">
-           <number>12</number>
-          </property>
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <item alignment="Qt::AlignTop">
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
            <widget class="AvatarWidget" name="wAvatar" native="true">
             <property name="minimumSize">
              <size>
@@ -1260,93 +1314,79 @@ margin-top: 4px;
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wDetails" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QGridLayout" name="wDetailsLayout">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <property name="horizontalSpacing">
-              <number>10</number>
-             </property>
-             <property name="verticalSpacing">
-              <number>2</number>
-             </property>
-             <item row="2" column="1">
-              <widget class="QPushButton" name="bUpgrade">
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="text">
-                <string>Upgrade</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QPushButton" name="lAccountType">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="icon">
-                <iconset resource="../Resources_win.qrc">
-                 <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>12</width>
-                 <height>12</height>
-                </size>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QPushButton" name="bMyAccount">
-               <property name="text">
-                <string>My Account</string>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0" colspan="3">
-              <widget class="QLabel" name="lEmail"/>
-             </item>
-             <item row="0" column="0" colspan="3">
-              <widget class="QLabel" name="lName">
-               <property name="textFormat">
-                <enum>Qt::PlainText</enum>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout">
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="lName">
+                  <property name="textFormat">
+                   <enum>Qt::PlainText</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="lAccountType">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="../Resources_win.qrc">
+                    <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>12</width>
+                    <height>12</height>
+                   </size>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="lEmail"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QPushButton" name="bUpgrade">
+                <property name="focusPolicy">
+                 <enum>Qt::StrongFocus</enum>
+                </property>
+                <property name="text">
+                 <string>Upgrade</string>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bMyAccount">
+                <property name="text">
+                 <string>My Account</string>
+                </property>
+                <property name="autoDefault">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -2228,14 +2268,7 @@ min-height: 72px;
       <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="bHelp">
         <property name="styleSheet">
-         <string notr="true">QPushButton {
-border: none;
-color: #0078D7;
-}
-
-QPushButton::!enabled {
-color: grey;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Help</string>

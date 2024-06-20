@@ -7,6 +7,8 @@
 #include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
 
+#include "Preferences.h"
+
 QString getArchitectureString()
 {
     QString architecture;

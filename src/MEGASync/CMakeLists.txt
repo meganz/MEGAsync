@@ -74,6 +74,7 @@ set_target_properties(MEGAsync
     AUTORCC ON # Activates the creation of rules over qrc files
 )
 
+
 find_package(Qt5 REQUIRED COMPONENTS LinguistTools)
 qt5_create_translation(QM_OUTPUT ${CMAKE_CURRENT_SOURCE_DIR} gui/translations/translation.source.ts
     OPTIONS -locations none -no-ui-lines -no-obsolete)

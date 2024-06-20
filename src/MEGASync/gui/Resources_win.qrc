@@ -1516,5 +1516,35 @@
         <file>images/themed/light/switch_on.svg</file>
         <file>images/themed/dark/switch_on.svg</file>
         <file>images/themed/dark/switch_off.svg</file>
+        <file>images/themed/dark/switch_on_pressed.svg</file>
+        <file>images/themed/dark/switch_on_hover.svg</file>
+        <file>images/themed/dark/switch_off_pressed.svg</file>
+        <file>images/themed/dark/switch_off_hover.svg</file>
+        <file>images/StalledIssues/rotate-ccw.png</file>
+        <file>images/StalledIssues/rotate-ccw@2x.png</file>
+        <file>images/StalledIssues/rotate-ccw@3x.png</file>
+        <file>images/StalledIssues/solved-issues-outline.png</file>
+        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
+        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
+        <file>images/StalledIssues/solved-issues-solid.png</file>
+        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
+        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@2x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@3x.png</file>
+        <file>images/StalledIssues/states/failed_state.png</file>
+        <file>images/StalledIssues/states/failed_state@2x.png</file>
+        <file>images/StalledIssues/states/failed_state@3x.png</file>
+        <file>images/StalledIssues/states/solved_state.png</file>
+        <file>images/StalledIssues/states/solved_state@2x.png</file>
+        <file>images/StalledIssues/states/solved_state@3x.png</file>
+        <file>images/StalledIssues/x-circle-outline.png</file>
+        <file>images/StalledIssues/x-circle-outline@2x.png</file>
+        <file>images/StalledIssues/x-circle-outline@3x.png</file>
+        <file>images/StalledIssues/x-circle-solid.png</file>
+        <file>images/StalledIssues/x-circle-solid@2x.png</file>
+        <file>images/StalledIssues/x-circle-solid@3x.png</file>
+        <file>images/themed/dark/checkbox_unchecked.svg</file>
+        <file>images/themed/light/checkbox_unchecked.svg</file>
     </qresource>
 </RCC>

@@ -5,7 +5,7 @@
 #include <syncs/gui/SyncSettingsUIBase.h>
 
 #include <Utilities.h>
-#include "control/Preferences/Preferences.h"
+#include "Preferences.h"
 #include <MegaApplication.h>
 #include <StalledIssuesModel.h>
 
@@ -57,7 +57,6 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 
     syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
 
-    // @jsubi : throw a update ui signal.
     emit MegaSyncApp->updateUserInterface();
 }
 

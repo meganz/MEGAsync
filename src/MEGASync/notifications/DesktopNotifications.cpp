@@ -53,6 +53,11 @@ QString getIconsPath()
     return MegaApplication::applicationDataPath() + QDir::separator() + iconFolderName + QDir::separator();
 }
 
+DesktopNotifications::NotificationInfo::NotificationInfo()
+    : title(MegaSyncApp->getMEGAString())
+{
+}
+
 DesktopNotifications::DesktopNotifications(const QString &appName, QSystemTrayIcon *trayIcon)
     :mNewContactIconPath(getIconsPath() + newContactIconName),
      mStorageQuotaFullIconPath(getIconsPath() + storageQuotaFullIconName),
@@ -776,11 +781,41 @@ void DesktopNotifications::sendBusinessWarningNotification(int businessStatus) c
     }
 }
 
-void DesktopNotifications::sendInfoNotification(const QString &title, const QString &message) const
+void DesktopNotifications::sendInfoNotification(const QString& title, const QString& message) const
+{
+    NotificationInfo info;
+    info.title = title;
+    info.message = message;
+    sendInfoNotification(info);
+}
+
+void DesktopNotifications::sendInfoNotification(const NotificationInfo& info) const
 {
     if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::INFO_MESSAGES))
     {
-        mNotificator->notify(NotificatorBase::Information, title, message);
+        auto notification = new DesktopAppNotification();
+        notification->setText(info.message);
+        notification->setActions(info.actions);
+        notification->setTitle(info.title);
+        notification->setType(NotificatorBase::Information);
+        notification->setImagePath(info.imagePath);
+
+        if(info.activatedFunction)
+        {
+            connect(notification, &DesktopAppNotification::activated, this, info.activatedFunction);
+        }
+
+        //Protect against notification from other threads
+        if(MegaSyncApp->thread() != MegaSyncApp->thread()->currentThread())
+        {
+            Utilities::queueFunctionInAppThread([this, notification](){
+                mNotificator->notify(notification);
+            });
+        }
+        else
+        {
+            mNotificator->notify(notification);
+        }
     }
 }
 

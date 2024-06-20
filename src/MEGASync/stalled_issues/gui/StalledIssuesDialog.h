@@ -4,7 +4,6 @@
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
 #include "StalledIssueLoadingItem.h"
-#include "control/Preferences/Preferences.h"
 
 #include <ViewLoadingScene.h>
 
@@ -39,7 +38,8 @@ private slots:
     void checkIfViewIsEmpty();
     void onGlobalSyncStateChanged(bool);
 
-    void toggleTab(StalledIssueFilterCriterion filterCriterion);
+    void onTabToggled(StalledIssueFilterCriterion filterCriterion);
+    bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
     void onUiUnblocked();

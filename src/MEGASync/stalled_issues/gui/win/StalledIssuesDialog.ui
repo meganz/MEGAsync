@@ -411,6 +411,22 @@ background-color: #F3F4F4;
               </widget>
              </item>
              <item>
+              <widget class="StalledIssueTab" name="failedTab">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="title" stdset="0">
+                <string/>
+               </property>
+               <property name="filterCriterion" stdset="0">
+                <UInt>4</UInt>
+               </property>
+               <property name="iconPrefix" stdset="0">
+                <string notr="true">x-circle</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="StalledIssueTab" name="solvedIssuesTab">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -425,7 +441,7 @@ background-color: #F3F4F4;
                 <string notr="true">solved-issues</string>
                </property>
                <property name="filterCriterion" stdset="0">
-                <UInt>4</UInt>
+                <UInt>5</UInt>
                </property>
               </widget>
              </item>
@@ -573,7 +589,9 @@ QMenu::item:default
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgba(255, 255, 255,0);</string>
+              <string notr="true">QWidget{
+background-color: rgba(255, 255, 255,0);
+}</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>

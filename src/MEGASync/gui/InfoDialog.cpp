@@ -25,7 +25,7 @@
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
 
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "platform/Platform.h"
 #include "qml/QmlDialogManager.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
@@ -1035,6 +1035,7 @@ void InfoDialog::addBackup()
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             QmlDialogManager::instance()->openBackupsDialog();
+            this->hide();
         }
     };
 
