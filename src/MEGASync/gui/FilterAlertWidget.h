@@ -27,7 +27,7 @@ private slots:
     void on_bPayment_clicked();
 
 signals:
-    void onFilterClicked(AlertType);
+    void filterClicked(AlertType);
 
 private:
     Ui::FilterAlertWidget *ui;

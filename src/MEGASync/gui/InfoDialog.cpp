@@ -102,7 +102,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(onFilterClicked(AlertType)),
+    connect(filterMenu, SIGNAL(filterClicked(AlertType)),
             this, SLOT(applyFilterOption(AlertType)));
 
     setUnseenNotifications(0);
