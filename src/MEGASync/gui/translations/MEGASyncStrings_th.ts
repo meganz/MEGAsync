@@ -1763,7 +1763,7 @@
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>เลือกไฟล์หรือโฟลเดอร์ที่ไม่ต้องการให้รวมอยู่ใน</translation>
+        <translation>เลือกไฟล์หรือโฟลเดอร์ที่คุณไม่ต้องการให้ซิงค์กับ</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
@@ -2004,6 +2004,56 @@
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>ตรงกัน</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ประกอบไปด้วยชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ลงท้ายด้วยชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ตรงกับชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>เริ่มต้นด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ประกอบไปด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ลงท้ายด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ตรงกับชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ที่มีนามสกุลไฟล์:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>เลือกโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>เลือกไฟล์ที่คุณต้องการยกเว้น</translation>
     </message>
 </context>
 <context>
@@ -2704,7 +2754,8 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
         <source>The notification area icon was installed successfully.
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
-        <translation>ติดตั้งไอคอนในแถบแจ้งเตือนสำเร็จแล้ว กรุณาออกจากระบบคอมพิวเตอร์ของคุณเพื่อให้การติดตั้งเสร็จสมบูรณ์</translation>
+        <translation>ติดตั้งไอคอนในแถบแจ้งเตือนสำเร็จแล้ว
+กรุณาเริ่มการทำงานคอมพิวเตอร์ของคุณใหม่เพื่อให้การติดตั้งเสร็จสมบูรณ์</translation>
     </message>
 </context>
 <context>
@@ -4017,11 +4068,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>ไม่สามารถอัปเดตข้อมูลการตั้งค่าการซิงค์หรือสำรองข้อมูลได้ ลองอีกครั้งในภายหลังหรือลองตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7691,19 +7737,6 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
 </context>
 <context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>เลือกไฟล์ที่คุณต้องการยกเว้น</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>เลือกโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
-    </message>
-</context>
-<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -7817,7 +7850,8 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ลึกเกินไป ให้หยุดการซิงค์ แล้วย้ายโฟลเดอร์ไปยังตำแหน่งที่ลึกไม่เกิน 64 โฟลเดอร์ จากนั้นเริ่มต้นการซิงค์ใหม่ หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.nz</translation>
+        <translation>เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ที่ลึกเกินไป ให้หยุดการซิงค์ แล้วย้ายโฟลเดอร์ไปยังตำแหน่งที่ลึกไม่เกิน 64 โฟลเดอร์ จากนั้นเริ่มต้นการซิงค์ใหม่ 
+หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.nz</translation>
     </message>
 </context>
 <context>

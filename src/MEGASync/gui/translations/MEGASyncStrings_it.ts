@@ -1762,7 +1762,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>Scegli da quali file o cartelle vuoi escludere</translation>
+        <translation>Scegli quali file o cartelle vuoi escludere da</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
@@ -2003,6 +2003,56 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>È uguale a</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File contenenti:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File che terminano con:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File uguali a:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle che iniziano con:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle contenenti:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle che terminano con:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle uguali a:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File con estensione:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Seleziona la cartella che vuoi escludere</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Seleziona il file che vuoi escludere</translation>
     </message>
 </context>
 <context>
@@ -2705,7 +2755,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>L&apos;icona dell&apos;area di notifica è stata installata correttamente.
-Effettua il logout per completare l&apos;installazione.</translation>
+Riavvia il computer per completare l&apos;installazione.</translation>
     </message>
 </context>
 <context>
@@ -4020,11 +4070,6 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Impossibile aggiornare la configurazione della sincronizzazione o del backup. Riprova più tardi o controlla le autorizzazioni della cartella.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7694,19 +7739,6 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>Questa cartella è già sincronizzata</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Seleziona il file che vuoi escludere</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Seleziona la cartella che vuoi escludere</translation>
     </message>
 </context>
 <context>

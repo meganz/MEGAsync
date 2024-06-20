@@ -2005,6 +2005,56 @@
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Este egal cu</translation>
     </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Fișiere care conțin:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Fișiere care se termină cu:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Fișiere egale cu:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Foldere care încep cu:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Foldere care conțin:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Foldere care se termină cu:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Foldere egale cu:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Fișiere cu extensie:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selectați folderul pe care doriți să îl excludeți</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selectați fișierul pe care doriți să îl excludeți</translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
@@ -2706,7 +2756,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>Pictograma zonei de notificare a fost instalată.
-Deconectați-vă de pe calculator pentru a finaliza instalarea.</translation>
+Reporniți computerul pentru a finliza instalarea.</translation>
     </message>
 </context>
 <context>
@@ -4021,11 +4071,6 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Imposibil de actualizat configurația de sincronizare sau backup. Încercați din nou mai târziu sau verificați permisiunile folderului.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7695,19 +7740,6 @@ Verificați permisiunile fișierului.megaignore în locațiile folderului local 
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>Acest folder este deja sincronizat</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selectați fișierul pe care doriți să îl excludeți</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selectați folderul pe care doriți să îl excludeți</translation>
     </message>
 </context>
 <context>

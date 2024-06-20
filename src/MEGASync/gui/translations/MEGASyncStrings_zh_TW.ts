@@ -1763,7 +1763,7 @@
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>選擇要排除的檔案或資料夾</translation>
+        <translation>選擇要從同步資料夾中排除的檔案或資料夾</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
@@ -2004,6 +2004,56 @@
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>等於</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>檔案名稱包含：</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>檔案名稱結尾：</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>檔案名稱等於：</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>資料夾名稱開頭：</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>資料夾名稱包含：</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>資料夾名稱結尾：</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>資料夾名稱等於：</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>檔案副檔名：</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>選擇您要排除的資料夾</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>選擇您要排除的檔案</translation>
     </message>
 </context>
 <context>
@@ -2706,7 +2756,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>通知區域圖示安裝成功。
-請退出您的電腦以完成安裝。</translation>
+請重新啟動電腦以完成安裝。</translation>
     </message>
 </context>
 <context>
@@ -4019,11 +4069,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>無法更新同步或備份配置。稍後重試或檢查資料夾權限。</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7697,19 +7742,6 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
 </context>
 <context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>選擇您要排除的檔案</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>選擇您要排除的資料夾</translation>
-    </message>
-</context>
-<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -7823,8 +7855,8 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>目標在您的資料夾結構中太深。停止同步，將資料夾移至深度少於64個資料夾的位置，然後重新建立同步。
-如果這不能解決問題，請聯繫support@mega.nz 。</translation>
+        <translation>目標在您的資料夾結構中太深。停止同步，將資料夾移至深度小於64個資料夾的位置，然後重新建立同步。
+如果這不能解決問題，請聯繫support@mega.nz。</translation>
     </message>
 </context>
 <context>

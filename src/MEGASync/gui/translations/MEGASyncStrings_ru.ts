@@ -1838,7 +1838,7 @@
     <message>
         <source>Files beginning with:</source>
         <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
-        <translation>Названия файлов, начинающиеся с:</translation>
+        <translation>Названия файлов начинаются с:</translation>
     </message>
     <message>
         <source>Use comma (“,”) to separate multiple items</source>
@@ -2004,6 +2004,56 @@
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Равно</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия файлов содержат:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия файлов заканчиваются на:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия файлов равны:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия папок начинаются с:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия папок содержат:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия папок заканчиваются на:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Названия папок равны:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Файлы с расширением:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Выберите папку, которую хотите исключить</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Выберите файл, который хотите исключить</translation>
     </message>
 </context>
 <context>
@@ -2706,7 +2756,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>Значок области уведомлений успешно установлен.
-Пожалуйста, выйдите из системы, чтобы завершить установку.</translation>
+Пожалуйста, перезагрузите компьютер, чтобы завершить установку.</translation>
     </message>
 </context>
 <context>
@@ -4022,11 +4072,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Не удалось обновить конфигурацию синхронизации или резервного копирования. Повторите попытку позже или проверьте права доступа к папке.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7697,19 +7742,6 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>Эта папка уже синхронизируется</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Выберите файл, который хотите исключить</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Выберите папку, которую хотите исключить</translation>
     </message>
 </context>
 <context>
