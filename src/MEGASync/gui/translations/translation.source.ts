@@ -1813,54 +1813,54 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Is equal to</translation>
     </message>
     <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule SNC-4243</translatorcomment>
-        <translation type="unfinished">Select the folder you want to exclude</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule SNC-4243</translatorcomment>
-        <translation type="unfinished">Select the file you want to exclude</translation>
-    </message>
-    <message>
         <source>Files containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Files containing:</translation>
     </message>
     <message>
         <source>Files ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Files ending with:</translation>
     </message>
     <message>
         <source>Files equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Files equal to:</translation>
     </message>
     <message>
         <source>Folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Folders beginning with:</translation>
     </message>
     <message>
         <source>Folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Folders containing:</translation>
     </message>
     <message>
         <source>Folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Folders ending with:</translation>
     </message>
     <message>
         <source>Folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Folders equal to:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
-        <translation></translation>
+        <translation>Files with extension:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Select the folder you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Select the file you want to exclude</translation>
     </message>
 </context>
 <context>
@@ -2555,7 +2555,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>The notification area icon was installed successfully.
-Please log out of your computer to complete the installation.</translation>
+Please restart your computer to complete the installation.</translation>
     </message>
 </context>
 <context>
@@ -2689,6 +2689,21 @@ Please wait for the upload to complete.</source>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
         <translation>With this action, the item already stored in MEGA will be chosen.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
+        <translation>Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
+        <translation>Apply to all</translation>
     </message>
     <message>
         <source>Keep both files?</source>
@@ -2832,21 +2847,6 @@ Wait for the upload to complete.</translation>
         <source>Unable to update both local and MEGA folders</source>
         <translatorcomment>Local/Remote conflict stall issue. User chose to keep both local and remote folders, but the process failed. Used in a tooltip. SAT-1110</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.FM-1615</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation type="unfinished">Apply to all</translation>
     </message>
 </context>
 <context>
@@ -6961,14 +6961,14 @@ Do you want to delete it anyway?</translation>
         <translation>Choose</translation>
     </message>
     <message>
-        <source>Chosen</source>
-        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
-        <translation type="unfinished">Chosen</translation>
-    </message>
-    <message>
         <source>Local file is being uploaded</source>
         <translatorcomment>Label shown when the sync stall is solved by choosing local file.SNC-2565</translatorcomment>
-        <translation type="unfinished">Local file is being uploaded</translation>
+        <translation>Local file is being uploaded</translation>
+    </message>
+    <message>
+        <source>Chosen</source>
+        <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
+        <translation>Chosen</translation>
     </message>
 </context>
 <context>
@@ -7810,7 +7810,7 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>The target is too deep in your folder structure. Stop the sync, move the folder to a location that is less than 64 folders deep, and recreate your sync.
-If this doesn&apos;t resolve the issue, contact support@mega.nz.</translation>
+If this doesn’t resolve the issue, contact support@mega.nz.</translation>
     </message>
 </context>
 <context>
