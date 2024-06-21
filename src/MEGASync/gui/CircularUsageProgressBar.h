@@ -6,6 +6,9 @@
 #include <QIcon>
 #include <QEvent>
 #include <QPainter>
+#include <qobjectdefs.h>
+
+#include <iostream>
 
 class CircularUsageProgressBar : public QWidget
 {
@@ -29,6 +32,11 @@ public:
     void setTotalValueUnknown(bool isEmptyBar = true);
     void setProgressBarGradient(QColor light, QColor dark);
 
+    Q_PROPERTY(QString color READ getColor WRITE setColor NOTIFY colorChanged)
+
+signals:
+    void colorChanged();
+
 protected:
     void paintEvent(QPaintEvent* event);
 
@@ -37,6 +45,18 @@ private:
     void setPenColor(QPen& pen, QColor color, bool forceRepaint = true);
     void setPenGradient(QPen& pen, QConicalGradient& gradient, bool forceRepaint = true);
     void setBarTotalValueUnkown(int value, QConicalGradient* gradient);
+
+    void setColor(const QString& color)
+    {
+        std::cout << "setColor" << std::endl;
+
+        emit colorChanged();
+    }
+
+    QString getColor()
+    {
+        return QLatin1String("#000000");
+    }
 
     int     mPbValue;
     double  mPenWidth;

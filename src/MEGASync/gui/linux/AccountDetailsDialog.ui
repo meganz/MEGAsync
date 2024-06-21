@@ -105,6 +105,11 @@ color: #303233; /*colorToken.text-primary*/
 font-size: 13px;
 }
 
+#wCircularStorage
+{
+qproperty-color: red;
+}
+
 #sHeader
 {
     background-color: transparent;
