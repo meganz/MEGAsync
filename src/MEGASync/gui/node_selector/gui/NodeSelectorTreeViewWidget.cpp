@@ -526,56 +526,131 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
     DialogOpener::showDialog(dialog);
 }
 
-void NodeSelectorTreeViewWidget::onDeleteClicked()
+void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles)
 {
-    auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-    int access = mMegaApi->getAccess(node.get());
-    //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
-    if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
+    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
+        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+        int access = mMegaApi->getAccess(node.get());
+
+        //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+        if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
+        {
+            return nullptr;
+        }
+
+        return node;
+    };
+
+    auto removeNode = [this](std::shared_ptr<mega::MegaNode> node)
     {
-        return;
-    }
+        int access = mMegaApi->getAccess(node.get());
+
+        //Double protection in case the node properties changed while the node is deleted
+        if(access == MegaShare::ACCESS_FULL && node->isNodeKeyDecrypted())
+        {
+            mMegaApi->remove(node.get());
+        }
+        else
+        {
+            auto rubbish = MegaSyncApp->getRubbishNode();
+            mMegaApi->moveNode(node.get(), rubbish.get());
+        }
+    };
+
+    QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
+    mDeletedHandles.clear();
+    mLastValidDeletedParent = QModelIndex();
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
-    msgInfo.title =  MegaSyncApp->getMEGAString();
-    msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
-            .arg(QString::fromUtf8(node->getName()));
-            msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-    msgInfo.defaultButton = QMessageBox::No;
-    msgInfo.finishFunc = [this, node, access](QPointer<QMessageBox> msg)
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.informativeText = tr(
+        "Any shared files or folders will no longer be accessible to the people you shared "
+        "them with.You can still access these items in the Rubbish bin, restore, and share "
+        "them.");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
+    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
+
+    if(handles.size() == 1)
     {
-        if(msg->result() == QMessageBox::Yes)
+        auto node = getNode(handles.first());
+        mDeletedHandles.insert(handles.first(), QPersistentModelIndex(getSelectedIndex()));
+
+        if(node)
         {
-            //Double protection in case the node properties changed while the node is deleted
-            if (access == MegaShare::ACCESS_FULL
-                && node->isNodeKeyDecrypted())
+            msgInfo.text = tr("Move \"%1\" to Rubbish bin?").arg(QString::fromUtf8(node->getName()));
+            msgInfo.finishFunc = [this, node, removeNode](QPointer<QMessageBox> msg)
             {
-                mMegaApi->remove(node.get());
-            }
-            else
-            {
-                auto rubbish = MegaSyncApp->getRubbishNode();
-                mMegaApi->moveNode(node.get(), rubbish.get());
-            }
+                if(msg->result() == QMessageBox::Yes)
+                {
+                    removeNode(node);
+                }
+            };
+
+            QMegaMessageBox::question(msgInfo);
         }
-    };
-    QMegaMessageBox::question(msgInfo);
+    }
+    else
+    {
+        msgInfo.text = tr("Move %1 items to Rubbish bin?").arg(handles.size());
+        msgInfo.finishFunc = [this, removeNode, getNode](QPointer<QMessageBox> msg)
+        {
+            if(msg->result() == QMessageBox::Yes)
+            {
+                auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+
+                foreach(auto& s_index, selectedRows)
+                {
+                    if(auto savedNode = mProxyModel->getNode(s_index))
+                    {
+                        mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
+                        auto node = getNode(savedNode->getHandle());
+                        removeNode(node);
+                    }
+                }
+            }
+        };
+
+        QMegaMessageBox::question(msgInfo);
+    }
+
+    if (!currentDialog)
+    {
+        return;
+    }
 }
 
 void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    if(request->getType() == MegaRequest::TYPE_REMOVE ||
+        request->getType() == MegaRequest::TYPE_MOVE)
     {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            ui->tMegaFolders->setEnabled(true);
+        auto index = mDeletedHandles.take(request->getNodeHandle());
 
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title =  MegaSyncApp->getMEGAString();
-            msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
-            QMegaMessageBox::critical(msgInfo);
+        if(e->getErrorCode() == MegaError::API_OK)
+        {
+            if(index.isValid())
+            {
+                if(index.parent().isValid())
+                {
+                    mLastValidDeletedParent = index.parent();
+                }
+
+                mNavigationInfo.remove(mProxyModel->getHandle(index));
+                mProxyModel->removeNode(index);
+
+                //Only when the last item is removed
+                if(mDeletedHandles.isEmpty() && mLastValidDeletedParent.isValid())
+                {
+                    auto parent = mProxyModel->getNode(mLastValidDeletedParent);
+                    if(parent)
+                    {
+                        setSelectedNodeHandle(parent->getHandle());
+                    }
+                }
+            }
         }
     }
 }
@@ -928,13 +1003,7 @@ MegaHandle NodeSelectorTreeViewWidget::getSelectedNodeHandle()
 
 QList<MegaHandle> NodeSelectorTreeViewWidget::getMultiSelectionNodeHandle()
 {
-    QList<MegaHandle> ret;
-    foreach(auto& s_index, ui->tMegaFolders->selectionModel()->selectedRows())
-    {
-        if(auto node = mProxyModel->getNode(s_index))
-            ret.append(node->getHandle());
-    }
-    return ret;
+    return ui->tMegaFolders->getMultiSelectionNodeHandle();
 }
 
 QModelIndex NodeSelectorTreeViewWidget::getSelectedIndex()

@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QDebug>
 #include <QItemSelectionModel>
+#include <QPersistentModelIndex>
 #include <memory>
 
 
@@ -100,7 +101,7 @@ private slots:
     void onbNewFolderClicked();
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onDeleteClicked();
+    void onDeleteClicked(const QList<mega::MegaHandle> &handles);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -158,6 +159,8 @@ private:
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
+    QMap<mega::MegaHandle, QPersistentModelIndex> mDeletedHandles;
+    QPersistentModelIndex mLastValidDeletedParent;
 
     friend class DownloadType;
     friend class SyncType;
