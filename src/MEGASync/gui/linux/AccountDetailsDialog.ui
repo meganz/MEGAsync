@@ -45,7 +45,7 @@ border-style: none;
 #headerBox
 {
 border-style:none;
-border-radius:5px;
+border-radius:12px;
 background-color: #fafafa; /*colorToken.surface-1*/
 }
 
@@ -161,12 +161,6 @@ font-size: 13px;
   background-color: #FF5646;
 }
 
-#lUsedStorage, #lUsedTransfer
-{
-color: #303233; /*colorToken.text-primary*/
-font-size: 13px;
-}
-
 #bCloudDrive, #bVault, #bRubbish
 {
     qproperty-iconSize: 24px;
@@ -224,24 +218,24 @@ font-size: 13px;
 
 #pStorageAndTransferUsage #sStorage, #sTransfer
 {
-    height: 52px;
-    width: 56px;
-    min-height: 52px;
-    min-width: 56px;
-    max-height: 52px;
-    max-width: 56px;
-    margin-left: 24px;
+height: 52px;
+width: 56px;
+min-height: 52px;
+min-width: 56px;
+max-height: 52px;
+max-width: 56px;
+margin-left: 24px;
 background-color: transparent;
 }
 
 #wStorageUsage, #wTransferUsage
 {
-    height: 96px;
-    width: 219px;
-    max-height: 96px;
-    min-height: 96px;
-    max-width:219px;
-    min-width:219px;
+height: 96px;
+width: 219px;
+max-height: 96px;
+min-height: 96px;
+max-width:219px;
+min-width:219px;
 }
 
 #wStorageUsage
@@ -279,7 +273,7 @@ background-color: transparent;
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <property name="topMargin">
-    <number>4</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QGroupBox" name="headerBox">
@@ -304,6 +298,18 @@ background-color: transparent;
       </property>
       <item>
        <widget class="QStackedWidget" name="sHeader">
+        <property name="minimumSize">
+         <size>
+          <width>440</width>
+          <height>80</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>440</width>
+          <height>80</height>
+         </size>
+        </property>
         <property name="lineWidth">
          <number>1</number>
         </property>
@@ -395,6 +401,18 @@ background-color: transparent;
          </layout>
         </widget>
         <widget class="QWidget" name="pStorageAndTransferUsage">
+         <property name="minimumSize">
+          <size>
+           <width>440</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>440</width>
+           <height>80</height>
+          </size>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_22">
           <property name="spacing">
            <number>0</number>
@@ -413,6 +431,18 @@ background-color: transparent;
           </property>
           <item>
            <widget class="QWidget" name="wStorageUsage" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>80</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
              <property name="spacing">
               <number>0</number>
@@ -431,6 +461,9 @@ background-color: transparent;
              </property>
              <item>
               <widget class="QStackedWidget" name="sStorage">
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
                <widget class="CircularUsageProgressBar" name="wCircularStorage"/>
                <widget class="QWidget" name="wBusinessStorage">
                 <layout class="QHBoxLayout" name="horizontalLayout_24">
@@ -538,6 +571,18 @@ background-color: transparent;
           </item>
           <item>
            <widget class="QWidget" name="wTransferUsage" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>80</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>80</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_25">
              <property name="spacing">
               <number>0</number>

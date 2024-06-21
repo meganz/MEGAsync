@@ -80,9 +80,7 @@ void AccountDetailsDialog::refresh()
             // Disable over quota and warning
             mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
             setProperty("storageState", QLatin1String("ok"));
-            usedStorageString = QString::fromUtf8("<span style='color: #333333;"
-                                                  "font-family: Lato; text-decoration:none;'>%1</span>")
-                                    .arg(Utilities::getSizeString(usedStorage));
+            usedStorageString = Utilities::getSizeString(usedStorage);
         }
         else
         {
@@ -125,13 +123,7 @@ void AccountDetailsDialog::refresh()
 
             QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
 
-            QString usedStorageFormatted = QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
-                                               .arg(usageColorS, Utilities::getSizeString(usedStorage));
-
-            QString totalStorageFormatted = QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>%1</span>")
-                                                .arg(Utilities::getSizeString(totalStorage));
-
-            usedStorageString = sepTemplate.arg(usedStorageFormatted, totalStorageFormatted);
+            usedStorageString = sepTemplate.arg(Utilities::getSizeString(usedStorage), Utilities::getSizeString(totalStorage));
         }
 
         mUi->lUsedStorage->setText(usedStorageString);
@@ -184,10 +176,7 @@ void AccountDetailsDialog::refresh()
             {
                 setProperty("accountType", QLatin1String("business"));
                 mUi->wCircularTransfer->setTotalValueUnknown();
-                usedTransferString = QString::fromUtf8("<span style='color:%1;"
-                                                       "font-family: Lato;"
-                                                       "text-decoration:none;'>%2</span>")
-                                         .arg(usageColorT, Utilities::getSizeString(0ULL));
+                usedTransferString = Utilities::getSizeString(0ULL);
                 break;
             }
             case Preferences::ACCOUNT_TYPE_FREE:
@@ -195,10 +184,7 @@ void AccountDetailsDialog::refresh()
                 setProperty("accountType", QLatin1String("free"));
                 mUi->wCircularTransfer->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
                                                         && transferQuotaState != QuotaState::OVERQUOTA);
-                usedTransferString = QString::fromUtf8("<span style='color:%1;"
-                                                                "font-family: Lato;"
-                                                                "text-decoration:none;'>%2</span>")
-                                                  .arg(usageColorT, Utilities::getSizeString(usedTransfer));
+                usedTransferString = Utilities::getSizeString(usedTransfer);
                 break;
             }
             case Preferences::ACCOUNT_TYPE_LITE:
@@ -228,13 +214,7 @@ void AccountDetailsDialog::refresh()
 
                 QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
 
-                QString usedTransferFormatted = QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
-                                                    .arg(usageColorT, Utilities::getSizeString(usedTransfer));
-
-                QString totalTransferFormatted = QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>%1</span>")
-                                                     .arg(Utilities::getSizeString(totalTransfer));
-
-                usedTransferString = sepTemplate.arg(usedTransferFormatted, totalTransferFormatted);
+                usedTransferString = sepTemplate.arg(Utilities::getSizeString(usedTransfer), Utilities::getSizeString(totalTransfer));
                 break;
             }
         }
