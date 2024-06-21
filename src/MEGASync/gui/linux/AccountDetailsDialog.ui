@@ -9,9 +9,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
+    <width>490</width>
     <height>397</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>490</width>
+    <height>397</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Account usage details</string>
@@ -36,6 +42,14 @@
 background-color: transparent;
 }
 
+QGroupBox
+{
+margin-top: 20px;
+margin-right: 20px;
+margin-left: 20px;
+margin-bottom: 20px;
+}
+
 #line
 {
 background-color: #f3f4f4; /*colorToken.surface-2*/
@@ -45,7 +59,7 @@ border-style: none;
 #headerBox
 {
 border-style:none;
-border-radius:12px;
+border-radius:20px;
 background-color: #fafafa; /*colorToken.surface-1*/
 }
 
@@ -272,7 +286,19 @@ min-width:219px;
    <bool>false</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -301,13 +327,13 @@ min-width:219px;
         <property name="minimumSize">
          <size>
           <width>440</width>
-          <height>80</height>
+          <height>96</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>440</width>
-          <height>80</height>
+          <height>96</height>
          </size>
         </property>
         <property name="lineWidth">
@@ -404,13 +430,13 @@ min-width:219px;
          <property name="minimumSize">
           <size>
            <width>440</width>
-           <height>80</height>
+           <height>96</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>440</width>
-           <height>80</height>
+           <height>96</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_22">
@@ -434,13 +460,13 @@ min-width:219px;
             <property name="minimumSize">
              <size>
               <width>220</width>
-              <height>80</height>
+              <height>96</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>220</width>
-              <height>80</height>
+              <height>96</height>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -574,13 +600,13 @@ min-width:219px;
             <property name="minimumSize">
              <size>
               <width>220</width>
-              <height>80</height>
+              <height>96</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>220</width>
-              <height>80</height>
+              <height>96</height>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_25">
@@ -735,7 +761,7 @@ min-width:219px;
        <number>23</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QWidget" name="wCloudDrive" native="true">
