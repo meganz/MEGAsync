@@ -32,9 +32,11 @@ class LinkProcessor: public QObject, public mega::MegaRequestListener, public me
     Q_OBJECT
 
 public:
+    LinkProcessor(mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     LinkProcessor(const QStringList& linkList, mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     virtual ~LinkProcessor();
 
+    void resetAndSetLinkList(const QStringList& linkList);
     QString getLink(int index) const;
     bool isSelected(int index) const;
     MegaNodeSPtr getNode(int index) const;
@@ -42,7 +44,6 @@ public:
     void importLinks(const QString& nodePath);
     mega::MegaHandle getImportParentFolder();
     void downloadLinks(const QString& localPath);
-    void setParentHandler(QObject* parent);
 
 signals:
     void requestFetchSetFromLink(const QString& link);
@@ -96,7 +97,6 @@ private:
     void sendLinkInfoAvailableSignal(int index);
     void continueOrFinishLinkInfoReq();
     void createInvalidLinkObject(int index, int error);
-    void markForDeletionIfNoMoreRequests();
 
     void addTransfersAndStartIfNotStartedYet(LinkTransferType transferType);
     void processNextTransfer();
@@ -109,7 +109,6 @@ private:
     mega::MegaHandle mImportParentFolder;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
-    QPointer<QObject> mParentHandler;
     uint32_t mRequestCounter;
     int mCurrentIndex;
     QQueue<LinkTransfer> mTransferQueue;
