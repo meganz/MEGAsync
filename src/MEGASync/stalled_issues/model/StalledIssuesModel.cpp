@@ -1429,7 +1429,7 @@ void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& 
             {
                 if(auto nameConflict = item.convert<NameConflictedStalledIssue>())
                 {
-                    result = nameConflict->semiAutoSolveIssue(option);
+                    result = nameConflict->semiAutoSolveIssue(static_cast<NameConflictedStalledIssue::ActionsSelected>(option));
 
                     if(result)
                     {

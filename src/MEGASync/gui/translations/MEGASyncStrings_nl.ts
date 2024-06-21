@@ -1764,7 +1764,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>Kies uit welke bestanden of mappen u wilt uitsluiten</translation>
+        <translation>Kies vanuit welke map u de bestanden of mappen u wilt uitsluiten</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
@@ -2005,6 +2005,56 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Is gelijk aan</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Bestanden die het volgende bevatten:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Bestanden die eindigen op:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Bestanden die gelijk zijn aan:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Mappen die beginnen met:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Mappen die het volgende bevatten:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Mappen die eindigen op:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Mappen gelijk aan:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Bestanden met de extensie:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecteer de map die u wilt uitsluiten</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Selecteer het bestand dat u wilt uitsluiten</translation>
     </message>
 </context>
 <context>
@@ -2707,7 +2757,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>Het icoon van het meldingsgebied is succesvol geïnstalleerd.
-Meld u af bij uw computer om de installatie te voltooien.</translation>
+Start de computer opnieuw op om de installatie te voltooien.</translation>
     </message>
 </context>
 <context>
@@ -4021,11 +4071,6 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>De synchronisatie- of backupconfiguratie kon niet worden bijgewerkt. Probeer het later opnieuw of controleer de mapmachtigingen.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7699,19 +7744,6 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
     </message>
 </context>
 <context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selecteer het bestand dat u wilt uitsluiten</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Selecteer de map die u wilt uitsluiten</translation>
-    </message>
-</context>
-<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -7825,7 +7857,7 @@ Controleer de machtigingen van het .megaignore bestand op de locaties van uw lok
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>Het doel zit te diep in uw mappenstructuur. Stop de synchronisatie, verplaats de map naar een lokatie met minder dan 64 mappen diep en maak de synchronisatie opnieuw.
+        <translation>Het doel zit te diep in uw mappenstructuur. Stop de synchronisatie, verplaats de map naar een locatie met minder dan 64 mappen diep en maak de synchronisatie opnieuw.
 Als het probleem hiermee niet is opgelost, neem contact op met support@mega.nz.</translation>
     </message>
 </context>

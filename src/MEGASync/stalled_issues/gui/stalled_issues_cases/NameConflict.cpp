@@ -116,10 +116,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             title = new StalledIssueActionTitle(parent);
             initTitle(title, index, conflictedName);
-            if(!issue->isSolved())
-            {
-                initActionButtons(title);
-            }
 
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
@@ -207,6 +203,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             titleLayout->activate();
             title->setFailed(true, info->mError);
+        }
+
+        if(!issue->isSolved())
+        {
+            initActionButtons(title);
         }
 
         allSolved &= info->isSolved();

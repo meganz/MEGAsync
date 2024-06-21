@@ -514,6 +514,8 @@ protected:
     StatsEventHandler* mStatsEventHandler;
 
     SetManager* mSetManager;
+    LinkProcessor* mLinkProcessor;
+
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;

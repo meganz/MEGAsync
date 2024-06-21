@@ -1,5 +1,6 @@
 #include "SetManager.h"
 #include <QDir>
+#include "RequestListenerManager.h"
 
 using namespace mega;
 
@@ -7,10 +8,15 @@ SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders)
     : AsyncHandler()
     , mMegaApi(megaApi)
     , mMegaApiFolders(megaApiFolders)
-    , mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this))
     , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
     , mSetManagerState(SetManagerState::INIT)
 {
+    // Register for SDK Request callbacks
+    ListenerCallbacks lcInfo;
+    lcInfo.callbackClass = this;
+    lcInfo.onRequestFinish = std::bind(&SetManager::onRequestFinish, this, std::placeholders::_1, std::placeholders::_2);
+    lcInfo.removeAfterReqFinish = false;    // Keep listener alive until we manually unregister
+    mDelegateListener = RequestListenerManager::instance().registerAndGetListener(lcInfo);
 }
 
 SetManager::~SetManager()
@@ -230,7 +236,7 @@ void SetManager::handleStateINIT(const ActionParams& action)
         mCurrentSet.link = action.link;
 
         if (!mCurrentSet.link.isEmpty())
-        {
+        {            
             mSetManagerState = SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA;
             mMegaApi->fetchPublicSet(mCurrentSet.link.toUtf8().constData(), mDelegateListener.get());
         }
@@ -400,7 +406,7 @@ void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(const Acti
 //! \brief SetManager::onRequestFinish
 //! \Callback from SDK: response to a request
 //!
-void SetManager::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
+void SetManager::onRequestFinish(MegaRequest* request, MegaError* error)
 {
     switch (request->getType())
     {
