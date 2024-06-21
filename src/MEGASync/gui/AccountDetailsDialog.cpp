@@ -85,7 +85,6 @@ void AccountDetailsDialog::refresh()
         else
         {
             // Check storage state and set property accordingly
-            QString usageColorS;
             switch (preferences->getStorageState())
             {
                 case MegaApi::STORAGE_STATE_UNKNOWN:
@@ -94,14 +93,12 @@ void AccountDetailsDialog::refresh()
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
                     setProperty("storageState", QLatin1String("ok"));
-                    usageColorS = QString::fromLatin1("#333333");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
                     setProperty("storageState", QLatin1String("warning"));
-                    usageColorS = QString::fromLatin1("#F98400");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_PAYWALL:
@@ -110,7 +107,6 @@ void AccountDetailsDialog::refresh()
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
                     setProperty("storageState", QLatin1String("full"));
-                    usageColorS = QString::fromLatin1("#D90007");
                     break;
                 }
             }
@@ -140,20 +136,17 @@ void AccountDetailsDialog::refresh()
         QString usedTransferString;
 
         // Set UI according to state
-        QString usageColorT;
         switch (transferQuotaState) {
             case QuotaState::OK:
             {
                 setProperty("transferState", QLatin1String("ok"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OK);
-                usageColorT = QString::fromLatin1("#333333");
                 break;
             }
             case QuotaState::WARNING:
             {
                 setProperty("transferState", QLatin1String("warning"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColorT = QString::fromLatin1("#F98400");
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -162,7 +155,6 @@ void AccountDetailsDialog::refresh()
             {
                 setProperty("transferState", QLatin1String("full"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColorT = QString::fromLatin1("#D90007");
                 break;
             }
         }

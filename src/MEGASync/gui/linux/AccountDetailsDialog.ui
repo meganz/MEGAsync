@@ -232,13 +232,13 @@ font-size: 13px;
 
 #pStorageAndTransferUsage #sStorage, #sTransfer
 {
-height: 52px;
-width: 56px;
-min-height: 52px;
-min-width: 56px;
-max-height: 52px;
-max-width: 56px;
-margin-left: 24px;
+height: 65px;
+width: 70px;
+min-height: 65px;
+min-width: 70px;
+max-height: 65px;
+max-width: 70px;
+margin-left: 20px;
 background-color: transparent;
 }
 
