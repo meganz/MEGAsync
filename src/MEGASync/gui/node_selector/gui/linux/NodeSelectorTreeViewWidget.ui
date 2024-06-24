@@ -966,6 +966,9 @@ background-color:qlineargradient( x1:0 y1:0, x2:1 y2:0, stop:0 #8D8D8D, stop:1 #
       </item>
          <item>
           <widget class="QWidget" name="customButtonsContainer" native="true">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">QPushButton
 {
