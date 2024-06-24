@@ -134,15 +134,19 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     }
     else
     {
-        QFileInfo file(pathIn);
+        QString folderToOpen;
         if(file.isFile())
         {
-            return QProcess::startDetached(QLatin1String("xdg-open"), params << QUrl::fromLocalFile(file.absolutePath()).toString());
+            //xdg-open open folders, so we choose the file parent folder
+            QFileInfo file(pathIn);
+            folderToOpen = file.absolutePath();
         }
         else
         {
-            return QProcess::startDetached(QLatin1String("xdg-open"), params << QUrl::fromLocalFile(pathIn).toString());
+            folderToOpen = pathIn;
         }
+
+        return QProcess::startDetached(QLatin1String("xdg-open"), params << QUrl::fromLocalFile(folderToOpen).toString());
     }
 
 }
