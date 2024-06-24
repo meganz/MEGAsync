@@ -35,6 +35,7 @@ public:
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
     bool event(QEvent *event) override;
+    void resizeEvent(QResizeEvent *) override;
 
 private:
     void setConflictItems(int count);

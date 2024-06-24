@@ -62,7 +62,7 @@ built64/
 built32/
 sign64/
 sign32/
-
+qt-deploy-*
 
 .vs
 
@@ -75,6 +75,7 @@ CTestTestfile.cmake
 cmake_install.cmake
 *automoc*
 src/build-MEGASync-Desktop-*
+build/Desktop_Qt_*
 
 *.pro.user.*
 ecm_uninstall.cmake
@@ -88,3 +89,6 @@ src/.qmake.stash
 *.stash
 *.Debug
 *.Release
+
+# qml
+*.qtds

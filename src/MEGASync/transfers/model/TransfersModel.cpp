@@ -11,6 +11,8 @@
 #include "TransferMetaData.h"
 #include <QMegaMessageBox.h>
 #include "MegaTransferView.h"
+#include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
 
 #include <QSharedData>
 
@@ -67,7 +69,6 @@ TransferThread::TransfersToProcess TransferThread::processTransfers()
 void TransferThread::clear()
 {
     QMutexLocker lock(&mCacheMutex);
-
     mTransfersToProcess.clear();
     mTransfersCount.clear();
 }
@@ -334,7 +335,7 @@ void TransferThread::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
-void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaError* e)
+void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, MegaError* e)
 {
     if (!transfer->isStreamingTransfer())
     { 
@@ -361,6 +362,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                     //If it is a completed transfer from a retried folder, ignore it
                     TransferMetaDataContainer::finishFromFolderTransfer(transfer, e);
                 }
+            }
+
+            if(!megaApi->isLoggedIn())
+            {
+                return;
             }
 
             if(!transfer->isFolderTransfer())
@@ -454,6 +460,11 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
         }
 
         {
+            if(!megaApi->isLoggedIn())
+            {
+                return;
+            }
+
             QMutexLocker cacheLock(&mCacheMutex);
             auto data = onTransferEvent(transfer, e);
 
@@ -487,6 +498,8 @@ void TransferThread::onTransferFinish(MegaApi*, MegaTransfer *transfer, MegaErro
                         mTransfersToProcess.updateTransfersByTag.insert(transfer->getTag(), data);
                     }
                 }
+
+                data->mIsTempTransfer = isTemp;
             }
 
             data->mIsTempTransfer = isTemp;
@@ -882,6 +895,52 @@ bool TransfersModel::areAllPaused() const
     return mAreAllPaused;
 }
 
+const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeDownloadTransferFound(DownloadTransferInfo* info) const
+{
+    QExplicitlySharedDataPointer<const TransferData> foundTransfer;
+
+    auto transfers = getTransfersToIterate();
+
+    foreach(auto transfer, transfers)
+    {
+        if(transfer && !transfer->isUpload())
+        {
+            if(transfer->mNodeHandle == info->nodeHandle &&
+               transfer->isActiveOrPending())
+            {
+                foundTransfer = transfer;
+                break;
+            }
+        }
+    }
+
+    return foundTransfer;
+}
+
+const QExplicitlySharedDataPointer<const TransferData> TransfersModel::activeUploadTransferFound(UploadTransferInfo* info) const
+{
+    QExplicitlySharedDataPointer<const TransferData> foundTransfer;
+
+    auto transfers = getTransfersToIterate();
+
+    foreach(auto transfer, transfers)
+    {
+        if(transfer && transfer->isUpload())
+        {
+            if(transfer->mFilename.compare(info->filename, Qt::CaseSensitive) == 0 &&
+               transfer->mParentHandle == info->parentHandle &&
+               transfer->path() == info->localPath &&
+               transfer->isActiveOrPending())
+            {
+                foundTransfer = transfer;
+                break;
+            }
+        }
+    }
+
+    return foundTransfer;
+}
+
 bool TransfersModel::hasChildren(const QModelIndex& parent) const
 {
     if (parent == DEFAULT_IDX)
@@ -1173,9 +1232,6 @@ void TransfersModel::updateTransfer(QExplicitlySharedDataPointer<TransferData> t
 
 void TransfersModel::processUpdateTransfers()
 {
-    QList<QExplicitlySharedDataPointer<TransferData>> alreadyUploadCompletedTransfers;
-    QList<QExplicitlySharedDataPointer<TransferData>> alreadyDownloadCompletedTransfers;
-
     for (auto it = mTransfersToProcess.updateTransfersByTag.begin(); it != mTransfersToProcess.updateTransfersByTag.end();)
     {   
         auto itValue = (*it);
@@ -1197,11 +1253,14 @@ void TransfersModel::processUpdateTransfers()
                     mCompletedTransfersByTag.insert(itValue->mNodeHandle, index(row,0));
                 }
             }
+            else
+            {
+                assert(false);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::DUP_FINISHED_TRSF,
+                                                               { QString::number(itValue->mTag) });
+            }
         }
     }
-
-    mTransferEventWorker->resetCompletedUploads(alreadyUploadCompletedTransfers);
-    mTransferEventWorker->resetCompletedDownloads(alreadyDownloadCompletedTransfers);
 }
 
 void TransfersModel::processFailedTransfers()
@@ -1470,6 +1529,10 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
 
             foreach(auto& failedTransferdata, transferDatas)
             {
+                if(!failedTransferdata)
+                {
+                    continue;
+                }
                 auto failedTransfer = failedTransferdata->mFailedTransfer;
 
                 std::shared_ptr<TransferMetaData> data(nullptr);
@@ -1507,7 +1570,6 @@ void TransfersModel::retryTransfers(const QMultiMap<unsigned long long, QExplici
                 {
                     TransferMetaDataContainer::retryTransfer(failedTransfer.get(), appData);
                 }
-
 
                 if (failedTransfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
                 {
@@ -2130,9 +2192,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
     QMutexLocker lock(&mModelMutex);
 
-    mDataMutex.lockForRead();
-    auto transfersCopied = mTransfers;
-    mDataMutex.unlock();
+    auto transfers = getTransfersToIterate();
 
     if (mAreAllPaused)
     {
@@ -2141,7 +2201,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
 
         EventUpdater updater(activeTransfers, 200);
 
-        std::for_each(transfersCopied.crbegin(), transfersCopied.crend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(transfers.crbegin(), transfers.crend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
                       mutable {
 
             if(item->getState() & TransferData::PAUSABLE_STATES_MASK)
@@ -2160,7 +2220,7 @@ int TransfersModel::performPauseResumeAllTransfers(int activeTransfers, bool use
     {
         EventUpdater updater(activeTransfers, 200);
 
-        std::for_each(transfersCopied.cbegin(), transfersCopied.cend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
+        std::for_each(transfers.cbegin(), transfers.cend(), [this, &tagsUpdated, updater, useEventUpdater](QExplicitlySharedDataPointer<TransferData> item)
                       mutable {
 
             if(item->getState() & TransferData::TRANSFER_PAUSED)
@@ -2335,14 +2395,6 @@ QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransfer(int row) 
     return transfer;
 }
 
-void TransfersModel::addTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
-{
-    mDataMutex.lockForWrite();
-    mTransfers.append(transfer);
-    mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(rowCount(DEFAULT_IDX) - 1,0)));
-    mDataMutex.unlock();
-}
-
 const QExplicitlySharedDataPointer<const TransferData> TransfersModel::getTransferByTag(int tag) const
 {
     return getTransfer(getRowByTransferTag(tag));
@@ -2355,10 +2407,17 @@ QExplicitlySharedDataPointer<TransferData> TransfersModel::getTransferByTag(int 
 
 int TransfersModel::getRowByTransferTag(int tag) const
 {
-    mDataMutex.lockForRead();
     auto result = mTagByOrder.contains(tag) ? mTagByOrder.value(tag).row() : -1;
-    mDataMutex.unlock();
     return result;
+}
+
+void TransfersModel::addTransfer(QExplicitlySharedDataPointer<TransferData> transfer)
+{
+    mDataMutex.lockForWrite();
+    mTransfers.append(transfer);
+    mDataMutex.unlock();
+
+    mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(rowCount(DEFAULT_IDX) - 1,0)));
 }
 
 void TransfersModel::removeTransfer(int row)
@@ -2400,6 +2459,14 @@ void TransfersModel::restoreTagsByRow()
             mTagByOrder.insert(transfer->mTag, QPersistentModelIndex(index(row,0)));
         }
     }
+}
+
+QList<QExplicitlySharedDataPointer<TransferData> > TransfersModel::getTransfersToIterate() const
+{
+    mDataMutex.lockForRead();
+    auto transfers = mTransfers;
+    mDataMutex.unlock();
+    return transfers;
 }
 
 bool TransfersModel::isUiBlockedModeActive() const
@@ -2693,6 +2760,7 @@ void TransfersModel::resetModel()
     beginResetModel();
 
     mTransfersCount.clear();
+    mActiveTransfers.clear();
     mTransferEventWorker->clear();
     mTransfersToProcess.clear();
     mTransfersProcessChanged = 0;

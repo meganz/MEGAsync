@@ -78,6 +78,7 @@ void DuplicatedNodeItem::fillUi()
     }
 
     auto nodeName(getNodeName());
+    ui->lNodeName->setMaximumLines(4);
     ui->lNodeName->setText(nodeName);
 
     QIcon icon = isFile() ? QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1Literal(":/images/drag_")))
@@ -89,6 +90,15 @@ void DuplicatedNodeItem::fillUi()
 void DuplicatedNodeItem::setModifiedTime(const QDateTime& dateTime)
 {
     auto timeString = dateTime.isValid() ? MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat) : tr("loading time…");
+
+#ifdef Q_OS_LINUX
+    if(QDateTime::fromSecsSinceEpoch(0) == dateTime)
+    {
+        timeString = QString::fromLatin1("");
+        ui->point->hide();
+    }
+#endif
+
     ui->lDate->setText(timeString);
 }
 

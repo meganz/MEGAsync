@@ -1,7 +1,7 @@
 #include "InfoDialogTransferDelegateWidget.h"
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "MegaApplication.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "platform/Platform.h"
 #include <TransferItem.h>
 
@@ -30,6 +30,7 @@ InfoDialogTransferDelegateWidget::InfoDialogTransferDelegateWidget(QWidget *pare
 
     mUi->lFileNameCompleted->installEventFilter(this);
     mUi->lFileName->installEventFilter(this);
+    mUi->lElapsedTime->installEventFilter(this);
 }
 
 InfoDialogTransferDelegateWidget::~InfoDialogTransferDelegateWidget()
@@ -144,12 +145,12 @@ void InfoDialogTransferDelegateWidget::setFileNameAndType()
 {
     mUi->lFileName->ensurePolished();
     mUi->lFileName->setText(getData()->mFilename);
-    mUi->lFileName->setToolTip(getData()->mFilename);
+    mUi->lFileName->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileName->adjustSize();
 
     mUi->lFileNameCompleted->ensurePolished();
     mUi->lFileNameCompleted->setText(getData()->mFilename);
-    mUi->lFileNameCompleted->setToolTip(getData()->mFilename);
+    mUi->lFileNameCompleted->setToolTip(getData()->mFilename.toHtmlEscaped());
     mUi->lFileNameCompleted->adjustSize();
 
     QIcon icon = Utilities::getExtensionPixmapMedium(getData()->mFilename);
@@ -194,19 +195,19 @@ QString InfoDialogTransferDelegateWidget::getTransferName()
     return mUi->lFileName->text();
 }
 
-void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, int errorCode)
+void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, bool error)
 {
     QIcon iconCompleted;
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/download_fail_item_ico.png")
+                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/downloaded_item_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        iconCompleted = Utilities::getCachedPixmap(errorCode < 0 ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
-                                                                  : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
+        iconCompleted = Utilities::getCachedPixmap(error ? QString::fromLatin1(":/images/transfer_manager/transfers_states/upload_fail_item_ico.png")
+                                                         : QString::fromLatin1(":/images/transfer_manager/transfers_states/uploaded_item_ico.png"));
     }
 
     mUi->lTransferTypeCompleted->setPixmap(iconCompleted.pixmap(mUi->lTransferTypeCompleted->size()));
@@ -258,7 +259,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                     //Double check that the mFailedTransfer is OK
                     if(getData()->isFailed())
                     {
-                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorInContext()));
+                        mUi->lActionTransfer->setToolTip(tr("Failed: %1").arg(getErrorText()));
                     }
 
                     if(update)
@@ -331,14 +332,7 @@ void InfoDialogTransferDelegateWidget::finishTransfer()
         mUi->lActionTransfer->setIconSize(QSize(24,24));
         mUi->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
 
-        //Check if transfer finishes while the account was blocked, in order to provide the right context for failed error
-        bool blockedTransfer = MegaSyncApp->finishedTransfersWhileBlocked(getData()->mTag);
-        if (blockedTransfer)
-        {
-            MegaSyncApp->removeFinishedBlockedTransfer(getData()->mTag);
-        }
-
-        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorInContext()));
+        mUi->lElapsedTime->setText(tr("Failed: %1").arg(getErrorText()));
         updateFinishedIco(getData()->mType, true);
     }
     else
@@ -359,7 +353,7 @@ void InfoDialogTransferDelegateWidget::updateFinishedTime()
     }
 
     mUi->lElapsedTime->setStyleSheet(QLatin1String("color: #999999"));
-    mUi->lElapsedTime->setText(tr("Added [A]").replace(QLatin1String("[A]"), Utilities::getFinishedTimeString(finishedTime)));
+    mUi->lElapsedTime->setText(Utilities::getAddedTimeString(finishedTime));
 }
 
 QSize InfoDialogTransferDelegateWidget::minimumSizeHint() const
@@ -398,6 +392,30 @@ bool InfoDialogTransferDelegateWidget::eventFilter(QObject *watched, QEvent *eve
                                                          availableSize));
             nameLabel->updateGeometry();
             nameLabel->parentWidget()->updateGeometry();
+        }
+    }
+
+    if(getData() && watched == mUi->lElapsedTime && getData()->mErrorCode < 0 && (event->type() == QEvent::Resize || event->type() == QEvent::Paint))
+    {
+        int leftMargin;
+        int rightMargin;
+
+        mUi->wContainerCompletedData->layout()->getContentsMargins(&leftMargin, 0, &rightMargin, 0);
+
+        int availableWidth = mUi->wContainerCompletedData->width() - mUi->lFileTypeCompleted->width() - mUi->wOptions->width()
+                        - mUi->wContainerCompletedData->layout()->spacing() * 2 - rightMargin - leftMargin
+                        - mUi->horizontalLayout_5->spacing() - 3;
+
+        QString text = tr("Failed: %1").arg(getErrorText());
+        QString elidedText = mUi->lElapsedTime->fontMetrics().elidedText(text, Qt::ElideMiddle, availableWidth);
+        if(text != elidedText)
+        {
+            mUi->lElapsedTime->setText(elidedText);
+            mUi->lElapsedTime->setToolTip(text);
+        }
+        else
+        {
+            mUi->lElapsedTime->setToolTip(QString());
         }
     }
 

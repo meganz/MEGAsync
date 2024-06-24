@@ -1,7 +1,7 @@
 #ifndef AVATARATTRIBUTESREQUESTS_H
 #define AVATARATTRIBUTESREQUESTS_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 #include <QColor>
 #include <QPixmap>
@@ -55,6 +55,8 @@ private:
 
     void fillLetterInfo();
     void getLetterColor();
+
+    bool isFileValid(const QString& filePath);
 
     mutable QMap<int,QPixmap> mIcon;
     QString mIconPath;

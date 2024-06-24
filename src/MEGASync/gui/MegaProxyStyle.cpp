@@ -1,6 +1,7 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
-#include "control/HTTPServer.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 
 #include <EventHelper.h>
 #include <QStyleOption>
@@ -8,7 +9,7 @@
 #include <QSpinBox>
 #include <QComboBox>
 #include <QOperatingSystemVersion>
-#include <QApplication>
+#include <QWindow>
 
 const int TOOLTIP_DELAY = 250;
 
@@ -197,16 +198,13 @@ void MegaProxyStyle::polish(QWidget *widget)
     {
         EventManager::addEvent(comboBox, QEvent::Wheel, EventHelper::BLOCK);
     }
-#ifdef Q_OS_MAC
-    else if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Monterey
+    else if(qobject_cast<QDialog*>(widget) || qobject_cast<QWindow*>(widget))
     {
-        if(auto dialog = qobject_cast<QDialog*>(widget))
+        if(MegaSyncApp->getStatsEventHandler())
         {
-            dialog->installEventFilter(this);
+            widget->installEventFilter(MegaSyncApp->getStatsEventHandler());
         }
     }
-
-#endif
 
     QProxyStyle::polish(widget);
 }
@@ -236,20 +234,3 @@ bool MegaProxyStyle::event(QEvent *e)
     return QProxyStyle::event(e);
 }
 
-bool MegaProxyStyle::eventFilter(QObject *watched, QEvent *event)
-{
-#ifdef Q_OS_MAC
-    if(event->type() == QEvent::Enter)
-    {
-        if (QOperatingSystemVersion::current() > QOperatingSystemVersion::MacOSBigSur) //It only fails from macOS Ventura
-        {
-            if(auto dialog = qobject_cast<QDialog*>(watched))
-            {
-                qApp->setActiveWindow(dialog);
-                dialog->repaint();
-            }
-        }
-    }
-#endif
-    return QProxyStyle::eventFilter(watched, event);
-}

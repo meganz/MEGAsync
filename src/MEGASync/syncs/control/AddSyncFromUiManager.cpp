@@ -88,13 +88,12 @@ void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> di
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
     mSyncController = new SyncController(this);
-    GuiUtilities::connectAddSyncDefaultHandler(mSyncController, Preferences::instance()->accountType());
     SyncController::connect(mSyncController, &SyncController::syncAddStatus, this, [this, handle](const int errorCode, const int,
-                                                                                                       const QString, QString localPath)
+                                                                                                       const QString name)
                             {
                                 if (errorCode == mega::MegaError::API_OK)
                                 {
-                                    emit syncAdded(handle, localPath);
+                                    emit syncAdded(handle, name);
                                 }
 
                                 deleteLater();

@@ -8,8 +8,7 @@ CONFIG += building_tests
 include(../../src/MEGASync/MEGASync.pro)
 include(../3rdparty/catch/catch.pri)
 include(../3rdparty/trompeloeil/trompeloeil.pri)
-SOURCES += GuestWidgetTest.cpp \
-           Utilities.test.cpp \
+SOURCES += Utilities.test.cpp \
            control/TransferRemainingTime.Test.cpp \
            ScaleFactorManager.Test.cpp \
            main.cpp

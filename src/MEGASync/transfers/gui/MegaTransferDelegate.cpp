@@ -1,6 +1,5 @@
 #include "MegaTransferDelegate.h"
-#include "control/Utilities.h"
-#include "Preferences.h"
+#include "Utilities.h"
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "TransfersModel.h"
@@ -51,7 +50,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             return;
         }
 
-#ifdef __APPLE__
+#ifdef Q_OS_MACOS
         auto width = mView->width();
         width -= mView->contentsMargins().left();
         width -= mView->contentsMargins().right();
@@ -124,7 +123,7 @@ bool MegaTransferDelegate::event(QEvent *event)
 TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QModelIndex& index, const QSize& size) const
 { 
     TransferBaseDelegateWidget* item(nullptr);
-
+    
     if(index.isValid())
     {
         auto nbRowsMaxInView(1);
@@ -133,7 +132,6 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
             nbRowsMaxInView = mView->height() / size.height() + 1;
         }
         auto row (index.row() % nbRowsMaxInView);
-
 
         if(row >= mTransferItems.size())
         {
@@ -147,7 +145,7 @@ TransferBaseDelegateWidget *MegaTransferDelegate::getTransferItemWidget(const QM
 
         item->setCurrentIndex(index);
     }
-
+    
     return item;
 }
 
@@ -212,6 +210,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view,
         if (widget)
         {
             QToolTip::showText(event->globalPos(), widget->toolTip());
+            return true;
         }
     }
     return QStyledItemDelegate::helpEvent(event, view, option, index);

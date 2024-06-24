@@ -15,13 +15,9 @@ class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
 {
     Q_OBJECT
 
-    static const QString ERROR_STRING;
-
 public:
 
     static const char* NODE_PATH_PROPERTY;
-    static const QString DEFAULT_FOLDER_NAME;
-    static const QString DEFAULT_PATH;
 
     explicit UploadToMegaDialog(mega::MegaApi *megaApi, QWidget *parent = 0);
     ~UploadToMegaDialog();
@@ -41,6 +37,12 @@ protected:
 private:
     std::unique_ptr<mega::MegaNode> getUploadFolder();
     void showNodeSelector();
+
+    static QString getDefaultPath();
+    void updatePath(const QString& path = QString());
+
+    bool mUseDefaultPath;
+    bool mPathChangedByUser;
 
     Ui::UploadToMegaDialog *ui;
     mega::MegaApi *megaApi;

@@ -2,15 +2,9 @@
 #include "node_selector/model/NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "Preferences.h"
-#include "syncs/control/SyncInfo.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
 #include "MegaNodeNames.h"
-#include "EventUpdater.h"
-
-#include "mega/types.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -97,7 +91,10 @@ void NodeRequester::search(const QString &text, NodeSelectorModelItemSearch::Typ
     }
     mSearchCanceled = false;
 
-    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(text.toUtf8().constData(), mCancelToken.get()));
+    std::unique_ptr<mega::MegaSearchFilter> searchFilter(mega::MegaSearchFilter::createInstance());
+    searchFilter->byName(text.toUtf8().constData());
+
+    auto nodeList = std::unique_ptr<mega::MegaNodeList>(MegaSyncApp->getMegaApi()->search(searchFilter.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get()));
     QList<NodeSelectorModelItem*> items;
     mSearchedTypes = NodeSelectorModelItemSearch::Type::NONE;
 
@@ -216,7 +213,6 @@ void NodeRequester::createCloudDriveRootItem()
 
 bool NodeRequester::isIncomingShareCompatible(mega::MegaNode *node)
 {
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
     if(mSyncSetupMode)
     {
         if(MegaSyncApp->getMegaApi()->getAccess(node) != mega::MegaShare::ACCESS_FULL)
@@ -264,7 +260,7 @@ void NodeRequester::createIncomingSharesRootItems(std::shared_ptr<mega::MegaNode
         {
             item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(i,0));
             connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-            item->setOwner(move(user));
+            item->setOwner(std::move(user));
         }
     }
 
@@ -300,7 +296,7 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
     {
         item->setProperty(INDEX_PROPERTY, incomingSharesModel->index(incomingSharesModel->rowCount(),0));
         connect(item, &NodeSelectorModelItem::infoUpdated, incomingSharesModel, &NodeSelectorModelIncomingShares::onItemInfoUpdated);
-        item->setOwner(move(user));
+        item->setOwner(std::move(user));
     }
 
     if(isAborted())
@@ -349,23 +345,6 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
     if(!isAborted())
     {
         emit megaBackupRootItemsCreated();
-    }
-}
-
-void NodeRequester::onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem)
-{
-    lockDataMutex(true);
-    auto childItem = parentItem->addNode(newNode);
-    lockDataMutex(false);
-    childItem->setProperty(INDEX_PROPERTY, mModel->index(parentItem->getNumChildren() -1 ,0, parentIndex));
-
-    if(!isAborted())
-    {
-        emit nodeAdded(childItem);
-    }
-    else
-    {
-        removeItem(childItem);
     }
 }
 
@@ -506,7 +485,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
-    mSyncSetupMode(false)
+    mSyncSetupMode(false),
+    mIsBeingModified(true)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -517,7 +497,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     mNodeRequesterThread->start();
 
     connect(this, &NodeSelectorModel::requestChildNodes, mNodeRequesterWorker, &NodeRequester::requestNodeAndCreateChildren, Qt::QueuedConnection);
-    connect(this, &NodeSelectorModel::requestAddNode, mNodeRequesterWorker, &NodeRequester::onAddNodeRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::requestAddNodes, mNodeRequesterWorker, &NodeRequester::onAddNodesRequested, Qt::QueuedConnection);
     connect(this, &NodeSelectorModel::removeItem, mNodeRequesterWorker, &NodeRequester::removeItem);
     connect(this, &NodeSelectorModel::removeRootItem, this, [this](NodeSelectorModelItem* item)
@@ -529,7 +508,6 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     connect(mNodeRequesterThread, &QThread::finished, mNodeRequesterWorker, &QObject::deleteLater, Qt::DirectConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::nodesReady, this, &NodeSelectorModel::onChildNodesReady, Qt::QueuedConnection);
-    connect(mNodeRequesterWorker, &NodeRequester::nodeAdded, this, &NodeSelectorModel::onNodeAdded, Qt::QueuedConnection);
     connect(mNodeRequesterWorker, &NodeRequester::nodesAdded, this, &NodeSelectorModel::onNodesAdded, Qt::QueuedConnection);
 
     connect(mNodeRequesterWorker, &NodeRequester::rootItemsAdded, this, &NodeSelectorModel::onRootItemAdded, Qt::QueuedConnection);
@@ -543,12 +521,34 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     qRegisterMetaType<std::shared_ptr<mega::MegaNodeList>>("std::shared_ptr<mega::MegaNodeList>");
     qRegisterMetaType<std::shared_ptr<mega::MegaNode>>("std::shared_ptr<mega::MegaNode>");
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
+
+    protectModelWhenPerformingActions();
 }
 
 NodeSelectorModel::~NodeSelectorModel()
 {
     mNodeRequesterThread->quit();
     mNodeRequesterThread->wait();
+}
+
+void NodeSelectorModel::protectModelWhenPerformingActions()
+{
+    auto protectModel = [this](){
+        setIsModelBeingModified(true);
+    };
+
+    connect(this, &NodeSelectorModel::rowsAboutToBeInserted, protectModel);
+    connect(this, &NodeSelectorModel::rowsAboutToBeRemoved, protectModel);
+    connect(this, &NodeSelectorModel::rowsAboutToBeMoved, protectModel);
+    connect(this, &NodeSelectorModel::modelAboutToBeReset, protectModel);
+
+    auto unprotectModel = [this](){
+        setIsModelBeingModified(false);
+    };
+    connect(this, &NodeSelectorModel::rowsInserted, unprotectModel);
+    connect(this, &NodeSelectorModel::rowsRemoved, unprotectModel);
+    connect(this, &NodeSelectorModel::modelReset, unprotectModel);
+    connect(this, &NodeSelectorModel::rowsMoved, unprotectModel);
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -850,19 +850,6 @@ void NodeSelectorModel::setSyncSetupMode(bool value)
     mNodeRequesterWorker->setSyncSetupMode(value);
 }
 
-void NodeSelectorModel::addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent)
-{
-    NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-    if(parentItem && parentItem->getNode()->isFolder())
-    {
-        clearIndexesNodeInfo();
-
-        auto totalRows = rowCount(parent);
-        beginInsertRows(parent, totalRows, totalRows);
-        emit requestAddNode(node, parent, parentItem);
-    }
-}
-
 void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
 {
     if(!nodes.isEmpty())
@@ -870,7 +857,7 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
         if(parent.isValid())
         {
             NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-            if(parentItem && parentItem->getNode()->isFolder())
+            if(parentItem && parentItem->getNode()->isFolder() && parentItem->areChildrenInitialized())
             {
                 clearIndexesNodeInfo();
                 auto totalRows = rowCount(parent);
@@ -881,17 +868,6 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
     }
 }
 
-void NodeSelectorModel::onNodeAdded(NodeSelectorModelItem* childItem)
-{
-    endInsertRows();
-    auto index = childItem->property(INDEX_PROPERTY).toModelIndex();
-    mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(childItem->getNode()->getHandle(), index));
-
-    mIndexesActionInfo.needsToBeSelected = true;
-    mIndexesActionInfo.needsToBeEntered = true;
-    emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded,false);
-}
-
 void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> childrenItem)
 {
     endInsertRows();
@@ -900,6 +876,11 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     {
         auto index = child->property(INDEX_PROPERTY).toModelIndex();
         emit dataChanged(index, index);
+    }
+
+    if (!childrenItem.empty())
+    {
+        emit levelsAdded({}, false);
     }
 }
 
@@ -946,7 +927,7 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
 
 void NodeSelectorModel::onRootItemAdded()
 {
-    endInsertingRows();
+    endInsertRows();
 }
 
 void NodeSelectorModel::onRootItemDeleted()
@@ -1063,14 +1044,15 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
 NodeSelectorModel::IndexesActionInfo NodeSelectorModel::needsToBeExpandedAndSelected()
 {
     IndexesActionInfo info = mIndexesActionInfo;
-    clearIndexesNodeInfo();
+    clearIndexesNodeInfo(mIndexesActionInfo.needsToBeSelected);
 
     return info;
 }
 
-void NodeSelectorModel::clearIndexesNodeInfo()
+void NodeSelectorModel::clearIndexesNodeInfo(bool select)
 {
     mIndexesActionInfo = IndexesActionInfo();
+    mIndexesActionInfo.needsToBeSelected = select;
 }
 
 void NodeSelectorModel::abort()
@@ -1282,7 +1264,7 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
     }
     for(int i = 0; i < rowCount(parent); ++i)
     {
-        QModelIndex child = index(i, COLUMN::NODE, parent);
+        QModelIndex child = parent.isValid() ? index(i, COLUMN::NODE, parent) : index(i, COLUMN::NODE);
         if(child.isValid())
         {
             auto ret = findItemByNodeHandle(handle, child);

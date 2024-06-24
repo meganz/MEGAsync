@@ -290,3 +290,20 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
         QMegaMessageBox::warning(msgInfo);
     }
 }
+
+////////////////////////////////
+MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget *parent) : NodeSelector(parent)
+{
+    ui->fBackups->hide();
+    ui->fIncomingShares->hide();
+    SelectTypeSPtr selectType = SelectTypeSPtr(new MoveBackupType);
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
+    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    mCloudDriveWidget->setShowEmptyView(false);
+    ui->stackedWidget->addWidget(mCloudDriveWidget);
+    makeConnections(selectType);
+}
+void MoveBackupNodeSelector::checkSelection()
+{
+    accept();
+}

@@ -1,6 +1,6 @@
 #include <platform/PowerOptions.h>
 
-#include <Preferences.h>
+#include "Preferences.h"
 #include "megaapi.h"
 
 #include <QString>
@@ -292,7 +292,7 @@ PowerOptions::PowerOptions()
 {
     if(!mPowerOptionsImpl)
     {
-        mPowerOptionsImpl = mega::make_unique<PowerOptionsImpl>();
+        mPowerOptionsImpl = std::make_unique<PowerOptionsImpl>();
     }
 }
 

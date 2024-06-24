@@ -73,9 +73,10 @@ public:
 
 public slots:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes);
+    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     virtual void onRowsInserted();
     void onRowsRemoved();
+    void onProxyModelSorted();
 
 signals:
     void okBtnClicked();
@@ -106,7 +107,7 @@ protected:
     mega::MegaApi* mMegaApi;
 
 protected slots:
-    virtual bool containsIndexToUpdate(mega::MegaNode *node, mega::MegaNode *parentNode);
+    virtual bool containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle);
 
 private slots:
     void onbNewFolderClicked();
@@ -148,11 +149,12 @@ private:
     virtual bool isCurrentRootIndexReadOnly(){return false;}
     virtual bool newFolderBtnCanBeVisisble(){return true;}
     virtual bool isCurrentSelectionReadOnly(){return false;}
-    int areThereNodesToUpdate();
     void selectionHasChanged(const QModelIndexList& selected);
-    ButtonIconManager mButtonIconManager;
+    void checkOkButton(const QModelIndexList& selected);
+    bool shouldUpdateImmediately();
+    bool areThereNodesToUpdate();
 
-    void processNodeUpdated(mega::MegaNode* node);
+    ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
@@ -163,14 +165,16 @@ private:
       mega::MegaHandle parentHandle = mega::INVALID_HANDLE;
       std::shared_ptr<mega::MegaNode> node;
     };
-
+    void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
     QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
-    mega::MegaHandle mNewFolderAdded;
+    mega::MegaHandle mNewFolderHandle;
+    bool mNewFolderAdded;
+
     friend class DownloadType;
     friend class SyncType;
     friend class UploadType;
@@ -255,6 +259,13 @@ public:
 
 private:
     QMap<QWidget*, QMap<int, QPushButton*>> mCustomBottomButtons;
+};
+ 
+class MoveBackupType : public UploadType
+{
+public:
+    explicit MoveBackupType() = default;
+    NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
 #endif // NODESELECTORTREEVIEWWIDGET_H

@@ -18,12 +18,16 @@ class PlanWidget : public QWidget
 
     public:
         typedef enum {
-            FREE     = mega::MegaAccountDetails::ACCOUNT_TYPE_FREE,
-            PRO_I    = mega::MegaAccountDetails::ACCOUNT_TYPE_PROI,
-            PRO_II   = mega::MegaAccountDetails::ACCOUNT_TYPE_PROII,
-            PRO_III  = mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII,
-            PRO_LITE = mega::MegaAccountDetails::ACCOUNT_TYPE_LITE,
-            BUSINESS = mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS,
+            FREE          = mega::MegaAccountDetails::ACCOUNT_TYPE_FREE,
+            PRO_I         = mega::MegaAccountDetails::ACCOUNT_TYPE_PROI,
+            PRO_II        = mega::MegaAccountDetails::ACCOUNT_TYPE_PROII,
+            PRO_III       = mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII,
+            PRO_LITE      = mega::MegaAccountDetails::ACCOUNT_TYPE_LITE,
+            PRO_STARTER   = mega::MegaAccountDetails::ACCOUNT_TYPE_STARTER,
+            PRO_BASIC     = mega::MegaAccountDetails::ACCOUNT_TYPE_BASIC,
+            PRO_ESSENTIAL = mega::MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL,
+            BUSINESS      = mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS,
+            PRO_FLEXI     = mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI,
         } ProLevel;
 
         typedef enum {
@@ -51,6 +55,18 @@ class PlanWidget : public QWidget
         std::unique_ptr<BalloonToolTip> mTooltip;
         bool mDisabled;
         bool mIsBillingCurrency;
+
+        //Map to fix order issues of Pro level list from SDK.
+        std::map<int, int> visiblePlanOrder = {{FREE, 0},
+                                               {PRO_STARTER, 1},
+                                               {PRO_BASIC, 2},
+                                               {PRO_ESSENTIAL, 3},
+                                               {PRO_LITE, 4},
+                                               {PRO_I, 5},
+                                               {PRO_II, 6},
+                                               {PRO_III, 7},
+                                               {BUSINESS, 8},
+                                               {PRO_FLEXI, 9}                                               };
 
         void updatePlanInfo();
         void setWidgetOpacity(qreal opacity);

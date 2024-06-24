@@ -1,7 +1,7 @@
 #include "RemoveBackupDialog.h"
 #include "ui_RemoveBackupDialog.h"
 #include "MegaApplication.h"
-#include "node_selector/gui/NodeSelector.h"
+#include "node_selector/gui/NodeSelectorSpecializations.h"
 #include "MegaNodeNames.h"
 #include "Utilities.h"
 #include "DialogOpener.h"
@@ -61,7 +61,7 @@ void RemoveBackupDialog::OnMoveSelected()
 
 void RemoveBackupDialog::OnChangeButtonClicked()
 {
-    auto nodeSelector = new UploadNodeSelector(this);
+    auto nodeSelector = new MoveBackupNodeSelector(this);
     DialogOpener::showDialog<NodeSelector>(nodeSelector, [this, nodeSelector]
     {
         if (nodeSelector->result() == QDialog::Accepted)

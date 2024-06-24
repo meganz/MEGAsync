@@ -1,0 +1,14 @@
+variables:
+  GIT_STRATEGY: clone
+  GIT_DEPTH: 0
+
+stages:
+  - scan
+
+scan:
+  stage: scan
+  image:
+    name: mega-docker.artifactory.developers.mega.co.nz:8443/gitleaks:v8.18.2-mega-1.0
+    entrypoint: [""]
+  script:
+    - gitleaks detect -v --redact -c .gitleaks/gitleaks.toml

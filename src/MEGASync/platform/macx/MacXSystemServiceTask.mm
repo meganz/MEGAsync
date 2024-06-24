@@ -29,19 +29,10 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
         if (file.exists())
         {
             string tmpPath(itemsSelected.at(i).toUtf8().constData());
-            MegaNode *node = megaApi->getSyncedNode(&tmpPath);
-            if (!node)
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service not synced node...");
-                const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
-                node = megaApi->getExportableNodeByFingerprint(fpLocal);
-                delete [] fpLocal;
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service found exportable node...");
-            }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service synced node...");
-            }
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service not synced node...");
+            const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
+            MegaNode *node = fpLocal ? megaApi->getExportableNodeByFingerprint(fpLocal) : nullptr;
+            delete [] fpLocal;
 
             if(node)
             {

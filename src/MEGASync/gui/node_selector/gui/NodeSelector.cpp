@@ -2,7 +2,7 @@
 #include "ui_NodeSelector.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "megaapi.h"
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"

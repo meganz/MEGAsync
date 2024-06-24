@@ -119,22 +119,6 @@ std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelInde
     return qvariant_cast<std::shared_ptr<mega::MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
 }
 
-void NodeSelectorProxyModel::addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex &parent)
-{
-    if(NodeSelectorModel* megaModel = getMegaModel())
-    {
-        megaModel->addNode(move(node), mapToSource(parent));
-    }
-}
-
-void NodeSelectorProxyModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
-{
-    if(NodeSelectorModel* megaModel = getMegaModel())
-    {
-        megaModel->addNodes(nodes, mapToSource(parent));
-    }
-}
-
 void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
 {
     if(NodeSelectorModel* megaModel = getMegaModel())
@@ -162,7 +146,7 @@ bool NodeSelectorProxyModel::lessThan(const QModelIndex &left, const QModelIndex
     {
         if(left.column() == NodeSelectorModel::DATE && right.column() == NodeSelectorModel::DATE)
         {
-            result = left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)) < right.data(toInt(NodeSelectorModelRoles::DATE_ROLE));
+            result = left.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>() < right.data(toInt(NodeSelectorModelRoles::DATE_ROLE)).value<int64_t>();
         }
         else
         {
@@ -318,6 +302,8 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     emit getMegaModel()->blockUi(false);
     mItemsToMap.clear();
+
+    emit modelSorted();
 }
 
 NodeSelectorProxyModelSearch::NodeSelectorProxyModelSearch(QObject *parent)

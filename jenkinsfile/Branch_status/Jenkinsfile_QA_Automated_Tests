@@ -1,0 +1,108 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build MEGAsync') {
+            parallel {
+                stage('Build Windows installers') {
+                    steps {
+                        script {
+                            def triggeredBuild = build job: '../MEGASync-winx64-Packages/develop', parameters: [ //tbc
+                                booleanParam(name: 'IS_RELEASE_CANDIDATE', value: true),
+                                string(name: 'RELEASE_CANDIDATE_NAME', value: 'QA-automated-tests'),
+                                string(name: 'ARCHITECTURE', value: "32/64"),
+                                string(name: 'SDK_BRANCH', value: "develop")
+                            ]
+                            env.WINDOWS_BUILD_ID = 	triggeredBuild.getId()                
+                        }
+                    }
+                }
+                stage('Build MacOS packages') {
+                    steps {
+                        build job: '../MEGAsync-macos-Packages/develop', parameters: [
+                            booleanParam(name: 'IS_RELEASE_CANDIDATE', value: true),
+                            string(name: 'RELEASE_CANDIDATE_NAME', value: 'QA-automated-tests'),
+                            booleanParam(name: 'ARM64', value: true),
+                            booleanParam(name: 'X86_64', value: true),
+                            string(name: 'SDK_BRANCH', value: "develop")
+                        ]
+                    }
+                }               
+            }
+        }
+
+        stage('Get MEGAsync version') {
+            steps {
+                script {
+                    copyArtifacts(projectName: 'MEGASync-winx64-Packages/develop', selector: specific("${env.WINDOWS_BUILD_ID}"), filter: 'version.txt', target: 'version-info', flatten: true)
+                    env.MEGASYNC_VERSION = readFile('version-info/version.txt').trim()
+                    echo "MEGAsync Version: ${env.MEGASYNC_VERSION}"
+                }
+            }
+        }
+        
+        stage ('Run QA Automated tests'){
+            parallel {
+                stage('Run Windows tests') {
+                    steps {
+                        script {
+                            def windowsMessage = """
+                                Received request from Jenkins, <@U06BFB1EURK>, please test:
+                                ```
+                                TEST_TAG = nightly
+                                APP_URL = ${env.REPOSITORY_URL}/artifactory/MEGAsync-releases/${env.MEGASYNC_VERSION}/QA-automated-tests/windows/built64/MEGAsyncSetup64.exe
+                                ```
+                                """.stripIndent()
+
+                            withCredentials([string(credentialsId: 'slack_webhook_ast_report', variable: 'SLACK_WEBHOOK_AST_REPORT')]) {
+                                sh """
+                                    curl -X POST -H 'Content-type: application/json' --data '{
+                                        "text": "${windowsMessage}"
+                                    }' ${SLACK_WEBHOOK_AST_REPORT}
+                                """
+                            }
+                        }
+                    }
+                }
+                stage('Run MacOS tests') {
+                    steps {
+                        script {
+                            def macOSMessage = """
+                                Received request from Jenkins, <@U06BFB1EURK>, please test:
+                                ```
+                                TEST_TAG = nightly
+                                APP_URL = ${env.REPOSITORY_URL}/artifactory/MEGAsync-releases/${env.MEGASYNC_VERSION}/QA-automated-tests/macOS/arm64/src/MEGASync/MEGAsync.dmg
+                                ```
+                                """.stripIndent()
+
+                            withCredentials([string(credentialsId: 'slack_webhook_ast_report', variable: 'SLACK_WEBHOOK_AST_REPORT')]) {
+                                sh """
+                                    curl -X POST -H 'Content-type: application/json' --data '{
+                                        "text": "${macOSMessage}"
+                                    }' ${SLACK_WEBHOOK_AST_REPORT}
+                                """
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    post {
+        failure {
+            script {
+                def failureMessage = """
+                    Jenkins nightly build failed, and tests can't be run.
+                    JOB_URL = ${env.BUILD_URL}
+                """.stripIndent()
+                withCredentials([string(credentialsId: 'slack_webhook_ast_report', variable: 'SLACK_WEBHOOK_AST_REPORT')]) {
+                    env.FAILURE_MESSAGE = failureMessage
+                    sh """
+                        curl -X POST -H 'Content-type: application/json' --data '{
+                            "text": "'"${env.FAILURE_MESSAGE}"'"
+                            }' ${SLACK_WEBHOOK_AST_REPORT}
+                    """
+                }
+            }
+        }
+    }
+}

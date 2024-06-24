@@ -41,8 +41,8 @@ if (CMAKE_HOST_WIN32)
     set(CMAKE_AUTOMOC_MOC_OPTIONS -DWIN32)
 elseif (CMAKE_HOST_APPLE)
     set (UiDir "macx")
-    set (QTCOMPONENS_REQUIRED_PLATFORM MacExtras)
-    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::MacExtras)
+    set (QTCOMPONENS_REQUIRED_PLATFORM MacExtras Svg)
+    set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::MacExtras Qt5::Svg)
     set(CMAKE_AUTOMOC_MOC_OPTIONS -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__)
 else()
     set (UiDir "linux")
@@ -50,8 +50,11 @@ else()
     set (TARGET_LINK_LIBRARIES_PLATFORM Qt5::Svg Qt5::X11Extras xcb)
 endif()
 
-set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools ${QTCOMPONENS_REQUIRED_PLATFORM})
-set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+set (MEGA_QT_REQUIRED_COMPONENTS Core Network Gui Widgets LinguistTools Quick Qml ${QTCOMPONENS_REQUIRED_PLATFORM})
+set (MEGA_QT_LINK_LIBRARIES Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
+
+list(APPEND QML_DIRS "${MEGAsyncDir}/gui/qml")
+set(QML_IMPORT_PATH "${QML_DIRS}" CACHE STRING "Qt Creator extra qml import paths")
 
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
@@ -67,7 +70,6 @@ set (USE_QT 1 CACHE STRING "")
 set (ENABLE_LOG_PERFORMANCE 1 CACHE STRING "")
 set (NO_READLINE 0 CACHE STRING "")
 set (USE_DRIVE_NOTIFICATIONS 1 CACHE STRING "")
-set (USE_PCRE 0 CACHE STRING "")
 if (WIN32)
     set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 else()
@@ -109,7 +111,9 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS "${MEGAsyncDir}/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/${UiDir}"
                                "${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}"
                                "${MEGAsyncDir}/syncs/gui/Backups/${UiDir}"
-                               "${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}")
+                               "${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}"
+                               "${MEGAsyncDir}/stalled_issues/gui/${UiDir}"
+                               "${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}")
 
 #AUTOMOC
 set(CMAKE_AUTOMOC ON)
@@ -125,6 +129,9 @@ include_directories( "${MEGAsyncDir}/mega/bindings/qt" )
 include_directories( "${MEGAsyncDir}/control" )
 include_directories( "${MEGAsyncDir}/model" )
 include_directories( "${MEGAsyncDir}/gui" )
+include_directories( "${MEGAsyncDir}/stalled_issues/model" )
+include_directories( "${MEGAsyncDir}/stalled_issues/gui" )
+include_directories( "${MEGAsyncDir}/stalled_issues/gui/${UiDir}" )
 include_directories( "${MEGAsyncDir}/gui/node_selector/gui/${UiDir}")
 include_directories( "${MEGAsyncDir}/gui/node_selector" )
 include_directories( "${MEGAsyncDir}/platform" )
@@ -177,18 +184,15 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/ImportMegaLinksDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ImportListWidgetItem.ui
     ${MEGAsyncDir}/gui/${UiDir}/CrashReportDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/SetupWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/SettingsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/NotificationsSettings.ui
     ${MEGAsyncDir}/gui/${UiDir}/AccountDetailsDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/DownloadFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/ChangeLogDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/GuestWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/StreamingFromMegaDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/InfoWizard.ui
     ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
@@ -211,12 +215,13 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/NodeSelectorTreeViewWidget.ui
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/RemoveSyncConfirmationDialog.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
+    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/BindFolderDialog.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupsWizard.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/AddBackupDialog.ui
     ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/RemoveBackupDialog.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupRenameWidget.ui
-    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/BackupNameConflictDialog.ui
+    ${MEGAsyncDir}/syncs/gui/Backups/${UiDir}/OpenBackupsFolder.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransfersWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferDelegateWidget.ui
     ${MEGAsyncDir}/transfers/gui/${UiDir}/InfoDialogTransferLoadingItem.ui
@@ -230,6 +235,18 @@ set (FORMS
     ${MEGAsyncDir}/transfers/gui/${UiDir}/TransferManagerLoadingItem.ui
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}/DuplicatedNodeDialog.ui
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/${UiDir}/DuplicatedNodeItem.ui
+    ${MEGAsyncDir}/transfers/gui/${UiDir}/SomeIssuesOccurredMessage.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueChooseWidget.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueFilePath.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueHeader.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueLoadingItem.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssuesDialog.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueTab.ui
+    ${MEGAsyncDir}/stalled_issues/gui/${UiDir}/StalledIssueActionTitle.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteDifferentWidget.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/OtherSideMissingOrBlocked.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/LocalAndRemoteNameConflicts.ui
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/${UiDir}/NameConflict.ui
     )
 
 
@@ -257,6 +274,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/EventUpdater.h
     ${MEGAsyncDir}/FolderTransferListener.h
     ${MEGAsyncDir}/BlockingStageProgressController.h
+    ${MEGAsyncDir}/drivedata.h
 
     ${MEGAsyncDir}/notifications/DesktopNotifications.h
     ${MEGAsyncDir}/notifications/NotificationDelayer.h
@@ -264,26 +282,38 @@ set (MOC_INPUT
     ${MEGAsyncDir}/notifications/NotificatorBase.h
     ${MEGAsyncDir}/notifications/${UiDir}/Notificator.h
 
+    ${MEGAsyncDir}/control/AsyncHandler.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
     ${MEGAsyncDir}/control/CrashHandler.h
-    ${MEGAsyncDir}/control/EncryptedSettings.h
     ${MEGAsyncDir}/control/ExportProcessor.h
     ${MEGAsyncDir}/control/HTTPServer.h
+    ${MEGAsyncDir}/control/LinkObject.h
     ${MEGAsyncDir}/control/LinkProcessor.h
     ${MEGAsyncDir}/control/MegaDownloader.h
     ${MEGAsyncDir}/control/DownloadQueueController.h
     ${MEGAsyncDir}/control/MegaSyncLogger.h
     ${MEGAsyncDir}/control/MegaUploader.h
-    ${MEGAsyncDir}/control/Preferences.h
+    ${MEGAsyncDir}/control/Preferences/Preferences.h
+    ${MEGAsyncDir}/control/Preferences/EncryptedSettings.h
+    ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.h
+    ${MEGAsyncDir}/control/ProtectedQueue.h
     ${MEGAsyncDir}/control/TransferRemainingTime.h
     ${MEGAsyncDir}/control/UpdateTask.h
     ${MEGAsyncDir}/control/ThreadPool.h
     ${MEGAsyncDir}/control/UserAttributesManager.h
+    ${MEGAsyncDir}/control/SetManager.h
+    ${MEGAsyncDir}/control/SetTypes.h
     ${MEGAsyncDir}/control/TextDecorator.h
     ${MEGAsyncDir}/control/TransferBatch.h
     ${MEGAsyncDir}/control/DialogOpener.h
     ${MEGAsyncDir}/control/FileFolderAttributes.h
     ${MEGAsyncDir}/control/Version.h
+    ${MEGAsyncDir}/control/LoginController.h
+    ${MEGAsyncDir}/control/AccountStatusController.h
+    ${MEGAsyncDir}/control/EmailRequester.h
+    ${MEGAsyncDir}/control/IStatsEventHandler.h
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.h
+    ${MEGAsyncDir}/control/AppStatsEvents.h
 
     ${MEGAsyncDir}/gui/AlertItem.h
     ${MEGAsyncDir}/gui/AlertFilterType.h
@@ -296,6 +326,8 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/AccountDetailsDialog.h
     ${MEGAsyncDir}/gui/AddExclusionDialog.h
     ${MEGAsyncDir}/gui/AvatarWidget.h
+    ${MEGAsyncDir}/gui/MenuItemAction.h
+    ${MEGAsyncDir}/gui/MegaUserAlertExt.h
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
     ${MEGAsyncDir}/gui/PasswordLineEdit.h
@@ -303,14 +335,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
     ${MEGAsyncDir}/gui/ElidedLabel.h
-    ${MEGAsyncDir}/gui/GuestWidget.h
     ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
     ${MEGAsyncDir}/gui/BalloonToolTip.h
     ${MEGAsyncDir}/gui/InfoDialog.h
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.h
-    ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
     ${MEGAsyncDir}/gui/MultiQFileDialog.h
@@ -320,7 +350,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
-    ${MEGAsyncDir}/gui/SetupWizard.h
     ${MEGAsyncDir}/gui/NotificationsSettings.h
     ${MEGAsyncDir}/gui/StatusInfo.h
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.h
@@ -341,14 +370,17 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ScanningWidget.h
     ${MEGAsyncDir}/gui/BlurredShadowEffect.h
     ${MEGAsyncDir}/gui/ButtonIconManager.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
-    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
     ${MEGAsyncDir}/gui/CancelConfirmWidget.h
     ${MEGAsyncDir}/gui/MegaNodeNames.h
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.h
     ${MEGAsyncDir}/gui/DateTimeFormatter.h
+    ${MEGAsyncDir}/gui/RemoteItemUI.h
     ${MEGAsyncDir}/gui/WordWrapLabel.h
+
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.h
+    ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.h
+
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h
@@ -356,6 +388,31 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeView.h
     ${MEGAsyncDir}/gui/node_selector/gui/SearchLineEdit.h
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorSpecializations.h
+
+    ${MEGAsyncDir}/gui/qml/QmlClipboard.h
+    ${MEGAsyncDir}/gui/qml/ColorTheme.h
+    ${MEGAsyncDir}/gui/qml/QmlDialog.h
+    ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.h
+    ${MEGAsyncDir}/gui/qml/StandardIconProvider.h
+    ${MEGAsyncDir}/gui/qml/ApiEnums.h
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.h
+    ${MEGAsyncDir}/gui/qml/QmlManager.h
+    ${MEGAsyncDir}/gui/qml/ChooseFolder.h
+    ${MEGAsyncDir}/gui/qml/AccountInfoData.h
+    ${MEGAsyncDir}/gui/qml/QmlDeviceName.h
+
+    ${MEGAsyncDir}/gui/onboarding/Onboarding.h
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.h
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.h
+    ${MEGAsyncDir}/gui/onboarding/Syncs.h
+    ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.h
+
+    ${MEGAsyncDir}/gui/backups/Backups.h
+    ${MEGAsyncDir}/gui/backups/BackupsController.h
+    ${MEGAsyncDir}/gui/backups/BackupsModel.h
+    ${MEGAsyncDir}/gui/backups/BackupsQmlDialog.h
+
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorDelegates.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModel.h
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.h
@@ -364,23 +421,25 @@ set (MOC_INPUT
 
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.h
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.h
+    ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.h
-    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/RemoveSyncConfirmationDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.h
-    ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.h
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.h
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.h	
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupNameConflictDialog.h
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsElements.h
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsUI.h
     ${MEGAsyncDir}/syncs/model/BackupItemModel.h
     ${MEGAsyncDir}/syncs/model/SyncItemModel.h
     ${MEGAsyncDir}/syncs/control/SyncSettings.h
     ${MEGAsyncDir}/syncs/control/SyncInfo.h
     ${MEGAsyncDir}/syncs/control/SyncController.h
     ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.h
+    ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.h
+    ${MEGAsyncDir}/syncs/control/MegaIgnoreRules.h
 
     ${MEGAsyncDir}/platform/PlatformStrings.h
     ${MEGAsyncDir}/platform/PowerOptions.h
@@ -423,6 +482,31 @@ set (MOC_INPUT
     ${MEGAsyncDir}/UserAttributesRequests/Avatar.h
     ${MEGAsyncDir}/UserAttributesRequests/MyChatFilesFolder.h
     ${MEGAsyncDir}/UserAttributesRequests/CameraUploadFolder.h
+
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.h
+
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/MoveOrRenameCannotOccurIssue.h
+
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.h
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.h
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.h
+    ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.h
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h
 )
 
 if (NOT CMAKE_HOST_APPLE)
@@ -494,6 +578,7 @@ set (SRCS
     ${MEGAsyncDir}/EventUpdater.cpp
     ${MEGAsyncDir}/FolderTransferListener.cpp
     ${MEGAsyncDir}/BlockingStageProgressController.cpp
+    ${MEGAsyncDir}/drivedata.cpp
 
     ${MEGAsyncDir}/notifications/TransferNotificationBuilder.cpp
     ${MEGAsyncDir}/notifications/DesktopNotifications.cpp
@@ -504,6 +589,8 @@ set (SRCS
     ${FORMS}
     ${MOC_INPUT}
     ${MEGAsyncDir}/gui/Resources_${UiDir}.qrc
+    ${MEGAsyncDir}/gui/Resources_qml.qrc
+    ${MEGAsyncDir}/gui/qml/qml.qrc
 
     ${MEGAsyncDir}/gui/AlertItem.cpp
     ${MEGAsyncDir}/gui/AlertFilterType.cpp
@@ -518,7 +605,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/BalloonToolTip.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/QtPositioningBugFixer.cpp
-    ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/UploadToMegaDialog.cpp
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.cpp
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.cpp
@@ -529,16 +615,14 @@ set (SRCS
     ${MEGAsyncDir}/gui/AccountDetailsDialog.cpp
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
-    ${MEGAsyncDir}/gui/GuestWidget.cpp
-    ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
-    ${MEGAsyncDir}/gui/InfoWizard.cpp
     ${MEGAsyncDir}/gui/QMegaMessageBox.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
+    ${MEGAsyncDir}/gui/MegaUserAlertExt.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
     ${MEGAsyncDir}/gui/StatusInfo.cpp
     ${MEGAsyncDir}/gui/ChangePassword.cpp
@@ -558,17 +642,19 @@ set (SRCS
     ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ButtonIconManager.cpp
     ${MEGAsyncDir}/gui/EventHelper.cpp
-    ${MEGAsyncDir}/gui/GuiUtilities.cpp
     ${MEGAsyncDir}/gui/ScanningWidget.cpp
     ${MEGAsyncDir}/gui/BlurredShadowEffect.cpp
     ${MEGAsyncDir}/gui/CancelConfirmWidget.cpp
     ${MEGAsyncDir}/gui/LowDiskSpaceDialog.cpp
     ${MEGAsyncDir}/gui/DateTimeFormatter.cpp
-    ${MEGAsyncDir}/gui/WordWrapLabel.cpp
+    ${MEGAsyncDir}/gui/RemoteItemUI.cpp
     ${MEGAsyncDir}/gui/MegaDelegateHoverManager.cpp
+    ${MEGAsyncDir}/gui/WordWrapLabel.cpp
+
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/NewFolderDialog.cpp
     ${MEGAsyncDir}/gui/NodeNameSetterDialog/RenameNodeDialog.cpp
+
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
     ${MEGAsyncDir}/gui/node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.cpp
@@ -581,11 +667,35 @@ set (SRCS
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelItem.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorModelSpecialised.cpp
     ${MEGAsyncDir}/gui/node_selector/model/NodeSelectorProxyModel.cpp
+
+    ${MEGAsyncDir}/gui/qml/QmlClipboard.cpp
+    ${MEGAsyncDir}/gui/qml/ColorTheme.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialog.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialogWrapper.cpp
+    ${MEGAsyncDir}/gui/qml/StandardIconProvider.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDialogManager.cpp
+    ${MEGAsyncDir}/gui/qml/QmlManager.cpp
+    ${MEGAsyncDir}/gui/qml/ChooseFolder.cpp
+    ${MEGAsyncDir}/gui/qml/AccountInfoData.cpp
+    ${MEGAsyncDir}/gui/qml/QmlDeviceName.cpp
+
+    ${MEGAsyncDir}/gui/onboarding/Onboarding.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/OnboardingQmlDialog.cpp
+    ${MEGAsyncDir}/gui/onboarding/GuestContent.cpp
+    ${MEGAsyncDir}/gui/onboarding/Syncs.cpp
+    ${MEGAsyncDir}/gui/onboarding/PasswordStrengthChecker.cpp
+
+    ${MEGAsyncDir}/gui/backups/Backups.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsController.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsModel.cpp
+    ${MEGAsyncDir}/gui/backups/BackupsQmlDialog.cpp
+
     ${MEGAsyncDir}/transfers/model/TransfersManagerSortFilterProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransfersModel.cpp
     ${MEGAsyncDir}/transfers/model/InfoDialogTransfersProxyModel.cpp
     ${MEGAsyncDir}/transfers/model/TransferMetaData.cpp
-    
+
     ${MEGAsyncDir}/transfers/gui/TransfersStatusWidget.cpp
     ${MEGAsyncDir}/transfers/gui/TransferItem.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransfersWidget.cpp
@@ -601,6 +711,35 @@ set (SRCS
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferDelegateWidget.cpp
     ${MEGAsyncDir}/transfers/gui/InfoDialogTransferLoadingItem.cpp
     ${MEGAsyncDir}/transfers/gui/TransferManagerDelegateWidget.cpp
+    ${MEGAsyncDir}/transfers/gui/SomeIssuesOccurredMessage.cpp
+
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/NameConflictStalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/IgnoredStalledIssue.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesProxyModel.cpp
+    ${MEGAsyncDir}/stalled_issues/model/StalledIssuesUtilities.cpp
+    ${MEGAsyncDir}/stalled_issues/model/MoveOrRenameCannotOccurIssue.cpp
+
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueActionTitle.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueChooseTitle.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueFilePath.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueHeader.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueLoadingItem.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDialog.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueTab.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueBaseDelegateWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesView.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssueDelegate.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
+
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
+    ${MEGAsyncDir}/stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.cpp
 
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeDialog.cpp
     ${MEGAsyncDir}/transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeInfo.cpp
@@ -613,13 +752,16 @@ set (SRCS
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
 
+    ${MEGAsyncDir}/control/Preferences/EncryptedSettings.cpp
+    ${MEGAsyncDir}/control/Preferences/EphemeralCredentials.cpp
+    ${MEGAsyncDir}/control/Preferences/Preferences.cpp
     ${MEGAsyncDir}/control/HTTPServer.cpp
-    ${MEGAsyncDir}/control/Preferences.cpp
+    ${MEGAsyncDir}/control/LinkObject.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
+    ${MEGAsyncDir}/control/SetManager.cpp
     ${MEGAsyncDir}/control/UpdateTask.cpp
     ${MEGAsyncDir}/control/ThreadPool.cpp
-    ${MEGAsyncDir}/control/EncryptedSettings.cpp
     ${MEGAsyncDir}/control/CrashHandler.cpp
     ${MEGAsyncDir}/control/ExportProcessor.cpp
     ${MEGAsyncDir}/control/Utilities.cpp
@@ -632,7 +774,12 @@ set (SRCS
     ${MEGAsyncDir}/control/UserAttributesManager.cpp
     ${MEGAsyncDir}/control/TextDecorator.cpp
     ${MEGAsyncDir}/control/DialogOpener.cpp
+    ${MEGAsyncDir}/control/LoginController.cpp
+    ${MEGAsyncDir}/control/AccountStatusController.cpp
     ${MEGAsyncDir}/control/FileFolderAttributes.cpp
+    ${MEGAsyncDir}/control/EmailRequester.cpp
+    ${MEGAsyncDir}/control/ProxyStatsEventHandler.cpp
+    ${MEGAsyncDir}/control/AppStatsEvents.cpp
 
     ${MEGAsyncDir}/UserAttributesRequests/DeviceName.cpp
     ${MEGAsyncDir}/UserAttributesRequests/MyBackupsHandle.cpp
@@ -643,29 +790,35 @@ set (SRCS
 
     ${MEGAsyncDir}/syncs/gui/SyncTooltipCreator.cpp
     ${MEGAsyncDir}/syncs/gui/SyncsMenu.cpp
+    ${MEGAsyncDir}/syncs/gui/SyncSettingsUIBase.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/RemoveSyncConfirmationDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableView.cpp
-    ${MEGAsyncDir}/syncs/gui/Twoways/SyncTableViewTooltips.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.cpp
+    ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupTableViewTooltips.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/AddBackupDialog.cpp
     ${MEGAsyncDir}/syncs/gui/Backups/RemoveBackupDialog.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupsWizard.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupRenameWidget.cpp
-    ${MEGAsyncDir}/syncs/gui/Backups/BackupNameConflictDialog.cpp
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsUI.cpp
+    ${MEGAsyncDir}/syncs/gui/Backups/BackupSettingsElements.cpp
     ${MEGAsyncDir}/syncs/model/BackupItemModel.cpp
     ${MEGAsyncDir}/syncs/model/SyncItemModel.cpp
     ${MEGAsyncDir}/syncs/control/SyncController.cpp
     ${MEGAsyncDir}/syncs/control/SyncSettings.cpp
     ${MEGAsyncDir}/syncs/control/SyncInfo.cpp
     ${MEGAsyncDir}/syncs/control/AddSyncFromUiManager.cpp
+    ${MEGAsyncDir}/syncs/control/MegaIgnoreManager.cpp
+    ${MEGAsyncDir}/syncs/control/MegaIgnoreRules.cpp
 
     ${MEGAsyncDir}/platform/ShellNotifier.cpp
     ${MEGAsyncDir}/platform/AbstractPlatform.cpp
     ${MEGAsyncDir}/platform/Platform.cpp
 
     ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
+
+    ${MEGAsyncDir}/gui/SyncExclusions/ExclusionRulesModel.cpp
+    ${MEGAsyncDir}/gui/SyncExclusions/ExclusionsQmlDialog.cpp
+    ${MEGAsyncDir}/gui/SyncExclusions/SyncExclusions.cpp
 )
 
 
@@ -771,7 +924,6 @@ else()
 
         ${MEGAsyncDir}/google_breakpad/common/mac/MachIPC.mm
 
-
         ${MEGAsyncDir}/platform/macx/MacXFunctions.h
         ${MEGAsyncDir}/platform/macx/MacXSystemServiceTask.h
         ${MEGAsyncDir}/platform/macx/MEGAService.h
@@ -872,7 +1024,7 @@ if (CMAKE_HOST_APPLE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 endif()
 
-target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network ${TARGET_LINK_LIBRARIES_PLATFORM})
+target_link_libraries(MEGAsync Mega Qt5::Core Qt5::Widgets Qt5::Gui Qt5::Network Qt5::Quick Qt5::Qml ${TARGET_LINK_LIBRARIES_PLATFORM})
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
@@ -934,7 +1086,6 @@ if(FULLREQUIREMENTS)
         #-DREQUIRE_ENABLE_BACKUPS
         #-DREQUIRE_ENABLE_WEBRTC
         #-DREQUIRE_ENABLE_EVT_TLS
-        #-DREQUIRE_USE_PCRE
         )
 
     if (CMAKE_HOST_WIN32 OR CMAKE_HOST_APPLE OR build_64_bit)
@@ -977,12 +1128,14 @@ endif()
 
 set (SHELLEXT_FILES
     ${MEGAShellExtDir}/ShellExt.cpp
+    ${MEGAShellExtDir}/ShellExtNotASync.cpp
     ${MEGAShellExtDir}/RegUtils.cpp
     ${MEGAShellExtDir}/dllmain.cpp
     ${MEGAShellExtDir}/ContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSyncing.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtSynced.cpp
     ${MEGAShellExtDir}/ClassFactoryShellExtPending.cpp
+    ${MEGAShellExtDir}/ClassFactoryShellExtNotFound.cpp
     ${MEGAShellExtDir}/ClassFactoryContextMenuExt.cpp
     ${MEGAShellExtDir}/ClassFactory.cpp
     ${MEGAShellExtDir}/MegaInterface.cpp
@@ -1006,7 +1159,6 @@ target_include_directories(catch INTERFACE "${RepoDir}/tests/3rdparty/trompeloei
 
 set(MEGASyncUnitTestsDir "${RepoDir}/tests/MEGASyncUnitTests")
 set(UNIT_TEST_FILES
-    ${MEGASyncUnitTestsDir}/GuestWidgetTest.cpp
     ${MEGASyncUnitTestsDir}/control/TransferRemainingTime.Test.cpp
     ${MEGASyncUnitTestsDir}/Utilities.test.cpp
     ${MEGASyncUnitTestsDir}/ScaleFactorManager.Test.cpp

@@ -22,6 +22,10 @@ namespace Ui {
 class ViewLoadingSceneUI;
 }
 
+namespace Ui {
+class ViewLoadingSceneUI;
+}
+
 template <class DelegateWidget, class ViewType>
 class LoadingSceneView;
 
@@ -201,9 +205,9 @@ struct MessageInfo
 {
     enum ButtonType
     {
-        None,
-        Stop,
-        Ok
+        NONE,
+        STOP,
+        OK
     };
 
     QString message;
@@ -222,6 +226,9 @@ public:
     LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
     ~LoadingSceneMessageHandler();
 
+    bool needsAnswerFromUser() const;
+
+    MessageInfo::ButtonType getButtonType() const;
 
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
@@ -232,7 +239,7 @@ public slots:
     void updateMessage(std::shared_ptr<MessageInfo> info);
 
 signals:
-    void onStopPressed();
+    void onButtonPressed(MessageInfo::ButtonType);
     void loadingMessageVisibilityChange(bool value);
 
 protected:
@@ -300,6 +307,7 @@ protected:
         LOADING_VIEW
     };
     LoadingViewType mLoadingViewSet;
+    LoadingSceneMessageHandler* mMessageHandler;
 
 private slots:
     void onDelayTimerToShowTimeout();
@@ -308,9 +316,6 @@ private slots:
     {
         hideLoadingScene();
     }
-
-private:
-    LoadingSceneMessageHandler* mMessageHandler;
 };
 
 template <class DelegateWidget, class ViewType>
@@ -347,6 +352,15 @@ public:
         return mLoadingViewSet != LoadingViewType::NONE;
     }
 
+    void setLoadingViewSet(LoadingViewType type)
+    {
+        if (mLoadingViewSet != type)
+        {
+            mLoadingViewSet = type;
+            mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
+        }
+    }
+
     inline void setView(LoadingSceneView<DelegateWidget, ViewType>* view)
     {
         mView = view;
@@ -377,6 +391,12 @@ public:
             {
                 mDelayTimerToShow.stop();
             }
+            return;
+        }
+
+        //Don´t close the loading view if we need interaction from the user (like clicking ok or stop...)
+        if(!state && getLoadingMessageHandler() && getLoadingMessageHandler()->needsAnswerFromUser())
+        {
             return;
         }
 
@@ -443,7 +463,7 @@ public:
     {
         ViewLoadingSceneBase::hideLoadingScene();
 
-        mLoadingViewSet = LoadingViewType::NONE;
+        setLoadingViewSet(LoadingViewType::NONE);
         emit sceneVisibilityChange(false);
 
         mLoadingModel->setRowCount(0);
@@ -477,7 +497,7 @@ private:
     {
         ViewLoadingSceneBase::showViewCopy();
 
-        mLoadingViewSet = LoadingViewType::COPY_VIEW;
+        setLoadingViewSet(LoadingViewType::COPY_VIEW);
 
         mView->setViewPortEventsBlocked(true);
         mViewLayout->replaceWidget(mView, mLoadingSceneUI);
@@ -492,7 +512,8 @@ private:
     void showLoadingScene() override
     {
         ViewLoadingSceneBase::showLoadingScene();
-        mLoadingViewSet = LoadingViewType::LOADING_VIEW;
+        setLoadingViewSet(LoadingViewType::LOADING_VIEW);
+
         int visibleRows(0);
 
         if(mView->isVisible())
@@ -554,6 +575,11 @@ public:
     LoadingSceneView(QWidget* parent): ViewType(parent)
     {
         mLoadingView.setView(this);
+    }
+
+    void setTopParent(QWidget* widget)
+    {
+        mLoadingView.setTopParent(widget);
     }
 
     void setViewPortEventsBlocked(bool newViewPortEventsBlocked)

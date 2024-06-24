@@ -2,6 +2,10 @@
 #include "ui_BindFolderDialog.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include <DialogOpener.h>
+#include <QScreen>
+#include "SyncExclusions/ExclusionsQmlDialog.h"
+#include "SyncExclusions/SyncExclusions.h"
 
 #include <QInputDialog>
 
@@ -15,8 +19,14 @@ BindFolderDialog::BindFolderDialog(MegaApplication* _app, QWidget *parent) :
     ui->setupUi(this);
 
     ui->bOK->setDefault(true);
-
+    ui->bAddExclusions->setEnabled(false);
     connect(ui->wBinder, &FolderBinder::selectionDone, this, &BindFolderDialog::allSelectionsDone);
+    connect(ui->wBinder, &FolderBinder::localPathSelected, this, [this]() 
+        {
+            ui->bAddExclusions->setEnabled(true);
+        });
+    connect(ui->bAddExclusions, &QPushButton::clicked, this, &BindFolderDialog::onAddExclusionsClicked);
+
     setFocusProxy(ui->bOK);
 }
 
@@ -115,6 +125,12 @@ void BindFolderDialog::on_bOK_clicked()
 void BindFolderDialog::allSelectionsDone()
 {
     ui->bOK->setFocus();
+}
+
+void BindFolderDialog::onAddExclusionsClicked()
+{
+    QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, ui->wBinder->selectedLocalFolder());
+    DialogOpener::showDialog(exclusions);
 }
 
 bool BindFolderDialog::focusNextPrevChild(bool next)

@@ -3,6 +3,7 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
+#include "QTMegaRequestListener.h"
 
 #include <QString>
 #include <QHash>
@@ -14,7 +15,8 @@
 #include <QIcon>
 #include <QLabel>
 #include <QQueue>
-#include <QPointer>
+#include <QEventLoop>
+#include <QMetaEnum>
 
 #include <QEasingCurve>
 
@@ -241,8 +243,8 @@ public:
     void setExecuteInAppThread(bool executeInAppThread);
 };
 
-
-class ClickableLabel : public QLabel {
+class ClickableLabel : public QLabel
+{
     Q_OBJECT
 
 public:
@@ -276,7 +278,6 @@ protected:
         setCursor(Qt::ArrowCursor);
     }
 #endif
-
 };
 
 struct TimeInterval
@@ -305,10 +306,14 @@ public:
     Q_DECLARE_FLAGS(FileTypes, FileType)
     static const QString SUPPORT_URL;
     static const QString BACKUP_CENTER_URL;
+    static const QString SYNC_SUPPORT_URL;
 
     static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
+    static QString getSizeStringLocalized(quint64 bytes);
     static int toNearestUnit(long long bytes);
+    static QString getTranslatedSeparatorTemplate();
+
     struct ProgressSize
     {
         QString transferredBytes;
@@ -322,8 +327,9 @@ public:
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
     static QString getQuantityString(unsigned long long quantity);
-    static QString getFinishedTimeString(long long secs);
+    static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
+    static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
     static void getPROurlWithParameters(QString &url);
@@ -332,7 +338,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
-    static QString getReadablePROplanFromId(int identifier);
+    static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
     static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
@@ -347,8 +353,9 @@ public:
 
     static QString getNonDuplicatedNodeName(mega::MegaNode* node, mega::MegaNode* parentNode, const QString& currentName, bool unescapeName, const QStringList &itemsBeingRenamed);
     static QString getNonDuplicatedLocalName(const QFileInfo& currentFile, bool unescapeName, const QStringList &itemsBeingRenamed);
-
     static QPair<QString, QString> getFilenameBasenameAndSuffix(const QString& fileName);
+
+    static void upgradeClicked();
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
@@ -362,6 +369,11 @@ public:
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
 
     static bool isIncommingShare(mega::MegaNode* node);
+
+    static bool dayHasChangedSince(qint64 msecs);
+    static bool monthHasChangedSince(qint64 msecs);
+
+    static QString getTranslatedError(const mega::MegaError* error);
 
 private:
     Utilities() {}
@@ -384,10 +396,12 @@ private:
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
+    static void removeAvatars();
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
 
     static void queueFunctionInAppThread(std::function<void()> fun);
+    static void queueFunctionInObjectThread(QObject* object, std::function<void()> fun);
 
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
@@ -405,9 +419,11 @@ public:
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 
+    static QString getFileHash(const QString& filePath);
+
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
-    // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+    // Forbidden chars PCRE
     static const QRegularExpression FORBIDDEN_CHARS_RX;
     // Time to show the new remote folder input error in milliseconds
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds
@@ -417,6 +433,29 @@ public:
 
 Q_DECLARE_METATYPE(Utilities::FileType)
 Q_DECLARE_OPERATORS_FOR_FLAGS(Utilities::FileTypes)
+
+template <class EnumType>
+class EnumConversions
+{
+public:
+    EnumConversions()
+        : mMetaEnum(QMetaEnum::fromType<EnumType>())
+    {
+    }
+
+    QString getString(EnumType type)
+    {
+        return QString::fromUtf8(mMetaEnum.valueToKey(static_cast<int>(type)));
+    }
+
+    EnumType  getEnum(const QString& typeAsString)
+    {
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+    }
+
+private:
+    QMetaEnum mMetaEnum;
+};
 
 // This class encapsulates a MEGA node and adds useful information, like the origin
 // of the transfer.

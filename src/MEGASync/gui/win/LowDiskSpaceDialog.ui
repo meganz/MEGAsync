@@ -89,9 +89,6 @@ QPushButton {
            <height>64</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">border-image: url(:/images/HD_win.png);</string>
-         </property>
          <property name="text">
           <string notr="true"/>
          </property>

@@ -19,12 +19,13 @@
 #include <time.h>
 #include <iostream>
 #include <dpapi.h>
+#include <shellapi.h>
 
-#if QT_VERSION >= 0x050200
 #include <QtWin>
-#endif
-
 #include <QOperatingSystemVersion>
+#include <QScreen>
+#include <QDesktopWidget>
+#include <QHostInfo>
 
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -75,6 +76,7 @@ using namespace std;
 using namespace mega;
 
 bool WindowsPlatform_exiting = false;
+static const QString NotAllowedDefaultFactoryBiosName = QString::fromUtf8("To be filled by O.E.M.");
 
 void PlatformImplementation::initialize(int, char *[])
 {
@@ -209,7 +211,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
 
 void PlatformImplementation::notifySyncFileChange(std::string *localPath, int)
 {
-    QString path = getPreparedPath(localPath);
+    QString path = QString::fromUtf8(localPath->c_str());
     notifyItemChange(path, mSyncFileNotifier);
 }
 
@@ -409,7 +411,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
             }
 
             if (path)
-            {                
+            {
                 bool found = false;
 
                 swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
@@ -736,10 +738,9 @@ bool PlatformImplementation::showInFolder(QString pathIn)
         return false;
     }
 
-    QString param;
-    param = QString::fromUtf8("/select,");
-    param += QString::fromLatin1("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromLatin1("\"\"");
-    return QProcess::startDetached(QString::fromLatin1("explorer"), { param });
+    return QProcess::startDetached(QString::fromLatin1("explorer.exe"), QStringList{QString::fromLatin1("/select"),
+                                                                                    QString::fromLatin1(","),
+                                                                                    QDir::toNativeSeparators(QDir(pathIn).canonicalPath())});
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)
@@ -919,6 +920,11 @@ void PlatformImplementation::notifyAllSyncFoldersRemoved()
 
 }
 
+void PlatformImplementation::processSymLinks()
+{
+
+}
+
 QByteArray PlatformImplementation::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
@@ -1087,14 +1093,12 @@ void PlatformImplementation::enableDialogBlur(QDialog*)
         FreeLibrary(hModule);
     }
 
-#if QT_VERSION >= 0x050200
     if (!win10)
     {
         QtWin::setCompositionEnabled(true);
         QtWin::extendFrameIntoClientArea(dialog, -1, -1, -1, -1);
         QtWin::enableBlurBehindWindow(dialog);
     }
-#endif
 #endif
 }
 
@@ -1402,45 +1406,147 @@ QString PlatformImplementation::getDeviceName()
     // First, try to read maker and model
     QSettings settings (QLatin1String("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\BIOS"),
                         QSettings::NativeFormat);
-    QString vendor (settings.value(QLatin1Literal("BaseBoardManufacturer"),
-                                   QLatin1Literal("0")).toString());
+    QString vendor (settings.value(QLatin1String("BaseBoardManufacturer"),
+                                   QLatin1String("0")).toString());
     QString model (settings.value(QLatin1String("SystemProductName"),
-                                  QLatin1Literal("0")).toString());
-    QString deviceName;
-    // If failure or empty strings, give hostname
-    if (vendor.isEmpty() && model.isEmpty())
+                                  QLatin1String("0")).toString());
+
+    QString deviceName = vendor + QLatin1String(" ") + model;
+    // If failure, empty strings or defaultFactoryBiosName, give hostname.
+    if ((vendor.isEmpty() && model.isEmpty()) || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
-        deviceName = QSysInfo::machineHostName();
-        deviceName.remove(QLatin1Literal(".local"));
-    }
-    else
-    {
-        deviceName = vendor + QLatin1Literal(" ") + model;
+        deviceName = QHostInfo::localHostName();
     }
 
     return deviceName;
 }
 
-QString PlatformImplementation::getPreparedPath(std::string *localPath)
+void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
 {
-    // The path we have here is, on Windows, an utf16-encoded string (using wchars) in a std::string buffer.
-    QString preparedPath = QString::fromWCharArray(reinterpret_cast<const wchar_t *>(localPath->data()),
-                                                   static_cast<int>(localPath->size() / (sizeof(wchar_t)
-                                                                                         / sizeof (char))));
-    if (!preparedPath.isEmpty())
+    int xSign = 1;
+    int ySign = 1;
+    QPoint position;
+    QRect screenGeometry;
+
+    position = QCursor::pos();
+    QScreen* currentScreen = QGuiApplication::screenAt(position);
+    if (currentScreen)
     {
-        if (preparedPath.startsWith(QLatin1String("\\\\?\\")))
+        screenGeometry = currentScreen->availableGeometry();
+
+        QString otherInfo = QString::fromUtf8("pos = [%1,%2], name = %3").arg(position.x()).arg(position.y()).arg(currentScreen->name());
+        logInfoDialogCoordinates("availableGeometry", screenGeometry, otherInfo);
+
+        if (!screenGeometry.isValid())
         {
-            preparedPath = preparedPath.mid(4);
+            screenGeometry = currentScreen->geometry();
+            otherInfo = QString::fromUtf8("dialog rect = %1").arg(rectToString(rect));
+            logInfoDialogCoordinates("screenGeometry", screenGeometry, otherInfo);
+
+            if (screenGeometry.isValid())
+            {
+                screenGeometry.setTop(28);
+            }
+            else
+            {
+                screenGeometry = rect;
+                screenGeometry.setBottom(screenGeometry.bottom() + 4);
+                screenGeometry.setRight(screenGeometry.right() + 4);
+            }
+
+            logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
+        }
+        else
+        {
+            if (screenGeometry.y() < 0)
+            {
+                ySign = -1;
+            }
+
+            if (screenGeometry.x() < 0)
+            {
+                xSign = -1;
+            }
         }
 
-        if (preparedPath.size() >= MAX_PATH)
+        QRect totalGeometry = QGuiApplication::primaryScreen()->geometry();
+        APPBARDATA pabd;
+        pabd.cbSize = sizeof(APPBARDATA);
+        pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+        //TODO: the following only takes into account the position of the tray for the main screen.
+        //Alternatively we might want to do that according to where the taskbar is for the targetted screen.
+        if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
         {
-            preparedPath.clear();
+            int size;
+            switch (pabd.uEdge)
+            {
+            case ABE_LEFT:
+                position = screenGeometry.bottomLeft();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.right - pabd.rc.left;
+                    size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                    screenGeometry.setLeft(screenGeometry.left() + size);
+                }
+                break;
+            case ABE_RIGHT:
+                position = screenGeometry.bottomRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.right - pabd.rc.left;
+                    size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                    screenGeometry.setRight(screenGeometry.right() - size);
+                }
+                break;
+            case ABE_TOP:
+                position = screenGeometry.topRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.bottom - pabd.rc.top;
+                    size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                    screenGeometry.setTop(screenGeometry.top() + size);
+                }
+                break;
+            case ABE_BOTTOM:
+                position = screenGeometry.bottomRight();
+                if (totalGeometry == screenGeometry)
+                {
+                    size = pabd.rc.bottom - pabd.rc.top;
+                    size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                    screenGeometry.setBottom(screenGeometry.bottom() - size);
+                }
+                break;
+            }
+
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. pabd.uEdge = %1, pabd.rc = %2")
+                         .arg(pabd.uEdge)
+                         .arg(QString::fromUtf8("[%1,%2,%3,%4]").arg(pabd.rc.left).arg(pabd.rc.top).arg(pabd.rc.right).arg(pabd.rc.bottom))
+                         .toUtf8().constData());
+
+        }
+
+        if (position.x() * xSign > (screenGeometry.right() / 2) * xSign)
+        {
+            *posx = screenGeometry.right() - rect.width() - 2;
+        }
+        else
+        {
+            *posx = screenGeometry.left() + 2;
+        }
+
+        if (position.y() * ySign > (screenGeometry.bottom() / 2) * ySign)
+        {
+            *posy = screenGeometry.bottom() - rect.height() - 2;
+        }
+        else
+        {
+            *posy = screenGeometry.top() + 2;
         }
     }
 
-    return preparedPath;
+    QString otherInfo = QString::fromUtf8("dialog rect = %1, posx = %2, posy = %3").arg(rectToString(rect)).arg(*posx).arg(*posy);
+    logInfoDialogCoordinates("Final", screenGeometry, otherInfo);
 }
 
 QString PlatformImplementation::findMimeType(const QString &extensionWithDot)
@@ -1604,4 +1710,24 @@ bool PlatformImplementation::openRegistry(HKEY baseKey, const QString &regKeyPat
     const std::wstring wideRegKey = regKeyPath.toStdWString();
     LONG result = RegOpenKeyEx(baseKey, wideRegKey.c_str(), 0, KEY_READ, &openedKey);
     return (result == ERROR_SUCCESS);
+}
+
+DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
+{
+    DriveSpaceData data;
+    // Network paths in Windows such as \\<ip>\<dir> are not handled by QStorageInfo,
+    // so we can't get available space this way.
+    const QByteArray pathArray = path.toUtf8();
+
+    ULARGE_INTEGER freeBytesAvailableToUser;
+    ULARGE_INTEGER totalBytes;
+    ULARGE_INTEGER totalFreeBytes;
+    BOOL ok = GetDiskFreeSpaceExA(pathArray.constData(),
+                                &freeBytesAvailableToUser,
+                                &totalBytes,
+                                &totalFreeBytes);
+    data.mIsReady = (ok == TRUE);
+    data.mAvailableSpace = totalFreeBytes.QuadPart;
+    data.mTotalSpace = totalBytes.QuadPart;
+    return data;
 }

@@ -1,40 +1,46 @@
-
 #include "Utilities.h"
-#include "control/Preferences.h"
+
+#include "Preferences.h"
+#include "MegaApplication.h"
+#include "gzjoin.h"
+#include "platform/Platform.h"
 
 #include <QApplication>
 #include <QImageReader>
 #include <QDirIterator>
 #include <QTextStream>
 #include <QDateTime>
-#include <iostream>
 #include <QDesktopWidget>
 #include <QScreen>
-#include "MegaApplication.h"
-#include "control/gzjoin.h"
-#include "platform/Platform.h"
-#include <syncs/gui/Twoways/BindFolderDialog.h>
-#include <DialogOpener.h>
-#include <GuiUtilities.h>
+#include <QCryptographicHash>
+#include <MegaApiSynchronizedRequest.h>
 
+#include <iostream>
 
 #ifndef WIN32
 #include "megaapi.h"
 #include <utime.h>
 #else
 #include <windows.h>
+#include <shellapi.h>
 #endif
 
 using namespace std;
 using namespace mega;
 
+namespace
+{
+    constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+}
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
 
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
+const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+const QString Utilities::SYNC_SUPPORT_URL = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing/sync-v2");
 
 const unsigned long long KB = 1024;
 const unsigned long long MB = 1024 * KB;
@@ -45,6 +51,9 @@ const unsigned long long TB = 1024 * GB;
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
 // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
 const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
+
+const qint64 FILE_READ_BUFFER_SIZE = 8192;
+
 
 void Utilities::initializeExtensions()
 {
@@ -236,6 +245,11 @@ void Utilities::queueFunctionInAppThread(std::function<void()> fun) {
    QObject::connect(&temporary, &QObject::destroyed, qApp, std::move(fun), Qt::QueuedConnection);
 }
 
+void Utilities::queueFunctionInObjectThread(QObject* object, std::function<void()> fun) {
+   QObject temporary;
+   QObject::connect(&temporary, &QObject::destroyed, object, std::move(fun), Qt::QueuedConnection);
+}
+
 void Utilities::getFolderSize(QString folderPath, long long *size)
 {
     if (!folderPath.size())
@@ -261,11 +275,7 @@ void Utilities::getFolderSize(QString folderPath, long long *size)
 
 qreal Utilities::getDevicePixelRatio()
 {
-#if QT_VERSION >= 0x050000
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
-#else
-    return 1.0;
-#endif
 }
 
 QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
@@ -394,7 +404,7 @@ double Utilities::toDoubleInUnit(unsigned long long bytes, unsigned long long un
 {
     double decimalMultiplier = 100.0;
     double multipliedValue = decimalMultiplier * static_cast<double>(bytes);
-    return static_cast<int>(multipliedValue / static_cast<double>(unit)) / decimalMultiplier;
+    return static_cast<int>(round(multipliedValue / static_cast<double>(unit))) / decimalMultiplier;
 }
 
 QString Utilities::getTimeFormat(const TimeInterval &interval)
@@ -523,6 +533,19 @@ QString Utilities::getAvatarPath(QString email)
     return QDir::toNativeSeparators(avatarsPath);
 }
 
+void Utilities::removeAvatars()
+{   
+    const QString avatarsPath = QString::fromUtf8("%1/avatars/").arg(Preferences::instance()->getDataPath());
+    QDir avatarsDirectory(avatarsPath);
+    avatarsDirectory.setNameFilters(QStringList() << QString::fromUtf8(::AVATARS_EXTENSION_FILTER));
+    avatarsDirectory.setFilter(QDir::Files);
+    const QStringList avatars = avatarsDirectory.entryList();
+    for(const QString &avatar: avatars)
+    {
+        avatarsDirectory.remove(avatar);
+    }
+}
+
 bool Utilities::removeRecursively(QString path)
 {
     if (!path.size())
@@ -629,7 +652,7 @@ QString Utilities::getQuantityString(unsigned long long quantity)
     return QString::number(quantity);
 }
 
-QString Utilities::getFinishedTimeString(long long secs)
+QString Utilities::getAddedTimeString(long long secs)
 {
     const int SECS_IN_1_MINUTE = 60;
     const int SECS_IN_1_HOUR = 3600;
@@ -639,38 +662,38 @@ QString Utilities::getFinishedTimeString(long long secs)
 
     if (secs < 2)
     {
-        return QCoreApplication::translate("Utilities", "just now");
+        return QCoreApplication::translate("Utilities", "Added just now");
     }
     else if (secs < SECS_IN_1_MINUTE)
     {
         const int secsAsInt = static_cast<int>(secs);
-        return QCoreApplication::translate("Utilities", "%n second ago", "", secsAsInt);
+        return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
     else if (secs < SECS_IN_1_HOUR)
     {
         const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
-        return QCoreApplication::translate("Utilities", "%n minute ago", "", minutes);
+        return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
     else if (secs < SECS_IN_1_DAY)
     {
         const int hours = static_cast<int>(secs/SECS_IN_1_HOUR);
-        return QCoreApplication::translate("Utilities", "%n hour ago", "", hours);
+        return QCoreApplication::translate("Utilities", "Added %n hour ago", "", hours);
     }
     else if (secs < SECS_IN_1_MONTH)
     {
         const int days = static_cast<int>(secs/SECS_IN_1_DAY);
-        return QCoreApplication::translate("Utilities", "%n day ago", "", days);
+        return QCoreApplication::translate("Utilities", "Added %n day ago", "", days);
     }
     else if (secs < SECS_IN_1_YEAR)
     {
         const int months = static_cast<int>(secs/SECS_IN_1_MONTH);
-        return QCoreApplication::translate("Utilities", "%n month ago", "", months);
+        return QCoreApplication::translate("Utilities", "Added %n month ago", "", months);
     }
     // We might not need century precision... give years.
     else
     {
         const int years = static_cast<int>(secs/SECS_IN_1_YEAR);
-        return QCoreApplication::translate("Utilities", "%n year ago", "", years);
+        return QCoreApplication::translate("Utilities", "Added %n year ago", "", years);
     }
 }
 
@@ -707,6 +730,37 @@ QString Utilities::getSizeString(unsigned long long bytes)
                     + QCoreApplication::translate("Utilities", "Bytes");
 }
 
+QString Utilities::getSizeStringLocalized(quint64 bytes)
+{
+    auto baseUnitSize = Platform::getInstance()->getBaseUnitsSize();
+
+    static const QVector<QPair<QString, quint64>> unitsSize{
+        {QLatin1String("TB"), static_cast<quint64>(std::pow(baseUnitSize, 4))},
+        {QLatin1String("GB"), static_cast<quint64>(std::pow(baseUnitSize, 3))},
+        {QLatin1String("MB"), static_cast<quint64>(std::pow(baseUnitSize, 2))},
+        {QLatin1String("KB"), baseUnitSize},
+        {QLatin1String("Bytes"), 1}
+    };
+
+    auto foundIt = std::find_if(unitsSize.constBegin(), unitsSize.constEnd(), [&bytes](const QPair<QString, quint64>& pair){
+        return bytes >= pair.second;
+    });
+
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
+
+    if (foundIt != unitsSize.constEnd())
+    {
+        return locale.toString(toDoubleInUnit(bytes, foundIt->second)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", foundIt->first.toStdString().c_str());
+    }
+    else
+    {
+        return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
+                + QCoreApplication::translate("Utilities", "Bytes");
+    }
+}
+
 QString Utilities::getSizeString(long long bytes)
 {
     if (bytes >= 0)
@@ -724,6 +778,11 @@ int Utilities::toNearestUnit(long long bytes)
     unsigned long long nearestUnit = getNearestUnit(bytes);
     double inNearestUnit = toDoubleInUnit(bytes, nearestUnit);
     return static_cast<int>(inNearestUnit);
+}
+
+QString Utilities::getTranslatedSeparatorTemplate()
+{
+    return QCoreApplication::translate("Utilities", "%1/%2");
 }
 
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
@@ -809,6 +868,37 @@ QString Utilities::extractJSONString(QString json, QString name)
     }
 
     return json.mid(pos + pattern.size(), end - pos - pattern.size());
+}
+
+QStringList Utilities::extractJSONStringList(const QString& json, const QString& name)
+{
+    QStringList resultList;
+
+    QString pattern = name + QString::fromUtf8("\":[\"");
+    int startPos = json.indexOf(pattern);
+    if (startPos < 0)
+    {
+        return resultList;
+    }
+
+    startPos += pattern.size(); // Move to the beginning of the first string
+
+    int endPos = json.indexOf(QString::fromUtf8("\"]"), startPos);
+    if (endPos < 0)
+    {
+        return resultList;
+    }
+
+    QString substr = json.mid(startPos, endPos - startPos);
+    QStringList parts = substr.remove(QString::fromUtf8("\"")).split(QString::fromUtf8(","));
+
+    // Trim whitespace from each part and add it to the result list
+    for (const QString& part : parts)
+    {
+        resultList.append(part.trimmed());
+    }
+
+    return resultList;
 }
 
 long long Utilities::extractJSONNumber(QString json, QString name)
@@ -1050,7 +1140,7 @@ QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long l
         }
     }
 
-    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
+    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
 }
 
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
@@ -1076,21 +1166,45 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
-QString Utilities::getReadablePROplanFromId(int identifier)
+QString Utilities::getReadablePlanFromId(int identifier, bool shortPlan)
 {
     switch (identifier)
     {
+        case MegaAccountDetails::ACCOUNT_TYPE_FREE:
+            return QCoreApplication::translate("Utilities", "Free");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Starter")
+                       : QCoreApplication::translate("Utilities", "MEGA Starter");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Basic")
+                       : QCoreApplication::translate("Utilities", "MEGA Basic");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Essential")
+                       : QCoreApplication::translate("Utilities", "MEGA Essential");
+            break;
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QCoreApplication::translate("Utilities","Pro Lite");
+            return QCoreApplication::translate("Utilities", "Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QCoreApplication::translate("Utilities","Pro I");
+            return QCoreApplication::translate("Utilities", "Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QCoreApplication::translate("Utilities","Pro II");
+            return QCoreApplication::translate("Utilities", "Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QCoreApplication::translate("Utilities","Pro III");
+            return QCoreApplication::translate("Utilities", "Pro III");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BUSINESS:
+            return QCoreApplication::translate("Utilities", "Business");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI:
+            return QCoreApplication::translate("Utilities", "Pro Flexi");
             break;
     }
 
@@ -1296,7 +1410,6 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
     return repeatedName;
 }
 
-
 QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& fileName)
 {
     QMimeDatabase db;
@@ -1324,6 +1437,20 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
     }
 
     return result;
+}
+
+void Utilities::upgradeClicked()
+{
+    QString url = QString::fromUtf8("mega://#pro");
+    int accountType = Preferences::instance()->accountType();
+    if(accountType == Preferences::ACCOUNT_TYPE_STARTER
+        || accountType == Preferences::ACCOUNT_TYPE_BASIC
+        || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
+    {
+        url.append(QString::fromUtf8("?tab=exc"));
+    }
+    getPROurlWithParameters(url);
+    openUrl(QUrl(url));
 }
 
 QString Utilities::getNodePath(MegaTransfer* transfer)
@@ -1377,22 +1504,29 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
 
     if(path1 < path2)
     {
-        firstPath = path1;
-        secondPath = path2;
+        firstPath = cloudPaths ? path1 : QDir::toNativeSeparators(path1);
+        secondPath = cloudPaths ? path2 : QDir::toNativeSeparators(path2);
     }
     else
     {
-        firstPath = path2;
-        secondPath = path1;
+        firstPath = cloudPaths ? path2 : QDir::toNativeSeparators(path2);
+        secondPath = cloudPaths ? path1 : QDir::toNativeSeparators(path1);
     }
 
     QString separator = cloudPaths ? QLatin1String("/") : QString(QDir::separator());
-    if(cloudPaths)
+    if(!firstPath.endsWith(separator))
     {
         firstPath.append(separator);
-        secondPath.append(separator);
     }
 
+    if(!secondPath.endsWith(separator))
+    {
+        secondPath.append(separator);
+    }
+    if (firstPath == secondPath)
+    {
+        return path1;
+    }
     int index = 1;
     while (firstPath.mid(0, index) == secondPath.mid(0, index))
     {
@@ -1400,6 +1534,9 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
         index++;
     }
 
+    //Just in case the folder path contains common characters but they are not the same
+    //EXAMPLE and EXAMPLE_1 for example
+    //If ret does not end with a separator it is because folders are not the same
     if(!ret.endsWith(separator))
     {
         auto splittedPath = ret.split(separator);
@@ -1408,7 +1545,8 @@ QString Utilities::getCommonPath(const QString &path1, const QString &path2, boo
             ret.remove(ret.lastIndexOf(separator) + 1,splittedPath.last().length());
         }
     }
-    else if(cloudPaths)
+
+    if(ret.endsWith(separator))
     {
         ret = ret.remove(ret.length() - 1, 1);
     }
@@ -1424,6 +1562,25 @@ bool Utilities::isIncommingShare(MegaNode *node)
     }
 
     return false;
+}
+
+bool Utilities::dayHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.daysTo(currentDate) > 0;
+}
+
+bool Utilities::monthHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.month() < currentDate.month();
+}
+
+QString Utilities::getTranslatedError(const MegaError* error)
+{
+    return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 
 long long Utilities::getSystemsAvailableMemory()
@@ -1484,6 +1641,34 @@ bool Utilities::isNodeNameValid(const QString& name)
 {
     QString trimmedName (name.trimmed());
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
+}
+
+QString Utilities::getFileHash(const QString& filePath)
+{
+    QFile file(filePath);
+
+    // Verify precondition: the file must exist and be readable
+    if (!QFile::exists(filePath) || (!file.open(QIODevice::ReadOnly)))
+    {
+        // Opening failed
+        return QString::fromLatin1("");
+    }
+
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    QByteArray buffer;
+
+    while (!file.atEnd())
+    {
+        buffer = file.read(FILE_READ_BUFFER_SIZE);
+        hash.addData(buffer);
+    }
+
+    file.close();
+
+    QByteArray resultHash = hash.result();
+    QString hashString = QString::fromUtf8(resultHash.toHex());
+
+    return hashString;
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

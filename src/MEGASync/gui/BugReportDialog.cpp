@@ -2,7 +2,7 @@
 #include "DialogOpener.h"
 
 #include <TransfersModel.h>
-#include <Preferences.h>
+#include "Preferences.h"
 #include <QMegaMessageBox.h>
 
 #include <QCloseEvent>

@@ -7,7 +7,7 @@
 #include <QMessageBox>
 
 #include "megaapi.h"
-#include "control/LinkProcessor.h"
+#include "LinkProcessor.h"
 #include "QTMegaTransferListener.h"
 #include <memory>
 
@@ -50,7 +50,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::StreamingFromMegaDialog> ui;
-    LinkProcessor* mLinkProcessor;
+    std::unique_ptr<LinkProcessor> mLinkProcessor;
     mega::MegaApi *megaApi;
     mega::MegaApi* mMegaApiFolders;
     std::unique_ptr<mega::QTMegaTransferListener> delegateTransferListener;
@@ -59,7 +59,7 @@ private:
     LastStreamingSelection lastStreamSelection;
     QString mPublicLink;
 
-    void generateStreamURL();
+    bool generateStreamURL();
     void updateFileInfo(QString fileName, LinkStatus status);
     void openStreamWithApp(QString app);
     void showStreamingError();

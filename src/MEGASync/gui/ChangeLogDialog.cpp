@@ -5,10 +5,9 @@
 #include <QString>
 #include <QUrl>
 #include <QScrollBar>
-
-#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
-#endif
+
+#include "Preferences.h"
 
 QString getArchitectureString()
 {
@@ -34,6 +33,11 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui(new Ui::ChangeLogDialog)
 {
     ui->setupUi(this);
+
+#ifdef Q_OS_MACX
+    setWindowFlags(windowFlags() | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
+#endif
+
 #ifdef Q_OS_LINUX
     setWindowFlags(windowFlags() | Qt::WindowCloseButtonHint);
 #endif

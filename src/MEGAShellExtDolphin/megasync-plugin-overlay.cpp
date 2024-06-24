@@ -20,11 +20,13 @@
 #endif
 
 typedef enum {
-    FILE_ERROR = 0,
-    FILE_SYNCED = 1,
-    FILE_PENDING = 2,
-    FILE_SYNCING = 3,
-    FILE_NOTFOUND = 9,
+    RESPONSE_SYNCED  = 0,
+    RESPONSE_PENDING = 1,
+    RESPONSE_SYNCING = 2,
+    RESPONSE_IGNORED = 3,
+    RESPONSE_PAUSED  = 4,
+    RESPONSE_DEFAULT = 9,
+    RESPONSE_ERROR   = 10,
 } FileState;
 
 const char OP_PATH_STATE  = 'P'; //Path state
@@ -176,15 +178,15 @@ public:
 
         switch (state)
         {
-            case FILE_SYNCED:
+            case RESPONSE_SYNCED:
                 r << "mega-dolphin-synced";
                 qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced",url.toLocalFile().toUtf8().constData());
                 break;
-            case FILE_PENDING:
+            case RESPONSE_PENDING:
                 r << "mega-dolphin-pending";
                 qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending",url.toLocalFile().toUtf8().constData());
                 break;
-            case FILE_SYNCING:
+            case RESPONSE_SYNCING:
                 r << "mega-dolphin-syncing";
                 qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing",url.toLocalFile().toUtf8().constData());
                 break;
@@ -204,7 +206,8 @@ private:
     {
         QString res;
         res = sendRequest(OP_PATH_STATE, QFileInfo(path).canonicalFilePath());
-        return res.toInt();
+
+        return res.isEmpty() ? RESPONSE_ERROR : res.toInt();
     }
 
     // send request and receive response from Extension server

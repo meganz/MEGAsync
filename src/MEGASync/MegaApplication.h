@@ -18,24 +18,22 @@
 #include "gui/TransferManager.h"
 #include "gui/InfoDialog.h"
 #include "gui/UpgradeOverStorage.h"
-#include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
-#include "gui/UploadToMegaDialog.h"
 #include "gui/DownloadFromMegaDialog.h"
 #include "gui/StreamingFromMegaDialog.h"
 #include "gui/ImportMegaLinksDialog.h"
 #include "gui/MultiQFileDialog.h"
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
-#include "gui/InfoWizard.h"
-#include "control/Preferences.h"
-#include "control/HTTPServer.h"
-#include "control/MegaUploader.h"
-#include "control/MegaDownloader.h"
-#include "control/UpdateTask.h"
-#include "control/MegaSyncLogger.h"
-#include "control/ThreadPool.h"
-#include "control/Utilities.h"
+#include "Preferences.h"
+#include "HTTPServer.h"
+#include "MegaUploader.h"
+#include "MegaDownloader.h"
+#include "UpdateTask.h"
+#include "MegaSyncLogger.h"
+#include "ThreadPool.h"
+#include "Utilities.h"
+#include "SetManager.h"
 #include "syncs/control/SyncInfo.h"
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
@@ -47,8 +45,12 @@
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
+#include "qml/QmlManager.h"
+#include "qml/QmlDialogManager.h"
 
+class IntervalExecutioner;
 class TransfersModel;
+class StalledIssuesModel;
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -59,12 +61,12 @@ class TransfersModel;
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-class NotificatorBase;
-class MEGASyncDelegateListener;
-class ShellNotifier;
+class LogoutController;
 class TransferMetadata;
 class DuplicatedNodeDialog;
-class LinkProcessor;
+class LoginController;
+class AccountStatusController;
+class StatsEventHandler;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -104,13 +106,10 @@ public:
     static QString applicationDataPath();
     QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
-    void updateTrayIcon();
-    void repositionInfoDialog();
 
     QString getFormattedDateByCurrentLanguage(const QDateTime& datetime, QLocale::FormatType format = QLocale::FormatType::LongFormat) const;
 
     void onEvent(mega::MegaApi *api, mega::MegaEvent *event) override;
-    void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request) override;
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
@@ -123,15 +122,14 @@ public:
     void onReloadNeeded(mega::MegaApi* api) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
-    virtual void onCheckDeferredPreferencesSync(bool timeout);
-    void onGlobalSyncStateChangedImpl(mega::MegaApi* api, bool timeout);
+    void onGlobalSyncStateChangedImpl();
 
     void showAddSyncError(mega::MegaRequest *request, mega::MegaError* e, QString localpath, QString remotePath = QString());
     void showAddSyncError(int errorCode, QString localpath, QString remotePath = QString());
 
     /**
      * @brief Migrate sync configuration to sdk cache
-     * @param email of sync configuration to migrate from previous sessions
+     * @param email of sync configuration to migrate from sprevious sessions
      */
     void migrateSyncConfToSdk(QString email = QString());
 
@@ -143,6 +141,7 @@ public:
 
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = MegaSyncApp->getMEGAString());
+    void showInfoMessage(DesktopNotifications::NotificationInfo info);
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());
@@ -165,41 +164,38 @@ public:
     // Create menus for the "..." menu in InfoDialog view.
     void createInfoDialogMenus();
     void toggleLogging();
-    QList<mega::MegaTransfer* > getFinishedTransfers();
-    int getNumUnviewedTransfers();
-    void removeFinishedTransfer(int transferTag);
-    void removeAllFinishedTransfers();
-    void showVerifyAccountInfo(std::function<void ()> func = nullptr);
 
-    void removeFinishedBlockedTransfer(int transferTag);
-    bool finishedTransfersWhileBlocked(int transferTag);
-
-    mega::MegaTransfer* getFinishedTransferByTag(int tag);
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
+    void resetRootNodes();
+    void initLocalServer();
+    void onboardingFinished(bool fastLogin);
+    void onLoginFinished();
+    void onFetchNodesFinished();
+    void onLogout();
+
+    StatsEventHandler* getStatsEventHandler() const;
 
     MegaSyncLogger& getLogger() const;
     void pushToThreadPool(std::function<void()> functor);
-    QPointer<SetupWizard> getSetupWizard() const;
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
+    StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
 
     /**
      * @brief migrates sync configuration and fetches nodes
      * @param email of sync configuration to migrate from previous sessions. If present
      * syncs configured in previous sessions will be loaded.
      */
-    void fetchNodes(QString email = QString());
-    void whyAmIBlocked(bool periodicCall = false);
     QPointer<OverQuotaDialog> showSyncOverquotaDialog();
     bool finished() const;
     bool isInfoDialogVisible() const;
 
-    int getBlockState() const;
+    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     void updateTrayIconMenu();
 
@@ -215,14 +211,16 @@ public:
     void raiseInfoDialog();
     bool isShellNotificationProcessingOngoing();
 
+    QSystemTrayIcon* getTrayIcon();
+    LoginController* getLoginController();
+    AccountStatusController* getAccountStatusController();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
     void installUpdate();
     void clearAllFinishedTransfers();
-    void clearFinishedTransfer(int transferTag);
     void fetchNodesAfterBlock();
-    void setupWizardCreated();
     void unblocked();
     void nodeMoved(mega::MegaHandle handle);
     void nodeAttributesChanged(mega::MegaHandle handle);
@@ -233,6 +231,7 @@ signals:
     void shellNotificationsProcessed();
 
 public slots:
+    void updateTrayIcon();
     void unlink(bool keepLogs = false);
     void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
@@ -240,7 +239,6 @@ public slots:
     void start();
     void openSettings(int tab = -1);
     void openSettingsAddSync(mega::MegaHandle megaFolderHandle);
-    void openInfoWizard();
     void importLinks();
     void officialWeb();
     void goToMyCloud();
@@ -249,13 +247,13 @@ public slots:
     void uploadActionClicked();
     void uploadActionFromWindowAfterOverQuotaCheck();
     void runUploadActionWithTargetHandle(const mega::MegaHandle &targetFolder, QWidget *parent);
-    void loginActionClicked();
     void downloadActionClicked();
     void downloadACtionClickedWithHandles(const QList<mega::MegaHandle>& handles);
     void streamActionClicked();
     void transferManagerActionClicked(int tab = 0);
     void logoutActionClicked();
     void processDownloads();
+    void processSetDownload(const QString& publicLink, const QList<mega::MegaHandle>& elementHandleList);
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
@@ -278,7 +276,6 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void deleteSdkCache();
     void tryExitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
@@ -294,17 +291,11 @@ public slots:
     void showInfoDialogNotifications();
     void triggerInstallUpdate();
     void scanningAnimationStep();
-    void setupWizardFinished(QPointer<SetupWizard> dialog);
     void clearDownloadAndPendingLinks();
-    void infoWizardDialogFinished(QPointer<InfoWizard> dialog);
-    void runConnectivityCheck();
-    void onConnectivityCheckSuccess();
-    void onConnectivityCheckError();
     void proExpirityTimedOut();
-    void userAction(int action);
-    void showSetupWizard(int action);
     void applyNotificationFilter(int opt);
     void changeState();
+
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
 #endif
@@ -312,21 +303,22 @@ public slots:
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
     void clearUserAttributes();
-    void clearViewedTransfers();
-    void onCompletedTransfersTabActive(bool active);
-    void checkFirstTransfer();
     void checkOperatingSystem();
     void notifyChangeToAllFolders();
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void setDownloadFinished(const QString& setName,
+                             const QStringList& succeededDownloadedElements,
+                             const QStringList& failedDownloadedElements,
+                             const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
-    void onGlobalSyncStateChangedTimeout();
-    void onCheckDeferredPreferencesSyncTimeout();
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+    void requestFetchSetFromLink(const QString& link);
+
 private slots:
     void openFolderPath(QString path);
     void registerUserActivity();
@@ -343,29 +335,24 @@ protected slots:
     void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
+    void onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog);
 
 protected:
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
-    void loggedIn(bool fromWizard);
-    void startSyncs(QList<PreConfiguredSync> syncs); //initializes syncs configured in the setup wizard
     void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void disableSyncs();
     void restoreSyncs();
     void createTransferManagerDialog(TransfersWidget::TM_TAB tab);
-    void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
-    void initLocalServer();
+    void startHttpsServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
-    void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
     void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
-
-    std::vector<std::unique_ptr<mega::MegaEvent>> eventsPendingLoggedIn;
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -415,12 +402,9 @@ protected:
     QTimer *scanningTimer;
 #endif
 
-    QTimer *connectivityTimer;
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
-    QPointer<SetupWizard> mSetupWizard;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
     std::shared_ptr<Preferences> preferences;
@@ -445,8 +429,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool mFetchingNodes = false;
-    bool mQueringWhyAmIBlocked = false;
     bool queuedUserStats[3];
     int queuedStorageUserStatsReason;
     long long userStatsLastRequest[3];
@@ -461,7 +443,6 @@ protected:
     long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
-    int syncState;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
     QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
@@ -471,7 +452,6 @@ protected:
     QTimer *periodicTasksTimer;
     QTimer *networkCheckTimer;
     QTimer *infoDialogTimer;
-    QTimer *firstTransferTimer;
     std::unique_ptr<std::thread> mMutexStealerThread;
 
     QTranslator translator;
@@ -491,19 +471,15 @@ protected:
     QMap<QString, QString> pendingLinks;
     std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> mTransferManager;
-    bool mTransferManagerFullScreen;
-    QMap<int, mega::MegaTransfer*> finishedTransfers;
-    QList<mega::MegaTransfer*> finishedTransferOrder;
-    QSet<int> finishedBlockedTransfers;
 
     bool reboot;
-    bool syncActive;
     bool paused;
-    bool indexing;
-    bool waiting;
-    bool syncing; //if any sync is in syncing state
+    bool mIndexing;
+    bool mWaiting;
+    bool mSyncing; //if any sync is in syncing state
+    bool mSyncStalled = false;
     bool updated;
-    bool transferring; //if there is any regular transfer in progress
+    bool mTransferring; //if there is any regular transfer in progress
     bool checkupdate;
     bool updateBlocked;
     long long lastExit;
@@ -513,24 +489,23 @@ protected:
     bool mIsFirstFileTwoWaySynced;
     bool mIsFirstFileBackedUp;
     bool networkConnectivity;
-    int nUnviewedTransfers;
-    bool completedTabActive;
     int prevVersion;
     bool isPublic;
     bool nodescurrent;
     int businessStatus = -2;
-    int blockState;
-    bool blockStateSet = false;
     bool whyamiblockedPeriodicPetition = false;
+    LoginController* mLoginController;
     friend class DeferPreferencesSyncForScope;
     std::shared_ptr<TransferQuota> mTransferQuota;
     bool transferOverQuotaWaitTimeExpiredReceived;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
+    AccountStatusController* mStatusController;
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
     // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
     std::unique_ptr<SyncController> mSyncController;
+    LogoutController* mLogoutController;
 
     QPointer<TransfersModel> mTransfersModel;
 
@@ -538,11 +513,18 @@ protected:
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
     bool mDisableGfx;
+    StalledIssuesModel* mStalledIssuesModel;
+    StatsEventHandler* mStatsEventHandler;
+
+    SetManager* mSetManager;
+    LinkProcessor* mLinkProcessor;
+
+    QString mLinkToPublicSet;
+    QList<mega::MegaHandle> mElementHandleList;
+    std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
-
-    static long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
 
     QList<QNetworkInterface> findNewNetworkInterfaces();
     bool checkNetworkInterfaces(const QList<QNetworkInterface>& newNetworkInterfaces) const;
@@ -576,12 +558,6 @@ private:
     int mProcessingShellNotifications = 0;
 
     void ConnectServerSignals(HTTPServer* server);
-
-    static QString RectToString(const QRect& rect);
-
-    void fixMultiscreenResizeBug(int& posX, int& posY);
-
-    static void logInfoDialogCoordinates(const char* message, const QRect& screenGeometry, const QString& otherInformation);
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
@@ -641,33 +617,19 @@ private:
     void processUpgradeSecurityEvent();
     QQueue<QString> createQueue(const QStringList& newUploads) const;
 
+    bool hasDefaultDownloadFolder() const;
+    void showInfoDialogIfHTTPServerSender();
+
+    void sendPeriodicStats() const;
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
+    void onScheduledExecution();
 
 private:
     QFutureWatcher<NodeCount> mWatcher;
-};
 
-class DeferPreferencesSyncForScope
-{
-    // This class is provided as an easy way to avoid updating the preferences file so often that it becomes a performance issue
-    // eg. when 1000 transfers all have a temporary error callback at once.
-    // It causes sync() to set a flag instead of actually rewriting the file, and the app will start a timer
-    // to do the actual sync() in 100ms instead.   Any other sync() calls (that are also protected by this class) in the meantime are effectively skipped.
-    MegaApplication* app;
-
-public:
-    DeferPreferencesSyncForScope(MegaApplication* a) : app(a)
-    {
-        app->preferences->deferSyncs(true);
-    }
-
-    ~DeferPreferencesSyncForScope()
-    {
-        app->preferences->deferSyncs(false);
-        app->onCheckDeferredPreferencesSync(false);
-    }
 };
 
 #endif // MEGAAPPLICATION_H

@@ -144,7 +144,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
         if(mOsName == "Deepin 20")
         {
             const auto scale = getDpiOnLinux() / 96.0;
-            qputenv("QT_SCALE_FACTOR", QString::number(scale).toAscii());
+            qputenv("QT_SCALE_FACTOR", QString::number(scale).toLatin1());
             return;
         }
 
@@ -156,7 +156,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
                 if(mOsName == "Deepin 20")
                 {
                     const auto minCalculatedScale = *std::min_element(mCalculatedScales.begin(), mCalculatedScales.end());
-                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toAscii();
+                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toLatin1();
                     qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
                     mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
                 }
@@ -169,7 +169,7 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
             }
             else
             {
-                const auto scaleString = QString::number(mCalculatedScales.front()).toAscii();
+                const auto scaleString = QString::number(mCalculatedScales.front()).toLatin1();
                 qputenv("QT_SCALE_FACTOR", scaleString);
                 mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + scaleString);
             }
@@ -238,13 +238,17 @@ double adjustScaleValueToSuitableIncrement(double scale, double maxScale, double
     return scale;
 }
 
-double calculateMaxScale(const ScreenInfo& screenInfo)
+double calculateMaxScale(const ScreenInfo& screenInfo, bool multiScreen)
 {
-    constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
-    constexpr auto maxDialogHeight = 740; //This is the height of the biggest dialog in megassync (Settings)
+    // This is the height of the biggest dialog in megassync (Settings) + headroom
+    constexpr auto maxDialogHeight = 810;
 
-    constexpr auto biggestDialogHeight = minTitleBarHeight + maxDialogHeight;
-    return screenInfo.availableHeightPixels / static_cast<double>(biggestDialogHeight);
+    // We use different env vars to set scaling depending on the number of screens:
+    // It seems the scling as not the same effect depending on the variable used...
+    // So we compute the scale differently.
+    // TODO: revamp all scaling code
+    return screenInfo.availableHeightPixels * (multiScreen ? screenInfo.devicePixelRatio : 1.)
+           / static_cast<double>(maxDialogHeight);
 }
 
 bool ScaleFactorManager::computeScales()
@@ -252,12 +256,12 @@ bool ScaleFactorManager::computeScales()
     bool needsRescaling = false;
     for(auto& screenInfo : mScreensInfo)
     {
-        auto scale = 1.;
+        auto scale = screenInfo.devicePixelRatio;
         if(mOsType == OsType::LINUX)
         {
             scale = computeScaleLinux(screenInfo);
         }
-        const auto maxScale = calculateMaxScale(screenInfo);
+        const auto maxScale = calculateMaxScale(screenInfo, mScreensInfo.size() > 1);
         scale = std::min(scale, maxScale);
         scale = adjustScaleValueToSuitableIncrement(scale, maxScale, screenInfo.devicePixelRatio);
 

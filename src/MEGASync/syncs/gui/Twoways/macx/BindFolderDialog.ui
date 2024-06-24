@@ -168,6 +168,13 @@ margin-right: 32px;</string>
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="bAddExclusions">
+        <property name="text">
+         <string>Add exclusions</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>

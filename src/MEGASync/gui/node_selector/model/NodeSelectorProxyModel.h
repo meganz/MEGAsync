@@ -29,8 +29,6 @@ public:
 
     mega::MegaHandle getHandle(const QModelIndex &index);
     std::shared_ptr<mega::MegaNode> getNode(const QModelIndex& index);
-    void addNode(std::unique_ptr<mega::MegaNode> node, const QModelIndex& parent);
-    void addNodes(QList<std::shared_ptr<mega::MegaNode> > nodes, const QModelIndex &parent);
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
@@ -48,6 +46,7 @@ signals:
     void expandReady();
     void navigateReady(const QModelIndex& index);
     void modelAboutToBeChanged();
+    void modelSorted();
 
 private:
     QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());

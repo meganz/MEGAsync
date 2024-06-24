@@ -31,9 +31,9 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
     m_ui->bWarning->setIcon(tmpIcon);
+    m_ui->bWarning->installEventFilter(this);
 
     connect(static_cast<MegaApplication *>(qApp), SIGNAL(unblocked()), this, SLOT(close()));
-
 }
 
 void VerifyLockMessage::mousePressEvent(QMouseEvent *event)
@@ -107,18 +107,6 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
 
             break;
         }
-        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-        {
-            QString title = m_haveMainDialog ? tr("Verify your account") : tr("Locked account");
-            setWindowTitle(title);
-            m_ui->lVerifyEmailTitle->setText(title);
-            m_ui->lVerifyEmailDesc->setText(tr("Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."));
-            m_ui->lWhySeenThis->setVisible(false);
-            m_ui->lEmailSent->setVisible(false);
-            m_ui->bResendEmail->setText(tr("Verify now"));
-            break;
-        }
-
     }
 }
 
@@ -185,9 +173,14 @@ void VerifyLockMessage::on_bResendEmail_clicked()
             megaApi->resendVerificationEmail(delegateListener);
             break;
         }
-        case MegaApi::ACCOUNT_BLOCKED_VERIFICATION_SMS:
-        {
-            static_cast<MegaApplication *>(qApp)->goToMyCloud();
-        }
     }
+}
+
+bool VerifyLockMessage::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == m_ui->bWarning && event->type() != QEvent::Paint && event->type() != QEvent::Polish)
+    {
+        return true;
+    }
+    return QDialog::eventFilter(obj, event);
 }

@@ -42,6 +42,7 @@ private slots:
 protected:
     mega::MegaApi *megaApi;
     mega::QTMegaRequestListener *delegateListener;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
     void mousePressEvent(QMouseEvent *event);
     void changeEvent(QEvent *event);

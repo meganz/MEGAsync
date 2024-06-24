@@ -1,15 +1,16 @@
 #ifndef DOWNLOADQUEUECONTROLLER_H
 #define DOWNLOADQUEUECONTROLLER_H
 
-#include "control/TransferBatch.h"
-#include "control/Utilities.h"
+#include "TransferBatch.h"
+#include "Utilities.h"
 #include "megaapi.h"
 #include <QTMegaRequestListener.h>
-#include "TransferMetaData.h"
+#include "drivedata.h"
 
 #include <QMap>
 #include <QObject>
 #include <QString>
+#include <QStorageInfo>
 
 class DownloadQueueController : public QObject, public mega::MegaRequestListener
 {
@@ -45,15 +46,21 @@ private:
     void tryDownload();
     bool hasEnoughSpaceForDownloads();
     void askUserForChoice();
+    DriveDisplayData getDriveDisplayData(const QStorageInfo& driveInfo) const;
+    QString getDefaultDriveName() const;
+    QString getDriveIcon() const;
+    DriveSpaceData getDriveSpaceDataFromQt();
 
     mega::MegaApi *mMegaApi;
     const QMap<mega::MegaHandle, QString>& mPathMap;
     std::unique_ptr<mega::QTMegaRequestListener> mListener;
     std::atomic<long> mFolderCountPendingSizeComputation;
-    std::atomic<qint64> mTotalQueueDiskSize;
+    std::atomic<quint64> mTotalQueueDiskSize;
     unsigned long long mCurrentAppDataId;
     QString mCurrentTargetPath;
     BlockingBatch* mDownloadBatches;
     QQueue<WrappedNode*>* mDownloadQueue;
+
+    DriveSpaceData mCachedDriveData;
 };
 #endif // DOWNLOADQUEUECONTROLLER_H

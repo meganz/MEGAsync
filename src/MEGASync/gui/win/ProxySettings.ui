@@ -124,12 +124,12 @@
         </property>
         <item>
          <property name="text">
-          <string>HTTP</string>
+          <string notr="true">HTTP</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SOCK5H</string>
+          <string notr="true">SOCKS5H</string>
          </property>
         </item>
        </widget>

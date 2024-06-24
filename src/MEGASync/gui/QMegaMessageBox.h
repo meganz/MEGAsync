@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 #include <QMap>
+#include <QCheckBox>
 
 class QMegaMessageBox : public QMessageBox
 {
@@ -23,20 +24,24 @@ public:
         QString informativeText;
         StandardButtons buttons;
         StandardButton defaultButton;
+        QCheckBox* checkBox;
         QMap<StandardButton, QString> buttonsText;
         Qt::TextFormat textFormat;
         QPixmap iconPixmap;
         bool enqueue;
         bool ignoreCloseAll;
+        QString checkboxText;
 
         MessageBoxInfo()
             : finishFunc(nullptr),
               parent(nullptr),
               buttons(Ok),
               defaultButton(NoButton),
+              checkBox(nullptr),
               textFormat(Qt::PlainText),
               enqueue(false),
-              ignoreCloseAll(false)
+              ignoreCloseAll(false),
+              checkboxText(QString())
         {}
     };
 

@@ -8,8 +8,10 @@
 #include <QDialog>
 #include <QMessageBox>
 #include <QPointer>
+
 #include <functional>
 #include <memory>
+
 #include <QMap>
 #include <QQueue>
 #include <QApplication>
@@ -49,9 +51,13 @@ private:
         bool ignoreCloseAllAction() const {return mIgnoreCloseAllAction;}
         void setIgnoreCloseAllAction(bool newIgnoreCloseAllAction){mIgnoreCloseAllAction = newIgnoreCloseAllAction;}
 
+        bool ignoreRaiseAllAction() const {return mIgnoreRaiseAllAction;}
+        void setIgnoreRaiseAllAction(bool newIgnoreRaiseAllAction){mIgnoreRaiseAllAction = newIgnoreRaiseAllAction;}
+
     protected:
         QString mDialogClass;
         bool mIgnoreCloseAllAction = false;
+        bool mIgnoreRaiseAllAction = false;
     };
 
     template <class DialogType>
@@ -116,7 +122,7 @@ public:
     template <class DialogType>
     static std::shared_ptr<DialogInfo<DialogType>> findDialog()
     {
-        auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+        auto classType = className<DialogType>();
 
         auto finder = [classType](const std::shared_ptr<DialogInfoBase>& dialogInfo) {
             return (dialogInfo->getDialogClass() == classType);
@@ -253,7 +259,7 @@ public:
     }
 
     template <class DialogType>
-    static void showDialog(QPointer<DialogType> dialog, std::function<void()> func)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, std::function<void()> func)
     {
         if(dialog)
         {
@@ -264,12 +270,13 @@ public:
                     func();
                 }
             });
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType, class ParentType, class CallbackClass>
-    static void showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, bool whenParentIsActivated, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
     {
         if(dialog)
         {
@@ -283,12 +290,13 @@ public:
                 }
             });
 
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType, class CallbackClass>
-    static void showDialog(QPointer<DialogType> dialog, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog, CallbackClass* caller, void(CallbackClass::*func)(QPointer<DialogType>))
     {
         if(dialog)
         {
@@ -300,19 +308,21 @@ public:
                 removeDialog(dialog);
             });
 
-            showDialogImpl(dialog);
+            return showDialogImpl(dialog);
         }
+        return nullptr;
     }
 
     template <class DialogType>
-    static void showNonModalDialog(QPointer<DialogType> dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> showNonModalDialog(QPointer<DialogType> dialog)
     {
         if(dialog)
         {
             removeWhenClose(dialog);
             dialog->setModal(false);
-            showDialogImpl(dialog, false);
+            return showDialogImpl(dialog, false);
         }
+        return nullptr;
     }
 
     template <class DialogType>
@@ -322,19 +332,44 @@ public:
         {
             removeWhenClose(dialog);
             showDialogImpl(dialog, false);
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            auto classType = className<DialogType>();
             mSavedGeometries.insert(classType, GeometryInfo());
         }
     }
 
     template <class DialogType>
-    static void showDialog(QPointer<DialogType> dialog)
+    static std::shared_ptr<DialogInfo<DialogType>> showDialog(QPointer<DialogType> dialog)
     {
+        std::shared_ptr<DialogInfo<DialogType>> ret = nullptr;
         if(dialog)
         {
             removeWhenClose(dialog);
-            showDialogImpl(dialog);
+            ret = showDialogImpl(dialog);
         }
+        return ret;
+    }
+
+    template <class DialogType>
+    static std::shared_ptr<DialogInfo<DialogType>> addDialog(QPointer<DialogType> dialog)
+    {
+        std::shared_ptr<DialogInfo<DialogType>> ret = nullptr;
+
+        if(dialog)
+        {
+            QString classType = className<DialogType>();
+            auto info = findSiblingDialogInfo<DialogType>(classType);
+
+            if(!info)
+            {
+                info = std::make_shared<DialogInfo<DialogType>>();
+                info->setDialog(dialog);
+                info->setDialogClass(classType);
+                mOpenedDialogs.append(info);
+                initDialog(dialog);
+            }
+            ret = info;
+        }
+        return ret;
     }
 
     template <class DialogType>
@@ -342,7 +377,7 @@ public:
     {
         if(dialog)
         {
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            auto classType = className<DialogType>();
             if(mSavedGeometries.contains(classType))
             {
                 GeometryInfo info;
@@ -362,12 +397,20 @@ public:
 
     static void raiseAllDialogs()
     {
+        bool anyRaised = false;
         foreach(auto dialogInfo, mOpenedDialogs)
         {
-            dialogInfo->raise();
+            if(!dialogInfo->ignoreRaiseAllAction())
+            {
+                dialogInfo->raise();
+                anyRaised = true;
+            }
         }
 
-        qApp->processEvents();
+        if(anyRaised)
+        {
+            qApp->processEvents();
+        }
     }
 
     static void closeAllDialogs()
@@ -400,7 +443,7 @@ private:
     {
         if(dialog)
         {
-            auto classType = QString::fromUtf8(DialogType::staticMetaObject.className());
+            QString classType = className<DialogType>();
             auto info = findSiblingDialogInfo<DialogType>(classType);
 
             if(info)
@@ -488,9 +531,7 @@ private:
                 mOpenedDialogs.removeOne(info);
             }
         });
-
-        //This depends on QDialog -> Check if we can templatizate it in order to reuse it with QML
-        auto dpiResize = new HighDpiResize(dialog);
+        auto dpiResize = new HighDpiResize<DialogType>(dialog);
         Q_UNUSED(dpiResize);
     }
 
@@ -533,6 +574,12 @@ private:
         }
 
         return nullptr;
+    }
+
+    template <class DialogType>
+    static QString className()
+    {
+        return QString::fromUtf8(typeid(DialogType).name());
     }
 };
 

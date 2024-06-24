@@ -1,14 +1,13 @@
 #include "AvatarWidget.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "MegaApplication.h"
 #include "UserAttributesRequests/Avatar.h"
+#include "StatsEventHandler.h"
 
 #include <QLinearGradient>
 #include <QPainter>
 #include <QWindow>
 #include <QMouseEvent>
-
-#include <math.h>
 
 static const int AVATAR_DIAMETER (60);
 static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
@@ -67,6 +66,7 @@ void AvatarWidget::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         MegaSyncApp->openSettings(SettingsDialog::ACCOUNT_TAB);
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::AVATAR_CLICKED, true);
     }
 }
 
@@ -82,41 +82,45 @@ QPixmap AvatarPixmap::maskFromImagePath(const QString &pathToFile, int size)
     }
 
     QPixmap pm;
-    QImage image(pathToFile);
-    image = image.convertToFormat(QImage::Format_ARGB32);
+    QImage image(pathToFile, "jpg");
 
-    // Crop image to a square:
-    int imgsize = qMin(image.width(), image.height());
-    QRect rect = QRect((image.width() - imgsize) / 2,
-                       (image.height() - imgsize) / 2,
-                       imgsize,
-                       imgsize);
-    image = image.copy(rect);
+    if (!image.isNull())
+    {
+        image = image.convertToFormat(QImage::Format_ARGB32);
 
-    // Create the output image with the same dimensions and an alpha channel
-    // and make it completely transparent:
-    QImage out_img = QImage(imgsize, imgsize, QImage::Format_ARGB32);
-    out_img.fill(Qt::transparent);
+        // Crop image to a square:
+        int imgsize = qMin(image.width(), image.height());
+        QRect rect = QRect((image.width() - imgsize) / 2,
+                           (image.height() - imgsize) / 2,
+                           imgsize,
+                           imgsize);
+        image = image.copy(rect);
 
-    // Create a texture brush and paint a circle with the original image onto
-    // the output image:
-    QBrush brush = QBrush(image);                       // Create texture brush
-    QPainter painter(&out_img);                         // Paint the output image
-    painter.setPen(Qt::NoPen);                          // Don't draw an outline
-    painter.setRenderHint(QPainter::Antialiasing, true);// Use AA
+        // Create the output image with the same dimensions and an alpha channel
+        // and make it completely transparent:
+        QImage out_img = QImage(imgsize, imgsize, QImage::Format_ARGB32);
+        out_img.fill(Qt::transparent);
 
-    painter.setBrush(brush);                            // Use the image texture brush
-    painter.drawEllipse(0, 0, imgsize, imgsize);        // Actually draw the circle
+        // Create a texture brush and paint a circle with the original image onto
+        // the output image:
+        QBrush brush = QBrush(image);                       // Create texture brush
+        QPainter painter(&out_img);                         // Paint the output image
+        painter.setPen(Qt::NoPen);                          // Don't draw an outline
+        painter.setRenderHint(QPainter::Antialiasing, true);// Use AA
 
-    painter.end();                                      // We are done (segfault if you forget this)
+        painter.setBrush(brush);                            // Use the image texture brush
+        painter.drawEllipse(0, 0, imgsize, imgsize);        // Actually draw the circle
 
-    // Convert the image to a pixmap and rescale it.  Take pixel ratio into
-    // account to get a sharp image on retina displays:
-    qreal pr = QWindow().devicePixelRatio();
-    pm = QPixmap::fromImage(out_img);
-    pm.setDevicePixelRatio(pr);
-    size = qRound (pr * size);
-    pm = pm.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        painter.end();                                      // We are done (segfault if you forget this)
+
+        // Convert the image to a pixmap and rescale it.  Take pixel ratio into
+        // account to get a sharp image on retina displays:
+        qreal pr = QWindow().devicePixelRatio();
+        pm = QPixmap::fromImage(out_img);
+        pm.setDevicePixelRatio(pr);
+        size = qRound (pr * size);
+        pm = pm.scaled(size, size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    }
 
     return pm;
 }

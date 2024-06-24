@@ -1,100 +1,104 @@
 [[_TOC_]]
 
-# Linux instructions
+# Ubuntu instructions
 
-For MEGA Desktop App development we are targeting Ubuntu LTS, although we are providing
-packages for other Linux flavors as well; please check the main README file for a
-definitive list.
-
-MEGA Desktop App may run on any flavor of Linux as long as the Desktop Manager and Window
-Environment is supported by the Qt SDK and the required third-party dependencies are
-available in their package management repositories. The officially supported distros
-guarantee that availability and MEGAsync compatibility with their default Window Manager
-and Desktop environment. In this document we aim to provide instructions for Debian (APT
-packaging) and RedHat (RPM packaging).
+We officially support a handful of Linux flavors based on Debian and RedHat,
+however, for development, we are focusing on Ubuntu LTS as a good reference platform.
+Current LTS is 22.04 (jammy) and our developers use that for daily Linux development.
 
 # Requirements
 
-Important requirements for MEGAsync are GCC above version 5 and Qt above version 5.10. The
-other third-party requirements will vary from distro to distro; we will aim for a
-base-line here and rely on you for the necessary adjustments for your specific Linux
-installation. If you need help, you can always reach out to us on GitHub.
+Important requirements for MEGAsync are GCC above version 5 and Qt above version 5.15. The
+other third-party requirements are handled through VCPKG.
 
-## Tools
-
-Some essential tools are needed to get the building process going. Here is the
-example Debian APT install command:
-
+## System build dependencies
+In order to build the desktop app, you will need to install the following packages:
 ```
-$ sudo apt install git build-essential wget dh-autoreconf cdbs unzip libtool-bin pkg-config debhelper
+sudo apt install \
+    build-essential \
+    git \
+    cmake \
+    wget \
+    autoconf-archive \
+    curl \
+    zip \
+    unzip \
+    tar \
+    pkg-config \
+    nasm
 ```
-And here is the example for Fedora:
+and
 ```
-$ sudo dnf install @"C Development Tools and Libraries" git wget unzip
+sudo apt install \
+    libxcb-cursor0 \
+    qtbase5-dev \
+    qttools5-dev  \
+    libqt5x11extras5-dev  \
+    libqt5svg5-dev    \
+    qtdeclarative5-dev \
+    qml-module-qtquick-dialogs \
+    qml-module-qtquick-controls2
 ```
-The package `build-essential` on Debian and the `C Development Tools and Libraries` on
-Fedora, are responsible for installing g++, autoconf, automake and some other build
-essential tools. Please install these packages, or their available equivalent, in your
-distribution's package repository.
+## VCPKG
+Along with Qt, MEGA Desktop app and the MEGA SDK require another dozen or more
+third party libraries to cover all the functionality exposed to our users. We are
+using Microsoft's VCPKG C++ Library Manager for managing our dependencies.
 
-The biggest differentiating factor in getting MEGAsync to work on your distro is, whether
-you can install (or build) all the library dependencies we need.
-
-## APT Libraries
-
-Here is the third-party dependency list for APT based distros (e.g. Ubuntu):
+You need to clone the VCPKG git repo (you can of course choose the local directory, `~/mega` is given as an example):
 ```
-$ sudo apt install qt5-default qttools5-dev-tools qtbase5-dev qt5-qmake libqt5x11extras5-dev libqt5dbus5 libqt5svg5-dev libcrypto++-dev libraw-dev libc-ares-dev libssl-dev libsqlite3-dev zlib1g-dev libavcodec-dev libavutil-dev libavformat-dev libswscale-dev libmediainfo-dev libfreeimage-dev libreadline-dev libsodium-dev libuv1-dev libudev-dev libzen-dev
-```
-
-## RPM Libraries
-
-Here is the dependency list for RPM based distros (e.g. Fedora):
-```
-$ sudo dnf install qt5-qtbase-devel qt5-qttools-devel qt5-qtsvg-devel qt5-qtx11extras-devel c-ares-devel cryptopp-devel openssl-devel sqlite-devel zlib-devel LibRaw-devel libudev-devel libzen-devel libmediainfo-devel
+mkdir ~/mega
+cd ~/mega
+git clone https://github.com/microsoft/vcpkg
 ```
 
 # Get the source
+Open a Terminal and clone the MEGA Desktop app repository:
 
-Open a Terminal and clone the MEGAsync repository:
 ```
-$ mkdir ~/mega
-$ cd ~/mega
-$ git clone --recursive https://github.com/meganz/MEGAsync.git desktop
+cd ~/mega
+git clone --recursive https://github.com/meganz/MEGAsync.git desktop
 ```
 The MEGA SDK is fetched recursively from https://github.com/meganz/sdk.git
 
 # Build everything
 
-This steps, will check-out all the 3rdParty dependencies and then
-proceed to build those, the SDK and MEGA Desktop:
+## Run CMake
+Run CMake to configure the project. We will build in a separate directory, outside of the source tree.
 ```
-$ cd ~/mega/desktop/src/
-$ ./configure -g -q -i
-$ qmake MEGASync/MEGASync.pro
-$ lrelease MEGASync/MEGASync.pro
-$ make
+cd ~/mega
+cmake -DVCPKG_ROOT='~/mega/vcpkg' -S '~/mega/desktop' -B '~/mega/build_dir' -DCMAKE_BUILD_TYPE=Debug
 ```
-Note: when compiling for RPM based distros, `qmake` and `lrelease` programs might be missing.
-Use `qmake-qt5` and `lrelease-qt5` instead.
+Adapt the parameters to suit your needs:
+```
+cmake -DVCPKG_ROOT='<VCPKG root path>' -S '<desktop app repository path>' -B '<build directory>' -DCMAKE_BUILD_TYPE=<Debug or Release>
+```
+
+The dependencies will be built at this stage from VCPKG.
+
+## Build the Desktop App
+To build the Desktop App, use target `MEGAsync`.
+Example:
+```
+cmake --build '~/mega/build_dir' --target MEGAsync
+```
+
+The built executable will be in `~/mega/build_dir/src/MEGASync/Debug/`
+
 
 # Development
 
-For development, you can open `desktop/src/MEGASync/MEGASync.pro` in Qt Creator
-IDE, which can be installed on Debian flavors like so:
+For development, you can use the Qt Creator IDE, which can be installed on Debian flavors like so:
 ```
-$ sudo apt install qtcreator libclang-common-8-dev
+sudo apt install qtcreator
 ```
-or on Fedora running:
-```
-$ sudo dnf install qtcreator
-```
+ Note: the Qt Online installer might provide a more recent version of Qt Creator than your distribution.
 
-When building via Qt Creator, note that the SDK is also being rebuilt, since it has its
-own QMake project file in the SDK sub-project at `bindings/qt/sdk.pri` included by the
-parent QMake.
+Open the `CMakeLists.txt` located at the root of the repository.
 
-You might have to generate the initial set of language files, so they are found by the
-build system onwards. To do that, in Qt Creator, in the application menu, go to Tools ->
-External -> Linguist and click on Release Translations action.
+## Configure the project
+Select the configuration that you want for the project, and set their build path (you can keep the defaults).
 
+You will need to add the path to VCPKG to the CMake configuration. For each configuration, add a new `VCPKG_ROOT` key (in the "Initial Configuration" tab), and set the value to the VCPKG root directory (for instance `~/mega/vcpkg`).
+
+Then click the "Re-configure with Initial Parameters" button. Wait for this process to finish (you can follow the progress in the "General messages" output).
+You're good to go!

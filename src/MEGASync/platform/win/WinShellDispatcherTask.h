@@ -6,7 +6,6 @@
 
 #include "MegaApplication.h"
 #include "megaapi.h"
-#include "control/Preferences.h"
 
 #include <windows.h>
 #include <winbase.h>

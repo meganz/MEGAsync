@@ -217,3 +217,9 @@ pip-log.txt
 *.qm
 .deps
 
+######################
+## QML / Qt Designer
+######################
+
+gui_qml_qml_qmlcache.qrc
+mocinclude.opt

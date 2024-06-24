@@ -66,7 +66,11 @@ unix:!macx {
 #    target.path = $$PREFIX/bin
 #    INSTALLS += target
 }
+else:win32 {
+    TARGET = MEGAsync
+}
 else {
+    QT += svg #macOS SVG support
     TARGET = MEGAsync
 }
 
@@ -122,6 +126,7 @@ include(syncs/syncs.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
+include(stalled_issues/stalledissues.pri)
 
 unix:!macx {
     GCC_VERSION = $$system("g++ -dumpversion")
@@ -154,7 +159,8 @@ SOURCES += $$PWD/MegaApplication.cpp \
     $$PWD/UserAttributesRequests/DeviceName.cpp \
     $$PWD/UserAttributesRequests/FullName.cpp \
     $$PWD/UserAttributesRequests/MyBackupsHandle.cpp \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.cpp \
+    $$PWD/drivedata.cpp
 
 HEADERS += $$PWD/MegaApplication.h \
     $$PWD/TransferQuota.h \
@@ -171,7 +177,8 @@ HEADERS += $$PWD/MegaApplication.h \
     $$PWD/UserAttributesRequests/DeviceName.h \
     $$PWD/UserAttributesRequests/FullName.h \
     $$PWD/UserAttributesRequests/MyBackupsHandle.h \
-    $$PWD/UserAttributesRequests/MyChatFilesFolder.h
+    $$PWD/UserAttributesRequests/MyChatFilesFolder.h \
+    $$PWD/drivedata.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
@@ -211,7 +218,7 @@ win32 {
 }
 
 macx {
-    QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM -D_DARWIN_C_SOURCE
+    QMAKE_CXXFLAGS += -D_DARWIN_C_SOURCE
     MAC_ICONS_RESOURCES.files += $$PWD/folder.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_yosemite.icns
     MAC_ICONS_RESOURCES.files += $$PWD/folder_bigsur.icns

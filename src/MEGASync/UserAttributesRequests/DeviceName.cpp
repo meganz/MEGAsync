@@ -1,7 +1,6 @@
 #include "DeviceName.h"
 
 #include "megaapi.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 
@@ -21,6 +20,7 @@ namespace UserAttributes
 
 DeviceName::DeviceName(const QString& userEmail) : AttributeRequest(userEmail),
     mDeviceName(getDefaultDeviceName()),
+    mUserChoosenDeviceName(),
     mNameSuffix(0)
 {
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
@@ -40,16 +40,16 @@ void DeviceName::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incoming_req
     {
         switch (incoming_request->getType())
         {
-        case mega::MegaRequest::TYPE_GET_ATTR_USER:
-        {
-            processGetDeviceNameCallback(incoming_request, e);
-            break;
-        }
-        case mega::MegaRequest::TYPE_SET_ATTR_USER:
-        {
-            processSetDeviceNameCallback(e);
-            break;
-        }
+            case mega::MegaRequest::TYPE_GET_ATTR_USER:
+            {
+                processGetDeviceNameCallback(incoming_request, e);
+                break;
+            }
+            case mega::MegaRequest::TYPE_SET_ATTR_USER:
+            {
+                processSetDeviceNameCallback(incoming_request, e);
+                break;
+            }
         }
     }
 }
@@ -71,7 +71,7 @@ AttributeRequest::RequestInfo DeviceName::fillRequestInfo()
                                                       << mega::MegaError::API_ENOENT    // Case we have to set it
                                                       << mega::MegaError::API_EEXIST)); // Case where the name is already taken
     ParamInfoMap paramInfoMap({{mega::MegaApi::USER_ATTR_DEVICE_NAMES, paramInfo}});
-    RequestInfo ret(paramInfoMap, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
+    RequestInfo ret(paramInfoMap, QMap<uint64_t, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
                                                 mega::MegaApi::USER_ATTR_DEVICE_NAMES}}));
     return ret;
 }
@@ -93,7 +93,21 @@ QString DeviceName::getDefaultDeviceName()
     return deviceName.isEmpty() ? tr("My computer") : deviceName;
 }
 
-void DeviceName::processGetDeviceNameCallback(mega::MegaRequest *incoming_request, mega::MegaError *e)
+bool DeviceName::setDeviceName(const QString& deviceName)
+{
+    if(deviceName == mDeviceName)
+    {
+        return false;
+    }
+
+    mUserChoosenDeviceName = deviceName;
+    mDeviceName = deviceName;
+
+    setDeviceNameAttribute();
+    return true;
+}
+
+void DeviceName::processGetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
     auto errorCode (e->getErrorCode());
 
@@ -102,7 +116,7 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest *incoming_reques
         mDeviceName = QString::fromUtf8(incoming_request->getName());
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                            QString::fromUtf8("Got device name from remote: \"%1\"").arg(mDeviceName)
-                           .toUtf8().constData());
+                               .toUtf8().constData());
         emit attributeReady(mDeviceName);
     }
     else
@@ -119,12 +133,15 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest *incoming_reques
     }
 }
 
-void DeviceName::processSetDeviceNameCallback(mega::MegaError *e)
+void DeviceName::processSetDeviceNameCallback(mega::MegaRequest* incoming_request, mega::MegaError* e)
 {
     auto errorCode (e->getErrorCode());
     if  (errorCode == mega::MegaError::API_OK)
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Device name successfully set on remote");
+        mDeviceName = QString::fromUtf8(incoming_request->getName());
+        emit attributeReady(mDeviceName);
+        mNameSuffix = 0;
     }
     else
     {
@@ -136,7 +153,8 @@ void DeviceName::processSetDeviceNameCallback(mega::MegaError *e)
         {
             // Increment suffix and retry
             mNameSuffix++;
-            mDeviceName = getDefaultDeviceName() + QString::fromLatin1(" - ") + QString::number(mNameSuffix);
+            mDeviceName = (mUserChoosenDeviceName.isEmpty() ? getDefaultDeviceName() : mUserChoosenDeviceName)
+                                                           + QString::fromLatin1(" - ") + QString::number(mNameSuffix);
             setDeviceNameAttribute();
         }
     }

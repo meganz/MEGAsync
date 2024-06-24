@@ -40,11 +40,13 @@ struct _MEGAExt
 };
 
 typedef enum {
-    FILE_ERROR = 0,
-    FILE_SYNCED = 1,
-    FILE_PENDING = 2,
-    FILE_SYNCING = 3,
-    FILE_NOTFOUND = 9,
+    RESPONSE_SYNCED  = 0,
+    RESPONSE_PENDING = 1,
+    RESPONSE_SYNCING = 2,
+    RESPONSE_IGNORED = 3,
+    RESPONSE_PAUSED  = 4,
+    RESPONSE_DEFAULT = 9,
+    RESPONSE_ERROR   = 10,
 } FileState;
 
 typedef enum {
@@ -62,5 +64,7 @@ GType mega_ext_get_type(void) G_GNUC_CONST;
 void  mega_ext_register_type(ThunarxProviderPlugin *plugin);
 
 G_END_DECLS;
+
+void expanselocalpath(const char *path, char *absolutepath);
 
 #endif

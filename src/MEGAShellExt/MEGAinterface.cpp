@@ -46,7 +46,7 @@ MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overl
     {
         return ((MegaInterface::FileState)(chReadBuf[0] - L'0'));
     }
-    return MegaInterface::FILE_NOTFOUND;
+    return MegaInterface::FILE_ERROR;
 }
 
 LPWSTR MegaInterface::getString(StringID stringID, int numFiles, int numFolders)

@@ -23,11 +23,12 @@ class SyncsMenu : public QWidget
     Q_OBJECT
 
 public:
+    explicit SyncsMenu(mega::MegaSync::SyncType type, QObject* parent);
+
     static SyncsMenu* newSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled, QWidget* parent);
     QPointer<MenuItemAction> getAction();
     void callMenu(const QPoint& p);
     void setEnabled(bool state);
-
 
 signals:
     void addSync(mega::MegaSync::SyncType type);
@@ -36,8 +37,6 @@ protected:
     explicit SyncsMenu(mega::MegaSync::SyncType type,
                        int itemIndent,
                        const QIcon& iconMenu,
-                       const QString& addActionText,
-                       const QString& menuActionText,
                        QWidget* parent);
     bool eventFilter(QObject* obj, QEvent* e) override;
     virtual QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const;
@@ -45,21 +44,24 @@ protected:
 
     QPointer<QMenu> getMenu();
 
+    virtual QString getMenuActionText() const = 0;
+    virtual QString getAddActionText() const = 0;
+
+    QPointer<QMenu> mMenu;
+
 private slots:
     void onAddSync();
 
 private:
     void highLightMenuEntry(QAction *action);
 
-    QPointer<QMenu> mMenu;
     QPointer<MenuItemAction> mAddAction;
     QPointer<MenuItemAction> mMenuAction;
-    MenuItemAction* mLastHovered;
+    QPointer<MenuItemAction> mLastHovered;
     mega::MegaSync::SyncType mType;
     int mItemIndent;
     QIcon mMenuIcon;
-    QString mAddActionText;
-    QString mMenuActionText;
+
 };
 
 class TwoWaySyncsMenu : public SyncsMenu
@@ -68,6 +70,10 @@ class TwoWaySyncsMenu : public SyncsMenu
 
 public:
     explicit TwoWaySyncsMenu(QWidget* parent);
+
+protected:
+    QString getMenuActionText() const override;
+    QString getAddActionText() const override;
 
 private:
     QString createSyncTooltipText(const std::shared_ptr<SyncSettings>& syncSetting) const override;
@@ -81,6 +87,10 @@ class BackupSyncsMenu : public SyncsMenu
 
 public:
     explicit BackupSyncsMenu(QWidget* parent);
+
+protected:
+    QString getMenuActionText() const override;
+    QString getAddActionText() const override;
 
 private slots:
     void onDeviceNameSet(QString name);

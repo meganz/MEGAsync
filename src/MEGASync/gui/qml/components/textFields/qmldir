@@ -1,0 +1,14 @@
+module components.textFields
+EmailTextField 1.0 EmailTextField.qml
+Hint 1.0 Hint.qml
+IconTextField 1.0 IconTextField.qml
+LeftIcon 1.0 LeftIcon.qml
+PasswordTextField 1.0 PasswordTextField.qml
+RightIcon 1.0 RightIcon.qml
+TextField 1.0 TextField.qml
+TwoFA 1.0 TwoFA.qml
+TwoFADigit 1.0 TwoFADigit.qml
+Sizes 1.0 Sizes.qml
+SmallSizes 1.0 SmallSizes.qml
+LargeSizes 1.0 LargeSizes.qml
+Colors 1.0 Colors.qml

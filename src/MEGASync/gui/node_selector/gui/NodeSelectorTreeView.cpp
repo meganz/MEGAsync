@@ -78,10 +78,6 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
     connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
-#endif
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
@@ -301,29 +297,32 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
     {
         auto selectionHandles(getMultiSelectionNodeHandle());
 
-        //All or none
-        if(areAllEligibleForDeletion(selectionHandles))
+        if(!selectionHandles.isEmpty())
         {
-            std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(selectionHandles.first()));
-            if(node && mMegaApi->isInRubbish(node.get()))
+            //All or none
+            if(areAllEligibleForDeletion(selectionHandles))
             {
-                customMenu.addAction(tr("Delete permanently"), this, [this, selectionHandles](){
-                    removeNode(selectionHandles, true);
-                });
+                std::unique_ptr<mega::MegaNode> node(
+                    mMegaApi->getNodeByHandle(selectionHandles.first()));
+                if(node && mMegaApi->isInRubbish(node.get()))
+                {
+                    customMenu.addAction(tr("Delete permanently"),
+                        this,
+                        [this, selectionHandles]() { removeNode(selectionHandles, true); });
+                }
+                else
+                {
+                    customMenu.addAction(tr("Delete"),
+                        this,
+                        [this, selectionHandles]() { removeNode(selectionHandles, false); });
+                }
             }
-            else
-            {
-                customMenu.addAction(tr("Delete"), this, [this, selectionHandles](){
-                    removeNode(selectionHandles, false);
-                });
-            }
-        }
 
-        if(areAllEligibleForRestore(selectionHandles))
-        {
-            customMenu.addAction(tr("Restore"), this, [this, selectionHandles](){
-                restore(selectionHandles);
-            });
+            if(areAllEligibleForRestore(selectionHandles))
+            {
+                customMenu.addAction(
+                    tr("Restore"), this, [this, selectionHandles]() { restore(selectionHandles); });
+            }
         }
     }
 
@@ -338,6 +337,7 @@ void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
     if (event->mimeData()->hasUrls())
     {
         event->acceptProposedAction();
+        event->accept();
     }
 }
 
@@ -348,12 +348,14 @@ void NodeSelectorTreeView::dragMoveEvent(QDragMoveEvent* event)
         event->acceptProposedAction();
         // clear selection and select only the drop index
         selectionModel()->clearSelection();
-        selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::Select);
+        selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
 }
 
 void NodeSelectorTreeView::dropEvent(QDropEvent* event)
 {
+    event->acceptProposedAction();
+
     // Get the list of URLs
     QList<QUrl> urlList = event->mimeData()->urls();
     if (urlList.isEmpty())
@@ -476,22 +478,6 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
         mouseDoubleClickEvent(&mouseEvent);
     }
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-void NodeSelectorTreeView::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
-{
-    Q_UNUSED(previous)
-        Qt::KeyboardModifiers modifiers = QGuiApplication::keyboardModifiers();
-        if(modifiers & Qt::ControlModifier || modifiers & Qt::ShiftModifier || state() == QAbstractItemView::DragSelectingState)
-        {
-            return;
-        }
-
-        QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::Select|QItemSelectionModel::Rows;
-        selectionModel()->select(current, flags);
-}
-#endif
-
 
 bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {

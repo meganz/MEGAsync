@@ -158,12 +158,12 @@ margin-left: 20px;
         </property>
         <item>
          <property name="text">
-          <string>HTTP</string>
+          <string notr="true">HTTP</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>SOCK5H</string>
+          <string notr="true">SOCKS5H</string>
          </property>
         </item>
        </widget>
@@ -539,6 +539,18 @@ margin-left: 20px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -549,6 +561,18 @@ margin-left: 20px;
       </item>
       <item>
        <widget class="QPushButton" name="bUpdate">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Update</string>
         </property>

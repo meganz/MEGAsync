@@ -1,13 +1,14 @@
 #include "ImportMegaLinksDialog.h"
 #include "ui_ImportMegaLinksDialog.h"
 #include "gui/ImportListWidgetItem.h"
-#include "gui/node_selector/gui/NodeSelector.h"
+#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include <MegaNodeNames.h>
 #include "Platform.h"
+#include "CommonMessages.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -17,26 +18,31 @@
 
 using namespace mega;
 
-ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::ImportMegaLinksDialog),
-    mMegaApi(MegaSyncApp->getMegaApi()),
-    mPreferences(Preferences::instance()),
-    mLinkProcessor(linkProcessor)
+ImportMegaLinksDialog::ImportMegaLinksDialog(const QStringList& linkList, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::ImportMegaLinksDialog)
+    , mMegaApi(MegaSyncApp->getMegaApi())
+    , mPreferences(Preferences::instance())
+    , mDownloadPathChangedByUser(false)
+    , mUseDefaultImportPath(true)
+    , mImportPathChangedByUser(false)
 {
     ui->setupUi(this);
 
     static const int MAX_ITEMS_DISPLAYED = 8;
-    const int nbItems (mLinkProcessor->size());
+    const int nbItems (linkList.size());
+    mSelectedItems.resize(nbItems);
 
     for (int i = 0; i < nbItems; i++)
     {
-        ImportListWidgetItem *customItem = new ImportListWidgetItem(mLinkProcessor->getLink(i), i, ui->linkList);
-        connect(customItem, SIGNAL(stateChanged(int,int)), this, SLOT(onLinkStateChanged(int, int)));
+        // Note: QWidget parents (in this case ui->linkList) will take ownership
+        ImportListWidgetItem* customItem = new ImportListWidgetItem(linkList[i], i, ui->linkList);
+        connect(customItem, &ImportListWidgetItem::stateChanged, this, &ImportMegaLinksDialog::onLinkStateChanged);
         QListWidgetItem *item = new QListWidgetItem(ui->linkList);
         ui->linkList->addItem(item);
         item->setSizeHint(customItem->size());
         ui->linkList->setItemWidget(item, customItem);
+        mSelectedItems[i] = false;
     }
 
     int extraSlots = std::min(MAX_ITEMS_DISPLAYED, nbItems) - 1;
@@ -46,22 +52,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
 
     ui->linkList->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    QString defaultFolderPath;
-    QString downloadFolder = QDir::toNativeSeparators(mPreferences->downloadFolder());
-    QFileInfo test(downloadFolder);
-    if (!test.isDir())
-    {
-        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGA Downloads")));
-        defaultFolder.mkpath(QString::fromLatin1("."));
-        defaultFolderPath = defaultFolder.absolutePath();
-        defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
-    }
-    else
-    {
-        defaultFolderPath = downloadFolder;
-    }
-
-    ui->eLocalFolder->setText(defaultFolderPath);
+    updateDownloadPath();
 
     if (mPreferences->logged())
     {
@@ -72,12 +63,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(LinkProcessor *linkProcessor, QWidg
         initUiAsUnlogged();
     }
 
-    mLinkProcessor->setParentHandler(this);
-    connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, this, &ImportMegaLinksDialog::onLinkInfoAvailable);
-    connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
-
     mFinished = false;
-    mLinkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
 }
 
@@ -120,21 +106,28 @@ void ImportMegaLinksDialog::on_cImport_clicked()
 
 void ImportMegaLinksDialog::on_bLocalFolder_clicked()
 {
-    QString defaultPath = ui->eLocalFolder->text().trimmed();
-    if (!defaultPath.size())
+    SelectorInfo info;
+
+    info.defaultDir = ui->eLocalFolder->text().trimmed();
+    if (!info.defaultDir.size())
     {
-        defaultPath = Utilities::getDefaultBasePath();
+        info.defaultDir = Utilities::getDefaultBasePath();
     }
 
-    defaultPath = QDir::toNativeSeparators(defaultPath);
-
-    Platform::getInstance()->folderSelector(tr("Select local folder"),defaultPath,false,this,[this](QStringList selection){
+    info.defaultDir = QDir::toNativeSeparators(info.defaultDir);
+    info.title = tr("Select local folder");
+    info.multiSelection = false;
+    info.parent = this;
+    info.canCreateDirectories = true;
+    info.func = [&](QStringList selection){
         if(!selection.isEmpty())
         {
             QString fPath = selection.first();
             onLocalFolderSet(fPath);
         }
-    });
+    };
+
+    Platform::getInstance()->folderSelector(info);
 }
 
 void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
@@ -160,6 +153,7 @@ void ImportMegaLinksDialog::onLocalFolderSet(const QString& path)
         else
         {
             ui->eLocalFolder->setText(nativePath);
+            mDownloadPathChangedByUser = true;
         }
     }
 }
@@ -183,47 +177,35 @@ void ImportMegaLinksDialog::on_bMegaFolder_clicked()
                 return;
             }
 
-            ui->eMegaFolder->setText(QString::fromUtf8(fPath.get()));
+            mImportPathChangedByUser = true;
+            updateImportPath(QString::fromUtf8(fPath.get()));
         }
     });
 }
 
-void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
+void ImportMegaLinksDialog::setSelectedItem(int index, bool selected)
 {
-    ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(id));
-    std::shared_ptr<MegaNode> node = mLinkProcessor->getNode(id);
+    if (index >= 0 && index < mSelectedItems.size())
+    {
+        mSelectedItems[index] = selected;
+    }
 
-    int e = mLinkProcessor->getError(id);
-    if (node && (e == MegaError::API_OK))
-    {
-        if (!node->isNodeKeyDecrypted())
-        {
-            item->setData(MegaNodeNames::getNodeName(node.get()), ImportListWidgetItem::WARNING, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
-        }
-        else
-        {
-            item->setData(QString::fromUtf8(node->getName()), ImportListWidgetItem::CORRECT, mMegaApi->getSize(node.get()), !(node->getType() == MegaNode::TYPE_FILE));
-        }
-    }
-    else
-    {
-        if ((e != MegaError::API_OK) && (e != MegaError::API_ETOOMANY))
-        {
-            ImportListWidgetItem::linkstatus status = ImportListWidgetItem::FAILED;
-            if (e == MegaError::API_ETEMPUNAVAIL)
-            {
-                status = ImportListWidgetItem::WARNING;
-            }
-            item->setData(QCoreApplication::translate("MegaError", MegaError::getErrorString(e, MegaError::API_EC_IMPORT)), status);
-        }
-        else
-        {
-            item->setData(tr("Not found"), ImportListWidgetItem::FAILED);
-        }
-    }
-    item->updateGui();
-    mLinkProcessor->setSelected(id, item->isSelected());
 }
+
+void ImportMegaLinksDialog::onLinkInfoAvailable(int index,
+                                                const QString& name,
+                                                int status,
+                                                long long size,
+                                                bool isFolder)
+{
+    ImportListWidgetItem *item = (ImportListWidgetItem *)ui->linkList->itemWidget(ui->linkList->item(index));
+    item->setData(name, static_cast<ImportListWidgetItem::linkstatus>(status), size, isFolder);
+    item->updateGui();
+
+    setSelectedItem(index, item->isSelected());
+    emit linkSelected(index, item->isSelected());
+}
+
 
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()
 {
@@ -231,17 +213,40 @@ void ImportMegaLinksDialog::onLinkInfoRequestFinish()
     checkLinkValidAndSelected();
 }
 
-void ImportMegaLinksDialog::onLinkStateChanged(int id, int state)
+void ImportMegaLinksDialog::onLinkStateChanged(int index, int state)
 {
-    mLinkProcessor->setSelected(id, state);
+    setSelectedItem(index, state);
+
+    emit linkSelected(index, state);
     checkLinkValidAndSelected();
 }
 
-void ImportMegaLinksDialog::accept()
+void ImportMegaLinksDialog::on_bOk_clicked()
 {
+    if (ui->cDownload->isChecked() && !ui->eLocalFolder->text().isEmpty())
+    {
+        QDir dir(ui->eLocalFolder->text());
+        if (!dir.exists())
+        {
+            dir.mkpath(QLatin1String("."));
+        }
+
+        QString qFilePath = QDir::fromNativeSeparators(ui->eLocalFolder->text()); // QFile always wants `/` as separator
+        QTemporaryFile test(qFilePath + QDir::separator());
+        if (!test.open())
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = QMegaMessageBox::errorTitle();
+            msgInfo.text = tr("You don't have write permissions in this local folder.");
+            QMegaMessageBox::critical(msgInfo);
+            return;
+        }
+    }
+
     mPreferences->setImportMegaLinksEnabled(ui->cImport->isChecked());
     mPreferences->setDownloadMegaLinksEnabled(ui->cDownload->isChecked());
-    QDialog::accept();
+
+    accept();
 }
 
 void ImportMegaLinksDialog::changeEvent(QEvent *event)
@@ -249,9 +254,18 @@ void ImportMegaLinksDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        int totalImports = mLinkProcessor->getCurrentIndex();
-        for (int i = 0; i < totalImports; i++)
-            this->onLinkInfoAvailable(i);
+
+        updateDownloadPath();
+        updateImportPath();
+
+        emit onChangeEvent();
+        //! This mechanism was kept, but moved to LinkProcessor.cpp
+        //! Not sure why this is needed?!
+//!        int totalImports = mLinkProcessor->getCurrentIndex();
+//!        for (int i = 0; i < totalImports; i++)
+//!        {
+//!            this->onLinkInfoAvailable(i);
+//!        }
     }
     QDialog::changeEvent(event);
 }
@@ -281,6 +295,7 @@ void ImportMegaLinksDialog::initImportFolderControl()
         {
             ui->eMegaFolder->setText(QString::fromUtf8(importFolderPath));
             delete [] importFolderPath;
+            mUseDefaultImportPath = false;
         }
         else
         {
@@ -295,14 +310,15 @@ void ImportMegaLinksDialog::initImportFolderControl()
 
 void ImportMegaLinksDialog::setInvalidImportFolder()
 {
-    ui->eMegaFolder->setText(QString::fromUtf8("/MEGA Imports"));
     mPreferences->setImportFolder(mega::INVALID_HANDLE);
+    mUseDefaultImportPath = true;
+    updateImportPath();
 }
 
 void ImportMegaLinksDialog::enableOkButton() const
 {
     const bool downloadOrImportChecked{ui->cDownload->isChecked() || ui->cImport->isChecked()};
-    const bool enable{mFinished && downloadOrImportChecked && mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    const bool enable{mFinished && downloadOrImportChecked && (mSelectedItems.contains(true))};
     ui->bOk->setEnabled(enable);
 }
 
@@ -320,10 +336,41 @@ void ImportMegaLinksDialog::enableMegaFolder(bool enable)
 
 void ImportMegaLinksDialog::checkLinkValidAndSelected()
 {
-    const bool enable{mLinkProcessor->atLeastOneLinkValidAndSelected()};
+    // Set enable to true if at least one item is selected
+    bool enable = mSelectedItems.contains(true);
     ui->cDownload->setEnabled(enable);
     ui->cImport->setEnabled(enable);
     enableOkButton();
     enableLocalFolder(enable && ui->cDownload->isChecked());
     enableMegaFolder(enable && ui->cImport->isChecked());
+}
+
+void ImportMegaLinksDialog::updateDownloadPath()
+{
+    if (!mDownloadPathChangedByUser)
+    {
+        QString downloadFolder = mPreferences->downloadFolder();
+        bool useDefaultDownloadPath = downloadFolder.isEmpty() || !QFileInfo::exists(downloadFolder);
+
+        if (useDefaultDownloadPath)
+        {
+            downloadFolder = Utilities::getDefaultBasePath() + QLatin1Char('/')
+                      + CommonMessages::getDefaultDownloadFolderName();
+        }
+        ui->eLocalFolder->setText(QDir::toNativeSeparators(downloadFolder));
+    }
+}
+
+void ImportMegaLinksDialog::updateImportPath(const QString& path)
+{
+    QString newPath (path);
+    if (!mImportPathChangedByUser && mUseDefaultImportPath)
+    {
+        newPath = QLatin1String("/") + CommonMessages::getDefaultImportFolderName();
+    }
+
+    if (!newPath.isEmpty())
+    {
+        ui->eMegaFolder->setText(newPath);
+    }
 }

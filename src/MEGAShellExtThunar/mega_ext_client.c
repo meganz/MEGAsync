@@ -2,6 +2,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <unistd.h>
+#include <stdio.h>
 #include <string.h>
 
 const gchar OP_PATH_STATE  = 'P'; //Path state
@@ -14,6 +15,8 @@ const gchar OP_SEND        = 'C'; //Copy to user
 const gchar OP_STRING      = 'T'; //Get Translated String
 const gchar OP_VIEW        = 'V'; //View on MEGA
 const gchar OP_PREVIOUS    = 'R'; //View previous versions
+
+const gchar *RESPONSE_DEFAULT_str = "9";
 
 static void mega_ext_client_disconnect(MEGAExt *mega_ext);
 
@@ -153,8 +156,8 @@ gchar *mega_ext_client_get_string(MEGAExt *mega_ext, int stringID, int numFiles,
     in = g_strdup_printf("%d:%d:%d", stringID, numFiles, numFolders);
     out = mega_ext_client_send_request(mega_ext, OP_STRING, in);
 
-    //If the answer is 9 (default), no action must be added to the context menu
-    if(g_str_equal(out, "9"))
+    // If the answer is "default", no action must be added to the context menu
+    if(g_str_equal(out, RESPONSE_DEFAULT_str))
     {
         g_free(out);
         out = NULL;
@@ -179,9 +182,9 @@ FileState mega_ext_client_get_path_state(MEGAExt *mega_ext, const gchar *path, i
     out = mega_ext_client_send_request(mega_ext, OP_PATH_STATE, finalpath);
 
     if (!out)
-        return FILE_ERROR;
+        return RESPONSE_ERROR;
 
-    st = out[0]-'0';
+    st = atoi(out);
     g_free(out);
 
     return st;

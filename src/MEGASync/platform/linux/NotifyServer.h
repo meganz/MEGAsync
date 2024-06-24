@@ -3,7 +3,6 @@
 
 #include "MegaApplication.h"
 #include "megaapi.h"
-#include "control/Preferences.h"
 
 class NotifyServer: public QObject
 {

@@ -1,11 +1,16 @@
 #ifndef QALERTSMODEL_H
 #define QALERTSMODEL_H
 
-#include <QCache>
-#include <megaapi.h>
-#include <deque>
 #include "AlertItem.h"
+#include "MegaUserAlertExt.h"
+
+#include <megaapi.h>
+#include <mega/bindings/qt/QTMegaGlobalListener.h>
+
+#include <QCache>
 #include <QAbstractItemModel>
+
+#include <deque>
 #include <array>
 
 class QAlertsModel : public QAbstractItemModel
@@ -41,18 +46,15 @@ public:
 
     long long getUnseenNotifications(int type) const;
     bool existsNotifications(int type) const;
+    void refreshAlertItem(unsigned item);
 
 private:
     int checkAlertType(int alertType) const;
 
-private:
-    QMap<int, mega::MegaUserAlert*> alertsMap;
+    QMap<int, MegaUserAlertExt*> alertsMap;
     std::deque<unsigned int> alertOrder;
     std::array<int, ALERT_ALL> unSeenNotifications;
     std::array<bool, ALERT_ALL> hasNotificationsOfType;
-
-private slots:
-    void refreshAlertItem(unsigned item);
 };
 
 #endif // QALERTSMODEL_H

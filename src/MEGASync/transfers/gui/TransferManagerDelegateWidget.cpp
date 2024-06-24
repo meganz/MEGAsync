@@ -3,7 +3,7 @@
 
 #include "MegaTransferView.h"
 #include "megaapi.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
@@ -12,7 +12,11 @@
 #include <QPainterPath>
 
 constexpr uint PB_PRECISION = 1000;
+#ifdef Q_OS_MACOS
+const QColor HOVER_COLOR = QColor("#F7F7F7");
+#else
 const QColor HOVER_COLOR = QColor("#FAFAFA");
+#endif
 const QColor SELECTED_BORDER_COLOR = QColor("#E9E9E9");
 
 using namespace mega;
@@ -207,7 +211,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->lItemFailed->setText(getState(TRANSFER_STATES::STATE_FAILED));
-                mUi->lItemFailed->setToolTip(getErrorInContext());
+                mUi->lItemFailed->setToolTip(getErrorText());
                 showTPauseResume = false;
             }
 
@@ -228,7 +232,7 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
-                mUi->lItemStatus->setToolTip(getErrorInContext());
+                mUi->lItemStatus->setToolTip(getErrorText());
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
 
@@ -337,11 +341,11 @@ void TransferManagerDelegateWidget::setFileNameAndType()
     QIcon icon;
     // File type icon
     icon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                          getData()->mFilename, QLatin1Literal(":/images/drag_")));
+                                          getData()->mFilename, QLatin1String(":/images/drag_")));
     mUi->tFileType->setIcon(icon);
 
     // File name
-    mUi->lTransferName->setToolTip(getData()->mFilename);
+    mUi->lTransferName->setToolTip(getData()->mFilename.toHtmlEscaped());
     adjustFileName();
 }
 
@@ -353,11 +357,11 @@ void TransferManagerDelegateWidget::setType()
 
     if(transferType & TransferData::TRANSFER_DOWNLOAD || transferType & TransferData::TRANSFER_LTCPDOWNLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_download_ico.png"));
     }
     else if(transferType & TransferData::TRANSFER_UPLOAD)
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/arrow_upload_ico.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/arrow_upload_ico.png"));
     }
 
     mUi->bItemSpeed->setIcon(icon);

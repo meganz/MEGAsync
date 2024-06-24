@@ -167,6 +167,13 @@ int TransferBaseDelegateWidget::getNameAvailableSize(QWidget *nameContainer, QWi
     return nameContainer->contentsRect().width() - syncLabel->contentsRect().width() - nameContainer->layout()->spacing()*2 - spacer->sizeHint().width();
 }
 
+QString TransferBaseDelegateWidget::getErrorText()
+{
+    return (getData() && getData()->mFailedTransfer && getData()->mFailedTransfer->isForeignOverquota())
+                ? QCoreApplication::translate("MegaError", "Destination storage is full.")
+                : getErrorInContext();
+}
+
 QString TransferBaseDelegateWidget::getErrorInContext()
 {
     auto context (mega::MegaError::ErrorContexts::API_EC_DEFAULT);
@@ -175,18 +182,29 @@ QString TransferBaseDelegateWidget::getErrorInContext()
         case TransferData::TRANSFER_DOWNLOAD:
         case TransferData::TRANSFER_LTCPDOWNLOAD:
         {
-                context = mega::MegaError::ErrorContexts::API_EC_DOWNLOAD;
-                break;
+            context = mega::MegaError::ErrorContexts::API_EC_DOWNLOAD;
+            break;
         }
         case TransferData::TRANSFER_UPLOAD:
         {
-                context = mega::MegaError::ErrorContexts::API_EC_UPLOAD;
-                break;
+            context = mega::MegaError::ErrorContexts::API_EC_UPLOAD;
+            break;
         }
+        default:
+            break;
     }
 
-    return QCoreApplication::translate("MegaError",
-                                       mega::MegaError::getErrorString(getData()->mErrorCode, context));
+    // SNC-4190/CON-556
+    const char* errorStr = mega::MegaError::getErrorString(getData()->mErrorCode, context);
+    const char* BUSINESS_ACCOUNT_EXPIRED_STR = "Business account has expired";
+
+    if (strcmp(errorStr, BUSINESS_ACCOUNT_EXPIRED_STR) == 0)
+    {
+        // Change "Business account" to a more generic string, to also cover Pro-Flexi accounts
+        return QCoreApplication::translate("MegaError", "Your account has expired");
+    }
+
+    return QCoreApplication::translate("MegaError", errorStr);
 }
 
 void TransferBaseDelegateWidget::onTransferRemoved(const QModelIndex &parent, int first, int last)

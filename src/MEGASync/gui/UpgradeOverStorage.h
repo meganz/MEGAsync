@@ -6,7 +6,7 @@
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMovie>
-#include "control/Utilities.h"
+#include "Utilities.h"
 
 #include <memory>
 

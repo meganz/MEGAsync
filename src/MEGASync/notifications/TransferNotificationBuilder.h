@@ -2,17 +2,10 @@
 #define TRANSFERNOTIFICATIONBUILDER_H
 
 #include "model/TransferMetaData.h"
+#include "DesktopNotifications.h"
 
 #include <megaapi.h>
 #include <QObject>
-
-struct FinishedTransferNotificationInfo
-{
-    QString title;
-    QString message;
-    QString imagePath;
-    QStringList actions;
-};
 
 class TransferNotificationBuilder : public QObject
 {
@@ -22,7 +15,19 @@ public:
     TransferNotificationBuilder(const std::shared_ptr<TransferMetaData>& data);
     ~TransferNotificationBuilder() = default;
 
-    FinishedTransferNotificationInfo buildNotification();
+    DesktopNotifications::NotificationInfo buildNotification();
+
+    static QString getDownloadFailedTitle();
+    static QString getDownloadSomeFailedTitle();
+    static QString getDownloadSuccessTitle();
+
+    static QString getDownloadFailedText(int num, const QString &destPath);
+    static QString getSomeDownloadFailedText(int completed, int failed);
+    static QString getDownloadSuccessText(int num, const QString& destPath);
+    static QString getSingleDownloadFailed(const QString& fileName, const QString& destPath);
+
+    static QString getShowInFolderText();
+
 
 protected:
     QString buildUploadTitle();
