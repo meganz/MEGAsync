@@ -321,7 +321,7 @@ private slots:
 template <class DelegateWidget, class ViewType>
 class ViewLoadingScene : public ViewLoadingSceneBase
 {
-    const uint8_t MAX_LOADING_ROWS = 20;
+    const uint8_t MAX_LOADING_ROWS = 50;
     const long long MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
@@ -357,7 +357,7 @@ public:
         if (mLoadingViewSet != type)
         {
             mLoadingViewSet = type;
-            mMessageHandler->setLoadingViewVisible(type != LoadingViewType::NONE);
+            mMessageHandler->setLoadingViewVisible(type == LoadingViewType::LOADING_VIEW);
         }
     }
 
