@@ -38,8 +38,6 @@
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "gui/QFilterAlertsModel.h"
-#include "gui/MegaAlertDelegate.h"
 #include "gui/VerifyLockMessage.h"
 #include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
@@ -47,6 +45,7 @@
 #include "BlockingStageProgressController.h"
 #include "qml/QmlManager.h"
 #include "qml/QmlDialogManager.h"
+#include "NotificationAlertController.h"
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -67,6 +66,7 @@ class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
+class NotificationAlertController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -116,7 +116,6 @@ public:
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
     void onAccountUpdate(mega::MegaApi *api) override;
-    void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
     void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
     void onReloadNeeded(mega::MegaApi* api) override;
@@ -165,9 +164,6 @@ public:
     void createInfoDialogMenus();
     void toggleLogging();
 
-    bool notificationsAreFiltered();
-    bool hasNotifications();
-    bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
@@ -185,6 +181,7 @@ public:
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
     StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
+    NotificationAlertController* getNotificationController() { return mNotificationAlertController.get(); }
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -290,7 +287,6 @@ public slots:
     void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
     void proExpirityTimedOut();
-    void applyNotificationFilter(int opt);
     void changeState();
 
 #ifdef _WIN32
@@ -349,7 +345,6 @@ protected:
     void startHttpsServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
-    void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -408,9 +403,6 @@ protected:
     SyncInfo *model;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
-    QFilterAlertsModel *notificationsProxyModel;
-    QAlertsModel *notificationsModel;
-    MegaAlertDelegate *notificationsDelegate;
     QObject *context;
     QString crashReportFilePath;
 
@@ -519,6 +511,8 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
+
+    std::unique_ptr<NotificationAlertController> mNotificationAlertController;
 
 private:
     void loadSyncExclusionRules(QString email = QString());

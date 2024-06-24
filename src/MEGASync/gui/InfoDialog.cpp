@@ -102,7 +102,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+    connect(filterMenu, SIGNAL(filterClicked(AlertType)),
+            this, SLOT(applyFilterOption(AlertType)));
 
     setUnseenNotifications(0);
 
@@ -195,7 +196,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -1182,15 +1182,25 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
 {
     notificationsReady = true;
     ui->tvNotifications->setModel(model);
+    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
     ui->tvNotifications->setItemDelegate(delegate);
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
+}
+
+void InfoDialog::onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts)
+{
+    setUnseenNotifications(alerts[AlertModel::ALERT_ALL]);
+    setUnseenTypeNotifications(alerts[AlertModel::ALERT_ALL],
+                               alerts[AlertModel::ALERT_CONTACTS],
+                               alerts[AlertModel::ALERT_SHARES],
+                               alerts[AlertModel::ALERT_PAYMENT]);
 }
 
 void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
+    ui->wSortNotifications->setActualFilter(AlertType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1428,7 +1438,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(int opt)
+void InfoDialog::applyFilterOption(AlertType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1437,11 +1447,11 @@ void InfoDialog::applyFilterOption(int opt)
 
     switch (opt)
     {
-        case QFilterAlertsModel::FILTER_CONTACTS:
+        case AlertType::CONTACTS:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_CONTACTS);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1453,11 +1463,11 @@ void InfoDialog::applyFilterOption(int opt)
 
             break;
         }
-        case QFilterAlertsModel::FILTER_SHARES:
+        case AlertType::SHARES:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_SHARES);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_SHARES))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1469,11 +1479,11 @@ void InfoDialog::applyFilterOption(int opt)
 
             break;
         }
-        case QFilterAlertsModel::FILTER_PAYMENT:
+        case AlertType::PAYMENTS:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_PAYMENTS);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_PAYMENT))
+            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_PAYMENT))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1484,11 +1494,13 @@ void InfoDialog::applyFilterOption(int opt)
             }
             break;
         }
+        case AlertType::ALL:
+        case AlertType::TAKEDOWNS:
         default:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotifications())
+            if (app->getNotificationController()->hasAlerts())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1501,7 +1513,7 @@ void InfoDialog::applyFilterOption(int opt)
         }
     }
 
-    app->applyNotificationFilter(opt);
+    app->getNotificationController()->applyNotificationFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1561,7 +1573,8 @@ void InfoDialog::sTabsChanged(int tab)
     {
         if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
         {
-            if (app->hasNotifications() && !app->notificationsAreFiltered())
+            if (app->getNotificationController()->hasAlerts()
+                    && !app->getNotificationController()->areAlertsFiltered())
             {
                 megaApi->acknowledgeUserAlerts();
             }

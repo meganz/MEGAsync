@@ -43,9 +43,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
     gui/AlertItem.h
-    gui/QAlertsModel.h
-    gui/MegaAlertDelegate.h
-    gui/QFilterAlertsModel.h
+    gui/AlertModel.h
+    gui/AlertDelegate.h
+    gui/NotificationAlertProxyModel.h
     gui/FilterAlertWidget.h
     gui/AlertFilterType.h
     gui/BugReportDialog.h
@@ -60,6 +60,11 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/NotificationItem.h
+    gui/NotificationModel.h
+    gui/NotificationDelegate.h
+    gui/NotificationAlertModel.h
+    gui/NotificationAlertDelegate.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -146,9 +151,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
     gui/AlertItem.cpp
-    gui/QAlertsModel.cpp
-    gui/MegaAlertDelegate.cpp
-    gui/QFilterAlertsModel.cpp
+    gui/AlertModel.cpp
+    gui/AlertDelegate.cpp
+    gui/NotificationAlertProxyModel.cpp
     gui/FilterAlertWidget.cpp
     gui/AlertFilterType.cpp
     gui/BugReportDialog.cpp
@@ -163,6 +168,11 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/NotificationItem.cpp
+    gui/NotificationModel.cpp
+    gui/NotificationDelegate.cpp
+    gui/NotificationAlertModel.cpp
+    gui/NotificationAlertDelegate.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -249,6 +259,7 @@ target_sources_conditional(MEGAsync
     gui/win/NotificationsSettings.ui
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
+    gui/win/NotificationItem.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/win/NodeSelector.ui
@@ -297,6 +308,7 @@ target_sources_conditional(MEGAsync
    gui/macx/NotificationsSettings.ui
    gui/macx/LowDiskSpaceDialog.ui
    gui/macx/ViewLoadingScene.ui
+   gui/macx/NotificationItem.ui
    gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
    gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
    gui/node_selector/gui/macx/NodeSelector.ui
@@ -348,6 +360,7 @@ target_sources_conditional(MEGAsync
     gui/linux/LowDiskSpaceDialog.ui
     gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
+    gui/linux/NotificationItem.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui
