@@ -515,8 +515,8 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
+    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -1583,7 +1583,7 @@ void MegaApplication::onLogout()
 
 StatsEventHandler* MegaApplication::getStatsEventHandler() const
 {
-    return mStatsEventHandler;
+    return mStatsEventHandler.get();
 }
 
 void MegaApplication::checkSystemTray()

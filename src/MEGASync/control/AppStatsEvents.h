@@ -18,7 +18,7 @@ public:
         FIRST_SYNC,
         FIRST_SYNCED_FILE,
         FIRST_WEBCLIENT_DL,
-        UNINSTALL_STATS,
+        UNINSTALL,
         ACC_CREATION_START,
         PRO_REDIRECT,
         MEM_USAGE,
