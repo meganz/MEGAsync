@@ -21,7 +21,7 @@ public:
     void onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList *list) override;
 
     void reset();
-    bool alertsAreFiltered();
+    bool areAlertsFiltered();
     bool hasAlerts();
     bool hasAlertsOfType(int type);
     void applyNotificationFilter(AlertType opt);

@@ -106,7 +106,7 @@ QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifica
     QMap<AlertModel::AlertType, long long> unseenNotifications;
     if (mAlertsModel)
     {
-        unseenNotifications = mAlertsModel->getUnseenNotifications();
+        unseenNotifications = mAlertsModel->getUnseenAlerts();
     }
     return unseenNotifications;
 }

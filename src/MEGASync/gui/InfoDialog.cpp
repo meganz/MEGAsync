@@ -1574,7 +1574,7 @@ void InfoDialog::sTabsChanged(int tab)
         if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
         {
             if (app->getNotificationController()->hasAlerts()
-                    && !app->getNotificationController()->alertsAreFiltered())
+                    && !app->getNotificationController()->areAlertsFiltered())
             {
                 megaApi->acknowledgeUserAlerts();
             }

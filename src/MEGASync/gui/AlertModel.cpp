@@ -18,8 +18,8 @@ AlertModel::AlertModel(MegaUserAlertList* alerts, QObject* parent)
 {
     for(int i = 0; i < ALERT_ALL; i++)
     {
-        mHasNotificationsOfType[i] = false;
-        mUnSeenNotifications[i] = 0;
+        mHasAlertsOfType[i] = false;
+        mUnSeenAlerts[i] = 0;
     }
 
     alertItems.setMaxCost(MAX_COST);
@@ -40,7 +40,7 @@ void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
                 ++actualNumberOfAlertsToInsert;
                 if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                 {
-                    mHasNotificationsOfType[checkAlertType(alert->getType())] = true;
+                    mHasAlertsOfType[checkAlertType(alert->getType())] = true;
                 }
             }
         }
@@ -57,7 +57,7 @@ void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
                 {
                     if (checkAlertType(alertToDelete->getType()) != AlertModel::ALERT_UNKNOWN)
                     {
-                        mUnSeenNotifications[checkAlertType(alertToDelete->getType())]--;
+                        mUnSeenAlerts[checkAlertType(alertToDelete->getType())]--;
                     }
                 }
 
@@ -89,7 +89,7 @@ void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
                     {
                         if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                         {
-                            mUnSeenNotifications[checkAlertType(alert->getType())]++;
+                            mUnSeenAlerts[checkAlertType(alert->getType())]++;
                         }
                     }
                 }
@@ -108,7 +108,7 @@ void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
                         {
                             if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                             {
-                                mUnSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
+                                mUnSeenAlerts[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
                             }
                         }
 
@@ -142,7 +142,7 @@ void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
                         {
                             if (checkAlertType(alert->getType()) != AlertModel::ALERT_UNKNOWN)
                             {
-                                mUnSeenNotifications[checkAlertType(alert->getType())]++;
+                                mUnSeenAlerts[checkAlertType(alert->getType())]++;
                             }
                         }
                     }
@@ -222,20 +222,20 @@ void AlertModel::refreshAlerts()
     }
 }
 
-QMap<AlertModel::AlertType, long long> AlertModel::getUnseenNotifications() const
+QMap<AlertModel::AlertType, long long> AlertModel::getUnseenAlerts() const
 {
     QMap<AlertModel::AlertType, long long> unseen;
     for (int i = 0; i < ALERT_ALL; i++)
     {
-        unseen[static_cast<AlertType>(i)] = mUnSeenNotifications[i];
+        unseen[static_cast<AlertType>(i)] = mUnSeenAlerts[i];
     }
-    unseen[ALERT_ALL] = std::accumulate(mUnSeenNotifications.begin(), mUnSeenNotifications.end(), 0);
+    unseen[ALERT_ALL] = std::accumulate(mUnSeenAlerts.begin(), mUnSeenAlerts.end(), 0);
     return unseen;
 }
 
 bool AlertModel::existsNotifications(int type) const
 {
-    return mHasNotificationsOfType[type];
+    return mHasAlertsOfType[type];
 }
 
 int AlertModel::checkAlertType(int alertType) const

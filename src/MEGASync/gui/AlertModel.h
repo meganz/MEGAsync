@@ -38,15 +38,15 @@ public:
     void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
     void refreshAlertItem(unsigned id);
     bool existsNotifications(int type) const;
-    QMap<AlertType, long long> getUnseenNotifications() const;
+    QMap<AlertType, long long> getUnseenAlerts() const;
 
     QCache<int, AlertItem> alertItems;
 
 private:
     QMap<int, MegaUserAlertExt*> mAlertsMap;
     std::deque<unsigned int> mAlertOrder;
-    std::array<int, ALERT_ALL> mUnSeenNotifications;
-    std::array<bool, ALERT_ALL> mHasNotificationsOfType;
+    std::array<int, ALERT_ALL> mUnSeenAlerts;
+    std::array<bool, ALERT_ALL> mHasAlertsOfType;
 
     int checkAlertType(int alertType) const;
 

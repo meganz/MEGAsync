@@ -19,6 +19,7 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
         return;
     }
 
+    // Used by DesktopNotifications because the current architecture
     emit userAlertsUpdated(alertList);
 
     if (mNotificationAlertModel)
@@ -43,6 +44,7 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
         emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
     }
 
+    // Used by InfoDialog because the current architecture
     emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());
 }
 
@@ -97,7 +99,7 @@ void NotificationAlertController::reset()
     }
 }
 
-bool NotificationAlertController::alertsAreFiltered()
+bool NotificationAlertController::areAlertsFiltered()
 {
     return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != AlertType::ALL;
 }
