@@ -25,9 +25,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     mUi->pbVault->setMaximum(PRECISION);
     mUi->pbRubbish->setMaximum(PRECISION);
 
-    // Set transfer quota progress bar color to blue
-    mUi->wCircularTransfer->setProgressBarGradient(QColor(96, 209, 254), QColor(88, 185, 243));
-
     // Get fresh data
     refresh();
 

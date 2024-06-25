@@ -37,6 +37,21 @@
 /*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
 /*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
 
+#wCircularStorage, #wCircularTransfer
+{
+qproperty-outerCircleBackgroundColor: #f3f4f4; /*colorToken.surface-2*/
+qproperty-innerCircleBackgroundColor: #ffffff; /*colorToken.page-background*/
+
+qproperty-lightOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
+qproperty-darkOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
+qproperty-lightWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
+qproperty-darkWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
+qproperty-lightFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
+qproperty-darkFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
+
+qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
+}
+
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
 {
 background-color: transparent;
@@ -103,11 +118,6 @@ font-family: &quot;Lato&quot;;
 background-color: transparent;
 color: #303233; /*colorToken.text-primary*/
 font-size: 13px;
-}
-
-#wCircularStorage
-{
-qproperty-color: red;
 }
 
 #sHeader
