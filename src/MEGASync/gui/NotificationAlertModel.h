@@ -9,9 +9,8 @@ class NotificationAlertModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    NotificationAlertModel(NotificationModel* notificationsModel,
-                           AlertModel* alertsModel,
-                           QObject* parent = nullptr);
+    using QAbstractItemModel::QAbstractItemModel;
+    virtual ~NotificationAlertModel() = default;
 
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
@@ -19,10 +18,15 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
 
+    void createNotificationModel(const mega::MegaNotificationList* notifications);
+    void createAlertModel(mega::MegaUserAlertList* alerts);
+
     bool hasAlerts();
     bool hasAlertsOfType(int type);
     void insertAlerts(mega::MegaUserAlertList* alerts);
     QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
+    AlertModel* alertModel() const;
+    NotificationModel* notificationModel() const;
 
 private slots:
     void onDataChanged(const QModelIndex& topLeft,
@@ -30,8 +34,12 @@ private slots:
                        const QVector<int>& roles = QVector<int>());
 
 private:
-    std::unique_ptr<NotificationModel> mNotificationsModel;
-    std::unique_ptr<AlertModel> mAlertsModel;
+    std::unique_ptr<NotificationModel> mNotificationsModel = nullptr;
+    std::unique_ptr<AlertModel> mAlertsModel = nullptr;
+
+    int getNotificationRowCount() const;
+    int getAlertRowCount() const;
+    int getAlertRow(int row) const;
 
 };
 

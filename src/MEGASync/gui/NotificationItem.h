@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class NotifTest;
+class MegaNotificationExt;
 
 namespace Ui
 {
@@ -18,11 +18,11 @@ public:
     explicit NotificationItem(QWidget *parent = nullptr);
     ~NotificationItem();
 
-    void setNotificationData(NotifTest* notification);
+    void setNotificationData(MegaNotificationExt* notification);
 
 private:
-    Ui::NotificationItem *ui;
-    NotifTest* mNotificationData;
+    Ui::NotificationItem* ui;
+    MegaNotificationExt* mNotificationData;
 
 };
 

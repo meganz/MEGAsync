@@ -5,15 +5,6 @@
 
 #include <QSortFilterProxyModel>
 
-NotificationAlertDelegate::NotificationAlertDelegate(NotificationDelegate* notificationsDelegate,
-                                                     AlertDelegate* alertsDelegate,
-                                                     QObject* parent)
-    : QStyledItemDelegate(parent)
-    , mNotificationsDelegate(std::unique_ptr<NotificationDelegate>(notificationsDelegate))
-    , mAlertsDelegate(std::unique_ptr<AlertDelegate>(alertsDelegate))
-{
-}
-
 void NotificationAlertDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
@@ -125,4 +116,20 @@ bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
         }
     }
     return result;
+}
+
+void NotificationAlertDelegate::createNotificationDelegate(NotificationModel* model)
+{
+    if(!mNotificationsDelegate)
+    {
+        mNotificationsDelegate = std::make_unique<NotificationDelegate>(model, this);
+    }
+}
+
+void NotificationAlertDelegate::createAlertDelegate(AlertModel* model)
+{
+    if(!mAlertsDelegate)
+    {
+        mAlertsDelegate = std::make_unique<AlertDelegate>(model, this);
+    }
 }

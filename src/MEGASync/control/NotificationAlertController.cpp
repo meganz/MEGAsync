@@ -5,11 +5,58 @@
 NotificationAlertController::NotificationAlertController(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
+    , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
     , mNotificationAlertModel(nullptr)
     , mNotificationAlertDelegate(nullptr)
 {
+    mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
+}
+
+void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
+{
+    Q_UNUSED(api)
+
+    switch(request->getType())
+    {
+        case mega::MegaRequest::TYPE_GET_NOTIFICATIONS:
+        {
+            if (e->getErrorCode() == mega::MegaError::API_OK)
+            {
+                const mega::MegaNotificationList* notifications = request->getMegaNotifications();
+                if (notifications)
+                {
+                    bool exists = mNotificationAlertModel != nullptr;
+
+                    if(!mNotificationAlertModel)
+                    {
+                        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
+                        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
+                        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
+                        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+                    }
+                    mNotificationAlertModel->createNotificationModel(notifications);
+
+                    if(!mNotificationAlertDelegate)
+                    {
+                        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
+                    }
+                    mNotificationAlertDelegate->createNotificationDelegate(mNotificationAlertModel->notificationModel());
+
+                    if(!exists)
+                    {
+                        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
+                    }
+                }
+            }
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 
 void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList)
@@ -28,20 +75,27 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     }
     else
     {
-        AlertModel* alertsModel = new AlertModel(alertList, this);
-        AlertDelegate* alertDelegate = new AlertDelegate(alertsModel, this);
+        bool exists = mNotificationAlertModel != nullptr;
 
-        NotificationModel* notificationsModel = new NotificationModel(this);
-        NotificationDelegate* notificationDelegate = new NotificationDelegate(notificationsModel, this);
+        if(!mNotificationAlertModel)
+        {
+            mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
+            mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
+            mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
+            mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+        }
+        mNotificationAlertModel->createAlertModel(alertList);
 
-        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(notificationsModel, alertsModel, this);
-        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(notificationDelegate, alertDelegate, this);
+        if(!mNotificationAlertDelegate)
+        {
+            mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
+        }
+        mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
 
-        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
-        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
-        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-
-        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
+        if(!exists)
+        {
+            emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
+        }
     }
 
     // Used by InfoDialog because the current architecture

@@ -7,44 +7,26 @@ namespace
 constexpr int MAX_COST = 16;
 }
 
-NotificationModel::NotificationModel(QObject *parent)
+NotificationModel::NotificationModel(const mega::MegaNotificationList* notifications, QObject* parent)
     : QAbstractItemModel(parent)
 {
     notificationItems.setMaxCost(MAX_COST);
-
-    beginInsertRows(QModelIndex(), 0, 0);
-    NotifTest* notif = new NotifTest();
-    notif->id = 0;
-    notif->title = "Get 50% off a Pro I plan";
-    notif->description = "To celebrate Data Privacy Day, we’re offering 50% off when you upgrade to a 3-year Pro I plan. This deal is valid until 6th February 2023";
-    notif->imageName = "PromoImage.png";
-    notif->iconName = "";//"PromoIcon.png";
-    notif->imagePath = "C:\\Users\\mega\\Pictures\\NotificationCenter\\";
-    notif->start = 0;
-    notif->end = 0;
-    notif->showBanner = false;
-    notif->callToAction1 = {
-        { "link", "https://mega.nz/" },
-        { "text", "Grab deal" }
-    };
-    notif->callToAction2 = {};
-    mNotifMap.insert(notif->id, notif);
-    endInsertRows();
+    insert(notifications);
 }
 
 NotificationModel::~NotificationModel()
 {
-    qDeleteAll(mNotifMap);
+    qDeleteAll(mNotificationsMap);
 }
 
-QModelIndex NotificationModel::index(int row, int column, const QModelIndex &parent) const
+QModelIndex NotificationModel::index(int row, int column, const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent))
     {
         return QModelIndex();
     }
 
-    return createIndex(row, column, mNotifMap.value(row));
+    return createIndex(row, column, mNotificationsMap.value(row));
 }
 
 QModelIndex NotificationModel::parent(const QModelIndex&) const
@@ -63,10 +45,10 @@ int NotificationModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return mNotifMap.size();
+    return mNotificationsMap.size();
 }
 
-QVariant NotificationModel::data(const QModelIndex &index, int role) const
+QVariant NotificationModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() < 0)
     {
@@ -79,4 +61,26 @@ QVariant NotificationModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
+}
+
+void NotificationModel::insert(const mega::MegaNotificationList* notifications)
+{
+    if (!notifications)
+    {
+        return;
+    }
+
+    beginInsertRows(QModelIndex(), 0, notifications->size() - 1);
+
+    for (int i = 0; i < notifications->size(); ++i)
+    {
+        const mega::MegaNotification* notification = notifications->get(i);
+        if (notification)
+        {
+            MegaNotificationExt* notificationExt = new MegaNotificationExt(notification);
+            mNotificationsMap.insert(notificationExt->getID(), notificationExt);
+        }
+    }
+
+    endInsertRows();
 }

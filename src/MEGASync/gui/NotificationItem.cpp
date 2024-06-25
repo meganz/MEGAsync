@@ -15,23 +15,22 @@ NotificationItem::~NotificationItem()
     delete ui;
 }
 
-void NotificationItem::setNotificationData(NotifTest* notification)
+void NotificationItem::setNotificationData(MegaNotificationExt* notification)
 {
     mNotificationData = notification;
 
-    ui->lTitle->setText(QString::fromStdString(mNotificationData->title));
+    ui->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText = QString::fromStdString("<html><head/><body><p style=\"line-height:22px;\">");
-    labelText += QString::fromStdString(mNotificationData->description);
-    labelText += QString::fromStdString("</p></body></html>");
+    QString labelText = QString::fromLatin1("<html><head/><body><p style=\"line-height:22px;\">");
+    labelText += mNotificationData->getDescription();
+    labelText += QString::fromLatin1("</p></body></html>");
     ui->lDescription->setText(labelText);
 
-    ui->lImageLarge->setVisible(!mNotificationData->imageName.empty());
-    if(!mNotificationData->imageName.empty())
+    bool showImage = mNotificationData->showImage();
+    ui->lImageLarge->setVisible(showImage);
+    if(showImage)
     {
-        QString fullImagePath = QString::fromStdString(mNotificationData->imagePath)
-                                + QString::fromStdString(mNotificationData->imageName);
-        QPixmap image(fullImagePath);
+        QPixmap image(mNotificationData->getImageNamePath());
         ui->lImageLarge->setPixmap(image);
     }
     else
@@ -39,12 +38,11 @@ void NotificationItem::setNotificationData(NotifTest* notification)
         ui->vlContent->setSpacing(6);
     }
 
-    ui->lImageSmall->setVisible(!mNotificationData->iconName.empty());
-    if(!mNotificationData->iconName.empty())
+    bool showIcon = mNotificationData->showIcon();
+    ui->lImageSmall->setVisible(showIcon);
+    if(showIcon)
     {
-        QString fullIconPath = QString::fromStdString(mNotificationData->imagePath)
-                               + QString::fromStdString(mNotificationData->iconName);
-        QPixmap image(fullIconPath);
+        QPixmap image(mNotificationData->getIconNamePath());
         ui->lImageSmall->setPixmap(image);
     }
     else
@@ -52,11 +50,7 @@ void NotificationItem::setNotificationData(NotifTest* notification)
         ui->hlDescription->setSpacing(0);
     }
 
-    auto it = mNotificationData->callToAction1.find("text");
-    if (it!= mNotificationData->callToAction1.end())
-    {
-        ui->bCTA->setText(QString::fromStdString(it->second));
-    }
+    ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
 
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }

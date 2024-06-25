@@ -31,7 +31,7 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
             return;
         }
 
-        NotifTest* notification = static_cast<NotifTest*>(item->pointer);
+        MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
 
         if (!notification)
         {
@@ -40,18 +40,18 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
             return;
         }
 
-        NotificationItem* notifItem = mNotificationModel->notificationItems[notification->id];
-        if (!notifItem)
+        NotificationItem* notificationItem = mNotificationModel->notificationItems[notification->getID()];
+        if (!notificationItem)
         {
-            notifItem = new NotificationItem();
-            mNotificationModel->notificationItems.insert(notification->id, notifItem);
-            notifItem->setNotificationData(notification);
+            notificationItem = new NotificationItem();
+            mNotificationModel->notificationItems.insert(notification->getID(), notificationItem);
+            notificationItem->setNotificationData(notification);
         }
 
         painter->save();
         painter->translate(option.rect.topLeft());
-        notifItem->resize(option.rect.width(), option.rect.height());
-        notifItem->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
+        notificationItem->resize(option.rect.width(), option.rect.height());
+        notificationItem->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
     else
@@ -74,6 +74,6 @@ QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
-    NotifTest* notif = static_cast<NotifTest*>(item->pointer);
-    return QSize(DEFAULT_WIDTH, notif->imageName.empty() ? HEIGHT_WITHOUT_IMAGE : HEIGHT_WITH_IMAGE);
+    MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
+    return QSize(DEFAULT_WIDTH, notification->showImage() ? HEIGHT_WITH_IMAGE : HEIGHT_WITHOUT_IMAGE);
 }
