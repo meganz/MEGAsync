@@ -55,23 +55,20 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     constexpr int padingPixels (4);
     const double updatedOuterRadius (std::min(width(), height()) - padingPixels);
 
-    if (updatedOuterRadius != mOuterRadius)
-    {
-        mOuterRadius = updatedOuterRadius;
-        mPenWidth    = mOuterRadius / 352. * 37.;
+    mOuterRadius = updatedOuterRadius;
+    mPenWidth    = mOuterRadius / 352. * 22.;
 
-        // Update baseRect dimensions
-        mBaseRect.setX(mPenWidth / 2.);
-        mBaseRect.setY((mPenWidth / 2.) + (padingPixels / 2.));
-        mBaseRect.setWidth(mOuterRadius - mPenWidth);
-        mBaseRect.setHeight(mBaseRect.width());
+    // Update baseRect dimensions
+    mBaseRect.setX(mPenWidth / 2.);
+    mBaseRect.setY((mPenWidth / 2.) + (padingPixels / 2.));
+    mBaseRect.setWidth(mOuterRadius - mPenWidth);
+    mBaseRect.setHeight(mBaseRect.width());
 
-        setPenColor(mBgPen, mPbBgColor, false);
-        mBgPen.setWidth(static_cast<int>(mPenWidth));
+    setPenColor(mBgPen, mPbBgColor, false);
+    mBgPen.setWidth(static_cast<int>(mPenWidth));
 
-        setPenGradient(mFgPen, *mPbGradient, false);
-        mFgPen.setWidth(static_cast<int>(mPenWidth));
-    }
+    setPenGradient(mFgPen, *mPbGradient, false);
+    mFgPen.setWidth(static_cast<int>(mPenWidth));
 
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing
