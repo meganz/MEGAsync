@@ -1443,7 +1443,8 @@ void Utilities::upgradeClicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
     int accountType = Preferences::instance()->accountType();
-    if(accountType == Preferences::ACCOUNT_TYPE_STARTER
+    if(accountType == Preferences::ACCOUNT_TYPE_FREE
+        || accountType == Preferences::ACCOUNT_TYPE_STARTER
         || accountType == Preferences::ACCOUNT_TYPE_BASIC
         || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
     {
