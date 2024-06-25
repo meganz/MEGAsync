@@ -111,6 +111,15 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
         return;
     }
 
+    // TESTS - REMOVE ME
+
+    mega::MegaIntegerList* listIds = mega::MegaIntegerList::createInstance();
+    listIds->add(1);
+    mMegaApi->enableTestNotifications(listIds);
+    mMegaApi->getNotifications();
+
+    // TESTS - REMOVE ME
+
     if (list != nullptr)
     {
         // Process synchronously if list is provided
