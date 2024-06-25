@@ -64,7 +64,6 @@ void AccountDetailsDialog::refresh()
 
         // ---------- Process storage usage
 
-        QString usedStorageString;
         // Get useful data
         auto totalStorage(preferences->totalStorage());
         auto usedStorage(preferences->usedStorage());
@@ -77,7 +76,7 @@ void AccountDetailsDialog::refresh()
             // Disable over quota and warning
             mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
             setProperty("storageState", QLatin1String("ok"));
-            usedStorageString = Utilities::getSizeString(usedStorage);
+            mUi->lTotalStorage->hide();
         }
         else
         {
@@ -89,13 +88,13 @@ void AccountDetailsDialog::refresh()
                 case MegaApi::STORAGE_STATE_GREEN:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    setProperty("storageState", QLatin1String("ok"));
+                    setProperty("storageState", QLatin1String("warning"));
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                    setProperty("storageState", QLatin1String("warning"));
+                    setProperty("storageState", QLatin1String("ok"));
                     break;
                 }
                 case MegaApi::STORAGE_STATE_PAYWALL:
@@ -116,10 +115,12 @@ void AccountDetailsDialog::refresh()
 
             QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
 
-            usedStorageString = sepTemplate.arg(Utilities::getSizeString(usedStorage), Utilities::getSizeString(totalStorage));
+            QString totalStorageString = sepTemplate.arg(QLatin1String(""), Utilities::getSizeString(totalStorage));
+            mUi->lTotalStorage->show();
+            mUi->lTotalStorage->setText(totalStorageString);
         }
 
-        mUi->lUsedStorage->setText(usedStorageString);
+        mUi->lUsedStorage->setText(Utilities::getSizeString(usedStorage));
 
         long long availableStorage = totalStorage - usedStorage;
         mUi->lAvailableStorage->setText(Utilities::getSizeString(std::max(0ll, availableStorage)));

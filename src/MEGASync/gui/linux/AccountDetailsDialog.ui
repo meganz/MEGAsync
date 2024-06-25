@@ -52,6 +52,16 @@ qproperty-darkFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
 qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
 }
 
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
+{
+  color: #fb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
+{
+  color: #F63D6B; /*colorToken.indicator-pink*/
+}
+
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
 {
 background-color: transparent;
@@ -575,6 +585,9 @@ min-width:219px;
                   </property>
                   <item>
                    <widget class="QLabel" name="lUsedStorage"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lTotalStorage"/>
                   </item>
                   <item>
                    <spacer name="horizontalSpacer">
