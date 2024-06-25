@@ -88,13 +88,13 @@ void AccountDetailsDialog::refresh()
                 case MegaApi::STORAGE_STATE_GREEN:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                    setProperty("storageState", QLatin1String("warning"));
+                    setProperty("storageState", QLatin1String("ok"));
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                    setProperty("storageState", QLatin1String("ok"));
+                    setProperty("storageState", QLatin1String("warning"));
                     break;
                 }
                 case MegaApi::STORAGE_STATE_PAYWALL:
@@ -157,6 +157,8 @@ void AccountDetailsDialog::refresh()
             }
         }
 
+        mUi->lTotalTransfer->hide();
+
         // Set progress bar
         switch (accType)
         {
@@ -202,9 +204,12 @@ void AccountDetailsDialog::refresh()
 
                 mUi->wCircularTransfer->setValue(parts);
 
-                QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
+                usedTransferString = Utilities::getSizeString(usedTransfer);
 
-                usedTransferString = sepTemplate.arg(Utilities::getSizeString(usedTransfer), Utilities::getSizeString(totalTransfer));
+                mUi->lTotalTransfer->show();
+                QString sepTemplate = Utilities::getTranslatedSeparatorTemplate();
+                QString totalTransferString = sepTemplate.arg(QLatin1String(""), Utilities::getSizeString(totalTransfer));
+                mUi->lTotalTransfer->setText(totalTransferString);
                 break;
             }
         }

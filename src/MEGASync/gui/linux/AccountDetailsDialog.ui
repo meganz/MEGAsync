@@ -54,12 +54,22 @@ qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
 
 #AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
 {
-  color: #fb6514; /*colorToken.indicator-orange*/
+color: #fb6514; /*colorToken.indicator-orange*/
 }
 
 #AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
 {
-  color: #F63D6B; /*colorToken.indicator-pink*/
+color: #f63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
+{
+color: #fb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[transferState=&quot;full&quot;] #headerBox #lUsedTransfer
+{
+color: #f63d6b; /*colorToken.indicator-pink*/
 }
 
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
@@ -682,7 +692,7 @@ min-width:219px;
              </item>
              <item>
               <widget class="QWidget" name="wTransferDetails" native="true">
-               <layout class="QVBoxLayout" name="verticalLayout_14">
+               <layout class="QVBoxLayout" name="verticalLayout_6">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -725,6 +735,9 @@ min-width:219px;
                   </property>
                   <item>
                    <widget class="QLabel" name="lUsedTransfer"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lTotalTransfer"/>
                   </item>
                   <item>
                    <spacer name="horizontalSpacer_2">
