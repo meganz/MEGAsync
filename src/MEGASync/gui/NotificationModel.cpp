@@ -26,7 +26,7 @@ QModelIndex NotificationModel::index(int row, int column, const QModelIndex& par
         return QModelIndex();
     }
 
-    return createIndex(row, column, mNotificationsMap.value(row));
+    return createIndex(row, column, mNotificationsMap.value(mNotificationsOrder[row]));
 }
 
 QModelIndex NotificationModel::parent(const QModelIndex&) const
@@ -74,11 +74,12 @@ void NotificationModel::insert(const mega::MegaNotificationList* notifications)
 
     for (int i = 0; i < notifications->size(); ++i)
     {
-        const mega::MegaNotification* notification = notifications->get(i);
+        const mega::MegaNotification* notification = notifications->get(i)->copy();
         if (notification)
         {
             MegaNotificationExt* notificationExt = new MegaNotificationExt(notification);
             mNotificationsMap.insert(notificationExt->getID(), notificationExt);
+            mNotificationsOrder.push_front(notificationExt->getID());
         }
     }
 

@@ -7,6 +7,8 @@
 #include <QAbstractItemModel>
 #include <QCache>
 
+#include <deque>
+
 class NotificationModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -28,6 +30,7 @@ public:
 
 private:
     QMap<int, MegaNotificationExt*> mNotificationsMap;
+    std::deque<unsigned int> mNotificationsOrder;
 
 };
 
