@@ -16,7 +16,8 @@ QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex
         }
         else if (row < (notificationRowCount + getAlertRowCount()))
         {
-            MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(mAlertsModel->index(getAlertRow(row), column).internalPointer());
+            int alertRow = getAlertRow(row);
+            MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(mAlertsModel->index(alertRow, column).internalPointer());
             NotificationAlertModelItem* item = new NotificationAlertModelItem { NotificationAlertModelItem::ALERT, alert };
             result = createIndex(row, column, item);
         }
@@ -84,6 +85,7 @@ void NotificationAlertModel::createNotificationModel(const mega::MegaNotificatio
     {
         mNotificationsModel = std::make_unique<NotificationModel>(notifications, this);
         connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
+        emit layoutChanged();
     }
 }
 
@@ -93,6 +95,7 @@ void NotificationAlertModel::createAlertModel(mega::MegaUserAlertList* alerts)
     {
         mAlertsModel = std::make_unique<AlertModel>(alerts, this);
         connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
+        emit layoutChanged();
     }
 }
 

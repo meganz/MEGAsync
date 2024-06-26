@@ -1178,7 +1178,7 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
-void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
+void InfoDialog::updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate)
 {
     notificationsReady = true;
     ui->tvNotifications->setModel(model);
