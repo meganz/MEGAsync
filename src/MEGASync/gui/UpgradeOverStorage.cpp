@@ -2,7 +2,7 @@
 #include "ui_UpgradeOverStorage.h"
 #include "Utilities.h"
 #include "Preferences.h"
-#include "gui/PlanWidget.h"
+#include "PlanWidget.h"
 #include "MegaApplication.h"
 #include "DialogOpener.h"
 

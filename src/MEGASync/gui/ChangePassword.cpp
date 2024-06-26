@@ -3,7 +3,7 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "gui/Login2FA.h"
+#include "Login2FA.h"
 
 using namespace mega;
 
