@@ -16,23 +16,127 @@
   <property name="windowTitle">
    <string>Account usage details</string>
   </property>
+  <property name="windowIcon">
+   <iconset theme="mega"/>
+  </property>
   <property name="styleSheet">
-   <string notr="true">
-#AccountDetailsDialog
+   <string notr="true">/*ColorTokenIcon;Button;bCloudDrive;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bCloudDrive;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
+
+#wCircularStorage, #wCircularTransfer
 {
-    border-radius: 0 0 4px 4px;
-    background-color: #FFFFFF;
+qproperty-outerCircleBackgroundColor: #f3f4f4; /*colorToken.surface-2*/
+qproperty-innerCircleBackgroundColor: #ffffff; /*colorToken.page-background*/
+
+qproperty-lightOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
+qproperty-darkOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
+qproperty-lightWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
+qproperty-darkWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
+qproperty-lightFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
+qproperty-darkFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
+
+qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
 }
 
-/* Config all labels */
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
+{
+color: #fb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
+{
+color: #f63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
+{
+color: #fb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[transferState=&quot;full&quot;] #headerBox #lUsedTransfer
+{
+color: #f63d6b; /*colorToken.indicator-pink*/
+}
+
+#pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
+{
+background-color: transparent;
+}
+
+QGroupBox
+{
+margin-top: 20px;
+margin-right: 20px;
+margin-left: 20px;
+margin-bottom: 20px;
+}
+
+#line
+{
+background-color: #f3f4f4; /*colorToken.surface-2*/
+border-style: none;
+}
+
+#headerBox
+{
+border-style:none;
+border-radius:20px;
+background-color: #fafafa; /*colorToken.surface-1*/
+}
+
+QProgressBar
+{
+height: 4px;
+min-height: 4px;
+max-height: 4px;
+border:0px;
+border-radius: 2px;
+background-color: #f3f4f4; /*colorToken.surface-2*/
+margin-bottom: 4px;
+}
+
+QProgressBar::chunk
+{
+background-color: #477EF7; /*colorToken.indicator-indigo*/
+border-radius: 2px;
+border:0px;
+}
+
+#wDetailedUsage QPushButton, #bVersionIcon
+{
+border-style: none;
+background-color: transparent;
+padding-left: 10px;
+padding-right: 10px;
+height: 22px;
+color: transparent;
+font-weight: bold;
+}
+
+#AccountDetailsDialog
+{
+border-radius: 0 0 4px 4px;
+}
+
 QLabel
 {
-    font-family: &quot;Lato&quot;;
+font-family: &quot;Lato&quot;;
+background-color: transparent;
+color: #303233; /*colorToken.text-primary*/
+font-size: 13px;
 }
 
 #sHeader
 {
-    background-color: #F4F6F8;
+    background-color: transparent;
     height: 96px;
     width: 440px;
     height: 96px;
@@ -45,8 +149,6 @@ QLabel
 
 #lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
 {
-  color: #333333;
-  font-size: 13px;
   font-weight: bold;
 }
 
@@ -55,7 +157,7 @@ QLabel
   qproperty-alignment: 'AlignLeft | AlignVCenter';
 }
 
-#lCloudDrive, #lVault, #lRubbish
+#lCloudDrive, #lVault, #lRubbish, #lAvailable
 {
     qproperty-alignment: 'AlignLeft | AlignBottom';
 }
@@ -75,13 +177,7 @@ QLabel
     padding-bottom: 4px;
 }
 
-#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lUsedByVersions, #lAvailableStorage
-{
-  color: #333333;
-  font-size: 13px;
-}
-
-#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish, #lAvailableStorage
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
 {
     qproperty-alignment: 'AlignRight | AlignBottom';
     padding-right: 4px;
@@ -108,60 +204,22 @@ QLabel
   background-color: #FF5646;
 }
 
-#lUsedStorage, #lUsedTransfer
-{
-  color: #8d8d8e;
-  font-size: 13px;
-}
-
-#wDetailedUsage QPushButton
-{
-    border-radius: 8px;
-    background-color: #EEEEEE;
-}
-
 #bCloudDrive, #bVault, #bRubbish
 {
     qproperty-iconSize: 24px;
 }
 
-#bCloudDrive
-{
-    qproperty-icon : url(:/images/account_details/Cloud_Drive_24_ico.png);
-}
-
-#bVault
-{
-    qproperty-icon : url(:/images/Backups_24_ico.png);
-}
-
-#bRubbish
-{
-    qproperty-icon : url(:/images/account_details/Bin_24_ico.png);
-}
-
-#bAvailable
-{
-    qproperty-icon : url(:/images/account_details/available_storage.png);
-}
-
-#lVersionIcon
-{
-    qproperty-icon : url(:/images/account_details/versions.png);
-	padding-left:4px;
-}
-
 #lLoading
 {
     border-radius: 16px;
-    background-color: white;
+    background-color: transparent;
     height: 32px;
     max-height: 32px;
     min-height: 32px;
     max-width:440px;
     min-width:10px;
     font-size: 14px;
-    color: #333333;
+    color: #303233; /*colorToken.text-primary*/
     padding-left:24px;
     padding-right:24px;
     qproperty-alignment: 'AlignVCenter | AlignHCenter';
@@ -175,47 +233,6 @@ QLabel
     min-height: 96px;
     max-width:440px;
     min-width:440px;
-}
-
-QProgressBar
-{
-    height: 4px;
-    min-height: 4px;
-    max-height: 4px;
-    border:0px;
-    border-radius: 2px;
-    background-color: #EEEEEE;
-    margin-bottom: 4px;
-}
-
-QProgressBar::chunk
-{
-  background-color: #6FD7FF;
-  border-radius: 2px;
-  border:0px;
-}
-
-#wSizeVersions
-{
-    background-color: #F2F2F2;
-    border-radius: 8px;
-    margin-left: 24px;
-    margin-right: 23px;
-    margin-bottom: 26px;
-    height: 32px;
-    max-height: 32px;
-    min-height: 32px;
-    border-top: 2px inset #ECECEC;
-    border-left: 1px inset #ECECEC;
-    border-right: 1px inset #ECECEC;
-    border-bottom: 1px inset #ECECEC;
-}
-
-#lVersions
-{
-    color: #333333;
-    font-size: 13px;
-    padding-left: 8px;
 }
 
 #AccountDetailsDialog[loading=true]  #sHeader
@@ -244,33 +261,34 @@ QProgressBar::chunk
 
 #pStorageAndTransferUsage #sStorage, #sTransfer
 {
-    height: 52px;
-    width: 56px;
-    min-height: 52px;
-    min-width: 56px;
-    max-height: 52px;
-    max-width: 56px;
-    margin-left: 24px;
+height: 65px;
+width: 70px;
+min-height: 65px;
+min-width: 70px;
+max-height: 65px;
+max-width: 70px;
+margin-left: 20px;
+background-color: transparent;
 }
 
 #wStorageUsage, #wTransferUsage
 {
-    height: 96px;
-    width: 219px;
-    max-height: 96px;
-    min-height: 96px;
-    max-width:219px;
-    min-width:219px;
+height: 96px;
+width: 219px;
+max-height: 96px;
+min-height: 96px;
+max-width:219px;
+min-width:219px;
 }
 
 #wStorageUsage
 {
-    border-right: 1px solid white;
+    border-right: 1px solid transparent;
 }
 
 #wTransferUsage
 {
-    border-left: 1px solid white;
+    border-left: 1px solid transparent;
 }
 
 #pStorageAndTransferUsage QPushButton
@@ -296,12 +314,9 @@ QProgressBar::chunk
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="layoutWidget">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
    <property name="spacing">
     <number>0</number>
-   </property>
-   <property name="sizeConstraint">
-    <enum>QLayout::SetFixedSize</enum>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -316,111 +331,144 @@ QProgressBar::chunk
     <number>0</number>
    </property>
    <item>
-    <widget class="QStackedWidget" name="sHeader">
-     <widget class="QWidget" name="pLoading">
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item row="2" column="1">
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>103</width>
-           <height>16</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="1">
-        <spacer name="verticalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>103</width>
-           <height>16</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="lLoading">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Loading...</string>
-         </property>
+    <widget class="QGroupBox" name="headerBox">
+     <property name="title">
+      <string/>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QStackedWidget" name="sHeader">
+        <property name="minimumSize">
+         <size>
+          <width>440</width>
+          <height>96</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>440</width>
+          <height>96</height>
+         </size>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="currentIndex">
+         <number>1</number>
+        </property>
+        <widget class="QWidget" name="pLoading">
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="2" column="1">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>103</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="0" column="1">
+           <spacer name="verticalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>103</width>
+              <height>16</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="lLoading">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Loading...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="2">
+           <spacer name="horizontalSpacer_8">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
         </widget>
-       </item>
-       <item row="1" column="0">
-        <spacer name="horizontalSpacer_7">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+        <widget class="QWidget" name="pStorageAndTransferUsage">
+         <property name="minimumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>440</width>
+           <height>96</height>
           </size>
          </property>
-        </spacer>
-       </item>
-       <item row="1" column="2">
-        <spacer name="horizontalSpacer_8">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
+         <property name="maximumSize">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>440</width>
+           <height>96</height>
           </size>
          </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pStorageAndTransferUsage">
-      <layout class="QHBoxLayout" name="horizontalLayout_22">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="wStorageUsage" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_23">
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
           <property name="spacing">
            <number>0</number>
           </property>
@@ -437,35 +485,20 @@ QProgressBar::chunk
            <number>0</number>
           </property>
           <item>
-           <widget class="QStackedWidget" name="sStorage">
-            <widget class="CircularUsageProgressBar" name="wCircularStorage"/>
-            <widget class="QWidget" name="wBusinessStorage">
-             <layout class="QHBoxLayout" name="horizontalLayout_24">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bBusinessStorage"/>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wStorageDetails" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_2">
+           <widget class="QWidget" name="wStorageUsage" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>96</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_23">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -482,115 +515,133 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
+              <widget class="QStackedWidget" name="sStorage">
+               <property name="currentIndex">
+                <number>0</number>
                </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lStorage">
-               <property name="text">
-                <string>Storage</string>
-               </property>
+               <widget class="CircularUsageProgressBar" name="wCircularStorage"/>
+               <widget class="QWidget" name="wBusinessStorage">
+                <layout class="QHBoxLayout" name="horizontalLayout_24">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="bBusinessStorage"/>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="lUsedStorage"/>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
+              <widget class="QWidget" name="wStorageDetails" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="verticalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lStorage">
+                  <property name="text">
+                   <string>Storage</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="lUsedStorage"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lTotalStorage"/>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_2">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="wTransferUsage" native="true">
-         <layout class="QHBoxLayout" name="horizontalLayout_25">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
           <item>
-           <widget class="QStackedWidget" name="sTransfer">
-            <widget class="CircularUsageProgressBar" name="wCircularTransfer"/>
-            <widget class="QWidget" name="wBusinessTransfer">
-             <layout class="QHBoxLayout" name="horizontalLayout_26">
-              <property name="spacing">
-               <number>0</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bBusinessTransfer"/>
-              </item>
-             </layout>
-            </widget>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wTransferDetails" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout_14">
+           <widget class="QWidget" name="wTransferUsage" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>220</width>
+              <height>96</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>220</width>
+              <height>96</height>
+             </size>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_25">
              <property name="spacing">
               <number>0</number>
              </property>
@@ -607,94 +658,145 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <item>
-              <spacer name="verticalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
-              <widget class="QLabel" name="lTransfer">
-               <property name="text">
-                <string>Transfer</string>
-               </property>
+              <widget class="QStackedWidget" name="sTransfer">
+               <widget class="CircularUsageProgressBar" name="wCircularTransfer"/>
+               <widget class="QWidget" name="wBusinessTransfer">
+                <layout class="QHBoxLayout" name="horizontalLayout_26">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="bBusinessTransfer"/>
+                 </item>
+                </layout>
+               </widget>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="lUsedTransfer"/>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <spacer name="verticalSpacer_4">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
+              <widget class="QWidget" name="wTransferDetails" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="verticalSpacer_3">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QLabel" name="lTransfer">
+                  <property name="text">
+                   <string>Transfer</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_5">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="lUsedTransfer"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lTotalTransfer"/>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>40</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <spacer name="verticalSpacer_4">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
              </item>
             </layout>
            </widget>
           </item>
          </layout>
         </widget>
-       </item>
-      </layout>
-     </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>120</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
        <height>16777215</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="wDetailedUsageLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>8</number>
+       <number>17</number>
       </property>
       <property name="leftMargin">
-       <number>24</number>
-      </property>
-      <property name="topMargin">
-       <number>24</number>
+       <number>23</number>
       </property>
       <property name="rightMargin">
-       <number>24</number>
-      </property>
-      <property name="bottomMargin">
-       <number>24</number>
+       <number>20</number>
       </property>
       <item>
        <widget class="QWidget" name="wCloudDrive" native="true">
@@ -734,6 +836,9 @@ QProgressBar::chunk
          </property>
          <item>
           <widget class="QPushButton" name="bCloudDrive">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -752,18 +857,31 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
              <height>24</height>
             </size>
            </property>
+           <property name="autoDefault">
+            <bool>true</bool>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -853,6 +971,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/database.svg</normaloff>:/images/account_details/database.svg</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -864,7 +986,7 @@ QProgressBar::chunk
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_20">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_30">
@@ -954,6 +1076,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/trash.svg</normaloff>:/images/account_details/trash.svg</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -965,7 +1091,7 @@ QProgressBar::chunk
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <property name="spacing">
-            <number>0</number>
+            <number>4</number>
            </property>
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1055,6 +1181,10 @@ QProgressBar::chunk
              <height>32</height>
             </size>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_win.qrc">
+             <normaloff>:/images/account_details/pie.svg</normaloff>:/images/account_details/pie.svg</iconset>
+           </property>
            <property name="iconSize">
             <size>
              <width>24</width>
@@ -1068,19 +1198,41 @@ QProgressBar::chunk
            <property name="spacing">
             <number>0</number>
            </property>
-           <item>
+           <property name="rightMargin">
+            <number>8</number>
+           </property>
+           <item alignment="Qt::AlignVCenter">
             <widget class="QLabel" name="lAvailable">
              <property name="text">
               <string>Available storage</string>
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignVCenter">
+           <item alignment="Qt::AlignRight|Qt::AlignVCenter">
             <widget class="QLabel" name="lAvailableStorage"/>
            </item>
           </layout>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
        </widget>
       </item>
      </layout>
@@ -1089,25 +1241,47 @@ QProgressBar::chunk
    <item>
     <widget class="QWidget" name="wSizeVersions" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <property name="spacing">
-       <number>0</number>
-      </property>
       <property name="leftMargin">
-       <number>24</number>
+       <number>25</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>11</number>
       </property>
       <property name="rightMargin">
-       <number>24</number>
+       <number>7</number>
       </property>
       <property name="bottomMargin">
-       <number>26</number>
+       <number>17</number>
       </property>
       <item>
-       <widget class="QLabel" name="lVersionIcon">
-        <property name="text">
-         <string/>
+       <widget class="QPushButton" name="bVersionIcon">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>32</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/account_details/versions.svg</normaloff>:/images/account_details/versions.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -1143,6 +1317,5 @@ QProgressBar::chunk
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources/>
  <connections/>
 </ui>
