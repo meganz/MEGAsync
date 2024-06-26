@@ -248,7 +248,7 @@ void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header
 {
     if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]")
+        QString headerText = tr("Can’t move or rename some items in [B]%1[/B]")
                                  .arg(moveOrRenameIssue->syncName());
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
         header->setText(headerText);
