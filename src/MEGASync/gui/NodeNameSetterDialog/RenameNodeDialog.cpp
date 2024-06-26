@@ -130,8 +130,8 @@ QString RenameRemoteNodeDialog::lineEditText()
 
 QString RenameRemoteNodeDialog::renamedFailedErrorString(mega::MegaError* error, bool isFile)
 {
-    QString errorMsg = isFile ? tr("Unable to rename this file.[BR]Error: %1.[/BR]").arg(Utilities::getTranslatedError(error))
-                              : tr("Unable to rename this folder.[BR]Error: %1.[/BR]").arg(Utilities::getTranslatedError(error));
+    QString errorMsg = isFile ? tr("Unable to rename this file.[BR]Error: %1.").arg(Utilities::getTranslatedError(error))
+                              : tr("Unable to rename this folder.[BR]Error: %1.").arg(Utilities::getTranslatedError(error));
 
     RenameNodeDecorator::textDecorator.process(errorMsg);
     return errorMsg;

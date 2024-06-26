@@ -31,7 +31,7 @@ static QString RemoveRemoteFailedDescription(const mega::MegaError* error){retur
 
 static QString RemoveRemoteFailedFile(const mega::MegaError* error)
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
                            .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -39,7 +39,7 @@ static QString RemoveRemoteFailedFile(const mega::MegaError* error)
 
 static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
                            .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -47,7 +47,7 @@ static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
 
 static QString RemoveLocalFailedFile()
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
     errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -55,7 +55,7 @@ static QString RemoveLocalFailedFile()
 
 static QString RemoveLocalFailedFolder()
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
     errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
