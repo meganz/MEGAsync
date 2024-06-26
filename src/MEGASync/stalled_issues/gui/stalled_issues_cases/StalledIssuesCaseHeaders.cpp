@@ -182,8 +182,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        QString informativeMessage = QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber) + QString::fromUtf8("</br>");
+        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
         msgInfo.informativeText.append(informativeMessage);
     }
 
