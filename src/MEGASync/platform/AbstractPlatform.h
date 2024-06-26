@@ -39,7 +39,7 @@ public:
     virtual void prepareForSync();
     virtual bool enableTrayIcon(QString executable);
     virtual void notifyItemChange(const QString& localPath, int newState) = 0;
-    virtual void notifySyncFileChange(std::string *localPath, int newState, bool stringIsPlatformEncoded) = 0;
+    virtual void notifySyncFileChange(std::string *localPath, int newState) = 0;
     virtual bool startOnStartup(bool value) = 0;
     virtual bool isStartOnStartupActive() = 0;
     virtual bool isTilingWindowManager();
@@ -83,6 +83,7 @@ public:
     virtual void addFileManagerExtensionToSystem() {};
     virtual void reloadFileManagerExtension() {};
     virtual void enableFileManagerExtension(bool) {};
+    virtual bool validateSystemTrayIntegration();
 
     virtual void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) = 0;
     virtual void streamWithApp(const QString& app, const QString& url) = 0;

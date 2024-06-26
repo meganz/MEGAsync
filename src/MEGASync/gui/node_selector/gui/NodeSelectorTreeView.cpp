@@ -51,10 +51,6 @@ void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
     connect(proxyModel(), &NodeSelectorProxyModel::navigateReady, this, &NodeSelectorTreeView::onNavigateReady);
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-    connect(selectionModel(), &QItemSelectionModel::currentRowChanged, this, &NodeSelectorTreeView::onCurrentRowChanged);
-#endif
 }
 
 void NodeSelectorTreeView::drawBranches(QPainter *painter, const QRect &rect, const QModelIndex &index) const
@@ -239,22 +235,6 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
         mouseDoubleClickEvent(&mouseEvent);
     }
 }
-
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
-void NodeSelectorTreeView::onCurrentRowChanged(const QModelIndex &current, const QModelIndex &previous)
-{
-    Q_UNUSED(previous)
-        Qt::KeyboardModifiers modifiers = QGuiApplication::keyboardModifiers();
-        if(modifiers & Qt::ControlModifier || modifiers & Qt::ShiftModifier || state() == QAbstractItemView::DragSelectingState)
-        {
-            return;
-        }
-
-        QItemSelectionModel::SelectionFlags flags = QItemSelectionModel::ClearAndSelect|QItemSelectionModel::Rows;
-        selectionModel()->select(current, flags);
-}
-#endif
-
 
 bool NodeSelectorTreeView::mousePressorReleaseEvent(QMouseEvent *event)
 {

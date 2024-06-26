@@ -40,6 +40,8 @@ using namespace std::chrono;
 using namespace mega;
 
 static constexpr int DEFAULT_MIN_PERCENTAGE{1};
+static constexpr int FONT_SIZE_BUSINESS_PX{20};
+static constexpr int FONT_SIZE_NO_BUSINESS_PX{14};
 
 void InfoDialog::pauseResumeClicked()
 {
@@ -105,11 +107,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     setUnseenNotifications(0);
 
-#if QT_VERSION > 0x050200
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-#endif
+
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
@@ -127,6 +128,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(app->getTransfersModel(), &TransfersModel::transfersCountUpdated, this, &InfoDialog::updateTransfersCount);
     connect(app->getTransfersModel(), &TransfersModel::transfersProcessChanged, this, &InfoDialog::onTransfersStateChanged);
+
+    connect(mPreferences.get(),
+            &Preferences::valueChanged,
+            this,
+            [this](const QString& key)
+            {
+                if(key == Preferences::wasPausedKey)
+                {
+                    ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
+                }
+            });
 
     //Set window properties
 #ifdef Q_OS_LINUX
@@ -385,104 +397,115 @@ void InfoDialog::setUsage()
 {
     auto accType = mPreferences->accountType();
 
-    // ---------- Process storage usage
-    QString usedStorageString;
+    QString quotaStringFormat = QString::fromLatin1("<span style='color:%1; font-size:%2px;'>%3</span>");
+    // Get font to adapt size to widget if needed
+    // Getting font from lUsedStorage considering both
+    // lUsedStorage and lUsedTransfer use the same font.
+    ui->lUsedStorage->style()->polish(ui->lUsedStorage);
+    QFont font (ui->lUsedStorage->font());
 
+    // ---------- Process storage usage
+
+    // Get useful data
     auto totalStorage(mPreferences->totalStorage());
     auto usedStorage(mPreferences->usedStorage());
+
+    QString usageColorS;
+    QString usedStorageString = Utilities::getSizeString(usedStorage);
+    QString totalStorageString;
+    QString storageUsageStringFormatted (usedStorageString);
 
     if (Utilities::isBusinessAccount())
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
-        ui->wCircularStorage->setValue(0);
-        usedStorageString = QString::fromUtf8("<span style='color: #333333; font-size:20px;"
-                                              "font-family: Lato; text-decoration:none;'>%1</span>")
-                                     .arg(Utilities::getSizeString(mPreferences->usedStorage()));
+        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+        usageColorS = QString::fromLatin1("#333333");
+        font.setPixelSize(FONT_SIZE_BUSINESS_PX);
     }
     else
     {
-        ui->sStorage->setCurrentWidget(ui->wCircularStorage);
-        if (totalStorage == 0)
+        int parts = 0;
+
+        if (totalStorage != 0ULL)
         {
-            ui->wCircularStorage->setValue(0ull);
-            usedStorageString = Utilities::getSizeString(0ull);
-        }
-        else
-        {
-            QString usageColorS;
             switch (mPreferences->getStorageState())
+            {
+                case MegaApi::STORAGE_STATE_PAYWALL:
+                // Fallthrough
+                case MegaApi::STORAGE_STATE_RED:
                 {
-                    case MegaApi::STORAGE_STATE_GREEN:
-                    {
-                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-                        usageColorS = QString::fromUtf8("#666666");
-                        break;
-                    }
-                    case MegaApi::STORAGE_STATE_ORANGE:
-                    {
-                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
-                        usageColorS = QString::fromUtf8("#F98400");
-                        break;
-                    }
-                    case MegaApi::STORAGE_STATE_PAYWALL:
-                    // Fallthrough
-                    case MegaApi::STORAGE_STATE_RED:
-                    {
-                        ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
-                        usageColorS = QString::fromUtf8("#D90007");
-                        break;
-                    }
+                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
+                    usageColorS = QString::fromLatin1("#D90007");
+                    break;
                 }
-            auto parts (usedStorage ?
-                            std::max(Utilities::partPer(usedStorage, totalStorage),
-                                     DEFAULT_MIN_PERCENTAGE)
-                          : 0);
-            ui->wCircularStorage->setValue(parts);
-            usedStorageString = QString::fromUtf8("%1 /%2")
-                    .arg(QString::fromUtf8("<span style='color:%1;"
-                                           "font-family: Lato;"
-                                           "text-decoration:none;'>%2</span>")
-                         .arg(usageColorS, Utilities::getSizeString(usedStorage)))
-                    .arg(QString::fromUtf8("<span style=' font-family: Lato;"
-                                           "text-decoration:none;'>&nbsp;%1</span>")
-                         .arg(Utilities::getSizeString(totalStorage)));
+                case MegaApi::STORAGE_STATE_ORANGE:
+                {
+                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
+                    usageColorS = QString::fromLatin1("#F98400");
+                    break;
+                }
+                case MegaApi::STORAGE_STATE_UNKNOWN:
+                // Fallthrough
+                case MegaApi::STORAGE_STATE_GREEN:
+                // Fallthrough
+                default:
+                {
+                    ui->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
+                    usageColorS = QString::fromLatin1("#666666");
+                    break;
+                }
+            }
+
+            parts = usedStorage ?
+                        std::max(Utilities::partPer(usedStorage, totalStorage),
+                                 DEFAULT_MIN_PERCENTAGE)
+                                : 0;
+
+            totalStorageString = Utilities::getSizeString(totalStorage);
+
+            storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
+                usedStorageString,
+                totalStorageString);
         }
+
+        ui->wCircularStorage->setValue(parts);
+        ui->sStorage->setCurrentWidget(ui->wCircularStorage);
+        font.setPixelSize(FONT_SIZE_NO_BUSINESS_PX);
     }
 
-    ui->lUsedStorage->setText(usedStorageString);
 
     // ---------- Process transfer usage
-    QString usedTransferString;
 
+    // Get useful data
+    auto totalTransfer(mPreferences->totalBandwidth());
     auto usedTransfer(mPreferences->usedBandwidth());
+
+    QString usageColorT;
+    QString usedTransferString (Utilities::getSizeString(usedTransfer));
+    QString totalTransferString;
+    QString transferUsageStringFormatted (usedTransferString);
 
     if (Utilities::isBusinessAccount())
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
+        usageColorT = QString::fromLatin1("#333333");
         ui->wCircularStorage->setTotalValueUnknown();
-        usedTransferString = QString::fromUtf8("<span style='color: #333333;"
-                                                    "font-size:20px; font-family: Lato;"
-                                                    "text-decoration:none;'>%1</span>")
-                                  .arg(Utilities::getSizeString(usedTransfer));
     }
     else
     {
-        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-
-        QString usageColor;
         // Set color according to state
         switch (transferQuotaState)
         {
             case QuotaState::OK:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OK);
-                usageColor = QString::fromUtf8("#666666");
+                usageColorT = QString::fromLatin1("#666666");
                 break;
             }
             case QuotaState::WARNING:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColor = QString::fromUtf8("#F98400");
+                usageColorT = QString::fromLatin1("#F98400");
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -490,52 +513,104 @@ void InfoDialog::setUsage()
             case QuotaState::FULL:
             {
                 ui->wCircularQuota->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColor = QString::fromUtf8("#D90007");
+                usageColorT = QString::fromLatin1("#D90007");
                 break;
             }
         }
 
         if (accType == Preferences::ACCOUNT_TYPE_FREE)
         {
-
             ui->wCircularQuota->setTotalValueUnknown(transferQuotaState != QuotaState::FULL
                                                         && transferQuotaState != QuotaState::OVERQUOTA);
-                usedTransferString = Utilities::createSimpleUsedStringWithoutReplacement(usedTransfer)
-                                 .arg(QString::fromUtf8("<span style='color:%1;"
-                                                        "font-family: Lato;"
-                                                        "text-decoration:none;'>%2</span>")
-                                      .arg(usageColor, Utilities::getSizeString(usedTransfer)));
         }
         else
         {
-            auto totalTransfer (mPreferences->totalBandwidth());
-            if (totalTransfer == 0)
+            int parts = 0;
+
+            if (totalTransfer == 0ULL)
             {
                 ui->wCircularQuota->setTotalValueUnknown();
-                usedTransferString = Utilities::getSizeString(0ull);
             }
             else
             {
-                auto parts (usedTransfer ?
-                                std::max(Utilities::partPer(usedTransfer, totalTransfer),
-                                         DEFAULT_MIN_PERCENTAGE)
-                              : 0);
+                parts = usedTransfer ?
+                            std::max(Utilities::partPer(usedTransfer, totalTransfer),
+                                     DEFAULT_MIN_PERCENTAGE)
+                                     : 0;
 
-                ui->wCircularQuota->setValue(parts);
-                usedTransferString = QString::fromUtf8("%1 /%2")
-                                     .arg(QString::fromUtf8("<span style='color:%1;"
-                                                            "font-family: Lato;"
-                                                            "text-decoration:none;'>%2</span>")
-                                          .arg(usageColor, Utilities::getSizeString(usedTransfer)),
-                                          QString::fromUtf8("<span style='font-family: Lato;"
-                                                            "text-decoration:none;"
-                                                            "'>&nbsp;%1</span>")
-                                          .arg(Utilities::getSizeString(totalTransfer)));
+                totalTransferString = Utilities::getSizeString(totalTransfer);
+
+                transferUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
+                    usedTransferString,
+                    totalTransferString);
             }
+
+            ui->wCircularQuota->setValue(parts);
         }
+
+        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
     }
 
-    ui->lUsedQuota->setText(usedTransferString);
+    // Now compute the font size and set usage strings
+    // Find correct font size so that the string does not overflow
+    auto defaultColor = QString::fromLatin1("#999999");
+
+    auto contentsMargins = ui->lUsedStorage->contentsMargins();
+    auto margin = contentsMargins.left() + contentsMargins.right() + 2 * ui->lUsedStorage->margin();
+    auto storageStringMaxWidth = ui->wStorageDetails->contentsRect().width() - margin;
+
+    contentsMargins = ui->lUsedQuota->contentsMargins();
+    margin = contentsMargins.left() + contentsMargins.right() + 2 * ui->lUsedQuota->margin();
+    auto transferStringMaxWidth = ui->wQuotaDetails->contentsRect().width() - margin;
+
+    QFontMetrics fMetrics (font);
+    while ((fMetrics.horizontalAdvance(storageUsageStringFormatted) >= storageStringMaxWidth
+            || fMetrics.horizontalAdvance(transferUsageStringFormatted) >= transferStringMaxWidth)
+           && font.pixelSize() > 1)
+    {
+        font.setPixelSize(font.pixelSize() - 1);
+        fMetrics = QFontMetrics(font);
+    }
+
+    // Now apply format (color, font size) to Storage usage string
+    auto usedStorageStringFormatted = quotaStringFormat.arg(usageColorS,
+                                                            QString::number(font.pixelSize()),
+                                                            usedStorageString);
+    if (totalStorage == 0ULL || Utilities::isBusinessAccount())
+    {
+        storageUsageStringFormatted = usedStorageStringFormatted;
+    }
+    else
+    {
+        storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
+            usedStorageStringFormatted,
+            totalStorageString);
+        storageUsageStringFormatted = quotaStringFormat.arg(defaultColor,
+                                                            QString::number(font.pixelSize()),
+                                                            storageUsageStringFormatted);
+    }
+
+    ui->lUsedStorage->setText(storageUsageStringFormatted);
+
+    // Now apply format (color, font size) to Transfer usage string
+    auto usedTransferStringFormatted = quotaStringFormat.arg(usageColorT,
+                                                             QString::number(font.pixelSize()),
+                                                             usedTransferString);
+    if (totalTransfer == 0ULL || Utilities::isBusinessAccount())
+    {
+        transferUsageStringFormatted = usedTransferStringFormatted;
+    }
+    else
+    {
+        transferUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
+            usedTransferStringFormatted,
+            totalTransferString);
+        transferUsageStringFormatted = quotaStringFormat.arg(defaultColor,
+                                                            QString::number(font.pixelSize()),
+                                                            transferUsageStringFormatted);
+    }
+
+    ui->lUsedQuota->setText(transferUsageStringFormatted);
 }
 
 void InfoDialog::updateTransfersCount()
@@ -695,7 +770,6 @@ void InfoDialog::updateState()
     if(ui->wStatus->getState() != mState)
     {
         ui->wStatus->setState(mState);
-        ui->bTransferManager->setPaused(mPreferences->getGlobalPaused());
         if(mTransferManager)
         {
             mTransferManager->setTransferState(mState);
@@ -723,11 +797,13 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
     {
         case mega::MegaSync::TYPE_TWOWAY:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
             addSync(INVALID_HANDLE);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_BACKUP_CLICKED, true);
             addBackup();
             break;
         }
@@ -947,11 +1023,14 @@ void InfoDialog::on_bSettings_clicked()
         this->hide();
     }
 #endif
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_CLICKED, true);
 }
 
 void InfoDialog::on_bUpgrade_clicked()
 {
     Utilities::upgradeClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPGRADE_ACCOUNT_CLICKED, true);
 }
 
 void InfoDialog::on_bUpgradeOverDiskQuota_clicked()
@@ -1065,16 +1144,19 @@ void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
     app->transferManagerActionClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
 }
 
 void InfoDialog::on_bAddSync_clicked()
 {
     showSyncsMenu(ui->bAddSync, MegaSync::TYPE_TWOWAY);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_SYNC_CLICKED, true);
 }
 
 void InfoDialog::on_bAddBackup_clicked()
 {
     showSyncsMenu(ui->bAddBackup, MegaSync::TYPE_BACKUP);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_BACKUP_CLICKED, true);
 }
 
 void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
@@ -1101,6 +1183,7 @@ SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabl
 void InfoDialog::on_bUpload_clicked()
 {
     app->uploadActionClicked();
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::UPLOAD_CLICKED, true);
 }
 
 void InfoDialog::clearUserAttributes()
@@ -1271,8 +1354,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 void InfoDialog::on_bStorageDetails_clicked()
 {
     auto dialog = new AccountDetailsDialog();
-    dialog->setAttribute(Qt::WA_DeleteOnClose, true);
-    dialog->show();
+    DialogOpener::showNonModalDialog<AccountDetailsDialog>(dialog);
 }
 
 void InfoDialog::animateStates(bool opt)
@@ -1340,6 +1422,9 @@ void InfoDialog::on_tTransfers_clicked()
     ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::TRANSFER_TAB_CLICKED,
+                                                          sender(), ui->tTransfers, true);
 }
 
 void InfoDialog::on_tNotifications_clicked()
@@ -1351,6 +1436,8 @@ void InfoDialog::on_tNotifications_clicked()
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
 
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_TAB_CLICKED, true);
 }
 
 void InfoDialog::onActualFilterClicked()
@@ -1444,6 +1531,7 @@ void InfoDialog::applyFilterOption(int opt)
 void InfoDialog::on_bNotificationsSettings_clicked()
 {
     Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::NOTIFICATION_SETTINGS_CLICKED, true);
 }
 
 void InfoDialog::on_bDiscard_clicked()

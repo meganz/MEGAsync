@@ -28,7 +28,7 @@ GuestQmlDialog {
 
         width: window.width
         height: window.height
-        color: Styles.surface1
+        color: colorStyle.surface1
         radius: 10
         border.color: "#1F000000"
         border.width: 1

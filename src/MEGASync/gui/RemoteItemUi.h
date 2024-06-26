@@ -32,6 +32,9 @@ signals:
     void permissionsClicked();
 #endif
 
+protected:
+    void changeEvent(QEvent* event) override;
+
 private:
     void setTableViewProperties(QTableView* view) const;
 

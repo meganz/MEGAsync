@@ -14,6 +14,7 @@ const char MegaIgnoreRule::NON_SIZE_LEFT_SIDE_REG_EX[] = "^#*[+-][]adfsNnpGgRr]*
 const char MegaIgnoreRule::RIGHT_SIDE_TYPE_RULE_REG_EX[] = "^\\*\\..*";
 const char MegaIgnoreRule::CAPTURE_EXTENSION_REG_EX[] = "\\.(.*)";
 
+const auto asterisk = QString::fromUtf8("*");
 ////////////////MEGA IGNORE RULE
 bool MegaIgnoreRule::isEqual(const QString& ruleAsStringToCompare) const
 {
@@ -147,14 +148,69 @@ QString MegaIgnoreNameRule::getModifiedRule() const
             rule.append(convertEnum.getString(mStrategy));
         }
         rule.append(QLatin1String(":"));
-        rule.append(mPattern);
-
+        // Extension rules we ignore the wild card type
+        if(mRuleType != EXTENSIONRULE)
+        {
+            switch (mWildCardType) {
+            case MegaIgnoreNameRule::WildCardType::STARTSWITH:
+                rule.append(mPattern + asterisk);
+                break;
+            case MegaIgnoreNameRule::WildCardType::ENDSWITH:
+                rule.append(asterisk + mPattern);
+                break;
+            case MegaIgnoreNameRule::WildCardType::CONTAINS:
+                rule.append(asterisk + mPattern + asterisk);
+                break;
+            default:
+                rule.append(mPattern);
+                break;
+            }
+        }
+        else
+        {
+            rule.append(asterisk + mPattern);
+        }
         return rule;
     }
     else
     {
         return MegaIgnoreRule::getModifiedRule();
     }
+}
+
+void MegaIgnoreNameRule::setTarget(Target target)
+{
+    if(target == mTarget)
+    {
+        return;
+    }
+    mTarget = target;
+    markAsDirty();
+}
+
+MegaIgnoreNameRule::WildCardType MegaIgnoreNameRule::getWildCardType()
+{
+    return mWildCardType;
+}
+
+void MegaIgnoreNameRule::setWildCardType(WildCardType wildCard)
+{
+    if(wildCard == mWildCardType)
+    {
+        return;
+    }
+    mWildCardType = wildCard;
+    markAsDirty();
+}
+
+void MegaIgnoreNameRule::setPattern(const QString &pattern)
+{
+    if(pattern == mPattern)
+    {
+        return;
+    }
+    mPattern = pattern;
+    markAsDirty();
 }
 
 void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
@@ -176,6 +232,7 @@ void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
     {
         mWildCardType = MegaIgnoreNameRule::WildCardType::STARTSWITH;
     }
+    mPattern = mPattern.remove(asterisk);
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE
@@ -192,7 +249,7 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString& rule, bool isCom
 }
 
 MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension)
-                                                :MegaIgnoreNameRule(QString::fromUtf8("*.") + extension, classType)
+    :MegaIgnoreNameRule(QString::fromUtf8("*.") + extension, classType)
 {
     mRuleType = RuleType::EXTENSIONRULE;
     mExtension = extension;
@@ -201,6 +258,26 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString&
 const QString& MegaIgnoreExtensionRule::extension() const
 {
     return mExtension;
+}
+
+void MegaIgnoreExtensionRule::setPattern(const QString &pattern)
+{
+    if(mPattern == pattern)
+    {
+        return;
+    }
+    if(pattern.startsWith(QLatin1String(".")))
+    {
+        mPattern = pattern;
+        mExtension = pattern;
+        mExtension.remove(0,1);
+    }
+    else
+    {
+        mExtension = pattern;
+        mPattern = QLatin1String(".") + pattern;
+    }
+    markAsDirty();
 }
 
 ////////////////MEGA IGNORE SIZE RULE
@@ -239,13 +316,22 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
         if (match.hasMatch())
         {
             auto value = match.captured(0);
-            mValue = value.toUInt();
+            try
+            {
+                mValue = std::stoull(value.toStdString());
+            }
+            catch (...)
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error loading .megaignore").toUtf8());
+            }
+
             auto unit = size.remove(value).toUpper().trimmed();
             if (!unit.isEmpty())
             {
                 EnumConversions<UnitTypes> convertEnum;
                 mUnit = convertEnum.getEnum(unit);
             }
+            computeMaximumUnit();
         }
     }
 }
@@ -268,20 +354,32 @@ QString MegaIgnoreSizeRule::getModifiedRule() const
         }
         rule.append(mThreshold == Threshold::LOW ? LOW_STRING : HIGH_STRING);
         rule.append(QLatin1String(":"));
-        rule.append(QString::number(mValue));
+        rule.append(QString::number(mValue == 0 ? 1 : mValue));
         EnumConversions<UnitTypes> convertEnum;
         rule.append(mUnit == UnitTypes::B ? QString() : convertEnum.getString(mUnit));
         return rule;
-    }
-    else
-    {
+    } else {
         return MegaIgnoreRule::getModifiedRule();
     }
 }
 
-int MegaIgnoreSizeRule::value() const
+double MegaIgnoreSizeRule::value() const
 {
     return mValue;
+}
+
+double MegaIgnoreSizeRule::valueInBytes()
+{
+    switch (mUnit) {
+    case MegaIgnoreSizeRule::UnitTypes::G:
+        return mValue*1024*1024*1024;
+    case MegaIgnoreSizeRule::UnitTypes::M:
+        return mValue*1024*1024;
+    case MegaIgnoreSizeRule::UnitTypes::K:
+        return mValue*1024;
+    default:
+        return mValue;
+    }
 }
 
 MegaIgnoreSizeRule::UnitTypes MegaIgnoreSizeRule::unit() const
@@ -313,5 +411,21 @@ void MegaIgnoreSizeRule::setUnit(int newUnit)
     {
         mIsDirty = true;
         mUnit = static_cast<UnitTypes>(newUnit);
+    }
+}
+
+void MegaIgnoreSizeRule::computeMaximumUnit()
+{
+    for(int unitIterator = mUnit + 1; unitIterator <= UnitTypes::G; ++unitIterator)
+    {
+        if((long long)mValue % (1024) ==0)
+        {
+            mValue /= 1024;
+            mUnit = static_cast<UnitTypes>(unitIterator);
+        }
+        else
+        {
+            break;
+        }
     }
 }

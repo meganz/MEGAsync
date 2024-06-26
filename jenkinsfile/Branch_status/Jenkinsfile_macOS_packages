@@ -45,8 +45,8 @@ pipeline {
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
                         branchToCheckout = "develop"
                     } else {
-                        env.SDK_BRANCH = sh(script: "grep 'branch =' ${macos_sources_workspace}/.gitmodules | sed 's/.*= //'", returnStdout: true).trim()
-                        branchToCheckout = env.SDK_BRANCH
+                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
 
                     dir('src/MEGASync/mega') {
@@ -65,15 +65,15 @@ pipeline {
         }
         stage ('Build macOS packages'){
             environment{
-                VCPKGPATH  = "${env.HOME}/jenkins/3rdparty"
-                QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.11/5.15.11"
+                VCPKGPATH  = "${env.HOME}/jenkins/vcpkg"
+                QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
             }
             steps {
                 gitlabCommitStatus (name: 'Build macOS packages'){
                     dir(macos_sources_workspace){
                         sh "sed -i'' -e 's/sysctl -n hw.ncpu/echo 2/g'  installer_mac.sh"
                         script {
-                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build --create-dmg" : "--build"
+                            def commonArgs = params.IS_RELEASE_CANDIDATE == true ? "--build-cmake --create-dmg" : "--build-cmake"
 
                             if (params.ARM64 == true) {
                                 env.MEGAQTPATH = "${QT_BASE_PATH}/arm64"
@@ -104,15 +104,17 @@ pipeline {
                         script: '''awk -F'"' '/VER_PRODUCTVERSION_STR/ {split(\$2, a, "."); print a[1]"."a[2]"."a[3]}' src/MEGASync/control/Version.h''',
                         returnStdout: true 
                         ).trim()
+                        sh "echo $MEGASYNC_VERSION > version.txt"
                         if (params.ARM64 == true){
                             sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64"
-                            sh "cd Release_arm64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
+                            sh "cd Release_arm64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
                         }
                         if (params.X86_64 == true){
                             sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64"
-                            sh "cd Release_x86_64 && zip -r MEGAsync.app.dSYM.zip MEGAsync.app.dSYM && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
+                            sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
                         } 
                     }
+                    archiveArtifacts artifacts: 'version.txt', onlyIfSuccessful: true
                 }
             }
             post {

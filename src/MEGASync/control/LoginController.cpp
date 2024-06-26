@@ -5,7 +5,8 @@
 #include "Platform.h"
 #include "QMegaMessageBox.h"
 #include "mega/types.h"
-#include "AppStatsEvents.h"
+#include "TextDecorator.h"
+#include "StatsEventHandler.h"
 
 #include <QQmlContext>
 
@@ -13,8 +14,8 @@ LoginController::LoginController(QObject* parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mPreferences(Preferences::instance())
-      , mDelegateListener(mega::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
-      , mGlobalListener(mega::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
+      , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+      , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mEmailError(false)
       , mPasswordError(false)
       , mProgress(0)
@@ -337,6 +338,7 @@ void LoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e)
         {
             mPreferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
         }
+        MegaSyncApp->onLoginFinished();
     }
     else
     {
@@ -406,9 +408,7 @@ void LoginController::onAccountCreation(mega::MegaRequest* request, mega::MegaEr
         credentials.email = mEmail;
         credentials.sessionId = QString::fromUtf8(request->getSessionKey());
         mPreferences->setEphemeralCredentials(credentials);
-        mMegaApi->sendEvent(AppStatsEvents::EVENT_ACC_CREATION_START,
-                            "MEGAsync account creation start",
-                            false, nullptr);
+        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::ACC_CREATION_START);
         if (!mPreferences->accountCreationTime())
         {
                 mPreferences->setAccountCreationTime(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
@@ -469,7 +469,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
 
         mProgress = 0; //sets guestdialog progressbar as indeterminate
         emit progressChanged();
-        MegaSyncApp->onLoginFinished();
+        MegaSyncApp->onFetchNodesFinished();
     }
     else
     {
@@ -486,7 +486,7 @@ void LoginController::onFetchNodes(mega::MegaRequest* request, mega::MegaError* 
             && !(mPreferences->isFirstBackupDone() || mPreferences->isFirstSyncDone())) //Onboarding don´t has to be shown to users that
                                                                                         //doesn´t have one_time_action_onboarding_shown
         {                                                                               //and they have first backup or first sync done
-            MegaSyncApp->openOnboardingDialog();
+            QmlDialogManager::instance()->openOnboardingDialog();
             setState(FETCH_NODES_FINISHED_ONBOARDING);
             mPreferences->setOneTimeActionUserDone(Preferences::ONE_TIME_ACTION_ONBOARDING_SHOWN, true);
         }
@@ -537,6 +537,12 @@ void LoginController::onLogout(mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(e)
     Q_UNUSED(request)
+    int errorCode = e->getErrorCode();
+    int paramType =  request->getParamType();
+    if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL)
+    {
+        return;
+    }
 
     setState(LOGGED_OUT);
 }
@@ -677,12 +683,44 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         {
             return;
         }
+        mPreferences->loadExcludedSyncNames(); //to attend the corner case:
+            // comming from old versions that didn't include some defaults
+
     }
     assert(mPreferences->logged()); //At this point mPreferences should be logged, just because you enterUser() or it was already logged
 
     if (!mPreferences->logged())
     {
         return;
+    }
+    const QStringList exclusions = mPreferences->getExcludedSyncNames();
+    if(!exclusions.isEmpty())
+    {
+        std::vector<std::string> vExclusions;
+        for (const QString& exclusion : exclusions)
+        {
+            vExclusions.push_back(exclusion.toStdString());
+        }
+        mMegaApi->setLegacyExcludedNames(&vExclusions);
+    }
+    const QStringList exclusionPaths = mPreferences->getExcludedSyncPaths();
+    if(!exclusionPaths.isEmpty())
+    {
+        std::vector<std::string> vExclusionPaths;
+        for (const QString& exclusionPath : exclusionPaths)
+        {
+            vExclusionPaths.push_back(exclusionPath.toStdString());
+        }
+        mMegaApi->setLegacyExcludedPaths(&vExclusionPaths);
+    }
+    if (mPreferences->lowerSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionLowerSizeLimit(computeExclusionSizeLimit(mPreferences->lowerSizeLimitValue(), mPreferences->lowerSizeLimitUnit()));
+    }
+
+    if (mPreferences->upperSizeLimit())
+    {
+        mMegaApi->setLegacyExclusionUpperSizeLimit(computeExclusionSizeLimit(mPreferences->upperSizeLimitValue(), mPreferences->upperSizeLimitUnit()));
     }
 
     if (temporarilyLoggedPrefs)
@@ -827,6 +865,7 @@ void FastLoginController::onLogin(mega::MegaRequest* request, mega::MegaError* e
         int errorCode = e->getErrorCode();
         if (errorCode == mega::MegaError::API_OK)
         {
+            MegaSyncApp->onLoginFinished();
             if (!mPreferences->getSession().isEmpty())
             {
                 //Successful login, fetch nodes
@@ -859,7 +898,7 @@ LogoutController::LogoutController(QObject* parent)
     : QObject(parent)
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
-      , mLogingIn(false)
+      , mLoginInWithoutSession(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
 }
@@ -872,6 +911,11 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
 {
     Q_UNUSED(api)
 
+    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    {
+        mLoginInWithoutSession = false;
+    }
+
     if(request->getType() != mega::MegaRequest::TYPE_LOGOUT)
     {
         return;
@@ -880,7 +924,7 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     int paramType =  request->getParamType();
     if (errorCode || paramType)
     {
-        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL && !mLogingIn)
+        if (errorCode == mega::MegaError::API_EINCOMPLETE && paramType == mega::MegaError::API_ESSL && !mLoginInWithoutSession)
         {
             //Typical case: Connecting from a public wifi when the wifi sends you to a landing page
             //SDK cannot connect through SSL securely and asks MEGA Desktop to log out
@@ -919,7 +963,18 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = MegaSyncApp->getMEGAString();
-            msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            if(errorCode != mega::MegaError::API_OK)
+            {
+                msgInfo.text =tr("You have been logged out because of this error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString()));
+            }
+            else
+            {
+                Text::Link link(QString::fromLatin1("mailto:support@mega.nz"));
+                QString text = tr("You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.");
+                link.process(text);
+                msgInfo.text = text;
+                msgInfo.textFormat = Qt::RichText;
+            }
             msgInfo.ignoreCloseAll = true;
 
             QMegaMessageBox::information(msgInfo);
@@ -936,14 +991,14 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     }
 
     emit logout(!request->getFlag());
-    mLogingIn = false;
+    mLoginInWithoutSession = false;
 }
 
 void LogoutController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
 {
     Q_UNUSED(api)
-    if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
+    if(request->getType() == mega::MegaRequest::TYPE_LOGIN && !request->getSessionKey())
     {
-        mLogingIn = true;
+        mLoginInWithoutSession = true;
     }
 }

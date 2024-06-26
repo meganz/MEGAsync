@@ -40,7 +40,7 @@ SyncsPage {
             Layout.topMargin: 20
             source: Images.pcMega
             sourceSize: Qt.size(48, 48)
-            color: Styles.textPrimary
+            color: colorStyle.textPrimary
         }
 
         TextField {

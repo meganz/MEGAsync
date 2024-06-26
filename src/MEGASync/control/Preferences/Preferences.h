@@ -32,8 +32,6 @@ signals:
 private:
     Preferences();
 
-    std::map<QString, QVariant> cache;
-
 public:
     //NOT thread-safe. Must be called before creating threads.
     static std::shared_ptr<Preferences> instance();
@@ -52,6 +50,8 @@ public:
     void setFirstName(QString firstName);
     QString lastName();
     void setLastName(QString lastName);
+    QString fileHash(const QString& filePath);
+    void setFileHash(const QString& filePath, const QString& fileHash);
     void setSession(QString session);
     void setSessionInUserGroup(QString session);
     QString getSession();
@@ -293,6 +293,8 @@ public:
     void setMaxMemoryUsage(long long value);
     long long getMaxMemoryReportTime();
     void setMaxMemoryReportTime(long long timestamp);
+    long long lastDailyStatTime();
+    void setLastDailyStatTime(long long time);
 
     long long lastUpdateTime();
     void setLastUpdateTime(long long time);
@@ -328,8 +330,19 @@ public:
                                        int *cachedStorageState = nullptr, QString email = QString());
     void saveOldCachedSyncs(); //save the old cache (intended to clean them)
 
+    QStringList getExcludedSyncNames();
+    QStringList getExcludedSyncPaths();
+    // preloads excluded sync names and adds missing defaults ones in previous versions
+    void loadExcludedSyncNames();
+
     bool isOneTimeActionDone(int action);
     void setOneTimeActionDone(int action, bool done);
+    void setSystemTrayPromptSuppressed(bool suppressed);
+    bool isSystemTrayPromptSuppressed();
+    void setAskOnExclusionRemove(bool value);
+    bool isAskOnExclusionRemove();
+    void setSystemTrayLastPromptTimestamp(long long timestamp);
+    long long getSystemTrayLastPromptTimestamp();
 
     bool isOneTimeActionUserDone(int action);
     void setOneTimeActionUserDone(int action, bool done);
@@ -396,9 +409,6 @@ public:
     void clearAll();
     void sync();
 
-    void deferSyncs(bool b);  // this must receive balanced calls with true and false, as it maintains a count (to support threads).
-    bool needsDeferredSync();
-
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -423,6 +433,9 @@ public:
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
         ACCOUNT_TYPE_LITE = 4,
+        ACCOUNT_TYPE_STARTER = 11,
+        ACCOUNT_TYPE_BASIC = 12,
+        ACCOUNT_TYPE_ESSENTIAL = 13,
         ACCOUNT_TYPE_BUSINESS = 100,
         ACCOUNT_TYPE_PRO_FLEXI = 101
     };
@@ -526,7 +539,10 @@ public:
 
     //Public keys for valueChanged signals
     static const QString stalledIssuesModeKey;
+    static const QString wasPausedKey;
+
     //In this section, you need to move the keys to make them accessible from outside
+    static const int minSyncStateChangeProcessingIntervalMs;
 
 protected:
     QMutex mutex;
@@ -555,9 +571,6 @@ protected:
     //Not all prefeerences need this, that´s why by default it is set to false
     void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
     void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
-    void setCachedValue(const QString &key, const QVariant &value);
-    void cleanCache();
-    void removeFromCache(const QString &key);
 
     std::unique_ptr<EncryptedSettings> mSettings;
 
@@ -569,6 +582,8 @@ protected:
     // These are only used for retrieving values or removing at uninstall
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> loadedSyncsMap;
 
+    QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -682,7 +697,6 @@ protected:
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
-    static const QString wasPausedKey;
     static const QString wasUploadsPausedKey;
     static const QString wasDownloadsPausedKey;
     static const QString lastUpdateTimeKey;
@@ -723,6 +737,10 @@ protected:
     static const QString notifyDisabledSyncsKey;
     static const QString importMegaLinksEnabledKey;
     static const QString downloadMegaLinksEnabledKey;
+    static const QString systemTrayPromptSuppressed;
+    static const QString systemTrayLastPromptTimestamp;
+    static const QString lastDailyStatTimeKey;
+    static const QString askOnExclusionRemove;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -775,6 +793,8 @@ protected:
     static const bool defaultNeverCreateLink;
     static const bool defaultImportMegaLinksEnabled;
     static const bool defaultDownloadMegaLinksEnabled;
+    static const bool defaultSystemTrayPromptSuppressed;
+    static const bool defaultAskOnExclusionRemove;
 
 private:
     void updateFullName();

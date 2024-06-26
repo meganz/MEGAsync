@@ -12,13 +12,17 @@ public:
            FILE_SYNCED = 0,
            FILE_PENDING = 1,
            FILE_SYNCING = 2,
-           FILE_NOTFOUND = 9
+           FILE_IGNORED = 3,
+           FILE_PAUSED = 4, // used for paused & suspendend syncs.
+           FILE_NOTFOUND = 9,
+           FILE_ERROR = 10
     } FileState;
 
     typedef enum {
            TYPE_FILE = 0,
            TYPE_FOLDER = 1,
-           TYPE_UNKNOWN = 2
+           TYPE_NOTFOUND = 2,
+           TYPE_UNKNOWN = 3
     } FileType;
 
     typedef enum {

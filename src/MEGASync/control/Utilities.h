@@ -312,6 +312,8 @@ public:
     static QString getSizeString(long long bytes);
     static QString getSizeStringLocalized(quint64 bytes);
     static int toNearestUnit(long long bytes);
+    static QString getTranslatedSeparatorTemplate();
+
     struct ProgressSize
     {
         QString transferredBytes;
@@ -327,6 +329,7 @@ public:
     static QString getQuantityString(unsigned long long quantity);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
+    static QStringList extractJSONStringList(const QString& json, const QString& name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
     static void getPROurlWithParameters(QString &url);
@@ -335,7 +338,7 @@ public:
     static void adjustToScreenFunc(QPoint position, QWidget *what);
     static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
-    static QString getReadablePROplanFromId(int identifier);
+    static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
     static void animateFadein(QWidget *object, int msecs = 700);
     static void animatePartialFadeout(QWidget *object, int msecs = 2000);
@@ -367,6 +370,9 @@ public:
 
     static bool isIncommingShare(mega::MegaNode* node);
 
+    static bool dayHasChangedSince(qint64 msecs);
+    static bool monthHasChangedSince(qint64 msecs);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
@@ -388,6 +394,7 @@ private:
 public:
     static QString languageCodeToString(QString code);
     static QString getAvatarPath(QString email);
+    static void removeAvatars();
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
 
@@ -410,9 +417,11 @@ public:
     // Compute the part per <ref> of <part> from <total>. Defaults to %
     static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
 
+    static QString getFileHash(const QString& filePath);
+
     // Human-friendly list of forbidden chars for New Remote Folder
     static const QLatin1String FORBIDDEN_CHARS;
-    // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
+    // Forbidden chars PCRE
     static const QRegularExpression FORBIDDEN_CHARS_RX;
     // Time to show the new remote folder input error in milliseconds
     static constexpr int ERROR_DISPLAY_TIME_MS = 10000; //10s in milliseconds

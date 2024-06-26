@@ -33,6 +33,7 @@ public:
         mIsCommented(isCommented),
         mIsDeleted(false)
     {}
+    MegaIgnoreRule() = default;
     virtual ~MegaIgnoreRule() = default;
     virtual bool isValid() const { return true; }
     virtual RuleType ruleType() const = 0;
@@ -99,15 +100,16 @@ public:
     };
     Q_ENUM(Strategy)
 
-    enum class WildCardType
+    enum WildCardType
     {
-        EQUAL,
-        STARTSWITH,
-        ENDSWITH,
-        CONTAINS
+        STARTSWITH = 0,
+        EQUAL = 3,
+        ENDSWITH = 2,
+        CONTAINS = 1
     };
     Q_ENUM(WildCardType)
 
+    MegaIgnoreNameRule() = default;
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
     explicit MegaIgnoreNameRule(const QString& pattern
                                 ,Class classType
@@ -118,6 +120,10 @@ public:
     QString getDisplayText() const override { return mPattern; }
     RuleType ruleType() const override { return RuleType::NAMERULE;}
     Target getTarget() { return mTarget; }
+    void setTarget(Target target);
+    WildCardType getWildCardType();
+    void setWildCardType(WildCardType wildCard);
+    virtual void setPattern(const QString &pattern);
 
 protected:
     QString mPattern;
@@ -159,7 +165,10 @@ public:
     explicit MegaIgnoreExtensionRule(Class classType, const QString& extension);
 
     RuleType ruleType() const override { return RuleType::EXTENSIONRULE; }
+    void setPattern(const QString &pattern) override;
+
     const QString& extension() const;
+    QString getDisplayText() const override { return mExtension; }
 
 private:
     QString mExtension;
@@ -191,16 +200,24 @@ public:
     RuleType ruleType() const override { return RuleType::SIZERULE; }
     QString getModifiedRule() const override;
 
-    int value() const;
+    double valueInBytes();
+    void setValueInBytes(double value)
+    {
+        mValue = value;
+        mUnit = UnitTypes::B;
+    }
+
+    double value() const;
     UnitTypes unit() const;
 
     static const QStringList& getUnitsForDisplay();
 
     void setValue(int newValue);
     void setUnit(int newUnit);
+    void computeMaximumUnit();
 
 private:
-    int mValue = 1;
+    unsigned long long mValue = 1;
     UnitTypes mUnit = UnitTypes::B;
     Threshold mThreshold = LOW;
 };

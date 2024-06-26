@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="ja" sourcelanguage="en">
 <context>
@@ -103,64 +103,6 @@
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
         <translation>続行しますか？</translation>
-    </message>
-</context>
-<context>
-    <name>AddExclusionDialog</name>
-    <message>
-        <source>Add exclusion</source>
-        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>除外を追加</translation>
-    </message>
-    <message>
-        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
-        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>名前、絶対パス（ワイルドカード*と？は許可）を入力するか、同期から除外したいファイルまたはフォルダを選択します</translation>
-    </message>
-    <message>
-        <source>Choose File</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>ファイルを選択</translation>
-    </message>
-    <message>
-        <source>Choose Folder</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>フォルダを選択</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>選択</translation>
-    </message>
-    <message>
-        <source>Please enter a valid file name or absolute path.</source>
-        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>有効なファイル名または絶対パスを入力してください</translation>
-    </message>
-    <message>
-        <source>Select the file or folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>除外したいファイルまたはフォルダを選択します</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>除外したいフォルダを選択します</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>除外したいファイルを選択します</translation>
     </message>
 </context>
 <context>
@@ -461,7 +403,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can't have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>同じ名前のフォルダをバックアップすることはできません。名前を変更して、バックアップを続行します。お使いのコンピューター上のフォルダ名は変更されません。</translation>
     </message>
 </context>
@@ -832,7 +774,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
         <translation>転送が開始されない場合にのみ、このオプションを有効にしてください。他のすべての状況では、MEGAはすべてのデータをすでに暗号化しているため、HTTPを使用するだけで十分です。</translation>
     </message>
 </context>
@@ -1162,7 +1104,7 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
         <translation><numerusform>問題を解決しますか？</numerusform></translation>
     </message>
     <message numerus="yes">
@@ -1187,7 +1129,7 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>解決する</translation>
     </message>
 </context>
@@ -1342,7 +1284,7 @@
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>他のプロセスが完了するのを待っています。</translation>
     </message>
 </context>
@@ -1576,7 +1518,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro&#xa0; Flexiアカウントが無効になりました</translation>
+        <translation>Pro  Flexiアカウントが無効になりました</translation>
     </message>
 </context>
 <context>
@@ -1623,7 +1565,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>このローカルフォルダに書き込む権限がありません。</translation>
     </message>
 </context>
@@ -1800,6 +1742,319 @@
     </message>
 </context>
 <context>
+    <name>ExclusionsStrings</name>
+    <message>
+        <source>Add Exclusions</source>
+        <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>除外を追加する</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
+        <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>ここで、ファイルやフォルダをクラウドドライブとの同期から除外できます。これは、大きなファイルや、すべてのデバイス上で必要なわけではないファイルや、同期する必要のない特定のファイルタイプなどに便利です。</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action that enables openning sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>除外を管理する</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from</source>
+        <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>除外するファイルまたはフォルダを選択します</translation>
+    </message>
+    <message>
+        <source>Exclude files by size</source>
+        <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>サイズでファイルを除外する</translation>
+    </message>
+    <message>
+        <source>Exclude file sizes</source>
+        <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
+        <translation>以下のファイルを除外：</translation>
+    </message>
+    <message>
+        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>最小サイズと最大サイズの制限を設定することによって、または特定のサイズより大きいまたは小さいファイルを除外します。</translation>
+    </message>
+    <message>
+        <source>Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).</source>
+        <translatorcomment>Description for the dialog for adding a new exclusion rule.SAT-449</translatorcomment>
+        <translation>ファイルまたはフォルダを除外するかどうかを選択します。特定のファイルタイプ、または名前（または名前の一部）から開始する、またはそれで終了する、またはそれを含む、またはそれに等しいファイルまたはフォルダを除外できます。</translation>
+    </message>
+    <message>
+        <source>Add Exclusion</source>
+        <translatorcomment>Button to accept and add a new exclusion rule with the specified values.SAT-449</translatorcomment>
+        <translation>除外の追加</translation>
+    </message>
+    <message>
+        <source>You will exclude:</source>
+        <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
+        <translation>以下を除外します：</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Drop down entry for specifying files as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>ファイル</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Drop down entry for specifying folders as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>フォルダ</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>拡張機能</translation>
+    </message>
+    <message>
+        <source>Beginning with</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>で始まる</translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>を含む</translation>
+    </message>
+    <message>
+        <source>Ending</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>で終わる</translation>
+    </message>
+    <message>
+        <source>Equal to</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>に等しい</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button to cancel the dialog for adding rules.SAT-449</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Files beginning with:</source>
+        <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>以下で始まるファイル：</translation>
+    </message>
+    <message>
+        <source>Use comma (“,”) to separate multiple items</source>
+        <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>複数の項目を区切るにはカンマ（「,」）を使用します</translation>
+    </message>
+    <message>
+        <source>Outside of</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>次のサイズ以外</translation>
+    </message>
+    <message>
+        <source>Bigger than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>次のサイズより大きい</translation>
+    </message>
+    <message>
+        <source>Smaller than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>次のサイズより小さい</translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment> Label for the end range of file size exclusions section.SAT-449</translatorcomment>
+        <translation>および</translation>
+    </message>
+    <message>
+        <source>Exclude by name</source>
+        <translatorcomment>Section title for name exclusion rules.SAT-449</translatorcomment>
+        <translation>名前で除外する</translation>
+    </message>
+    <message>
+        <source>Restore defaults</source>
+        <translatorcomment>Button for restoring MEGA ddefault sync exclusion rules.SAT-449</translatorcomment>
+        <translation>デフォルトに戻す</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translatorcomment>Column title for displaying exclusion rule target type.SAT-449</translatorcomment>
+        <translation>タイプ</translation>
+    </message>
+    <message>
+        <source>property</source>
+        <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
+        <translation>基準</translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
+        <translation>ターゲット</translation>
+    </message>
+    <message>
+        <source>Remove this exclusion?</source>
+        <translatorcomment>Title for confirmation dialog before removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>この除外を削除しますか？</translation>
+    </message>
+    <message>
+        <source>Files beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>「%1」で始まるファイルがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>「%1」で始まるフォルダがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Files containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>「%1」を含むファイルがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>「%1」を含むフォルダがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Files ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>「%1」で終わるファイルがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>「%1」で終わるフォルダがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Files equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>「%1」に等しいファイルがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>「%1」に等しいフォルダがこの同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation>拡張子「%1」を持つファイルは、この同期に含まれます。</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box for confirmation message bedore removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>次回から表示しない</translation>
+    </message>
+    <message>
+        <source>Set a minimum and maximum value for file sizes. Files outside this range will be excluded.</source>
+        <translatorcomment>Hint text when specyfing the range to be excluded in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>ファイルサイズの最小値と最大値を設定します。この範囲外のファイルは除外されます。</translation>
+    </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation>除外の編集</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation>完了</translation>
+    </message>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ファイル拡張子</translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ファイル名</translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>フォルダ名</translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ファイルの種類</translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>内容</translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>で終わる</translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>で始まる</translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>等しい</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下を含むファイル：</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下で終わるファイル：</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下に等しいファイル：</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下で始まるフォルダ：</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下を含むフォルダ：</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下で終わるフォルダ：</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下に等しいフォルダ：</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>以下の拡張子を持つファイル：</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>除外したいフォルダを選択します</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>除外したいファイルを選択します</translation>
+    </message>
+</context>
+<context>
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
@@ -1811,17 +2066,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B]を同期できません</translation>
     </message>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
         <translation>あるファイルに問題があり、それを解決するにはあなたの決定が必要です。</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
         <translation>あるフォルダに問題があり、それを解決するにはあなたの決定が必要です。</translation>
     </message>
 </context>
@@ -1923,12 +2178,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B]を同期できません</translation>
     </message>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>同期しようとしているファイルには拡張子がなく、既存のフォルダと同じ名前が付いています</translation>
     </message>
 </context>
@@ -1977,7 +2232,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>ログ&#xa0;アウト</translation>
+        <translation>ログ アウト</translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2040,128 +2295,6 @@ Please, refresh the list.</source>
     </message>
 </context>
 <context>
-    <name>IgnoresEditingDialog</name>
-    <message>
-        <source>Edit exclusions</source>
-        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>除外の編集</translation>
-    </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>除外を管理する</translation>
-    </message>
-    <message>
-        <source>by size</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>サイズで除外する</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>以下より小さなファイルを除外する：</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>以下より大きなファイルを除外する：</translation>
-    </message>
-    <message>
-        <source>by name</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>名前で除外する</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation>同期から除外されるファイルまたはフォルダ：</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
-        <translation>追加</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
-        <translation>削除</translation>
-    </message>
-    <message>
-        <source>by file type</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>ファイルの種類で除外する</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>詳細設定</translation>
-    </message>
-    <message>
-        <source>Open .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>.megaignoreを開く</translation>
-    </message>
-    <message>
-        <source>by size:</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>サイズで除外する：</translation>
-    </message>
-    <message>
-        <source>by name:</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>名前で除外する：</translation>
-    </message>
-    <message>
-        <source>by file type:</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>ファイルの種類で除外する：</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>.megaignoreを編集する</translation>
-    </message>
-    <message>
-        <source>Advanced:</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>詳細設定：</translation>
-    </message>
-    <message>
-        <source>Rule already exists.</source>
-        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation>ルールはすでに存在します</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
-        <translation>再読み込み</translation>
-    </message>
-    <message>
-        <source>Current file has been modified by another program. it will be reloaded</source>
-        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation>現在の.megaignoreファイルは別のプログラムによって変更されており、再読み込みされます</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation>関連する.megaignoreファイルはテキストエディタで編集できます。これは、正規表現に慣れているユーザー様に適したタスクです。</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation>関連する.megaignoreファイルはテキストエディタで編集できます。これは、正規表現に慣れているユーザー様に適したタスクです。</translation>
-    </message>
-    <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>特定のファイルやフォルダをクラウドドライブとの同期から除外できます。
-これは、大きなファイルや、すべてのデバイス上で必要なわけではないファイルや、同期する必要のない特定のファイルタイプなどに便利です。</translation>
-    </message>
-</context>
-<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
@@ -2198,7 +2331,7 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
         <translation>見つかりません</translation>
     </message>
     <message>
@@ -2225,26 +2358,6 @@ This can be useful for large files, files that you don't need on all of your dev
         <translation>無料</translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
         <translation>ビジネス</translation>
@@ -2252,7 +2365,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Available storage:</source>
@@ -2364,7 +2477,7 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
         <translation>通知はありません</translation>
     </message>
     <message>
@@ -2384,17 +2497,17 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
         <translation>連絡先の通知はありません</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
         <translation>受信共有の通知はありません</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
         <translation>お支払いの通知はありません</translation>
     </message>
     <message>
@@ -2565,6 +2678,86 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
 </context>
 <context>
+    <name>LinuxPlatformNotificationAreaIcon</name>
+    <message>
+        <source>Install notification area icon</source>
+        <translatorcomment>This is the title of a notification message prompting the user about enabling the Notification Area Icon. The &quot;Notification Area Icon&quot; refers to the option to display an icon in the system tray or notification area of the taskbar. SNC-2270</translatorcomment>
+        <translation>通知領域アイコンのインストール</translation>
+    </message>
+    <message>
+        <source>For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.
+Would you like to install the necessary components now?</source>
+        <translatorcomment>This is the text of a notification message displayed to users on Fedora with GNOME, advising them to consider activating the Notification Area Icon for an optimized experience. It also inquires if they wish to proceed with the installation of the required components for enabling the Notification Area Icon. SNC-2270</translatorcomment>
+        <translation>GNOMEを使用したFedoraの体験を向上させるには、通知領域アイコンを有効にすることをお勧めします。
+必要なコンポーネントを今すぐインストールしますか？</translation>
+    </message>
+    <message>
+        <source>Do not show again</source>
+        <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
+        <translation>次回から表示しない</translation>
+    </message>
+    <message>
+        <source>Installing notification area icon...</source>
+        <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
+        <translation>通知領域アイコンをインストールしています...</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>This is the option provided in the Notification Area Icon installation progress bar to the user to cancel the Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Installing</source>
+        <translatorcomment>This is the title  for the Notification Area Icon installation progress bar which provide the feedback to the user about Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>インストール中</translation>
+    </message>
+    <message>
+        <source>Installation Cancelled</source>
+        <translatorcomment>This is the title of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>インストールのキャンセル</translation>
+    </message>
+    <message>
+        <source>The notification area icon installation was cancelled.</source>
+        <translatorcomment>This is the text of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>通知領域アイコンのインストールはキャンセルされました。</translation>
+    </message>
+    <message>
+        <source>Error installing components</source>
+        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
+        <translation>コンポーネントインストール中のエラー</translation>
+    </message>
+    <message>
+        <source>Failed to install the necessary components.</source>
+        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translation>必要なコンポーネントをインストールできませんでした。</translation>
+    </message>
+    <message>
+        <source>To install manually, please run the following commands:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translation>手動でインストールするには、次のコマンドを実行してください：
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
+    </message>
+    <message>
+        <source>Install complete</source>
+        <translatorcomment>This is the title of a message indicating that the Notification Area Icon Support has been installed without any issues. SNC-2270</translatorcomment>
+        <translation>インストール完了</translation>
+    </message>
+    <message>
+        <source>The notification area icon was installed successfully.
+Please log out of your computer to complete the installation.</source>
+        <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
+        <translation>通知領域アイコンが正常にインストールされました。
+インストールを完了するには、コンピューターを再起動してください。 </translation>
+    </message>
+</context>
+<context>
     <name>LoadingSceneMessageHandler</name>
     <message>
         <source>%1 of %2</source>
@@ -2640,7 +2833,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>ローカルフォルダ[B]%1[/B]を保持してもよろしいですか？</translation>
+        <translation>ローカルフォルダ[B]%1[/B]を保持しますか？</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
@@ -2822,6 +3015,24 @@ Please wait for the upload to complete.</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]ローカル[/B]フォルダを保持しますか？</translation>
     </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
+        <translation>ローカルファイル[B]%1[/B]がMEGAにアップロードされ、現在のファイルと置き換えられます。そのファイルは、MEGAのごみ箱のSyncDebrisフォルダに移動さ​​れます。</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
+        <translation>[B]ローカル[/B]ファイルがMEGAにアップロードされ、現在のファイルと置き換えられます。そのファイルは、MEGAのごみ箱のSyncDebrisフォルダに移動さ​​れます。</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>この問題を解決するには、「名前の変更（Rename）」をクリックするか、下のフォルダをクリックしてローカルファイルシステムまたはMEGAで調整を行ってください。</translation>
+    </message>
 </context>
 <context>
     <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
@@ -2945,6 +3156,11 @@ Please wait for the upload to complete.</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>次のエラーのためログアウトされました：%1</translation>
     </message>
+    <message>
+        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
+        <translation>ログアウトされました。この問題が解決しない場合は、[A]support@mega.nz[/A]までご連絡ください。</translation>
+    </message>
 </context>
 <context>
     <name>LowDiskSpaceDialog</name>
@@ -3013,7 +3229,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
         <translation>最新版</translation>
     </message>
     <message>
@@ -3043,7 +3259,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
         <translation>問題が検出されました</translation>
     </message>
     <message>
@@ -3116,11 +3332,6 @@ https://mega.co.nz/#sync</source>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>構成に欠陥がありますので、やり直してください</translation>
-    </message>
-    <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>容量超過</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3230,7 +3441,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>アカウントが凍結されました</translation>
+        <translation>アカウントが無効化されました</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3382,7 +3593,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Pro&#xa0; Flexiアカウントが無効になりました</translation>
+        <translation>Pro  Flexiアカウントが無効になりました</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full (tray icon tooltip). CON-561</translatorcomment>
+        <translation>ストレージがいっぱい</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
+        <translation>転送容量を超えました</translation>
     </message>
 </context>
 <context>
@@ -3523,11 +3744,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>ご利用規約違反</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>当社のご利用規約に違反しているためアクセスできません</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>転送は再帰的なフォルダ構造が原因で失敗しました</translation>
@@ -3551,7 +3767,7 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>MEGAのご利用規約に違反したため、あなたのアカウントは停止されました。
 保管されたデータへのアクセスを回復したり、MEGAアカウントを新規登録したりすることはできません。</translation>
     </message>
@@ -3559,6 +3775,16 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
         <translation>ご利用規約違反です。</translation>
+    </message>
+    <message>
+        <source>Your account has expired</source>
+        <translatorcomment>Used when a business account has expired, but this could also be a Pro-Flexi account. Max. 27 characters. SNC-4190 and CON-556</translatorcomment>
+        <translation>アカウントの有効期限が切れました</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation>宛先ストレージがいっぱいです</translation>
     </message>
 </context>
 <context>
@@ -3654,8 +3880,8 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>同期フォルダの所有者のアカウントがストレージ 容量を超えました。</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>このフォルダを共有したユーザーはストレージ容量に達したため、フォルダを同期できません</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3671,11 +3897,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
         <translation>MEGA内の共有フォルダへの完全なアクセス権がありません</translation>
-    </message>
-    <message>
-        <source>Local fingerprint mismatch</source>
-        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>ローカルファイルシステムの変更が検出されました</translation>
     </message>
     <message>
         <source>Put nodes error</source>
@@ -3751,6 +3972,101 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation>お客様のプランは期限切れです</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
+        <translation>ログアウトしたため、同期またはバックアップが停止されました。同期を再開するには、「設定」から同期またはバックアップを再度有効にします。</translation>
+    </message>
+    <message>
+        <source>Active sync same path</source>
+        <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
+        <translation>この場所には、同期またはバックアップされたフォルダが既に含まれています</translation>
+    </message>
+    <message>
+        <source>Unknown drive path.</source>
+        <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
+        <translation>同期またはバックアップのドライブパスが不明です</translation>
+    </message>
+    <message>
+        <source>Local filesystem mismatch</source>
+        <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
+        <translation>このフォルダ内のファイルは同期またはバックアップできません。設定から同期またはバックアップを再度有効にする必要があります。</translation>
+    </message>
+    <message>
+        <source>Backup externally modified</source>
+        <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
+        <translation>MEGAフォルダに変更が加えられたため、このフォルダの同期またはバックアップで問題が発生しました。同期またはバックアップを停止し、設定で再度セットアップするか、サポートにご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Unable to create initial ignore file.</source>
+        <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
+        <translation>この同期またはバックアップ用の.megaignoreファイルを作成できませんでした</translation>
+    </message>
+    <message>
+        <source>Unable to read sync configs from disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
+        <translation>同期またはバックアップ構成を読み取れませんでした。後でもう一度試すか、フォルダのアクセス許可を確認してください。</translation>
+    </message>
+    <message>
+        <source>Invalid scan interval specified.</source>
+        <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
+        <translation>スキャン間隔が無効です。スキャン間隔の設定を確認して、再試行してください。</translation>
+    </message>
+    <message>
+        <source>Filesystem notification subsystem unavailable.</source>
+        <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
+        <translation>フォルダの場所と通信できませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Unable to add filesystem watch.</source>
+        <translatorcomment>SDK error indicating that the filesystem watch couldn´t be added. CON-537</translatorcomment>
+        <translation>ファイルシステム監視を追加できません。十分な空き容量とメモリがあること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve sync root FSID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
+        <translation>同期またはバックアップの場所を読み取れませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Unable to open state cache database.</source>
+        <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
+        <translation>このフォルダの同期またはバックアップ中に問題が発生しました。同期またはバックアップを停止し、設定でもう一度設定してみるか、サポートにご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Insufficient disk space.</source>
+        <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
+        <translation>ダウンロード用のスペースが不足しています。</translation>
+    </message>
+    <message>
+        <source>Failure accessing to persistent storage</source>
+        <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
+        <translation>同期またはバックアップの場所を読み取れませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve the ID of current device</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
+        <translation>バックアップ元のデバイスに名前がないため、バックアップを作成できません。デバイスに名前を付けて、再試行してください。問題が解決しない場合は、サポートにご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation>このフォルダの同期またはバックアップ中に問題が発生しました。同期またはバックアップを停止し、設定でもう一度設定してみるか、サポートにご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation>このフォルダの同期またはバックアップ中に問題が発生しました。同期またはバックアップを停止し、設定でもう一度設定してみるか、サポートにご連絡ください。</translation>
+    </message>
+    <message>
+        <source>Could not get the filesystem&apos;s ID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
+        <translation>同期またはバックアップの場所を読み取れませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
+        <translation>同期またはバックアップ構成を更新できませんでした。後でもう一度試すか、フォルダのアクセス許可を確認してください。</translation>
     </message>
 </context>
 <context>
@@ -3994,7 +4310,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
         <translation>外部で変更済み</translation>
     </message>
     <message>
@@ -4043,7 +4359,7 @@ Please refresh the view</source>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
         <translation>アクションは必要ありません</translation>
     </message>
     <message>
@@ -4716,7 +5032,7 @@ Enter a different name</source>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>ログ&#xa0;イン</translation>
+        <translation>ログ イン</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -5296,12 +5612,12 @@ Enter a different name</source>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>追加ストレージは%2&#xa0;TBあたり%1の料金を頂戴いたします。</translation>
+        <translation>追加ストレージは%2 TBあたり%1の料金を頂戴いたします。</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>追加の転送容量は%2&#xa0;TBあたり%1の料金を頂戴いたします。</translation>
+        <translation>追加の転送容量は%2 TBあたり%1の料金を頂戴いたします。</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -5323,7 +5639,7 @@ Enter a different name</source>
     <name>PlatformStrings</name>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
         <translation>項目をごみ箱に移動しました</translation>
     </message>
     <message>
@@ -5338,7 +5654,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
         <translation>項目をごみ箱に移動しました</translation>
     </message>
     <message>
@@ -5353,7 +5669,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
         <translation>項目をRecycle Bin（ごみ箱）に移動しました</translation>
     </message>
     <message>
@@ -5365,22 +5681,24 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync rework Beta V2 is released.
-- A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
-- User experience for batch fixing sync issues is improved.
-- Minor bugs are fixed.
-- Performance is improved.
+        <source>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation>同期リワークベータ版V2
-－新しい同期またはバックアッププロセス用に、新しいオンボーディングウィザードが導入されました。
-－変更が検出され、同期問題が自動的に更新されます。
-－MEGA対応言語すべてでご利用可能になりました。
-－同期の問題を一括修正するためのユーザーエクスペリエンスが向上しました。
-－軽微なバグが修正されました。
-－パフォーマンスが向上しました。
+        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
+        <translation>－アルバムとコレクションのリンクのサポートを追加しました。
+－Qtをv5.15.13に更新しました。
+－依存関係を更新しました。
+－エラーメッセージを改善しました。
+－除外インターフェースを改善しました。
+－openSUSE Leap 15.6、Ubuntu 24.04、およびFedora 40のサポートを追加しました。
+－すべてのOSのシステム統合を改善しました。
+－バグを修正し、その他を改善しました。
 </translation>
     </message>
 </context>
@@ -5766,7 +6084,7 @@ Please verify the correct file name was given.</source>
 正しいファイル名が指定されていることをご確認ください。</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>「%1」は書き込み保護されています。
@@ -5778,27 +6096,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1&#xa0;TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1&#xa0;GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1&#xa0;MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1&#xa0;KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;バイト</translation>
+        <translation>%1 バイト</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -5946,6 +6264,29 @@ Do you want to delete it anyway?</source>
     </message>
 </context>
 <context>
+    <name>RemoveSyncConfirmationDialog</name>
+    <message>
+        <source>Remove this sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>この同期を削除しますか？</translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>コンピューターとMEGAのデータは削除されませんが、フォルダは相互に同期されなくなります。</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>削除</translation>
+    </message>
+</context>
+<context>
     <name>RenameNodeDialog</name>
     <message>
         <source>Enter new file name</source>
@@ -6064,7 +6405,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>ログ&#xa0;アウト</translation>
+        <translation>ログ アウト</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -6377,21 +6718,6 @@ Do you want to delete it anyway?</source>
         <translation>最新版をインストール</translation>
     </message>
     <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>無料</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>ビジネス</translation>
-    </message>
-    <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
         <translation>制限なし</translation>
@@ -6420,21 +6746,6 @@ Do you want to delete it anyway?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>問題を報告</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -6505,11 +6816,6 @@ Do you want to delete it anyway?</source>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>ログアウトしますか？</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -6777,7 +7083,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
         <translation>ファイルシステムの名前が長すぎます</translation>
     </message>
     <message>
@@ -6797,7 +7103,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC検証に失敗しました</translation>
     </message>
     <message>
@@ -6828,7 +7134,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>ローカルファイルシステムのフォルダコンテンツの識別中にエラーが発生しました</translation>
+        <translation>このフォルダの内容を読み取ることができませんでした。フォルダのアクセス許可を確認し、他のアプリケーションによって使用されている項目がないことを確認してください。</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -7037,14 +7343,14 @@ Please, refresh the list.</source>
 リストを更新してください。</translation>
     </message>
     <message>
-        <source>Some issues can&apos;t be fixed.
+        <source>Some issues can't be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>一部の問題は解決できません。
 ローカル同期フォルダの場所にある.megaignoreファイルのアクセス許可を認証してください。</translation>
     </message>
     <message>
-        <source>Issues can&apos;t be fixed.
+        <source>Issues can't be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>一部の問題は解決できません。
@@ -7257,7 +7563,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>この操作では、すべての同期内の現在および将来のシンボリックリンクがすべて無視されます。</translation>
     </message>
     <message>
@@ -7267,7 +7573,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>このアクションではこのシンボリックリンクが無視され、同期されません。</translation>
     </message>
     <message>
@@ -7546,8 +7852,8 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>ターゲットがフォルダ構造内で深すぎます。
-フォルダの深さが64未満の場所に移動してください。</translation>
+        <translation>ターゲットがフォルダ構造の深すぎる場所にあります。同期を停止し、フォルダの深さが64個未満の場所にフォルダを移動し、同期を再作成してください。
+それでも問題が解決しない場合は、support@mega.nzにご連絡ください。</translation>
     </message>
 </context>
 <context>
@@ -7725,7 +8031,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>お支払いが失敗したか、お客様のサブスクリプションをキャンセルされたため、Pro&#xa0;Flexiアカウントが無効になっているため、[B]%1[/B]を追加できません。続行するには、お支払いを行っていただき、サブスクリプションを再度有効にしてください。</translation>
+        <translation>お支払いが失敗したか、お客様のサブスクリプションをキャンセルされたため、Pro Flexiアカウントが無効になっているため、[B]%1[/B]を追加できません。続行するには、お支払いを行っていただき、サブスクリプションを再度有効にしてください。</translation>
     </message>
 </context>
 <context>
@@ -7784,11 +8090,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>一時停止</translation>
     </message>
     <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
-        <translation>除外を追加する</translation>
-    </message>
-    <message>
         <source>Quick Rescan</source>
         <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>クイック再スキャン</translation>
@@ -7797,11 +8098,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Deep Rescan</source>
         <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>ディープ再スキャン</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>.megaignoreを編集する</translation>
     </message>
 </context>
 <context>
@@ -8101,7 +8397,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>あなたのMEGA PROアカウントはいっぱいです。</translation>
     </message>
     <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+        <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>このIPアドレスに十分な転送容量が残っていないため、ダウンロードを続行できません。
@@ -8632,7 +8928,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*現地通貨での見積価格です。お客様のアカウントは、すべての取引においてユーロで請求されます。</translation>
+        <translation>* 現地通貨での推定価格です。すべての取引に対してユーロでご請求いたします。</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -8675,12 +8971,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>*現地通貨での見積価格です。お客様のアカウントは、すべての取引においてユーロで請求されます。</translation>
+        <translation>* 現地通貨での推定価格です。すべての取引に対してユーロでご請求いたします。</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
         <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>お客様のアカウントでご使用可能な%1中100&#xa0;%を使用しました。</translation>
+        <translation>お客様のアカウントでご使用可能な%1中100 %を使用しました。</translation>
     </message>
     <message>
         <source>Choose annual billing and get 12 months for the price of 10</source>
@@ -8692,12 +8988,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>[B]%1[/B]を選択した場所にアップロードできません</translation>
     </message>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>目的のフォルダに到達できません</translation>
     </message>
 </context>
@@ -8785,22 +9081,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -8820,22 +9116,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]日と[/A]</translation>
+        <translation>%1 [A]日と[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]時間[/A]</translation>
+        <translation>%1 [A]時間[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]分[/A]</translation>
+        <translation>%1 [A]分[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]秒[/A]</translation>
+        <translation>%1 [A]秒[/A]</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -8882,6 +9178,56 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
         <translation><numerusform>%n年前に転送が完了</numerusform></translation>
     </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>MEGA Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
+        <translation>MEGA Starter</translation>
+    </message>
+    <message>
+        <source>MEGA Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
+        <translation>MEGA Basic</translation>
+    </message>
+    <message>
+        <source>MEGA Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
+        <translation>MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>無料</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation>Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation>Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation>Essential</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>ビジネス</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Pro Flexi</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -8893,7 +9239,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>ログ&#xa0;アウト</translation>
+        <translation>ログ アウト</translation>
     </message>
     <message>
         <source>Verify your email</source>

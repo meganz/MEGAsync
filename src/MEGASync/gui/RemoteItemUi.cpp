@@ -76,6 +76,16 @@ QTableView *RemoteItemUi::getView()
     return ui->tableView;
 }
 
+void RemoteItemUi::changeEvent(QEvent* event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+
+    QWidget::changeEvent(event);
+}
+
 void RemoteItemUi::setTableViewProperties(QTableView *view) const
 {
     view->setFrameShape(QFrame::NoFrame);

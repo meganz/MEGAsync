@@ -4,8 +4,10 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "Utilities.h"
 #include "Platform.h"
+#include <QScreen>
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
+#include "SyncExclusions/SyncExclusions.h"
+#include "SyncExclusions/ExclusionsQmlDialog.h"
 
 #include "QMegaMessageBox.h"
 
@@ -154,6 +156,6 @@ void AddBackupDialog::onConflictSolved(QPointer<BackupNameConflictDialog> dialog
 
 void AddBackupDialog::on_bAddExclusions_clicked()
 {
-	QPointer<IgnoresEditingDialog> exclusionRules = new IgnoresEditingDialog(getSelectedFolder(), true, this);
-	DialogOpener::showDialog(exclusionRules);
+    QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, getSelectedFolder());
+    DialogOpener::showDialog(exclusions);
 }

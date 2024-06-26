@@ -11,11 +11,13 @@ using namespace std;
 
 constexpr char ASCII_FILE_SEP = 0x1C;
 constexpr int  BUFSIZE = 1024;
+constexpr char RESPONSE_SYNCED[]  = "0";
+constexpr char RESPONSE_PENDING[] = "1";
+constexpr char RESPONSE_SYNCING[] = "2";
+constexpr char RESPONSE_IGNORED[] = "3";
+constexpr char RESPONSE_PAUSED[]  = "4";
 constexpr char RESPONSE_DEFAULT[] = "9";
-constexpr char RESPONSE_ERROR[]   = "0";
-constexpr char RESPONSE_SYNCED[]  = "1";
-constexpr char RESPONSE_PENDING[] = "2";
-constexpr char RESPONSE_SYNCING[] = "3";
+constexpr char RESPONSE_ERROR[]   = "10";
 
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
@@ -26,7 +28,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 
 
     // construct local socket path
-    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
+    sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromLatin1("mega.socket");
 
     //LOG_info << "Starting Ext server";
 
@@ -135,7 +137,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
 
             bool ok;
-            QStringList parameters = QString::fromAscii(content).split(QChar::fromAscii(':'));
+            QStringList parameters = QString::fromLatin1(content).split(QLatin1Char(':'));
 
             if (parameters.size() != 3)
             {
@@ -181,7 +183,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         // get the state of an object
         case 'P':
         {
-            int state = MegaApi::STATE_NONE;
+            int state = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
             string scontent(content);
 
             // ASCII_FILE_SEP is used to separate the file name and an optional '1' or '0'
@@ -216,10 +218,30 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 case MegaApi::STATE_PENDING:
                     strncpy(out, RESPONSE_PENDING, BUFSIZE);
                     break;
-                case MegaApi::STATE_NONE:
                 case MegaApi::STATE_IGNORED:
+                {
+                    int runState = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
+                    auto megaSync = MegaSyncApp->getMegaApi()->getSyncByPath(scontent.c_str());
+                    if (megaSync != nullptr)
+                    {
+                        runState = megaSync->getRunState();
+                    }
+
+                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED || runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
+                    {
+                        strncpy(out, RESPONSE_PAUSED, BUFSIZE);
+                    }
+                    else
+                    {
+                        strncpy(out, RESPONSE_IGNORED, BUFSIZE);
+                    }
+                    break;
+                }
+                case MegaApi::STATE_NONE:                
                 default:
+                {
                     strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
+                }
             }
             break;
         }

@@ -86,7 +86,6 @@ public slots:
     void removeRootItem(NodeSelectorModelItem* item);
     void removeRootItem(std::shared_ptr<mega::MegaNode> node);
 
-    void onAddNodeRequested(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parentItem);
     void onAddNodesRequested(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem *parentItem);
     void removeItem(NodeSelectorModelItem *item);
     void abort();
@@ -159,7 +158,6 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
-    void addNode(std::shared_ptr<mega::MegaNode> node, const QModelIndex &parent);
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
     void removeNode(const QModelIndex &index);
     void showFiles(bool show);
@@ -168,8 +166,6 @@ public:
     QVariant getIcon(const QModelIndex &index, NodeSelectorModelItem* item) const;
     QVariant getText(const QModelIndex &index, NodeSelectorModelItem* item) const;
     void setFetchStep(int step);
-    void endInsertingRows(){endInsertRows();}
-    void beginInsertingRows(const QModelIndex& index, int rowCount){beginInsertRows(index, 0 , rowCount-1);}
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
@@ -195,11 +191,13 @@ public:
 
     bool showFiles() const;
 
+    bool isBeingModified() const {return mIsBeingModified;}
+    void setIsModelBeingModified(bool state) {mIsBeingModified = state;}
+
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
     void firstLoadFinished(const QModelIndex& parent);
-    void requestAddNode(std::shared_ptr<mega::MegaNode> newNode, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void requestAddNodes(QList<std::shared_ptr<mega::MegaNode>> newNodes, const QModelIndex& parentIndex, NodeSelectorModelItem* parent);
     void removeItem(NodeSelectorModelItem* items);
     void removeRootItem(NodeSelectorModelItem* items);
@@ -226,7 +224,6 @@ protected slots:
 
 private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
-    void onNodeAdded(NodeSelectorModelItem* childItem);
     void onNodesAdded(QList<QPointer<NodeSelectorModelItem> > childrenItem);
 
 private:
@@ -234,15 +231,16 @@ private:
     virtual int rootItemsCount() const = 0;
     virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
+    void protectModelWhenPerformingActions();
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
-
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
     QThread* mNodeRequesterThread;
+    bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

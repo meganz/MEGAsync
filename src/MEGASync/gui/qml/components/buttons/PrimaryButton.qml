@@ -4,16 +4,16 @@ Button {
     id: root
 
     colors {
-        background: Styles.buttonPrimary
+        background: colorStyle.buttonPrimary
         border: colors.background
-        pressed: Styles.buttonPrimaryPressed
+        pressed: colorStyle.buttonPrimaryPressed
         borderPressed: colors.pressed
-        hover: Styles.buttonPrimaryHover
+        hover: colorStyle.buttonPrimaryHover
         borderHover: colors.hover
-        text: Styles.textOnColor
-        textPressed: Styles.textOnColor
-        textHover: Styles.textOnColor
-        textDisabled: Styles.textDisabled
+        text: colorStyle.textOnColor
+        textPressed: colorStyle.textOnColor
+        textHover: colorStyle.textOnColor
+        textDisabled: colorStyle.textDisabled
     }
 }
 

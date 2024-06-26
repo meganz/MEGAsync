@@ -18,7 +18,7 @@ Qml.ToolTip {
         id: backgroundRect
 
         anchors.fill: parent
-        color: Styles.buttonPrimary
+        color: colorStyle.buttonPrimary
         radius: 4
 
         SvgImage {
@@ -30,7 +30,7 @@ Qml.ToolTip {
                 leftMargin: root.padding
             }
             source: leftIconSource
-            color: Styles.iconOnColor
+            color: colorStyle.iconOnColor
             sourceSize: Qt.size(16, 16)
         }
     }
@@ -53,7 +53,7 @@ Qml.ToolTip {
             }
             width: Math.min(textMetrics.width + root.padding, maxWidth)
             text: root.text
-            color: Styles.textInverse
+            color: colorStyle.textInverse
             wrapMode: Text.Wrap
             lineHeight: Math.max(leftIcon.height, textMetrics.height)
             lineHeightMode: Text.FixedHeight

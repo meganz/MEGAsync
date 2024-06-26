@@ -5,5 +5,5 @@ import components.texts 1.0 as Texts
 Texts.Text {
     id: root
 
-    color: enabled ? Styles.textSecondary : Styles.textDisabled
+    color: enabled ? colorStyle.textSecondary : colorStyle.textDisabled
 }

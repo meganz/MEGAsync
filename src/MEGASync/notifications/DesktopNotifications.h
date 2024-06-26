@@ -34,24 +34,29 @@ public:
     void sendOverStorageNotification(int state) const;
     void sendOverTransferNotification(const QString& title) const;
     void sendFinishedTransferNotification(unsigned long long appDataId) const;
+    void sendFinishedSetDownloadNotification(const QString& setName,
+                                             const QStringList& succeededDownloadedElements,
+                                             const QStringList& failedDownloadedElements,
+                                             const QString& destinationPath);
     void sendBusinessWarningNotification(int businessStatus) const;
     void sendInfoNotification(const QString& title, const QString& message) const;
     void sendWarningNotification(const QString& title, const QString& message) const;
     void sendErrorNotification(const QString& title, const QString& message) const;
 
 public slots:
-    void replyIncomingPendingRequest(MegaNotification::Action action) const;
-    void viewContactOnWebClient(MegaNotification::Action activationButton) const;
-    void redirectToUpgrade(MegaNotification::Action activationButton) const;
-    void redirectToPayBusiness(MegaNotification::Action activationButton) const;
-    void actionPressedOnDownloadFinishedTransferNotification(MegaNotification::Action action) const;
-    void actionPressedOnUploadFinishedTransferNotification(MegaNotification::Action action) const;
+    void replyIncomingPendingRequest(DesktopAppNotification::Action action) const;
+    void viewContactOnWebClient(DesktopAppNotification::Action activationButton) const;
+    void redirectToUpgrade(DesktopAppNotification::Action activationButton) const;
+    void redirectToPayBusiness(DesktopAppNotification::Action activationButton) const;
+    void actionPressedOnDownloadFinishedTransferNotification(DesktopAppNotification::Action action) const;
+    void actionPressedOnUploadFinishedTransferNotification(DesktopAppNotification::Action action) const;
+    void actionPressedOnDownloadSetFinished(DesktopAppNotification::Action action);
     void viewShareOnWebClient() const;
     void viewShareOnWebClientByHandle(const QString &nodeBase64Handle) const;
     void getRemoteNodeLink(const QList<std::shared_ptr<mega::MegaNode> > &nodes) const;
     void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString &message) const;
-    void replyNewShareReceived(MegaNotification::Action action) const;
-    void viewOnInfoDialogNotifications(MegaNotification::Action action) const;
+    void replyNewShareReceived(DesktopAppNotification::Action action) const;
+    void viewOnInfoDialogNotifications(DesktopAppNotification::Action action) const;
 
 private slots:
     void OnUserAttributesReady();
@@ -67,10 +72,10 @@ private:
     int countUnseenAlerts(mega::MegaUserAlertList *alertList);
 
     void processAlert(mega::MegaUserAlert* alert, const QString& email = QString());
-    MegaNotification* CreateContactNotification(const QString& title,
+    DesktopAppNotification* CreateContactNotification(const QString& title,
                                                const QString& message,
                                                const QString& email, const QStringList &actions = QStringList());
-    void setActionsToNotification(MegaNotification* notification, QStringList actions) const;
+    void setActionsToNotification(DesktopAppNotification* notification, QStringList actions) const;
 
     std::unique_ptr<Notificator> mNotificator;
     QString mNewContactIconPath, mStorageQuotaFullIconPath, mStorageQuotaWarningIconPath;
@@ -80,4 +85,5 @@ private:
     bool mIsFirstTime;//Check first time alerts are added to show unified message of unread.
 
     QMultiMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
+    QString mSetDownloadPath;
 };

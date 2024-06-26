@@ -27,12 +27,15 @@ public:
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
         ACCOUNT_TYPE_LITE = 4,
+        ACCOUNT_TYPE_STARTER = 11,
+        ACCOUNT_TYPE_BASIC = 12,
+        ACCOUNT_TYPE_ESSENTIAL = 13,
         ACCOUNT_TYPE_BUSINESS = 100,
         ACCOUNT_TYPE_PRO_FLEXI = 101
     };
     Q_ENUM(AccountType)
 
-    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine*);
+    static AccountInfoData* instance(QQmlEngine* qmlEngine, QJSEngine* jsEngine);
 
 public slots:
     void requestAccountInfoData();

@@ -73,7 +73,7 @@ protected:
     QString getState(TRANSFER_STATES state);
 
     int getNameAvailableSize(QWidget* nameContainer, QWidget* syncLabel, QSpacerItem* spacer);
-    QString getErrorInContext();
+    QString getErrorText();
 
     virtual void reset();
 
@@ -86,6 +86,8 @@ private:
     QModelIndex mCurrentIndex;
     QHash<QWidget*, QString> mLastActionTransferIconName;
     TransferData::TransferState mPreviousState;
+
+    QString getErrorInContext();
 };
 
 #endif // TRANSFERBASEDELEGATEWIDGET

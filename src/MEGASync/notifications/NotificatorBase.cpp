@@ -22,7 +22,7 @@
 
 using namespace mega;
 
-MegaNotificationBase::MegaNotificationBase()
+DesktopAppNotificationBase::DesktopAppNotificationBase()
 {
     mTitle = MegaSyncApp->getMEGAString();
     mText = MegaSyncApp->getMEGAString();
@@ -31,114 +31,114 @@ MegaNotificationBase::MegaNotificationBase()
     mType = NotificatorBase::Information;
     mId = -1;
 
-    qRegisterMetaType<MegaNotificationBase::CloseReason>("MegaNotificationBase::CloseReason");
-    qRegisterMetaType<MegaNotificationBase::Action>("MegaNotificationBase::Action");
+    qRegisterMetaType<DesktopAppNotificationBase::CloseReason>("DesktopAppNotificationBase::CloseReason");
+    qRegisterMetaType<DesktopAppNotificationBase::Action>("DesktopAppNotificationBase::Action");
 
-    connect(this, &MegaNotificationBase::closed, this, &MegaNotificationBase::deleteLater, Qt::QueuedConnection);
-    connect(this, &MegaNotificationBase::activated, this, &MegaNotificationBase::deleteLater, Qt::QueuedConnection);
+    connect(this, &DesktopAppNotificationBase::closed, this, &DesktopAppNotificationBase::deleteLater, Qt::QueuedConnection);
+    connect(this, &DesktopAppNotificationBase::activated, this, &DesktopAppNotificationBase::deleteLater, Qt::QueuedConnection);
 }
 
-int MegaNotificationBase::getStyle() const
+int DesktopAppNotificationBase::getStyle() const
 {
     return mStyle;
 }
 
-void MegaNotificationBase::setStyle(int value)
+void DesktopAppNotificationBase::setStyle(int value)
 {
     mStyle = value;
 }
 
-QStringList MegaNotificationBase::getActions() const
+QStringList DesktopAppNotificationBase::getActions() const
 {
     return actions;
 }
 
-void MegaNotificationBase::setActions(const QStringList &value)
+void DesktopAppNotificationBase::setActions(const QStringList &value)
 {
     actions = value;
 }
 
-int MegaNotificationBase::getType() const
+int DesktopAppNotificationBase::getType() const
 {
     return mType;
 }
 
-void MegaNotificationBase::setType(int value)
+void DesktopAppNotificationBase::setType(int value)
 {
     mType = value;
 }
 
-int64_t MegaNotificationBase::getId() const
+int64_t DesktopAppNotificationBase::getId() const
 {
     return mId;
 }
 
-void MegaNotificationBase::setId(const int64_t &value)
+void DesktopAppNotificationBase::setId(const int64_t &value)
 {
     mId = value;
 }
 
-QVariant MegaNotificationBase::getData() const
+QVariant DesktopAppNotificationBase::getData() const
 {
     return mData;
 }
 
-void MegaNotificationBase::setData(const QVariant &value)
+void DesktopAppNotificationBase::setData(const QVariant &value)
 {
     mData = value;
 }
 
-void MegaNotificationBase::emitLegacyNotificationActivated()
+void DesktopAppNotificationBase::emitLegacyNotificationActivated()
 {
     emit activated(Action::legacy);
 }
 
-QString MegaNotificationBase::getTitle() const
+QString DesktopAppNotificationBase::getTitle() const
 {
     return mTitle;
 }
 
-void MegaNotificationBase::setTitle(const QString &value)
+void DesktopAppNotificationBase::setTitle(const QString &value)
 {
     mTitle = value;
 }
 
-QString MegaNotificationBase::getText() const
+QString DesktopAppNotificationBase::getText() const
 {
     return mText;
 }
 
-void MegaNotificationBase::setText(const QString &value)
+void DesktopAppNotificationBase::setText(const QString &value)
 {
     mText = value;
 }
 
-QString MegaNotificationBase::getSource() const
+QString DesktopAppNotificationBase::getSource() const
 {
     return mSource;
 }
 
-void MegaNotificationBase::setSource(const QString &value)
+void DesktopAppNotificationBase::setSource(const QString &value)
 {
     mSource = value;
 }
 
-int MegaNotificationBase::getExpirationTime() const
+int DesktopAppNotificationBase::getExpirationTime() const
 {
     return mExpirationTime;
 }
 
-void MegaNotificationBase::setExpirationTime(int value)
+void DesktopAppNotificationBase::setExpirationTime(int value)
 {
     mExpirationTime = value;
 }
 
-QString MegaNotificationBase::getImagePath() const
+QString DesktopAppNotificationBase::getImagePath() const
 {
     return mImagePath;
 }
 
-void MegaNotificationBase::setImagePath(const QString &value)
+void DesktopAppNotificationBase::setImagePath(const QString &value)
 {
     mImagePath = value;
 }
@@ -186,7 +186,7 @@ void NotificatorBase::notifySystray(Class cls, const QString &title, const QStri
     mTrayIcon->showMessage(title, text, sicon, millisTimeout);
 }
 
-void NotificatorBase::notifySystray(MegaNotificationBase *notification)
+void NotificatorBase::notifySystray(DesktopAppNotificationBase *notification)
 {
     if (!notification)
     {
@@ -231,7 +231,7 @@ void NotificatorBase::notify(Class cls, const QString &title, const QString &tex
     }
 }
 
-void NotificatorBase::notify(MegaNotificationBase *notification)
+void NotificatorBase::notify(DesktopAppNotificationBase *notification)
 {
     if (mMode == QSystemTray)
     {

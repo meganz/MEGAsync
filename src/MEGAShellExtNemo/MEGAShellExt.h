@@ -34,11 +34,13 @@ struct _MEGAExtClass {
 };
 
 typedef enum {
-    FILE_ERROR = 0,
-    FILE_SYNCED = 1,
-    FILE_PENDING = 2,
-    FILE_SYNCING = 3,
-    FILE_NOTFOUND = 9,
+    RESPONSE_SYNCED  = 0,
+    RESPONSE_PENDING = 1,
+    RESPONSE_SYNCING = 2,
+    RESPONSE_IGNORED = 3,
+    RESPONSE_PAUSED  = 4,
+    RESPONSE_DEFAULT = 9,
+    RESPONSE_ERROR   = 10,
 } FileState;
 
 typedef enum {
@@ -59,5 +61,6 @@ G_END_DECLS
 void mega_ext_on_item_changed(MEGAExt *mega_ext, const gchar *path);
 void mega_ext_on_sync_add(MEGAExt *mega_ext, const gchar *path);
 void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path);
+void expanselocalpath(const char *path, char *absolutepath);
 
 #endif

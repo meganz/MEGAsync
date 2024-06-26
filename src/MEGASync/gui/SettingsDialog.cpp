@@ -19,6 +19,7 @@
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
+#include "StatsEventHandler.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -750,6 +751,8 @@ void SettingsDialog::changeEvent(QEvent* event)
 
 void SettingsDialog::on_bGeneral_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_GENERAL_TAB_CLICKED);
+
     emit userActivity();
 
     if ((mUi->wStack->currentWidget() == mUi->pGeneral))
@@ -1070,6 +1073,8 @@ void SettingsDialog::on_bFullCheck_clicked()
 
 void SettingsDialog::on_bSendBug_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED);
+
     QPointer<BugReportDialog> dialog = new BugReportDialog(this, mApp->getLogger());
     DialogOpener::showDialog(dialog);
 }
@@ -1162,56 +1167,66 @@ void SettingsDialog::updateBandwidthElements()
 void SettingsDialog::updateAccountElements()
 {
     QIcon icon;
+    mUi->lAccountType->setText(Utilities::getReadablePlanFromId(mPreferences->accountType()));
+
     switch(mPreferences->accountType())
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
-            mUi->lAccountType->setText(tr("Free"));
             mUi->bUpgrade->show();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
-            mUi->lAccountType->setText(tr("Pro I"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
-            mUi->lAccountType->setText(tr("Pro II"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
-            mUi->lAccountType->setText(tr("Pro III"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
-            mUi->lAccountType->setText(tr("Pro Lite"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BUSINESS:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Business.png"));
-            mUi->lAccountType->setText(tr("Business"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_Flexi.png"));
-            mUi->lAccountType->setText(tr("Pro Flexi"));
             mUi->bUpgrade->hide();
             mUi->pStorageQuota->hide();
             mUi->pTransferQuota->hide();
+            break;
+        case Preferences::ACCOUNT_TYPE_STARTER:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
+            break;
+        case Preferences::ACCOUNT_TYPE_BASIC:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
+            break;
+        case Preferences::ACCOUNT_TYPE_ESSENTIAL:
+            mUi->bUpgrade->hide();
+            mUi->pStorageQuota->show();
+            mUi->pTransferQuota->show();
             break;
         default:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/Small_Pro_I.png"));
@@ -1227,6 +1242,8 @@ void SettingsDialog::updateAccountElements()
 
 void SettingsDialog::on_bAccount_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_ACCOUNT_TAB_CLICKED);
+
     emit userActivity();
 
     if ((mUi->wStack->currentWidget() == mUi->pAccount))
@@ -1271,12 +1288,12 @@ void SettingsDialog::on_bStorageDetails_clicked()
     auto accountDetailsDialog = new AccountDetailsDialog();
 #endif
 
-    mApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
 void SettingsDialog::on_bLogout_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::LOGOUT_CLICKED);
     QString text;
     bool haveSyncs (false);
     bool haveBackups (false);
@@ -1403,6 +1420,8 @@ void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool ch
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pSyncs)
@@ -1424,6 +1443,8 @@ void SettingsDialog::on_bSyncs_clicked()
 // Backup ----------------------------------------------------------------------------------------
 void SettingsDialog::on_bBackup_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_BACKUP_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pBackup)
@@ -1450,6 +1471,8 @@ void SettingsDialog::on_bBackupCenter_clicked()
 // Security ----------------------------------------------------------------------------------------
 void SettingsDialog::on_bSecurity_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_SECURITY_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pSecurity)
@@ -1468,6 +1491,8 @@ void SettingsDialog::on_bSecurity_clicked()
 
 void SettingsDialog::on_bExportMasterKey_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED);
+
     QString defaultPath = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
 #ifndef _WIN32
     if (defaultPath.isEmpty())
@@ -1533,6 +1558,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
 void SettingsDialog::on_bChangePassword_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED);
+
     QPointer<ChangePassword> cPassword = new ChangePassword(this);
     DialogOpener::showDialog<ChangePassword>(cPassword);
 }
@@ -1583,6 +1610,8 @@ void SettingsDialog::updateDownloadFolder()
 
 void SettingsDialog::on_bFolders_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_FOLDERS_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pFolders)
@@ -1669,6 +1698,8 @@ void SettingsDialog::onShellNotificationsProcessed()
 // Network -----------------------------------------------------------------------------------------
 void SettingsDialog::on_bNetwork_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_NETWORK_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pNetwork)
@@ -1722,6 +1753,8 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
 
 void SettingsDialog::on_bNotifications_clicked()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_NOTIFICATIONS_TAB_CLICKED);
+
     emit userActivity();
 
     if (mUi->wStack->currentWidget() == mUi->pNotifications)

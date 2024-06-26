@@ -32,6 +32,7 @@ public:
 protected:
     bool eventFilter(QObject *, QEvent *) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void changeEvent(QEvent *) override;
 
 private slots:
     void on_doneButton_clicked();
@@ -56,6 +57,8 @@ private:
     void selectNewMode();
     void hoverMode(Preferences::StalledIssuesModeType mode);
     void unhoverMode(Preferences::StalledIssuesModeType mode);
+
+    void setLearnMoreLabel();
 
     bool setNewModeToPreferences();
 

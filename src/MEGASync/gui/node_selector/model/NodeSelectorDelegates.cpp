@@ -99,7 +99,7 @@ bool NodeRowDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, cons
         }
         if (rect.width() < (fm.horizontalAdvance(tooltipText) + margin))
         {
-                QToolTip::showText(event->globalPos(), tooltipText);
+                QToolTip::showText(event->globalPos(), tooltipText.toHtmlEscaped());
                 return true;
         }
         if (!QStyledItemDelegate::helpEvent(event, view, option, index))

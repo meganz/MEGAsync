@@ -23,6 +23,7 @@ FocusScope {
     property alias rightIconVisible: rightIcon.visible
     property alias leftIconColor: leftIcon.color
     property alias leftIconVisible: leftIcon.visible
+    property alias horizontalAlignment: textField.horizontalAlignment
 
     property bool error: false
     property string rightIconSource: ""
@@ -35,6 +36,7 @@ FocusScope {
     signal pastePressed
     signal returnPressed
     signal accepted
+    signal editingFinished
 
     height: textField.height
                 + ((titleItem.text !== "" && titleItem.visible)
@@ -104,14 +106,16 @@ FocusScope {
         color: enabled ? colors.text : colors.textDisabled
         font {
             pixelSize: Texts.Text.Size.MEDIUM
-            family: Styles.fontFamily
-            styleName: Styles.fontStyleName
+            family: FontStyles.fontFamily
+            styleName: FontStyles.fontStyleName
         }
 
         onAccepted: {
             root.accepted();
         }
-
+        onEditingFinished: {
+            root.editingFinished();
+        }
         background: Rectangle {
             id: focusBorder
 

@@ -20,7 +20,7 @@ Row {
     SvgImage {
         id: image
 
-        color: checked ? Styles.indicatorGreen : Styles.textSecondary
+        color: checked ? colorStyle.indicatorGreen : colorStyle.textSecondary
         source: checked ? Images.check : Images.smallCircle
         sourceSize: Qt.size(iconWidth, iconWidth)
     }

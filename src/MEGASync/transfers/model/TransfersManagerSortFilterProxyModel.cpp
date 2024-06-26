@@ -124,9 +124,8 @@ void TransfersManagerSortFilterProxyModel::invalidateModel()
         startProcessingInOtherThread();
 
         invalidate();
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         invalidateFilter();
-#endif
+
         if(sortOrder() == mSortOrder)
         {
             QSortFilterProxyModel::sort(-1,mSortOrder);

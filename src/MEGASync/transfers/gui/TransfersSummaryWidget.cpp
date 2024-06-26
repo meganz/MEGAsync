@@ -715,7 +715,7 @@ void TransfersSummaryWidget::updateSizes()
         pixmapArrowMarginX = static_cast<int>(minwidthheight / 28.0 * 8);
         pixmapArrowY = static_cast<int>(height() / 2.0 - minwidthheight / 28.0 * 12.0 /2.0);
         pixmapWidth = static_cast<int>(minwidthheight / 28.0 * 12.0);
-#if QT_VERSION >= 0x050000
+
         if (minwidthheight != 28.0 )
         {
             const int scaledDimension = static_cast<int>(pixmapWidth*qApp->devicePixelRatio());
@@ -725,7 +725,6 @@ void TransfersSummaryWidget::updateSizes()
             dlArrowPixmap.setDevicePixelRatio(QCoreApplication::testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0);
         }
         else
-#endif
         {
             upArrowPixmap = upArrowPixmapOrig;
             dlArrowPixmap = dlArrowPixmapOrig;

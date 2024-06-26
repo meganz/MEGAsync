@@ -607,7 +607,18 @@ QModelIndex StalledIssueDelegate::getEditorCurrentIndex() const
 
 QModelIndex StalledIssueDelegate::getRelativeIndex(const QModelIndex& index) const
 {
-    return index.parent().isValid() ? index.parent() : index.model()->index(0,0,index);
+    if(index.parent().isValid())
+    {
+        return index.parent();
+    }
+    else
+    {
+        if(auto model = index.model())
+        {
+            model->index(0,0,index);
+        }
+    }
+    return QModelIndex();
 }
 
 QModelIndex StalledIssueDelegate::getHeaderIndex(const QModelIndex &index) const

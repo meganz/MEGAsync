@@ -14,7 +14,7 @@ Qml.ProgressBar {
 
         anchors.fill: parent
         radius: height
-        color: Styles.indicatorBackground
+        color: colorStyle.indicatorBackground
     }
 
     contentItem: Item {
@@ -26,7 +26,7 @@ Qml.ProgressBar {
             width: root.visualPosition * parent.width
             height: parent.height
             radius: height
-            color: Styles.buttonPrimary
+            color: colorStyle.buttonPrimary
             visible: !indeterminate
         }
 
@@ -35,7 +35,7 @@ Qml.ProgressBar {
 
             width: 30
             height: parent.height
-            color: Styles.buttonPrimary
+            color: colorStyle.buttonPrimary
             visible: indeterminate
 
             SequentialAnimation {

@@ -16,7 +16,7 @@ QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
 QT_END_NAMESPACE
 
-class MegaNotificationBase : public QObject
+class DesktopAppNotificationBase : public QObject
 {
     Q_OBJECT
 
@@ -37,8 +37,8 @@ public:
         legacy = 2
     };
 
-    MegaNotificationBase();
-    virtual ~MegaNotificationBase() = default;
+    DesktopAppNotificationBase();
+    virtual ~DesktopAppNotificationBase() = default;
 
     QString getTitle() const;
     void setTitle(const QString &value);
@@ -76,8 +76,8 @@ protected:
     QVariant mData;
 
 signals:
-    void activated(MegaNotificationBase::Action action);
-    void closed(MegaNotificationBase::CloseReason reason);
+    void activated(DesktopAppNotificationBase::Action action);
+    void closed(DesktopAppNotificationBase::CloseReason reason);
     void failed();
 };
 
@@ -111,7 +111,7 @@ public slots:
        @note Platform implementations are free to ignore any of the provided fields except for \a text.
      */
     void notify(NotificatorBase::Class cls, const QString &title, const QString &text, int millisTimeout = 10000);
-    void notify(MegaNotificationBase *notification);
+    void notify(DesktopAppNotificationBase *notification);
 
 protected:
 
@@ -125,10 +125,10 @@ protected:
     QString mProgramName;
     Mode mMode;
     QSystemTrayIcon *mTrayIcon;
-    QPointer<MegaNotificationBase> mCurrentNotification;
+    QPointer<DesktopAppNotificationBase> mCurrentNotification;
 
     virtual void notifySystray(Class cls, const QString &title, const QString &text, int millisTimeout, bool forceQt = false);
-    virtual void notifySystray(MegaNotificationBase *notification);
+    virtual void notifySystray(DesktopAppNotificationBase *notification);
 
 protected slots:
     void onMessageClicked();

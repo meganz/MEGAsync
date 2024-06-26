@@ -20,12 +20,8 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     mDelegate(nullptr)
 {
     ui->setupUi(this);
+    setLearnMoreLabel();
 
-    QString learnMoretext = tr("[A]Learn more[/A]");
-    learnMoretext.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.io/installs-apps/desktop-syncing/sync-v2\" \n   style=\"text-decoration: none\">"));
-    learnMoretext.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-
-    ui->LearnMoreLabel->setText(learnMoretext);
 #ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
@@ -363,6 +359,15 @@ void StalledIssuesDialog::unhoverMode(Preferences::StalledIssuesModeType mode)
     }
 }
 
+void StalledIssuesDialog::setLearnMoreLabel()
+{
+    QString learnMoretext = tr("[A]Learn more[/A]");
+    learnMoretext.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.io/installs-apps/desktop-syncing/sync-v2\" \n   style=\"text-decoration: none\">"));
+    learnMoretext.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
+
+    ui->LearnMoreLabel->setText(learnMoretext);
+}
+
 bool StalledIssuesDialog::setNewModeToPreferences()
 {
     disconnect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
@@ -378,4 +383,15 @@ bool StalledIssuesDialog::setNewModeToPreferences()
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
 {
     //For the future, detect if the stalled issues have been removed remotely to close the dialog
+}
+
+void StalledIssuesDialog::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        setLearnMoreLabel();
+    }
+
+    QWidget::changeEvent(event);
 }

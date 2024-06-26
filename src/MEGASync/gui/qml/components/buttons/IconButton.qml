@@ -6,16 +6,16 @@ Button {
     id: root
 
     icons {
-        colorEnabled: Styles.iconButton
-        colorDisabled: Styles.iconButtonDisabled
-        colorHovered: Styles.iconButtonHover
-        colorPressed: Styles.iconButtonPressed
+        colorEnabled: colorStyle.iconButton
+        colorDisabled: colorStyle.iconButtonDisabled
+        colorHovered: colorStyle.iconButtonHover
+        colorPressed: colorStyle.iconButtonPressed
     }
 
     colors {
         background: "transparent"
         hover: "transparent"
-        pressed: Styles.iconButtonPressedBackground
+        pressed: colorStyle.iconButtonPressedBackground
         border: "transparent"
         borderDisabled: "transparent"
         borderHover: "transparent"

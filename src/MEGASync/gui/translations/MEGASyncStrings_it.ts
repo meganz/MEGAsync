@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="it" sourcelanguage="en">
 <context>
@@ -103,64 +103,6 @@
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
         <translation>Vuoi continuare?</translation>
-    </message>
-</context>
-<context>
-    <name>AddExclusionDialog</name>
-    <message>
-        <source>Add exclusion</source>
-        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>Aggiungi eccezione</translation>
-    </message>
-    <message>
-        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
-        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>Inserisci un nome, un percorso assoluto (i simboli * e ? sono permessi) o scegli quale file o cartella vuoi escludere dalla sincronizzazione.</translation>
-    </message>
-    <message>
-        <source>Choose File</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>Scegli file</translation>
-    </message>
-    <message>
-        <source>Choose Folder</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Scegli cartella</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annulla</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation>OK</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>Scegli</translation>
-    </message>
-    <message>
-        <source>Please enter a valid file name or absolute path.</source>
-        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>Immettete un nome di file valido o un percorso assoluto</translation>
-    </message>
-    <message>
-        <source>Select the file or folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>Seleziona il file o la cartella che vuoi escludere</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>Seleziona la cartella che vuoi escludere</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>Seleziona il file che vuoi escludere</translation>
     </message>
 </context>
 <context>
@@ -341,7 +283,7 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>L&#8217;accesso alla cartella condivisa è stato rimosso da [A]</translation>
+        <translation>L&apos;accesso alla cartella condivisa è stato rimosso da [A]</translation>
     </message>
     <message>
         <source>Shared Folder Activity</source>
@@ -351,7 +293,7 @@
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access to a shared folder has been removed by the owner</translatorcomment>
-        <translation>L&#8217;accesso alla cartella condivisa è stato rimosso</translation>
+        <translation>L&apos;accesso alla cartella condivisa è stato rimosso</translation>
     </message>
     <message>
         <source>Your publicly shared file ([A]) has been taken down</source>
@@ -461,7 +403,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can't have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>Non puoi effettuare il backup di cartelle con lo stesso nome. Rinominale per continuare con il backup. I nomi delle cartelle non cambieranno sul tuo computer.</translation>
     </message>
 </context>
@@ -498,7 +440,7 @@
     <message>
         <source>Error moving or removing remote backup folder</source>
         <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
-        <translation>Errore durante lo spostamento o l&#8217;eliminazione della cartella MEGA di backup</translation>
+        <translation>Errore durante lo spostamento o l&apos;eliminazione della cartella MEGA di backup</translation>
     </message>
     <message>
         <source>Failed to move or remove the remote backup folder. Reason: %1</source>
@@ -518,7 +460,7 @@
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
-        <translation>Errore nell&#8217;aggiunta della sincronizzazione</translation>
+        <translation>Errore nell&apos;aggiunta della sincronizzazione</translation>
     </message>
     <message>
         <source>Error removing backup</source>
@@ -533,7 +475,7 @@
     <message>
         <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
         <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
-        <translation>Alcune cartelle non hanno effettuato il backup. Per maggiori informazioni, vai sull&#8217;icona rossa.</translation>
+        <translation>Alcune cartelle non hanno effettuato il backup. Per maggiori informazioni, vai sull&apos;icona rossa.</translation>
     </message>
 </context>
 <context>
@@ -595,7 +537,7 @@
     <message>
         <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
         <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>Puoi effettuare il backup di cartelle dal tuo computer su MEGA. I file effettueranno automaticamente il backup quando l&#8217;app per desktop è attiva.</translation>
+        <translation>Puoi effettuare il backup di cartelle dal tuo computer su MEGA. I file effettueranno automaticamente il backup quando l&apos;app per desktop è attiva.</translation>
     </message>
     <message>
         <source>No folders available</source>
@@ -700,7 +642,7 @@
     <message>
         <source>Folder is already selected. Select a different folder.</source>
         <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation>La cartella è già selezionata. Seleziona un&#8217;altra cartella.</translation>
+        <translation>La cartella è già selezionata. Seleziona un&apos;altra cartella.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -832,7 +774,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
         <translation>Attiva questa opzione solo se i trasferimenti non partono. In tutte le altre circostanze, utilizzare HTTP è soddisfacente in quanto MEGA già cripta tutti i dati.</translation>
     </message>
 </context>
@@ -969,7 +911,7 @@
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation>Al momento c&#8217;è un&#8217;altra segnalazione in caricamento.</translation>
+        <translation>Al momento c&apos;è un&apos;altra segnalazione in caricamento.</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
@@ -1015,7 +957,7 @@
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a folder cannot be created in the local drive.SNC-2565</translatorcomment>
-        <translation>Un errore locale impedisce l&#8217;accesso alla cartella</translation>
+        <translation>Un errore locale impedisce l&apos;accesso alla cartella</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +965,7 @@
     <message>
         <source>Filesystem error preventing folder access.</source>
         <translatorcomment>Subtitle for the header widget  sync stall that occurs when a local file system element(file, folder) cannot be moved to local debris(local debris is a designated trash folder for each sync).SNC-2565</translatorcomment>
-        <translation>Un errore locale impedisce l&#8217;accesso alla cartella</translation>
+        <translation>Un errore locale impedisce l&apos;accesso alla cartella</translation>
     </message>
     <message>
         <source>Cannot perform deletion [B]%1[/B]</source>
@@ -1162,7 +1104,7 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
         <translation><numerusform>Risolvere il problema?</numerusform><numerusform>Risolvere i problemi?</numerusform><numerusform>Risolvere i problemi?</numerusform></translation>
     </message>
     <message numerus="yes">
@@ -1187,7 +1129,7 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Risolvi</translation>
     </message>
 </context>
@@ -1196,7 +1138,7 @@
     <message>
         <source>Cloude node undecrypted [B]%1[/B]</source>
         <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Impossibile decriptare l&#8217;oggetto in MEGA [B]%1[/B]</translation>
+        <translation>Impossibile decriptare l&apos;oggetto in MEGA [B]%1[/B]</translation>
     </message>
     <message>
         <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
@@ -1243,7 +1185,7 @@
     <message>
         <source>Your account has been deactivated due to payment failure or cancelled subscription. Please pay and reactivate now to access your data.</source>
         <translatorcomment>Error message displayed when a Pro Flexi account has been deactivated. Max 140 characters. SNC-3019, SNC-3934 and CON-435</translatorcomment>
-        <translation>Il tuo account è stato disattivato a causa di un fallimento nel pagamento o dell&#8217;annullamento dell&#8217;abbonamento. Per favore, paga e riattiva ora il tuo account per accedere ai tuoi dati.</translation>
+        <translation>Il tuo account è stato disattivato a causa di un fallimento nel pagamento o dell&apos;annullamento dell&apos;abbonamento. Per favore, paga e riattiva ora il tuo account per accedere ai tuoi dati.</translation>
     </message>
     <message>
         <source>MEGA Uploads</source>
@@ -1271,12 +1213,12 @@
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>L&#8217;app di MEGA ha riscontrato un problema. Qui ci sono i dettagli:</translation>
+        <translation>L&apos;app di MEGA ha riscontrato un problema. Qui ci sono i dettagli:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Puoi aiutarci a migliorare l&#8217;app di MEGA segnalandoci questo errore. Non contiene alcuna informazione personale. Se desideri darci maggiori dettagli, scrivili qui sotto:</translation>
+        <translation>Puoi aiutarci a migliorare l&apos;app di MEGA segnalandoci questo errore. Non contiene alcuna informazione personale. Se desideri darci maggiori dettagli, scrivili qui sotto:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1343,7 +1285,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>In attesa del completamento di altri processi.</translation>
     </message>
 </context>
@@ -1357,12 +1299,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Access to shared folder was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation>L&#8217;accesso alla cartella condivisa è stato rimosso</translation>
+        <translation>L&apos;accesso alla cartella condivisa è stato rimosso</translation>
     </message>
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation>L&#8217;accesso alla cartella condivisa è stato rimosso da [A]</translation>
+        <translation>L&apos;accesso alla cartella condivisa è stato rimosso da [A]</translation>
     </message>
     <message>
         <source>New Contact Request</source>
@@ -1547,7 +1489,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Upgrade now to a Pro account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation>Effettua ora l&#8217;upgrade ad un account Pro.</translation>
+        <translation>Effettua ora l&apos;upgrade ad un account Pro.</translation>
     </message>
     <message>
         <source>Get Pro</source>
@@ -1577,7 +1519,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Account Pro&#xa0;Flexi disattivato</translation>
+        <translation>Account Pro Flexi disattivato</translation>
     </message>
 </context>
 <context>
@@ -1624,7 +1566,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Non hai i permessi di scrittura in questa cartella locale.</translation>
     </message>
 </context>
@@ -1651,7 +1593,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>L&#8217;oggetto che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
+        <translation><numerusform>L&apos;oggetto che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform><numerusform>Gli oggetti che hai selezionato sono stati rimossi. Per selezionare nuovamente, chiudi questa finestra e riprova.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
@@ -1739,7 +1681,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Applica all&#8217;altro duplicato</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform></translation>
+        <translation><numerusform>Applica all&apos;altro duplicato</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform><numerusform>Applica a tutti i %1 duplicati</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
@@ -1801,6 +1743,319 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     </message>
 </context>
 <context>
+    <name>ExclusionsStrings</name>
+    <message>
+        <source>Add Exclusions</source>
+        <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Aggiungi eccezioni</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
+        <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Da qui puoi escludere file e cartelle dalla sincronizzazione con il tuo Cloud Drive. Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno su tutti i tuoi dispositivi, o certi tipi di file di cui non necessiti la sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action that enables openning sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>Gestisci eccezioni</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from</source>
+        <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>Scegli quali file o cartelle vuoi escludere da</translation>
+    </message>
+    <message>
+        <source>Exclude files by size</source>
+        <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>Escludi i file in base alla grandezza</translation>
+    </message>
+    <message>
+        <source>Exclude file sizes</source>
+        <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
+        <translation>Escludi file</translation>
+    </message>
+    <message>
+        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>Escludi i file impostando un minimo e un massimo di dimensione, oppure file più grandi o più piccoli di una dimensione specifica.</translation>
+    </message>
+    <message>
+        <source>Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).</source>
+        <translatorcomment>Description for the dialog for adding a new exclusion rule.SAT-449</translatorcomment>
+        <translation>Scegli se escludere un file o una cartella. Puoi escludere tipi di file specifici o un file o una cartella che inizia, termina, contiene o è uguale a un nome (o parte di un nome).</translation>
+    </message>
+    <message>
+        <source>Add Exclusion</source>
+        <translatorcomment>Button to accept and add a new exclusion rule with the specified values.SAT-449</translatorcomment>
+        <translation>Aggiungi eccezione</translation>
+    </message>
+    <message>
+        <source>You will exclude:</source>
+        <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
+        <translation>Escluderai:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Drop down entry for specifying files as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>File</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Drop down entry for specifying folders as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Cartelle</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>Estensioni</translation>
+    </message>
+    <message>
+        <source>Beginning with</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>che iniziano con</translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>che contengono</translation>
+    </message>
+    <message>
+        <source>Ending</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>che terminano con</translation>
+    </message>
+    <message>
+        <source>Equal to</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>che sono uguali a</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button to cancel the dialog for adding rules.SAT-449</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Files beginning with:</source>
+        <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>File che iniziano con:</translation>
+    </message>
+    <message>
+        <source>Use comma (“,”) to separate multiple items</source>
+        <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>Usa la virgola (“,”) per separare più oggetti</translation>
+    </message>
+    <message>
+        <source>Outside of</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>non compresi tra</translation>
+    </message>
+    <message>
+        <source>Bigger than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>più grandi di</translation>
+    </message>
+    <message>
+        <source>Smaller than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>più piccoli di</translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment> Label for the end range of file size exclusions section.SAT-449</translatorcomment>
+        <translation>e</translation>
+    </message>
+    <message>
+        <source>Exclude by name</source>
+        <translatorcomment>Section title for name exclusion rules.SAT-449</translatorcomment>
+        <translation>Escludi per nome</translation>
+    </message>
+    <message>
+        <source>Restore defaults</source>
+        <translatorcomment>Button for restoring MEGA ddefault sync exclusion rules.SAT-449</translatorcomment>
+        <translation>Ripristina</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translatorcomment>Column title for displaying exclusion rule target type.SAT-449</translatorcomment>
+        <translation>Tipo</translation>
+    </message>
+    <message>
+        <source>property</source>
+        <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
+        <translation>Criterio</translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
+        <translation>Valore</translation>
+    </message>
+    <message>
+        <source>Remove this exclusion?</source>
+        <translatorcomment>Title for confirmation dialog before removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Rimuovere questa regola di eccezione?</translation>
+    </message>
+    <message>
+        <source>Files beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>I file i cui nomi iniziano con “%1” saranno inclusi in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Le cartelle i cui nomi iniziano con “%1” saranno incluse in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Files containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>I file i cui nomi contengono “%1” saranno inclusi in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Le cartelle i cui nomi contengono “%1” saranno incluse in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Files ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>I file i cui nomi terminano con “%1” saranno inclusi in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Le cartelle i cui nomi terminano con “%1” saranno incluse in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Files equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>I file i cui nomi sono uguali a “%1” saranno inclusi in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>Le cartelle i cui nomi sono uguali a “%1” saranno incluse in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation>I file con estensione “%1” saranno inclusi in questa sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Rimuovi</translation>
+    </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box for confirmation message bedore removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Non chiedermelo di nuovo</translation>
+    </message>
+    <message>
+        <source>Set a minimum and maximum value for file sizes. Files outside this range will be excluded.</source>
+        <translatorcomment>Hint text when specyfing the range to be excluded in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>Imposta un valore minimo e un valore massimo per la grandezza dei file. I file che non rientrano in questo intervallo saranno esclusi.</translation>
+    </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation>Modifica eccezione</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation>Fatto</translation>
+    </message>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Estensione del file</translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Nome del file</translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Nome cartella</translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Formato del file</translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Contiene</translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Termina con</translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>Comincia con</translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>È uguale a</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File contenenti:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File che terminano con:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File uguali a:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle che iniziano con:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle contenenti:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle che terminano con:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Cartelle uguali a:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>File con estensione:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Seleziona la cartella che vuoi escludere</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Seleziona il file che vuoi escludere</translation>
+    </message>
+</context>
+<context>
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
@@ -1812,17 +2067,17 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <name>FileIssueHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Impossibile sincronizzare [B]%1[/B]</translation>
     </message>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
         <translation>Un file presenta un problema che richiede la tua decisione per la risoluzione</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
         <translation>Una cartella presenta un problema che richiede la tua decisione per la risoluzione</translation>
     </message>
 </context>
@@ -1869,7 +2124,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation>Clicca sull&#8217;oggetto della barra degli strumenti per un menù.</translation>
+        <translation>Clicca sull&apos;oggetto della barra degli strumenti per un menù.</translation>
     </message>
     <message>
         <source>View previous versions</source>
@@ -1924,13 +2179,13 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Impossibile sincronizzare [B]%1[/B]</translation>
     </message>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
-        <translation>Il file che stai cercando di sincronizzare non ha un&#8217;estensione e ha lo stesso nome di una cartella esistente</translation>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translation>Il file che stai cercando di sincronizzare non ha un&apos;estensione e ha lo stesso nome di una cartella esistente</translation>
     </message>
 </context>
 <context>
@@ -1988,7 +2243,7 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Waiting for email confirmation…</source>
         <translatorcomment>Label that indicates that the email confirmation is pending CON-465</translatorcomment>
-        <translation>In attesa della conferma dell&#8217;email…</translation>
+        <translation>In attesa della conferma dell&apos;email…</translation>
     </message>
 </context>
 <context>
@@ -2041,128 +2296,6 @@ Aggiorna la lista.</translation>
     </message>
 </context>
 <context>
-    <name>IgnoresEditingDialog</name>
-    <message>
-        <source>Edit exclusions</source>
-        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Modifica eccezioni</translation>
-    </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Gestisci eccezioni</translation>
-    </message>
-    <message>
-        <source>by size</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Escludi per grandezza</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Escludi file più piccoli di</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>Escludi file più grandi di</translation>
-    </message>
-    <message>
-        <source>by name</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Escludi per nome</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation>File o cartelle da escludere dalla sincronizzazione:</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
-        <translation>Aggiungi</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
-        <translation>Cancella</translation>
-    </message>
-    <message>
-        <source>by file type</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Escludi per tipo di file</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Avanzato</translation>
-    </message>
-    <message>
-        <source>Open .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Apri .megaignore</translation>
-    </message>
-    <message>
-        <source>by size:</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>Escludi per grandezza:</translation>
-    </message>
-    <message>
-        <source>by name:</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>Escludi per nome:</translation>
-    </message>
-    <message>
-        <source>by file type:</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>Escludi per tipo di file:</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>Modifica .megaignore</translation>
-    </message>
-    <message>
-        <source>Advanced:</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>Avanzato:</translation>
-    </message>
-    <message>
-        <source>Rule already exists.</source>
-        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation>La regola già esiste</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
-        <translation>Ricarica</translation>
-    </message>
-    <message>
-        <source>Current file has been modified by another program. it will be reloaded</source>
-        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation>Il file .megaignore corrente è stato modificato da un altro programma, verrà ricaricato</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation>Puoi modificare il file associato .megaignore tramite un editor di testo. Questa è un&#8217;azione più adatta agli utenti a proprio agio con le espressioni regolari.</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation>Puoi modificare il file associato .megaignore tramite un editor di testo. Questa è un&#8217;azione più adatta agli utenti a proprio agio con le espressioni regolari.</translation>
-    </message>
-    <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>Puoi escludere file e cartelle dalla sincronizzazione con il tuo Cloud Drive.
-Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno su tutti i tuoi dispositivi, o certi tipi di file di cui non necessiti la sincronizzazione.</translation>
-    </message>
-</context>
-<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
@@ -2199,7 +2332,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
         <translation>Non trovato</translation>
     </message>
     <message>
@@ -2226,26 +2359,6 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
         <translation>Gratis</translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
         <source>Business</source>
         <translatorcomment>Label to refer Business tier CON-467</translatorcomment>
         <translation>Business</translation>
@@ -2253,7 +2366,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Pro Flexi</source>
         <translatorcomment>Label to refer Pro Flexi tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
+        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Available storage:</source>
@@ -2281,7 +2394,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Fai l&#8217;upgrade dell&#8217;account</translation>
+        <translation>Fai l&apos;upgrade dell&apos;account</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -2316,7 +2429,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation>Fai l&#8217;upgrade adesso prima che il tuo account diventi pieno e i tuoi caricamenti su MEGA si fermino.</translation>
+        <translation>Fai l&apos;upgrade adesso prima che il tuo account diventi pieno e i tuoi caricamenti su MEGA si fermino.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
@@ -2331,7 +2444,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation>Effettua l&#8217;upgrade del tuo account.</translation>
+        <translation>Effettua l&apos;upgrade del tuo account.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -2365,7 +2478,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
         <translation>Nessuna notifica</translation>
     </message>
     <message>
@@ -2385,23 +2498,23 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
         <translation>Nessuna notifica di contatti</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
         <translation>Nessuna notifica di condivisioni in entrata</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
         <translation>Nessuna notifica di pagamenti</translation>
     </message>
     <message>
         <source>Upgrade account</source>
         <translatorcomment>Button label to forward the user to the webclient for upgrade the current account.</translatorcomment>
-        <translation>Fai l&#8217;upgrade dell&#8217;account</translation>
+        <translation>Fai l&apos;upgrade dell&apos;account</translation>
     </message>
     <message>
         <source>You must act immediately to save your data</source>
@@ -2441,12 +2554,12 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Ti rimane [A]%n giorno[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
+        <translation><numerusform>Ti rimane [A]%n giorno[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n giorni[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Ti rimane [A]%n ora[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&#8217;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
+        <translation><numerusform>Ti rimane [A]%n ora[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform><numerusform>Ti rimangono [A]%n ore[/A] per effettuare l&apos;upgrade. Dopodiché, i tuoi dati verranno eliminati.</numerusform></translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2486,7 +2599,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to upgrade the current account.</translatorcomment>
-        <translation>Effettua l&#8217;upgrade dell&#8217;account</translation>
+        <translation>Effettua l&apos;upgrade dell&apos;account</translation>
     </message>
     <message>
         <source>I will wait</source>
@@ -2566,6 +2679,86 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     </message>
 </context>
 <context>
+    <name>LinuxPlatformNotificationAreaIcon</name>
+    <message>
+        <source>Install notification area icon</source>
+        <translatorcomment>This is the title of a notification message prompting the user about enabling the Notification Area Icon. The &quot;Notification Area Icon&quot; refers to the option to display an icon in the system tray or notification area of the taskbar. SNC-2270</translatorcomment>
+        <translation>Installa l&apos;icona dell&apos;area di notifica</translation>
+    </message>
+    <message>
+        <source>For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.
+Would you like to install the necessary components now?</source>
+        <translatorcomment>This is the text of a notification message displayed to users on Fedora with GNOME, advising them to consider activating the Notification Area Icon for an optimized experience. It also inquires if they wish to proceed with the installation of the required components for enabling the Notification Area Icon. SNC-2270</translatorcomment>
+        <translation>Per una migliore esperienza su Fedora con GNOME, ti consigliamo di attivare l&apos;icona dell&apos;area di notifica.
+Vuoi installare subito i componenti necessari?</translation>
+    </message>
+    <message>
+        <source>Do not show again</source>
+        <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
+        <translation>Non mostrare più</translation>
+    </message>
+    <message>
+        <source>Installing notification area icon...</source>
+        <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
+        <translation>Installazione dell&apos;icona dell&apos;area di notifica…</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>This is the option provided in the Notification Area Icon installation progress bar to the user to cancel the Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Installing</source>
+        <translatorcomment>This is the title  for the Notification Area Icon installation progress bar which provide the feedback to the user about Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>Installazione</translation>
+    </message>
+    <message>
+        <source>Installation Cancelled</source>
+        <translatorcomment>This is the title of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>Installazione annullata</translation>
+    </message>
+    <message>
+        <source>The notification area icon installation was cancelled.</source>
+        <translatorcomment>This is the text of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>L&apos;installazione dell&apos;icona dell&apos;area di notifica è stata annullata.</translation>
+    </message>
+    <message>
+        <source>Error installing components</source>
+        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
+        <translation>Errore durante l&apos;installazione dei componenti</translation>
+    </message>
+    <message>
+        <source>Failed to install the necessary components.</source>
+        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translation>Installazione dei componenti necessari non riuscita.</translation>
+    </message>
+    <message>
+        <source>To install manually, please run the following commands:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translation>Per installare manualmente, esegui i seguenti comandi:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
+    </message>
+    <message>
+        <source>Install complete</source>
+        <translatorcomment>This is the title of a message indicating that the Notification Area Icon Support has been installed without any issues. SNC-2270</translatorcomment>
+        <translation>Installazione completata</translation>
+    </message>
+    <message>
+        <source>The notification area icon was installed successfully.
+Please log out of your computer to complete the installation.</source>
+        <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
+        <translation>L&apos;icona dell&apos;area di notifica è stata installata correttamente.
+Riavvia il computer per completare l&apos;installazione.</translation>
+    </message>
+</context>
+<context>
     <name>LoadingSceneMessageHandler</name>
     <message>
         <source>%1 of %2</source>
@@ -2593,7 +2786,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>This file has been changed both in MEGA and locally since it it was last synced.</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when the file being synced changed oth locally and remotely.SNC-2565</translatorcomment>
-        <translation>Il file è stato modificato sia in MEGA sia localmente dall&#8217;ultima sincronizzazione</translation>
+        <translation>Il file è stato modificato sia in MEGA sia localmente dall&apos;ultima sincronizzazione</translation>
     </message>
 </context>
 <context>
@@ -2641,7 +2834,7 @@ Questo può essere utile per i file troppo grandi, i file di cui non hai bisogno
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Vuoi veramente tenere la cartella locale [B]%1[/B]?</translation>
+        <translation>Mantenere la cartella locale [B]%1[/B]?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
@@ -2672,7 +2865,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to keep the [B]remote item[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep remote version of a local and remote changed stall, %1 is a placeholder for item name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Mantenere l&#8217;oggetto [B]%1[/B] già memorizzato in MEGA?</translation>
+        <translation>Mantenere l&apos;oggetto [B]%1[/B] già memorizzato in MEGA?</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be moved to the sync debris folder</source>
@@ -2687,17 +2880,17 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Are you sure you want to choose the latest modified side?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the last modified version of a local and remote changed stall.SNC-2565</translatorcomment>
-        <translation>Scegliere l&#8217;oggetto modificato più recentemente?</translation>
+        <translation>Scegliere l&apos;oggetto modificato più recentemente?</translation>
     </message>
     <message>
         <source>This action will choose the local side</source>
         <translatorcomment>Informative text in a message box explainging that the local file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Con questa azione, verrà scelto l&#8217;oggetto locale.</translation>
+        <translation>Con questa azione, verrà scelto l&apos;oggetto locale.</translation>
     </message>
     <message>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Con questa azione, verrà scelto l&#8217;oggetto già archiviato in MEGA.</translation>
+        <translation>Con questa azione, verrà scelto l&apos;oggetto già archiviato in MEGA.</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -2739,12 +2932,12 @@ Aggiorna la lista.</translation>
     <message>
         <source>[B]Keep last modified[/B] (local)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Mantieni l&#8217;ultimo modificato[/B] (locale)</translation>
+        <translation>[B]Mantieni l&apos;ultimo modificato[/B] (locale)</translation>
     </message>
     <message>
         <source>[B]Keep last modified[/B] (remote)</source>
         <translatorcomment>Solve option for stalls caused by having both local and remote files changed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>[B]Mantieni l&#8217;ultimo modificato[/B] (in MEGA)</translation>
+        <translation>[B]Mantieni l&apos;ultimo modificato[/B] (in MEGA)</translation>
     </message>
     <message>
         <source>Keep the [B]local files[/B]?</source>
@@ -2822,6 +3015,24 @@ Attendi il completamento dei caricamenti.</translation>
         <source>Keep the [B]local folders[/B]?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Mantenere le cartelle [B]locali[/B]?</translation>
+    </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
+        <translation>Il file locale [B]%1[/B] verrà caricato su MEGA e sostituirà il file corrente, che verrà spostato nella cartella SyncDebris nel tuo Cestino MEGA.</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
+        <translation>I file[B]locali[/B] verranno caricati su MEGA e sostituiranno i file correnti, che verranno spostati nella cartella SyncDebris del tuo Cestino MEGA.</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>Clicca su Rinomina per risolvere il problema, oppure clicca sulle cartelle seguenti per apportare modifiche nel file system locale o in MEGA</translation>
     </message>
 </context>
 <context>
@@ -2921,7 +3132,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>L&#8217;app non riesce a connettersi. Controlla la tua connessione ad Internet e la configurazione del tuo firewall locale. Ricorda che la maggior parte degli antivirus include un firewall.</translation>
+        <translation>L&apos;app non riesce a connettersi. Controlla la tua connessione ad Internet e la configurazione del tuo firewall locale. Ricorda che la maggior parte degli antivirus include un firewall.</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2946,6 +3157,11 @@ Attendi il completamento dei caricamenti.</translation>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>È stato effettuato il logout a causa di questo errore: %1</translation>
     </message>
+    <message>
+        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
+        <translation>Disconnessione. Contatta [A]support@mega.nz[/A] se il problema persiste.</translation>
+    </message>
 </context>
 <context>
     <name>LowDiskSpaceDialog</name>
@@ -2967,7 +3183,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>There is not enough space on %1. You need an additional %2 to download these files.</source>
         <translatorcomment>Label explaining the problem, %1 is the download target disk name. %2 is the needed size to continue with the download (the size unit depends on the quantity) </translatorcomment>
-        <translation>Non c&#8217;è abbastanza spazio disponibile su %1. Hai bisogno di %2 addizionali per scaricare questi file.</translation>
+        <translation>Non c&apos;è abbastanza spazio disponibile su %1. Hai bisogno di %2 addizionali per scaricare questi file.</translation>
     </message>
     <message>
         <source>Free space: %1</source>
@@ -2990,7 +3206,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>L&#8217;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
+        <translation>L&apos;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -3014,7 +3230,7 @@ Attendi il completamento dei caricamenti.</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
         <translation>Aggiornato</translation>
     </message>
     <message>
@@ -3035,7 +3251,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>L&#8217;app è stata aggiornata</translation>
+        <translation>L&apos;app è stata aggiornata</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -3044,7 +3260,7 @@ Attendi il completamento dei caricamenti.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
         <translation>Problema rilevato</translation>
     </message>
     <message>
@@ -3055,7 +3271,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>Un aggiornamento verrà applicato durante il prossimo avvio dell&#8217;applicazione</translation>
+        <translation>Un aggiornamento verrà applicato durante il prossimo avvio dell&apos;applicazione</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -3076,7 +3292,7 @@ Attendi il completamento dei caricamenti.</translation>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>C&#8217;è stato un problema nell&#8217;installazione dell&#8217;aggiornamento. Riprova o scarica l&#8217;ultima versione da: https://mega.io/desktop</translation>
+        <translation>C&apos;è stato un problema nell&apos;installazione dell&apos;aggiornamento. Riprova o scarica l&apos;ultima versione da: https://mega.io/desktop</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -3101,12 +3317,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>L&#8217;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
+        <translation>L&apos;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>L&#8217;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
+        <translation>L&apos;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -3117,11 +3333,6 @@ https://mega.co.nz/#sync</source>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>La tua configurazione è corrotta, per favore ricomincia</translation>
-    </message>
-    <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>Oltre quota</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3171,7 +3382,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation>Impossibile trovare una barra di sistema dove posizionare l&#8217;icona dell&#8217;app. Prova a chiudere e riaprire l&#8217;app.</translation>
+        <translation>Impossibile trovare una barra di sistema dove posizionare l&apos;icona dell&apos;app. Prova a chiudere e riaprire l&apos;app.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -3186,7 +3397,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message displayed in warning dialog when running in a deprecated OS</translatorcomment>
-        <translation>Valuta l&#8217;aggiornamento del tuo sistema operativo.</translation>
+        <translation>Valuta l&apos;aggiornamento del tuo sistema operativo.</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -3196,7 +3407,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation>L&#8217;app continuerà a lavorare, anche se potresti non ricevere nuovi aggiornamenti.</translation>
+        <translation>L&apos;app continuerà a lavorare, anche se potresti non ricevere nuovi aggiornamenti.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3231,7 +3442,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>Account sospeso</translation>
+        <translation>Account disattivato</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3241,7 +3452,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation>I tuoi caricamenti non possono procedere perché l&#8217;account di %1 è pieno.</translation>
+        <translation>I tuoi caricamenti non possono procedere perché l&apos;account di %1 è pieno.</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3261,7 +3472,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.</source>
         <translatorcomment>Informative message box shown if user is running an old Win version (vista or previous), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>L&#8217;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di Windows 7.</translation>
+        <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di Windows 7.</translation>
     </message>
     <message>
         <source>Transferring</source>
@@ -3276,7 +3487,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
         <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>L&#8217;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di macOS Sierra.</translation>
+        <translation>L&apos;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di macOS Sierra.</translation>
     </message>
     <message>
         <source>Thank you for your collaboration</source>
@@ -3297,7 +3508,7 @@ https://mega.co.nz/#sync</source>
         <source>There is an active transfer. Exit the app?
 Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
-        <translation><numerusform>C&#8217;è un trasferimento attivo. Uscire dall&#8217;app?
+        <translation><numerusform>C&apos;è un trasferimento attivo. Uscire dall&apos;app?
 Il trasferimento riprenderà automaticamente quando riaprirai l&apos;app.</numerusform><numerusform>Ci sono trasferimenti attivi. Uscire dall&apos;app?
 I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</numerusform><numerusform>Ci sono trasferimenti attivi. Uscire dall&apos;app?
 I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</numerusform></translation>
@@ -3305,12 +3516,12 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Exit app</source>
         <translatorcomment>One of the messagebox options: Close the app and pause the active transfers</translatorcomment>
-        <translation>Esci dall&#8217;app</translation>
+        <translation>Esci dall&apos;app</translation>
     </message>
     <message>
         <source>Stay in app</source>
         <translatorcomment>One of the messagebox options: Keep the app open and continue with the active transfers</translatorcomment>
-        <translation>Rimani nell&#8217;app</translation>
+        <translation>Rimani nell&apos;app</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -3340,7 +3551,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Failed to ugrade security. Error: %1</source>
         <translatorcomment>System notification error shown if an error occur while upgrading security for your account. %1 will be replaced with the error returned from the SDK.</translatorcomment>
-        <translation>Errore durante l&#8217;aggiornamento di sicurezza. Errore: %1</translation>
+        <translation>Errore durante l&apos;aggiornamento di sicurezza. Errore: %1</translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
@@ -3370,7 +3581,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Error getting link: %1</source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Placeholder %1 displays the reason.</translatorcomment>
-        <translation>Errore nell&#8217;ottenimento del link: %1</translation>
+        <translation>Errore nell&apos;ottenimento del link: %1</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3385,7 +3596,17 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>Account Pro&#xa0;Flexi disattivato</translation>
+        <translation>Account Pro Flexi disattivato</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full (tray icon tooltip). CON-561</translatorcomment>
+        <translation>Archivio pieno</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
+        <translation>Banda di trasferimento superata</translation>
     </message>
 </context>
 <context>
@@ -3526,11 +3747,6 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
         <translation>Termini di Servizio violati</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>Non accessibile a causa di una violazione di TdS/PUA</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>Il trasferimento è fallito a causa di un errore nella struttura della cartella</translation>
@@ -3538,7 +3754,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Storage Quota Exceeded. Upgrade now</source>
         <translatorcomment>Error label to indicate a situation of storage quota exceeded and the user needs to upgrade now in order to continue working with the account.</translatorcomment>
-        <translation>Spazio di archiviazione superato. Effettua l&#8217;upgrade adesso.</translation>
+        <translation>Spazio di archiviazione superato. Effettua l&apos;upgrade adesso.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3554,7 +3770,7 @@ Controlla la tua casella di posta elettronica per ulteriori informazioni su come
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.
 Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo account MEGA.</translation>
     </message>
@@ -3562,6 +3778,16 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
         <translation>Termini di Servizio violati.</translation>
+    </message>
+    <message>
+        <source>Your account has expired</source>
+        <translatorcomment>Used when a business account has expired, but this could also be a Pro-Flexi account. Max. 27 characters. SNC-4190 and CON-556</translatorcomment>
+        <translation>Il tuo account è scaduto</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation>Lo spazio di archiviazione nella destinazione è pieno</translation>
     </message>
 </context>
 <context>
@@ -3657,8 +3883,8 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>L&#8217;account del proprietario della cartella condivisa ha superato il limite del proprio spazio di archiviazione.</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>La cartella non può essere sincronizzata poiché l&apos;utente che ha condiviso questa cartella ha esaurito la propria banda di trasferimento</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3674,11 +3900,6 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
         <translation>Non hai accesso completo alla cartella condivisa in MEGA</translation>
-    </message>
-    <message>
-        <source>Local fingerprint mismatch</source>
-        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>È stato notato un cambiamento nel file system locale</translation>
     </message>
     <message>
         <source>Put nodes error</source>
@@ -3748,12 +3969,107 @@ Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo accoun
     <message>
         <source>You can&apos;t run MEGA Desktop App from this location. Move it into the Applications folder then run it.</source>
         <translatorcomment>Error message shown when the user is trying to run MEGA Desktop App from a path different than Applications. Only affects to macOS.</translatorcomment>
-        <translation>Non puoi avviare l&#8217;app per desktop da qui. Spostala nella cartella delle Applicazioni e poi avviala.</translation>
+        <translation>Non puoi avviare l&apos;app per desktop da qui. Spostala nella cartella delle Applicazioni e poi avviala.</translation>
     </message>
     <message>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation>Il tuo piano è scaduto</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
+        <translation>La sincronizzazione o il backup è stato interrotto perché hai effettuato la disconnessione. Per riprendere, riattiva la sincronizzazione o il backup dalle Impostazioni.</translation>
+    </message>
+    <message>
+        <source>Active sync same path</source>
+        <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
+        <translation>Questa posizione contiene già cartelle sincronizzate o di cui è stato eseguito il backup</translation>
+    </message>
+    <message>
+        <source>Unknown drive path.</source>
+        <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
+        <translation>Il percorso della sincronizzazione o del backup è sconosciuto</translation>
+    </message>
+    <message>
+        <source>Local filesystem mismatch</source>
+        <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
+        <translation>I file in questa cartella non possono essere sincronizzati o sottoposti a backup. Dovrai riattivare la sincronizzazione o il backup dalle Impostazioni.</translation>
+    </message>
+    <message>
+        <source>Backup externally modified</source>
+        <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
+        <translation>Problemi durante la sincronizzazione o il backup di questa cartella a causa di modifiche alla cartella MEGA. Interrompi la sincronizzazione o il backup e prova a configurare nuovamente il processo nelle Impostazioni, oppure contatta il Supporto.</translation>
+    </message>
+    <message>
+        <source>Unable to create initial ignore file.</source>
+        <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
+        <translation>Impossibile creare un file .megaignore per questa sincronizzazione o per questo backup.</translation>
+    </message>
+    <message>
+        <source>Unable to read sync configs from disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
+        <translation>Impossibile leggere la configurazione della sincronizzazione o del backup. Riprova più tardi o controlla le autorizzazioni della cartella.</translation>
+    </message>
+    <message>
+        <source>Invalid scan interval specified.</source>
+        <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
+        <translation>Intervallo della scansione invalido. Controlla l&apos;impostazione dell&apos;intervallo della scansione e riprova.</translation>
+    </message>
+    <message>
+        <source>Filesystem notification subsystem unavailable.</source>
+        <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
+        <translation>Impossibile comunicare con la cartella della posizione. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.</translation>
+    </message>
+    <message>
+        <source>Unable to add filesystem watch.</source>
+        <translatorcomment>SDK error indicating that the filesystem watch couldn´t be added. CON-537</translatorcomment>
+        <translation>Impossibile aggiungere un orologio del filesystem. Assicurati che ci sia abbastanza spazio libero e di aver garantito le autorizzazioni per la posizione della cartella.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve sync root FSID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
+        <translation>Impossibile leggere la posizione della sincronizzazione o del backup. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.</translation>
+    </message>
+    <message>
+        <source>Unable to open state cache database.</source>
+        <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
+        <translation>Problemi nella sincronizzazione o nel backup di questa cartella. Ferma la sincronizzazione o il backup e prova ad impostarlo nuovamente dalle Impostazioni, oppure contatta il Supporto.</translation>
+    </message>
+    <message>
+        <source>Insufficient disk space.</source>
+        <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
+        <translation>Spazio per il download insufficiente.</translation>
+    </message>
+    <message>
+        <source>Failure accessing to persistent storage</source>
+        <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
+        <translation>Impossibile leggere la posizione della sincronizzazione o del backup. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve the ID of current device</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
+        <translation>Impossibile creare il backup perché il dispositivo da cui stai effettuando il backup non ha un nome. Dai un nome al tuo dispositivo e poi riprova. Se il problema persiste, contatta il Supporto.</translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation>Problemi nella sincronizzazione o nel backup di questa cartella. Ferma la sincronizzazione o il backup e prova ad impostarlo nuovamente dalle Impostazioni, oppure contatta il Supporto.</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation>Problemi nella sincronizzazione o nel backup di questa cartella. Ferma la sincronizzazione o il backup e prova ad impostarlo nuovamente dalle Impostazioni, oppure contatta il Supporto.</translation>
+    </message>
+    <message>
+        <source>Could not get the filesystem&apos;s ID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
+        <translation>Impossibile leggere la posizione della sincronizzazione o del backup. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
+        <translation>Impossibile aggiornare la configurazione della sincronizzazione o del backup. Riprova più tardi o controlla le autorizzazioni della cartella.</translation>
     </message>
 </context>
 <context>
@@ -3957,12 +4273,12 @@ Le sincronizzazioni incomplete che hai selezionato non saranno annullate. Tutti 
     <message>
         <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
         <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>MEGA ha rilevato uno spostamento o una rinominazione, ma non riesce a ripetere l&#8217;azione localmente.</translation>
+        <translation>MEGA ha rilevato uno spostamento o una rinominazione, ma non riesce a ripetere l&apos;azione localmente.</translation>
     </message>
     <message>
         <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
         <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>All&#8217;interno del filesystem locale è stato riscontrato uno spostamento o una rinominazione, ma è impossibile da replicare su MEGA.</translation>
+        <translation>All&apos;interno del filesystem locale è stato riscontrato uno spostamento o una rinominazione, ma è impossibile da replicare su MEGA.</translation>
     </message>
     <message>
         <source>Solve</source>
@@ -3975,7 +4291,7 @@ Le sincronizzazioni incomplete che hai selezionato non saranno annullate. Tutti 
     <message>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
-        <translation>Troppi oggetti selezionati. Per continuare, selezionane di meno o seleziona l&#8217;intera cartella che li contiene.</translation>
+        <translation>Troppi oggetti selezionati. Per continuare, selezionane di meno o seleziona l&apos;intera cartella che li contiene.</translation>
     </message>
 </context>
 <context>
@@ -3997,7 +4313,7 @@ Le sincronizzazioni incomplete che hai selezionato non saranno annullate. Tutti 
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
         <translation>Modificato esternamente</translation>
     </message>
     <message>
@@ -4046,7 +4362,7 @@ Aggiorna l&apos;elenco.</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
         <translation>Nessuna azione necessaria</translation>
     </message>
     <message>
@@ -4116,19 +4432,19 @@ Aggiorna l&apos;elenco.</translation>
         <source>These items contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&#8217;altro lato della sincronizzazione</translation>
+        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&apos;altro lato della sincronizzazione</translation>
     </message>
     <message>
         <source>These files contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&#8217;altro lato della sincronizzazione</translation>
+        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&apos;altro lato della sincronizzazione</translation>
     </message>
     <message>
         <source>These folders contain multiple names on one side, that would all become the same single name on the other side.
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&#8217;altro lato della sincronizzazione</translation>
+        <translation>Ci sono più elementi con lo stesso nome da un lato della sincronizzazione che diverrebbero tutti lo stesso elemento dall&apos;altro lato della sincronizzazione</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4159,7 +4475,7 @@ This may be due to syncing to case insensitive local filesystems, or the effects
         <source>This action will merge all folders into a single one. We will skip duplicated files
 and rename the files with the same name but different content (adding a suffix like (1))</source>
         <translatorcomment>Info text for confirmation message of merge folder action in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Questa azione unirà tutte le cartelle in un&#8217;unica cartella. I file duplicati saranno saltati, e i file con lo stesso nome ma diverso contenuto saranno rinominati aggiungendo un suffisso come (1).</translation>
+        <translation>Questa azione unirà tutte le cartelle in un&apos;unica cartella. I file duplicati saranno saltati, e i file con lo stesso nome ma diverso contenuto saranno rinominati aggiungendo un suffisso come (1).</translation>
     </message>
     <message>
         <source>This action will delete the duplicate files.</source>
@@ -4174,7 +4490,7 @@ and rename the files with the same name but different content (adding a suffix l
     <message>
         <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
-        <translation>Questa azione eliminerà i file duplicati, unirà tutte le cartelle in un&#8217;unica cartella, e rinominerà gli oggetti rimanenti in caso di conflitti del nome aggiungendo un suffisso come (1).</translation>
+        <translation>Questa azione eliminerà i file duplicati, unirà tutte le cartelle in un&apos;unica cartella, e rinominerà gli oggetti rimanenti in caso di conflitti del nome aggiungendo un suffisso come (1).</translation>
     </message>
 </context>
 <context>
@@ -4231,7 +4547,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation>L&#8217;elemento che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</translation>
+        <translation>L&apos;elemento che hai selezionato è stato rimosso. Per selezionare nuovamente, chiudi questa finestra e riprova.</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -4396,7 +4712,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Access to a shared folder was removed</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications</translatorcomment>
-        <translation>L&#8217;accesso ad una cartella condivisa è stato rimosso</translation>
+        <translation>L&apos;accesso ad una cartella condivisa è stato rimosso</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -4529,7 +4845,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Enter the new email address and click Resend. We will then send the verification email to this new email address for you to activate your account.</source>
         <translatorcomment>Text indicating the user what he has to do in order to change the email addres CON-466</translatorcomment>
-        <translation>Inserisci un nuovo indirizzo email e clicca su Reinvia. Invieremo un&#8217;email di verifica a questo nuovo indirizzo email in modo che tu possa attivare il tuo account.</translation>
+        <translation>Inserisci un nuovo indirizzo email e clicca su Reinvia. Invieremo un&apos;email di verifica a questo nuovo indirizzo email in modo che tu possa attivare il tuo account.</translation>
     </message>
     <message>
         <source>Change your email address</source>
@@ -4559,7 +4875,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>There is already a folder with the same name in this backup</source>
         <translatorcomment>Error text indicating that it can´t create a backup with duplicated names CON-468</translatorcomment>
-        <translation>C&#8217;è già una cartella con lo stesso nome in questo backup</translation>
+        <translation>C&apos;è già una cartella con lo stesso nome in questo backup</translation>
     </message>
     <message>
         <source>A folder with the same name already exists on your backups</source>
@@ -4579,7 +4895,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
-        <translation>Per attivare il tuo account, devi verificare il tuo indirizzo email. Ti abbiamo inviato un&#8217;email con un link di conferma. Clicca sul link per verificare il tuo indirizzo email, poi potrai effettuare il login.</translation>
+        <translation>Per attivare il tuo account, devi verificare il tuo indirizzo email. Ti abbiamo inviato un&apos;email con un link di conferma. Clicca sul link per verificare il tuo indirizzo email, poi potrai effettuare il login.</translation>
     </message>
     <message>
         <source>If you don&apos;t receive the email within 1 hour, please [B][A]contact support[/A][/B].</source>
@@ -4644,12 +4960,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>What else do you want to do?</source>
         <translatorcomment>Text suggesting the user to create another backup or sync CON-468</translatorcomment>
-        <translation>Cos&#8217;altro vuoi fare?</translation>
+        <translation>Cos&apos;altro vuoi fare?</translation>
     </message>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation>La tua sincronizzazione è stata configurata e sincronizzerà automaticamente i dati selezionati ogni volta che l&#8217;app per desktop è in esecuzione.</translation>
+        <translation>La tua sincronizzazione è stata configurata e sincronizzerà automaticamente i dati selezionati ogni volta che l&apos;app per desktop è in esecuzione.</translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
@@ -4679,7 +4995,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
         <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata perché non possiedi l&#8217;autorizzazione per creare una nuova cartella. Per continuare, seleziona una cartella esistente.</translation>
+        <translation>La cartella non può essere sincronizzata perché non possiedi l&apos;autorizzazione per creare una nuova cartella. Per continuare, seleziona una cartella esistente.</translation>
     </message>
     <message>
         <source>Forgot password?</source>
@@ -4719,7 +5035,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Effettua il log&#xa0;in</translation>
+        <translation>Effettua il log in</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -4774,7 +5090,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Le cartelle selezionate verranno automaticamente salvate su MEGA quando l&#8217;app per desktop è in esecuzione.</translation>
+        <translation>Le cartelle selezionate verranno automaticamente salvate su MEGA quando l&apos;app per desktop è in esecuzione.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -4844,7 +5160,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Problem with two-factor authentication?</source>
         <translatorcomment>Text that the user has to click in case he has problems with 2FA CON-465</translatorcomment>
-        <translation>Problemi con l&#8217;autenticazione a due fattori?</translation>
+        <translation>Problemi con l&apos;autenticazione a due fattori?</translation>
     </message>
     <message>
         <source>Enter the 6-digit code generated by your authenticator app.</source>
@@ -4864,7 +5180,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Fetching file list…</source>
         <translatorcomment>Status text displayed in the footer of the page CON-467</translatorcomment>
-        <translation>Recupero dell&#8217;elenco dei file…</translation>
+        <translation>Recupero dell&apos;elenco dei file…</translation>
     </message>
     <message>
         <source>Creating account…</source>
@@ -4879,17 +5195,17 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Stop logging in?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>Interrompere l&#8217;accesso?</translation>
+        <translation>Interrompere l&apos;accesso?</translation>
     </message>
     <message>
         <source>Closing this window will stop you logging in.</source>
         <translatorcomment>Dialog body text. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>La chiusura di questa finestra impedirà l&#8217;accesso.</translation>
+        <translation>La chiusura di questa finestra impedirà l&apos;accesso.</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
         <translatorcomment>Accept button text in the cancel loggin dialog. This dialog appears if the user is being logged and he wants to close the window CON-465</translatorcomment>
-        <translation>Interrompi l&#8217;accesso</translation>
+        <translation>Interrompi l&apos;accesso</translation>
     </message>
     <message>
         <source>Don’t stop</source>
@@ -4899,7 +5215,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Cancel account creation?</source>
         <translatorcomment>Dialog title. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
-        <translation>Annullare la creazione dell&#8217;account?</translation>
+        <translation>Annullare la creazione dell&apos;account?</translation>
     </message>
     <message>
         <source>Closing this window will cancel the sign up process.</source>
@@ -4959,12 +5275,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Sync selected folders between your computer with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to selective sync button description CON-467</translatorcomment>
-        <translation>Sincronizza cartelle selezionate tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&#8217;altra.</translation>
+        <translation>Sincronizza cartelle selezionate tra i tuoi computer e MEGA; qualsiasi modifica da una parte verrà applicata all&apos;altra.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
         <translatorcomment>Final page go to choose sync type button description CON-467</translatorcomment>
-        <translation>Sincronizza i tuoi file tra i tuoi computer con MEGA; qualsiasi modifica da un lato verrà applicata all&#8217;altro lato.</translation>
+        <translation>Sincronizza i tuoi file tra i tuoi computer con MEGA; qualsiasi modifica da un lato verrà applicata all&apos;altro lato.</translation>
     </message>
     <message>
         <source>Let&apos;s get you set up</source>
@@ -5004,7 +5320,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>Il tuo backup è stato impostato e i dati selezionati effettueranno automaticamente il backup quando l&#8217;app per desktop è in esecuzione. Puoi vedere i tuoi backup e il loro status nella sezione Backup delle Impostazioni.</translation>
+        <translation>Il tuo backup è stato impostato e i dati selezionati effettueranno automaticamente il backup quando l&apos;app per desktop è in esecuzione. Puoi vedere i tuoi backup e il loro status nella sezione Backup delle Impostazioni.</translation>
     </message>
     <message>
         <source>Try again</source>
@@ -5078,7 +5394,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Upgrade Account</source>
         <translatorcomment>Button label to redirect the user to upgrade account (getting more space and transfer quota)</translatorcomment>
-        <translation>Effettua l&#8217;upgrade dell&#8217;account</translation>
+        <translation>Effettua l&apos;upgrade dell&apos;account</translation>
     </message>
     <message>
         <source>Importing links is temporarily disabled.</source>
@@ -5131,7 +5447,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to redirect user to upgrade current account.</translatorcomment>
-        <translation>Fai l&#8217;upgrade</translation>
+        <translation>Fai l&apos;upgrade</translation>
     </message>
 </context>
 <context>
@@ -5223,7 +5539,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>I file e le cartelle hanno un proprietario ed appartengono ad un gruppo di utenti. Utilizzando questa finestra, puoi dare diversi permessi di accesso ai nuovi file e alle nuove cartelle create tramite l&#8217;app per desktop agli utenti che appartengono allo stesso gruppo e al resto degli utenti del computer. Se non hai bisogno di cambiarli, lascia le impostazioni predefinite per motivi di sicurezza.</translation>
+        <translation>I file e le cartelle hanno un proprietario ed appartengono ad un gruppo di utenti. Utilizzando questa finestra, puoi dare diversi permessi di accesso ai nuovi file e alle nuove cartelle create tramite l&apos;app per desktop agli utenti che appartengono allo stesso gruppo e al resto degli utenti del computer. Se non hai bisogno di cambiarli, lascia le impostazioni predefinite per motivi di sicurezza.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5299,12 +5615,12 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>Spazio di archiviazione aggiuntivo a %1 per %2&#xa0;TB.</translation>
+        <translation>Spazio di archiviazione aggiuntivo a %1 per %2 TB.</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>Banda di trasferimento aggiuntiva a %1 per %2&#xa0;TB.</translation>
+        <translation>Banda di trasferimento aggiuntiva a %1 per %2 TB.</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -5326,7 +5642,7 @@ Inserisci un nome differente.</translation>
     <name>PlatformStrings</name>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
         <translation>Oggetto spostato nel Cestino</translation>
     </message>
     <message>
@@ -5341,7 +5657,7 @@ Inserisci un nome differente.</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
         <translation>Oggetto spostato nel Cestino</translation>
     </message>
     <message>
@@ -5356,7 +5672,7 @@ Inserisci un nome differente.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
         <translation>Oggetto spostato nel Cestino</translation>
     </message>
     <message>
@@ -5368,22 +5684,24 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync rework Beta V2 is released.
-- A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
-- User experience for batch fixing sync issues is improved.
-- Minor bugs are fixed.
-- Performance is improved.
+        <source>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation>Sincronizzazioni beta V2
-- Nuova procedura guidata di inserimento per qualsiasi nuovo processo di sincronizzazione o backup.
-- Le modifiche vengono rilevate e i problemi di sincronizzazione vengono aggiornati automaticamente.
-- Ora disponibile in tutte le lingue supportate da MEGA.
-- Esperienza utente per la risoluzione in blocco dei problemi di sincronizzazione è migliorata.
-- Bug minori sono stati corretti.
-- Prestazioni migliorate.
+        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
+        <translation>- Aggiunto il supporto per i link di Album e Raccolte.
+- Qt aggiornato alla v5.15.13.
+- Dipendenze aggiornate.
+- Messaggi di errore migliorati.
+- Migliorata l&apos;interfaccia delle eccezioni.
+- Aggiunto il supporto per openSUSE Leap 15.6, Ubuntu 24.04 e Fedora 40.
+- Migliore integrazione di sistema per tutti i sistemi operativi.
+- Correzioni di bug e altri miglioramenti.
 </translation>
     </message>
 </context>
@@ -5769,7 +6087,7 @@ Please verify the correct file name was given.</source>
 Verifica di aver inserito il nome corretto del file.</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” è protetto dalla scrittura.
@@ -5781,27 +6099,27 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1&#xa0;TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1&#xa0;GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1&#xa0;MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1&#xa0;KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;bytes</translation>
+        <translation>%1 bytes</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -5949,6 +6267,29 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     </message>
 </context>
 <context>
+    <name>RemoveSyncConfirmationDialog</name>
+    <message>
+        <source>Remove this sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Rimuovere questa sincronizzazione?</translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>I dati sul tuo computer e su MEGA non verranno rimossi, ma le cartelle non saranno più sincronizzate tra di loro.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>Rimuovi</translation>
+    </message>
+</context>
+<context>
     <name>RenameNodeDialog</name>
     <message>
         <source>Enter new file name</source>
@@ -5981,7 +6322,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Don&apos;t close the app. If you close, transfers not yet queued will be lost.</source>
         <translatorcomment>Message displayed in scanning widget to warn the user of consequences of closing the app.</translatorcomment>
-        <translation>Non chiudere l&#8217;app. Se la chiudi, i trasferimenti non ancora completati saranno persi.</translation>
+        <translation>Non chiudere l&apos;app. Se la chiudi, i trasferimenti non ancora completati saranno persi.</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -6047,7 +6388,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Start on startup</source>
         <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Apri all&#8217;avvio</translation>
+        <translation>Apri all&apos;avvio</translation>
     </message>
     <message>
         <source>Update automatically</source>
@@ -6072,7 +6413,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Fai l&#8217;upgrade</translation>
+        <translation>Fai l&apos;upgrade</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -6172,7 +6513,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceeding.</translatorcomment>
-        <translation>Disabilitare le versioni del file perverrà la creazione e l&#8217;archiviazione delle nuove versioni del file. Vuoi continuare?</translation>
+        <translation>Disabilitare le versioni del file perverrà la creazione e l&apos;archiviazione delle nuove versioni del file. Vuoi continuare?</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
@@ -6372,27 +6713,12 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Abilita l&#8217;integrazione con Esplora file</translation>
+        <translation>Abilita l&apos;integrazione con Esplora file</translation>
     </message>
     <message>
         <source>Install Update</source>
         <translatorcomment>Button label text shown in General pane when there is an update available. Keep as short as possible.</translatorcomment>
         <translation>Installa aggiornamento</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Gratis</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Business</translation>
     </message>
     <message>
         <source>No limit</source>
@@ -6425,21 +6751,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Riporta un problema</translation>
     </message>
     <message>
-        <source>Pro I</source>
-        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
         <source>Export Key</source>
         <translatorcomment>Button label text for export key saving to local machine in a file. Keep string as short as possible.</translatorcomment>
         <translation>Esporta chiave</translation>
@@ -6457,7 +6768,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Banda di trasferimento utilizzata nell&#8217;ultima ora:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform></translation>
+        <translation><numerusform>Banda di trasferimento utilizzata nell&apos;ultima ora:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform><numerusform>Banda di trasferimento utilizzata nelle ultime %n ore:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
@@ -6508,11 +6819,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>Vuoi effettuare il log out?</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Flexi</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -6655,7 +6961,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>recupero dell&#8217;utente…</translation>
+        <translation>recupero dell&apos;utente…</translation>
     </message>
     <message>
         <source>Upload by:</source>
@@ -6776,22 +7082,22 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Filesystem error during operation.</source>
         <translatorcomment>Label descriping a sync stall is happening because of filesystem failed operation ( Eg. folder creation).SNC-2565</translatorcomment>
-        <translation>Un errore locale è avvenuto durante l&#8217;operazione</translation>
+        <translation>Un errore locale è avvenuto durante l&apos;operazione</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
         <translation>Nome troppo lungo per il filesystem</translation>
     </message>
     <message>
         <source>Cannot fingerprint file.</source>
         <translatorcomment>Label descriping a sync stall is happening because MEGA cannot create a fingerprint for it.SNC-2565</translatorcomment>
-        <translation>Impossibile creare l&#8217;impronta digitale del file</translation>
+        <translation>Impossibile creare l&apos;impronta digitale del file</translation>
     </message>
     <message>
         <source>Hard link or Reparse Point detected.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a hard link and cannot be synced.SNC-2565</translatorcomment>
-        <translation>Collegamento fisico o punto di reparse rilevato. Contatta il Supporto se non c&#8217;è alcun collegamento fisico o punto di reparse in questa posizione.</translation>
+        <translation>Collegamento fisico o punto di reparse rilevato. Contatta il Supporto se non c&apos;è alcun collegamento fisico o punto di reparse in questa posizione.</translation>
     </message>
     <message>
         <source>The folder could not be found. Ensure that the path is correct and try again.</source>
@@ -6800,7 +7106,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
         <translation>Verifica MAC fallita</translation>
     </message>
     <message>
@@ -6821,7 +7127,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Ignore file malformed.</source>
         <translatorcomment>Label descriping a sync stall is happening because exclusion rules file is malformed (.megaignore).SNC-2565</translatorcomment>
-        <translation>C&#8217;è un errore nel file .megaignore. Modifica il file per correggerlo.</translation>
+        <translation>C&apos;è un errore nel file .megaignore. Modifica il file per correggerlo.</translation>
     </message>
     <message>
         <source>Error Listing folder in filesystem.</source>
@@ -6831,12 +7137,12 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>Errore nell&#8217;identificazione del contenuto della cartella locale</translation>
+        <translation>Impossibile leggere il contenuto di questa cartella. Verifica le autorizzazioni della cartella e che nessuno degli oggetti sia utilizzato da altre applicazioni.</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
         <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
-        <translation>Impossibile decriptare l&#8217;oggetto nel Cloud drive.</translation>
+        <translation>Impossibile decriptare l&apos;oggetto nel Cloud drive.</translation>
     </message>
     <message>
         <source>Waiting for scanning to complete.</source>
@@ -6861,7 +7167,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Fingerprint is missing or invalid.</source>
         <translatorcomment>Label descriping a sync stall is happening because the file fingerprint is missing.SNC-2565</translatorcomment>
-        <translation>L&#8217;impronta digitale è mancante o non valida</translation>
+        <translation>L&apos;impronta digitale è mancante o non valida</translation>
     </message>
     <message>
         <source>Error not detected</source>
@@ -6889,7 +7195,7 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>This action will ignore this issue and it will not be synced.</source>
         <translatorcomment>informative text in message box shown when the user chooses to ignore files causing stall.SNC-2565</translatorcomment>
-        <translation>Questa azione ignorerà questo problema e l&#8217;elemento non verrà sincronizzato finché il problema non sarà risolto.</translation>
+        <translation>Questa azione ignorerà questo problema e l&apos;elemento non verrà sincronizzato finché il problema non sarà risolto.</translation>
     </message>
     <message>
         <source>Ignore</source>
@@ -7040,14 +7346,14 @@ Please, refresh the list.</source>
 Aggiorna la lista.</translation>
     </message>
     <message>
-        <source>Some issues can&apos;t be fixed.
+        <source>Some issues can't be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Alcuni problemi non possono essere risolti.
 Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella locale della tua sincronizzazione.</translation>
     </message>
     <message>
-        <source>Issues can&apos;t be fixed.
+        <source>Issues can't be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Alcuni problemi non possono essere risolti.
@@ -7260,7 +7566,7 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>Questa azione ignorerà tutti i presenti e futuri collegamenti simbolici in tutte le tue sincronizzazioni.</translation>
     </message>
     <message>
@@ -7270,7 +7576,7 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>Questa azione ignorerà questo link di reindirizzamento e non sarà sincronizzato.</translation>
     </message>
     <message>
@@ -7312,7 +7618,7 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     <message>
         <source>Folder is already backed up. Select a different one.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is already backed up.</translatorcomment>
-        <translation>La cartella ha già effettuato il backup. Seleziona un&#8217;altra cartella.</translation>
+        <translation>La cartella ha già effettuato il backup. Seleziona un&apos;altra cartella.</translation>
     </message>
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a synced folder.</source>
@@ -7332,7 +7638,7 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     <message>
         <source>You can&apos;t backup this folder as it&apos;s already inside a backed up folder.</source>
         <translatorcomment>Warning message indicating that a folder can´t be backed up as it is inside a backed up folder.</translatorcomment>
-        <translation>Non puoi effettuare il backup di questa cartella perché è già all&#8217;interno di una cartella di cui viene effettuato il backup.</translation>
+        <translation>Non puoi effettuare il backup di questa cartella perché è già all&apos;interno di una cartella di cui viene effettuato il backup.</translation>
     </message>
     <message>
         <source>Unable to create backup as selected folder is not valid. Try again.</source>
@@ -7392,12 +7698,12 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a synced folder</source>
         <translatorcomment>Warning message indicating that the selected is inside a sync folder. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella sincronizzata</translation>
+        <translation>La cartella non può essere sincronizzata poiché si trova all&apos;interno di una cartella sincronizzata</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it&apos;s inside a backed up folder</source>
         <translatorcomment>Warning message indicating that the selected is inside a backed up folder. CON-467</translatorcomment>
-        <translation>La cartella non può essere sincronizzata poiché si trova all&#8217;interno di una cartella di cui viene effettuato il backup</translation>
+        <translation>La cartella non può essere sincronizzata poiché si trova all&apos;interno di una cartella di cui viene effettuato il backup</translation>
     </message>
     <message>
         <source>Folder can&apos;t be synced as it contains synced folders</source>
@@ -7440,12 +7746,12 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a FAT filesystem.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale formattata con un file system FAT. Il file system FAT presenta delle lacune nella gestione dei file di grandi dimensioni e degli orari di modifica che possono causare problemi di sincronizzazione (ad esempio quando si passa dall&#8217;ora solare all&#8217;ora legale e viceversa), quindi si consiglia vivamente di sincronizzare solo le cartelle formattate con file system più affidabili come NTFS (ulteriori informazioni [A]qui[/A]).</translation>
+        <translation>Stai sincronizzando una cartella locale formattata con un file system FAT. Il file system FAT presenta delle lacune nella gestione dei file di grandi dimensioni e degli orari di modifica che possono causare problemi di sincronizzazione (ad esempio quando si passa dall&apos;ora solare all&apos;ora legale e viceversa), quindi si consiglia vivamente di sincronizzare solo le cartelle formattate con file system più affidabili come NTFS (ulteriori informazioni [A]qui[/A]).</translation>
     </message>
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Informative message shown when a user is trying to sync using a local folder shared with VMWare third party app.</translatorcomment>
-        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare l&#8217;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&#8217;altra cartella per ridurre l&#8217;utilizzo della CPU.</translation>
+        <translation>Stai sincronizzando una cartella locale condivisa con VMWare. Questa cartella non supporta le notifiche del filesystem, quindi per riscontrare cambiamenti e sincronizzare l&apos;app dovrà scansionare la cartella e i file al suo interno di continuo. Se possibile, utilizza un&apos;altra cartella per ridurre l&apos;utilizzo della CPU.</translation>
     </message>
     <message>
         <source>Your syncs and backups have been disabled: %1</source>
@@ -7549,8 +7855,8 @@ Verifica le autorizzazioni del file .megaignore nelle posizioni della cartella l
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>La destinazione è troppo profonda nella struttura delle tue cartelle.
-Sposta l&apos;oggetto in una posizione profonda meno di 64 cartelle.</translation>
+        <translation>L&apos;obiettivo è troppo profondo nella struttura delle cartelle. Interrompi la sincronizzazione, sposta la cartella in una posizione profonda meno di 64 cartelle e crea nuovamente la sincronizzazione.
+Se il problema persiste, contatta support@mega.nz.</translation>
     </message>
 </context>
 <context>
@@ -7685,7 +7991,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
         <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
-        <translation>Alcune cartelle non sono state sincronizzate. Per maggiori informazioni, vai sull&#8217;icona rossa.</translation>
+        <translation>Alcune cartelle non sono state sincronizzate. Per maggiori informazioni, vai sull&apos;icona rossa.</translation>
     </message>
     <message>
         <source>Sync operation failed</source>
@@ -7700,7 +8006,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Error adding sync</source>
         <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
-        <translation>Errore nell&#8217;aggiunta della sincronizzazione</translation>
+        <translation>Errore nell&apos;aggiunta della sincronizzazione</translation>
     </message>
     <message>
         <source>Error removing backup</source>
@@ -7723,12 +8029,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Error opening megaignore file</source>
         <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
-        <translation>Errore nell&#8217;apertura del file .megaignore</translation>
+        <translation>Errore nell&apos;apertura del file .megaignore</translation>
     </message>
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>[B]%1[/B] non può essere aggiunta perché il tuo account Pro&#xa0;Flexi è stato disattivato a causa di un fallimento nel pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
+        <translation>[B]%1[/B] non può essere aggiunta perché il tuo account Pro Flexi è stato disattivato a causa di un fallimento nel pagamento oppure perché hai annullato il tuo abbonamento. Per continuare, effettua un pagamento e riattiva il tuo abbonamento.</translation>
     </message>
 </context>
 <context>
@@ -7787,11 +8093,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pausa</translation>
     </message>
     <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
-        <translation>Aggiungi eccezioni</translation>
-    </message>
-    <message>
         <source>Quick Rescan</source>
         <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Scansione veloce</translation>
@@ -7800,11 +8101,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Deep Rescan</source>
         <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>Scansione profonda</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>Modifica .megaignore</translation>
     </message>
 </context>
 <context>
@@ -8104,7 +8400,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Il tuo account MEGA è pieno</translation>
     </message>
     <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+        <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>Non puoi continuare a scaricare perché non hai abbastanza banda di trasferimento disponibile per questo indirizzo IP.
@@ -8159,7 +8455,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Riprova l&#8217;oggetto fallito</numerusform><numerusform>Riprova gli oggetti falliti</numerusform><numerusform>Riprova gli oggetti falliti</numerusform></translation>
+        <translation><numerusform>Riprova l&apos;oggetto fallito</numerusform><numerusform>Riprova gli oggetti falliti</numerusform><numerusform>Riprova gli oggetti falliti</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
@@ -8336,7 +8632,7 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
         <source>Sync transfers cannot be cancelled individually.
 Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
-        <translation>La sincronizzazioni non possono essere annullate individualmente. Per rimuovere la sincronizzazione, vai nelle Impostazioni tramite l&#8217;app per desktop ed elimina la cartella sincronizzata.</translation>
+        <translation>La sincronizzazioni non possono essere annullate individualmente. Per rimuovere la sincronizzazione, vai nelle Impostazioni tramite l&apos;app per desktop ed elimina la cartella sincronizzata.</translation>
     </message>
     <message>
         <source>Open settings</source>
@@ -8625,17 +8921,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
         <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>Il limite è dinamico e dipende dall&#8217;ammontare di banda inutilizzata a disposizione.</translation>
+        <translation>Il limite è dinamico e dipende dall&apos;ammontare di banda inutilizzata a disposizione.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Effettua l&#8217;upgrade del tuo account per continuare immediatamente o attendi %1 per continuare gratuitamente</translation>
+        <translation>Effettua l&apos;upgrade del tuo account per continuare immediatamente o attendi %1 per continuare gratuitamente</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà addebitato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -8663,7 +8959,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Effettua l&#8217;upgrade del tuo account per usufruire di più spazio di archiviazione (i tuoi caricamenti riprenderanno automaticamente).</translation>
+        <translation>Effettua l&apos;upgrade del tuo account per usufruire di più spazio di archiviazione (i tuoi caricamenti riprenderanno automaticamente).</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
@@ -8673,12 +8969,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
         <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>Per aumentare questo limite, puoi effettuare l&#8217;upgrade del tuo account, che ti darà molto spazio di archiviazione extra.</translation>
+        <translation>Per aumentare questo limite, puoi effettuare l&apos;upgrade del tuo account, che ti darà molto spazio di archiviazione extra.</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà fatturato in euro per tutte le transazioni.</translation>
+        <translation>* Prezzo stimato nella tua valuta locale. Il tuo account verrà addebitato in euro per tutte le transazioni.</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -8695,12 +8991,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Impossibile caricare [B]%1[/B] nella posizione selezionata</translation>
     </message>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Impossibile raggiungere la cartella di destinazione</translation>
     </message>
 </context>
@@ -8788,22 +9084,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -8823,22 +9119,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]g[/A]</translation>
+        <translation>%1 [A]g[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]o[/A]</translation>
+        <translation>%1 [A]o[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]m[/A]</translation>
+        <translation>%1 [A]m[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]s[/A]</translation>
+        <translation>%1 [A]s[/A]</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -8885,6 +9181,56 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
         <translation><numerusform>Trasferimento completato %n anno fa</numerusform><numerusform>Trasferimento completato %n di anni fa</numerusform><numerusform>Trasferimento completato %n anni fa</numerusform></translation>
     </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>MEGA Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
+        <translation>MEGA Starter</translation>
+    </message>
+    <message>
+        <source>MEGA Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
+        <translation>MEGA Basic</translation>
+    </message>
+    <message>
+        <source>MEGA Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
+        <translation>MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Gratis</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation>Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation>Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation>Essential</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Business</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Pro Flexi</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -8911,7 +9257,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo account è stato bloccato per proteggerti dopo aver rilevato un accesso dannoso, quindi ti chiediamo di resettare la tua password. 
+Controlla la tua casella di posta elettronica per istruzioni su come sbloccare il tuo account e suggerimenti su come evitare che ciò accada di nuovo.</translation>
     </message>
     <message>
         <source>Resend email</source>

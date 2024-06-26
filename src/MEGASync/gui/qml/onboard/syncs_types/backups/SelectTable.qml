@@ -29,7 +29,7 @@ Item {
         id: backgroundRectangle
 
         anchors.fill: parent
-        color: Styles.pageBackground
+        color: colorStyle.pageBackground
         radius: tableRadius
     }
 
@@ -72,7 +72,7 @@ Item {
                 right: parent.right
             }
             height: headerFooterHeight
-            color: Styles.pageBackground
+            color: colorStyle.pageBackground
             radius: tableRadius
             z: 2
 
@@ -101,7 +101,6 @@ Item {
                     tristate: true
                     sizes.spacing: 8
                     enabled: backupsListView.count > 0
-
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
                             backupsModelAccess.checkAllState = checkState;
@@ -133,7 +132,7 @@ Item {
                     right: parent.right
                 }
                 height: borderRectangle.border.width
-                color: Styles.borderSubtle
+                color: colorStyle.borderSubtle
             }
 
         } // Rectangle: headerRectangle
@@ -185,7 +184,7 @@ Item {
         }
         height: headerFooterHeight - 2 * borderRectangle.border.width
         radius: tableRadius
-        color: Styles.pageBackground
+        color: colorStyle.pageBackground
         z: 2
 
         MouseArea {
@@ -252,7 +251,7 @@ Item {
 
         anchors.fill: parent
         color: "transparent"
-        border.color: Styles.borderStrong
+        border.color: colorStyle.borderStrong
         border.width: 1
         radius: tableRadius
         z: 4

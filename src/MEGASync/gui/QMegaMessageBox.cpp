@@ -96,5 +96,11 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setIconPixmap(info.iconPixmap);
     }
 
+    if (!info.checkboxText.isEmpty())
+    {
+        QCheckBox* checkbox = new QCheckBox(info.checkboxText);
+        msgBox->setCheckBox(checkbox);
+    }
+
     DialogOpener::showMessageBox(msgBox, info);
 }

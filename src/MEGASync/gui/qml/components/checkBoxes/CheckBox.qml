@@ -12,6 +12,9 @@ Qml.CheckBox {
     property string url: ""
     property bool manageChecked: false
 
+    property alias textWordWrap: checkLabel.wrapMode
+    property alias mouseArea: rootMouseArea
+
     property Sizes sizes: Sizes {}
     property Colors colors: Colors {}
     property Icons icons: Icons {}
@@ -43,6 +46,7 @@ Qml.CheckBox {
     }
 
     height: Math.max(contentItem.height, focusRect.height)
+
     spacing: (text.length === 0) ? 0 : sizes.spacing
     padding: 0
     activeFocusOnTab: true
@@ -65,7 +69,7 @@ Qml.CheckBox {
 
             anchors.fill: parent
             onPressed: { mouse.accepted = false; }
-            cursorShape: Qt.PointingHandCursor
+            cursorShape: root.text.length === 0 ? Qt.ArrowCursor : Qt.PointingHandCursor
         }
     }
 
@@ -78,7 +82,7 @@ Qml.CheckBox {
         radius: sizes.focusBorderRadius
         border {
             color: root.enabled
-                   ? (root.activeFocus ? Styles.focus : "transparent")
+                   ? (root.activeFocus ? colorStyle.focus : "transparent")
                    : "transparent"
             width: sizes.focusBorderWidth
         }
@@ -136,7 +140,7 @@ Qml.CheckBox {
                 visible: indeterminate() || checked
                 source: indeterminate() ? icons.indeterminate : icons.checked
                 sourceSize: indeterminate() ? sizes.iconSizeIndeterminate : sizes.iconSize
-                color: Styles.iconInverseAccent
+                color: colorStyle.iconInverseAccent
             }
 
         } // Rectangle: checkBoxOutRect

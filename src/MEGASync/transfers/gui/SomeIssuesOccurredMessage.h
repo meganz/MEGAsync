@@ -18,6 +18,9 @@ public:
     explicit SomeIssuesOccurredMessage(QWidget *parent = nullptr);
     ~SomeIssuesOccurredMessage();
 
+protected:
+    void changeEvent(QEvent *) override;
+
 private slots:
     void on_viewIssuesButton_clicked();
 

@@ -9,6 +9,8 @@ import components.images 1.0
 TextField {
     id: root
 
+    property alias iconVisibility: iconImage.visible
+
     property url imageSource
     property bool readOnly: true
 
@@ -28,6 +30,6 @@ TextField {
         height: root.outRect.height
         sourceSize: Qt.size(16 ,16)
         source: imageSource
-        color: Styles.iconSecondary
+        color: colorStyle.iconSecondary
     }
 }

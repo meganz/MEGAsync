@@ -16,9 +16,9 @@ Button {
     sizes.borderLess: true
 
     icons {
-        colorEnabled: visited ? Styles.linkVisited : Styles.linkPrimary
-        colorHovered: visited ? Styles.linkVisited : Styles.linkPrimary
-        colorPressed: visited ? Styles.linkVisited : Styles.linkPrimary
+        colorEnabled: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
+        colorHovered: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
+        colorPressed: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
     }
 
     colors {
@@ -28,9 +28,9 @@ Button {
         border: "transparent"
         borderHover: "transparent"
         borderDisabled: "transparent"
-        text: visited ? Styles.linkVisited : Styles.linkPrimary
-        textHover: visited ? Styles.linkVisited : Styles.linkPrimary
-        textPressed: visited ? Styles.linkVisited : Styles.linkPrimary
+        text: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
+        textHover: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
+        textPressed: visited ? colorStyle.linkVisited : colorStyle.linkPrimary
         pressed: "transparent"
         borderPressed: "transparent"
     }

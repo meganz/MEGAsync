@@ -13,6 +13,7 @@
 #include "MegaApplication.h"
 #include "control/gzjoin.h"
 #include "platform/Platform.h"
+#include <QCryptographicHash>
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -25,6 +26,10 @@
 using namespace std;
 using namespace mega;
 
+namespace
+{
+    constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+}
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
@@ -44,6 +49,9 @@ const unsigned long long TB = 1024 * GB;
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
 // Forbidden chars PCRE using a capture list: [\\/:"\*<>?|]
 const QRegularExpression Utilities::FORBIDDEN_CHARS_RX(QLatin1String("[\\\\/:\"*<>\?|]"));
+
+const qint64 FILE_READ_BUFFER_SIZE = 8192;
+
 
 void Utilities::initializeExtensions()
 {
@@ -265,11 +273,7 @@ void Utilities::getFolderSize(QString folderPath, long long *size)
 
 qreal Utilities::getDevicePixelRatio()
 {
-#if QT_VERSION >= 0x050000
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
-#else
-    return 1.0;
-#endif
 }
 
 QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
@@ -527,6 +531,19 @@ QString Utilities::getAvatarPath(QString email)
     return QDir::toNativeSeparators(avatarsPath);
 }
 
+void Utilities::removeAvatars()
+{   
+    const QString avatarsPath = QString::fromUtf8("%1/avatars/").arg(Preferences::instance()->getDataPath());
+    QDir avatarsDirectory(avatarsPath);
+    avatarsDirectory.setNameFilters(QStringList() << QString::fromUtf8(::AVATARS_EXTENSION_FILTER));
+    avatarsDirectory.setFilter(QDir::Files);
+    const QStringList avatars = avatarsDirectory.entryList();
+    for(const QString &avatar: avatars)
+    {
+        avatarsDirectory.remove(avatar);
+    }
+}
+
 bool Utilities::removeRecursively(QString path)
 {
     if (!path.size())
@@ -761,6 +778,11 @@ int Utilities::toNearestUnit(long long bytes)
     return static_cast<int>(inNearestUnit);
 }
 
+QString Utilities::getTranslatedSeparatorTemplate()
+{
+    return QCoreApplication::translate("Utilities", "%1/%2");
+}
+
 Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
 {
     ProgressSize sizes;
@@ -844,6 +866,37 @@ QString Utilities::extractJSONString(QString json, QString name)
     }
 
     return json.mid(pos + pattern.size(), end - pos - pattern.size());
+}
+
+QStringList Utilities::extractJSONStringList(const QString& json, const QString& name)
+{
+    QStringList resultList;
+
+    QString pattern = name + QString::fromUtf8("\":[\"");
+    int startPos = json.indexOf(pattern);
+    if (startPos < 0)
+    {
+        return resultList;
+    }
+
+    startPos += pattern.size(); // Move to the beginning of the first string
+
+    int endPos = json.indexOf(QString::fromUtf8("\"]"), startPos);
+    if (endPos < 0)
+    {
+        return resultList;
+    }
+
+    QString substr = json.mid(startPos, endPos - startPos);
+    QStringList parts = substr.remove(QString::fromUtf8("\"")).split(QString::fromUtf8(","));
+
+    // Trim whitespace from each part and add it to the result list
+    for (const QString& part : parts)
+    {
+        resultList.append(part.trimmed());
+    }
+
+    return resultList;
 }
 
 long long Utilities::extractJSONNumber(QString json, QString name)
@@ -1085,7 +1138,7 @@ QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long l
         }
     }
 
-    return getReadablePROplanFromId(pricing->getProLevel(planNeeded));
+    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
 }
 
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
@@ -1111,21 +1164,45 @@ QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
     return readableTimes;
 }
 
-QString Utilities::getReadablePROplanFromId(int identifier)
+QString Utilities::getReadablePlanFromId(int identifier, bool shortPlan)
 {
     switch (identifier)
     {
+        case MegaAccountDetails::ACCOUNT_TYPE_FREE:
+            return QCoreApplication::translate("Utilities", "Free");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_STARTER:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Starter")
+                       : QCoreApplication::translate("Utilities", "MEGA Starter");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BASIC:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Basic")
+                       : QCoreApplication::translate("Utilities", "MEGA Basic");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL:
+            return shortPlan
+                       ? QCoreApplication::translate("Utilities", "Essential")
+                       : QCoreApplication::translate("Utilities", "MEGA Essential");
+            break;
         case MegaAccountDetails::ACCOUNT_TYPE_LITE:
-            return QCoreApplication::translate("Utilities","Pro Lite");
+            return QCoreApplication::translate("Utilities", "Pro Lite");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROI:
-            return QCoreApplication::translate("Utilities","Pro I");
+            return QCoreApplication::translate("Utilities", "Pro I");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROII:
-            return QCoreApplication::translate("Utilities","Pro II");
+            return QCoreApplication::translate("Utilities", "Pro II");
             break;
         case MegaAccountDetails::ACCOUNT_TYPE_PROIII:
-            return QCoreApplication::translate("Utilities","Pro III");
+            return QCoreApplication::translate("Utilities", "Pro III");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_BUSINESS:
+            return QCoreApplication::translate("Utilities", "Business");
+            break;
+        case MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI:
+            return QCoreApplication::translate("Utilities", "Pro Flexi");
             break;
     }
 
@@ -1363,6 +1440,13 @@ QPair<QString, QString> Utilities::getFilenameBasenameAndSuffix(const QString& f
 void Utilities::upgradeClicked()
 {
     QString url = QString::fromUtf8("mega://#pro");
+    int accountType = Preferences::instance()->accountType();
+    if(accountType == Preferences::ACCOUNT_TYPE_STARTER
+        || accountType == Preferences::ACCOUNT_TYPE_BASIC
+        || accountType == Preferences::ACCOUNT_TYPE_ESSENTIAL)
+    {
+        url.append(QString::fromUtf8("?tab=exc"));
+    }
     getPROurlWithParameters(url);
     openUrl(QUrl(url));
 }
@@ -1478,6 +1562,20 @@ bool Utilities::isIncommingShare(MegaNode *node)
     return false;
 }
 
+bool Utilities::dayHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.daysTo(currentDate) > 0;
+}
+
+bool Utilities::monthHasChangedSince(qint64 msecs)
+{
+    QDate currentDate = QDateTime::currentDateTime().date();
+    QDate lastExecutionDate = QDateTime::fromMSecsSinceEpoch(msecs).date();
+    return lastExecutionDate.month() < currentDate.month();
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
@@ -1536,6 +1634,34 @@ bool Utilities::isNodeNameValid(const QString& name)
 {
     QString trimmedName (name.trimmed());
     return !trimmedName.isEmpty() && !trimmedName.contains(FORBIDDEN_CHARS_RX);
+}
+
+QString Utilities::getFileHash(const QString& filePath)
+{
+    QFile file(filePath);
+
+    // Verify precondition: the file must exist and be readable
+    if (!QFile::exists(filePath) || (!file.open(QIODevice::ReadOnly)))
+    {
+        // Opening failed
+        return QString::fromLatin1("");
+    }
+
+    QCryptographicHash hash(QCryptographicHash::Sha256);
+    QByteArray buffer;
+
+    while (!file.atEnd())
+    {
+        buffer = file.read(FILE_READ_BUFFER_SIZE);
+        hash.addData(buffer);
+    }
+
+    file.close();
+
+    QByteArray resultHash = hash.result();
+    QString hashString = QString::fromUtf8(resultHash.toHex());
+
+    return hashString;
 }
 
 void MegaListenerFuncExecuter::setExecuteInAppThread(bool executeInAppThread)

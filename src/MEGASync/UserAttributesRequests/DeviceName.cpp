@@ -71,7 +71,7 @@ AttributeRequest::RequestInfo DeviceName::fillRequestInfo()
                                                       << mega::MegaError::API_ENOENT    // Case we have to set it
                                                       << mega::MegaError::API_EEXIST)); // Case where the name is already taken
     ParamInfoMap paramInfoMap({{mega::MegaApi::USER_ATTR_DEVICE_NAMES, paramInfo}});
-    RequestInfo ret(paramInfoMap, QMap<int64_t, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
+    RequestInfo ret(paramInfoMap, QMap<uint64_t, int>({{mega::MegaUser::CHANGE_TYPE_DEVICE_NAMES,
                                                 mega::MegaApi::USER_ATTR_DEVICE_NAMES}}));
     return ret;
 }
@@ -116,7 +116,7 @@ void DeviceName::processGetDeviceNameCallback(mega::MegaRequest* incoming_reques
         mDeviceName = QString::fromUtf8(incoming_request->getName());
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                            QString::fromUtf8("Got device name from remote: \"%1\"").arg(mDeviceName)
-                           .toUtf8().constData());
+                               .toUtf8().constData());
         emit attributeReady(mDeviceName);
     }
     else

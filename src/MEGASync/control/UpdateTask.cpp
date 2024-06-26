@@ -453,7 +453,7 @@ void UpdateTask::rollbackUpdate(int fileNum)
 
 void UpdateTask::addToSignature(QString value)
 {
-    QByteArray bytes = value.toAscii();
+    QByteArray bytes = value.toLatin1();
     addToSignature(bytes);
 }
 
@@ -469,7 +469,7 @@ void UpdateTask::initSignature()
 
 bool UpdateTask::checkSignature(QString value)
 {
-    int result = signatureChecker->checkSignature(value.toAscii().constData());
+    int result = signatureChecker->checkSignature(value.toLatin1().constData());
     if (!result)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid signature");
@@ -501,7 +501,7 @@ bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
     tmpHash.add(bytes.constData(), bytes.size());
     file.close();
 
-    return tmpHash.checkSignature(fileSignature.toAscii().constData());
+    return tmpHash.checkSignature(fileSignature.toLatin1().constData());
 }
 
 void UpdateTask::downloadFinished(QNetworkReply *reply)

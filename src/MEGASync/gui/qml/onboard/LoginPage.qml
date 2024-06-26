@@ -1,8 +1,10 @@
 import QtQuick 2.15
 
 import onboard 1.0
+import common 1.0
 
 import ApiEnums 1.0
+import AppStatsEvents 1.0
 import LoginController 1.0
 import AccountStatusController 1.0
 
@@ -143,6 +145,8 @@ LoginPageForm {
     }
 
     loginButton.onClicked: {
+        proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.LOGIN_CLICKED);
+
         var emailValid = email.valid();
         loginControllerAccess.emailError = !emailValid;
         var emailText = "";
@@ -167,7 +171,7 @@ LoginPageForm {
             return;
         }
 
-        loginControllerAccess.login(email.text, password.text);
+        loginControllerAccess.login(email.text.trim(), password.text);
     }
 
     signUpButton.onClicked: {
@@ -183,6 +187,8 @@ LoginPageForm {
         loginButton.forceActiveFocus();
         loginButton.clicked();
     }
+
+    helpButton.url: Links.recovery + (email.valid() ? "?email=" + Qt.btoa(email.text) : "")
 
     Component.onDestruction: {
         resetLoginControllerStatus();
@@ -235,4 +241,5 @@ LoginPageForm {
             }
         }
     }
+
 }

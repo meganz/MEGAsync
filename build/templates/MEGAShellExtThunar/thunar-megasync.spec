@@ -28,7 +28,7 @@ BuildRequires: qt-devel
 %endif
 %endif
 
-Requires:       thunar, megasync >= 3.5
+Requires:       thunar, megasync >= 5.3.0
 
 %description
 - Easily see and track your sync statuses.

@@ -470,7 +470,7 @@ bool registerUpdateDaemon()
                << QString::fromUtf8("launchctl unload %1 && launchctl load %1").arg(path);
 
     QProcess p;
-    p.start(QString::fromAscii("bash"), scriptArgs);
+    p.start(QString::fromLatin1("bash"), scriptArgs);
     if (!p.waitForFinished(2000))
     {
         return false;

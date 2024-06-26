@@ -56,7 +56,7 @@ public:
 
         connect(table, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
         connect(table, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
+        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::reqRemoveSync);
         connect(table, &TableType::signaladdExclusions, this, &SyncSettingsUIBase::openExclusionsDialog);
         connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
         connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
@@ -110,15 +110,23 @@ public:
             if (Preferences::instance()->accountType() == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
                 syncErrorCode == mega::MegaSync::ACCOUNT_EXPIRED)
             {
+                Text::Bold bold;
+                Text::Decorator dec(&bold);
+
+
                 QString message = tr("%1 can't be added as your Pro Flexi account has been deactivated due to payment failure "
                              "or you've cancelled your subscription. To continue, make a payment and reactivate your subscription.").arg(localPath);
+                dec.process(message);
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
+
+                onSavingSyncsCompleted(SAVING_FINISHED);
             }
             else
             {
                 if (errorCode != mega::MegaError::API_OK)
                 {
                     onSavingSyncsCompleted(SAVING_FINISHED);
+
                     Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
                     Text::Decorator dec(&link);
                     QString msg = errorMsg;
@@ -195,6 +203,7 @@ protected:
 
 protected slots:
     virtual void removeSyncButtonClicked();
+    virtual void reqRemoveSync(std::shared_ptr<SyncSettings> sync);
     virtual void removeSync(std::shared_ptr<SyncSettings> sync);
     void setSyncToRun(std::shared_ptr<SyncSettings> sync);
     void setSyncToPause(std::shared_ptr<SyncSettings> sync);

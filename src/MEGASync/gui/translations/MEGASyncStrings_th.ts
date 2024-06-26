@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.1" language="th" sourcelanguage="en">
 <context>
@@ -103,64 +103,6 @@
         <source>Do you want to continue?</source>
         <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
         <translation>คุณต้องการดำเนินการต่อหรือไม่</translation>
-    </message>
-</context>
-<context>
-    <name>AddExclusionDialog</name>
-    <message>
-        <source>Add exclusion</source>
-        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation>เพิ่มการยกเว้น</translation>
-    </message>
-    <message>
-        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
-        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation>กรอกชื่อเส้นทางแบบเต็ม (อนุญาตให้ใช้สัญลักษณ์ * และ ? แทนได้) หรือเลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้นจากการซิงโครไนซ์</translation>
-    </message>
-    <message>
-        <source>Choose File</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation>เลือกไฟล์</translation>
-    </message>
-    <message>
-        <source>Choose Folder</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation>เลือกโฟลเดอร์</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>ยกเลิก</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation>ตกลง</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation>เลือก</translation>
-    </message>
-    <message>
-        <source>Please enter a valid file name or absolute path.</source>
-        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation>กรอกชื่อไฟล์ที่ถูกต้องหรือเส้นทางแบบเต็ม</translation>
-    </message>
-    <message>
-        <source>Select the file or folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation>เลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation>เลือกโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
-    </message>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation>เลือกไฟล์ที่คุณต้องการยกเว้น</translation>
     </message>
 </context>
 <context>
@@ -461,7 +403,7 @@
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can&apos;t have duplicated backup names and instructing them to rename them</translatorcomment>
+        <translatorcomment>Text informing the user that they can't have duplicated backup names and instructing them to rename them</translatorcomment>
         <translation>คุณไม่สามารถสำรองโฟลเดอร์ที่มีชื่อเดียวกันได้ หากต้องการสำรองข้อมูลต่อ กรุณาเปลี่ยนชื่อใหม่ ส่วนชื่อโฟลเดอร์บนคอมพิวเตอร์ของคุณจะไม่เปลี่ยนแปลง</translation>
     </message>
 </context>
@@ -832,7 +774,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
         <translation>ตัวเลือกนี้ควรเปิดใช้งานเฉพาะเมื่อการโอนย้ายข้อมูลไม่เริ่มต้นเท่านั้น ในกรณีอื่น ๆ การใช้ HTTP เพียงพอแล้ว เนื่องจาก MEGA เข้ารหัสข้อมูลทั้งหมดอยู่แล้ว</translation>
     </message>
 </context>
@@ -1162,7 +1104,7 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
         <translation><numerusform>แก้ไขปัญหานี้หรือไม่</numerusform></translation>
     </message>
     <message numerus="yes">
@@ -1187,7 +1129,7 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>แก้ไขปัญหา</translation>
     </message>
 </context>
@@ -1344,7 +1286,7 @@
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>กำลังรอให้กระบวนการอื่นเสร็จสิ้นก่อน</translation>
     </message>
 </context>
@@ -1578,7 +1520,7 @@
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Notificaion title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>บัญชี Pro&#xa0;Flexi ถูกปิดใช้งาน</translation>
+        <translation>บัญชี Pro Flexi ถูกปิดใช้งาน</translation>
     </message>
 </context>
 <context>
@@ -1625,7 +1567,7 @@
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>คุณไม่มีสิทธิ์เขียนในโฟลเดอร์บนเครื่อง</translation>
     </message>
 </context>
@@ -1802,6 +1744,319 @@
     </message>
 </context>
 <context>
+    <name>ExclusionsStrings</name>
+    <message>
+        <source>Add Exclusions</source>
+        <translatorcomment>Title for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>เพิ่มข้อยกเว้น</translation>
+    </message>
+    <message>
+        <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
+        <translatorcomment>Description for sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>ฟีเจอร์นี้ช่วยให้คุณสามารถเลือกไม่ซิงค์ไฟล์และโฟลเดอร์บางประเภทกับคลาวด์ไดร์ฟของคุณ เหมาะสำหรับไฟล์ขนาดใหญ่ ไฟล์ที่ไม่จำเป็นต้องใช้บนทุกอุปกรณ์ หรือไฟล์ประเภทเฉพาะที่ไม่จำเป็นต้องซิงค์</translation>
+    </message>
+    <message>
+        <source>Manage exclusions</source>
+        <translatorcomment>Action that enables openning sync exclusion rules dialog.SAT-449</translatorcomment>
+        <translation>จัดการข้อยกเว้น</translation>
+    </message>
+    <message>
+        <source>Choose which files or folders you want to exclude from</source>
+        <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>เลือกไฟล์หรือโฟลเดอร์ที่คุณไม่ต้องการให้ซิงค์กับ</translation>
+    </message>
+    <message>
+        <source>Exclude files by size</source>
+        <translatorcomment>Title for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>ยกเว้นไฟล์ตามขนาด</translation>
+    </message>
+    <message>
+        <source>Exclude file sizes</source>
+        <translatorcomment>Check box for enabling size rules in sync exclusions.SAT-449</translatorcomment>
+        <translation>ยกเว้นไฟล์</translation>
+    </message>
+    <message>
+        <source>Exclude files by specifying the lower and upper size limit, or just the files that are greater than or lesser than a specific size.</source>
+        <translatorcomment>Description for size exclusion rules section.SAT-449</translatorcomment>
+        <translation>คุณสามารถยกเว้นไฟล์จากการสำรองข้อมูลหรือซิงค์โดยกำหนดขนาดไฟล์ขั้นต่ำและสูงสุด หรือเลือกไฟล์ที่ขนาดใหญ่หรือเล็กกว่าขนาดที่ระบุไว้</translation>
+    </message>
+    <message>
+        <source>Choose if you want to exclude a file or a folder. You can exclude specific file types or a file/folder that starts, ends, contains, or equals a name (or part of a name).</source>
+        <translatorcomment>Description for the dialog for adding a new exclusion rule.SAT-449</translatorcomment>
+        <translation>เลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้นการสำรองข้อมูล คุณสามารถยกเว้นประเภทไฟล์เฉพาะ ไฟล์หรือโฟลเดอร์ที่ขึ้นต้น ลงท้าย อยู่ตรงกลาง หรือตรงกับชื่อ (หรือส่วนหนึ่งของชื่อ) ได้</translation>
+    </message>
+    <message>
+        <source>Add Exclusion</source>
+        <translatorcomment>Button to accept and add a new exclusion rule with the specified values.SAT-449</translatorcomment>
+        <translation>เพิ่มรายการยกเว้น</translation>
+    </message>
+    <message>
+        <source>You will exclude:</source>
+        <translatorcomment>Label for section to specify new exclusion rule values.SAT-449</translatorcomment>
+        <translation>คุณจะยกเว้น:</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Drop down entry for specifying files as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>ไฟล์</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Drop down entry for specifying folders as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>โฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
+        <translation>ส่วนขยาย</translation>
+    </message>
+    <message>
+        <source>Beginning with</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>ที่เริ่มต้นด้วยชื่อ</translation>
+    </message>
+    <message>
+        <source>Containing</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>ที่ประกอบไปด้วยชื่อ</translation>
+    </message>
+    <message>
+        <source>Ending</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>ที่ลงท้ายด้วยชื่อ</translation>
+    </message>
+    <message>
+        <source>Equal to</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.SAT-449</translatorcomment>
+        <translation>ที่มีชื่อตรงกับ</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button to cancel the dialog for adding rules.SAT-449</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Files beginning with:</source>
+        <translatorcomment>Title for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>ไฟล์ที่เริ่มต้นด้วยชื่อ:</translation>
+    </message>
+    <message>
+        <source>Use comma (“,”) to separate multiple items</source>
+        <translatorcomment>Placeholder for text field for adding new exclusion rule .SAT-449</translatorcomment>
+        <translation>ใช้เครื่องหมายจุลภาค (“,”) แยกคำหรือวลีหลายคำ</translation>
+    </message>
+    <message>
+        <source>Outside of</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>นอกเหนือจากขนาด</translation>
+    </message>
+    <message>
+        <source>Bigger than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>ใหญ่กว่า</translation>
+    </message>
+    <message>
+        <source>Smaller than</source>
+        <translatorcomment>Drop down for specifying the range in file size exclusion rule.SAT-449</translatorcomment>
+        <translation>เล็กกว่า</translation>
+    </message>
+    <message>
+        <source>and</source>
+        <translatorcomment> Label for the end range of file size exclusions section.SAT-449</translatorcomment>
+        <translation>และ</translation>
+    </message>
+    <message>
+        <source>Exclude by name</source>
+        <translatorcomment>Section title for name exclusion rules.SAT-449</translatorcomment>
+        <translation>ยกเว้นตามชื่อ</translation>
+    </message>
+    <message>
+        <source>Restore defaults</source>
+        <translatorcomment>Button for restoring MEGA ddefault sync exclusion rules.SAT-449</translatorcomment>
+        <translation>คืนค่าเริ่มต้น</translation>
+    </message>
+    <message>
+        <source>type</source>
+        <translatorcomment>Column title for displaying exclusion rule target type.SAT-449</translatorcomment>
+        <translation>ประเภท</translation>
+    </message>
+    <message>
+        <source>property</source>
+        <translatorcomment>Column title for displaying exclusion rule wild card type.SAT-449</translatorcomment>
+        <translation>เกณฑ์</translation>
+    </message>
+    <message>
+        <source>value</source>
+        <translatorcomment>Column title for displaying exclusion rule value.SAT-449</translatorcomment>
+        <translation>เป้าหมาย</translation>
+    </message>
+    <message>
+        <source>Remove this exclusion?</source>
+        <translatorcomment>Title for confirmation dialog before removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>ลบการยกเว้นนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Files beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>ไฟล์ที่เริ่มต้นด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>โฟลเดอร์ที่เริ่มต้นด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Files containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>ไฟล์ที่ประกอบไปด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>โฟลเดอร์ที่ประกอบไปด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Files ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>ไฟล์ที่ลงท้ายด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>โฟลเดอร์ที่ลงท้ายด้วยชื่อ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Files equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, the variable is for file name.SAT-449</translatorcomment>
+        <translation>ไฟล์ที่มีชื่อตรงกับ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.SAT-449</translatorcomment>
+        <translation>โฟลเดอร์ที่มีชื่อตรงกับ “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Files with this extension “%1” will be included</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for the extension.SAT-449</translatorcomment>
+        <translation>ไฟล์ที่มีนามสกุล “%1” จะถูกซิงค์ทั้งหมด</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>Button in confirmation message before removing exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ลบออก</translation>
+    </message>
+    <message>
+        <source>Don’t ask me again</source>
+        <translatorcomment>Check box for confirmation message bedore removing sync exclusion rule.SAT-449</translatorcomment>
+        <translation>อย่าถามฉันอีก</translation>
+    </message>
+    <message>
+        <source>Set a minimum and maximum value for file sizes. Files outside this range will be excluded.</source>
+        <translatorcomment>Hint text when specyfing the range to be excluded in sync exclusions dialog.SAT-449</translatorcomment>
+        <translation>กำหนดค่าขนาดไฟล์ขั้นต่ำและสูงสุด ไฟล์ที่อยู่นอกช่วงที่กำหนดจะถูกยกเว้น</translation>
+    </message>
+    <message>
+        <source>Edit Exclusion</source>
+        <translatorcomment>Title for the dialog of editing sync exclusion rules.SAT-449</translatorcomment>
+        <translation>แก้ไขข้อยกเว้น</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Button to accept exclusions dialog.SAT-449</translatorcomment>
+        <translation>เรียบร้อย</translation>
+    </message>
+    <message>
+        <source>file extension</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>นามสกุลไฟล์</translation>
+    </message>
+    <message>
+        <source>file name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ชื่อไฟล์</translation>
+    </message>
+    <message>
+        <source>folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ชื่อโฟล์เดอร์</translation>
+    </message>
+    <message>
+        <source>file type</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ประเภทไฟล์</translation>
+    </message>
+    <message>
+        <source>contains</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ประกอบไปด้วย</translation>
+    </message>
+    <message>
+        <source>ends with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ลงท้ายด้วย</translation>
+    </message>
+    <message>
+        <source>begins with</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>เริ่มต้นด้วย</translation>
+    </message>
+    <message>
+        <source>is equal</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
+        <translation>ตรงกัน</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ประกอบไปด้วยชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ลงท้ายด้วยชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ตรงกับชื่อไฟล์:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>เริ่มต้นด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ประกอบไปด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ลงท้ายด้วยชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ตรงกับชื่อโฟลเดอร์:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>ที่มีนามสกุลไฟล์:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>เลือกโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>เลือกไฟล์ที่คุณต้องการยกเว้น</translation>
+    </message>
+</context>
+<context>
     <name>FastLoginController</name>
     <message>
         <source>Login error: %1</source>
@@ -1813,17 +2068,17 @@
     <name>FileIssueHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>ไม่สามารถซิงค์ [B]%1[/B] ได้</translation>
     </message>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
         <translation>โฟลเดอร์มีปัญหาที่จำเป็นต้องได้รับการแก้ไขจากคุณ</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
         <translation>ไฟล์มีปัญหาที่จำเป็นต้องได้รับการแก้ไขจากคุณ</translation>
     </message>
 </context>
@@ -1925,12 +2180,12 @@
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>ไม่สามารถซิงค์ [B]%1[/B] ได้</translation>
     </message>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>ไฟล์ที่คุณกำลังพยายามซิงค์นั้นไม่มีนามสกุล และชื่อไฟล์ซ้ำกับชื่อโฟลเดอร์ที่มีอยู่แล้ว</translation>
     </message>
 </context>
@@ -2042,128 +2297,6 @@ Please, refresh the list.</source>
     </message>
 </context>
 <context>
-    <name>IgnoresEditingDialog</name>
-    <message>
-        <source>Edit exclusions</source>
-        <translatorcomment>window name for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>แก้ไขข้อยกเว้น</translation>
-    </message>
-    <message>
-        <source>Manage exclusions</source>
-        <translatorcomment>window title for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>จัดการข้อยกเว้น</translation>
-    </message>
-    <message>
-        <source>by size</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามขนาด</translation>
-    </message>
-    <message>
-        <source>Exclude files smaller than</source>
-        <translatorcomment>Check box text responsible for the lower size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>ยกเว้นไฟล์ที่มีขนาดเล็กกว่า</translation>
-    </message>
-    <message>
-        <source>Exclude files bigger than</source>
-        <translatorcomment>Check box text responsible for the upper size limit of included files in the sync.SNC-4208</translatorcomment>
-        <translation>ยกเว้นไฟล์ที่มีขนาดใหญ่กว่า</translation>
-    </message>
-    <message>
-        <source>by name</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามชื่อ</translation>
-    </message>
-    <message>
-        <source>Choose which files or folders you want to exclude from synchronisation.</source>
-        <translatorcomment>Section description for adding sync ignore rules for specific file/folder names.SNC-4208</translatorcomment>
-        <translation>ไฟล์หรือโฟลเดอร์ต่อไปนี้ จะไม่ทำการซิงค์:</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button to add new ignore rule in the sync ignores file.SNC-2565</translatorcomment>
-        <translation>เพิ่ม</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete selected ignore rules in the sync ignores dialog.SNC-2565</translatorcomment>
-        <translation>ลบ</translation>
-    </message>
-    <message>
-        <source>by file type</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามประเภทไฟล์</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>ขั้นสูง</translation>
-    </message>
-    <message>
-        <source>Open .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>เปิดไฟล์ .megaignore</translation>
-    </message>
-    <message>
-        <source>by size:</source>
-        <translatorcomment>Section title for adding sync ignore rules by file size.SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามขนาด:</translation>
-    </message>
-    <message>
-        <source>by name:</source>
-        <translatorcomment>Section title for adding sync ignore rules for specific file/folder names.SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามชื่อ:</translation>
-    </message>
-    <message>
-        <source>by file type:</source>
-        <translatorcomment>Section for title adding sync ignore rules for file types (extension).SNC-2565</translatorcomment>
-        <translation>ยกเว้นตามประเภทไฟล์:</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Button that opens the ignore rules file for editing.SNC-2565</translatorcomment>
-        <translation>แก้ไขไฟล์ .megaignore</translation>
-    </message>
-    <message>
-        <source>Advanced:</source>
-        <translatorcomment>Subtitle of a section for advanced users to open and edit the ignore rules file directly.SNC-2565</translatorcomment>
-        <translation>ขั้นสูง:</translation>
-    </message>
-    <message>
-        <source>Rule already exists.</source>
-        <translatorcomment>Text in a message box shown when the user adds a new rule identical to existing one.SNC-2565</translatorcomment>
-        <translation>มีการกำหนดกฎไว้อยู่แล้ว</translation>
-    </message>
-    <message>
-        <source>Reload</source>
-        <translatorcomment>Title for message box shown when an external chane detected in the ignore rules file.SNC-2565</translatorcomment>
-        <translation>โหลดซ้ำ</translation>
-    </message>
-    <message>
-        <source>Current file has been modified by another program. it will be reloaded</source>
-        <translatorcomment>Text in message box shown when the ignore rules file is changed externally.SNC-2565</translatorcomment>
-        <translation>ไฟล์ .megaignore ถูกโปรแกรมอื่นแก้ไขแล้ว ไฟล์จะถูกโหลดใหม่</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor. This is a task better[BR]suited for users who are comfortable with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly, [BR] is a placeholder for line break.SNC-256</translatorcomment>
-        <translation>คุณสามารถแก้ไขไฟล์ .megaignore ที่เกี่ยวข้องในโปรแกรมแก้ไขข้อความได้ นี่เป็นงานที่เหมาะสมกับผู้ใช้ที่เข้าใจรูปแบบนิพจน์ปรกติ</translation>
-    </message>
-    <message>
-        <source>You can change the associated .megaignore file on a text editor.
-This is a task better suited for advanced users who are comfortable[BR]with regular expressions.</source>
-        <translatorcomment>Description of a section for advanced users to open and edit the ignore rules file directly.SNC-256</translatorcomment>
-        <translation>คุณสามารถแก้ไขไฟล์ .megaignore ที่เกี่ยวข้องในโปรแกรมแก้ไขข้อความได้ นี่เป็นงานที่เหมาะสมกับผู้ใช้ที่เข้าใจรูปแบบนิพจน์ปรกติ</translation>
-    </message>
-    <message>
-        <source>Here you can exclude files and folders from being synced with your cloud drive.
-This can be useful for large files, files that you don't need on all of your devices,or certain file types that need not be synced.
-</source>
-        <translatorcomment>Description for ignore rules editing window.SNC-2565</translatorcomment>
-        <translation>คุณสามารถยกเว้นไฟล์และโฟลเดอร์บางรายการไม่ให้ซิงค์กับคลาวด์ไดร์ฟของคุณได้
-สิ่งนี้มีประโยชน์สำหรับไฟล์ขนาดใหญ่ ไฟล์ที่คุณไม่จำเป็นต้องใช้บนอุปกรณ์ทั้งหมดของคุณหรือไฟล์บางประเภทที่ไม่ต้องการซิงค์</translation>
-    </message>
-</context>
-<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
@@ -2200,7 +2333,7 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that the name of a Public Link (for example a folder or a Set) was not found. JIRA ticket CON-638</translatorcomment>
         <translation>ไม่พบข้อมูล</translation>
     </message>
     <message>
@@ -2225,26 +2358,6 @@ This can be useful for large files, files that you don't need on all of your dev
         <source>Free</source>
         <translatorcomment>Label to refer Free tier CON-467</translatorcomment>
         <translation>ฟรี</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translatorcomment>Label to refer Pro I CON-467</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Label to refer Pro II tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Label to refer Pro III tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Label to refer Pro Lite tier CON-467</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
     </message>
     <message>
         <source>Business</source>
@@ -2366,7 +2479,7 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
         <translation>ไม่มีแจ้งเตือน</translation>
     </message>
     <message>
@@ -2386,17 +2499,17 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
         <translation>ไม่มีการแจ้งเตือนสำหรับผู้ติดต่อ</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
         <translation>ไม่มีการแจ้งเตือนสำหรับการแชร์ขาเข้า</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
         <translation>ไม่มีการแจ้งเตือนสำหรับการชำระเงิน</translation>
     </message>
     <message>
@@ -2567,6 +2680,85 @@ This can be useful for large files, files that you don't need on all of your dev
     </message>
 </context>
 <context>
+    <name>LinuxPlatformNotificationAreaIcon</name>
+    <message>
+        <source>Install notification area icon</source>
+        <translatorcomment>This is the title of a notification message prompting the user about enabling the Notification Area Icon. The &quot;Notification Area Icon&quot; refers to the option to display an icon in the system tray or notification area of the taskbar. SNC-2270</translatorcomment>
+        <translation>ติดตั้งไอคอนในแถบแจ้งเตือน</translation>
+    </message>
+    <message>
+        <source>For a better experience on Fedora with GNOME, we recommend you enable the notification area icon.
+Would you like to install the necessary components now?</source>
+        <translatorcomment>This is the text of a notification message displayed to users on Fedora with GNOME, advising them to consider activating the Notification Area Icon for an optimized experience. It also inquires if they wish to proceed with the installation of the required components for enabling the Notification Area Icon. SNC-2270</translatorcomment>
+        <translation>เพื่อประสบการณ์ที่ดีขึ้นบน Fedora กับ GNOME เราขอแนะนำให้คุณเปิดใช้งานไอคอนในแถบแจ้งเตือน คุณต้องการติดตั้งส่วนประกอบที่จำเป็นตอนนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Do not show again</source>
+        <translatorcomment>This is a label for a checkbox. When checked by the user, it ensures that the Enable Notification Area Icon notification will not be displayed to them in the future. SNC-2270</translatorcomment>
+        <translation>ไม่ต้องแสดงอีกในครั้งต่อไป</translation>
+    </message>
+    <message>
+        <source>Installing notification area icon...</source>
+        <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
+        <translation>กำลังติดตั้งไอคอนในแถบแจ้งเตือน</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>This is the option provided in the Notification Area Icon installation progress bar to the user to cancel the Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Installing</source>
+        <translatorcomment>This is the title  for the Notification Area Icon installation progress bar which provide the feedback to the user about Notification Area Icon installation. SNC-2270</translatorcomment>
+        <translation>กำลังติดตั้ง</translation>
+    </message>
+    <message>
+        <source>Installation Cancelled</source>
+        <translatorcomment>This is the title of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>ยกเลิกการติดตั้งแล้ว</translation>
+    </message>
+    <message>
+        <source>The notification area icon installation was cancelled.</source>
+        <translatorcomment>This is the text of a notification message to provide information to the user about the Notification Area Icon installation was cancelled. SNC-2270</translatorcomment>
+        <translation>การติดตั้งไอคอนในแถบแจ้งเตือนถูกยกเลิกแล้ว</translation>
+    </message>
+    <message>
+        <source>Error installing components</source>
+        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
+        <translation>เกิดข้อผิดพลาดระหว่างติดตั้งส่วนประกอบ</translation>
+    </message>
+    <message>
+        <source>Failed to install the necessary components.</source>
+        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translation>ไม่สามารถติดตั้งส่วนประกอบที่จำเป็นได้</translation>
+    </message>
+    <message>
+        <source>To install manually, please run the following commands:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translation>หากต้องการติดตั้งด้วยตนเอง ให้รันคำสั่งต่อไปนี้:
+
+sudo dnf install gnome-shell-extensions
+sudo dnf install gnome-shell-extension-appindicator
+gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
+    </message>
+    <message>
+        <source>Install complete</source>
+        <translatorcomment>This is the title of a message indicating that the Notification Area Icon Support has been installed without any issues. SNC-2270</translatorcomment>
+        <translation>ติดตั้งสำเร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>The notification area icon was installed successfully.
+Please log out of your computer to complete the installation.</source>
+        <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
+        <translation>ติดตั้งไอคอนในแถบแจ้งเตือนสำเร็จแล้ว
+กรุณาเริ่มการทำงานคอมพิวเตอร์ของคุณใหม่เพื่อให้การติดตั้งเสร็จสมบูรณ์</translation>
+    </message>
+</context>
+<context>
     <name>LoadingSceneMessageHandler</name>
     <message>
         <source>%1 of %2</source>
@@ -2642,7 +2834,7 @@ This can be useful for large files, files that you don't need on all of your dev
     <message>
         <source>Are you sure you want to keep the [B]local folder[/B] %1?</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, %1 is placeholder for folder name,[B] is for bold.SNC-2565</translatorcomment>
-        <translation>คุณแน่ใจหรือไม่ว่าต้องการเก็บโฟลเดอร์ [B]%1[/B] ในเครื่องไว้</translation>
+        <translation>เก็บโฟลเดอร์ [B]%1[/B] ที่อยู่ในเครื่องไว้หรือไม่</translation>
     </message>
     <message>
         <source>The [B]local file[/B] %1 will be uploaded to MEGA and added as a version to the remote file.
@@ -2824,6 +3016,24 @@ Please wait for the upload to complete.</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall, displayed when multiple stalls are selected ,[B] is for bold.SNC-2565</translatorcomment>
         <translation>เก็บโฟลเดอร์[B]ในเครื่อง[/B]ไว้หรือไม่</translation>
     </message>
+    <message>
+        <source>The [B]local file[/B] %1 will be uploaded to MEGA and replace the current file, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote file (with versioning disabled), %1 is a placeholder for file name,[B] is for bold.SAT-800</translatorcomment>
+        <translation>ไฟล์ [B]%1[/B] ที่อยู่ภายในเครื่องของคุณจะถูกอัปโหลดไปยัง MEGA เพื่อแทนที่ไฟล์ปัจจุบัน ส่วนไฟล์ปัจจุบันจะถูกย้ายไปยังโฟลเดอร์ SyncDebris ในถังขยะ MEGA ของคุณ</translation>
+    </message>
+    <message>
+        <source>The [B]local files[/B] will be uploaded to MEGA and replace the current files, which will be moved to the SyncDebris folder in your MEGA Rubbish bin.</source>
+        <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
+        <translation>ไฟล์ที่อยู่[B]ภายในเครื่อง[/B]จะถูกอัปโหลดไปยัง MEGA เพื่อแทนที่ไฟล์ปัจจุบัน ส่วนไฟล์ปัจจุบันจะถูกย้ายไปยังโฟลเดอร์ SyncDebris ในถังขยะ MEGA ของคุณ</translation>
+    </message>
+</context>
+<context>
+    <name>LocalAndRemoteNameConflicts</name>
+    <message>
+        <source>Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA</source>
+        <translatorcomment>Label descriping the way to solve a name conflict sync stall.SNC-2565</translatorcomment>
+        <translation>คลิกเปลี่ยนชื่อเพื่อแก้ไขปัญหา หรือคลิกที่โฟลเดอร์ด้านล่างเพื่อปรับแต่งในระบบไฟล์บนอุปกรณ์หรือใน MEGA</translation>
+    </message>
 </context>
 <context>
     <name>LocalAndRemotePreviouslyUnsyncedDifferHeader</name>
@@ -2922,7 +3132,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs. CON-465</translatorcomment>
-        <translation>แอปพลิเคชันไม่สามารถเชื่อมต่อได้ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและการตั้งค่าไฟร์วอลล์บนอุปกรณ์ของคุณ โปรดทราบว่าโปรแกรมป้องกันไวรัสส่วนใหญ่มีไฟร์วอลล์รวมอยู่ด้วย</translation>
+        <translation>แอปไม่สามารถเชื่อมต่อได้ ตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและการตั้งค่าไฟร์วอลล์บนอุปกรณ์ของคุณ โปรดทราบว่าโปรแกรมป้องกันไวรัสส่วนใหญ่มีไฟร์วอลล์รวมอยู่ด้วย</translation>
     </message>
     <message>
         <source>Email address already in use.</source>
@@ -2946,6 +3156,11 @@ Please wait for the upload to complete.</source>
         <source>You have been logged out because of this error: %1</source>
         <translatorcomment>Message displayed when the current account has been logged due to an error. Keep &quot;%1&quot; code because it will be filled with the error message. SNC-4122</translatorcomment>
         <translation>คุณถูกออกจากระบบเนื่องจากข้อผิดพลาดนี้: %1</translation>
+    </message>
+    <message>
+        <source>You have been logged out. Please contact [A]support@mega.nz[/A] if this issue persists.</source>
+        <translatorcomment>Message displayed when the current account has been logged out due to an unknown error. CON-541</translatorcomment>
+        <translation>คุณออกจากระบบแล้ว ติดต่อ [A]support@mega.nz[/A] หากยังประสบปัญหานี้อยู่</translation>
     </message>
 </context>
 <context>
@@ -3015,7 +3230,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
         <translation>ล่าสุดแล้ว</translation>
     </message>
     <message>
@@ -3045,7 +3260,7 @@ Please wait for the upload to complete.</source>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
         <translation>พบปัญหาการซิงค์ข้อมูล</translation>
     </message>
     <message>
@@ -3118,11 +3333,6 @@ https://mega.co.nz/#sync</source>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
         <translation>การปรับแต่งของคุณเสียหาย กรุณาเริ่มใหม่</translation>
-    </message>
-    <message>
-        <source>Over quota</source>
-        <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation>เกินโควต้า</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3232,7 +3442,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation>บัญชีถูกระงับ</translation>
+        <translation>บัญชีถูกปิดใช้งานแล้ว</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3384,7 +3594,17 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Pro Flexi Account deactivated</source>
         <translatorcomment>Messabox title for pro flexi deactivated accounts. CON-435</translatorcomment>
-        <translation>บัญชี Pro&#xa0;Flexi ถูกปิดใช้งาน</translation>
+        <translation>บัญชี Pro Flexi ถูกปิดใช้งาน</translation>
+    </message>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Label to indicate the full storage for the current account is full (tray icon tooltip). CON-561</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลเต็มแล้ว</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
+        <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
 </context>
 <context>
@@ -3525,11 +3745,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>ละเมิดข้อกำหนดในการให้บริการ</translation>
     </message>
     <message>
-        <source>Not accessible due to ToS/AUP violation</source>
-        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation>ไม่สามารถเข้าถึงได้เนื่องจากละเมิดเงื่อนไขการให้บริการของเรา</translation>
-    </message>
-    <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
         <translation>การถ่ายโอนล้มเหลวเนื่องจากมีโครงสร้างโฟลเดอร์ซ้ำกัน</translation>
@@ -3553,7 +3768,7 @@ Transfer will automatically resume when you re-open the app.</source>
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>บัญชีของคุณถูกยุติการใช้งานเนื่องจากละเมิดเงื่อนไขการให้บริการของ MEGA
 คุณจะไม่สามารถกลับไปใช้ข้อมูลที่เก็บไว้หรือลงทะเบียนบัญชี MEGA ใหม่ได้อีกต่อไป</translation>
     </message>
@@ -3561,6 +3776,16 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
         <translation>ละเมิดเงื่อนไขการให้บริการ</translation>
+    </message>
+    <message>
+        <source>Your account has expired</source>
+        <translatorcomment>Used when a business account has expired, but this could also be a Pro-Flexi account. Max. 27 characters. SNC-4190 and CON-556</translatorcomment>
+        <translation>บัญชีของคุณหมดอายุแล้ว</translation>
+    </message>
+    <message>
+        <source>Destination storage is full.</source>
+        <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลปลายทางเต็มแล้ว</translation>
     </message>
 </context>
 <context>
@@ -3652,12 +3877,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Reached storage quota limit</source>
         <translatorcomment>Label to show that the account reached storage limit during a SDK operation.</translatorcomment>
-        <translation>&#xa0;เกินโควต้าพื้นที่จัดเก็บ </translation>
+        <translation> เกินโควต้าพื้นที่จัดเก็บ </translation>
     </message>
     <message>
         <source>Foreign target storage quota reached</source>
-        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation.</translatorcomment>
-        <translation>เจ้าของบัญชีโฟลเดอร์สำหรับซิงค์นี้ได้ใช้พื้นที่เก็บข้อมูลเกินโควต้าแล้ว</translation>
+        <translatorcomment>Label to show that foreign target account has exceeded its storage quota during a SDK operation. CON-561</translatorcomment>
+        <translation>ไม่สามารถซิงค์โฟลเดอร์ได้ เนื่องจากผู้ใช้ที่แชร์โฟลเดอร์นี้ใช้พื้นที่เก็บข้อมูลเต็มแล้ว</translation>
     </message>
     <message>
         <source>Remote path has changed</source>
@@ -3673,11 +3898,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Share without full access</source>
         <translatorcomment>SDK error label shown when trying to sync into a shared folder without full access.</translatorcomment>
         <translation>คุณไม่มีสิทธิ์เข้าถึงโฟลเดอร์ที่แชร์ใน MEGA แบบเต็มที่ได้</translation>
-    </message>
-    <message>
-        <source>Local fingerprint mismatch</source>
-        <translatorcomment>SDK error label shown when local fingerprint mismatches.</translatorcomment>
-        <translation>ตรวจพบการเปลี่ยนแปลงระบบไฟล์ภายในเครื่อง</translation>
     </message>
     <message>
         <source>Put nodes error</source>
@@ -3753,6 +3973,101 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Your plan has expired</source>
         <translatorcomment>Label to show that the current account is expired during a SDK operation. SNC-3747</translatorcomment>
         <translation>แผนของคุณหมดอายุแล้ว</translation>
+    </message>
+    <message>
+        <source>Session closed</source>
+        <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
+        <translation>การซิงค์หรือสำรองข้อมูลถูกหยุดชั่วคราวเนื่องจากคุณออกจากระบบ หากต้องการกลับมาซิงค์หรือสำรองข้อมูลต่อ ไปที่เมนูการตั้งค่าและเปิดใช้งานการซิงค์หรือสำรองข้อมูลอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Active sync same path</source>
+        <translatorcomment>SDK error to inform the user that there is an active sync in the same path. CON-537</translatorcomment>
+        <translation>โฟลเดอร์ในตำแหน่งนี้ถูกซิงค์หรือสำรองข้อมูลไว้แล้ว</translation>
+    </message>
+    <message>
+        <source>Unknown drive path.</source>
+        <translatorcomment>SDK error to inform the user that the drive path is unknown. CON-537</translatorcomment>
+        <translation>ไม่สามารถระบุเส้นทางไดรฟ์สำหรับการซิงค์หรือสำรองข้อมูล</translation>
+    </message>
+    <message>
+        <source>Local filesystem mismatch</source>
+        <translatorcomment>SDK error to inform the user that there is a mismatch in the filesystem. CON-537</translatorcomment>
+        <translation>ไฟล์ในโฟลเดอร์นี้ไม่สามารถซิงค์หรือสำรองข้อมูลได้ คุณต้องเปิดใช้งานการซิงค์หรือการสำรองข้อมูลใหม่ในเมนูการตั้งค่าก่อน</translation>
+    </message>
+    <message>
+        <source>Backup externally modified</source>
+        <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
+        <translation>มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์ MEGA คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Unable to create initial ignore file.</source>
+        <translatorcomment>SDK error to inform the user that the ignore file couldn´t be created. CON-537</translatorcomment>
+        <translation>ไม่สามารถสร้างไฟล์ .megaignore ที่ใช้ในการซิงค์หรือสำรองข้อมูลนี้ได้</translation>
+    </message>
+    <message>
+        <source>Unable to read sync configs from disk.</source>
+        <translatorcomment>SDK error to inform the user that megasync wasn´t able to read sync configuration files. CON-537</translatorcomment>
+        <translation>ไม่สามารถอ่านข้อมูลการตั้งค่าการซิงค์หรือสำรองข้อมูล ลองอีกครั้งในภายหลังหรือลองตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>Invalid scan interval specified.</source>
+        <translatorcomment>SDK error to inform the user that the specified scan interval was not valid. CON-537</translatorcomment>
+        <translation>ระยะเวลาการสแกนไม่ถูกต้อง ตรวจสอบค่าตั้งค่าและลองอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Filesystem notification subsystem unavailable.</source>
+        <translatorcomment>SDK error indicating that the filesystem notification subsystem is not available. CON-537</translatorcomment>
+        <translation>ม่สามารถสื่อสารกับตำแหน่งโฟลเดอร์ได้ ตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Unable to add filesystem watch.</source>
+        <translatorcomment>SDK error indicating that the filesystem watch couldn´t be added. CON-537</translatorcomment>
+        <translation>ไม่สามารถเพิ่มการติดตามระบบไฟล์ได้ ตรวจสอบให้แน่ใจว่ามีพื้นที่ว่างและหน่วยความจำเพียงพอ และคุณได้อนุญาตการเข้าถึงโฟลเดอร์แล้ว</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve sync root FSID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the sync root filesystem id. CON-537</translatorcomment>
+        <translation>ไม่สามารถอ่านตำแหน่งที่ตั้งการซิงค์หรือการสำรองข้อมูลได้ ตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Unable to open state cache database.</source>
+        <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
+        <translation>พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในเมนูการตั้งค่าหรือติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Insufficient disk space.</source>
+        <translatorcomment>SDK error indicating that there is no sufficient disk space. CON-537</translatorcomment>
+        <translation>พื้นที่เก็บข้อมูลไม่เพียงพอที่จะดาวน์โหลด</translation>
+    </message>
+    <message>
+        <source>Failure accessing to persistent storage</source>
+        <translatorcomment>SDK error indicating that the access to persistent storage failed. CON-537</translatorcomment>
+        <translation>ไม่สามารถอ่านตำแหน่งที่ตั้งการซิงค์หรือการสำรองข้อมูลได้ ตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Unable to retrieve the ID of current device</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve the ID of the device. CON-537</translatorcomment>
+        <translation>ไม่สามารถสร้างการสำรองข้อมูลได้ เนื่องจากอุปกรณ์ที่คุณกำลังสำรองข้อมูลยังไม่มีชื่อ ตั้งชื่ออุปกรณ์ของคุณแล้วลองอีกครั้ง หากปัญหายังคงอยู่ ติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Mismatch on sync root FSID.</source>
+        <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
+        <translation>พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในเมนูการตั้งค่าหรือติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
+        <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
+        <translation>พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในเมนูการตั้งค่าหรือติดต่อฝ่ายสนับสนุน</translation>
+    </message>
+    <message>
+        <source>Could not get the filesystem&apos;s ID.</source>
+        <translatorcomment>SDK error indicating that it can´t retrieve filesystem id. CON-537</translatorcomment>
+        <translation>ไม่สามารถอ่านตำแหน่งที่ตั้งการซิงค์หรือการสำรองข้อมูลได้ ตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่</translation>
+    </message>
+    <message>
+        <source>Unable to write sync config to disk.</source>
+        <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
+        <translation>ไม่สามารถอัปเดตข้อมูลการตั้งค่าการซิงค์หรือสำรองข้อมูลได้ ลองอีกครั้งในภายหลังหรือลองตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์</translation>
     </message>
 </context>
 <context>
@@ -3996,7 +4311,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
         <translation>แก้ไขจากภายนอกแล้ว</translation>
     </message>
     <message>
@@ -4045,7 +4360,7 @@ Please refresh the view</source>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
         <translation>ไม่ต้องดำเนินการใด ๆ</translation>
     </message>
     <message>
@@ -4852,7 +5167,7 @@ Enter a different name</source>
     <message>
         <source>Continue with [B]two-factor authentication[/B]</source>
         <translatorcomment>2FA page title CON-465</translatorcomment>
-        <translation>ดำเนินการต่อด้วยการรับรองความถูกต้องด้วยสองปัจจัยหรือไม่</translation>
+        <translation>ดำเนินการต่อด้วย[B]การรับรองความถูกต้องด้วยสองปัจจัย[/B]</translation>
     </message>
     <message>
         <source>Logging in…</source>
@@ -5297,12 +5612,12 @@ Enter a different name</source>
     <message>
         <source>Additional storage charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional storage quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of storage quota.</translatorcomment>
-        <translation>พื้นที่จัดเก็บเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2&#xa0;TB</translation>
+        <translation>พื้นที่จัดเก็บเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2 TB</translation>
     </message>
     <message>
         <source>Additional transfer quota charged at %1 per %2TB.</source>
         <translatorcomment>Tooltip to inform users that additional transfer quota will be charged at %1 price per %2 TB. %1 reflects the price and %2 the quantity of transfer quota.</translatorcomment>
-        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2&#xa0;TB</translation>
+        <translation>โควต้าการถ่ายโอนข้อมูลเพิ่มเติม คิดค่าบริการอยู่ที่ %1 ต่อ %2 TB</translation>
     </message>
     <message numerus="yes">
         <source>minimum %n user</source>
@@ -5324,7 +5639,7 @@ Enter a different name</source>
     <name>PlatformStrings</name>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
         <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
@@ -5339,7 +5654,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
         <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
@@ -5354,7 +5669,7 @@ Enter a different name</source>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
         <translation>รายการถูกย้ายไปที่ถังขยะแล้ว</translation>
     </message>
     <message>
@@ -5366,21 +5681,24 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Sync rework Beta V2 is released.
-- A new onboarding wizard is introduced for any new sync or backup processes.
-- Changes are detected and stalled issues are updated automatically.
-- MEGA-supported language set is now available.
-- User experience for batch fixing sync issues is improved.
-- Minor bugs are fixed.
-- Performance is improved.
+        <source>- Added support for Album and Collections links.
+- Updated Qt to v5.15.13.
+- Updated dependencies.
+- Improved error messages.
+- Improved the exclusions interface.
+- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
+- Improved system integration for all operating systems.
+- Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for Sync rework beta version 5.2.0.CON-530</translatorcomment>
-        <translation>ปรับปรุงการทำงานการซิงค์เบต้า V2
-- ตัวช่วยสร้างการเริ่มต้นใช้งานใหม่ ช่วยให้ผู้ใช้เริ่มต้นการซิงค์หรือสำรองข้อมูลได้ง่าย
-- ระบบจะตรวจจับการเปลี่ยนแปลงของไฟล์ และอัปเดตปัญหาการซิงค์โดยอัตโนมัติ
-- การแก้ไขปัญหาการซิงค์แบบเป็นกลุ่ม ช่วยให้ผู้ใช้แก้ไขปัญหาการซิงค์หลายรายการพร้อมกันได้
-- แก้ไขข้อผิดพลาดเล็กน้อย
-- ปรับปรุงประสิทธิภาพการทำงาน</translation>
+        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
+        <translation>- เพิ่มการสนับสนุนลิงก์อัลบั้มและคอลเลกชัน
+- อัปเดต Qt เป็นเวอร์ชัน 5.15.13
+- อัปเดตไลบรารีที่จำเป็น
+- ปรับปรุงข้อความแสดงข้อผิดพลาด
+- ปรับปรุงหน้าจอการตั้งค่าการยกเว้น
+- เพิ่มการสนับสนุน openSUSE Leap 15.6, Ubuntu 24.04 และ Fedora 40
+- ปรับปรุงการรวมระบบกับระบบปฏิบัติการทั้งหมด
+- แก้ไขข้อผิดพลาดและปรับปรุงการทำงานอื่น ๆ</translation>
     </message>
 </context>
 <context>
@@ -5765,7 +6083,7 @@ Please verify the correct file name was given.</source>
 ตรวจสอบชื่อไฟล์ว่าถูกต้องหรือไม่</translation>
     </message>
     <message>
-        <source>&apos;%1&apos; is write protected.
+        <source>'%1' is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>ไฟล์ “%1” ถูกป้องกันการเขียนไว้
@@ -5777,27 +6095,27 @@ Do you want to delete it anyway?</source>
     <message>
         <source>%1 TB</source>
         <translatorcomment>File size measured in terabytes</translatorcomment>
-        <translation>%1&#xa0;TB</translation>
+        <translation>%1 TB</translation>
     </message>
     <message>
         <source>%1 GB</source>
         <translatorcomment>File size measured in gigabytes</translatorcomment>
-        <translation>%1&#xa0;GB</translation>
+        <translation>%1 GB</translation>
     </message>
     <message>
         <source>%1 MB</source>
         <translatorcomment>File size measured in megabytes</translatorcomment>
-        <translation>%1&#xa0;MB</translation>
+        <translation>%1 MB</translation>
     </message>
     <message>
         <source>%1 KB</source>
         <translatorcomment>File size measured in kilobytes</translatorcomment>
-        <translation>%1&#xa0;KB</translation>
+        <translation>%1 KB</translation>
     </message>
     <message>
         <source>%1 bytes</source>
         <translatorcomment>File size measured in bytes</translatorcomment>
-        <translation>%1&#xa0;ไบต์</translation>
+        <translation>%1 ไบต์</translation>
     </message>
     <message>
         <source>Invalid filename</source>
@@ -5942,6 +6260,29 @@ Do you want to delete it anyway?</source>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>ยกเลิก</translation>
+    </message>
+</context>
+<context>
+    <name>RemoveSyncConfirmationDialog</name>
+    <message>
+        <source>Remove this sync?</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>นำการซิงค์นี้ออกหรือไม่</translation>
+    </message>
+    <message>
+        <source>The data on your computer and in MEGA will not be removed, but the folders will no longer sync with each other.</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>ข้อมูลบนคอมพิวเตอร์และ MEGA ของคุณจะยังคงอยู่ แต่โฟลเดอร์จะไม่ซิงค์กันอีกต่อไป</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translatorcomment>SNC-4402 - Add confirmation dialog for removing syncs. Reassure the user that no data will be deleted.</translatorcomment>
+        <translation>ลบออก</translation>
     </message>
 </context>
 <context>
@@ -6128,12 +6469,12 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and its consequences</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูลเวอร์ชันก่อนหน้าของไฟล์ที่ซิงค์ไว้จะถูกลบออกจากคอมพิวเตอร์ของคุณอย่างถาวร ตรวจสอบโฟลเดอร์สำรองข้อมูลของคุณว่ามีสิ่งใดที่ต้องกู้คืนก่อนดำเนินการต่อ</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and its consequences. Keep [A] substitution placeholder.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>การสำรองข้อมูลของไฟล์ที่ซิงค์ก่อนหน้านี้จะถูกลบออกจาก MEGA อย่างถาวร ตรวจสอบโฟลเดอร์ [A] ในถังขยะของบัญชี MEGA เพื่อดูว่ามีสิ่งใดที่ต้องกู้คืนก่อนดำเนินการต่อ</translation>
     </message>
     <message>
         <source>Clear local backup</source>
@@ -6376,21 +6717,6 @@ Do you want to delete it anyway?</source>
         <translation>ติดตั้งการอัปเดต</translation>
     </message>
     <message>
-        <source>Free</source>
-        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>ฟรี</translation>
-    </message>
-    <message>
-        <source>Pro Lite</source>
-        <translatorcomment>Text label indicating the Pro Lite tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
-    </message>
-    <message>
-        <source>Business</source>
-        <translatorcomment>Text label indicating the Business tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>ธุรกิจ</translation>
-    </message>
-    <message>
         <source>No limit</source>
         <translatorcomment>Text label shown when there is no limit set for Upload and Download rate limits in Network pane.</translatorcomment>
         <translation>ไม่จำกัด</translation>
@@ -6419,21 +6745,6 @@ Do you want to delete it anyway?</source>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
         <translation>รายงานปัญหา</translation>
-    </message>
-    <message>
-        <source>Pro I</source>
-        <translatorcomment>Text label indicating the Pro I tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
-    </message>
-    <message>
-        <source>Pro II</source>
-        <translatorcomment>Text label indicating the Pro II tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
-    </message>
-    <message>
-        <source>Pro III</source>
-        <translatorcomment>Text label indicating the Pro III tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -6504,11 +6815,6 @@ Do you want to delete it anyway?</source>
         <source>Are you sure?</source>
         <translatorcomment>Warning message second part asking if you are sure about continuing with the logout.</translatorcomment>
         <translation>ต้องการออกจากระบบหรือไม่</translation>
-    </message>
-    <message>
-        <source>Pro Flexi</source>
-        <translatorcomment>Text label indicating the Pro Flexi tier of account type in Account pane, next to the shield icon indicating also the type of account.</translatorcomment>
-        <translation>Pro Flexi</translation>
     </message>
     <message>
         <source>Go to backup centre</source>
@@ -6776,7 +7082,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
         <translation>ชื่อไฟล์ยาวเกินขีดจำกัดของระบบไฟล์</translation>
     </message>
     <message>
@@ -6796,7 +7102,7 @@ Do you want to delete it anyway?</source>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
         <translation>ตรวจสอบ MAC ไม่สำเร็จ</translation>
     </message>
     <message>
@@ -6827,7 +7133,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Error identifying folder content in filesystem.</source>
         <translatorcomment>Label descriping a sync stall is happening because the folder cannot be parsed for unnkown reason.SNC-2565</translatorcomment>
-        <translation>ไม่สามารถระบุเนื้อหาโฟลเดอร์ในระบบไฟล์ภายในเครื่องได้</translation>
+        <translation>ไม่สามารถอ่านเนื้อหาในโฟลเดอร์นี้ได้ ตรวจสอบสิทธิ์การเข้าถึงโฟลเดอร์ และตรวจสอบว่าไม่มีรายการใดถูกใช้งานโดยแอปพลิเคชันอื่นอยู่</translation>
     </message>
     <message>
         <source>Cloud node undecrypted.</source>
@@ -7035,14 +7341,14 @@ Please, refresh the list.</source>
 รีเฟรชรายการเพื่อดูข้อมูลล่าสุด</translation>
     </message>
     <message>
-        <source>Some issues can&apos;t be fixed.
+        <source>Some issues can't be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>ไม่สามารถแก้ไขปัญหาบางอย่างได้
 สิทธิ์การเข้าถึงไฟล์ .megaignore ในโฟลเดอร์ซิงค์บนอุปกรณ์ของคุณไม่ถูกต้อง</translation>
     </message>
     <message>
-        <source>Issues can&apos;t be fixed.
+        <source>Issues can't be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>ไม่สามารถแก้ไขปัญหาบางอย่างได้
@@ -7255,7 +7561,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
     <message>
         <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>การซิงค์ทั้งหมดของคุณ จะละเว้นการเชื่อมโยงแบบสัญลักษณ์ที่มีอยู่และในอนาคตทั้งหมด</translation>
     </message>
     <message>
@@ -7265,7 +7571,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     </message>
     <message>
         <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user&apos;s choice.SNC-2565</translatorcomment>
+        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
         <translation>การเชื่อมโยงแบบสัญลักษณ์นี้จะถูกละเว้น และจะไม่ทำการซิงค์</translation>
     </message>
     <message>
@@ -7544,7 +7850,8 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>ไฟล์เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ลึกเกินไป กรุณาย้ายไปยังตำแหน่งที่มีโครงสร้างโฟลเดอร์น้อยกว่า 64 โฟลเดอร์</translation>
+        <translation>เป้าหมายอยู่ในโครงสร้างโฟลเดอร์ที่ลึกเกินไป ให้หยุดการซิงค์ แล้วย้ายโฟลเดอร์ไปยังตำแหน่งที่ลึกไม่เกิน 64 โฟลเดอร์ จากนั้นเริ่มต้นการซิงค์ใหม่ 
+หากยังไม่สามารถแก้ไขปัญหาได้ ติดต่อ support@mega.nz</translation>
     </message>
 </context>
 <context>
@@ -7722,7 +8029,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
         <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
-        <translation>ไม่สามารถเพิ่ม [B]%1[/B] ได้ เนื่องจากว่าบัญชี Pro&#xa0;Flexi ของคุณถูกปิดใช้งาน อาจเป็นเพราะการชำระเงินไม่สำเร็จหรือคุณได้ยกเลิกการสมัครใช้งานของคุณเอง หากต้องการดำเนินการต่อ ให้ชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง</translation>
+        <translation>ไม่สามารถเพิ่ม [B]%1[/B] ได้ เนื่องจากว่าบัญชี Pro Flexi ของคุณถูกปิดใช้งาน อาจเป็นเพราะการชำระเงินไม่สำเร็จหรือคุณได้ยกเลิกการสมัครใช้งานของคุณเอง หากต้องการดำเนินการต่อ ให้ชำระเงินและเปิดใช้การสมัครใช้งานของคุณอีกครั้ง</translation>
     </message>
 </context>
 <context>
@@ -7781,11 +8088,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>พัก</translation>
     </message>
     <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow adding exclusion rules for new syncs &amp; backups.SNC-2565</translatorcomment>
-        <translation>เพิ่มข้อยกเว้น</translation>
-    </message>
-    <message>
         <source>Quick Rescan</source>
         <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>สแกนแบบด่วน</translation>
@@ -7794,11 +8096,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Deep Rescan</source>
         <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
         <translation>สแกนแบบละเอียด</translation>
-    </message>
-    <message>
-        <source>Edit .megaignore</source>
-        <translatorcomment>Menu action to open and start adding ignore rules file for a sync or backup folder.SNC-2565</translatorcomment>
-        <translation>แก้ไขไฟล์ .megaignore</translation>
     </message>
 </context>
 <context>
@@ -8098,7 +8395,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>บัญชี MEGA ของคุณเต็มแล้ว</translation>
     </message>
     <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
+        <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>คุณไม่สามารถดาวน์โหลดต่อได้ เนื่องจากที่อยู่ IP นี้ไม่มีโควต้าการถ่ายโอนที่เพียงพอ
@@ -8624,12 +8921,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
         <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>อัปเกรดบัญชีของคุณเพื่อใช้งานต่อได้ทันที หรือรอ %1 เพื่อใช้งานแบบฟรีต่อ</translation>
     </message>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาประมาณการในเงินสกุลท้องถิ่นของคุณ บัญชีของคุณจะถูกเรียกเก็บเงินเป็นเงินยูโรสำหรับทุกการทำธุรกรรม</translation>
+        <translation>* ราคาประมาณในสกุลเงินท้องถิ่นของคุณ แต่คุณจะถูกเรียกเก็บเงินเป็นสกุลยูโรในทุกการทำธุรกรรม</translation>
     </message>
     <message>
         <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
@@ -8672,7 +8969,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
         <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* ราคาประมาณการในเงินสกุลท้องถิ่นของคุณ บัญชีของคุณจะถูกเรียกเก็บเงินเป็นเงินยูโรสำหรับทุกการทำธุรกรรม</translation>
+        <translation>* ราคาประมาณในสกุลเงินท้องถิ่นของคุณ แต่คุณจะถูกเรียกเก็บเงินเป็นสกุลยูโรในทุกการทำธุรกรรม</translation>
     </message>
     <message>
         <source>100% of the %1 available used on your account.</source>
@@ -8689,12 +8986,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>ไม่สามารถอัปโหลด [B]%1[/B] ไปยังตำแหน่งที่เลือกได้</translation>
     </message>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>ไม่สามารถเข้าถึงโฟลเดอร์ปลายทางได้</translation>
     </message>
 </context>
@@ -8782,22 +9079,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Pro Lite</source>
         <translatorcomment>Label to refer Pro Lite tier</translatorcomment>
-        <translation>Pro&#xa0;Lite</translation>
+        <translation>Pro Lite</translation>
     </message>
     <message>
         <source>Pro I</source>
         <translatorcomment>Label to refer Pro I tier</translatorcomment>
-        <translation>Pro&#xa0;I</translation>
+        <translation>Pro I</translation>
     </message>
     <message>
         <source>Pro II</source>
         <translatorcomment>Label to refer Pro II tier</translatorcomment>
-        <translation>Pro&#xa0;II</translation>
+        <translation>Pro II</translation>
     </message>
     <message>
         <source>Pro III</source>
         <translatorcomment>Label to refer Pro III tier</translatorcomment>
-        <translation>Pro&#xa0;III</translation>
+        <translation>Pro III</translation>
     </message>
     <message>
         <source>[DAYS] [HOURS]</source>
@@ -8817,22 +9114,22 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 [A]d[/A]</source>
         <translatorcomment>String controlling the formatting of the day count for time intervals. It is used in the [DAYS] [HOURS] string, replacing the [DAYS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the days. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]ว[/A]</translation>
+        <translation>%1 [A]ว[/A]</translation>
     </message>
     <message>
         <source>%1 [A]h[/A]</source>
         <translatorcomment>String controlling the formatting of the hour count for time intervals. It is used in [DAYS] [HOURS] and [HOURS] [MINUTES] strings, replacing the [HOURS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the hours. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]ชม.[/A]</translation>
+        <translation>%1 [A]ชม.[/A]</translation>
     </message>
     <message>
         <source>%1 [A]m[/A]</source>
         <translatorcomment>String controlling the formatting of the minute count for time intervals. It is used in [HOURS] [MINUTES] and [MINUTES] [SECONDS] strings, replacing the [MINUTES] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the minutes. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]น.[/A]</translation>
+        <translation>%1 [A]น.[/A]</translation>
     </message>
     <message>
         <source>%1 [A]s[/A]</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
-        <translation>%1&#xa0;[A]วิ[/A]</translation>
+        <translation>%1 [A]วิ[/A]</translation>
     </message>
     <message numerus="yes">
         <source>%1 used</source>
@@ -8879,6 +9176,56 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
         <translation><numerusform>ถ่ายโอนเสร็จสมบูรณ์เมื่อ %n ปีที่แล้ว</numerusform></translation>
     </message>
+    <message>
+        <source>%1/%2</source>
+        <translatorcomment>This translated separator template with placeholders &quot;%1&quot; and &quot;%2&quot; is used to format the display of two values separated by a slash, without any superfluous spaces, in the UI. The placeholders represent dynamic content that will be replaced with actual data. For instance, in French, the formatted string should appear as &quot;15,2 Go/400 Go&quot;, without any spaces surrounding the slash. Translators should adjust the spaces around the slash according to their language-specific formatting rules, ensuring that the translation adheres to the standard typographical conventions of the target language. SNC-1793</translatorcomment>
+        <translation>%1/%2</translation>
+    </message>
+    <message>
+        <source>MEGA Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type CON-719</translatorcomment>
+        <translation>MEGA Starter</translation>
+    </message>
+    <message>
+        <source>MEGA Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type CON-719</translatorcomment>
+        <translation>MEGA Basic</translation>
+    </message>
+    <message>
+        <source>MEGA Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type CON-719</translatorcomment>
+        <translation>MEGA Essential</translation>
+    </message>
+    <message>
+        <source>Free</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>ฟรี</translation>
+    </message>
+    <message>
+        <source>Starter</source>
+        <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
+        <translation>Starter</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
+        <translation>Basic</translation>
+    </message>
+    <message>
+        <source>Essential</source>
+        <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
+        <translation>Essential</translation>
+    </message>
+    <message>
+        <source>Business</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>ธุรกิจ</translation>
+    </message>
+    <message>
+        <source>Pro Flexi</source>
+        <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
+        <translation>Pro Flexi</translation>
+    </message>
 </context>
 <context>
     <name>VerifyLockMessage</name>
@@ -8905,7 +9252,8 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Your account has been temporarily suspended for your safety. Please verify your email and follow its steps to unlock your account.</source>
         <translatorcomment>Label to indicate that current account is suspended and needs email verification to unlock it.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>บัญชีของคุณถูกล็อกชั่วคราวเพื่อความปลอดภัย เนื่องจากตรวจพบการเข้าสู่ระบบที่อาจเป็นอันตราย กรุณาเปลี่ยนรหัสผ่านของคุณเพื่อกู้คืนการเข้าถึงบัญชี
+ตรวจสอบกล่องจดหมายอีเมลของคุณเพื่อดูวิธีการปลดล็อกบัญชีและเคล็ดลับป้องกันไม่ให้เกิดเหตุการณ์นี้ซ้ำอีก</translation>
     </message>
     <message>
         <source>Resend email</source>

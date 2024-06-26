@@ -13,16 +13,16 @@ Text {
     property bool hovered: false
     property bool manageHover: false
     property bool visited: false
-    property color urlColor: Styles.linkPrimary
+    property color urlColor: colorStyle.linkPrimary
     property string rawText: ""
 
     function updateLinkColor() {
-        var color = Styles.linkPrimary;
+        var color = colorStyle.linkPrimary;
         if(!enabled) {
-            color = Styles.notificationInfo;
+            color = colorStyle.notificationInfo;
         }
         else if(visited) {
-            color = Styles.linkVisited;
+            color = colorStyle.linkVisited;
         }
         root.text = root.text.replace("color:" + urlColor, "color:" + color);
         urlColor = color;
@@ -121,7 +121,7 @@ Text {
         }
     }
 
-    color: enabled ? Styles.textPrimary : Styles.textDisabled
+    color: enabled ? colorStyle.textPrimary : colorStyle.textDisabled
     textFormat: Qml.Text.RichText
 
     // We are using rawText to avoid breaking internal connections in the text property.
@@ -185,7 +185,7 @@ Text {
             radius: Sizes.focusBorderRadius
             visible: false
             border {
-                color: Styles.focus
+                color: colorStyle.focus
                 width: Sizes.focusBorderWidth
             }
         }

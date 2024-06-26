@@ -206,7 +206,7 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
                 if(nonExistData)
                 {
                     item->state = TransferData::TRANSFER_FAILED;
-                    nonExistData->mFiles.nonExistFailedTransfers.insert(item->id, item);
+                    mFiles.nonExistFailedTransfers.insert(item->id, item);
                 }
             }
         }
@@ -496,10 +496,7 @@ void TransferMetaData::checkAndSendNotification()
 
             if(nonExistData)
             {
-                //Do not overwrite non exist files
-                auto nonExistFiles = nonExistData->mFiles.nonExistFailedTransfers;
                 nonExistData->mFiles = mFiles;
-                nonExistData->mFiles.nonExistFailedTransfers = nonExistFiles;
 
                 nonExistData->mEmptyFolders = mEmptyFolders;
                 nonExistData->mFolders = mFolders;
@@ -595,14 +592,14 @@ void TransferMetaData::setInitialTransfers(int newInitialPendingTransfers)
     mInitialTopLevelTransfers = newInitialPendingTransfers;
 }
 
-void TransferMetaData::setNotification(MegaNotification* newNotification)
+void TransferMetaData::setNotification(DesktopAppNotification* newNotification)
 {
     unlinkNotification();
 
     newNotification->setData(getAppId());
 
     mNotification = newNotification;
-    mNotificationDestroyedConnection = MegaNotification::connect(newNotification, &MegaNotification::destroyed, [newNotification](){
+    mNotificationDestroyedConnection = DesktopAppNotification::connect(newNotification, &DesktopAppNotification::destroyed, [newNotification](){
         auto appDataId(newNotification->getData().toULongLong());
         auto data = TransferMetaDataContainer::getAppDataById(appDataId);
         if(data && data->isNonExistData())
@@ -618,7 +615,7 @@ void TransferMetaData::unlinkNotification()
 {
     if(mNotification)
     {
-        MegaNotification::disconnect(mNotificationDestroyedConnection);
+        DesktopAppNotification::disconnect(mNotificationDestroyedConnection);
         mNotification->deleteLater();
     }
 }

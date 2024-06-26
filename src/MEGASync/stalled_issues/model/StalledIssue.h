@@ -406,7 +406,11 @@ public:
 
     QSize getDelegateSize(StalledIssue::Type type) const
     {
-        return mData->getDelegateSize(type);
+        if(mData)
+        {
+            return mData->getDelegateSize(type);
+        }
+        return QSize();
     }
     void setDelegateSize(const QSize &newDelegateSize, StalledIssue::Type type)
     {
@@ -443,7 +447,7 @@ private:
         return std::dynamic_pointer_cast<Type>(mData);
     }
 
-   std::shared_ptr<StalledIssue> mData;
+   std::shared_ptr<StalledIssue> mData = nullptr;
 };
 
 Q_DECLARE_METATYPE(StalledIssueVariant)

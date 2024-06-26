@@ -16,7 +16,7 @@ public:
 
     void initialize(int argc, char *argv[]) override;
     void notifyItemChange(const QString& path, int newState) override;
-    void notifySyncFileChange(std::string *localPath, int newState, bool) override;
+    void notifySyncFileChange(std::string *localPath, int newState) override;
     bool startOnStartup(bool value) override;
     bool isStartOnStartupActive() override;
     bool isTilingWindowManager() override;
@@ -38,6 +38,7 @@ public:
     bool shouldRunHttpServer() override;
     bool isUserActive() override;
     QString getDeviceName() override;
+    bool validateSystemTrayIntegration() override;
 
     void fileSelector(const SelectorInfo& info) override;
     void folderSelector(const SelectorInfo& info) override;
@@ -51,6 +52,11 @@ public:
 private:
     QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);
+    bool isFedoraWithGnome();
+    void promptFedoraGnomeUser();
+    bool installAppIndicatorForFedoraGnome();
+    int parseDnfOutput(const QString& dnfOutput);
+    bool verifyAndEnableAppIndicatorExtension();
 
     ExtServer *ext_server = nullptr;
     NotifyServer *notify_server = nullptr;

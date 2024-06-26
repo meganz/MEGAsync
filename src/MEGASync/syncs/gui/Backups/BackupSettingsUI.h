@@ -34,10 +34,12 @@ protected:
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
+    void setBackupsTitle();
     void changeEvent(QEvent* event);
 
 protected slots:
-    void removeSync(std::shared_ptr<SyncSettings> sync) override;
+    void reqRemoveSync(std::shared_ptr<SyncSettings> backup) override;
+    void removeSync(std::shared_ptr<SyncSettings> backup) override;
 
 private:
     BackupSettingsElements mElements;
