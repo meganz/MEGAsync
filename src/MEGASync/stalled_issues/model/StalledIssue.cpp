@@ -411,6 +411,12 @@ void StalledIssue::removeDelegateSize(Type type)
     }
 }
 
+void StalledIssue::resetDelegateSize()
+{
+    removeDelegateSize(Type::Header);
+    removeDelegateSize(Type::Body);
+}
+
 bool StalledIssue::isSolved() const
 {
     return mIsSolved >= SolveType::POTENTIALLY_SOLVED;
@@ -433,11 +439,15 @@ bool StalledIssue::isFailed() const
 
 void StalledIssue::setIsSolved(SolveType type)
 {
-    mIsSolved = type;
-    // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
-    MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
+    if(mIsSolved != type)
+    {
+        mIsSolved = type;
+        // Prevent this one showing again (if they Refresh) until sync has made a full fresh pass
+        MegaSyncApp->getMegaApi()->clearStalledPath(originalStall.get());
 
-    resetUIUpdated();
+        resetUIUpdated();
+        resetDelegateSize();
+    }
 }
 
 bool StalledIssue::isAutoSolvable() const

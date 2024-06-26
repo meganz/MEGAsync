@@ -50,12 +50,17 @@ void MultiStepIssueSolverBase::sendFinishNotification()
     DesktopNotifications::NotificationInfo finishNotificationInfo;
     finishNotificationInfo.title = tr("Solve issues");
 
-    if(mSolversFailedInTheSameNotification > 0)
+    if(mSolversFailedInTheSameNotification > 0 || mIssue->isFailed())
     {
         auto message = tr(
             "Some issues couldn't be resolved.[BR]Check the Issues screen for resolution options, "
             "and try to resolve the issues again.");
+#ifdef Q_OS_MACOS
+        //macOS doesn´t accept HMTL on notifications
+        message = message.replace(QLatin1String("[BR]"), QLatin1String("\n"));
+#else
         StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(message);
+#endif
         finishNotificationInfo.message = message;
         //Add action to run the widget to show the errors (future feature)
     }
