@@ -621,7 +621,7 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_MEGA_HELP_URL + QString::fromUtf8("/installs-apps/desktop");
     Utilities::openUrl(QUrl(helpUrl));
 }
 
