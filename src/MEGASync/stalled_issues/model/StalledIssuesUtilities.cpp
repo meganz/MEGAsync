@@ -253,6 +253,7 @@ mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString& path, bo
     else
     {
         QFileInfo fileDir(path);
+        QFileInfo folderDir(fileDir.absolutePath());
         if(!fileDir.exists())
         {
             return mega::INVALID_HANDLE;
