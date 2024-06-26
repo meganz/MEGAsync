@@ -15,6 +15,10 @@ static const QString CoreColors = QString::fromLatin1("Colors");
 static const QString SemanticTokens = QString::fromLatin1("Semantic tokens");
 static const QString ColorTokenStart = QString::fromLatin1("color-");
 
+static const QString RepoAttributeValue = QString::fromLatin1("value");
+static const QString RepoAttributeType = QString::fromLatin1("type");
+static const QString RepoAttributeColorId = QString::fromLatin1("color");
+
 DesignAssetsRepoManager::DesignAssetsRepoManager()
 {
     qDebug() << __func__ << " Current working directory : " << QDir::currentPath();
@@ -61,16 +65,16 @@ void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& c
 {
     const QStringList tokenKeys = coreColors.keys();
 
-    if (tokenKeys.contains(QLatin1String("value")) && tokenKeys.contains(QLatin1String("type")))
+    if (tokenKeys.contains(RepoAttributeValue) && tokenKeys.contains(RepoAttributeType))
     {
-        QJsonValue jType = coreColors["type"];
-        QJsonValue jValue = coreColors["value"];
+        QJsonValue jType = coreColors[RepoAttributeType];
+        QJsonValue jValue = coreColors[RepoAttributeValue];
 
         if (!jType.isNull() && jValue.isString())
         {
             QString type = jType.toString();
 
-            if (type == "color")
+            if (type == RepoAttributeColorId)
             {
                 /*
                  * Core color hex value format is #RRGGBBAA,
@@ -157,8 +161,8 @@ void DesignAssetsRepoManager::processToken(const QString& token,
                                            const CoreData& coreData,
                                            ColorData& colorData)
 {
-    QJsonValue jType = tokenObject["type"];
-    QJsonValue jValue = tokenObject["value"];
+    QJsonValue jType = tokenObject[RepoAttributeType];
+    QJsonValue jValue = tokenObject[RepoAttributeValue];
 
     if (jType.isNull() || jValue.isNull())
     {
@@ -167,7 +171,7 @@ void DesignAssetsRepoManager::processToken(const QString& token,
 
     QString type = jType.toString();
 
-    if (type == "color")
+    if (type == RepoAttributeColorId)
     {
         QString value = jValue.toString();
         processColorToken(token, value, coreData, colorData);
@@ -209,11 +213,11 @@ void DesignAssetsRepoManager::processColorToken(const QString& token,
     }
 }
 
-CoreData DesignAssetsRepoManager::parseCore(QFile& designTokensFile)
+DesignAssetsRepoManager::CoreData DesignAssetsRepoManager::parseCore(QFile& designTokensFile)
 {
     const QString errorPrefix = __func__ + QString(" Error : parsing design tokens file, ");
 
-    CoreData coreData;
+    DesignAssetsRepoManager::CoreData coreData;
 
     designTokensFile.seek(0);
     QJsonDocument jsonDocument = QJsonDocument::fromJson(designTokensFile.readAll());

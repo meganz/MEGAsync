@@ -6,7 +6,6 @@
 
 namespace DTI
 {
-    using CoreData = QMap<QString, QString>;
     using ColorData = QMap<QString, QString>;
     using ThemedColorData = QMap<QString, ColorData>;
 

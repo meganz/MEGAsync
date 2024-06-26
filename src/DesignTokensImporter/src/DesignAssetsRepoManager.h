@@ -18,10 +18,12 @@ namespace DTI
         DesignAssets getDesignAssets();
 
     private:
+        using CoreData = QMap<QString, QString>;
+
         ThemedColorData getColorData();
         ThemedColorData parseTheme(QFile& designTokensFile, const ColorData& coreData);
-        CoreData parseCore(QFile& designTokensFile);
-        void recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData);
+        DesignAssetsRepoManager::CoreData parseCore(QFile& designTokensFile);
+        void recurseCore(QString category, const QJsonObject& coreColors, DesignAssetsRepoManager::CoreData& coreData);
 
         //!
         //! \brief Creates the color data structure organised by themes so targets can consume it.
