@@ -13,6 +13,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/ExportProcessor.h
     control/FileFolderAttributes.h
     control/HTTPServer.h
+    control/ImageDownloader.h
     control/IntervalExecutioner.h
     control/LinkProcessor.h
     control/LinkObject.h
@@ -56,6 +57,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/ExportProcessor.cpp
     control/FileFolderAttributes.cpp
     control/HTTPServer.cpp
+    control/ImageDownloader.cpp
     control/IntervalExecutioner.cpp
     control/LinkProcessor.cpp
     control/LinkObject.cpp

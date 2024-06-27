@@ -6,8 +6,13 @@
 NotificationItem::NotificationItem(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::NotificationItem)
+    , mNotificationData(nullptr)
+    , mDownloader(std::make_unique<ImageDownloader>(this))
 {
     ui->setupUi(this);
+
+    connect(mDownloader.get(), &ImageDownloader::downloadFinished,
+            this, &NotificationItem::updateImage);
 }
 
 NotificationItem::~NotificationItem()
@@ -30,8 +35,7 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->lImageLarge->setVisible(showImage);
     if(showImage)
     {
-        QPixmap image(mNotificationData->getImageNamePath());
-        ui->lImageLarge->setPixmap(image);
+        mDownloader->downloadImage(mNotificationData->getImageNamePath(), 370, 115);
     }
     else
     {
@@ -42,8 +46,7 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->lImageSmall->setVisible(showIcon);
     if(showIcon)
     {
-        QPixmap image(mNotificationData->getIconNamePath());
-        ui->lImageSmall->setPixmap(image);
+        mDownloader->downloadImage(mNotificationData->getIconNamePath(), 48, 48);
     }
     else
     {
@@ -53,4 +56,31 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
 
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+}
+
+void NotificationItem::updateImage(const QImage& image, const QString& imageUrl)
+{
+    if (image.isNull())
+    {
+        return;
+    }
+
+    QLabel* imageLabel = nullptr;
+    QSize size(0, 0);
+    if (imageUrl == mNotificationData->getImageNamePath())
+    {
+        imageLabel = ui->lImageLarge;
+        size = QSize(370, 115);
+    }
+    else if (imageUrl == mNotificationData->getIconNamePath())
+    {
+        imageLabel = ui->lImageSmall;
+        size = QSize(48, 48);
+    }
+
+    if(imageLabel)
+    {
+        QPixmap pixmap = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        imageLabel->setPixmap(pixmap);
+    }
 }
