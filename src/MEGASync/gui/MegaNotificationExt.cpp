@@ -1,5 +1,10 @@
 #include "MegaNotificationExt.h"
 
+namespace
+{
+constexpr char* DefaultImageExtension = ".png";
+}
+
 MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent)
     : QObject(parent)
     , mNotification(notification)
@@ -13,34 +18,36 @@ int64_t MegaNotificationExt::getID() const
 
 QString MegaNotificationExt::getTitle() const
 {
-    return QString::fromLatin1(mNotification->getTitle());
+    return QString::fromUtf8(mNotification->getTitle());
 }
 
 QString MegaNotificationExt::getDescription() const
 {
-    return QString::fromLatin1(mNotification->getDescription());
+    return QString::fromUtf8(mNotification->getDescription());
 }
 
 bool MegaNotificationExt::showImage() const
 {
-    return !QString::fromLatin1(mNotification->getImageName()).isEmpty();
+    return !QString::fromUtf8(mNotification->getImageName()).isEmpty();
 }
 
 QString MegaNotificationExt::getImageNamePath() const
 {
-    return QString::fromLatin1(mNotification->getImagePath())
-                + QString::fromLatin1(mNotification->getImageName());
+    return QString::fromUtf8(mNotification->getImagePath())
+                + QString::fromUtf8(mNotification->getImageName())
+                + QString::fromUtf8(DefaultImageExtension);
 }
 
 bool MegaNotificationExt::showIcon() const
 {
-    return !QString::fromLatin1(mNotification->getIconName()).isEmpty();
+    return !QString::fromUtf8(mNotification->getIconName()).isEmpty();
 }
 
 QString MegaNotificationExt::getIconNamePath() const
 {
-    return QString::fromLatin1(mNotification->getImagePath())
-                + QString::fromLatin1(mNotification->getIconName());
+    return QString::fromUtf8(mNotification->getImagePath())
+                + QString::fromUtf8(mNotification->getIconName())
+                + QString::fromUtf8(DefaultImageExtension);
 }
 
 int64_t MegaNotificationExt::getStart() const
