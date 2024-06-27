@@ -1,5 +1,5 @@
-#ifndef DTI_DESIGN_TARGET_FACTORY_H
-#define DTI_DESIGN_TARGET_FACTORY_H
+#ifndef DESIGN_TARGET_FACTORY_H
+#define DESIGN_TARGET_FACTORY_H
 
 #include "DesignTarget.h"
 

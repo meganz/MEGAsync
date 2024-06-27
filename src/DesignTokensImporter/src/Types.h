@@ -1,5 +1,5 @@
-#ifndef DTI_TYPES_H
-#define DTI_TYPES_H
+#ifndef DESIGN_TOKENS_TYPES_H
+#define DESIGN_TOKENS_TYPES_H
 
 #include <QMap>
 #include <QString>

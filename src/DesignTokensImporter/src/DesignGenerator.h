@@ -1,20 +1,19 @@
-#ifndef DTI_DESIGN_GENERATOR_H
-#define DTI_DESIGN_GENERATOR_H
+#ifndef DESIGN_GENERATOR_H
+#define DESIGN_GENERATOR_H
 
-#include "IDesignGenerator.h"
 #include "Types.h"
 
 #include <QObject>
 
 namespace DTI
 {
-    class DesignGenerator : public QObject, public IDesignGenerator
+    class DesignGenerator : public QObject
     {
         Q_OBJECT
 
     public:
         explicit DesignGenerator(QObject* parent = nullptr);
-        void deploy(const DesignAssets& designAssets) override;
+        void deploy(const DesignAssets& designAssets);
     };
 }
 

@@ -1,22 +1,19 @@
-#ifndef DTI_PATH_PROVIDER_H
-#define DTI_PATH_PROVIDER_H
+#ifndef PATH_PROVIDER_H
+#define PATH_PROVIDER_H
 
 #include <QString>
 
 namespace DTI
 {
-    class PathProvider
+    namespace PathProvider
     {
-    public:
-        PathProvider() = delete;
-
-        static const QString RELATIVE_UI_PATH;
-        static const QString RELATIVE_MEGASYNC_PATH;
-        static const QString RELATIVE_COLOR_DIR_PATH;
-        static const QString RELATIVE_DESIGN_TOKENS_FILE_PATH;
-        static const QString JSON_NAME_FILTER;
-        static const QString COLOR_THEMED_TOKENS_FILE_NAME;
-    };
+        const QString RELATIVE_UI_PATH = QString::fromLatin1("/gui");
+        const QString RELATIVE_MEGASYNC_PATH = QString::fromLatin1("../MEGASync");
+        const QString RELATIVE_COLOR_DIR_PATH = RELATIVE_UI_PATH + QString::fromLatin1("/colors");
+        const QString RELATIVE_DESIGN_TOKENS_FILE_PATH = QString::fromLatin1("../DesignTokensImporter/megadesignassets/tokens.json");
+        const QString JSON_NAME_FILTER = QString::fromLatin1("*.json");
+        const QString COLOR_THEMED_TOKENS_FILE_NAME = QString::fromLatin1("ColorThemedTokens.json");
+    }
 }
 
-#endif // PATHPROVIDER_H
+#endif

@@ -14,7 +14,7 @@ namespace DTI
     class DesignAssetsRepoManager
     {
     public:
-        DesignAssetsRepoManager();
+        DesignAssetsRepoManager() = default;
         DesignAssets getDesignAssets();
 
     private:
