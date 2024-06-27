@@ -135,10 +135,10 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     else
     {
         QString folderToOpen;
+        QFileInfo file(pathIn);
         if(file.isFile())
         {
             //xdg-open open folders, so we choose the file parent folder
-            QFileInfo file(pathIn);
             folderToOpen = file.absolutePath();
         }
         else
