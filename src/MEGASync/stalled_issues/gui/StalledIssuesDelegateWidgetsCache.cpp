@@ -259,6 +259,10 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             {
                 headerCase = new CloudFingerprintMissingHeader(header);
             }
+            else if(StalledIssue::isCloudNodeBlocked(issue.consultData()->getOriginalStall().get()))
+            {
+                headerCase = new CloudNodeIsBlockedHeader(header);
+            }
             else
             {
                 headerCase = new DownloadIssueHeader(header);

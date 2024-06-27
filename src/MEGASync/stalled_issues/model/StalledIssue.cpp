@@ -508,6 +508,12 @@ bool StalledIssue::missingFingerprint() const
            consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
+bool StalledIssue::isCloudNodeBlocked(const mega::MegaSyncStall* stall)
+{
+    return stall->reason() == mega::MegaSyncStall::DownloadIssue &&
+           stall->pathProblem(true, 0) == mega::MegaSyncStall::SyncPathProblem::CloudNodeIsBlocked;
+}
+
 bool StalledIssue::canBeIgnored() const
 {
     return !mIgnoredPaths.isEmpty();

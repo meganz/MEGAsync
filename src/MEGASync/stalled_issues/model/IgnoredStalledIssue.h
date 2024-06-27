@@ -8,7 +8,7 @@ class IgnoredStalledIssue : public StalledIssue
 {
 public:
     IgnoredStalledIssue(const mega::MegaSyncStall *stallIssue);
-    ~IgnoredStalledIssue(){}
+    ~IgnoredStalledIssue() = default;
 
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
@@ -20,6 +20,16 @@ public:
 
 private:
     static QMap<mega::MegaHandle, bool> mSymLinksIgnoredInSyncs;
+};
+
+class CloudNodeIsBlockedIssue : public IgnoredStalledIssue
+{
+public:
+    CloudNodeIsBlockedIssue(const mega::MegaSyncStall *stallIssue);
+    ~CloudNodeIsBlockedIssue() = default;
+
+    bool isAutoSolvable() const override;
+    void fillIssue(const mega::MegaSyncStall *stall) override;
 };
 
 #endif // SYMLINKSTALLEDISSUE_H

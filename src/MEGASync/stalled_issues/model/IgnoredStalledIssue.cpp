@@ -22,7 +22,7 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
 
 bool IgnoredStalledIssue::isAutoSolvable() const
 {
-    //Always autosolvable, we don´t need to check if smart mode is active
+    //Always autosolvable for special links and ToS takedown files, we don´t need to check if smart mode is active
     return !isSolved() &&
            !syncIds().isEmpty() &&
            isSpecialLink();
@@ -100,4 +100,21 @@ bool IgnoredStalledIssue::autoSolveIssue()
     }
 
     return result;
+}
+
+CloudNodeIsBlockedIssue::CloudNodeIsBlockedIssue(const mega::MegaSyncStall* stallIssue)
+    : IgnoredStalledIssue(stallIssue)
+{
+
+}
+
+bool CloudNodeIsBlockedIssue::isAutoSolvable() const
+{
+    return true;
+}
+
+void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
+{
+    IgnoredStalledIssue::fillIssue(stall);
+    mIgnoredPaths.append(consultCloudData()->getFilePath());
 }

@@ -23,9 +23,6 @@ class StalledIssuesBoldTextDecorator
 public:
     StalledIssuesBoldTextDecorator() = default;
     static const Text::Decorator boldTextDecorator;
-
-private:
-    Text::Bold boldTD;
 };
 
 class StalledIssuesNewLineTextDecorator
@@ -34,9 +31,18 @@ public:
     StalledIssuesNewLineTextDecorator() = default;
 
     static const Text::Decorator newLineTextDecorator;
+};
 
-private:
-    Text::NewLine newLineTD;
+class StalledIssuesLinkTextDecorator
+{
+public:
+    StalledIssuesLinkTextDecorator() = default;
+
+    static void process(const QStringList& links, QString& input)
+    {
+        Text::Decorator linkTextDecorator(new Text::Link(links));
+        linkTextDecorator.process(input);
+    }
 };
 
 class StalledIssuesUtilities : public QObject

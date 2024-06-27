@@ -924,6 +924,19 @@
     </message>
 </context>
 <context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The link [B]%1[/B] you are trying to access is unavailable because the folder or file was reported to contain content in breach of MEGA&apos;s Terms of Service. The account of the user who created this link has been terminated.</source>
+        <translatorcomment>Title for the header widget of sync stall shown when there is a cloud node blocked by ToS, [B] is for bold and %1 is the name of the takedown file.SAT-1209</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For more information, please see our [A]Terms of Service[/A] and our [A]Takedown Guidance Policy[/A].</source>
+        <translatorcomment>Description text just below the header title when there is a cloud node blocked by ToS, [A] is for hyperlink style.SAT-1209</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloudStalledIssueChooseWidget</name>
     <message>
         <source>Moved to MEGA Bin</source>
@@ -5576,25 +5589,14 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support for Album and Collections links.
-- Updated Qt to v5.15.13.
-- Updated dependencies.
-- Improved error messages.
-- Improved the exclusions interface.
-- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
-- Improved system integration for all operating systems.
+        <source>- New support to Move or Rename sync conflicts.
+- New fail management for sync conflict resolution.
+- New UI improvements and fixes in sync conflict dialog.
+- New option to keep most recently modified file in local/remote sync conflict.
+- Sync stalls are now automatically resolved as soon as they are detected.
 - Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
-        <translation>- Added support for Album and Collections links.
-- Updated Qt to v5.15.13.
-- Updated dependencies.
-- Improved error messages.
-- Improved the exclusions interface.
-- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
-- Improved system integration for all operating systems.
-- Bug fixes and other improvements.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

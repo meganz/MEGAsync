@@ -333,6 +333,7 @@ public:
     virtual bool isSymLink() const {return false;}
     virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
+    static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
     bool canBeIgnored() const;
     virtual QStringList getLocalFiles();
     QStringList getIgnoredFiles() const;
