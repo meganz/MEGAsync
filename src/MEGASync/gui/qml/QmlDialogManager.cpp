@@ -4,10 +4,10 @@
 
 #include "backups/Backups.h"
 
-#include "onboarding/Onboarding.h"
-#include "onboarding/GuestContent.h"
-#include "onboarding/OnboardingQmlDialog.h"
-#include "onboarding/GuestQmlDialog.h"
+#include "Onboarding.h"
+#include "GuestContent.h"
+#include "OnboardingQmlDialog.h"
+#include "GuestQmlDialog.h"
 
 #include "WhatsNewWindow.h"
 #include "DialogOpener.h"

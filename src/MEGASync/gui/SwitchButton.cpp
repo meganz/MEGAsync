@@ -6,7 +6,7 @@
 
 #ifdef Q_OS_MACX
 #include <QOperatingSystemVersion>
-#include "gui/CocoaSwitchButton.h"
+#include "CocoaSwitchButton.h"
 #endif
 
 SwitchButton::SwitchButton(QWidget* parent)

@@ -2005,6 +2005,56 @@ W niektórych przypadkach mogą one zawierać szczegóły dotyczące Twoich dany
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Jest równe</translation>
     </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Pliki zawierające:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Pliki kończące się na:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Pliki równe:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Katalogi zaczynające się od:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Katalogi zawierające:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Katalogi kończące się na:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Katalogi równe:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Pliki z rozszerzeniem:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Wybierz katalog, który chcesz wykluczyć</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Wybierz plik, który chcesz wykluczyć</translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
@@ -2705,8 +2755,8 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
         <source>The notification area icon was installed successfully.
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
-        <translation>Ikona powiadomień została pomyślnie zainstalowana.
-Wyloguj się z komputera, aby zakończyć instalację.</translation>
+        <translation>Ikona obszaru powiadomień została pomyślnie zainstalowana.
+Uruchom ponownie komputer, aby zakończyć instalację.</translation>
     </message>
 </context>
 <context>
@@ -4022,11 +4072,6 @@ Użytkownik nie będzie mógł odzyskać dostępu do przechowywanych danych ani 
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Nie można zaktualizować konfiguracji synchronizacji ani kopii zapasowej. Spróbuj ponownie później lub sprawdź uprawnienia katalogu.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7700,19 +7745,6 @@ Sprawdź uprawnienia pliku .megaignore w lokalizacjach lokalnych folderów synch
     </message>
 </context>
 <context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Wybierz plik, który chcesz wykluczyć</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Wybierz katalog, który chcesz wykluczyć</translation>
-    </message>
-</context>
-<context>
     <name>SyncInfo</name>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -7826,7 +7858,7 @@ Sprawdź uprawnienia pliku .megaignore w lokalizacjach lokalnych folderów synch
         <source>Target is too deep on your folder structure.
 Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
-        <translation>Cel jest zbyt głęboko w strukturze katalogów. Zatrzymaj synchronizację, przenieś katalog do lokalizacji o głębokości mniejszej niż 64 katalogów i odtwórz synchronizację.
+        <translation>Cel jest zbyt głęboko w strukturze folderów. Zatrzymaj synchronizację, przenieś katalog do lokalizacji o głębokości mniejszej niż 64 katalog i odtwórz synchronizację.
 Jeśli to nie rozwiąże problemu, skontaktuj się z support@mega.nz.</translation>
     </message>
 </context>

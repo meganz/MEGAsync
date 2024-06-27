@@ -1763,7 +1763,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>Chọn tệp tin hoặc thư mục bạn muốn loại trừ khỏi</translation>
+        <translation>Chọn tệp tin hoặc thư mục bạn muốn loại trừ ra khỏi</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
@@ -2004,6 +2004,56 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
         <source>is equal</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.SAT-449</translatorcomment>
         <translation>Giống với</translation>
+    </message>
+    <message>
+        <source>Files containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các tệp tin có chứa:</translation>
+    </message>
+    <message>
+        <source>Files ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các tệp tin kết thúc với:</translation>
+    </message>
+    <message>
+        <source>Files equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các tệp tin giống như:</translation>
+    </message>
+    <message>
+        <source>Folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các thư mục  bắt đầu với:</translation>
+    </message>
+    <message>
+        <source>Folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các thư mục có chứa:</translation>
+    </message>
+    <message>
+        <source>Folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các thư mục kết thúc với:</translation>
+    </message>
+    <message>
+        <source>Folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các thư mục giống như:</translation>
+    </message>
+    <message>
+        <source>Files with extension:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.SAT-1099</translatorcomment>
+        <translation>Các tệp tin có phần mở rộng là:</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Chọn thư mục bạn muốn loại trừ</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
+        <translation>Chọn tệp tin bạn muốn loại trừ</translation>
     </message>
 </context>
 <context>
@@ -2706,7 +2756,7 @@ gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</translation>
 Please log out of your computer to complete the installation.</source>
         <translatorcomment>This is the text of a notification message confirming the successful installation of Notification Area Icon Support. Additionally, it provides guidance that the user needs to log out and then log back in for the changes to take effect. SNC-2270</translatorcomment>
         <translation>Biểu tượng vùng thông báo đã được cài đặt thành công.
-Vui lòng đăng xuất khỏi máy tính của bạn để hoàn tất việc cài đặt.</translation>
+Vui lòng khởi động lại máy tính của bạn để hoàn tất việc cài đặt.</translation>
     </message>
 </context>
 <context>
@@ -4019,11 +4069,6 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
         <source>Unable to write sync config to disk.</source>
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Không thể cập nhật cấu hình đồng bộ hóa hoặc sao lưu. Hãy thử lại sau hoặc kiểm tra quyền hạn của thư mục.</translation>
-    </message>
-    <message>
-        <source>Backup source path not below drive path.</source>
-        <translatorcomment>SDK error shown when cloud path of the sync is not below the main drive node.SAT-815</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6562,7 +6607,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Chìa Khóa Phục Hồi</translation>
+        <translation>Chìa khóa phục hồi</translation>
     </message>
     <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
@@ -6960,7 +7005,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Created at:</source>
         <translatorcomment>Label indicating creation time for the file causing sync stall. SNC-2565</translatorcomment>
-        <translation>Được tạo lúc:</translation>
+        <translation>Đã tạo:</translation>
     </message>
 </context>
 <context>
@@ -7693,19 +7738,6 @@ Kiểm tra quyền của tệp .megaignore trong vị trí thư mục đồng
         <source>This folder is already being synced.</source>
         <translatorcomment>Warning message indicating that the selected folder is already a synced folder. CON-467</translatorcomment>
         <translation>Thư mục này đã được đồng bộ rồi</translation>
-    </message>
-</context>
-<context>
-    <name>SyncExclusions</name>
-    <message>
-        <source>Select the file you want to exclude</source>
-        <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Chọn tệp tin bạn muốn loại trừ</translation>
-    </message>
-    <message>
-        <source>Select the folder you want to exclude</source>
-        <translatorcomment>Title for dialog to choose folder to be used in sync exclusion rule.SAT-449</translatorcomment>
-        <translation>Chọn thư mục bạn muốn loại trừ</translation>
     </message>
 </context>
 <context>

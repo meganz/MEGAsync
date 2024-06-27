@@ -1,7 +1,7 @@
 #ifndef ONBOARDING_H
 #define ONBOARDING_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class Onboarding : public QMLComponent
 {

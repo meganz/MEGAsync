@@ -3,10 +3,10 @@
 #include "syncs/gui/Backups/BackupTableView.h"
 #include "syncs/model/BackupItemModel.h"
 
-#include "qml/QmlDialogWrapper.h"
-#include "qml/QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
+#include "QmlDialogManager.h"
 #include "backups/Backups.h"
-#include "onboarding/Onboarding.h"
+#include "Onboarding.h"
 
 #include "Utilities.h"
 #include "DialogOpener.h"

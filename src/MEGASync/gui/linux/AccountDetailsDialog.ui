@@ -69,11 +69,6 @@ QLabel
     border: 0px;
 }
 
-#lStorage, #lTransfer, #lUsedStorage, #lUsedTransfer
-{
-    margin-left: 6px;
-}
-
 #lStorage, #lTransfer
 {
     padding-bottom: 4px;
@@ -111,13 +106,6 @@ QLabel
 {
   background-color: #FF5646;
 }
-
-#lUsedStorage, #lUsedTransfer
-{
-  color: #8d8d8e;
-  font-size: 13px;
-}
-
 
 #wDetailedUsage QPushButton
 {
@@ -427,7 +415,7 @@ QProgressBar::chunk
         <widget class="QWidget" name="wStorageUsage" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="spacing">
-           <number>0</number>
+           <number>6</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -481,7 +469,7 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>2</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -504,30 +492,20 @@ QProgressBar::chunk
                <property name="text">
                 <string>Storage</string>
                </property>
+               <property name="indent">
+                <number>0</number>
+               </property>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <property name="spacing">
+              <widget class="QLabel" name="lUsedStorage">
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="indent">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QLabel" name="lUsedStorage"/>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              </widget>
              </item>
              <item>
               <spacer name="verticalSpacer_2">
@@ -552,7 +530,7 @@ QProgressBar::chunk
         <widget class="QWidget" name="wTransferUsage" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_25">
           <property name="spacing">
-           <number>0</number>
+           <number>6</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
@@ -606,7 +584,7 @@ QProgressBar::chunk
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>2</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -629,30 +607,20 @@ QProgressBar::chunk
                <property name="text">
                 <string>Transfer</string>
                </property>
+               <property name="indent">
+                <number>0</number>
+               </property>
               </widget>
              </item>
              <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_5">
-               <property name="spacing">
+              <widget class="QLabel" name="lUsedTransfer">
+               <property name="text">
+                <string notr="true"/>
+               </property>
+               <property name="indent">
                 <number>0</number>
                </property>
-               <item>
-                <widget class="QLabel" name="lUsedTransfer"/>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_2">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
+              </widget>
              </item>
              <item>
               <spacer name="verticalSpacer_4">

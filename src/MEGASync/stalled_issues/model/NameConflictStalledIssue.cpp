@@ -287,13 +287,12 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
 
                 if(conflictedName->isSolved())
                 {
-                    checkAndSolveConflictedNamesSolved(true);
+                    if(checkAndSolveConflictedNamesSolved())
+                    {
+                        setIsSolved(SolveType::POTENTIALLY_SOLVED);
+                        break;
+                    }
                 }
-            }
-
-            if(isPotentiallySolved())
-            {
-                break;
             }
         }
     }
@@ -311,13 +310,12 @@ bool NameConflictedStalledIssue::checkForExternalChanges()
 
                     if(conflictedName->isSolved())
                     {
-                        checkAndSolveConflictedNamesSolved(true);
+                        if(checkAndSolveConflictedNamesSolved())
+                        {
+                            setIsSolved(SolveType::POTENTIALLY_SOLVED);
+                            break;
+                        }
                     }
-                }
-
-                if(isPotentiallySolved())
-                {
-                    break;
                 }
             }
         }
@@ -390,9 +388,16 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
         conflictName->solveByRename(renameTo);
 
         auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
-        result = renameCloudSibling(findOtherSideItem(cloudConflictedNames, conflictName), renameTo);
+        auto siblingItem(findOtherSideItem(cloudConflictedNames, conflictName));
+        if(siblingItem)
+        {
+            result = renameCloudSibling(siblingItem, renameTo);
+        }
 
-        result = checkAndSolveConflictedNamesSolved();
+        if(!siblingItem || result)
+        {
+            result = checkAndSolveConflictedNamesSolved();
+        }
     }
 
     return result;
@@ -410,9 +415,16 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
         {
             conflictName->solveByRename(renameTo);
 
-            renameLocalSibling(findOtherSideItem(mLocalConflictedNames, conflictName), renameTo);
+            auto siblingItem(findOtherSideItem(mLocalConflictedNames, conflictName));
+            if(siblingItem)
+            {
+                result = renameLocalSibling(siblingItem, renameTo);
+            }
 
-            result = checkAndSolveConflictedNamesSolved();
+            if(!siblingItem || result)
+            {
+                result = checkAndSolveConflictedNamesSolved();
+            }
         }
     }
 
@@ -569,6 +581,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                 QFile file(fileInfo.filePath());
                 if(file.exists())
                 {
+                    bool isFile(fileInfo.isFile());
                     auto newName = Utilities::getNonDuplicatedLocalName(fileInfo, true, cloudItemsBeingRenamed);
 
                     fileInfo.setFile(fileInfo.path(), newName);
@@ -580,7 +593,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                     else
                     {
                         result = false;
-                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
+                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(isFile));
                         break;
                     }
                 }
@@ -617,7 +630,7 @@ bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNa
         }
     }
 
-    return false;
+    return error == nullptr;
 }
 
 bool NameConflictedStalledIssue::renameLocalSibling(std::shared_ptr<ConflictedNameInfo> item, const QString &newName)
@@ -659,11 +672,11 @@ std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> NameConflictedSt
                 }
             }
 
-            if(sameName && sameFingerprint)
+            if(sameFingerprint)
             {
                 return true;
             }
-            else if(sameName || sameFingerprint)
+            else if(sameName)
             {
                 partialFound = fileIt;
             }
@@ -689,7 +702,7 @@ std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> NameConflictedSt
     }
 }
 
-bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPotentiallySolved)
+bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved()
 {
     auto checkLogic = [](const QList<std::shared_ptr<ConflictedNameInfo>>& conflicts) -> int
     {
@@ -736,25 +749,21 @@ bool NameConflictedStalledIssue::checkAndSolveConflictedNamesSolved(bool isPoten
         }
     }
 
-    if(!isSolved() && unsolvedItems == 0)
-    {
-        setIsSolved(isPotentiallySolved ? SolveType::POTENTIALLY_SOLVED : SolveType::SOLVED);
-    }
-
-    return isSolved();
+    return unsolvedItems == 0;
 }
 
-void NameConflictedStalledIssue::semiAutoSolveIssue(int option)
+bool NameConflictedStalledIssue::semiAutoSolveIssue(ActionsSelected option)
 {
-    solveIssue(option);
+    return solveIssue(option);
 }
 
 //This code is never called. NameConflict, for the moment, are not autosolvable.
 bool NameConflictedStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
-    solveIssue(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
-    if(isSolved() && !isPotentiallySolved())
+    ActionsSelected options(ActionSelected::RemoveDuplicated | ActionSelected::Rename | ActionSelected::MergeFolders);
+    auto result = solveIssue(options);
+    if(result)
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_AUTOMATICALLY);
         return true;
@@ -768,7 +777,7 @@ bool NameConflictedStalledIssue::isAutoSolvable() const
     return Preferences::instance()->isStalledIssueSmartModeActivated();
 }
 
-void NameConflictedStalledIssue::solveIssue(int option)
+bool NameConflictedStalledIssue::solveIssue(ActionsSelected option)
 {
     auto result(false);
 
@@ -787,9 +796,18 @@ void NameConflictedStalledIssue::solveIssue(int option)
         }
     }
 
-    if(!result & option & ActionSelected::RemoveDuplicated)
+    if(!result && option & ActionSelected::RemoveDuplicated)
     {
         result = mCloudConflictedNames.removeDuplicatedNodes() == nullptr;
+        if(result)
+        {
+            result = checkAndSolveConflictedNamesSolved();
+        }
+    }
+
+    if(!result && option & ActionSelected::KeepMostRecentlyModifiedNode)
+    {
+        result = mCloudConflictedNames.keepMostRecentlyModifiedNode() == nullptr;
         if(result)
         {
             result = checkAndSolveConflictedNamesSolved();
@@ -805,10 +823,7 @@ void NameConflictedStalledIssue::solveIssue(int option)
         }
     }
 
-    if(!result)
-    {
-        setIsSolved(SolveType::FAILED);
-    }
+    return result;
 }
 
 //CloudConflictedNames logic
@@ -862,6 +877,82 @@ NameConflictedStalledIssue::CloudConflictedNames::removeDuplicatedNodes()
 
     //No error to return
     return nullptr;
+}
+
+std::shared_ptr<mega::MegaError>
+NameConflictedStalledIssue::CloudConflictedNames::keepMostRecentlyModifiedNode()
+{
+    auto info = findMostRecentlyModifiedNode();
+    foreach(auto conflictedName, info.oldVersions)
+    {
+        std::unique_ptr<mega::MegaNode> conflictNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedName->mHandle));
+        if(conflictNode)
+        {
+            auto error = StalledIssuesUtilities::removeRemoteFile(
+                conflictNode.get());
+            if(error)
+            {
+                auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(
+                    error.get());
+                conflictedName->setFailed(errorStr);
+
+                return error;
+            }
+            else
+            {
+                conflictedName->solveByRemove();
+            }
+        }
+    }
+
+    //No error to return
+    return nullptr;
+}
+
+NameConflictedStalledIssue::CloudConflictedNames::MostRecentlyModifiedInfo
+NameConflictedStalledIssue::CloudConflictedNames::findMostRecentlyModifiedNode() const
+{
+    MostRecentlyModifiedInfo info;
+
+    for(int index = 0; index < mConflictedNames.size(); ++index)
+    {
+        const auto conflictedNamesGroup = mConflictedNames[index];
+        foreach(auto conflictedName, conflictedNamesGroup.conflictedNames)
+        {
+            if(conflictedName->getSolvedType() ==
+                NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED)
+            {
+                if(info.mostRecentlyModified == nullptr)
+                {
+                    info.mostRecentlyModified = conflictedName;
+                }
+                else
+                {
+                    QDateTime previousConflictDate;
+                    QDateTime currentConflictDate;
+
+                    info.mostRecentlyModified->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&previousConflictDate](const QDateTime& time)
+                        { previousConflictDate = time; });
+                    conflictedName->mItemAttributes->requestModifiedTime(MegaSyncApp,
+                        [&currentConflictDate](const QDateTime& time)
+                        { currentConflictDate = time; });
+
+                    if(currentConflictDate >= previousConflictDate)
+                    {
+                        info.oldVersions.append(info.mostRecentlyModified);
+                        info.mostRecentlyModified = conflictedName;
+                    }
+                    else
+                    {
+                        info.oldVersions.append(conflictedName);
+                    }
+                }
+            }
+        }
+    }
+
+    return info;
 }
 
 NameConflictedStalledIssue::CloudConflictedNames::MergeFoldersError

@@ -75,6 +75,7 @@ CTestTestfile.cmake
 cmake_install.cmake
 *automoc*
 src/build-MEGASync-Desktop-*
+build/Desktop_Qt_*
 
 *.pro.user.*
 ecm_uninstall.cmake
