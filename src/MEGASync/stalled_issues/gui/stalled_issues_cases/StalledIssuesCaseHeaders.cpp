@@ -595,7 +595,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             {
                msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
-            else if(index == NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
+            else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()

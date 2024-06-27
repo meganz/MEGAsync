@@ -24,7 +24,7 @@ class NameConflictedStalledIssue;
 namespace StalledIssuesStrings
 {
 static QString RemoveFileFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
-static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
+static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));}
 static QString RemoveLocalFileFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the file is in use, and the permissions of the file, then try again."));}
 static QString RemoveLocalFolderFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the folder is in use, and the permissions of the file, then try again."));}
 static QString RemoveRemoteFailedDescription(const mega::MegaError* error){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));}
