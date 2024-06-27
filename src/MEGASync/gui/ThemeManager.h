@@ -14,6 +14,7 @@ public:
     static ThemeManager* instance();
     QStringList themesAvailable() const;
     Preferences::ThemeType getSelectedTheme() const;
+    QString getSelectedThemeString() const;
     void setTheme(Preferences::ThemeType theme);
 
 signals:

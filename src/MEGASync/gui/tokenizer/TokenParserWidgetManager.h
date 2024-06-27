@@ -20,7 +20,6 @@ private:
     using ColorTokens = QMap<QString, QString>;
 
     explicit TokenParserWidgetManager(QObject *parent = nullptr);
-    QString themeToString(Preferences::ThemeType theme) const;
     void loadColorThemeJson();
     void loadStandardStyleSheetComponents();
     void onThemeChanged(Preferences::ThemeType theme);
