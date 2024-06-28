@@ -302,6 +302,8 @@ void StalledIssueHeader::updateIssueState()
             }
             break;
         }
+        default:
+            break;
     }
 
     showMessage(message, icon.pixmap(16, 16));

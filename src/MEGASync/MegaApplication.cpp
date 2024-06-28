@@ -6262,6 +6262,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             mIsFirstFileBackedUp = true;
             break;
         }
+        default:
+            break;
         }
     }
 }

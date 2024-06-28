@@ -902,6 +902,8 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(D
 
                     break;
                 }
+                default:
+                    break;
             }
         }
     }
@@ -964,6 +966,8 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Des
                 }
                 break;
             }
+            default:
+                break;
             }
         }
     }

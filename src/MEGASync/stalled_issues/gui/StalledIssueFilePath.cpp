@@ -471,6 +471,8 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         {
             break;
         }
+        default:
+            break;
     }
     return tr("Error not detected");
 }
@@ -483,6 +485,8 @@ QString StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem p
         {
             return QLatin1String("https://help.mega.io/");
         }
+        default:
+            break;
     }
 
     return QString();
