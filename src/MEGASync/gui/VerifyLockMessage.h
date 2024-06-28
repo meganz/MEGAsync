@@ -29,7 +29,7 @@ public:
 
     void regenerateUI(int newStatus, bool force = false);
 
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
 
 signals:
     void logout();
@@ -44,8 +44,8 @@ protected:
     mega::QTMegaRequestListener *delegateListener;
     bool eventFilter(QObject* obj, QEvent* event) override;
 
-    void mousePressEvent(QMouseEvent *event);
-    void changeEvent(QEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
 private:
     Ui::VerifyLockMessage *m_ui;

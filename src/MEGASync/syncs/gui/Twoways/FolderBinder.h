@@ -36,7 +36,7 @@ private slots:
     void on_bMegaFolder_clicked();
 
 protected:
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
     void showEvent(QShowEvent *event) override;
 
 private:

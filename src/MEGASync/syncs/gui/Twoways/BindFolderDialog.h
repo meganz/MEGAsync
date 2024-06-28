@@ -36,7 +36,7 @@ private slots:
 
 protected:
     bool focusNextPrevChild(bool next) override;
-    void changeEvent(QEvent * event);
+    void changeEvent(QEvent * event) override;
 
 private:
     Ui::BindFolderDialog *ui;

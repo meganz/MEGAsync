@@ -102,7 +102,6 @@ public:
     void setTransferManager(TransferManager *transferManager);
 
 private:
-    InfoDialog() = default;
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
