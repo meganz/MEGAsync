@@ -138,7 +138,10 @@ target_link_libraries(MEGAsync
 if (ENABLE_DESKTOP_APP_WERROR)
     target_platform_compile_options(
         TARGET MEGAsync
+        WINDOWS /WX
         UNIX  $<$<CONFIG:Debug>: -Werror
+                                 -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
+        APPLE $<$<CONFIG:Debug>: -Werror
                                  -Wno-error=unqualified-std-cast-call
                                  -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
     )
