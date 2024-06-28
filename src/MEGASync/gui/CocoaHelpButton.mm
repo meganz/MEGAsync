@@ -25,20 +25,20 @@ CocoaHelpButton::CocoaHelpButton(QWidget *pParent /* = 0 */)
   :QMacCocoaViewContainer(0, pParent)
 {
     m_pButton = [[NSButton alloc] init];
-    [m_pButton setTitle: @""];
-    [m_pButton setBezelStyle: NSHelpButtonBezelStyle];
-    [m_pButton setBordered: YES];
-    [m_pButton setAlignment: NSCenterTextAlignment];
-    [m_pButton sizeToFit];
-    NSRect frame = [m_pButton frame];
+    [(__bridge NSButton *) m_pButton setTitle: @""];
+    [(__bridge NSButton *) m_pButton setBezelStyle: NSHelpButtonBezelStyle];
+    [(__bridge NSButton *) m_pButton setBordered: YES];
+    [(__bridge NSButton *) m_pButton setAlignment: NSCenterTextAlignment];
+    [(__bridge NSButton *) m_pButton sizeToFit];
+    NSRect frame = [(__bridge NSButton *) m_pButton frame];
     frame.size.width += 12; /* Margin */
-    [m_pButton setFrame:frame];
+    [(__bridge NSButton *) m_pButton setFrame:frame];
     /* We need a target for the click selector */
     NSButtonTarget *bt = [[NSButtonTarget alloc] initWithObject: this];
-    [m_pButton setTarget: bt];
-    [m_pButton setAction: @selector(clicked:)];
+    [(__bridge NSButton *) m_pButton setTarget: bt];
+    [(__bridge NSButton *) m_pButton setAction: @selector(clicked:)];
 
-    setCocoaView((NSButton *)m_pButton);
+    setCocoaView((__bridge NSButton *) m_pButton);
     /* Make sure all is properly resized */
     resize(frame.size.width, frame.size.height);
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
@@ -46,7 +46,7 @@ CocoaHelpButton::CocoaHelpButton(QWidget *pParent /* = 0 */)
 
 QSize CocoaHelpButton::sizeHint() const
 {
-    NSRect frame = [m_pButton frame];
+    NSRect frame = [(__bridge NSButton *) m_pButton frame];
     return QSize(frame.size.width, frame.size.height);
 }
 
