@@ -1388,7 +1388,7 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             {
                 QPainter painter(widget);
                 QStyleOptionFocusRect option;
-                if(option.state |= QStyle::State_KeyboardFocusChange)
+                if((option.state |= QStyle::State_KeyboardFocusChange))
                 {
                     option.init(widget);
                     option.backgroundColor = palette().color(QPalette::Window);
