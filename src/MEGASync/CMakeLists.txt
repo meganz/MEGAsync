@@ -135,6 +135,15 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
+if (ENABLE_DESKTOP_APP_WERROR)
+    target_platform_compile_options(
+        TARGET MEGAsync
+        UNIX  $<$<CONFIG:Debug>: -Werror
+                                 -Wno-error=unqualified-std-cast-call
+                                 -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
+    )
+endif()
+
 # Install MEGAsync binary, dynamic libraries and, if needed, deploy Qt dependencies.
 if (UNIX AND NOT APPLE)
 
