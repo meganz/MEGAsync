@@ -283,7 +283,6 @@ private:
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable StalledIssuesVariantList mFailedStalledIssues;
-    mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;

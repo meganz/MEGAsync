@@ -515,7 +515,6 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex& index) const
 void StalledIssuesModel::fullReset()
 {
     mSolvedStalledIssues.clear();
-    mLastSolvedStalledIssue = StalledIssueVariant();
     reset();
 }
 
@@ -756,16 +755,7 @@ void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
     if(mIssuesSolved)
     {
         mIssuesSolved = false;
-
-        if(mLastSolvedStalledIssue.consultData() &&
-            mLastSolvedStalledIssue.consultData()->refreshListAfterSolving())
-        {
-            updateStalledIssues();
-        }
-        else
-        {
-            emit refreshFilter();
-        }
+        emit refreshFilter();
     }
     else
     {
@@ -1000,7 +990,6 @@ bool StalledIssuesModel::issueSolved(const StalledIssue* issue)
         auto issueVariant(getIssueVariantByIssue(issue));
         if(issueVariant.isValid())
         {
-            mLastSolvedStalledIssue = issueVariant;
             mSolvedStalledIssues.append(issueVariant);
             mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
             auto& counter = mCountByFilterCriterion[static_cast<int>(
