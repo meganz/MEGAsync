@@ -859,14 +859,14 @@ void TransferManager::refreshSpeed()
     if(mTransfersCount.pendingUploads)
     {
         auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1String("/s"));
     }
 
     mUi->wDownSpeed->setVisible(mTransfersCount.pendingDownloads);
     if(mTransfersCount.pendingDownloads)
     {
         auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1String("/s"));
     }
 }
 

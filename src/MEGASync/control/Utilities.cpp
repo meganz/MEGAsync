@@ -185,57 +185,57 @@ void Utilities::initializeExtensions()
 
 void Utilities::initializeFileTypes()
 {
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.wav"), QString())]
             = FileType::TYPE_AUDIO;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.mkv"), QString())]
             = FileType::TYPE_VIDEO;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.tar"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.torrent"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.torrent"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.dmg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.dmg"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xd"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xd"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.sketch"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.txt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pdf"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.doc"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.doc"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ods"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ods"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ppt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ppt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pages"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pages"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.numbers"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.key"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xml"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xml"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xls"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xls"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.png"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.jpg"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ai"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ai"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.abr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.abr"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.3fr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.3fr"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.svg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.svg"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.bin"), QString())]
             = FileType::TYPE_OTHER;
 }
 
@@ -1310,7 +1310,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
     while(newName.isEmpty())
     {
         bool nameFound = false;
-        QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        QString suggestedName = nodeName + QString(QLatin1String("(%1)")).arg(QString::number(counter));
         if(node)
         {
             if(node->isFile() && !suffix.isEmpty())
@@ -1368,10 +1368,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
         notFound = true;
         counter++;
 
-        QString suggestedName = fileName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        QString suggestedName = fileName + QString(QLatin1String("(%1)")).arg(QString::number(counter));
         if(!suffix.isEmpty())
         {
-            suggestedName += QString(QLatin1Literal(".%1")).arg(suffix);
+            suggestedName += QString(QLatin1String(".%1")).arg(suffix);
         }
 
         if(!itemsBeingRenamed.contains(suggestedName))
@@ -1401,10 +1401,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
 
     } while(!notFound);
 
-    repeatedName = currentFile.baseName() + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+    repeatedName = currentFile.baseName() + QString(QLatin1String("(%1)")).arg(QString::number(counter));
     if(!suffix.isEmpty())
     {
-        repeatedName += QString(QLatin1Literal(".%1")).arg(suffix);
+        repeatedName += QString(QLatin1String(".%1")).arg(suffix);
     }
 
     return repeatedName;

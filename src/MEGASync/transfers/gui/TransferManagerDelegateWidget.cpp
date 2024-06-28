@@ -4,7 +4,6 @@
 #include "MegaTransferView.h"
 #include "megaapi.h"
 #include "Utilities.h"
-#include "Preferences.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 
@@ -96,7 +95,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
+                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
@@ -114,7 +113,7 @@ void TransferManagerDelegateWidget::updateTransferState()
             else
             {
                 speedString = Utilities::getSizeString(getData()->mSpeed)
-                        + QLatin1Literal("/s");
+                        + QLatin1String("/s");
             }
 
             break;
@@ -123,7 +122,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_selected.png");
+                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_selected.png");
                 pauseResumeTooltip = MegaTransferView::resumeActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
@@ -152,7 +151,7 @@ void TransferManagerDelegateWidget::updateTransferState()
         {
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
+                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->wProgressBar->setVisible(true);
@@ -229,7 +228,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
             if(stateHasChanged())
             {
-                mPauseResumeTransferDefaultIconName = QLatin1Literal(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
+                mPauseResumeTransferDefaultIconName = QLatin1String(":images/transfer_manager/transfers_actions/lists_pause_ico_default.png");
                 pauseResumeTooltip = MegaTransferView::pauseActionText(1); //Use singular form
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
                 mUi->lItemStatus->setToolTip(getErrorText());
@@ -259,7 +258,7 @@ void TransferManagerDelegateWidget::updateTransferState()
 
                 mUi->sStatus->setCurrentWidget(mUi->pActive);
             }
-            speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1Literal("/s");
+            speedString = Utilities::getSizeString(getData()->mSpeed) + QLatin1String("/s");
             auto dateTime = getData()->getFinishedDateTime();
             timeString = MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime, QLocale::FormatType::ShortFormat);
 
@@ -309,8 +308,8 @@ void TransferManagerDelegateWidget::updateTransferState()
 
     auto sizes = Utilities::getProgressSizes(transferedB, totalB);
 
-    mUi->lDone->setText(sizes.transferredBytes + QLatin1Literal("/"));
-    mUi->lTotal->setText(sizes.totalBytes + QLatin1Literal(" ") + sizes.units);
+    mUi->lDone->setText(sizes.transferredBytes + QLatin1String("/"));
+    mUi->lTotal->setText(sizes.totalBytes + QLatin1String(" ") + sizes.units);
 
     // Progress bar
     int permil = getData()->getState() & (TransferData::TRANSFER_COMPLETED | TransferData::TRANSFER_COMPLETING) ?
@@ -330,7 +329,7 @@ void TransferManagerDelegateWidget::updateTransferState()
     mUi->lSyncIcon->setVisible(getData()->isSyncTransfer());
     if(getData()->isSyncTransfer())
     {
-        auto syncIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/transfer_manager/transfers_states/synching_ico.png"));
+        auto syncIcon = Utilities::getCachedPixmap(QLatin1String(":/images/transfer_manager/transfers_states/synching_ico.png"));
         mUi->lSyncIcon->setPixmap(syncIcon.pixmap(mUi->lSyncIcon->size()));
     }
 }

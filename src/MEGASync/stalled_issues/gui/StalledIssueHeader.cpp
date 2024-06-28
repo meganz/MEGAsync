@@ -49,7 +49,7 @@ StalledIssueHeader::~StalledIssueHeader()
 
 void StalledIssueHeader::expand(bool state)
 {
-    auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
+    auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1String(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1String(":/images/node_selector/Icon-Small-Arrow-Left.png"));
     ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
 }
 
@@ -409,7 +409,7 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::refreshUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
+    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/ico_menu_full.png"));
     ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
 
     QIcon fileTypeIcon;

@@ -111,7 +111,7 @@ QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFil
     }
     else
     {
-        return Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
+        return Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/help-circle.png"));
     }
 }
 
@@ -124,23 +124,23 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/drag_generic.png"));
         }
         else
         {
             fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
+                                                          fileInfo.fileName(), QLatin1String(":/images/drag_")));
         }
     }
     else
     {
         if(hasProblem)
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_error_default.png"));
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default.png"));
         }
     }
 
