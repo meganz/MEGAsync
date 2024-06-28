@@ -23,7 +23,7 @@ public:
     void setNotificationData(MegaNotificationExt* notification);
 
 private slots:
-    void updateImage(const QImage& image, const QString& imageUrl);
+    void onDownloadFinished(const QImage& image, const QString& imageUrl);
 
 private:
     Ui::NotificationItem* ui;

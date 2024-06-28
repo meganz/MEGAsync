@@ -31,7 +31,17 @@ class ImageDownloader : public QObject
     Q_OBJECT
 
 public:
+    enum class Error
+    {
+        NoError = 0,
+        NetworkError,
+        InvalidUrl,
+        EmptyData,
+        InvalidImage
+    };
+
     explicit ImageDownloader(QObject* parent = nullptr);
+    explicit ImageDownloader(unsigned int timeout, QObject* parent = nullptr);
     virtual ~ImageDownloader() = default;
 
 public slots:
@@ -41,14 +51,22 @@ public slots:
                        QImage::Format format = QImage::Format_ARGB32_Premultiplied);
 
 signals:
-    void downloadFinished(const QImage& image, const QString& imageUrl);
+    void downloadFinished(const QImage& image,
+                          const QString& imageUrl);
+    void downloadFinishedWithError(const QString& imageUrl,
+                                   Error error,
+                                   QNetworkReply::NetworkError networkError = QNetworkReply::NoError);
 
 private slots:
     void onRequestImgFinished(QNetworkReply* reply);
 
 private:
-    std::unique_ptr<QNetworkAccessManager> mManager;
     QMap<QNetworkReply*, std::shared_ptr<ImageData>> mReplies;
+    std::unique_ptr<QNetworkAccessManager> mManager;
+    unsigned int mTimeout;
+
+    bool validateReply(QNetworkReply* reply, const QString& url, QByteArray& bytes);
+    void processImageData(const QByteArray& bytes, const std::shared_ptr<ImageData>& imageData);
 
 };
 

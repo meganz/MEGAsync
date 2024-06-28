@@ -4,9 +4,21 @@
 
 #include <QNetworkRequest>
 
+namespace
+{
+constexpr int DefaultTimeout = 30000;
+constexpr int StatusCodeOK = 200;
+}
+
 ImageDownloader::ImageDownloader(QObject* parent)
+    : ImageDownloader(DefaultTimeout, parent)
+{
+}
+
+ImageDownloader::ImageDownloader(unsigned int timeout, QObject* parent)
     : QObject(parent)
     , mManager(new QNetworkAccessManager(this))
+    , mTimeout(timeout)
 {
     connect(mManager.get(), &QNetworkAccessManager::finished,
             this, &ImageDownloader::onRequestImgFinished);
@@ -24,6 +36,7 @@ void ImageDownloader::downloadImage(const QString& imageUrl,
     }
 
     QNetworkRequest request(url);
+    request.setTransferTimeout(mTimeout);
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 
     QNetworkReply* reply = mManager->get(request);
@@ -39,7 +52,6 @@ void ImageDownloader::downloadImage(const QString& imageUrl,
     }
 }
 
-
 void ImageDownloader::onRequestImgFinished(QNetworkReply* reply)
 {
     reply->deleteLater();
@@ -48,32 +60,63 @@ void ImageDownloader::onRequestImgFinished(QNetworkReply* reply)
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            "Received finished signal for unknown QNetworkReply");
+        emit downloadFinishedWithError(QString(), Error::InvalidUrl);
         return;
     }
 
     auto imageData = mReplies.take(reply);
-    if (reply->error())
+    QByteArray bytes;
+    if (!validateReply(reply, imageData->url, bytes))
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
-                           "Error downloading image: %s", reply->errorString().toUtf8().constData());
         return;
     }
 
-    QByteArray bytes = reply->readAll();
-    if (bytes.isEmpty())
+    processImageData(bytes, imageData);
+}
+
+
+bool ImageDownloader::validateReply(QNetworkReply* reply,
+                                    const QString& url,
+                                    QByteArray& bytes)
+{
+    bool success = true;
+    QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+    if (!statusCode.isValid() || (statusCode.toInt() != StatusCodeOK) || (reply->error() != QNetworkReply::NoError))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
-                           "Downloaded image data is empty");
-        return;
+                           "Error downloading image %s : %d",
+                           reply->errorString().toUtf8().constData(), reply->error());
+        emit downloadFinishedWithError(url, Error::NetworkError, reply->error());
+        success = false;
     }
 
+    if(success)
+    {
+        bytes = reply->readAll();
+        if (bytes.isEmpty())
+        {
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               "Downloaded image data is empty");
+            emit downloadFinishedWithError(url, Error::EmptyData, reply->error());
+            success = false;
+        }
+    }
+
+    return success;
+}
+
+void ImageDownloader::processImageData(const QByteArray& bytes,
+                                       const std::shared_ptr<ImageData>& imageData)
+{
     QImage image(imageData->size, imageData->format);
-    if (!image.loadFromData(bytes))
+    if (image.loadFromData(bytes))
+    {
+        emit downloadFinished(image, imageData->url);
+    }
+    else
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            "Failed to load image from downloaded data");
-        return;
+        emit downloadFinishedWithError(imageData->url, Error::InvalidImage, QNetworkReply::UnknownContentError);
     }
-
-    emit downloadFinished(image, imageData->url);
 }

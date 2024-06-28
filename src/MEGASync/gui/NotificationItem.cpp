@@ -12,7 +12,7 @@ NotificationItem::NotificationItem(QWidget *parent)
     ui->setupUi(this);
 
     connect(mDownloader.get(), &ImageDownloader::downloadFinished,
-            this, &NotificationItem::updateImage);
+            this, &NotificationItem::onDownloadFinished);
 }
 
 NotificationItem::~NotificationItem()
@@ -58,7 +58,7 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }
 
-void NotificationItem::updateImage(const QImage& image, const QString& imageUrl)
+void NotificationItem::onDownloadFinished(const QImage& image, const QString& imageUrl)
 {
     if (image.isNull())
     {
