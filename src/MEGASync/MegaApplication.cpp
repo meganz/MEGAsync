@@ -36,6 +36,8 @@
 #include "DateTimeFormatter.h"
 #include <StalledIssuesDialog.h>
 #include <DialogOpener.h>
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
 
 #include "mega/types.h"
 
