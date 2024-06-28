@@ -1,12 +1,9 @@
 #include "SyncsComponent.h"
 
 #include "SyncsQmlDialog.h"
-
 #include "Syncs.h"
-
 #include "ChooseFolder.h"
-//@jsubi
-//#include "syncs/gui/Twoways/IgnoresEditingDialog.h"
+#include "AddExclusionRule.h"
 
 #include "DialogOpener.h"
 #include "MegaApplication.h"
@@ -74,9 +71,8 @@ void SyncsComponent::openExclusionsDialog(const QString& folder) const
 {
     if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
     {
-        /* @jsubi.
-        QPointer<IgnoresEditingDialog> exclusionsDialog = new IgnoresEditingDialog(folder, true, dialog->getDialog());
-        DialogOpener::showDialog(exclusionsDialog);
-        */
+        QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
+        QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions = new QmlDialogWrapper<AddExclusionRule>(parentWidget, QStringList() << folder);
+        DialogOpener::showDialog(exclusions);
     }
 }
