@@ -53,10 +53,8 @@ class TransfersModel;
 class StalledIssuesModel;
 
 #ifdef __APPLE__
-    #include "MegaSystemTrayIcon.h"
     #include <mach/mach.h>
     #include <sys/sysctl.h>
-    #include <errno.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
