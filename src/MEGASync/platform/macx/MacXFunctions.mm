@@ -408,31 +408,6 @@ QString defaultOpenApp(QString extension)
     return defaultAppPath;
 }
 
-void enableBlurForWindow(QWidget *window)
-{
-    NSView *nsview = (NSView *)window->winId();
-    NSWindow *nswindow = [nsview window];
-
-    Class vibrantClass = NSClassFromString(@"NSVisualEffectView");
-    if (vibrantClass)
-    {
-        static const NSRect frameRect = {
-            { 0.0, 0.0 },
-            { static_cast<float>(window->width()), static_cast<float>(window->height()) }
-        };
-
-        auto vibrant = [[vibrantClass alloc] initWithFrame:frameRect];
-        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-        if ([vibrant respondsToSelector:@selector(setBlendingMode:)])
-        {
-            [vibrant setBlendingMode:(NSVisualEffectBlendingMode)0];
-        }
-
-        //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
-        [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
-    }
-}
-
 bool registerUpdateDaemon()
 {
     NSDictionary *plistd = @{

@@ -8,7 +8,7 @@
 @public
     QPointer<QSegmentedControl> pimpl;
 }
--(void)clicked;
+-(void)clicked : (id)sender;
 @end
 
 @implementation QSegmentedControlTarget
