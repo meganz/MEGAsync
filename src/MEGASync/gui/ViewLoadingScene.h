@@ -130,7 +130,7 @@ public:
     explicit LoadingSceneDelegate(QAbstractItemView* view) : LoadingSceneDelegateBase(view)
     {}
 
-    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
+    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const override
     {
         return DelegateWidget::widgetSize();
     }

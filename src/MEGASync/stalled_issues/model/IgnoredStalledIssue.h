@@ -16,6 +16,8 @@ public:
     bool isSymLink() const override;
     bool isSpecialLink() const override;
 
+    bool isExpandable() const override;
+
     static void clearIgnoredSyncs();
 
 private:

@@ -420,13 +420,27 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
 
 bool StalledIssuesModel::hasChildren(const QModelIndex& parent) const
 {
+    auto result(false);
     auto stalledIssueItem = static_cast<StalledIssue*>(parent.internalPointer());
     if (stalledIssueItem)
     {
-        return false;
+        result = false;
+    }
+    else if(parent.isValid())
+    {
+        auto issue = getStalledIssueByRow(parent.row());
+        if(issue.consultData())
+        {
+            result = issue.consultData()->isExpandable();
+        }
+    }
+    else
+    {
+        //Top parent has always children
+        result = true;
     }
 
-    return true;
+    return result;
 }
 
 int StalledIssuesModel::rowCount(const QModelIndex& parent) const

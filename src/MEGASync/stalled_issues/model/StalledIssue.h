@@ -383,6 +383,8 @@ public:
     bool wasAutoResolutionApplied() const;
     void setAutoResolutionApplied(bool newAutoResolutionApplied);
 
+    virtual bool isExpandable() const;
+
 signals:
     void asyncIssueSolvingStarted();
     void asyncIssueSolvingFinished(StalledIssue*);

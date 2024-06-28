@@ -495,6 +495,11 @@ void StalledIssue::setAutoResolutionApplied(bool newAutoResolutionApplied)
     mAutoResolutionApplied = newAutoResolutionApplied;
 }
 
+bool StalledIssue::isExpandable() const
+{
+    return !missingFingerprint();
+}
+
 void StalledIssue::startAsyncIssueSolving()
 {
     setIsSolved(StalledIssue::SolveType::BEING_SOLVED);

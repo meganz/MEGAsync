@@ -128,7 +128,6 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
-    header->setIsExpandable(false);
 }
 
 void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -207,7 +206,6 @@ void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
-    header->setIsExpandable(false);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *header)
