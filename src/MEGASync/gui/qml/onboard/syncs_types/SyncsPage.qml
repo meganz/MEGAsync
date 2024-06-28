@@ -5,7 +5,7 @@ import common 1.0
 import syncs 1.0
 
 import onboard 1.0
-import onboard.syncs_types.left_panel 1.0
+//@jsubi import onboard.syncs_types.left_panel 1.0
 
 SyncsFlow {
     id: root
