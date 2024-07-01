@@ -181,8 +181,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        QString informativeMessage = QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber) + QString::fromUtf8("</br>");
+        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
         msgInfo.informativeText.append(informativeMessage);
     }
 
@@ -245,7 +246,7 @@ void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header
 {
     if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]")
+        QString headerText = tr("Can’t move or rename some items in [B]%1[/B]")
                                  .arg(moveOrRenameIssue->syncName());
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
         header->setText(headerText);
@@ -592,7 +593,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             {
                msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
-            else if(index == NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
+            else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()

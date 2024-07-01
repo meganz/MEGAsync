@@ -49,6 +49,11 @@ bool IgnoredStalledIssue::isExpandable() const
     return !isSymLink();
 }
 
+bool IgnoredStalledIssue::checkForExternalChanges()
+{
+    return false;
+}
+
 bool IgnoredStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);

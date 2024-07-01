@@ -323,7 +323,6 @@ public:
 
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
-    virtual bool refreshListAfterSolving() const {return false;}
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
@@ -352,6 +351,7 @@ public:
     QSize getDelegateSize(Type type) const;
     void setDelegateSize(const QSize& newDelegateSize, Type type);
     void removeDelegateSize(Type type);
+    void resetDelegateSize();
 
     const std::shared_ptr<mega::MegaSyncStall>& getOriginalStall() const;
 
