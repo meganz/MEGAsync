@@ -15,7 +15,6 @@ public:
 
     AlertType filterAlertType();
     void setFilterAlertType(AlertType filterType);
-    bool checkFilterType(int sdkType) const;
 
 protected:
     bool filterAcceptsRow(int row, const QModelIndex& sourceParent) const override;
@@ -23,6 +22,8 @@ protected:
 
 private:
     AlertType mActualFilter;
+
+    bool checkAlertFilterType(int sdkType) const;
 
 };
 
