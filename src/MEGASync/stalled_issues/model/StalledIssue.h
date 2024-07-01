@@ -353,6 +353,7 @@ public:
     QSize getDelegateSize(Type type) const;
     void setDelegateSize(const QSize& newDelegateSize, Type type);
     void removeDelegateSize(Type type);
+    void resetDelegateSize();
 
     const std::shared_ptr<mega::MegaSyncStall>& getOriginalStall() const;
 

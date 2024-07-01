@@ -44,6 +44,11 @@ bool IgnoredStalledIssue::isSpecialLink() const
             consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
 }
 
+bool IgnoredStalledIssue::checkForExternalChanges()
+{
+    return false;
+}
+
 bool IgnoredStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
