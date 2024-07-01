@@ -135,6 +135,7 @@ void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
     if (mAlertsModel)
     {
         mAlertsModel->insertAlerts(alerts, true);
+        emit layoutChanged();
     }
 }
 

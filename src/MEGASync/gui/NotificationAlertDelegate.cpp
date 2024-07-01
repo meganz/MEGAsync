@@ -1,7 +1,7 @@
 #include "NotificationAlertDelegate.h"
 
 #include "NotificationAlertModel.h"
-#include "NotificationAlertTypes.h"
+
 
 #include <QSortFilterProxyModel>
 
@@ -9,9 +9,7 @@ void NotificationAlertDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
-    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-    switch (item->type)
+    switch (getModelType(index))
     {
         case NotificationAlertModelItem::ALERT:
         {
@@ -23,6 +21,7 @@ void NotificationAlertDelegate::paint(QPainter* painter,
             mNotificationsDelegate->paint(painter, option, index);
             break;
         }
+        case NotificationAlertModelItem::NONE:
         default:
         {
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
@@ -35,10 +34,8 @@ void NotificationAlertDelegate::paint(QPainter* painter,
 QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
                                           const QModelIndex& index) const
 {
-    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-    auto result = QStyledItemDelegate::sizeHint(option, index);
-    switch (item->type)
+    QSize result;
+    switch (getModelType(index))
     {
         case NotificationAlertModelItem::ALERT:
         {
@@ -50,8 +47,10 @@ QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
             result = mNotificationsDelegate->sizeHint(option, index);
             break;
         }
+        case NotificationAlertModelItem::NONE:
         default:
         {
+            result = QStyledItemDelegate::sizeHint(option, index);
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
                                "Invalid notification item type in delegate (sizeHint).");
             break;
@@ -65,10 +64,8 @@ bool NotificationAlertDelegate::editorEvent(QEvent* event,
                                             const QStyleOptionViewItem& option,
                                             const QModelIndex& index)
 {
-    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-    auto result = QStyledItemDelegate::editorEvent(event, model, option, index);
-    switch (item->type)
+    bool result = false;
+    switch (getModelType(index))
     {
         case NotificationAlertModelItem::ALERT:
         {
@@ -77,10 +74,13 @@ bool NotificationAlertDelegate::editorEvent(QEvent* event,
         }
         case NotificationAlertModelItem::NOTIFICATION:
         {
+            result = QStyledItemDelegate::editorEvent(event, model, option, index);
             break;
         }
+        case NotificationAlertModelItem::NONE:
         default:
         {
+            result = QStyledItemDelegate::editorEvent(event, model, option, index);
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
                                "Invalid notification item type in delegate (editorEvent).");
             break;
@@ -94,10 +94,8 @@ bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
                                           const QStyleOptionViewItem& option,
                                           const QModelIndex& index)
 {
-    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-    auto result = QStyledItemDelegate::helpEvent(event, view, option, index);
-    switch (item->type)
+    bool result = false;
+    switch (getModelType(index))
     {
         case NotificationAlertModelItem::ALERT:
         {
@@ -106,10 +104,13 @@ bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
         }
         case NotificationAlertModelItem::NOTIFICATION:
         {
+            result = QStyledItemDelegate::helpEvent(event, view, option, index);
             break;
         }
+        case NotificationAlertModelItem::NONE:
         default:
         {
+            result = QStyledItemDelegate::helpEvent(event, view, option, index);
             mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
                                "Invalid notification item type in delegate (helpEvent).");
             break;
@@ -132,4 +133,22 @@ void NotificationAlertDelegate::createAlertDelegate(AlertModel* model)
     {
         mAlertsDelegate = std::make_unique<AlertDelegate>(model, this);
     }
+}
+
+NotificationAlertModelItem::ModelType NotificationAlertDelegate::getModelType(const QModelIndex &index) const
+{
+    NotificationAlertModelItem::ModelType type = NotificationAlertModelItem::NONE;
+    if (index.isValid() && index.row() >= 0)
+    {
+        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+        if (filteredIndex.isValid() && filteredIndex.row() >= 0)
+        {
+            NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+            if(item)
+            {
+                type = item->type;
+            }
+        }
+    }
+    return type;
 }

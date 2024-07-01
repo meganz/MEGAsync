@@ -3,6 +3,7 @@
 
 #include "NotificationDelegate.h"
 #include "AlertDelegate.h"
+#include "NotificationAlertTypes.h"
 
 class NotificationAlertDelegate : public QStyledItemDelegate
 {
@@ -23,6 +24,8 @@ public:
 private:
     std::unique_ptr<NotificationDelegate> mNotificationsDelegate = nullptr;
     std::unique_ptr<AlertDelegate> mAlertsDelegate = nullptr;
+
+    NotificationAlertModelItem::ModelType getModelType(const QModelIndex& index) const;
 
 };
 
