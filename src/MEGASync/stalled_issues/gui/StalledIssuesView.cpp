@@ -14,7 +14,7 @@ StalledIssuesView::StalledIssuesView(QWidget *parent)
 {
     connect(verticalScrollBar(), &QScrollBar::valueChanged, this, &StalledIssuesView::onScrollMoved);
     mScrollStop.setSingleShot(true);
-    connect(&mScrollStop, &QTimer::timeout, [this](){
+    connect(&mScrollStop, &QTimer::timeout, this, [this](){
         emit scrollStopped();
     });
 }
@@ -61,12 +61,12 @@ void StalledIssuesView::keyPressEvent(QKeyEvent *event)
 #endif
         if(event->key() == Qt::Key_Minus)
         {
-            emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(false);
+            MegaSyncApp->getStalledIssuesModel()->showRawInfo(false);
         }
         else if(event->key() == Qt::Key_Plus
                 || event->key() == Qt::Key_BracketRight)
         {
-            emit MegaSyncApp->getStalledIssuesModel()->showRawInfo(true);
+            MegaSyncApp->getStalledIssuesModel()->showRawInfo(true);
         }
 
         viewport()->update();
