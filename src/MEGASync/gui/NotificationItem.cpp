@@ -3,6 +3,15 @@
 
 #include "NotificationModel.h"
 
+namespace
+{
+constexpr int SpacingWithoutLargeImage = 6;
+constexpr int SpacingWithoutSmallImage = 0;
+constexpr int SmallImageSize = 48;
+constexpr int LargeImageWidth = 370;
+constexpr int LargeImageHeight = 115;
+}
+
 NotificationItem::NotificationItem(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::NotificationItem)
@@ -35,22 +44,22 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->lImageLarge->setVisible(showImage);
     if(showImage)
     {
-        mDownloader->downloadImage(mNotificationData->getImageNamePath(), 370, 115);
+        mDownloader->downloadImage(mNotificationData->getImageNamePath(), LargeImageWidth, LargeImageHeight);
     }
     else
     {
-        ui->vlContent->setSpacing(6);
+        ui->vlContent->setSpacing(SpacingWithoutLargeImage);
     }
 
     bool showIcon = mNotificationData->showIcon();
     ui->lImageSmall->setVisible(showIcon);
     if(showIcon)
     {
-        mDownloader->downloadImage(mNotificationData->getIconNamePath(), 48, 48);
+        mDownloader->downloadImage(mNotificationData->getIconNamePath(), SmallImageSize, SmallImageSize);
     }
     else
     {
-        ui->hlDescription->setSpacing(0);
+        ui->hlDescription->setSpacing(SpacingWithoutSmallImage);
     }
 
     ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
@@ -70,12 +79,12 @@ void NotificationItem::onDownloadFinished(const QImage& image, const QString& im
     if (imageUrl == mNotificationData->getImageNamePath())
     {
         imageLabel = ui->lImageLarge;
-        size = QSize(370, 115);
+        size = QSize(LargeImageWidth, LargeImageHeight);
     }
     else if (imageUrl == mNotificationData->getIconNamePath())
     {
         imageLabel = ui->lImageSmall;
-        size = QSize(48, 48);
+        size = QSize(SmallImageSize, SmallImageSize);
     }
 
     if(imageLabel)
