@@ -61,6 +61,7 @@ public:
     static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
     static void openLink(bool isCloud, const QString& path);
+    static QString getLink(bool isCloud, const QString& path);
 
 signals:
     void actionFinished();

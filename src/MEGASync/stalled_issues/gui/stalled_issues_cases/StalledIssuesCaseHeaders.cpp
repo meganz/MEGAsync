@@ -225,17 +225,11 @@ CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
 
 void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    auto headerText = tr("The link [B]%1[/B] you are trying to access is unavailable because the folder or "
-                       "file was reported to contain content in breach of MEGA's Terms of Service. "
-                         "The account of the user who created this link has been terminated.").arg(header->displayFileName());
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText);
-    auto descriptionText = tr("For more information, please see our [A]Terms of Service[/A] and our [A]Takedown Guidance Policy[/A].");
+    auto headerText = tr("The file [A]%1[/A] is unavailable because it was reported to contain content in breach of MEGA's [A]Terms of Service[/A].").arg(header->displayFileName());
     QStringList links;
-    links << QLatin1String("https://mega.io/terms") << QLatin1String("https://mega.io/takedown");
-    StalledIssuesLinkTextDecorator::process(links, descriptionText);
-    header->setTitleDescriptionText(descriptionText);
-    header->setIsExpandable(false);
+    links << StalledIssuesUtilities::getLink(true, header->getData().consultData()->consultCloudData()->getNativeFilePath()) << QLatin1String("https://mega.io/terms");
+    StalledIssuesLinkTextDecorator::process(links, headerText);
+    header->setText(headerText);
 }
 
 //Local folder not scannable

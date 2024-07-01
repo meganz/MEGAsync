@@ -64,7 +64,10 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->setDelegate(mDelegate);
     }
 
-    createHeaderCaseWidget(header, issue);
+    if(needsUpdate)
+    {
+        createHeaderCaseWidget(header, issue);
+    }
 
     if(isNew)
     {

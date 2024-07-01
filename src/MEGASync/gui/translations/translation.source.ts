@@ -926,13 +926,8 @@
 <context>
     <name>CloudNodeIsBlockedHeader</name>
     <message>
-        <source>The link [B]%1[/B] you are trying to access is unavailable because the folder or file was reported to contain content in breach of MEGA&apos;s Terms of Service. The account of the user who created this link has been terminated.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there is a cloud node blocked by ToS, [B] is for bold and %1 is the name of the takedown file.SAT-1209</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>For more information, please see our [A]Terms of Service[/A] and our [A]Takedown Guidance Policy[/A].</source>
-        <translatorcomment>Description text just below the header title when there is a cloud node blocked by ToS, [A] is for hyperlink style.SAT-1209</translatorcomment>
+        <source>The file [A]%1[/A] is unavailable because it was reported to contain content in breach of MEGA&apos;s [A]Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
