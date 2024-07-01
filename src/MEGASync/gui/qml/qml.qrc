@@ -115,7 +115,7 @@
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>onboard/syncs_types/StepPanel.qml</file>
         <file>onboard/syncs_types/SyncsPage.qml</file>
-	<file>onboard/syncs_types/backups/qmldir</file>
+        <file>onboard/syncs_types/backups/qmldir</file>
         <file>onboard/syncs_types/backups/BackupsPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPage.qml</file>
         <file>onboard/syncs_types/backups/ConfirmFoldersPageForm.ui.qml</file>
@@ -165,7 +165,7 @@
         <file>backups/ResumePageForm.ui.qml</file>
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
-        <file>backups/StepPanel.qml</file>
         <file>common/Utilities.qml</file>
+        <file>components/steps/StepPanel.qml</file>
     </qresource>
 </RCC>

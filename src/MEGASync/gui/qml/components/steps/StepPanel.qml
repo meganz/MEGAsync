@@ -4,10 +4,12 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.buttons 1.0
-import components.steps 1.0
 
 Rectangle {
     id: root
+
+    property alias step1String: step1.text
+    property alias step2String: step2.text
 
     readonly property string step1: "step1"
     readonly property string step2: "step2"
@@ -79,7 +81,6 @@ Rectangle {
                 id: step1
 
                 number: 1
-                text: BackupsStrings.selectFolders
             }
 
             Rectangle {
@@ -95,7 +96,6 @@ Rectangle {
                 id: step2
 
                 number: 2
-                text: BackupsStrings.confirmFolders
             }
 
         } // RowLayout: stepsLayout
