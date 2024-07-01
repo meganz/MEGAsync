@@ -235,25 +235,16 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             if (access >= MegaShare::ACCESS_FULL)
             {
                 customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
-
-                QList<mega::MegaHandle> selectionHandle{getSelectedNodeHandle()};
-                customMenu.addAction(tr("Delete"), this, [this, selectionHandle](){
-                    removeNode(selectionHandle);
-                });
             }
         }
     }
-    else
-    {
-        auto selectionHandles(getMultiSelectionNodeHandle());
 
-        //All or none
-        if(areAllEligibleForDeletion(selectionHandles))
-        {
-            customMenu.addAction(tr("Delete"), this, [this, selectionHandles](){
-                removeNode(selectionHandles);
-            });
-        }
+    auto selectionHandles(getMultiSelectionNodeHandle());
+    //All or none
+    if(areAllEligibleForDeletion(selectionHandles))
+    {
+        customMenu.addAction(
+            tr("Delete"), this, [this, selectionHandles]() { removeNode(selectionHandles); });
     }
 
     if (!customMenu.actions().isEmpty())
@@ -262,16 +253,15 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 
 bool NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle> &handles) const
 {
-    auto removableItems(handles.size());
     foreach(auto&& nodeHandle, handles)
     {
-        if (getNodeAccess(nodeHandle) >= MegaShare::ACCESS_FULL)
+        if (getNodeAccess(nodeHandle) < MegaShare::ACCESS_FULL)
         {
-            removableItems--;
+            return false;
         }
     }
 
-    return removableItems == 0;
+    return true;
 }
 
 int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
