@@ -1,7 +1,7 @@
 #ifndef GUESTQMLDIALOG_H
 #define GUESTQMLDIALOG_H
 
-#include "qml/QmlDialog.h"
+#include "QmlDialog.h"
 
 class GuestQmlDialog : public QmlDialog
 {

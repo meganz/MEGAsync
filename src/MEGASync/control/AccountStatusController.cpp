@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "onboarding/GuestContent.h"
+#include "GuestContent.h"
 #include <QDebug>
 
 AccountStatusController::AccountStatusController(QObject* parent)

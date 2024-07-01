@@ -1,7 +1,7 @@
 #ifndef ADDEXCLUSIONRULE_H
 #define ADDEXCLUSIONRULE_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class AddExclusionRule : public QMLComponent
 {

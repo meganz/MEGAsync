@@ -35,11 +35,12 @@ void ObserverRequestListener::onRequestStart(MegaApi*, MegaRequest* request)
 
 void ObserverRequestListener::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
-    if(mCallbacks.onRequestFinish && mCallbacks.callbackClass)
+    if (mCallbacks.onRequestFinish && mCallbacks.callbackClass)
     {
         mCallbacks.onRequestFinish(request, error);
     }
-    else if(!mCallbacks.callbackClass || mCallbacks.removeAfterReqFinish)
+
+    if (!mCallbacks.callbackClass || mCallbacks.removeAfterReqFinish)
     {
         // Observer has been destroyed or it has finished and it need to be removed
         emit removeListener(this);

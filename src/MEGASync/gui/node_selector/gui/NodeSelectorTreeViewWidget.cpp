@@ -1,16 +1,16 @@
 #include "ui_NodeSelectorTreeViewWidget.h"
 #include "NodeSelectorTreeViewWidget.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "../model/NodeSelectorModel.h"
-#include "../model/NodeSelectorDelegates.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorDelegates.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "../model/NodeSelectorModel.h"
-#include "NodeNameSetterDialog/RenameNodeDialog.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModel.h"
+#include "RenameNodeDialog.h"
 #include "DialogOpener.h"
-#include <MegaNodeNames.h>
-#include "NodeNameSetterDialog/NewFolderDialog.h"
+#include "MegaNodeNames.h"
+#include "NewFolderDialog.h"
 
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;

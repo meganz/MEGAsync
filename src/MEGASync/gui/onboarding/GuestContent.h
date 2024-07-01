@@ -1,7 +1,7 @@
 #ifndef GUESTCONTENT_H
 #define GUESTCONTENT_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class GuestContent : public QMLComponent
 {

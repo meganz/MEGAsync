@@ -1,7 +1,7 @@
 #ifndef BACKUPSQMLDIALOG_H
 #define BACKUPSQMLDIALOG_H
 
-#include "qml/QmlDialog.h"
+#include "QmlDialog.h"
 
 class BackupsQmlDialog : public QmlDialog
 {

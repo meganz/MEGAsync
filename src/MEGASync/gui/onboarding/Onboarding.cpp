@@ -6,7 +6,7 @@
 #include "OnboardingQmlDialog.h"
 
 #include "backups/Backups.h"
-#include "qml/ChooseFolder.h"
+#include "ChooseFolder.h"
 
 #include "SettingsDialog.h"
 #include "MegaApplication.h"

@@ -1,5 +1,5 @@
 #include "MegaProxyStyle.h"
-#include "gui/MegaTransferView.h"
+#include "MegaTransferView.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
 

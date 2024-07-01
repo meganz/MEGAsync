@@ -18,22 +18,18 @@
 #include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
-
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
-#include "gui/UploadToMegaDialog.h"
+#include "UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
-
-#include "qml/QmlManager.h"
-#include "qml/QmlDialogManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -515,8 +511,8 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
+    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -1583,7 +1579,7 @@ void MegaApplication::onLogout()
 
 StatsEventHandler* MegaApplication::getStatsEventHandler() const
 {
-    return mStatsEventHandler;
+    return mStatsEventHandler.get();
 }
 
 void MegaApplication::checkSystemTray()
