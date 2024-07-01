@@ -19,6 +19,7 @@ QtObject {
     readonly property string selectiveSync: qsTr("Selective sync")
     readonly property string sync: qsTr("Sync")
     readonly property string syncTitle: qsTr("Choose sync type")
+    readonly property string syncType: qsTr("Choose type")
     readonly property string syncsWindowTitle: qsTr("Add sync")
 
 }

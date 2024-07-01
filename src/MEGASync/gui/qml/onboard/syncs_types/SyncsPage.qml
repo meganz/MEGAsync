@@ -5,13 +5,14 @@ import common 1.0
 import syncs 1.0
 
 import onboard 1.0
-//@jsubi import onboard.syncs_types.left_panel 1.0
 
 SyncsFlow {
     id: root
 
     required property StepPanel stepPanelRef
     required property NavigationInfo navInfoRef
+    syncPageComponent: syncPageComponent
+
 
     isOnboarding: true
 
@@ -76,4 +77,30 @@ SyncsFlow {
         }
     }
 
+    Component {
+        id: syncPageComponent
+
+        SyncTypePage {
+            id: syncTypePage
+
+            footerButtons.leftPrimary.visible: true
+            footerButtons.leftPrimary.text: Strings.skip
+            footerButtons.leftSecondary.visible: false
+            footerButtons.rightSecondary.visible: true
+
+            onSyncTypeMoveToBack: {
+                root.syncsFlowMoveToBack(true);
+            }
+
+            onSyncTypeMoveToFullSync: {
+                root.state = root.fullSync;
+            }
+
+            onSyncTypeMoveToSelectiveSync: {
+                root.state = root.selectiveSync;
+            }
+        }
+    }
+
 }
+

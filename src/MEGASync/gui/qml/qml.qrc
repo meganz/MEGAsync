@@ -167,5 +167,6 @@
         <file>backups/BackupsPage.qml</file>
         <file>common/Utilities.qml</file>
         <file>components/steps/StepPanel.qml</file>
+        <file>syncs/SyncsPage.qml</file>
     </qresource>
 </RCC>

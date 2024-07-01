@@ -2,6 +2,7 @@ module syncs
 singleton SyncsStrings 1.0 SyncsStrings.qml
 SyncsDialog 1.0 SyncsDialog.qml
 SyncsFlow 1.0 SyncsFlow.qml
+SyncsPage 1.0 SyncsPage.qml
 SyncTypePage 1.0 SyncTypePage.qml
 SyncTypePageForm 1.0 SyncTypePageForm.ui.qml
 FullSyncPage 1.0 FullSyncPage.qml

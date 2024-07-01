@@ -9,6 +9,8 @@ import Syncs 1.0
 Item {
     id: root
 
+    required property Component syncPageComponent
+
     readonly property string syncType: "syncType"
     readonly property string fullSync: "fullSync"
     readonly property string selectiveSync: "selectiveSync"
@@ -62,29 +64,6 @@ Item {
         anchors.fill: parent
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
-        }
-
-        Component {
-            id: syncPageComponent
-
-            SyncTypePage {
-                id: syncTypePage
-
-                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.cancel
-                footerButtons.rightSecondary.visible: root.isOnboarding
-
-                onSyncTypeMoveToBack: {
-                    root.syncsFlowMoveToBack(true);
-                }
-
-                onSyncTypeMoveToFullSync: {
-                    root.state = root.fullSync;
-                }
-
-                onSyncTypeMoveToSelectiveSync: {
-                    root.state = root.selectiveSync;
-                }
-            }
         }
 
         Component {
