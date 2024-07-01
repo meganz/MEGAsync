@@ -515,7 +515,6 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex& index) const
 void StalledIssuesModel::fullReset()
 {
     mSolvedStalledIssues.clear();
-    mLastSolvedStalledIssue = StalledIssueVariant();
     reset();
 }
 
@@ -756,16 +755,7 @@ void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
     if(mIssuesSolved)
     {
         mIssuesSolved = false;
-
-        if(mLastSolvedStalledIssue.consultData() &&
-            mLastSolvedStalledIssue.consultData()->refreshListAfterSolving())
-        {
-            updateStalledIssues();
-        }
-        else
-        {
-            emit refreshFilter();
-        }
+        emit refreshFilter();
     }
     else
     {
@@ -978,16 +968,13 @@ bool StalledIssuesModel::issueSolvingFinished(const StalledIssue* issue)
 
 bool StalledIssuesModel::issueSolvingFinished(StalledIssue* issue, bool wasSuccessful)
 {
-    if(issue->isUnsolved())
+    if(wasSuccessful)
     {
-        if(wasSuccessful)
-        {
-            issue->setIsSolved(StalledIssue::SolveType::SOLVED);
-        }
-        else
-        {
-            issue->setIsSolved(StalledIssue::SolveType::FAILED);
-        }
+        issue->setIsSolved(StalledIssue::SolveType::SOLVED);
+    }
+    else
+    {
+        issue->setIsSolved(StalledIssue::SolveType::FAILED);
     }
 
     return issueSolvingFinished(issue);
@@ -1000,7 +987,6 @@ bool StalledIssuesModel::issueSolved(const StalledIssue* issue)
         auto issueVariant(getIssueVariantByIssue(issue));
         if(issueVariant.isValid())
         {
-            mLastSolvedStalledIssue = issueVariant;
             mSolvedStalledIssues.append(issueVariant);
             mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
             auto& counter = mCountByFilterCriterion[static_cast<int>(

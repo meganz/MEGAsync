@@ -480,6 +480,19 @@ target_include_directories(MEGAsync PRIVATE
     ${CMAKE_CURRENT_LIST_DIR}
 )
 
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/model
+    ${CMAKE_CURRENT_LIST_DIR}/node_selector/gui
+    ${CMAKE_CURRENT_LIST_DIR}/qml
+    ${CMAKE_CURRENT_LIST_DIR}/onboarding
+    ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
+    ${CMAKE_CURRENT_LIST_DIR}/backups
+)
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
+
 if (UNIX AND NOT APPLE)
 
     # Install tray icons for Linux

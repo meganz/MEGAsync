@@ -270,12 +270,7 @@ void TransferMetaData::increaseFinishedTopLevelTransfers(mega::MegaTransfer *tra
 
 bool TransferMetaData::isSingleTransfer() const
 {
-    if(isNonExistData())
-    {
-        return mFiles.nonExistFailedTransfers.size() == 1;
-    }
-
-    return (mFiles.completedTransfers.size() + mFiles.failedTransfers.size() + getTotalEmptyFolders()) == 1;
+    return getTransfersCount() == 1;
 }
 
 int TransferMetaData::getTotalFiles() const
@@ -580,6 +575,16 @@ bool TransferMetaData::someHaveFailed() const
 bool TransferMetaData::isEmpty() const
 {
     return mFiles.size() == 0 && mEmptyFolders.size() == 0;
+}
+
+int TransferMetaData::getTransfersCount() const
+{
+    if(isNonExistData())
+    {
+        return mFiles.nonExistFailedTransfers.size();
+    }
+
+    return (mFiles.completedTransfers.size() + mFiles.failedTransfers.size() + getTotalEmptyFolders());
 }
 
 unsigned long long TransferMetaData::getAppId() const

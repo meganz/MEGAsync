@@ -15,7 +15,7 @@ public:
     TransferNotificationBuilder(const std::shared_ptr<TransferMetaData>& data);
     ~TransferNotificationBuilder() = default;
 
-    DesktopNotifications::NotificationInfo buildNotification();
+    DesktopNotifications::NotificationInfo buildNotification(const bool isLogged);
 
     static QString getDownloadFailedTitle();
     static QString getDownloadSomeFailedTitle();

@@ -1764,7 +1764,7 @@ In sommige gevallen kunnen ze details over uw gegevens bevatten, zoals bestands-
     <message>
         <source>Choose which files or folders you want to exclude from</source>
         <translatorcomment>Description for name rules section in sync exclusions dialog.SAT-449</translatorcomment>
-        <translation>Kies vanuit welke map u de bestanden of mappen u wilt uitsluiten</translation>
+        <translation>Kies welke bestanden of mappen u wilt uitsluiten van</translation>
     </message>
     <message>
         <source>Exclude files by size</source>
