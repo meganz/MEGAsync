@@ -992,16 +992,13 @@ bool StalledIssuesModel::issueSolvingFinished(const StalledIssue* issue)
 
 bool StalledIssuesModel::issueSolvingFinished(StalledIssue* issue, bool wasSuccessful)
 {
-    if(issue->isUnsolved())
+    if(wasSuccessful)
     {
-        if(wasSuccessful)
-        {
-            issue->setIsSolved(StalledIssue::SolveType::SOLVED);
-        }
-        else
-        {
-            issue->setIsSolved(StalledIssue::SolveType::FAILED);
-        }
+        issue->setIsSolved(StalledIssue::SolveType::SOLVED);
+    }
+    else
+    {
+        issue->setIsSolved(StalledIssue::SolveType::FAILED);
     }
 
     return issueSolvingFinished(issue);

@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 #include "platform/Platform.h"
 #include "Utilities.h"
-#include "gui/QMegaMessageBox.h"
+#include "QMegaMessageBox.h"
 #include "TransfersWidget.h"
 
 #include <QScrollBar>
