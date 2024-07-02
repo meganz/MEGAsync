@@ -24,31 +24,8 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
         {
             if (e->getErrorCode() == mega::MegaError::API_OK)
             {
-                const mega::MegaNotificationList* notifications = request->getMegaNotifications();
-                if (notifications)
-                {
-                    bool exists = mNotificationAlertModel != nullptr;
-
-                    if(!mNotificationAlertModel)
-                    {
-                        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
-                        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
-                        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
-                        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-                    }
-                    mNotificationAlertModel->createNotificationModel(notifications);
-
-                    if(!mNotificationAlertDelegate)
-                    {
-                        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
-                    }
-                    mNotificationAlertDelegate->createNotificationDelegate(mNotificationAlertModel->notificationModel());
-
-                    if(!exists)
-                    {
-                        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
-                    }
-                }
+                auto notifications = request->getMegaNotifications();
+                populateNotifications(notifications);
             }
             break;
         }
@@ -69,37 +46,55 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     // Used by DesktopNotifications because the current architecture
     emit userAlertsUpdated(alertList);
 
-    if (mNotificationAlertModel)
+    if(createModelAndDelegate() || !mNotificationAlertModel->alertModel())
     {
-        mNotificationAlertModel->insertAlerts(alertList);
+        mNotificationAlertModel->createAlertModel(alertList);
+        mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
     }
     else
     {
-        bool exists = mNotificationAlertModel != nullptr;
-
-        if(!mNotificationAlertModel)
-        {
-            mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
-            mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
-            mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
-            mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-        }
-        mNotificationAlertModel->createAlertModel(alertList);
-
-        if(!mNotificationAlertDelegate)
-        {
-            mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
-        }
-        mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
-
-        if(!exists)
-        {
-            emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
-        }
+        mNotificationAlertModel->insertAlerts(alertList);
     }
 
     // Used by InfoDialog because the current architecture
     emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());
+}
+
+void NotificationAlertController::populateNotifications(const mega::MegaNotificationList* notificationList)
+{
+    if (!notificationList)
+    {
+        return;
+    }
+
+    if(createModelAndDelegate() || !mNotificationAlertModel->notificationModel())
+    {
+        mNotificationAlertModel->createNotificationModel(notificationList);
+        mNotificationAlertDelegate->createNotificationDelegate(mNotificationAlertModel->notificationModel());
+    }
+    else
+    {
+        mNotificationAlertModel->insertNotifications(notificationList);
+    }
+}
+
+bool NotificationAlertController::createModelAndDelegate()
+{
+    bool isNew = true;
+    if(mNotificationAlertModel || mNotificationAlertDelegate)
+    {
+        isNew = false;
+    }
+    else
+    {
+        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
+        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
+        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
+        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
+        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
+    }
+    return isNew;
 }
 
 void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)

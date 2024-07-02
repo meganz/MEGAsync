@@ -11,7 +11,7 @@ NotificationModel::NotificationModel(const mega::MegaNotificationList* notificat
     : QAbstractItemModel(parent)
 {
     notificationItems.setMaxCost(MAX_COST);
-    insert(notifications);
+    insertNewNotifications(notifications);
 }
 
 NotificationModel::~NotificationModel()
@@ -70,18 +70,133 @@ void NotificationModel::insert(const mega::MegaNotificationList* notifications)
         return;
     }
 
-    beginInsertRows(QModelIndex(), 0, notifications->size() - 1);
+    removeNotifications(notifications);
+    updateNotifications(notifications);
+    insertNewNotifications(notifications);
+}
+
+int NotificationModel::countNewNotifications(const mega::MegaNotificationList* notifications) const
+{
+    int newItemsCount = 0;
+    for (int i = 0; i < notifications->size(); ++i)
+    {
+        const mega::MegaNotification* notification = notifications->get(i);
+        if (notification && !mNotificationsMap.contains(notification->getID()))
+        {
+            ++newItemsCount;
+        }
+    }
+    return newItemsCount;
+}
+
+void NotificationModel::insertNewNotifications(const mega::MegaNotificationList* notifications)
+{
+    int newItemsCount = countNewNotifications(notifications);
+    if (newItemsCount == 0)
+    {
+        return;
+    }
+
+    beginInsertRows(QModelIndex(), 0, newItemsCount - 1);
 
     for (int i = 0; i < notifications->size(); ++i)
     {
-        const mega::MegaNotification* notification = notifications->get(i)->copy();
-        if (notification)
+        const mega::MegaNotification* notification = notifications->get(i);
+        if (notification && !mNotificationsMap.contains(notification->getID()))
         {
-            MegaNotificationExt* notificationExt = new MegaNotificationExt(notification);
-            mNotificationsMap.insert(notificationExt->getID(), notificationExt);
-            mNotificationsOrder.push_front(notificationExt->getID());
+            MegaNotificationExt* notificationExt = new MegaNotificationExt(notification->copy());
+            mNotificationsMap.insert(notification->getID(), notificationExt);
+            mNotificationsOrder.push_front(notification->getID());
         }
     }
-
     endInsertRows();
+}
+
+void NotificationModel::removeNotifications(const mega::MegaNotificationList* notifications)
+{
+    QSet<int> notificationIDsInList = createNotificationIDSet(notifications);
+    QList<int> rowsToRemove = findRowsToRemove(notificationIDsInList);
+    removeRows(rowsToRemove);
+}
+
+QSet<int> NotificationModel::createNotificationIDSet(const mega::MegaNotificationList* notifications) const
+{
+    QSet<int> notificationIDsInList;
+    for (int i = 0; i < notifications->size(); ++i)
+    {
+        const mega::MegaNotification* notification = notifications->get(i);
+        if (notification)
+        {
+            notificationIDsInList.insert(notification->getID());
+        }
+    }
+    return notificationIDsInList;
+}
+
+QList<int> NotificationModel::findRowsToRemove(const QSet<int>& notificationIDsInList) const
+{
+    QList<int> rowsToRemove;
+    for (auto it = mNotificationsOrder.begin(); it != mNotificationsOrder.end(); ++it)
+    {
+        int notificationID = *it;
+        if (!notificationIDsInList.contains(notificationID))
+        {
+            rowsToRemove.append(std::distance(mNotificationsOrder.begin(), it));
+        }
+    }
+    return rowsToRemove;
+}
+
+void NotificationModel::removeRows(const QList<int>& rowsToRemove)
+{
+    if (rowsToRemove.isEmpty())
+    {
+        return;
+    }
+
+    beginRemoveRows(QModelIndex(), 0, rowsToRemove.size() - 1);
+
+    for (int i = rowsToRemove.size() - 1; i >= 0; --i)
+    {
+        int row = rowsToRemove.at(i);
+        int notificationID = mNotificationsOrder.at(row);
+        delete mNotificationsMap.take(notificationID);
+        mNotificationsOrder.erase(mNotificationsOrder.begin() + row);
+    }
+
+    endRemoveRows();
+}
+
+void NotificationModel::updateNotifications(const mega::MegaNotificationList* notifications)
+{
+    if (!notifications)
+    {
+        return;
+    }
+
+    for (int i = 0; i < notifications->size(); ++i)
+    {
+        const mega::MegaNotification* notification = notifications->get(i);
+        if (!notification)
+        {
+            continue;
+        }
+
+        int notificationID = notification->getID();
+        if (mNotificationsMap.contains(notificationID))
+        {
+            MegaNotificationExt* notificationExt = mNotificationsMap.value(notificationID);
+            notificationExt->reset(notification->copy());
+
+            auto orderIter = std::find(mNotificationsOrder.begin(), mNotificationsOrder.end(), notificationID);
+            if (orderIter != mNotificationsOrder.end())
+            {
+                int row = static_cast<int>(std::distance(mNotificationsOrder.begin(), orderIter));
+                if (row >= 0 && row < static_cast<int>(mNotificationsOrder.size()))
+                {
+                    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+                }
+            }
+        }
+    }
 }

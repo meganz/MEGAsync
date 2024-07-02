@@ -24,6 +24,7 @@ public:
     bool hasAlerts();
     bool hasAlertsOfType(int type);
     void insertAlerts(mega::MegaUserAlertList* alerts);
+    void insertNotifications(const mega::MegaNotificationList* notificationList);
     QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
     AlertModel* alertModel() const;
     NotificationModel* notificationModel() const;

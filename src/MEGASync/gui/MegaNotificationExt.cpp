@@ -11,6 +11,11 @@ MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notificat
 {
 }
 
+void MegaNotificationExt::reset(const mega::MegaNotification* notification)
+{
+    mNotification.reset(notification);
+}
+
 int64_t MegaNotificationExt::getID() const
 {
     return mNotification->getID();

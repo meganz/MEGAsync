@@ -43,6 +43,8 @@ private:
     std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
 
     void populateUserAlerts(mega::MegaUserAlertList* alertList);
+    void populateNotifications(const mega::MegaNotificationList* notificationList);
+    bool createModelAndDelegate();
 
 };
 

@@ -16,6 +16,8 @@ public:
     MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent = nullptr);
     ~MegaNotificationExt() = default;
 
+    void reset(const mega::MegaNotification* notification);
+
     int64_t getID() const;
     QString getTitle() const;
     QString getDescription() const;

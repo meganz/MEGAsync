@@ -32,6 +32,16 @@ private:
     QMap<int, MegaNotificationExt*> mNotificationsMap;
     std::deque<unsigned int> mNotificationsOrder;
 
+    int countNewNotifications(const mega::MegaNotificationList* notifications) const;
+    void insertNewNotifications(const mega::MegaNotificationList* notifications);
+
+    void updateNotifications(const mega::MegaNotificationList* notifications);
+
+    void removeNotifications(const mega::MegaNotificationList* notifications);
+    QSet<int> createNotificationIDSet(const mega::MegaNotificationList* notifications) const;
+    QList<int> findRowsToRemove(const QSet<int>& notificationIDsInList) const;
+    void removeRows(const QList<int>& rowsToRemove);
+
 };
 
 #endif // QNOTIFICATIONSMODEL_H

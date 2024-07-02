@@ -120,12 +120,12 @@ QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifica
     return unseenNotifications;
 }
 
-AlertModel *NotificationAlertModel::alertModel() const
+AlertModel* NotificationAlertModel::alertModel() const
 {
     return mAlertsModel.get();
 }
 
-NotificationModel *NotificationAlertModel::notificationModel() const
+NotificationModel* NotificationAlertModel::notificationModel() const
 {
     return mNotificationsModel.get();
 }
@@ -135,6 +135,15 @@ void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
     if (mAlertsModel)
     {
         mAlertsModel->insertAlerts(alerts, true);
+        emit layoutChanged();
+    }
+}
+
+void NotificationAlertModel::insertNotifications(const mega::MegaNotificationList* notificationList)
+{
+    if (mNotificationsModel)
+    {
+        mNotificationsModel->insert(notificationList);
         emit layoutChanged();
     }
 }
