@@ -27,6 +27,7 @@ public:
     bool hasAlerts();
     bool hasAlertsOfType(int type);
     void applyNotificationFilter(AlertType opt);
+    void requestNotifications() const;
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);

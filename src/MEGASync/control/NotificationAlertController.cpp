@@ -182,3 +182,8 @@ void NotificationAlertController::applyNotificationFilter(AlertType opt)
         mAlertsProxyModel->setFilterAlertType(opt);
     }
 }
+
+void NotificationAlertController::requestNotifications() const
+{
+    mMegaApi->getNotifications();
+}

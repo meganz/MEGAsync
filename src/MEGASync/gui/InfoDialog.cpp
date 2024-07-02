@@ -1415,6 +1415,8 @@ void InfoDialog::on_tTransfers_clicked()
 
 void InfoDialog::on_tNotifications_clicked()
 {
+    app->getNotificationController()->requestNotifications();
+
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
 
