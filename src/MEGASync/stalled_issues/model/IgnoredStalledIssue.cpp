@@ -46,7 +46,7 @@ bool IgnoredStalledIssue::isSpecialLink() const
 
 bool IgnoredStalledIssue::isExpandable() const
 {
-    return !isSymLink();
+    return !isSymLink() && !isCloudNodeBlocked(getOriginalStall().get());
 }
 
 bool IgnoredStalledIssue::checkForExternalChanges()
