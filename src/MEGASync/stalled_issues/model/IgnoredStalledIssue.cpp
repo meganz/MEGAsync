@@ -46,7 +46,7 @@ bool IgnoredStalledIssue::isSpecialLink() const
 
 bool IgnoredStalledIssue::isExpandable() const
 {
-    return !isSymLink() && !isCloudNodeBlocked(getOriginalStall().get());
+    return !isSymLink();
 }
 
 bool IgnoredStalledIssue::checkForExternalChanges()
@@ -127,4 +127,9 @@ void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
     IgnoredStalledIssue::fillIssue(stall);
     mIgnoredPaths.append(consultCloudData()->getFilePath());
+}
+
+bool CloudNodeIsBlockedIssue::isExpandable() const
+{
+    return false;
 }
