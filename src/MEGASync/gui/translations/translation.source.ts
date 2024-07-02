@@ -926,7 +926,7 @@
 <context>
     <name>CloudNodeIsBlockedHeader</name>
     <message>
-        <source>The file [A]%1[/A] is unavailable because it was reported to contain content in breach of MEGA&apos;s [A]Terms of Service[/A].</source>
+        <source>The file [A]%1[/A] is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
