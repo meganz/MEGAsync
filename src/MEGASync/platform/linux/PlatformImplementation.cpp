@@ -108,6 +108,8 @@ bool PlatformImplementation::isStartOnStartupActive()
 bool PlatformImplementation::isTilingWindowManager()
 {
     static const QSet<QString> tiling_wms = {
+        QString::fromUtf8("sway"),
+        QString::fromUtf8("wayfire"),
         QString::fromUtf8("i3")
     };
 
@@ -308,6 +310,9 @@ QString PlatformImplementation::getWindowManagerName()
 {
     static QString wmName;
     static bool cached = false;
+    if (qgetenv("XDG_SESSION_TYPE") == "wayland") {
+        return QString::fromLocal8Bit(qgetenv("XDG_CURRENT_DESKTOP"));
+    }
 
     if (!cached)
     {
