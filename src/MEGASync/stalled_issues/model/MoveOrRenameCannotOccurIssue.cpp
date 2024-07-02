@@ -59,6 +59,11 @@ bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
     return false;
 }
 
+bool MoveOrRenameCannotOccurIssue::refreshListAfterSolving() const
+{
+    return true;
+}
+
 void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 {
     if(!syncIds().isEmpty())
