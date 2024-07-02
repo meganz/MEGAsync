@@ -348,7 +348,6 @@ void StalledIssueHeader::setTitleDescriptionText(const QString &text)
 
 void StalledIssueHeader::setData(StalledIssueHeaderCase * issueData)
 {
-    reset();
     mHeaderCase = issueData;
 }
 
@@ -356,14 +355,16 @@ void StalledIssueHeader::reset()
 {
     StalledIssueBaseDelegateWidget::reset();
     mHeaderCase->deleteLater();
-    setText(QString());
-    setTitleDescriptionText(QString());
 }
 
 void StalledIssueHeader::refreshCaseTitles()
 {
     if(mHeaderCase)
     {
+        //Reset strings first
+        setText(QString());
+        setTitleDescriptionText(QString());
+
         mHeaderCase->refreshCaseTitles(this);
     }
 }
