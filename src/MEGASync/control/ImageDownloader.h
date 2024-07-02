@@ -46,6 +46,8 @@ public:
 
 public slots:
     void downloadImage(const QString& imageUrl,
+                       QImage::Format format = QImage::Format_ARGB32_Premultiplied);
+    void downloadImage(const QString& imageUrl,
                        int width,
                        int height,
                        QImage::Format format = QImage::Format_ARGB32_Premultiplied);
