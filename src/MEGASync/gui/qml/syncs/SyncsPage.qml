@@ -8,9 +8,8 @@ SyncsFlow {
     id: root
 
     required property StepPanel stepPanelRef
-    syncPageComponent: syncPageComponent
 
-    Component {
+    syncPageComponent: Component {
         id: syncPageComponent
 
         SyncTypePage {
@@ -40,6 +39,58 @@ SyncsFlow {
             onSyncTypeMoveToSelectiveSync: {
                 root.state = root.selectiveSync;
             }
+        }
+    }
+
+    Item {
+        id: stepPanelStateWrapper
+
+        readonly property string selectSyncTypePage: "selectSyncTypePage"
+        readonly property string selectiveSyncPage: "selectiveSyncPage"
+        readonly property string fullSyncPage: "fullSyncPage"
+
+        states: [
+            State {
+                name: stepPanelStateWrapper.selectSyncTypePage
+                PropertyChanges {
+                    target: root.stepPanelRef
+                    state: root.stepPanelRef.step1
+                    step2String: SyncsStrings.sync
+                }
+            },
+            State {
+                name: stepPanelStateWrapper.selectiveSyncPage
+                PropertyChanges {
+                    target: root.stepPanelRef
+                    state: root.stepPanelRef.step2
+                    step2String: SyncsStrings.selectiveSync
+                }
+            },
+            State {
+                name: stepPanelStateWrapper.fullSyncPage
+                PropertyChanges {
+                    target: root.stepPanelRef
+                    state: root.stepPanelRef.step2
+                    step2String: SyncsStrings.fullSync
+                }
+            }
+        ]
+    }
+
+    onStateChanged: {
+        switch(root.state) {
+            case root.syncType:
+                stepPanelStateWrapper.state = stepPanelStateWrapper.selectSyncTypePage;
+                break;
+            case root.fullSync:
+                stepPanelStateWrapper.state = stepPanelStateWrapper.fullSyncPage;
+                break;
+            case root.selectiveSync:
+                stepPanelStateWrapper.state = stepPanelStateWrapper.selectiveSyncPage;
+                break;
+            default:
+                console.warn("SyncPage: state does not exist -> " + root.state);
+                break;
         }
     }
 }
