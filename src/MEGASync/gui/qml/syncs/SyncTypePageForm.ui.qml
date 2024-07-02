@@ -11,6 +11,7 @@ FooterButtonsPage {
 
     property alias buttonGroup: buttonGroup
     property alias fullSyncButton: fullSyncButtonItem
+    property alias selectiveSyncButton: selectiveSyncButtonItem
 
     footerButtons.rightPrimary.enabled: false
 
@@ -62,9 +63,9 @@ FooterButtonsPage {
                 }
 
                 SyncTypeButton {
-                    id: selectiveSyncButton
+                    id: selectiveSyncButtonItem
 
-                    Layout.rightMargin: -selectiveSyncButton.focusBorderWidth
+                    Layout.rightMargin: -selectiveSyncButtonItem.focusBorderWidth
                     title: SyncsStrings.selectiveSync
                     type: Constants.SyncType.SELECTIVE_SYNC
                     description: SyncsStrings.selectiveSyncButtonDescription

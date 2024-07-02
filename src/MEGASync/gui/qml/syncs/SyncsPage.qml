@@ -16,10 +16,18 @@ SyncsFlow {
         SyncTypePage {
             id: syncTypePage
 
-            footerButtons.leftPrimary.visible: false;
-            footerButtons.leftSecondary.visible: false;
+            footerButtons.leftPrimary.visible: false
+            footerButtons.leftSecondary.visible: false
             footerButtons.rightSecondary.text: Strings.cancel
             footerButtons.rightSecondary.visible: true
+
+            fullSyncButton.width: 280
+            fullSyncButton.imageSource: Images.syncTypeFull
+            fullSyncButton.imageSourceSize: Qt.size(256, 100)
+
+            selectiveSyncButton.width: 280
+            selectiveSyncButton.imageSource: Images.syncTypeSelective
+            selectiveSyncButton.imageSourceSize: Qt.size(256, 100)
 
             onSyncTypeMoveToBack: {
                 root.syncsFlowMoveToBack(true);
