@@ -5584,14 +5584,20 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- New support to Move or Rename sync conflicts.
-- New fail management for sync conflict resolution.
-- New UI improvements and fixes in sync conflict dialog.
-- New option to keep most recently modified file in local/remote sync conflict.
-- Sync stalls are now automatically resolved as soon as they are detected.
-- Bug fixes and other improvements.
+        <source>- Improved handling of sync conflicts.
+- Improved management of failures within issue resolution.
+- Improved issue resolution dialogs.
+- Added default automatic issue resolution.
+- Added new UI improvements.
+- Fixed other bugs and made assorted other improvements.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.4.0.CON-806</translatorcomment>
+        <translation>- Improved handling of sync conflicts.
+- Improved management of failures within issue resolution.
+- Improved issue resolution dialogs.
+- Added default automatic issue resolution.
+- Added new UI improvements.
+- Fixed other bugs and made assorted other improvements.</translation>
     </message>
 </context>
 <context>
