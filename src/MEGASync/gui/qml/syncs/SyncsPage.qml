@@ -8,6 +8,7 @@ SyncsFlow {
     id: root
 
     required property StepPanel stepPanelRef
+    required property var syncsContentItemRef
 
     syncPageComponent: Component {
         id: syncPageComponent
@@ -75,6 +76,12 @@ SyncsFlow {
                 }
             }
         ]
+    }
+
+    onSyncsFlowMoveToFinal: (success) => {
+        if (success) {
+            syncsContentItemRef.state = syncsContentItemRef.resume;
+        }
     }
 
     onStateChanged: {

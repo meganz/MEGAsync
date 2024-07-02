@@ -75,6 +75,7 @@ SyncsQmlDialog {
                         id: syncsFlowItem
 
                         stepPanelRef : stepPanelItem
+                        syncsContentItemRef: syncsContentItem
                     }
                 }
 
@@ -83,6 +84,9 @@ SyncsQmlDialog {
 
                     ResumeSyncsPage {
                         id: resumeSyncsPageItem
+
+                        image.source: Images.syncResume
+                        image.sourceSize: Qt.size(128, 128)
                     }
                 }
             }

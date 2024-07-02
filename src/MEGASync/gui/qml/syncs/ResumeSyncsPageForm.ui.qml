@@ -11,6 +11,8 @@ import components.pages 1.0
 FooterButtonsPage {
     id: root
 
+    property alias image : imageItem
+
     footerButtons {
         leftSecondary.visible: false
         rightSecondary {
@@ -34,7 +36,7 @@ FooterButtonsPage {
         spacing: 8
 
         Image {
-            id: image
+            id: imageItem
 
             source: Images.ok
             sourceSize: Qt.size(120, 120)

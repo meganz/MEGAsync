@@ -86,6 +86,7 @@ QtObject {
 
     readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
     readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
+    readonly property url syncResume: imagesSyncsPath + "sync_resume.png"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
