@@ -1,4 +1,4 @@
-#include "gui/GuiUtilities.h"
+#include "GuiUtilities.h"
 
 #include <QApplication>
 #include <QPointer>

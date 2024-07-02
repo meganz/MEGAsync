@@ -569,10 +569,9 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
-    //For these two methods, use notifyChange = true if someone needs to detect when it changes
+    //For this method, use notifyChange = true if someone needs to detect when it changes
     //Not all prefeerences need this, that´s why by default it is set to false
-    void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
-    void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
+    void setValueConcurrently(const QString &key, const QVariant &value, bool notifyChange = false);
 
     std::unique_ptr<EncryptedSettings> mSettings;
 

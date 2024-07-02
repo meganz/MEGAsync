@@ -1,9 +1,9 @@
 #ifndef EXCLUSIONSQMLDIALOG_H
 #define EXCLUSIONSQMLDIALOG_H
 
-#include "qml/QmlDialog.h"
+#include "QmlDialog.h"
 #include "syncs/control/MegaIgnoreManager.h"
-#include "gui/SyncExclusions/ExclusionRulesModel.h"
+#include "ExclusionRulesModel.h"
 
 class ExclusionsQmlDialog : public QmlDialog
 {

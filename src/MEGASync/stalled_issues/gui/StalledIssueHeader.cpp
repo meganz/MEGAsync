@@ -49,8 +49,13 @@ StalledIssueHeader::~StalledIssueHeader()
 
 void StalledIssueHeader::expand(bool state)
 {
-    auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
-    ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+    if(mIsExpandable)
+    {
+        auto arrowIcon = Utilities::getCachedPixmap(
+            state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png")
+                  : QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
+        ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+    }
 }
 
 bool StalledIssueHeader::isExpandable() const
@@ -443,7 +448,10 @@ void StalledIssueHeader::refreshUi()
     updateIssueState();
 
     //By default it is expandable
-    setIsExpandable(true);
+    if(getData().consultData())
+    {
+        setIsExpandable(getData().consultData()->isExpandable());
+    }
 }
 
 void StalledIssueHeader::resetSolvingWidgets()

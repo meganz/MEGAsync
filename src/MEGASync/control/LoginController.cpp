@@ -9,7 +9,7 @@
 #include "StatsEventHandler.h"
 
 #include "Preferences.h"
-#include "qml/QmlDialogManager.h"
+#include "QmlDialogManager.h"
 
 #include <QQmlContext>
 
