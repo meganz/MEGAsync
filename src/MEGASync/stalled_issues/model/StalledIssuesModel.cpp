@@ -1248,7 +1248,8 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
                         dir.setPath(folderPath);
 
                     }
-                    manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(ignoredPath.path));
+                    manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                        dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                 }
 
                 manager.applyChanges();

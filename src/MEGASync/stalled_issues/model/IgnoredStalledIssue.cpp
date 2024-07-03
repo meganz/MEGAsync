@@ -43,21 +43,54 @@ void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         mLinkType = consultLocalData()->getPath().pathProblem;
     }
 
-    if(stall->couldSuggestIgnoreThisPath(false, 0))
+    //FILL LOCAL IGNORED PATHS
     {
-        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), false});
+        auto fillLocalIgnoredPath = [this](const QString& path)
+        {
+            QFileInfo info(path);
+            if(info.exists())
+            {
+                mIgnoredPaths.append({path,
+                    false,
+                    info.isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
+            }
+        };
+
+        if(stall->couldSuggestIgnoreThisPath(false, 0))
+        {
+            fillLocalIgnoredPath(consultLocalData()->getNativeFilePath());
+        }
+
+        if(stall->couldSuggestIgnoreThisPath(false, 1))
+        {
+            fillLocalIgnoredPath(consultLocalData()->getNativeMoveFilePath());
+        }
     }
-    if(stall->couldSuggestIgnoreThisPath(false, 1))
+
+    //FILL MEGA IGNORED PATHS
     {
-        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), false});
-    }
-    if(stall->couldSuggestIgnoreThisPath(true, 0))
-    {
-        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), false});
-    }
-    if(stall->couldSuggestIgnoreThisPath(true, 1))
-    {
-        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), false});
+        auto fillCloudIgnoredPath = [this](const mega::MegaHandle& handle, const QString& path)
+        {
+            std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+            if(node)
+            {
+                mIgnoredPaths.append({path,
+                    true,
+                    node->isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
+            }
+        };
+
+        if(stall->couldSuggestIgnoreThisPath(true, 0))
+        {
+            fillCloudIgnoredPath(
+                consultCloudData()->getPathHandle(), consultCloudData()->getNativeFilePath());
+        }
+
+        if(stall->couldSuggestIgnoreThisPath(true, 1))
+        {
+            fillCloudIgnoredPath(consultCloudData()->getMovePathHandle(),
+                consultCloudData()->getNativeMoveFilePath());
+        }
     }
 }
 

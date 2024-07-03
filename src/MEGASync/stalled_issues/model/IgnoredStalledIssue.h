@@ -2,6 +2,7 @@
 #define SYMLINKSTALLEDISSUE_H
 
 #include <StalledIssue.h>
+#include <syncs/control/MegaIgnoreRules.h>
 #include <megaapi.h>
 
 class IgnoredStalledIssue : public StalledIssue
@@ -30,8 +31,10 @@ public:
     {
         QString path;
         bool cloud;
+        MegaIgnoreNameRule::Target target;
 
-        IgnoredPath(const QString& newpath, bool newcloud):path(newpath), cloud(newcloud)
+        IgnoredPath(const QString& newpath, bool newcloud, MegaIgnoreNameRule::Target newtarget)
+            :path(newpath), cloud(newcloud), target(newtarget)
         {}
     };
     QList<IgnoredPath> getIgnoredFiles() const { return mIgnoredPaths;}
