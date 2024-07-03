@@ -7,18 +7,11 @@
 
 bool SyncsQmlDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::Close)
+    if(event->type() == QEvent::Close || event->type() == QEvent::Show)
     {
         if(auto dialog = DialogOpener::findDialog<SettingsDialog>())
         {
-            dialog->getDialog()->setSyncAddButtonEnabled(true);
-        }
-    }
-    else if (event->type() == QEvent::Show)
-    {
-        if(auto dialog = DialogOpener::findDialog<SettingsDialog>())
-        {
-            dialog->getDialog()->setSyncAddButtonEnabled(false);
+            dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close);
         }
     }
 
