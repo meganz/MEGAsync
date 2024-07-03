@@ -420,13 +420,27 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
 
 bool StalledIssuesModel::hasChildren(const QModelIndex& parent) const
 {
+    auto result(false);
     auto stalledIssueItem = static_cast<StalledIssue*>(parent.internalPointer());
     if (stalledIssueItem)
     {
-        return false;
+        result = false;
+    }
+    else if(parent.isValid())
+    {
+        auto issue = getStalledIssueByRow(parent.row());
+        if(issue.consultData())
+        {
+            result = issue.consultData()->isExpandable();
+        }
+    }
+    else
+    {
+        //Top parent has always children
+        result = true;
     }
 
-    return true;
+    return result;
 }
 
 int StalledIssuesModel::rowCount(const QModelIndex& parent) const
@@ -515,7 +529,6 @@ Qt::ItemFlags StalledIssuesModel::flags(const QModelIndex& index) const
 void StalledIssuesModel::fullReset()
 {
     mSolvedStalledIssues.clear();
-    mLastSolvedStalledIssue = StalledIssueVariant();
     reset();
 }
 
@@ -756,16 +769,7 @@ void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
     if(mIssuesSolved)
     {
         mIssuesSolved = false;
-
-        if(mLastSolvedStalledIssue.consultData() &&
-            mLastSolvedStalledIssue.consultData()->refreshListAfterSolving())
-        {
-            updateStalledIssues();
-        }
-        else
-        {
-            emit refreshFilter();
-        }
+        emit refreshFilter();
     }
     else
     {
@@ -997,7 +1001,6 @@ bool StalledIssuesModel::issueSolved(const StalledIssue* issue)
         auto issueVariant(getIssueVariantByIssue(issue));
         if(issueVariant.isValid())
         {
-            mLastSolvedStalledIssue = issueVariant;
             mSolvedStalledIssues.append(issueVariant);
             mCountByFilterCriterion[static_cast<int>(StalledIssueFilterCriterion::SOLVED_CONFLICTS)]++;
             auto& counter = mCountByFilterCriterion[static_cast<int>(
