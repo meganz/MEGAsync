@@ -234,11 +234,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.pathProblem = localSourcePathProblem;
 
-        if(stall->couldSuggestIgnoreThisPath(false, 0))
-        {
-            mIgnoredPaths.append(getLocalData()->getNativeFilePath());
-        }
-
         setIsFile(localSourcePath, true);
     }
 
@@ -247,11 +242,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.pathProblem = localTargetPathProblem;
-
-        if(stall->couldSuggestIgnoreThisPath(false, 1))
-        {
-            mIgnoredPaths.append(getLocalData()->getNativeMoveFilePath());
-        }
 
         setIsFile(localTargetPath, true);
     }
@@ -269,11 +259,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         getCloudData()->mPath.pathProblem = cloudSourcePathProblem;
 
-        if(stall->couldSuggestIgnoreThisPath(true, 0))
-        {
-            mIgnoredPaths.append(cloudSourcePath);
-        }
-
         setIsFile(cloudSourcePath, false);
     }
 
@@ -283,11 +268,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePathHandle = stall->cloudNodeHandle(1);
         getCloudData()->mMovePath.pathProblem = cloudTargetPathProblem;
-
-        if(stall->couldSuggestIgnoreThisPath(true, 1))
-        {
-            mIgnoredPaths.append(cloudTargetPath);
-        }
 
         setIsFile(cloudTargetPath, false);
     }
@@ -523,15 +503,6 @@ bool StalledIssue::missingFingerprint() const
            consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
-bool StalledIssue::canBeIgnored() const
-{
-    return !mIgnoredPaths.isEmpty();
-}
-
-QStringList StalledIssue::getIgnoredFiles() const
-{
-    return mIgnoredPaths;
-}
 
 bool StalledIssue::isFile() const
 {

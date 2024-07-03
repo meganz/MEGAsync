@@ -2,6 +2,7 @@
 
 #include <stalled_issues/model/StalledIssuesModel.h>
 #include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
+#include <stalled_issues/model/IgnoredStalledIssue.h>
 
 #include <MegaApplication.h>
 
@@ -74,6 +75,7 @@ bool StalledIssueHeader::adaptativeHeight()
     return false;
 }
 
+//For all issue with ignorable paths which are not special, hard or sym links
 void StalledIssueHeader::onIgnoreFileActionClicked()
 {
     propagateButtonClick();
@@ -82,7 +84,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
         //Symlinks are treated differently
-        return !issue->isSymLink() && issue->canBeIgnored();
+        return StalledIssue::convert<IgnoredStalledIssue>(issue) != nullptr;
     };
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -110,11 +112,11 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         {
             if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
             {
-                MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), false);
+                MegaSyncApp->getStalledIssuesModel()->ignoreAllSimilarIssues();
             }
             else
             {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, false);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
             }
         }
     };
@@ -262,7 +264,7 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::SOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
-            if(getData().consultData()->canBeIgnored())
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
                 message = tr("Ignored");
@@ -301,17 +303,20 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::UNSOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
-            if(getData().consultData()->canBeIgnored())
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 showIgnoreFile();
             }
+            break;
+        }
+        default:
+        {
             break;
         }
     }
 
     showMessage(message, icon.pixmap(16, 16));
     ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
-    ui->multipleActionButton->hide();
 }
 
 void StalledIssueHeader::setText(const QString &text, const QString& tooltip)

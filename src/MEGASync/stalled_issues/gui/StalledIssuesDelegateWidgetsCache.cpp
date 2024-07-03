@@ -7,6 +7,7 @@
 #include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueFilePath.h"
+#include "IgnoredStalledIssue.h"
 
 #include "Utilities.h"
 
@@ -223,9 +224,16 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            if(issue.consultData()->isSymLink())
+            if(auto ignoredIssue = issue.convert<const IgnoredStalledIssue>())
             {
-                headerCase = new SymLinkHeader(header);
+                if(ignoredIssue->isSymLink())
+                {
+                    headerCase = new SymLinkHeader(header);
+                }
+                else
+                {
+                    headerCase = new HardSpecialLinkHeader(header);
+                }
             }
             else
             {
