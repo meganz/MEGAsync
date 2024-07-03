@@ -9,7 +9,11 @@ import Syncs 1.0
 Item {
     id: root
 
+    property alias sync: syncItem
+
     required property Component syncPageComponent
+    required property Component fullSyncPageComponent
+    required property Component selectiveSyncPageComponent
 
     readonly property string syncType: "syncType"
     readonly property string fullSync: "fullSync"
@@ -65,73 +69,7 @@ Item {
         onCurrentItemChanged: {
             currentItem.setInitialFocusPosition();
         }
-
-        Component {
-            id: fullSyncPageComponent
-
-            FullSyncPage {
-                id: fullSyncPage
-
-                isOnboardingRef: root.isOnboarding
-
-                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.addExclusions
-
-                onFullSyncMoveToBack: {
-                    // If it is the standalone window, then move to the sync type page
-                    // Otherwise, delegate the state control to MainFlow using the signal
-                    if(!isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
-                        root.state = root.syncType;
-                    }
-                    else {
-                        root.syncsFlowMoveToBack(false);
-                    }
-                }
-
-                onFullSyncMoveToSuccess: {
-                    syncItem.syncStatus = syncItem.SyncStatusCode.FULL;
-                    root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
-                }
-            }
-        }
-
-        Component {
-            id: selectiveSyncPageComponent
-
-            SelectiveSyncPage {
-                id: selectiveSyncPage
-
-                isOnboardingRef: root.isOnboarding
-
-                footerButtons.leftSecondary.text: root.isOnboarding ? Strings.skip : Strings.addExclusions
-                footerButtons.rightSecondary.visible: root.isOnboarding
-                                                      || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
-                                                          && syncsComponentAccess.remoteFolder === "")
-                footerButtons.leftSecondary {
-                    text: root.isOnboarding ? Strings.skip : Strings.cancel
-                    visible: root.isOnboarding
-                             || (!root.isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE
-                                 && (syncsComponentAccess != null && syncsComponentAccess.remoteFolder === ""))
-                }
-
-                onSelectiveSyncMoveToBack: {
-                    // If it is the standalone window, then move to the sync type page
-                    // Otherwise, delegate the state control to MainFlow using the signal
-                    if(!isOnboarding && syncItem.syncStatus === syncItem.SyncStatusCode.NONE) {
-                        root.state = root.syncType;
-                    }
-                    else {
-                        root.syncsFlowMoveToBack(false);
-                    }
-                }
-
-                onSelectiveSyncMoveToSuccess: {
-                    syncItem.syncStatus = syncItem.SyncStatusCode.SELECTIVE;
-                    root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
-                }
-            }
-        }
-
-    } // StackViewBase: view
+    }
 
     Connections {
         id: syncsComponentAccessConnection

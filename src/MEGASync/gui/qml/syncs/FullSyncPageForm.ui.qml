@@ -10,7 +10,7 @@ import components.pages 1.0
 FooterButtonsPage {
     id: root
 
-    required property bool isOnboardingRef
+    required property bool isOnboarding
 
     property alias localFolderChooser: localFolder
 
@@ -49,7 +49,7 @@ FooterButtonsPage {
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            isOnboardingRef: root.isOnboardingRef
+            isOnboarding: root.isOnboarding
         }
     }
 }

@@ -85,6 +85,8 @@ SyncsQmlDialog {
                     ResumeSyncsPage {
                         id: resumeSyncsPageItem
 
+                        footerButtons.leftPrimary.visible: false
+
                         image.source: Images.syncResume
                         image.sourceSize: Qt.size(128, 128)
                     }

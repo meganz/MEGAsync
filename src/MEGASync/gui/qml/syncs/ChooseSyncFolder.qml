@@ -15,7 +15,7 @@ import ChooseRemoteFolder 1.0
 FocusScope {
     id: root
 
-    required property bool isOnboardingRef
+    required property bool isOnboarding
 
     readonly property int textEditMargin: 2
 
@@ -33,7 +33,7 @@ FocusScope {
     function getFolder() {
         var defaultFolder = "";
 
-        if(root.isOnboardingRef) {
+        if(root.isOnboarding) {
             if (local) {
                 defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
             }

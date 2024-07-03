@@ -10,11 +10,9 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
 
     footerButtons {
-        executeDefaultLeftSecondary: root.isOnboardingRef
+        executeDefaultLeftSecondary: root.isOnboarding
         leftSecondary.onClicked: {
-            if(!root.isOnboardingRef) {
-                syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
-            }
+            syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
         }
 
         rightSecondary.onClicked: {

@@ -6,13 +6,17 @@ import syncs 1.0
 
 import onboard 1.0
 
+import Syncs 1.0
+
 SyncsFlow {
     id: root
 
     required property StepPanel stepPanelRef
     required property NavigationInfo navInfoRef
-    syncPageComponent: syncPageComponent
 
+    syncPageComponent: syncPageComponentItem
+    fullSyncPageComponent: fullSyncPageComponentItem
+    selectiveSyncPageComponent: selectiveSyncPageComponentItem
 
     isOnboarding: true
 
@@ -78,7 +82,7 @@ SyncsFlow {
     }
 
     Component {
-        id: syncPageComponent
+        id: syncPageComponentItem
 
         SyncTypePage {
             id: syncTypePage
@@ -98,6 +102,51 @@ SyncsFlow {
 
             onSyncTypeMoveToSelectiveSync: {
                 root.state = root.selectiveSync;
+            }
+        }
+    }
+
+    Component {
+        id: fullSyncPageComponentItem
+
+        FullSyncPage {
+            id: fullSyncPage
+
+            isOnboarding: true
+
+            footerButtons.leftSecondary.text: Strings.skip
+
+            onFullSyncMoveToBack: {
+                 root.syncsFlowMoveToBack(false);
+            }
+
+            onFullSyncMoveToSuccess: {
+                root.sync.syncStatus = root.sync.SyncStatusCode.FULL;
+                root.syncsFlowMoveToFinal(Constants.SyncType.FULL_SYNC);
+            }
+        }
+    }
+
+    Component {
+        id: selectiveSyncPageComponentItem
+
+        SelectiveSyncPage {
+            id: selectiveSyncPage
+
+            isOnboarding: true
+            footerButtons.rightSecondary.visible: true
+            footerButtons.leftSecondary {
+                text: Strings.setExclusions
+                visible: true
+            }
+
+            onSelectiveSyncMoveToBack: {
+                root.syncsFlowMoveToBack(false);
+            }
+
+            onSelectiveSyncMoveToSuccess: {
+                root.sync.syncStatus = root.sync.SyncStatusCode.SELECTIVE;
+                root.syncsFlowMoveToFinal(Constants.SyncType.SELECTIVE_SYNC);
             }
         }
     }
