@@ -135,6 +135,14 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
+
+## Adjust compilation flags for warnings and errors ##
+target_platform_compile_options(
+    TARGET SDKlib
+    WINDOWS /W4
+    UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
+)
+
 if (ENABLE_DESKTOP_APP_WERROR)
     target_platform_compile_options(
         TARGET MEGAsync
