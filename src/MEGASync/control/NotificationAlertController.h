@@ -23,11 +23,11 @@ public:
     void onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list) override;
 
     void reset();
-    bool areAlertsFiltered();
-    bool hasAlerts();
+    bool hasNotificationsOrAlerts();
     bool hasAlertsOfType(int type);
     void applyNotificationFilter(AlertType opt);
     void requestNotifications() const;
+    void ackSeenAlertsAndNotifications();
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
@@ -38,14 +38,16 @@ private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
-
     std::unique_ptr<NotificationAlertModel> mNotificationAlertModel;
     std::unique_ptr<NotificationAlertProxyModel> mAlertsProxyModel;
     std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
+    long long mAllUnseenAlerts;
 
     void populateUserAlerts(mega::MegaUserAlertList* alertList);
     void populateNotifications(const mega::MegaNotificationList* notificationList);
     bool createModelAndDelegate();
+    void checkUseenNotifications();
+    bool areAlertsFiltered();
 
 };
 

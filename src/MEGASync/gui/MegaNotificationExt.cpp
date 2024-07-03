@@ -1,5 +1,7 @@
 #include "MegaNotificationExt.h"
 
+#include "MegaApplication.h"
+
 namespace
 {
 constexpr char* DefaultImageExtension = ".png";

@@ -99,7 +99,7 @@ void NotificationAlertModel::createAlertModel(mega::MegaUserAlertList* alerts)
     }
 }
 
-bool NotificationAlertModel::hasAlerts()
+bool NotificationAlertModel::hasNotificationsOrAlerts()
 {
     return rowCount() > 0;
 }
@@ -116,6 +116,10 @@ QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifica
     {
         unseenNotifications = mAlertsModel->getUnseenAlerts();
     }
+    if(mNotificationsModel)
+    {
+        unseenNotifications[AlertModel::AlertType::ALERT_ALL] += mNotificationsModel->getNumUnseenNotifications();
+    }
     return unseenNotifications;
 }
 
@@ -127,6 +131,19 @@ AlertModel* NotificationAlertModel::alertModel() const
 NotificationModel* NotificationAlertModel::notificationModel() const
 {
     return mNotificationsModel.get();
+}
+
+uint32_t NotificationAlertModel::getLastSeenNotification() const
+{
+    return mNotificationsModel ? mNotificationsModel->getLastSeenNotification() : 0;
+}
+
+void NotificationAlertModel::setLastSeenNotification(uint32_t id)
+{
+    if (mNotificationsModel)
+    {
+        mNotificationsModel->setLastSeenNotification(id);
+    }
 }
 
 void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)

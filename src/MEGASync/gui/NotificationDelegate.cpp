@@ -17,6 +17,7 @@ NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel,
     : QStyledItemDelegate(parent)
     , mNotificationModel(notificationModel)
 {
+    installEventFilter(this);
 }
 
 void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const

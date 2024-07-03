@@ -9,6 +9,7 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
     , mNotificationAlertModel(nullptr)
     , mNotificationAlertDelegate(nullptr)
+    , mAllUnseenAlerts(0)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -26,6 +27,18 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
             {
                 auto notifications = request->getMegaNotifications();
                 populateNotifications(notifications);
+            }
+            break;
+        }
+        case mega::MegaRequest::TYPE_SET_ATTR_USER:
+        case mega::MegaRequest::TYPE_GET_ATTR_USER:
+        {
+            if (e->getErrorCode() == mega::MegaError::API_OK
+                && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
+                && mNotificationAlertModel)
+            {
+                mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
+                checkUseenNotifications();
             }
             break;
         }
@@ -57,7 +70,7 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     }
 
     // Used by InfoDialog because the current architecture
-    emit unseenAlertsChanged(mNotificationAlertModel->getUnseenNotifications());
+    checkUseenNotifications();
 }
 
 void NotificationAlertController::populateNotifications(const mega::MegaNotificationList* notificationList)
@@ -76,6 +89,9 @@ void NotificationAlertController::populateNotifications(const mega::MegaNotifica
     {
         mNotificationAlertModel->insertNotifications(notificationList);
     }
+
+    mMegaApi->getLastReadNotification();
+
 }
 
 bool NotificationAlertController::createModelAndDelegate()
@@ -105,8 +121,6 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
     {
         return;
     }
-
-    mMegaApi->getNotifications();
 
     if (list != nullptr)
     {
@@ -154,10 +168,9 @@ bool NotificationAlertController::areAlertsFiltered()
 {
     return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != AlertType::ALL;
 }
-
-bool NotificationAlertController::hasAlerts()
+bool NotificationAlertController::hasNotificationsOrAlerts()
 {
-    return mNotificationAlertModel && mNotificationAlertModel->hasAlerts();
+    return mNotificationAlertModel && mNotificationAlertModel->hasNotificationsOrAlerts();
 }
 
 bool NotificationAlertController::hasAlertsOfType(int type)
@@ -176,4 +189,33 @@ void NotificationAlertController::applyNotificationFilter(AlertType opt)
 void NotificationAlertController::requestNotifications() const
 {
     mMegaApi->getNotifications();
+}
+
+void NotificationAlertController::checkUseenNotifications()
+{
+    if(!mNotificationAlertModel)
+    {
+        return;
+    }
+
+    auto unseenAlerts = mNotificationAlertModel->getUnseenNotifications();
+    long long allUnseenAlerts = unseenAlerts[AlertModel::AlertType::ALERT_ALL];
+    if(mAllUnseenAlerts != allUnseenAlerts)
+    {
+        mAllUnseenAlerts = allUnseenAlerts;
+        emit unseenAlertsChanged(unseenAlerts);
+    }
+}
+
+void NotificationAlertController::ackSeenAlertsAndNotifications()
+{
+    if (mAllUnseenAlerts > 0 && hasNotificationsOrAlerts() && !areAlertsFiltered())
+    {
+        mMegaApi->acknowledgeUserAlerts();
+        auto lastSeen = mNotificationAlertModel->getLastSeenNotification();
+        if(lastSeen > 0)
+        {
+            mMegaApi->setLastReadNotification(lastSeen);
+        }
+    }
 }

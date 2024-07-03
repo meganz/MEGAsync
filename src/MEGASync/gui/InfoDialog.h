@@ -92,9 +92,6 @@ public:
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
 
-    void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
-    long long getUnseenNotifications() const;
     int getLoggedInMode() const;
     void showNotifications();
 
@@ -201,7 +198,7 @@ private:
     bool circlesShowAllActiveTransfersProgress;
     void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
     SyncsMenu* initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
-
+    void setUnseenNotifications(long long value);
 
     bool mIndexing; //scanning
     bool mWaiting;
@@ -217,7 +214,6 @@ private:
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
     bool isShown = false;
-    long long unseenNotifications = 0;
 
     QPointer<TransferManager> mTransferManager;
 

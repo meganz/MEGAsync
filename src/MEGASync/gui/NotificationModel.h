@@ -25,12 +25,16 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     void insert(const mega::MegaNotificationList* notifications);
+    long long getNumUnseenNotifications() const;
+    uint32_t getLastSeenNotification() const;
+    void setLastSeenNotification(uint32_t id);
 
     QCache<int, NotificationItem> notificationItems;
 
 private:
     QMap<int, MegaNotificationExt*> mNotificationsMap;
     std::deque<unsigned int> mNotificationsOrder;
+    uint32_t mLastSeenNotification;
 
     int countNewNotifications(const mega::MegaNotificationList* notifications) const;
     void insertNewNotifications(const mega::MegaNotificationList* notifications);

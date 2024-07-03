@@ -324,6 +324,8 @@ void InfoDialog::showEvent(QShowEvent *event)
     isShown = true;
     mTransferScanCancelUi->update();
 
+    app->getNotificationController()->requestNotifications();
+
     repositionInfoDialog();
     QDialog::showEvent(event);
 }
@@ -1190,10 +1192,10 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel* model, QAbstrac
 void InfoDialog::onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts)
 {
     setUnseenNotifications(alerts[AlertModel::ALERT_ALL]);
-    setUnseenTypeNotifications(alerts[AlertModel::ALERT_ALL],
-                               alerts[AlertModel::ALERT_CONTACTS],
-                               alerts[AlertModel::ALERT_SHARES],
-                               alerts[AlertModel::ALERT_PAYMENT]);
+    filterMenu->setUnseenNotifications(alerts[AlertModel::ALERT_ALL],
+                                       alerts[AlertModel::ALERT_CONTACTS],
+                                       alerts[AlertModel::ALERT_SHARES],
+                                       alerts[AlertModel::ALERT_PAYMENT]);
 }
 
 void InfoDialog::reset()
@@ -1502,7 +1504,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlerts())
+            if (app->getNotificationController()->hasNotificationsOrAlerts())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1570,22 +1572,14 @@ void InfoDialog::onAnimationFinished()
 
 void InfoDialog::sTabsChanged(int tab)
 {
-    static int lasttab = -1;
-    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab))
+    static int lastTab = -1;
+    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab)
+            && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab))
     {
-        if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
-        {
-            if (app->getNotificationController()->hasAlerts()
-                    && !app->getNotificationController()->areAlertsFiltered())
-            {
-                megaApi->acknowledgeUserAlerts();
-            }
-        }
+        app->getNotificationController()->ackSeenAlertsAndNotifications();
     }
-    lasttab = tab;
+    lastTab = tab;
 }
-
-
 
 void InfoDialog::hideSomeIssues()
 {
@@ -1654,27 +1648,19 @@ void InfoDialog::move(int x, int y)
    QDialog::move(x, y);
 }
 
-long long InfoDialog::getUnseenNotifications() const
-{
-    return unseenNotifications;
-}
-
 void InfoDialog::setUnseenNotifications(long long value)
 {
     assert(value >= 0);
-    unseenNotifications = value > 0 ? value : 0;
-    if (!unseenNotifications)
+
+    if (value > 0)
+    {
+        ui->bNumberUnseenNotifications->setText(QString::number(value));
+        ui->bNumberUnseenNotifications->show();
+    }
+    else
     {
         ui->bNumberUnseenNotifications->hide();
-        return;
     }
-    ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
-    ui->bNumberUnseenNotifications->show();
-}
-
-void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
-{
-    filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
 double InfoDialog::computeRatio(long long completed, long long remaining)

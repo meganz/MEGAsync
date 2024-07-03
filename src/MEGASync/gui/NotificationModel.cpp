@@ -9,6 +9,7 @@ constexpr int MAX_COST = 16;
 
 NotificationModel::NotificationModel(const mega::MegaNotificationList* notifications, QObject* parent)
     : QAbstractItemModel(parent)
+    , mLastSeenNotification(0)
 {
     notificationItems.setMaxCost(MAX_COST);
     insertNewNotifications(notifications);
@@ -73,6 +74,43 @@ void NotificationModel::insert(const mega::MegaNotificationList* notifications)
     removeNotifications(notifications);
     updateNotifications(notifications);
     insertNewNotifications(notifications);
+}
+
+long long NotificationModel::getNumUnseenNotifications() const
+{
+    long long unseenCount = 0;
+    for (const auto& notification : mNotificationsMap)
+    {
+        if (notification->getID() > mLastSeenNotification)
+        {
+            ++unseenCount;
+        }
+    }
+    return unseenCount;
+}
+
+uint32_t NotificationModel::getLastSeenNotification() const
+{
+    uint32_t lastSeen = 0;
+    if(!mLastSeenNotification)
+    {
+        for (const auto& notification : mNotificationsMap)
+        {
+            if (notification->getID() > lastSeen)
+            {
+                lastSeen = notification->getID();
+            }
+        }
+    }
+    return lastSeen;
+}
+
+void NotificationModel::setLastSeenNotification(uint32_t id)
+{
+    if(id > mLastSeenNotification)
+    {
+        mLastSeenNotification = id;
+    }
 }
 
 int NotificationModel::countNewNotifications(const mega::MegaNotificationList* notifications) const
