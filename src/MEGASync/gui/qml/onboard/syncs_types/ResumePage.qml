@@ -29,6 +29,10 @@ ResumePageForm {
     }
 
     footerButtons {
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
 
         rightSecondary.onClicked: {
             onboardingAccess.openPreferences(tabToOpen);

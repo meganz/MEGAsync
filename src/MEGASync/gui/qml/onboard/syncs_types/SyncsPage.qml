@@ -87,10 +87,16 @@ SyncsFlow {
         SyncTypePage {
             id: syncTypePage
 
-            footerButtons.leftPrimary.visible: true
-            footerButtons.leftPrimary.text: Strings.skip
-            footerButtons.leftSecondary.visible: false
-            footerButtons.rightSecondary.visible: true
+            footerButtons {
+                leftPrimary.visible: true
+                leftPrimary.text: Strings.skip
+                leftPrimary.onClicked: {
+                    window.close();
+                }
+
+                leftSecondary.visible: false
+                rightSecondary.visible: true
+            }
 
             onSyncTypeMoveToBack: {
                 root.syncsFlowMoveToBack(true);
@@ -114,7 +120,10 @@ SyncsFlow {
 
             isOnboarding: true
 
-            footerButtons.leftSecondary.text: Strings.skip
+            footerButtons.leftPrimary.text: Strings.skip
+            footerButtons.leftPrimary.onClicked: {
+                window.close();
+            }
 
             onFullSyncMoveToBack: {
                  root.syncsFlowMoveToBack(false);
@@ -135,9 +144,10 @@ SyncsFlow {
 
             isOnboarding: true
             footerButtons.rightSecondary.visible: true
-            footerButtons.leftSecondary {
-                text: Strings.setExclusions
-                visible: true
+            footerButtons.leftSecondary.visible: false
+            footerButtons.leftPrimary.text: Strings.skip
+            footerButtons.leftPrimary.onClicked: {
+                window.close();
             }
 
             onSelectiveSyncMoveToBack: {

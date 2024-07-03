@@ -16,8 +16,6 @@ RowLayout {
     property alias rightSecondary: rightSecondaryButton // 2nd
     property alias rightPrimary: rightPrimaryButton // 1st
 
-    property bool executeDefaultLeftSecondary: true
-
     anchors {
         bottom: parent.bottom
         right: parent.right
@@ -51,13 +49,6 @@ RowLayout {
 
         OutlineButton {
             id: leftPrimaryButton
-
-            text: Strings.skip
-            onClicked: {
-                if(root.executeDefaultLeftSecondary) {
-                    window.close();
-                }
-            }
         }
 
         SecondaryButton {

@@ -29,6 +29,11 @@ InstallationTypePageForm {
                     break;
             }
         }
+
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
     }
 
     buttonGroup.onCheckStateChanged: {
