@@ -106,8 +106,7 @@ bool NotificationAlertModel::hasAlerts()
 
 bool NotificationAlertModel::hasAlertsOfType(int type)
 {
-    return (mAlertsModel && mAlertsModel->existsNotifications(type))
-            || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
+    return mAlertsModel && mAlertsModel->existsNotifications(type);
 }
 
 QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifications() const
