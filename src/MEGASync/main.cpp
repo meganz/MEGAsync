@@ -433,9 +433,10 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_LINUX)
     if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
     {
-        if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+        //!  If unsetenv succeeds, it returns 0. If unsetenv fails, it returns -1.
+        if (unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
         {
-            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble" << std::endl;
+            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble. errno=" << errno << std::endl;
         }
     }
     if (!(getenv("DO_NOT_UNSET_SHLVL")) && getenv("SHLVL"))
