@@ -165,15 +165,18 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                     mError = utilities.removeRemoteFile(node.get());
                     if(mError)
                     {
-                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to remove file: %1. Error: %2")
                                                                    .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(mError.get()))
                                                                    .toUtf8().constData());
                         return false;
                     }
                 }
-
-                //Using appDataId == 0 means that there will be no notification for this upload
-                mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
+                else
+                {
+                    //Only upload the file if the versions are enabled
+                    //Using appDataId == 0 means that there will be no notification for this upload
+                    mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
+                }
 
                 return true;
             }

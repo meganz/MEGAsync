@@ -11,22 +11,30 @@ TransferNotificationBuilder::TransferNotificationBuilder(const std::shared_ptr<T
 {
 }
 
-DesktopNotifications::NotificationInfo TransferNotificationBuilder::buildNotification()
+DesktopNotifications::NotificationInfo TransferNotificationBuilder::buildNotification(const bool isLogged)
 {
     DesktopNotifications::NotificationInfo info;
 
     if (data->isUpload())
     {
-        info.title = buildUploadTitle();
-        if(data->isSingleTransfer())
+        if (isLogged)
         {
-            info.message = buildSingleUploadMessage();
-            info.actions = buildSingleUploadActions();
+            info.title = buildUploadTitle();
+            if(data->isSingleTransfer())
+            {
+                info.message = buildSingleUploadMessage();
+                info.actions = buildSingleUploadActions();
+            }
+            else
+            {
+                info.message = buildMultipleUploadMessage();
+                info.actions = buildMultipleUploadActions();
+            }
         }
         else
         {
-            info.message = buildMultipleUploadMessage();
-            info.actions = buildMultipleUploadActions();
+            info.title = tr("Upload stopped", "", data->getTransfersCount());
+            info.message = tr("You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.", "", data->getTransfersCount());
         }
     }
     else if (data->isDownload())
