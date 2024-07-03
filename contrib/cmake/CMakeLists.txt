@@ -216,7 +216,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/node_selector/gui/${UiDir}/SearchLineEdit.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/FolderBinder.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/RemoveSyncConfirmationDialog.ui
-#@jsubi    ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/IgnoresEditingDialog.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncAccountFullMessage.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncStallModeSelector.ui
     ${MEGAsyncDir}/syncs/gui/Twoways/${UiDir}/SyncSettingsUIBase.ui
@@ -429,7 +428,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/syncs/gui/Twoways/RemoveSyncConfirmationDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/BindFolderDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/FolderBinder.h
-#@jsubi    ${MEGAsyncDir}/syncs/gui/Twoways/IgnoresEditingDialog.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsUI.h
     ${MEGAsyncDir}/syncs/gui/Twoways/SyncSettingsElements.h
     ${MEGAsyncDir}/syncs/gui/Backups/BackupTableView.h
