@@ -637,9 +637,11 @@ void DesktopNotifications::sendFinishedTransferNotification(unsigned long long a
     auto data = TransferMetaDataContainer::getAppDataById(appDataId);
     if (data)
     {
+        const auto megaApi = static_cast<MegaApplication*>(qApp)->getMegaApi();
+
         mPreferences->setLastTransferNotificationTimestamp();
         TransferNotificationBuilder messageBuilder(data);
-        auto info = messageBuilder.buildNotification();
+        auto info = messageBuilder.buildNotification(megaApi->isLoggedIn());
 
         auto notification = new DesktopAppNotification();
         notification->setText(info.message);

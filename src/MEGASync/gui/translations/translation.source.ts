@@ -8544,6 +8544,22 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform>%n items no longer exist.</numerusform>
         </translation>
     </message>
+    <message numerus="yes">
+        <source>Upload stopped</source>
+        <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Upload stopped</numerusform>
+            <numerusform>Uploads stopped</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
+        <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</numerusform>
+            <numerusform>You logged out of MEGA so your uploads have stopped. You can resume the uploads after logging back in.</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>TransferNotificationBuilder_File</name>
