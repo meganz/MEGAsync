@@ -160,7 +160,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                         }
 
                         ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
-                            dir.relativeFilePath(ignoredPath.path));
+                            dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                     }
                 }
 
