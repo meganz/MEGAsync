@@ -101,7 +101,7 @@ private slots:
     void onbNewFolderClicked();
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-    void onDeleteClicked(const QList<mega::MegaHandle> &handles);
+    void onDeleteClicked();
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);

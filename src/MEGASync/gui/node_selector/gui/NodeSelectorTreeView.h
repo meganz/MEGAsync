@@ -19,7 +19,7 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
-    QList<MegaHandle> getMultiSelectionNodeHandle();
+    QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
 
 protected:
@@ -34,13 +34,13 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override;
 
 signals:
-    void removeNodeClicked(const QList<MegaHandle>& handles);
+    void removeNodeClicked();
     void renameNodeClicked();
     void getMegaLinkClicked();
     void nodeSelected();
 
 private slots:
-    void removeNode(const QList<MegaHandle>& handles);
+    void removeNode();
     void renameNode();
     void getMegaLink();
     void onNavigateReady(const QModelIndex& index);
@@ -51,7 +51,7 @@ private:
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
 
-    bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
+    bool areAllEligibleForDeletion() const;
     int getNodeAccess(mega::MegaHandle handle) const;
 
     MegaApi* mMegaApi;

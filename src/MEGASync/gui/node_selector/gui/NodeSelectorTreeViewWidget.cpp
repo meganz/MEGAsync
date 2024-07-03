@@ -526,13 +526,13 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
     DialogOpener::showDialog(dialog);
 }
 
-void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles)
+void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
     auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         int access = mMegaApi->getAccess(node.get());
 
-        //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+        //This is for an extra protection as we don´t show the delete action if one of this conditions are not met
         if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
         {
             return nullptr;
@@ -541,20 +541,10 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return node;
     };
 
-    auto removeNode = [this](std::shared_ptr<mega::MegaNode> node)
+    auto moveToRubbish = [this](std::shared_ptr<mega::MegaNode> node)
     {
-        int access = mMegaApi->getAccess(node.get());
-
-        //Double protection in case the node properties changed while the node is deleted
-        if(access == MegaShare::ACCESS_FULL && node->isNodeKeyDecrypted())
-        {
-            mMegaApi->remove(node.get());
-        }
-        else
-        {
-            auto rubbish = MegaSyncApp->getRubbishNode();
-            mMegaApi->moveNode(node.get(), rubbish.get());
-        }
+        auto rubbish = MegaSyncApp->getRubbishNode();
+        mMegaApi->moveNode(node.get(), rubbish.get());
     };
 
     QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
@@ -566,48 +556,56 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     msgInfo.title = MegaSyncApp->getMEGAString();
     msgInfo.informativeText = tr(
         "Any shared files or folders will no longer be accessible to the people you shared "
-        "them with.You can still access these items in the Rubbish bin, restore, and share "
+        "them with. You can still access these items in the Rubbish bin, restore, and share "
         "them.");
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
     msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
 
-    if(handles.size() == 1)
+    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+
+    if(selectedRows.size() == 1)
     {
-        auto node = getNode(handles.first());
-        mDeletedHandles.insert(handles.first(), QPersistentModelIndex(getSelectedIndex()));
+        QPersistentModelIndex p_index(selectedRows.first());
 
-        if(node)
+        if(auto savedNode = mProxyModel->getNode(p_index))
         {
-            msgInfo.text = tr("Move \"%1\" to Rubbish bin?").arg(QString::fromUtf8(node->getName()));
-            msgInfo.finishFunc = [this, node, removeNode](QPointer<QMessageBox> msg)
+            auto node = getNode(savedNode->getHandle());
+            if(node)
             {
-                if(msg->result() == QMessageBox::Yes)
+                msgInfo.text = tr("Move \"%1\" to Rubbish bin?")
+                                   .arg(QString::fromUtf8(node->getName()));
+                msgInfo.finishFunc = [this, moveToRubbish, node, p_index](QPointer<QMessageBox> msg)
                 {
-                    removeNode(node);
-                }
-            };
+                    if(msg->result() == QMessageBox::Yes)
+                    {
+                        mDeletedHandles.insert(node->getHandle(), p_index);
+                        moveToRubbish(node);
+                    }
+                };
 
-            QMegaMessageBox::question(msgInfo);
+                QMegaMessageBox::question(msgInfo);
+            }
         }
     }
     else
     {
-        msgInfo.text = tr("Move %1 items to Rubbish bin?").arg(handles.size());
-        msgInfo.finishFunc = [this, removeNode, getNode](QPointer<QMessageBox> msg)
+        msgInfo.text = tr("Move %1 items to Rubbish bin?").arg(selectedRows.size());
+        msgInfo.finishFunc = [this, moveToRubbish, getNode, selectedRows](QPointer<QMessageBox> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
-                auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
-
                 foreach(auto& s_index, selectedRows)
                 {
                     if(auto savedNode = mProxyModel->getNode(s_index))
                     {
-                        mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
                         auto node = getNode(savedNode->getHandle());
-                        removeNode(node);
+                        if(node)
+                        {
+                            mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
+                            moveToRubbish(node);
+                        }
                     }
                 }
             }
@@ -988,7 +986,6 @@ void NodeSelectorTreeViewWidget::setSelectedNodeHandle(const MegaHandle& selecte
     }
 
     mModel->loadTreeFromNode(node);
-
 }
 
 void NodeSelectorTreeViewWidget::setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle)
