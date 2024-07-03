@@ -149,9 +149,6 @@ if (ENABLE_DESKTOP_APP_WERROR)
         WINDOWS /WX
         UNIX  $<$<CONFIG:Debug>: -Werror
                                  -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
-        APPLE $<$<CONFIG:Debug>: -Werror
-                                 -Wno-error=unqualified-std-cast-call
-                                 -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
     )
 endif()
 
