@@ -1574,9 +1574,11 @@ void InfoDialog::sTabsChanged(int tab)
 {
     static int lastTab = -1;
     if (tab != ui->sTabs->indexOf(ui->pNotificationsTab)
-            && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab))
+            && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab)
+            && ui->wSortNotifications->allFilterHasBeenSelected())
     {
         app->getNotificationController()->ackSeenAlertsAndNotifications();
+        ui->wSortNotifications->resetAllFilterHasBeenSelected();
     }
     lastTab = tab;
 }

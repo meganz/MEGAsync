@@ -1,9 +1,10 @@
 #include "AlertFilterType.h"
 #include "ui_AlertFilterType.h"
 
-AlertFilterType::AlertFilterType(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AlertFilterType)
+AlertFilterType::AlertFilterType(QWidget* parent)
+    : QWidget(parent)
+    , ui(new Ui::AlertFilterType)
+    , mAllFilterHasBeenSelected(false)
 {
     ui->setupUi(this);
     ui->lFilterActive->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -49,10 +50,21 @@ void AlertFilterType::setActualFilter(AlertType type)
         {
             ui->wIconType->hide();
             ui->lFilterActive->setText(tr("All notifications"));
+            mAllFilterHasBeenSelected = true;
             break;
         }
     }
     mType = type;
+}
+
+bool AlertFilterType::allFilterHasBeenSelected() const
+{
+    return mAllFilterHasBeenSelected;
+}
+
+void AlertFilterType::resetAllFilterHasBeenSelected()
+{
+    mAllFilterHasBeenSelected = false;
 }
 
 void AlertFilterType::mousePressEvent(QMouseEvent*)
