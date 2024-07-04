@@ -459,6 +459,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         {
             if (lstrlen(pipe->chRequest) < 3)
             {
+                wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_ERROR );
                 break;
             }
 
@@ -472,11 +473,6 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 {
                     overlayIcons = true;
                 }
-            }
-
-            if ((parameters[0].size() < 3) || (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
-            {
-                break;
             }
 
             int state;
@@ -502,16 +498,17 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 numHits = 1;
             }
 
+            wstring syncStatus;
             switch(state)
             {
                 case MegaApi::STATE_SYNCED:
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCED);
+                    syncStatus = RESPONSE_SYNCED;
                     break;
                 case MegaApi::STATE_SYNCING:
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_SYNCING );
+                    syncStatus = RESPONSE_SYNCING;
                     break;
                 case MegaApi::STATE_PENDING:
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PENDING );
+                    syncStatus = RESPONSE_PENDING;
                     break;
                 case MegaApi::STATE_IGNORED:
                 {
@@ -522,20 +519,36 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                         runState = megaSync->getRunState();
                     }
 
-                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED || runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
+                    if (runState == MegaSync::SyncRunningState::RUNSTATE_RUNNING ||
+                        runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED ||
+                        runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
                     {
-                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_PAUSED );
+                        syncStatus = RESPONSE_PAUSED;
                     }
                     else
                     {
-                        wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
+                        syncStatus = RESPONSE_DEFAULT;
                     }
                     break;
                 }
                 case MegaApi::STATE_NONE:
                 default:
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_DEFAULT );
+                {
+                    syncStatus = RESPONSE_DEFAULT;
+                }
             }
+
+            if ((parameters[0].size() < 3) || (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
+            {
+                if (syncStatus != RESPONSE_DEFAULT)
+                {
+                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_ERROR );
+                    break;
+                }
+            }
+
+            wcscpy_s( pipe->chReply, BUFSIZE, syncStatus.c_str() );
+
             break;
         }
         case L'E':
