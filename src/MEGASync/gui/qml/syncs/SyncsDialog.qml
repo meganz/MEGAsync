@@ -31,6 +31,7 @@ SyncsQmlDialog {
             width: parent.width
             step1String: SyncsStrings.syncType
             step2String: SyncsStrings.sync
+            helpUrl: Links.helpSyncs
         }
 
         Rectangle {

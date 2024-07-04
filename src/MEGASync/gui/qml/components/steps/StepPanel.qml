@@ -10,7 +10,7 @@ Rectangle {
 
     property alias step1String: step1.text
     property alias step2String: step2.text
-
+    property url helpUrl
     readonly property string step1: "step1"
     readonly property string step2: "step2"
     readonly property string step2Warning: "step2Warning"
@@ -111,7 +111,9 @@ Rectangle {
             }
             icons.source: Images.helpCircle
             onClicked: {
-                Qt.openUrlExternally(Links.desktopSyncApp);
+                if (root.helpUrl.toString().length > 0) {
+                    Qt.openUrlExternally(root.helpUrl);
+                }
             }
         }
 
