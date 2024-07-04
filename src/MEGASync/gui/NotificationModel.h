@@ -14,7 +14,7 @@ class NotificationModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit NotificationModel(const mega::MegaNotificationList* notifications, QObject* parent = 0);
+    explicit NotificationModel(QObject* parent = 0);
     virtual ~NotificationModel();
 
     QModelIndex index(int row, int column,

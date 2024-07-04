@@ -83,9 +83,14 @@ void NotificationAlertModel::createNotificationModel(const mega::MegaNotificatio
 {
     if(!mNotificationsModel)
     {
-        mNotificationsModel = std::make_unique<NotificationModel>(notifications, this);
-        connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
-        emit layoutChanged();
+        mNotificationsModel = std::make_unique<NotificationModel>(this);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::rowsInserted,
+                this, &NotificationAlertModel::onNotificationRowsInserted);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::rowsRemoved,
+                this, &NotificationAlertModel::onNotificationRowsRemoved);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged,
+                this, &NotificationAlertModel::onNotificationDataChanged);
+        mNotificationsModel->insert(notifications);
     }
 }
 
@@ -93,10 +98,73 @@ void NotificationAlertModel::createAlertModel(mega::MegaUserAlertList* alerts)
 {
     if(!mAlertsModel)
     {
-        mAlertsModel = std::make_unique<AlertModel>(alerts, this);
-        connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
-        emit layoutChanged();
+        mAlertsModel = std::make_unique<AlertModel>(this);
+        connect(mAlertsModel.get(), &QAbstractItemModel::rowsInserted,
+                this, &NotificationAlertModel::onAlertRowsInserted);
+        connect(mAlertsModel.get(), &QAbstractItemModel::rowsRemoved,
+                this, &NotificationAlertModel::onAlertRowsRemoved);
+        connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged,
+                this, &NotificationAlertModel::onAlertDataChanged);
+        mAlertsModel->insertAlerts(alerts);
     }
+}
+
+void NotificationAlertModel::onAlertRowsInserted(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        int startRow = first + getNotificationRowCount();
+        int endRow = last + getNotificationRowCount();
+        beginInsertRows(QModelIndex(), startRow, endRow);
+        endInsertRows();
+    }
+}
+
+void NotificationAlertModel::onAlertRowsRemoved(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        int startRow = first + getNotificationRowCount();
+        int endRow = last + getNotificationRowCount();
+        beginRemoveRows(QModelIndex(), startRow, endRow);
+        endRemoveRows();
+    }
+}
+
+void NotificationAlertModel::onAlertDataChanged(const QModelIndex& topLeft,
+                                                const QModelIndex& bottomRight,
+                                                const QVector<int>& roles)
+{
+    int startRow = topLeft.row() + getNotificationRowCount();
+    int endRow = bottomRight.row() + getNotificationRowCount();
+    emit dataChanged(index(startRow, topLeft.column()),
+                     index(endRow, bottomRight.column()), roles);
+}
+
+void NotificationAlertModel::onNotificationRowsInserted(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        beginInsertRows(QModelIndex(), first, last);
+        endInsertRows();
+    }
+}
+
+void NotificationAlertModel::onNotificationRowsRemoved(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        beginRemoveRows(QModelIndex(), first, last);
+        endRemoveRows();
+    }
+}
+
+void NotificationAlertModel::onNotificationDataChanged(const QModelIndex& topLeft,
+                                                const QModelIndex& bottomRight,
+                                                const QVector<int>& roles)
+{
+    emit dataChanged(index(topLeft.row(), topLeft.column()),
+                     index(bottomRight.row(), bottomRight.column()), roles);
 }
 
 bool NotificationAlertModel::hasNotificationsOrAlerts()
@@ -151,7 +219,6 @@ void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
     if (mAlertsModel)
     {
         mAlertsModel->insertAlerts(alerts, true);
-        emit layoutChanged();
     }
 }
 
@@ -160,7 +227,6 @@ void NotificationAlertModel::insertNotifications(const mega::MegaNotificationLis
     if (mNotificationsModel)
     {
         mNotificationsModel->insert(notificationList);
-        emit layoutChanged();
     }
 }
 

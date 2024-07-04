@@ -35,6 +35,12 @@ private slots:
     void onDataChanged(const QModelIndex& topLeft,
                        const QModelIndex& bottomRight,
                        const QVector<int>& roles = QVector<int>());
+    void onAlertDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
+    void onAlertRowsInserted(const QModelIndex& parent, int first, int last);
+    void onAlertRowsRemoved(const QModelIndex& parent, int first, int last);
+    void onNotificationDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
+    void onNotificationRowsInserted(const QModelIndex& parent, int first, int last);
+    void onNotificationRowsRemoved(const QModelIndex& parent, int first, int last);
 
 private:
     std::unique_ptr<NotificationModel> mNotificationsModel = nullptr;

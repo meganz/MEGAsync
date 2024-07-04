@@ -7,12 +7,11 @@ namespace
 constexpr int MAX_COST = 16;
 }
 
-NotificationModel::NotificationModel(const mega::MegaNotificationList* notifications, QObject* parent)
+NotificationModel::NotificationModel(QObject* parent)
     : QAbstractItemModel(parent)
     , mLastSeenNotification(0)
 {
     notificationItems.setMaxCost(MAX_COST);
-    insertNewNotifications(notifications);
 }
 
 NotificationModel::~NotificationModel()
