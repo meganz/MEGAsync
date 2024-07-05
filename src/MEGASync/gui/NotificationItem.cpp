@@ -16,12 +16,8 @@ NotificationItem::NotificationItem(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::NotificationItem)
     , mNotificationData(nullptr)
-    , mDownloader(std::make_unique<ImageDownloader>(this))
 {
     ui->setupUi(this);
-
-    connect(mDownloader.get(), &ImageDownloader::downloadFinished,
-            this, &NotificationItem::onDownloadFinished);
 }
 
 NotificationItem::~NotificationItem()
@@ -40,11 +36,23 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     labelText += QString::fromLatin1("</p></body></html>");
     ui->lDescription->setText(labelText);
 
+    setImages();
+
+    ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
+    ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+}
+
+void NotificationItem::setImages()
+{
     bool showImage = mNotificationData->showImage();
     ui->lImageLarge->setVisible(showImage);
     if(showImage)
     {
-        mDownloader->downloadImage(mNotificationData->getImageNamePath(), LargeImageWidth, LargeImageHeight);
+        ui->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
+        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+                {
+                    ui->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
+                });
     }
     else
     {
@@ -55,41 +63,14 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
     ui->lImageSmall->setVisible(showIcon);
     if(showIcon)
     {
-        mDownloader->downloadImage(mNotificationData->getIconNamePath(), SmallImageSize, SmallImageSize);
+        ui->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
+        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+                {
+                    ui->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
+                });
     }
     else
     {
         ui->hlDescription->setSpacing(SpacingWithoutSmallImage);
-    }
-
-    ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
-
-    ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
-}
-
-void NotificationItem::onDownloadFinished(const QImage& image, const QString& imageUrl)
-{
-    if (image.isNull())
-    {
-        return;
-    }
-
-    QLabel* imageLabel = nullptr;
-    QSize size(0, 0);
-    if (imageUrl == mNotificationData->getImageNamePath())
-    {
-        imageLabel = ui->lImageLarge;
-        size = QSize(LargeImageWidth, LargeImageHeight);
-    }
-    else if (imageUrl == mNotificationData->getIconNamePath())
-    {
-        imageLabel = ui->lImageSmall;
-        size = QSize(SmallImageSize, SmallImageSize);
-    }
-
-    if(imageLabel)
-    {
-        QPixmap pixmap = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        imageLabel->setPixmap(pixmap);
     }
 }

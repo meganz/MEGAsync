@@ -1,11 +1,17 @@
 #ifndef MEGA_NOTIFICATION_EXT_H
 #define MEGA_NOTIFICATION_EXT_H
 
-#include "megaapi.h"
-
 #include <QObject>
+#include <QPixmap>
 
 #include <memory>
+
+class ImageDownloader;
+
+namespace mega
+{
+class MegaNotification;
+}
 
 class MegaNotificationExt : public QObject
 {
@@ -23,18 +29,30 @@ public:
     QString getDescription() const;
 
     bool showImage() const;
-    QString getImageNamePath() const;
-
     bool showIcon() const;
-    QString getIconNamePath() const;
+    QPixmap getImagePixmap() const;
+    QPixmap getIconPixmap() const;
 
     int64_t getStart() const;
     int64_t getEnd() const;
     const char* getActionText() const;
     const char* getActionLink() const;
 
+signals:
+    void imageChanged();
+    void iconChanged();
+
+private slots:
+    void onDownloadFinished(const QImage& image, const QString& imageUrl);
+
 private:
     std::unique_ptr<const mega::MegaNotification> mNotification;
+    std::unique_ptr<ImageDownloader> mDownloader;
+    QPixmap mImage;
+    QPixmap mIcon;
+
+    QString getImageNamePath() const;
+    QString getIconNamePath() const;
 
 };
 

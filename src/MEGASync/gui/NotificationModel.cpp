@@ -1,6 +1,10 @@
 #include "NotificationModel.h"
 
+#include "megaapi.h"
+
 #include <QDateTime>
+#include <QSet>
+#include <QList>
 
 namespace
 {

@@ -1,7 +1,5 @@
-#ifndef NOTIFICATIONITEM_H
-#define NOTIFICATIONITEM_H
-
-#include "ImageDownloader.h"
+#ifndef NOTIFICATION_ITEM_H
+#define NOTIFICATION_ITEM_H
 
 #include <QWidget>
 
@@ -22,14 +20,11 @@ public:
 
     void setNotificationData(MegaNotificationExt* notification);
 
-private slots:
-    void onDownloadFinished(const QImage& image, const QString& imageUrl);
-
 private:
     Ui::NotificationItem* ui;
     MegaNotificationExt* mNotificationData;
-    std::unique_ptr<ImageDownloader> mDownloader;
 
+    void setImages();
 };
 
-#endif // NOTIFICATIONITEM_H
+#endif // NOTIFICATION_ITEM_H

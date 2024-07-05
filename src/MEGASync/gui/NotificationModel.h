@@ -9,6 +9,11 @@
 
 #include <deque>
 
+namespace mega
+{
+class MegaNotificationList;
+}
+
 class NotificationModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -38,9 +43,7 @@ private:
 
     int countNewNotifications(const mega::MegaNotificationList* notifications) const;
     void insertNewNotifications(const mega::MegaNotificationList* notifications);
-
     void updateNotifications(const mega::MegaNotificationList* notifications);
-
     void removeNotifications(const mega::MegaNotificationList* notifications);
     QSet<int> createNotificationIDSet(const mega::MegaNotificationList* notifications) const;
     QList<int> findRowsToRemove(const QSet<int>& notificationIDsInList) const;

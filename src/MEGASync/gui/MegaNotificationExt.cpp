@@ -1,16 +1,26 @@
 #include "MegaNotificationExt.h"
 
+#include "ImageDownloader.h"
 #include "MegaApplication.h"
 
 namespace
 {
 constexpr char* DefaultImageExtension = ".png";
+constexpr int SmallImageSize = 48;
+constexpr int LargeImageWidth = 370;
+constexpr int LargeImageHeight = 115;
 }
 
 MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent)
     : QObject(parent)
     , mNotification(notification)
+    , mDownloader(std::make_unique<ImageDownloader>(this))
 {
+    connect(mDownloader.get(), &ImageDownloader::downloadFinished,
+            this, &MegaNotificationExt::onDownloadFinished);
+
+    mDownloader->downloadImage(getImageNamePath(), LargeImageWidth, LargeImageHeight);
+    mDownloader->downloadImage(getIconNamePath(), SmallImageSize, SmallImageSize);
 }
 
 void MegaNotificationExt::reset(const mega::MegaNotification* notification)
@@ -50,6 +60,16 @@ bool MegaNotificationExt::showIcon() const
     return !QString::fromUtf8(mNotification->getIconName()).isEmpty();
 }
 
+QPixmap MegaNotificationExt::getImagePixmap() const
+{
+    return mImage;
+}
+
+QPixmap MegaNotificationExt::getIconPixmap() const
+{
+    return mIcon;
+}
+
 QString MegaNotificationExt::getIconNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
@@ -70,25 +90,32 @@ int64_t MegaNotificationExt::getEnd() const
 const char* MegaNotificationExt::getActionText() const
 {
     const char* value = mNotification->getCallToAction1()->get("text");
-    if (value != NULL)
-    {
-        return value;
-    }
-    else
-    {
-        return "";
-    }
+    return value != NULL ? value : "";
 }
 
 const char* MegaNotificationExt::getActionLink() const
 {
     const char* value = mNotification->getCallToAction1()->get("link");
-    if (value != NULL)
+    return value != NULL ? value : "";
+}
+
+void MegaNotificationExt::onDownloadFinished(const QImage& image, const QString& imageUrl)
+{
+    if (image.isNull())
     {
-        return value;
+        return;
     }
-    else
+
+    if (imageUrl == getImageNamePath())
     {
-        return "";
+        QSize size = QSize(LargeImageWidth, LargeImageHeight);
+        mImage = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        emit imageChanged();
+    }
+    else if (imageUrl == getIconNamePath())
+    {
+        QSize size = QSize(SmallImageSize, SmallImageSize);
+        mIcon = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        emit iconChanged();
     }
 }
