@@ -59,12 +59,15 @@ void AlertFilterType::setActualFilter(AlertType type)
 
 bool AlertFilterType::allFilterHasBeenSelected() const
 {
-    return mAllFilterHasBeenSelected;
+    return mAllFilterHasBeenSelected || mType == AlertType::ALL;
 }
 
 void AlertFilterType::resetAllFilterHasBeenSelected()
 {
-    mAllFilterHasBeenSelected = false;
+    if(mType != AlertType::ALL)
+    {
+        mAllFilterHasBeenSelected = false;
+    }
 }
 
 void AlertFilterType::mousePressEvent(QMouseEvent*)

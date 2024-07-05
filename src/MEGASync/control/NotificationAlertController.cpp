@@ -164,10 +164,6 @@ void NotificationAlertController::reset()
     }
 }
 
-bool NotificationAlertController::areAlertsFiltered()
-{
-    return mAlertsProxyModel && mAlertsProxyModel->filterAlertType() != AlertType::ALL;
-}
 bool NotificationAlertController::hasNotificationsOrAlerts()
 {
     return mNotificationAlertModel && mNotificationAlertModel->hasNotificationsOrAlerts();
@@ -209,7 +205,7 @@ void NotificationAlertController::checkUseenNotifications()
 
 void NotificationAlertController::ackSeenAlertsAndNotifications()
 {
-    if (mAllUnseenAlerts > 0 && hasNotificationsOrAlerts() && !areAlertsFiltered())
+    if (mAllUnseenAlerts > 0 && hasNotificationsOrAlerts())
     {
         mMegaApi->acknowledgeUserAlerts();
         auto lastSeen = mNotificationAlertModel->getLastSeenNotification();

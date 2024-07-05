@@ -47,7 +47,6 @@ private:
     void populateNotifications(const mega::MegaNotificationList* notificationList);
     bool createModelAndDelegate();
     void checkUseenNotifications();
-    bool areAlertsFiltered();
 
 };
 

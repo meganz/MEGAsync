@@ -95,14 +95,11 @@ long long NotificationModel::getNumUnseenNotifications() const
 uint32_t NotificationModel::getLastSeenNotification() const
 {
     uint32_t lastSeen = 0;
-    if(!mLastSeenNotification)
+    for (const auto& notification : mNotificationsMap)
     {
-        for (const auto& notification : mNotificationsMap)
+        if (notification->getID() > lastSeen)
         {
-            if (notification->getID() > lastSeen)
-            {
-                lastSeen = notification->getID();
-            }
+            lastSeen = notification->getID();
         }
     }
     return lastSeen;
