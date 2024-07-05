@@ -2,7 +2,6 @@
 
 #include "NotificationAlertModel.h"
 
-
 #include <QSortFilterProxyModel>
 
 void NotificationAlertDelegate::paint(QPainter* painter,

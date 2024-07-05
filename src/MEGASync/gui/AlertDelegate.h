@@ -2,6 +2,7 @@
 #define ALERT_DELEGATE_H
 
 #include "AlertModel.h"
+#include "NotificationAlertTypes.h"
 
 #include <QStyledItemDelegate>
 
@@ -18,6 +19,9 @@ public:
 
 private:
     AlertModel* mAlertsModel;
+
+    void handleAlertItem(MegaUserAlertExt* alert, const QRect& rect, QPainter* painter) const;
+    NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
 
 };
 
