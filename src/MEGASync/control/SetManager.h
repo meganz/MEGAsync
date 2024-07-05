@@ -41,7 +41,7 @@ struct ActionParams
     MegaNodeSPtr importParentNode;
 };
 
-class SetManager: public QObject, public mega::MegaRequestListener, public mega::MegaTransferListener, public AsyncHandler<bool>
+class SetManager: public QObject, public mega::MegaTransferListener, public AsyncHandler<bool>
 {
     Q_OBJECT
 
@@ -75,7 +75,7 @@ public slots:
 
 private:
     void handleTriggerAction(bool&) override;
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* error) override;
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error) override;
 
     // State Machine

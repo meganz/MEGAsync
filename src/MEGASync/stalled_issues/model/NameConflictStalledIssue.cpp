@@ -620,6 +620,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                 QFile file(fileInfo.filePath());
                 if(file.exists())
                 {
+                    bool isFile(fileInfo.isFile());
                     auto newName = Utilities::getNonDuplicatedLocalName(fileInfo, true, cloudItemsBeingRenamed);
 
                     fileInfo.setFile(fileInfo.path(), newName);
@@ -631,7 +632,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                     else
                     {
                         result = false;
-                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
+                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(isFile));
                         break;
                     }
                 }

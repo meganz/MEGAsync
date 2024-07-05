@@ -251,7 +251,9 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     if (index.isValid() && row < rowCount)
     {
-        bool isExpanded(mView->isExpanded(index));
+        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
+
+        bool isExpanded(mView->isExpanded(index) && stalledIssueItem.consultData()->isExpandable());
 
         auto pos (option.rect.topLeft());
         QRect geometry(option.rect);
@@ -383,7 +385,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         bool renderDelegate(editorCurrentIndex != index);
 
-        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
         if(renderDelegate)
         {
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, geometry.size()));
@@ -417,7 +418,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
         else
         {
-            if(!mView->isExpanded(index))
+            if(!isExpanded)
             {
                 drawBottomLine = true;
             }

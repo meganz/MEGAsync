@@ -9,7 +9,7 @@
 #include "ProxySettings.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
@@ -35,13 +35,13 @@
 #include <memory>
 
 #ifdef Q_OS_MACOS
-    #include "gui/CocoaHelpButton.h"
+    #include "CocoaHelpButton.h"
 #endif
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #else
-#include "gui/PermissionsDialog.h"
+#include "PermissionsDialog.h"
 #endif
 
 using namespace mega;
@@ -621,7 +621,7 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_MEGA_HELP_URL + QString::fromUtf8("/installs-apps/desktop");
     Utilities::openUrl(QUrl(helpUrl));
 }
 

@@ -318,12 +318,12 @@
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A] ha añadido %n de elementos</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] ha eliminado %n elemento</numerusform><numerusform>[A] ha eliminado %n de elementos</numerusform><numerusform>[A] ha eliminado %n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha eliminado %n elemento</numerusform><numerusform>[A] ha eliminado %n elementos</numerusform></translation>
     </message>
     <message>
         <source>New shared folder from [A]</source>
@@ -343,7 +343,7 @@
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] ha actualizado %n elemento</numerusform><numerusform>[A] ha actualizado %n de elementos</numerusform><numerusform>[A] ha actualizado %n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha actualizado %n elemento</numerusform><numerusform>[A] ha actualizado %n elementos</numerusform></translation>
     </message>
 </context>
 <context>
@@ -504,7 +504,7 @@
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
-        <translation><numerusform>No se ha hecho el backup de esta carpeta. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform></translation>
+        <translation><numerusform>No se ha hecho el backup de esta carpeta. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform></translation>
     </message>
     <message>
         <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
@@ -514,7 +514,7 @@
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
-        <translation><numerusform>Ya existe una carpeta con el mismo nombre en tus copias de seguridad. Cambie el nombre de la nueva carpeta para continuar con el backup. El nombre de la carpeta no cambiará en su equipo.</numerusform><numerusform>Ya existen algunas carpetas con el mismo nombre en tus copias de seguridad. Cambie el nombre de las nuevas carpetas para continuar con el backup. Los nombres de las carpetas no cambiarán en el equipo.</numerusform><numerusform>Ya existen algunas carpetas con el mismo nombre en tus Backups. Cambia el nombre de las nuevas carpetas para continuar con el backup. Los nombres de las carpetas no cambiarán en el equipo local.</numerusform></translation>
+        <translation><numerusform>Ya existe una carpeta con el mismo nombre en tus copias de seguridad. Cambie el nombre de la nueva carpeta para continuar con el backup. El nombre de la carpeta no cambiará en su equipo.</numerusform><numerusform>Ya existen algunas carpetas con el mismo nombre en tus Backups. Cambia el nombre de las nuevas carpetas para continuar con el backup. Los nombres de las carpetas no cambiarán en el equipo local.</numerusform></translation>
     </message>
     <message>
         <source>Backup folders can&apos;t contain or be contained by other backup folder</source>
@@ -617,27 +617,27 @@
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation><numerusform>%n carpeta</numerusform><numerusform>%n de carpetas</numerusform><numerusform>%n carpetas</numerusform></translation>
+        <translation><numerusform>%n carpeta</numerusform><numerusform>%n carpetas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Backup created</source>
         <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation><numerusform>Backup creado</numerusform><numerusform>Backups creados</numerusform><numerusform>Backups creados</numerusform></translation>
+        <translation><numerusform>Backup creado</numerusform><numerusform>Backups creados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
         <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>Estamos haciendo un backup de tu carpetas El tiempo requerido para completar el proceso dependerá de los archivos contenidos en esta carpeta.</numerusform><numerusform>Estamos haciendo un backup de tus carpetas. El tiempo requerido para completar el proceso dependerá de los archivos contenidos en estas carpetas.</numerusform><numerusform>Estamos haciendo un backup de tus carpetas. El tiempo requerido para completar el proceso dependerá de los archivos contenidos en estas carpetas.</numerusform></translation>
+        <translation><numerusform>Estamos haciendo un backup de tu carpetas El tiempo requerido para completar el proceso dependerá de los archivos contenidos en esta carpeta.</numerusform><numerusform>Estamos haciendo un backup de tus carpetas. El tiempo requerido para completar el proceso dependerá de los archivos contenidos en estas carpetas.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Problem backing up folder</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Problema al hacer copia de seguridad de la carpeta</numerusform><numerusform>Problema al hacer copia de seguridad de las carpetas</numerusform><numerusform>Problema al hacer el backup de las carpetas</numerusform></translation>
+        <translation><numerusform>Problema al hacer copia de seguridad de la carpeta</numerusform><numerusform>Problema al hacer el backup de las carpetas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>No se ha hecho el backup de esta carpeta. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform></translation>
+        <translation><numerusform>No se ha hecho el backup de esta carpeta. Inténtalo de nuevo.</numerusform><numerusform>No se ha hecho el backup de estas carpetas. Inténtalo de nuevo.</numerusform></translation>
     </message>
     <message>
         <source>Folder is already selected. Select a different folder.</source>
@@ -1105,17 +1105,17 @@
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
-        <translation><numerusform>¿Resolver el problema?</numerusform><numerusform>¿Resolver los problemas?</numerusform><numerusform>¿Resolver los problemas?</numerusform></translation>
+        <translation><numerusform>¿Resolver el problema?</numerusform><numerusform>¿Resolver los problemas?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>This action will download the file to a temp location, fix the issue and finally remove it.</source>
         <translatorcomment>Description for the solution of missing fingerprint stalled issues shown in the confirmation dialog when the user clicks solve option.SNC-2565</translatorcomment>
-        <translation><numerusform>Esta acción descargará el archivo en una ubicación temporal, solucionará el problema y luego eliminará el archivo temporal.</numerusform><numerusform>Esta acción descargará los archivos en una ubicación temporal, solucionará los problemas y luego eliminará los archivos temporales.</numerusform><numerusform>Esta acción descargará los archivos en una ubicación temporal, solucionará los problemas y luego eliminará los archivos temporales.</numerusform></translation>
+        <translation><numerusform>Esta acción descargará el archivo en una ubicación temporal, solucionará el problema y luego eliminará el archivo temporal.</numerusform><numerusform>Esta acción descargará los archivos en una ubicación temporal, solucionará los problemas y luego eliminará los archivos temporales.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers,[B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Reanuda tus transferencias para solucionar el problema.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform></translation>
+        <translation><numerusform>Reanuda tus transferencias para solucionar el problema.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform></translation>
     </message>
     <message>
         <source>Can´t download [B]%1[/B] to the selected location</source>
@@ -1164,7 +1164,7 @@
     <message numerus="yes">
         <source>Your Pro membership plan will expire in %n day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in %n days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation><numerusform>Tu plan Pro caducará en %n día</numerusform><numerusform>Tu plan Pro caducará en %n de días</numerusform><numerusform>Tu plan Pro caducará en %n días</numerusform></translation>
+        <translation><numerusform>Tu plan Pro caducará en %n día</numerusform><numerusform>Tu plan Pro caducará en %n días</numerusform></translation>
     </message>
     <message>
         <source>Pro membership plan expiring soon</source>
@@ -1174,7 +1174,7 @@
     <message numerus="yes">
         <source>Your Pro membership plan expired %n day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired %n days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation><numerusform>Tu plan Pro caducó hace %n día</numerusform><numerusform>Tu plan Pro caducó hace %n de días</numerusform><numerusform>Tu plan Pro caducó hace %n días</numerusform></translation>
+        <translation><numerusform>Tu plan Pro caducó hace %n día</numerusform><numerusform>Tu plan Pro caducó hace %n días</numerusform></translation>
     </message>
     <message>
         <source>The following characters are not allowed:
@@ -1480,12 +1480,12 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>[A] added %n item</source>
         <translatorcomment>Label to indicate that [A] has added %n items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and %n with the number of added items.</translatorcomment>
-        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A]ha añadido %n elementos</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha añadido %n elemento</numerusform><numerusform>[A] ha añadido %n elementos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have %n day left to save your data</source>
         <translatorcomment>Notification content to inform the days the user have to save the date before possible deletion. %n will be replaced with remaining days amount.</translatorcomment>
-        <translation><numerusform>Te queda %n día para conservar tus datos</numerusform><numerusform>Te quedan %n de días para conservar tus datos</numerusform><numerusform>Te quedan %n días para conservar tus datos</numerusform></translation>
+        <translation><numerusform>Te queda %n día para conservar tus datos</numerusform><numerusform>Te quedan %n días para conservar tus datos</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now to a Pro account.</source>
@@ -1515,7 +1515,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>[A] updated %n item</source>
         <translatorcomment>Label to indicate that user [A] has updated %n items in shared folder. Placeholder [A] will be replaced by the email or full name of the user that made the update and %n with the number of removed items. CON-295</translatorcomment>
-        <translation><numerusform>[A] ha actualizado %n elemento</numerusform><numerusform>[A] ha actualizado %n de elementos</numerusform><numerusform>[A] ha actualizado %n elementos</numerusform></translation>
+        <translation><numerusform>[A] ha actualizado %n elemento</numerusform><numerusform>[A] ha actualizado %n elementos</numerusform></translation>
     </message>
     <message>
         <source>Pro Flexi Account deactivated</source>
@@ -1594,24 +1594,24 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>The item you selected has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
-        <translation><numerusform>El elemento que has seleccionado ha sido eliminado. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>Los elementos que has seleccionado han sido eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>Los elementos que has seleccionado han sido eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform></translation>
+        <translation><numerusform>El elemento que has seleccionado ha sido eliminado. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>Los elementos que has seleccionado han sido eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You no longer have access to this item. Ask the owner to share again.</source>
         <translatorcomment>Error message shown when the user is trying to download an file or folder from an incoming share and the owner stops sharing/removes all items</translatorcomment>
-        <translation><numerusform>Ya no tienes acceso a este elemento. Pídele a la persona que te los compartió anteriormente que lo vuelva a compartir.</numerusform><numerusform>Ya no tienes acceso a estos elementos. Pídele a la persona que te los compartió anteriormente que los vuelva a compartir.</numerusform><numerusform>Ya no tienes acceso a estos elementos. Pídele a la persona que te los compartió anteriormente que los vuelva a compartir.</numerusform></translation>
+        <translation><numerusform>Ya no tienes acceso a este elemento. Pídele a la persona que te los compartió anteriormente que lo vuelva a compartir.</numerusform><numerusform>Ya no tienes acceso a estos elementos. Pídele a la persona que te los compartió anteriormente que los vuelva a compartir.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 item selected</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1 elemento seleccionado.</numerusform><numerusform>%1elementos seleccionados.</numerusform><numerusform>%1 elementos seleccionados.</numerusform></translation>
+        <translation><numerusform>%1 elemento seleccionado.</numerusform><numerusform>%1 elementos seleccionados.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1. %2 has been removed. To reselect, close this window and try again.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: 5 items selected. 2 have been removed. To reselect, close this window and try again. </translatorcomment>
-        <translation><numerusform>%1.%2eliminado. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>%1.%2eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>%1.%2 eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform></translation>
+        <translation><numerusform>%1.%2eliminado. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform><numerusform>%1.%2 eliminados. Para volver a seleccionar, cierra esta ventana y vuelve a intentarlo.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1682,7 +1682,7 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>Apply to all %1 duplicates</source>
         <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts</translatorcomment>
-        <translation><numerusform>Aplicar al duplicado</numerusform><numerusform>Aplicar a todos los %1 de duplicados</numerusform><numerusform>Aplicar a todos los %1 duplicados</numerusform></translation>
+        <translation><numerusform>Aplicar al duplicado</numerusform><numerusform>Aplicar a todos los %1 duplicados</numerusform></translation>
     </message>
     <message>
         <source>The file at this destination will be updated if the new file is different.</source>
@@ -2135,12 +2135,12 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of files</translatorcomment>
-        <translation><numerusform>%n archivo</numerusform><numerusform>%n de archivos</numerusform><numerusform>%n archivos</numerusform></translation>
+        <translation><numerusform>%n archivo</numerusform><numerusform>%n archivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected %n number of folders</translatorcomment>
-        <translation><numerusform>%n carpeta</numerusform><numerusform>%n de carpetas</numerusform><numerusform>%n carpetas</numerusform></translation>
+        <translation><numerusform>%n carpeta</numerusform><numerusform>%n carpetas</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2550,17 +2550,17 @@ Actualiza la lista.</translation>
     <message numerus="yes">
         <source>We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].</source>
         <translatorcomment>Informative label about account status regarding over quota storage. Placeholders will be replaced: [A] - user email, [B] - localized date list of emails sent to inform the user about the situation,  %n - amount of files in the current account, [D] - amount of storage used and [E] - min PRO plan needed to fix the situation.</translatorcomment>
-        <translation><numerusform>Te contactamos por email a [A] el [B] pero todavía tienes %n archivo que ocupa [D] en tu cuenta de MEGA, lo cual requiere una cuenta [E].</numerusform><numerusform>Te contactamos por email a [A] el [B] pero todavía tienes %n archivos que ocupan [D] en tu cuenta de MEGA, lo cual requiere una cuenta [E].</numerusform><numerusform>Te contactamos por email a [A] el [B] pero todavía tienes %n archivos que ocupan [D] en tu cuenta de MEGA, lo cual requiere una cuenta [E].</numerusform></translation>
+        <translation><numerusform>Te contactamos por email a [A] el [B] pero todavía tienes %n archivo que ocupa [D] en tu cuenta de MEGA, lo cual requiere una cuenta [E].</numerusform><numerusform>Te contactamos por email a [A] el [B] pero todavía tienes %n archivos que ocupan [D] en tu cuenta de MEGA, lo cual requiere una cuenta [E].</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of days left to upgrade.</translatorcomment>
-        <translation><numerusform>Te queda [A]%n día[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación. </numerusform><numerusform>Te quedan [A]%n días[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación. </numerusform><numerusform>Te quedan [A]%n días[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación. </numerusform></translation>
+        <translation><numerusform>Te queda [A]%n día[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación. </numerusform><numerusform>Te quedan [A]%n días[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación. </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.</source>
         <translatorcomment>Label to inform about the deadline time to upgrade. Otherwise, data is subject to deletion. Placeholder info: [A][/A] - needed to format and apply text style, %n- number of hours left to upgrade.</translatorcomment>
-        <translation><numerusform>Te queda [A]%n hora[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación.</numerusform><numerusform>Te quedan [A]%n horas[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación.</numerusform><numerusform>Te quedan [A]%n horas[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación.</numerusform></translation>
+        <translation><numerusform>Te queda [A]%n hora[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación.</numerusform><numerusform>Te quedan [A]%n horas[/A] para ampliar la cuenta. Después, tus datos estarán sujetos a eliminación.</numerusform></translation>
     </message>
     <message>
         <source>Some syncs and backups have been disabled</source>
@@ -2851,7 +2851,7 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Reanuda tus transferencias para solucionar el problema.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform></translation>
+        <translation><numerusform>Reanuda tus transferencias para solucionar el problema.</numerusform><numerusform>Reanuda tus transferencias para solucionar los problemas.</numerusform></translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
@@ -3005,12 +3005,12 @@ Espera a que se complete la subida.</translation>
     <message numerus="yes">
         <source>The [B]remote file[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>Al archivo almacenado en MEGA se le añadirá un sufijo como (1).</numerusform><numerusform>A los archivos almacenados en MEGA se les añadirá un sufijo como (1).</numerusform><numerusform>A los archivos almacenados en MEGA se les añadirá un sufijo como (1).</numerusform></translation>
+        <translation><numerusform>Al archivo almacenado en MEGA se le añadirá un sufijo como (1).</numerusform><numerusform>A los archivos almacenados en MEGA se les añadirá un sufijo como (1).</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The [B]remote folder[/B] will have a suffix like (1) added</source>
         <translatorcomment>Informative text in a message box shown when the user chooses both versions explaining what happens to the remote one, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>A la carpeta almacenada en MEGA se le añadirá un sufijo como (1).</numerusform><numerusform>A las carpetas almacenadas en MEGA se les añadirá un sufijo como (1).</numerusform><numerusform>A las carpetas almacenadas en MEGA se les añadirá un sufijo como (1).</numerusform></translation>
+        <translation><numerusform>A la carpeta almacenada en MEGA se le añadirá un sufijo como (1).</numerusform><numerusform>A las carpetas almacenadas en MEGA se les añadirá un sufijo como (1).</numerusform></translation>
     </message>
     <message>
         <source>Keep the [B]local folders[/B]?</source>
@@ -3511,7 +3511,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translatorcomment>Messagebox text to let the user know that there are active transfers when closing the app. The user will be able to exit and pause them, or stop the exit action.</translatorcomment>
         <translation><numerusform>Hay una transferencia activa. ¿Salir de la aplicación?
 La transferencia se reanudará automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform><numerusform>Hay transferencias activas. ¿Salir de la aplicación?
-Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform><numerusform>Hay transferencias activas. ¿Salir de la aplicación?
 Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la aplicación.</numerusform></translation>
     </message>
     <message>
@@ -3547,7 +3546,7 @@ Las transferencias se reanudarán automáticamente en cuanto vuelvas a abrir la 
     <message numerus="yes">
         <source>You are currently sharing the following folder: %1</source>
         <translatorcomment>Additional information shown within Security upgrade dialog if the user has outgoing shares. A list of the shares will be filled at %1 placeholder. Please check screenshot to see the full context of this string along with the other ones.</translatorcomment>
-        <translation><numerusform>Actualmente estás compartiendo la siguiente carpeta: %1</numerusform><numerusform>Actualmente estás compartiendo las siguientes carpetas: %1</numerusform><numerusform>Actualmente estás compartiendo las siguientes carpetas: %1</numerusform></translation>
+        <translation><numerusform>Actualmente estás compartiendo la siguiente carpeta: %1</numerusform><numerusform>Actualmente estás compartiendo las siguientes carpetas: %1</numerusform></translation>
     </message>
     <message>
         <source>Failed to ugrade security. Error: %1</source>
@@ -4128,22 +4127,22 @@ No podrás recuperar el acceso a tus datos ni estás autorizado a registrar una 
     <message numerus="yes">
         <source>Pause transfer</source>
         <translatorcomment>Context menu action to pause transfer</translatorcomment>
-        <translation><numerusform>Pausar transferencia</numerusform><numerusform>Pausar transferencias</numerusform><numerusform>Pausar transferencias</numerusform></translation>
+        <translation><numerusform>Pausar transferencia</numerusform><numerusform>Pausar transferencias</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Resume transfer</source>
         <translatorcomment>Context menu action to resume transfer</translatorcomment>
-        <translation><numerusform>Reanudar transferencia</numerusform><numerusform>Reanudar transferencias</numerusform><numerusform>Reanudar transferencias</numerusform></translation>
+        <translation><numerusform>Reanudar transferencia</numerusform><numerusform>Reanudar transferencias</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Cancel transfer</source>
         <translatorcomment>Context menu action to cancel transfer</translatorcomment>
-        <translation><numerusform>Cancelar transferencia</numerusform><numerusform>Cancelar transferencias</numerusform><numerusform>Cancelar transferencias</numerusform></translation>
+        <translation><numerusform>Cancelar transferencia</numerusform><numerusform>Cancelar transferencias</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Clear transfer</source>
         <translatorcomment>Tooltip for the clear button in a transfer row</translatorcomment>
-        <translation><numerusform>Limpiar transferencia</numerusform><numerusform>Limpiar transferencias</numerusform><numerusform>Limpiar transferencias</numerusform></translation>
+        <translation><numerusform>Limpiar transferencia</numerusform><numerusform>Limpiar transferencias</numerusform></translation>
     </message>
     <message>
         <source>Cancel transfers?
@@ -4246,7 +4245,7 @@ No se cancelarán las transferencias incompletas de datos sincronizados que has 
     <message numerus="yes">
         <source>Cancel and clear transfer</source>
         <translatorcomment>Context menu action to resume cancel the active transfers and clear the completed transfers (multiple transfers selected)</translatorcomment>
-        <translation><numerusform>Cancelar y limpiar la transferencia</numerusform><numerusform>Cancelar y limpiar las transferencias</numerusform><numerusform>Cancelar y limpiar las transferencias</numerusform></translation>
+        <translation><numerusform>Cancelar y limpiar la transferencia</numerusform><numerusform>Cancelar y limpiar las transferencias</numerusform></translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5353,7 +5352,7 @@ Introduzca un nombre diferente.</translation>
     <message numerus="yes">
         <source>[A] removed %n item</source>
         <translatorcomment>Label to indicate that [A] has removed %n items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and %n with the number of removed items.</translatorcomment>
-        <translation><numerusform>[A] ha eliminado %n elemento</numerusform><numerusform>[A] ha eliminado %n elementos</numerusform><numerusform>[A] ha eliminado %n elementos </numerusform></translation>
+        <translation><numerusform>[A] ha eliminado %n elemento</numerusform><numerusform>[A] ha eliminado %n elementos </numerusform></translation>
     </message>
 </context>
 <context>
@@ -5627,7 +5626,7 @@ Introduzca un nombre diferente.</translation>
     <message numerus="yes">
         <source>minimum %n user</source>
         <translatorcomment>Label to inform about the minimum number of users for a business plan. %1 will be replaced with the minimum number of users.</translatorcomment>
-        <translation><numerusform>mínimo %n usuario</numerusform><numerusform>mínimo %n usuarios</numerusform><numerusform>mínimo %n usuarios</numerusform></translation>
+        <translation><numerusform>mínimo %n usuario</numerusform><numerusform>mínimo %n usuarios</numerusform></translation>
     </message>
     <message>
         <source>[A] storage</source>
@@ -6349,12 +6348,12 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Part of the string used to display number of folders in scanning step. %1 is the number of folders found so far.</translatorcomment>
-        <translation><numerusform>%n carpeta</numerusform><numerusform>%n de carpetas</numerusform><numerusform>%n carpetas</numerusform></translation>
+        <translation><numerusform>%n carpeta</numerusform><numerusform>%n carpetas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Part of the string used to display number of files in scanning step. %1 is the number of files found so far.</translatorcomment>
-        <translation><numerusform>%n archivo</numerusform><numerusform>%n de archivos</numerusform><numerusform>%n archivos</numerusform></translation>
+        <translation><numerusform>%n archivo</numerusform><numerusform>%n archivos</numerusform></translation>
     </message>
     <message>
         <source>Adding transfers…</source>
@@ -6770,12 +6769,12 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Used quota for the last %n hour:</source>
         <translatorcomment>Informative text shown in Account pane for Free account type. Indicates the used quota in the last %n specified number of hours. Keep the %n subsitution argument.</translatorcomment>
-        <translation><numerusform>Cuota utilizada en la última hora:</numerusform><numerusform>Cuota utilizada en las últimas %n horas:</numerusform><numerusform>Cuota utilizada en las últimas %n horas:</numerusform></translation>
+        <translation><numerusform>Cuota utilizada en la última hora:</numerusform><numerusform>Cuota utilizada en las últimas %n horas:</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>day</source>
         <translatorcomment>Suffix text label for number of days to keep files in local cache.</translatorcomment>
-        <translation><numerusform>día</numerusform><numerusform>de días</numerusform><numerusform>días</numerusform></translation>
+        <translation><numerusform>día</numerusform><numerusform>días</numerusform></translation>
     </message>
     <message>
         <source>Sleep settings</source>
@@ -6914,12 +6913,12 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>%n file</source>
         <translatorcomment>Label to indicate file count. Keep %n code because it will be filled with the number of files at runtime.</translatorcomment>
-        <translation><numerusform>%n archivo</numerusform><numerusform>%n archivos</numerusform><numerusform>%n archivos</numerusform></translation>
+        <translation><numerusform>%n archivo</numerusform><numerusform>%n archivos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n folder</source>
         <translatorcomment>Label to indicate folder count. Keep %n code because it will be filled with the number of folders at runtime.</translatorcomment>
-        <translation><numerusform>%n carpeta</numerusform><numerusform>%n carpetas</numerusform><numerusform>%n carpetas</numerusform></translation>
+        <translation><numerusform>%n carpeta</numerusform><numerusform>%n carpetas</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7220,7 +7219,7 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Resolved: %n</source>
         <translatorcomment>Name of the tab containing  solved sync stalls in sync stalls dialog, %n variable refers to the number of solved issues.DNS-1388</translatorcomment>
-        <translation><numerusform>Resueltos: %n</numerusform><numerusform>Resueltos: %n</numerusform><numerusform>Resueltos: %n</numerusform></translation>
+        <translation><numerusform>Resueltos: %n</numerusform><numerusform>Resueltos: %n</numerusform></translation>
     </message>
     <message>
         <source>All issues: %1</source>
@@ -7230,17 +7229,17 @@ Do you want to delete it anyway?</source>
     <message numerus="yes">
         <source>Name conflict: %n</source>
         <translatorcomment>Name of the tab containing name conflict sync stalls in sync stalls dialog, %n is for the count .DNS-1388</translatorcomment>
-        <translation><numerusform>Conflicto de nombre: %n</numerusform><numerusform>Conflictos de nombre: %n</numerusform><numerusform>Conflictos de nombre: %n</numerusform></translation>
+        <translation><numerusform>Conflicto de nombre: %n</numerusform><numerusform>Conflictos de nombre: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Item type conflict: %n</source>
         <translatorcomment>Name of the tab containing item type sync stalls in sync stalls dialog, %n variable is for the count.SNC-2565</translatorcomment>
-        <translation><numerusform>Conflicto de tipo: %n</numerusform><numerusform>Conflictos de tipo: %n</numerusform><numerusform>Conflictos de tipo: %n</numerusform></translation>
+        <translation><numerusform>Conflicto de tipo: %n</numerusform><numerusform>Conflictos de tipo: %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Other: %n</source>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
-        <translation><numerusform>Otro: %n</numerusform><numerusform>Otros: %n</numerusform><numerusform>Otros: %n</numerusform></translation>
+        <translation><numerusform>Otro: %n</numerusform><numerusform>Otros: %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7333,7 +7332,7 @@ Recarga la vista.</translation>
     <message numerus="yes">
         <source>%n issues fixed</source>
         <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation><numerusform>%n problema resuelto</numerusform><numerusform>%n problemas resueltos</numerusform><numerusform>%n problemas resueltos</numerusform></translation>
+        <translation><numerusform>%n problema resuelto</numerusform><numerusform>%n problemas resueltos</numerusform></translation>
     </message>
     <message>
         <source>Fixing issues</source>
@@ -8384,7 +8383,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message numerus="yes">
         <source>%1 result found</source>
         <translatorcomment>Message shown with search results,when there are only uploads or downloads, but not both at the same time</translatorcomment>
-        <translation><numerusform>%1 resultado encontrado</numerusform><numerusform>%1 resultados encontrados</numerusform><numerusform>%1 resultados encontrados</numerusform></translation>
+        <translation><numerusform>%1 resultado encontrado</numerusform><numerusform>%1 resultados encontrados</numerusform></translation>
     </message>
     <message>
         <source>Upgrade now</source>
@@ -8416,7 +8415,7 @@ Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya má
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
-        <translation><numerusform>Problema detectado</numerusform><numerusform>Problemas detectados</numerusform><numerusform>Problemas detectados</numerusform></translation>
+        <translation><numerusform>Problema detectado</numerusform><numerusform>Problemas detectados</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8457,7 +8456,7 @@ Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya má
     <message numerus="yes">
         <source>Retry failed items</source>
         <translatorcomment>Notification button to retry failed transfers when not all the transfers failed. CON-223</translatorcomment>
-        <translation><numerusform>Reintentar elemento fallido</numerusform><numerusform>Reintentar elementos fallidos</numerusform><numerusform>Reintentar elementos fallidos</numerusform></translation>
+        <translation><numerusform>Reintentar elemento fallido</numerusform><numerusform>Reintentar elementos fallidos</numerusform></translation>
     </message>
     <message>
         <source>Could not upload</source>
@@ -8492,56 +8491,56 @@ Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya má
     <message numerus="yes">
         <source>%n item couldn’t be uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>No se ha podido subir %n elemento a %1.</numerusform><numerusform>No se han podido subir %n de elementos a %1.</numerusform><numerusform>No se han podido subir %n elementos a %1.</numerusform></translation>
+        <translation><numerusform>No se ha podido subir %n elemento a %1.</numerusform><numerusform>No se han podido subir %n elementos a %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n elemento subido</numerusform><numerusform>%n de elementos subidos</numerusform><numerusform>%n elementos subidos</numerusform></translation>
+        <translation><numerusform>%n elemento subido</numerusform><numerusform>%n elementos subidos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be uploaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item uploaded, but Y item couldn’t be uploaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, pero %n elemento no se ha podido subir.</numerusform><numerusform>%1, pero %n de elementos no se han podido subir.</numerusform><numerusform>%1, pero %n elementos no se han podido subir.</numerusform></translation>
+        <translation><numerusform>%1, pero %n elemento no se ha podido subir.</numerusform><numerusform>%1, pero %n elementos no se han podido subir.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item uploaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were uploaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n elemento subido a %1.</numerusform><numerusform>%n de elementos subidos a %1.</numerusform><numerusform>%n elementos subidos a %1.</numerusform></translation>
+        <translation><numerusform>%n elemento subido a %1.</numerusform><numerusform>%n elementos subidos a %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         First part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%n elemento descargado</numerusform><numerusform>%n de elementos descargados</numerusform><numerusform>%n elementos descargados</numerusform></translation>
+        <translation><numerusform>%n elemento descargado</numerusform><numerusform>%n elementos descargados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1, but %n item couldn’t be downloaded.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but some of the selected nodes were removed. 
         Second part of string for multi plural support. Full string looks like: X item downloaded, but Y item couldn’t be downloaded (X and Y will be replaced with specific numbers).</translatorcomment>
-        <translation><numerusform>%1, pero %n elemento no se ha podido descargar.</numerusform><numerusform>%1, pero %n de elementos no se han podido descargar.</numerusform><numerusform>%1, pero %n elementos no se han podido descargar.</numerusform></translation>
+        <translation><numerusform>%1, pero %n elemento no se ha podido descargar.</numerusform><numerusform>%1, pero %n elementos no se han podido descargar.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item couldn’t be downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items could not be downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>No se ha podido descargar %n elemento a %1.</numerusform><numerusform>No se han podido descargar %n de elementos a %1.</numerusform><numerusform>No se han podido descargar %n elementos a %1.</numerusform></translation>
+        <translation><numerusform>No se ha podido descargar %n elemento a %1.</numerusform><numerusform>No se han podido descargar %n elementos a %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item downloaded to %1.</source>
         <translatorcomment>Body text of a system notification shown when %n items were downloaded to %1 destination. %n will be replaced with the number of items and %1 with the remote path. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n elemento descargado en %1.</numerusform><numerusform>%n de elementos descargados en %1.</numerusform><numerusform>%n elementos descargados en %1.</numerusform></translation>
+        <translation><numerusform>%n elemento descargado en %1.</numerusform><numerusform>%n elementos descargados en %1.</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist or was renamed.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during an upload operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n elemento ya no existe o han sido renombrado. </numerusform><numerusform>%n de elementos ya no existen o han sido renombrados.</numerusform><numerusform>%n elementos ya no existen o han sido renombrados. </numerusform></translation>
+        <translation><numerusform>%n elemento ya no existe o han sido renombrado. </numerusform><numerusform>%n elementos ya no existen o han sido renombrados. </numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
-        <translation><numerusform>%n elemento ya no existe.</numerusform><numerusform>%n de elementos ya no existen.</numerusform><numerusform>%n elementos ya no existen.</numerusform></translation>
+        <translation><numerusform>%n elemento ya no existe.</numerusform><numerusform>%n elementos ya no existen.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9141,12 +9140,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 usado</numerusform><numerusform>%1 usados</numerusform><numerusform>%1 usados</numerusform></translation>
+        <translation><numerusform>%1 usado</numerusform><numerusform>%1 usados</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the amount and percentage of used and total space available. Keep %1 (%2%) and %3 substitution placeholders because they will be filled with the required amounts of storage space dynamically. SNC-3429</translatorcomment>
-        <translation><numerusform>%1 (%2%) de %3 usado</numerusform><numerusform>%1 (%2%) de %3 usados</numerusform><numerusform>%1 (%2%) de %3 usados</numerusform></translation>
+        <translation><numerusform>%1 (%2%) de %3 usado</numerusform><numerusform>%1 (%2%) de %3 usados</numerusform></translation>
     </message>
     <message>
         <source>Added just now</source>
@@ -9156,32 +9155,32 @@ Please delete the folder sync from settings to cancel them.</source>
     <message numerus="yes">
         <source>Added %n second ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n seconds ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n segundo</numerusform><numerusform>Transferencia completada hace %n de segundos</numerusform><numerusform>Transferencia completada hace %n segundos</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n segundo</numerusform><numerusform>Transferencia completada hace %n segundos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n minutes ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n minuto</numerusform><numerusform>Transferencia completada hace %n de minutos</numerusform><numerusform>Transferencia completada hace %n minutos</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n minuto</numerusform><numerusform>Transferencia completada hace %n minutos</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n hours ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n hora</numerusform><numerusform>Transferencia completada hace %n de horas</numerusform><numerusform>Transferencia completada hace %n horas</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n hora</numerusform><numerusform>Transferencia completada hace %n horas</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n days ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n día</numerusform><numerusform>Transferencia completada hace %n de días</numerusform><numerusform>Transferencia completada hace %n días</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n día</numerusform><numerusform>Transferencia completada hace %n días</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n month ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n months ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n mes</numerusform><numerusform>Transferencia completada hace %n de meses</numerusform><numerusform>Transferencia completada hace %n meses</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n mes</numerusform><numerusform>Transferencia completada hace %n meses</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Added %n year ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %n years ago. SNC-4131</translatorcomment>
-        <translation><numerusform>Transferencia completada hace %n año</numerusform><numerusform>Transferencia completada hace %n de años</numerusform><numerusform>Transferencia completada hace %n años</numerusform></translation>
+        <translation><numerusform>Transferencia completada hace %n año</numerusform><numerusform>Transferencia completada hace %n años</numerusform></translation>
     </message>
     <message>
         <source>%1/%2</source>

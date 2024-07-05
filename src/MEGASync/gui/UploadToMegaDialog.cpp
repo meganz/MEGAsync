@@ -1,6 +1,6 @@
 #include "UploadToMegaDialog.h"
 #include "ui_UploadToMegaDialog.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "MegaApplication.h"
 #include "DialogOpener.h"
 #include "CommonMessages.h"
