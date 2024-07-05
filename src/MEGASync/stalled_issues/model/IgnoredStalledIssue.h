@@ -33,6 +33,8 @@ public:
 
     bool isAutoSolvable() const override;
     void fillIssue(const mega::MegaSyncStall *stall) override;
+    bool showDirectoryInHyperlink() const override;
+    bool isExpandable() const override;
 };
 
 #endif // SYMLINKSTALLEDISSUE_H
