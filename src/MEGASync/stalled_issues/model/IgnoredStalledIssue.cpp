@@ -129,7 +129,12 @@ void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
     mIgnoredPaths.append(consultCloudData()->getFilePath());
 }
 
+bool CloudNodeIsBlockedIssue::showDirectoryInHyperlink() const
+{
+    return true;
+}
+
 bool CloudNodeIsBlockedIssue::isExpandable() const
 {
-    return false;
+    return true;
 }

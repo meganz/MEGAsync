@@ -46,6 +46,7 @@ private:
     std::unique_ptr<mega::MegaNode> getMoveNode() const;
 
     QString getSyncPathProblemString(mega::MegaSyncStall::SyncPathProblem pathProblem);
+    bool showError(mega::MegaSyncStall::SyncPathProblem pathProblem);
     QString getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem);
 
     Ui::StalledIssueFilePath *ui;
