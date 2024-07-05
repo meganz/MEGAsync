@@ -542,8 +542,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             {
                 if (syncStatus != RESPONSE_DEFAULT)
                 {
-                    wcscpy_s( pipe->chReply, BUFSIZE, RESPONSE_ERROR );
-                    break;
+                    syncStatus = RESPONSE_ERROR;
                 }
             }
 
