@@ -262,7 +262,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "current file, which will be moved to the SyncDebris folder in your MEGA "
                         "Rubbish bin.")
                             .arg(localInfo.fileName()) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
             else
             {
@@ -270,7 +270,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                     tr("The [B]local files[/B] will be uploaded to MEGA and replace the "
                         "current files, which will be moved to the SyncDebris folder in your MEGA "
                         "Rubbish bin.") +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
         }
         else
@@ -283,7 +283,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "the "
                         "remote files.\nPlease wait for the upload to complete.")
                             .arg(localInfo.fileName())) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
             else
             {
@@ -292,7 +292,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "to "
                         "the remote file.\nPlease wait for the upload to complete.")
                             .arg(localInfo.fileName())) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
         }
     }
@@ -307,7 +307,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        info.msgInfo.informativeText.append(QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("<br>"));
+        info.msgInfo.informativeText.append(QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("[BR]"));
     }
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.informativeText);

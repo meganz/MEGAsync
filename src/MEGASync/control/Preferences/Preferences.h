@@ -532,6 +532,7 @@ public:
     static const QString FINDER_EXT_BUNDLE_ID;
     static QString BASE_URL;
     static QString BASE_MEGA_IO_URL;
+    static QString BASE_MEGA_HELP_URL;
 
     static void setBaseUrl(const QString &value);
     template<typename T>
