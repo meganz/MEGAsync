@@ -1,5 +1,5 @@
-#ifndef ALERTITEM_H
-#define ALERTITEM_H
+#ifndef ALERT_ITEM_H
+#define ALERT_ITEM_H
 
 #include "MegaUserAlertExt.h"
 
@@ -60,4 +60,4 @@ private:
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 };
 
-#endif // ALERTITEM_H
+#endif // ALERT_ITEM_H

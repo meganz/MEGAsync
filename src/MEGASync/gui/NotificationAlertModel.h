@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONALERTMODEL_H
-#define NOTIFICATIONALERTMODEL_H
+#ifndef NOTIFICATION_ALERT_MODEL_H
+#define NOTIFICATION_ALERT_MODEL_H
 
 #include "NotificationModel.h"
 #include "AlertModel.h"
@@ -32,9 +32,6 @@ public:
     void setLastSeenNotification(uint32_t id);
 
 private slots:
-    void onDataChanged(const QModelIndex& topLeft,
-                       const QModelIndex& bottomRight,
-                       const QVector<int>& roles = QVector<int>());
     void onAlertDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
     void onAlertRowsInserted(const QModelIndex& parent, int first, int last);
     void onAlertRowsRemoved(const QModelIndex& parent, int first, int last);
@@ -52,4 +49,4 @@ private:
 
 };
 
-#endif // NOTIFICATIONALERTMODEL_H
+#endif // NOTIFICATION_ALERT_MODEL_H

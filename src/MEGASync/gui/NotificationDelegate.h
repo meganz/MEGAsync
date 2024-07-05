@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONDELEGATE_H
-#define NOTIFICATIONDELEGATE_H
+#ifndef NOTIFICATION_DELEGATE_H
+#define NOTIFICATION_DELEGATE_H
 
 #include "NotificationModel.h"
 
@@ -20,4 +20,4 @@ private:
 
 };
 
-#endif // NOTIFICATIONDELEGATE_H
+#endif // NOTIFICATION_DELEGATE_H

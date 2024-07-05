@@ -4,14 +4,14 @@
 
 namespace
 {
-constexpr int MAX_COST = 16;
+constexpr int MaxCost = 16;
 }
 
 NotificationModel::NotificationModel(QObject* parent)
     : QAbstractItemModel(parent)
     , mLastSeenNotification(0)
 {
-    notificationItems.setMaxCost(MAX_COST);
+    notificationItems.setMaxCost(MaxCost);
 }
 
 NotificationModel::~NotificationModel()
@@ -153,7 +153,23 @@ void NotificationModel::removeNotifications(const mega::MegaNotificationList* no
 {
     QSet<int> notificationIDsInList = createNotificationIDSet(notifications);
     QList<int> rowsToRemove = findRowsToRemove(notificationIDsInList);
-    removeRows(rowsToRemove);
+
+    if (rowsToRemove.isEmpty())
+    {
+        return;
+    }
+
+    beginRemoveRows(QModelIndex(), 0, rowsToRemove.size() - 1);
+
+    for (int i = rowsToRemove.size() - 1; i >= 0; --i)
+    {
+        int row = rowsToRemove.at(i);
+        int notificationID = mNotificationsOrder.at(row);
+        delete mNotificationsMap.take(notificationID);
+        mNotificationsOrder.erase(mNotificationsOrder.begin() + row);
+    }
+
+    endRemoveRows();
 }
 
 QSet<int> NotificationModel::createNotificationIDSet(const mega::MegaNotificationList* notifications) const
@@ -182,26 +198,6 @@ QList<int> NotificationModel::findRowsToRemove(const QSet<int>& notificationIDsI
         }
     }
     return rowsToRemove;
-}
-
-void NotificationModel::removeRows(const QList<int>& rowsToRemove)
-{
-    if (rowsToRemove.isEmpty())
-    {
-        return;
-    }
-
-    beginRemoveRows(QModelIndex(), 0, rowsToRemove.size() - 1);
-
-    for (int i = rowsToRemove.size() - 1; i >= 0; --i)
-    {
-        int row = rowsToRemove.at(i);
-        int notificationID = mNotificationsOrder.at(row);
-        delete mNotificationsMap.take(notificationID);
-        mNotificationsOrder.erase(mNotificationsOrder.begin() + row);
-    }
-
-    endRemoveRows();
 }
 
 void NotificationModel::updateNotifications(const mega::MegaNotificationList* notifications)

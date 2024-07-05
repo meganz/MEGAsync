@@ -1,5 +1,5 @@
-#ifndef QNOTIFICATIONSMODEL_H
-#define QNOTIFICATIONSMODEL_H
+#ifndef NOTIFICATION_MODEL_H
+#define NOTIFICATION_MODEL_H
 
 #include "NotificationItem.h"
 #include "MegaNotificationExt.h"
@@ -44,8 +44,7 @@ private:
     void removeNotifications(const mega::MegaNotificationList* notifications);
     QSet<int> createNotificationIDSet(const mega::MegaNotificationList* notifications) const;
     QList<int> findRowsToRemove(const QSet<int>& notificationIDsInList) const;
-    void removeRows(const QList<int>& rowsToRemove);
 
 };
 
-#endif // QNOTIFICATIONSMODEL_H
+#endif // NOTIFICATION_MODEL_H

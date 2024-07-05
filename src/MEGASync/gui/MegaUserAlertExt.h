@@ -1,5 +1,5 @@
-#ifndef MEGAUSERALERTEXT_H
-#define MEGAUSERALERTEXT_H
+#ifndef MEGA_USER_ALERT_EXT_H
+#define MEGA_USER_ALERT_EXT_H
 
 #include "megaapi.h"
 
@@ -13,7 +13,7 @@ class MegaUserAlertExt : public QObject
 
 public:
     MegaUserAlertExt() = delete;
-    MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject *parent = nullptr);
+    MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent = nullptr);
     ~MegaUserAlertExt();
 
     MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
@@ -44,4 +44,4 @@ private:
     void init();
 };
 
-#endif // MEGAUSERALERTEXT_H
+#endif // MEGA_USER_ALERT_EXT_H

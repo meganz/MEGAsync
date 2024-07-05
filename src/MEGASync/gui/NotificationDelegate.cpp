@@ -8,9 +8,9 @@
 
 namespace
 {
-constexpr int DEFAULT_WIDTH = 400;
-constexpr int HEIGHT_WITHOUT_IMAGE = 219;
-constexpr int HEIGHT_WITH_IMAGE = 346;
+constexpr int DefaultWidth = 400;
+constexpr int HeightWithoutImage = 219;
+constexpr int HeightWithImage = 346;
 }
 
 NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject* parent)
@@ -76,5 +76,5 @@ QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
     }
 
     MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
-    return QSize(DEFAULT_WIDTH, notification->showImage() ? HEIGHT_WITH_IMAGE : HEIGHT_WITHOUT_IMAGE);
+    return QSize(DefaultWidth, notification->showImage() ? HeightWithImage : HeightWithoutImage);
 }

@@ -230,13 +230,6 @@ void NotificationAlertModel::insertNotifications(const mega::MegaNotificationLis
     }
 }
 
-void NotificationAlertModel::onDataChanged(const QModelIndex& topLeft,
-                                           const QModelIndex& bottomRight,
-                                           const QVector<int>& roles)
-{
-    emit dataChanged(index(topLeft.row(), topLeft.column()), index(bottomRight.row(), bottomRight.column()), roles);
-}
-
 int NotificationAlertModel::getNotificationRowCount() const
 {
     return mNotificationsModel ? mNotificationsModel->rowCount() : 0;

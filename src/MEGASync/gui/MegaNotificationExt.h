@@ -1,5 +1,5 @@
-#ifndef MEGANOTIFICATIONEXT_H
-#define MEGANOTIFICATIONEXT_H
+#ifndef MEGA_NOTIFICATION_EXT_H
+#define MEGA_NOTIFICATION_EXT_H
 
 #include "megaapi.h"
 
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // MEGANOTIFICATIONEXT_H
+#endif // MEGA_NOTIFICATION_EXT_H

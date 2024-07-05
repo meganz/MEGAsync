@@ -17,7 +17,7 @@
 
 namespace
 {
-constexpr int DEFAULT_WIDTH = 400;
+constexpr int DefaultWidth = 400;
 constexpr int DEFAULT_HEIGHT = 122;
 }
 
@@ -76,7 +76,7 @@ QSize AlertDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIn
 {
     if (index.isValid())
     {
-        return QSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        return QSize(DefaultWidth, DEFAULT_HEIGHT);
     }
     else
     {

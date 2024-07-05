@@ -1,5 +1,5 @@
-#ifndef ALERTDELEGATE_H
-#define ALERTDELEGATE_H
+#ifndef ALERT_DELEGATE_H
+#define ALERT_DELEGATE_H
 
 #include "AlertModel.h"
 
@@ -21,4 +21,4 @@ private:
 
 };
 
-#endif // ALERTDELEGATE_H
+#endif // ALERT_DELEGATE_H

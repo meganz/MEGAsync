@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONALERTCONTROLLER_H
-#define NOTIFICATIONALERTCONTROLLER_H
+#ifndef NOTIFICATION_ALERT_CONTROLLER_H
+#define NOTIFICATION_ALERT_CONTROLLER_H
 
 #include "NotificationAlertModel.h"
 #include "NotificationAlertDelegate.h"
@@ -51,4 +51,4 @@ private:
 
 };
 
-#endif // NOTIFICATIONALERTCONTROLLER_H
+#endif // NOTIFICATION_ALERT_CONTROLLER_H
