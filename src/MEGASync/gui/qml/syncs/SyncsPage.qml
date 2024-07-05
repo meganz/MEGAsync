@@ -78,32 +78,38 @@ SyncsFlow {
        id: syncPageComponentItem
 
        SyncTypePage {
-           id: syncTypePage
+            id: syncTypePage
 
-           footerButtons.leftPrimary.visible: false
-           footerButtons.leftSecondary.visible: false
-           footerButtons.rightSecondary.text: Strings.cancel
-           footerButtons.rightSecondary.visible: true
+            footerButtons {
+                leftPrimary.visible: false
+                leftSecondary.visible: false
+                rightSecondary.text: Strings.cancel
+                rightSecondary.visible: true
+            }
 
-           fullSyncButton.width: 280
-           fullSyncButton.imageSource: Images.syncTypeFull
-           fullSyncButton.imageSourceSize: Qt.size(256, 100)
+            fullSyncButton {
+                width: 280
+                imageSource: Images.syncTypeFull
+                imageSourceSize: Qt.size(256, 100)
+            }
 
-           selectiveSyncButton.width: 280
-           selectiveSyncButton.imageSource: Images.syncTypeSelective
-           selectiveSyncButton.imageSourceSize: Qt.size(256, 100)
+            selectiveSyncButton {
+                width: 280
+                imageSource: Images.syncTypeSelective
+                imageSourceSize: Qt.size(256, 100)
+            }
 
-           onSyncTypeMoveToBack: {
-               window.close();
-           }
+            onSyncTypeMoveToBack: {
+                window.close();
+            }
 
-           onSyncTypeMoveToFullSync: {
-               root.state = root.fullSync;
-           }
+            onSyncTypeMoveToFullSync: {
+                root.state = root.fullSync;
+            }
 
-           onSyncTypeMoveToSelectiveSync: {
-               root.state = root.selectiveSync;
-           }
+            onSyncTypeMoveToSelectiveSync: {
+                root.state = root.selectiveSync;
+            }
        }
     }
 
@@ -115,8 +121,10 @@ SyncsFlow {
 
             isOnboarding: false
             footerButtons.leftPrimary.visible: false
-            footerButtons.leftSecondary.visible: true
-            footerButtons.leftSecondary.text: Strings.setExclusions
+            footerButtons.leftSecondary {
+                text: Strings.setExclusions
+                visible: localFolderChooser.choosenPath.length !== 0
+            }
 
             onFullSyncMoveToBack: {
                 root.state = root.syncType;
@@ -139,7 +147,7 @@ SyncsFlow {
             footerButtons.leftPrimary.visible: false
             footerButtons.leftSecondary {
                 text: Strings.setExclusions
-                visible: true
+                visible: localFolderChooser.choosenPath.length !== 0
             }
 
             footerButtons.rightSecondary.text: (root.sync.syncStatus === root.sync.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
