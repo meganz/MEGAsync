@@ -405,7 +405,7 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
             }
 
             //Fail string pending
-            conflictName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(originalFileInfo.isFile()));
+            conflictName->setFailed(tr("Unable to rename the file in MEGA"));
         }
 
         if(result)
@@ -451,7 +451,7 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
                         renameFrom.toStdString().c_str());
 
                     //Fail string pending
-                    conflictName->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(error.get(), conflictedNode->isFile()));
+                    conflictName->setFailed(tr("Unable to rename the local file"));
                 }
             }
 

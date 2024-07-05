@@ -4244,6 +4244,19 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
+    <name>NameConflictedStalledIssue</name>
+    <message>
+        <source>Unable to rename the file in MEGA</source>
+        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename the local file</source>
+        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
@@ -5576,25 +5589,14 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support for Album and Collections links.
-- Updated Qt to v5.15.13.
-- Updated dependencies.
-- Improved error messages.
-- Improved the exclusions interface.
-- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
-- Improved system integration for all operating systems.
+        <source>- New support to Move or Rename sync conflicts.
+- New fail management for sync conflict resolution.
+- New UI improvements and fixes in sync conflict dialog.
+- New option to keep most recently modified file in local/remote sync conflict.
+- Sync stalls are now automatically resolved as soon as they are detected.
 - Bug fixes and other improvements.
 </source>
-        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
-        <translation>- Added support for Album and Collections links.
-- Updated Qt to v5.15.13.
-- Updated dependencies.
-- Improved error messages.
-- Improved the exclusions interface.
-- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
-- Improved system integration for all operating systems.
-- Bug fixes and other improvements.
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
