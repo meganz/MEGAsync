@@ -18,7 +18,7 @@ https://help.mega.io/installs-apps/desktop
 Since this list may be out of date, please also check the MEGA Desktop download page: https://mega.io/desktop
 
 * Windows
-  * Windows 7 newer.
+  * Windows 7 and newer.
   * Windows Server 2008 R2 and newer.
 * macOS
   * Apple CPU: Big Sur 11 and newer.
