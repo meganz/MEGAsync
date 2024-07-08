@@ -14,10 +14,10 @@ SyncsQmlDialog {
     visible: true
     modality: Qt.NonModal
     width: 640
-    height: 560
-    maximumHeight: 560
+    height: 580
+    maximumHeight: 580
     maximumWidth: 640
-    minimumHeight: 560
+    minimumHeight: 580
     minimumWidth: 640
 
     Column {
