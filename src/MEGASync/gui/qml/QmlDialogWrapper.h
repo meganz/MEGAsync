@@ -109,7 +109,7 @@ public:
         for(const QString& path : engine->importPathList())
         {
             QString message = QString::fromUtf8("QML import path:") + path;
-            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message);
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toStdString().c_str());
         }
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
