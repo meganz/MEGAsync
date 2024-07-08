@@ -7,12 +7,14 @@ add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
     ShellExt.h
+    ShellExtNotASync.h
     resource.h
     RegUtils.h
     ContextMenuExt.h
     ClassFactoryShellExtSyncing.h
     ClassFactoryShellExtSynced.h
     ClassFactoryShellExtPending.h
+    ClassFactoryShellExtNotFound.h
     ClassFactoryContextMenuExt.h
     ClassFactory.h
     MegaInterface.h
