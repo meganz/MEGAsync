@@ -23,6 +23,7 @@ public:
 
     void init();
     QString getName() const;
+    QString getOriginalName() const;
 
 protected:
     virtual void onDialogAccepted() = 0;
@@ -51,6 +52,7 @@ protected:
 
 private:
     QTimer mNewFolderErrorTimer;
+    QString mOriginalName;
 
 private slots:
     void dialogAccepted();
