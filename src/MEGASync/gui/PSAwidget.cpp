@@ -16,7 +16,7 @@ constexpr int DownloadTimeout = 5000;
 PSAwidget::PSAwidget(QWidget* parent)
     : QWidget(parent)
     , ui(new Ui::PSAwidget)
-    , mDownloader(std::make_unique<ImageDownloader>(DownloadTimeout, this))
+    , mDownloader(std::make_unique<ImageDownloader>(DownloadTimeout))
 {
     ui->setupUi(this);
 

@@ -17,7 +17,7 @@ ImageDownloader::ImageDownloader(QObject* parent)
 
 ImageDownloader::ImageDownloader(unsigned int timeout, QObject* parent)
     : QObject(parent)
-    , mManager(new QNetworkAccessManager(this))
+    , mManager(std::make_unique<QNetworkAccessManager>(nullptr))
     , mTimeout(timeout)
 {
     connect(mManager.get(), &QNetworkAccessManager::finished,

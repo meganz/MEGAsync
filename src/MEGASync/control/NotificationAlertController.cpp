@@ -103,11 +103,11 @@ bool NotificationAlertController::createModelAndDelegate()
     }
     else
     {
-        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(this);
-        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(this);
+        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(nullptr);
+        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(nullptr);
         mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
         mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(this);
+        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(nullptr);
         emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
     }
     return isNew;

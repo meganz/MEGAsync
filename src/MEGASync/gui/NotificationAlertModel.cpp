@@ -83,7 +83,7 @@ void NotificationAlertModel::createNotificationModel(const mega::MegaNotificatio
 {
     if(!mNotificationsModel)
     {
-        mNotificationsModel = std::make_unique<NotificationModel>(this);
+        mNotificationsModel = std::make_unique<NotificationModel>(nullptr);
         connect(mNotificationsModel.get(), &QAbstractItemModel::rowsInserted,
                 this, &NotificationAlertModel::onNotificationRowsInserted);
         connect(mNotificationsModel.get(), &QAbstractItemModel::rowsRemoved,
@@ -98,7 +98,7 @@ void NotificationAlertModel::createAlertModel(mega::MegaUserAlertList* alerts)
 {
     if(!mAlertsModel)
     {
-        mAlertsModel = std::make_unique<AlertModel>(this);
+        mAlertsModel = std::make_unique<AlertModel>(nullptr);
         connect(mAlertsModel.get(), &QAbstractItemModel::rowsInserted,
                 this, &NotificationAlertModel::onAlertRowsInserted);
         connect(mAlertsModel.get(), &QAbstractItemModel::rowsRemoved,

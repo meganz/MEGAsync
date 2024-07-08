@@ -122,7 +122,7 @@ void NotificationAlertDelegate::createNotificationDelegate(NotificationModel* mo
 {
     if(!mNotificationsDelegate)
     {
-        mNotificationsDelegate = std::make_unique<NotificationDelegate>(model, this);
+        mNotificationsDelegate = std::make_unique<NotificationDelegate>(model);
     }
 }
 
@@ -130,7 +130,7 @@ void NotificationAlertDelegate::createAlertDelegate(AlertModel* model)
 {
     if(!mAlertsDelegate)
     {
-        mAlertsDelegate = std::make_unique<AlertDelegate>(model, this);
+        mAlertsDelegate = std::make_unique<AlertDelegate>(model);
     }
 }
 
