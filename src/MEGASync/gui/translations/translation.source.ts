@@ -7173,11 +7173,6 @@ Do you want to delete it anyway?</translation>
         <translation>Auto-solved</translation>
     </message>
     <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>Auto-failed</translation>
-    </message>
-    <message>
         <source>Failed</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue was manually solved but it has failed. SAT-1140</translatorcomment>
         <translation>Failed</translation>
