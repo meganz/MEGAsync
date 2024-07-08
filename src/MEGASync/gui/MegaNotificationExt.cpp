@@ -6,6 +6,8 @@
 namespace
 {
 constexpr char* DefaultImageExtension = ".png";
+constexpr char* KeyCallToActionText = "text";
+constexpr char* KeyCallToActionLink = "link";
 constexpr int SmallImageSize = 48;
 constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
@@ -89,14 +91,12 @@ int64_t MegaNotificationExt::getEnd() const
 
 const char* MegaNotificationExt::getActionText() const
 {
-    const char* value = mNotification->getCallToAction1()->get("text");
-    return value != NULL ? value : "";
+    return mNotification->getCallToAction1()->get(KeyCallToActionText);
 }
 
 const char* MegaNotificationExt::getActionLink() const
 {
-    const char* value = mNotification->getCallToAction1()->get("link");
-    return value != NULL ? value : "";
+    return mNotification->getCallToAction1()->get(KeyCallToActionLink);
 }
 
 void MegaNotificationExt::onDownloadFinished(const QImage& image, const QString& imageUrl)

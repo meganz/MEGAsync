@@ -5,6 +5,8 @@
 
 namespace
 {
+constexpr char* DescriptionHtmlStart = "<html><head/><body><p style=\"line-height:22px;\">";
+constexpr char* DescriptionHtmlEnd = "</p></body></html>";
 constexpr int SpacingWithoutLargeImage = 6;
 constexpr int SpacingWithoutSmallImage = 0;
 constexpr int SmallImageSize = 48;
@@ -31,14 +33,14 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
 
     ui->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText = QString::fromLatin1("<html><head/><body><p style=\"line-height:22px;\">");
+    QString labelText = QString::fromLatin1(DescriptionHtmlStart);
     labelText += mNotificationData->getDescription();
-    labelText += QString::fromLatin1("</p></body></html>");
+    labelText += QString::fromLatin1(DescriptionHtmlEnd);
     ui->lDescription->setText(labelText);
 
     setImages();
 
-    ui->bCTA->setText(QString::fromStdString(mNotificationData->getActionText()));
+    ui->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }
 

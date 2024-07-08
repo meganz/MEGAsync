@@ -62,7 +62,8 @@ void ImageDownloader::onRequestImgFinished(QNetworkReply* reply)
 {
     reply->deleteLater();
 
-    if (!mReplies.contains(reply))
+    auto imageData = mReplies.take(reply);
+    if (!imageData)
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            "Received finished signal for unknown QNetworkReply");
@@ -70,7 +71,6 @@ void ImageDownloader::onRequestImgFinished(QNetworkReply* reply)
         return;
     }
 
-    auto imageData = mReplies.take(reply);
     QByteArray bytes;
     if (!validateReply(reply, imageData->url, bytes))
     {
@@ -79,7 +79,6 @@ void ImageDownloader::onRequestImgFinished(QNetworkReply* reply)
 
     processImageData(bytes, imageData);
 }
-
 
 bool ImageDownloader::validateReply(QNetworkReply* reply,
                                     const QString& url,
