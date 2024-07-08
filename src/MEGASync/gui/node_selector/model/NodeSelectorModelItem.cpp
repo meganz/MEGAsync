@@ -327,12 +327,6 @@ void NodeSelectorModelItem::calculateSyncStatus()
         break;
     }
     }
-    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
-    if(syncedFolders.contains(mNode->getHandle()))
-    {
-        mStatus = Status::SYNC;
-        return;
-    }
 }
 
 bool NodeSelectorModelItem::isCloudDrive() const

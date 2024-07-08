@@ -80,6 +80,7 @@ private slots:
     void on_tClearSearchResultNS_clicked();
 
 private:
+    bool isFullSync();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();
