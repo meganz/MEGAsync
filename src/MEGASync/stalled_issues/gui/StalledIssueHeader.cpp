@@ -361,6 +361,10 @@ void StalledIssueHeader::refreshCaseTitles()
 {
     if(mHeaderCase)
     {
+        //Reset strings first
+        setText(QString());
+        setTitleDescriptionText(QString());
+
         mHeaderCase->refreshCaseTitles(this);
     }
 }

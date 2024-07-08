@@ -109,6 +109,6 @@ private:
     std::shared_ptr<MoveOrRenameCannotOccurFactory> mMoveOrRenameCannotOccurFactory;
 };
 
-Q_DECLARE_METATYPE(StalledIssuesCreator::IssuesCount);
+Q_DECLARE_METATYPE(StalledIssuesCreator::IssuesCount)
 
 #endif // STALLEDISSUEFACTORY_H
