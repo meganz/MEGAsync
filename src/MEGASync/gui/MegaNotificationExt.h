@@ -1,12 +1,12 @@
 #ifndef MEGA_NOTIFICATION_EXT_H
 #define MEGA_NOTIFICATION_EXT_H
 
+#include "ImageDownloader.h"
+
 #include <QObject>
 #include <QPixmap>
 
 #include <memory>
-
-class ImageDownloader;
 
 namespace mega
 {
