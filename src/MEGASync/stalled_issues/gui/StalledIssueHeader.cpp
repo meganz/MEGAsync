@@ -282,14 +282,7 @@ void StalledIssueHeader::updateIssueState()
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
             icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
-            if(getData().consultData()->wasAutoResolutionApplied())
-            {
-                message = tr("Auto-failed");
-            }
-            else
-            {
-                message = tr("Failed");
-            }
+            message = tr("Failed");
 
             break;
         }
