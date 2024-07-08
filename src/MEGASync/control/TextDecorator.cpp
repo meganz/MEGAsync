@@ -67,6 +67,6 @@ void NewLine::process(QString &input) const
 {
     Decorator::process(input);
     input.replace(QLatin1String("[BR]"), QLatin1String("<br>"));
-    input.replace(QLatin1String("[/BR]"), QLatin1String("</br>"));
+    input.replace(QLatin1String("[/BR]"), QLatin1String(""));
 }
 }
