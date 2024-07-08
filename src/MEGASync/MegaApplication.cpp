@@ -18,22 +18,18 @@
 #include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
 #include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
-
 
 #include "UserAttributesManager.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "syncs/gui/SyncsMenu.h"
-#include "gui/UploadToMegaDialog.h"
+#include "UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"
-
-#include "qml/QmlManager.h"
-#include "qml/QmlDialogManager.h"
 
 #include "DialogOpener.h"
 #include "PowerOptions.h"
@@ -54,6 +50,7 @@
 #include <QFuture>
 #include <QCheckBox>
 #include <QtConcurrent/QtConcurrent>
+#include "RequestListenerManager.h"
 
 #include <assert.h>
 
@@ -514,8 +511,8 @@ void MegaApplication::initialize()
     megaApi->setMaxPayloadLogSize(newPayLoadLogSize);
     megaApiFolders->setMaxPayloadLogSize(newPayLoadLogSize);
 
-    mStatsEventHandler = new ProxyStatsEventHandler(megaApi);
-    QmlManager::instance()->setRootContextProperty(mStatsEventHandler);
+    mStatsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi);
+    QmlManager::instance()->setRootContextProperty(mStatsEventHandler.get());
 
     QString stagingPath = QDir(dataPath).filePath(QString::fromUtf8("megasync.staging"));
     QFile fstagingPath(stagingPath);
@@ -715,10 +712,21 @@ void MegaApplication::initialize()
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
+    RequestListenerManager& manager = RequestListenerManager::instance();
+
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
     mSetManager = new SetManager(megaApi, megaApiFolders);
     connect(mSetManager, &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
+
+    mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
+
+    connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
+    connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
+    connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
+    connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
+    connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
+    connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1571,7 +1579,7 @@ void MegaApplication::onLogout()
 
 StatsEventHandler* MegaApplication::getStatsEventHandler() const
 {
-    return mStatsEventHandler;
+    return mStatsEventHandler.get();
 }
 
 void MegaApplication::checkSystemTray()
@@ -2228,6 +2236,8 @@ void MegaApplication::cleanAll()
         mBlockingBatch.cancelTransfer();
     }
 
+    delete mLinkProcessor;
+    mLinkProcessor = nullptr;
     delete mSetManager;
     mSetManager = nullptr;
     delete mStalledIssuesModel;
@@ -4070,33 +4080,19 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
         //Get the list of links from the dialog
         QStringList linkList = pasteMegaLinksDialog->getLinks();
 
-        //We prefer to use a raw pointer to avoid crashes if the app is closed while the link is still being imported
-        //If the app is closed while the link is being imported, there is a memory leak but nothing else
-        auto linkProcessor = new LinkProcessor(linkList, MegaSyncApp->getMegaApi(), MegaSyncApp->getMegaApiFolders());
+        mLinkProcessor->resetAndSetLinkList(linkList);
 
         //Open the import dialog
         auto importDialog = new ImportMegaLinksDialog(linkList);
 
-        linkProcessor->setParentHandler(importDialog);
+        connect(mLinkProcessor, &LinkProcessor::onLinkInfoAvailable, importDialog, &ImportMegaLinksDialog::onLinkInfoAvailable);
+        connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, importDialog, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
+        connect(importDialog, &ImportMegaLinksDialog::linkSelected, mLinkProcessor, &LinkProcessor::onLinkSelected);
+        connect(importDialog, &ImportMegaLinksDialog::onChangeEvent, mLinkProcessor, &LinkProcessor::refreshLinkInfo);
 
-        connect(linkProcessor, &LinkProcessor::onLinkInfoAvailable, importDialog, &ImportMegaLinksDialog::onLinkInfoAvailable);
-        connect(linkProcessor, &LinkProcessor::onLinkInfoRequestFinish, importDialog, &ImportMegaLinksDialog::onLinkInfoRequestFinish);
-        connect(importDialog, &ImportMegaLinksDialog::linkSelected, linkProcessor, &LinkProcessor::onLinkSelected);
-        connect(importDialog, &ImportMegaLinksDialog::onChangeEvent, linkProcessor, &LinkProcessor::refreshLinkInfo);
+        mLinkProcessor->requestLinkInfo();
 
-        if (mSetManager)
-        {
-            connect(linkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink, Qt::QueuedConnection);
-            connect(mSetManager, &SetManager::onFetchSetFromLink, linkProcessor, &LinkProcessor::onFetchSetFromLink, Qt::QueuedConnection);
-            connect(linkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet, Qt::QueuedConnection);
-            connect(mSetManager, &SetManager::onSetDownloadFinished, linkProcessor, &LinkProcessor::onSetDownloadFinished, Qt::QueuedConnection);
-            connect(linkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet, Qt::QueuedConnection);
-            connect(mSetManager, &SetManager::onSetImportFinished, linkProcessor, &LinkProcessor::onSetImportFinished, Qt::QueuedConnection);
-        }
-
-        linkProcessor->requestLinkInfo();
-
-        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, linkProcessor, importDialog]()
+        DialogOpener::showDialog<ImportMegaLinksDialog, TransferManager>(importDialog, true, [this, importDialog]()
         {
             if (importDialog->result() == QDialog::Accepted)
             {
@@ -4108,7 +4104,7 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
                         preferences->setDownloadFolder(importDialog->getDownloadPath());
                     }
 
-                    linkProcessor->downloadLinks(importDialog->getDownloadPath());
+                    mLinkProcessor->downloadLinks(importDialog->getDownloadPath());
                 }
 
                 //If the user wants to import some links, do it
@@ -4116,12 +4112,12 @@ void MegaApplication::onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog
                 {
                     preferences->setOverStorageDismissExecution(0);
 
-                    connect(linkProcessor, &LinkProcessor::onLinkImportFinish, this, [this, linkProcessor]() mutable
+                    connect(mLinkProcessor, &LinkProcessor::onLinkImportFinish, this, [this]() mutable
                     {
-                        preferences->setImportFolder(linkProcessor->getImportParentFolder());
+                        preferences->setImportFolder(mLinkProcessor->getImportParentFolder());
                     });
 
-                    linkProcessor->importLinks(importDialog->getImportPath());
+                    mLinkProcessor->importLinks(importDialog->getImportPath());
                 }
             }
         });

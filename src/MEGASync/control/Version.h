@@ -28,12 +28,12 @@
 //"- item n\n"              \
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences", \
-"- New support to Move or Rename sync conflicts.\n" \
-"- New fail management for sync conflict resolution.\n" \
-"- New UI improvements and fixes in sync conflict dialog.\n" \
-"- New option to keep most recently modified file in local/remote sync conflict.\n" \
-"- Sync stalls are now automatically resolved as soon as they are detected.\n" \
-"- Bug fixes and other improvements.\n" \
+"- Improved handling of sync conflicts.\n" \
+"- Improved management of failures within issue resolution.\n" \
+"- Improved issue resolution dialogs.\n" \
+"- Added default automatic issue resolution.\n" \
+"- Added new UI improvements.\n" \
+"- Fixed other bugs and made assorted other improvements.\n" \
 )
 
 #endif // VERSION_H

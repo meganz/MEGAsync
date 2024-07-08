@@ -1,5 +1,5 @@
 #include "MegaApplication.h"
-#include "gui/MegaProxyStyle.h"
+#include "MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "ScaleFactorManager.h"
@@ -191,6 +191,69 @@ void freeStaticResources()
     Platform::destroy();
 }
 
+#if defined(WIN32) || defined(Q_OS_LINUX)
+void sendUninstallEvent(std::shared_ptr<Preferences> preferences)
+{
+    if (preferences->installationTime() != -1)
+    {
+        auto megaApi = std::make_unique<MegaApi>(Preferences::CLIENT_KEY,
+                                                 (char *)NULL,
+                                                 Preferences::USER_AGENT.toUtf8().constData());
+        auto statsEventHandler = std::make_unique<ProxyStatsEventHandler>(megaApi.get());
+        statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL,
+                                     { QString::number(preferences->installationTime()),
+                                       QString::number(preferences->accountCreationTime()),
+                                       QString::number(preferences->hasLoggedIn()) },
+                                     true);
+        QThread::msleep(500);
+    }
+}
+#endif
+
+void uninstall()
+{
+    auto preferences = Preferences::instance();
+    preferences->initialize(MegaApplication::applicationDataPath());
+    if (!preferences->error())
+    {
+        if (preferences->logged())
+        {
+            preferences->unlink();
+        }
+
+        for (int i = 0; i < preferences->getNumUsers(); i++)
+        {
+            preferences->enterUser(i);
+
+            // we do first for old sync configuration (in case there were remaining for some user)
+            QList<SyncData> syncData = preferences->readOldCachedSyncs();
+            foreach(SyncData osd, syncData)
+            {
+                removeSyncData(osd.mLocalFolder, osd.mName.remove(QLatin1Char(':')), osd.mSyncID);
+            }
+
+            // now for the new syncs cached configurations
+            auto loadedSyncs = preferences->getLoadedSyncsMap();
+            for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
+            {
+                removeSyncData(it.value()->getLocalFolder(), it.value()->name(true), it.value()->getSyncID());
+            }
+
+            preferences->leaveUser();
+        }
+    }
+
+    QDir dir(MegaApplication::applicationDataPath());
+    dir.removeRecursively();
+    Platform::getInstance()->uninstall();
+
+#ifdef WIN32
+    sendUninstallEvent(preferences);
+#endif
+
+    freeStaticResources();
+}
+
 void addFonts()
 {
 #if !defined(__APPLE__) && !defined (_WIN32)
@@ -226,58 +289,18 @@ int main(int argc, char *argv[])
 
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
-        auto preferences = Preferences::instance();
-        preferences->initialize(MegaApplication::applicationDataPath());
-        if (!preferences->error())
-        {
-            if (preferences->logged())
-            {
-                preferences->unlink();
-            }
-
-            for (int i = 0; i < preferences->getNumUsers(); i++)
-            {
-                preferences->enterUser(i);
-
-                // we do first for old sync configuration (in case there were remaining for some user)
-                QList<SyncData> syncData = preferences->readOldCachedSyncs();
-                foreach(SyncData osd, syncData)
-                {
-                    removeSyncData(osd.mLocalFolder, osd.mName.remove(QLatin1Char(':')), osd.mSyncID);
-                }
-
-                // now for the new syncs cached configurations
-                auto loadedSyncs = preferences->getLoadedSyncsMap();
-                for (auto it = loadedSyncs.begin(); it != loadedSyncs.end(); it++)
-                {
-                    removeSyncData(it.value()->getLocalFolder(), it.value()->name(true), it.value()->getSyncID());
-                }
-
-                preferences->leaveUser();
-            }
-        }
-
-        QDir dir(MegaApplication::applicationDataPath());
-        dir.removeRecursively();
-        Platform::getInstance()->uninstall();
-
-#ifdef WIN32
-        if (preferences->installationTime() != -1)
-        {
-            MegaApi *megaApi = new MegaApi(Preferences::CLIENT_KEY, (char *)NULL,
-                                           Preferences::USER_AGENT.toUtf8().constData());
-            StatsEventHandler* statsEventHandler = new ProxyStatsEventHandler(megaApi);
-            statsEventHandler->sendEvent(AppStatsEvents::EventType::UNINSTALL_STATS,
-                                         { QString::number(preferences->installationTime()),
-                                           QString::number(preferences->accountCreationTime()),
-                                           QString::number(preferences->hasLoggedIn()) },
-                                         true);
-            Sleep(5000);
-        }
-#endif
-        freeStaticResources();
+        uninstall();
         return 0;
     }
+#ifdef Q_OS_LINUX
+    else if((argc == 2) && !strcmp("--send-uninstall-event", argv[1]))
+    {
+        auto preferences = Preferences::instance();
+        preferences->initialize(MegaApplication::applicationDataPath());
+        sendUninstallEvent(preferences);
+        return 0;
+    }
+#endif
 
 #ifdef Q_OS_LINUX
 
@@ -410,9 +433,10 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_LINUX)
     if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
     {
-        if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+        //!  If unsetenv succeeds, it returns 0. If unsetenv fails, it returns -1.
+        if (unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
         {
-            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble" << std::endl;
+            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble. errno=" << errno << std::endl;
         }
     }
     if (!(getenv("DO_NOT_UNSET_SHLVL")) && getenv("SHLVL"))
