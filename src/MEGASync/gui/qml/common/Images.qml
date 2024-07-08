@@ -73,6 +73,7 @@ QtObject {
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"
+    readonly property url guest3x: imagesGuestPath + "guest@3x.png"
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
@@ -86,7 +87,6 @@ QtObject {
 
     readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
     readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
-    readonly property url syncResume: imagesSyncsPath + "sync_resume.png"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

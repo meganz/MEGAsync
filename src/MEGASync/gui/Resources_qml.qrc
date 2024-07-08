@@ -89,6 +89,5 @@
         <file>images/qml/check_circle_filled.svg</file>
         <file>images/qml/syncs/selective_sync.svg</file>
         <file>images/qml/syncs/full_sync.svg</file>
-        <file>images/qml/syncs/sync_resume.png</file>
     </qresource>
 </RCC>

@@ -88,7 +88,7 @@ SyncsQmlDialog {
 
                         footerButtons.leftPrimary.visible: false
 
-                        image.source: Images.syncResume
+                        image.source: Images.guest3x
                         image.sourceSize: Qt.size(128, 128)
                     }
                 }
