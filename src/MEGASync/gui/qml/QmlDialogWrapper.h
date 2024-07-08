@@ -105,6 +105,12 @@ public:
 
         mWrapper = new Type(parent, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
+
+        for(const QString& path : engine->importPathList())
+        {
+            QString message = QString::fromUtf8("QML import path:") + path;
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message);
+        }
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
 
