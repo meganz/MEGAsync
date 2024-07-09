@@ -27,16 +27,19 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     adjustSize();
 #endif
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
-        connect(dialog->getDialog(), &QmlDialogWrapper<Onboarding>::finished, this, [this]()
-        {
-            setAddButtonEnabled(true);
-        });
+        connect(dialog->getDialog(),
+                &QmlDialogWrapper<Onboarding>::finished,
+                this,
+                [this]()
+                {
+                    setAddButtonEnabled(true);
+                });
     }
 
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
@@ -117,7 +120,7 @@ void SyncSettingsUI::changeEvent(QEvent* event)
 void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
 {
     QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
     {
         syncsDialog = dialog->getDialog();
     }

@@ -169,13 +169,13 @@ void SyncSettingsUIBase::addButtonClicked(const QString& remoteFolder) const
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
     auto addSyncLambda = [remoteFolder, overQuotaDialog, this]()
     {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
+        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             addSyncAfterOverQuotaCheck(remoteFolder);
         }
     };
 
-    if(overQuotaDialog)
+    if (overQuotaDialog)
     {
         DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
     }

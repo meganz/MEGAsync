@@ -182,12 +182,12 @@ QString Syncs::getDefaultMegaPath() const
     return DEFAULT_MEGA_PATH;
 }
 
-int Syncs::getSyncStatus() const
+Syncs::SyncStatusCode Syncs::getSyncStatus() const
 {
     return mSyncStatus;
 }
 
-void Syncs::setSyncStatus(int status)
+void Syncs::setSyncStatus(SyncStatusCode status)
 {
     if(status != mSyncStatus)
     {

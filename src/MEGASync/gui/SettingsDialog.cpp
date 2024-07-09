@@ -1369,21 +1369,27 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
 void SettingsDialog::setSyncAddButtonEnabled(const bool enabled,
                                              SettingsDialog::Tabs tab)
 {
-    if(mUi->backupSettings)
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
     {
-        switch (tab)
-        {
-            case SYNCS_TAB:
-                mUi->syncSettings->setAddButtonEnabled(enabled);
-                break;
-            case BACKUP_TAB:
-                mUi->backupSettings->setAddButtonEnabled(enabled);
-                break;
-            default:
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
-                             QString::fromUtf8("Unexpected tab when setting add button enabled state").toUtf8().constData());
-                break;
-        }
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
     }
 }
 

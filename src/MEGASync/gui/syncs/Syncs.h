@@ -17,7 +17,7 @@ class Syncs : public QObject, public mega::MegaRequestListener
 
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
-    Q_PROPERTY(int syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
+    Q_PROPERTY(SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
 
 public:
     enum SyncStatusCode
@@ -41,8 +41,8 @@ public:
     QString getDefaultMegaFolder() const;
     QString getDefaultMegaPath() const;
 
-    int getSyncStatus() const;
-    void setSyncStatus(int status);
+    SyncStatusCode getSyncStatus() const;
+    void setSyncStatus(SyncStatusCode status);
 
 signals:
     void syncSetupSuccess();
@@ -57,7 +57,7 @@ private:
     QString mRemoteFolder;
     QString mLocalFolder;
     bool mCreatingFolder;
-    int mSyncStatus;
+    SyncStatusCode mSyncStatus;
 
     bool errorOnSyncPaths(const QString& localPath, const QString& remotePath);
     bool helperCheckLocalSync(const QString& path, QString& errorMessage) const;

@@ -65,10 +65,7 @@ public:
     void updateUploadFolder();
     void updateDownloadFolder();
 
-    // Backups
-    void setBackupsAddButtonEnabled(bool enabled);
-
-    void setSyncAddButtonEnabled(const bool enabled,
+    void setSyncAddButtonEnabled(bool enabled,
                                  SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
 
 signals:

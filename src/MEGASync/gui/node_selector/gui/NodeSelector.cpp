@@ -170,9 +170,13 @@ void NodeSelector::onbOkClicked()
 bool NodeSelector::isFullSync()
 {
     auto syncsList = SyncInfo::instance()->getSyncSettingsByType(SyncInfo::SyncType::TYPE_TWOWAY);
-    auto foundIt = std::find_if(syncsList.cbegin(), syncsList.cend(), [](const auto& sync) {
-        return (sync->getMegaFolder() == QLatin1String("/") && sync->isActive());
-    });
+    auto foundIt =
+        std::find_if(syncsList.cbegin(),
+                     syncsList.cend(),
+                     [](const auto& sync)
+                     {
+                         return (sync->getMegaFolder() == QLatin1String("/") && sync->isActive());
+                     });
 
     return foundIt != syncsList.cend();
 }

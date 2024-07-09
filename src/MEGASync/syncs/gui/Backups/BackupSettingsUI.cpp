@@ -139,7 +139,7 @@ void BackupSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) c
     Q_UNUSED(remoteFolder);
 
     QPointer<QmlDialogWrapper<Backups>> backupsDialog;
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
     {
         backupsDialog = dialog->getDialog();
     }
