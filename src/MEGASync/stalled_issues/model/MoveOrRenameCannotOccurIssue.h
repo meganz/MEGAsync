@@ -34,7 +34,6 @@ public:
 
     void setIsSolved(SolveType type) override;
     bool isAutoSolvable() const override;
-    bool refreshListAfterSolving() const override;
     void solveIssue(MoveOrRenameIssueChosenSide side);
     bool autoSolveIssue() override;
 

@@ -111,7 +111,7 @@ Rectangle {
             }
             icons.source: Images.helpCircle
             onClicked: {
-                Qt.openUrlExternally(Links.desktopSyncApp);
+                Qt.openUrlExternally(Links.createBackup);
             }
         }
 

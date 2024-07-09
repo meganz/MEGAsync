@@ -35,7 +35,8 @@ void NodeNameSetterDialog::init()
     //only enabled when there's input, guards against empty folder name
     okButton->setEnabled(false);
 
-    mUi->lineEdit->setText(lineEditText());
+    mOriginalName = lineEditText();
+    mUi->lineEdit->setText(mOriginalName);
     mUi->lineEdit->setSelection(lineEditSelection().start, lineEditSelection().length);
 
     connect(mUi->lineEdit, &QLineEdit::textChanged, this, [this, okButton]()
@@ -62,6 +63,11 @@ void NodeNameSetterDialog::init()
 QString NodeNameSetterDialog::getName() const
 {
     return mUi->lineEdit->text().trimmed();
+}
+
+QString NodeNameSetterDialog::getOriginalName() const
+{
+    return mOriginalName;
 }
 
 void NodeNameSetterDialog::showError(const QString &errorText)

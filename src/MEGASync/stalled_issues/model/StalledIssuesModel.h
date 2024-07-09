@@ -157,11 +157,11 @@ public:
 
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     void finishConflictManually();
@@ -283,7 +283,6 @@ private:
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable StalledIssuesVariantList mFailedStalledIssues;
-    mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;

@@ -32,6 +32,7 @@ public:
     {
         QString path;
         mega::MegaSyncStall::SyncPathProblem pathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
+        bool showDirectoryInHyperLink = false;
 
         Path(){}
         bool isEmpty() const {return path.isEmpty() && pathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
@@ -323,7 +324,6 @@ public:
 
     virtual bool autoSolveIssue() {return false;}
     virtual bool isAutoSolvable() const;
-    virtual bool refreshListAfterSolving() const {return false;}
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
@@ -333,6 +333,7 @@ public:
     virtual bool isSymLink() const {return false;}
     virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
+    static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
     bool canBeIgnored() const;
     virtual QStringList getLocalFiles();
     QStringList getIgnoredFiles() const;
@@ -358,6 +359,8 @@ public:
 
     virtual void fillIssue(const mega::MegaSyncStall* stall);
     void fillBasicInfo(const mega::MegaSyncStall* stall);
+    //In order to show the filepath or the directory path when the path is used for a hyperlink
+    virtual bool showDirectoryInHyperlink() const {return false;}
 
     virtual void endFillingIssue();
 
@@ -383,6 +386,8 @@ public:
 
     bool wasAutoResolutionApplied() const;
     void setAutoResolutionApplied(bool newAutoResolutionApplied);
+
+    virtual bool isExpandable() const;
 
 signals:
     void asyncIssueSolvingStarted();
