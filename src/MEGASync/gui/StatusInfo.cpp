@@ -178,7 +178,7 @@ void StatusInfo::scanningAnimationStep()
 
 void StatusInfo::setFailedText()
 {
-    long long transfersFailed(MegaSyncApp->getTransfersModel() ? MegaSyncApp->getTransfersModel()->failedTransfers() : 0);
+    int transfersFailed(MegaSyncApp->getTransfersModel() ? MegaSyncApp->getTransfersModel()->failedTransfers() : 0);
 
     const QString statusText{QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed)};
     ui->lStatusDesc->setToolTip(statusText);

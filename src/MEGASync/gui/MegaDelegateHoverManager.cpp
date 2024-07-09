@@ -35,26 +35,29 @@ bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
 
         sendEvent(QEvent::MouseMove, mouseEvent->pos());
     }
-    else if(event->type() == QEvent::Enter)
+    else if(event)
     {
-        if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
+        if(event->type() == QEvent::Enter)
         {
-            mCurrentIndex = mView->indexAt(enterEvent->pos());
-            sendEvent(QEvent::Enter);
-        }
-    }
-    else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
-    {
-        sendEvent(QEvent::Leave);
-        mCurrentIndex = QModelIndex();
-    }
-    else if(event->type() == QEvent::ChildAdded)
-    {
-        if(auto childEvent = dynamic_cast<QChildEvent*>(event))
-        {
-            if(auto editor = dynamic_cast<QWidget*>(childEvent->child()))
+            if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
             {
-                editor->setMouseTracking(true);
+                mCurrentIndex = mView->indexAt(enterEvent->pos());
+                sendEvent(QEvent::Enter);
+            }
+        }
+        else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
+        {
+            sendEvent(QEvent::Leave);
+            mCurrentIndex = QModelIndex();
+        }
+        else if(event->type() == QEvent::ChildAdded)
+        {
+            if(auto childEvent = dynamic_cast<QChildEvent*>(event))
+            {
+                if(auto editor = dynamic_cast<QWidget*>(childEvent->child()))
+                {
+                    editor->setMouseTracking(true);
+                }
             }
         }
     }

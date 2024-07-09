@@ -53,22 +53,18 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
             item->setRequestingChildren(true);
             mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-            auto childNodesFiltered = mega::MegaNodeList::createInstance();
+            std::unique_ptr<mega::MegaNodeList> childNodesFiltered;
             mNodesRequested = true;
             mShowFiles ?
-                childNodesFiltered = megaApi->getChildren(node.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get())
-                    : childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), mega::MegaNode::TYPE_FOLDER, mega::MegaApi::ORDER_NONE, mCancelToken.get());
+                childNodesFiltered.reset(megaApi->getChildren(node.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get()))
+                    : childNodesFiltered.reset(megaApi->getChildrenFromType(item->getNode().get(), mega::MegaNode::TYPE_FOLDER, mega::MegaApi::ORDER_NONE, mCancelToken.get()));
             mNodesRequested = false;
             if(!isAborted())
             {
                 lockDataMutex(true);
-                item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
+                item->createChildItems(std::move(childNodesFiltered));
                 lockDataMutex(false);
                 emit nodesReady(item);
-            }
-            else
-            {
-                delete childNodesFiltered;
             }
         }
     }

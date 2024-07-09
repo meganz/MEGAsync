@@ -322,7 +322,7 @@ template <class DelegateWidget, class ViewType>
 class ViewLoadingScene : public ViewLoadingSceneBase
 {
     const uint8_t MAX_LOADING_ROWS = 20;
-    const long long MIN_TIME_DISPLAYING_VIEW = 350;
+    const qint64 MIN_TIME_DISPLAYING_VIEW = 350;
 
 public:
     ViewLoadingScene() :
@@ -448,7 +448,7 @@ public:
 
             if(mLoadingViewSet == LoadingViewType::LOADING_VIEW)
             {
-                auto delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
+                qint64 delay = std::max(0ll, MIN_TIME_DISPLAYING_VIEW - (QDateTime::currentMSecsSinceEpoch()
                                                                        - mStartTime));
                 delay > 0 ? mDelayTimerToHide.start(delay) : hideLoadingScene();
             }

@@ -559,7 +559,7 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::FAILED_TAB];
 
-    long long failedNumber(mTransfersCount.totalFailedTransfers());
+    auto failedNumber(mTransfersCount.totalFailedTransfers());
     countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
@@ -1206,7 +1206,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 || previousTab == TransfersWidget::FAILED_TAB
                 || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
-            long long transfers(0);
+            int transfers(0);
 
             if(previousTab == TransfersWidget::COMPLETED_TAB)
             {

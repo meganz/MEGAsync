@@ -647,7 +647,7 @@ void TransferMetaData::start(mega::MegaTransfer *transfer)
     }
 }
 
-void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle)
+void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag, mega::MegaHandle nodeHandle)
 {
     TransferMetaDataItemId fileId(fileTag, nodeHandle);
 

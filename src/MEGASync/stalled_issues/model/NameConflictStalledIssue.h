@@ -228,7 +228,7 @@ public:
                     info->mDuplicatedGroupId = index;
                     info->mDuplicated = true;
 
-                    namesByHandle.conflictedNames.insertMulti(newcreationtimestamp, info);
+                    namesByHandle.conflictedNames.insert(newcreationtimestamp, info);
 
                     isDuplicated = true;
                     break;
@@ -248,7 +248,7 @@ public:
                 }
 
                 CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
-                newConflictedName.conflictedNames.insertMulti(newcreationtimestamp,info);
+                newConflictedName.conflictedNames.insert(newcreationtimestamp,info);
                 mConflictedNames.append(newConflictedName);
 
                 info->mDuplicated = false;
@@ -280,13 +280,13 @@ public:
                         info->mDuplicated = true;
                     }
 
-                    namesByHandle.conflictedNames.insertMulti(creationtimestamp, info);
+                    namesByHandle.conflictedNames.insert(creationtimestamp, info);
                     return;
                 }
             }
 
             CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
-            newConflictedName.conflictedNames.insertMulti(creationtimestamp,info);
+            newConflictedName.conflictedNames.insert(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
         }
 

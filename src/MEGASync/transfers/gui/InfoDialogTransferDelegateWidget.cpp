@@ -249,8 +249,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
-                    setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
-                    hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
+                    update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
+                    if(update)
+                    {
+                        hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
+                    }
                 }
                 else
                 {
@@ -267,8 +270,6 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                         hoverType = ActionHoverType::HOVER_LEAVE;
                     }
                 }
-
-                update = true;
             }
             else
             {

@@ -82,7 +82,7 @@ void MacXExtServer::onClientData(QByteArray data)
     qint64 len;
     QByteArray buf;
     QByteArray response;
-    while ((len = client->readCommand(&buf)) > 0)
+    while (client->readCommand(&buf) > 0)
     {
         bool shouldRespond = GetAnswerToRequest(buf.constData(), &response);
         if (shouldRespond)
@@ -266,21 +266,19 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
         }
         case 'V': // View node at MEGA cloud
         {
-            QByteArray filePath = QByteArray(content, strlen(content) + 1);
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath, false);
+                emit viewOnMega(file.filePath().toUtf8(), false);
             }
             return false;
         }
         case 'R': // Open previous versions
         {
-            QByteArray filePath = QByteArray(content, strlen(content) + 1);
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath, true);
+                emit viewOnMega(file.filePath().toUtf8(), true);
             }
             return false;
         }

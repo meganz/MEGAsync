@@ -87,7 +87,7 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
     return data->size();
 }
 
-bool MacXLocalSocket::writeData(const char *data, qint64 len)
+bool MacXLocalSocket::writeData(const char *data, int len)
 {
     if (!len)
     {

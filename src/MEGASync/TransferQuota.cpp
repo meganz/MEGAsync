@@ -273,8 +273,9 @@ QTime TransferQuota::getTransferQuotaDeadline()
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(mWaitTimeUntil.time_since_epoch()).count();
     auto now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     auto timeToWait(seconds-now);
-    QTime time(0,0,0);
-    return time.addSecs(timeToWait);
+    QDateTime dateTime;
+    dateTime.addSecs(timeToWait);
+    return dateTime.time();
 }
 
 void TransferQuota::reset()

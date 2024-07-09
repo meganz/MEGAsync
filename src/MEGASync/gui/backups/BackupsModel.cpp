@@ -823,10 +823,14 @@ void BackupsModel::remove(const QString& folder)
         if((found = (*item)->getFolder() == folder))
         {
             name = (*item)->mName;
-            const auto row = std::distance(mBackupFolderList.begin(), item);
-            beginRemoveRows(QModelIndex(), row, row);
-            item = mBackupFolderList.erase(item);
-            endRemoveRows();
+            //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+            const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+            if(row >= 0)
+            {
+                beginRemoveRows(QModelIndex(), row, row);
+                item = mBackupFolderList.erase(item);
+                endRemoveRows();
+            }
         }
         else
         {
@@ -903,10 +907,14 @@ void BackupsModel::clean(bool resetErrors)
         {
             if((*item)->mDone)
             {
-                const auto row = std::distance(mBackupFolderList.begin(), item);
-                beginRemoveRows(QModelIndex(), row, row);
-                item = mBackupFolderList.erase(item);
-                endRemoveRows();
+                //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+                const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+                if(row >= 0)
+                {
+                    beginRemoveRows(QModelIndex(), row, row);
+                    item = mBackupFolderList.erase(item);
+                    endRemoveRows();
+                }
             }
             else
             {

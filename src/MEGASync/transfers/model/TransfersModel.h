@@ -55,7 +55,7 @@ struct TransfersCount
     int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
     int pendingTransfers() const {return pendingDownloads + pendingUploads;}
 
-    long long totalFailedTransfers() const {return failedUploads + failedDownloads;}
+    int totalFailedTransfers() const {return failedUploads + failedDownloads;}
 
     void clear()
     {

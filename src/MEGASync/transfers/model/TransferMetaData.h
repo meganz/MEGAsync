@@ -338,7 +338,7 @@ protected:
 
 private:
     void retryFailingFile(int tag, mega::MegaHandle nodeHandle);
-    void retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle);
+    void retryFileFromFolderFailingItem(int fileTag, int folderTag, mega::MegaHandle nodeHandle);
     void retryAllPressed();
 
     void addInitialPendingTopLevelTransferFromOtherSession(bool isFolder);

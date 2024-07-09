@@ -939,10 +939,11 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        int transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
+            //We won´t never have thousand of millions of failed issues...so overflow is not a problem here
             tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
             icon = icons["someissues"];
         }
@@ -990,7 +991,7 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        int transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {

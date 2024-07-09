@@ -152,7 +152,7 @@ private:
     void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
-    QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
+    QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;

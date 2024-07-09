@@ -380,7 +380,7 @@ NodeSelectorModelItemIncomingShare::NodeSelectorModelItemIncomingShare(std::uniq
 {
     if(!parentItem)
     {
-        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node.get()));
+        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get()));
         setOwner(std::move(user));
     }
     calculateSyncStatus();

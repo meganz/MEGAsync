@@ -1,4 +1,4 @@
-﻿#include "MegaSyncLogger.h"
+#include "MegaSyncLogger.h"
 #include "Utilities.h"
 
 #include <fstream>
@@ -510,12 +510,17 @@ char* filltime(char* s, struct tm*  gmt, int microsec)
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
 
-    s[5] = static_cast<char>(microsec % 10 + '0');
-    s[4] = static_cast<char>((microsec /= 10) % 10 + '0');
-    s[3] = static_cast<char>((microsec /= 10) % 10 + '0');
-    s[2] = static_cast<char>((microsec /= 10) % 10 + '0');
-    s[1] = static_cast<char>((microsec /= 10) % 10 + '0');
-    s[0] = static_cast<char>((microsec /= 10) % 10 + '0');
+
+    for(int index = 5; index >= 0; --index)
+    {
+        if(index != 5)
+        {
+            microsec /= 10;
+        }
+        
+        s[index] = static_cast<char>(microsec % 10 + '0');
+    }
+
     s += 6;
     *s++ = ' ';
     *s = 0;

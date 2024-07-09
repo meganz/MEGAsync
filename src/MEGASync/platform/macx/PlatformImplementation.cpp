@@ -494,18 +494,7 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
             logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
         }
-        else
-        {
-            if (screenGeometry.y() < 0)
-            {
-                ySign = -1;
-            }
 
-            if (screenGeometry.x() < 0)
-            {
-                xSign = -1;
-            }
-        }
 
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
                            .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))
