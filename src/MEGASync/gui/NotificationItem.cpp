@@ -5,8 +5,8 @@
 
 namespace
 {
-constexpr char* DescriptionHtmlStart = "<html><head/><body><p style=\"line-height:22px;\">";
-constexpr char* DescriptionHtmlEnd = "</p></body></html>";
+const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-height:22px;\">");
+const QLatin1String DescriptionHtmlEnd("</p></body></html>");
 constexpr int SpacingWithoutLargeImage = 6;
 constexpr int SpacingWithoutSmallImage = 0;
 constexpr int SmallImageSize = 48;
@@ -33,9 +33,9 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
 
     ui->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText = QString::fromLatin1(DescriptionHtmlStart);
+    QString labelText(DescriptionHtmlStart);
     labelText += mNotificationData->getDescription();
-    labelText += QString::fromLatin1(DescriptionHtmlEnd);
+    labelText += DescriptionHtmlEnd;
     ui->lDescription->setText(labelText);
 
     setImages();

@@ -5,7 +5,7 @@
 
 namespace
 {
-constexpr char* DefaultImageExtension = ".png";
+const QLatin1String DefaultImageExtension(".png");
 constexpr char* KeyCallToActionText = "text";
 constexpr char* KeyCallToActionLink = "link";
 constexpr int SmallImageSize = 48;
@@ -54,7 +54,7 @@ QString MegaNotificationExt::getImageNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getImageName())
-                + QString::fromUtf8(DefaultImageExtension);
+                + DefaultImageExtension;
 }
 
 bool MegaNotificationExt::showIcon() const
@@ -76,7 +76,7 @@ QString MegaNotificationExt::getIconNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getIconName())
-                + QString::fromUtf8(DefaultImageExtension);
+                + DefaultImageExtension;
 }
 
 int64_t MegaNotificationExt::getStart() const
