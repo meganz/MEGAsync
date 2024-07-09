@@ -924,6 +924,14 @@
     </message>
 </context>
 <context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloudStalledIssueChooseWidget</name>
     <message>
         <source>Moved to MEGA Bin</source>
@@ -4244,6 +4252,19 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
+    <name>NameConflictedStalledIssue</name>
+    <message>
+        <source>Unable to rename the file in MEGA</source>
+        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename the local file</source>
+        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
@@ -7150,11 +7171,6 @@ Do you want to delete it anyway?</translation>
         <source>Auto-solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
         <translation>Auto-solved</translation>
-    </message>
-    <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>Auto-failed</translation>
     </message>
     <message>
         <source>Failed</source>

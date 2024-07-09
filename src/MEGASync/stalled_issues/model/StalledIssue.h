@@ -32,6 +32,7 @@ public:
     {
         QString path;
         mega::MegaSyncStall::SyncPathProblem pathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
+        bool showDirectoryInHyperLink = false;
 
         Path(){}
         bool isEmpty() const {return path.isEmpty() && pathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
@@ -332,6 +333,7 @@ public:
     virtual bool isSymLink() const {return false;}
     virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
+    static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
     bool canBeIgnored() const;
     virtual QStringList getLocalFiles();
     QStringList getIgnoredFiles() const;
@@ -357,6 +359,8 @@ public:
 
     virtual void fillIssue(const mega::MegaSyncStall* stall);
     void fillBasicInfo(const mega::MegaSyncStall* stall);
+    //In order to show the filepath or the directory path when the path is used for a hyperlink
+    virtual bool showDirectoryInHyperlink() const {return false;}
 
     virtual void endFillingIssue();
 
