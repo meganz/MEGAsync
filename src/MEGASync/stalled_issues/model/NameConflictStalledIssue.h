@@ -80,12 +80,19 @@ public:
                 if(mHandle != mega::INVALID_HANDLE)
                 {
                     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(mHandle));
-                    if(node && node->isNodeKeyDecrypted())
+                    auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
+                    if(!node || !node->isNodeKeyDecrypted() || nodePath != mConflictedPath)
                     {
-                        auto nodePath = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePathByNodeHandle(mHandle));
-                        if(nodePath != mConflictedPath)
+                        mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::
+                            CHANGED_EXTERNALLY;
+                    }
+                    else if(node)
+                    {
+                        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(node->getParentHandle()));
+                        if(!parentNode || parentNode->getType() == mega::MegaNode::TYPE_FILE)
                         {
-                            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::CHANGED_EXTERNALLY;
+                            mSolved = NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::
+                                CHANGED_EXTERNALLY;
                         }
                     }
                 }
@@ -456,6 +463,15 @@ public:
 
         std::shared_ptr<mega::MegaError> removeDuplicatedNodes();
 
+        struct MostRecentlyModifiedInfo
+        {
+            std::shared_ptr<ConflictedNameInfo> mostRecentlyModified;
+            QList<std::shared_ptr<ConflictedNameInfo>> oldVersions;
+        };
+
+        std::shared_ptr<mega::MegaError> keepMostRecentlyModifiedNode();
+        MostRecentlyModifiedInfo findMostRecentlyModifiedNode() const;
+
         struct MergeFoldersError
         {
             QString error;
@@ -485,7 +501,8 @@ public:
         None = 0,
         RemoveDuplicated = 0x01,
         Rename = 0x02,
-        MergeFolders = 0x04
+        MergeFolders = 0x04,
+        KeepMostRecentlyModifiedNode = 0x08,
     };
     Q_DECLARE_FLAGS(ActionsSelected, ActionSelected)
 
@@ -509,14 +526,14 @@ public:
     bool solveLocalConflictedNameByRemove(int conflictIndex);
     bool solveCloudConflictedNameByRemove(int conflictIndex);
 
-    bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
-    bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo);
+    bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo, const QString& renameFrom);
+    bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo, const QString& renameFrom);
 
     bool hasFoldersToMerge() const;
 
     bool renameNodesAutomatically();
 
-    void semiAutoSolveIssue(int option);
+    bool semiAutoSolveIssue(ActionsSelected option);
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
@@ -538,9 +555,9 @@ public:
     static void showRemoteRenameHasFailedMessageBox(const mega::MegaError& error, bool isFile);
 
 private:
-    bool checkAndSolveConflictedNamesSolved(bool isPotentiallySolved = false);
+    bool checkAndSolveConflictedNamesSolved();
 
-    void solveIssue(int option);
+    bool solveIssue(NameConflictedStalledIssue::ActionsSelected option);
 
     bool renameCloudNodesAutomatically(const QList<std::shared_ptr<ConflictedNameInfo>>& cloudConflictedNames,
                                        const QList<std::shared_ptr<ConflictedNameInfo>>& localConflictedNames,

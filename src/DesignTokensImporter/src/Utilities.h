@@ -1,5 +1,5 @@
-#ifndef DTI_UTILITIES
-#define DTI_UTILITIES
+#ifndef DESIGN_TOKENS_UTILITIES
+#define DESIGN_TOKENS_UTILITIES
 
 #include <QString>
 #include <QMap>
@@ -34,18 +34,6 @@ namespace DTI
         static QString themeToString(Utilities::Theme theme);
         static QString resolvePath(const QString& basePath, const QString& relativePath);
         static QString normalizeHexColoursForQtFormat(QString colour);
-        //!
-        //! \brief Utilities::findValueByKey
-        //! \param myMap Qmap with key/value pairs
-        //! \param key key value that needs to match a key in @myMap
-        //! \returns the value if found, or default-constructed value if not found
-        //!
-        template <typename Key, typename Value>
-        static Value findValueByKey(const QMap<Key, Value>& map, const Key& key)
-        {
-            auto it = map.find(key);
-            return (it != map.end()) ? it.value() : Value();
-        }
     };
 }
 

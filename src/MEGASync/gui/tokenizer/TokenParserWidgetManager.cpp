@@ -10,16 +10,10 @@
 #include <QBitmap>
 #include <QComboBox>
 #include <QToolButton>
-
 #include <QtConcurrent/QtConcurrent>
 
 namespace // anonymous namespace to hide names from other translation units
 {
-    static const QMap<Preferences::ThemeType, QString> THEME_NAMES = {
-        {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
-        {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
-    };
-
     static QRegularExpression COLOR_TOKEN_REGULAR_EXPRESSION(QLatin1String("(#.*) *; *\\/\\* *colorToken\\.(.*)\\*\\/"));
     static QRegularExpression ICON_COLOR_TOKEN_REGULAR_EXPRESSION(QLatin1String(" *\\/\\* *ColorTokenIcon;(.*);(.*);(.*);(.*);colorToken\\.(.*) *\\*\\/"));
     static QRegularExpression REPLACE_THEME_TOKEN_REGULAR_EXPRESSION(QLatin1String(".*\\/(light|dark)\\/.*; *\\/\\* *replaceThemeToken *\\*\\/"));
@@ -164,8 +158,7 @@ void TokenParserWidgetManager::applyCurrentTheme()
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
-    auto theme = ThemeManager::instance()->getSelectedTheme();
-    auto currentTheme = themeToString(theme);
+    auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
     if (!mColorThemedTokens.contains(currentTheme))
     {
@@ -311,11 +304,6 @@ std::shared_ptr<TokenParserWidgetManager> TokenParserWidgetManager::instance()
 {
     static std::shared_ptr<TokenParserWidgetManager> manager(new TokenParserWidgetManager());
     return manager;
-}
-
-QString TokenParserWidgetManager::themeToString(Preferences::ThemeType theme) const
-{
-    return THEME_NAMES.value(theme, QLatin1String("Light"));
 }
 
 void TokenParserWidgetManager::onThemeChanged(Preferences::ThemeType theme)

@@ -130,9 +130,25 @@ bool PlatformImplementation::showInFolder(QString pathIn)
     if (itFoundAppParams != showInFolderCallMap.constEnd())
     {
         params << *itFoundAppParams;
+        return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
+    }
+    else
+    {
+        QString folderToOpen;
+        QFileInfo file(pathIn);
+        if(file.isFile())
+        {
+            //xdg-open open folders, so we choose the file parent folder
+            folderToOpen = file.absolutePath();
+        }
+        else
+        {
+            folderToOpen = pathIn;
+        }
+
+        return QProcess::startDetached(QLatin1String("xdg-open"), params << QUrl::fromLocalFile(folderToOpen).toString());
     }
 
-    return QProcess::startDetached(fileBrowser, params << QUrl::fromLocalFile(pathIn).toString());
 }
 
 void PlatformImplementation::startShellDispatcher(MegaApplication *receiver)

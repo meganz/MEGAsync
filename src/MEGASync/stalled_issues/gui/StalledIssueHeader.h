@@ -38,12 +38,8 @@ public:
 
     void expand(bool state) override;
     bool isExpandable() const;
-    void setIsExpandable(bool newIsExpandable);
 
     virtual bool adaptativeHeight();
-
-    //void showAction(const QString& actionButtonText);
-    //void hideAction();
 
     struct ActionInfo
     {
@@ -83,6 +79,7 @@ private slots:
     void onMultipleActionClicked();
 
 private:
+    void setIsExpandable(bool newIsExpandable);
     void showIgnoreFile();
     void onIgnoreFileActionClicked();
 

@@ -23,9 +23,6 @@ class StalledIssuesBoldTextDecorator
 public:
     StalledIssuesBoldTextDecorator() = default;
     static const Text::Decorator boldTextDecorator;
-
-private:
-    Text::Bold boldTD;
 };
 
 class StalledIssuesNewLineTextDecorator
@@ -34,9 +31,18 @@ public:
     StalledIssuesNewLineTextDecorator() = default;
 
     static const Text::Decorator newLineTextDecorator;
+};
 
-private:
-    Text::NewLine newLineTD;
+class StalledIssuesLinkTextDecorator
+{
+public:
+    StalledIssuesLinkTextDecorator() = default;
+
+    static void process(const QStringList& links, QString& input)
+    {
+        Text::Decorator linkTextDecorator(new Text::Link(links));
+        linkTextDecorator.process(input);
+    }
 };
 
 class StalledIssuesUtilities : public QObject
@@ -46,15 +52,16 @@ class StalledIssuesUtilities : public QObject
 public:
     StalledIssuesUtilities();
 
-    std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
-    std::shared_ptr<mega::MegaError> removeRemoteFile(mega::MegaNode* node);
-    bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(mega::MegaNode* node);
+    static bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
     static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
     static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
     static void openLink(bool isCloud, const QString& path);
+    static QString getLink(bool isCloud, const QString& path);
 
 signals:
     void actionFinished();

@@ -1,21 +1,24 @@
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/targets)
 
 set(DESIGN_TOKENS_IMPORTER_SOURCES ${DESIGN_TOKENS_IMPORTER_SOURCES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/Types.h
-	${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/Utilities.h	
-	${CMAKE_CURRENT_SOURCE_DIR}/Utilities.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.h
-	${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/IDesignGenerator.h
-		
-	PARENT_SCOPE
+    ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.cpp
+
+    PARENT_SCOPE
+)
+
+set(DESIGN_TOKENS_IMPORTER_HEADERS ${DESIGN_TOKENS_IMPORTER_HEADERS}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Types.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Utilities.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignAssetsRepoManager.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignTokensImporter.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/DesignGenerator.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/PathProvider.h
+
+    PARENT_SCOPE
 )
 
 set(INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES}

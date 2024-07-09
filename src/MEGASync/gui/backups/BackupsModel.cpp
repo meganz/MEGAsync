@@ -1,7 +1,7 @@
 #include "BackupsModel.h"
 
-#include "qml/QmlManager.h"
-#include "qml/StandardIconProvider.h"
+#include "QmlManager.h"
+#include "StandardIconProvider.h"
 #include "syncs/control/SyncController.h"
 #include "syncs/control/SyncInfo.h"
 

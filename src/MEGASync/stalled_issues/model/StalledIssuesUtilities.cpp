@@ -4,6 +4,7 @@
 #include <mega/types.h>
 #include <MegaDownloader.h>
 #include <QTMegaRequestListener.h>
+#include <MegaApiSynchronizedRequest.h>
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
@@ -55,27 +56,27 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
     {
         if(syncId != mega::INVALID_HANDLE)
         {
-            QEventLoop moveEventLoop;
-            MegaSyncApp->getMegaApi()->moveToDebris(path.toStdString().c_str(),syncId, new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                           this,
-                                                                                                           [=, &result, &moveEventLoop](bool,
-                                                                                                           const mega::MegaRequest&,
-                                                                                                           const mega::MegaError& e){
-                //In case of error, move to OS trash
-                if (e.getErrorCode() != mega::MegaError::API_OK)
+            MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
+                MegaSyncApp->getMegaApi(),
+                [=, &result](
+                    const mega::MegaRequest&, const mega::MegaError& e)
                 {
-                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
-                                                                           .arg(path, Utilities::getTranslatedError(&e))
-                                                                           .toUtf8().constData());
-                    result = QFile::moveToTrash(path);
-                }
-                else
-                {
-                    result = true;
-                }
-                moveEventLoop.quit();
-            }));
-            moveEventLoop.exec();
+                    //In case of error, move to OS trash
+                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    {
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                            QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
+                                .arg(path, Utilities::getTranslatedError(&e))
+                                .toUtf8()
+                                .constData());
+                        result = QFile::moveToTrash(path);
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                },path.toStdString().c_str(),
+                syncId);
         }
         else
         {
@@ -152,14 +153,10 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
 
     if(isCloud)
     {
-        mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
-        if (node)
+        auto url(getLink(isCloud, path));
+        if (!url.isEmpty())
         {
-            const char* handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
         }
         else
         {
@@ -189,6 +186,23 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
             QMegaMessageBox::warning(msgInfo);
         }
     }
+}
+
+QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
+{
+    QString url;
+
+    if(isCloud)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
+        if(node)
+        {
+            std::unique_ptr<char[]> handle(node->getBase64Handle());
+            url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+        }
+    }
+
+    return url;
 }
 
 //////////////////////////////////////////////////
@@ -252,7 +266,8 @@ mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString& path, bo
     else
     {
         QFileInfo fileDir(path);
-        if(!fileDir.exists())
+        QFileInfo folderDir(fileDir.absolutePath());
+        if(!folderDir.exists())
         {
             return mega::INVALID_HANDLE;
         }

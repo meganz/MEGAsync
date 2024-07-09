@@ -15,6 +15,7 @@ public:
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
     void setIsSolved(SolveType type) override;
+    bool checkForExternalChanges() override;
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;
@@ -44,6 +45,9 @@ private:
     ChosenSide mChosenSide = ChosenSide::NONE;
     QString mNewName;
     std::shared_ptr<mega::MegaError> mError;
+
+    QString mLocalCRCAtStart;
+    QString mRemoteCRCAtStart;
 };
 
 #endif // LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H

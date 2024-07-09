@@ -15,16 +15,16 @@
 
 #include <memory>
 
-#include "gui/TransferManager.h"
-#include "gui/InfoDialog.h"
-#include "gui/UpgradeOverStorage.h"
-#include "gui/SettingsDialog.h"
-#include "gui/DownloadFromMegaDialog.h"
-#include "gui/StreamingFromMegaDialog.h"
-#include "gui/ImportMegaLinksDialog.h"
-#include "gui/MultiQFileDialog.h"
-#include "gui/PasteMegaLinksDialog.h"
-#include "gui/ChangeLogDialog.h"
+#include "TransferManager.h"
+#include "InfoDialog.h"
+#include "UpgradeOverStorage.h"
+#include "SettingsDialog.h"
+#include "DownloadFromMegaDialog.h"
+#include "StreamingFromMegaDialog.h"
+#include "ImportMegaLinksDialog.h"
+#include "MultiQFileDialog.h"
+#include "PasteMegaLinksDialog.h"
+#include "ChangeLogDialog.h"
 #include "Preferences.h"
 #include "HTTPServer.h"
 #include "MegaUploader.h"
@@ -38,22 +38,22 @@
 #include "syncs/control/SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "gui/QFilterAlertsModel.h"
-#include "gui/MegaAlertDelegate.h"
-#include "gui/VerifyLockMessage.h"
+#include "QFilterAlertsModel.h"
+#include "MegaAlertDelegate.h"
+#include "VerifyLockMessage.h"
 #include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
-#include "qml/QmlManager.h"
-#include "qml/QmlDialogManager.h"
+#include "QmlManager.h"
+#include "QmlDialogManager.h"
 
 class IntervalExecutioner;
 class TransfersModel;
 class StalledIssuesModel;
 
 #ifdef __APPLE__
-    #include "gui/MegaSystemTrayIcon.h"
+    #include "MegaSystemTrayIcon.h"
     #include <mach/mach.h>
     #include <sys/sysctl.h>
     #include <errno.h>
@@ -512,9 +512,11 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
-    StatsEventHandler* mStatsEventHandler;
+    std::unique_ptr<StatsEventHandler> mStatsEventHandler;
 
     SetManager* mSetManager;
+    LinkProcessor* mLinkProcessor;
+
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;

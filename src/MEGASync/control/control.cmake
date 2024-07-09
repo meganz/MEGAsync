@@ -26,6 +26,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/TransferRemainingTime.h
     control/UpdateTask.h
     control/UserAttributesManager.h
+    control/RequestListenerManager.h
     control/SetManager.h
     control/SetTypes.h
     control/Utilities.h
@@ -60,6 +61,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/MegaDownloader.cpp
     control/MegaSyncLogger.cpp
     control/MegaUploader.cpp
+    control/RequestListenerManager.cpp
     control/SetManager.cpp
     control/TextDecorator.cpp
     control/ThreadPool.cpp

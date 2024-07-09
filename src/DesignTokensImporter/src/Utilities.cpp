@@ -33,11 +33,10 @@ bool Utilities::createDirectory(const QString& dirPath)
 
     if (directory.mkpath("."))
     {
-        qDebug() << __func__ << " Directory created successfully: " << dirPath;
         return true;
     }
 
-    qDebug() << __func__ << " ERROR! Failed to create directory: " << dirPath;
+    qWarning() << __func__ << " ERROR! Failed to create directory: " << dirPath;
     return false;
 }
 
@@ -97,7 +96,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file path is not empty
     if (path.isEmpty())
     {
-        qDebug() << __func__ << " File path is empty.";
+        qWarning() << __func__ << " File path is empty.";
         return false;
     }
 
@@ -107,7 +106,7 @@ bool Utilities::isFileValid(const QString& path)
     // Check if the file exists and is not empty
     if (!fileInfo.exists() || fileInfo.size() == 0)
     {
-        qDebug() << __func__ << " File does not exist or is empty: " << path;
+        qWarning() << __func__ << " File does not exist or is empty: " << path;
         return false;
     }
 
@@ -164,7 +163,7 @@ bool Utilities::addToResources(const QString& filePath, const QString& qrcPath)
     // Precondition check: path must not already be added to the resources
     if (qrcContent.contains(filePath))
     {
-        qDebug() << "Utilities::addToResources - " << filePath << " is already added to " << qrcPath;
+        qWarning() << __func__ << filePath << " is already added to " << qrcPath;
         return true;
     }
 
@@ -174,7 +173,7 @@ bool Utilities::addToResources(const QString& filePath, const QString& qrcPath)
 
     if (!match.isValid())
     {
-        // Failed to find the correct position to insert the new file entry
+        qWarning() << __func__ << " Failed to find the correct position to insert the new file entry ";
         return false;
     }
 
@@ -187,8 +186,6 @@ bool Utilities::addToResources(const QString& filePath, const QString& qrcPath)
     stream << qrcContent;
 
     qrcFile.close();
-
-    qDebug() << "Utilities::addToResources - Successfully added " << filePath << " to " << qrcPath;
 
     return true;
 }
@@ -262,21 +259,20 @@ bool Utilities::writeJSONToFile(const QJsonDocument& jsonDoc, const QString& fil
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-        qDebug() << "Utilities::writeJSONToFile - ERROR: Could not open file " << filePath << " for writing";
+        qWarning() << __func__ << " ERROR: Could not open file " << filePath << " for writing";
         return false;
     }
 
     // Check if the write operation is successful
     if (file.write(jsonDoc.toJson()) == -1)
     {
-        qDebug() << "Utilities::writeJSONToFile - ERROR: Failed to write JSON to file " << filePath;
+        qWarning() << __func__ << " ERROR: Failed to write JSON to file " << filePath;
         file.close();
         return false;
     }
 
     file.close();
 
-    qDebug() << "Utilities::writeJSONToFile - JSON file " << filePath << " was written successfully!";
     return true;
 }
 

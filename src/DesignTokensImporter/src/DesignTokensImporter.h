@@ -3,12 +3,10 @@
 
 namespace DTI
 {
-    class DesignTokensImporter
+    namespace DesignTokensImporter
     {
-    public:
-        DesignTokensImporter() = delete;
-        static void run();
-    };
+        void run();
+    }
 }
 
 #endif

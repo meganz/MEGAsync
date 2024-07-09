@@ -1,7 +1,7 @@
 #ifndef ONBOARDINGQMLDIALOG_H
 #define ONBOARDINGQMLDIALOG_H
 
-#include "qml/QmlDialog.h"
+#include "QmlDialog.h"
 
 class OnboardingQmlDialog : public QmlDialog
 {

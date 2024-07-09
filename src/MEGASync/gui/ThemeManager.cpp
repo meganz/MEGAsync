@@ -17,6 +17,11 @@ Preferences::ThemeType ThemeManager::getSelectedTheme() const
     return mCurrentTheme;
 }
 
+QString ThemeManager::getSelectedThemeString() const
+{
+    return mThemesMap.value(mCurrentTheme, QLatin1String("Light"));
+}
+
 ThemeManager* ThemeManager::instance()
 {
     static ThemeManager manager;

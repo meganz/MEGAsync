@@ -50,7 +50,7 @@ private slots:
 
 private:
     std::unique_ptr<Ui::StreamingFromMegaDialog> ui;
-    LinkProcessor* mLinkProcessor;
+    std::unique_ptr<LinkProcessor> mLinkProcessor;
     mega::MegaApi *megaApi;
     mega::MegaApi* mMegaApiFolders;
     std::unique_ptr<mega::QTMegaTransferListener> delegateTransferListener;

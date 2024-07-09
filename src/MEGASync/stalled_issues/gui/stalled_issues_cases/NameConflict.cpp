@@ -3,18 +3,19 @@
 
 #include "StalledIssueHeader.h"
 
-#include <MegaApplication.h>
-#include <StalledIssuesModel.h>
-#include "NodeNameSetterDialog/RenameNodeDialog.h"
+#include "MegaApplication.h"
+#include "StalledIssuesModel.h"
+#include "RenameNodeDialog.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"
 #include "MegaNodeNames.h"
 #include "DateTimeFormatter.h"
 #include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
+#include "TextDecorator.h"
 
 #include <megaapi.h>
-#include "TextDecorator.h"
 #include <QDialogButtonBox>
 #include <QPainter>
 
@@ -115,10 +116,6 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             title = new StalledIssueActionTitle(parent);
             initTitle(title, index, conflictedName);
-            if(!issue->isSolved())
-            {
-                initActionButtons(title);
-            }
 
             connect(title, &StalledIssueActionTitle::actionClicked, this, &NameConflict::onActionClicked);
             titleLayout->addWidget(title);
@@ -206,6 +203,11 @@ void NameConflict::updateUi(std::shared_ptr<const NameConflictedStalledIssue> is
         {
             titleLayout->activate();
             title->setFailed(true, info->mError);
+        }
+
+        if(!issue->isSolved())
+        {
+            initActionButtons(title);
         }
 
         allSolved &= info->isSolved();
@@ -342,7 +344,6 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
     title->updateExtraInfoLayout();
 }
 
-
 void NameConflict::setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate)
 {
     mDelegateWidget = newDelegate;
@@ -430,28 +431,28 @@ void NameConflict::onActionClicked(int actionId)
                     if (renameDialog->result() == QDialog::Accepted)
                     {
                         auto newName = renameDialog->getName();
+                        auto originalName = renameDialog->getOriginalName();
 
                         bool areAllSolved(false);
 
                         if (isCloud())
                         {
                             areAllSolved = MegaSyncApp->getStalledIssuesModel()
-                                               ->solveCloudConflictedNameByRename(newName,
+                                               ->solveCloudConflictedNameByRename(newName, originalName,
                                                    conflictIndex,
                                                    mDelegateWidget->getCurrentIndex());
                         }
                         else
                         {
                             areAllSolved = MegaSyncApp->getStalledIssuesModel()
-                                               ->solveLocalConflictedNameByRename(newName,
+                                               ->solveLocalConflictedNameByRename(newName, originalName,
                                                    conflictIndex,
                                                    mDelegateWidget->getCurrentIndex());
                         }
 
-                        if (areAllSolved)
-                        {
-                            emit allSolved();
-                        }
+
+
+                        checkIfAreAllSolved(areAllSolved);
 
                         //Now, close the editor because the action has been finished
                         if (mDelegateWidget)
@@ -588,10 +589,7 @@ void NameConflict::onActionClicked(int actionId)
                         }
                     }
 
-                    if(areAllSolved)
-                    {
-                        emit allSolved();
-                    }
+                    checkIfAreAllSolved(areAllSolved);
 
                     //Now, close the editor because the action has been finished
                     if(mDelegateWidget)
@@ -605,5 +603,15 @@ void NameConflict::onActionClicked(int actionId)
             StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(msgInfo.informativeText);
             QMegaMessageBox::warning(msgInfo);
         }
+    }
+}
+
+void NameConflict::checkIfAreAllSolved(bool areAllSolved)
+{
+    if(areAllSolved)
+    {
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::SI_NAMECONFLICT_SOLVED_MANUALLY);
+        emit allSolved();
     }
 }

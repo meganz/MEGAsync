@@ -1,5 +1,5 @@
-#ifndef DTI_DESIGN_TARGET_H
-#define DTI_DESIGN_TARGET_H
+#ifndef DESIGN_TARGET_H
+#define DESIGN_TARGET_H
 
 #include "Types.h"
 

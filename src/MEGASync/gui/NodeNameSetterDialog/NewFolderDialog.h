@@ -1,7 +1,8 @@
 #ifndef NEWFOLDERDIALOG_H
 #define NEWFOLDERDIALOG_H
 
-#include <NodeNameSetterDialog/NodeNameSetterDialog.h>
+#include "NodeNameSetterDialog.h"
+
 #include <megaapi.h>
 
 #include <memory>

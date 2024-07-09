@@ -24,14 +24,14 @@ class NameConflictedStalledIssue;
 namespace StalledIssuesStrings
 {
 static QString RemoveFileFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
-static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
+static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));}
 static QString RemoveLocalFileFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the file is in use, and the permissions of the file, then try again."));}
 static QString RemoveLocalFolderFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the folder is in use, and the permissions of the file, then try again."));}
 static QString RemoveRemoteFailedDescription(const mega::MegaError* error){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));}
 
 static QString RemoveRemoteFailedFile(const mega::MegaError* error)
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
                            .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -39,7 +39,7 @@ static QString RemoveRemoteFailedFile(const mega::MegaError* error)
 
 static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"))
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
                            .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -47,7 +47,7 @@ static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
 
 static QString RemoveLocalFailedFile()
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
     errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -55,7 +55,7 @@ static QString RemoveLocalFailedFile()
 
 static QString RemoveLocalFailedFolder()
 {
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2[/BR]"));
+    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
     errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
     StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
     return errorStr;
@@ -157,11 +157,11 @@ public:
 
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     void finishConflictManually();
@@ -283,7 +283,6 @@ private:
     mutable StalledIssuesVariantList mStalledIssues;
     mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable StalledIssuesVariantList mFailedStalledIssues;
-    mutable StalledIssueVariant mLastSolvedStalledIssue;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
 
     QHash<int, int> mCountByFilterCriterion;
