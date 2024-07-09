@@ -187,3 +187,30 @@ bool IgnoredStalledIssue::autoSolveIssue()
 
     return result;
 }
+
+CloudNodeIsBlockedIssue::CloudNodeIsBlockedIssue(const mega::MegaSyncStall* stallIssue)
+    : IgnoredStalledIssue(stallIssue)
+{
+
+}
+
+bool CloudNodeIsBlockedIssue::isAutoSolvable() const
+{
+    return true;
+}
+
+void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
+{
+    IgnoredStalledIssue::fillIssue(stall);
+    mIgnoredPaths.append({consultCloudData()->getFilePath(), true, MegaIgnoreNameRule::Target::f});
+}
+
+bool CloudNodeIsBlockedIssue::showDirectoryInHyperlink() const
+{
+    return true;
+}
+
+bool CloudNodeIsBlockedIssue::isExpandable() const
+{
+    return true;
+}

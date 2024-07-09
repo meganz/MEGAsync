@@ -168,6 +168,20 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
     }
 }
 
+//Cloud node is blocked
+CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA's Terms of Service[/A].").arg(header->displayFileName());
+    QStringList links;
+    links << QLatin1String("https://mega.io/terms");
+    StalledIssuesLinkTextDecorator::process(links, headerText);
+    header->setText(headerText);
+}
+
 //Local folder not scannable
 FileIssueHeader::FileIssueHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)

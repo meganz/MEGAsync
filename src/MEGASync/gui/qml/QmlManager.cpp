@@ -23,7 +23,8 @@ QmlManager::QmlManager()
 {
     QObject::connect(mEngine, &QQmlEngine::warnings, [](const QList<QQmlError>& warnings) {
         for (const QQmlError& e : warnings) {
-            qDebug() << "Qml error: " << e.toString();
+            QString message = QString::fromUtf8("QML error: ") + e.toString();
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toStdString().c_str());
         }
     });
 

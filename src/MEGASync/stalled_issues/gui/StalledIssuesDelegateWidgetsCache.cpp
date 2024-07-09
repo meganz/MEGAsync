@@ -65,7 +65,10 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->setDelegate(mDelegate);
     }
 
-    createHeaderCaseWidget(header, issue);
+    if(needsUpdate)
+    {
+        createHeaderCaseWidget(header, issue);
+    }
 
     if(isNew)
     {
@@ -266,6 +269,10 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             if(issue.consultData()->missingFingerprint())
             {
                 headerCase = new CloudFingerprintMissingHeader(header);
+            }
+            else if(StalledIssue::isCloudNodeBlocked(issue.consultData()->getOriginalStall().get()))
+            {
+                headerCase = new CloudNodeIsBlockedHeader(header);
             }
             else
             {

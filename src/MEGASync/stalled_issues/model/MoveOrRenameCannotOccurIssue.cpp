@@ -32,14 +32,20 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
 
 bool MoveOrRenameCannotOccurIssue::isValid() const
 {
-    return consultCloudData() && consultLocalData();
+    return consultCloudData() || consultLocalData();
 }
 
 //We don´t fill the issue as usual
 void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
-    stall->detectedCloudSide() ? fillCloudSide(stall)
-                               : fillLocalSide(stall);
+    if(stall->detectedCloudSide() && !consultCloudData())
+    {
+        fillCloudSide(stall);
+    }
+    else if(!stall->detectedCloudSide() && !consultLocalData())
+    {
+        fillLocalSide(stall);
+    }
 }
 
 bool MoveOrRenameCannotOccurIssue::isAutoSolvable() const
@@ -102,7 +108,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
             syncState == mega::MegaSync::RUNSTATE_SUSPENDED)
         {
             //We perform the undo in the opposite side
-            if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE)
+            if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE && consultLocalData())
             {
                 QFileInfo previousPath(consultLocalData()->getFilePath());
                 QFileInfo previousDirectory(previousPath.absolutePath());
@@ -126,7 +132,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                     mFailedLocalPaths.insert(currentPath);
                 }
             }
-            else
+            else if(getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL && consultCloudData())
             {
                 std::unique_ptr<mega::MegaNode> nodeToMove(
                     MegaSyncApp->getMegaApi()->getNodeByHandle(
@@ -160,7 +166,16 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                                 targetPath.path().toStdString().c_str()));
                         }
                     }
-                    MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(), newParent.get(), mListener.get());
+
+                    if(strcmp(nodeToMove->getName(), targetPath.fileName().toStdString().c_str()) != 0)
+                    {
+                        MegaSyncApp->getMegaApi()->renameNode(nodeToMove.get(), targetPath.fileName().toStdString().c_str(), mListener.get());
+                    }
+                    else
+                    {
+                        MegaSyncApp->getMegaApi()->moveNode(
+                            nodeToMove.get(), newParent.get(), mListener.get());
+                    }
                 }
             }
 
@@ -183,6 +198,8 @@ void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> 
 
     if(mUndoSuccessful)
     {
+        mCloudData.reset();
+        mLocalData.reset();
         mSolveAttempts = 0;
     }
 }
@@ -195,7 +212,8 @@ bool MoveOrRenameCannotOccurIssue::solveAttemptsAchieved() const
 void MoveOrRenameCannotOccurIssue::onRequestFinish(
     mega::MegaApi*, mega::MegaRequest* request, mega::MegaError* e)
 {
-    if(request->getType() == mega::MegaRequest::TYPE_MOVE)
+    if(request->getType() == mega::MegaRequest::TYPE_MOVE ||
+        request->getType() == mega::MegaRequest::TYPE_RENAME)
     {
         mUndoSuccessful = !e || (e->getErrorCode() == mega::MegaError::API_OK);
 
@@ -399,7 +417,6 @@ std::shared_ptr<StalledIssue> MoveOrRenameCannotOccurFactory::createIssue(MultiS
 
             if(moveIssue)
             {
-                moveIssue->fillIssue(stall);
                 mIssueBySyncId.insert(syncId, moveIssue);
                 return moveIssue;
             }

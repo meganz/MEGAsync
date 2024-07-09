@@ -60,7 +60,7 @@ protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
-//Sym Link
+//Cloud Fingerprint missing
 class CloudFingerprintMissingHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
@@ -72,6 +72,18 @@ public:
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
     void refreshCaseActions(StalledIssueHeader *header) override;
+};
+
+//Cloud Fingerprint missing
+class CloudNodeIsBlockedHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    CloudNodeIsBlockedHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Create folder failed
