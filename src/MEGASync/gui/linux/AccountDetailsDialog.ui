@@ -753,7 +753,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
            </property>
            <property name="iconSize">
@@ -858,7 +858,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
            </property>
            <property name="iconSize">
@@ -963,7 +963,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/account_details/trash.svg</normaloff>:/images/account_details/trash.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1068,7 +1068,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/account_details/pie.svg</normaloff>:/images/account_details/pie.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1153,7 +1153,7 @@ min-width:219px;
            </size>
           </property>
           <property name="icon">
-           <iconset resource="../Resources_win.qrc">
+           <iconset resource="../Resources_linux.qrc">
             <normaloff>:/images/account_details/versions.svg</normaloff>:/images/account_details/versions.svg</iconset>
           </property>
           <property name="iconSize">
@@ -1203,7 +1203,7 @@ min-width:219px;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
