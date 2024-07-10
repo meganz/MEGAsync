@@ -4,7 +4,6 @@
 #include "TransferBatch.h"
 #include "Utilities.h"
 #include "megaapi.h"
-#include <QTMegaRequestListener.h>
 #include "drivedata.h"
 
 #include <QMap>
@@ -12,7 +11,7 @@
 #include <QString>
 #include <QStorageInfo>
 
-class DownloadQueueController : public QObject, public mega::MegaRequestListener
+class DownloadQueueController : public QObject
 {
     Q_OBJECT
 
@@ -35,11 +34,10 @@ public:
     unsigned long long getCurrentAppDataId() const;
     const QString& getCurrentTargetPath() const;
 
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError *e);
+
 signals:
     void finishedAvailableSpaceCheck(bool isDownloadPossible);
-
-protected:
-    void onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError *e) override;
 
 private:
 
@@ -53,7 +51,6 @@ private:
 
     mega::MegaApi *mMegaApi;
     const QMap<mega::MegaHandle, QString>& mPathMap;
-    std::unique_ptr<mega::QTMegaRequestListener> mListener;
     std::atomic<long> mFolderCountPendingSizeComputation;
     std::atomic<quint64> mTotalQueueDiskSize;
     unsigned long long mCurrentAppDataId;

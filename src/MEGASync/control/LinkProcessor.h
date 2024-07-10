@@ -6,13 +6,17 @@
 #include <QPointer>
 #include <memory>
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include "QTMegaTransferListener.h"
 #include <QSharedPointer>
 #include <QQueue>
 #include <QList>
 #include "LinkObject.h"
 #include "SetTypes.h"
+
+namespace mega
+{
+    class QTMegaRequestListener;
+}
 
 enum class LinkTransferType { UNKNOWN, DOWNLOAD, IMPORT };
 
@@ -27,7 +31,7 @@ struct LinkTransfer
     LinkTransferType transferType = LinkTransferType::UNKNOWN;
 };
 
-class LinkProcessor: public QObject, public mega::MegaRequestListener, public mega::MegaTransferListener
+class LinkProcessor: public QObject, public mega::MegaTransferListener
 {
     Q_OBJECT
 
@@ -44,6 +48,8 @@ public:
     void importLinks(const QString& nodePath);
     mega::MegaHandle getImportParentFolder();
     void downloadLinks(const QString& localPath);
+
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
 
 signals:
     void requestFetchSetFromLink(const QString& link);
@@ -82,7 +88,6 @@ private:
         return (index >= 0 && index < container.size());
     }
 
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error) override;
 
     // Download

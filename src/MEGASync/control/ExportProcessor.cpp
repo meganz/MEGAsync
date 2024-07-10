@@ -1,39 +1,30 @@
 #include "ExportProcessor.h"
+#include "RequestListenerManager.h"
 
 using namespace mega;
-using namespace std;
 
-ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) : QObject()
+ExportProcessor::ExportProcessor(MegaApi* megaApi, QStringList fileList)
+    : QObject()
+    , fileList(fileList)
 {
-    this->megaApi = megaApi;
-    this->fileList = fileList;
-    this->mode = MODE_PATHS;
-
-    currentIndex = 0;
-    remainingNodes = fileList.size();
-    importSuccess = 0;
-    importFailed = 0;
-
-    delegateListener = new QTMegaRequestListener(megaApi, this);
+    init(megaApi, MODE_PATHS, fileList.size());
 }
 
-ExportProcessor::ExportProcessor(MegaApi *megaApi, QList<MegaHandle> handleList)
+ExportProcessor::ExportProcessor(MegaApi* megaApi, QList<MegaHandle> handleList)
+    : QObject()
+    , handleList(handleList)
 {
-    this->megaApi = megaApi;
-    this->handleList = handleList;
-    this->mode = MODE_HANDLES;
-
-    currentIndex = 0;
-    remainingNodes = handleList.size();
-    importSuccess = 0;
-    importFailed = 0;
-
-    delegateListener = new QTMegaRequestListener(megaApi, this);
+    init(megaApi, MODE_HANDLES, handleList.size());
 }
 
-ExportProcessor::~ExportProcessor()
+void ExportProcessor::init(MegaApi *megaApi, int mode, int size)
 {
-    delete delegateListener;
+    this->megaApi = megaApi;
+    this->mode = mode;
+    this->currentIndex = 0;
+    this->remainingNodes = size;
+    this->importSuccess = 0;
+    this->importFailed = 0;
 }
 
 void ExportProcessor::requestLinks()
@@ -56,9 +47,9 @@ void ExportProcessor::requestLinks()
                 fileList[i].insert(0, QString::fromLatin1("\\\\?\\"));
             }
 
-            string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
+            std::string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
     #else
-            string tmpPath((const char*)fileList[i].toUtf8().constData());
+            std::string tmpPath((const char*)fileList[i].toUtf8().constData());
     #endif
 
             node = megaApi->getSyncedNode(&tmpPath);
@@ -73,7 +64,7 @@ void ExportProcessor::requestLinks()
         {
             node = megaApi->getNodeByHandle(handleList[i]);
         }
-        megaApi->exportNode(node, delegateListener);
+        megaApi->exportNode(node, RequestListenerManager::instance().registerAndGetFinishListener(this, true).get());
         delete node;
     }
 }
@@ -83,7 +74,7 @@ QStringList ExportProcessor::getValidLinks()
     return validPublicLinks;
 }
 
-void ExportProcessor::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+void ExportProcessor::onRequestFinish(MegaRequest *request, MegaError *e)
 {
     currentIndex++;
     remainingNodes--;

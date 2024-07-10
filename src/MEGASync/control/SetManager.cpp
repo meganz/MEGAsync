@@ -12,11 +12,7 @@ SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders)
     , mSetManagerState(SetManagerState::INIT)
 {
     // Register for SDK Request callbacks
-    ListenerCallbacks lcInfo;
-    lcInfo.callbackClass = this;
-    lcInfo.onRequestFinish = std::bind(&SetManager::onRequestFinish, this, std::placeholders::_1, std::placeholders::_2);
-    lcInfo.removeAfterReqFinish = false;    // Keep listener alive until we manually unregister
-    mDelegateListener = RequestListenerManager::instance().registerAndGetListener(lcInfo);
+    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
 }
 
 SetManager::~SetManager()
