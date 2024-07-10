@@ -15,7 +15,7 @@ class NotificationItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit NotificationItem(QWidget *parent = nullptr);
+    explicit NotificationItem(QWidget* parent = nullptr);
     ~NotificationItem();
 
     void setNotificationData(MegaNotificationExt* notification);

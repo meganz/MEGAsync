@@ -3,24 +3,12 @@
 
 enum class AlertType
 {
-    ALL = 0,
+    UNKNOWN = 0,
+    ALL,
     CONTACTS,
     SHARES,
     PAYMENTS,
     TAKEDOWNS
-};
-
-struct NotificationAlertModelItem
-{
-    enum ModelType
-    {
-        NONE = 0,
-        ALERT,
-        NOTIFICATION
-    };
-
-    ModelType type;
-    void* pointer;
 };
 
 #endif // NOTIFICATION_ALERT_TYPES_H

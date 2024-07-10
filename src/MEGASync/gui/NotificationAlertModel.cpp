@@ -1,7 +1,380 @@
 #include "NotificationAlertModel.h"
 
 #include "NotificationAlertTypes.h"
+#include "MegaNotificationExt.h"
+#include "MegaUserAlertExt.h"
 
+#include "megaapi.h"
+
+QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex& parent) const
+{
+    if (!hasIndex(row, column, parent))
+    {
+        return QModelIndex();
+    }
+
+    return createIndex(row, column, mNotifications.at(row));
+}
+
+QModelIndex NotificationAlertModel::parent(const QModelIndex& index) const
+{
+    Q_UNUSED(index)
+
+    return QModelIndex();
+}
+
+int NotificationAlertModel::rowCount(const QModelIndex& parent) const
+{
+    return parent.isValid() ? 0 : mNotifications.size();
+}
+
+int NotificationAlertModel::columnCount(const QModelIndex& parent) const
+{
+    return 1;
+}
+
+QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
+{
+    if (!index.isValid() || index.row() < 0)
+    {
+        return QVariant();
+    }
+
+    if (role == Qt::DisplayRole)
+    {
+        return QVariant::fromValue(index.internalId());
+    }
+    else if (role == Qt::UserRole && mNotifications.at(index.row())->getType() == NotificationExtBase::Type::ALERT)
+    {
+        auto alert = qobject_cast<const MegaUserAlertExt*>(mNotifications.at(index.row()));
+        return QDateTime::fromMSecsSinceEpoch(alert->getTimestamp(0) * 1000);
+    }
+
+    return QVariant();
+}
+
+auto NotificationAlertModel::findAlertById(unsigned int id)
+{
+    auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                           [id](const NotificationExtBase* current)
+                           {
+                               if(current->getType() == NotificationExtBase::Type::ALERT)
+                               {
+                                   auto alertItem = qobject_cast<const MegaUserAlertExt*>(current);
+                                   return alertItem && alertItem->getId() == id;
+                               }
+                               return false;
+                           });
+
+    return it;
+}
+
+void NotificationAlertModel::updateAlerts(mega::MegaUserAlertList* alerts)
+{
+    int numAlerts = alerts ? alerts->size() : 0;
+    if (numAlerts)
+    {
+        QList<mega::MegaUserAlert*> newAlerts;
+        QList<mega::MegaUserAlert*> updatedAlerts;
+        QList<mega::MegaUserAlert*> removedAlerts;
+        for (int i = 0; i < numAlerts; i++)
+        {
+            mega::MegaUserAlert* alert = alerts->get(i);
+            //unsigned id = alert->getId();
+
+            /*
+            auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                                   [id](const NotificationExtBase* current)
+                                   {
+                                       if(current->getType() == NotificationExtBase::Type::ALERT)
+                                       {
+                                           auto alertItem = qobject_cast<const MegaUserAlertExt*>(current);
+                                           return alertItem && alertItem->getId() == id;
+                                       }
+                                       return false;
+                                   });
+            */
+            auto it = findAlertById(alert->getId());
+            if (it == mNotifications.end() && !alert->isRemoved())
+            {
+                if(alert->isRemoved())
+                {
+                    removedAlerts.append(alert);
+                }
+                else
+                {
+                    newAlerts.append(alert->copy());
+                }
+            }
+            else if (it != mNotifications.end())
+            {
+                updatedAlerts.append(alert);
+            }
+        }
+
+        removeAlerts(removedAlerts);
+        insertAlerts(newAlerts);
+        updateAlerts(updatedAlerts);
+    }
+}
+
+void NotificationAlertModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
+{
+    if(alerts.size() <= 0)
+    {
+        return;
+    }
+
+    beginInsertRows(QModelIndex(), 0, alerts.size() - 1);
+    for (auto& notification : alerts)
+    {
+        mNotifications.push_back(new MegaUserAlertExt(notification));
+    }
+    endInsertRows();
+}
+
+void NotificationAlertModel::updateAlerts(const QList<mega::MegaUserAlert*>& alerts)
+{
+    if(alerts.size() <= 0)
+    {
+        return;
+    }
+
+    for (auto& alert : alerts)
+    {
+        /*
+        unsigned id = alert->getId();
+        auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                               [id](const NotificationExtBase* current)
+                               {
+                                   if(current->getType() == NotificationExtBase::Type::ALERT)
+                                   {
+                                       auto alertItem = qobject_cast<const MegaUserAlertExt*>(current);
+                                       return alertItem && alertItem->getId() == id;
+                                   }
+                                   return false;
+                               });
+*/
+        auto it = findAlertById(alert->getId());
+        if (it != mNotifications.end())
+        {
+            int row = std::distance(mNotifications.begin(), it);
+            auto alertItem = qobject_cast<MegaUserAlertExt*>(mNotifications[row]);
+            alertItem->reset(alert);
+            emit dataChanged(index(row, 0), index(row, 0));
+        }
+    }
+}
+
+void NotificationAlertModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
+{
+    if(alerts.size() <= 0)
+    {
+        return;
+    }
+
+    for (auto& alert : alerts)
+    {
+        /*
+        unsigned id = alert->getId();
+        auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                               [id](const NotificationExtBase* current)
+                               {
+                                   if(current->getType() == NotificationExtBase::Type::ALERT)
+                                   {
+                                       auto alertItem = qobject_cast<const MegaUserAlertExt*>(current);
+                                       return alertItem && alertItem->getId() == id;
+                                   }
+                                   return false;
+                               });
+*/
+        auto it = findAlertById(alert->getId());
+        if (it != mNotifications.end())
+        {
+            int row = std::distance(mNotifications.begin(), it);
+            beginRemoveRows(QModelIndex(), row, row);
+            delete mNotifications[row];
+            mNotifications.erase(it);
+            endRemoveRows();
+        }
+    }
+}
+
+
+/*
+void NotificationAlertModel::updateNotifications(const mega::MegaNotificationList* notifications)
+{
+    int numNotifications = notifications ? notifications->size() : 0;
+    if (numNotifications)
+    {
+        QList<const mega::MegaNotification*> newNotifications;
+        QList<const mega::MegaNotification*> updatedNotifications;
+        QList<const mega::MegaNotification*> removedNotifications;
+        for (int i = 0; i < numNotifications; i++)
+        {
+            const mega::MegaNotification* notification = notifications->get(i);
+            int64_t id = notification->getID();
+            auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                                   [id](const MegaNotificationExt* notification)
+                                   {
+                                       return notification->getID() == id;
+                                   });
+
+            if (it == mNotifications.end())
+            {
+                newNotifications.append(notification->copy());
+            }
+            else
+            {
+                updatedNotifications.append(notification);
+            }
+        }
+
+        for (auto& notification : mNotifications)
+        {
+            int i = 0;
+            bool found = false;
+            while (i < numNotifications && !found)
+            {
+                found = notifications->get(i)->getID() == notification->getID();
+                ++i;
+            }
+
+            if (!found)
+            {
+                removedNotifications.append(notification);
+            }
+        }
+
+        //removeNotifications(removedNotifications);
+        insertNotifications(newNotifications);
+        updateNotifications(updatedNotifications);
+    }
+}
+
+void NotificationAlertModel::insertNotifications(const QList<const mega::MegaNotification*>& notifications)
+{
+    if(notifications.size() <= 0)
+    {
+        return;
+    }
+
+    beginInsertRows(QModelIndex(), 0, notifications.size() - 1);
+    for (auto& notification : notifications)
+    {
+        mNotifications.push_back(new MegaNotificationExt(notification));
+    }
+    endInsertRows();
+}
+
+void NotificationAlertModel::updateNotifications(const QList<const mega::MegaNotification*>& notifications)
+{
+    if(notifications.size() <= 0)
+    {
+        return;
+    }
+
+    for (auto& notification : notifications)
+    {
+        auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                               [notification](const MegaNotificationExt* current)
+                               {
+                                   return current->getID() == notification->getID();
+                               });
+        if (it != mNotifications.end())
+        {
+            int row = std::distance(mNotifications.begin(), it);
+            //mNotifications[row]->update(notification);
+            emit dataChanged(index(row, 0), index(row, 0));
+        }
+    }
+}
+
+void NotificationAlertModel::removeNotifications(const QList<const mega::MegaNotification*>& notifications)
+{
+    if(notifications.size() <= 0)
+    {
+        return;
+    }
+
+    for (auto& notification : notifications)
+    {
+        auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+                               [notification](const MegaNotificationExt* current)
+                               {
+                                   return current->getID() == notification->getID();
+                               });
+        if (it != mNotifications.end())
+        {
+            int row = std::distance(mNotifications.begin(), it);
+            beginRemoveRows(QModelIndex(), row, row);
+            delete mNotifications[row];
+            mNotifications.erase(it);
+            endRemoveRows();
+        }
+    }
+}
+*/
+
+/*
+int NotificationAlertModel::getAlertType(int alertType) const
+{
+    int type = AlertType::UNKNOWN;
+    switch (alertType)
+    {
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        {
+            type = AlertType::CONTACTS;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_NEWSHARE:
+        case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+        case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+        case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            type = AlertType::SHARES;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        case mega::MegaUserAlert::TYPE_PAYMENT_FAILED:
+        case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
+        {
+            type = AlertType::PAYMENTS;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_TAKEDOWN:
+        case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+        {
+            type = AlertType::TAKEDOWNS;
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    return type;
+}
+
+void NotificationAlertModel::insertNotifications(const mega::MegaNotificationList* notificationList)
+{
+
+}
+*/
+
+/*
 QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex& parent) const
 {
     QModelIndex result;
@@ -244,3 +617,6 @@ int NotificationAlertModel::getAlertRow(int row) const
 {
     return row - getNotificationRowCount();
 }
+*/
+
+

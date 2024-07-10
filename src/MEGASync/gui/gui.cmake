@@ -66,6 +66,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/NotificationAlertModel.h
     gui/NotificationAlertDelegate.h
     gui/MegaNotificationExt.h
+    gui/NotificationExtBase.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h

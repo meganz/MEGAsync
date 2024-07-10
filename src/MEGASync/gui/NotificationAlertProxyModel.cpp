@@ -8,7 +8,7 @@
 
 namespace
 {
-const std::map<AlertType, std::vector<int>> MEGAUSER_ALERTS_BY_TYPE
+const std::map<AlertType, std::vector<int>> MegaUserAlertsByType
 {
     {
         AlertType::CONTACTS,
@@ -81,8 +81,8 @@ bool NotificationAlertProxyModel::checkAlertFilterType(int sdkType) const
     }
     else
     {
-        auto it = MEGAUSER_ALERTS_BY_TYPE.find(mActualFilter);
-        if (it != MEGAUSER_ALERTS_BY_TYPE.end())
+        auto it = MegaUserAlertsByType.find(mActualFilter);
+        if (it != MegaUserAlertsByType.end())
         {
             success = std::find(it->second.begin(), it->second.end(), sdkType) != it->second.end();
         }
@@ -94,18 +94,18 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
 {
     bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(index.internalPointer());
+    NotificationExtBase* item = static_cast<NotificationExtBase*>(index.internalPointer());
     if(item)
     {
-        switch (item->type)
+        switch (item->getType())
         {
-            case NotificationAlertModelItem::ALERT:
+            case NotificationExtBase::Type::ALERT:
             {
-                MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
+                MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item);
                 filter = checkAlertFilterType(alert->getType());
                 break;
             }
-            case NotificationAlertModelItem::NOTIFICATION:
+            case NotificationExtBase::Type::NOTIFICATION:
             {
                 filter = mActualFilter == AlertType::ALL;
                 break;
@@ -123,23 +123,29 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
 
 bool NotificationAlertProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
-    NotificationAlertModelItem* leftItem = static_cast<NotificationAlertModelItem*>(left.internalPointer());
-    NotificationAlertModelItem* rightItem = static_cast<NotificationAlertModelItem*>(right.internalPointer());
+    NotificationExtBase* leftItem = static_cast<NotificationExtBase*>(left.internalPointer());
+    NotificationExtBase* rightItem = static_cast<NotificationExtBase*>(right.internalPointer());
+
+    if(!leftItem || !rightItem)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Invalid items (lessThan).");
+        return false;
+    }
 
     bool isLess;
     // If the types are different, prioritise notifications over alerts
-    if (leftItem->type == NotificationAlertModelItem::NOTIFICATION
-        && rightItem->type == NotificationAlertModelItem::ALERT)
+    if (leftItem->getType() == NotificationExtBase::Type::NOTIFICATION
+        && rightItem->getType() == NotificationExtBase::Type::ALERT)
     {
         isLess = true;
     }
-    else if (leftItem->type == NotificationAlertModelItem::ALERT
-               && rightItem->type == NotificationAlertModelItem::NOTIFICATION)
+    else if (leftItem->getType() == NotificationExtBase::Type::ALERT
+               && rightItem->getType() == NotificationExtBase::Type::NOTIFICATION)
     {
         isLess = false;
     }
-    else if (leftItem->type == NotificationAlertModelItem::ALERT
-               && rightItem->type == NotificationAlertModelItem::ALERT)
+    else if (leftItem->getType() == NotificationExtBase::Type::ALERT
+               && rightItem->getType() == NotificationExtBase::Type::ALERT)
     {
         // If both are of type alert, order by date
         QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();

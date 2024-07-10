@@ -6,22 +6,23 @@
 
 #include <QStyledItemDelegate>
 
-class AlertDelegate : public QStyledItemDelegate
+class AlertDelegate
 {
-    Q_OBJECT
-
 public:
-    AlertDelegate(AlertModel* model, QObject* parent = 0);
+    AlertDelegate();
+    /*
     void paint(QPainter* painter, const QStyleOptionViewItem& option,const QModelIndex& index) const;
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
     bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index);
     bool helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index);
+    */
+    QWidget* getWidget(MegaUserAlertExt* alert);
 
 private:
-    AlertModel* mAlertsModel;
+    QCache<int, AlertItem> mItems;
 
-    void handleAlertItem(MegaUserAlertExt* alert, const QRect& rect, QPainter* painter) const;
-    NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
+    //void handleAlertItem(MegaUserAlertExt* alert, const QRect& rect, QPainter* painter) const;
+    //NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
 
 };
 

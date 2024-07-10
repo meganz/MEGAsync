@@ -3,30 +3,37 @@
 #include "NotificationAlertModel.h"
 
 #include <QSortFilterProxyModel>
+#include <QPainter>
+
+NotificationAlertDelegate::NotificationAlertDelegate(QObject* parent)
+    : QStyledItemDelegate(parent)
+    , mAlertsDelegate(std::make_unique<AlertDelegate>())
+{
+}
 
 void NotificationAlertDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
-    switch (getModelType(index))
+    if (index.isValid())
     {
-        case NotificationAlertModelItem::ALERT:
+        painter->save();
+        painter->translate(option.rect.topLeft());
+
+        QWidget* item = getWidget(index);
+        if(!item)
         {
-            mAlertsDelegate->paint(painter, option, index);
-            break;
+            return;
         }
-        case NotificationAlertModelItem::NOTIFICATION:
-        {
-            mNotificationsDelegate->paint(painter, option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NONE:
-        default:
-        {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                               "Invalid notification item type in delegate (paint).");
-            break;
-        }
+
+        item->resize(option.rect.width(), option.rect.height());
+        item->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
+
+        painter->restore();
+    }
+    else
+    {
+        QStyledItemDelegate::paint(painter, option, index);
     }
 }
 
@@ -34,30 +41,53 @@ QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
                                           const QModelIndex& index) const
 {
     QSize result;
-    switch (getModelType(index))
+    if (index.isValid())
     {
-        case NotificationAlertModelItem::ALERT:
+        QWidget* item = getWidget(index);
+        if(!item)
         {
-            result = mAlertsDelegate->sizeHint(option, index);
-            break;
+            return QSize();
         }
-        case NotificationAlertModelItem::NOTIFICATION:
-        {
-            result = mNotificationsDelegate->sizeHint(option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NONE:
-        default:
-        {
-            result = QStyledItemDelegate::sizeHint(option, index);
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                               "Invalid notification item type in delegate (sizeHint).");
-            break;
-        }
+        result = item->sizeHint();
+    }
+    else
+    {
+        result = QStyledItemDelegate::sizeHint(option, index);
     }
     return result;
 }
 
+QWidget* NotificationAlertDelegate::getWidget(const QModelIndex& index) const
+{
+    QWidget* widget = nullptr;
+    if (index.isValid() && index.row() >= 0)
+    {
+        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+        if (filteredIndex.isValid() && filteredIndex.row() >= 0)
+        {
+            NotificationExtBase* item = static_cast<NotificationExtBase*>(filteredIndex.internalPointer());
+            if(item)
+            {
+                switch (item->getType())
+                {
+                case NotificationExtBase::Type::ALERT:
+                {
+                    MegaUserAlertExt* alert = dynamic_cast<MegaUserAlertExt*>(item);
+                    widget = mAlertsDelegate->getWidget(alert);
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+                }
+            }
+        }
+    }
+    return widget;
+}
+
+/*
 bool NotificationAlertDelegate::editorEvent(QEvent* event,
                                             QAbstractItemModel* model,
                                             const QStyleOptionViewItem& option,
@@ -151,3 +181,6 @@ NotificationAlertModelItem::ModelType NotificationAlertDelegate::getModelType(co
     }
     return type;
 }
+*/
+
+

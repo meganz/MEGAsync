@@ -7,25 +7,24 @@
 
 class NotificationAlertDelegate : public QStyledItemDelegate
 {
-    Q_OBJECT
-
 public:
-    using QStyledItemDelegate::QStyledItemDelegate;
+    NotificationAlertDelegate(QObject* parent = nullptr);
     virtual ~NotificationAlertDelegate() = default;
 
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
     QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const override;
-    bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
-    bool helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index) override;
+    //bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
+    //bool helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index) override;
 
-    void createNotificationDelegate(NotificationModel* model);
-    void createAlertDelegate(AlertModel* model);
+    //void createNotificationDelegate(NotificationModel* model);
+    //void createAlertDelegate(AlertModel* model);
 
 private:
-    std::unique_ptr<NotificationDelegate> mNotificationsDelegate = nullptr;
-    std::unique_ptr<AlertDelegate> mAlertsDelegate = nullptr;
+    //std::unique_ptr<NotificationDelegate> mNotificationsDelegate = nullptr;
+    std::unique_ptr<AlertDelegate> mAlertsDelegate;
 
-    NotificationAlertModelItem::ModelType getModelType(const QModelIndex& index) const;
+    //NotificationAlertModelItem::ModelType getModelType(const QModelIndex& index) const;
+    QWidget* getWidget(const QModelIndex &index) const;
 
 };
 

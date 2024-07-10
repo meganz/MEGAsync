@@ -1,5 +1,6 @@
 #include "NotificationAlertController.h"
 
+#include "NotificationAlertProxyModel.h"
 #include "MegaApplication.h"
 
 NotificationAlertController::NotificationAlertController(QObject* parent)
@@ -7,10 +8,13 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-    , mNotificationAlertModel(nullptr)
-    , mNotificationAlertDelegate(nullptr)
+    , mNotificationAlertModel(std::make_unique<NotificationAlertModel>(nullptr))
+    , mAlertsProxyModel(std::make_unique<NotificationAlertProxyModel>(nullptr))
     , mAllUnseenAlerts(0)
 {
+    mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
+    mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
@@ -18,7 +22,7 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
 void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
-
+/*
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_GET_NOTIFICATIONS:
@@ -46,7 +50,7 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
         {
             break;
         }
-    }
+    }*/
 }
 
 void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList)
@@ -59,22 +63,23 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     // Used by DesktopNotifications because the current architecture
     emit userAlertsUpdated(alertList);
 
-    if(createModelAndDelegate() || !mNotificationAlertModel->alertModel())
+    //if(createModelAndDelegate() || !mNotificationAlertModel->alertModel())
+    //{
+    //    mNotificationAlertModel->createAlertModel(alertList);
+    //    mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
+    //}
+    //else
     {
-        mNotificationAlertModel->createAlertModel(alertList);
-        mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
-    }
-    else
-    {
-        mNotificationAlertModel->insertAlerts(alertList);
+        mNotificationAlertModel->updateAlerts(alertList);
     }
 
     // Used by InfoDialog because the current architecture
-    checkUseenNotifications();
+    //checkUseenNotifications();
 }
 
 void NotificationAlertController::populateNotifications(const mega::MegaNotificationList* notificationList)
 {
+    /*
     if (!notificationList)
     {
         return;
@@ -90,27 +95,8 @@ void NotificationAlertController::populateNotifications(const mega::MegaNotifica
         mNotificationAlertModel->insertNotifications(notificationList);
     }
 
-    mMegaApi->getLastReadNotification();
+    mMegaApi->getLastReadNotification();*/
 
-}
-
-bool NotificationAlertController::createModelAndDelegate()
-{
-    bool isNew = true;
-    if(mNotificationAlertModel || mNotificationAlertDelegate)
-    {
-        isNew = false;
-    }
-    else
-    {
-        mNotificationAlertModel = std::make_unique<NotificationAlertModel>(nullptr);
-        mAlertsProxyModel = std::make_unique<NotificationAlertProxyModel>(nullptr);
-        mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
-        mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-        mNotificationAlertDelegate = std::make_unique<NotificationAlertDelegate>(nullptr);
-        emit notificationAlertCreated(mAlertsProxyModel.get(), mNotificationAlertDelegate.get());
-    }
-    return isNew;
 }
 
 void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
@@ -157,23 +143,24 @@ void NotificationAlertController::reset()
     {
         mAlertsProxyModel.reset();
     }
-
+/*
     if (mNotificationAlertDelegate)
     {
         mNotificationAlertDelegate.reset();
-    }
+    }*/
 }
 
 bool NotificationAlertController::hasNotificationsOrAlerts()
 {
-    return mNotificationAlertModel && mNotificationAlertModel->hasNotificationsOrAlerts();
+    return true;//mNotificationAlertModel && mNotificationAlertModel->hasNotificationsOrAlerts();
 }
 
 bool NotificationAlertController::hasAlertsOfType(int type)
 {
-    return mNotificationAlertModel && mNotificationAlertModel->hasAlertsOfType(type);
+    return true;//mNotificationAlertModel && mNotificationAlertModel->hasAlertsOfType(type);
 }
 
+/*
 void NotificationAlertController::applyNotificationFilter(AlertType opt)
 {
     if (mAlertsProxyModel)
@@ -181,10 +168,11 @@ void NotificationAlertController::applyNotificationFilter(AlertType opt)
         mAlertsProxyModel->setFilterAlertType(opt);
     }
 }
+*/
 
 void NotificationAlertController::requestNotifications() const
 {
-    mMegaApi->getNotifications();
+    //mMegaApi->getNotifications();
 }
 
 void NotificationAlertController::checkUseenNotifications()
@@ -194,17 +182,19 @@ void NotificationAlertController::checkUseenNotifications()
         return;
     }
 
+    /*
     auto unseenAlerts = mNotificationAlertModel->getUnseenNotifications();
     long long allUnseenAlerts = unseenAlerts[AlertModel::AlertType::ALERT_ALL];
     if(mAllUnseenAlerts != allUnseenAlerts)
     {
         mAllUnseenAlerts = allUnseenAlerts;
         emit unseenAlertsChanged(unseenAlerts);
-    }
+    }*/
 }
 
 void NotificationAlertController::ackSeenAlertsAndNotifications()
 {
+    /*
     if (mAllUnseenAlerts > 0 && hasNotificationsOrAlerts())
     {
         mMegaApi->acknowledgeUserAlerts();
@@ -213,5 +203,10 @@ void NotificationAlertController::ackSeenAlertsAndNotifications()
         {
             mMegaApi->setLastReadNotification(lastSeen);
         }
-    }
+    }*/
+}
+
+QAbstractItemModel* NotificationAlertController::getModel() const
+{
+    return mAlertsProxyModel.get();
 }

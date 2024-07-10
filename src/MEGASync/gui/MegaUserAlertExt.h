@@ -1,13 +1,13 @@
 #ifndef MEGA_USER_ALERT_EXT_H
 #define MEGA_USER_ALERT_EXT_H
 
-#include "megaapi.h"
+#include "NotificationExtBase.h"
 
-#include <QObject>
+#include "megaapi.h"
 
 #include <memory>
 
-class MegaUserAlertExt : public QObject
+class MegaUserAlertExt : public NotificationExtBase
 {
     Q_OBJECT
 
@@ -42,6 +42,7 @@ private:
     QString mEmail;
 
     void init();
+
 };
 
 #endif // MEGA_USER_ALERT_EXT_H

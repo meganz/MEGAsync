@@ -2,7 +2,7 @@
 #include "EmailRequester.h"
 
 MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent)
-    : QObject(parent)
+    : NotificationExtBase(NotificationExtBase::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
 {
     init();

@@ -22,14 +22,15 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 {
     if (index.isValid())
     {
+        /*
         NotificationAlertModelItem* item = getModelItem(index);
         if (!item)
         {
             QStyledItemDelegate::paint(painter, option, index);
             return;
-        }
+        }*/
 
-        MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
+        MegaNotificationExt* notification = nullptr;//static_cast<MegaNotificationExt*>(item->pointer);
         if (!notification)
         {
             assert(false || "No notif found");
@@ -40,7 +41,7 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
         painter->save();
         painter->translate(option.rect.topLeft());
 
-        handleNotificationItem(notification, option.rect, painter);
+        //handleNotificationItem(notification, option.rect, painter);
 
         painter->restore();
     }
@@ -57,16 +58,16 @@ QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
-    NotificationAlertModelItem* item = getModelItem(index);
+    /*NotificationAlertModelItem* item = getModelItem(index);
     if (!item)
     {
         return QStyledItemDelegate::sizeHint(option, index);
-    }
+    }*/
 
-    MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
+    MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(nullptr/*item->pointer*/);
     return QSize(DefaultWidth, notification->showImage() ? HeightWithImage : HeightWithoutImage);
 }
-
+/*
 void NotificationDelegate::handleNotificationItem(MegaNotificationExt* notification, const QRect& rect, QPainter* painter) const
 {
     int id = notification->getID();
@@ -102,3 +103,4 @@ NotificationAlertModelItem* NotificationDelegate::getModelItem(const QModelIndex
     }
     return item;
 }
+*/

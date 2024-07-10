@@ -17,18 +17,39 @@
 
 namespace
 {
-constexpr int DefaultWidth = 400;
-constexpr int DEFAULT_HEIGHT = 122;
+//constexpr int DefaultWidth = 400;
+//constexpr int DEFAULT_HEIGHT = 122;
+constexpr int MaxCost = 16;
 }
 
 using namespace mega;
 
-AlertDelegate::AlertDelegate(AlertModel* model, QObject* parent)
-    : QStyledItemDelegate(parent)
-    , mAlertsModel(model)
+AlertDelegate::AlertDelegate()
+    : mItems(MaxCost)
 {
 }
 
+QWidget* AlertDelegate::getWidget(MegaUserAlertExt* alert)
+{
+    if(!alert)
+    {
+        return nullptr;
+    }
+
+    auto alertItem = mItems[alert->getId()];
+    if(alertItem)
+    {
+        return alertItem;
+    }
+    else
+    {
+        AlertItem* item = new AlertItem();
+        item->setAlertData(alert);
+        mItems.insert(alert->getId(), item);
+        return mItems[alert->getId()];
+    }
+}
+/*
 void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     if (index.isValid())
@@ -39,7 +60,7 @@ void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
             return;
         }
 
-        MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
+        MegaUserAlertExt* alert = nullptr;//static_cast<MegaUserAlertExt*>(item->pointer);
         if (!alert)
         {
             assert(false || "No alert found");
@@ -50,7 +71,7 @@ void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
         painter->save();
         painter->translate(option.rect.topLeft());
 
-        handleAlertItem(alert, option.rect, painter);
+        //handleAlertItem(alert, option.rect, painter);
 
         painter->restore();
     }
@@ -87,7 +108,7 @@ bool AlertDelegate::editorEvent(QEvent* event, QAbstractItemModel *model, const 
             return true;
         }
 
-        MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
+        MegaUserAlertExt* alert = nullptr;//static_cast<MegaUserAlertExt*>(item->pointer);
         if (!alert)
         {
             return true;
@@ -198,7 +219,7 @@ bool AlertDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view, const 
             return true;
         }
 
-        MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
+        MegaUserAlertExt* alert = nullptr;//static_cast<MegaUserAlertExt*>(item->pointer);
         if (!alert)
         {
             return QStyledItemDelegate::helpEvent(event, view, option, index);
@@ -218,6 +239,7 @@ bool AlertDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view, const 
 
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
+
 
 void AlertDelegate::handleAlertItem(MegaUserAlertExt* alert, const QRect& rect, QPainter* painter) const
 {
@@ -255,3 +277,4 @@ NotificationAlertModelItem* AlertDelegate::getModelItem(const QModelIndex &index
     }
     return item;
 }
+*/

@@ -2,14 +2,17 @@
 #define NOTIFICATION_ALERT_CONTROLLER_H
 
 #include "NotificationAlertModel.h"
-#include "NotificationAlertDelegate.h"
-#include "NotificationAlertProxyModel.h"
+//#include "NotificationAlertDelegate.h"
+//#include "NotificationAlertProxyModel.h"
 
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "QTMegaGlobalListener.h"
 
 #include <QMap>
+
+//class NotificationAlertModel;
+class NotificationAlertProxyModel;
 
 class NotificationAlertController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
@@ -25,14 +28,14 @@ public:
     void reset();
     bool hasNotificationsOrAlerts();
     bool hasAlertsOfType(int type);
-    void applyNotificationFilter(AlertType opt);
+    //void applyNotificationFilter(AlertType opt);
     void requestNotifications() const;
     void ackSeenAlertsAndNotifications();
+    QAbstractItemModel* getModel() const;
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
-    void notificationAlertCreated(NotificationAlertProxyModel* model, NotificationAlertDelegate* delegate);
-    void unseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
+    //void unseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
 
 private:
     mega::MegaApi* mMegaApi;
@@ -40,12 +43,11 @@ private:
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     std::unique_ptr<NotificationAlertModel> mNotificationAlertModel;
     std::unique_ptr<NotificationAlertProxyModel> mAlertsProxyModel;
-    std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
+    //std::unique_ptr<NotificationAlertDelegate> mNotificationAlertDelegate;
     long long mAllUnseenAlerts;
 
     void populateUserAlerts(mega::MegaUserAlertList* alertList);
     void populateNotifications(const mega::MegaNotificationList* notificationList);
-    bool createModelAndDelegate();
     void checkUseenNotifications();
 
 };

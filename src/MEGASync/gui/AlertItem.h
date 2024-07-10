@@ -10,11 +10,13 @@
 
 #include <memory>
 
-namespace Ui {
+namespace Ui
+{
 class AlertItem;
 }
 
-namespace UserAttributes{
+namespace UserAttributes
+{
 class FullName;
 }
 
@@ -23,7 +25,8 @@ class AlertItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit AlertItem(QWidget *parent = 0);
+    //explicit QWidget(QWidget* parent = nullptr, Qt::WindowFlags f = Qt::WindowFlags());
+    explicit AlertItem(QWidget* parent = 0);
     ~AlertItem();
 
     void setAlertData(MegaUserAlertExt* alert);
@@ -58,6 +61,7 @@ private:
     std::unique_ptr<mega::MegaNode> mAlertNode;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
+
 };
 
 #endif // ALERT_ITEM_H

@@ -1,8 +1,17 @@
 #ifndef NOTIFICATION_ALERT_MODEL_H
 #define NOTIFICATION_ALERT_MODEL_H
 
-#include "NotificationModel.h"
-#include "AlertModel.h"
+#include "NotificationExtBase.h"
+
+#include <QAbstractItemModel>
+
+namespace mega
+{
+class MegaUserAlert;
+class MegaUserAlertList;
+class MegaNotificationList;
+class MegaNotification;
+}
 
 class NotificationAlertModel : public QAbstractItemModel
 {
@@ -18,6 +27,11 @@ public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
 
+    void updateAlerts(mega::MegaUserAlertList* alerts);
+    //void updateNotifications(const mega::MegaNotificationList* notifications);
+    //void insertNotifications(const mega::MegaNotificationList* notificationList);
+
+    /*
     void createNotificationModel(const mega::MegaNotificationList* notifications);
     void createAlertModel(mega::MegaUserAlertList* alerts);
 
@@ -38,14 +52,25 @@ private slots:
     void onNotificationDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
     void onNotificationRowsInserted(const QModelIndex& parent, int first, int last);
     void onNotificationRowsRemoved(const QModelIndex& parent, int first, int last);
+*/
 
 private:
-    std::unique_ptr<NotificationModel> mNotificationsModel = nullptr;
-    std::unique_ptr<AlertModel> mAlertsModel = nullptr;
+    QList<NotificationExtBase*> mNotifications;
 
-    int getNotificationRowCount() const;
-    int getAlertRowCount() const;
-    int getAlertRow(int row) const;
+    void insertAlerts(const QList<mega::MegaUserAlert*>& alerts);
+    void updateAlerts(const QList<mega::MegaUserAlert*>& alerts);
+    void removeAlerts(const QList<mega::MegaUserAlert*>& alerts);
+
+    //void insertNotifications(const QList<const mega::MegaNotification*>& notifications);
+    //void updateNotifications(const QList<const mega::MegaNotification*>& notifications);
+    //void removeNotifications(const QList<const mega::MegaNotification*>& notifications);
+
+
+   // int getNotificationRowCount() const;
+   // int getAlertRowCount() const;
+  // int getAlertRow(int row) const;
+
+    auto findAlertById(unsigned id);
 
 };
 

@@ -24,6 +24,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "NotificationAlertDelegate.h"
 
 #include "Utilities.h"
 #include "platform/Platform.h"
@@ -110,9 +111,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-
-    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
@@ -203,6 +201,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     reset();
 
     hideSomeIssues();
+
+    initNotificationArea();
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -1180,15 +1180,6 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
-void InfoDialog::updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate)
-{
-    notificationsReady = true;
-    ui->tvNotifications->setModel(model);
-    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
-    ui->tvNotifications->setItemDelegate(delegate);
-    ui->sNotifications->setCurrentWidget(ui->pNotifications);
-}
-
 void InfoDialog::onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts)
 {
     setUnseenNotifications(alerts[AlertModel::ALERT_ALL]);
@@ -1517,7 +1508,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         }
     }
 
-    app->getNotificationController()->applyNotificationFilter(opt);
+    //app->getNotificationController()->applyNotificationFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1782,4 +1773,15 @@ void InfoDialog::repositionInfoDialog()
     {
         move(posx, posy);
     }
+}
+
+void InfoDialog::initNotificationArea()
+{
+    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
+    ui->tvNotifications->setModel(app->getNotificationController()->getModel());
+    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
+    ui->tvNotifications->setItemDelegate(new NotificationAlertDelegate(ui->tvNotifications));
+    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+    notificationsReady = true;
 }

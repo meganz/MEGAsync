@@ -19,8 +19,8 @@ public:
 private:
     NotificationModel* mNotificationModel;
 
-    void handleNotificationItem(MegaNotificationExt* notification, const QRect& rect, QPainter* painter) const;
-    NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
+    //void handleNotificationItem(MegaNotificationExt* notification, const QRect& rect, QPainter* painter) const;
+    //NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
 
 };
 

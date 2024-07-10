@@ -1,9 +1,9 @@
 #ifndef MEGA_NOTIFICATION_EXT_H
 #define MEGA_NOTIFICATION_EXT_H
 
+#include "NotificationExtBase.h"
 #include "ImageDownloader.h"
 
-#include <QObject>
 #include <QPixmap>
 
 #include <memory>
@@ -13,7 +13,7 @@ namespace mega
 class MegaNotification;
 }
 
-class MegaNotificationExt : public QObject
+class MegaNotificationExt : public NotificationExtBase
 {
     Q_OBJECT
 

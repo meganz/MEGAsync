@@ -127,7 +127,6 @@ public slots:
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
 
-   void updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate);
    void onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
 
 private slots:
@@ -264,6 +263,7 @@ protected:
     void setupSyncController();
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
+    void initNotificationArea();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
