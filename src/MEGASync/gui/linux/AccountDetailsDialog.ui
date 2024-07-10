@@ -317,7 +317,7 @@ min-width:219px;
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_6">
    <item>
-    <widget class="QGroupBox" name="groupBox">
+    <widget class="QGroupBox" name="headerBox">
      <property name="title">
       <string/>
      </property>
