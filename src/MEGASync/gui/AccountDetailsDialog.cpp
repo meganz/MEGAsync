@@ -64,7 +64,7 @@ void AccountDetailsDialog::refresh()
         // We have data, so disable loading property
         setProperty("loading", false);
 
-        QString quotaStringFormat = QString::fromLatin1("<span style='color:%1; font-size:%2px;'>%3</span>");
+        QString quotaStringFormat = QString::fromLatin1("<span style='font-size:%1px;'>%2</span>");
         // Get font to adapt size to widget if needed
         // Getting font from lUsedStorage considering both
         // lUsedStorage and lUsedTransfer use the same font.
@@ -73,13 +73,12 @@ void AccountDetailsDialog::refresh()
         QFont font (mUi->lUsedStorage->font());
         font.setPixelSize(FONT_SIZE_PX);
 
-               // ---------- Process storage usage
+        // ---------- Process storage usage
 
-               // Get useful data
+        // Get useful data
         auto totalStorage(preferences->totalStorage());
         auto usedStorage(preferences->usedStorage());
 
-        QString usageColorS;
         QString usedStorageString = Utilities::getSizeString(usedStorage);
         QString totalStorageString;
         QString storageUsageStringFormatted (usedStorageString);
@@ -91,7 +90,6 @@ void AccountDetailsDialog::refresh()
             // Disable over quota and warning
             setProperty("storageState", QLatin1String("ok"));
             mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
-            usageColorS = QString::fromLatin1("#333333");
         }
         else
         {
@@ -104,14 +102,12 @@ void AccountDetailsDialog::refresh()
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OVER);
                     setProperty("storageState", QLatin1String("full"));
-                    usageColorS = QString::fromLatin1("#D90007");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_ORANGE:
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_WARNING);
                     setProperty("storageState", QLatin1String("warning"));
-                    usageColorS = QString::fromLatin1("#F98400");
                     break;
                 }
                 case MegaApi::STORAGE_STATE_UNKNOWN:
@@ -122,7 +118,6 @@ void AccountDetailsDialog::refresh()
                 {
                     mUi->wCircularStorage->setState(CircularUsageProgressBar::STATE_OK);
                     setProperty("storageState", QLatin1String("ok"));
-                    usageColorS = QString::fromLatin1("#333333");
                     break;
                 }
             }
@@ -136,7 +131,7 @@ void AccountDetailsDialog::refresh()
 
             storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
                 usedStorageString,
-                totalStorageString);;
+                totalStorageString);
         }
 
         mUi->wCircularStorage->setValue(parts);
@@ -151,7 +146,6 @@ void AccountDetailsDialog::refresh()
         auto usedTransfer(preferences->usedBandwidth());
         auto transferQuotaState(MegaSyncApp->getTransferQuotaState());
 
-        QString usageColorT;
         QString usedTransferString (Utilities::getSizeString(usedTransfer));
         QString totalTransferString;
         QString transferUsageStringFormatted (usedTransferString);
@@ -162,14 +156,12 @@ void AccountDetailsDialog::refresh()
             {
                 setProperty("transferState", QLatin1String("ok"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OK);
-                usageColorT = QString::fromLatin1("#333333");
                 break;
             }
             case QuotaState::WARNING:
             {
                 setProperty("transferState", QLatin1String("warning"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_WARNING);
-                usageColorT = QString::fromLatin1("#F98400");
                 break;
             }
             case QuotaState::OVERQUOTA:
@@ -178,16 +170,15 @@ void AccountDetailsDialog::refresh()
             {
                 setProperty("transferState", QLatin1String("full"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OVER);
-                usageColorT = QString::fromLatin1("#D90007");
                 break;
             }
         }
 
-               // Set progress bar
+        // Set progress bar
         switch (accType)
         {
             case Preferences::ACCOUNT_TYPE_BUSINESS:
-                                                     // Fallthrough
+            // Fallthrough
             case Preferences::ACCOUNT_TYPE_PRO_FLEXI:
             {
                 setProperty("accountType", QLatin1String("business"));
@@ -233,10 +224,8 @@ void AccountDetailsDialog::refresh()
             }
         }
 
-               // Now compute the font size and set usage strings
-               // Find correct font size so that the string does not overflow
-        auto defaultColor = QString::fromLatin1("#8d8d8e");
-
+       // Now compute the font size and set usage strings
+       // Find correct font size so that the string does not overflow
         auto contentsMargins = mUi->lUsedStorage->contentsMargins();
         auto margin = contentsMargins.left() + contentsMargins.right() + 2 * mUi->lUsedStorage->margin();
         auto storageStringMaxWidth = mUi->wStorageDetails->contentsRect().width() - margin;
@@ -255,8 +244,7 @@ void AccountDetailsDialog::refresh()
         };
 
                // Now apply format (color, font size) to Storage usage string
-        auto usedStorageStringFormatted = quotaStringFormat.arg(usageColorS,
-                                                                QString::number(font.pixelSize()),
+        auto usedStorageStringFormatted = quotaStringFormat.arg(QString::number(font.pixelSize()),
                                                                 usedStorageString);
         if (totalStorage == 0ULL || Utilities::isBusinessAccount())
         {
@@ -267,16 +255,14 @@ void AccountDetailsDialog::refresh()
             storageUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
                 usedStorageStringFormatted,
                 totalStorageString);
-            storageUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                                QString::number(font.pixelSize()),
+            storageUsageStringFormatted = quotaStringFormat.arg(QString::number(font.pixelSize()),
                                                                 storageUsageStringFormatted);
         }
 
         mUi->lUsedStorage->setText(storageUsageStringFormatted);
 
                // Now apply format (color, font size) to Transfer usage string
-        auto usedTransferStringFormatted = quotaStringFormat.arg(usageColorT,
-                                                                 QString::number(font.pixelSize()),
+        auto usedTransferStringFormatted = quotaStringFormat.arg(QString::number(font.pixelSize()),
                                                                  usedTransferString);
         if (totalTransfer == 0ULL || Utilities::isBusinessAccount())
         {
@@ -287,8 +273,7 @@ void AccountDetailsDialog::refresh()
             transferUsageStringFormatted = Utilities::getTranslatedSeparatorTemplate().arg(
                 usedTransferStringFormatted,
                 totalTransferString);
-            transferUsageStringFormatted = quotaStringFormat.arg(defaultColor,
-                                                                 QString::number(font.pixelSize()),
+            transferUsageStringFormatted = quotaStringFormat.arg(QString::number(font.pixelSize()),
                                                                  transferUsageStringFormatted);
         }
 
