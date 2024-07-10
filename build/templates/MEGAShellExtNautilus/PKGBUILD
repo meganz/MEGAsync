@@ -30,7 +30,7 @@ url=""
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=5.3.0' 'nautilus')
-makedepends=( 'ca-certificates' 'qt5-base' 'nautilus' 'libnautilus-extension')
+makedepends=( 'ca-certificates' 'libnautilus-extension' 'cmake')
 checkdepends=()
 optdepends=()
 provides=("nautilus-megasync=${pkgver}")
@@ -46,23 +46,10 @@ noextract=()
 md5sums=('MD5SUM') # generated with makepkg -g
 validpgpkeys=()
 
-prepare() {
-	cd "$pkgname-$pkgver"
-}
-
 build() {
-	#export DESKTOP_DESTDIR=$pkgdir/usr
-	cd "$pkgname-$pkgver"
-	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNautilus.pro
-	if [ 0$(pacman -Q nautilus | awk '{print $NF}' | awk -F='-' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
-	 echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"
-	 for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
-	else
-	 echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
-	 rm data/emblems/64x64/*smaller.png
-	fi    
-	qmake-qt5 || qmake
-	make
+    cmake -B build -S "$pkgname-$pkgver" \
+		-DCMAKE_INSTALL_PREFIX='/usr'
+    cmake --build build ${BUILD_PARALLEL_JOBS}
 }
 
 check() {
@@ -70,6 +57,5 @@ check() {
 }
 
 package() {
-	cd "$pkgname-$pkgver"
-	make install INSTALL_ROOT=$pkgdir
+	DESTDIR="$pkgdir" cmake --install build
 }
