@@ -1,16 +1,15 @@
 #include "NotificationDelegate.h"
 
 #include "NotificationAlertModel.h"
-#include "NotificationAlertTypes.h"
 
 #include <QPainter>
 #include <QSortFilterProxyModel>
 
 namespace
 {
-constexpr int DEFAULT_WIDTH = 400;
-constexpr int HEIGHT_WITHOUT_IMAGE = 219;
-constexpr int HEIGHT_WITH_IMAGE = 346;
+constexpr int DefaultWidth = 400;
+constexpr int HeightWithoutImage = 219;
+constexpr int HeightWithImage = 346;
 }
 
 NotificationDelegate::NotificationDelegate(NotificationModel* notificationModel, QObject* parent)
@@ -23,16 +22,14 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
 {
     if (index.isValid())
     {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-        if (item->type != NotificationAlertModelItem::NOTIFICATION || !item->pointer)
+        NotificationAlertModelItem* item = getModelItem(index);
+        if (!item)
         {
             QStyledItemDelegate::paint(painter, option, index);
             return;
         }
 
-        NotifTest* notification = static_cast<NotifTest*>(item->pointer);
-
+        MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
         if (!notification)
         {
             assert(false || "No notif found");
@@ -40,18 +37,11 @@ void NotificationDelegate::paint(QPainter* painter, const QStyleOptionViewItem& 
             return;
         }
 
-        NotificationItem* notifItem = mNotificationModel->notificationItems[notification->id];
-        if (!notifItem)
-        {
-            notifItem = new NotificationItem();
-            mNotificationModel->notificationItems.insert(notification->id, notifItem);
-            notifItem->setNotificationData(notification);
-        }
-
         painter->save();
         painter->translate(option.rect.topLeft());
-        notifItem->resize(option.rect.width(), option.rect.height());
-        notifItem->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
+
+        handleNotificationItem(notification, option.rect, painter);
+
         painter->restore();
     }
     else
@@ -67,13 +57,48 @@ QSize NotificationDelegate::sizeHint(const QStyleOptionViewItem& option, const Q
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
-    QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-    NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-    if (item->type != NotificationAlertModelItem::NOTIFICATION || !item->pointer)
+    NotificationAlertModelItem* item = getModelItem(index);
+    if (!item)
     {
         return QStyledItemDelegate::sizeHint(option, index);
     }
 
-    NotifTest* notif = static_cast<NotifTest*>(item->pointer);
-    return QSize(DEFAULT_WIDTH, notif->imageName.empty() ? HEIGHT_WITHOUT_IMAGE : HEIGHT_WITH_IMAGE);
+    MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(item->pointer);
+    return QSize(DefaultWidth, notification->showImage() ? HeightWithImage : HeightWithoutImage);
+}
+
+void NotificationDelegate::handleNotificationItem(MegaNotificationExt* notification, const QRect& rect, QPainter* painter) const
+{
+    int id = notification->getID();
+    NotificationItem* notificationItem = mNotificationModel->notificationItems[id];
+    bool isNew = !notificationItem;
+    if (isNew)
+    {
+        notificationItem = new NotificationItem();
+        notificationItem->setNotificationData(notification);
+    }
+
+    notificationItem->resize(rect.width(), rect.height());
+    notificationItem->render(painter, QPoint(0, 0), QRegion(0, 0, rect.width(), rect.height()));
+
+    if(isNew)
+    {
+        mNotificationModel->notificationItems.insert(id, notificationItem);
+    }
+}
+
+NotificationAlertModelItem* NotificationDelegate::getModelItem(const QModelIndex &index) const
+{
+    NotificationAlertModelItem* item = nullptr;
+    const QSortFilterProxyModel* proxyModel = static_cast<const QSortFilterProxyModel*>(index.model());
+    QModelIndex filteredIndex = proxyModel->mapToSource(index);
+    if (filteredIndex.isValid())
+    {
+        item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item && (item->type != NotificationAlertModelItem::NOTIFICATION || !item->pointer))
+        {
+            item = nullptr;
+        }
+    }
+    return item;
 }

@@ -725,7 +725,7 @@ void MegaApplication::initialize()
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 
-    mNotificationAlertController = std::make_unique<NotificationAlertController>(this);
+    mNotificationAlertController = std::make_unique<NotificationAlertController>(nullptr);
     connect(mNotificationAlertController.get(), &NotificationAlertController::userAlertsUpdated,
             mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }

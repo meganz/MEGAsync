@@ -14,10 +14,12 @@ class AlertFilterType : public QWidget
     Q_OBJECT
 
 public:
-    explicit AlertFilterType(QWidget *parent = 0);
+    explicit AlertFilterType(QWidget* parent = 0);
     ~AlertFilterType();
 
     void setActualFilter(AlertType type);
+    bool allFilterHasBeenSelected() const;
+    void resetAllFilterHasBeenSelected();
 
 signals:
     void clicked();
@@ -27,8 +29,9 @@ protected:
     void changeEvent(QEvent *event);
 
 private:
-    Ui::AlertFilterType *ui;
+    Ui::AlertFilterType* ui;
     AlertType mType;
+    bool mAllFilterHasBeenSelected;
 
 };
 

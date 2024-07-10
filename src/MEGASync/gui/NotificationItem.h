@@ -1,9 +1,9 @@
-#ifndef NOTIFICATIONITEM_H
-#define NOTIFICATIONITEM_H
+#ifndef NOTIFICATION_ITEM_H
+#define NOTIFICATION_ITEM_H
 
 #include <QWidget>
 
-class NotifTest;
+class MegaNotificationExt;
 
 namespace Ui
 {
@@ -18,12 +18,13 @@ public:
     explicit NotificationItem(QWidget *parent = nullptr);
     ~NotificationItem();
 
-    void setNotificationData(NotifTest* notification);
+    void setNotificationData(MegaNotificationExt* notification);
 
 private:
-    Ui::NotificationItem *ui;
-    NotifTest* mNotificationData;
+    Ui::NotificationItem* ui;
+    MegaNotificationExt* mNotificationData;
 
+    void setImages();
 };
 
-#endif // NOTIFICATIONITEM_H
+#endif // NOTIFICATION_ITEM_H

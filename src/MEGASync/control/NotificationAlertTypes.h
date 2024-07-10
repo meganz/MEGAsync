@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONALERTTYPES_H
-#define NOTIFICATIONALERTTYPES_H
+#ifndef NOTIFICATION_ALERT_TYPES_H
+#define NOTIFICATION_ALERT_TYPES_H
 
 enum class AlertType
 {
@@ -23,4 +23,4 @@ struct NotificationAlertModelItem
     void* pointer;
 };
 
-#endif // NOTIFICATIONALERTTYPES_H
+#endif // NOTIFICATION_ALERT_TYPES_H

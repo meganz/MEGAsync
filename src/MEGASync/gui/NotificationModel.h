@@ -1,25 +1,18 @@
-#ifndef QNOTIFICATIONSMODEL_H
-#define QNOTIFICATIONSMODEL_H
+#ifndef NOTIFICATION_MODEL_H
+#define NOTIFICATION_MODEL_H
 
 #include "NotificationItem.h"
+#include "MegaNotificationExt.h"
 
 #include <QAbstractItemModel>
 #include <QCache>
 
-struct NotifTest
+#include <deque>
+
+namespace mega
 {
-    int64_t id = 0;
-    std::string title = "";
-    std::string description = "";
-    std::string imageName = "";
-    std::string iconName = "";
-    std::string imagePath = "";
-    int64_t start = 0;
-    int64_t end = 0;
-    bool showBanner = false;
-    std::map<std::string, std::string> callToAction1{};
-    std::map<std::string, std::string> callToAction2{};
-};
+class MegaNotificationList;
+}
 
 class NotificationModel : public QAbstractItemModel
 {
@@ -36,11 +29,25 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+    void insert(const mega::MegaNotificationList* notifications);
+    long long getNumUnseenNotifications() const;
+    uint32_t getLastSeenNotification() const;
+    void setLastSeenNotification(uint32_t id);
+
     QCache<int, NotificationItem> notificationItems;
 
 private:
-    QMap<int, NotifTest*> mNotifMap;
+    QMap<int, MegaNotificationExt*> mNotificationsMap;
+    std::deque<unsigned int> mNotificationsOrder;
+    uint32_t mLastSeenNotification;
+
+    int countNewNotifications(const mega::MegaNotificationList* notifications) const;
+    void insertNewNotifications(const mega::MegaNotificationList* notifications);
+    void updateNotifications(const mega::MegaNotificationList* notifications);
+    void removeNotifications(const mega::MegaNotificationList* notifications);
+    QSet<int> createNotificationIDSet(const mega::MegaNotificationList* notifications) const;
+    QList<int> findRowsToRemove(const QSet<int>& notificationIDsInList) const;
 
 };
 
-#endif // QNOTIFICATIONSMODEL_H
+#endif // NOTIFICATION_MODEL_H

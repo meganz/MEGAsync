@@ -1,5 +1,5 @@
-#ifndef NOTIFICATIONALERTPROXYMODEL_H
-#define NOTIFICATIONALERTPROXYMODEL_H
+#ifndef NOTIFICATION_ALERT_PROXY_MODEL_H
+#define NOTIFICATION_ALERT_PROXY_MODEL_H
 
 #include "NotificationAlertTypes.h"
 
@@ -15,7 +15,6 @@ public:
 
     AlertType filterAlertType();
     void setFilterAlertType(AlertType filterType);
-    bool checkFilterType(int sdkType) const;
 
 protected:
     bool filterAcceptsRow(int row, const QModelIndex& sourceParent) const override;
@@ -24,6 +23,8 @@ protected:
 private:
     AlertType mActualFilter;
 
+    bool checkAlertFilterType(int sdkType) const;
+
 };
 
-#endif // NOTIFICATIONALERTPROXYMODEL_H
+#endif // NOTIFICATION_ALERT_PROXY_MODEL_H

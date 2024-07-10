@@ -1,5 +1,5 @@
-#ifndef ALERTMODEL_H
-#define ALERTMODEL_H
+#ifndef ALERT_MODEL_H
+#define ALERT_MODEL_H
 
 #include "AlertItem.h"
 #include "MegaUserAlertExt.h"
@@ -25,7 +25,7 @@ public:
         ALERT_ALL //this must be the last on the enum
     };
 
-    explicit AlertModel(mega::MegaUserAlertList* alerts, QObject* parent = 0);
+    explicit AlertModel(QObject* parent = 0);
     virtual ~AlertModel();
 
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
@@ -34,7 +34,6 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
-    void refreshAlerts();
     void insertAlerts(mega::MegaUserAlertList* alerts, bool copy = false);
     void refreshAlertItem(unsigned id);
     bool existsNotifications(int type) const;
@@ -52,4 +51,4 @@ private:
 
 };
 
-#endif // ALERTMODEL_H
+#endif // ALERT_MODEL_H

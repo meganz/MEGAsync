@@ -8,12 +8,12 @@
 
 namespace
 {
-constexpr int MAX_COST = 16;
+constexpr int MaxCost = 16;
 }
 
 using namespace mega;
 
-AlertModel::AlertModel(MegaUserAlertList* alerts, QObject* parent)
+AlertModel::AlertModel(QObject* parent)
     : QAbstractItemModel(parent)
 {
     for(int i = 0; i < ALERT_ALL; i++)
@@ -22,8 +22,7 @@ AlertModel::AlertModel(MegaUserAlertList* alerts, QObject* parent)
         mUnSeenAlerts[i] = 0;
     }
 
-    alertItems.setMaxCost(MAX_COST);
-    insertAlerts(alerts);
+    alertItems.setMaxCost(MaxCost);
 }
 
 void AlertModel::insertAlerts(MegaUserAlertList* alerts, bool copy)
@@ -212,14 +211,6 @@ QVariant AlertModel::data(const QModelIndex &index, int role) const
     }
 
     return QVariant();
-}
-
-void AlertModel::refreshAlerts()
-{
-    if (mAlertOrder.size())
-    {
-        emit dataChanged(index(0, 0, QModelIndex()), index(int(mAlertOrder.size()) - 1, 0, QModelIndex()));
-    }
 }
 
 QMap<AlertModel::AlertType, long long> AlertModel::getUnseenAlerts() const

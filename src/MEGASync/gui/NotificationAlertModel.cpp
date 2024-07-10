@@ -2,31 +2,21 @@
 
 #include "NotificationAlertTypes.h"
 
-NotificationAlertModel::NotificationAlertModel(NotificationModel* notificationsModel,
-                                               AlertModel* alertsModel,
-                                               QObject* parent)
-    : QAbstractItemModel(parent)
-    , mNotificationsModel(std::unique_ptr<NotificationModel>(notificationsModel))
-    , mAlertsModel(std::unique_ptr<AlertModel>(alertsModel))
-{
-    connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
-    connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged, this, &NotificationAlertModel::onDataChanged);
-}
-
 QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex& parent) const
 {
     QModelIndex result;
     if (!parent.isValid())
     {
-        if (row < mNotificationsModel->rowCount())
+        int notificationRowCount = getNotificationRowCount();
+        if (notificationRowCount > 0 && row < notificationRowCount)
         {
-            NotificationAlertModelItem* item = new NotificationAlertModelItem { NotificationAlertModelItem::NOTIFICATION,
-                                                                                mNotificationsModel->index(row, column).internalPointer() };
+            MegaNotificationExt* notification = static_cast<MegaNotificationExt*>(mNotificationsModel->index(row, column).internalPointer());
+            NotificationAlertModelItem* item = new NotificationAlertModelItem { NotificationAlertModelItem::NOTIFICATION, notification };
             result = createIndex(row, column, item);
         }
-        else if (row < mNotificationsModel->rowCount() + mAlertsModel->rowCount())
+        else if (row < (notificationRowCount + getAlertRowCount()))
         {
-            int alertRow = row - mNotificationsModel->rowCount();
+            int alertRow = getAlertRow(row);
             MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(mAlertsModel->index(alertRow, column).internalPointer());
             NotificationAlertModelItem* item = new NotificationAlertModelItem { NotificationAlertModelItem::ALERT, alert };
             result = createIndex(row, column, item);
@@ -45,7 +35,7 @@ int NotificationAlertModel::rowCount(const QModelIndex& parent) const
     int totalRowCount = 0;
     if (!parent.isValid())
     {
-        totalRowCount = mNotificationsModel->rowCount() + mAlertsModel->rowCount();
+        totalRowCount = getNotificationRowCount() + getAlertRowCount();
     }
     return totalRowCount;
 }
@@ -55,7 +45,8 @@ int NotificationAlertModel::columnCount(const QModelIndex& parent) const
     int maxColumnCount = 0;
     if (!parent.isValid())
     {
-        maxColumnCount = std::max(mNotificationsModel->columnCount(), mAlertsModel->columnCount());
+        maxColumnCount = std::max(mNotificationsModel ? mNotificationsModel->columnCount() : 0,
+                                  mAlertsModel ? mAlertsModel->columnCount() : 0);
     }
     return maxColumnCount;
 }
@@ -70,8 +61,7 @@ QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
         {
             case NotificationAlertModelItem::ALERT:
             {
-                int alertRow = index.row() - mNotificationsModel->rowCount();
-                result = mAlertsModel->data(mAlertsModel->index(alertRow, index.column()), role);
+                result = mAlertsModel->data(mAlertsModel->index(getAlertRow(index.row()), index.column()), role);
                 break;
             }
             case NotificationAlertModelItem::NOTIFICATION:
@@ -89,16 +79,102 @@ QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
     return result;
 }
 
-bool NotificationAlertModel::hasAlerts()
+void NotificationAlertModel::createNotificationModel(const mega::MegaNotificationList* notifications)
 {
-    return (mAlertsModel && mAlertsModel->rowCount(QModelIndex()))
-           || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
+    if(!mNotificationsModel)
+    {
+        mNotificationsModel = std::make_unique<NotificationModel>(nullptr);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::rowsInserted,
+                this, &NotificationAlertModel::onNotificationRowsInserted);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::rowsRemoved,
+                this, &NotificationAlertModel::onNotificationRowsRemoved);
+        connect(mNotificationsModel.get(), &QAbstractItemModel::dataChanged,
+                this, &NotificationAlertModel::onNotificationDataChanged);
+        mNotificationsModel->insert(notifications);
+    }
+}
+
+void NotificationAlertModel::createAlertModel(mega::MegaUserAlertList* alerts)
+{
+    if(!mAlertsModel)
+    {
+        mAlertsModel = std::make_unique<AlertModel>(nullptr);
+        connect(mAlertsModel.get(), &QAbstractItemModel::rowsInserted,
+                this, &NotificationAlertModel::onAlertRowsInserted);
+        connect(mAlertsModel.get(), &QAbstractItemModel::rowsRemoved,
+                this, &NotificationAlertModel::onAlertRowsRemoved);
+        connect(mAlertsModel.get(), &QAbstractItemModel::dataChanged,
+                this, &NotificationAlertModel::onAlertDataChanged);
+        mAlertsModel->insertAlerts(alerts);
+    }
+}
+
+void NotificationAlertModel::onAlertRowsInserted(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        int startRow = first + getNotificationRowCount();
+        int endRow = last + getNotificationRowCount();
+        beginInsertRows(QModelIndex(), startRow, endRow);
+        endInsertRows();
+    }
+}
+
+void NotificationAlertModel::onAlertRowsRemoved(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        int startRow = first + getNotificationRowCount();
+        int endRow = last + getNotificationRowCount();
+        beginRemoveRows(QModelIndex(), startRow, endRow);
+        endRemoveRows();
+    }
+}
+
+void NotificationAlertModel::onAlertDataChanged(const QModelIndex& topLeft,
+                                                const QModelIndex& bottomRight,
+                                                const QVector<int>& roles)
+{
+    int startRow = topLeft.row() + getNotificationRowCount();
+    int endRow = bottomRight.row() + getNotificationRowCount();
+    emit dataChanged(index(startRow, topLeft.column()),
+                     index(endRow, bottomRight.column()), roles);
+}
+
+void NotificationAlertModel::onNotificationRowsInserted(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        beginInsertRows(QModelIndex(), first, last);
+        endInsertRows();
+    }
+}
+
+void NotificationAlertModel::onNotificationRowsRemoved(const QModelIndex& parent, int first, int last)
+{
+    if (!parent.isValid())
+    {
+        beginRemoveRows(QModelIndex(), first, last);
+        endRemoveRows();
+    }
+}
+
+void NotificationAlertModel::onNotificationDataChanged(const QModelIndex& topLeft,
+                                                const QModelIndex& bottomRight,
+                                                const QVector<int>& roles)
+{
+    emit dataChanged(index(topLeft.row(), topLeft.column()),
+                     index(bottomRight.row(), bottomRight.column()), roles);
+}
+
+bool NotificationAlertModel::hasNotificationsOrAlerts()
+{
+    return rowCount() > 0;
 }
 
 bool NotificationAlertModel::hasAlertsOfType(int type)
 {
-    return (mAlertsModel && mAlertsModel->existsNotifications(type))
-            || (mNotificationsModel && mNotificationsModel->rowCount(QModelIndex()));
+    return mAlertsModel && mAlertsModel->existsNotifications(type);
 }
 
 QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifications() const
@@ -108,7 +184,34 @@ QMap<AlertModel::AlertType, long long> NotificationAlertModel::getUnseenNotifica
     {
         unseenNotifications = mAlertsModel->getUnseenAlerts();
     }
+    if(mNotificationsModel)
+    {
+        unseenNotifications[AlertModel::AlertType::ALERT_ALL] += mNotificationsModel->getNumUnseenNotifications();
+    }
     return unseenNotifications;
+}
+
+AlertModel* NotificationAlertModel::alertModel() const
+{
+    return mAlertsModel.get();
+}
+
+NotificationModel* NotificationAlertModel::notificationModel() const
+{
+    return mNotificationsModel.get();
+}
+
+uint32_t NotificationAlertModel::getLastSeenNotification() const
+{
+    return mNotificationsModel ? mNotificationsModel->getLastSeenNotification() : 0;
+}
+
+void NotificationAlertModel::setLastSeenNotification(uint32_t id)
+{
+    if (mNotificationsModel)
+    {
+        mNotificationsModel->setLastSeenNotification(id);
+    }
 }
 
 void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
@@ -119,9 +222,25 @@ void NotificationAlertModel::insertAlerts(mega::MegaUserAlertList* alerts)
     }
 }
 
-void NotificationAlertModel::onDataChanged(const QModelIndex& topLeft,
-                                           const QModelIndex& bottomRight,
-                                           const QVector<int>& roles)
+void NotificationAlertModel::insertNotifications(const mega::MegaNotificationList* notificationList)
 {
-    emit dataChanged(index(topLeft.row(), topLeft.column()), index(bottomRight.row(), bottomRight.column()), roles);
+    if (mNotificationsModel)
+    {
+        mNotificationsModel->insert(notificationList);
+    }
+}
+
+int NotificationAlertModel::getNotificationRowCount() const
+{
+    return mNotificationsModel ? mNotificationsModel->rowCount() : 0;
+}
+
+int NotificationAlertModel::getAlertRowCount() const
+{
+    return mAlertsModel ? mAlertsModel->rowCount() : 0;
+}
+
+int NotificationAlertModel::getAlertRow(int row) const
+{
+    return row - getNotificationRowCount();
 }

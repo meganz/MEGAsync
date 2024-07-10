@@ -17,7 +17,7 @@
 
 namespace
 {
-constexpr int DEFAULT_WIDTH = 400;
+constexpr int DefaultWidth = 400;
 constexpr int DEFAULT_HEIGHT = 122;
 }
 
@@ -33,11 +33,9 @@ void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
 {
     if (index.isValid())
     {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = getModelItem(index);
+        if (!item)
         {
-            QStyledItemDelegate::paint(painter, option, index);
             return;
         }
 
@@ -49,21 +47,11 @@ void AlertDelegate::paint(QPainter* painter, const QStyleOptionViewItem& option,
             return;
         }
 
-        AlertItem* ti = mAlertsModel->alertItems[alert->getId()];
-        if (!ti)
-        {
-            ti = new AlertItem();
-            connect(ti, &AlertItem::refreshAlertItem, mAlertsModel, &AlertModel::refreshAlertItem);
-            mAlertsModel->alertItems.insert(alert->getId(), ti);
-            ti->setAlertData(alert);
-        }
-
         painter->save();
         painter->translate(option.rect.topLeft());
 
-        ti->resize(option.rect.width(), option.rect.height());
+        handleAlertItem(alert, option.rect, painter);
 
-        ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
     else
@@ -76,7 +64,7 @@ QSize AlertDelegate::sizeHint(const QStyleOptionViewItem& option, const QModelIn
 {
     if (index.isValid())
     {
-        return QSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        return QSize(DefaultWidth, DEFAULT_HEIGHT);
     }
     else
     {
@@ -93,9 +81,8 @@ bool AlertDelegate::editorEvent(QEvent* event, QAbstractItemModel *model, const 
 
     if (QEvent::MouseButtonPress ==  event->type())
     {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = getModelItem(index);
+        if (!item)
         {
             return true;
         }
@@ -205,9 +192,8 @@ bool AlertDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view, const 
 
     if (event->type() == QEvent::ToolTip)
     {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-        if (item->type != NotificationAlertModelItem::ALERT || !item->pointer)
+        NotificationAlertModelItem* item = getModelItem(index);
+        if (!item)
         {
             return true;
         }
@@ -231,4 +217,41 @@ bool AlertDelegate::helpEvent(QHelpEvent* event, QAbstractItemView* view, const 
     }
 
     return QStyledItemDelegate::helpEvent(event, view, option, index);
+}
+
+void AlertDelegate::handleAlertItem(MegaUserAlertExt* alert, const QRect& rect, QPainter* painter) const
+{
+    int id = alert->getId();
+    AlertItem* alertItem = mAlertsModel->alertItems[id];
+    bool isNew = !alertItem;
+    if (!alertItem)
+    {
+        alertItem = new AlertItem();
+        connect(alertItem, &AlertItem::refreshAlertItem, mAlertsModel, &AlertModel::refreshAlertItem);
+        alertItem->setAlertData(alert);
+    }
+
+    alertItem->resize(rect.width(), rect.height());
+    alertItem->render(painter, QPoint(0, 0), QRegion(0, 0, rect.width(), rect.height()));
+
+    if(isNew)
+    {
+        mAlertsModel->alertItems.insert(id, alertItem);
+    }
+}
+
+NotificationAlertModelItem* AlertDelegate::getModelItem(const QModelIndex &index) const
+{
+    NotificationAlertModelItem* item = nullptr;
+    const QSortFilterProxyModel* proxyModel = static_cast<const QSortFilterProxyModel*>(index.model());
+    QModelIndex filteredIndex = proxyModel->mapToSource(index);
+    if (filteredIndex.isValid())
+    {
+        item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
+        if (item && (item->type != NotificationAlertModelItem::ALERT || !item->pointer))
+        {
+            item = nullptr;
+        }
+    }
+    return item;
 }

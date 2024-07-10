@@ -3,9 +3,21 @@
 
 #include "NotificationModel.h"
 
+namespace
+{
+const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-height:22px;\">");
+const QLatin1String DescriptionHtmlEnd("</p></body></html>");
+constexpr int SpacingWithoutLargeImage = 6;
+constexpr int SpacingWithoutSmallImage = 0;
+constexpr int SmallImageSize = 48;
+constexpr int LargeImageWidth = 370;
+constexpr int LargeImageHeight = 115;
+}
+
 NotificationItem::NotificationItem(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::NotificationItem)
+    , mNotificationData(nullptr)
 {
     ui->setupUi(this);
 }
@@ -15,48 +27,52 @@ NotificationItem::~NotificationItem()
     delete ui;
 }
 
-void NotificationItem::setNotificationData(NotifTest* notification)
+void NotificationItem::setNotificationData(MegaNotificationExt* notification)
 {
     mNotificationData = notification;
 
-    ui->lTitle->setText(QString::fromStdString(mNotificationData->title));
+    ui->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText = QString::fromStdString("<html><head/><body><p style=\"line-height:22px;\">");
-    labelText += QString::fromStdString(mNotificationData->description);
-    labelText += QString::fromStdString("</p></body></html>");
+    QString labelText(DescriptionHtmlStart);
+    labelText += mNotificationData->getDescription();
+    labelText += DescriptionHtmlEnd;
     ui->lDescription->setText(labelText);
 
-    ui->lImageLarge->setVisible(!mNotificationData->imageName.empty());
-    if(!mNotificationData->imageName.empty())
-    {
-        QString fullImagePath = QString::fromStdString(mNotificationData->imagePath)
-                                + QString::fromStdString(mNotificationData->imageName);
-        QPixmap image(fullImagePath);
-        ui->lImageLarge->setPixmap(image);
-    }
-    else
-    {
-        ui->vlContent->setSpacing(6);
-    }
+    setImages();
 
-    ui->lImageSmall->setVisible(!mNotificationData->iconName.empty());
-    if(!mNotificationData->iconName.empty())
-    {
-        QString fullIconPath = QString::fromStdString(mNotificationData->imagePath)
-                               + QString::fromStdString(mNotificationData->iconName);
-        QPixmap image(fullIconPath);
-        ui->lImageSmall->setPixmap(image);
-    }
-    else
-    {
-        ui->hlDescription->setSpacing(0);
-    }
-
-    auto it = mNotificationData->callToAction1.find("text");
-    if (it!= mNotificationData->callToAction1.end())
-    {
-        ui->bCTA->setText(QString::fromStdString(it->second));
-    }
-
+    ui->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+}
+
+void NotificationItem::setImages()
+{
+    bool showImage = mNotificationData->showImage();
+    ui->lImageLarge->setVisible(showImage);
+    if(showImage)
+    {
+        ui->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
+        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+                {
+                    ui->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
+                });
+    }
+    else
+    {
+        ui->vlContent->setSpacing(SpacingWithoutLargeImage);
+    }
+
+    bool showIcon = mNotificationData->showIcon();
+    ui->lImageSmall->setVisible(showIcon);
+    if(showIcon)
+    {
+        ui->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
+        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+                {
+                    ui->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
+                });
+    }
+    else
+    {
+        ui->hlDescription->setSpacing(SpacingWithoutSmallImage);
+    }
 }

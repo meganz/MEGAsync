@@ -72,7 +72,7 @@ void NotificationAlertProxyModel::setFilterAlertType(AlertType filterType)
     invalidateFilter();
 }
 
-bool NotificationAlertProxyModel::checkFilterType(int sdkType) const
+bool NotificationAlertProxyModel::checkAlertFilterType(int sdkType) const
 {
     bool success = false;
     if(mActualFilter == AlertType::ALL)
@@ -102,12 +102,12 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
             case NotificationAlertModelItem::ALERT:
             {
                 MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item->pointer);
-                filter = checkFilterType(alert->getType());
+                filter = checkAlertFilterType(alert->getType());
                 break;
             }
             case NotificationAlertModelItem::NOTIFICATION:
             {
-                filter = true;
+                filter = mActualFilter == AlertType::ALL;
                 break;
             }
             default:
