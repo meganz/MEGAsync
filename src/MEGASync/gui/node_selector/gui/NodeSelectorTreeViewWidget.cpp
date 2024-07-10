@@ -1154,7 +1154,11 @@ void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaH
 void NodeSelectorTreeViewWidget::Navigation::remove(const mega::MegaHandle &handle)
 {
     backwardHandles.removeAll(handle);
-    forwardHandles.removeAll(handle);
+    int forwardPos = forwardHandles.indexOf(handle);
+    for(int i = 0; i <= forwardPos; i++)
+    {
+        forwardHandles.removeFirst();
+    }
 }
 
 void NodeSelectorTreeViewWidget::Navigation::appendToBackward(const mega::MegaHandle &handle)
