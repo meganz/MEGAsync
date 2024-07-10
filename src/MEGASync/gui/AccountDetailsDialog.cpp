@@ -27,9 +27,6 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     mUi->pbVault->setMaximum(PRECISION);
     mUi->pbRubbish->setMaximum(PRECISION);
 
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/images/account_details/versions.png"));
-    mUi->lVersionIcon->setPixmap(icon.pixmap(24, 24));
     // Get fresh data
     refresh();
 
