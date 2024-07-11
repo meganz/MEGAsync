@@ -113,6 +113,7 @@ QtObject {
 
     // Common
     // Not moved to avoid change of context and generate new strings in the ts file
+    readonly property string choose: qsTr("Choose")
     readonly property string cancel: qsTr("Cancel")
     readonly property string done: qsTr("Done")
     readonly property string next: qsTr("Next")

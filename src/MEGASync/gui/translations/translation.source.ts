@@ -5153,6 +5153,11 @@ Enter a different name.</translation>
         <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
         <translation>Set exclusions</translation>
     </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Choose</translation>
+    </message>
 </context>
 <context>
     <name>OpenBackupsFolder</name>
@@ -7406,13 +7411,6 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
         <translation>Select items</translation>
-    </message>
-</context>
-<context>
-    <name>Strings</name>
-    <message>
-        <source>Choose</source>
-        <translation type="unfinished">Choose</translation>
     </message>
 </context>
 <context>

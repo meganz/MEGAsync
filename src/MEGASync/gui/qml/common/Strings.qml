@@ -5,7 +5,7 @@ QtObject {
     id: root
 
     readonly property string cancel: qsTranslate("OnboardingStrings", "Cancel")
-    readonly property string choose: qsTr("Choose")
+    readonly property string choose: qsTranslate("OnboardingStrings", "Choose")
     readonly property string done: qsTranslate("OnboardingStrings", "Done")
     readonly property string next: qsTranslate("OnboardingStrings", "Next")
     readonly property string skip: qsTranslate("OnboardingStrings", "Skip")
