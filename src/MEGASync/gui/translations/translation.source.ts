@@ -4564,10 +4564,13 @@ Enter a different name.</translation>
         <translatorcomment>Title of the messagebox when moving a single node to the rubbish bigint. %1 is the file/folder name. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>Move %1 items to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bigint. %1 is the number of nodes CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
