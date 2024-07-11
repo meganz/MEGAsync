@@ -1,7 +1,8 @@
 #ifndef RENAMENODEDIALOG_H
 #define RENAMENODEDIALOG_H
 
-#include <NodeNameSetterDialog/NodeNameSetterDialog.h>
+#include "NodeNameSetterDialog.h"
+
 #include <megaapi.h>
 
 #include <memory>

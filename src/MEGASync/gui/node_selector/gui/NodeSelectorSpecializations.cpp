@@ -2,7 +2,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
-#include "node_selector/gui/NodeSelectorTreeViewWidgetSpecializations.h"
+#include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "ui_NodeSelector.h"
 #include <DialogOpener.h>
 #include <UploadToMegaDialog.h>

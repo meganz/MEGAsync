@@ -378,20 +378,39 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRemove(int conflictIn
     return result;
 }
 
-bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIndex, const QString &renameTo)
+bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIndex, const QString &renameTo, const QString& renameFrom)
 {
     auto result(false);
 
     if(mLocalConflictedNames.size() > conflictIndex)
     {
         auto& conflictName = mLocalConflictedNames[conflictIndex];
-        conflictName->solveByRename(renameTo);
 
         auto cloudConflictedNames(mCloudConflictedNames.getConflictedNames());
         auto siblingItem(findOtherSideItem(cloudConflictedNames, conflictName));
         if(siblingItem)
         {
             result = renameCloudSibling(siblingItem, renameTo);
+        }
+
+        //Undo the local name change
+        if(!result)
+        {
+            QFileInfo originalFileInfo(conflictName->mConflictedPath);
+            QFileInfo newFileInfo(originalFileInfo.path(), renameTo);
+            QFile file(newFileInfo.filePath());
+            if(file.exists())
+            {
+                file.rename(QDir::toNativeSeparators(originalFileInfo.filePath()));
+            }
+
+            //Fail string pending
+            conflictName->setFailed(tr("Unable to rename the file in MEGA"));
+        }
+
+        if(result)
+        {
+            conflictName->solveByRename(renameTo);
         }
 
         if(!siblingItem || result)
@@ -403,7 +422,7 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
     return result;
 }
 
-bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIndex, const QString &renameTo)
+bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo, const QString& renameFrom)
 {
     auto result(false);
 
@@ -413,12 +432,32 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
         auto conflictName = conflictedNames.at(conflictIndex);
         if(conflictName)
         {
-            conflictName->solveByRename(renameTo);
 
             auto siblingItem(findOtherSideItem(mLocalConflictedNames, conflictName));
             if(siblingItem)
             {
                 result = renameLocalSibling(siblingItem, renameTo);
+            }
+
+            if(!result)
+            {
+                std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictName->mHandle));
+                if(conflictedNode)
+                {
+                    MegaApiSynchronizedRequest::runRequest(
+                        &mega::MegaApi::renameNode,
+                        MegaSyncApp->getMegaApi(),
+                        conflictedNode.get(),
+                        renameFrom.toStdString().c_str());
+
+                    //Fail string pending
+                    conflictName->setFailed(tr("Unable to rename the local file"));
+                }
+            }
+
+            if(result)
+            {
+                conflictName->solveByRename(renameTo);
             }
 
             if(!siblingItem || result)
@@ -581,6 +620,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                 QFile file(fileInfo.filePath());
                 if(file.exists())
                 {
+                    bool isFile(fileInfo.isFile());
                     auto newName = Utilities::getNonDuplicatedLocalName(fileInfo, true, cloudItemsBeingRenamed);
 
                     fileInfo.setFile(fileInfo.path(), newName);
@@ -592,7 +632,7 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
                     else
                     {
                         result = false;
-                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
+                        localConflictedName->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(isFile));
                         break;
                     }
                 }

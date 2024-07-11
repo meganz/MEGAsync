@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID                  "2e2f919"
+#define VER_SDK_ID                  "7648e68"
 
 // Update scrips relying on this value if you move it
 // Format: 1 item by line, starting from line following the #define
@@ -28,14 +28,12 @@
 //"- item n\n"              \
 //)
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences", \
-"- Added support for Album and Collections links.\n" \
-"- Updated Qt to v5.15.13.\n" \
-"- Updated dependencies.\n" \
-"- Improved error messages.\n" \
-"- Improved the exclusions interface.\n" \
-"- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.\n" \
-"- Improved system integration for all operating systems.\n" \
-"- Bug fixes and other improvements.\n" \
+"- Improved handling of sync conflicts.\n" \
+"- Improved management of failures within issue resolution.\n" \
+"- Improved issue resolution dialogs.\n" \
+"- Added default automatic issue resolution.\n" \
+"- Added new UI improvements.\n" \
+"- Fixed other bugs and made assorted other improvements.\n" \
 )
 
 #endif // VERSION_H

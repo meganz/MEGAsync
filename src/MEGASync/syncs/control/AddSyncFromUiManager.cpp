@@ -5,6 +5,8 @@
 #include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/control/SyncSettings.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
+#include <QmlDialogWrapper.h>
+#include <syncs/SyncsComponent.h>
 
 const AddSyncFromUiManager* const AddSyncFromUiManager::addSync_static(mega::MegaHandle handle, bool disableUi)
 {
@@ -32,63 +34,44 @@ void AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
 
 void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableUi)
 {
+    QString remoteFolder;
+
+    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    if(node)
+    {
+        remoteFolder = QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(node.get()));
+    }
+
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, handle, disableUi, this]()
+    auto addSyncLambda = [overQuotaDialog, handle, disableUi, remoteFolder, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            QPointer<BindFolderDialog> addSyncDialog = new BindFolderDialog(MegaSyncApp);
-
-            if (handle != mega::INVALID_HANDLE)
+            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
+            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
             {
-                addSyncDialog->setMegaFolder(handle, disableUi);
+                syncsDialog = dialog->getDialog();
             }
-
-            DialogOpener::showDialog(addSyncDialog, this, &AddSyncFromUiManager::onAddSyncDialogFinished);
+            else
+            {
+                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+            }
+            syncsDialog->wrapper()->setComesFromSettings(false);
+            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+            syncsDialog->wrapper()->setRemoteFolderDisabled(disableUi);
+            DialogOpener::showDialog(syncsDialog);
         }
     };
 
     if(overQuotaDialog)
     {
-        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
+        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
     }
     else
     {
         addSyncLambda();
     }
 }
-
-void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
-{
-    if (dialog->result() != QDialog::Accepted)
-    {
-        deleteLater();
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    mega::MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-
-    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-    auto syncController = new SyncController(this);
-    SyncController::connect(syncController, &SyncController::syncAddStatus, this, [this, handle, syncController](const int errorCode, const int,
-                                                                                       const QString name)
-        {
-            if (errorCode == mega::MegaError::API_OK)
-            {
-                emit syncAdded(handle, name);
-            }
-
-            syncController->deleteLater();
-            deleteLater();
-        });
-
-    emit syncAddingStarted();
-    syncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
-}
-
 
 void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
 {

@@ -29,8 +29,9 @@
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 #include "platform/Platform.h"
-#include "qml/QmlDialogManager.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+
+#include "QmlDialogManager.h"
+#include "syncs/SyncsComponent.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -92,10 +93,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
-    mSyncController (nullptr),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -799,7 +798,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(INVALID_HANDLE);
+            addSync();
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1044,12 +1043,12 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(MegaHandle h)
+void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    auto syncManager(AddSyncFromUiManager::addSync_static(h));
-    connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
-        app->createAppMenus();
-    });
+    auto syncManager(AddSyncFromUiManager::addSync_static(handle));
+    // connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
+    //     app->createAppMenus();
+    // });
 }
 
 void InfoDialog::addBackup()
@@ -1158,8 +1157,6 @@ void InfoDialog::reset()
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
     transferQuotaState = QuotaState::OK;
-
-    mSyncController.reset();
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
@@ -1662,14 +1659,6 @@ void InfoDialog::setTransferManager(TransferManager *transferManager)
 {
     mTransferManager = transferManager;
     mTransferManager->setTransferState(mState);
-}
-
-void InfoDialog::setupSyncController()
-{
-    if (!mSyncController)
-    {
-        mSyncController.reset(new SyncController());
-    }
 }
 
 void InfoDialog::fixMultiscreenResizeBug(int& posX, int& posY)

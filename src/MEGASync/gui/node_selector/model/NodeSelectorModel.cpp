@@ -1,5 +1,5 @@
-#include "node_selector/model/NodeSelectorModel.h"
-#include "node_selector/model/NodeSelectorModelSpecialised.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"

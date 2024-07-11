@@ -5,7 +5,6 @@
 #include <DialogOpener.h>
 
 #include <syncs/gui/Twoways/SyncTableView.h>
-#include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"

@@ -9,12 +9,10 @@
 #include "ProxySettings.h"
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
-#include "GuiUtilities.h"
 #include "syncs/control/AddSyncFromUiManager.h"
 #include "mega/types.h"
 #include "GuiUtilities.h"
@@ -36,13 +34,13 @@
 #include <memory>
 
 #ifdef Q_OS_MACOS
-    #include "gui/CocoaHelpButton.h"
+    #include "CocoaHelpButton.h"
 #endif
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #else
-#include "gui/PermissionsDialog.h"
+#include "PermissionsDialog.h"
 #endif
 
 using namespace mega;
@@ -622,7 +620,7 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromUtf8("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_MEGA_HELP_URL + QString::fromUtf8("/installs-apps/desktop");
     Utilities::openUrl(QUrl(helpUrl));
 }
 
@@ -1349,9 +1347,9 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
+void SettingsDialog::addSyncFolder(mega::MegaHandle handle) const
 {
-    AddSyncFromUiManager::addSync_static(megaFolderHandle, true);
+    AddSyncFromUiManager::addSync_static(handle, true);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)
@@ -1368,11 +1366,30 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
-void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled,
+                                             SettingsDialog::Tabs tab)
 {
-    if(mUi->backupSettings)
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
     {
-        mUi->backupSettings->setAddButtonEnabled(enabled);
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
     }
 }
 

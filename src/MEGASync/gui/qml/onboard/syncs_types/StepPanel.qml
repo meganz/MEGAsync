@@ -176,7 +176,7 @@ Rectangle {
         icons.source: Images.helpCircle
         sizes.iconSize: Qt.size(24, 24)
         onClicked: {
-            Qt.openUrlExternally(Links.desktopSyncApp);
+            Qt.openUrlExternally(Links.installAppsDesktop);
         }
     }
 }

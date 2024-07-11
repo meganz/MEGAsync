@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 InstallationTypePageForm {
     id: root
 
@@ -15,10 +17,10 @@ InstallationTypePageForm {
 
         rightPrimary.onClicked: {
             switch(buttonGroup.checkedButton.type) {
-                case SyncsType.Types.SYNC:
+                case Constants.SyncType.SYNC:
                     root.installationTypeMoveToSync();
                     break;
-                case SyncsType.Types.BACKUP:
+                case Constants.SyncType.BACKUP:
                     root.installationTypeMoveToBackup();
                     break;
                 default:
@@ -26,6 +28,11 @@ InstallationTypePageForm {
                                   + buttonGroup.checkedButton.type);
                     break;
             }
+        }
+
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
         }
     }
 

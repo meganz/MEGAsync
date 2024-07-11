@@ -35,7 +35,7 @@ protected:
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
     void setBackupsTitle();
-    void changeEvent(QEvent* event);
+    void changeEvent(QEvent* event) override;
 
 protected slots:
     void reqRemoveSync(std::shared_ptr<SyncSettings> backup) override;

@@ -35,7 +35,6 @@ class Preferences;
 class SyncInfo : public QObject, public mega::MegaListener
 {
     Q_OBJECT
-    using SyncType = mega::MegaSync::SyncType;
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
@@ -58,6 +57,8 @@ private:
     int mLastError = mega::MegaSync::NO_SYNC_ERROR;
 
 public:
+    using SyncType = mega::MegaSync::SyncType;
+
     // Data for display in Settings dialog Syncs/Backups.
     // Model data that needs to be kept even before the window is shown
     std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;

@@ -2,8 +2,8 @@
 #define NODESELECTOR_H
 
 #include "ButtonIconManager.h"
-#include "NodeNameSetterDialog/NewFolderDialog.h"
-#include "gui/node_selector/gui/NodeSelectorTreeViewWidget.h"
+#include "NewFolderDialog.h"
+#include "NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
 #include <QItemSelection>
@@ -93,6 +93,7 @@ private slots:
     void onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
 
 private:
+    bool isFullSync();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();

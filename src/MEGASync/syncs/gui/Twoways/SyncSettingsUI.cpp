@@ -3,6 +3,11 @@
 #include "syncs/gui/Twoways/SyncTableView.h"
 #include "syncs/model/SyncItemModel.h"
 #include "syncs/control/AddSyncFromUiManager.h"
+#include "qml/QmlDialogWrapper.h"
+#include "syncs/SyncsComponent.h"
+#include "onboarding/Onboarding.h"
+
+#include "DialogOpener.h"
 #include <MegaApplication.h>
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
@@ -20,6 +25,23 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     adjustSize();
 #endif
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(),
+                &QmlDialogWrapper<Onboarding>::finished,
+                this,
+                [this]()
+                {
+                    setAddButtonEnabled(true);
+                });
+    }
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+    }
 }
 
 SyncSettingsUI::~SyncSettingsUI()
@@ -112,9 +134,3 @@ void SyncSettingsUI::storageStateChanged(int newStorageState)
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
                                   || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }
-
-
-
-
-
-

@@ -7,7 +7,6 @@
 #include "../model/NodeSelectorProxyModel.h"
 #include "../model/NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "NodeSelectorSpecializations.h"
 
 #include "MegaNodeNames.h"
 
@@ -26,7 +25,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
+    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked, Qt::QueuedConnection);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
@@ -56,7 +55,16 @@ NodeSelector::NodeSelector(QWidget *parent) :
     setAllFramesItsOnProperty();
 
     updateNodeSelectorTabs();
-    onOptionSelected(CLOUD_DRIVE);
+
+    if (isFullSync())
+    {
+        ui->fCloudDrive->setVisible(false);
+        emit ui->bShowIncomingShares->clicked();
+    }
+    else
+    {
+        onOptionSelected(CLOUD_DRIVE);
+    }
 }
 
 NodeSelector::~NodeSelector()
@@ -175,6 +183,20 @@ void NodeSelector::onbOkClicked()
     }
 
     checkSelection();
+}
+
+bool NodeSelector::isFullSync()
+{
+    auto syncsList = SyncInfo::instance()->getSyncSettingsByType(SyncInfo::SyncType::TYPE_TWOWAY);
+    auto foundIt =
+        std::find_if(syncsList.cbegin(),
+                     syncsList.cend(),
+                     [](const auto& sync)
+                     {
+                         return (sync->getMegaFolder() == QLatin1String("/") && sync->isActive());
+                     });
+
+    return foundIt != syncsList.cend();
 }
 
 void NodeSelector::on_tClearSearchResultNS_clicked()

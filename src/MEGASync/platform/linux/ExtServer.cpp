@@ -183,7 +183,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         // get the state of an object
         case 'P':
         {
-            int state = MegaSync::SyncRunningState::RUNSTATE_DISABLED;
+            int state = MegaApi::STATE_NONE;
             string scontent(content);
 
             // ASCII_FILE_SEP is used to separate the file name and an optional '1' or '0'
@@ -207,16 +207,17 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 }
             }
 
+            const char* syncStatus = RESPONSE_DEFAULT;
             switch(state)
             {
                 case MegaApi::STATE_SYNCED:
-                    strncpy(out, RESPONSE_SYNCED, BUFSIZE);
+                    syncStatus = RESPONSE_SYNCED;
                     break;
                 case MegaApi::STATE_SYNCING:
-                    strncpy(out, RESPONSE_SYNCING, BUFSIZE);
+                    syncStatus = RESPONSE_SYNCING;
                     break;
                 case MegaApi::STATE_PENDING:
-                    strncpy(out, RESPONSE_PENDING, BUFSIZE);
+                    syncStatus = RESPONSE_PENDING;
                     break;
                 case MegaApi::STATE_IGNORED:
                 {
@@ -227,22 +228,36 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                         runState = megaSync->getRunState();
                     }
 
-                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED || runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
+                    if (runState == MegaSync::SyncRunningState::RUNSTATE_PAUSED ||
+                        runState == MegaSync::SyncRunningState::RUNSTATE_SUSPENDED)
                     {
-                        strncpy(out, RESPONSE_PAUSED, BUFSIZE);
+                        syncStatus = RESPONSE_PAUSED;
                     }
                     else
                     {
-                        strncpy(out, RESPONSE_IGNORED, BUFSIZE);
+                        syncStatus = RESPONSE_IGNORED;
                     }
                     break;
                 }
                 case MegaApi::STATE_NONE:                
                 default:
                 {
-                    strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
+                    // This case is when the extension wants to display overlays.
+                    // RESPONSE_ERROR will make it display no overlay and keep the folder icon.
+                    // We don't want to send RESPONSE_ERROR when forceGetState is true
+                    // to avoid breaking contextual menu.
+                    if (!forceGetState && Preferences::instance()->overlayIconsDisabled())
+                    {
+                        syncStatus = RESPONSE_ERROR;
+                    }
+                    else
+                    {
+                        syncStatus = RESPONSE_DEFAULT;
+                    }
                 }
             }
+
+            strncpy(out, syncStatus, BUFSIZE);
             break;
         }
         case 'E':

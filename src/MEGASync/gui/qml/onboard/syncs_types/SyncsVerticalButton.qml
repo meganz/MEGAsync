@@ -2,6 +2,8 @@ import QtQuick.Layouts 1.15
 
 import components.buttons 1.0
 
+import syncs 1.0
+
 CardVerticalButton {
     id: root
 

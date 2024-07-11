@@ -128,7 +128,6 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
-    header->setIsExpandable(false);
 }
 
 void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -182,8 +181,9 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        QString informativeMessage = QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber) + QString::fromUtf8("</br>");
+        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
         msgInfo.informativeText.append(informativeMessage);
     }
 
@@ -207,7 +207,6 @@ void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
-    header->setIsExpandable(false);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -216,6 +215,20 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
     {
         header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
     }
+}
+
+//Cloud node is blocked
+CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA's Terms of Service[/A].").arg(header->displayFileName());
+    QStringList links;
+    links << QLatin1String("https://mega.io/terms");
+    StalledIssuesLinkTextDecorator::process(links, headerText);
+    header->setText(headerText);
 }
 
 //Local folder not scannable
@@ -247,7 +260,7 @@ void MoveOrRenameCannotOccurHeader::refreshCaseTitles(StalledIssueHeader* header
 {
     if(auto moveOrRenameIssue = header->getData().convert<MoveOrRenameCannotOccurIssue>())
     {
-        QString headerText = tr("Can’t move or rename some items on in [B]%1[/B]")
+        QString headerText = tr("Can’t move or rename some items in [B]%1[/B]")
                                  .arg(moveOrRenameIssue->syncName());
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
         header->setText(headerText);
@@ -594,7 +607,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
             {
                msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
-            else if(index == NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
+            else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()

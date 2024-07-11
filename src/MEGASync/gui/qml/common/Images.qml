@@ -12,6 +12,7 @@ QtObject {
     readonly property url imagesPath: Qt.resolvedUrl("../../images/")
     readonly property url imagesQmlPath: Qt.resolvedUrl(imagesPath + "qml/")
     readonly property url imagesOnboardingPath: Qt.resolvedUrl(imagesQmlPath + "onboarding/")
+    readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
 
@@ -72,6 +73,7 @@ QtObject {
 
     readonly property url exit: imagesGuestPath + "exit.svg"
     readonly property url guest: imagesGuestPath + "guest.png"
+    readonly property url guest3x: imagesGuestPath + "guest@3x.png"
     readonly property url menu: imagesGuestPath + "menu.svg"
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
@@ -82,6 +84,9 @@ QtObject {
     readonly property url editRule: imagesExclusionsPath + "edit.svg"
     readonly property url chevronDown: imagesExclusionsPath + "chevron-down.svg"
     readonly property url info: imagesExclusionsPath + "info.svg"
+
+    readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
+    readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

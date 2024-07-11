@@ -4,12 +4,10 @@
 #include "syncs/model/BackupItemModel.h"
 #include "syncs/control/AddBackupFromUiManager.h"
 
-#include "qml/QmlDialogWrapper.h"
-#include "qml/QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
 #include "backups/Backups.h"
-#include "onboarding/Onboarding.h"
+#include "Onboarding.h"
 
-#include "Utilities.h"
 #include "DialogOpener.h"
 #include "RemoveBackupDialog.h"
 #include "QMegaMessageBox.h"

@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 ResumePageForm {
     id: root
 
@@ -11,13 +13,13 @@ ResumePageForm {
 
     buttonGroup.onClicked: {
         switch(button.type) {
-            case SyncsType.Types.SYNC:
+            case Constants.SyncType.SYNC:
                 root.resumePageMoveToSyncs();
                 break;
-            case SyncsType.Types.SELECTIVE_SYNC:
+            case Constants.SyncType.SELECTIVE_SYNC:
                 root.resumePageMoveToSelectiveSyncs();
                 break;
-            case SyncsType.Types.BACKUP:
+            case Constants.SyncType.BACKUP:
                 root.resumePageMoveToBackup();
                 break;
             default:
@@ -27,6 +29,10 @@ ResumePageForm {
     }
 
     footerButtons {
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
 
         rightSecondary.onClicked: {
             onboardingAccess.openPreferences(tabToOpen);

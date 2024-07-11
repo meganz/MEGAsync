@@ -153,14 +153,10 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
 
     if(isCloud)
     {
-        mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
-        if (node)
+        auto url(getLink(isCloud, path));
+        if (!url.isEmpty())
         {
-            const char* handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
         }
         else
         {
@@ -190,6 +186,23 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
             QMegaMessageBox::warning(msgInfo);
         }
     }
+}
+
+QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
+{
+    QString url;
+
+    if(isCloud)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
+        if(node)
+        {
+            std::unique_ptr<char[]> handle(node->getBase64Handle());
+            url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+        }
+    }
+
+    return url;
 }
 
 //////////////////////////////////////////////////
@@ -253,7 +266,8 @@ mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString& path, bo
     else
     {
         QFileInfo fileDir(path);
-        if(!fileDir.exists())
+        QFileInfo folderDir(fileDir.absolutePath());
+        if(!folderDir.exists())
         {
             return mega::INVALID_HANDLE;
         }

@@ -31,9 +31,6 @@ signals:
 private:
     void performAddSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
     void performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent);
-
-private slots:
-    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
 };
 
 #endif // ADDSYNCFROMUIMANAGER_H
