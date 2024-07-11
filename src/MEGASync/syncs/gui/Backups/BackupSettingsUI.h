@@ -16,7 +16,7 @@ public:
     explicit BackupSettingsUI(QWidget *parent = nullptr);
     ~BackupSettingsUI() override;
 
-    void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) override;
+    void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) override;
 
 protected:
     QString getFinishWarningIconString() const override;

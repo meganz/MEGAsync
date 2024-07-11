@@ -2,6 +2,7 @@
 
 #include "syncs/gui/Backups/BackupTableView.h"
 #include "syncs/model/BackupItemModel.h"
+#include "syncs/control/AddBackupFromUiManager.h"
 
 #include "qml/QmlDialogWrapper.h"
 #include "qml/QmlDialogManager.h"
@@ -54,10 +55,9 @@ BackupSettingsUI::~BackupSettingsUI()
 {
 }
 
-void BackupSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
+void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
-    Q_UNUSED(megaFolderHandle)
-    QmlDialogManager::instance()->openBackupsDialog(true);
+    AddBackupFromUiManager::addBackup(false);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
@@ -79,16 +79,7 @@ void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
-
-    DialogOpener::showDialog(dialog,[this, dialog]()
-    {
-        if(dialog->result() == QDialog::Accepted)
-        {
-            syncsStateInformation(SyncStateInformation::SAVING);
-            mSyncController->removeSync(dialog->backupToRemove(), dialog->targetFolder());
-        }
-    });
+    AddBackupFromUiManager::removeBackup(backup, this);
 }
 
 QString BackupSettingsUI::getFinishWarningIconString() const

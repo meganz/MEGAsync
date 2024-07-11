@@ -4,22 +4,37 @@
 #include <DialogOpener.h>
 #include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/control/SyncSettings.h>
+#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 
-void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
+const AddSyncFromUiManager* AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
+{
+    auto syncManager(new AddSyncFromUiManager());
+    syncManager->performAddSync(handle, disableUi);
+    return syncManager;
+}
+
+const AddSyncFromUiManager* AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
+{
+    auto syncManager(new AddSyncFromUiManager());
+    syncManager->performRemoveSync(handle, parent);
+    return syncManager;
+}
+
+void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableUi)
 {
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
     auto addSyncLambda = [overQuotaDialog, handle, disableUi, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            mAddSyncDialog = new BindFolderDialog(MegaSyncApp);
+            QPointer<BindFolderDialog> addSyncDialog = new BindFolderDialog(MegaSyncApp);
 
             if (handle != mega::INVALID_HANDLE)
             {
-                mAddSyncDialog->setMegaFolder(handle, disableUi);
+                addSyncDialog->setMegaFolder(handle, disableUi);
             }
 
-            DialogOpener::showDialog(mAddSyncDialog, this, &AddSyncFromUiManager::onAddSyncDialogFinished);
+            DialogOpener::showDialog(addSyncDialog, this, &AddSyncFromUiManager::onAddSyncDialogFinished);
         }
     };
 
@@ -31,46 +46,6 @@ void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
     {
         addSyncLambda();
     }
-}
-
-void AddSyncFromUiManager::removeSync(mega::MegaHandle remoteHandle)
-{
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
-    if(node)
-    {
-        std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByNode(node.get()));
-        auto syncSettings(SyncInfo::instance()->getSyncSettingByTag(sync->getBackupId()));
-        if(syncSettings)
-        {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::warningTitle();
-            msgInfo.text = tr("Are you sure you want to remove %1 sync?").arg(syncSettings->name());
-            msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-            QMap<QMegaMessageBox::StandardButton, QString> buttonsText;
-            buttonsText.insert(QMessageBox::Ok, tr("Sync"));
-            msgInfo.buttonsText = buttonsText;
-            msgInfo.finishFunc = [this, syncSettings, remoteHandle](QPointer<QMessageBox> msg)
-            {
-                if(msg->result() == QMessageBox::Ok)
-                {
-                    mSyncController = new SyncController(this);
-                    mSyncController->removeSync(syncSettings, remoteHandle);
-                }
-                deleteLater();
-            };
-
-            QMegaMessageBox::information(msgInfo);
-            return;
-        }
-    }
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = QCoreApplication::translate("MegaSyncError", "Sync removal failed. Sync not found");
-    msgInfo.buttons = QMessageBox::Ok;
-    QMegaMessageBox::information(msgInfo);
-
-    deleteLater();
 }
 
 void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
@@ -87,17 +62,69 @@ void AddSyncFromUiManager::onAddSyncDialogFinished(QPointer<BindFolderDialog> di
 
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
-    mSyncController = new SyncController(this);
-    SyncController::connect(mSyncController, &SyncController::syncAddStatus, this, [this, handle](const int errorCode, const int,
-                                                                                                       const QString name)
-                            {
-                                if (errorCode == mega::MegaError::API_OK)
-                                {
-                                    emit syncAdded(handle, name);
-                                }
+    auto syncController = new SyncController(this);
+    SyncController::connect(syncController, &SyncController::syncAddStatus, this, [this, handle, syncController](const int errorCode, const int,
+                                                                                       const QString name)
+        {
+            if (errorCode == mega::MegaError::API_OK)
+            {
+                emit syncAdded(handle, name);
+            }
 
+            syncController->deleteLater();
+            deleteLater();
+        });
+
+    emit syncAddingStarted();
+    syncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+}
+
+
+void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
+{
+    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
+    if(node)
+    {
+        std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByNode(node.get()));
+        auto syncSettings(SyncInfo::instance()->getSyncSettingByTag(sync->getBackupId()));
+        if(syncSettings)
+        {
+            QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(parent);
+
+            DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog,
+                [dialog, syncSettings, remoteHandle, this]()
+                {
+                    if(dialog->result() == QDialog::Accepted)
+                    {
+                        auto syncController = new SyncController(this);
+                        syncController->removeSync(syncSettings, remoteHandle);
+
+                        SyncController::connect(syncController,
+                            &SyncController::syncRemoveStatus,
+                            this,
+                            [this, syncController](const int)
+                            {
+                                syncController->deleteLater();
                                 deleteLater();
                             });
+                    }
+                    else
+                    {
+                        deleteLater();
+                        return;
+                    }
+                });
 
-    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+            //Dialog correctly shown
+            return;
+        }
+    }
+
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.title = QMegaMessageBox::errorTitle();
+    msgInfo.text = QCoreApplication::translate("MegaSyncError", "Sync removal failed. Sync not found");
+    msgInfo.buttons = QMessageBox::Ok;
+    QMegaMessageBox::information(msgInfo);
+
+    deleteLater();
 }

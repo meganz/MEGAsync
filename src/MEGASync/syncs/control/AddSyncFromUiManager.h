@@ -18,18 +18,19 @@ public:
     AddSyncFromUiManager() = default;
     ~AddSyncFromUiManager() = default;
 
-    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
-    void removeSync(mega::MegaHandle remoteHandle);
+    static const AddSyncFromUiManager* addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+    static const AddSyncFromUiManager* removeSync(mega::MegaHandle handle, QWidget* parent);
 
 signals:
     void syncAdded(mega::MegaHandle remote, const QString& localPath);
+    void syncAddingStarted();
+
+private:
+    void performAddSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+    void performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent);
 
 private slots:
     void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
-
-private:
-    QPointer<BindFolderDialog> mAddSyncDialog;
-    QPointer<SyncController> mSyncController;
 };
 
 #endif // ADDSYNCFROMUIMANAGER_H

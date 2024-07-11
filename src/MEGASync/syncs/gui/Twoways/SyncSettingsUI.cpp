@@ -2,6 +2,7 @@
 
 #include "syncs/gui/Twoways/SyncTableView.h"
 #include "syncs/model/SyncItemModel.h"
+#include "syncs/control/AddSyncFromUiManager.h"
 #include <MegaApplication.h>
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
@@ -23,6 +24,19 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 
 SyncSettingsUI::~SyncSettingsUI()
 {
+}
+
+void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
+{
+    auto syncManager = AddSyncFromUiManager::addSync(megaFolderHandle, false);
+
+    connect(syncManager, &AddSyncFromUiManager::syncAddingStarted, this, [this](){
+        syncsStateInformation(SyncStateInformation::SAVING);
+    });
+
+    connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
+        syncsStateInformation(SyncStateInformation::SAVING_FINISHED);
+    });
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const

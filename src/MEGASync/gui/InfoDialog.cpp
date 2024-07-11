@@ -25,6 +25,7 @@
 #include "DialogOpener.h"
 #include "node_selector/gui/NodeSelectorSpecializations.h"
 #include "syncs/control/AddSyncFromUiManager.h"
+#include "syncs/control/AddBackupFromUiManager.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
 #include "platform/Platform.h"
@@ -1045,11 +1046,10 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
+    auto syncManager(AddSyncFromUiManager::addSync(h));
     connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
         app->createAppMenus();
     });
-    syncManager->addSync(h);
 }
 
 void InfoDialog::addBackup()
@@ -1059,7 +1059,7 @@ void InfoDialog::addBackup()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            QmlDialogManager::instance()->openBackupsDialog();
+            AddBackupFromUiManager::addBackup(false);
             this->hide();
         }
     };

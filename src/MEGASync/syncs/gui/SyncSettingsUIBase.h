@@ -174,7 +174,7 @@ public:
     }
 
 public slots:
-    virtual void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
+    virtual void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) = 0;
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
@@ -222,7 +222,6 @@ protected slots:
 
 private:
     void initTable();
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
     void setDisabledSyncsText();
 
     SyncInfo* mSyncInfo;

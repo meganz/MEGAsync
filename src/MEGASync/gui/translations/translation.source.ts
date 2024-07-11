@@ -58,17 +58,6 @@
     </message>
 </context>
 <context>
-    <name>AddSyncFromUiManager</name>
-    <message>
-        <source>Are you sure you want to remove %1 sync?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sync</source>
-        <translation type="unfinished">Sync</translation>
-    </message>
-</context>
-<context>
     <name>AlertFilterType</name>
     <message>
         <source>All notifications</source>

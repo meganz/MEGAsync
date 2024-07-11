@@ -164,6 +164,8 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
                 }
             }));
         }
+
+        emit syncRemoveStatus(e.getErrorCode());
     }));
 }
 

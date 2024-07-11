@@ -60,6 +60,7 @@ public:
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
+    void syncRemoveStatus(int errorCode);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
     void signalSyncOperationBegins(std::shared_ptr<SyncSettings> sync);
     void signalSyncOperationEnds(std::shared_ptr<SyncSettings> sync);

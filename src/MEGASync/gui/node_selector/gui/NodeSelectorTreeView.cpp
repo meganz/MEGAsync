@@ -272,15 +272,13 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                         if(itemStatus == NodeSelectorModelItem::Status::NONE && !(item->getNode()->isFile()))
                         {
                             customMenu.addAction(tr("Sync"), this, [selectionHandle](){
-                                AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
-                                syncManager->addSync(selectionHandle.first(), true);
+                                AddSyncFromUiManager::addSync(selectionHandle.first(), true);
                             });
                         }
                         else if(itemStatus == NodeSelectorModelItem::Status::SYNC)
                         {
-                            customMenu.addAction(tr("Unsync"), this, [selectionHandle](){
-                                AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
-                                syncManager->removeSync(selectionHandle.first());
+                            customMenu.addAction(tr("Unsync"), this, [selectionHandle, this](){
+                                AddSyncFromUiManager::removeSync(selectionHandle.first(), this);
                             });
                         }
                     }

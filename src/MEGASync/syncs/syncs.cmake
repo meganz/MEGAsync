@@ -21,6 +21,7 @@ set(DESKTOP_APP_SYNCS_HEADERS
     syncs/control/SyncInfo.h
     syncs/control/SyncSettings.h
     syncs/control/AddSyncFromUiManager.h
+    syncs/control/AddBackupFromUiManager.h
 )
 
 set(DESKTOP_APP_SYNCS_SOURCES
@@ -45,6 +46,7 @@ set(DESKTOP_APP_SYNCS_SOURCES
     syncs/control/SyncController.cpp
     syncs/control/SyncSettings.cpp
     syncs/control/AddSyncFromUiManager.cpp
+    syncs/control/AddBackupFromUiManager.cpp
 )
 
 target_sources_conditional(MEGAsync

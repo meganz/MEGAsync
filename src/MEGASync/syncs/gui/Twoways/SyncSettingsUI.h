@@ -14,6 +14,8 @@ public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
     ~SyncSettingsUI() override;
 
+    void addButtonClicked(mega::MegaHandle megaFolderHandle) override;
+
 protected:
     QString getFinishWarningIconString() const override;
     QString getFinishIconString() const override;

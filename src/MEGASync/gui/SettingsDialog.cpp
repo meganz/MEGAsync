@@ -11,7 +11,6 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "gui/node_selector/gui/NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "syncs/gui/Twoways/BindFolderDialog.h"
@@ -1352,8 +1351,7 @@ void SettingsDialog::on_bLogout_clicked()
 // Syncs -------------------------------------------------------------------------------------------
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    AddSyncFromUiManager* syncManager(new AddSyncFromUiManager());
-    syncManager->addSync(megaFolderHandle, true);
+    AddSyncFromUiManager::addSync(megaFolderHandle, true);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)

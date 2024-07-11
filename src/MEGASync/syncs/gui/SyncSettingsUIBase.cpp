@@ -165,25 +165,6 @@ void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
     ui->gSyncs->setAddButtonEnabled(enabled);
 }
 
-void SyncSettingsUIBase::addButtonClicked(mega::MegaHandle megaFolderHandle)
-{
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, [megaFolderHandle, overQuotaDialog, this]()
-        {
-            if(overQuotaDialog->result() == QDialog::Rejected)
-            {
-                addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-            }
-        });
-    }
-    else
-    {
-        addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-    }
-}
-
 #ifndef Q_OS_WIN
 void SyncSettingsUIBase::onPermissionsClicked()
 {
@@ -211,32 +192,6 @@ void SyncSettingsUIBase::onPermissionsClicked()
     });
 }
 #endif
-
-void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle)
-{
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(MegaSyncApp, this);
-
-    if (megaFolderHandle != mega::INVALID_HANDLE)
-    {
-        dialog->setMegaFolder(megaFolderHandle, false);
-    }
-
-    DialogOpener::showDialog<BindFolderDialog>(dialog, [dialog, this]()
-    {
-        QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
-                                                           .canonicalPath());
-
-    if (localFolderPath.isEmpty() || dialog->getMegaPath().isEmpty()
-        || dialog->getSyncName().isEmpty() || !dialog->getMegaFolder())
-    {
-        return;
-    }
-
-    syncsStateInformation(SyncStateInformation::SAVING);
-    mSyncController->addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), mega::MegaSync::TYPE_TWOWAY);
-    });
-
-}
 
 void SyncSettingsUIBase::setDisabledSyncsText()
 {
