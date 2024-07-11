@@ -304,8 +304,8 @@ public:
 
     QString downloadFolder();
     void setDownloadFolder(QString value);
-    long long uploadFolder();
-    void setUploadFolder(long long value);
+    mega::MegaHandle uploadFolder();
+    void setUploadFolder(mega::MegaHandle value);
     long long importFolder();
     void setImportFolder(long long value);
 

@@ -1939,13 +1939,13 @@ void Preferences::setDownloadFolder(QString value)
     setValueConcurrently(downloadFolderKey, QDir::toNativeSeparators(value));
 }
 
-long long Preferences::uploadFolder()
+MegaHandle Preferences::uploadFolder()
 {
     assert(logged());
-    return getValueConcurrent<long long>(uploadFolderKey);
+    return getValueConcurrent<mega::MegaHandle>(uploadFolderKey);
 }
 
-void Preferences::setUploadFolder(long long value)
+void Preferences::setUploadFolder(mega::MegaHandle value)
 {
     assert(logged());
     setValueConcurrently(uploadFolderKey, value);

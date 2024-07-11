@@ -1656,7 +1656,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
                     mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
                     mUi->eUploadFolder->setText(QString::fromUtf8(nPath.get()));
                     mPreferences->setHasDefaultUploadFolder(mHasDefaultUploadOption);
-                    mPreferences->setUploadFolder(static_cast<long long>(node->getHandle()));
+                    mPreferences->setUploadFolder(node->getHandle());
                 }
             }
         }
