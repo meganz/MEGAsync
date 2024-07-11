@@ -1351,7 +1351,7 @@ void SettingsDialog::on_bLogout_clicked()
 // Syncs -------------------------------------------------------------------------------------------
 void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
 {
-    AddSyncFromUiManager::addSync(megaFolderHandle, true);
+    AddSyncFromUiManager::addSync_static(megaFolderHandle, true);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)

@@ -1046,7 +1046,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    auto syncManager(AddSyncFromUiManager::addSync(h));
+    auto syncManager(AddSyncFromUiManager::addSync_static(h));
     connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
         app->createAppMenus();
     });
@@ -1054,7 +1054,7 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    AddBackupFromUiManager::addBackup(false);
+    AddBackupFromUiManager::addBackup_static(false);
 }
 
 void InfoDialog::onOverlayClicked()

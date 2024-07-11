@@ -19,8 +19,11 @@ public:
     AddBackupFromUiManager() = default;
     ~AddBackupFromUiManager() = default;
 
-    static const AddBackupFromUiManager* addBackup(bool fromOnboarding);
-    static const AddBackupFromUiManager* removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+    static const AddBackupFromUiManager* addBackup_static(bool fromOnboarding);
+    static const AddBackupFromUiManager* removeBackup_static(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+
+    void addBackup(bool fromOnboarding);
+    void removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
 
 signals:
     void backupAdded(mega::MegaHandle remote, const QString& localPath);

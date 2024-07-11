@@ -18,8 +18,11 @@ public:
     AddSyncFromUiManager() = default;
     ~AddSyncFromUiManager() = default;
 
-    static const AddSyncFromUiManager* const addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
-    static const AddSyncFromUiManager* const removeSync(mega::MegaHandle handle, QWidget* parent);
+    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+    void removeSync(mega::MegaHandle handle, QWidget* parent);
+
+    static const AddSyncFromUiManager* const addSync_static(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false);
+    static const AddSyncFromUiManager* const removeSync_static(mega::MegaHandle handle, QWidget* parent);
 
 signals:
     void syncAdded(mega::MegaHandle remote, const QString& localPath);

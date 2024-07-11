@@ -6,18 +6,28 @@
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "syncs/control/SyncSettings.h"
 
-const AddBackupFromUiManager* AddBackupFromUiManager::addBackup(bool fromOnboarding)
+const AddBackupFromUiManager* AddBackupFromUiManager::addBackup_static(bool fromOnboarding)
 {
     auto backupManager(new AddBackupFromUiManager());
     backupManager->performAddBackup(fromOnboarding);
     return backupManager;
 }
 
-const AddBackupFromUiManager* AddBackupFromUiManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
+const AddBackupFromUiManager* AddBackupFromUiManager::removeBackup_static(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
     auto backupManager(new AddBackupFromUiManager());
     backupManager->performRemoveBackup(backup, parent);
     return backupManager;
+}
+
+void AddBackupFromUiManager::addBackup(bool fromOnboarding)
+{
+    performAddBackup(fromOnboarding);
+}
+
+void AddBackupFromUiManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
+{
+    performRemoveBackup(backup, parent);
 }
 
 void AddBackupFromUiManager::performAddBackup(bool fromOnboarding)

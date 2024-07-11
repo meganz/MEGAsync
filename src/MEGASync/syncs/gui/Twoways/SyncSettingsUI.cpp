@@ -28,7 +28,7 @@ SyncSettingsUI::~SyncSettingsUI()
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    auto syncManager = AddSyncFromUiManager::addSync(megaFolderHandle, false);
+    auto syncManager = AddSyncFromUiManager::addSync_static(megaFolderHandle, false);
 
     connect(syncManager, &AddSyncFromUiManager::syncAddingStarted, this, [this](){
         syncsStateInformation(SyncStateInformation::SAVING);

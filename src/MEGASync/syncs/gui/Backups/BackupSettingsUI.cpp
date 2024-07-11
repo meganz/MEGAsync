@@ -57,7 +57,7 @@ BackupSettingsUI::~BackupSettingsUI()
 
 void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
-    AddBackupFromUiManager::addBackup(false);
+    AddBackupFromUiManager::addBackup_static(false);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
@@ -79,7 +79,7 @@ void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    AddBackupFromUiManager::removeBackup(backup, this);
+    AddBackupFromUiManager::removeBackup_static(backup, this);
 }
 
 QString BackupSettingsUI::getFinishWarningIconString() const
