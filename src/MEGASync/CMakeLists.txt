@@ -138,7 +138,7 @@ target_link_libraries(MEGAsync
 
 ## Adjust compilation flags for warnings and errors ##
 target_platform_compile_options(
-    TARGET SDKlib
+    TARGET MEGAsync
     WINDOWS /W4
     UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
 )
