@@ -1054,24 +1054,7 @@ void InfoDialog::addSync(MegaHandle h)
 
 void InfoDialog::addBackup()
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, this]()
-    {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            AddBackupFromUiManager::addBackup(false);
-            this->hide();
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
-    }
-    else
-    {
-        addBackupLambda();
-    }
+    AddBackupFromUiManager::addBackup(false);
 }
 
 void InfoDialog::onOverlayClicked()
