@@ -111,7 +111,6 @@
         <file>onboard/syncs_types/ResumePage.qml</file>
         <file>onboard/syncs_types/ResumePageForm.ui.qml</file>
         <file>onboard/syncs_types/SyncsHorizontalButton.qml</file>
-        <file>onboard/syncs_types/SyncsType.qml</file>
         <file>onboard/syncs_types/SyncsVerticalButton.qml</file>
         <file>onboard/syncs_types/StepPanel.qml</file>
         <file>onboard/syncs_types/SyncsPage.qml</file>
@@ -168,5 +167,6 @@
         <file>common/Utilities.qml</file>
         <file>components/steps/StepPanel.qml</file>
         <file>syncs/SyncsPage.qml</file>
+        <file>syncs/SyncsType.qml</file>
     </qresource>
 </RCC>

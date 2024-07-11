@@ -1,5 +1,6 @@
 module syncs
 singleton SyncsStrings 1.0 SyncsStrings.qml
+SyncsType 1.0 SyncsType.qml
 SyncsDialog 1.0 SyncsDialog.qml
 SyncsFlow 1.0 SyncsFlow.qml
 SyncsPage 1.0 SyncsPage.qml
