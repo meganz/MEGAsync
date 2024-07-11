@@ -1,9 +1,63 @@
 #include "MegaUserAlertExt.h"
+
 #include "EmailRequester.h"
+
+/*
+namespace
+{
+const std::map<AlertType, std::vector<int>> MegaUserAlertsByType
+{
+    {
+        AlertType::CONTACTS,
+        {
+            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST,
+            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED,
+            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER,
+            mega::MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU,
+            mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED,
+            mega::MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED,
+            mega::MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU,
+            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED,
+            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED,
+            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED,
+            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED,
+            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED
+        }
+    },
+    {
+        AlertType::SHARES,
+        {
+            mega::MegaUserAlert::TYPE_NEWSHARE,
+            mega::MegaUserAlert::TYPE_DELETEDSHARE,
+            mega::MegaUserAlert::TYPE_NEWSHAREDNODES,
+            mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES,
+            mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES
+        }
+    },
+    {
+        AlertType::PAYMENTS,
+        {
+            mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED,
+            mega::MegaUserAlert::TYPE_PAYMENT_FAILED,
+            mega::MegaUserAlert::TYPE_PAYMENTREMINDER
+        }
+    },
+    {
+        AlertType::TAKEDOWNS,
+        {
+            mega::MegaUserAlert::TYPE_TAKEDOWN,
+            mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED
+        }
+    }
+};
+}
+*/
 
 MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent)
     : NotificationExtBase(NotificationExtBase::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
+    , mAlertType(AlertType::UNKNOWN)
+    , mEmail()
 {
     init();
 }
@@ -31,6 +85,75 @@ void MegaUserAlertExt::init()
     else if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
     {
         mEmail = EmailRequester::instance()->getEmail(mMegaUserAlert->getUserHandle());
+    }
+
+    initAlertType();
+}
+
+void MegaUserAlertExt::initAlertType()
+{
+    /*
+    for (auto rit = MegaUserAlertsByType.rbegin(); rit != MegaUserAlertsByType.rend(); ++rit)
+    {
+        const auto& alertType = rit->first;
+        const auto& alerts = rit->second;
+        if (std::find(alerts.begin(), alerts.end(), mMegaUserAlert->getType()) != alerts.end())
+        {
+            mAlertType = alertType;
+            return;
+        }
+    }
+
+    if(mAlertType == AlertType::UNKNOWN)
+    {
+        // TODO: Show warning
+    }
+    */
+    switch (mMegaUserAlert->getType())
+    {
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+        case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+        case mega::MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        {
+            mAlertType = AlertType::CONTACTS;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_NEWSHARE:
+        case mega::MegaUserAlert::TYPE_DELETEDSHARE:
+        case mega::MegaUserAlert::TYPE_NEWSHAREDNODES:
+        case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            mAlertType = AlertType::SHARES;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        case mega::MegaUserAlert::TYPE_PAYMENT_FAILED:
+        case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
+        {
+            mAlertType = AlertType::PAYMENTS;
+            break;
+        }
+        case mega::MegaUserAlert::TYPE_TAKEDOWN:
+        case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+        {
+            mAlertType = AlertType::TAKEDOWNS;
+            break;
+        }
+        default:
+        {
+            // TODO: Show warning
+            break;
+        }
     }
 }
 
@@ -120,4 +243,9 @@ const char* MegaUserAlertExt::getString(unsigned int index) const
 const char* MegaUserAlertExt::getTitle() const
 {
     return mMegaUserAlert->getTitle();
+}
+
+AlertType MegaUserAlertExt::getAlertType() const
+{
+    return mAlertType;
 }

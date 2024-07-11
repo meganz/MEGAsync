@@ -15,16 +15,19 @@ class NotificationItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit NotificationItem(QWidget* parent = nullptr);
+    explicit NotificationItem(MegaNotificationExt* notification, QWidget* parent = nullptr);
     ~NotificationItem();
 
-    void setNotificationData(MegaNotificationExt* notification);
+    QSize minimumSizeHint() const override;
+    QSize sizeHint() const override;
 
 private:
     Ui::NotificationItem* ui;
     MegaNotificationExt* mNotificationData;
 
+    void init();
     void setImages();
+
 };
 
 #endif // NOTIFICATION_ITEM_H

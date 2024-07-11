@@ -14,12 +14,13 @@ constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 }
 
-NotificationItem::NotificationItem(QWidget *parent)
+NotificationItem::NotificationItem(MegaNotificationExt* notification, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::NotificationItem)
-    , mNotificationData(nullptr)
+    , mNotificationData(notification)
 {
     ui->setupUi(this);
+    init();
 }
 
 NotificationItem::~NotificationItem()
@@ -27,10 +28,8 @@ NotificationItem::~NotificationItem()
     delete ui;
 }
 
-void NotificationItem::setNotificationData(MegaNotificationExt* notification)
+void NotificationItem::init()
 {
-    mNotificationData = notification;
-
     ui->lTitle->setText(mNotificationData->getTitle());
 
     QString labelText(DescriptionHtmlStart);
@@ -42,6 +41,16 @@ void NotificationItem::setNotificationData(MegaNotificationExt* notification)
 
     ui->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
     ui->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+}
+
+QSize NotificationItem::minimumSizeHint() const
+{
+    return this->size();
+}
+
+QSize NotificationItem::sizeHint() const
+{
+    return this->size();
 }
 
 void NotificationItem::setImages()

@@ -1,5 +1,6 @@
 #include "NotificationAlertController.h"
 
+#include "NotificationAlertModel.h"
 #include "NotificationAlertProxyModel.h"
 #include "MegaApplication.h"
 
@@ -22,15 +23,18 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
 void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
-/*
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_GET_NOTIFICATIONS:
         {
             if (e->getErrorCode() == mega::MegaError::API_OK)
             {
-                auto notifications = request->getMegaNotifications();
-                populateNotifications(notifications);
+                auto notificationList = request->getMegaNotifications();
+                if (notificationList)
+                {
+                    mNotificationAlertModel->processNotifications(notificationList);
+                    mMegaApi->getLastReadNotification();
+                }
             }
             break;
         }
@@ -41,7 +45,7 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
                 && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
                 && mNotificationAlertModel)
             {
-                mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
+                //mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
                 checkUseenNotifications();
             }
             break;
@@ -50,7 +54,7 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
         {
             break;
         }
-    }*/
+    }
 }
 
 void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList)
@@ -75,28 +79,6 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
 
     // Used by InfoDialog because the current architecture
     //checkUseenNotifications();
-}
-
-void NotificationAlertController::populateNotifications(const mega::MegaNotificationList* notificationList)
-{
-    /*
-    if (!notificationList)
-    {
-        return;
-    }
-
-    if(createModelAndDelegate() || !mNotificationAlertModel->notificationModel())
-    {
-        mNotificationAlertModel->createNotificationModel(notificationList);
-        mNotificationAlertDelegate->createNotificationDelegate(mNotificationAlertModel->notificationModel());
-    }
-    else
-    {
-        mNotificationAlertModel->insertNotifications(notificationList);
-    }
-
-    mMegaApi->getLastReadNotification();*/
-
 }
 
 void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
@@ -143,36 +125,26 @@ void NotificationAlertController::reset()
     {
         mAlertsProxyModel.reset();
     }
-/*
-    if (mNotificationAlertDelegate)
-    {
-        mNotificationAlertDelegate.reset();
-    }*/
 }
 
-bool NotificationAlertController::hasNotificationsOrAlerts()
+bool NotificationAlertController::hasNotifications()
 {
-    return true;//mNotificationAlertModel && mNotificationAlertModel->hasNotificationsOrAlerts();
+    return mNotificationAlertModel->rowCount() > 0;
 }
 
-bool NotificationAlertController::hasAlertsOfType(int type)
+bool NotificationAlertController::hasElementsOfType(AlertType type)
 {
-    return true;//mNotificationAlertModel && mNotificationAlertModel->hasAlertsOfType(type);
+    return mNotificationAlertModel->hasAlertsOfType(type);
 }
 
-/*
-void NotificationAlertController::applyNotificationFilter(AlertType opt)
+void NotificationAlertController::applyFilter(AlertType type)
 {
-    if (mAlertsProxyModel)
-    {
-        mAlertsProxyModel->setFilterAlertType(opt);
-    }
+    mAlertsProxyModel->setFilterAlertType(type);
 }
-*/
 
 void NotificationAlertController::requestNotifications() const
 {
-    //mMegaApi->getNotifications();
+    mMegaApi->getNotifications();
 }
 
 void NotificationAlertController::checkUseenNotifications()

@@ -2,6 +2,7 @@
 #define MEGA_USER_ALERT_EXT_H
 
 #include "NotificationExtBase.h"
+#include "NotificationAlertTypes.h"
 
 #include "megaapi.h"
 
@@ -33,15 +34,18 @@ public:
     virtual mega::MegaHandle getNodeHandle() const;
     virtual const char* getString(unsigned index) const;
     virtual const char* getTitle() const;
+    virtual AlertType getAlertType() const;
 
 signals:
     void emailChanged();
 
 private:
     std::unique_ptr<mega::MegaUserAlert> mMegaUserAlert;
+    AlertType mAlertType;
     QString mEmail;
 
     void init();
+    void initAlertType();
 
 };
 

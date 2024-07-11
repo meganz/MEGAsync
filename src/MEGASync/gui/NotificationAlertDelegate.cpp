@@ -1,13 +1,24 @@
 #include "NotificationAlertDelegate.h"
 
 #include "NotificationAlertModel.h"
+#include "MegaDelegateHoverManager.h"
+#include "NotificationAlertProxyModel.h"
+#include "MegaUserAlertExt.h"
+#include "MegaNotificationExt.h"
 
 #include <QSortFilterProxyModel>
 #include <QPainter>
+#include <QTreeView>
+#include <QTimer>
 
-NotificationAlertDelegate::NotificationAlertDelegate(QObject* parent)
-    : QStyledItemDelegate(parent)
+NotificationAlertDelegate::NotificationAlertDelegate(QAbstractItemModel* proxyModel,
+                                                     QTreeView* view)
+    : QStyledItemDelegate(view)
     , mAlertsDelegate(std::make_unique<AlertDelegate>())
+    , mNotificationsDelegate(std::make_unique<NotificationDelegate>())
+    , mProxyModel(qobject_cast<NotificationAlertProxyModel*>(proxyModel))
+    , mEditor(std::make_unique<NotificationEditorInfo>())
+    , mView(view)
 {
 }
 
@@ -15,6 +26,11 @@ void NotificationAlertDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
+    if(mEditor->getWidget() && mEditor->getIndex() == index)
+    {
+        return;
+    }
+
     if (index.isValid())
     {
         painter->save();
@@ -57,6 +73,107 @@ QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
     return result;
 }
 
+QWidget* NotificationAlertDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+{
+    Q_UNUSED(parent);
+    Q_UNUSED(option);
+
+    auto widget = getWidget(index);
+    if(widget)
+    {
+        mEditor->setData(index, widget);
+    }
+
+    return mEditor->getWidget();
+}
+
+void NotificationAlertDelegate::destroyEditor(QWidget *, const QModelIndex &) const
+{
+    //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
+    mEditor->setData(QModelIndex(), nullptr);
+}
+
+bool NotificationAlertDelegate::event(QEvent* event)
+{
+    if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
+    {
+        switch (hoverEvent->type())
+        {
+            case QEvent::Enter:
+            case QEvent::MouseMove:
+            {
+                onHoverEnter(hoverEvent->index());
+                break;
+            }
+            case QEvent::Leave:
+            {
+                onHoverLeave(hoverEvent->index());
+                break;
+            }
+            default:
+            {
+                break;
+            }
+        }
+    }
+
+    return QStyledItemDelegate::event(event);
+}
+
+void NotificationAlertDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
+{
+    QRect geometry(option.rect);
+#ifdef __APPLE__
+    auto width = mView->size().width();
+    width -= mView->contentsMargins().left();
+    width -= mView->contentsMargins().right();
+    if(mView->verticalScrollBar() && mView->verticalScrollBar()->isVisible())
+    {
+        width -= mView->verticalScrollBar()->width();
+    }
+    geometry.setWidth(std::min(width, option.rect.width()));
+#endif
+    editor->setGeometry(geometry);
+}
+
+void NotificationAlertDelegate::onHoverEnter(const QModelIndex& index)
+{
+    QModelIndex editorCurrentIndex(mEditor->getIndex());
+    if(editorCurrentIndex != index)
+    {
+        onHoverLeave(index);
+        mView->edit(index);
+    }
+}
+
+void NotificationAlertDelegate::onHoverLeave(const QModelIndex& index)
+{
+    //It is mandatory to close the editor, as it may be different depending on the row
+    if(mEditor->getWidget())
+    {
+        emit closeEditor(mEditor->getWidget(), QAbstractItemDelegate::EndEditHint::NoHint);
+
+        //Small hack to avoid blinks when changing from editor to delegate paint
+        //Set the editor to nullptr and update the view -> Then the delegate paints the base widget
+        //before the editor is removed
+        mEditor->setData(QModelIndex(), nullptr);
+    }
+
+    QTimer::singleShot(50, this, [this, index](){
+        mView->update(index);
+    });
+}
+
+QModelIndex NotificationAlertDelegate::getEditorCurrentIndex() const
+{
+    if(mEditor)
+    {
+        return mProxyModel->mapFromSource(mEditor->getIndex());
+    }
+
+    return QModelIndex();
+}
+
 QWidget* NotificationAlertDelegate::getWidget(const QModelIndex& index) const
 {
     QWidget* widget = nullptr;
@@ -70,117 +187,25 @@ QWidget* NotificationAlertDelegate::getWidget(const QModelIndex& index) const
             {
                 switch (item->getType())
                 {
-                case NotificationExtBase::Type::ALERT:
-                {
-                    MegaUserAlertExt* alert = dynamic_cast<MegaUserAlertExt*>(item);
-                    widget = mAlertsDelegate->getWidget(alert);
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
+                    case NotificationExtBase::Type::ALERT:
+                    {
+                        MegaUserAlertExt* alert = dynamic_cast<MegaUserAlertExt*>(item);
+                        widget = mAlertsDelegate->getWidget(alert, mView->viewport());
+                        break;
+                    }
+                    case NotificationExtBase::Type::NOTIFICATION:
+                    {
+                        MegaNotificationExt* notification = dynamic_cast<MegaNotificationExt*>(item);
+                        widget = mNotificationsDelegate->getWidget(notification, mView->viewport());
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
                 }
             }
         }
     }
     return widget;
 }
-
-/*
-bool NotificationAlertDelegate::editorEvent(QEvent* event,
-                                            QAbstractItemModel* model,
-                                            const QStyleOptionViewItem& option,
-                                            const QModelIndex& index)
-{
-    bool result = false;
-    switch (getModelType(index))
-    {
-        case NotificationAlertModelItem::ALERT:
-        {
-            result = mAlertsDelegate->editorEvent(event, model, option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NOTIFICATION:
-        {
-            result = QStyledItemDelegate::editorEvent(event, model, option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NONE:
-        default:
-        {
-            result = QStyledItemDelegate::editorEvent(event, model, option, index);
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                               "Invalid notification item type in delegate (editorEvent).");
-            break;
-        }
-    }
-    return result;
-}
-
-bool NotificationAlertDelegate::helpEvent(QHelpEvent* event,
-                                          QAbstractItemView* view,
-                                          const QStyleOptionViewItem& option,
-                                          const QModelIndex& index)
-{
-    bool result = false;
-    switch (getModelType(index))
-    {
-        case NotificationAlertModelItem::ALERT:
-        {
-            result = mAlertsDelegate->helpEvent(event, view, option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NOTIFICATION:
-        {
-            result = QStyledItemDelegate::helpEvent(event, view, option, index);
-            break;
-        }
-        case NotificationAlertModelItem::NONE:
-        default:
-        {
-            result = QStyledItemDelegate::helpEvent(event, view, option, index);
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                               "Invalid notification item type in delegate (helpEvent).");
-            break;
-        }
-    }
-    return result;
-}
-
-void NotificationAlertDelegate::createNotificationDelegate(NotificationModel* model)
-{
-    if(!mNotificationsDelegate)
-    {
-        mNotificationsDelegate = std::make_unique<NotificationDelegate>(model);
-    }
-}
-
-void NotificationAlertDelegate::createAlertDelegate(AlertModel* model)
-{
-    if(!mAlertsDelegate)
-    {
-        mAlertsDelegate = std::make_unique<AlertDelegate>(model);
-    }
-}
-
-NotificationAlertModelItem::ModelType NotificationAlertDelegate::getModelType(const QModelIndex &index) const
-{
-    NotificationAlertModelItem::ModelType type = NotificationAlertModelItem::NONE;
-    if (index.isValid() && index.row() >= 0)
-    {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
-        if (filteredIndex.isValid() && filteredIndex.row() >= 0)
-        {
-            NotificationAlertModelItem* item = static_cast<NotificationAlertModelItem*>(filteredIndex.internalPointer());
-            if(item)
-            {
-                type = item->type;
-            }
-        }
-    }
-    return type;
-}
-*/
-
-

@@ -23,6 +23,7 @@
 #include "SyncsMenu.h"
 #include "SyncController.h"
 #include "AlertModel.h"
+#include "MegaDelegateHoverManager.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -232,6 +233,7 @@ private:
     void hideSomeIssues();
     void showSomeIssues();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
+    MegaDelegateHoverManager mNotificationsViewHoverManager;
 
 protected:
     void updateBlockedState();
@@ -254,7 +256,7 @@ protected:
     mega::MegaTransfer *activeUpload;
     std::shared_ptr<SyncController> mSyncController;
 
- private:
+private:
     void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);

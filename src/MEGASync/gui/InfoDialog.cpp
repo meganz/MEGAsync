@@ -1446,7 +1446,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasElementsOfType(AlertType::CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1462,7 +1462,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_SHARES))
+            if (app->getNotificationController()->hasElementsOfType(AlertType::SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1478,7 +1478,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_PAYMENT))
+            if (app->getNotificationController()->hasElementsOfType(AlertType::PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1495,7 +1495,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasNotificationsOrAlerts())
+            if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1508,7 +1508,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         }
     }
 
-    //app->getNotificationController()->applyNotificationFilter(opt);
+    app->getNotificationController()->applyFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1777,11 +1777,14 @@ void InfoDialog::repositionInfoDialog()
 
 void InfoDialog::initNotificationArea()
 {
+    mNotificationsViewHoverManager.setView(ui->tvNotifications);
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
     ui->tvNotifications->setModel(app->getNotificationController()->getModel());
     ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
-    ui->tvNotifications->setItemDelegate(new NotificationAlertDelegate(ui->tvNotifications));
+    auto delegate = new NotificationAlertDelegate(app->getNotificationController()->getModel(),
+                                                  ui->tvNotifications);
+    ui->tvNotifications->setItemDelegate(delegate);
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
     notificationsReady = true;
 }

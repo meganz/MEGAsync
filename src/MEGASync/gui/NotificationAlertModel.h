@@ -2,6 +2,7 @@
 #define NOTIFICATION_ALERT_MODEL_H
 
 #include "NotificationExtBase.h"
+#include "NotificationAlertTypes.h"
 
 #include <QAbstractItemModel>
 
@@ -26,9 +27,13 @@ public:
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
+    Qt::ItemFlags flags(const QModelIndex& index) const override;
 
     void updateAlerts(mega::MegaUserAlertList* alerts);
-    //void updateNotifications(const mega::MegaNotificationList* notifications);
+    bool hasAlertsOfType(AlertType type);
+    void processNotifications(const mega::MegaNotificationList* notifications);
+
+
     //void insertNotifications(const mega::MegaNotificationList* notificationList);
 
     /*
@@ -61,9 +66,8 @@ private:
     void updateAlerts(const QList<mega::MegaUserAlert*>& alerts);
     void removeAlerts(const QList<mega::MegaUserAlert*>& alerts);
 
-    //void insertNotifications(const QList<const mega::MegaNotification*>& notifications);
-    //void updateNotifications(const QList<const mega::MegaNotification*>& notifications);
-    //void removeNotifications(const QList<const mega::MegaNotification*>& notifications);
+    void insertNotifications(const mega::MegaNotificationList* notifications);
+    void removeNotifications(const mega::MegaNotificationList* notifications);
 
 
    // int getNotificationRowCount() const;
@@ -71,6 +75,7 @@ private:
   // int getAlertRow(int row) const;
 
     auto findAlertById(unsigned id);
+    auto findNotificationById(int64_t id);
 
 };
 

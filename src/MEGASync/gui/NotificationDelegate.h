@@ -1,26 +1,22 @@
 #ifndef NOTIFICATION_DELEGATE_H
 #define NOTIFICATION_DELEGATE_H
 
-#include "NotificationModel.h"
-#include "NotificationAlertTypes.h"
+#include <QWidget>
+#include <QCache>
 
-#include <QStyledItemDelegate>
+class NotificationItem;
+class MegaNotificationExt;
 
-class NotificationDelegate : public QStyledItemDelegate
+class NotificationDelegate
 {
-    Q_OBJECT
 
 public:
-    NotificationDelegate(NotificationModel* notificationModel, QObject* parent = 0);
+    NotificationDelegate();
 
-    void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const;
-    QSize sizeHint(const QStyleOptionViewItem& option, const QModelIndex& index) const;
+    QWidget* getWidget(MegaNotificationExt* notification, QWidget* parent);
 
 private:
-    NotificationModel* mNotificationModel;
-
-    //void handleNotificationItem(MegaNotificationExt* notification, const QRect& rect, QPainter* painter) const;
-    //NotificationAlertModelItem* getModelItem(const QModelIndex& index) const;
+    QCache<int64_t, NotificationItem> mItems;
 
 };
 

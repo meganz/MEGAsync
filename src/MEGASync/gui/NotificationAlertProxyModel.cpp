@@ -6,55 +6,6 @@
 
 #include <QDateTime>
 
-namespace
-{
-const std::map<AlertType, std::vector<int>> MegaUserAlertsByType
-{
-    {
-        AlertType::CONTACTS,
-        {
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST,
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED,
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED
-        }
-    },
-    {
-        AlertType::SHARES,
-        {
-            mega::MegaUserAlert::TYPE_NEWSHARE,
-            mega::MegaUserAlert::TYPE_DELETEDSHARE,
-            mega::MegaUserAlert::TYPE_NEWSHAREDNODES,
-            mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES,
-            mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES
-        }
-    },
-    {
-        AlertType::PAYMENTS,
-        {
-            mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED,
-            mega::MegaUserAlert::TYPE_PAYMENT_FAILED,
-            mega::MegaUserAlert::TYPE_PAYMENTREMINDER
-        }
-    },
-    {
-        AlertType::TAKEDOWNS,
-        {
-            mega::MegaUserAlert::TYPE_TAKEDOWN,
-            mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED
-        }
-    }
-};
-}
-
 NotificationAlertProxyModel::NotificationAlertProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
     , mActualFilter(AlertType::ALL)
@@ -72,26 +23,13 @@ void NotificationAlertProxyModel::setFilterAlertType(AlertType filterType)
     invalidateFilter();
 }
 
-bool NotificationAlertProxyModel::checkAlertFilterType(int sdkType) const
-{
-    bool success = false;
-    if(mActualFilter == AlertType::ALL)
-    {
-        success = true;
-    }
-    else
-    {
-        auto it = MegaUserAlertsByType.find(mActualFilter);
-        if (it != MegaUserAlertsByType.end())
-        {
-            success = std::find(it->second.begin(), it->second.end(), sdkType) != it->second.end();
-        }
-    }
-    return success;
-}
-
 bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceParent) const
 {
+    if(mActualFilter == AlertType::ALL)
+    {
+        return true;
+    }
+
     bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
     NotificationExtBase* item = static_cast<NotificationExtBase*>(index.internalPointer());
@@ -101,8 +39,8 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
         {
             case NotificationExtBase::Type::ALERT:
             {
-                MegaUserAlertExt* alert = static_cast<MegaUserAlertExt*>(item);
-                filter = checkAlertFilterType(alert->getType());
+                MegaUserAlertExt* alert = qobject_cast<MegaUserAlertExt*>(item);
+                filter = mActualFilter == alert->getAlertType();
                 break;
             }
             case NotificationExtBase::Type::NOTIFICATION:

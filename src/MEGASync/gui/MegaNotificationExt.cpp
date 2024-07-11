@@ -14,7 +14,7 @@ constexpr int LargeImageHeight = 115;
 }
 
 MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent)
-    : NotificationExtBase(NotificationExtBase::Type::ALERT, parent)
+    : NotificationExtBase(NotificationExtBase::Type::NOTIFICATION, parent)
     , mNotification(notification)
     , mDownloader(std::make_unique<ImageDownloader>(nullptr))
 {

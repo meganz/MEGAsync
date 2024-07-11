@@ -23,8 +23,6 @@ protected:
 private:
     AlertType mActualFilter;
 
-    bool checkAlertFilterType(int sdkType) const;
-
 };
 
 #endif // NOTIFICATION_ALERT_PROXY_MODEL_H

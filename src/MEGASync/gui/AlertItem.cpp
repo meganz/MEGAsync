@@ -1,9 +1,10 @@
 #include "AlertItem.h"
+
 #include "ui_AlertItem.h"
 #include "CommonMessages.h"
 #include "MegaApplication.h"
+#include "MegaNodeNames.h"
 #include "UserAttributesRequests/FullName.h"
-#include <MegaNodeNames.h>
 
 #include <QDateTime>
 #include <QFutureWatcher>
@@ -14,16 +15,17 @@ using namespace mega;
 
 AlertItem::AlertItem(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::AlertItem),
-    megaApi(MegaSyncApp->getMegaApi())
+    mUi(new Ui::AlertItem),
+    mMegaApi(MegaSyncApp->getMegaApi())
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
 
-    ui->sIconWidget->hide();
-    ui->wNotificationIcon->hide();
-    ui->lNew->hide();
+    mUi->sIconWidget->hide();
+    mUi->wNotificationIcon->hide();
+    mUi->lNew->hide();
 
-    connect(&mAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=](){
+    connect(&mAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=]()
+    {
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
         updateAlertData();
     });
@@ -31,7 +33,7 @@ AlertItem::AlertItem(QWidget *parent) :
 
 AlertItem::~AlertItem()
 {
-    delete ui;
+    delete mUi;
 }
 
 void AlertItem::setAlertData(MegaUserAlertExt* alert)
@@ -53,13 +55,13 @@ void AlertItem::setAlertData(MegaUserAlertExt* alert)
     }
     else //If it comes without user handler, it is because is an own alert, then take your email.
     {
-        if(megaApi)
+        if(mMegaApi)
         {
-            ui->wAvatarContact->setUserEmail(megaApi->getMyEmail());
+            mUi->wAvatarContact->setUserEmail(mMegaApi->getMyEmail());
         }
     }
 
-    connect(ui->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
+    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
         emit refreshAlertItem(mAlertUser->getId());
     });
 
@@ -85,7 +87,7 @@ void AlertItem::requestFullName()
         connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
     }
 
-    ui->wAvatarContact->setUserEmail(mAlertUser->getEmail().toUtf8().constData());
+    mUi->wAvatarContact->setUserEmail(mAlertUser->getEmail().toUtf8().constData());
 
     onAttributesReady();
 }
@@ -98,7 +100,7 @@ void AlertItem::onAttributesReady()
     {
         mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
         {
-            return megaApi ? megaApi->getNodeByHandle(handle) : nullptr;
+            return mMegaApi ? mMegaApi->getNodeByHandle(handle) : nullptr;
         }));
     }
     else
@@ -113,14 +115,14 @@ void AlertItem::updateAlertData()
     setAlertHeading(mAlertUser);
     setAlertContent(mAlertUser);
     setAlertTimeStamp(mAlertUser->getTimestamp(0));
-    mAlertUser->getSeen() ? ui->lNew->hide() : ui->lNew->show();
+    mAlertUser->getSeen() ? mUi->lNew->hide() : mUi->lNew->show();
 
     emit refreshAlertItem(mAlertUser->getId());
 }
 
 void AlertItem::setAlertType(int type)
 {
-    ui->wNotificationIcon->hide();
+    mUi->wNotificationIcon->hide();
 
     QString notificationTitle;
     QString notificationColor;
@@ -151,18 +153,18 @@ void AlertItem::setAlertType(int type)
             {
                 if (type == MegaUserAlert::TYPE_DELETEDSHARE)
                 {
-                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
+                    mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
                 }
                 else
                 {
-                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder.png")).pixmap(24.0, 24.0));
+                    mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder.png")).pixmap(24.0, 24.0));
                 }
 
-                ui->bNotificationIcon->setMinimumSize(QSize(10, 8));
-                ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
-                ui->bNotificationIcon->setIconSize(QSize(10, 8));
-                ui->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
-                ui->wNotificationIcon->show();
+                mUi->bNotificationIcon->setMinimumSize(QSize(10, 8));
+                mUi->bNotificationIcon->setMaximumSize(QSize(10, 8));
+                mUi->bNotificationIcon->setIconSize(QSize(10, 8));
+                mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
+                mUi->wNotificationIcon->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
                 break;
@@ -186,22 +188,22 @@ void AlertItem::setAlertType(int type)
             {
                 notificationTitle = QString::fromUtf8("");
                 notificationColor = QString::fromUtf8("#FFFFFF");
-                ui->bNotificationIcon->setMinimumSize(QSize(16, 16));
-                ui->bNotificationIcon->setMaximumSize(QSize(16, 16));
-                ui->bNotificationIcon->setIconSize(QSize(16, 16));
-                ui->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/mega_notifications.png")));
-                ui->wNotificationIcon->show();
-            }
+                mUi->bNotificationIcon->setMinimumSize(QSize(16, 16));
+                mUi->bNotificationIcon->setMaximumSize(QSize(16, 16));
+                mUi->bNotificationIcon->setIconSize(QSize(16, 16));
+                mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/mega_notifications.png")));
+                mUi->wNotificationIcon->show();
                 break;
+            }
     }
 
-    ui->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
-    ui->lTitle->setText(notificationTitle);
+    mUi->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
+    mUi->lTitle->setText(notificationTitle);
 }
 
 void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
 {
-    ui->sIconWidget->hide();
+    mUi->sIconWidget->hide();
     mNotificationHeading.clear();
 
     switch (alert->getType())
@@ -212,30 +214,30 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
         {
             mNotificationHeading = tr("New Contact Request");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
         case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
         {
             mNotificationHeading = tr("Contact Deleted");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
         {
             mNotificationHeading = tr("Contact Established");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
         {
             mNotificationHeading = tr("Contact Blocked");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
@@ -243,22 +245,22 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
         {
             mNotificationHeading = tr("Contact Updated");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
         {
             mNotificationHeading = tr("Contact Accepted");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
             mNotificationHeading = tr("Contact Denied");
-            ui->sIconWidget->setCurrentWidget(ui->pContact);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pContact);
+            mUi->sIconWidget->show();
             break;
         }
         // Share notifications
@@ -267,8 +269,8 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
         case MegaUserAlert::TYPE_NEWSHAREDNODES:
         case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         {
-            ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pSharedFolder);
+            mUi->sIconWidget->show();
             mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
 
             if (mNotificationHeading.isEmpty())
@@ -279,8 +281,8 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
         }
         case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
-            ui->sIconWidget->show();
+            mUi->sIconWidget->setCurrentWidget(mUi->pSharedFolder);
+            mUi->sIconWidget->show();
             mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
 
             if (mNotificationHeading.isEmpty())
@@ -307,8 +309,8 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
     }
 
 
-    ui->lHeading->ensurePolished();
-    ui->lHeading->setText(ui->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,ui->lHeading->minimumWidth()));
+    mUi->lHeading->ensurePolished();
+    mUi->lHeading->setText(mUi->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,mUi->lHeading->minimumWidth()));
 
     if(!mAlertUser->getEmail().isEmpty())
     {
@@ -478,7 +480,7 @@ void AlertItem::setAlertContent(MegaUserAlertExt *alert)
                 break;
     }
 
-    ui->lDesc->setText(notificationContent);
+    mUi->lDesc->setText(notificationContent);
 }
 
 void AlertItem::setAlertTimeStamp(int64_t ts)
@@ -486,11 +488,11 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
     if (ts != -1)
     {
         const QDateTime dateTime{QDateTime::fromMSecsSinceEpoch(ts * 1000)};
-        ui->lTimeStamp->setText(MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime));
+        mUi->lTimeStamp->setText(MegaSyncApp->getFormattedDateByCurrentLanguage(dateTime));
     }
     else
     {
-        ui->lTimeStamp->setText(QString::fromUtf8(""));
+        mUi->lTimeStamp->setText(QString::fromUtf8(""));
     }
 }
 
@@ -501,19 +503,121 @@ QString AlertItem::getHeadingString()
 
 QSize AlertItem::minimumSizeHint() const
 {
-    return QSize(400, 122);
+    return this->size();
 }
 
 QSize AlertItem::sizeHint() const
 {
-    return QSize(400, 122);
+    return this->size();
+}
+
+void AlertItem::mousePressEvent(QMouseEvent* event)
+{
+    switch(mAlertUser->getType())
+    {
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        {
+            processIncomingPendingContactClick();
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        {
+            processIncomingContactChangeOrAcceptedClick();
+            break;
+        }
+        case MegaUserAlert::TYPE_NEWSHARE:
+        case MegaUserAlert::TYPE_DELETEDSHARE:
+        case MegaUserAlert::TYPE_NEWSHAREDNODES:
+        case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        case MegaUserAlert::TYPE_TAKEDOWN:
+        case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+        {
+            processShareOrTakedownClick();
+            break;
+        }
+        case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        case MegaUserAlert::TYPE_PAYMENT_FAILED:
+        case MegaUserAlert::TYPE_PAYMENTREMINDER:
+        {
+            processPaymentClick();
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+    QWidget::mousePressEvent(event);
+}
+
+void AlertItem::processIncomingPendingContactClick()
+{
+    bool found = false;
+    std::unique_ptr<MegaContactRequestList> icr(mMegaApi->getIncomingContactRequests());
+    if (icr)
+    {
+        for (int i = 0; i < icr->size(); i++)
+        {
+            MegaContactRequest* request = icr->get(i);
+            if (!request)
+            {
+                continue;
+            }
+
+            const char* email = request->getSourceEmail();
+            if (mAlertUser->getEmail().toStdString().c_str() == email)
+            {
+                found = true;
+                Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                break;
+            }
+        }
+    }
+
+    if (!found)
+    {
+        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+    }
+}
+
+void AlertItem::processIncomingContactChangeOrAcceptedClick()
+{
+    std::unique_ptr<MegaUser> user { mMegaApi->getContact(mAlertUser->getEmail().toStdString().c_str()) };
+    if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
+    {
+        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
+                                    .arg(QString::fromUtf8(mMegaApi->userHandleToBase64(user->getHandle())))));
+    }
+    else
+    {
+        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/contacts")));
+    }
+}
+
+void AlertItem::processShareOrTakedownClick()
+{
+    std::unique_ptr<MegaNode> node { mMegaApi->getNodeByHandle(mAlertUser->getNodeHandle()) };
+    if (node)
+    {
+        Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
+                                    .arg(QString::fromUtf8(node->getBase64Handle()))));
+    }
+}
+
+void AlertItem::processPaymentClick()
+{
+    Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/account/plan")));
 }
 
 void AlertItem::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        ui->retranslateUi(this);
+        mUi->retranslateUi(this);
         setAlertType(mAlertUser->getType());
         setAlertHeading(mAlertUser);
         setAlertContent(mAlertUser);
@@ -522,7 +626,7 @@ void AlertItem::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
-QString AlertItem::formatRichString(QString str)
+QString AlertItem::formatRichString(const QString& str)
 {
     return QString::fromUtf8("<span style='color:#333333; font-family: Lato; font-size: 14px; font-weight: bold; text-decoration:none;'>%1</span>")
             .arg(str);
