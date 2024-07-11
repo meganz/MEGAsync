@@ -178,5 +178,8 @@
         <file>deviceCenter/DevicePage.qml</file>
         <file>deviceCenter/DevicePageHeader.qml</file>
         <file>deviceCenter/DevicePageContent.qml</file>
+        <file>deviceCenter/NoInternetPage.qml</file>
+        <file>deviceCenter/NoConnectionsPage.qml</file>
+        <file>deviceCenter/SyncTablePage.qml</file>
     </qresource>
 </RCC>

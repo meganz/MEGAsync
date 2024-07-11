@@ -5,3 +5,6 @@ LeftSidebar 1.0 LeftSidebar.qml
 Toolbar 1.0 Toolbar.qml
 DevicePage 1.0 DevicePage.qml
 DevicePageHeader 1.0 DevicePageHeader.qml
+NoInternetPage 1.0 NoInternetPage.qml
+NoConnectionsPage 1.0 NoConnectionsPage.qml
+SyncTablePage 1.0 SyncTablePage.qml
