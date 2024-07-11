@@ -377,7 +377,16 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
     if(!dropIndex.isValid())
     {
         const auto root = rootIndex();
-        const auto item = NodeSelectorModel::getItemByIndex(root);
+        NodeSelectorModelItem* item(nullptr);
+        if(!root.isValid())
+        {
+            QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
+            item = NodeSelectorModel::getItemByIndex(cdRootIndex);
+        }
+        else
+        {
+            item = NodeSelectorModel::getItemByIndex(root);
+        }
         return item->getNode();
     }
     auto node = proxyModel()->getNode(dropIndex);
