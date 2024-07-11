@@ -277,6 +277,7 @@ public:
     bool allHaveFailed() const;
     bool someHaveFailed() const;
     bool isEmpty() const;
+    int getTransfersCount() const;
 
     //For files
     int getPendingFiles() const;

@@ -135,14 +135,19 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
+
+## Adjust compilation flags for warnings and errors ##
+target_platform_compile_options(
+    TARGET MEGAsync
+    WINDOWS /W4
+    UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
+)
+
 if (ENABLE_DESKTOP_APP_WERROR)
     target_platform_compile_options(
         TARGET MEGAsync
         WINDOWS /WX
         UNIX  $<$<CONFIG:Debug>: -Werror
-                                 -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
-        APPLE $<$<CONFIG:Debug>: -Werror
-                                 -Wno-error=unqualified-std-cast-call
                                  -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
     )
 endif()
