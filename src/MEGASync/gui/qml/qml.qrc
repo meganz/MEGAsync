@@ -170,5 +170,13 @@
         <file>common/Utilities.qml</file>
         <file>components/steps/StepPanel.qml</file>
         <file>syncs/SyncsPage.qml</file>
+        <file>deviceCenter/DeviceCenterDialog.qml</file>
+        <file>deviceCenter/DeviceCenterStrings.qml</file>
+        <file>deviceCenter/qmldir</file>
+        <file>deviceCenter/LeftSidebar.qml</file>
+        <file>deviceCenter/Toolbar.qml</file>
+        <file>deviceCenter/DevicePage.qml</file>
+        <file>deviceCenter/DevicePageHeader.qml</file>
+        <file>deviceCenter/DevicePageContent.qml</file>
     </qresource>
 </RCC>

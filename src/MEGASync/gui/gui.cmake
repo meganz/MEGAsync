@@ -113,6 +113,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/user_messages/UserNotification.h
     gui/user_messages/UserMessageWidget.h
     gui/user_messages/NotificationExpirationTimer.h
+    gui/DeviceCenter/DeviceCenter.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -224,6 +225,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/user_messages/UserMessageProxyModel.cpp
     gui/user_messages/UserNotification.cpp
     gui/user_messages/NotificationExpirationTimer.cpp
+    gui/DeviceCenter/DeviceCenter.cpp
 )
 
 # UI files additions
@@ -498,6 +500,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCenter
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

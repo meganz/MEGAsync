@@ -1,16 +1,17 @@
 #include "QmlDialogManager.h"
 
-#include "QmlDialogWrapper.h"
-#include "Backups.h"
-#include "Onboarding.h"
-#include "GuestContent.h"
-#include "OnboardingQmlDialog.h"
-#include "GuestQmlDialog.h"
-#include "WhatsNewWindow.h"
-#include "DialogOpener.h"
-#include "LoginController.h"
 #include "AccountStatusController.h"
+#include "Backups.h"
+#include "DeviceCenter.h"
+#include "DialogOpener.h"
+#include "GuestContent.h"
+#include "GuestQmlDialog.h"
+#include "LoginController.h"
+#include "Onboarding.h"
+#include "OnboardingQmlDialog.h"
+#include "QmlDialogWrapper.h"
 #include "SyncsComponent.h"
+#include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
@@ -168,3 +169,17 @@ void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSetting
     }
 }
 
+void QmlDialogManager::openDeviceCenterDialog()
+{
+    DeviceCenter::registerQmlModules();
+    QPointer<QmlDialogWrapper<DeviceCenter>> deviceCenterDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<DeviceCenter>>())
+    {
+        deviceCenterDialog = dialog->getDialog();
+    }
+    else
+    {
+        deviceCenterDialog = new QmlDialogWrapper<DeviceCenter>();
+    }
+    DialogOpener::showDialog(deviceCenterDialog);
+}

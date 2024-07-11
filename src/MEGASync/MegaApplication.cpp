@@ -315,6 +315,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     downloadAction = nullptr;
     streamAction = nullptr;
     myCloudAction = nullptr;
+    deviceCenterAction = nullptr;
     mWaiting = false;
     updated = false;
     mSyncing = false;
@@ -3947,6 +3948,16 @@ void MegaApplication::goToMyCloud()
                                          sender(), myCloudAction, true);
 }
 
+void MegaApplication::openDeviceCenter()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    QmlDialogManager::instance()->openDeviceCenterDialog();
+}
+
 void MegaApplication::importLinks()
 {
     if (appfinished)
@@ -5360,6 +5371,12 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
+    recreateMenuAction(&deviceCenterAction,
+                       infoDialogMenu,
+                       tr("Device Center"),
+                       "://images/ico-cloud-drive.png",
+                       &MegaApplication::openDeviceCenter);
+
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
@@ -5414,6 +5431,7 @@ void MegaApplication::createInfoDialogMenus()
 
 
     infoDialogMenu->addAction(myCloudAction);
+    infoDialogMenu->addAction(deviceCenterAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
     if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());

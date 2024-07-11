@@ -238,6 +238,7 @@ public slots:
     void importLinks();
     void officialWeb();
     void goToMyCloud();
+    void openDeviceCenter();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
@@ -376,6 +377,7 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
+    MenuItemAction* deviceCenterAction;
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
     QAction *showStatusAction;
