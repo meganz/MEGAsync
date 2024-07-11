@@ -6,14 +6,14 @@
 #include <syncs/control/SyncSettings.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 
-const AddSyncFromUiManager* AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
+const AddSyncFromUiManager* const AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
 {
     auto syncManager(new AddSyncFromUiManager());
     syncManager->performAddSync(handle, disableUi);
     return syncManager;
 }
 
-const AddSyncFromUiManager* AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
+const AddSyncFromUiManager* const AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
 {
     auto syncManager(new AddSyncFromUiManager());
     syncManager->performRemoveSync(handle, parent);
