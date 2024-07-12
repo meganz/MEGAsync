@@ -193,6 +193,7 @@ image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 QLabel
 {
 background-color: transparent;
+color: #303233; /*colorToken.text-primary*/
 }
 
 QPushButton

@@ -6,15 +6,13 @@
 #include <QIcon>
 #include <QEvent>
 #include <QPainter>
+#include <qobjectdefs.h>
 
 class CircularUsageProgressBar : public QWidget
 {
     Q_OBJECT
 
 public:
-    static const int MAXVALUE = 100;
-    static const int MINVALUE = 0;
-
     enum STATE
     {
         STATE_OK      = 0,
@@ -27,7 +25,19 @@ public:
     void setValue(int value);
     void setState(STATE state);
     void setTotalValueUnknown(bool isEmptyBar = true);
-    void setProgressBarGradient(QColor light, QColor dark);
+
+    Q_PROPERTY(QString outerCircleBackgroundColor WRITE setOuterCircleBackgroundColor NOTIFY colorChanged)
+    Q_PROPERTY(QString innerCircleBackgroundColor WRITE setInnerCircleBackgroundColor NOTIFY colorChanged)
+    Q_PROPERTY(QString okStateTextColor WRITE setOkStateTextColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightOkProgressBarColors WRITE setLightOkProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkOkProgressBarColors WRITE setDarkOkProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightWarnProgressBarColors WRITE setLightWarnProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkWarnProgressBarColors WRITE setDarkWarnProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightFullProgressBarColors WRITE setLightFullProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkFullProgressBarColors WRITE setDarkFullProgressBarColor NOTIFY colorChanged)
+
+signals:
+    void colorChanged();
 
 protected:
     void paintEvent(QPaintEvent* event);
@@ -38,6 +48,17 @@ private:
     void setPenGradient(QPen& pen, QConicalGradient& gradient, bool forceRepaint = true);
     void setBarTotalValueUnkown(int value, QConicalGradient* gradient);
 
+    void setOuterCircleBackgroundColor(const QString& color);
+    void setInnerCircleBackgroundColor(const QString& color);
+    void setLightOkProgressBarColor(const QString& color);
+    void setDarkOkProgressBarColor(const QString& color);
+    void setLightWarnProgressBarColor(const QString& color);
+    void setDarkWarnProgressBarColor(const QString& color);
+    void setLightFullProgressBarColor(const QString& color);
+    void setDarkFullProgressBarColor(const QString& color);
+    void setOkStateTextColor(const QString& color);
+    void setProgressBarColors(const QString& color, STATE state, bool light);
+
     int     mPbValue;
     double  mPenWidth;
     double  mOuterRadius;
@@ -47,6 +68,8 @@ private:
     STATE mState;
 
     QColor mPbBgColor;
+    QColor mBgColor;
+    QColor mOkStateTextColor;
 
     QConicalGradient  mOkPbGradient;
     QConicalGradient  mWarnPbGradient;
