@@ -28,7 +28,7 @@
 #include "Utilities.h"
 #include "platform/Platform.h"
 #include "QmlDialogManager.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "BindFolderDialog.h"
 
 #ifdef _WIN32
 #include <chrono>

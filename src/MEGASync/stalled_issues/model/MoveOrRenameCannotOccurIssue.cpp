@@ -1,8 +1,8 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 
-#include <syncs/control/SyncInfo.h>
-#include <syncs/control/SyncController.h>
-#include <syncs/control/SyncSettings.h>
+#include "SyncInfo.h"
+#include "SyncController.h"
+#include "SyncSettings.h"
 #include <StalledIssuesUtilities.h>
 
 #include <StatsEventHandler.h>
