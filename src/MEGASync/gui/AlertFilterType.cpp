@@ -23,21 +23,21 @@ void AlertFilterType::setActualFilter(AlertType type)
 {
     switch (type)
     {
-        case AlertType::CONTACTS:
+        case AlertType::ALERT_CONTACTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Contacts"));
             break;
         }
-        case AlertType::PAYMENTS:
+        case AlertType::ALERT_PAYMENTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Payment"));
             break;
         }
-        case AlertType::SHARES:
+        case AlertType::ALERT_SHARES:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
@@ -45,7 +45,7 @@ void AlertFilterType::setActualFilter(AlertType type)
             break;
         }
         case AlertType::ALL:
-        case AlertType::TAKEDOWNS:
+        case AlertType::ALERT_TAKEDOWNS:
         default:
         {
             ui->wIconType->hide();

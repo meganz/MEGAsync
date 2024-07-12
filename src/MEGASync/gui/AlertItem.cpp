@@ -115,7 +115,7 @@ void AlertItem::updateAlertData()
     setAlertHeading(mAlertUser);
     setAlertContent(mAlertUser);
     setAlertTimeStamp(mAlertUser->getTimestamp(0));
-    mAlertUser->getSeen() ? mUi->lNew->hide() : mUi->lNew->show();
+    mAlertUser->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
 
     emit refreshAlertItem(mAlertUser->getId());
 }

@@ -22,7 +22,6 @@
 #include "StatusInfo.h"
 #include "SyncsMenu.h"
 #include "SyncController.h"
-#include "AlertModel.h"
 #include "MegaDelegateHoverManager.h"
 
 #include <memory>
@@ -128,7 +127,7 @@ public slots:
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
 
-   void onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
+   void onUnseenAlertsChanged(const UnseenNotificationsMap& alerts);
 
 private slots:
     void on_bSettings_clicked();

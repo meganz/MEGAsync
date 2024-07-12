@@ -22,7 +22,7 @@ public:
     QSize sizeHint() const override;
 
 private:
-    Ui::NotificationItem* ui;
+    Ui::NotificationItem* mUi;
     MegaNotificationExt* mNotificationData;
 
     void init();

@@ -17,6 +17,7 @@ MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notificat
     : NotificationExtBase(NotificationExtBase::Type::NOTIFICATION, parent)
     , mNotification(notification)
     , mDownloader(std::make_unique<ImageDownloader>(nullptr))
+    , mSeen(false)
 {
     connect(mDownloader.get(), &ImageDownloader::downloadFinished,
             this, &MegaNotificationExt::onDownloadFinished);
@@ -28,6 +29,16 @@ MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notificat
 void MegaNotificationExt::reset(const mega::MegaNotification* notification)
 {
     mNotification.reset(notification);
+}
+
+bool MegaNotificationExt::isSeen() const
+{
+    return mSeen;
+}
+
+void MegaNotificationExt::markAsSeen()
+{
+    mSeen = true;
 }
 
 int64_t MegaNotificationExt::getID() const

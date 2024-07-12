@@ -42,10 +42,10 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
         case mega::MegaRequest::TYPE_GET_ATTR_USER:
         {
             if (e->getErrorCode() == mega::MegaError::API_OK
-                && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
-                && mNotificationAlertModel)
+                    && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
+                    && mNotificationAlertModel)
             {
-                //mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
+                mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
                 checkUseenNotifications();
             }
             break;
@@ -64,21 +64,11 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
         return;
     }
 
+    mNotificationAlertModel->processAlerts(alertList);
+    checkUseenNotifications();
+
     // Used by DesktopNotifications because the current architecture
     emit userAlertsUpdated(alertList);
-
-    //if(createModelAndDelegate() || !mNotificationAlertModel->alertModel())
-    //{
-    //    mNotificationAlertModel->createAlertModel(alertList);
-    //    mNotificationAlertDelegate->createAlertDelegate(mNotificationAlertModel->alertModel());
-    //}
-    //else
-    {
-        mNotificationAlertModel->updateAlerts(alertList);
-    }
-
-    // Used by InfoDialog because the current architecture
-    //checkUseenNotifications();
 }
 
 void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
@@ -144,6 +134,11 @@ void NotificationAlertController::applyFilter(AlertType type)
 
 void NotificationAlertController::requestNotifications() const
 {
+    if (MegaSyncApp->finished())
+    {
+        return;
+    }
+
     mMegaApi->getNotifications();
 }
 
@@ -154,28 +149,29 @@ void NotificationAlertController::checkUseenNotifications()
         return;
     }
 
-    /*
     auto unseenAlerts = mNotificationAlertModel->getUnseenNotifications();
-    long long allUnseenAlerts = unseenAlerts[AlertModel::AlertType::ALERT_ALL];
+    long long allUnseenAlerts = unseenAlerts[AlertType::ALL];
     if(mAllUnseenAlerts != allUnseenAlerts)
     {
         mAllUnseenAlerts = allUnseenAlerts;
         emit unseenAlertsChanged(unseenAlerts);
-    }*/
+    }
 }
 
 void NotificationAlertController::ackSeenAlertsAndNotifications()
 {
-    /*
-    if (mAllUnseenAlerts > 0 && hasNotificationsOrAlerts())
+    // TODO: REMOVE AFTER TESTS
+    //mMegaApi->setLastReadNotification(0);
+
+    if (mAllUnseenAlerts > 0 && hasNotifications())
     {
         mMegaApi->acknowledgeUserAlerts();
-        auto lastSeen = mNotificationAlertModel->getLastSeenNotification();
+        auto lastSeen = mNotificationAlertModel->checkLocalLastSeenNotification();
         if(lastSeen > 0)
         {
             mMegaApi->setLastReadNotification(lastSeen);
         }
-    }*/
+    }
 }
 
 QAbstractItemModel* NotificationAlertController::getModel() const

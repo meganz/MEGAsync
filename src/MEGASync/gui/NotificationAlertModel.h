@@ -14,6 +14,66 @@ class MegaNotificationList;
 class MegaNotification;
 }
 
+class NotificationSeenStatusManager
+{
+public:
+    NotificationSeenStatusManager() = default;
+    virtual ~NotificationSeenStatusManager() = default;
+
+    void markAsUnseen(AlertType type)
+    {
+        if(type == AlertType::UNKNOWN || type == AlertType::ALL)
+        {
+            return;
+        }
+
+        mUnseenNotifications[type]++;
+        mUnseenNotifications[AlertType::ALL]++;
+    }
+
+    void markAsSeen(AlertType type)
+    {
+        if(type == AlertType::UNKNOWN || type == AlertType::ALL)
+        {
+            return;
+        }
+
+        mUnseenNotifications[type]--;
+        mUnseenNotifications[AlertType::ALL]--;
+    }
+
+    UnseenNotificationsMap getUnseenNotifications() const
+    {
+        return mUnseenNotifications;
+    }
+
+    void setLastSeenNotification(uint32_t id)
+    {
+        mLastSeenNotification = id;
+    }
+
+    uint32_t getLastSeenNotification() const
+    {
+        return mLastSeenNotification;
+    }
+
+    void setLocalLastSeenNotification(uint32_t id)
+    {
+        mLocalLastSeenNotification = id;
+    }
+
+    uint32_t getLocalLastSeenNotification() const
+    {
+        return mLocalLastSeenNotification;
+    }
+
+private:
+    UnseenNotificationsMap mUnseenNotifications;
+    uint32_t mLastSeenNotification = 0;
+    uint32_t mLocalLastSeenNotification = 0;
+
+};
+
 class NotificationAlertModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -29,38 +89,16 @@ public:
     QVariant data(const QModelIndex& index, int role) const override;
     Qt::ItemFlags flags(const QModelIndex& index) const override;
 
-    void updateAlerts(mega::MegaUserAlertList* alerts);
-    bool hasAlertsOfType(AlertType type);
+    void processAlerts(mega::MegaUserAlertList* alerts);
     void processNotifications(const mega::MegaNotificationList* notifications);
-
-
-    //void insertNotifications(const mega::MegaNotificationList* notificationList);
-
-    /*
-    void createNotificationModel(const mega::MegaNotificationList* notifications);
-    void createAlertModel(mega::MegaUserAlertList* alerts);
-
-    bool hasNotificationsOrAlerts();
-    bool hasAlertsOfType(int type);
-    void insertAlerts(mega::MegaUserAlertList* alerts);
-    void insertNotifications(const mega::MegaNotificationList* notificationList);
-    QMap<AlertModel::AlertType, long long> getUnseenNotifications() const;
-    AlertModel* alertModel() const;
-    NotificationModel* notificationModel() const;
-    uint32_t getLastSeenNotification() const;
+    bool hasAlertsOfType(AlertType type);
+    UnseenNotificationsMap getUnseenNotifications() const;
+    uint32_t checkLocalLastSeenNotification();
     void setLastSeenNotification(uint32_t id);
-
-private slots:
-    void onAlertDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
-    void onAlertRowsInserted(const QModelIndex& parent, int first, int last);
-    void onAlertRowsRemoved(const QModelIndex& parent, int first, int last);
-    void onNotificationDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QVector<int>& roles);
-    void onNotificationRowsInserted(const QModelIndex& parent, int first, int last);
-    void onNotificationRowsRemoved(const QModelIndex& parent, int first, int last);
-*/
 
 private:
     QList<NotificationExtBase*> mNotifications;
+    NotificationSeenStatusManager mSeenStatusManager;
 
     void insertAlerts(const QList<mega::MegaUserAlert*>& alerts);
     void updateAlerts(const QList<mega::MegaUserAlert*>& alerts);
@@ -68,11 +106,6 @@ private:
 
     void insertNotifications(const mega::MegaNotificationList* notifications);
     void removeNotifications(const mega::MegaNotificationList* notifications);
-
-
-   // int getNotificationRowCount() const;
-   // int getAlertRowCount() const;
-  // int getAlertRow(int row) const;
 
     auto findAlertById(unsigned id);
     auto findNotificationById(int64_t id);

@@ -43,7 +43,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
     gui/AlertItem.h
-    gui/AlertModel.h
     gui/AlertDelegate.h
     gui/NotificationAlertProxyModel.h
     gui/FilterAlertWidget.h
@@ -61,7 +60,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/NotificationItem.h
-    gui/NotificationModel.h
     gui/NotificationDelegate.h
     gui/NotificationAlertModel.h
     gui/NotificationAlertDelegate.h
@@ -153,7 +151,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
     gui/AlertItem.cpp
-    gui/AlertModel.cpp
     gui/AlertDelegate.cpp
     gui/NotificationAlertProxyModel.cpp
     gui/FilterAlertWidget.cpp
@@ -171,7 +168,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/NotificationItem.cpp
-    gui/NotificationModel.cpp
     gui/NotificationDelegate.cpp
     gui/NotificationAlertModel.cpp
     gui/NotificationAlertDelegate.cpp

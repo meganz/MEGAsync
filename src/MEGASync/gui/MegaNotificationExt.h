@@ -24,6 +24,9 @@ public:
 
     void reset(const mega::MegaNotification* notification);
 
+    bool isSeen() const override;
+    void markAsSeen();
+
     int64_t getID() const;
     QString getTitle() const;
     QString getDescription() const;
@@ -50,6 +53,7 @@ private:
     std::unique_ptr<ImageDownloader> mDownloader;
     QPixmap mImage;
     QPixmap mIcon;
+    bool mSeen;
 
     QString getImageNamePath() const;
     QString getIconNamePath() const;

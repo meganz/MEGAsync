@@ -24,8 +24,9 @@ public:
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 
+    bool isSeen() const override;
+
     virtual unsigned getId() const;
-    virtual bool getSeen() const;
     virtual bool getRelevant() const;
     virtual int getType() const;
     virtual mega::MegaHandle getUserHandle() const;

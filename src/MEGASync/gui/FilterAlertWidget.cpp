@@ -85,19 +85,19 @@ void FilterAlertWidget::on_bAll_clicked()
 
 void FilterAlertWidget::on_bContacts_clicked()
 {
-    emit filterClicked(AlertType::CONTACTS);
+    emit filterClicked(AlertType::ALERT_CONTACTS);
     QApplication::postEvent(ui->bContacts, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bShares_clicked()
 {
-    emit filterClicked(AlertType::SHARES);
+    emit filterClicked(AlertType::ALERT_SHARES);
     QApplication::postEvent(ui->bShares, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bPayment_clicked()
 {
-    emit filterClicked(AlertType::PAYMENTS);
+    emit filterClicked(AlertType::ALERT_PAYMENTS);
     QApplication::postEvent(ui->bPayment, new QEvent(QEvent::Leave));
 }
 

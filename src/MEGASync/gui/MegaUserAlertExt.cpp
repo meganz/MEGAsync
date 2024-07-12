@@ -124,7 +124,7 @@ void MegaUserAlertExt::initAlertType()
         case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
         case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
-            mAlertType = AlertType::CONTACTS;
+            mAlertType = AlertType::ALERT_CONTACTS;
             break;
         }
         case mega::MegaUserAlert::TYPE_NEWSHARE:
@@ -133,20 +133,20 @@ void MegaUserAlertExt::initAlertType()
         case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            mAlertType = AlertType::SHARES;
+            mAlertType = AlertType::ALERT_SHARES;
             break;
         }
         case mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case mega::MegaUserAlert::TYPE_PAYMENT_FAILED:
         case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
         {
-            mAlertType = AlertType::PAYMENTS;
+            mAlertType = AlertType::ALERT_PAYMENTS;
             break;
         }
         case mega::MegaUserAlert::TYPE_TAKEDOWN:
         case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
-            mAlertType = AlertType::TAKEDOWNS;
+            mAlertType = AlertType::ALERT_TAKEDOWNS;
             break;
         }
         default:
@@ -200,7 +200,7 @@ unsigned int MegaUserAlertExt::getId() const
     return mMegaUserAlert->getId();
 }
 
-bool MegaUserAlertExt::getSeen() const
+bool MegaUserAlertExt::isSeen() const
 {
     return mMegaUserAlert->getSeen();
 }

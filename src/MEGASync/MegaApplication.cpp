@@ -2471,7 +2471,7 @@ void MegaApplication::createInfoDialog()
     connect(mTransferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
-    //connect(mNotificationAlertController.get(), &NotificationAlertController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
+    connect(mNotificationAlertController.get(), &NotificationAlertController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
 }
 

@@ -36,7 +36,7 @@ public:
 
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
-    //void unseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
+    void unseenAlertsChanged(const UnseenNotificationsMap& alerts);
 
 private:
     mega::MegaApi* mMegaApi;

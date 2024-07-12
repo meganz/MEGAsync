@@ -28,6 +28,8 @@ public:
         return mType;
     }
 
+    virtual bool isSeen() const = 0;
+
 private:
     Type mType;
 
