@@ -25,18 +25,24 @@ font-size: 11px;
   font-size: 12px;
 }
 
-#PermissionsDialog
+QGroupBox
 {
-	background-color: #f1f1f1;
+margin-top: 15px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="topMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string/>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QLabel" name="lPermissionsDesc">
         <property name="styleSheet">
