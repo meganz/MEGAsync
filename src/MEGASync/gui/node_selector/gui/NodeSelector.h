@@ -62,10 +62,10 @@ protected:
     void keyPressEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
     void addBackupsView();
-    int getNodeAccess(std::shared_ptr<mega::MegaNode> node);
     std::shared_ptr<mega::MegaNode> getSelectedNode();
     void showNotFoundNodeMessageBox();
     void makeConnections(SelectTypeSPtr selectType);
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;

@@ -23,7 +23,6 @@ public:
 
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
-
     bool showsSyncStates() override {return true;}
 
 signals:
@@ -48,6 +47,12 @@ public:
     void firstLoad() override;
     bool rootNodeUpdated(mega::MegaNode*node) override;
     bool showsSyncStates() override {return true;}
+
+    bool canDropMimeData(const QMimeData* data,
+        Qt::DropAction action,
+        int row,
+        int column,
+        const QModelIndex& parent) const override;
 
 public slots:
     void onItemInfoUpdated(int role);

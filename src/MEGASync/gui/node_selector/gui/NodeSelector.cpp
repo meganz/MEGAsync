@@ -33,6 +33,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
 
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
+        button->installEventFilter(this);
         mButtonIconManager.addButton(button);
     }
 
@@ -398,17 +399,6 @@ void NodeSelector::setToggledStyle(TabItem item)
     ui->wLeftPaneNS->setStyleSheet(ui->wLeftPaneNS->styleSheet());
 }
 
-int NodeSelector::getNodeAccess(std::shared_ptr<MegaNode> node)
-{
-    int access = MegaShare::ACCESS_UNKNOWN;
-    if (node)
-    {
-        access = mMegaApi->getAccess(node.get());
-    }
-
-    return access;
-}
-
 std::shared_ptr<MegaNode> NodeSelector::getSelectedNode()
 {
     auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
@@ -457,6 +447,19 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             }
         }
     }
+}
+
+bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
+{
+    if(event->type() == QEvent::DragEnter)
+    {
+        if(auto button = dynamic_cast<QPushButton*>(obj))
+        {
+            button->click();
+        }
+    }
+
+    return QDialog::eventFilter(obj,event);
 }
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)

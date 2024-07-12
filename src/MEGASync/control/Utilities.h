@@ -369,6 +369,7 @@ public:
     static QString getCommonPath(const QString& path1, const QString& path2, bool cloudPaths);
 
     static bool isIncommingShare(mega::MegaNode* node);
+    static int getNodeAccess(mega::MegaHandle handle);
 
     static bool dayHasChangedSince(qint64 msecs);
     static bool monthHasChangedSince(qint64 msecs);

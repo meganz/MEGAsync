@@ -750,6 +750,9 @@ QScrollBar::handle:vertical
          </layout>
         </widget>
         <widget class="QWidget" name="emptyPage">
+         <property name="acceptDrops">
+          <bool>true</bool>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <property name="leftMargin">
            <number>0</number>

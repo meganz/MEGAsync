@@ -480,13 +480,15 @@ void NodeRequester::abort()
 /* ------------------- MODEL ------------------------- */
 
 const int NodeSelectorModel::ROW_HEIGHT = 25;
+const QString MIME_DATA_INTERNAL_MOVE = QLatin1String("application/node_move");
 
 NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     QAbstractItemModel(parent),
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
-    mIsBeingModified(true)
+    mIsBeingModified(true),
+    mAcceptDragAndDrop(false)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -671,11 +673,130 @@ Qt::ItemFlags NodeSelectorModel::flags(const QModelIndex &index) const
             {
                 flags &= ~(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
             }
+
+            if(mAcceptDragAndDrop)
+            {
+                flags |= (Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled);
+            }
         }
     }
 
     return flags;
 }
+
+void NodeSelectorModel::setAcceptDragAndDrop(bool newAcceptDragAndDrop)
+{
+    mAcceptDragAndDrop = newAcceptDragAndDrop;
+}
+
+bool NodeSelectorModel::acceptDragAndDrop(const QMimeData* data)
+{
+    return (data->hasUrls() || data->hasFormat(MIME_DATA_INTERNAL_MOVE));
+}
+
+bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
+    Qt::DropAction action,
+    int row,
+    int column,
+    const QModelIndex& parent) const
+{
+    Q_UNUSED(action);
+    Q_UNUSED(row);
+    Q_UNUSED(parent);
+
+    if (!data->hasFormat(MIME_DATA_INTERNAL_MOVE))
+        return false;
+
+    return true;
+}
+
+QStringList NodeSelectorModel::mimeTypes() const
+{
+    QStringList types;
+    types << MIME_DATA_INTERNAL_MOVE;
+    return types;
+}
+
+bool NodeSelectorModel::dropMimeData(
+    const QMimeData* data, Qt::DropAction action, int, int, const QModelIndex& parent)
+{
+    if(action == Qt::DropAction::CopyAction)
+    {
+        auto targetIndex(parent.isValid() ? parent : index(0,0,QModelIndex()));
+
+        if(targetIndex.isValid())
+        {
+            if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(targetIndex.internalPointer()))
+            {
+                auto node = chkItem->getNode();
+                mega::MegaHandle targetFolder(mega::INVALID_HANDLE);
+                if(node->isFile())
+                {
+                    targetFolder = node->getParentHandle();
+                }
+                else
+                {
+                    targetFolder = node->getHandle();
+                }
+
+                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
+
+
+                QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
+                QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+                while (!stream.atEnd())
+                {
+                    mega::MegaHandle handle;
+                    stream >> handle;
+                    std::unique_ptr<mega::MegaNode> moveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+                    if(moveNode)
+                    {
+                        MegaSyncApp->getMegaApi()->moveNode(moveNode.get(), parentNode.get());
+                    }
+                }
+
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+QMimeData* NodeSelectorModel::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData *mimeData = new QMimeData;
+    QByteArray encodedData;
+
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    QSet<mega::MegaHandle> processedHandles;
+
+    for(const QModelIndex& index : indexes)
+    {
+        if(index.isValid())
+        {
+            if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
+            {
+                auto handle(chkItem->getNode()->getHandle());
+                if(!processedHandles.contains(handle))
+                {
+                    processedHandles.insert(handle);
+                    stream << handle;
+                }
+            }
+        }
+    }
+
+    mimeData->setData(MIME_DATA_INTERNAL_MOVE, encodedData);
+    return mimeData;
+}
+
+Qt::DropActions NodeSelectorModel::supportedDropActions() const
+{
+    return Qt::CopyAction;
+}
+
 
 bool NodeSelectorModel::showFiles() const
 {

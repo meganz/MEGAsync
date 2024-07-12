@@ -89,6 +89,7 @@ protected:
     void resizeEvent(QResizeEvent* ) override;
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     void setTitle(const QString& title);
     void selectionChanged(const QModelIndexList &selected);
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
@@ -130,7 +131,7 @@ private slots:
 
 private:
     bool mManuallyResizedColumn;
-    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
+    static std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();

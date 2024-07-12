@@ -17,11 +17,10 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
 
 void NodeSelectorTreeViewWidgetCloudDrive::enableDragAndDrop(bool enable)
 {
-    ui->tMegaFolders->setAcceptDrops(enable);
     ui->tMegaFolders->setDragEnabled(enable);
-    ui->tMegaFolders->setAcceptDrops(enable);
+    ui->tMegaFolders->viewport()->setAcceptDrops(enable);
     ui->tMegaFolders->setDropIndicatorShown(enable);
-    ui->tMegaFolders->setDragDropMode(QAbstractItemView::DragDrop);
+    ui->tMegaFolders->setDragDropMode(enable ? QAbstractItemView::DragDrop : QAbstractItemView::NoDragDrop);
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(mega::MegaHandle& handle, bool parentLoaded)

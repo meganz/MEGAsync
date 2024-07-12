@@ -291,6 +291,9 @@ min-height:36px;
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string>Cloud Drive</string>
               </property>
@@ -471,6 +474,9 @@ min-height:36px;
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
+              </property>
               <property name="text">
                <string>Incoming Shares</string>
               </property>
@@ -541,6 +547,9 @@ min-height:36px;
               </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="acceptDrops">
+               <bool>true</bool>
               </property>
               <property name="text">
                <string>Rubbish Bin</string>

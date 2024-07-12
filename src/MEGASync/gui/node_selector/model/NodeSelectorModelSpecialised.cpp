@@ -17,6 +17,7 @@ using namespace mega;
 NodeSelectorModelCloudDrive::NodeSelectorModelCloudDrive(QObject *parent)
     : NodeSelectorModel(parent)
 {
+    setAcceptDragAndDrop(true);
 }
 
 void NodeSelectorModelCloudDrive::createRootNodes()
@@ -69,6 +70,8 @@ NodeSelectorModelIncomingShares::NodeSelectorModelIncomingShares(QObject *parent
 {
     MegaApi* megaApi = MegaSyncApp->getMegaApi();
     mSharedNodeList = std::unique_ptr<MegaNodeList>(megaApi->getInShares());
+
+    setAcceptDragAndDrop(true);
 }
 
 void NodeSelectorModelIncomingShares::onItemInfoUpdated(int role)
@@ -147,6 +150,32 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     }
 
     return false;
+}
+
+bool NodeSelectorModelIncomingShares::canDropMimeData(
+    const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const
+{
+    if(action == Qt::CopyAction)
+    {
+        if(parent.isValid())
+        {
+            auto item = getItemByIndex(parent);
+            if(item)
+            {
+                auto node = item->getNode();
+                if(node)
+                {
+                    auto access = Utilities::getNodeAccess(node->getHandle());
+                    if(access < MegaShare::ACCESS_FULL)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return NodeSelectorModel::canDropMimeData(data, action, row, column, parent);
 }
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
@@ -463,7 +492,7 @@ const NodeSelectorModelItemSearch::Types &NodeSelectorModelSearch::searchedTypes
 NodeSelectorModelRubbish::NodeSelectorModelRubbish(QObject *parent)
     : NodeSelectorModel(parent)
 {
-    MegaApi* megaApi = MegaSyncApp->getMegaApi();
+    setAcceptDragAndDrop(true);
 }
 
 void NodeSelectorModelRubbish::onItemInfoUpdated(int role)

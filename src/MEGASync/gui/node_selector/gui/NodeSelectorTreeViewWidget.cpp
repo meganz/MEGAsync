@@ -19,6 +19,8 @@ const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
+std::unique_ptr<QTMegaListener> NodeSelectorTreeViewWidget::mDelegateListener = nullptr;
+
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
@@ -26,7 +28,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     mModel(nullptr),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mManuallyResizedColumn(false),
-    mDelegateListener(new QTMegaListener(mMegaApi, this)),
     first(true),
     mUiBlocked(false),
     mNodeHandleToSelect(INVALID_HANDLE),
@@ -42,7 +43,11 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->searchButtonsWidget->setVisible(false);
     ui->searchingText->setVisible(false);
 
-    MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
+    if(!mDelegateListener)
+    {
+        mDelegateListener = std::make_unique<QTMegaListener>(mMegaApi, this);
+        MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
+    }
 
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
@@ -72,6 +77,11 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
+    if(mDelegateListener)
+    {
+        MegaSyncApp->getMegaApi()->removeListener(mDelegateListener.get());
+        mDelegateListener.release();
+    }
     delete ui;
 }
 
@@ -88,11 +98,38 @@ void NodeSelectorTreeViewWidget::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+bool NodeSelectorTreeViewWidget::eventFilter(QObject* watched, QEvent* event)
+{
+    if(event->type() == QEvent::Drop)
+    {
+        if(auto dropEvent = static_cast<QDropEvent*>(event))
+        {
+            if(mModel->dropMimeData(dropEvent->mimeData(), Qt::CopyAction, -1, -1, mModel->index(0,0,QModelIndex())))
+            {
+                dropEvent->acceptProposedAction();
+            }
+        }
+    }
+    else if(event->type() == QEvent::DragEnter)
+    {
+        if(auto dropEvent = static_cast<QDragEnterEvent*>(event))
+        {
+            if(mModel->canDropMimeData(dropEvent->mimeData(), Qt::CopyAction, -1, -1, mModel->index(0,0,QModelIndex())))
+            {
+                dropEvent->acceptProposedAction();
+            }
+        }
+    }
+
+    return QWidget::eventFilter(watched, event);
+}
+
 void NodeSelectorTreeViewWidget::init()
 {
     mProxyModel = createProxyModel();
     mModel = createModel();
     ui->emptyIcon->setIcon(getEmptyIcon());
+    ui->emptyPage->installEventFilter(this);
     mSelectType->init(this);
 
     ui->tMegaFolders->setSortingEnabled(true);

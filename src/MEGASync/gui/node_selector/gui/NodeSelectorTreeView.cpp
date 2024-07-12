@@ -332,7 +332,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 
 void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
 {
-    if (event->mimeData()->hasUrls())
+    if(proxyModel()->getMegaModel()->acceptDragAndDrop(event->mimeData()))
     {
         event->acceptProposedAction();
         event->accept();
@@ -341,35 +341,53 @@ void NodeSelectorTreeView::dragEnterEvent(QDragEnterEvent* event)
 
 void NodeSelectorTreeView::dragMoveEvent(QDragMoveEvent* event)
 {
-    if (event->mimeData()->hasUrls())
+    if(proxyModel()->getMegaModel()->acceptDragAndDrop(event->mimeData()))
     {
-        event->acceptProposedAction();
         // clear selection and select only the drop index
         selectionModel()->clearSelection();
         selectionModel()->select(indexAt(event->pos()), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+
+        event->acceptProposedAction();
+        event->accept();
     }
 }
 
 void NodeSelectorTreeView::dropEvent(QDropEvent* event)
 {
-    event->acceptProposedAction();
-
-    // Get the list of URLs
-    QList<QUrl> urlList = event->mimeData()->urls();
-    if (urlList.isEmpty())
+    if(proxyModel()->getMegaModel()->acceptDragAndDrop(event->mimeData()))
     {
-        return;
-    }
-    // get drop index
-    QModelIndex dropIndex = indexAt(event->pos());
+        // get drop index
+        QModelIndex dropIndex = indexAt(event->pos());
 
-    // get the node handle of the drop index from the proxy model
-    auto node = getDropNode(dropIndex);
-    if(node)
-    {
-        MegaSyncApp->uploadFilesToNode(urlList, node->getHandle());
+        // Get the list of URLs
+        QList<QUrl> urlList = event->mimeData()->urls();
+        if(!urlList.isEmpty())
+        {
+
+            // get the node handle of the drop index from the proxy model
+            auto node = getDropNode(dropIndex);
+            if(node)
+            {
+                MegaSyncApp->uploadFilesToNode(urlList, node->getHandle());
+            }
+            else
+            {
+                event->ignore();
+                return;
+            }
+        }
+        else
+        {
+            if(!proxyModel()->canDropMimeData(event->mimeData(), Qt::CopyAction, -1, -1, dropIndex))
+            {
+                event->ignore();
+                return;
+            }
+        }
+
+        QTreeView::dropEvent(event);
+        event->acceptProposedAction();
     }
-    QTreeView::dropEvent(event);
 }
 
 std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& dropIndex)
@@ -387,7 +405,7 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
         {
             item = NodeSelectorModel::getItemByIndex(root);
         }
-        return item->getNode();
+        return item ? item->getNode() : nullptr;
     }
     auto node = proxyModel()->getNode(dropIndex);
     if(!node || node->isFolder())
@@ -434,23 +452,17 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
 
 int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
 {
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-    if (node)
+    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+    std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(handle));
+    if(node)
     {
-        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-        auto access(mMegaApi->getAccess(node.get()));
-
-        if (access >= MegaShare::ACCESS_FULL && (!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted()))
+        if(!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted())
         {
             return MegaShare::ACCESS_UNKNOWN;
         }
+    }
 
-        return access;
-    }
-    else
-    {
-        return MegaShare::ACCESS_UNKNOWN;
-    }
+    return Utilities::getNodeAccess(handle);
 }
 
 void NodeSelectorTreeView::removeNode(const QList<MegaHandle> &handles, bool permanently)

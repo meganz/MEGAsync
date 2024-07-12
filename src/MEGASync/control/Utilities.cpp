@@ -1564,6 +1564,19 @@ bool Utilities::isIncommingShare(MegaNode *node)
     return false;
 }
 
+int Utilities::getNodeAccess(MegaHandle handle)
+{
+    auto node = std::unique_ptr<MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    if (node)
+    {
+        return MegaSyncApp->getMegaApi()->getAccess(node.get());
+    }
+    else
+    {
+        return MegaShare::ACCESS_UNKNOWN;
+    }
+}
+
 bool Utilities::dayHasChangedSince(qint64 msecs)
 {
     QDate currentDate = QDateTime::currentDateTime().date();

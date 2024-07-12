@@ -194,12 +194,20 @@ public:
     virtual bool isNodeAccepted(mega::MegaNode* node){return !MegaSyncApp->getMegaApi()->isInRubbish(node);}
     virtual bool showsSyncStates() {return false;}
 
-    Qt::ItemFlags flags(const QModelIndex &index) const override;
-
     bool showFiles() const;
 
     bool isBeingModified() const {return mIsBeingModified;}
     void setIsModelBeingModified(bool state) {mIsBeingModified = state;}
+
+    void setAcceptDragAndDrop(bool newAcceptDragAndDrop);
+    bool acceptDragAndDrop(const QMimeData* data);
+
+    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int, int, const QModelIndex &parent) override;
+    virtual bool canDropMimeData(const QMimeData* data,
+        Qt::DropAction action,
+        int row,
+        int column,
+        const QModelIndex& parent) const override;
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
@@ -214,6 +222,12 @@ signals:
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
 protected:
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+    Qt::DropActions supportedDropActions() const;
+    QMimeData* mimeData(const QModelIndexList& indexes) const;
+
+    QStringList mimeTypes() const;
+
     void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
     virtual void loadLevelFinished();
@@ -250,6 +264,7 @@ private:
 
     QThread* mNodeRequesterThread;
     bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
+    bool mAcceptDragAndDrop;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

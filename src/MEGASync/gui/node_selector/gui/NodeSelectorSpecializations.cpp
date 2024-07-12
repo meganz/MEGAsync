@@ -26,7 +26,7 @@ void UploadNodeSelector::checkSelection()
     auto node = getSelectedNode();
     if(node)
     {
-        int access = getNodeAccess(node);
+        int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_READWRITE)
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -136,7 +136,7 @@ void SyncNodeSelector::checkSelection()
             reject();
         };
 
-        int access = getNodeAccess(node);
+        int access = Utilities::getNodeAccess(node->getHandle());
         if (access < mega::MegaShare::ACCESS_FULL)
         {
             msgInfo.text = tr("You need Full access right to be able to sync the selected folder.");
