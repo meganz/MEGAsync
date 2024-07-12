@@ -21,9 +21,12 @@ const char* ITS_ON_NS = "itsOn";
 NodeSelector::NodeSelector(QWidget *parent) :
     QDialog(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    ui(new Ui::NodeSelector)
+    ui(new Ui::NodeSelector),
+    mDelegateListener(new QTMegaListener(mMegaApi, this))
 {
     ui->setupUi(this);
+
+    mMegaApi->addListener(mDelegateListener.get());
 
     connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked, Qt::QueuedConnection);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
@@ -70,6 +73,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
 
 NodeSelector::~NodeSelector()
 {
+    mMegaApi->removeListener(mDelegateListener.get());
     delete ui;
 }
 
@@ -478,5 +482,31 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         onOptionSelected(option);
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+    }
+}
+
+void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes)
+{
+    mCloudDriveWidget->onNodesUpdate(api, nodes);
+    mIncomingSharesWidget->onNodesUpdate(api, nodes);
+    mBackupsWidget->onNodesUpdate(api, nodes);
+    mSearchWidget->onNodesUpdate(api, nodes);
+    mRubbishWidget->onNodesUpdate(api, nodes);
+}
+
+void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+{
+    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            //ui->tMegaFolders->setEnabled(true);
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = this;
+            msgInfo.title =  MegaSyncApp->getMEGAString();
+            msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
+            QMegaMessageBox::critical(msgInfo);
+        }
     }
 }

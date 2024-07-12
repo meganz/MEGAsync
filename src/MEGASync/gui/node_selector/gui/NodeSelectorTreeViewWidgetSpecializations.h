@@ -21,7 +21,6 @@ public:
     void itemsRestored(mega::MegaHandle &handle, bool parentLoaded);
 
     void setShowEmptyView(bool newShowEmptyView);
-    void enableDragAndDrop(bool enable);
 
 public slots:
     void onRowsInserted() override;

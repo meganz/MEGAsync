@@ -4459,6 +4459,10 @@ Enter a different name.</translation>
         <source>Rubbish</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Error:</source>
+        <translation type="unfinished">Error:</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorModel</name>
@@ -4558,11 +4562,6 @@ Enter a different name.</translation>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
         <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
         <translation>Are you sure you want to delete “%1”?</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
-        <translation>Error:</translation>
     </message>
     <message>
         <source>Cloud drive</source>

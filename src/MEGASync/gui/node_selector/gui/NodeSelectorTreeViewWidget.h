@@ -27,7 +27,7 @@ namespace Ui {
 class NodeSelectorTreeViewWidget;
 }
 
-class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaListener
+class NodeSelectorTreeViewWidget : public QWidget
 {
     Q_OBJECT
 
@@ -69,11 +69,13 @@ public:
     NodeSelectorProxyModel* getProxyModel();
     bool isInRootView() const;
 
+    bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes);
+
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
+    void enableDragAndDrop(bool enable);
+
 public slots:
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
-    void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     virtual void onRowsInserted();
     void onRowsRemoved();
     void onProxyModelSorted();
@@ -131,7 +133,6 @@ private slots:
 
 private:
     bool mManuallyResizedColumn;
-    static std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     virtual bool isAllowedToEnterInIndex(const QModelIndex &idx);
     QModelIndex getSelectedIndex();

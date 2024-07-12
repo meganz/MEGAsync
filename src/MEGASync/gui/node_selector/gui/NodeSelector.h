@@ -32,7 +32,7 @@ namespace Ui {
 class NodeSelector;
 }
 
-class NodeSelector : public QDialog
+class NodeSelector : public QDialog, public mega::MegaListener
 {
     Q_OBJECT
 
@@ -66,6 +66,9 @@ protected:
     void showNotFoundNodeMessageBox();
     void makeConnections(SelectTypeSPtr selectType);
     bool eventFilter(QObject *obj, QEvent *event) override;
+
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
@@ -102,6 +105,7 @@ private:
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;
     QMap<TabItem, QFrame*> mTabFramesToggleGroup;
+    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
 
     bool mManuallyResizedColumn;
 };

@@ -19,8 +19,6 @@ const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
 const int CHECK_UPDATED_NODES_INTERVAL = 1000;
 const int IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD = 200;
 
-std::unique_ptr<QTMegaListener> NodeSelectorTreeViewWidget::mDelegateListener = nullptr;
-
 NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::NodeSelectorTreeViewWidget),
@@ -42,12 +40,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
     ui->bOk->setEnabled(false);
     ui->searchButtonsWidget->setVisible(false);
     ui->searchingText->setVisible(false);
-
-    if(!mDelegateListener)
-    {
-        mDelegateListener = std::make_unique<QTMegaListener>(mMegaApi, this);
-        MegaSyncApp->getMegaApi()->addListener(mDelegateListener.get());
-    }
 
     connect(ui->bNewFolder, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::onbNewFolderClicked);
     connect(ui->bOk, &QPushButton::clicked, this, &NodeSelectorTreeViewWidget::okBtnClicked);
@@ -77,11 +69,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
 {
-    if(mDelegateListener)
-    {
-        MegaSyncApp->getMegaApi()->removeListener(mDelegateListener.get());
-        mDelegateListener.release();
-    }
     delete ui;
 }
 
@@ -201,6 +188,15 @@ bool NodeSelectorTreeViewWidget::isInRootView() const
 void NodeSelectorTreeViewWidget::updateLoadingMessage(std::shared_ptr<MessageInfo> message)
 {
     ui->tMegaFolders->getLoadingMessageHandler()->updateMessage(message);
+}
+
+void NodeSelectorTreeViewWidget::enableDragAndDrop(bool enable)
+{
+    ui->tMegaFolders->setDragEnabled(enable);
+    ui->tMegaFolders->viewport()->setAcceptDrops(enable);
+    ui->tMegaFolders->setDropIndicatorShown(enable);
+    ui->tMegaFolders->setDragDropMode(
+        enable ? QAbstractItemView::DragDrop : QAbstractItemView::NoDragDrop);
 }
 
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
@@ -656,7 +652,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         int access = mMegaApi->getAccess(node.get());
 
-        //This is for an extra protection as we don´t show the rename action if one of this conditions are not met
+        //This is for an extra protection as we don´t show the rename action if oxne of this conditions are not met
         if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
         {
             return nullptr;
@@ -763,23 +759,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     }
 }
 
-void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
-{
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            ui->tMegaFolders->setEnabled(true);
-
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title =  MegaSyncApp->getMEGAString();
-            msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
-            QMegaMessageBox::critical(msgInfo);
-        }
-    }
-}
-
 bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
 {
     if(parentHandle != mega::INVALID_HANDLE)
@@ -817,11 +796,11 @@ bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node
     return false;
 }
 
-void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
+bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes)
 {
     if(!nodes)
     {
-        return;
+        return false;
     }
 
     QMap<mega::MegaHandle, mega::MegaHandle> updatedVersions;
@@ -933,6 +912,12 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
         {
             mNodesUpdateTimer.setInterval(CHECK_UPDATED_NODES_INTERVAL);
         }
+
+        return true;
+    }
+    else
+    {
+        return false;
     }
 }
 
@@ -1447,7 +1432,7 @@ NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
 void CloudDriveType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->ui->bNewFolder->hide();
-    wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    //wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
     wdg->mModel->showFiles(true);
     wdg->mModel->showReadOnlyFolders(true);
 }

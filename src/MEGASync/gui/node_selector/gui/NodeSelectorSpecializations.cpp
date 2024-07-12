@@ -245,6 +245,8 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(p
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
 {
     mCloudDriveWidget->enableDragAndDrop(enable);
+    mRubbishWidget->enableDragAndDrop(true);
+    mIncomingSharesWidget->enableDragAndDrop(true);
 }
 
 void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
