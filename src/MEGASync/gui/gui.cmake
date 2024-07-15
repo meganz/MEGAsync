@@ -95,11 +95,10 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsModel.h
     gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
-    gui/user_messages/AlertDelegate.h
+    gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
     gui/user_messages/AlertItem.h
     gui/user_messages/FilterAlertWidget.h
-    gui/user_messages/NotificationDelegate.h
     gui/user_messages/NotificationItem.h
     gui/user_messages/UserAlert.h
     gui/user_messages/UserMessage.h
@@ -202,11 +201,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsModel.cpp
     gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
-    gui/user_messages/AlertDelegate.cpp
+    gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp
     gui/user_messages/FilterAlertWidget.cpp
-    gui/user_messages/NotificationDelegate.cpp
     gui/user_messages/NotificationItem.cpp
     gui/user_messages/UserAlert.cpp
     gui/user_messages/UserMessageDelegate.cpp

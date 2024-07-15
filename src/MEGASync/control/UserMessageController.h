@@ -28,7 +28,7 @@ public:
     bool hasElementsOfType(MessageType type);
     void applyFilter(MessageType type);
     void requestNotifications() const;
-    void ackSeenAlertsAndNotifications();
+    void ackSeenUserMessages();
     QAbstractItemModel* getModel() const;
 
 signals:

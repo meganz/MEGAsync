@@ -25,14 +25,12 @@ class AlertItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit AlertItem(QWidget* parent = 0);
+    explicit AlertItem(UserAlert* alert, QWidget* parent = 0);
     ~AlertItem();
 
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
-    void setAlertData(UserAlert* alert);
-    void setAlertType(int type);
     void setAlertHeading(UserAlert* alert);
     void setAlertContent(UserAlert* alert);
     void setAlertTimeStamp(int64_t ts);
@@ -58,6 +56,8 @@ private:
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 
+    void setAlertData(UserAlert* alert);
+    void updateAlertType();
     QString formatRichString(const QString& str);
     QString getUserFullName();
     void requestFullName();

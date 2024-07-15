@@ -1,8 +1,7 @@
 #ifndef USER_MESSAGE_DELEGATE_H
 #define USER_MESSAGE_DELEGATE_H
 
-#include "NotificationDelegate.h"
-#include "AlertDelegate.h"
+#include "UserMessageCacheManager.h"
 #include "UserMessageTypes.h"
 
 #include <QTreeView>
@@ -15,32 +14,12 @@ class UserMessageProxyModel;
 
 struct UserMessageEditorInfo
 {
-    UserMessageEditorInfo()
-        : mIndex(QModelIndex())
-        , mWidget(nullptr)
-    {
-    }
+    UserMessageEditorInfo();
 
-    void setData(const QModelIndex& index, QWidget* widget)
-    {
-        mIndex = index;
-        mWidget = widget;
-    }
-
-    bool isEmpty() const
-    {
-        return !mWidget;
-    }
-
-    QModelIndex getIndex() const
-    {
-        return mIndex;
-    }
-
-    QWidget* getWidget() const
-    {
-        return mWidget;
-    }
+    void setData(const QModelIndex& index, QWidget* widget);
+    bool isEmpty() const;
+    QModelIndex getIndex() const;
+    QWidget* getWidget() const;
 
 private:
     QModelIndex mIndex;
@@ -68,8 +47,7 @@ protected slots:
     void onHoverLeave(const QModelIndex& index);
 
 private:
-    std::unique_ptr<AlertDelegate> mAlertsDelegate;
-    std::unique_ptr<NotificationDelegate> mNotificationsDelegate;
+    std::unique_ptr<UserMessageCacheManager> mCacheManager;
     UserMessageProxyModel* mProxyModel;
     std::unique_ptr<UserMessageEditorInfo> mEditor;
     QTreeView* mView;

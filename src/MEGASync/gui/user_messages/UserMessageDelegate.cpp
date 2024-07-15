@@ -11,11 +11,37 @@
 #include <QTreeView>
 #include <QTimer>
 
+UserMessageEditorInfo::UserMessageEditorInfo()
+    : mIndex(QModelIndex())
+    , mWidget(nullptr)
+{
+}
+
+void UserMessageEditorInfo::setData(const QModelIndex& index, QWidget* widget)
+{
+    mIndex = index;
+    mWidget = widget;
+}
+
+bool UserMessageEditorInfo::isEmpty() const
+{
+    return !mWidget;
+}
+
+QModelIndex UserMessageEditorInfo::getIndex() const
+{
+    return mIndex;
+}
+
+QWidget* UserMessageEditorInfo::getWidget() const
+{
+    return mWidget;
+}
+
 UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel,
                                                      QTreeView* view)
     : QStyledItemDelegate(view)
-    , mAlertsDelegate(std::make_unique<AlertDelegate>())
-    , mNotificationsDelegate(std::make_unique<NotificationDelegate>())
+    , mCacheManager(std::make_unique<UserMessageCacheManager>())
     , mProxyModel(qobject_cast<UserMessageProxyModel*>(proxyModel))
     , mEditor(std::make_unique<UserMessageEditorInfo>())
     , mView(view)
@@ -183,29 +209,9 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
-            if(item)
-            {
-                switch (item->getType())
-                {
-                    case UserMessage::Type::ALERT:
-                    {
-                        UserAlert* alert = dynamic_cast<UserAlert*>(item);
-                        widget = mAlertsDelegate->getWidget(alert, mView->viewport());
-                        break;
-                    }
-                    case UserMessage::Type::NOTIFICATION:
-                    {
-                        UserNotification* notification = dynamic_cast<UserNotification*>(item);
-                        widget = mNotificationsDelegate->getWidget(notification, mView->viewport());
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
-                }
-            }
+            widget = mCacheManager->getWidget(item, mView->viewport());
         }
     }
     return widget;
 }
+

@@ -158,7 +158,7 @@ void UserMessageController::checkUseenNotifications()
     }
 }
 
-void UserMessageController::ackSeenAlertsAndNotifications()
+void UserMessageController::ackSeenUserMessages()
 {
     // TODO: REMOVE AFTER TESTS
     //mMegaApi->setLastReadNotification(0);

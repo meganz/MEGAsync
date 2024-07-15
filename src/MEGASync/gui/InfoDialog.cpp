@@ -103,8 +103,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(filterClicked(AlertType)),
-            this, SLOT(applyFilterOption(AlertType)));
+    connect(filterMenu, SIGNAL(filterClicked(MessageType)),
+            this, SLOT(applyFilterOption(MessageType)));
 
     setUnseenNotifications(0);
 
@@ -1569,7 +1569,7 @@ void InfoDialog::sTabsChanged(int tab)
             && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab)
             && ui->wSortNotifications->allFilterHasBeenSelected())
     {
-        app->getNotificationController()->ackSeenAlertsAndNotifications();
+        app->getNotificationController()->ackSeenUserMessages();
         ui->wSortNotifications->resetAllFilterHasBeenSelected();
     }
     lastTab = tab;

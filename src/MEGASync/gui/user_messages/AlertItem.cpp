@@ -13,10 +13,10 @@
 
 using namespace mega;
 
-AlertItem::AlertItem(QWidget *parent) :
-    QWidget(parent),
-    mUi(new Ui::AlertItem),
-    mMegaApi(MegaSyncApp->getMegaApi())
+AlertItem::AlertItem(UserAlert* alert, QWidget *parent)
+    : QWidget(parent)
+    , mUi(new Ui::AlertItem)
+    , mMegaApi(MegaSyncApp->getMegaApi())
 {
     mUi->setupUi(this);
 
@@ -29,6 +29,8 @@ AlertItem::AlertItem(QWidget *parent) :
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
         updateAlertData();
     });
+
+    setAlertData(alert);
 }
 
 AlertItem::~AlertItem()
@@ -111,7 +113,7 @@ void AlertItem::onAttributesReady()
 
 void AlertItem::updateAlertData()
 {
-    setAlertType(mAlertUser->getType());
+    updateAlertType();
     setAlertHeading(mAlertUser);
     setAlertContent(mAlertUser);
     setAlertTimeStamp(mAlertUser->getTimestamp(0));
@@ -120,81 +122,80 @@ void AlertItem::updateAlertData()
     emit refreshAlertItem(mAlertUser->getId());
 }
 
-void AlertItem::setAlertType(int type)
+void AlertItem::updateAlertType()
 {
     mUi->wNotificationIcon->hide();
 
     QString notificationTitle;
     QString notificationColor;
-    switch (type)
+    switch (mAlertUser->getType())
     {
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-            case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
-            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-            case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
-            case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+        case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+        case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        {
+            notificationTitle = tr("Contacts").toUpper();
+            notificationColor = QString::fromUtf8("#1CB5A0");
+            break;
+        }
+        case MegaUserAlert::TYPE_NEWSHARE:
+        case MegaUserAlert::TYPE_DELETEDSHARE:
+        case MegaUserAlert::TYPE_NEWSHAREDNODES:
+        case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            if (mAlertUser->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
             {
-                notificationTitle = tr("Contacts").toUpper();
-                notificationColor = QString::fromUtf8("#1CB5A0");
-                break;
+                mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
             }
-            case MegaUserAlert::TYPE_NEWSHARE:
-            case MegaUserAlert::TYPE_DELETEDSHARE:
-            case MegaUserAlert::TYPE_NEWSHAREDNODES:
-            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
-            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+            else
             {
-                if (type == MegaUserAlert::TYPE_DELETEDSHARE)
-                {
-                    mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
-                }
-                else
-                {
-                    mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder.png")).pixmap(24.0, 24.0));
-                }
-
-                mUi->bNotificationIcon->setMinimumSize(QSize(10, 8));
-                mUi->bNotificationIcon->setMaximumSize(QSize(10, 8));
-                mUi->bNotificationIcon->setIconSize(QSize(10, 8));
-                mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
-                mUi->wNotificationIcon->show();
-                notificationTitle = tr("Incoming Shares").toUpper();
-                notificationColor = QString::fromUtf8("#F2C249");
-                break;
+                mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder.png")).pixmap(24.0, 24.0));
             }
-            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
-            case MegaUserAlert::TYPE_PAYMENT_FAILED:
-            case MegaUserAlert::TYPE_PAYMENTREMINDER:
-            {
-                notificationTitle = tr("Payment").toUpper();
-                notificationColor = QString::fromUtf8("#FFA502");
-                break;
-            }
-            case MegaUserAlert::TYPE_TAKEDOWN:
-            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
-            {
-                notificationTitle = tr("Takedown notice").toUpper();
-                notificationColor = QString::fromUtf8("#D64446");
-                break;
-            }
-            default:
-            {
-                notificationTitle = QString::fromUtf8("");
-                notificationColor = QString::fromUtf8("#FFFFFF");
-                mUi->bNotificationIcon->setMinimumSize(QSize(16, 16));
-                mUi->bNotificationIcon->setMaximumSize(QSize(16, 16));
-                mUi->bNotificationIcon->setIconSize(QSize(16, 16));
-                mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/mega_notifications.png")));
-                mUi->wNotificationIcon->show();
-                break;
-            }
+            mUi->bNotificationIcon->setMinimumSize(QSize(10, 8));
+            mUi->bNotificationIcon->setMaximumSize(QSize(10, 8));
+            mUi->bNotificationIcon->setIconSize(QSize(10, 8));
+            mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/share_arrow.png")));
+            mUi->wNotificationIcon->show();
+            notificationTitle = tr("Incoming Shares").toUpper();
+            notificationColor = QString::fromUtf8("#F2C249");
+            break;
+        }
+        case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        case MegaUserAlert::TYPE_PAYMENT_FAILED:
+        case MegaUserAlert::TYPE_PAYMENTREMINDER:
+        {
+            notificationTitle = tr("Payment").toUpper();
+            notificationColor = QString::fromUtf8("#FFA502");
+            break;
+        }
+        case MegaUserAlert::TYPE_TAKEDOWN:
+        case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+        {
+            notificationTitle = tr("Takedown notice").toUpper();
+            notificationColor = QString::fromUtf8("#D64446");
+            break;
+        }
+        default:
+        {
+            notificationTitle = QString::fromUtf8("");
+            notificationColor = QString::fromUtf8("#FFFFFF");
+            mUi->bNotificationIcon->setMinimumSize(QSize(16, 16));
+            mUi->bNotificationIcon->setMaximumSize(QSize(16, 16));
+            mUi->bNotificationIcon->setIconSize(QSize(16, 16));
+            mUi->bNotificationIcon->setIcon(QIcon(QString::fromLatin1("://images/mega_notifications.png")));
+            mUi->wNotificationIcon->show();
+            break;
+        }
     }
 
     mUi->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
@@ -618,7 +619,7 @@ void AlertItem::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-        setAlertType(mAlertUser->getType());
+        updateAlertType();
         setAlertHeading(mAlertUser);
         setAlertContent(mAlertUser);
         setAlertTimeStamp(mAlertUser->getTimestamp(0));
