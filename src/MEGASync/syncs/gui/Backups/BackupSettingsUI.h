@@ -4,9 +4,8 @@
 #include <QWidget>
 #include <QPointer>
 
-#include <syncs/gui/SyncSettingsUIBase.h>
-#include <syncs/gui/Backups/BackupTableView.h>
-#include <syncs/gui/Backups/BackupSettingsElements.h>
+#include "SyncSettingsUIBase.h"
+#include "BackupSettingsElements.h"
 
 class BackupSettingsUI : public SyncSettingsUIBase
 {

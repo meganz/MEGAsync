@@ -924,6 +924,14 @@
     </message>
 </context>
 <context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CloudStalledIssueChooseWidget</name>
     <message>
         <source>Moved to MEGA Bin</source>
@@ -4126,7 +4134,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Changes Undone</source>
         <translatorcomment>Informative message shown when the user selects local or remote option, explaining that the local or remote changes are undone in order to keep the other side changes. SAT-973</translatorcomment>
-        <translation>Changes Undone</translation>
+        <translation>Changes undone</translation>
     </message>
 </context>
 <context>
@@ -4134,12 +4142,12 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>The local and remote locations have changed at the same time</source>
         <translatorcomment>Subtitle description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
-        <translation>The local and remote locations have changed at the same time</translation>
+        <translation>The local and MEGA folders have changed at the same time</translation>
     </message>
     <message>
         <source>Can’t move or rename some items in [B]%1[/B]</source>
         <translatorcomment>Title description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unable to move or rename some items in [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -4160,7 +4168,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</source>
         <translatorcomment>Notification sent when at least one MoveOrRenameCannotOccur has failed. SAT-1016.</translatorcomment>
-        <translation>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</translation>
+        <translation>Some issues couldn’t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</translation>
     </message>
 </context>
 <context>
@@ -4244,11 +4252,24 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
+    <name>NameConflictedStalledIssue</name>
+    <message>
+        <source>Unable to rename the file in MEGA</source>
+        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename the local file</source>
+        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
         <translatorcomment>Error message shown as a tooltip when merging folders failed in a name conflict stalled issue. SAT-1110</translatorcomment>
-        <translation>Unable to merge this folder.</translation>
+        <translation>Unable to merge these folders</translation>
     </message>
 </context>
 <context>
@@ -6100,7 +6121,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Remote</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
-        <translation>Remote</translation>
+        <translation>In MEGA</translation>
     </message>
 </context>
 <context>
@@ -7144,17 +7165,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>Being solved</translation>
+        <translation>Solving…</translation>
     </message>
     <message>
         <source>Auto-solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
-        <translation>Auto-solved</translation>
-    </message>
-    <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>Auto-failed</translation>
+        <translation>Auto-resolved</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7289,24 +7305,24 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n issue failed</numerusform>
-            <numerusform>%n issues failed</numerusform>
+            <numerusform>%n issue failed to resolve</numerusform>
+            <numerusform>%n issues failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>1 issue fixed and %n issue failed</numerusform>
-            <numerusform>1 issue fixed and %n issues failed</numerusform>
+            <numerusform>1 issue fixed and %n issue failed to resolve</numerusform>
+            <numerusform>1 issue fixed and %n issues failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n issue fixed and 1 issue failed</numerusform>
-            <numerusform>%n issues fixed and 1 issue failed</numerusform>
+            <numerusform>%n issue fixed and 1 issue failed to resolve</numerusform>
+            <numerusform>%n issues fixed and 1 issue failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7314,8 +7330,8 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%1 and %n issue failed</numerusform>
-            <numerusform>%1 and %n issues failed</numerusform>
+            <numerusform>%1 and %n issue failed to resolve</numerusform>
+            <numerusform>%1 and %n issues failed to resolve</numerusform>
         </translation>
     </message>
 </context>

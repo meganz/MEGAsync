@@ -10,7 +10,7 @@
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <MultiStepIssueSolver.h>
-#include <syncs/control/MegaIgnoreManager.h>
+#include "MegaIgnoreManager.h"
 #include "StatsEventHandler.h"
 
 #include <QSortFilterProxyModel>
@@ -420,13 +420,27 @@ Qt::DropActions StalledIssuesModel::supportedDropActions() const
 
 bool StalledIssuesModel::hasChildren(const QModelIndex& parent) const
 {
+    auto result(false);
     auto stalledIssueItem = static_cast<StalledIssue*>(parent.internalPointer());
     if (stalledIssueItem)
     {
-        return false;
+        result = false;
+    }
+    else if(parent.isValid())
+    {
+        auto issue = getStalledIssueByRow(parent.row());
+        if(issue.consultData())
+        {
+            result = issue.consultData()->isExpandable();
+        }
+    }
+    else
+    {
+        //Top parent has always children
+        result = true;
     }
 
-    return true;
+    return result;
 }
 
 int StalledIssuesModel::rowCount(const QModelIndex& parent) const
@@ -1452,7 +1466,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRemove(int conflictIndex, con
     return areAllSolved;
 }
 
-bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
+bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index)
 {
     auto areAllSolved(false);
 
@@ -1461,7 +1475,7 @@ bool StalledIssuesModel::solveLocalConflictedNameByRename(const QString& renameT
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        areAllSolved = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo);
+        areAllSolved = nameConflict->solveLocalConflictedNameByRename(conflictIndex, renameTo, renameFrom);
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);
@@ -1517,7 +1531,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRemove(int conflictIndex, con
     return areAllSolved;
 }
 
-bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index)
+bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index)
 {
     auto areAllSolved(false);
 
@@ -1526,7 +1540,7 @@ bool StalledIssuesModel::solveCloudConflictedNameByRename(const QString& renameT
     auto issue(mStalledIssues.at(potentialIndex.row()));
     if(auto nameConflict = issue.convert<NameConflictedStalledIssue>())
     {
-        areAllSolved = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo);
+        areAllSolved = nameConflict->solveCloudConflictedNameByRename(conflictIndex, renameTo, renameFrom);
         if(areAllSolved)
         {
             issueSolvingFinished(issue.getData().get(), true);

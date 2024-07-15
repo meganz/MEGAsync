@@ -158,7 +158,7 @@ ln -s ../../src/MEGAShellExtNautilus/mega_notify_client.h $EXT_NAME/mega_notify_
 ln -s ../../src/MEGAShellExtNautilus/mega_notify_client.c $EXT_NAME/mega_notify_client.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
-ln -s ../../src/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
+ln -s ../../src/MEGAShellExtNautilus/CMakeLists.txt $EXT_NAME/CMakeLists.txt
 ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 

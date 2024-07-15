@@ -1,7 +1,7 @@
 #ifndef SYNCS_H
 #define SYNCS_H
 
-#include "syncs/control/SyncController.h"
+#include "SyncController.h"
 
 #include "megaapi.h"
 #include "mega/bindings/qt/QTMegaRequestListener.h"

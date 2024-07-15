@@ -128,7 +128,6 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultLocalData()->getNativeFilePath()));
     header->setTitleDescriptionText(QString());
-    header->setIsExpandable(false);
 }
 
 void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -208,7 +207,6 @@ void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header
     StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
     header->setText(headerText.arg(header->getData().consultData()->consultCloudData()->getNativeFilePath()));
     header->setTitleDescriptionText(tr("File fingerprint missing"));
-    header->setIsExpandable(false);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *header)
@@ -217,6 +215,20 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
     {
         header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
     }
+}
+
+//Cloud node is blocked
+CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
+    : StalledIssueHeaderCase(header)
+{}
+
+void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA's Terms of Service[/A].").arg(header->displayFileName());
+    QStringList links;
+    links << QLatin1String("https://mega.io/terms");
+    StalledIssuesLinkTextDecorator::process(links, headerText);
+    header->setText(headerText);
 }
 
 //Local folder not scannable

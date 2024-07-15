@@ -1,12 +1,11 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
-#include "stalled_issues_cases/LocalAndRemoteDifferentWidget.h"
-#include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
-#include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
-#include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
-#include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
+#include "LocalAndRemoteDifferentWidget.h"
+#include "LocalAndRemoteNameConflicts.h"
+#include "OtherSideMissingOrBlocked.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
-#include "StalledIssueFilePath.h"
 
 #include "Utilities.h"
 
@@ -64,7 +63,10 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->setDelegate(mDelegate);
     }
 
-    createHeaderCaseWidget(header, issue);
+    if(needsUpdate)
+    {
+        createHeaderCaseWidget(header, issue);
+    }
 
     if(isNew)
     {
@@ -258,6 +260,10 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             if(issue.consultData()->missingFingerprint())
             {
                 headerCase = new CloudFingerprintMissingHeader(header);
+            }
+            else if(StalledIssue::isCloudNodeBlocked(issue.consultData()->getOriginalStall().get()))
+            {
+                headerCase = new CloudNodeIsBlockedHeader(header);
             }
             else
             {

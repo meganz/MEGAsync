@@ -1,9 +1,9 @@
-#include "syncs/gui/Twoways/SyncTableView.h"
+#include "SyncTableView.h"
 
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
-#include "syncs/model/SyncItemModel.h"
+#include "SyncItemModel.h"
 
 #include <QHeaderView>
 #include <QMenu>

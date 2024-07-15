@@ -26,7 +26,7 @@
 #include "UserAttributesRequests/FullName.h"
 #include "UserAttributesRequests/Avatar.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
-#include "syncs/gui/SyncsMenu.h"
+#include "SyncsMenu.h"
 #include "UploadToMegaDialog.h"
 #include "EmailRequester.h"
 #include "StatsEventHandler.h"

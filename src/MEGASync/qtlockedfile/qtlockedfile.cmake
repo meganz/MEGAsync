@@ -27,4 +27,8 @@ target_sources(MEGAsync
     ${DESKTOP_APP_LOCKED_FILE_SOURCES}
 )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

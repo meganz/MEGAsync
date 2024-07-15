@@ -431,20 +431,21 @@ void NameConflict::onActionClicked(int actionId)
                     if (renameDialog->result() == QDialog::Accepted)
                     {
                         auto newName = renameDialog->getName();
+                        auto originalName = renameDialog->getOriginalName();
 
                         bool areAllSolved(false);
 
                         if (isCloud())
                         {
                             areAllSolved = MegaSyncApp->getStalledIssuesModel()
-                                               ->solveCloudConflictedNameByRename(newName,
+                                               ->solveCloudConflictedNameByRename(newName, originalName,
                                                    conflictIndex,
                                                    mDelegateWidget->getCurrentIndex());
                         }
                         else
                         {
                             areAllSolved = MegaSyncApp->getStalledIssuesModel()
-                                               ->solveLocalConflictedNameByRename(newName,
+                                               ->solveLocalConflictedNameByRename(newName, originalName,
                                                    conflictIndex,
                                                    mDelegateWidget->getCurrentIndex());
                         }
