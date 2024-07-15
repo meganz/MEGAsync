@@ -5,7 +5,7 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "TransferBatch.h"
-#include "transfers/model/TransferMetaData.h"
+#include "TransferMetaData.h"
 
 #include <QDateTime>
 #include <QFileIconProvider>

@@ -4,8 +4,8 @@
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 #include "megaapi.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "../model/NodeSelectorModel.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 #include "NodeSelectorSpecializations.h"
 

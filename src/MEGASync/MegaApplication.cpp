@@ -17,7 +17,7 @@
 #include "OverQuotaDialog.h"
 #include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
-#include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "DuplicatedNodeDialog.h"
 #include "NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"

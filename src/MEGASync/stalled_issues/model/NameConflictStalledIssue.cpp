@@ -4,7 +4,7 @@
 #include "Utilities.h"
 #include "StatsEventHandler.h"
 #include "StalledIssuesModel.h"
-#include "gui/NodeNameSetterDialog/RenameNodeDialog.h"
+#include "RenameNodeDialog.h"
 
 #include <MegaApiSynchronizedRequest.h>
 

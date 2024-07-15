@@ -8,7 +8,7 @@
 #include "Platform.h"
 #include "UserAttributesRequests/FullName.h"
 #include "MegaApplication.h"
-#include "transfers/model/TransferMetaData.h"
+#include "TransferMetaData.h"
 #include "TransferNotificationBuilder.h"
 #include "Notificator.h"
 
