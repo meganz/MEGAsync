@@ -2,8 +2,6 @@
 #define EXCLUSIONSQMLDIALOG_H
 
 #include "QmlDialog.h"
-#include "syncs/control/MegaIgnoreManager.h"
-#include "ExclusionRulesModel.h"
 
 class ExclusionsQmlDialog : public QmlDialog
 {

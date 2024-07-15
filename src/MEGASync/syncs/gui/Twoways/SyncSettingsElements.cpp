@@ -2,7 +2,7 @@
 #include "ui_SyncAccountFullMessage.h"
 #include "ui_SyncStallModeSelector.h"
 
-#include <syncs/gui/SyncSettingsUIBase.h>
+#include "SyncSettingsUIBase.h"
 
 #include <Utilities.h>
 #include "Preferences.h"

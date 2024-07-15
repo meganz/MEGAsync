@@ -1,7 +1,7 @@
 #include "NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "UserAttributesRequests/MyBackupsHandle.h"
