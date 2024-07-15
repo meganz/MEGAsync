@@ -3,8 +3,8 @@
 #include "NotificationAlertModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "NotificationAlertProxyModel.h"
-#include "MegaUserAlertExt.h"
-#include "MegaNotificationExt.h"
+#include "UserAlert.h"
+#include "UserNotification.h"
 
 #include <QSortFilterProxyModel>
 #include <QPainter>
@@ -182,20 +182,20 @@ QWidget* NotificationAlertDelegate::getWidget(const QModelIndex& index) const
         QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
-            NotificationExtBase* item = static_cast<NotificationExtBase*>(filteredIndex.internalPointer());
+            UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
             if(item)
             {
                 switch (item->getType())
                 {
-                    case NotificationExtBase::Type::ALERT:
+                    case UserMessage::Type::ALERT:
                     {
-                        MegaUserAlertExt* alert = dynamic_cast<MegaUserAlertExt*>(item);
+                        UserAlert* alert = dynamic_cast<UserAlert*>(item);
                         widget = mAlertsDelegate->getWidget(alert, mView->viewport());
                         break;
                     }
-                    case NotificationExtBase::Type::NOTIFICATION:
+                    case UserMessage::Type::NOTIFICATION:
                     {
-                        MegaNotificationExt* notification = dynamic_cast<MegaNotificationExt*>(item);
+                        UserNotification* notification = dynamic_cast<UserNotification*>(item);
                         widget = mNotificationsDelegate->getWidget(notification, mView->viewport());
                         break;
                     }

@@ -1,6 +1,6 @@
 #include "NotificationAlertProxyModel.h"
 
-#include "MegaUserAlertExt.h"
+#include "UserAlert.h"
 
 #include "megaapi.h"
 
@@ -32,18 +32,18 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
 
     bool filter = false;
     QModelIndex index = sourceModel()->index(row, 0, sourceParent);
-    NotificationExtBase* item = static_cast<NotificationExtBase*>(index.internalPointer());
+    UserMessage* item = static_cast<UserMessage*>(index.internalPointer());
     if(item)
     {
         switch (item->getType())
         {
-            case NotificationExtBase::Type::ALERT:
+            case UserMessage::Type::ALERT:
             {
-                MegaUserAlertExt* alert = qobject_cast<MegaUserAlertExt*>(item);
+                UserAlert* alert = qobject_cast<UserAlert*>(item);
                 filter = mActualFilter == alert->getAlertType();
                 break;
             }
-            case NotificationExtBase::Type::NOTIFICATION:
+            case UserMessage::Type::NOTIFICATION:
             {
                 filter = mActualFilter == AlertType::ALL;
                 break;
@@ -61,8 +61,8 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
 
 bool NotificationAlertProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
-    NotificationExtBase* leftItem = static_cast<NotificationExtBase*>(left.internalPointer());
-    NotificationExtBase* rightItem = static_cast<NotificationExtBase*>(right.internalPointer());
+    UserMessage* leftItem = static_cast<UserMessage*>(left.internalPointer());
+    UserMessage* rightItem = static_cast<UserMessage*>(right.internalPointer());
 
     if(!leftItem || !rightItem)
     {
@@ -72,18 +72,18 @@ bool NotificationAlertProxyModel::lessThan(const QModelIndex& left, const QModel
 
     bool isLess;
     // If the types are different, prioritise notifications over alerts
-    if (leftItem->getType() == NotificationExtBase::Type::NOTIFICATION
-        && rightItem->getType() == NotificationExtBase::Type::ALERT)
+    if (leftItem->getType() == UserMessage::Type::NOTIFICATION
+        && rightItem->getType() == UserMessage::Type::ALERT)
     {
         isLess = true;
     }
-    else if (leftItem->getType() == NotificationExtBase::Type::ALERT
-               && rightItem->getType() == NotificationExtBase::Type::NOTIFICATION)
+    else if (leftItem->getType() == UserMessage::Type::ALERT
+               && rightItem->getType() == UserMessage::Type::NOTIFICATION)
     {
         isLess = false;
     }
-    else if (leftItem->getType() == NotificationExtBase::Type::ALERT
-               && rightItem->getType() == NotificationExtBase::Type::ALERT)
+    else if (leftItem->getType() == UserMessage::Type::ALERT
+               && rightItem->getType() == UserMessage::Type::ALERT)
     {
         // If both are of type alert, order by date
         QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();

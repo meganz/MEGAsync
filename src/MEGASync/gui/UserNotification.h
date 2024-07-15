@@ -1,7 +1,7 @@
-#ifndef MEGA_NOTIFICATION_EXT_H
-#define MEGA_NOTIFICATION_EXT_H
+#ifndef USER_NOTIFICATION_H
+#define USER_NOTIFICATION_H
 
-#include "NotificationExtBase.h"
+#include "UserMessage.h"
 #include "ImageDownloader.h"
 
 #include <QPixmap>
@@ -13,14 +13,14 @@ namespace mega
 class MegaNotification;
 }
 
-class MegaNotificationExt : public NotificationExtBase
+class UserNotification : public UserMessage
 {
     Q_OBJECT
 
 public:
-    MegaNotificationExt() = delete;
-    MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent = nullptr);
-    ~MegaNotificationExt() = default;
+    UserNotification() = delete;
+    UserNotification(const mega::MegaNotification* notification, QObject* parent = nullptr);
+    ~UserNotification() = default;
 
     void reset(const mega::MegaNotification* notification);
 
@@ -60,4 +60,4 @@ private:
 
 };
 
-#endif // MEGA_NOTIFICATION_EXT_H
+#endif // USER_NOTIFICATION_H

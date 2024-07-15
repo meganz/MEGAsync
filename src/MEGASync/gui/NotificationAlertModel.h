@@ -1,7 +1,7 @@
 #ifndef NOTIFICATION_ALERT_MODEL_H
 #define NOTIFICATION_ALERT_MODEL_H
 
-#include "NotificationExtBase.h"
+#include "UserMessage.h"
 #include "NotificationAlertTypes.h"
 
 #include <QAbstractItemModel>
@@ -97,7 +97,7 @@ public:
     void setLastSeenNotification(uint32_t id);
 
 private:
-    QList<NotificationExtBase*> mNotifications;
+    QList<UserMessage*> mNotifications;
     NotificationSeenStatusManager mSeenStatusManager;
 
     void insertAlerts(const QList<mega::MegaUserAlert*>& alerts);

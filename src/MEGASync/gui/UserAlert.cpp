@@ -1,60 +1,9 @@
-#include "MegaUserAlertExt.h"
+#include "UserAlert.h"
 
 #include "EmailRequester.h"
 
-/*
-namespace
-{
-const std::map<AlertType, std::vector<int>> MegaUserAlertsByType
-{
-    {
-        AlertType::CONTACTS,
-        {
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST,
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED,
-            mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED,
-            mega::MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED,
-            mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED
-        }
-    },
-    {
-        AlertType::SHARES,
-        {
-            mega::MegaUserAlert::TYPE_NEWSHARE,
-            mega::MegaUserAlert::TYPE_DELETEDSHARE,
-            mega::MegaUserAlert::TYPE_NEWSHAREDNODES,
-            mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES,
-            mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES
-        }
-    },
-    {
-        AlertType::PAYMENTS,
-        {
-            mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED,
-            mega::MegaUserAlert::TYPE_PAYMENT_FAILED,
-            mega::MegaUserAlert::TYPE_PAYMENTREMINDER
-        }
-    },
-    {
-        AlertType::TAKEDOWNS,
-        {
-            mega::MegaUserAlert::TYPE_TAKEDOWN,
-            mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED
-        }
-    }
-};
-}
-*/
-
-MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent)
-    : NotificationExtBase(NotificationExtBase::Type::ALERT, parent)
+UserAlert::UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent)
+    : UserMessage(UserMessage::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
     , mAlertType(AlertType::UNKNOWN)
     , mEmail()
@@ -62,12 +11,12 @@ MegaUserAlertExt::MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* 
     init();
 }
 
-MegaUserAlertExt::~MegaUserAlertExt()
+UserAlert::~UserAlert()
 {
     mEmail.clear();
 }
 
-void MegaUserAlertExt::init()
+void UserAlert::init()
 {
     assert(mMegaUserAlert != nullptr);
 
@@ -75,7 +24,7 @@ void MegaUserAlertExt::init()
     {
         auto requestInfo = EmailRequester::getRequest(mMegaUserAlert->getUserHandle(), QString::fromUtf8(mMegaUserAlert->getEmail()));
 
-        connect(requestInfo, &RequestInfo::emailChanged, this, &MegaUserAlertExt::setEmail, Qt::QueuedConnection);
+        connect(requestInfo, &RequestInfo::emailChanged, this, &UserAlert::setEmail, Qt::QueuedConnection);
     }
 
     if (mMegaUserAlert->getEmail())
@@ -90,25 +39,8 @@ void MegaUserAlertExt::init()
     initAlertType();
 }
 
-void MegaUserAlertExt::initAlertType()
+void UserAlert::initAlertType()
 {
-    /*
-    for (auto rit = MegaUserAlertsByType.rbegin(); rit != MegaUserAlertsByType.rend(); ++rit)
-    {
-        const auto& alertType = rit->first;
-        const auto& alerts = rit->second;
-        if (std::find(alerts.begin(), alerts.end(), mMegaUserAlert->getType()) != alerts.end())
-        {
-            mAlertType = alertType;
-            return;
-        }
-    }
-
-    if(mAlertType == AlertType::UNKNOWN)
-    {
-        // TODO: Show warning
-    }
-    */
     switch (mMegaUserAlert->getType())
     {
         case mega::MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
@@ -157,7 +89,7 @@ void MegaUserAlertExt::initAlertType()
     }
 }
 
-MegaUserAlertExt& MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
+UserAlert& UserAlert::operator=(UserAlert&& megaUserAlert)
 {
     mMegaUserAlert.reset(megaUserAlert.mMegaUserAlert.release());
     megaUserAlert.mMegaUserAlert = nullptr;
@@ -168,12 +100,12 @@ MegaUserAlertExt& MegaUserAlertExt::operator=(MegaUserAlertExt&& megaUserAlert)
     return *this;
 }
 
-QString MegaUserAlertExt::getEmail() const
+QString UserAlert::getEmail() const
 {
     return mEmail;
 }
 
-void MegaUserAlertExt::setEmail(QString email)
+void UserAlert::setEmail(QString email)
 {
     if (!email.isEmpty() && email != mEmail)
     {
@@ -183,69 +115,69 @@ void MegaUserAlertExt::setEmail(QString email)
     }
 }
 
-bool MegaUserAlertExt::isValid() const
+bool UserAlert::isValid() const
 {
     return mMegaUserAlert != nullptr;
 }
 
-void MegaUserAlertExt::reset(mega::MegaUserAlert* alert)
+void UserAlert::reset(mega::MegaUserAlert* alert)
 {
     mMegaUserAlert.reset(alert);
 
     init();
 }
 
-unsigned int MegaUserAlertExt::getId() const
+unsigned int UserAlert::getId() const
 {
     return mMegaUserAlert->getId();
 }
 
-bool MegaUserAlertExt::isSeen() const
+bool UserAlert::isSeen() const
 {
     return mMegaUserAlert->getSeen();
 }
 
-bool MegaUserAlertExt::getRelevant() const
+bool UserAlert::getRelevant() const
 {
     return mMegaUserAlert->getRelevant();
 }
 
-int MegaUserAlertExt::getType() const
+int UserAlert::getType() const
 {
     return mMegaUserAlert->getType();
 }
 
-mega::MegaHandle MegaUserAlertExt::getUserHandle() const
+mega::MegaHandle UserAlert::getUserHandle() const
 {
     return mMegaUserAlert->getUserHandle();
 }
 
-int64_t MegaUserAlertExt::getTimestamp(unsigned int index) const
+int64_t UserAlert::getTimestamp(unsigned int index) const
 {
     return mMegaUserAlert->getTimestamp(index);
 }
 
-int64_t MegaUserAlertExt::getNumber(unsigned int index) const
+int64_t UserAlert::getNumber(unsigned int index) const
 {
     return mMegaUserAlert->getNumber(index);
 }
 
-mega::MegaHandle MegaUserAlertExt::getNodeHandle() const
+mega::MegaHandle UserAlert::getNodeHandle() const
 {
     return mMegaUserAlert->getNodeHandle();
 }
 
-const char* MegaUserAlertExt::getString(unsigned int index) const
+const char* UserAlert::getString(unsigned int index) const
 {
     return mMegaUserAlert->getString(index);
 }
 
-const char* MegaUserAlertExt::getTitle() const
+const char* UserAlert::getTitle() const
 {
     return mMegaUserAlert->getTitle();
 }
 
-AlertType MegaUserAlertExt::getAlertType() const
+AlertType UserAlert::getAlertType() const
 {
     return mAlertType;
 }

@@ -5,7 +5,7 @@
 #include <QCache>
 
 class NotificationItem;
-class MegaNotificationExt;
+class UserNotification;
 
 class NotificationDelegate
 {
@@ -13,7 +13,7 @@ class NotificationDelegate
 public:
     NotificationDelegate();
 
-    QWidget* getWidget(MegaNotificationExt* notification, QWidget* parent);
+    QWidget* getWidget(UserNotification* notification, QWidget* parent);
 
 private:
     QCache<int64_t, NotificationItem> mItems;

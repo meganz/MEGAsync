@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-class MegaNotificationExt;
+class UserNotification;
 
 namespace Ui
 {
@@ -15,7 +15,7 @@ class NotificationItem : public QWidget
     Q_OBJECT
 
 public:
-    explicit NotificationItem(MegaNotificationExt* notification, QWidget* parent = nullptr);
+    explicit NotificationItem(UserNotification* notification, QWidget* parent = nullptr);
     ~NotificationItem();
 
     QSize minimumSizeHint() const override;
@@ -23,7 +23,7 @@ public:
 
 private:
     Ui::NotificationItem* mUi;
-    MegaNotificationExt* mNotificationData;
+    UserNotification* mNotificationData;
 
     void init();
     void setImages();

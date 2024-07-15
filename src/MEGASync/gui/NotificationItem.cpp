@@ -1,7 +1,7 @@
 #include "NotificationItem.h"
 
 #include "ui_NotificationItem.h"
-#include "MegaNotificationExt.h"
+#include "UserNotification.h"
 
 namespace
 {
@@ -15,7 +15,7 @@ constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
 }
 
-NotificationItem::NotificationItem(MegaNotificationExt* notification, QWidget *parent)
+NotificationItem::NotificationItem(UserNotification* notification, QWidget *parent)
     : QWidget(parent)
     , mUi(new Ui::NotificationItem)
     , mNotificationData(notification)
@@ -66,7 +66,7 @@ void NotificationItem::setImages()
     if(showImage)
     {
         mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+        connect(mNotificationData, &UserNotification::imageChanged, this, [this]()
                 {
                     mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
                 });
@@ -81,7 +81,7 @@ void NotificationItem::setImages()
     if(showIcon)
     {
         mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        connect(mNotificationData, &MegaNotificationExt::imageChanged, this, [this]()
+        connect(mNotificationData, &UserNotification::imageChanged, this, [this]()
         {
             mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
         });

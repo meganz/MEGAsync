@@ -1,7 +1,7 @@
 #ifndef ALERT_ITEM_H
 #define ALERT_ITEM_H
 
-#include "MegaUserAlertExt.h"
+#include "UserAlert.h"
 
 #include "megaapi.h"
 
@@ -31,10 +31,10 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
-    void setAlertData(MegaUserAlertExt* alert);
+    void setAlertData(UserAlert* alert);
     void setAlertType(int type);
-    void setAlertHeading(MegaUserAlertExt* alert);
-    void setAlertContent(MegaUserAlertExt* alert);
+    void setAlertHeading(UserAlert* alert);
+    void setAlertContent(UserAlert* alert);
     void setAlertTimeStamp(int64_t ts);
     void contactEmailChanged();
     QString getHeadingString();
@@ -53,7 +53,7 @@ private:
     Ui::AlertItem* mUi;
     mega::MegaApi* mMegaApi;
     QString mNotificationHeading;
-    MegaUserAlertExt* mAlertUser;
+    UserAlert* mAlertUser;
     std::unique_ptr<mega::MegaNode> mAlertNode;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;

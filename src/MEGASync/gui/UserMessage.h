@@ -1,9 +1,9 @@
-#ifndef NOTIFICATION_EXT_BASE_H
-#define NOTIFICATION_EXT_BASE_H
+#ifndef USER_MESSAGE_H
+#define USER_MESSAGE_H
 
 #include <QObject>
 
-class NotificationExtBase : public QObject
+class UserMessage : public QObject
 {
     Q_OBJECT
 
@@ -15,13 +15,13 @@ public:
         NOTIFICATION
     };
 
-    NotificationExtBase() = delete;
-    NotificationExtBase(Type type, QObject* parent = nullptr)
+    UserMessage() = delete;
+    UserMessage(Type type, QObject* parent = nullptr)
         : QObject(parent)
         , mType(type)
     {
     }
-    ~NotificationExtBase() = default;
+    ~UserMessage() = default;
 
     Type getType() const
     {
@@ -35,4 +35,4 @@ private:
 
 };
 
-#endif // NOTIFICATION_EXT_BASE_H
+#endif // USER_MESSAGE_H

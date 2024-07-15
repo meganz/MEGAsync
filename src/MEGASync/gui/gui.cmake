@@ -10,7 +10,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/InfoDialog.h
     gui/MegaDelegateHoverManager.h
     gui/MegaNodeNames.h
-    gui/MegaUserAlertExt.h
+    gui/UserAlert.h
     gui/NotificationsSettings.h
     gui/OverQuotaDialog.h
     gui/ScanningWidget.h
@@ -63,8 +63,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/NotificationDelegate.h
     gui/NotificationAlertModel.h
     gui/NotificationAlertDelegate.h
-    gui/MegaNotificationExt.h
-    gui/NotificationExtBase.h
+    gui/UserNotification.h
+    gui/UserMessage.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -119,7 +119,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/MegaUserAlertExt.cpp
+    gui/UserAlert.cpp
     gui/NotificationsSettings.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
@@ -171,7 +171,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/NotificationDelegate.cpp
     gui/NotificationAlertModel.cpp
     gui/NotificationAlertDelegate.cpp
-    gui/MegaNotificationExt.cpp
+    gui/UserNotification.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp

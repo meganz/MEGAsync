@@ -1,7 +1,7 @@
 #include "NotificationDelegate.h"
 
 #include "NotificationItem.h"
-#include "MegaNotificationExt.h"
+#include "UserNotification.h"
 
 namespace
 {
@@ -15,7 +15,7 @@ NotificationDelegate::NotificationDelegate()
 {
 }
 
-QWidget* NotificationDelegate::getWidget(MegaNotificationExt* notification, QWidget* parent)
+QWidget* NotificationDelegate::getWidget(UserNotification* notification, QWidget* parent)
 {
     if(!notification)
     {

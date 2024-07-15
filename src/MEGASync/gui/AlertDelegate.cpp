@@ -1,7 +1,7 @@
 #include "AlertDelegate.h"
 
 #include "AlertItem.h"
-#include "MegaUserAlertExt.h"
+#include "UserAlert.h"
 
 namespace
 {
@@ -15,7 +15,7 @@ AlertDelegate::AlertDelegate()
 {
 }
 
-QWidget* AlertDelegate::getWidget(MegaUserAlertExt* alert, QWidget* parent)
+QWidget* AlertDelegate::getWidget(UserAlert* alert, QWidget* parent)
 {
     if(!alert)
     {

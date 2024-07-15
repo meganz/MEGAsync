@@ -5,14 +5,14 @@
 #include <QCache>
 
 class AlertItem;
-class MegaUserAlertExt;
+class UserAlert;
 
 class AlertDelegate
 {
 
 public:
     AlertDelegate();
-    QWidget* getWidget(MegaUserAlertExt* alert, QWidget* parent);
+    QWidget* getWidget(UserAlert* alert, QWidget* parent);
 
 private:
     QCache<unsigned, AlertItem> mItems;

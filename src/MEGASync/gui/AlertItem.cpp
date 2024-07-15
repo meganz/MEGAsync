@@ -36,12 +36,12 @@ AlertItem::~AlertItem()
     delete mUi;
 }
 
-void AlertItem::setAlertData(MegaUserAlertExt* alert)
+void AlertItem::setAlertData(UserAlert* alert)
 {
     mAlertUser = alert;
 
-    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-    connect(mAlertUser, &MegaUserAlertExt::emailChanged, this, [=]()
+    connect(mAlertUser, &UserAlert::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
+    connect(mAlertUser, &UserAlert::emailChanged, this, [=]()
     {
         updateAlertData();
     });
@@ -201,7 +201,7 @@ void AlertItem::setAlertType(int type)
     mUi->lTitle->setText(notificationTitle);
 }
 
-void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
+void AlertItem::setAlertHeading(UserAlert* alert)
 {
     mUi->sIconWidget->hide();
     mNotificationHeading.clear();
@@ -319,7 +319,7 @@ void AlertItem::setAlertHeading(MegaUserAlertExt* alert)
     }
 }
 
-void AlertItem::setAlertContent(MegaUserAlertExt *alert)
+void AlertItem::setAlertContent(UserAlert *alert)
 {
     QString notificationContent;
     switch (alert->getType())

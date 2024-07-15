@@ -1,23 +1,23 @@
-#ifndef MEGA_USER_ALERT_EXT_H
-#define MEGA_USER_ALERT_EXT_H
+#ifndef USER_ALERT_H
+#define USER_ALERT_H
 
-#include "NotificationExtBase.h"
+#include "UserMessage.h"
 #include "NotificationAlertTypes.h"
 
 #include "megaapi.h"
 
 #include <memory>
 
-class MegaUserAlertExt : public NotificationExtBase
+class UserAlert : public UserMessage
 {
     Q_OBJECT
 
 public:
-    MegaUserAlertExt() = delete;
-    MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent = nullptr);
-    ~MegaUserAlertExt();
+    UserAlert() = delete;
+    UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent = nullptr);
+    ~UserAlert();
 
-    MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
+    UserAlert& operator=(UserAlert&& megaUserAlert);
 
     QString getEmail() const;
     void setEmail(QString email);
@@ -50,4 +50,4 @@ private:
 
 };
 
-#endif // MEGA_USER_ALERT_EXT_H
+#endif // USER_ALERT_H
