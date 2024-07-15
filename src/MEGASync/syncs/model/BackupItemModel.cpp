@@ -1,7 +1,7 @@
 #include "Utilities.h"
-#include "syncs/model/BackupItemModel.h"
-#include "syncs/control/SyncController.h"
-#include "syncs/gui/SyncTooltipCreator.h"
+#include "BackupItemModel.h"
+#include "SyncController.h"
+#include "SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>

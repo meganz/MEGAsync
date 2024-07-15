@@ -1,7 +1,7 @@
 #ifndef REMOVEBACKUPDIALOG_H
 #define REMOVEBACKUPDIALOG_H
 
-#include "syncs/control/SyncSettings.h"
+#include "SyncSettings.h"
 
 #include <QDialog>
 #include <QPointer>

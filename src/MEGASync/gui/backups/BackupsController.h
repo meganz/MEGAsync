@@ -1,7 +1,7 @@
 #ifndef BACKUPSCONTROLLER_H
 #define BACKUPSCONTROLLER_H
 
-#include "syncs/control/SyncController.h"
+#include "SyncController.h"
 
 class BackupsController : public QObject
 {

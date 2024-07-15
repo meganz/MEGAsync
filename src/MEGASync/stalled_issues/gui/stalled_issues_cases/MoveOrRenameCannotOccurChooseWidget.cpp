@@ -1,7 +1,7 @@
 #include "MoveOrRenameCannotOccurChooseWidget.h"
 
 #include "ui_StalledIssueChooseWidget.h"
-#include "syncs/control/SyncController.h"
+#include "SyncController.h"
 
 //BASE CLASS
 MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget *parent) :

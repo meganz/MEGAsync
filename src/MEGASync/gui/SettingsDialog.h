@@ -1,13 +1,10 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "AccountDetailsDialog.h"
-#include "DownloadFromMegaDialog.h"
-#include "ChangePassword.h"
 #include "Preferences.h"
 #include "Utilities.h"
 
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include "megaapi.h"
 
 #include <QDialog>

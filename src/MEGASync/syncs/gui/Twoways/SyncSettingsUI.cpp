@@ -1,15 +1,13 @@
 #include "SyncSettingsUI.h"
 
-#include "syncs/gui/Twoways/SyncTableView.h"
-#include "syncs/model/SyncItemModel.h"
-
-#include "qml/QmlDialogWrapper.h"
-#include "syncs/SyncsComponent.h"
-#include "onboarding/Onboarding.h"
-
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
 #include "DialogOpener.h"
+#include "SyncTableView.h"
+#include "SyncItemModel.h"
+#include "MegaApplication.h"
+#include "SyncsComponent.h"
 
-#include <MegaApplication.h>
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)

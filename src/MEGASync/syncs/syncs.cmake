@@ -103,4 +103,13 @@ target_sources(MEGAsync
     ${DESKTOP_APP_SYNCS_SOURCES}
 )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/gui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Backups
+    ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways
+    ${CMAKE_CURRENT_LIST_DIR}/model
+    ${CMAKE_CURRENT_LIST_DIR}/control
+)
+
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
