@@ -11,7 +11,7 @@ AlertFilterType::AlertFilterType(QWidget* parent)
     ui->bDropDownArrow->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->liconType->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    setActualFilter(AlertType::ALL);
+    setActualFilter(UserMessageType::ALL);
 }
 
 AlertFilterType::~AlertFilterType()
@@ -19,33 +19,33 @@ AlertFilterType::~AlertFilterType()
     delete ui;
 }
 
-void AlertFilterType::setActualFilter(AlertType type)
+void AlertFilterType::setActualFilter(UserMessageType type)
 {
     switch (type)
     {
-        case AlertType::ALERT_CONTACTS:
+        case UserMessageType::ALERT_CONTACTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Contacts"));
             break;
         }
-        case AlertType::ALERT_PAYMENTS:
+        case UserMessageType::ALERT_PAYMENTS:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Payment"));
             break;
         }
-        case AlertType::ALERT_SHARES:
+        case UserMessageType::ALERT_SHARES:
         {
             ui->liconType->setIcon(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
             ui->wIconType->show();
             ui->lFilterActive->setText(tr("Incoming Shares"));
             break;
         }
-        case AlertType::ALL:
-        case AlertType::ALERT_TAKEDOWNS:
+        case UserMessageType::ALL:
+        case UserMessageType::ALERT_TAKEDOWNS:
         default:
         {
             ui->wIconType->hide();
@@ -59,12 +59,12 @@ void AlertFilterType::setActualFilter(AlertType type)
 
 bool AlertFilterType::allFilterHasBeenSelected() const
 {
-    return mAllFilterHasBeenSelected || mType == AlertType::ALL;
+    return mAllFilterHasBeenSelected || mType == UserMessageType::ALL;
 }
 
 void AlertFilterType::resetAllFilterHasBeenSelected()
 {
-    if(mType != AlertType::ALL)
+    if(mType != UserMessageType::ALL)
     {
         mAllFilterHasBeenSelected = false;
     }

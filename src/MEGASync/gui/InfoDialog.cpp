@@ -24,7 +24,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
-#include "NotificationAlertDelegate.h"
+#include "UserMessageDelegate.h"
 
 #include "Utilities.h"
 #include "platform/Platform.h"
@@ -1180,13 +1180,13 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
-void InfoDialog::onUnseenAlertsChanged(const UnseenNotificationsMap& alerts)
+void InfoDialog::onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts)
 {
-    setUnseenNotifications(alerts[AlertType::ALL]);
-    filterMenu->setUnseenNotifications(alerts[AlertType::ALL],
-                                       alerts[AlertType::ALERT_CONTACTS],
-                                       alerts[AlertType::ALERT_SHARES],
-                                       alerts[AlertType::ALERT_PAYMENTS]);
+    setUnseenNotifications(alerts[UserMessageType::ALL]);
+    filterMenu->setUnseenNotifications(alerts[UserMessageType::ALL],
+                                       alerts[UserMessageType::ALERT_CONTACTS],
+                                       alerts[UserMessageType::ALERT_SHARES],
+                                       alerts[UserMessageType::ALERT_PAYMENTS]);
     ui->wSortNotifications->resetAllFilterHasBeenSelected();
 }
 
@@ -1194,7 +1194,7 @@ void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertType::ALL);
+    ui->wSortNotifications->setActualFilter(UserMessageType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1434,7 +1434,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(AlertType opt)
+void InfoDialog::applyFilterOption(UserMessageType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1443,11 +1443,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
     switch (opt)
     {
-        case AlertType::ALERT_CONTACTS:
+        case UserMessageType::ALERT_CONTACTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(AlertType::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1459,11 +1459,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
             break;
         }
-        case AlertType::ALERT_SHARES:
+        case UserMessageType::ALERT_SHARES:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(AlertType::ALERT_SHARES))
+            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1475,11 +1475,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
             break;
         }
-        case AlertType::ALERT_PAYMENTS:
+        case UserMessageType::ALERT_PAYMENTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(AlertType::ALERT_PAYMENTS))
+            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1490,8 +1490,8 @@ void InfoDialog::applyFilterOption(AlertType opt)
             }
             break;
         }
-        case AlertType::ALL:
-        case AlertType::ALERT_TAKEDOWNS:
+        case UserMessageType::ALL:
+        case UserMessageType::ALERT_TAKEDOWNS:
         default:
         {
             ui->wSortNotifications->setActualFilter(opt);
@@ -1783,7 +1783,7 @@ void InfoDialog::initNotificationArea()
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
     ui->tvNotifications->setModel(app->getNotificationController()->getModel());
     ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
-    auto delegate = new NotificationAlertDelegate(app->getNotificationController()->getModel(),
+    auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
                                                   ui->tvNotifications);
     ui->tvNotifications->setItemDelegate(delegate);
     ui->sNotifications->setCurrentWidget(ui->pNotifications);

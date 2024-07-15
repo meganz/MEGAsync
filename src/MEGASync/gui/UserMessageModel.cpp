@@ -1,4 +1,4 @@
-#include "NotificationAlertModel.h"
+#include "UserMessageModel.h"
 
 #include "NotificationAlertTypes.h"
 #include "UserNotification.h"
@@ -6,7 +6,7 @@
 
 #include "megaapi.h"
 
-QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex& parent) const
+QModelIndex UserMessageModel::index(int row, int column, const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent))
     {
@@ -16,24 +16,24 @@ QModelIndex NotificationAlertModel::index(int row, int column, const QModelIndex
     return createIndex(row, column, mNotifications.at(row));
 }
 
-QModelIndex NotificationAlertModel::parent(const QModelIndex& index) const
+QModelIndex UserMessageModel::parent(const QModelIndex& index) const
 {
     Q_UNUSED(index)
 
     return QModelIndex();
 }
 
-int NotificationAlertModel::rowCount(const QModelIndex& parent) const
+int UserMessageModel::rowCount(const QModelIndex& parent) const
 {
     return parent.isValid() ? 0 : mNotifications.size();
 }
 
-int NotificationAlertModel::columnCount(const QModelIndex& parent) const
+int UserMessageModel::columnCount(const QModelIndex& parent) const
 {
     return 1;
 }
 
-QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
+QVariant UserMessageModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid() || index.row() < 0)
     {
@@ -53,12 +53,12 @@ QVariant NotificationAlertModel::data(const QModelIndex& index, int role) const
     return QVariant();
 }
 
-Qt::ItemFlags NotificationAlertModel::flags(const QModelIndex& index) const
+Qt::ItemFlags UserMessageModel::flags(const QModelIndex& index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
-auto NotificationAlertModel::findAlertById(unsigned int id)
+auto UserMessageModel::findAlertById(unsigned int id)
 {
     auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
                            [id](const UserMessage* current)
@@ -73,7 +73,7 @@ auto NotificationAlertModel::findAlertById(unsigned int id)
     return it;
 }
 
-auto NotificationAlertModel::findNotificationById(int64_t id)
+auto UserMessageModel::findNotificationById(int64_t id)
 {
     auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
                            [id](const UserMessage* current)
@@ -88,7 +88,7 @@ auto NotificationAlertModel::findNotificationById(int64_t id)
     return it;
 }
 
-void NotificationAlertModel::processAlerts(mega::MegaUserAlertList* alerts)
+void UserMessageModel::processAlerts(mega::MegaUserAlertList* alerts)
 {
     int numAlerts = alerts ? alerts->size() : 0;
     if (numAlerts)
@@ -123,7 +123,7 @@ void NotificationAlertModel::processAlerts(mega::MegaUserAlertList* alerts)
     }
 }
 
-void NotificationAlertModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
+void UserMessageModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
 {
     if(alerts.size() <= 0)
     {
@@ -146,7 +146,7 @@ void NotificationAlertModel::insertAlerts(const QList<mega::MegaUserAlert*>& ale
     endInsertRows();
 }
 
-void NotificationAlertModel::updateAlerts(const QList<mega::MegaUserAlert*>& alerts)
+void UserMessageModel::updateAlerts(const QList<mega::MegaUserAlert*>& alerts)
 {
     if(alerts.size() <= 0)
     {
@@ -176,7 +176,7 @@ void NotificationAlertModel::updateAlerts(const QList<mega::MegaUserAlert*>& ale
     }
 }
 
-void NotificationAlertModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
+void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
 {
     if(alerts.size() <= 0)
     {
@@ -203,7 +203,7 @@ void NotificationAlertModel::removeAlerts(const QList<mega::MegaUserAlert*>& ale
     }
 }
 
-bool NotificationAlertModel::hasAlertsOfType(AlertType type)
+bool UserMessageModel::hasAlertsOfType(UserMessageType type)
 {
     return std::any_of(mNotifications.begin(), mNotifications.end(),
                        [type](const UserMessage* current)
@@ -217,7 +217,7 @@ bool NotificationAlertModel::hasAlertsOfType(AlertType type)
                        });
 }
 
-void NotificationAlertModel::processNotifications(const mega::MegaNotificationList* notifications)
+void UserMessageModel::processNotifications(const mega::MegaNotificationList* notifications)
 {
     int numNotifications = notifications ? notifications->size() : 0;
     if (numNotifications)
@@ -227,7 +227,7 @@ void NotificationAlertModel::processNotifications(const mega::MegaNotificationLi
     }
 }
 
-void NotificationAlertModel::insertNotifications(const mega::MegaNotificationList* notifications)
+void UserMessageModel::insertNotifications(const mega::MegaNotificationList* notifications)
 {
     QList<const mega::MegaNotification*> newNotifications;
     for (int i = 0; i < notifications->size(); i++)
@@ -253,13 +253,13 @@ void NotificationAlertModel::insertNotifications(const mega::MegaNotificationLis
 
         if(!item->isSeen())
         {
-            mSeenStatusManager.markAsUnseen(AlertType::NOTIFICATIONS);
+            mSeenStatusManager.markAsUnseen(UserMessageType::NOTIFICATIONS);
         }
     }
     endInsertRows();
 }
 
-void NotificationAlertModel::removeNotifications(const mega::MegaNotificationList* notifications)
+void UserMessageModel::removeNotifications(const mega::MegaNotificationList* notifications)
 {
     for (int row = 0; row < mNotifications.size(); ++row)
     {
@@ -283,7 +283,7 @@ void NotificationAlertModel::removeNotifications(const mega::MegaNotificationLis
         {
             if(!notification->isSeen())
             {
-                mSeenStatusManager.markAsSeen(AlertType::NOTIFICATIONS);
+                mSeenStatusManager.markAsSeen(UserMessageType::NOTIFICATIONS);
             }
 
             beginRemoveRows(QModelIndex(), row, row);
@@ -296,12 +296,12 @@ void NotificationAlertModel::removeNotifications(const mega::MegaNotificationLis
     }
 }
 
-UnseenNotificationsMap NotificationAlertModel::getUnseenNotifications() const
+UnseenUserMessagesMap UserMessageModel::getUnseenNotifications() const
 {
     return mSeenStatusManager.getUnseenNotifications();
 }
 
-uint32_t NotificationAlertModel::checkLocalLastSeenNotification()
+uint32_t UserMessageModel::checkLocalLastSeenNotification()
 {
     for (auto& item : mNotifications)
     {
@@ -321,7 +321,7 @@ uint32_t NotificationAlertModel::checkLocalLastSeenNotification()
     return mSeenStatusManager.getLocalLastSeenNotification();
 }
 
-void NotificationAlertModel::setLastSeenNotification(uint32_t id)
+void UserMessageModel::setLastSeenNotification(uint32_t id)
 {
     if(mSeenStatusManager.getLastSeenNotification() < id)
     {
@@ -338,7 +338,7 @@ void NotificationAlertModel::setLastSeenNotification(uint32_t id)
             if(notification->getID() <= id && !notification->isSeen())
             {
                 notification->markAsSeen();
-                mSeenStatusManager.markAsSeen(AlertType::NOTIFICATIONS);
+                mSeenStatusManager.markAsSeen(UserMessageType::NOTIFICATIONS);
             }
         }
     }

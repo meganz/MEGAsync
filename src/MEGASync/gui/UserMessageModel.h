@@ -1,5 +1,5 @@
-#ifndef NOTIFICATION_ALERT_MODEL_H
-#define NOTIFICATION_ALERT_MODEL_H
+#ifndef USER_MESSAGE_MODEL_H
+#define USER_MESSAGE_MODEL_H
 
 #include "UserMessage.h"
 #include "NotificationAlertTypes.h"
@@ -20,29 +20,29 @@ public:
     NotificationSeenStatusManager() = default;
     virtual ~NotificationSeenStatusManager() = default;
 
-    void markAsUnseen(AlertType type)
+    void markAsUnseen(UserMessageType type)
     {
-        if(type == AlertType::UNKNOWN || type == AlertType::ALL)
+        if(type == UserMessageType::UNKNOWN || type == UserMessageType::ALL)
         {
             return;
         }
 
         mUnseenNotifications[type]++;
-        mUnseenNotifications[AlertType::ALL]++;
+        mUnseenNotifications[UserMessageType::ALL]++;
     }
 
-    void markAsSeen(AlertType type)
+    void markAsSeen(UserMessageType type)
     {
-        if(type == AlertType::UNKNOWN || type == AlertType::ALL)
+        if(type == UserMessageType::UNKNOWN || type == UserMessageType::ALL)
         {
             return;
         }
 
         mUnseenNotifications[type]--;
-        mUnseenNotifications[AlertType::ALL]--;
+        mUnseenNotifications[UserMessageType::ALL]--;
     }
 
-    UnseenNotificationsMap getUnseenNotifications() const
+    UnseenUserMessagesMap getUnseenNotifications() const
     {
         return mUnseenNotifications;
     }
@@ -68,19 +68,19 @@ public:
     }
 
 private:
-    UnseenNotificationsMap mUnseenNotifications;
+    UnseenUserMessagesMap mUnseenNotifications;
     uint32_t mLastSeenNotification = 0;
     uint32_t mLocalLastSeenNotification = 0;
 
 };
 
-class NotificationAlertModel : public QAbstractItemModel
+class UserMessageModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
     using QAbstractItemModel::QAbstractItemModel;
-    virtual ~NotificationAlertModel() = default;
+    virtual ~UserMessageModel() = default;
 
     QModelIndex index(int row, int column, const QModelIndex& parent = QModelIndex()) const override;
     QModelIndex parent(const QModelIndex& index) const override;
@@ -91,8 +91,8 @@ public:
 
     void processAlerts(mega::MegaUserAlertList* alerts);
     void processNotifications(const mega::MegaNotificationList* notifications);
-    bool hasAlertsOfType(AlertType type);
-    UnseenNotificationsMap getUnseenNotifications() const;
+    bool hasAlertsOfType(UserMessageType type);
+    UnseenUserMessagesMap getUnseenNotifications() const;
     uint32_t checkLocalLastSeenNotification();
     void setLastSeenNotification(uint32_t id);
 
@@ -112,4 +112,4 @@ private:
 
 };
 
-#endif // NOTIFICATION_ALERT_MODEL_H
+#endif // USER_MESSAGE_MODEL_H

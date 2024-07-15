@@ -127,7 +127,7 @@ public slots:
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
 
-   void onUnseenAlertsChanged(const UnseenNotificationsMap& alerts);
+   void onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts);
 
 private slots:
     void on_bSettings_clicked();
@@ -144,7 +144,7 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
     void onActualFilterClicked();
-    void applyFilterOption(AlertType opt);
+    void applyFilterOption(UserMessageType opt);
     void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();

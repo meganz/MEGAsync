@@ -44,7 +44,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/HighDpiResize.h
     gui/AlertItem.h
     gui/AlertDelegate.h
-    gui/NotificationAlertProxyModel.h
+    gui/UserMessageProxyModel.h
     gui/FilterAlertWidget.h
     gui/AlertFilterType.h
     gui/BugReportDialog.h
@@ -61,8 +61,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/WordWrapLabel.h
     gui/NotificationItem.h
     gui/NotificationDelegate.h
-    gui/NotificationAlertModel.h
-    gui/NotificationAlertDelegate.h
+    gui/UserMessageModel.h
+    gui/UserMessageDelegate.h
     gui/UserNotification.h
     gui/UserMessage.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
@@ -152,7 +152,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CircularUsageProgressBar.cpp
     gui/AlertItem.cpp
     gui/AlertDelegate.cpp
-    gui/NotificationAlertProxyModel.cpp
+    gui/UserMessageProxyModel.cpp
     gui/FilterAlertWidget.cpp
     gui/AlertFilterType.cpp
     gui/BugReportDialog.cpp
@@ -169,8 +169,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/WordWrapLabel.cpp
     gui/NotificationItem.cpp
     gui/NotificationDelegate.cpp
-    gui/NotificationAlertModel.cpp
-    gui/NotificationAlertDelegate.cpp
+    gui/UserMessageModel.cpp
+    gui/UserMessageDelegate.cpp
     gui/UserNotification.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp

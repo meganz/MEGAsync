@@ -1,8 +1,8 @@
-#include "NotificationAlertDelegate.h"
+#include "UserMessageDelegate.h"
 
-#include "NotificationAlertModel.h"
+#include "UserMessageModel.h"
 #include "MegaDelegateHoverManager.h"
-#include "NotificationAlertProxyModel.h"
+#include "UserMessageProxyModel.h"
 #include "UserAlert.h"
 #include "UserNotification.h"
 
@@ -11,18 +11,18 @@
 #include <QTreeView>
 #include <QTimer>
 
-NotificationAlertDelegate::NotificationAlertDelegate(QAbstractItemModel* proxyModel,
+UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel,
                                                      QTreeView* view)
     : QStyledItemDelegate(view)
     , mAlertsDelegate(std::make_unique<AlertDelegate>())
     , mNotificationsDelegate(std::make_unique<NotificationDelegate>())
-    , mProxyModel(qobject_cast<NotificationAlertProxyModel*>(proxyModel))
-    , mEditor(std::make_unique<NotificationEditorInfo>())
+    , mProxyModel(qobject_cast<UserMessageProxyModel*>(proxyModel))
+    , mEditor(std::make_unique<UserMessageEditorInfo>())
     , mView(view)
 {
 }
 
-void NotificationAlertDelegate::paint(QPainter* painter,
+void UserMessageDelegate::paint(QPainter* painter,
                                       const QStyleOptionViewItem& option,
                                       const QModelIndex& index) const
 {
@@ -53,7 +53,7 @@ void NotificationAlertDelegate::paint(QPainter* painter,
     }
 }
 
-QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
+QSize UserMessageDelegate::sizeHint(const QStyleOptionViewItem& option,
                                           const QModelIndex& index) const
 {
     QSize result;
@@ -73,7 +73,7 @@ QSize NotificationAlertDelegate::sizeHint(const QStyleOptionViewItem& option,
     return result;
 }
 
-QWidget* NotificationAlertDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+QWidget* UserMessageDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
 {
     Q_UNUSED(parent);
     Q_UNUSED(option);
@@ -87,13 +87,13 @@ QWidget* NotificationAlertDelegate::createEditor(QWidget* parent, const QStyleOp
     return mEditor->getWidget();
 }
 
-void NotificationAlertDelegate::destroyEditor(QWidget *, const QModelIndex &) const
+void UserMessageDelegate::destroyEditor(QWidget *, const QModelIndex &) const
 {
     //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
     mEditor->setData(QModelIndex(), nullptr);
 }
 
-bool NotificationAlertDelegate::event(QEvent* event)
+bool UserMessageDelegate::event(QEvent* event)
 {
     if(auto hoverEvent = dynamic_cast<MegaDelegateHoverEvent*>(event))
     {
@@ -120,7 +120,7 @@ bool NotificationAlertDelegate::event(QEvent* event)
     return QStyledItemDelegate::event(event);
 }
 
-void NotificationAlertDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
+void UserMessageDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
 {
     QRect geometry(option.rect);
 #ifdef __APPLE__
@@ -136,7 +136,7 @@ void NotificationAlertDelegate::updateEditorGeometry(QWidget *editor, const QSty
     editor->setGeometry(geometry);
 }
 
-void NotificationAlertDelegate::onHoverEnter(const QModelIndex& index)
+void UserMessageDelegate::onHoverEnter(const QModelIndex& index)
 {
     QModelIndex editorCurrentIndex(mEditor->getIndex());
     if(editorCurrentIndex != index)
@@ -146,7 +146,7 @@ void NotificationAlertDelegate::onHoverEnter(const QModelIndex& index)
     }
 }
 
-void NotificationAlertDelegate::onHoverLeave(const QModelIndex& index)
+void UserMessageDelegate::onHoverLeave(const QModelIndex& index)
 {
     //It is mandatory to close the editor, as it may be different depending on the row
     if(mEditor->getWidget())
@@ -164,7 +164,7 @@ void NotificationAlertDelegate::onHoverLeave(const QModelIndex& index)
     });
 }
 
-QModelIndex NotificationAlertDelegate::getEditorCurrentIndex() const
+QModelIndex UserMessageDelegate::getEditorCurrentIndex() const
 {
     if(mEditor)
     {
@@ -174,7 +174,7 @@ QModelIndex NotificationAlertDelegate::getEditorCurrentIndex() const
     return QModelIndex();
 }
 
-QWidget* NotificationAlertDelegate::getWidget(const QModelIndex& index) const
+QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
 {
     QWidget* widget = nullptr;
     if (index.isValid() && index.row() >= 0)

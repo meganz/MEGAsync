@@ -3,7 +3,7 @@
 
 #include <QMap>
 
-enum class AlertType
+enum class UserMessageType
 {
     UNKNOWN = 0,
     ALL,
@@ -14,6 +14,6 @@ enum class AlertType
     NOTIFICATIONS
 };
 
-typedef QMap<AlertType, long long> UnseenNotificationsMap;
+typedef QMap<UserMessageType, long long> UnseenUserMessagesMap;
 
 #endif // NOTIFICATION_ALERT_TYPES_H

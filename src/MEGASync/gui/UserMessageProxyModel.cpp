@@ -1,4 +1,4 @@
-#include "NotificationAlertProxyModel.h"
+#include "UserMessageProxyModel.h"
 
 #include "UserAlert.h"
 
@@ -6,26 +6,26 @@
 
 #include <QDateTime>
 
-NotificationAlertProxyModel::NotificationAlertProxyModel(QObject* parent)
+UserMessageProxyModel::UserMessageProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
-    , mActualFilter(AlertType::ALL)
+    , mActualFilter(UserMessageType::ALL)
 {
 }
 
-AlertType NotificationAlertProxyModel::filterAlertType()
+UserMessageType UserMessageProxyModel::getActualFilter()
 {
     return mActualFilter;
 }
 
-void NotificationAlertProxyModel::setFilterAlertType(AlertType filterType)
+void UserMessageProxyModel::setFilter(UserMessageType filter)
 {
-    mActualFilter = filterType;
+    mActualFilter = filter;
     invalidateFilter();
 }
 
-bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceParent) const
+bool UserMessageProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceParent) const
 {
-    if(mActualFilter == AlertType::ALL)
+    if(mActualFilter == UserMessageType::ALL)
     {
         return true;
     }
@@ -45,7 +45,7 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
             }
             case UserMessage::Type::NOTIFICATION:
             {
-                filter = mActualFilter == AlertType::ALL;
+                filter = mActualFilter == UserMessageType::ALL;
                 break;
             }
             default:
@@ -59,7 +59,7 @@ bool NotificationAlertProxyModel::filterAcceptsRow(int row, const QModelIndex& s
     return filter;
 }
 
-bool NotificationAlertProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
+bool UserMessageProxyModel::lessThan(const QModelIndex& left, const QModelIndex& right) const
 {
     UserMessage* leftItem = static_cast<UserMessage*>(left.internalPointer());
     UserMessage* rightItem = static_cast<UserMessage*>(right.internalPointer());

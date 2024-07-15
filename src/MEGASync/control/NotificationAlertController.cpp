@@ -1,7 +1,7 @@
 #include "NotificationAlertController.h"
 
-#include "NotificationAlertModel.h"
-#include "NotificationAlertProxyModel.h"
+#include "UserMessageModel.h"
+#include "UserMessageProxyModel.h"
 #include "MegaApplication.h"
 
 NotificationAlertController::NotificationAlertController(QObject* parent)
@@ -9,12 +9,12 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
-    , mNotificationAlertModel(std::make_unique<NotificationAlertModel>(nullptr))
-    , mAlertsProxyModel(std::make_unique<NotificationAlertProxyModel>(nullptr))
+    , mUserMessagesModel(std::make_unique<UserMessageModel>(nullptr))
+    , mUserMessagesProxyModel(std::make_unique<UserMessageProxyModel>(nullptr))
     , mAllUnseenAlerts(0)
 {
-    mAlertsProxyModel->setSourceModel(mNotificationAlertModel.get());
-    mAlertsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+    mUserMessagesProxyModel->setSourceModel(mUserMessagesModel.get());
+    mUserMessagesProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
 
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
@@ -32,7 +32,7 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
                 auto notificationList = request->getMegaNotifications();
                 if (notificationList)
                 {
-                    mNotificationAlertModel->processNotifications(notificationList);
+                    mUserMessagesModel->processNotifications(notificationList);
                     mMegaApi->getLastReadNotification();
                 }
             }
@@ -43,9 +43,9 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
         {
             if (e->getErrorCode() == mega::MegaError::API_OK
                     && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
-                    && mNotificationAlertModel)
+                    && mUserMessagesModel)
             {
-                mNotificationAlertModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
+                mUserMessagesModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
                 checkUseenNotifications();
             }
             break;
@@ -64,7 +64,7 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
         return;
     }
 
-    mNotificationAlertModel->processAlerts(alertList);
+    mUserMessagesModel->processAlerts(alertList);
     checkUseenNotifications();
 
     // Used by DesktopNotifications because the current architecture
@@ -106,30 +106,30 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
 
 void NotificationAlertController::reset()
 {
-    if (mNotificationAlertModel)
+    if (mUserMessagesModel)
     {
-        mNotificationAlertModel.reset();
+        mUserMessagesModel.reset();
     }
 
-    if (mAlertsProxyModel)
+    if (mUserMessagesProxyModel)
     {
-        mAlertsProxyModel.reset();
+        mUserMessagesProxyModel.reset();
     }
 }
 
 bool NotificationAlertController::hasNotifications()
 {
-    return mNotificationAlertModel->rowCount() > 0;
+    return mUserMessagesModel->rowCount() > 0;
 }
 
-bool NotificationAlertController::hasElementsOfType(AlertType type)
+bool NotificationAlertController::hasElementsOfType(UserMessageType type)
 {
-    return mNotificationAlertModel->hasAlertsOfType(type);
+    return mUserMessagesModel->hasAlertsOfType(type);
 }
 
-void NotificationAlertController::applyFilter(AlertType type)
+void NotificationAlertController::applyFilter(UserMessageType type)
 {
-    mAlertsProxyModel->setFilterAlertType(type);
+    mUserMessagesProxyModel->setFilter(type);
 }
 
 void NotificationAlertController::requestNotifications() const
@@ -144,13 +144,13 @@ void NotificationAlertController::requestNotifications() const
 
 void NotificationAlertController::checkUseenNotifications()
 {
-    if(!mNotificationAlertModel)
+    if(!mUserMessagesModel)
     {
         return;
     }
 
-    auto unseenAlerts = mNotificationAlertModel->getUnseenNotifications();
-    long long allUnseenAlerts = unseenAlerts[AlertType::ALL];
+    auto unseenAlerts = mUserMessagesModel->getUnseenNotifications();
+    long long allUnseenAlerts = unseenAlerts[UserMessageType::ALL];
     if(mAllUnseenAlerts != allUnseenAlerts)
     {
         mAllUnseenAlerts = allUnseenAlerts;
@@ -166,7 +166,7 @@ void NotificationAlertController::ackSeenAlertsAndNotifications()
     if (mAllUnseenAlerts > 0 && hasNotifications())
     {
         mMegaApi->acknowledgeUserAlerts();
-        auto lastSeen = mNotificationAlertModel->checkLocalLastSeenNotification();
+        auto lastSeen = mUserMessagesModel->checkLocalLastSeenNotification();
         if(lastSeen > 0)
         {
             mMegaApi->setLastReadNotification(lastSeen);
@@ -176,5 +176,5 @@ void NotificationAlertController::ackSeenAlertsAndNotifications()
 
 QAbstractItemModel* NotificationAlertController::getModel() const
 {
-    return mAlertsProxyModel.get();
+    return mUserMessagesProxyModel.get();
 }

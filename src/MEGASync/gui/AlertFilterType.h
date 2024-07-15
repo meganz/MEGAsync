@@ -17,7 +17,7 @@ public:
     explicit AlertFilterType(QWidget* parent = 0);
     ~AlertFilterType();
 
-    void setActualFilter(AlertType type);
+    void setActualFilter(UserMessageType type);
     bool allFilterHasBeenSelected() const;
     void resetAllFilterHasBeenSelected();
 
@@ -30,7 +30,7 @@ protected:
 
 private:
     Ui::AlertFilterType* ui;
-    AlertType mType;
+    UserMessageType mType;
     bool mAllFilterHasBeenSelected;
 
 };

@@ -1,5 +1,5 @@
-#ifndef NOTIFICATION_ALERT_DELEGATE_H
-#define NOTIFICATION_ALERT_DELEGATE_H
+#ifndef USER_MESSAGE_DELEGATE_H
+#define USER_MESSAGE_DELEGATE_H
 
 #include "NotificationDelegate.h"
 #include "AlertDelegate.h"
@@ -11,11 +11,11 @@
 
 #include <memory>
 
-class NotificationAlertProxyModel;
+class UserMessageProxyModel;
 
-struct NotificationEditorInfo
+struct UserMessageEditorInfo
 {
-    NotificationEditorInfo()
+    UserMessageEditorInfo()
         : mIndex(QModelIndex())
         , mWidget(nullptr)
     {
@@ -48,12 +48,12 @@ private:
 
 };
 
-class NotificationAlertDelegate : public QStyledItemDelegate
+class UserMessageDelegate : public QStyledItemDelegate
 {
 public:
-    NotificationAlertDelegate(QAbstractItemModel* proxyModel,
+    UserMessageDelegate(QAbstractItemModel* proxyModel,
                               QTreeView* view);
-    virtual ~NotificationAlertDelegate() = default;
+    virtual ~UserMessageDelegate() = default;
 
 protected:
     void paint(QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
@@ -63,12 +63,6 @@ protected:
     bool event(QEvent* event) override;
     void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const override;
 
-    //bool editorEvent(QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index) override;
-    //bool helpEvent(QHelpEvent* event, QAbstractItemView* view, const QStyleOptionViewItem& option, const QModelIndex& index) override;
-
-    //void createNotificationDelegate(NotificationModel* model);
-    //void createAlertDelegate(AlertModel* model);
-
 protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex& index);
@@ -76,14 +70,13 @@ protected slots:
 private:
     std::unique_ptr<AlertDelegate> mAlertsDelegate;
     std::unique_ptr<NotificationDelegate> mNotificationsDelegate;
-    NotificationAlertProxyModel* mProxyModel;
-    std::unique_ptr<NotificationEditorInfo> mEditor;
+    UserMessageProxyModel* mProxyModel;
+    std::unique_ptr<UserMessageEditorInfo> mEditor;
     QTreeView* mView;
 
-    //NotificationAlertModelItem::ModelType getModelType(const QModelIndex& index) const;
     QWidget* getWidget(const QModelIndex &index) const;
     QModelIndex getEditorCurrentIndex() const;
 
 };
 
-#endif // NOTIFICATION_ALERT_DELEGATE_H
+#endif // USER_MESSAGE_DELEGATE_H
