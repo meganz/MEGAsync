@@ -1,7 +1,7 @@
 #include "SyncController.h"
 #include "MegaApplication.h"
 #include "Platform.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MyBackupsHandle.h"
 
 #include "mega/types.h"
 

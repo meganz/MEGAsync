@@ -1,8 +1,8 @@
 
 #include "SyncInfo.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MyBackupsHandle.h"
 #include <MegaNodeNames.h>
 #include <mega/types.h>
 #include "StatsEventHandler.h"

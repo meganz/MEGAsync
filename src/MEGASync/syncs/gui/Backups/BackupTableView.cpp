@@ -1,6 +1,6 @@
 #include "BackupTableView.h"
 
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
 #include "BackupItemModel.h"

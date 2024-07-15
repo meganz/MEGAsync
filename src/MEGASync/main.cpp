@@ -1,6 +1,6 @@
 #include "MegaApplication.h"
 #include "MegaProxyStyle.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"

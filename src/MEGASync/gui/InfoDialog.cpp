@@ -26,7 +26,7 @@
 #include "StatsEventHandler.h"
 
 #include "Utilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "QmlDialogManager.h"
 #include "BindFolderDialog.h"
 

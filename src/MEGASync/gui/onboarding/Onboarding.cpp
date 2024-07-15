@@ -5,7 +5,7 @@
 #include "AccountStatusController.h"
 #include "OnboardingQmlDialog.h"
 
-#include "backups/Backups.h"
+#include "Backups.h"
 #include "ChooseFolder.h"
 
 #include "SettingsDialog.h"

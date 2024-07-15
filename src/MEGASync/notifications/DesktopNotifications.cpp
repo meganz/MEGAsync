@@ -6,7 +6,7 @@
 #include "QTMegaRequestListener.h"
 #include "mega/user.h"
 #include "Platform.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "MegaApplication.h"
 #include "TransferMetaData.h"
 #include "TransferNotificationBuilder.h"

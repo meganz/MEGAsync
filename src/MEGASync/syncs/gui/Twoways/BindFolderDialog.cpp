@@ -4,8 +4,8 @@
 #include "QMegaMessageBox.h"
 #include <DialogOpener.h>
 #include <QScreen>
-#include "SyncExclusions/ExclusionsQmlDialog.h"
-#include "SyncExclusions/SyncExclusions.h"
+#include "ExclusionsQmlDialog.h"
+#include "SyncExclusions.h"
 
 #include <QInputDialog>
 

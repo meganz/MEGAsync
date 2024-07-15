@@ -1,7 +1,7 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 #include "MultiStepIssueSolver.h"

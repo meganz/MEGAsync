@@ -1,15 +1,16 @@
 #include "SyncExclusions.h"
+
 #include "ExclusionsQmlDialog.h"
-#include <QQmlEngine>
 #include "Platform.h"
 #include "Preferences.h"
+
+#include <QQmlEngine>
 
 using namespace mega;
 
 bool isEqual(double a, double b, double epsilon = 1e-2) {
     return fabs(a - b) < epsilon;
 }
-
 
 SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
     : QMLComponent(parent)

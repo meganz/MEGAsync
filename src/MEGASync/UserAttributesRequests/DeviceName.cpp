@@ -2,7 +2,7 @@
 
 #include "megaapi.h"
 #include "MegaApplication.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 namespace UserAttributes
 {
