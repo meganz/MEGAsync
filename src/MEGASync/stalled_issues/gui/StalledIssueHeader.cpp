@@ -2,6 +2,7 @@
 
 #include <stalled_issues/model/StalledIssuesModel.h>
 #include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
+#include <stalled_issues/model/IgnoredStalledIssue.h>
 
 #include <MegaApplication.h>
 
@@ -80,9 +81,14 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
+    auto canBeIgnoredChecker = [this](const std::shared_ptr<const StalledIssue> issue){
         //Symlinks are treated differently
-        return !issue->isSymLink() && issue->canBeIgnored();
+        if(getData().convert<IgnoredStalledIssue>())
+        {
+            return !issue->isSymLink();
+        }
+
+        return false;
     };
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -262,7 +268,8 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::SOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
-            if(getData().consultData()->canBeIgnored())
+
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
                 message = tr("Ignored");
@@ -294,7 +301,7 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::UNSOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
-            if(getData().consultData()->canBeIgnored())
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 showIgnoreFile();
             }
