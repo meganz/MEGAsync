@@ -1,7 +1,6 @@
 #ifndef USER_MESSAGE_MODEL_H
 #define USER_MESSAGE_MODEL_H
 
-#include "UserMessage.h"
 #include "UserMessageTypes.h"
 
 #include <QAbstractItemModel>
@@ -14,65 +13,7 @@ class MegaNotificationList;
 class MegaNotification;
 }
 
-class NotificationSeenStatusManager
-{
-public:
-    NotificationSeenStatusManager() = default;
-    virtual ~NotificationSeenStatusManager() = default;
-
-    void markAsUnseen(MessageType type)
-    {
-        if(type == MessageType::UNKNOWN || type == MessageType::ALL)
-        {
-            return;
-        }
-
-        mUnseenNotifications[type]++;
-        mUnseenNotifications[MessageType::ALL]++;
-    }
-
-    void markAsSeen(MessageType type)
-    {
-        if(type == MessageType::UNKNOWN || type == MessageType::ALL)
-        {
-            return;
-        }
-
-        mUnseenNotifications[type]--;
-        mUnseenNotifications[MessageType::ALL]--;
-    }
-
-    UnseenUserMessagesMap getUnseenNotifications() const
-    {
-        return mUnseenNotifications;
-    }
-
-    void setLastSeenNotification(uint32_t id)
-    {
-        mLastSeenNotification = id;
-    }
-
-    uint32_t getLastSeenNotification() const
-    {
-        return mLastSeenNotification;
-    }
-
-    void setLocalLastSeenNotification(uint32_t id)
-    {
-        mLocalLastSeenNotification = id;
-    }
-
-    uint32_t getLocalLastSeenNotification() const
-    {
-        return mLocalLastSeenNotification;
-    }
-
-private:
-    UnseenUserMessagesMap mUnseenNotifications;
-    uint32_t mLastSeenNotification = 0;
-    uint32_t mLocalLastSeenNotification = 0;
-
-};
+class UserMessage;
 
 class UserMessageModel : public QAbstractItemModel
 {
@@ -97,8 +38,31 @@ public:
     void setLastSeenNotification(uint32_t id);
 
 private:
+    class SeenStatusManager
+    {
+
+    public:
+        SeenStatusManager() = default;
+        virtual ~SeenStatusManager() = default;
+
+        void markAsUnseen(MessageType type);
+        void markAsSeen(MessageType type);
+        UnseenUserMessagesMap getUnseenUserMessages() const;
+
+        void setLastSeenNotification(uint32_t id);
+        uint32_t getLastSeenNotification() const;
+        void setLocalLastSeenNotification(uint32_t id);
+        uint32_t getLocalLastSeenNotification() const;
+
+    private:
+        UnseenUserMessagesMap mUnseenNotifications;
+        uint32_t mLastSeenNotification = 0;
+        uint32_t mLocalLastSeenNotification = 0;
+
+    };
+
     QList<UserMessage*> mNotifications;
-    NotificationSeenStatusManager mSeenStatusManager;
+    SeenStatusManager mSeenStatusManager;
 
     void insertAlerts(const QList<mega::MegaUserAlert*>& alerts);
     void updateAlerts(const QList<mega::MegaUserAlert*>& alerts);

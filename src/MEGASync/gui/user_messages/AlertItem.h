@@ -1,8 +1,6 @@
 #ifndef ALERT_ITEM_H
 #define ALERT_ITEM_H
 
-#include "UserAlert.h"
-
 #include "megaapi.h"
 
 #include <QWidget>
@@ -19,6 +17,8 @@ namespace UserAttributes
 {
 class FullName;
 }
+
+class UserAlert;
 
 class AlertItem : public QWidget
 {

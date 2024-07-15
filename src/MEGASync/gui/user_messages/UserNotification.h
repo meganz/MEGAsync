@@ -2,7 +2,6 @@
 #define USER_NOTIFICATION_H
 
 #include "UserMessage.h"
-#include "ImageDownloader.h"
 
 #include <QPixmap>
 
@@ -12,6 +11,8 @@ namespace mega
 {
 class MegaNotification;
 }
+
+class ImageDownloader;
 
 class UserNotification : public UserMessage
 {

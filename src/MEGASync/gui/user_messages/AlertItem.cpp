@@ -5,6 +5,7 @@
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "UserAttributesRequests/FullName.h"
+#include "UserAlert.h"
 
 #include <QDateTime>
 #include <QFutureWatcher>

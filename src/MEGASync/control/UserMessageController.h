@@ -1,5 +1,5 @@
-#ifndef USER_MESSAGES_CONTROLLER_H
-#define USER_MESSAGES_CONTROLLER_H
+#ifndef USER_MESSAGE_CONTROLLER_H
+#define USER_MESSAGE_CONTROLLER_H
 
 #include "UserMessageTypes.h"
 
@@ -48,4 +48,4 @@ private:
 
 };
 
-#endif // USER_MESSAGES_CONTROLLER_H
+#endif // USER_MESSAGE_CONTROLLER_H

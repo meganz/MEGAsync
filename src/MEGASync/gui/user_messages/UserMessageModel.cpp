@@ -6,6 +6,8 @@
 
 #include "megaapi.h"
 
+#include <QDateTime>
+
 QModelIndex UserMessageModel::index(int row, int column, const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent))
@@ -298,7 +300,7 @@ void UserMessageModel::removeNotifications(const mega::MegaNotificationList* not
 
 UnseenUserMessagesMap UserMessageModel::getUnseenNotifications() const
 {
-    return mSeenStatusManager.getUnseenNotifications();
+    return mSeenStatusManager.getUnseenUserMessages();
 }
 
 uint32_t UserMessageModel::checkLocalLastSeenNotification()
@@ -342,4 +344,55 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
             }
         }
     }
+}
+
+// ----------------------------------------------------------------------------
+//      UserMessageSeenStatusManager
+// ----------------------------------------------------------------------------
+
+void UserMessageModel::SeenStatusManager::markAsUnseen(MessageType type)
+{
+    if(type == MessageType::UNKNOWN || type == MessageType::ALL)
+    {
+        return;
+    }
+
+    mUnseenNotifications[type]++;
+    mUnseenNotifications[MessageType::ALL]++;
+}
+
+void UserMessageModel::SeenStatusManager::markAsSeen(MessageType type)
+{
+    if(type == MessageType::UNKNOWN || type == MessageType::ALL)
+    {
+        return;
+    }
+
+    mUnseenNotifications[type]--;
+    mUnseenNotifications[MessageType::ALL]--;
+}
+
+UnseenUserMessagesMap UserMessageModel::SeenStatusManager::getUnseenUserMessages() const
+{
+    return mUnseenNotifications;
+}
+
+void UserMessageModel::SeenStatusManager::setLastSeenNotification(uint32_t id)
+{
+    mLastSeenNotification = id;
+}
+
+uint32_t UserMessageModel::SeenStatusManager::getLastSeenNotification() const
+{
+    return mLastSeenNotification;
+}
+
+void UserMessageModel::SeenStatusManager::setLocalLastSeenNotification(uint32_t id)
+{
+    mLocalLastSeenNotification = id;
+}
+
+uint32_t UserMessageModel::SeenStatusManager::getLocalLastSeenNotification() const
+{
+    return mLocalLastSeenNotification;
 }

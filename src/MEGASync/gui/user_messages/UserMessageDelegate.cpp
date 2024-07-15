@@ -1,56 +1,31 @@
 #include "UserMessageDelegate.h"
 
-#include "UserMessageModel.h"
 #include "MegaDelegateHoverManager.h"
 #include "UserMessageProxyModel.h"
-#include "UserAlert.h"
-#include "UserNotification.h"
+#include "UserMessageCacheManager.h"
 
-#include <QSortFilterProxyModel>
 #include <QPainter>
 #include <QTreeView>
 #include <QTimer>
 
-UserMessageEditorInfo::UserMessageEditorInfo()
-    : mIndex(QModelIndex())
-    , mWidget(nullptr)
+namespace
 {
-}
-
-void UserMessageEditorInfo::setData(const QModelIndex& index, QWidget* widget)
-{
-    mIndex = index;
-    mWidget = widget;
-}
-
-bool UserMessageEditorInfo::isEmpty() const
-{
-    return !mWidget;
-}
-
-QModelIndex UserMessageEditorInfo::getIndex() const
-{
-    return mIndex;
-}
-
-QWidget* UserMessageEditorInfo::getWidget() const
-{
-    return mWidget;
+constexpr int UpdateDelay = 50;
 }
 
 UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel,
-                                                     QTreeView* view)
+                                         QTreeView* view)
     : QStyledItemDelegate(view)
     , mCacheManager(std::make_unique<UserMessageCacheManager>())
     , mProxyModel(qobject_cast<UserMessageProxyModel*>(proxyModel))
-    , mEditor(std::make_unique<UserMessageEditorInfo>())
+    , mEditor(std::make_unique<EditorInfo>())
     , mView(view)
 {
 }
 
 void UserMessageDelegate::paint(QPainter* painter,
-                                      const QStyleOptionViewItem& option,
-                                      const QModelIndex& index) const
+                                const QStyleOptionViewItem& option,
+                                const QModelIndex& index) const
 {
     if(mEditor->getWidget() && mEditor->getIndex() == index)
     {
@@ -80,7 +55,7 @@ void UserMessageDelegate::paint(QPainter* painter,
 }
 
 QSize UserMessageDelegate::sizeHint(const QStyleOptionViewItem& option,
-                                          const QModelIndex& index) const
+                                    const QModelIndex& index) const
 {
     QSize result;
     if (index.isValid())
@@ -99,10 +74,12 @@ QSize UserMessageDelegate::sizeHint(const QStyleOptionViewItem& option,
     return result;
 }
 
-QWidget* UserMessageDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const
+QWidget* UserMessageDelegate::createEditor(QWidget* parent,
+                                           const QStyleOptionViewItem& option,
+                                           const QModelIndex& index) const
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(option);
+    Q_UNUSED(parent)
+    Q_UNUSED(option)
 
     auto widget = getWidget(index);
     if(widget)
@@ -113,8 +90,12 @@ QWidget* UserMessageDelegate::createEditor(QWidget* parent, const QStyleOptionVi
     return mEditor->getWidget();
 }
 
-void UserMessageDelegate::destroyEditor(QWidget *, const QModelIndex &) const
+void UserMessageDelegate::destroyEditor(QWidget* editor,
+                                        const QModelIndex& index) const
 {
+    Q_UNUSED(editor)
+    Q_UNUSED(index)
+
     //Do not destroy it the editor, as it is also used to paint the row and it is saved in a cache
     mEditor->setData(QModelIndex(), nullptr);
 }
@@ -146,8 +127,12 @@ bool UserMessageDelegate::event(QEvent* event)
     return QStyledItemDelegate::event(event);
 }
 
-void UserMessageDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &) const
+void UserMessageDelegate::updateEditorGeometry(QWidget* editor,
+                                               const QStyleOptionViewItem& option,
+                                               const QModelIndex& index) const
 {
+    Q_UNUSED(index)
+
     QRect geometry(option.rect);
 #ifdef __APPLE__
     auto width = mView->size().width();
@@ -185,7 +170,8 @@ void UserMessageDelegate::onHoverLeave(const QModelIndex& index)
         mEditor->setData(QModelIndex(), nullptr);
     }
 
-    QTimer::singleShot(50, this, [this, index](){
+    QTimer::singleShot(UpdateDelay, this, [this, index]()
+    {
         mView->update(index);
     });
 }
@@ -205,7 +191,7 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
     QWidget* widget = nullptr;
     if (index.isValid() && index.row() >= 0)
     {
-        QModelIndex filteredIndex = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+        QModelIndex filteredIndex = mProxyModel->mapToSource(index);
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
@@ -215,3 +201,28 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
     return widget;
 }
 
+// ----------------------------------------------------------------------------
+//      EditorInfo
+// ----------------------------------------------------------------------------
+
+UserMessageDelegate::EditorInfo::EditorInfo()
+    : mIndex(QModelIndex())
+    , mWidget(nullptr)
+{
+}
+
+void UserMessageDelegate::EditorInfo::setData(const QModelIndex& index, QWidget* widget)
+{
+    mIndex = index;
+    mWidget = widget;
+}
+
+QModelIndex UserMessageDelegate::EditorInfo::getIndex() const
+{
+    return mIndex;
+}
+
+QWidget* UserMessageDelegate::EditorInfo::getWidget() const
+{
+    return mWidget;
+}

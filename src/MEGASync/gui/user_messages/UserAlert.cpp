@@ -83,7 +83,9 @@ void UserAlert::initAlertType()
         }
         default:
         {
-            // TODO: Show warning
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                               QString::fromLatin1("Unknown alert type type: %d")
+                                   .arg(mMegaUserAlert->getType()).toStdString().c_str());
             break;
         }
     }
