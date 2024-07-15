@@ -144,7 +144,7 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
     void onActualFilterClicked();
-    void applyFilterOption(UserMessageType opt);
+    void applyFilterOption(MessageType opt);
     void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();

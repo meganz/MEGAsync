@@ -488,6 +488,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

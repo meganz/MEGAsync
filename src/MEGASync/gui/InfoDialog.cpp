@@ -1182,11 +1182,11 @@ bool InfoDialog::updateOverStorageState(int state)
 
 void InfoDialog::onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts)
 {
-    setUnseenNotifications(alerts[UserMessageType::ALL]);
-    filterMenu->setUnseenNotifications(alerts[UserMessageType::ALL],
-                                       alerts[UserMessageType::ALERT_CONTACTS],
-                                       alerts[UserMessageType::ALERT_SHARES],
-                                       alerts[UserMessageType::ALERT_PAYMENTS]);
+    setUnseenNotifications(alerts[MessageType::ALL]);
+    filterMenu->setUnseenNotifications(alerts[MessageType::ALL],
+                                       alerts[MessageType::ALERT_CONTACTS],
+                                       alerts[MessageType::ALERT_SHARES],
+                                       alerts[MessageType::ALERT_PAYMENTS]);
     ui->wSortNotifications->resetAllFilterHasBeenSelected();
 }
 
@@ -1194,7 +1194,7 @@ void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(UserMessageType::ALL);
+    ui->wSortNotifications->setActualFilter(MessageType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1434,7 +1434,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(UserMessageType opt)
+void InfoDialog::applyFilterOption(MessageType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1443,11 +1443,11 @@ void InfoDialog::applyFilterOption(UserMessageType opt)
 
     switch (opt)
     {
-        case UserMessageType::ALERT_CONTACTS:
+        case MessageType::ALERT_CONTACTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1459,11 +1459,11 @@ void InfoDialog::applyFilterOption(UserMessageType opt)
 
             break;
         }
-        case UserMessageType::ALERT_SHARES:
+        case MessageType::ALERT_SHARES:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_SHARES))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1475,11 +1475,11 @@ void InfoDialog::applyFilterOption(UserMessageType opt)
 
             break;
         }
-        case UserMessageType::ALERT_PAYMENTS:
+        case MessageType::ALERT_PAYMENTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasElementsOfType(UserMessageType::ALERT_PAYMENTS))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1490,8 +1490,8 @@ void InfoDialog::applyFilterOption(UserMessageType opt)
             }
             break;
         }
-        case UserMessageType::ALL:
-        case UserMessageType::ALERT_TAKEDOWNS:
+        case MessageType::ALL:
+        case MessageType::ALERT_TAKEDOWNS:
         default:
         {
             ui->wSortNotifications->setActualFilter(opt);

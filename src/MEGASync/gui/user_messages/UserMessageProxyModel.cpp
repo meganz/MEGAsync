@@ -8,16 +8,16 @@
 
 UserMessageProxyModel::UserMessageProxyModel(QObject* parent)
     : QSortFilterProxyModel(parent)
-    , mActualFilter(UserMessageType::ALL)
+    , mActualFilter(MessageType::ALL)
 {
 }
 
-UserMessageType UserMessageProxyModel::getActualFilter()
+MessageType UserMessageProxyModel::getActualFilter()
 {
     return mActualFilter;
 }
 
-void UserMessageProxyModel::setFilter(UserMessageType filter)
+void UserMessageProxyModel::setFilter(MessageType filter)
 {
     mActualFilter = filter;
     invalidateFilter();
@@ -25,7 +25,7 @@ void UserMessageProxyModel::setFilter(UserMessageType filter)
 
 bool UserMessageProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceParent) const
 {
-    if(mActualFilter == UserMessageType::ALL)
+    if(mActualFilter == MessageType::ALL)
     {
         return true;
     }
@@ -40,12 +40,12 @@ bool UserMessageProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceP
             case UserMessage::Type::ALERT:
             {
                 UserAlert* alert = qobject_cast<UserAlert*>(item);
-                filter = mActualFilter == alert->getAlertType();
+                filter = mActualFilter == alert->getMessageType();
                 break;
             }
             case UserMessage::Type::NOTIFICATION:
             {
-                filter = mActualFilter == UserMessageType::ALL;
+                filter = mActualFilter == MessageType::ALL;
                 break;
             }
             default:

@@ -1,10 +1,10 @@
-#include "NotificationAlertController.h"
+#include "UserMessageController.h"
 
 #include "UserMessageModel.h"
 #include "UserMessageProxyModel.h"
 #include "MegaApplication.h"
 
-NotificationAlertController::NotificationAlertController(QObject* parent)
+UserMessageController::UserMessageController(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
     , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
@@ -20,7 +20,7 @@ NotificationAlertController::NotificationAlertController(QObject* parent)
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
-void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
+void UserMessageController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
 {
     Q_UNUSED(api)
     switch(request->getType())
@@ -57,7 +57,7 @@ void NotificationAlertController::onRequestFinish(mega::MegaApi* api, mega::Mega
     }
 }
 
-void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* alertList)
+void UserMessageController::populateUserAlerts(mega::MegaUserAlertList* alertList)
 {
     if (!alertList)
     {
@@ -71,7 +71,7 @@ void NotificationAlertController::populateUserAlerts(mega::MegaUserAlertList* al
     emit userAlertsUpdated(alertList);
 }
 
-void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
+void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list)
 {
     Q_UNUSED(api)
 
@@ -104,7 +104,7 @@ void NotificationAlertController::onUserAlertsUpdate(mega::MegaApi* api, mega::M
     }
 }
 
-void NotificationAlertController::reset()
+void UserMessageController::reset()
 {
     if (mUserMessagesModel)
     {
@@ -117,22 +117,22 @@ void NotificationAlertController::reset()
     }
 }
 
-bool NotificationAlertController::hasNotifications()
+bool UserMessageController::hasNotifications()
 {
     return mUserMessagesModel->rowCount() > 0;
 }
 
-bool NotificationAlertController::hasElementsOfType(UserMessageType type)
+bool UserMessageController::hasElementsOfType(MessageType type)
 {
     return mUserMessagesModel->hasAlertsOfType(type);
 }
 
-void NotificationAlertController::applyFilter(UserMessageType type)
+void UserMessageController::applyFilter(MessageType type)
 {
     mUserMessagesProxyModel->setFilter(type);
 }
 
-void NotificationAlertController::requestNotifications() const
+void UserMessageController::requestNotifications() const
 {
     if (MegaSyncApp->finished())
     {
@@ -142,7 +142,7 @@ void NotificationAlertController::requestNotifications() const
     mMegaApi->getNotifications();
 }
 
-void NotificationAlertController::checkUseenNotifications()
+void UserMessageController::checkUseenNotifications()
 {
     if(!mUserMessagesModel)
     {
@@ -150,7 +150,7 @@ void NotificationAlertController::checkUseenNotifications()
     }
 
     auto unseenAlerts = mUserMessagesModel->getUnseenNotifications();
-    long long allUnseenAlerts = unseenAlerts[UserMessageType::ALL];
+    long long allUnseenAlerts = unseenAlerts[MessageType::ALL];
     if(mAllUnseenAlerts != allUnseenAlerts)
     {
         mAllUnseenAlerts = allUnseenAlerts;
@@ -158,7 +158,7 @@ void NotificationAlertController::checkUseenNotifications()
     }
 }
 
-void NotificationAlertController::ackSeenAlertsAndNotifications()
+void UserMessageController::ackSeenAlertsAndNotifications()
 {
     // TODO: REMOVE AFTER TESTS
     //mMegaApi->setLastReadNotification(0);
@@ -174,7 +174,7 @@ void NotificationAlertController::ackSeenAlertsAndNotifications()
     }
 }
 
-QAbstractItemModel* NotificationAlertController::getModel() const
+QAbstractItemModel* UserMessageController::getModel() const
 {
     return mUserMessagesProxyModel.get();
 }

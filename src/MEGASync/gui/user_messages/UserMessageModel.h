@@ -2,7 +2,7 @@
 #define USER_MESSAGE_MODEL_H
 
 #include "UserMessage.h"
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include <QAbstractItemModel>
 
@@ -20,26 +20,26 @@ public:
     NotificationSeenStatusManager() = default;
     virtual ~NotificationSeenStatusManager() = default;
 
-    void markAsUnseen(UserMessageType type)
+    void markAsUnseen(MessageType type)
     {
-        if(type == UserMessageType::UNKNOWN || type == UserMessageType::ALL)
+        if(type == MessageType::UNKNOWN || type == MessageType::ALL)
         {
             return;
         }
 
         mUnseenNotifications[type]++;
-        mUnseenNotifications[UserMessageType::ALL]++;
+        mUnseenNotifications[MessageType::ALL]++;
     }
 
-    void markAsSeen(UserMessageType type)
+    void markAsSeen(MessageType type)
     {
-        if(type == UserMessageType::UNKNOWN || type == UserMessageType::ALL)
+        if(type == MessageType::UNKNOWN || type == MessageType::ALL)
         {
             return;
         }
 
         mUnseenNotifications[type]--;
-        mUnseenNotifications[UserMessageType::ALL]--;
+        mUnseenNotifications[MessageType::ALL]--;
     }
 
     UnseenUserMessagesMap getUnseenNotifications() const
@@ -91,7 +91,7 @@ public:
 
     void processAlerts(mega::MegaUserAlertList* alerts);
     void processNotifications(const mega::MegaNotificationList* notifications);
-    bool hasAlertsOfType(UserMessageType type);
+    bool hasAlertsOfType(MessageType type);
     UnseenUserMessagesMap getUnseenNotifications() const;
     uint32_t checkLocalLastSeenNotification();
     void setLastSeenNotification(uint32_t id);

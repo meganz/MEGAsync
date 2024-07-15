@@ -1,7 +1,7 @@
-#ifndef NOTIFICATION_ALERT_CONTROLLER_H
-#define NOTIFICATION_ALERT_CONTROLLER_H
+#ifndef USER_MESSAGES_CONTROLLER_H
+#define USER_MESSAGES_CONTROLLER_H
 
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
@@ -12,21 +12,21 @@
 class UserMessageModel;
 class UserMessageProxyModel;
 
-class NotificationAlertController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
+class UserMessageController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
     Q_OBJECT
 
 public:
-    explicit NotificationAlertController(QObject* parent = nullptr);
-    virtual ~NotificationAlertController() = default;
+    explicit UserMessageController(QObject* parent = nullptr);
+    virtual ~UserMessageController() = default;
 
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list) override;
 
     void reset();
     bool hasNotifications();
-    bool hasElementsOfType(UserMessageType type);
-    void applyFilter(UserMessageType type);
+    bool hasElementsOfType(MessageType type);
+    void applyFilter(MessageType type);
     void requestNotifications() const;
     void ackSeenAlertsAndNotifications();
     QAbstractItemModel* getModel() const;
@@ -48,4 +48,4 @@ private:
 
 };
 
-#endif // NOTIFICATION_ALERT_CONTROLLER_H
+#endif // USER_MESSAGES_CONTROLLER_H

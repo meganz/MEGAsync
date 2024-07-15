@@ -5,7 +5,7 @@
 UserAlert::UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent)
     : UserMessage(UserMessage::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
-    , mAlertType(UserMessageType::UNKNOWN)
+    , mMessageType(MessageType::UNKNOWN)
     , mEmail()
 {
     init();
@@ -56,7 +56,7 @@ void UserAlert::initAlertType()
         case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
         case mega::MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
         {
-            mAlertType = UserMessageType::ALERT_CONTACTS;
+            mMessageType = MessageType::ALERT_CONTACTS;
             break;
         }
         case mega::MegaUserAlert::TYPE_NEWSHARE:
@@ -65,20 +65,20 @@ void UserAlert::initAlertType()
         case mega::MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         case mega::MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            mAlertType = UserMessageType::ALERT_SHARES;
+            mMessageType = MessageType::ALERT_SHARES;
             break;
         }
         case mega::MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
         case mega::MegaUserAlert::TYPE_PAYMENT_FAILED:
         case mega::MegaUserAlert::TYPE_PAYMENTREMINDER:
         {
-            mAlertType = UserMessageType::ALERT_PAYMENTS;
+            mMessageType = MessageType::ALERT_PAYMENTS;
             break;
         }
         case mega::MegaUserAlert::TYPE_TAKEDOWN:
         case mega::MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
-            mAlertType = UserMessageType::ALERT_TAKEDOWNS;
+            mMessageType = MessageType::ALERT_TAKEDOWNS;
             break;
         }
         default:
@@ -177,7 +177,7 @@ const char* UserAlert::getTitle() const
     return mMegaUserAlert->getTitle();
 }
 
-UserMessageType UserAlert::getAlertType() const
+MessageType UserAlert::getMessageType() const
 {
-    return mAlertType;
+    return mMessageType;
 }

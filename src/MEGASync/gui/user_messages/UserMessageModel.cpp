@@ -1,6 +1,6 @@
 #include "UserMessageModel.h"
 
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 #include "UserNotification.h"
 #include "UserAlert.h"
 
@@ -140,7 +140,7 @@ void UserMessageModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
 
         if(!alertItem->isSeen())
         {
-            mSeenStatusManager.markAsUnseen(alertItem->getAlertType());
+            mSeenStatusManager.markAsUnseen(alertItem->getMessageType());
         }
     }
     endInsertRows();
@@ -163,11 +163,11 @@ void UserMessageModel::updateAlerts(const QList<mega::MegaUserAlert*>& alerts)
 
             if(alertItem->isSeen() && !alert->getSeen())
             {
-                mSeenStatusManager.markAsUnseen(alertItem->getAlertType());
+                mSeenStatusManager.markAsUnseen(alertItem->getMessageType());
             }
             else if(!alertItem->isSeen() && alert->getSeen())
             {
-                mSeenStatusManager.markAsSeen(alertItem->getAlertType());
+                mSeenStatusManager.markAsSeen(alertItem->getMessageType());
             }
 
             alertItem->reset(alert);
@@ -192,7 +192,7 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
             auto alertItem = qobject_cast<UserAlert*>(mNotifications[row]);
             if(!alertItem->isSeen())
             {
-                mSeenStatusManager.markAsSeen(alertItem->getAlertType());
+                mSeenStatusManager.markAsSeen(alertItem->getMessageType());
             }
 
             beginRemoveRows(QModelIndex(), row, row);
@@ -203,7 +203,7 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
     }
 }
 
-bool UserMessageModel::hasAlertsOfType(UserMessageType type)
+bool UserMessageModel::hasAlertsOfType(MessageType type)
 {
     return std::any_of(mNotifications.begin(), mNotifications.end(),
                        [type](const UserMessage* current)
@@ -211,7 +211,7 @@ bool UserMessageModel::hasAlertsOfType(UserMessageType type)
                            if(current->getType() == UserMessage::Type::ALERT)
                            {
                                auto alertItem = qobject_cast<const UserAlert*>(current);
-                               return alertItem && alertItem->getAlertType() == type;
+                               return alertItem && alertItem->getMessageType() == type;
                            }
                            return false;
                        });
@@ -253,7 +253,7 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
 
         if(!item->isSeen())
         {
-            mSeenStatusManager.markAsUnseen(UserMessageType::NOTIFICATIONS);
+            mSeenStatusManager.markAsUnseen(MessageType::NOTIFICATIONS);
         }
     }
     endInsertRows();
@@ -283,7 +283,7 @@ void UserMessageModel::removeNotifications(const mega::MegaNotificationList* not
         {
             if(!notification->isSeen())
             {
-                mSeenStatusManager.markAsSeen(UserMessageType::NOTIFICATIONS);
+                mSeenStatusManager.markAsSeen(MessageType::NOTIFICATIONS);
             }
 
             beginRemoveRows(QModelIndex(), row, row);
@@ -338,7 +338,7 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
             if(notification->getID() <= id && !notification->isSeen())
             {
                 notification->markAsSeen();
-                mSeenStatusManager.markAsSeen(UserMessageType::NOTIFICATIONS);
+                mSeenStatusManager.markAsSeen(MessageType::NOTIFICATIONS);
             }
         }
     }

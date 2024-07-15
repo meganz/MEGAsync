@@ -3,7 +3,7 @@
 
 #include "NotificationDelegate.h"
 #include "AlertDelegate.h"
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include <QTreeView>
 #include <QPointer>

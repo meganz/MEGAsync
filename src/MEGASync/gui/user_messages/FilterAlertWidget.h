@@ -1,7 +1,7 @@
 #ifndef FILTERALERTWIDGET_H
 #define FILTERALERTWIDGET_H
 
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include <QWidget>
 
@@ -27,7 +27,7 @@ private slots:
     void on_bPayment_clicked();
 
 signals:
-    void filterClicked(UserMessageType);
+    void filterClicked(MessageType);
 
 private:
     Ui::FilterAlertWidget *ui;

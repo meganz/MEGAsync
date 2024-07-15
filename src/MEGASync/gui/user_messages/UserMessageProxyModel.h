@@ -1,7 +1,7 @@
 #ifndef USER_MESSAGE_PROXY_MODEL_H
 #define USER_MESSAGE_PROXY_MODEL_H
 
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include <QSortFilterProxyModel>
 
@@ -13,15 +13,15 @@ public:
     UserMessageProxyModel(QObject* parent = 0);
     virtual ~UserMessageProxyModel() = default;
 
-    UserMessageType getActualFilter();
-    void setFilter(UserMessageType filter);
+    MessageType getActualFilter();
+    void setFilter(MessageType filter);
 
 protected:
     bool filterAcceptsRow(int row, const QModelIndex& sourceParent) const override;
     bool lessThan(const QModelIndex& left, const QModelIndex& right) const override;
 
 private:
-    UserMessageType mActualFilter;
+    MessageType mActualFilter;
 
 };
 
