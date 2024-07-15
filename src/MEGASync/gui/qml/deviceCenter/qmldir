@@ -3,6 +3,7 @@ singleton DeviceCenterStrings 1.0 DeviceCenterStrings.qml
 DeviceCenterDialog 1.0 DeviceCenterDialog.qml
 LeftSidebar 1.0 LeftSidebar.qml
 Toolbar 1.0 Toolbar.qml
+ToolbarButton 1.0 ToolbarButton.qml
 DevicePage 1.0 DevicePage.qml
 DevicePageHeader 1.0 DevicePageHeader.qml
 NoInternetPage 1.0 NoInternetPage.qml

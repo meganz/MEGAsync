@@ -18,7 +18,7 @@ FooterButtonsPage {
 
     property alias enableConfirmHeader: confirmHeader.enabled
 
-    readonly property int spacing: 24
+    readonly property int spacing: Constants.defaultComponentSpacing
 
     footerButtons.rightPrimary {
         text: BackupsStrings.backUp

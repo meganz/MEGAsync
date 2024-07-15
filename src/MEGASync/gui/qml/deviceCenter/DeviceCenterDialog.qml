@@ -11,7 +11,7 @@ DeviceCenterQmlDialog {
     readonly property int deviceCenterWidth: 1024
     readonly property int deviceCenterHeight: 720
 
-    title: DeviceCenterStrings.deviceCenterWindowTitle
+    title: DeviceCenterStrings.windowTitle
     visible: true
     modality: Qt.NonModal
     width: deviceCenterWidth

@@ -1,5 +1,10 @@
 import QtQuick 2.0
-import components.texts 1.0 as Texts
+import QtQuick.Layouts 1.15
+
+import common 1.0
+import components.buttons 1.0
+import components.images 1.0
+
 Item {
     id:root
 
@@ -7,11 +12,36 @@ Item {
         id: contentItem
 
         anchors.fill: parent
-        color:"pink";
-    }
-    Texts.RichText {
-        anchors.centerIn: parent
-        wrapMode: Text.NoWrap
-        text: "Toolbar (" + root.width + ", " + root.height+")";
+
+        RowLayout {
+            id: layout
+
+            spacing: Constants.defaultComponentSpacing - 8
+            anchors {
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+                rightMargin: Constants.defaultComponentSpacing - addSync.sizes.focusBorderWidth
+            }
+
+            ToolbarButton {
+                id: addBackup
+
+                text: DeviceCenterStrings.addBackupLabel
+                icons.source: Images.addBackup
+
+                onClicked: {
+                }
+            }
+
+            ToolbarButton {
+                id: addSync
+
+                text: DeviceCenterStrings.addSyncLabel
+                icons.source: Images.addSync
+
+                onClicked: {
+                }
+            }
+        }
     }
 }

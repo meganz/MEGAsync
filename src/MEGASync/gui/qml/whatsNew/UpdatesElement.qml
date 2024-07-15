@@ -12,7 +12,7 @@ Item{
     property alias descriptionText: secondaryText.text
 
     readonly property int imageDimension: 120
-    readonly property int majorSpacing: 24
+    readonly property int majorSpacing: Constants.defaultComponentSpacing
     readonly property int minorSpacing: 12
 
     width: 233

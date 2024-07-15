@@ -36,7 +36,7 @@ FooterButtonsPage {
             right: parent.right
             margins: 0
         }
-        spacing: 24
+        spacing: Constants.defaultComponentSpacing
 
         HeaderTexts {
             id: header

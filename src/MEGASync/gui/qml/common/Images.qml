@@ -15,6 +15,7 @@ QtObject {
     readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
+    readonly property url imagesDeviceCenterPath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -86,6 +87,8 @@ QtObject {
 
     readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
     readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
+    readonly property url addBackup: imagesDeviceCenterPath + "addbackup.svg"
+    readonly property url addSync: imagesDeviceCenterPath + "addsync.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
