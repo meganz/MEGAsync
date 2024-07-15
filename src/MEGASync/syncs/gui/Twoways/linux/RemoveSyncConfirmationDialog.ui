@@ -121,7 +121,6 @@ max-height: 96px;
     align-self: stretch;
 
 	/* Typography */
-    color: #BF303233;
     font-family: Inter;
     font-size: 12px;
     font-style: normal;
@@ -135,9 +134,6 @@ max-height: 96px;
 {
 	/* Layout */
 	align-self: stretch;
-
-	/* Typography */
-    color: #303233;
 
 	/* Label 2/Semibold */
     font-family: Inter;
