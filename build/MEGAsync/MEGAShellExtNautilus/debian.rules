@@ -1,10 +1,7 @@
 #!/usr/bin/make -f
 DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-export QT_SELECT=qt5
 
 export DH_VERBOSE=1
-
-vnautilus = $(shell dpkg -l libnautilus-extension-dev | tail -n 1 | awk '{print $$3}' | awk -F".is.|:|-" '{print $$2}' | awk -F "." '{FS=".";print $$1*10000+$$2*100+$$3}')
 
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 
@@ -12,9 +9,8 @@ build:
 	sed -i -E "0,/nautilus-megasync \(([0-9.]*)[^\)]*\)/s//nautilus-megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
 
 common-configure-impl::; 
-	if [ 0$(vnautilus) -gt 31403 ]; then for i in data/emblems/64x64/*smaller.png; do mv $$i $$(echo $$i | sed "s#-smaller##g"); done; echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"; else rm data/emblems/64x64/*smaller.png; echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"; fi
 
 include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/qmake.mk
+include /usr/share/cdbs/1/class/cmake.mk
 
 DEB_DH_BUILDDEB_ARGS += $(DPKGXZ)

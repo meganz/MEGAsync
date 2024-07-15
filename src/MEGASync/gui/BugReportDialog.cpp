@@ -9,7 +9,7 @@
 #include <QRegExp>
 
 #include "ui_BugReportDialog.h"
-
+#include "RequestListenerManager.h"
 
 using namespace mega;
 
@@ -40,7 +40,6 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     delegateTransferListener = new QTMegaTransferListener(megaApi, this);
-    delegateRequestListener = new QTMegaRequestListener(megaApi, this);
 }
 
 BugReportDialog::~BugReportDialog()
@@ -50,7 +49,6 @@ BugReportDialog::~BugReportDialog()
 
     delete ui;
     delete delegateTransferListener;
-    delete delegateRequestListener;
 }
 
 void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
@@ -143,7 +141,7 @@ void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaErro
                      .toUtf8().constData());
 }
 
-void BugReportDialog::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
+void BugReportDialog::onRequestFinish(MegaRequest* request, MegaError* e)
 {
     switch(request->getType())
     {
@@ -252,7 +250,8 @@ void BugReportDialog::createSupportTicket()
     report.append(QString::fromUtf8("Title: %1").arg(ui->leTitleBug->text().append(QString::fromUtf8("\n"))));
     report.append(QString::fromUtf8("Description: %1").arg(ui->teDescribeBug->toPlainText().append(QString::fromUtf8("\n"))));
 
-    megaApi->createSupportTicket(report.toUtf8().constData(), 6, delegateRequestListener);
+    auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
+    megaApi->createSupportTicket(report.toUtf8().constData(), 6, listener.get());
 }
 
 void BugReportDialog::cancelCurrentReportUpload()

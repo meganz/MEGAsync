@@ -28,7 +28,7 @@ endif()
 
 if(ENABLE_LINUX_EXT)
     # add_subdirectory(MEGAShellExtDolphin)
-    # add_subdirectory(MEGAShellExtNautilus)
+    add_subdirectory(MEGAShellExtNautilus)
     # add_subdirectory(MEGAShellExtThunar)
     # add_subdirectory(MEGAShellExtNemo)
 endif()
