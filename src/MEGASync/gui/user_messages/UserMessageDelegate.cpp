@@ -8,6 +8,10 @@
 #include <QTreeView>
 #include <QTimer>
 
+#ifdef __APPLE__
+#include <QScrollBar>
+#endif
+
 namespace
 {
 constexpr int UpdateDelay = 50;

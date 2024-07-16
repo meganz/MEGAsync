@@ -1,7 +1,5 @@
 #include "UserMessageController.h"
 
-#include "UserMessageModel.h"
-#include "UserMessageProxyModel.h"
 #include "MegaApplication.h"
 
 UserMessageController::UserMessageController(QObject* parent)

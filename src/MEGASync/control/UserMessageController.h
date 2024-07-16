@@ -2,15 +2,14 @@
 #define USER_MESSAGE_CONTROLLER_H
 
 #include "UserMessageTypes.h"
+#include "UserMessageModel.h"
+#include "UserMessageProxyModel.h"
 
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "QTMegaGlobalListener.h"
 
 #include <QAbstractItemModel>
-
-class UserMessageModel;
-class UserMessageProxyModel;
 
 class UserMessageController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
 {
