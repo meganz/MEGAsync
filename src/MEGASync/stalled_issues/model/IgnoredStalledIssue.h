@@ -13,16 +13,37 @@ public:
     bool autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
+    void fillIssue(const mega::MegaSyncStall *stall) override;
+
     bool isSymLink() const override;
     bool isSpecialLink() const override;
 
     bool isExpandable() const override;
-    bool checkForExternalChanges() override;
+    bool checkForExternalChanges() override;    
 
     static void clearIgnoredSyncs();
 
+    struct IgnoredPath
+    {
+        QString path;
+        enum class IgnorePathSide
+        {
+            LOCAL,
+            REMOTE,
+        };
+        IgnorePathSide pathSide;
+
+        IgnoredPath(const QString& newpath, IgnorePathSide side):path(newpath), pathSide(side)
+        {}
+    };
+    QList<IgnoredPath> getIgnoredFiles() const { return mIgnoredPaths;}
+
+protected:
+    QList<IgnoredPath> mIgnoredPaths;
+
 private:
     static QMap<mega::MegaHandle, bool> mSymLinksIgnoredInSyncs;
+    mega::MegaSyncStall::SyncPathProblem mLinkType;
 };
 
 class CloudNodeIsBlockedIssue : public IgnoredStalledIssue
