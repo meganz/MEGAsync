@@ -8,7 +8,7 @@
 #include "BindFolderDialog.h"
 #include "RemoveSyncConfirmationDialog.h"
 #include "SyncItemModel.h"
-#include "SyncExclusions/SyncExclusions.h"
+#include "SyncExclusions.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
 #include <DialogOpener.h>

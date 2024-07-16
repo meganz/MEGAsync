@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "gzjoin.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include <QApplication>
 #include <QImageReader>

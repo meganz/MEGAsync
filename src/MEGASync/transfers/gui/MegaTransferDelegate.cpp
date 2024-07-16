@@ -4,7 +4,7 @@
 #include "megaapi.h"
 #include "TransfersModel.h"
 #include "MegaApplication.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "TransfersWidget.h"
 #include "TransferManagerDelegateWidget.h"
 #include "MegaDelegateHoverManager.h"

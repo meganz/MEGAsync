@@ -3,14 +3,13 @@
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
 #include "MegaApplication.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
-#include "Platform.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>

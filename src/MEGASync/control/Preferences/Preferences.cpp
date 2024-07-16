@@ -1,7 +1,7 @@
 #include "Preferences.h"
 #include "Version.h"
-#include "platform/Platform.h"
-#include "UserAttributesRequests/FullName.h"
+#include "Platform.h"
+#include "FullName.h"
 #include "StatsEventHandler.h"
 
 #include <QDesktopServices>

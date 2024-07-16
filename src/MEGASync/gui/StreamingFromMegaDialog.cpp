@@ -5,9 +5,8 @@
 #include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
-#include "platform/Platform.h"
-#include "Utilities.h"
 #include "Platform.h"
+#include "Utilities.h"
 #include <MegaNodeNames.h>
 
 #include <QCloseEvent>
