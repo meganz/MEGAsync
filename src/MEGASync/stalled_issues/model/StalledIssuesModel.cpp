@@ -1201,7 +1201,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
                         {
                             auto findRepeatedPath =
                                 [ignoredItem](const IgnoredStalledIssue::IgnoredPath& check) -> bool {
-                                return ignoredItem.cloud == check.cloud &&
+                                return ignoredItem.pathSide == IgnoredStalledIssue::IgnoredPath::IgnorePathSide::REMOTE &&
                                        ignoredItem.path == check.path;
                             };
 
@@ -1257,7 +1257,7 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
                 foreach(auto ignoredPath, ignoredFiles)
                 {
                     QDir dir;
-                    if(ignoredPath.cloud)
+                    if(ignoredPath.pathSide == IgnoredStalledIssue::IgnoredPath::IgnorePathSide::REMOTE)
                     {
                         dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
                     }

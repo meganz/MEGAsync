@@ -26,9 +26,14 @@ public:
     struct IgnoredPath
     {
         QString path;
-        bool cloud;
+        enum class IgnorePathSide
+        {
+            LOCAL,
+            REMOTE,
+        };
+        IgnorePathSide pathSide;
 
-        IgnoredPath(const QString& newpath, bool newcloud):path(newpath), cloud(newcloud)
+        IgnoredPath(const QString& newpath, IgnorePathSide side):path(newpath), pathSide(side)
         {}
     };
     QList<IgnoredPath> getIgnoredFiles() const { return mIgnoredPaths;}
