@@ -3,6 +3,7 @@
 #include "UserMessageTypes.h"
 #include "UserNotification.h"
 #include "UserAlert.h"
+#include "Preferences.h"
 
 #include "megaapi.h"
 
@@ -185,6 +186,7 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
         return;
     }
 
+    // Remove alerts that are not in the list of removed alerts
     for (auto& alert : alerts)
     {
         auto it = findAlertById(alert->getId());
@@ -201,6 +203,23 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
             delete mUserMessages[row];
             mUserMessages.erase(it);
             endRemoveRows();
+        }
+    }
+
+    // Remove the oldest items if the list is too long
+    if(mUserMessages.size() > Preferences::MAX_COMPLETED_ITEMS)
+    {
+        int row = mUserMessages.size() - 1;
+        while(row >= 0 && mUserMessages.size() > Preferences::MAX_COMPLETED_ITEMS)
+        {
+            if(mUserMessages[row]->getType() == UserMessage::Type::ALERT)
+            {
+                beginRemoveRows(QModelIndex(), row, row);
+                delete mUserMessages[row];
+                mUserMessages.removeAt(row);
+                endRemoveRows();
+            }
+            --row;
         }
     }
 }
