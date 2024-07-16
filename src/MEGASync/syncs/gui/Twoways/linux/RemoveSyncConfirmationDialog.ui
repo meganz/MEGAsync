@@ -34,76 +34,13 @@
     padding: 3px 10px;
     justify-content: center;
     align-items: center;
-    flex: 1 0 0;    
+    flex: 1 0 0;
 }
 
-QPushButton#bCancel
-{   
-    /* Layout */
-    width: 72px;	 /* Figma specifies Width: 68 =&gt; add 4 for border-radius */
-    height: 38px; /* Figma specifies Height: 34 =&gt; add 4 for border-radius */
-    max-width: 72px;
-    max-height: 38px;
-
-    /* Style */
-    border-radius: 4px;
-    background-color: #fafafa;
-    border: 1px solid rgba(0, 0, 0, 0.10); /* rgba(0, 0, 0, 0.10) */
-
-    /* Typography */
-    color: #333333;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
-}
-
-QPushButton#bCancel:hover
+#bOK
 {
-    /* Button hover effect if needed */
-    background-color: #F2F2F2; /* Background color for hover state */
-    opacity: 1.0; /* Opacity for hover state */
-}
-
-QPushButton#bCancel:pressed
-{
-    /* Button pressed effect */
-    background-color: #FFFFFF; /* Background color for pressed state */
-    opacity: 1.0; /* Opacity for pressed state */
-}
-
-
-QPushButton#bOK
-{    
-    width: 77px;
-    height: 38px; /* Figma specifies Height: 34 =&gt; add 4 for border-radius */
-
-    /* Style */
-    border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 10%); /* rgba(0, 0, 0, 0.10) */
-    background: #00BFA5;
-    box-shadow: 0px 1px 2px 0px rgba(0, 143, 107, 30%); /* rgba(0, 143, 107, 0.30); */
-
-    /* Typography */
-	color: #FFFFFF;
-    font-feature-settings: 'clig' off, 'liga' off;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
-}
-
-QPushButton#bOK:hover 
-{
-    background: #00A787;
-}
-
-QPushButton#bOK:pressed 
-{
-    background: #00D7C2;
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
 }
 
 #labelFolderIcon
@@ -195,7 +132,7 @@ max-height: 96px;
      <x>422</x>
      <y>144</y>
      <width>72</width>
-     <height>38</height>
+     <height>36</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -206,9 +143,12 @@ max-height: 96px;
    </property>
    <property name="maximumSize">
     <size>
-     <width>74</width>
-     <height>40</height>
+     <width>77</width>
+     <height>36</height>
     </size>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true"/>
@@ -237,6 +177,9 @@ max-height: 96px;
      <width>77</width>
      <height>36</height>
     </size>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
     <string>Remove</string>

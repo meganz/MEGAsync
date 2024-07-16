@@ -41,7 +41,50 @@ QWidget::title
     justify-content: center;
     align-items: center;
     flex: 1 0 0;
-    
+}
+
+#bOK
+{
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
+}
+
+#labelFolderIcon
+{
+border-image: url(&quot;:/images/icons/folder/synced-folder.png&quot;);
+max-width: 96px;
+max-height: 96px;
+}
+
+#labelMessage
+{
+	/* Layout */
+    max-width: 432px;
+    height: 36px;
+    align-self: stretch;
+
+	/* Typography */
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+	word-wrap: break-word; /* Enable word wrap */
+    white-space: pre-wrap;
+}
+
+#labelHeader
+{
+	/* Layout */
+	align-self: stretch;
+
+	/* Label 2/Semibold */
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 24px;
+    max-width: 432px;
 }</string>
   </property>
   <widget class="QWidget" name="bLayout" native="true">
@@ -165,8 +208,8 @@ max-height: 96px;
     <rect>
      <x>422</x>
      <y>144</y>
-     <width>72</width>
-     <height>38</height>
+     <width>74</width>
+     <height>36</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -180,6 +223,9 @@ max-height: 96px;
      <width>74</width>
      <height>40</height>
     </size>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton 
@@ -242,8 +288,11 @@ QPushButton:pressed
    <property name="maximumSize">
     <size>
      <width>77</width>
-     <height>36</height>
+     <height>40</height>
     </size>
+   </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton#bOK
