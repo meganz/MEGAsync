@@ -363,7 +363,6 @@ void NodeSelectorTreeView::dropEvent(QDropEvent* event)
         QList<QUrl> urlList = event->mimeData()->urls();
         if(!urlList.isEmpty())
         {
-
             // get the node handle of the drop index from the proxy model
             auto node = getDropNode(dropIndex);
             if(node)

@@ -51,7 +51,7 @@ void DuplicatedNodeItem::fillUi()
         case NodeItemType::DONT_UPLOAD:
         {
             ui->bAction->setText(tr("Skip"));
-            ui->lTitle->setText(mInfo->isLocalFile() ? tr("Skip this file") : tr("Skip this folder"));
+            ui->lTitle->setText(mInfo->sourceItemIsFile() ? tr("Skip this file") : tr("Skip this folder"));
             break;
         }
         case NodeItemType::FOLDER_UPLOAD_AND_MERGE:
@@ -142,7 +142,7 @@ void DuplicatedRemoteItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Nod
 {
     if(!mFolderAttributes)
     {
-        mFolderAttributes = new RemoteFileFolderAttributes(info->getRemoteConflictNode()->getHandle(), this, false);
+        mFolderAttributes = new RemoteFileFolderAttributes(info->getConflictNode()->getHandle(), this, false);
         mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
         {
             setModifiedTime(time);
@@ -156,9 +156,28 @@ void DuplicatedRemoteItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Nod
     DuplicatedNodeItem::setInfo(info, type);
 }
 
+void DuplicatedRemoteItem::setInfoSpecifyingHandle(
+    std::shared_ptr<DuplicatedNodeInfo> info, mega::MegaHandle handle, NodeItemType type)
+{
+    if(!mFolderAttributes)
+    {
+        mFolderAttributes = new RemoteFileFolderAttributes(handle, this, false);
+        mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
+            {
+                setModifiedTime(time);
+            });
+        mFolderAttributes->requestSize(this,[this](qint64 size)
+            {
+                setSize(size);
+            });
+    }
+
+    DuplicatedNodeItem::setInfo(info, type);
+}
+
 std::shared_ptr<mega::MegaNode> DuplicatedRemoteItem::getNode()
 {
-    return mInfo->getRemoteConflictNode();
+    return mInfo->getConflictNode();
 }
 
 QString DuplicatedRemoteItem::getNodeName()
@@ -168,7 +187,7 @@ QString DuplicatedRemoteItem::getNodeName()
 
 bool DuplicatedRemoteItem::isFile() const
 {
-    return mInfo->isRemoteFile();
+    return mInfo->conflictNodeIsFile();
 }
 
 /*
@@ -189,7 +208,7 @@ void DuplicatedLocalItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Node
 {
     if(!mFolderAttributes)
     {
-        mFolderAttributes = new LocalFileFolderAttributes(info->getLocalPath(), this);
+        mFolderAttributes = new LocalFileFolderAttributes(info->getSourceItemPath(), this);
         mFolderAttributes->requestModifiedTime(this,[this](const QDateTime& time)
         {
             setModifiedTime(time);
@@ -203,28 +222,23 @@ void DuplicatedLocalItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> info, Node
     DuplicatedNodeItem::setInfo(info, type);
 }
 
-const QString &DuplicatedLocalItem::getLocalPath()
-{
-    return mInfo->getLocalPath();
-}
-
 QString DuplicatedLocalItem::getNodeName()
 {
-    if(mInfo->isLocalFile())
+    if(isFile())
     {
-        QFileInfo localNode(mInfo->getLocalPath());
+        QFileInfo localNode(mInfo->getSourceItemPath());
         return localNode.fileName();
     }
     else
     {
-        QDir dir(mInfo->getLocalPath());
+        QDir dir(mInfo->getSourceItemPath());
         return dir.dirName();
     }
 }
 
 bool DuplicatedLocalItem::isFile() const
 {
-    return mInfo->isLocalFile();
+    return mInfo->sourceItemIsFile();
 }
 
 QString DuplicatedLocalItem::getFullFileName(const QString &path, const QString &fileName)

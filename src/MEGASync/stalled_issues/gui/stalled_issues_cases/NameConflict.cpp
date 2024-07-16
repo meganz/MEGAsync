@@ -550,12 +550,12 @@ void NameConflict::onActionClicked(int actionId)
                             std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
                             if(node)
                             {
-                                error = mUtilities.removeRemoteFile(node.get());
+                                error = Utilities::removeRemoteFile(node.get());
                             }
                         }
                         else
                         {
-                            error = mUtilities.removeRemoteFile(filePath);
+                            error = Utilities::removeRemoteFile(filePath);
                         }
 
                         if(error)
@@ -572,7 +572,7 @@ void NameConflict::onActionClicked(int actionId)
                     else
                     {
                         auto syncId = mIssue->syncIds().isEmpty() ? mega::INVALID_HANDLE : mIssue->firstSyncId();
-                        auto failed = !mUtilities.removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
+                        auto failed = !Utilities::removeLocalFile(QDir::toNativeSeparators(filePath), syncId);
 
                         if(failed)
                         {

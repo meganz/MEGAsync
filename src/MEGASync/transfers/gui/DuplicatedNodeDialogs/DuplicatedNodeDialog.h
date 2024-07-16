@@ -21,6 +21,7 @@ public:
     ~DuplicatedNodeDialog();
 
     void checkUploads(QQueue<QString> &nodePath, std::shared_ptr<mega::MegaNode> parentNode);
+    void checkMoves(QList<mega::MegaHandle> moveHandles, std::shared_ptr<mega::MegaNode> parentNode);
 
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);
@@ -56,6 +57,9 @@ private:
     Ui::DuplicatedNodeDialog *ui;
     DuplicatedUploadFolder mFolderCheck;
     DuplicatedUploadFile mFileCheck;
+
+    DuplicatedMoveFolder mFolderMoveCheck;
+    DuplicatedMoveFile mFileMoveCheck;
 
     QList<std::shared_ptr<DuplicatedNodeInfo>> mConflictsBeingProcessed;
     DuplicatedUploadBase* mChecker;

@@ -4,7 +4,13 @@
 #include "Utilities.h"
 #include "UserAttributesRequests/CameraUploadFolder.h"
 #include "UserAttributesRequests/MyChatFilesFolder.h"
+#include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "EventUpdater.h"
 #include "MegaNodeNames.h"
+#include "DialogOpener.h"
+#include "MergeMEGAFolders.h"
+#include "StalledIssuesUtilities.h"
+#include "MegaApiSynchronizedRequest.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -729,6 +735,7 @@ bool NodeSelectorModel::dropMimeData(
             if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(targetIndex.internalPointer()))
             {
                 auto node = chkItem->getNode();
+
                 mega::MegaHandle targetFolder(mega::INVALID_HANDLE);
                 if(node->isFile())
                 {
@@ -739,9 +746,9 @@ bool NodeSelectorModel::dropMimeData(
                     targetFolder = node->getHandle();
                 }
 
-                std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
+                std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
 
-
+                QList<mega::MegaHandle> moveHandles;
                 QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
                 QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
@@ -749,11 +756,109 @@ bool NodeSelectorModel::dropMimeData(
                 {
                     mega::MegaHandle handle;
                     stream >> handle;
-                    std::unique_ptr<mega::MegaNode> moveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-                    if(moveNode)
+                    moveHandles.append(handle);
+                }
+
+                if(moveHandles.isEmpty())
+                {
+                    return false;
+                }
+
+                std::unique_ptr<mega::MegaNode> firstMoveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandles.first()));
+
+                if(firstMoveNode->getParentHandle() == targetFolder)
+                {
+                    return false;
+                }
+
+                auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
+                checkUploadNameDialog->checkMoves(moveHandles, parentNode);
+
+                auto resolveMoves = [parentNode, checkUploadNameDialog](){
+                    if(checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
                     {
-                        MegaSyncApp->getMegaApi()->moveNode(moveNode.get(), parentNode.get());
+                        auto movesBaseInfo = checkUploadNameDialog->getResolvedConflicts();
+
+                        EventUpdater updater(movesBaseInfo.size(),20);
+                        auto counter = 0;
+                        foreach(auto moveBaseInfo, movesBaseInfo)
+                        {
+                            if(auto moveInfo = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(moveBaseInfo))
+                            {
+                                std::shared_ptr<mega::MegaNode> moveNode(
+                                    MegaSyncApp->getMegaApi()->getNodeByHandle(
+                                        moveInfo->getSourceItemHandle()));
+                                if(moveNode)
+                                {
+                                    if(moveInfo->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
+                                    {
+                                        QtConcurrent::run(
+                                            [moveNode, parentNode, moveInfo]()
+                                            {
+                                                MegaApiSynchronizedRequest::runRequestLambdaWithResult(
+                                                    [](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
+                                                    { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
+                                                    MegaSyncApp->getMegaApi(),
+                                                    [moveNode, parentNode, moveInfo](
+                                                        const mega::MegaRequest&,
+                                                        const mega::MegaError& e)
+                                                    {
+                                                        if(e.getErrorCode() ==
+                                                            mega::MegaError::API_OK)
+                                                        {
+                                                            MergeMEGAFolders merge(
+                                                                moveNode.get(), moveInfo->getConflictNode().get());
+                                                            merge.merge(MergeMEGAFolders::
+                                                                    ActionForDuplicates::Rename);
+                                                        }
+                                                    },
+                                                    moveNode.get(),
+                                                    parentNode.get());
+                                            });
+                                    }
+                                    else if(moveInfo->getSolution() == NodeItemType::FILE_UPLOAD_AND_REPLACE)
+                                    {
+                                        QtConcurrent::run(
+                                            [moveNode, parentNode, moveInfo]()
+                                            {
+                                                Utilities::removeRemoteFile(moveInfo->getConflictNode().get());
+                                                MegaSyncApp->getMegaApi()->moveNode(
+                                                    moveNode.get(), parentNode.get());
+                                            });
+                                    }
+                                    else if(moveInfo->getSolution() == NodeItemType::UPLOAD_AND_RENAME)
+                                    {
+                                        MegaSyncApp->getMegaApi()->moveNode(moveNode.get(),
+                                            parentNode.get(),
+                                            moveInfo->getNewName().toUtf8());
+                                    }
+                                    else if(moveInfo->getSolution() == NodeItemType::UPLOAD)
+                                    {
+                                        MegaSyncApp->getMegaApi()->moveNode(moveNode.get(),
+                                            parentNode.get());
+                                    }
+                                }
+
+                                if(moveBaseInfo != movesBaseInfo.last())
+                                {
+                                    updater.update(counter);
+                                    counter++;
+                                }
+                            }
+                        }
                     }
+                };
+
+                if(!checkUploadNameDialog->isEmpty())
+                {
+                    DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, resolveMoves);
+                }
+                else
+                {
+                    checkUploadNameDialog->accept();
+                    resolveMoves();
+                    checkUploadNameDialog->close();
+                    checkUploadNameDialog->deleteLater();
                 }
 
                 return true;

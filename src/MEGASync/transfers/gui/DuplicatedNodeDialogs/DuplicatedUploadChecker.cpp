@@ -25,7 +25,7 @@ QStringList &DuplicatedUploadBase::getCheckedNames()
 
 QString DuplicatedUploadBase::getHeader(std::shared_ptr<DuplicatedNodeInfo> conflict)
 {
-    return conflict->isRemoteFile() ? DuplicatedNodeDialog::tr("A file named [A] already exists at this destination")
+    return conflict->conflictNodeIsFile() ? DuplicatedNodeDialog::tr("A file named [A] already exists at this destination")
            : DuplicatedNodeDialog::tr("A folder named [A] already exists at this destination");
 }
 
@@ -40,7 +40,7 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
 {
     mUploadInfo = conflict;
 
-    dialog->setHeader(getHeader(conflict),QString::fromUtf8(conflict->getRemoteConflictNode()->getName()));
+    dialog->setHeader(getHeader(conflict),QString::fromUtf8(conflict->getConflictNode()->getName()));
 
     auto fileVersioningDisabled(Preferences::instance()->fileVersioningDisabled());
 
@@ -74,7 +74,7 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
 
     DuplicatedRemoteItem* dontUploadItem = new DuplicatedRemoteItem(dialog);
     dontUploadItem->setInfo(conflict, NodeItemType::DONT_UPLOAD);
-    dontUploadItem->setDescription(getSkipText(conflict->isRemoteFile()));
+    dontUploadItem->setDescription(getSkipText(conflict->conflictNodeIsFile()));
     connect(dontUploadItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);
     dialog->addNodeItem(dontUploadItem);
 }
@@ -84,7 +84,7 @@ void DuplicatedUploadFolder::fillUi(DuplicatedNodeDialog* dialog, std::shared_pt
 {
     mUploadInfo = conflict;
 
-    dialog->setHeader(getHeader(conflict),QString::fromUtf8(conflict->getRemoteConflictNode()->getName()));
+    dialog->setHeader(getHeader(conflict),QString::fromUtf8(conflict->getConflictNode()->getName()));
 
     if(!conflict->haveDifferentType())
     {
@@ -98,7 +98,7 @@ void DuplicatedUploadFolder::fillUi(DuplicatedNodeDialog* dialog, std::shared_pt
 
     DuplicatedRemoteItem* dontUploadItem = new DuplicatedRemoteItem(dialog);
     dontUploadItem->setInfo(conflict, NodeItemType::DONT_UPLOAD);
-    dontUploadItem->setDescription(getSkipText(conflict->isRemoteFile()));
+    dontUploadItem->setDescription(getSkipText(conflict->conflictNodeIsFile()));
     connect(dontUploadItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFolder::onNodeItemSelected);
     dialog->addNodeItem(dontUploadItem);
 }
@@ -108,8 +108,86 @@ void DuplicatedUploadFolder::onUploadAndMergeSelected()
     //This is done to merge the local folder into the remote one (we need to upload it with the remote name)
     if(mUploadInfo->isNameConflict())
     {
-        mUploadInfo->setNewName(QString::fromUtf8(mUploadInfo->getRemoteConflictNode()->getName()));
+        mUploadInfo->setNewName(QString::fromUtf8(mUploadInfo->getConflictNode()->getName()));
     }
 
     DuplicatedUploadFolder::onNodeItemSelected();
+}
+
+void DuplicatedMoveFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<DuplicatedNodeInfo> conflict)
+{
+    if(auto moveNodeInfo = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(conflict))
+    {
+        mUploadInfo = conflict;
+
+        dialog->setHeader(
+            getHeader(conflict), QString::fromUtf8(conflict->getConflictNode()->getName()));
+
+        if(!conflict->haveDifferentType())
+        {
+            DuplicatedRemoteItem* uploadItem = new DuplicatedRemoteItem(dialog);
+
+            uploadItem->setInfoSpecifyingHandle(conflict, moveNodeInfo->getSourceItemHandle(), NodeItemType::FILE_UPLOAD_AND_REPLACE);
+            QString description = DuplicatedNodeDialog::tr(
+                "The file at this destination will be replaced with the new file.");
+            uploadItem->setDescription(description);
+
+            connect(uploadItem, &DuplicatedNodeItem::actionClicked, this, &DuplicatedMoveFile::onNodeItemSelected);
+            dialog->addNodeItem(uploadItem);
+        }
+
+        //Upload and merge item
+        DuplicatedRenameItem* uploadAndRename = new DuplicatedRenameItem(dialog);
+        uploadAndRename->setInfo(conflict);
+        uploadAndRename->setDescription(DuplicatedNodeDialog::tr("The file will be renamed as:"));
+        connect(uploadAndRename,
+            &DuplicatedNodeItem::actionClicked,
+            this,
+            &DuplicatedMoveFile::onNodeItemSelected);
+        dialog->addNodeItem(uploadAndRename);
+
+        DuplicatedRemoteItem* dontUploadItem = new DuplicatedRemoteItem(dialog);
+        dontUploadItem->setInfo(conflict, NodeItemType::DONT_UPLOAD);
+        dontUploadItem->setDescription(getSkipText(conflict->conflictNodeIsFile()));
+        connect(dontUploadItem,
+            &DuplicatedNodeItem::actionClicked,
+            this,
+            &DuplicatedMoveFile::onNodeItemSelected);
+        dialog->addNodeItem(dontUploadItem);
+    }
+}
+
+///FOLDER
+void DuplicatedMoveFolder::fillUi(DuplicatedNodeDialog* dialog,  std::shared_ptr<DuplicatedNodeInfo> conflict)
+{
+    if(auto moveNodeInfo = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(conflict))
+    {
+        mUploadInfo = conflict;
+
+        dialog->setHeader(
+            getHeader(conflict), QString::fromUtf8(conflict->getConflictNode()->getName()));
+
+        if(!conflict->haveDifferentType())
+        {
+            //Upload and merge item
+            DuplicatedRemoteItem* uploadAndMergeItem = new DuplicatedRemoteItem(dialog);
+            uploadAndMergeItem->setInfoSpecifyingHandle(conflict, moveNodeInfo->getSourceItemHandle(), NodeItemType::FOLDER_UPLOAD_AND_MERGE);
+            uploadAndMergeItem->setDescription(DuplicatedNodeDialog::tr(
+                "The new folder will be merged with the folder at this destination."));
+            connect(uploadAndMergeItem,
+                &DuplicatedNodeItem::actionClicked,
+                this,
+                &DuplicatedMoveFolder::onNodeItemSelected);
+            dialog->addNodeItem(uploadAndMergeItem);
+        }
+
+        DuplicatedRemoteItem* dontUploadItem = new DuplicatedRemoteItem(dialog);
+        dontUploadItem->setInfo(conflict, NodeItemType::DONT_UPLOAD);
+        dontUploadItem->setDescription(getSkipText(conflict->conflictNodeIsFile()));
+        connect(dontUploadItem,
+            &DuplicatedNodeItem::actionClicked,
+            this,
+            &DuplicatedMoveFolder::onNodeItemSelected);
+        dialog->addNodeItem(dontUploadItem);
+    }
 }

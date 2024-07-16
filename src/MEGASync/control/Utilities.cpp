@@ -14,6 +14,7 @@
 #include <QScreen>
 #include <QCryptographicHash>
 #include <MegaApiSynchronizedRequest.h>
+#include <MoveToMEGABin.h>
 
 #include <iostream>
 
@@ -1595,6 +1596,74 @@ QString Utilities::getTranslatedError(const MegaError* error)
 {
     return QCoreApplication::translate("MegaError", error->getErrorString());
 }
+
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
+{
+    std::shared_ptr<MegaError> error;
+
+    if(node)
+    {
+        auto moveToBinError = MoveToMEGABin::moveToBin(
+            node->getHandle(), QLatin1String("SyncDebris"), true);
+        if(moveToBinError.binFolderCreationError)
+        {
+            error = moveToBinError.binFolderCreationError;
+        }
+        else if(moveToBinError.moveError)
+        {
+            error = moveToBinError.moveError;
+        }
+    }
+
+    return error;
+}
+
+std::shared_ptr<MegaError> Utilities::removeRemoteFile(const QString& path)
+{
+    std::unique_ptr<MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    return removeRemoteFile(fileNode.get());
+}
+
+bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
+{
+    bool result(false);
+
+    QFile file(path);
+    if(file.exists())
+    {
+        if(syncId != INVALID_HANDLE)
+        {
+            MegaApiSynchronizedRequest::runRequestWithResult(&MegaApi::moveToDebris,
+                MegaSyncApp->getMegaApi(),
+                [=, &result](
+                    const MegaRequest&, const MegaError& e)
+                {
+                    //In case of error, move to OS trash
+                    if(e.getErrorCode() != MegaError::API_OK)
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                            QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
+                                .arg(path, Utilities::getTranslatedError(&e))
+                                .toUtf8()
+                                .constData());
+                        result = QFile::moveToTrash(path);
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                },path.toStdString().c_str(),
+                syncId);
+        }
+        else
+        {
+            result = QFile::moveToTrash(path);
+        }
+    }
+
+    return result;
+}
+
 
 long long Utilities::getSystemsAvailableMemory()
 {

@@ -376,6 +376,10 @@ public:
 
     static QString getTranslatedError(const mega::MegaError* error);
 
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const mega::MegaNode* node);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    static bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

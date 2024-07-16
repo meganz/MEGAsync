@@ -1432,7 +1432,7 @@ NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
 void CloudDriveType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->ui->bNewFolder->hide();
-    //wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    wdg->ui->tMegaFolders->setSelectionMode(QAbstractItemView::ExtendedSelection);
     wdg->mModel->showFiles(true);
     wdg->mModel->showReadOnlyFolders(true);
 }

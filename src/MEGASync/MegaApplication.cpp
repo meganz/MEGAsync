@@ -1732,7 +1732,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         data->setInitialTransfers(uploads.size());
         foreach(auto uploadInfo, uploads)
         {
-            QString filePath = uploadInfo->getLocalPath();
+            QString filePath = uploadInfo->getSourceItemPath();
             uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
 
             //Do not update the last items, leave Qt to do it in its natural way
@@ -4888,8 +4888,14 @@ void MegaApplication::uploadFilesToNode(const QList<QUrl>& files,  MegaHandle ta
 
     //Append the list of files to the upload queue, but avoid duplicates
     std::for_each(files.begin(), files.end(), [&](const QUrl &file) {
-        if (!uploadQueue.contains(file.toLocalFile())) {
-            uploadQueue.enqueue(file.toLocalFile());
+        if (!uploadQueue.contains(file.toLocalFile()))
+        {
+            auto item(file.toLocalFile());
+            if(item.endsWith(QDir::separator()))
+            {
+                item = item.left(item.lastIndexOf(QDir::separator()));
+            }
+            uploadQueue.enqueue(item);
         }
     });
     processUploadQueue(targetNode);

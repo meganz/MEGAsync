@@ -30,6 +30,13 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
         onConflictProcessed();
     });
 
+    connect(&mFolderMoveCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
+        onConflictProcessed();
+    });
+    connect(&mFileMoveCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
+        onConflictProcessed();
+    });
+
     QIcon warningIcon(QString::fromLatin1(":/images/icon_warning.png"));
     ui->lIcon->setPixmap(warningIcon.pixmap(ui->lIcon->size()));
 
@@ -60,10 +67,6 @@ void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_
         nodesOnCloudDrive.insert(nodeName.toLower(), nodes->get(index));
     }
 
-    QList<std::shared_ptr<DuplicatedNodeInfo>> resolvedInfoList;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> filesConflictedInfoList;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> foldersConflictedInfoList;
-
     auto counter(0);
     EventUpdater checkUpdater(nodePaths.size());
 
@@ -83,7 +86,7 @@ void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_
         }
 
         auto info = std::make_shared<DuplicatedNodeInfo>(checker);
-        info->setLocalPath(localPath);
+        info->setSourceItemPath(localPathInfo.absoluteFilePath());
         info->setParentNode(parentNode);
 
         QString nodeToUploadName(localPathInfo.fileName());
@@ -91,7 +94,7 @@ void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_
         if(node)
         {
             std::shared_ptr<mega::MegaNode> smartNode(node->copy());
-            info->setRemoteConflictNode(smartNode);
+            info->setConflictNode(smartNode);
             info->setHasConflict(true);
             info->setName(nodeToUploadName);
 
@@ -105,6 +108,61 @@ void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_
             {
                 isFile ? mFileConflicts.append(info) : mFolderConflicts.append(info);
             }
+        }
+        else
+        {
+            mResolvedUploads.append(info);
+        }
+
+        checkUpdater.update(counter);
+        counter++;
+    }
+}
+
+void DuplicatedNodeDialog::checkMoves(
+    QList<mega::MegaHandle> moveHandles, std::shared_ptr<mega::MegaNode> parentNode)
+{
+    std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
+    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
+
+    for(int index = 0; index < nodes->size(); ++index)
+    {
+        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+        nodesOnCloudDrive.insert(nodeName, nodes->get(index));
+    }
+
+    auto counter(0);
+    EventUpdater checkUpdater(moveHandles.size());
+
+    while (!moveHandles.isEmpty())
+    {
+        auto moveHandle(moveHandles.takeFirst());
+        std::unique_ptr<mega::MegaNode> moveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandle));
+        auto moveNodeName(QString::fromUtf8(moveNode->getName()));
+
+        DuplicatedUploadBase* checker(nullptr);
+        if(moveNode->isFile())
+        {
+            checker = &mFileMoveCheck;
+        }
+        else
+        {
+            checker = &mFolderMoveCheck;
+        }
+
+        auto info = std::make_shared<DuplicatedMoveNodeInfo>(checker);
+        info->setParentNode(parentNode);
+        info->setSourceItemHandle(moveHandle);
+
+        auto MEGANode(nodesOnCloudDrive.value(moveNodeName));
+        if(MEGANode)
+        {
+            std::shared_ptr<mega::MegaNode> smartNode(MEGANode->copy());
+            info->setConflictNode(smartNode);
+            info->setHasConflict(true);
+            info->setName(moveNodeName);
+            info->setIsNameConflict(true);
+            moveNode->isFile() ? mFileNameConflicts.append(info) : mFolderNameConflicts.append(info);
         }
         else
         {
@@ -164,7 +222,7 @@ void DuplicatedNodeDialog::fillDialog()
 
 void DuplicatedNodeDialog::processConflict(std::shared_ptr<DuplicatedNodeInfo> conflict)
 {
-    mChecker->fillUi(this, conflict);
+    conflict->checker()->fillUi(this, conflict);
 }
 
 void DuplicatedNodeDialog::onConflictProcessed()

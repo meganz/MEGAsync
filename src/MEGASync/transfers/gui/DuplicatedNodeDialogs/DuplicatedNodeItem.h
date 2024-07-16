@@ -75,6 +75,8 @@ public:
     ~DuplicatedRemoteItem();
 
     void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type) override;
+    void setInfoSpecifyingHandle(std::shared_ptr<DuplicatedNodeInfo> info, mega::MegaHandle handle,  NodeItemType type);
+
     std::shared_ptr<mega::MegaNode> getNode();
 
 protected:
@@ -99,7 +101,6 @@ public:
     virtual ~DuplicatedLocalItem();
 
     void setInfo(std::shared_ptr<DuplicatedNodeInfo> info, NodeItemType type) override;
-    const QString& getLocalPath();
 
 protected:
     QString getNodeName() override;

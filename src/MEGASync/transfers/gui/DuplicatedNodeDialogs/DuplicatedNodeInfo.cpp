@@ -5,10 +5,9 @@
 #include <MegaApplication.h>
 
 DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker)
-    : mSolution(NodeItemType::DONT_UPLOAD),
-    mIsLocalFile(false),
+    : mSolution(NodeItemType::UPLOAD),
+    mSourceItemIsFile(false),
     mHasConflict(false),
-    mHaveDifferentType(false),
     mIsNameConflict(false),
     mChecker(checker)
 {
@@ -25,31 +24,31 @@ void DuplicatedNodeInfo::setParentNode(const std::shared_ptr<mega::MegaNode> &ne
     mParentNode = newParentNode;
 }
 
-const std::shared_ptr<mega::MegaNode> &DuplicatedNodeInfo::getRemoteConflictNode() const
+const std::shared_ptr<mega::MegaNode> &DuplicatedNodeInfo::getConflictNode() const
 {
-    return mRemoteConflictNode;
+    return mConflictNode;
 }
 
-void DuplicatedNodeInfo::setRemoteConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode)
+void DuplicatedNodeInfo::setConflictNode(const std::shared_ptr<mega::MegaNode> &newRemoteConflictNode)
 {
-    mRemoteConflictNode = newRemoteConflictNode;
+    mConflictNode = newRemoteConflictNode;
 
-    auto time = newRemoteConflictNode->isFile() ? mRemoteConflictNode->getModificationTime()
-                                                : mRemoteConflictNode->getCreationTime();
-    mNodeModifiedTime = QDateTime::fromSecsSinceEpoch(time);
+    auto time = newRemoteConflictNode->isFile() ? mConflictNode->getModificationTime()
+                                                : mConflictNode->getCreationTime();
+    mConflictNodeModifiedTime = QDateTime::fromSecsSinceEpoch(time);
 }
 
-const QString &DuplicatedNodeInfo::getLocalPath() const
+const QString &DuplicatedNodeInfo::getSourceItemPath() const
 {
-    return mLocalPath;
+    return mSourcePath;
 }
 
-void DuplicatedNodeInfo::setLocalPath(const QString &newLocalPath)
+void DuplicatedNodeInfo::setSourceItemPath(const QString &newLocalPath)
 {
-    mLocalPath = newLocalPath;
+    mSourcePath = newLocalPath;
 
-    QFileInfo localNode(mLocalPath);
-    mIsLocalFile = localNode.exists() && localNode.isFile();
+    QFileInfo localNode(mSourcePath);
+    mSourceItemIsFile = localNode.exists() && localNode.isFile();
 }
 
 NodeItemType DuplicatedNodeInfo::getSolution() const
@@ -66,9 +65,9 @@ const QString &DuplicatedNodeInfo::getNewName()
 {
     if(mSolution == NodeItemType::UPLOAD_AND_RENAME)
     {
-        if(mNewName.isEmpty() && mRemoteConflictNode)
+        if(mNewName.isEmpty() && mConflictNode)
         {
-            mNewName = Utilities::getNonDuplicatedNodeName(mRemoteConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
+            mNewName = Utilities::getNonDuplicatedNodeName(mConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
             auto& checkedNames = mChecker->getCheckedNames();
             checkedNames.removeOne(mName);
             checkedNames.append(mNewName);
@@ -82,7 +81,7 @@ const QString &DuplicatedNodeInfo::getDisplayNewName()
 {
     if(mDisplayNewName.isEmpty())
     {
-        mDisplayNewName = Utilities::getNonDuplicatedNodeName(mRemoteConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
+        mDisplayNewName = Utilities::getNonDuplicatedNodeName(mConflictNode.get(), mParentNode.get(), mName, false, mChecker->getCheckedNames());
     }
 
     return mDisplayNewName;
@@ -103,35 +102,34 @@ void DuplicatedNodeInfo::setHasConflict(bool newHasConflict)
     mHasConflict = newHasConflict;
 }
 
-bool DuplicatedNodeInfo::isLocalFile() const
+bool DuplicatedNodeInfo::sourceItemIsFile() const
 {
-    return mIsLocalFile;
+    return mSourceItemIsFile;
 }
 
-bool DuplicatedNodeInfo::isRemoteFile() const
+bool DuplicatedNodeInfo::conflictNodeIsFile() const
 {
-    return mRemoteConflictNode->isFile();
+    return mConflictNode->isFile();
 }
 
 const QDateTime &DuplicatedNodeInfo::getNodeModifiedTime() const
 {
-    return mNodeModifiedTime;
+    return mConflictNodeModifiedTime;
 }
 
-const QDateTime &DuplicatedNodeInfo::getLocalModifiedTime() const
+const QDateTime &DuplicatedNodeInfo::getSourceItemModifiedTime() const
 {
-    return mLocalModifiedTime;
+    return mSourceItemModifiedTime;
 }
 
-void DuplicatedNodeInfo::setLocalModifiedTime(const QDateTime &newLocalModifiedTime)
+void DuplicatedNodeInfo::setSourceItemModifiedTime(const QDateTime &newSourceItemModifiedTime)
 {
-    mLocalModifiedTime = newLocalModifiedTime;
-    emit localModifiedDateUpdated();
+    mSourceItemModifiedTime = newSourceItemModifiedTime;
 }
 
 bool DuplicatedNodeInfo::haveDifferentType() const
 {
-    return mHaveDifferentType;
+    return sourceItemIsFile() != conflictNodeIsFile();
 }
 
 bool DuplicatedNodeInfo::isNameConflict() const
@@ -144,6 +142,11 @@ void DuplicatedNodeInfo::setIsNameConflict(bool newIsNameConflict)
     mIsNameConflict = newIsNameConflict;
 }
 
+DuplicatedUploadBase* DuplicatedNodeInfo::checker() const
+{
+    return mChecker;
+}
+
 void DuplicatedNodeInfo::setNewName(const QString &newNewName)
 {
     mNewName = newNewName;
@@ -152,4 +155,19 @@ void DuplicatedNodeInfo::setNewName(const QString &newNewName)
 void DuplicatedNodeInfo::setName(const QString &newName)
 {
     mName = newName;
+}
+
+mega::MegaHandle DuplicatedMoveNodeInfo::getSourceItemHandle() const
+{
+    return mSourceItemNode->getHandle();
+}
+
+void DuplicatedMoveNodeInfo::setSourceItemHandle(const mega::MegaHandle& sourceItemHandle)
+{
+    mSourceItemNode = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(sourceItemHandle));
+}
+
+bool DuplicatedMoveNodeInfo::sourceItemIsFile() const
+{
+    return mSourceItemNode->isFile();
 }
