@@ -4742,7 +4742,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Your sync has been set up and will automatically sync selected data whenever the MEGA Desktop App is running.</source>
         <translatorcomment>Text indicating that the sync was successfully configured CON-467</translatorcomment>
-        <translation>La sincronización se ha configurado y sincronizará automáticamente los datos seleccionados cada vez que se ejecute la aplicación de escritorio.</translation>
+        <translation>La sincronización se ha configurado y sincronizará automáticamente los datos seleccionados mientras la aplicación de escritorio esté en funcionamiento. </translation>
     </message>
     <message>
         <source>Your sync has been set up</source>
