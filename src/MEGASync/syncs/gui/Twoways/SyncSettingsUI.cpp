@@ -1,8 +1,8 @@
 #include "SyncSettingsUI.h"
 
-#include "syncs/gui/Twoways/SyncTableView.h"
-#include "syncs/model/SyncItemModel.h"
-#include <MegaApplication.h>
+#include "SyncTableView.h"
+#include "SyncItemModel.h"
+#include "MegaApplication.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)

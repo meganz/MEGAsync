@@ -19,11 +19,6 @@
 #include <QApplication>
 #include <QScreen> // Implicitly included
 
-#include <memory>
-#if DEBUG
-#include <iostream>
-#endif
-
 class QMLComponent : public QObject
 {
 public:

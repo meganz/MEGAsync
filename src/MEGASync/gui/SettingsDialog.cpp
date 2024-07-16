@@ -11,15 +11,18 @@
 #include "UserAttributesRequests/MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/RemoveBackupDialog.h"
+#include "Backups/RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "Twoways/BindFolderDialog.h"
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
 #include "ThemeManager.h"
 #include "StatsEventHandler.h"
+#include "AccountDetailsDialog.h"
+#include "ChangePassword.h"
+
 
 #include <QApplication>
 #include <QDesktopServices>

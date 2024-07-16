@@ -3,7 +3,7 @@
 
 #include <megaapi.h>
 #include "EncryptedSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include "EphemeralCredentials.h"
 
 #include <QLocale>
@@ -11,10 +11,9 @@
 #include <QMutex>
 #include <QDataStream>
 
-#include <iostream>
-#include <assert.h>
 #include <chrono>
 #include <type_traits>
+#include <memory>
 
 Q_DECLARE_METATYPE(QList<long long>)
 
