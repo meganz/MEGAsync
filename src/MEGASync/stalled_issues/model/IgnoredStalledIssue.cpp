@@ -51,7 +51,7 @@ void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
             if(info.exists())
             {
                 mIgnoredPaths.append({path,
-                    false,
+                    IgnoredPath::IgnorePathSide::LOCAL,
                     info.isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
             }
         };
@@ -75,7 +75,7 @@ void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
             if(node)
             {
                 mIgnoredPaths.append({path,
-                    true,
+                    IgnoredPath::IgnorePathSide::REMOTE,
                     node->isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
             }
         };
@@ -150,7 +150,7 @@ bool IgnoredStalledIssue::autoSolveIssue()
                     QDir dir;
                     foreach(auto ignoredPath, mIgnoredPaths)
                     {
-                        if(ignoredPath.cloud)
+                        if(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE)
                         {
                             dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
                         }
@@ -202,7 +202,7 @@ bool CloudNodeIsBlockedIssue::isAutoSolvable() const
 void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
     IgnoredStalledIssue::fillIssue(stall);
-    mIgnoredPaths.append({consultCloudData()->getFilePath(), true, MegaIgnoreNameRule::Target::f});
+    mIgnoredPaths.append({consultCloudData()->getFilePath(), IgnoredPath::IgnorePathSide::REMOTE, MegaIgnoreNameRule::Target::f});
 }
 
 bool CloudNodeIsBlockedIssue::showDirectoryInHyperlink() const
