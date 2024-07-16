@@ -27,7 +27,7 @@ font-size: 11px;
 
 QGroupBox
 {
-margin-top: 15px;
+margin-top: 25px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
