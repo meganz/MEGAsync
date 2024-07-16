@@ -58,54 +58,6 @@
     </message>
 </context>
 <context>
-    <name>AddBackupDialog</name>
-    <message>
-        <source>Add backup folder</source>
-        <translatorcomment>Window title for add backup dialog (not backup wizard)</translatorcomment>
-        <translation>Ajouter un dossier de sauvegarde</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Line edit title label that shows the path that is going to be backed up</translatorcomment>
-        <translation>Dossier de sauvegarde :</translation>
-    </message>
-    <message>
-        <source>Choose folder</source>
-        <translatorcomment>Line edit placeholder, here the path of the backup will be displayed once the user select it</translatorcomment>
-        <translation>Choisir un dossier</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text that opens a dialog to choose a folder</translatorcomment>
-        <translation>Choisir</translation>
-    </message>
-    <message>
-        <source>Backup to:</source>
-        <translatorcomment>Remote path where the backup is going to be stored</translatorcomment>
-        <translation>Sauvegarder vers :</translation>
-    </message>
-    <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button that allows users to add exclusion rules for their new backups.SNC-2565</translatorcomment>
-        <translation>Ajouter des exclusions</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button text to add a backup</translatorcomment>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel the addition of a backup</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Voulez-vous poursuivre ?</translation>
-    </message>
-</context>
-<context>
     <name>AlertFilterType</name>
     <message>
         <source>All notifications</source>
@@ -380,57 +332,6 @@
     </message>
 </context>
 <context>
-    <name>BackupNameConflictDialog</name>
-    <message>
-        <source>Rename folder</source>
-        <translatorcomment>Title of the dialog prompting the user to resolve backup name conflicts by renaming them</translatorcomment>
-        <translation>Renommer le dossier</translation>
-    </message>
-    <message>
-        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
-        <translatorcomment>Text shown to the user if there is a name conflict with a folder in the Backups remote folder for the current device</translatorcomment>
-        <translation>Un dossier du même nom « %1 » existe déjà dans vos Sauvegardes. Renommez le nouveau dossier pour poursuivre la sauvegarde. Le nom de dossier ne changera pas sur votre ordinateur.</translation>
-    </message>
-    <message>
-        <source>If you don&apos;t want to rename the new folder, stop the backup in the [A]Backup centre[/A] for the existing folder. Then setup the backup for the new folder again.</source>
-        <translatorcomment>Text instructing the user to go to the backup center to solve the backup name conflict</translatorcomment>
-        <translation>Si vous ne voulez pas renommer le nouveau dossier, arrêtez la sauvegarde pour le dossier existant dans le [A]Centre de sauvegarde[/A]. Ensuite, configurez de nouveau la sauvegarde du nouveau dossier.</translation>
-    </message>
-    <message>
-        <source>Rename and backup</source>
-        <translatorcomment>Text for the button to apply the name conflict resolution in the backup name conflict resolution dialog</translatorcomment>
-        <translation>Renommer et sauvegarder</translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Text informing the user that they can't have duplicated backup names and instructing them to rename them</translatorcomment>
-        <translation>Vous ne pouvez pas sauvegarder des dossiers qui portent le même nom. Renommez-les pour poursuivre la sauvegarde. Le nom des dossiers ne changera pas sur votre ordinateur.</translation>
-    </message>
-</context>
-<context>
-    <name>BackupRenameWidget</name>
-    <message>
-        <source>Local folder %1:</source>
-        <translatorcomment>Backup rename widget dialog label. Placeholder will display the conflict count. In the right of the label the local folder path will be displayed</translatorcomment>
-        <translation>Dossier local %1 :</translation>
-    </message>
-    <message>
-        <source>Rename backup folder</source>
-        <translatorcomment>Placeholder for the backup rename widget line edit.</translatorcomment>
-        <translation>Renommez le dossier de sauvegarde</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>In the right of this label the line edit will be displayed. This line edit will be used by the user to change the backup name.</translatorcomment>
-        <translation>Dossier de sauvegarde :</translation>
-    </message>
-    <message>
-        <source>A folder named &quot;%1&quot; already exists in your Backups. Rename the new folder to continue with the backup.</source>
-        <translatorcomment>Error message displayed in the top of the rename backup dialog. It indicates that a backup with that name already exists.</translatorcomment>
-        <translation>Un dossier du même nom « %1 » existe déjà dans vos Sauvegardes. Renommez le nouveau dossier pour poursuivre la sauvegarde.</translation>
-    </message>
-</context>
-<context>
     <name>BackupSettingsUI</name>
     <message>
         <source>Backups</source>
@@ -528,156 +429,21 @@
     </message>
 </context>
 <context>
-    <name>BackupsWizard</name>
+    <name>BackupsStrings</name>
     <message>
-        <source>Setup backups</source>
-        <translatorcomment>Backup wizard window title</translatorcomment>
-        <translation>Configurer des sauvegardes</translation>
-    </message>
-    <message>
-        <source>You can back up folders from your computer to MEGA. Files will automatically back up when the desktop app is running.</source>
-        <translatorcomment>Backup wizard body text</translatorcomment>
-        <translation>Vous ne pouvez pas sauvegarder des dossiers de votre ordinateur vers MEGA. Les fichiers seront sauvegardés automatiquement quand l’appli pour ordinateur sera en fonction.</translation>
+        <source>Add backup</source>
+        <translatorcomment>Add backup window title CON-738</translatorcomment>
+        <translation>Ajouter une sauvegarde</translation>
     </message>
     <message>
-        <source>No folders available</source>
-        <translatorcomment>Backup wizard text that indicates that here aren´t any folder available for backup.</translatorcomment>
-        <translation>Aucun dossier n’est proposé</translation>
+        <source>Confirm folders</source>
+        <translatorcomment>Step label indicating the user that he is in the backup confirm step CON-738</translatorcomment>
+        <translation>Confirmer les dossiers</translation>
     </message>
     <message>
-        <source>More folders</source>
-        <translatorcomment>Button text that opens a window where you can choose a folder to backup</translatorcomment>
-        <translation>Autres dossiers</translation>
-    </message>
-    <message>
-        <source>All folders have been synced or backed up.</source>
-        <translatorcomment>Label that indicates that all the folders in the system have been synced or backed up</translatorcomment>
-        <translation>Tous les dossiers ont été synchronisés ou sauvegardés.</translation>
-    </message>
-    <message>
-        <source>Selected backup folders</source>
-        <translatorcomment>This is the title for a table that shows the full list of selected folders for backup</translatorcomment>
-        <translation>Dossiers de sauvegarde sélectionnés</translation>
-    </message>
-    <message>
-        <source>Backup to</source>
-        <translatorcomment>Line edit title, in this line edit the remote folder for backups will be displayed</translatorcomment>
-        <translation>Sauvegarder vers</translation>
-    </message>
-    <message>
-        <source>Folders will be stored in backups and you can check the status of your backups in backup centre.</source>
-        <translatorcomment>Successfull dialog text</translatorcomment>
-        <translation>Les dossiers seront stockés dans Sauvegardes et vous pourrez vérifier l’état de vos sauvegardes dans le Centre de sauvegarde.</translation>
-    </message>
-    <message>
-        <source>Show more…</source>
-        <translatorcomment>Button text that expands failed backup list</translatorcomment>
-        <translation>Afficher plus</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Précédent</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Button text to cancel the creation of backups</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Next</source>
-        <translatorcomment>Button text to navigate back in the backup wizard</translatorcomment>
-        <translation>Suivant</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translatorcomment>Button text shown in error dialog, it allows the user to go to first step on backup wizard and start the process again</translatorcomment>
-        <translation>Réessayer</translation>
-    </message>
-    <message>
-        <source>Dismiss</source>
-        <translatorcomment>Button text shown in success dialog, it closes the dialog.</translatorcomment>
-        <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>Setup</source>
-        <translatorcomment>Step 2 button text that will initiate the creation of the backups.</translatorcomment>
-        <translation>Configurer</translation>
-    </message>
-    <message>
-        <source>Collapse</source>
-        <translatorcomment>Error dialog button text that will collapse the list of failed backups.</translatorcomment>
-        <translation>Replier</translation>
-    </message>
-    <message>
-        <source>Add folders</source>
-        <translatorcomment>Button Text, the user will be able to select new folders to backup if clicks here.</translatorcomment>
-        <translation>Ajouter des dossiers</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n folder</source>
-        <translatorcomment>Label that indicates the number of folders that are going to be backed up.</translatorcomment>
-        <translation><numerusform>%n dossier</numerusform><numerusform>%n dossiers</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Backup created</source>
-        <translatorcomment>Backup successfully created dialog title</translatorcomment>
-        <translation><numerusform>La sauvegarde a été créée</numerusform><numerusform>Les sauvegardes ont été créées</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>We&apos;re backing up your folder. The time this takes depends on the files in this folder.</source>
-        <translatorcomment>Label indicating that the backup configuration was successfull and it is being uploaded.</translatorcomment>
-        <translation><numerusform>Nous sauvegardons votre dossier. Le temps nécessaire dépendra des fichiers dans ce dossier.</numerusform><numerusform>Nous sauvegardons vos dossiers. Le temps nécessaire dépendra des fichiers dans les dossiers.</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Problem backing up folder</source>
-        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Problème de sauvegarde de votre dossier</numerusform><numerusform>Problème de sauvegarde de vos dossiers</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>This folder wasn&apos;t backed up. Try again.</source>
-        <translatorcomment>Label that indicates that there happened an error backing up a folder/folders</translatorcomment>
-        <translation><numerusform>Ce dossier n’a pas été sauvegardé. Réessayez.</numerusform><numerusform>Ces dossiers n’ont pas été sauvegardés. Réessayez.</numerusform></translation>
-    </message>
-    <message>
-        <source>Folder is already selected. Select a different folder.</source>
-        <translatorcomment>Warning message that indicates that the folder that the user is trying to select is already selected</translatorcomment>
-        <translation>Le dossier est déjà sélectionné. Sélectionnez un dossier différent.</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Text shown at the end of a warning dialog, asking the user if they want to proceed with the action in spite of the warning</translatorcomment>
-        <translation>Voulez-vous poursuivre ?</translation>
-    </message>
-    <message>
-        <source>1. [B]Select[/B] folders to backup</source>
-        <translatorcomment>Title for the first step of the backups wizard, instructing the user to select folders to backup</translatorcomment>
-        <translation>1. [B]Sélectionner[/B] les dossiers à sauvegarder</translation>
-    </message>
-    <message>
-        <source>2. [B]Confirm[/B] backup settings</source>
-        <translatorcomment>Title for the second step of the backups wizard, instructing the user to confirm his choice</translatorcomment>
-        <translation>2. [B]Confirmer[/B] les paramètres de sauvegarde</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to cancel? All changes will be lost.</source>
-        <translatorcomment>Warning dialog that appears when user click in cancel button in backup wizard and it will be closed.</translatorcomment>
-        <translation>Voulez-vous annuler ? Tous les changements seront perdus.</translation>
-    </message>
-    <message>
-        <source>Choose directory</source>
-        <translatorcomment>Folder selector window title text</translatorcomment>
-        <translation>Sélectionner un dossier</translation>
-    </message>
-    <message>
-        <source>Error: %1</source>
-        <translatorcomment>Placeholder will show the error message, this is being shown in a tooltip</translatorcomment>
-        <translation>Erreur : %1</translation>
-    </message>
-    <message>
-        <source>View in backup centre</source>
-        <translatorcomment>Text for a button allowing the user to view the newly created backup i nthe Backup center (in the webclient)</translatorcomment>
-        <translation>Visualiser dans le Centre de sauvegarde</translation>
+        <source>Select folders</source>
+        <translatorcomment>Step label indicating the user that he is in the backup select step CON-738</translatorcomment>
+        <translation>Choisir des dossiers</translation>
     </message>
 </context>
 <context>
@@ -1131,19 +897,6 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Résoudre</translation>
-    </message>
-</context>
-<context>
-    <name>CloudNodeUndecryptedHeader</name>
-    <message>
-        <source>Cloude node undecrypted [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget sync stall thatoccurs when the node being synced cannot be decrypted.[B] is for bold.SNC-2565</translatorcomment>
-        <translation>Impossible de déchiffrer un élément dans MEGA [B]%1[/B]</translation>
-    </message>
-    <message>
-        <source>Decryption process could not be completed. Reload your account on [A]MEGA[/A] or contact [A1]Support[/A1].</source>
-        <translatorcomment>Subtitle for the header widget sync stall thatoccurs when the node being synced cannot be decrypted, [A] will be replaced by Mega link, [A1] will be replaced by support link. SNC-2565</translatorcomment>
-        <translation>Le processus de déchiffrement ne s’est pas terminé. Rechargez votre compte sur [A]MEGA[/A] ou contactez l’[A1]assistance[/A1].</translation>
     </message>
 </context>
 <context>
@@ -2274,29 +2027,6 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     </message>
 </context>
 <context>
-    <name>HeaderCaseIssueChecker</name>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>Actualiser</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box to refresh the stalled issues when an external change to a stalled issue is detected.SNC-2565</translatorcomment>
-        <translation>Le problème peut avoir été résolu de façon externe.
-Actualisez la liste.</translation>
-    </message>
-</context>
-<context>
-    <name>IgnoredStalledIssue</name>
-    <message>
-        <source>We could not update the megaignore file. Please, check if it has write permissions.</source>
-        <translatorcomment>Text in message box shown when a failure in adding rules in the file containing ignore rules.SNC-2565</translatorcomment>
-        <translation>Impossible de mettre à jour le fichier .megaignore. Vérifiez si vous disposez des droits d’écriture pour ce fichier.</translation>
-    </message>
-</context>
-<context>
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
@@ -2795,17 +2525,12 @@ Redémarrez votre ordinateur pour terminer l’installation.</translation>
     <message>
         <source>Please select which version you want to keep</source>
         <translatorcomment>Title for the solve options in a local remote changed stalled issue.SNC-2565</translatorcomment>
-        <translation>Sélectionnez la version à conserver</translation>
+        <translation>Sélectionnez la version à garder</translation>
     </message>
     <message>
         <source>Choose both</source>
         <translatorcomment>Button text to choose both local and remote versions in the local remote changed stall body widget.SNC-2565</translatorcomment>
         <translation>Choisir les deux</translation>
-    </message>
-    <message>
-        <source>Chosen</source>
-        <translatorcomment>TText shown on the choosen version (local, remote, both) in a solved local remote stall.SNC-2565</translatorcomment>
-        <translation>Choisi</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2892,18 +2617,6 @@ Please wait for the upload to complete.</source>
         <source>This action will choose the remote side</source>
         <translatorcomment>Informative text in a message box explainging that the remote file will be chosen when the user chooses the last modified option in a local remote changed stalled issue.SNC-2565</translatorcomment>
         <translation>Cette action choisira l’élément déjà présent sur MEGA.</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>Actualiser</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Text in a message box shown when a stalled issue have been solved externally by the user and stalled issues dialog needs update.SNC-2565</translatorcomment>
-        <translation>Le problème peut avoir été résolu de façon externe.
-Actualisez la liste.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3027,6 +2740,36 @@ Attendez la fin du téléversement.</translation>
         <translatorcomment>Informative text in a message box shown when the user chooses the local version explaining what happens to the remote files (with versioning disabled),[B] is for bold.SAT-800</translatorcomment>
         <translation>Les fichiers [B]locaux[/B] seront téléversés vers MEGA et remplaceront les fichiers actuels qui seront déplacés dans le dossier SyncDebris de votre Corbeille MEGA.</translation>
     </message>
+    <message>
+        <source>Unable to remove the local file</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote file, but removing the local file failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de supprimer le fichier local</translation>
+    </message>
+    <message>
+        <source>Unable to remove the local folder</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the remote folder, but removing the local folder failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de supprimer le dossier local</translation>
+    </message>
+    <message>
+        <source>Unable to remove the file stored in MEGA</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local file, but removing the MEGA file failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de supprimer le fichier stocké dans MEGA</translation>
+    </message>
+    <message>
+        <source>Unable to remove the folder stored in MEGA</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep the local folder, but removing the MEGA folder failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de supprimer le dossier stocké dans MEGA</translation>
+    </message>
+    <message>
+        <source>Unable to update both local and MEGA files</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep both local and remote files, but the process failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de mettre à jour les fichiers ni localement ni dans MEGA</translation>
+    </message>
+    <message>
+        <source>Unable to update both local and MEGA folders</source>
+        <translatorcomment>Local/Remote conflict stall issue. User chose to keep both local and remote folders, but the process failed. Used in a tooltip. SAT-1110</translatorcomment>
+        <translation>Impossible de mettre à jour les dossiers ni localement ni dans MEGA</translation>
+    </message>
 </context>
 <context>
     <name>LocalAndRemoteNameConflicts</name>
@@ -3047,6 +2790,14 @@ Attendez la fin du téléversement.</translation>
         <source>This file has conflicting copies</source>
         <translatorcomment>Subtitle for the header widget of sync stall that occurs when a new file/folder exists both locally and remotely, the user must choose a version.SNC-2565</translatorcomment>
         <translation>Cet élément a des copies contradictoires</translation>
+    </message>
+</context>
+<context>
+    <name>LocalMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Local</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur. SAT-973</translatorcomment>
+        <translation>Locale</translation>
     </message>
 </context>
 <context>
@@ -4266,26 +4017,32 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
     </message>
 </context>
 <context>
+    <name>MoveOrRenameCannotOccur</name>
+    <message>
+        <source>Please select which version you want to keep</source>
+        <translatorcomment>Title for the solve options in a move or rename conflict stalled issue. SAT-973</translatorcomment>
+        <translation>Choisissez la version à garder</translation>
+    </message>
+</context>
+<context>
+    <name>MoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Changes Undone</source>
+        <translatorcomment>Informative message shown when the user selects local or remote option, explaining that the local or remote changes are undone in order to keep the other side changes. SAT-973</translatorcomment>
+        <translation>Les modifications ont été annulées</translation>
+    </message>
+</context>
+<context>
     <name>MoveOrRenameCannotOccurHeader</name>
     <message>
-        <source>Cannot move or rename [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when the item cannot be moved ore renamed, [B] is for bold.SNC-2565</translatorcomment>
-        <translation>Impossible de déplacer ou de renommer [B]%1[/B]</translation>
+        <source>The local and remote locations have changed at the same time</source>
+        <translatorcomment>Subtitle description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
+        <translation>Les dossiers locaux et dans MEGA ont changé en même temps</translation>
     </message>
     <message>
-        <source>A move or rename was detected in MEGA, but could not be replicated in the local filesystem.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>Un déplacement ou un renommage a été détecté dans MEGA, mais n’a pas pu être répliqué localement.</translation>
-    </message>
-    <message>
-        <source>A move or rename was detected in the local filesystem, but could not be replicated in MEGA.</source>
-        <translatorcomment>Description for the header widget of sync stall that occurs when the item cannot be moved ore renamed.SNC-2565</translatorcomment>
-        <translation>Un déplacement ou un renommage a été détecté dans le système de fichiers local, mais n’a pas pu être reproduit sur MEGA.</translation>
-    </message>
-    <message>
-        <source>Solve</source>
-        <translatorcomment>Button in a sync stall header widget to solve the issue.SNC-2565</translatorcomment>
-        <translation>Résoudre</translation>
+        <source>Can’t move or rename some items in [B]%1[/B]</source>
+        <translatorcomment>Title description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
+        <translation>Impossible de déplacer ou de renommer certains éléments dans [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -4294,6 +4051,19 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
         <source>Too many items selected. To continue, deselect some or select the parent folder instead.</source>
         <translatorcomment>Message displayed as a tooltip on the OK button when there are too many items selected. See CON-326.</translatorcomment>
         <translation>Trop d’éléments ont été sélectionnés. Pour continuer, dessélectionnez-en ou sélectionnez plutôt le dossier parent.</translation>
+    </message>
+</context>
+<context>
+    <name>MultiStepIssueSolverBase</name>
+    <message>
+        <source>Solve issues</source>
+        <translatorcomment>Notification title for MoveOrRenameCannotOccur stalled issue notifications. SAT-1016.</translatorcomment>
+        <translation>Résoudre les problèmes</translation>
+    </message>
+    <message>
+        <source>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</source>
+        <translatorcomment>Notification sent when at least one MoveOrRenameCannotOccur has failed. SAT-1016.</translatorcomment>
+        <translation>Certains problèmes n’ont pas pu être résolus.[BR]Consultez l’écran Problèmes pour connaître les options de résolution, puis essayez à nouveau de résoudre les problèmes.</translation>
     </message>
 </context>
 <context>
@@ -4322,18 +4092,6 @@ Tous les autres transferts sélectionnés seront annulés.</translation>
         <source>Rename</source>
         <translatorcomment>Solve option for name conflict sync stall.SNC-2565</translatorcomment>
         <translation>Renommer</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translatorcomment>Button to refresh sync stalls when an external change to sync stalls is detected.SNC-2565</translatorcomment>
-        <translation>Actualiser</translation>
-    </message>
-    <message>
-        <source>The issue may have been solved externally.
-Please, refresh the list.</source>
-        <translatorcomment>Confirmation text when a name conflict has been resolved externally.SNC-2565</translatorcomment>
-        <translation>Le problème peut avoir été résolu de façon externe.
-Actualisez la liste.</translation>
     </message>
     <message>
         <source>%1 no longer exists.
@@ -4386,6 +4144,14 @@ Actualisez la fenêtre.</translation>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
         <translation>Remplacer le dossier local [B]%1[/B] ?</translation>
+    </message>
+</context>
+<context>
+    <name>NameConflictedStalledIssue::CloudConflictedNames</name>
+    <message>
+        <source>Unable to merge this folder.</source>
+        <translatorcomment>Error message shown as a tooltip when merging folders failed in a name conflict stalled issue. SAT-1110</translatorcomment>
+        <translation>Impossible de fusionner ces dossiers</translation>
     </message>
 </context>
 <context>
@@ -4493,6 +4259,16 @@ and rename the files with the same name but different content (adding a suffix l
         <source>This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).</source>
         <translatorcomment>Info text for confirmation message for picked solution in a name conflict sync stall.SNC-2565</translatorcomment>
         <translation>Cette action supprimera les fichiers en double, fusionnera tous les dossiers en un seul et, en cas de conflit de noms, renommera les éléments restants en ajoutant un suffixe tel que (1).</translation>
+    </message>
+    <message>
+        <source>Keep most recently modified file</source>
+        <translatorcomment>Button to solve a name conflict sync stall by keeping the most recently modified file.SAT-1147</translatorcomment>
+        <translation>Garder le fichier modifié le plus récemment</translation>
+    </message>
+    <message>
+        <source>This action will replace the older files with the same name with the most recently modified file (%1).</source>
+        <translatorcomment>Info text for confirmation message for picked solution (keep most recently modified file) in a name conflict sync stall.SAT-1147</translatorcomment>
+        <translation>Cette action remplacera les anciens fichiers du même nom par le fichier modifié le plus récemment (%1).</translation>
     </message>
 </context>
 <context>
@@ -5321,14 +5097,24 @@ Saisissez un nom différent.</translation>
         <translation>Le code d’A2F est erroné</translation>
     </message>
     <message>
-        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running. You can view your backups and their statuses under the Backup tab in Settings.</source>
-        <translatorcomment>Text indicating that the backup was successfully configured CON-468</translatorcomment>
-        <translation>Votre sauvegarde a été configurée et les données sélectionnées seront sauvegardées automatiquement lors de l’exécution de l’appli pour ordinateur. Vous pouvez visualiser vos sauvegardes et leur état sous l’onglet Sauvegarde des Paramètres.</translation>
-    </message>
-    <message>
         <source>Try again</source>
         <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
         <translation>Réessayer</translation>
+    </message>
+    <message>
+        <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
+        <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
+        <translation>Votre sauvegarde a été configurée et les données sélectionnées seront sauvegardées automatiquement lors de l’exécution de l’appli pour ordinateur.</translation>
+    </message>
+    <message>
+        <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
+        <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
+        <translation>Vous pouvez consulter vos sauvegardes et leur état dans l’onglet Sauvegarde des Paramètres.</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
+        <translation>Définir des exclusions</translation>
     </message>
 </context>
 <context>
@@ -5687,24 +5473,20 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Added support for Album and Collections links.
-- Updated Qt to v5.15.13.
-- Updated dependencies.
-- Improved error messages.
-- Improved the exclusions interface.
-- Added support for openSUSE Leap 15.6, Ubuntu 24.04 and Fedora 40.
-- Improved system integration for all operating systems.
-- Bug fixes and other improvements.
+        <source>- Improved handling of sync conflicts.
+- Improved management of failures within issue resolution.
+- Improved issue resolution dialogs.
+- Added default automatic issue resolution.
+- Added new UI improvements.
+- Fixed other bugs and made assorted other improvements.
 </source>
-        <translatorcomment>Change log for version 5.3.0.CON-709</translatorcomment>
-        <translation>– Prise en charge des liens Albums et Collections.
-– Mise à jour de Qt vers la version 5.15.13.
-– Mise à jour des dépendances.
-– Amélioration des messages d’erreur.
-– Amélioration de l’interface des exclusions.
-– Prise en charge d’openSUSE Leap 15.6, Ubuntu 24.04 et Fedora 40.
-– Intégration améliorée pour tous les systèmes d’exploitation.
-– Correctifs de bogues et améliorations.</translation>
+        <translatorcomment>Change log for version 5.4.0.CON-806</translatorcomment>
+        <translation>– Gestion améliorée des conflits de synchronisation.
+– Gestion améliorée des échecs de résolution des problèmes.
+– Amélioration des boîtes de dialogue de résolution des problèmes.
+– Résolution automatique par défaut des problèmes.
+– Amélioration de l’interface utilisateur.
+– Nous avons corrigé des bogues et apporté d’autres améliorations.</translation>
     </message>
 </context>
 <context>
@@ -6211,6 +5993,14 @@ Voulez-vous le supprimer quand même ?</translation>
     </message>
 </context>
 <context>
+    <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
+    <message>
+        <source>Remote</source>
+        <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
+        <translation>Dans MEGA</translation>
+    </message>
+</context>
+<context>
     <name>RemoveBackupDialog</name>
     <message>
         <source>Stop backup</source>
@@ -6292,6 +6082,19 @@ Voulez-vous le supprimer quand même ?</translation>
     </message>
 </context>
 <context>
+    <name>RenameLocalNodeDialog</name>
+    <message>
+        <source>Unable to rename this file.[BR]Check the name and the file permissions, then try again.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a local file has failed. SAT-1110</translatorcomment>
+        <translation>Impossible de renommer ce fichier.[BR]Vérifiez le nom et les droits du fichier, puis réessayez.</translation>
+    </message>
+    <message>
+        <source>Unable to rename this folder.[BR]Check the name and the folder permissions, then try again.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a local folder has failed. SAT-1110</translatorcomment>
+        <translation>Impossible de renommer ce dossier.[BR]Vérifiez le nom et les droits du dossier, puis réessayez.</translation>
+    </message>
+</context>
+<context>
     <name>RenameNodeDialog</name>
     <message>
         <source>Enter new file name</source>
@@ -6312,6 +6115,19 @@ Voulez-vous le supprimer quand même ?</translation>
         <source>Rename folder</source>
         <translatorcomment>Dialog title for folder renaming</translatorcomment>
         <translation>Renommer le dossier</translation>
+    </message>
+</context>
+<context>
+    <name>RenameRemoteNodeDialog</name>
+    <message>
+        <source>Unable to rename this file.[BR]Error: %1.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA file has failed. SAT-1110</translatorcomment>
+        <translation>Impossible de renommer ce fichier.[BR]Erreur : %1.</translation>
+    </message>
+    <message>
+        <source>Unable to rename this folder.[BR]Error: %1.</source>
+        <translatorcomment>Fail message shown on the rename dialog when renaming a MEGA folder has failed. SAT-1110</translatorcomment>
+        <translation>Impossible de renommer ce dossier.[BR]Erreur : %1.</translation>
     </message>
 </context>
 <context>
@@ -7024,11 +6840,6 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Le fichier local est téléversé</translation>
     </message>
     <message>
-        <source>Renamed to %1</source>
-        <translatorcomment>Label shown when the sync stall is solved by keeping both versions.SNC-2565</translatorcomment>
-        <translation>A été renommé</translation>
-    </message>
-    <message>
         <source>Chosen</source>
         <translatorcomment>Label shown when the sync stall is solved by choosing remote version.SNC-2565</translatorcomment>
         <translation>Choisi</translation>
@@ -7142,11 +6953,6 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Impossible de lire le contenu de ce dossier. Vérifiez les droits du dossier et assurez-vous qu’aucun élément n’est utilisé par d’autres applications.</translation>
     </message>
     <message>
-        <source>Cloud node undecrypted.</source>
-        <translatorcomment>Label descriping a sync stall is happening because the node cannot be decrypted( not owned by the user).SNC-2565</translatorcomment>
-        <translation>Impossible de déchiffrer l’élément dans le Disque nuagique</translation>
-    </message>
-    <message>
         <source>Waiting for scanning to complete.</source>
         <translatorcomment>Label descriping the sync sall is caused by ongoing scan operation.SNC-2565</translatorcomment>
         <translation>Attente de la fin de l’analyse</translation>
@@ -7214,6 +7020,26 @@ Voulez-vous le supprimer quand même ?</translation>
         <translatorcomment>Default resolution message when a sync stall is solved.SNC-2565</translatorcomment>
         <translation>Résolu</translation>
     </message>
+    <message>
+        <source>Being solved</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
+        <translation>Résolution…</translation>
+    </message>
+    <message>
+        <source>Auto-solved</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
+        <translation>Résolu automatiquement</translation>
+    </message>
+    <message>
+        <source>Auto-failed</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
+        <translation>Échec</translation>
+    </message>
+    <message>
+        <source>Failed</source>
+        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue was manually solved but it has failed. SAT-1140</translatorcomment>
+        <translation>Échec</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssueTab</name>
@@ -7242,6 +7068,11 @@ Voulez-vous le supprimer quand même ?</translation>
         <translatorcomment>Name of the tab containing  sync stalls in non categorized sync stalls dialog, %n variable is for the count.DNS-1388</translatorcomment>
         <translation><numerusform>Autre : %n</numerusform><numerusform>Autres : %n</numerusform></translation>
     </message>
+    <message numerus="yes">
+        <source>Failed: %n</source>
+        <translatorcomment>Name of the tab containing failed sync stalls in sync stalls dialog, %n variable is for the count.SAT-1034</translatorcomment>
+        <translation><numerusform>Échec : %n</numerusform><numerusform>Échec : %n</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesDialog</name>
@@ -7261,50 +7092,9 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Fermer</translation>
     </message>
     <message>
-        <source>Sync stall mode</source>
-        <translatorcomment>Label for choosing sync stall mode.DNS-1388</translatorcomment>
-        <translation>Méthode de résolution des problèmes</translation>
-    </message>
-    <message>
-        <source>Choose:</source>
-        <translatorcomment>Label tellong the user to choose the sync stall mode.DNS-1388</translatorcomment>
-        <translation>Vos choix :</translation>
-    </message>
-    <message>
-        <source>Smart mode</source>
-        <translatorcomment>Button for choosing smart (automatic) mode for solving stalled issues.DNS-1388</translatorcomment>
-        <translation>Mode intelligent</translation>
-    </message>
-    <message>
-        <source>Let Mega solve sync issues
-automatically</source>
-        <translatorcomment>Description of the smart mode of sync stalls.DNS-1388</translatorcomment>
-        <translation>Laissez MEGA résoudre automatiquement les problèmes de synchronisation</translation>
-    </message>
-    <message>
-        <source>Advanced mode</source>
-        <translatorcomment>Button for choosing advanced (manual) mode for solving stalled issues. DNS-1388</translatorcomment>
-        <translation>Mode avancé</translation>
-    </message>
-    <message>
-        <source>Get full control of the sync issues</source>
-        <translatorcomment>Description of the advanced mode of sync stalls.DNS-1388</translatorcomment>
-        <translation>Contrôlez entièrement les problèmes de synchronisation</translation>
-    </message>
-    <message>
-        <source>Solve issues</source>
-        <translatorcomment>Button to start solving stalls after selecting a mode.DNS-1388</translatorcomment>
-        <translation>Résoudre les problèmes</translation>
-    </message>
-    <message>
         <source>No issues</source>
         <translatorcomment>Label shown when there are no stalls to show.DNS-1388</translatorcomment>
         <translation>Aucun problème</translation>
-    </message>
-    <message>
-        <source>[A]Learn more[/A]</source>
-        <translatorcomment>Learn more clickable label with link to help page, [A] is for link replacement.DNS-1388</translatorcomment>
-        <translation>[A]En apprendre davantage[/A]</translation>
     </message>
     <message>
         <source>Help</source>
@@ -7324,15 +7114,10 @@ automatically</source>
         <translatorcomment>Message box button to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
         <translation>Actualiser</translation>
     </message>
-    <message>
-        <source>Some external changes were detected. Please, refresh the view.</source>
-        <translatorcomment>Message box text to refresh sync stalls, when an external change is deteced.SNC-2565</translatorcomment>
-        <translation>Des changements externes ont été détectés.
-Actualisez la fenêtre.</translation>
-    </message>
     <message numerus="yes">
         <source>%n issues fixed</source>
-        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
+        <translatorcomment>Message in loading scene displayed while smart mode (auto solve) is in progress. This string can be used by its own or as first part of string for multi plural support
+        when several issues have failed. SNC-2565</translatorcomment>
         <translation><numerusform>%n problème a été résolu</numerusform><numerusform>%n problèmes ont été résolus</numerusform></translation>
     </message>
     <message>
@@ -7361,15 +7146,26 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <translation>Certains problèmes ne peuvent pas être résolus.
 Vérifiez les autorisations du fichier .megaignore dans les emplacements locaux de votre dossier de synchronisation.</translation>
     </message>
-    <message>
-        <source>File &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>Le fichier « %1 » a été déplacé vers « %2 »</translation>
+    <message numerus="yes">
+        <source>%n issues failed</source>
+        <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
+        <translation><numerusform>%n problème non résolu</numerusform><numerusform>%n problèmes non résolus</numerusform></translation>
     </message>
-    <message>
-        <source>Folder &quot;%1&quot; was moved to &quot;%2&quot;.</source>
-        <translatorcomment>Solve message explaining the auo solve action performed for a sync stall.SNC-2565</translatorcomment>
-        <translation>Le dossier « %1 » a été déplacé vers « %2 »</translation>
+    <message numerus="yes">
+        <source>1 issue fixed and %n issues failed</source>
+        <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
+        <translation><numerusform>1 problème résolu et %n problème non résolu</numerusform><numerusform>1 problème résolu et %n problèmes non résolus</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n issues fixed and 1 issue failed</source>
+        <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
+        <translation><numerusform>%n problème résolu et 1 problème non résolu</numerusform><numerusform>%n problèmes résolus et 1 problème non résolu</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 and %n issues failed.</source>
+        <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
+        being the first part about the issues fixed. SAT-1034</translatorcomment>
+        <translation><numerusform>%1 et %n problème non résolu</numerusform><numerusform>%1 et %n problèmes non résolus</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9279,6 +9075,54 @@ Vous trouverez dans votre boîte de réception des courriels des instructions po
         <source>Stop</source>
         <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
         <translation>Arrêter</translation>
+    </message>
+</context>
+<context>
+    <name>WhatsNewStrings</name>
+    <message>
+        <source>What&apos;s new</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
+        <translation>Nouveautés</translation>
+    </message>
+    <message>
+        <source>Updates</source>
+        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
+        <translation>Mises à jour</translation>
+    </message>
+    <message>
+        <source>Better Performance</source>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>Performances améliorées</translation>
+    </message>
+    <message>
+        <source>Greater control</source>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>Contrôle accru</translation>
+    </message>
+    <message>
+        <source>Advanced filters</source>
+        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>Filtres évolués</translation>
+    </message>
+    <message>
+        <source>Files now sync up to 5x faster than before</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Les fichiers se synchronisent désormais jusqu’à cinq fois plus rapidement qu’auparavant.</translation>
+    </message>
+    <message>
+        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Nous offrons désormais l’entière visibilité sur les problèmes de synchronisation et vous donnons un contrôle total sur la résolution des conflits.</translation>
+    </message>
+    <message>
+        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Personnalisez vos synchronisations et sauvegardes grâce à une toute nouvelle interface permettant d’exclure des fichiers et des dossiers. Des paramètres évolués vous permettent d’écrire vos propres règles d’exclusion pour chacune de vos synchronisations et sauvegardes.</translation>
+    </message>
+    <message>
+        <source>Got it</source>
+        <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
+        <translation>J’ai compris</translation>
     </message>
 </context>
 <context>

@@ -1,26 +1,24 @@
 #ifndef EXPORTPROCESSOR_H
 #define EXPORTPROCESSOR_H
 
+#include <QObject>
 #include <QStringList>
 #include <megaapi.h>
-#include <QTMegaRequestListener.h>
 
-class ExportProcessor :  public QObject, public mega::MegaRequestListener
+class ExportProcessor :  public QObject
 {
     Q_OBJECT
 public:
-    explicit ExportProcessor(mega::MegaApi *megaApi, QStringList fileList);
-    explicit ExportProcessor(mega::MegaApi *megaApi, QList<mega::MegaHandle> handleList);
-    virtual ~ExportProcessor();
+    explicit ExportProcessor(mega::MegaApi* megaApi, QStringList fileList);
+    explicit ExportProcessor(mega::MegaApi* megaApi, QList<mega::MegaHandle> handleList);
 
     void requestLinks();
     QStringList getValidLinks();
 
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
+
 signals:
     void onRequestLinksFinished();
-
-public slots:
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 protected:
     enum {
@@ -38,7 +36,9 @@ protected:
     int importSuccess;
     int importFailed;
     int mode;
-    mega::QTMegaRequestListener *delegateListener;
+
+private:
+    void init(mega::MegaApi* megaApi, int mode, int size);
 };
 
 #endif // EXPORTPROCESSOR_H

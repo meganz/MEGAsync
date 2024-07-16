@@ -146,7 +146,11 @@ target_sources(MEGAsync
     ${DESKTOP_APP_STALLED_ISSUES_SOURCES}
 )
 
-target_include_directories(MEGAsync PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/gui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/stalled_issues_cases
     ${CMAKE_CURRENT_LIST_DIR}/model
 )
+
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

@@ -1,12 +1,11 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
-#include "stalled_issues_cases/LocalAndRemoteDifferentWidget.h"
-#include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
-#include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
-#include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
-#include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
+#include "LocalAndRemoteDifferentWidget.h"
+#include "LocalAndRemoteNameConflicts.h"
+#include "OtherSideMissingOrBlocked.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
-#include "StalledIssueFilePath.h"
 #include "IgnoredStalledIssue.h"
 
 #include "Utilities.h"

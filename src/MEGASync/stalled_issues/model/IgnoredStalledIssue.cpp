@@ -2,7 +2,7 @@
 
 #include <StalledIssuesUtilities.h>
 #include <MegaApplication.h>
-#include <syncs/control/MegaIgnoreManager.h>
+#include "MegaIgnoreManager.h"
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <StalledIssuesModel.h>

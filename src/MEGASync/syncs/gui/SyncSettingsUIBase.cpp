@@ -4,10 +4,10 @@
 
 #include <DialogOpener.h>
 
-#include <syncs/gui/Twoways/SyncTableView.h>
-#include <syncs/gui/Twoways/BindFolderDialog.h>
-#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
-#include <syncs/model/SyncItemModel.h>
+#include "SyncTableView.h"
+#include "BindFolderDialog.h"
+#include "RemoveSyncConfirmationDialog.h"
+#include "SyncItemModel.h"
 #include "SyncExclusions/SyncExclusions.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>

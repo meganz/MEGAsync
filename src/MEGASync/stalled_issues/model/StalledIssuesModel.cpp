@@ -10,7 +10,7 @@
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
 #include <MultiStepIssueSolver.h>
-#include <syncs/control/MegaIgnoreManager.h>
+#include "MegaIgnoreManager.h"
 #include "StatsEventHandler.h"
 
 #include <QSortFilterProxyModel>

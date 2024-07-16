@@ -1,8 +1,8 @@
 #include "StalledIssueHeader.h"
 
-#include <stalled_issues/model/StalledIssuesModel.h>
-#include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
-#include <stalled_issues/model/IgnoredStalledIssue.h>
+#include "StalledIssuesModel.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "IgnoredStalledIssue.h"
 
 #include <MegaApplication.h>
 
