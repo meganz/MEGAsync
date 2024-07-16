@@ -23,7 +23,7 @@ public:
     }
     ~UserMessage() = default;
 
-    Type getType() const
+    inline Type getType() const
     {
         return mType;
     }
