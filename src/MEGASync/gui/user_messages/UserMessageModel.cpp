@@ -247,7 +247,9 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
         return;
     }
 
-    beginInsertRows(QModelIndex(), 0, newNotifications.size() - 1);
+    beginInsertRows(QModelIndex(),
+                    mNotifications.size(),
+                    mNotifications.size() + newNotifications.size() - 1);
     for (auto& notification : newNotifications)
     {
         auto item = new UserNotification(notification);
@@ -255,7 +257,10 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
 
         if(!item->isSeen())
         {
-            mSeenStatusManager.markAsUnseen(MessageType::NOTIFICATIONS);
+            if(!mSeenStatusManager.markNotificationAsUnseen(item->getID()))
+            {
+                item->markAsSeen();
+            }
         }
     }
     endInsertRows();
@@ -359,6 +364,17 @@ void UserMessageModel::SeenStatusManager::markAsUnseen(MessageType type)
 
     mUnseenNotifications[type]++;
     mUnseenNotifications[MessageType::ALL]++;
+}
+
+bool UserMessageModel::SeenStatusManager::markNotificationAsUnseen(uint32_t id)
+{
+    bool success = false;
+    if(id > mLastSeenNotification)
+    {
+        markAsUnseen(MessageType::NOTIFICATIONS);
+        success = true;
+    }
+    return success;
 }
 
 void UserMessageModel::SeenStatusManager::markAsSeen(MessageType type)

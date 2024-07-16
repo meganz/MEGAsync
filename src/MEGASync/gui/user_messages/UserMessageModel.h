@@ -46,6 +46,7 @@ private:
         virtual ~SeenStatusManager() = default;
 
         void markAsUnseen(MessageType type);
+        bool markNotificationAsUnseen(uint32_t id);
         void markAsSeen(MessageType type);
         UnseenUserMessagesMap getUnseenUserMessages() const;
 
