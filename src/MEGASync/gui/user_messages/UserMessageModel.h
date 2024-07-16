@@ -62,7 +62,7 @@ private:
 
     };
 
-    QList<UserMessage*> mNotifications;
+    QList<UserMessage*> mUserMessages;
     SeenStatusManager mSeenStatusManager;
 
     void insertAlerts(const QList<mega::MegaUserAlert*>& alerts);

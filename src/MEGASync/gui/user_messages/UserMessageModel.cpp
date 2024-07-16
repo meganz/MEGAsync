@@ -15,7 +15,7 @@ QModelIndex UserMessageModel::index(int row, int column, const QModelIndex& pare
         return QModelIndex();
     }
 
-    return createIndex(row, column, mNotifications.at(row));
+    return createIndex(row, column, mUserMessages.at(row));
 }
 
 QModelIndex UserMessageModel::parent(const QModelIndex& index) const
@@ -27,7 +27,7 @@ QModelIndex UserMessageModel::parent(const QModelIndex& index) const
 
 int UserMessageModel::rowCount(const QModelIndex& parent) const
 {
-    return parent.isValid() ? 0 : mNotifications.size();
+    return parent.isValid() ? 0 : mUserMessages.size();
 }
 
 int UserMessageModel::columnCount(const QModelIndex& parent) const
@@ -46,9 +46,9 @@ QVariant UserMessageModel::data(const QModelIndex& index, int role) const
     {
         return QVariant::fromValue(index.internalId());
     }
-    else if (role == Qt::UserRole && mNotifications.at(index.row())->getType() == UserMessage::Type::ALERT)
+    else if (role == Qt::UserRole && mUserMessages.at(index.row())->getType() == UserMessage::Type::ALERT)
     {
-        auto alert = qobject_cast<const UserAlert*>(mNotifications.at(index.row()));
+        auto alert = qobject_cast<const UserAlert*>(mUserMessages.at(index.row()));
         return QDateTime::fromMSecsSinceEpoch(alert->getTimestamp(0) * 1000);
     }
 
@@ -62,7 +62,7 @@ Qt::ItemFlags UserMessageModel::flags(const QModelIndex& index) const
 
 auto UserMessageModel::findAlertById(unsigned int id)
 {
-    auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+    auto it = std::find_if(mUserMessages.begin(), mUserMessages.end(),
                            [id](const UserMessage* current)
                            {
                                if(current->getType() == UserMessage::Type::ALERT)
@@ -77,7 +77,7 @@ auto UserMessageModel::findAlertById(unsigned int id)
 
 auto UserMessageModel::findNotificationById(int64_t id)
 {
-    auto it = std::find_if(mNotifications.begin(), mNotifications.end(),
+    auto it = std::find_if(mUserMessages.begin(), mUserMessages.end(),
                            [id](const UserMessage* current)
                            {
                                if(current->getType() == UserMessage::Type::NOTIFICATION)
@@ -102,7 +102,7 @@ void UserMessageModel::processAlerts(mega::MegaUserAlertList* alerts)
         {
             mega::MegaUserAlert* alert = alerts->get(i);
             auto it = findAlertById(alert->getId());
-            if (it == mNotifications.end() && !alert->isRemoved())
+            if (it == mUserMessages.end() && !alert->isRemoved())
             {
                 if(alert->isRemoved())
                 {
@@ -113,7 +113,7 @@ void UserMessageModel::processAlerts(mega::MegaUserAlertList* alerts)
                     newAlerts.append(alert->copy());
                 }
             }
-            else if (it != mNotifications.end())
+            else if (it != mUserMessages.end())
             {
                 updatedAlerts.append(alert->copy());
             }
@@ -133,12 +133,12 @@ void UserMessageModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
     }
 
     beginInsertRows(QModelIndex(),
-                    mNotifications.size(),
-                    mNotifications.size() + alerts.size() - 1);
+                    mUserMessages.size(),
+                    mUserMessages.size() + alerts.size() - 1);
     for (auto& alert : alerts)
     {
         auto alertItem = new UserAlert(alert);
-        mNotifications.push_back(alertItem);
+        mUserMessages.push_back(alertItem);
 
         if(!alertItem->isSeen())
         {
@@ -158,10 +158,10 @@ void UserMessageModel::updateAlerts(const QList<mega::MegaUserAlert*>& alerts)
     for (auto& alert : alerts)
     {
         auto it = findAlertById(alert->getId());
-        if (it != mNotifications.end())
+        if (it != mUserMessages.end())
         {
-            int row = std::distance(mNotifications.begin(), it);
-            auto alertItem = qobject_cast<UserAlert*>(mNotifications[row]);
+            int row = std::distance(mUserMessages.begin(), it);
+            auto alertItem = qobject_cast<UserAlert*>(mUserMessages[row]);
 
             if(alertItem->isSeen() && !alert->getSeen())
             {
@@ -188,18 +188,18 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
     for (auto& alert : alerts)
     {
         auto it = findAlertById(alert->getId());
-        if (it != mNotifications.end())
+        if (it != mUserMessages.end())
         {
-            int row = std::distance(mNotifications.begin(), it);
-            auto alertItem = qobject_cast<UserAlert*>(mNotifications[row]);
+            int row = std::distance(mUserMessages.begin(), it);
+            auto alertItem = qobject_cast<UserAlert*>(mUserMessages[row]);
             if(!alertItem->isSeen())
             {
                 mSeenStatusManager.markAsSeen(alertItem->getMessageType());
             }
 
             beginRemoveRows(QModelIndex(), row, row);
-            delete mNotifications[row];
-            mNotifications.erase(it);
+            delete mUserMessages[row];
+            mUserMessages.erase(it);
             endRemoveRows();
         }
     }
@@ -207,7 +207,7 @@ void UserMessageModel::removeAlerts(const QList<mega::MegaUserAlert*>& alerts)
 
 bool UserMessageModel::hasAlertsOfType(MessageType type)
 {
-    return std::any_of(mNotifications.begin(), mNotifications.end(),
+    return std::any_of(mUserMessages.begin(), mUserMessages.end(),
                        [type](const UserMessage* current)
                        {
                            if(current->getType() == UserMessage::Type::ALERT)
@@ -236,7 +236,7 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
     {
         const mega::MegaNotification* notification = notifications->get(i);
         auto it = findNotificationById(notification->getID());
-        if (it == mNotifications.end())
+        if (it == mUserMessages.end())
         {
             newNotifications.append(notification->copy());
         }
@@ -248,12 +248,12 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
     }
 
     beginInsertRows(QModelIndex(),
-                    mNotifications.size(),
-                    mNotifications.size() + newNotifications.size() - 1);
+                    mUserMessages.size(),
+                    mUserMessages.size() + newNotifications.size() - 1);
     for (auto& notification : newNotifications)
     {
         auto item = new UserNotification(notification);
-        mNotifications.push_back(item);
+        mUserMessages.push_back(item);
 
         if(!item->isSeen())
         {
@@ -268,9 +268,9 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
 
 void UserMessageModel::removeNotifications(const mega::MegaNotificationList* notifications)
 {
-    for (int row = 0; row < mNotifications.size(); ++row)
+    for (int row = 0; row < mUserMessages.size(); ++row)
     {
-        auto item = mNotifications[row];
+        auto item = mUserMessages[row];
         if(item->getType() != UserMessage::Type::NOTIFICATION)
         {
             continue;
@@ -294,8 +294,8 @@ void UserMessageModel::removeNotifications(const mega::MegaNotificationList* not
             }
 
             beginRemoveRows(QModelIndex(), row, row);
-            delete mNotifications[row];
-            mNotifications.removeAt(row);
+            delete mUserMessages[row];
+            mUserMessages.removeAt(row);
             endRemoveRows();
 
             --row;
@@ -310,7 +310,7 @@ UnseenUserMessagesMap UserMessageModel::getUnseenNotifications() const
 
 uint32_t UserMessageModel::checkLocalLastSeenNotification()
 {
-    for (auto& item : mNotifications)
+    for (auto& item : mUserMessages)
     {
         if(item->getType() != UserMessage::Type::NOTIFICATION)
         {
@@ -334,7 +334,7 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
     {
         mSeenStatusManager.setLastSeenNotification(id);
         mSeenStatusManager.setLocalLastSeenNotification(id);
-        for (auto& item : mNotifications)
+        for (auto& item : mUserMessages)
         {
             if(item->getType() != UserMessage::Type::NOTIFICATION)
             {
