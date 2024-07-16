@@ -4877,7 +4877,7 @@ Enter a different name.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sync your entire MEGA account with your local device.</translation>
+        <translation>Sync your entire MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -5002,7 +5002,7 @@ Enter a different name.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sync selected folders in your MEGA account with your local device.</translation>
+        <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>

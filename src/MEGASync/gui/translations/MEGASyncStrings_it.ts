@@ -744,7 +744,7 @@
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation>Termini di Servizio</translation>
+        <translation>Termini di servizio</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -3494,7 +3494,7 @@ I trasferimenti riprenderanno automaticamente quando riaprirai l&apos;app.</nume
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation>Termini di Servizio violati</translation>
+        <translation>Termini di servizio violati</translation>
     </message>
     <message>
         <source>Upload produces recursivity</source>
@@ -3521,13 +3521,13 @@ Controlla la tua casella di posta elettronica per ulteriori informazioni su come
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.
+        <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di servizio di MEGA.
 Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo account MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Termini di Servizio violati.</translation>
+        <translation>Termini di servizio violati.</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -4565,7 +4565,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>I agree with MEGA&apos;s [B][A]Terms of service[/A][/B]</source>
         <translatorcomment>Label shown in the right of a checkbox to accept terms of servcice [B] is for bold and [A] is for link to the terms of service page in the web CON-466</translatorcomment>
-        <translation>Ho letto e accettato i [B][A]Termini di Servizio[/A][/B] di MEGA</translation>
+        <translation>Ho letto e accettato i [B][A]Termini di servizio[/A][/B] di MEGA</translation>
     </message>
     <message>
         <source>Back up</source>

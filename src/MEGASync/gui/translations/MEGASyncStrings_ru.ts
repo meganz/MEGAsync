@@ -1390,7 +1390,7 @@
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation>В этом расположении уже существует папка «[A]»</translation>
+        <translation>В этом расположении уже существует папка «[A]».</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -1405,7 +1405,7 @@
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation>В этом расположении уже существует файл «[A]»</translation>
+        <translation>В этом расположении уже существует файл «[A]».</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
@@ -4759,7 +4759,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Синхронизируйте весь аккаунт MEGA с локальным устройством.</translation>
+        <translation>Синхронизируйте весь свой Облачный диск MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4884,7 +4884,7 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Синхронизируйте отдельные папки в аккаунте MEGA с локальным устройством.</translation>
+        <translation>Синхронизируйте выбранные папки Облачного диска MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
@@ -7309,7 +7309,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Ошибка трансляции: превышен лимит передачи данных</translation>
+        <translation>Ошибка трансляции: превышен лимит передачи данных.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -8195,7 +8195,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Ваш MEGA-аккаунт заполнен.</translation>
+        <translation>Ваш MEGA-аккаунт заполнен</translation>
     </message>
     <message>
         <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.

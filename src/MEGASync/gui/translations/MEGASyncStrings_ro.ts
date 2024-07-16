@@ -1987,7 +1987,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2953,7 +2953,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Se autentifică</translation>
+        <translation>Conexiune</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -4813,7 +4813,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Autentifică-te</translation>
+        <translation>Conectați-vă</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -6225,7 +6225,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -9039,7 +9039,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Verify your email</source>

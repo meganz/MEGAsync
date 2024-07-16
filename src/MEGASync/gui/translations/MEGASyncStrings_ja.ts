@@ -4753,7 +4753,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>MEGAアカウント全体をローカルデバイスと同期します。</translation>
+        <translation>MEGA Cloudドライブ全体をローカルデバイスと同期します。</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4878,7 +4878,7 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>MEGAアカウント内の選択されたフォルダをローカルデバイスと同期します。</translation>
+        <translation>MEGAクラウドドライブ内の選択されたフォルダをローカルデバイスと同期します。</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>

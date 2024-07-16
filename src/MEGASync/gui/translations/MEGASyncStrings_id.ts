@@ -7025,7 +7025,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Auto-solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Otomatis selesai</translation>
     </message>
     <message>
         <source>Auto-failed</source>

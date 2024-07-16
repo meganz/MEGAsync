@@ -4758,7 +4758,7 @@ Digite um nome diferente.
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sincronize toda a sua conta no MEGA com seu dispositivo local.</translation>
+        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4883,7 +4883,7 @@ Digite um nome diferente.
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sincronize as pastas selecionadas em sua conta no MEGA com seu dispositivo local.</translation>
+        <translation>Sincronize pastas específicas na sua Nuvem de arquivos no MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
