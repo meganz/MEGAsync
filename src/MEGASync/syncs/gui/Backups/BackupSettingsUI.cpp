@@ -4,7 +4,7 @@
 #include "BackupItemModel.h"
 
 #include "QmlDialogWrapper.h"
-#include "backups/Backups.h"
+#include "Backups.h"
 #include "Onboarding.h"
 
 #include "DialogOpener.h"
@@ -138,17 +138,7 @@ void BackupSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) c
 {
     Q_UNUSED(remoteFolder);
 
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-    {
-        backupsDialog = dialog->getDialog();
-    }
-    else
-    {
-        backupsDialog = new QmlDialogWrapper<Backups>();
-    }
-    DialogOpener::showDialog(backupsDialog);
-    backupsDialog->wrapper()->setComesFromSettings(true);
+    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 QString BackupSettingsUI::disableString() const

@@ -31,7 +31,7 @@ BackupsQmlDialog {
             width: parent.width
             step1String: BackupsStrings.selectFolders;
             step2String: BackupsStrings.confirmFolders;
-            helpUrl: Links.helpBackups
+            helpUrl: Links.createBackup
         }
 
         Rectangle {

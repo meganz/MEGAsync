@@ -26,10 +26,10 @@
 #include "StatsEventHandler.h"
 
 #include "Utilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include "QmlDialogManager.h"
-#include "syncs/SyncsComponent.h"
+#include "SyncsComponent.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -1043,34 +1043,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(const QString& remoteFolder)
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, remoteFolder, this]()
-    {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-            if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
-            {
-                syncsDialog = dialog->getDialog();
-            }
-            else
-            {
-                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
-            }
-            syncsDialog->wrapper()->setComesFromSettings(false);
-            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            DialogOpener::showDialog(syncsDialog);
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
+    QmlDialogManager::instance()->openAddSync(remoteFolder, false);
 }
 
 void InfoDialog::addBackup()

@@ -43,10 +43,6 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     }
 }
 
-SyncSettingsUI::~SyncSettingsUI()
-{
-}
-
 QString SyncSettingsUI::getFinishWarningIconString() const
 {
 #ifdef Q_OS_MACOS
@@ -117,18 +113,7 @@ void SyncSettingsUI::changeEvent(QEvent* event)
 
 void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
 {
-    QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
-    {
-        syncsDialog = dialog->getDialog();
-    }
-    else
-    {
-        syncsDialog = new QmlDialogWrapper<SyncsComponent>();
-    }
-    syncsDialog->wrapper()->setComesFromSettings(true);
-    syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-    DialogOpener::showDialog(syncsDialog);
+    QmlDialogManager::instance()->openAddSync(remoteFolder, true);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

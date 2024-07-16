@@ -167,6 +167,5 @@
         <file>common/Utilities.qml</file>
         <file>components/steps/StepPanel.qml</file>
         <file>syncs/SyncsPage.qml</file>
-        <file>syncs/SyncsType.qml</file>
     </qresource>
 </RCC>

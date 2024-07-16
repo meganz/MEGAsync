@@ -4,8 +4,8 @@
 #include "AccountStatusController.h"
 #include "OnboardingQmlDialog.h"
 
-#include "backups/Backups.h"
-#include "syncs/SyncsComponent.h"
+#include "Backups.h"
+#include "SyncsComponent.h"
 
 #include "SettingsDialog.h"
 #include "MegaApplication.h"

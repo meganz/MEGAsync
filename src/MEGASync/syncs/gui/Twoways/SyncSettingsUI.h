@@ -12,7 +12,7 @@ class SyncSettingsUI : public SyncSettingsUIBase
 
 public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
-    ~SyncSettingsUI() override;
+    ~SyncSettingsUI() override = default;
 
 protected:
     QString getFinishWarningIconString() const override;

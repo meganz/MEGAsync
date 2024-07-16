@@ -1,7 +1,8 @@
 import QtQuick 2.15
 
-import BackupsModel 1.0
 import components.steps 1.0
+
+import BackupsModel 1.0
 
 BackupsFlow {
     id: root

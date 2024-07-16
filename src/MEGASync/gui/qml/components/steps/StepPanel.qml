@@ -8,9 +8,6 @@ import components.buttons 1.0
 Rectangle {
     id: root
 
-    property alias step1String: step1.text
-    property alias step2String: step2.text
-    property url helpUrl
     readonly property string step1: "step1"
     readonly property string step2: "step2"
     readonly property string step2Warning: "step2Warning"
@@ -22,6 +19,11 @@ Rectangle {
     readonly property int lineWidth: 127
     readonly property int lineHeight: 2
     readonly property int lineRadius: 1
+
+    property alias step1String: step1.text
+    property alias step2String: step2.text
+
+    property url helpUrl
 
     height: 104
     color: colorStyle.pageBackground

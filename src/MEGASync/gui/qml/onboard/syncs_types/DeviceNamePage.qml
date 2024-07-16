@@ -9,10 +9,11 @@ DeviceNamePageForm {
 
     signal deviceNameMoveToSyncType
 
-    footerButtons.leftPrimary.text: Strings.skip
-
-    footerButtons.leftPrimary.onClicked: {
-        window.close();
+    footerButtons.leftPrimary {
+        text: Strings.skip
+        onClicked: {
+            window.close();
+        }
     }
 
     footerButtons.rightPrimary.onClicked: {

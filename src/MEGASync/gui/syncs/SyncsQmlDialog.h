@@ -1,5 +1,5 @@
-#ifndef SYNCSQMLDIALOG_H
-#define SYNCSQMLDIALOG_H
+#ifndef SYNCS_QML_DIALOG_H
+#define SYNCS_QML_DIALOG_H
 
 #include "QmlDialog.h"
 
@@ -16,4 +16,4 @@ protected:
 
 };
 
-#endif // SYNCSQMLDIALOG_H
+#endif // SYNCS_QML_DIALOG_H

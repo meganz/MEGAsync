@@ -29,9 +29,11 @@ ResumePageForm {
     }
 
     footerButtons {
-        leftPrimary.text: Strings.skip
-        leftPrimary.onClicked: {
-            window.close();
+        leftPrimary {
+            text: Strings.skip
+            onClicked: {
+                window.close();
+            }
         }
 
         rightSecondary.onClicked: {

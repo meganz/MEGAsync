@@ -30,9 +30,11 @@ InstallationTypePageForm {
             }
         }
 
-        leftPrimary.text: Strings.skip
-        leftPrimary.onClicked: {
+        leftPrimary {
+            text: Strings.skip
+            onClicked: {
             window.close();
+            }
         }
     }
 

@@ -21,7 +21,6 @@
 #include "TransferQuota.h"
 #include "StatusInfo.h"
 #include "SyncsMenu.h"
-#include "SyncController.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -101,7 +100,7 @@ public:
     void setTransferManager(TransferManager *transferManager);
 
 private:
-    InfoDialog() = default;
+    InfoDialog() = delete;
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;

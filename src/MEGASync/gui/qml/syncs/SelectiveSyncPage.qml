@@ -102,13 +102,5 @@ SelectiveSyncPageForm {
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
         }
-
-        /*
-        function onLanguageChanged() {
-            if (localFolderChooser.folderField.hint.visible || remoteFolderChooser.folderField.hint.visible) {
-                footerButtons.rightPrimary.clicked();
-            }
-        }
-        */
     }
 }

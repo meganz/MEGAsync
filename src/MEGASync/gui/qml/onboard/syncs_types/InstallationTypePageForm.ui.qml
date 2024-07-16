@@ -7,8 +7,6 @@ import common 1.0
 import components.texts 1.0 as Texts
 import components.pages 1.0
 
-import syncs 1.0
-
 import onboard 1.0
 
 import LoginController 1.0

@@ -31,7 +31,7 @@ SyncsQmlDialog {
             width: parent.width
             step1String: SyncsStrings.syncType
             step2String: SyncsStrings.sync
-            helpUrl: Links.helpSyncs
+            helpUrl: Links.setUpSyncs
         }
 
         Rectangle {
@@ -87,9 +87,6 @@ SyncsQmlDialog {
                         id: resumeSyncsPageItem
 
                         footerButtons.leftPrimary.visible: false
-
-                        image.source: Images.guest3x
-                        image.sourceSize: Qt.size(128, 128)
                     }
                 }
             }
