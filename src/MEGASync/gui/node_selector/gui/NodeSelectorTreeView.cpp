@@ -58,10 +58,26 @@ QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle() const
 
     auto selectedRows = selectionModel()->selectedRows();
 
-    foreach(auto& s_index,selectedRows)
+    //If there is no selection, add the root index
+    if(selectedRows.isEmpty())
     {
-        if(auto node = proxyModel()->getNode(s_index))
-            ret.append(node->getHandle());
+        auto index(rootIndex());
+        if(index.isValid())
+        {
+            auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
+            if(item)
+            {
+                ret.append(item->getNode()->getHandle());
+            }
+        }
+    }
+    else
+    {
+        foreach(auto& s_index, selectedRows)
+        {
+            if(auto node = proxyModel()->getNode(s_index))
+                ret.append(node->getHandle());
+        }
     }
 
     return ret;

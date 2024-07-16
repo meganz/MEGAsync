@@ -61,6 +61,7 @@ public:
     void clearSearchText();
     void clearSelection();
     void abort();
+    NodeSelectorModelItem* rootItem();
     NodeSelectorProxyModel* getProxyModel();
 
 public slots:
@@ -175,9 +176,12 @@ public:
     explicit SelectType() = default;
     virtual bool isAllowedToNavigateInside(const QModelIndex& index);
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
-    virtual bool okButtonEnabled(const QModelIndexList &selected) = 0;
+    virtual bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) = 0;
     virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)};
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
+
+protected:
+    bool cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg);
 };
 
 class DownloadType : public SelectType
@@ -185,7 +189,7 @@ class DownloadType : public SelectType
 public:
     explicit DownloadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -196,7 +200,7 @@ public:
     bool isAllowedToNavigateInside(const QModelIndex& index) override;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -205,7 +209,7 @@ class StreamType : public SelectType
 public:
     explicit StreamType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -215,7 +219,7 @@ public:
     explicit UploadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
