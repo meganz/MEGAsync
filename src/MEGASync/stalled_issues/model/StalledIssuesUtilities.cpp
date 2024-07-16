@@ -58,7 +58,7 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
         {
             MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result](
+                [=, &result, &file](
                     const mega::MegaRequest&, const mega::MegaError& e)
                 {
                     //In case of error, move to OS trash
@@ -70,6 +70,13 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);
+#ifdef Q_OS_WIN
+                        //When the file has no rights, the QFile::moveToTrash fails on Windows
+                        if(result && file.exists())
+                        {
+                            result = false;
+                        }
+#endif
                     }
                     else
                     {
