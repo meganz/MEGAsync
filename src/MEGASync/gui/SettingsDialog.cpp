@@ -11,17 +11,15 @@
 #include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "Backups/RemoveBackupDialog.h"
+#include "RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "BindFolderDialog.h"
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
 #include "StatsEventHandler.h"
 #include "AccountDetailsDialog.h"
 #include "ChangePassword.h"
-
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -1351,9 +1349,9 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
+void SettingsDialog::addSyncFolder(const QString& remoteFolder) const
 {
-    mUi->syncSettings->addButtonClicked(megaFolderHandle);
+    mUi->syncSettings->addButtonClicked(remoteFolder);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)
@@ -1370,11 +1368,30 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
-void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled,
+                                             SettingsDialog::Tabs tab)
 {
-    if(mUi->backupSettings)
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
     {
-        mUi->backupSettings->setAddButtonEnabled(enabled);
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
     }
 }
 

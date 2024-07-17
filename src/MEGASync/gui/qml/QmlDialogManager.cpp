@@ -10,10 +10,7 @@
 #include "DialogOpener.h"
 #include "LoginController.h"
 #include "AccountStatusController.h"
-
-QmlDialogManager::QmlDialogManager()
-{
-}
+#include "SyncsComponent.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
@@ -151,5 +148,38 @@ bool QmlDialogManager::openWhatsNewDialog()
         whatsNew->raise();
     }
     return true;
+}
+
+void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSettings)
+{
+    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
+    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder, this]()
+    {
+        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
+        {
+            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
+            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+            {
+                syncsDialog = dialog->getDialog();
+            }
+            else
+            {
+                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+            }
+
+            syncsDialog->wrapper()->setComesFromSettings(fromSettings);
+            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+            DialogOpener::showDialog(syncsDialog);
+        }
+    };
+
+    if (overQuotaDialog)
+    {
+        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
+    }
+    else
+    {
+        addSyncLambda();
+    }
 }
 

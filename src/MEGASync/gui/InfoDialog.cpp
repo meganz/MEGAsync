@@ -28,7 +28,7 @@
 #include "Utilities.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
-#include "BindFolderDialog.h"
+#include "SyncsComponent.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -90,10 +90,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
-    mSyncController (nullptr),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -797,7 +795,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(INVALID_HANDLE);
+            addSync();
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1042,51 +1040,9 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(MegaHandle h)
+void InfoDialog::addSync(const QString& remoteFolder)
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, h, this]()
-    {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            mAddSyncDialog = new BindFolderDialog(app);
-
-            if (h != mega::INVALID_HANDLE)
-            {
-                mAddSyncDialog->setMegaFolder(h);
-            }
-
-            DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
-}
-
-void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
-{
-    if (dialog->result() != QDialog::Accepted)
-    {
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-    setupSyncController();
-    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
-
-    app->createAppMenus();
+    QmlDialogManager::instance()->openAddSync(remoteFolder, false);
 }
 
 void InfoDialog::addBackup()
@@ -1205,8 +1161,6 @@ void InfoDialog::reset()
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
     transferQuotaState = QuotaState::OK;
-
-    mSyncController.reset();
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
@@ -1709,14 +1663,6 @@ void InfoDialog::setTransferManager(TransferManager *transferManager)
 {
     mTransferManager = transferManager;
     mTransferManager->setTransferState(mState);
-}
-
-void InfoDialog::setupSyncController()
-{
-    if (!mSyncController)
-    {
-        mSyncController.reset(new SyncController());
-    }
 }
 
 void InfoDialog::fixMultiscreenResizeBug(int& posX, int& posY)

@@ -5,20 +5,20 @@ import common 1.0
 import components.views 1.0
 import components.steps 1.0
 
-import BackupsQmlDialog 1.0
+import SyncsQmlDialog 1.0
 
-BackupsQmlDialog {
+SyncsQmlDialog {
     id: window
 
-    title: BackupsStrings.backupsWindowTitle
+    title: SyncsStrings.syncsWindowTitle
     visible: true
     modality: Qt.NonModal
     width: 640
-    height: 560
-    maximumHeight: 560
-    maximumWidth: 640
-    minimumHeight: 560
-    minimumWidth: 640
+    height: 620
+    maximumHeight: height
+    maximumWidth: width
+    minimumHeight: height
+    minimumWidth: width
 
     Column {
         id: contentItem
@@ -29,31 +29,31 @@ BackupsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            step1String: BackupsStrings.selectFolders;
-            step2String: BackupsStrings.confirmFolders;
-            helpUrl: Links.createBackup
+            step1String: SyncsStrings.syncTitle
+            step2String: SyncsStrings.sync
+            helpUrl: Links.setUpSyncs
         }
 
         Rectangle {
-            id: backupsContentItem
-
-            readonly property string backupsFlow: "backupsFlow"
-            readonly property string resume: "resume"
+            id: syncsContentItem
 
             width: parent.width
             height: parent.height - stepPanelItem.height
             color: colorStyle.surface1
 
-            state: backupsFlow
+            readonly property string syncsFlow: "syncsFlow"
+            readonly property string resume: "resume"
+
+            state: syncsFlow
             states: [
                 State {
-                    name: backupsContentItem.backupsFlow
+                    name: syncsContentItem.syncsFlow
                     StateChangeScript {
-                        script: stackView.replace(backupsFlowPage);
+                        script: stackView.replace(syncsFlowPage);
                     }
                 },
                 State {
-                    name: backupsContentItem.resume
+                    name: syncsContentItem.resume
                     StateChangeScript {
                         script: stackView.replace(resumePage);
                     }
@@ -70,26 +70,28 @@ BackupsQmlDialog {
                 }
 
                 Component {
-                    id: backupsFlowPage
+                    id: syncsFlowPage
 
-                    BackupsPage {
-                        id: backupsFlowItem
+                    SyncsPage {
+                        id: syncsFlowItem
 
-                        stepPanelRef: stepPanelItem
-                        backupsContentItemRef: backupsContentItem
+                        stepPanelRef : stepPanelItem
+                        syncsContentItemRef: syncsContentItem
                     }
                 }
 
                 Component {
                     id: resumePage
 
-                    ResumePage {
-                        id: resumePageItem
+                    ResumeSyncsPage {
+                        id: resumeSyncsPageItem
+
+                        footerButtons.leftPrimary.visible: false
                     }
                 }
             }
 
-        } // Rectangle: backupsContentItem
+        } // Rectangle: syncsContentItem
     }
 
 }

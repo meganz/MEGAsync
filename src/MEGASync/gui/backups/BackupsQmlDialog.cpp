@@ -7,18 +7,12 @@
 
 bool BackupsQmlDialog::event(QEvent* event)
 {
-    if(event->type() == QEvent::Close)
+    if (event->type() == QEvent::Close || event->type() == QEvent::Show)
     {
-        if(auto dialog = DialogOpener::findDialog<SettingsDialog>())
+        if (auto dialog = DialogOpener::findDialog<SettingsDialog>())
         {
-            dialog->getDialog()->setBackupsAddButtonEnabled(true);
-        }
-    }
-    else if (event->type() == QEvent::Show)
-    {
-        if(auto dialog = DialogOpener::findDialog<SettingsDialog>())
-        {
-            dialog->getDialog()->setBackupsAddButtonEnabled(false);
+            dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close,
+                                                         SettingsDialog::Tabs::BACKUP_TAB);
         }
     }
 

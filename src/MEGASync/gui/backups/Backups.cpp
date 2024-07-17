@@ -3,8 +3,8 @@
 #include "BackupsQmlDialog.h"
 #include "BackupsModel.h"
 #include "AddExclusionRule.h"
-#include "DialogOpener.h"
 
+#include "DialogOpener.h"
 #include "MegaApplication.h"
 
 static bool qmlRegistrationDone = false;

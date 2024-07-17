@@ -11,6 +11,11 @@ ConfirmFoldersPageForm {
     signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
+
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);
             root.confirmFoldersMoveToSelect();

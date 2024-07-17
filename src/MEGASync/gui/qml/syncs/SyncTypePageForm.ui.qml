@@ -6,14 +6,12 @@ import common 1.0
 
 import components.pages 1.0
 
-import onboard 1.0
-import onboard.syncs_types 1.0
-
 FooterButtonsPage {
     id: root
 
     property alias buttonGroup: buttonGroup
     property alias fullSyncButton: fullSyncButtonItem
+    property alias selectiveSyncButton: selectiveSyncButtonItem
 
     footerButtons.rightPrimary.enabled: false
 
@@ -30,16 +28,15 @@ FooterButtonsPage {
         HeaderTexts {
             id: header
 
-            title: OnboardingStrings.syncTitle
+            title: SyncsStrings.syncTitle
         }
 
-        Rectangle {
+        Item {
             id: spacer
 
             Layout.preferredHeight: 208
             Layout.preferredWidth: parent.width
             Layout.alignment: Qt.AlignLeft
-            color: "transparent"
 
             ButtonGroup {
                 id: buttonGroup
@@ -55,30 +52,25 @@ FooterButtonsPage {
                     id: fullSyncButtonItem
 
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
-                    title: OnboardingStrings.fullSync
-                    type: SyncsType.Types.FULL_SYNC
-                    description: OnboardingStrings.fullSyncButtonDescription
+                    title: SyncsStrings.fullSync
+                    type: Constants.SyncType.FULL_SYNC
+                    description: SyncsStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
 
                 SyncTypeButton {
-                    id: selectiveSyncButton
+                    id: selectiveSyncButtonItem
 
-                    Layout.rightMargin: -selectiveSyncButton.focusBorderWidth
-                    title: OnboardingStrings.selectiveSync
-                    type: SyncsType.Types.SELECTIVE_SYNC
-                    description: OnboardingStrings.selectiveSyncButtonDescription
+                    Layout.rightMargin: -selectiveSyncButtonItem.focusBorderWidth
+                    title: SyncsStrings.selectiveSync
+                    type: Constants.SyncType.SELECTIVE_SYNC
+                    description: SyncsStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
             }
         }
-    }
+
+    } // ColumnLayout: column
 }

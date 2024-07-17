@@ -1,7 +1,5 @@
 import QtQuick 2.15
 
-import onboard 1.0
-
 import Syncs 1.0
 import ChooseLocalFolder 1.0
 
@@ -12,9 +10,12 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToSuccess
 
     footerButtons {
+        leftSecondary.onClicked: {
+            syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
+        }
 
         rightSecondary.onClicked: {
-            root.selectiveSyncMoveToBack()
+            root.selectiveSyncMoveToBack();
         }
 
         rightPrimary.onClicked: {
@@ -28,15 +29,15 @@ SelectiveSyncPageForm {
             if (localFolderChooser.choosenPath.length === 0) {
                 localFolderError = true;
                 localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
+                localFolderChooser.folderField.hint.text = SyncsStrings.invalidLocalPath;
                 localFolderChooser.folderField.hint.visible = true;
             }
 
-            var remoteFolderError = false
+            var remoteFolderError = false;
             if (remoteFolderChooser.choosenPath.length === 0) {
                 remoteFolderError = true;
                 remoteFolderChooser.folderField.error = true;
-                remoteFolderChooser.folderField.hint.text = OnboardingStrings.invalidRemotePath;
+                remoteFolderChooser.folderField.hint.text = SyncsStrings.invalidRemotePath;
                 remoteFolderChooser.folderField.hint.visible = true;
             }
 
@@ -47,7 +48,7 @@ SelectiveSyncPageForm {
             if (localFolderChooser.choosenPath === localFolder.getDefaultFolder(syncs.defaultMegaFolder)
                     && !localFolder.createFolder(localFolderChooser.choosenPath)) {
                 localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
+                localFolderChooser.folderField.hint.text = SyncsStrings.canNotSyncPermissionError;
                 localFolderChooser.folderField.hint.visible = true;
                 return;
             }

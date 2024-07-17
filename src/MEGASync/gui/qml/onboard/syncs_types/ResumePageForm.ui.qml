@@ -10,6 +10,7 @@ import components.buttons 1.0
 import components.pages 1.0
 
 import backups 1.0
+import syncs 1.0
 
 import onboard 1.0
 
@@ -42,8 +43,8 @@ FooterButtonsPage {
     states: [
         State {
             name: root.stateFullSync
-            PropertyChanges { target: titleItem; text: OnboardingStrings.finalStepSyncTitle; }
-            PropertyChanges { target: descriptionItem; text: OnboardingStrings.finalStepSync; }
+            PropertyChanges { target: titleItem; text: SyncsStrings.finalStepSyncTitle; }
+            PropertyChanges { target: descriptionItem; text: SyncsStrings.finalStepSync; }
             PropertyChanges { target: descriptionItem2; visible: false; }
             PropertyChanges { target: syncButtonItem; visible: false; }
             PropertyChanges {
@@ -58,7 +59,7 @@ FooterButtonsPage {
             extend: root.stateFullSync
             PropertyChanges {
                 target: syncButtonItem;
-                type: SyncsType.Types.SELECTIVE_SYNC;
+                type: Constants.SyncType.SELECTIVE_SYNC;
                 visible: true;
             }
         },
@@ -74,12 +75,12 @@ FooterButtonsPage {
             PropertyChanges {
                 target: syncButtonItem;
                 type: !fullSyncDone && !selectiveSyncDone
-                      ? SyncsType.Types.SYNC
-                      : SyncsType.Types.SELECTIVE_SYNC;
+                      ? Constants.SyncType.SYNC
+                      : Constants.SyncType.SELECTIVE_SYNC;
                 visible: !fullSyncDone;
                 title: !fullSyncDone && !selectiveSyncDone
-                       ? OnboardingStrings.sync
-                       : OnboardingStrings.selectiveSync;
+                       ? SyncsStrings.sync
+                       : SyncsStrings.selectiveSync;
                 description: !fullSyncDone && !selectiveSyncDone
                              ? OnboardingStrings.finalPageButtonSync
                              : OnboardingStrings.finalPageButtonSelectiveSync;
@@ -166,15 +167,9 @@ FooterButtonsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    Layout.preferredWidth: width
-                    Layout.preferredHeight: height
-                    contentMargin: 24
-                    contentSpacing: 8
-                    imageSourceSize: Qt.size(22, 20)
-                    title: OnboardingStrings.selectiveSync
+                    title: SyncsStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
-                    checkable: false
                     focus: true
                     useMaxSiblingHeight: true
                     ButtonGroup.group: buttonGroupItem
@@ -186,16 +181,10 @@ FooterButtonsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    Layout.preferredWidth: width
-                    Layout.preferredHeight: height
-                    contentMargin: 24
-                    contentSpacing: 8
-                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
-                    type: SyncsType.Types.BACKUP
-                    checkable: false
+                    type: Constants.SyncType.BACKUP
                     useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }

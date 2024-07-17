@@ -4,11 +4,9 @@
 #include "BackupItemModel.h"
 
 #include "QmlDialogWrapper.h"
-#include "QmlDialogManager.h"
-#include "backups/Backups.h"
+#include "Backups.h"
 #include "Onboarding.h"
 
-#include "Utilities.h"
 #include "DialogOpener.h"
 #include "RemoveBackupDialog.h"
 #include "QMegaMessageBox.h"
@@ -52,12 +50,6 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
 
 BackupSettingsUI::~BackupSettingsUI()
 {
-}
-
-void BackupSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
-{
-    Q_UNUSED(megaFolderHandle)
-    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
@@ -140,6 +132,13 @@ QString BackupSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> 
 void BackupSettingsUI::setBackupsTitle()
 {
     setTitle(tr("Backups"));
+}
+
+void BackupSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
+{
+    Q_UNUSED(remoteFolder);
+
+    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 QString BackupSettingsUI::disableString() const
