@@ -13,12 +13,12 @@ SyncsQmlDialog {
     title: SyncsStrings.syncsWindowTitle
     visible: true
     modality: Qt.NonModal
-    width: 640
-    height: 580
-    maximumHeight: 580
-    maximumWidth: 640
-    minimumHeight: 580
-    minimumWidth: 640
+    width: 715
+    height: 620
+    maximumHeight: height
+    maximumWidth: width
+    minimumHeight: height
+    minimumWidth: width
 
     Column {
         id: contentItem
