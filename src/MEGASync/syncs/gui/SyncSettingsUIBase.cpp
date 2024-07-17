@@ -14,7 +14,6 @@
 #include <PermissionsDialog.h>
 #endif
 
-
 #include "ui_SyncSettingsUIBase.h"
 
 QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> SyncSettingsUIBase::mModels = QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>>();

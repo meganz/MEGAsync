@@ -22,3 +22,10 @@ target_sources(MEGAsync
     ${DESKTOP_APP_UA_REQUEST_HEADERS}
     ${DESKTOP_APP_UA_REQUEST_SOURCES}
 )
+
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
+

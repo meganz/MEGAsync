@@ -1,7 +1,7 @@
 #ifndef DUPLICATEDUPLOADFILE_H
 #define DUPLICATEDUPLOADFILE_H
 
-#include <DuplicatedNodeDialogs/DuplicatedNodeItem.h>
+#include "DuplicatedNodeInfo.h"
 #include <megaapi.h>
 
 #include <QObject>

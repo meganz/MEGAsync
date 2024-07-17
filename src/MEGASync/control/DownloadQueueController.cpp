@@ -2,7 +2,7 @@
 
 #include "LowDiskSpaceDialog.h"
 #include "DialogOpener.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "RequestListenerManager.h"
 
 #ifdef WIN32

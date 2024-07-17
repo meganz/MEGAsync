@@ -3,8 +3,8 @@
 #include "Preferences.h"
 #include "SyncInfo.h"
 #include "Platform.h"
-#include "UserAttributesRequests/DeviceName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "DeviceName.h"
+#include "MyBackupsHandle.h"
 #include "SyncTooltipCreator.h"
 
 #ifdef Q_OS_WINDOWS

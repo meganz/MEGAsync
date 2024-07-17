@@ -1,4 +1,5 @@
 #include "BalloonToolTip.h"
+
 #include <QPainter>
 #include <QDebug>
 #include <QEvent>

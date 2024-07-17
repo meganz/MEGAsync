@@ -27,7 +27,6 @@
 
 #include "Utilities.h"
 #include "Platform.h"
-
 #include "QmlDialogManager.h"
 #include "SyncsComponent.h"
 

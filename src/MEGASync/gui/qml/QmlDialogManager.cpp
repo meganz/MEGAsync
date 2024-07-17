@@ -1,14 +1,11 @@
 #include "QmlDialogManager.h"
 
 #include "QmlDialogWrapper.h"
-
-#include "backups/Backups.h"
-
+#include "Backups.h"
 #include "Onboarding.h"
 #include "GuestContent.h"
 #include "OnboardingQmlDialog.h"
 #include "GuestQmlDialog.h"
-
 #include "WhatsNewWindow.h"
 #include "DialogOpener.h"
 #include "LoginController.h"
