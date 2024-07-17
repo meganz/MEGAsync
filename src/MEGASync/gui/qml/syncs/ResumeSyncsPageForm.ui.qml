@@ -58,6 +58,7 @@ FooterButtonsPage {
         Texts.SecondaryText {
             id: descriptionItem
 
+            Layout.topMargin: 30
             Layout.preferredWidth: parent.width
             text: SyncsStrings.finalStepSync
             font.pixelSize: Texts.Text.Size.MEDIUM
