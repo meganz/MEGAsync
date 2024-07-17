@@ -10,6 +10,7 @@ import components.buttons 1.0
 import components.pages 1.0
 
 import backups 1.0
+import syncs 1.0
 
 import onboard 1.0
 
