@@ -56,10 +56,7 @@ FooterButtonsPage {
                     type: Constants.SyncType.FULL_SYNC
                     description: SyncsStrings.fullSyncButtonDescription
                     imageSource: Images.fullSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
 
                 SyncTypeButton {
@@ -70,10 +67,7 @@ FooterButtonsPage {
                     type: Constants.SyncType.SELECTIVE_SYNC
                     description: SyncsStrings.selectiveSyncButtonDescription
                     imageSource: Images.selectiveSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
             }
         }

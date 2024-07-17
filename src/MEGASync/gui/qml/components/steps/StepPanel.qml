@@ -88,7 +88,7 @@ Rectangle {
             Rectangle {
                 id: line
 
-                Layout.preferredWidth: root.lineWidth
+                Layout.preferredWidth: Math.min((contentItem.width - step2.width - step1.width - (3 * root.contentSpacing) - helpButton.width), root.lineWidth)
                 Layout.preferredHeight: root.lineHeight
                 color: colorStyle.buttonSecondaryPressed
                 radius: root.lineRadius

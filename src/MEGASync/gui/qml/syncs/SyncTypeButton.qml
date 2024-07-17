@@ -14,4 +14,6 @@ CardVerticalButton {
     Layout.preferredHeight: height
     width: 196
     imageSourceSize: Qt.size(172, 100)
+    textHorizontalExtraMargin: 4
+    useMaxSiblingHeight: true
 }
