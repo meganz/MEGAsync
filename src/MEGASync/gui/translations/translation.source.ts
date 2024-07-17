@@ -4794,11 +4794,6 @@ Enter a different name.</translation>
         <translation>First name</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sync your entire MEGA account with your local device.</translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation>Full sync</translation>
@@ -4917,11 +4912,6 @@ Enter a different name.</translation>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>Select a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sync selected folders in your MEGA account with your local device.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
@@ -5157,6 +5147,16 @@ Enter a different name.</translation>
         <source>Choose</source>
         <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
         <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync your entire MEGA Cloud drive with your local device.</translation>
     </message>
 </context>
 <context>
@@ -8036,12 +8036,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>SyncsStrings</name>
     <message>
-        <source>Choose type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add sync</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>

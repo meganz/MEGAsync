@@ -29,7 +29,7 @@ SyncsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            step1String: SyncsStrings.syncType
+            step1String: SyncsStrings.syncTitle
             step2String: SyncsStrings.sync
             helpUrl: Links.setUpSyncs
         }
