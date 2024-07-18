@@ -54,7 +54,7 @@ FooterButtonsPage {
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: SyncsStrings.fullSync
                     type: Constants.SyncType.FULL_SYNC
-                    description: SyncsStrings.fullSyncButtonDescription
+                    description: SyncsStrings.fullSyncDescription
                     imageSource: Images.fullSync
                     ButtonGroup.group: buttonGroup
                 }
@@ -65,7 +65,7 @@ FooterButtonsPage {
                     Layout.rightMargin: -selectiveSyncButtonItem.focusBorderWidth
                     title: SyncsStrings.selectiveSync
                     type: Constants.SyncType.SELECTIVE_SYNC
-                    description: SyncsStrings.selectiveSyncButtonDescription
+                    description: SyncsStrings.selectiveSyncDescription
                     imageSource: Images.selectiveSync
                     ButtonGroup.group: buttonGroup
                 }
