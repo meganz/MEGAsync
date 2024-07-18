@@ -321,7 +321,7 @@ background-color: rgba(0,0,0,0.1);
                <string notr="true"/>
               </property>
               <property name="pixmap">
-               <pixmap resource="../Resources_qml.qrc">:/images/qml/mega.svg</pixmap>
+               <pixmap resource="../Resources_win.qrc">:/images/app_64.png</pixmap>
               </property>
               <property name="scaledContents">
                <bool>true</bool>
@@ -559,7 +559,7 @@ background-color: rgba(0,0,0,0.1);
   <zorder>wContainer</zorder>
  </widget>
  <resources>
-  <include location="../Resources_qml.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
