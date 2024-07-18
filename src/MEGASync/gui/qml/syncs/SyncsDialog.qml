@@ -39,7 +39,7 @@ SyncsQmlDialog {
 
             width: parent.width
             height: parent.height - stepPanelItem.height
-            color: colorStyle.surface1
+            color: ColorTheme.surface1
 
             readonly property string syncsFlow: "syncsFlow"
             readonly property string resume: "resume"
