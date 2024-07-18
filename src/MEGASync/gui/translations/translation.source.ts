@@ -4799,11 +4799,6 @@ Enter a different name.</translation>
         <translation>Full sync</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with a local device.</translation>
-    </message>
-    <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
         <translatorcomment>Sync creation error indicating the user that he hasn´t got permission to create folders in the selected local folder CON-467</translatorcomment>
         <translation>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</translation>
@@ -4912,11 +4907,6 @@ Enter a different name.</translation>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>Select a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sync specific folders in your MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Selective sync</source>
