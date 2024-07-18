@@ -56,14 +56,14 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    void addSyncFolder(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
+    void addSyncFolder(const QString& remoteFolder) const;
 
     // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
 
-    // Backups
-    void setBackupsAddButtonEnabled(bool enabled);
+    void setSyncAddButtonEnabled(bool enabled,
+                                 SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
 
 signals:
     void userActivity();

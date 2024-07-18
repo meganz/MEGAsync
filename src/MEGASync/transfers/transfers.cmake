@@ -141,10 +141,12 @@ target_sources(MEGAsync
     ${DESKTOP_APP_TRANSFERS_SOURCES}
 )
 
-
-target_include_directories(MEGAsync PRIVATE
+set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/model
     ${CMAKE_CURRENT_LIST_DIR}/gui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs
 )
+
+target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

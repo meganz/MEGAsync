@@ -8,13 +8,12 @@ import components.views 1.0
 
 import onboard 1.0
 import onboard.syncs_types.backups 1.0
-import onboard.syncs_types.syncs 1.0
 
 import LoginController 1.0
 import SettingsDialog 1.0
 
 Rectangle {
-    id: syncsPanel
+    id: root
 
     readonly property string deviceName: "deviceName"
     readonly property string syncType: "syncType"
@@ -28,10 +27,11 @@ Rectangle {
     property NavigationInfo navInfo: NavigationInfo {}
 
     color: ColorTheme.surface1
-    state: deviceName
+    state: root.deviceName
+
     states: [
         State {
-            name: deviceName
+            name: root.deviceName
             StateChangeScript {
                 script: rightPanel.replace(deviceNamePage);
             }
@@ -41,7 +41,7 @@ Rectangle {
             }
         },
         State {
-            name: syncType
+            name: root.syncType
             StateChangeScript {
                 script: rightPanel.replace(installationTypePage);
             }
@@ -51,10 +51,10 @@ Rectangle {
             }
         },
         State {
-            name: syncsFlow
+            name: root.syncsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.SYNC;
+                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -64,10 +64,10 @@ Rectangle {
             }
         },
         State {
-            name: backupsFlow
+            name: root.backupsFlow
             StateChangeScript {
                 script: {
-                    navInfo.typeSelected = SyncsType.Types.BACKUP;
+                    root.navInfo.typeSelected = Constants.SyncType.BACKUP;
                     rightPanel.replace(backupsFlowPage);
                 }
             }
@@ -77,37 +77,37 @@ Rectangle {
             }
         },
         State {
-            name: resume
+            name: root.resume
             StateChangeScript {
                 script: {
-                    syncsPanel.navInfo.comesFromResumePage = true;
+                    root.navInfo.comesFromResumePage = true;
 
                     var resumePageState = "";
                     var toOpenTabIndex = 0;
-                    switch(syncsPanel.navInfo.typeSelected) {
-                        case SyncsType.Types.SELECTIVE_SYNC:
+                    switch(root.navInfo.typeSelected) {
+                        case Constants.SyncType.SELECTIVE_SYNC:
                             resumePageState = "stateSelectiveSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.FULL_SYNC:
+                        case Constants.SyncType.FULL_SYNC:
                             resumePageState = "stateFullSync";
                             toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
-                        case SyncsType.Types.BACKUP:
+                        case Constants.SyncType.BACKUP:
                             resumePageState = "stateBackup";
                             toOpenTabIndex = SettingsDialog.BACKUP_TAB;
                             break;
                         default:
                             console.warn("ResumePage: typeSelected does not exist -> "
-                                         + syncsPanel.navInfo.typeSelected);
+                                         + root.navInfo.typeSelected);
                             break;
                     }
 
                     rightPanel.replace(resumePage,
                                        { "state": resumePageState,
                                          "tabToOpen": toOpenTabIndex,
-                                         "fullSyncDone": syncsPanel.navInfo.fullSyncDone,
-                                         "selectiveSyncDone": syncsPanel.navInfo.selectiveSyncDone
+                                         "fullSyncDone": root.navInfo.fullSyncDone,
+                                         "selectiveSyncDone": root.navInfo.selectiveSyncDone
                                        });
                 }
             }
@@ -121,7 +121,7 @@ Rectangle {
     Item {
         id: leftPanel
 
-        width: stepPanelWidth
+        width: root.stepPanelWidth
         height: parent.height
         z: 2
 
@@ -144,8 +144,10 @@ Rectangle {
                 topMargin: Constants.defaultWindowMargin
                 bottomMargin: Constants.defaultWindowMargin
             }
-            width: lineWidth
-            radius: lineWidth
+
+            width: root.lineWidth
+            radius: root.lineWidth
+            height: root.contentHeight
             color: ColorTheme.borderDisabled
         }
     }
@@ -172,7 +174,7 @@ Rectangle {
                 id: deviceNamePageItem
 
                 onDeviceNameMoveToSyncType: {
-                    syncsPanel.state = syncType;
+                    root.state = root.syncType;
                 }
             }
         }
@@ -184,15 +186,15 @@ Rectangle {
                 id: installationTypePageItem
 
                 onInstallationTypeMoveToBack: {
-                    syncsPanel.state = deviceName;
+                    root.state = root.deviceName;
                 }
 
                 onInstallationTypeMoveToSync: {
-                    syncsPanel.state = syncsFlow;
+                    root.state = root.syncsFlow;
                 }
 
                 onInstallationTypeMoveToBackup: {
-                    syncsPanel.state = backupsFlow;
+                    root.state = root.backupsFlow;
                 }
             }
         }
@@ -200,15 +202,33 @@ Rectangle {
         Component {
             id: syncsFlowPage
 
-            SyncsFlow {
+            SyncsPage {
                 id: syncsFlowPageItem
 
-                onSyncsFlowMoveToFinal: {
-                    syncsPanel.state = resume;
+                stepPanelRef: stepPanel
+                navInfoRef: root.navInfo
+
+                onSyncsFlowMoveToFinal: (syncType) => {
+                    if(syncType === Constants.SyncType.FULL_SYNC) {
+                        root.navInfo.fullSyncDone = true;
+                    }
+                    else if(syncType === Constants.SyncType.SELECTIVE_SYNC) {
+                        root.navInfo.selectiveSyncDone = true;
+                    }
+                    root.state = root.resume;
                 }
 
-                onSyncsFlowMoveToBack: {
-                    syncsPanel.state = syncType;
+                onSyncsFlowMoveToBack: (fromSelectType) => {
+                    if(root.navInfo.comesFromResumePage) {
+                        root.navInfo.typeSelected = root.navInfo.previousTypeSelected;
+                        root.state = root.resume;
+                    }
+                    else if(fromSelectType) {
+                        root.state = root.syncType;
+                    }
+                    else {
+                        syncsFlowPageItem.state = syncsFlowPageItem.syncType;
+                    }
                 }
             }
         }
@@ -223,17 +243,17 @@ Rectangle {
 
                 onBackupFlowMoveToFinal: (success) => {
                     if(success) {
-                        syncsPanel.state = resume;
+                        root.state = root.resume;
                     }
                 }
 
                 onBackupFlowMoveToBack: {
-                    if(syncsPanel.navInfo.comesFromResumePage) {
-                        syncsPanel.navInfo.typeSelected = syncsPanel.navInfo.previousTypeSelected;
-                        syncsPanel.state = resume;
+                    if(root.navInfo.comesFromResumePage) {
+                        root.navInfo.typeSelected = root.navInfo.previousTypeSelected;
+                        root.state = root.resume;
                     }
                     else {
-                        syncsPanel.state = syncType;
+                        root.state = root.syncType;
                     }
                 }
             }
@@ -248,19 +268,19 @@ Rectangle {
                 stepPanelRef: stepPanel
 
                 onResumePageMoveToSyncs: {
-                    syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
-                    syncsPanel.state = syncsFlow;
+                    root.navInfo.previousTypeSelected = root.navInfo.typeSelected;
+                    root.state = root.syncsFlow;
                 }
 
                 onResumePageMoveToSelectiveSyncs: {
-                    syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
-                    syncsPanel.state = syncsFlow;
-                    syncsPanel.navInfo.typeSelected = SyncsType.Types.SELECTIVE_SYNC;
+                    root.navInfo.previousTypeSelected = root.navInfo.typeSelected;
+                    root.state = root.syncsFlow;
+                    root.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
                 }
 
                 onResumePageMoveToBackup: {
-                    syncsPanel.navInfo.previousTypeSelected = syncsPanel.navInfo.typeSelected;
-                    syncsPanel.state = backupsFlow;
+                    root.navInfo.previousTypeSelected = root.navInfo.typeSelected;
+                    root.state = root.backupsFlow;
                 }
             }
         }

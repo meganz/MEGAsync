@@ -8,8 +8,6 @@ import common 1.0
 import components.buttons 1.0
 import components.textFields 1.0
 
-import onboard 1.0
-
 import Syncs 1.0
 import ChooseLocalFolder 1.0
 import ChooseRemoteFolder 1.0
@@ -17,11 +15,14 @@ import ChooseRemoteFolder 1.0
 FocusScope {
     id: root
 
+    required property bool isOnboarding
+
     readonly property int textEditMargin: 2
 
     property alias choosenPath: folderItem.text
-    property bool local: true
     property alias folderField: folderItem
+
+    property bool local: true
 
     function reset() {
         if(!local) {
@@ -32,11 +33,32 @@ FocusScope {
     function getFolder() {
         var defaultFolder = "";
 
-        if (local) {
-            defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+        if(root.isOnboarding) {
+            if (local) {
+                defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+            }
+            else {
+                defaultFolder = syncs.defaultMegaPath;
+            }
         }
-        else {
-            defaultFolder = syncs.defaultMegaPath;
+        else { // Standalone syncs window
+            if(syncsComponentAccess === null) {
+                return defaultFolder;
+            }
+
+            if (local) {
+                if(syncsComponentAccess.remoteFolder === "") {
+                    defaultFolder = localFolderChooser.getDefaultFolder(syncs.defaultMegaFolder);
+                }
+            }
+            else {
+                if(syncsComponentAccess.remoteFolder === "") {
+                    defaultFolder = syncs.defaultMegaPath;
+                }
+                else {
+                    defaultFolder = syncsComponentAccess.remoteFolder;
+                }
+            }
         }
 
         if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
@@ -55,6 +77,17 @@ FocusScope {
         id: syncs
     }
 
+    Connections {
+        id: syncsConnection
+
+        target: syncs
+
+        function onSyncRemoved() {
+            // Check if MEGA is available again when removed
+            folderItem.text = getFolder();
+        }
+    }
+
     TextField {
         id: folderItem
 
@@ -64,7 +97,7 @@ FocusScope {
             top: parent.top
             rightMargin: textEditMargin
         }
-        title: local ? OnboardingStrings.selectLocalFolder : OnboardingStrings.selectMEGAFolder
+        title: local ? SyncsStrings.selectLocalFolder : SyncsStrings.selectMEGAFolder
         text: getFolder()
         leftIconSource: local ? Images.pc : Images.megaOutline
         leftIconColor: enabled ? ColorTheme.iconSecondary : ColorTheme.iconDisabled
@@ -85,7 +118,7 @@ FocusScope {
             topMargin: 15
         }
         focus: true
-        text: OnboardingStrings.choose
+        text: Strings.choose
         onClicked: {
             folderItem.error = false;
             folderItem.hint.visible = false;

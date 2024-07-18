@@ -2,9 +2,9 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "SyncInfo.h"
-#include "UserAttributesRequests/CameraUploadFolder.h"
-#include "UserAttributesRequests/MyChatFilesFolder.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "CameraUploadFolder.h"
+#include "MyChatFilesFolder.h"
+#include "MyBackupsHandle.h"
 
 #include "mega/types.h"
 

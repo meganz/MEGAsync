@@ -22,7 +22,7 @@ Button {
         borderDisabled: ColorTheme.borderDisabled
         borderHover: ColorTheme.borderDisabled
         borderPressed: ColorTheme.borderSubtle
-        borderSelected: ColorTheme.borderStrongSelected
+        borderSelected: ColorTheme.borderInteractive
     }
 
     function getBorderColor() {

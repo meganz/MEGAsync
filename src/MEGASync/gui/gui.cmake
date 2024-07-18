@@ -90,7 +90,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/AccountInfoData.h
     gui/qml/WhatsNewWindow.h
     gui/onboarding/Onboarding.h
-    gui/onboarding/Syncs.h
     gui/onboarding/PasswordStrengthChecker.h
     gui/onboarding/GuestQmlDialog.h
     gui/onboarding/OnboardingQmlDialog.h
@@ -105,6 +104,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsModel.h
     gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
+    gui/syncs/SyncsComponent.h
+    gui/syncs/SyncsQmlDialog.h
+    gui/syncs/Syncs.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -195,7 +197,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/AccountInfoData.cpp
     gui/qml/WhatsNewWindow.cpp
     gui/onboarding/Onboarding.cpp
-    gui/onboarding/Syncs.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
     gui/onboarding/GuestQmlDialog.cpp
     gui/onboarding/OnboardingQmlDialog.cpp
@@ -210,6 +211,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsModel.cpp
     gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
+    gui/syncs/SyncsComponent.cpp
+    gui/syncs/SyncsQmlDialog.cpp
+    gui/syncs/Syncs.cpp
 )
 
 # UI files additions
@@ -483,6 +487,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
+    ${CMAKE_CURRENT_LIST_DIR}/syncs
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

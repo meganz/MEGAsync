@@ -2,7 +2,7 @@
 #include "ui_OpenBackupsFolder.h"
 
 #include "SyncSettingsUIBase.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MyBackupsHandle.h"
 
 BackupSettingsElements::BackupSettingsElements(QObject *parent)
     :QObject(parent)

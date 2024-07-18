@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.buttons 1.0
-import components.steps 1.0
 
 Rectangle {
     id: root
@@ -20,6 +19,11 @@ Rectangle {
     readonly property int lineWidth: 127
     readonly property int lineHeight: 2
     readonly property int lineRadius: 1
+
+    property alias step1String: step1.text
+    property alias step2String: step2.text
+
+    property url helpUrl
 
     height: 104
     color: ColorTheme.pageBackground
@@ -79,13 +83,12 @@ Rectangle {
                 id: step1
 
                 number: 1
-                text: BackupsStrings.selectFolders
             }
 
             Rectangle {
                 id: line
 
-                Layout.preferredWidth: root.lineWidth
+                Layout.preferredWidth: Math.min((contentItem.width - step2.width - step1.width - (3 * root.contentSpacing) - helpButton.width), root.lineWidth)
                 Layout.preferredHeight: root.lineHeight
                 color: ColorTheme.buttonSecondaryPressed
                 radius: root.lineRadius
@@ -95,7 +98,6 @@ Rectangle {
                 id: step2
 
                 number: 2
-                text: BackupsStrings.confirmFolders
             }
 
         } // RowLayout: stepsLayout
@@ -111,7 +113,9 @@ Rectangle {
             }
             icons.source: Images.helpCircle
             onClicked: {
-                Qt.openUrlExternally(Links.createBackup);
+                if (root.helpUrl.toString().length > 0) {
+                    Qt.openUrlExternally(root.helpUrl);
+                }
             }
         }
 

@@ -8,6 +8,7 @@ import components.texts 1.0 as Texts
 import components.pages 1.0
 
 import onboard 1.0
+import syncs 1.0
 
 import LoginController 1.0
 
@@ -55,10 +56,10 @@ FooterButtonsPage {
 
                 Layout.leftMargin: -syncButtonItem.focusBorderWidth
                 Layout.rightMargin: -syncButtonItem.focusBorderWidth
-                title: OnboardingStrings.sync
+                title: SyncsStrings.sync
                 description: OnboardingStrings.syncButtonDescription
                 imageSource: Images.sync
-                type: SyncsType.Types.SYNC
+                type: Constants.SyncType.SYNC
                 ButtonGroup.group: buttonGroupComp
             }
 
@@ -70,7 +71,7 @@ FooterButtonsPage {
                 title: OnboardingStrings.backup
                 description: OnboardingStrings.backupButtonDescription
                 imageSource: Images.installationTypeBackups
-                type: SyncsType.Types.BACKUP
+                type: Constants.SyncType.BACKUP
                 ButtonGroup.group: buttonGroupComp
             }
         }

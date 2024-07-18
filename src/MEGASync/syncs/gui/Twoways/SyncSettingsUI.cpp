@@ -1,8 +1,13 @@
 #include "SyncSettingsUI.h"
 
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
+#include "DialogOpener.h"
 #include "SyncTableView.h"
 #include "SyncItemModel.h"
 #include "MegaApplication.h"
+#include "SyncsComponent.h"
+
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
@@ -19,10 +24,23 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     adjustSize();
 #endif
-}
 
-SyncSettingsUI::~SyncSettingsUI()
-{
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(),
+                &QmlDialogWrapper<Onboarding>::finished,
+                this,
+                [this]()
+                {
+                    setAddButtonEnabled(true);
+                });
+    }
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+    }
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -93,14 +111,13 @@ void SyncSettingsUI::changeEvent(QEvent* event)
     SyncSettingsUIBase::changeEvent(event);
 }
 
+void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
+{
+    QmlDialogManager::instance()->openAddSync(remoteFolder, true);
+}
+
 void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
                                   || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }
-
-
-
-
-
-

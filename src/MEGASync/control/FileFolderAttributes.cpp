@@ -1,7 +1,7 @@
 #include "FileFolderAttributes.h"
 
 #include <MegaApplication.h>
-#include <UserAttributesRequests/FullName.h>
+#include "FullName.h"
 
 #include <QEventLoop>
 
