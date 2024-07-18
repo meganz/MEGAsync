@@ -13,6 +13,8 @@ public:
     QUrl getQmlUrl() override;
     QString contextName() override;
     static void registerQmlModules();
+
+    Q_INVOKABLE void openAddBackupDialog();
 };
 
 #endif // DEVICE_CENTER_H

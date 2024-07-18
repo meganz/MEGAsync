@@ -27,3 +27,9 @@ void DeviceCenter::registerQmlModules()
         qmlRegistrationDone = true;
     }
 }
+
+void DeviceCenter::openAddBackupDialog()
+{
+    const bool comesFromSettings = false;
+    QmlDialogManager::instance()->openBackupsDialog(comesFromSettings);
+}
