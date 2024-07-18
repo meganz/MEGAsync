@@ -9,6 +9,7 @@
 #include <QObject>
 
 #include <memory>
+#include <optional>
 
 class SyncController;
 class Syncs : public QObject, public mega::MegaRequestListener
@@ -18,6 +19,8 @@ class Syncs : public QObject, public mega::MegaRequestListener
     Q_PROPERTY(QString defaultMegaFolder READ getDefaultMegaFolder CONSTANT FINAL)
     Q_PROPERTY(QString defaultMegaPath READ getDefaultMegaPath CONSTANT FINAL)
     Q_PROPERTY(SyncStatusCode syncStatus READ getSyncStatus WRITE setSyncStatus NOTIFY syncStatusChanged)
+    Q_PROPERTY(QString localError READ getLocalError NOTIFY localErrorChanged)
+    Q_PROPERTY(QString remoteError READ getRemoteError NOTIFY remoteErrorChanged)
 
 public:
     enum SyncStatusCode
@@ -35,8 +38,8 @@ public:
     virtual ~Syncs() = default;
 
     Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
-    Q_INVOKABLE bool checkLocalSync(const QString& path) const;
-    Q_INVOKABLE bool checkRemoteSync(const QString& path) const;
+    Q_INVOKABLE bool checkLocalSync(const QString& path);
+    Q_INVOKABLE bool checkRemoteSync(const QString& path);
 
     QString getDefaultMegaFolder() const;
     QString getDefaultMegaPath() const;
@@ -44,30 +47,50 @@ public:
     SyncStatusCode getSyncStatus() const;
     void setSyncStatus(SyncStatusCode status);
 
+    QString getLocalError() const;
+    QString getRemoteError() const;
+
 signals:
     void syncSetupSuccess();
     void cantSync(const QString& message = QString(), bool localFolderError = true);
     void syncStatusChanged();
     void syncRemoved();
+    void localErrorChanged();
+    void remoteErrorChanged();
 
 private:
+    enum class LocalErrors
+    {
+        EmptyPath,
+        NoAccessPermissionsNoExist,
+        WarnSyncable
+    };
+
+    enum class RemoteErrors
+    {
+        EmptyPath,
+        CantSync
+    };
+
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
+    std::unique_ptr<mega::MegaError> mRemoteMegaError;
     QString mRemoteFolder;
     QString mLocalFolder;
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
+    std::optional<LocalErrors> mLocalError;
+    std::optional<RemoteErrors> mRemoteError;
 
-    bool errorOnSyncPaths(const QString& localPath, const QString& remotePath);
-    bool helperCheckLocalSync(const QString& path, QString& errorMessage) const;
-    bool helperCheckRemoteSync(const QString& path, QString& errorMessage) const;
+    bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
+    void helperCheckLocalSync(const QString& path);
+    void helperCheckRemoteSync(const QString& path);
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
-
 };
 
 #endif // SYNCS_H

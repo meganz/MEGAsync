@@ -9,6 +9,12 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
 
+    /*
+    localFolderChooser.folderField.hint.text : syncs.localError
+    localFolderChooser.folderField.hint.visible : (syncs.localError.length !== 0)
+    localFolderChooser.folderField.error : (syncs.localError.length !== 0)
+    */
+
     footerButtons {
         leftSecondary.onClicked: {
             syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
@@ -19,6 +25,7 @@ SelectiveSyncPageForm {
         }
 
         rightPrimary.onClicked: {
+            /*
             localFolderChooser.folderField.hint.visible = false;
             localFolderChooser.folderField.error = false;
 
@@ -52,6 +59,7 @@ SelectiveSyncPageForm {
                 localFolderChooser.folderField.hint.visible = true;
                 return;
             }
+            */
 
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
@@ -73,6 +81,7 @@ SelectiveSyncPageForm {
             root.selectiveSyncMoveToSuccess();
         }
 
+        /*
         onCantSync: (message, localFolderError) => {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
@@ -94,6 +103,51 @@ SelectiveSyncPageForm {
 
             console.log("Selective sync can't sync, message -> " + message);
         }
+        */
+
+        onLocalErrorChanged: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+
+            var errorMessage = syncs.localError;
+            var isErrorMessageEmpty = (errorMessage.length !== 0);
+
+            localFolderChooser.folderField.error = isErrorMessageEmpty;
+            localFolderChooser.folderField.hint.text = errorMessage;
+            localFolderChooser.folderField.hint.visible = isErrorMessageEmpty;
+
+            if (isErrorMessageEmpty) {
+                console.log("Selective sync can't sync, local error message -> " + errorMessage);
+            }
+        }
+
+        onRemoteErrorChanged: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+
+            var errorMessage = syncs.remoteError;
+            var isErrorMessageEmpty = (errorMessage.length !== 0);
+
+            remoteFolderChooser.folderField.error = isErrorMessageEmpty;
+            remoteFolderChooser.folderField.hint.text = errorMessage;
+            remoteFolderChooser.folderField.hint.visible = isErrorMessageEmpty;
+
+            if (isErrorMessageEmpty) {
+                console.log("Selective sync can't sync, remote error message -> " + errorMessage);
+            }
+        }
+
+        /*
+        onLocalErrorChanged: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+        }
+
+        onRemoteErrorChanged: {
+            root.enabled = true;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+        }
+        */
     }
 
     Connections {
@@ -103,10 +157,12 @@ SelectiveSyncPageForm {
             localFolderChooser.forceActiveFocus();
         }
 
+        /*
         function onLanguageChanged() {
             if (localFolderChooser.folderField.hint.visible || remoteFolderChooser.folderField.hint.visible) {
                 footerButtons.rightPrimary.clicked();
             }
         }
+        */
     }
 }

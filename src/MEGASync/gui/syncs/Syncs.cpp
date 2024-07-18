@@ -27,7 +27,7 @@ Syncs::Syncs(QObject *parent)
 
 void Syncs::addSync(const QString& local, const QString& remote)
 {
-    if (errorOnSyncPaths(local, remote))
+    if (checkErrorsOnSyncPaths(local, remote))
     {
         return;
     }
@@ -62,112 +62,102 @@ void Syncs::addSync(const QString& local, const QString& remote)
     }
 }
 
-bool Syncs::errorOnSyncPaths(const QString &localPath, const QString &remotePath)
+bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath)
 {
-    bool error = false;
+    helperCheckLocalSync(localPath);
+    helperCheckRemoteSync(remotePath);
 
-    QString localErrorMessage;
-    if (!helperCheckLocalSync(localPath, localErrorMessage))
-    {
-        error = true;
-        emit cantSync(localErrorMessage, true);
-    }
-
-    QString remoteErrorMessage;
-    if (!helperCheckRemoteSync(remotePath, remoteErrorMessage))
-    {
-        error = true;
-        emit cantSync(remoteErrorMessage, false);
-    }
-
-    return error;
+    return (mLocalError.has_value() || mRemoteError.has_value());
 }
 
-bool Syncs::helperCheckLocalSync(const QString& path, QString& errorMessage) const
+void Syncs::helperCheckLocalSync(const QString& path)
 {
+    std::optional<LocalErrors> localError;
+
     if (path.isEmpty())
     {
-        errorMessage = tr("Select a local folder to sync.");
-        return false;
+        localError = LocalErrors::EmptyPath;
     }
 
-    auto localFolderPath = QDir::toNativeSeparators(path);
-    QDir openFromFolderDir(localFolderPath);
-    if (!openFromFolderDir.exists() )
+    if (!localError.has_value())
     {
-        errorMessage = QCoreApplication::translate("MegaSyncError", "Local path not available");
-        return false;
+        auto localFolderPath = QDir::toNativeSeparators(path);
+        QDir openFromFolderDir(localFolderPath);
+        if (!openFromFolderDir.exists() )
+        {
+            localError = LocalErrors::NoAccessPermissionsNoExist;
+        }
     }
 
-    auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
-
-    if (syncability == SyncController::WARN_SYNC)
+    if (!localError.has_value())
     {
-        // Only local WARN_SYNC at this point
-        //local warning write permission needs to be different for this case
-        //on onboarding so we will make up it here
-        errorMessage = tr("Folder can't be synced as you don't have write permissions.");
-    }
+        QString errorMessage;
+        auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+        if (syncability == SyncController::WARN_SYNC)
+        {
+            // Only local WARN_SYNC at this point
+            //local warning write permission needs to be different for this case
+            //on onboarding so we will make up it here
+            localError = LocalErrors::WarnSyncable;
 
 #if defined DEBUG
-    qDebug() << "localPath : " << path << " syncability : " << syncability << " message : " << errorMessage;
+            qDebug() << "localPath : " << path << " syncability : " << syncability << " message : " << errorMessage;
 #endif
+        }
+    }
 
-    return (syncability != SyncController::CANT_SYNC);
+    mLocalError.swap(localError);
+
+    emit localErrorChanged();
 }
 
-bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) const
+void Syncs::helperCheckRemoteSync(const QString& path)
 {
+    std::optional<RemoteErrors> remoteError;
+    std::unique_ptr<mega::MegaError> remoteMegaError;
+
     if (path.isEmpty())
     {
-        errorMessage = tr("Select a MEGA folder to sync.");
-        return false;
+        remoteError = RemoteErrors::EmptyPath;
     }
 
-    SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
-    auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
-    if (megaNode)
+    if (!remoteError.has_value())
     {
-        syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
-    }
-    else if(path != Syncs::DEFAULT_MEGA_PATH)
-    {
-        syncability = SyncController::CANT_SYNC;
-        errorMessage = tr("Folder can't be synced as it can't be located. "
-                          "It may have been moved or deleted, or you might not have access.");
+        SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
+        auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
+        if (megaNode)
+        {
+            remoteMegaError.reset(MegaSyncApp->getMegaApi()->isNodeSyncableWithError(megaNode.get()));
+            if (remoteMegaError->getErrorCode() != mega::MegaError::API_OK)
+            {
+                remoteError = RemoteErrors::CantSync;
+            }
+        }
+        else if (path != Syncs::DEFAULT_MEGA_PATH)
+        {
+            remoteError = RemoteErrors::CantSync;
+        }
     }
 
-#if defined DEBUG
-    qDebug() << "remotePath : " << path << " syncability : " << syncability << " message : " << errorMessage;
-#endif
+    mRemoteMegaError.swap(remoteMegaError);
+    mRemoteError.swap(remoteError);
 
-    return (syncability != SyncController::CANT_SYNC);
+    emit remoteErrorChanged();
+
 }
 
-bool Syncs::checkLocalSync(const QString &path) const
+bool Syncs::checkLocalSync(const QString& path)
 {
-    if (path.isEmpty())
-    {
-        return false;
-    }
+    helperCheckLocalSync(path);
 
-    auto localFolderPath = QDir::toNativeSeparators(path);
-    QDir openFromFolderDir(localFolderPath);
-    if (!openFromFolderDir.exists())
-    {
-        return true;
-    }
-
-    QString errorMessage;
-    auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
-
-    return (syncability != SyncController::CANT_SYNC);
+    return (mLocalError.has_value());
 }
 
-bool Syncs::checkRemoteSync(const QString &path) const
+bool Syncs::checkRemoteSync(const QString& path)
 {
-    QString error;
-    return helperCheckRemoteSync(path, error);
+    helperCheckRemoteSync(path);
+
+    return (mRemoteError.has_value());
 }
 
 QString Syncs::getDefaultMegaFolder() const
@@ -258,4 +248,63 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     {
         emit syncSetupSuccess();
     }
+}
+
+QString Syncs::getLocalError() const
+{
+    if (!mLocalError.has_value())
+    {
+        return {};
+    }
+
+    switch (mLocalError.value())
+    {
+        case LocalErrors::EmptyPath:
+        {
+            return tr("Select a local folder to sync.");
+        }
+
+        case LocalErrors::NoAccessPermissionsNoExist:
+        {
+            return QCoreApplication::translate("MegaSyncError", "Local path not available");
+        }
+
+        case LocalErrors::WarnSyncable:
+        {
+            return tr("Folder can't be synced as you don't have write permissions.");
+        }
+    }
+
+    return {};
+}
+
+QString Syncs::getRemoteError() const
+{
+    if (!mRemoteError.has_value())
+    {
+        return {};
+    }
+
+    switch (mRemoteError.value())
+    {
+        case RemoteErrors::EmptyPath:
+        {
+            return tr("Select a MEGA folder to sync.");
+        }
+
+        case RemoteErrors::CantSync:
+        {
+            if (mRemoteMegaError)
+            {
+                return SyncController::getRemoteFolderErrorMessage(mRemoteMegaError->getErrorCode(), mRemoteMegaError->getSyncError());
+            }
+            else
+            {
+                return tr("Folder can't be synced as it can't be located. "
+                          "It may have been moved or deleted, or you might not have access.");
+            }
+        }
+    }
+
+    return {};
 }
