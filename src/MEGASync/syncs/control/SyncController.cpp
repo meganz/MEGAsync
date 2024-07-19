@@ -500,6 +500,10 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
     {
         message = getRemoteFolderErrorMessage(err->getErrorCode(), err->getSyncError());
     }
+    else
+    {
+        syncability = Syncability::CAN_SYNC;
+    }
 
     return (syncability);
 }
@@ -510,10 +514,6 @@ QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncError
 
     switch (errorCode)
     {
-        case MegaError::API_OK:
-        {
-            break;
-        }
         case MegaError::API_EACCESS:
         {
             switch (syncErrorCode)
