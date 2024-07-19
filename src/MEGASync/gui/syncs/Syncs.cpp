@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "TextDecorator.h"
+#include "ChooseFolder.h"
 
 const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
 const QString Syncs::DEFAULT_MEGA_PATH = QString::fromUtf8("/") + Syncs::DEFAULT_MEGA_FOLDER;
@@ -27,6 +28,8 @@ Syncs::Syncs(QObject *parent)
 
 void Syncs::addSync(const QString& local, const QString& remote)
 {
+    cleanErrors();
+
     if (checkErrorsOnSyncPaths(local, remote))
     {
         return;
@@ -83,9 +86,20 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         auto localFolderPath = QDir::toNativeSeparators(path);
         QDir openFromFolderDir(localFolderPath);
-        if (!openFromFolderDir.exists() )
+        if (!openFromFolderDir.exists())
         {
-            localError = LocalErrors::NoAccessPermissionsNoExist;
+            ChooseLocalFolder localFolder;
+            if (localFolderPath == localFolder.getDefaultFolder(DEFAULT_MEGA_FOLDER))
+            {
+                if (!localFolder.createFolder(localFolderPath))
+                {
+                    localError = LocalErrors::NoAccessPermissionsCantCreate;
+                }
+            }
+            else
+            {
+                localError = LocalErrors::NoAccessPermissionsNoExist;
+            }
         }
     }
 
@@ -264,6 +278,11 @@ QString Syncs::getLocalError() const
             return tr("Select a local folder to sync.");
         }
 
+        case LocalErrors::NoAccessPermissionsCantCreate:
+        {
+            return QCoreApplication::translate("OnboardingStrings", "Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.");
+        }
+
         case LocalErrors::NoAccessPermissionsNoExist:
         {
             return QCoreApplication::translate("MegaSyncError", "Local path not available");
@@ -307,4 +326,14 @@ QString Syncs::getRemoteError() const
     }
 
     return {};
+}
+
+void Syncs::cleanErrors()
+{
+    mRemoteError.reset();
+    mLocalError.reset();
+    mRemoteMegaError.release();
+
+    emit localErrorChanged();
+    emit remoteErrorChanged();
 }

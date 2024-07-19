@@ -63,6 +63,7 @@ private:
     {
         EmptyPath,
         NoAccessPermissionsNoExist,
+        NoAccessPermissionsCantCreate,
         WarnSyncable
     };
 
@@ -86,6 +87,7 @@ private:
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
+    void cleanErrors();
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
