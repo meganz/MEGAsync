@@ -26,9 +26,9 @@ public:
     void reset(const mega::MegaNotification* notification);
 
     bool isSeen() const override;
+
     void markAsSeen();
 
-    int64_t getID() const;
     QString getTitle() const;
     QString getDescription() const;
 

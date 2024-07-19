@@ -43,7 +43,8 @@ void AlertItem::setAlertData(UserAlert* alert)
 {
     mAlertUser = alert;
 
-    connect(mAlertUser, &UserAlert::emailChanged, this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
+    connect(mAlertUser, &UserAlert::emailChanged,
+            this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
     connect(mAlertUser, &UserAlert::emailChanged, this, [=]()
     {
         updateAlertData();
@@ -64,8 +65,9 @@ void AlertItem::setAlertData(UserAlert* alert)
         }
     }
 
-    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this](){
-        emit refreshAlertItem(mAlertUser->getId());
+    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this]()
+    {
+        emit refreshAlertItem(mAlertUser->id().toUInt());
     });
 
     onAttributesReady();
@@ -125,7 +127,7 @@ void AlertItem::updateAlertData()
     setAlertTimeStamp(mAlertUser->getTimestamp(0));
     mAlertUser->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
 
-    emit refreshAlertItem(mAlertUser->getId());
+    emit refreshAlertItem(mAlertUser->id().toUInt());
 }
 
 void AlertItem::updateAlertType()

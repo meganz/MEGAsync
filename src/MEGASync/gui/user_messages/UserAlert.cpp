@@ -5,7 +5,7 @@
 #include <QDateTime>
 
 UserAlert::UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent)
-    : UserMessage(UserMessage::Type::ALERT, parent)
+    : UserMessage(megaUserAlert->getId(), UserMessage::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
     , mMessageType(MessageType::UNKNOWN)
     , mEmail()
@@ -127,13 +127,8 @@ bool UserAlert::isValid() const
 void UserAlert::reset(mega::MegaUserAlert* alert)
 {
     mMegaUserAlert.reset(alert);
-
+    mId = mMegaUserAlert->getId();
     init();
-}
-
-unsigned int UserAlert::getId() const
-{
-    return mMegaUserAlert->getId();
 }
 
 bool UserAlert::isSeen() const

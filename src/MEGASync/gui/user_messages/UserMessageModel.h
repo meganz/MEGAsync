@@ -2,6 +2,7 @@
 #define USER_MESSAGE_MODEL_H
 
 #include "UserMessageTypes.h"
+#include "UserMessage.h"
 
 #include <QAbstractItemModel>
 
@@ -12,8 +13,6 @@ class MegaUserAlertList;
 class MegaNotificationList;
 class MegaNotification;
 }
-
-class UserMessage;
 
 class UserMessageModel : public QAbstractItemModel
 {
@@ -72,8 +71,7 @@ private:
     void insertNotifications(const mega::MegaNotificationList* notifications);
     void removeNotifications(const mega::MegaNotificationList* notifications);
 
-    auto findAlertById(unsigned id);
-    auto findNotificationById(int64_t id);
+    auto findById(QVariant id, UserMessage::Type type);
 
 };
 

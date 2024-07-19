@@ -35,7 +35,7 @@ QWidget *UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget*
             AlertItem* item = dynamic_cast<AlertItem*>(getWidgetFromCache(cacheIndex));
             if(item)
             {
-                if(item->getData()->getId() != alert->getId())
+                if(item->getData()->id() != alert->id())
                 {
                     item->setAlertData(alert);
                 }
@@ -56,7 +56,7 @@ QWidget *UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget*
             NotificationItem* item = dynamic_cast<NotificationItem*>(getWidgetFromCache(cacheIndex));
             if(item)
             {
-                if(item->getData()->getID() != notification->getID())
+                if(item->getData()->id() != notification->id())
                 {
                     item->setNotificationData(notification);
                 }

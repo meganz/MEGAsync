@@ -29,7 +29,6 @@ public:
 
     bool isSeen() const override;
 
-    virtual unsigned getId() const;
     virtual bool getRelevant() const;
     virtual int getType() const;
     virtual mega::MegaHandle getUserHandle() const;
