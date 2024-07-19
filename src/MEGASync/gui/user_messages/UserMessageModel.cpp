@@ -47,11 +47,6 @@ QVariant UserMessageModel::data(const QModelIndex& index, int role) const
     {
         return QVariant::fromValue(index.internalId());
     }
-    else if (role == Qt::UserRole && mUserMessages.at(index.row())->getType() == UserMessage::Type::ALERT)
-    {
-        auto alert = qobject_cast<const UserAlert*>(mUserMessages.at(index.row()));
-        return QDateTime::fromMSecsSinceEpoch(alert->getTimestamp(0) * 1000);
-    }
 
     return QVariant();
 }

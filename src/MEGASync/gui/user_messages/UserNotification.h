@@ -42,6 +42,8 @@ public:
     const char* getActionText() const;
     const char* getActionLink() const;
 
+    bool isRowAccepted(MessageType type) const override;
+
 signals:
     void imageChanged();
     void iconChanged();

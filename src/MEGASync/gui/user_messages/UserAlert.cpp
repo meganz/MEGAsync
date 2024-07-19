@@ -2,6 +2,8 @@
 
 #include "EmailRequester.h"
 
+#include <QDateTime>
+
 UserAlert::UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent)
     : UserMessage(UserMessage::Type::ALERT, parent)
     , mMegaUserAlert(megaUserAlert)
@@ -182,4 +184,21 @@ const char* UserAlert::getTitle() const
 MessageType UserAlert::getMessageType() const
 {
     return mMessageType;
+}
+
+bool UserAlert::sort(UserMessage* checkWith) const
+{
+    if(auto checkAlert = dynamic_cast<UserAlert*>(checkWith))
+    {
+        auto thisDate = QDateTime::fromMSecsSinceEpoch(getTimestamp(0) * 1000);
+        auto checkDate = QDateTime::fromMSecsSinceEpoch(checkAlert->getTimestamp(0) * 1000);
+        return thisDate > checkDate;
+    }
+
+    return UserMessage::sort(checkWith);
+}
+
+bool UserAlert::isRowAccepted(MessageType type) const
+{
+    return type == getMessageType();
 }

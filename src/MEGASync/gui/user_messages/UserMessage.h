@@ -2,17 +2,19 @@
 #define USER_MESSAGE_H
 
 #include <QObject>
+#include "UserMessageTypes.h"
 
 class UserMessage : public QObject
 {
     Q_OBJECT
 
 public:
+    //It follows the required order
     enum class Type
     {
         NONE = 0,
+        NOTIFICATION,
         ALERT,
-        NOTIFICATION
     };
 
     UserMessage() = delete;
@@ -29,6 +31,8 @@ public:
     }
 
     virtual bool isSeen() const = 0;
+    virtual bool sort(UserMessage*) const {return false;}
+    virtual bool isRowAccepted(MessageType type) const = 0;
 
 private:
     Type mType;

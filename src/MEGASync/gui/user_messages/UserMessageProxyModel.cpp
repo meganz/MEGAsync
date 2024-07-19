@@ -35,26 +35,7 @@ bool UserMessageProxyModel::filterAcceptsRow(int row, const QModelIndex& sourceP
     UserMessage* item = static_cast<UserMessage*>(index.internalPointer());
     if(item)
     {
-        switch (item->getType())
-        {
-            case UserMessage::Type::ALERT:
-            {
-                UserAlert* alert = qobject_cast<UserAlert*>(item);
-                filter = mActualFilter == alert->getMessageType();
-                break;
-            }
-            case UserMessage::Type::NOTIFICATION:
-            {
-                filter = mActualFilter == MessageType::ALL;
-                break;
-            }
-            default:
-            {
-                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                                   "Invalid notification item type (filterAcceptsRow).");
-                break;
-            }
-        }
+        filter = item->isRowAccepted(mActualFilter);
     }
     return filter;
 }
@@ -70,29 +51,16 @@ bool UserMessageProxyModel::lessThan(const QModelIndex& left, const QModelIndex&
         return false;
     }
 
-    bool isLess;
-    // If the types are different, prioritise notifications over alerts
-    if (leftItem->getType() == UserMessage::Type::NOTIFICATION
-        && rightItem->getType() == UserMessage::Type::ALERT)
+    bool isLess(false);
+
+    if(leftItem->getType() != rightItem->getType())
     {
-        isLess = true;
-    }
-    else if (leftItem->getType() == UserMessage::Type::ALERT
-               && rightItem->getType() == UserMessage::Type::NOTIFICATION)
-    {
-        isLess = false;
-    }
-    else if (leftItem->getType() == UserMessage::Type::ALERT
-               && rightItem->getType() == UserMessage::Type::ALERT)
-    {
-        // If both are of type alert, order by date
-        QDateTime leftDate = sourceModel()->data(left, Qt::UserRole).toDateTime();
-        QDateTime rightDate = sourceModel()->data(right, Qt::UserRole).toDateTime();
-        isLess = leftDate > rightDate;
+        isLess = leftItem->getType() < rightItem->getType();
     }
     else
     {
-        isLess = QSortFilterProxyModel::lessThan(left, right);
+        isLess = leftItem->sort(rightItem);
     }
+
     return isLess;
 }

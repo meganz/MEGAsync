@@ -110,6 +110,11 @@ const char* UserNotification::getActionLink() const
     return mNotification->getCallToAction1()->get(KeyCallToActionLink);
 }
 
+bool UserNotification::isRowAccepted(MessageType type) const
+{
+    return type == MessageType::ALL;
+}
+
 void UserNotification::onDownloadFinished(const QImage& image, const QString& imageUrl)
 {
     if (image.isNull())
