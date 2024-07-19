@@ -13,37 +13,62 @@ constexpr int MaxCost = 16;
 using namespace mega;
 
 UserMessageCacheManager::UserMessageCacheManager()
-    : mAlertItems(MaxCost)
-    , mNotificationItems(MaxCost)
+    : mUserMessageItems(MaxCost)
 {
 }
 
-QWidget *UserMessageCacheManager::getWidget(UserMessage* item, QWidget* parent)
+QWidget *UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget* parent)
 {
-    if(!item)
+    if(!data)
     {
         return nullptr;
     }
 
-    QWidget* widget = nullptr;
-    switch (item->getType())
+    QWidget* widget(nullptr);
+    auto cacheIndex(row % mUserMessageItems.maxCost());
+
+    switch (data->getType())
     {
         case UserMessage::Type::ALERT:
         {
-            UserAlert* alert = dynamic_cast<UserAlert*>(item);
-            widget = getWidget<UserAlert, AlertItem, unsigned>(alert,
-                                                               alert->getId(),
-                                                               &mAlertItems,
-                                                               parent);
+            UserAlert* alert = dynamic_cast<UserAlert*>(data);
+            AlertItem* item = dynamic_cast<AlertItem*>(getWidgetFromCache(cacheIndex));
+            if(item)
+            {
+                if(item->getData()->getId() != alert->getId())
+                {
+                    item->setAlertData(alert);
+                }
+            }
+            else
+            {
+                item = new AlertItem(alert, parent);
+                mUserMessageItems.insert(cacheIndex, item);
+            }
+
+            widget = item;
+
             break;
         }
         case UserMessage::Type::NOTIFICATION:
         {
-            UserNotification* notification = dynamic_cast<UserNotification*>(item);
-            widget = getWidget<UserNotification, NotificationItem, int64_t>(notification,
-                                                                            notification->getID(),
-                                                                            &mNotificationItems,
-                                                                            parent);
+            UserNotification* notification = dynamic_cast<UserNotification*>(data);
+            NotificationItem* item = dynamic_cast<NotificationItem*>(getWidgetFromCache(cacheIndex));
+            if(item)
+            {
+                if(item->getData()->getID() != notification->getID())
+                {
+                    item->setNotificationData(notification);
+                }
+            }
+            else
+            {
+                item = new NotificationItem(notification, parent);
+                mUserMessageItems.insert(cacheIndex, item);
+            }
+
+            widget = item;
+
             break;
         }
         default:
@@ -52,29 +77,24 @@ QWidget *UserMessageCacheManager::getWidget(UserMessage* item, QWidget* parent)
         }
     }
 
+    if(widget)
+    {
+        widget->show();
+        widget->hide();
+        data->setSizeHint(widget->sizeHint());
+    }
+
     return widget;
 }
 
-template<class UserMessageChild, class ItemType, typename IdType>
-QWidget* UserMessageCacheManager::getWidget(UserMessageChild* itemData,
-                                            IdType id,
-                                            QCache<IdType, ItemType>* target,
-                                            QWidget* parent)
+QWidget* UserMessageCacheManager::getWidgetFromCache(int cacheIndex)
 {
-    if(!itemData)
+    QWidget* item(nullptr);
+
+    if(cacheIndex < mUserMessageItems.size())
     {
-        return nullptr;
+        item = mUserMessageItems.object(cacheIndex);
     }
 
-    ItemType* item = target->object(id);
-    if(item)
-    {
-        return item;
-    }
-
-    item = new ItemType(itemData, parent);
-    item->show();
-    item->hide();
-    target->insert(id, item);
-    return target->object(id);
+    return item;
 }

@@ -15,15 +15,13 @@ class UserMessageCacheManager
 
 public:
     UserMessageCacheManager();
-    QWidget* getWidget(UserMessage* item, QWidget* parent);
+    QWidget* getWidget(int row, UserMessage* item, QWidget* parent);
 
 private:
-    QCache<unsigned, AlertItem> mAlertItems;
-    QCache<int64_t, NotificationItem> mNotificationItems;
+    QCache<int, QWidget> mUserMessageItems;
 
-    template<class UserMessageChild, class ItemType, typename IdType>
-    QWidget* getWidget(UserMessageChild* itemData, IdType id, QCache<IdType, ItemType>* target, QWidget* parent);
 
+    QWidget* getWidgetFromCache(int cacheIndex);
 };
 
 #endif // USER_MESSAGE_CACHE_MANAGER_H

@@ -37,6 +37,9 @@ public:
     void contactEmailChanged();
     QString getHeadingString();
 
+    void setAlertData(UserAlert* alert);
+    UserAlert* getData() const;
+
 signals:
     void refreshAlertItem(unsigned item);
 
@@ -56,7 +59,6 @@ private:
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 
-    void setAlertData(UserAlert* alert);
     void updateAlertType();
     QString formatRichString(const QString& str);
     QString getUserFullName();

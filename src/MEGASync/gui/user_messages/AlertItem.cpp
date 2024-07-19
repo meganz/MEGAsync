@@ -112,6 +112,11 @@ void AlertItem::onAttributesReady()
     }
 }
 
+UserAlert* AlertItem::getData() const
+{
+    return mAlertUser;
+}
+
 void AlertItem::updateAlertData()
 {
     updateAlertType();

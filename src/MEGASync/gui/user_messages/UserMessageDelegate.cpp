@@ -3,6 +3,7 @@
 #include "MegaDelegateHoverManager.h"
 #include "UserMessageProxyModel.h"
 #include "UserMessageCacheManager.h"
+#include "UserMessage.h"
 
 #include <QPainter>
 #include <QTreeView>
@@ -64,12 +65,25 @@ QSize UserMessageDelegate::sizeHint(const QStyleOptionViewItem& option,
     QSize result;
     if (index.isValid())
     {
-        QWidget* item = getWidget(index);
-        if(!item)
+        QModelIndex filteredIndex = mProxyModel->mapToSource(index);
+        if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
-            return QSize();
+            UserMessage* data = static_cast<UserMessage*>(filteredIndex.internalPointer());
+            if(data)
+            {
+                result = data->sizeHint();
+            }
         }
-        result = item->sizeHint();
+
+        if(result.isEmpty())
+        {
+            QWidget* item = getWidget(index);
+            if(!item)
+            {
+                return QSize();
+            }
+            result = item->sizeHint();
+        }
     }
     else
     {
@@ -199,7 +213,7 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
-            widget = mCacheManager->getWidget(item, mView->viewport());
+            widget = mCacheManager->getWidget(index.row(), item, mView->viewport());
         }
     }
     return widget;

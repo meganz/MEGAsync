@@ -18,10 +18,9 @@ constexpr int HeightWithoutImage = 219;
 NotificationItem::NotificationItem(UserNotification* notification, QWidget *parent)
     : QWidget(parent)
     , mUi(new Ui::NotificationItem)
-    , mNotificationData(notification)
 {
     mUi->setupUi(this);
-    init();
+    setNotificationData(notification);
 }
 
 NotificationItem::~NotificationItem()
@@ -57,6 +56,17 @@ QSize NotificationItem::sizeHint() const
         size.setHeight(HeightWithoutImage);
     }
     return size;
+}
+
+UserNotification* NotificationItem::getData() const
+{
+    return mNotificationData;
+}
+
+void NotificationItem::setNotificationData(UserNotification* newNotificationData)
+{
+    mNotificationData = newNotificationData;
+    init();
 }
 
 void NotificationItem::setImages()

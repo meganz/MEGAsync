@@ -21,6 +21,9 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
+    UserNotification* getData() const;
+    void setNotificationData(UserNotification* newNotificationData);
+
 private:
     Ui::NotificationItem* mUi;
     UserNotification* mNotificationData;
