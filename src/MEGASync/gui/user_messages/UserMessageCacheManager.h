@@ -5,23 +5,22 @@
 #include <QCache>
 
 class UserMessage;
-class AlertItem;
-class UserAlert;
-class NotificationItem;
-class UserNotification;
+class UserMessageWidget;
 
 class UserMessageCacheManager
 {
 
 public:
     UserMessageCacheManager();
-    QWidget* getWidget(int row, UserMessage* item, QWidget* parent);
+    QWidget* getWidget(int row, UserMessage* data, QWidget* parent);
 
 private:
-    QCache<int, QWidget> mUserMessageItems;
+    QCache<int, UserMessageWidget> mUserMessageItems;
 
+    template<class Item>
+    QWidget* createOrGetWidget(int cacheIndex, UserMessage* data, QWidget* parent);
+    UserMessageWidget* getWidgetFromCache(int cacheIndex);
 
-    QWidget* getWidgetFromCache(int cacheIndex);
 };
 
 #endif // USER_MESSAGE_CACHE_MANAGER_H

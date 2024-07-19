@@ -106,6 +106,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/user_messages/UserMessageModel.h
     gui/user_messages/UserMessageProxyModel.h
     gui/user_messages/UserNotification.h
+    gui/user_messages/UserMessageWidget.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES

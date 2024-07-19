@@ -15,12 +15,11 @@ constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
 }
 
-NotificationItem::NotificationItem(UserNotification* notification, QWidget *parent)
-    : QWidget(parent)
+NotificationItem::NotificationItem(QWidget *parent)
+    : UserMessageWidget(parent)
     , mUi(new Ui::NotificationItem)
 {
     mUi->setupUi(this);
-    setNotificationData(notification);
 }
 
 NotificationItem::~NotificationItem()
@@ -28,19 +27,18 @@ NotificationItem::~NotificationItem()
     delete mUi;
 }
 
-void NotificationItem::init()
+void NotificationItem::setData(UserMessage* data)
 {
-    mUi->lTitle->setText(mNotificationData->getTitle());
+    UserNotification* notification = dynamic_cast<UserNotification*>(data);
+    if(notification)
+    {
+        setNotificationData(notification);
+    }
+}
 
-    QString labelText(DescriptionHtmlStart);
-    labelText += mNotificationData->getDescription();
-    labelText += DescriptionHtmlEnd;
-    mUi->lDescription->setText(labelText);
-
-    setImages();
-
-    mUi->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
-    mUi->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+UserMessage* NotificationItem::getData() const
+{
+    return mNotificationData;
 }
 
 QSize NotificationItem::minimumSizeHint() const
@@ -58,15 +56,21 @@ QSize NotificationItem::sizeHint() const
     return size;
 }
 
-UserNotification* NotificationItem::getData() const
-{
-    return mNotificationData;
-}
-
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
     mNotificationData = newNotificationData;
-    init();
+
+    mUi->lTitle->setText(mNotificationData->getTitle());
+
+    QString labelText(DescriptionHtmlStart);
+    labelText += mNotificationData->getDescription();
+    labelText += DescriptionHtmlEnd;
+    mUi->lDescription->setText(labelText);
+
+    setImages();
+
+    mUi->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
+    mUi->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }
 
 void NotificationItem::setImages()

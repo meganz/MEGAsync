@@ -23,6 +23,7 @@ public:
     UserMessage() = delete;
     UserMessage(QVariant id, Type type, QObject* parent = nullptr)
         : QObject(parent)
+        , mId(id)
         , mType(type)
     {
     }

@@ -14,8 +14,8 @@
 
 using namespace mega;
 
-AlertItem::AlertItem(UserAlert* alert, QWidget *parent)
-    : QWidget(parent)
+AlertItem::AlertItem(QWidget *parent)
+    : UserMessageWidget(parent)
     , mUi(new Ui::AlertItem)
     , mMegaApi(MegaSyncApp->getMegaApi())
 {
@@ -30,8 +30,6 @@ AlertItem::AlertItem(UserAlert* alert, QWidget *parent)
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
         updateAlertData();
     });
-
-    setAlertData(alert);
 }
 
 AlertItem::~AlertItem()
@@ -39,20 +37,34 @@ AlertItem::~AlertItem()
     delete mUi;
 }
 
+void AlertItem::setData(UserMessage* data)
+{
+    UserAlert* alert = dynamic_cast<UserAlert*>(data);
+    if (alert)
+    {
+        setAlertData(alert);
+    }
+}
+
+UserMessage* AlertItem::getData() const
+{
+    return mAlertData;
+}
+
 void AlertItem::setAlertData(UserAlert* alert)
 {
-    mAlertUser = alert;
+    mAlertData = alert;
 
-    connect(mAlertUser, &UserAlert::emailChanged,
+    connect(mAlertData, &UserAlert::emailChanged,
             this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-    connect(mAlertUser, &UserAlert::emailChanged, this, [=]()
+    connect(mAlertData, &UserAlert::emailChanged, this, [=]()
     {
         updateAlertData();
     });
 
-    if (mAlertUser->getUserHandle() != INVALID_HANDLE)
+    if (mAlertData->getUserHandle() != INVALID_HANDLE)
     {
-        if (!mAlertUser->getEmail().isEmpty())
+        if (!mAlertData->getEmail().isEmpty())
         {
             requestFullName();
         }
@@ -67,7 +79,7 @@ void AlertItem::setAlertData(UserAlert* alert)
 
     connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this]()
     {
-        emit refreshAlertItem(mAlertUser->id().toUInt());
+        emit refreshAlertItem(mAlertData->id().toUInt());
     });
 
     onAttributesReady();
@@ -80,26 +92,26 @@ void AlertItem::contactEmailChanged()
 
 void AlertItem::requestFullName()
 {
-    if (mAlertUser->getEmail().isEmpty())
+    if (mAlertData->getEmail().isEmpty())
     {
         return;
     }
 
-    mFullNameAttributes = UserAttributes::FullName::requestFullName(mAlertUser->getEmail().toUtf8().constData());
+    mFullNameAttributes = UserAttributes::FullName::requestFullName(mAlertData->getEmail().toUtf8().constData());
 
     if(mFullNameAttributes)
     {
         connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
     }
 
-    mUi->wAvatarContact->setUserEmail(mAlertUser->getEmail().toUtf8().constData());
+    mUi->wAvatarContact->setUserEmail(mAlertData->getEmail().toUtf8().constData());
 
     onAttributesReady();
 }
 
 void AlertItem::onAttributesReady()
 {
-    MegaHandle handle = mAlertUser->getNodeHandle();
+    MegaHandle handle = mAlertData->getNodeHandle();
 
     if (handle != INVALID_HANDLE)
     {
@@ -114,20 +126,15 @@ void AlertItem::onAttributesReady()
     }
 }
 
-UserAlert* AlertItem::getData() const
-{
-    return mAlertUser;
-}
-
 void AlertItem::updateAlertData()
 {
     updateAlertType();
-    setAlertHeading(mAlertUser);
-    setAlertContent(mAlertUser);
-    setAlertTimeStamp(mAlertUser->getTimestamp(0));
-    mAlertUser->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
+    setAlertHeading(mAlertData);
+    setAlertContent(mAlertData);
+    setAlertTimeStamp(mAlertData->getTimestamp(0));
+    mAlertData->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
 
-    emit refreshAlertItem(mAlertUser->id().toUInt());
+    emit refreshAlertItem(mAlertData->id().toUInt());
 }
 
 void AlertItem::updateAlertType()
@@ -136,7 +143,7 @@ void AlertItem::updateAlertType()
 
     QString notificationTitle;
     QString notificationColor;
-    switch (mAlertUser->getType())
+    switch (mAlertData->getType())
     {
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
@@ -161,7 +168,7 @@ void AlertItem::updateAlertType()
         case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
         case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
         {
-            if (mAlertUser->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
+            if (mAlertData->getType() == MegaUserAlert::TYPE_DELETEDSHARE)
             {
                 mUi->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/icons/folder/small-folder-disabled.png")).pixmap(24.0, 24.0));
             }
@@ -321,9 +328,9 @@ void AlertItem::setAlertHeading(UserAlert* alert)
     mUi->lHeading->ensurePolished();
     mUi->lHeading->setText(mUi->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,mUi->lHeading->minimumWidth()));
 
-    if(!mAlertUser->getEmail().isEmpty())
+    if(!mAlertData->getEmail().isEmpty())
     {
-        mNotificationHeading.append(QString::fromLatin1(" (") + mAlertUser->getEmail() + QString::fromLatin1(")"));
+        mNotificationHeading.append(QString::fromLatin1(" (") + mAlertData->getEmail() + QString::fromLatin1(")"));
         setToolTip(mNotificationHeading);
     }
 }
@@ -392,7 +399,7 @@ void AlertItem::setAlertContent(UserAlert *alert)
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = !mAlertUser->getEmail().isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
+                    notificationContent = !mAlertData->getEmail().isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
                                                             : tr("Access to shared folder was removed");
                 }
                 break;
@@ -522,7 +529,7 @@ QSize AlertItem::sizeHint() const
 
 void AlertItem::mousePressEvent(QMouseEvent* event)
 {
-    switch(mAlertUser->getType())
+    switch(mAlertData->getType())
     {
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
@@ -578,7 +585,7 @@ void AlertItem::processIncomingPendingContactClick()
             }
 
             const char* email = request->getSourceEmail();
-            if (mAlertUser->getEmail().toStdString().c_str() == email)
+            if (mAlertData->getEmail().toStdString().c_str() == email)
             {
                 found = true;
                 Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
@@ -595,7 +602,7 @@ void AlertItem::processIncomingPendingContactClick()
 
 void AlertItem::processIncomingContactChangeOrAcceptedClick()
 {
-    std::unique_ptr<MegaUser> user { mMegaApi->getContact(mAlertUser->getEmail().toStdString().c_str()) };
+    std::unique_ptr<MegaUser> user { mMegaApi->getContact(mAlertData->getEmail().toStdString().c_str()) };
     if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
     {
         Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
@@ -609,7 +616,7 @@ void AlertItem::processIncomingContactChangeOrAcceptedClick()
 
 void AlertItem::processShareOrTakedownClick()
 {
-    std::unique_ptr<MegaNode> node { mMegaApi->getNodeByHandle(mAlertUser->getNodeHandle()) };
+    std::unique_ptr<MegaNode> node { mMegaApi->getNodeByHandle(mAlertData->getNodeHandle()) };
     if (node)
     {
         Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/%1")
@@ -628,9 +635,9 @@ void AlertItem::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         updateAlertType();
-        setAlertHeading(mAlertUser);
-        setAlertContent(mAlertUser);
-        setAlertTimeStamp(mAlertUser->getTimestamp(0));
+        setAlertHeading(mAlertData);
+        setAlertContent(mAlertData);
+        setAlertTimeStamp(mAlertData->getTimestamp(0));
     }
     QWidget::changeEvent(event);
 }
@@ -648,6 +655,6 @@ QString AlertItem::getUserFullName()
         return mFullNameAttributes->getRichFullName();
     }
 
-    return mAlertUser->getEmail();
+    return mAlertData->getEmail();
 }
 

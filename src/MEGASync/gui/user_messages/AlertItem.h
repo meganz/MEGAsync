@@ -1,9 +1,10 @@
 #ifndef ALERT_ITEM_H
 #define ALERT_ITEM_H
 
+#include "UserMessageWidget.h"
+
 #include "megaapi.h"
 
-#include <QWidget>
 #include <QFutureWatcher>
 
 #include <memory>
@@ -20,13 +21,16 @@ class FullName;
 
 class UserAlert;
 
-class AlertItem : public QWidget
+class AlertItem : public UserMessageWidget
 {
     Q_OBJECT
 
 public:
-    explicit AlertItem(UserAlert* alert, QWidget* parent = 0);
+    explicit AlertItem(QWidget* parent = 0);
     ~AlertItem();
+
+    void setData(UserMessage* data) override;
+    UserMessage* getData() const override;
 
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
@@ -36,9 +40,6 @@ public:
     void setAlertTimeStamp(int64_t ts);
     void contactEmailChanged();
     QString getHeadingString();
-
-    void setAlertData(UserAlert* alert);
-    UserAlert* getData() const;
 
 signals:
     void refreshAlertItem(unsigned item);
@@ -54,7 +55,7 @@ private:
     Ui::AlertItem* mUi;
     mega::MegaApi* mMegaApi;
     QString mNotificationHeading;
-    UserAlert* mAlertUser;
+    UserAlert* mAlertData;
     std::unique_ptr<mega::MegaNode> mAlertNode;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
@@ -68,6 +69,7 @@ private:
     void processIncomingContactChangeOrAcceptedClick();
     void processShareOrTakedownClick();
     void processPaymentClick();
+    void setAlertData(UserAlert* alert);
 
 };
 
