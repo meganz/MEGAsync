@@ -251,7 +251,7 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
 
         if(!item->isSeen())
         {
-            if(!mSeenStatusManager.markNotificationAsUnseen(item->id().toUInt()))
+            if(!mSeenStatusManager.markNotificationAsUnseen(item->id()))
             {
                 item->markAsSeen();
             }
@@ -315,7 +315,7 @@ uint32_t UserMessageModel::checkLocalLastSeenNotification()
         auto id = notification->id();
         if(!notification->isSeen() && id > currentLastSeen)
         {
-            mSeenStatusManager.setLocalLastSeenNotification(id.toUInt());
+            mSeenStatusManager.setLocalLastSeenNotification(id);
         }
     }
     return mSeenStatusManager.getLocalLastSeenNotification();
@@ -335,7 +335,7 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
             }
 
             auto notification = qobject_cast<UserNotification*>(item);
-            if(notification->id() <= QVariant(id) && !notification->isSeen())
+            if(notification->id() <= id && !notification->isSeen())
             {
                 notification->markAsSeen();
                 mSeenStatusManager.markAsSeen(MessageType::NOTIFICATIONS);

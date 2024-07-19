@@ -79,7 +79,7 @@ void AlertItem::setAlertData(UserAlert* alert)
 
     connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this]()
     {
-        emit refreshAlertItem(mAlertData->id().toUInt());
+        emit refreshAlertItem(mAlertData->id());
     });
 
     onAttributesReady();
@@ -134,7 +134,7 @@ void AlertItem::updateAlertData()
     setAlertTimeStamp(mAlertData->getTimestamp(0));
     mAlertData->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
 
-    emit refreshAlertItem(mAlertData->id().toUInt());
+    emit refreshAlertItem(mAlertData->id());
 }
 
 void AlertItem::updateAlertType()

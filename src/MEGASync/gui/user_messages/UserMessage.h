@@ -21,7 +21,7 @@ public:
     };
 
     UserMessage() = delete;
-    UserMessage(QVariant id, Type type, QObject* parent = nullptr)
+    UserMessage(unsigned id, Type type, QObject* parent = nullptr)
         : QObject(parent)
         , mId(id)
         , mType(type)
@@ -39,14 +39,14 @@ public:
     inline bool isOfType(Type type) const { return mType == type; }
     inline QSize sizeHint() const { return mSizeHint; }
     inline void setSizeHint(const QSize& newSizeHint) { mSizeHint = newSizeHint; }
-    inline QVariant id() const { return mId; }
+    inline unsigned id() const { return mId; }
     inline bool hasSameId(QVariant id) const { return mId == id; }
 
     //In case we know the height of an user message can dynamically change
     inline void clearSizeHint(){ mSizeHint = QSize();}
 
 protected:
-    QVariant mId;
+    unsigned mId;
 
 private:
     Type mType;
