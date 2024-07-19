@@ -120,11 +120,6 @@ FocusScope {
         focus: true
         text: Strings.choose
         onClicked: {
-
-            // @jsubi, both next lines
-            //folderItem.error = false;
-            //folderItem.hint.visible = false;
-
             if (local) {
                 localFolderChooser.openFolderSelector(folderItem.text);
             }
