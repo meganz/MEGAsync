@@ -114,6 +114,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/user_messages/UserMessageWidget.h
     gui/user_messages/NotificationExpirationTimer.h
     gui/DeviceCenter/DeviceCenter.h
+    gui/DeviceCenter/SyncModel.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -226,6 +227,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/user_messages/UserNotification.cpp
     gui/user_messages/NotificationExpirationTimer.cpp
     gui/DeviceCenter/DeviceCenter.cpp
+    gui/DeviceCenter/SyncModel.cpp
 )
 
 # UI files additions

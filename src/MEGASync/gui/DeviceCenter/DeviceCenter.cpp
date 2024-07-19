@@ -3,7 +3,8 @@
 static bool qmlRegistrationDone = false;
 
 DeviceCenter::DeviceCenter(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mSyncModel(new SyncModel(this))
 {
     registerQmlModules();
 }
@@ -30,6 +31,6 @@ void DeviceCenter::registerQmlModules()
 
 void DeviceCenter::openAddBackupDialog()
 {
-    const bool comesFromSettings = false;
+    const bool comesFromSettings = true;
     QmlDialogManager::instance()->openBackupsDialog(comesFromSettings);
 }
