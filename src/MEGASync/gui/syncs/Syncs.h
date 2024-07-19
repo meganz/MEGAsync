@@ -52,7 +52,6 @@ public:
 
 signals:
     void syncSetupSuccess();
-    void cantSync(const QString& message = QString(), bool localFolderError = true);
     void syncStatusChanged();
     void syncRemoved();
     void localErrorChanged();
