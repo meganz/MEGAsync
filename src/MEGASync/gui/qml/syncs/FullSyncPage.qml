@@ -9,6 +9,15 @@ FullSyncPageForm {
     signal fullSyncMoveToBack
     signal fullSyncMoveToSuccess
 
+    localFolderChooser.folderField.hint.text : syncs.localError
+    localFolderChooser.folderField.hint.visible : syncs.localError.length !== 0
+    localFolderChooser.folderField.error : syncs.localError.length !== 0
+
+    function enableScreen() {
+        root.enabled = true;
+        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+    }
+
     footerButtons {
         leftSecondary.onClicked: {
             if(!root.isOnboarding) {
@@ -21,25 +30,10 @@ FullSyncPageForm {
         }
 
         rightPrimary.onClicked: {
-            localFolderChooser.folderField.hint.visible = false;
-            localFolderChooser.folderField.error = false;
+            root.enabled = false;
+            footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-            if (localFolderChooser.choosenPath.length === 0) {
-                localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = SyncsStrings.invalidLocalPath;
-                localFolderChooser.folderField.hint.visible = true;
-            }
-            else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncs.defaultMegaFolder)
-                     || localFolder.createFolder(localFolderChooser.choosenPath)) {
-                root.enabled = false;
-                footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-                syncs.addSync(localFolderChooser.choosenPath);
-            }
-            else {
-                localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = SyncsStrings.canNotSyncPermissionError;
-                localFolderChooser.folderField.hint.visible = true;
-            }
+            syncs.addSync(localFolderChooser.choosenPath);
         }
     }
 
@@ -57,19 +51,12 @@ FullSyncPageForm {
             localFolderChooser.reset();
         }
 
-        onCantSync: (message, localFolderError) => {
-            root.enabled = true;
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+        onLocalErrorChanged: {
+            enableScreen();
+        }
 
-            if(message.length === 0) {
-                return;
-            }
-
-            localFolderChooser.folderField.error = true;
-            localFolderChooser.folderField.hint.text = message;
-            localFolderChooser.folderField.hint.visible = true;
-
-            console.log("Full sync can't sync, message -> " + message);
+        onRemoteErrorChanged: {
+            enableScreen();
         }
     }
 
@@ -78,12 +65,6 @@ FullSyncPageForm {
 
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
-        }
-
-        function onLanguageChanged() {
-            if (localFolderChooser.folderField.hint.visible) {
-                footerButtons.rightPrimary.clicked();
-            }
         }
     }
 }

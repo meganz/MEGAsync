@@ -70,19 +70,28 @@ private:
     enum class RemoteErrors
     {
         EmptyPath,
-        CantSync
+        CantSync,
+        CantCreateRemoteFolder,
+        CantCreateRemoteFolderMsg,
+        CantAddSync
+    };
+
+    struct MegaRemoteCodeError{
+        int error;
+        int syncError;
     };
 
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
-    std::unique_ptr<mega::MegaError> mRemoteMegaError;
+    MegaRemoteCodeError mRemoteMegaError;
     QString mRemoteFolder;
     QString mLocalFolder;
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
+    QString mRemoteStringMessage;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
