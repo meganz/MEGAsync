@@ -120,10 +120,12 @@ SyncsFlow {
             id: fullSyncPage
 
             isOnboarding: false
-            footerButtons.leftPrimary.visible: false
-            footerButtons.leftSecondary {
-                text: Strings.setExclusions
-                visible: localFolderChooser.choosenPath.length !== 0
+            footerButtons {
+                leftPrimary.visible: false
+                leftSecondary {
+                    text: Strings.setExclusions
+                    visible: localFolderChooser.choosenPath.length !== 0
+                }
             }
 
             onFullSyncMoveToBack: {
@@ -144,13 +146,14 @@ SyncsFlow {
             id: selectiveSyncPage
 
             isOnboarding: false
-            footerButtons.leftPrimary.visible: false
-            footerButtons.leftSecondary {
-                text: Strings.setExclusions
-                visible: localFolderChooser.choosenPath.length !== 0
+            footerButtons {
+                leftPrimary.visible: false
+                leftSecondary {
+                    text: Strings.setExclusions
+                    visible: localFolderChooser.choosenPath.length !== 0
+                }
+                rightSecondary.text: (root.sync.syncStatus === root.sync.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
             }
-
-            footerButtons.rightSecondary.text: (root.sync.syncStatus === root.sync.SyncStatusCode.NONE) ? Strings.previous : Strings.cancel
 
             onSelectiveSyncMoveToBack: {
                 if(root.sync.syncStatus === root.sync.SyncStatusCode.NONE) {

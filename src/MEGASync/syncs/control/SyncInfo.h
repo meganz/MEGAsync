@@ -1,6 +1,6 @@
 #pragma once
 
-#include "syncs/control/SyncSettings.h"
+#include "SyncSettings.h"
 #include "QTMegaListener.h"
 
 #include "megaapi.h"

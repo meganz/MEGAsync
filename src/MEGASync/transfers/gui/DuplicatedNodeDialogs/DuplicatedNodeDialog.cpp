@@ -1,4 +1,4 @@
-#include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "DuplicatedNodeDialog.h"
 #include "ui_DuplicatedNodeDialog.h"
 
 #include "DuplicatedNodeItem.h"

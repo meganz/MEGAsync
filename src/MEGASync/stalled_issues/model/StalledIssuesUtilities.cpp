@@ -10,7 +10,6 @@
 #include <StalledIssuesDialog.h>
 #include <MoveToMEGABin.h>
 
-
 #include <QFile>
 #include <QDir>
 

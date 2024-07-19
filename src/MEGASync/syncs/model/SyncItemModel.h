@@ -1,7 +1,7 @@
 #ifndef SYNCITEMMODEL_H
 #define SYNCITEMMODEL_H
 
-#include "syncs/control/SyncController.h"
+#include "SyncSettings.h"
 
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>

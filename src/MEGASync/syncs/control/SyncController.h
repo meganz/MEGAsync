@@ -1,7 +1,7 @@
 #pragma once
 
-#include "syncs/control/SyncSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncSettings.h"
+#include "SyncInfo.h"
 
 #include "megaapi.h"
 

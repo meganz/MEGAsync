@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
-#include <syncs/gui/SyncSettingsUIBase.h>
-#include <syncs/gui/Twoways/SyncSettingsElements.h>
+#include "SyncSettingsUIBase.h"
+#include "SyncSettingsElements.h"
 
 class SyncSettingsUI : public SyncSettingsUIBase
 {
@@ -12,7 +12,7 @@ class SyncSettingsUI : public SyncSettingsUIBase
 
 public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
-    ~SyncSettingsUI() override;
+    ~SyncSettingsUI() override = default;
 
     void addButtonClicked(mega::MegaHandle megaFolderHandle) override;
 

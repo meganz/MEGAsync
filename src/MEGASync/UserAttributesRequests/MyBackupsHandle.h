@@ -2,14 +2,11 @@
 #define MYBACKUPSHANDLEATTRIBUTESREQUEST_H
 
 #include "UserAttributesManager.h"
-#include <mega/bindings/qt/QTMegaRequestListener.h>
 
 Q_DECLARE_METATYPE(mega::MegaHandle)
 
 namespace UserAttributes
 {
-class CreateMyBackupsListener;
-
 class MyBackupsHandle : public AttributeRequest
 {
     Q_OBJECT
@@ -24,6 +21,8 @@ public:
     RequestInfo fillRequestInfo() override;
 
     bool isAttributeReady() const override;
+
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError *error);
 
     mega::MegaHandle getMyBackupsHandle() const;
     static QString getMyBackupsLocalizedPath();
@@ -41,23 +40,6 @@ private:
     mega::MegaHandle mMyBackupsFolderHandle;
     QString mMyBackupsFolderPath;
     bool mCreationRequested;
-    std::unique_ptr<CreateMyBackupsListener> mCreateBackupsListener;
-};
-
-class CreateMyBackupsListener : public QObject, public mega::MegaRequestListener
-{
-    Q_OBJECT
-
-public:
-    CreateMyBackupsListener();
-    void onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error) override;
-    virtual ~CreateMyBackupsListener();
-
-signals:
-    void backupFolderCreated(mega::MegaHandle h);
-
-private:
-    QPointer<mega::QTMegaRequestListener> mDelegateListener;
 };
 }
 

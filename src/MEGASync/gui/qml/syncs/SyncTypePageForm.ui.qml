@@ -54,12 +54,9 @@ FooterButtonsPage {
                     Layout.leftMargin: -fullSyncButtonItem.focusBorderWidth
                     title: SyncsStrings.fullSync
                     type: Constants.SyncType.FULL_SYNC
-                    description: SyncsStrings.fullSyncButtonDescription
+                    description: SyncsStrings.fullSyncDescription
                     imageSource: Images.fullSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
 
                 SyncTypeButton {
@@ -68,12 +65,9 @@ FooterButtonsPage {
                     Layout.rightMargin: -selectiveSyncButtonItem.focusBorderWidth
                     title: SyncsStrings.selectiveSync
                     type: Constants.SyncType.SELECTIVE_SYNC
-                    description: SyncsStrings.selectiveSyncButtonDescription
+                    description: SyncsStrings.selectiveSyncDescription
                     imageSource: Images.selectiveSync
-                    imageSourceSize: Qt.size(172, 100)
                     ButtonGroup.group: buttonGroup
-                    textHorizontalExtraMargin: 4
-                    useMaxSiblingHeight: true
                 }
             }
         }

@@ -1,7 +1,7 @@
 #ifndef MEGAIGNOREMANAGER_H
 #define MEGAIGNOREMANAGER_H
 
-#include <syncs/control/MegaIgnoreRules.h>
+#include "MegaIgnoreRules.h"
 
 #include <QString>
 #include <QFile>

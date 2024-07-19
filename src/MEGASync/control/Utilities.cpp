@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "gzjoin.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include <QApplication>
 #include <QImageReader>
@@ -1603,8 +1603,7 @@ std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
 
     if(node)
     {
-        auto moveToBinError = MoveToMEGABin::moveToBin(
-            node->getHandle(), QLatin1String("SyncDebris"), true);
+        auto moveToBinError = MoveToMEGABin::moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
         if(moveToBinError.binFolderCreationError)
         {
             error = moveToBinError.binFolderCreationError;
@@ -1635,7 +1634,7 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
         {
             MegaApiSynchronizedRequest::runRequestWithResult(&MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result](
+                [=, &result, &file](
                     const MegaRequest&, const MegaError& e)
                 {
                     //In case of error, move to OS trash
@@ -1647,6 +1646,14 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);
+
+#ifdef Q_OS_WIN
+                        //When the file has no rights, the QFile::moveToTrash fails on Windows
+                        if(result && file.exists())
+                        {
+                            result = false;
+                        }
+#endif
                     }
                     else
                     {
@@ -1658,6 +1665,14 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
         else
         {
             result = QFile::moveToTrash(path);
+
+#ifdef Q_OS_WIN
+            //When the file has no rights, the QFile::moveToTrash fails on Windows
+            if(result && file.exists())
+            {
+                result = false;
+            }
+#endif
         }
     }
 

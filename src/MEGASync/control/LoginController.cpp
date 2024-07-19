@@ -12,12 +12,12 @@
 #include "QmlDialogManager.h"
 
 #include <QQmlContext>
+#include "RequestListenerManager.h"
 
 LoginController::LoginController(QObject* parent)
     : QObject{parent}
       , mMegaApi(MegaSyncApp->getMegaApi())
       , mPreferences(Preferences::instance())
-      , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
       , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
       , mEmailError(false)
       , mPasswordError(false)
@@ -25,6 +25,15 @@ LoginController::LoginController(QObject* parent)
       , mState(LOGGED_OUT)
       , mNewAccount(false)
 {
+    ListenerCallbacks lcInfo{
+        this,
+        std::bind(&LoginController::onRequestStart, this, std::placeholders::_1),
+        std::bind(&LoginController::onRequestFinish, this, std::placeholders::_1, std::placeholders::_2),
+        std::bind(&LoginController::onRequestUpdate, this, std::placeholders::_1)
+    };
+
+    mDelegateListener = RequestListenerManager::instance().registerAndGetListener(lcInfo);
+
     mMegaApi->addRequestListener(mDelegateListener.get());
     mMegaApi->addGlobalListener(mGlobalListener.get());
     mConnectivityTimer = new QTimer(this);
@@ -180,9 +189,8 @@ bool LoginController::isFetchNodesFinished() const
     return getState() >= LoginController::State::FETCH_NODES_FINISHED_ONBOARDING;
 }
 
-void LoginController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
+void LoginController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
-    Q_UNUSED(api)
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_LOGIN:
@@ -246,10 +254,8 @@ void LoginController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req
     }
 }
 
-void LoginController::onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request)
+void LoginController::onRequestUpdate(mega::MegaRequest* request)
 {
-    Q_UNUSED(api)
-
     if (request->getType() == mega::MegaRequest::TYPE_FETCH_NODES)
     {
         if (request->getTotalBytes() > 0)
@@ -264,9 +270,8 @@ void LoginController::onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* req
     }
 }
 
-void LoginController::onRequestStart(mega::MegaApi* api, mega::MegaRequest* request)
+void LoginController::onRequestStart(mega::MegaRequest* request)
 {
-    Q_UNUSED(api)
     switch(request->getType())
     {
     case mega::MegaRequest::TYPE_LOGIN:
@@ -900,9 +905,15 @@ void FastLoginController::onboardingFinished()
 LogoutController::LogoutController(QObject* parent)
     : QObject(parent)
       , mMegaApi(MegaSyncApp->getMegaApi())
-      , mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
       , mLoginInWithoutSession(false)
-{
+{   
+    ListenerCallbacks lcInfo{
+        this,
+        std::bind(&LogoutController::onRequestStart, this, std::placeholders::_1),
+        std::bind(&LogoutController::onRequestFinish, this, std::placeholders::_1, std::placeholders::_2)
+    };
+
+    mDelegateListener = RequestListenerManager::instance().registerAndGetListener(lcInfo);
     mMegaApi->addRequestListener(mDelegateListener.get());
 }
 
@@ -910,10 +921,8 @@ LogoutController::~LogoutController()
 {
 }
 
-void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
+void LogoutController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
-    Q_UNUSED(api)
-
     if(request->getType() == mega::MegaRequest::TYPE_LOGIN)
     {
         mLoginInWithoutSession = false;
@@ -997,9 +1006,8 @@ void LogoutController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* re
     mLoginInWithoutSession = false;
 }
 
-void LogoutController::onRequestStart(mega::MegaApi *api, mega::MegaRequest *request)
+void LogoutController::onRequestStart(mega::MegaRequest *request)
 {
-    Q_UNUSED(api)
     if(request->getType() == mega::MegaRequest::TYPE_LOGIN && !request->getSessionKey())
     {
         mLoginInWithoutSession = true;

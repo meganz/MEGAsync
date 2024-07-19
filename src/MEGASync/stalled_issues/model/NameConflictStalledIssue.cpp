@@ -4,7 +4,7 @@
 #include "Utilities.h"
 #include "StatsEventHandler.h"
 #include "StalledIssuesModel.h"
-#include "gui/NodeNameSetterDialog/RenameNodeDialog.h"
+#include "RenameNodeDialog.h"
 
 #include <MegaApiSynchronizedRequest.h>
 
@@ -439,6 +439,7 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
                 result = renameLocalSibling(siblingItem, renameTo);
             }
 
+             //Undo the local name change
             if(!result)
             {
                 std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictName->mHandle));
@@ -683,9 +684,10 @@ bool NameConflictedStalledIssue::renameLocalSibling(std::shared_ptr<ConflictedNa
         QFile file(fileInfo.filePath());
         if(file.exists())
         {
+            auto isFile(fileInfo.isFile());
             fileInfo.setFile(fileInfo.path(), newName);
             result = file.rename(QDir::toNativeSeparators(fileInfo.filePath()));
-            result ?  item->solveByRename(newName) : item->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(fileInfo.isFile()));
+            result ?  item->solveByRename(newName) : item->setFailed(RenameLocalNodeDialog::renamedFailedErrorString(isFile));
         }
     }
 

@@ -3,12 +3,12 @@
 #include "QMegaMessageBox.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
 #include "ProxySettings.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "FullName.h"
+#include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
 #include "TextDecorator.h"
@@ -18,6 +18,8 @@
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
 #include "StatsEventHandler.h"
+#include "AccountDetailsDialog.h"
+#include "ChangePassword.h"
 
 #include <QApplication>
 #include <QDesktopServices>

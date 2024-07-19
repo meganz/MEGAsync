@@ -1,11 +1,11 @@
 #include "BackupSettingsUI.h"
 
-#include "syncs/gui/Backups/BackupTableView.h"
-#include "syncs/model/BackupItemModel.h"
-#include "syncs/control/AddBackupFromUiManager.h"
+#include "AddBackupFromUiManager.h"
+#include "BackupTableView.h"
+#include "BackupItemModel.h"
 
 #include "QmlDialogWrapper.h"
-#include "backups/Backups.h"
+#include "Backups.h"
 #include "Onboarding.h"
 
 #include "DialogOpener.h"

@@ -28,10 +28,9 @@
 #include "syncs/control/AddBackupFromUiManager.h"
 #include "StatsEventHandler.h"
 #include "Utilities.h"
-#include "platform/Platform.h"
-
+#include "Platform.h"
 #include "QmlDialogManager.h"
-#include "syncs/SyncsComponent.h"
+#include "SyncsComponent.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -1046,9 +1045,6 @@ void InfoDialog::openFolder(QString path)
 void InfoDialog::addSync(mega::MegaHandle handle)
 {
     auto syncManager(AddSyncFromUiManager::addSync_static(handle));
-    // connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
-    //     app->createAppMenus();
-    // });
 }
 
 void InfoDialog::addBackup()

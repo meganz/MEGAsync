@@ -1,7 +1,7 @@
 #ifndef EXCLUSION_RULES_MODEL_H
 #define EXCLUSION_RULES_MODEL_H
 
-#include "syncs/control/MegaIgnoreManager.h"
+#include "MegaIgnoreManager.h"
 
 #include <QAbstractListModel>
 

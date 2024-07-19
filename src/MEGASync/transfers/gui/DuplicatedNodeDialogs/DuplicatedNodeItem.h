@@ -2,7 +2,7 @@
 #define DUPLICATEDNODEITEM_H
 
 #include <megaapi.h>
-#include <DuplicatedNodeDialogs/DuplicatedNodeInfo.h>
+#include "DuplicatedNodeInfo.h"
 #include "FileFolderAttributes.h"
 
 #include <QTMegaRequestListener.h>

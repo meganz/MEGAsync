@@ -1,11 +1,11 @@
 #include "NodeSelectorTreeView.h"
-#include "../model/NodeSelectorModelItem.h"
-#include "MegaApplication.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "Platform.h"
-#include "../model/NodeSelectorModel.h"
-#include <syncs/control/AddSyncFromUiManager.h>
 
+#include "NodeSelectorModelItem.h"
+#include "MegaApplication.h"
+#include "NodeSelectorProxyModel.h"
+#include "Platform.h"
+#include "AddSyncFromUiManager.h"
+#include "NodeSelectorModel.h"
 
 #include <QPainter>
 #include <QMenu>

@@ -1,9 +1,10 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+
 #include "ui_NodeSelectorTreeViewWidget.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "../model/NodeSelectorModel.h"
-#include "../model/NodeSelectorModelSpecialised.h"
 #include <MegaApplication.h>
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorModelSpecialised.h"
 
 #include "MegaNodeNames.h"
 

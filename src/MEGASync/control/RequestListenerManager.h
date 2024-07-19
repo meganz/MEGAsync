@@ -10,6 +10,13 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include <mutex>
+#include <type_traits>
+
+struct onRequestFinishOnlyListenerCallback
+{
+    QPointer<QObject> callbackClass;
+    bool removeAfterReqFinish = false;
+};
 
 struct ListenerCallbacks
 {
@@ -18,7 +25,7 @@ struct ListenerCallbacks
     std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestFinish;
     std::function<void(mega::MegaRequest *request)> onRequestUpdate;
     std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError;
-    bool removeAfterReqFinish = true;
+    bool removeAfterReqFinish = false;
 };
 
 class ObserverRequestListener : public QObject, public mega::MegaRequestListener
@@ -67,6 +74,20 @@ public:
     RequestListenerManager& operator=(const RequestListenerManager&) = delete;
 
     std::shared_ptr<mega::QTMegaRequestListener> registerAndGetListener(const ListenerCallbacks& callbacks);
+
+    template<typename T>
+    std::shared_ptr<mega::QTMegaRequestListener>
+    registerAndGetFinishListener(T* callbackClass, bool removeAfterReqFinish = false)
+    {
+        ListenerCallbacks callbacks;
+        callbacks.callbackClass = callbackClass;
+        callbacks.onRequestFinish = [callbackClass](mega::MegaRequest* request, mega::MegaError* error) {
+            callbackClass->onRequestFinish(request, error);
+        };
+        callbacks.removeAfterReqFinish = removeAfterReqFinish;
+
+        return registerAndGetListener(callbacks);
+    }
 
 private slots:
     void removeListener(ObserverRequestListener *listener);

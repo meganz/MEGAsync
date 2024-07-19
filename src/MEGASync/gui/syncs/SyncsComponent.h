@@ -1,5 +1,5 @@
-#ifndef SYNCSCOMPONENT_H
-#define SYNCSCOMPONENT_H
+#ifndef SYNCS_COMPONENT_H
+#define SYNCS_COMPONENT_H
 
 #include "qml/QmlDialogWrapper.h"
 
@@ -12,7 +12,7 @@ class SyncsComponent : public QMLComponent
     Q_PROPERTY(bool remoteFolderDisabled READ isRemoteFolderDisabled WRITE setRemoteFolderDisabled NOTIFY remoteFolderDisabledChanged)
 
 public:
-    explicit SyncsComponent(QObject *parent = 0);
+    explicit SyncsComponent(QObject* parent = 0);
 
     QUrl getQmlUrl() override;
     QString contextName() override;
@@ -43,4 +43,4 @@ private:
 
 };
 
-#endif // SYNCSCOMPONENT_H
+#endif // SYNCS_COMPONENT_H

@@ -10,7 +10,7 @@
 
 static bool qmlRegistrationDone = false;
 
-SyncsComponent::SyncsComponent(QObject *parent)
+SyncsComponent::SyncsComponent(QObject* parent)
     : QMLComponent(parent)
     , mRemoteFolder(QString())
     , mRemoteFolderDisabled(false)

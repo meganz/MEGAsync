@@ -96,7 +96,6 @@ private slots:
     void onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
 
 private:
-    bool isFullSync();
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
     void setToggledStyle(TabItem item);
     void setAllFramesItsOnProperty();

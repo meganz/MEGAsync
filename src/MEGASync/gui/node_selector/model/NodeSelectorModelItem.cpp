@@ -1,9 +1,9 @@
 #include "NodeSelectorModelItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "syncs/control/SyncInfo.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/Avatar.h"
+#include "SyncInfo.h"
+#include "FullName.h"
+#include "Avatar.h"
 
 #include "mega/utils.h"
 

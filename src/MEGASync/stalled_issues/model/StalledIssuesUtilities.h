@@ -6,7 +6,7 @@
 #include <megaapi.h>
 #include <MegaApplication.h>
 #include <Utilities.h>
-#include <syncs/control/SyncInfo.h>
+#include "SyncInfo.h"
 #include <TextDecorator.h>
 
 #include <QObject>

@@ -4,7 +4,8 @@
 #include "ButtonIconManager.h"
 #include "QTMegaListener.h"
 #include <megaapi.h>
-#include "../model/NodeSelectorModelItem.h"
+#include "NodeSelectorModelItem.h"
+#include <ViewLoadingScene.h>
 
 #include <QWidget>
 #include <QDebug>

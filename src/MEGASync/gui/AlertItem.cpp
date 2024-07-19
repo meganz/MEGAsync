@@ -2,7 +2,7 @@
 #include "ui_AlertItem.h"
 #include "CommonMessages.h"
 #include "MegaApplication.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include <MegaNodeNames.h>
 
 #include <QDateTime>

@@ -1,8 +1,8 @@
 #ifndef DUPLICATEDNODEDIALOG_H
 #define DUPLICATEDNODEDIALOG_H
 
-#include "DuplicatedNodeDialogs/DuplicatedNodeItem.h"
-#include "DuplicatedNodeDialogs/DuplicatedUploadChecker.h"
+#include "DuplicatedNodeItem.h"
+#include "DuplicatedUploadChecker.h"
 
 #include <QDialog>
 #include <QPointer>

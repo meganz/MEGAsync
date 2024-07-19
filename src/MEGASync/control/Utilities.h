@@ -3,8 +3,6 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
-#include "QTMegaRequestListener.h"
-
 #include <QString>
 #include <QHash>
 #include <QPixmap>

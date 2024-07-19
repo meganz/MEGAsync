@@ -11,7 +11,7 @@
 #include "SettingsDialog.h"
 #include "MenuItemAction.h"
 #include "Preferences.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include <QGraphicsOpacityEffect>
 #include "TransferScanCancelUi.h"
 #include "HighDpiResize.h"
@@ -20,7 +20,7 @@
 #include "QtPositioningBugFixer.h"
 #include "TransferQuota.h"
 #include "StatusInfo.h"
-#include "syncs/gui/SyncsMenu.h"
+#include "SyncsMenu.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -100,7 +100,7 @@ public:
     void setTransferManager(TransferManager *transferManager);
 
 private:
-    InfoDialog() = default;
+    InfoDialog() = delete;
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;

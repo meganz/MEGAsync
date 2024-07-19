@@ -563,13 +563,11 @@
     <name>BindFolderDialog</name>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
-        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Select a local folder and a MEGA folder</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Do you want to continue?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1964,14 +1962,12 @@ In some cases they may contain details about your data, such as file or folder n
 <context>
     <name>FolderBinder</name>
     <message>
-        <source>Select local folder</source>
-        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
+        <source>You can not sync a shared folder without Full Access permissions</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>You can’t sync a shared folder without full access permissions</translation>
+        <source>Select local folder</source>
+        <translation type="unfinished">Select local folder</translation>
     </message>
 </context>
 <context>
@@ -4906,19 +4902,9 @@ Would you like to proceed?</source>
         <translation>First name</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sync your entire MEGA account with your local device.</translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation>Full sync</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with a local device.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -5029,16 +5015,6 @@ Would you like to proceed?</source>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>Select a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sync selected folders in your MEGA account with your local device.</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sync specific folders in your MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5264,6 +5240,21 @@ Would you like to proceed?</source>
         <source>Set Exclusions</source>
         <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
         <translation>Set exclusions</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync your entire MEGA Cloud drive with your local device.</translation>
     </message>
 </context>
 <context>
@@ -7529,13 +7520,6 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     </message>
 </context>
 <context>
-    <name>Strings</name>
-    <message>
-        <source>Choose</source>
-        <translation type="unfinished">Choose</translation>
-    </message>
-</context>
-<context>
     <name>SwitchButton</name>
     <message>
         <source>On</source>
@@ -8158,12 +8142,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>SyncsStrings</name>
     <message>
-        <source>Choose type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add sync</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>

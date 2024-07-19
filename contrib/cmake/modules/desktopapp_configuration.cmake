@@ -20,6 +20,10 @@ if (MSVC)
 
     # Enable build with multiple processes.
     add_compile_options(/MP)
+
+    # std::list::erase is very slow with _ITERATOR_DEBUG_LEVEL=2, which is default setting
+    # in MSVC Debug compilation mode.
+    add_compile_definitions($<$<CONFIG:Debug>:_ITERATOR_DEBUG_LEVEL=0>)
 endif()
 
 if(UNIX AND NOT APPLE)

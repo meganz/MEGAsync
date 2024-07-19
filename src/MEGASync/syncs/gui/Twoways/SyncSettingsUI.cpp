@@ -1,14 +1,13 @@
 #include "SyncSettingsUI.h"
 
-#include "syncs/gui/Twoways/SyncTableView.h"
-#include "syncs/model/SyncItemModel.h"
-#include "syncs/control/AddSyncFromUiManager.h"
-#include "qml/QmlDialogWrapper.h"
-#include "syncs/SyncsComponent.h"
-#include "onboarding/Onboarding.h"
-
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
 #include "DialogOpener.h"
-#include <MegaApplication.h>
+#include "SyncTableView.h"
+#include "SyncItemModel.h"
+#include "MegaApplication.h"
+#include "SyncsComponent.h"
+#include "AddSyncFromUiManager.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
@@ -42,10 +41,6 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
-}
-
-SyncSettingsUI::~SyncSettingsUI()
-{
 }
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)

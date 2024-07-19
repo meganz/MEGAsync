@@ -167,15 +167,9 @@ FooterButtonsPage {
                     id: syncButtonItem
 
                     width: (parent.width - parent.spacing) / 2
-                    Layout.preferredWidth: width
-                    Layout.preferredHeight: height
-                    contentMargin: 24
-                    contentSpacing: 8
-                    imageSourceSize: Qt.size(22, 20)
                     title: SyncsStrings.selectiveSync
                     description: OnboardingStrings.finalPageButtonSelectiveSync
                     imageSource: Images.sync
-                    checkable: false
                     focus: true
                     useMaxSiblingHeight: true
                     ButtonGroup.group: buttonGroupItem
@@ -187,16 +181,10 @@ FooterButtonsPage {
                     width: !syncButtonItem.visible
                            ? parent.width
                            : (parent.width - parent.spacing) / 2
-                    Layout.preferredWidth: width
-                    Layout.preferredHeight: height
-                    contentMargin: 24
-                    contentSpacing: 8
-                    imageSourceSize: Qt.size(22, 20)
                     title: OnboardingStrings.backup
                     description: OnboardingStrings.finalPageButtonBackup
                     imageSource: Images.installationTypeBackups
                     type: Constants.SyncType.BACKUP
-                    checkable: false
                     useMaxSiblingHeight: syncButtonItem.visible
                     ButtonGroup.group: buttonGroupItem
                 }

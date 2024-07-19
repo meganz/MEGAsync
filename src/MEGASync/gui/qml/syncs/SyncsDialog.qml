@@ -14,11 +14,11 @@ SyncsQmlDialog {
     visible: true
     modality: Qt.NonModal
     width: 640
-    height: 580
-    maximumHeight: 580
-    maximumWidth: 640
-    minimumHeight: 580
-    minimumWidth: 640
+    height: 620
+    maximumHeight: height
+    maximumWidth: width
+    minimumHeight: height
+    minimumWidth: width
 
     Column {
         id: contentItem
@@ -29,9 +29,9 @@ SyncsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
-            step1String: SyncsStrings.syncType
+            step1String: SyncsStrings.syncTitle
             step2String: SyncsStrings.sync
-            helpUrl: Links.helpSyncs
+            helpUrl: Links.setUpSyncs
         }
 
         Rectangle {
@@ -87,9 +87,6 @@ SyncsQmlDialog {
                         id: resumeSyncsPageItem
 
                         footerButtons.leftPrimary.visible: false
-
-                        image.source: Images.guest3x
-                        image.sourceSize: Qt.size(128, 128)
                     }
                 }
             }

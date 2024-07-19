@@ -2,19 +2,17 @@
 
 #include <QDateTime>
 
-#include <DialogOpener.h>
+#include "DialogOpener.h"
+#include "SyncTableView.h"
+#include "RemoveSyncConfirmationDialog.h"
+#include "SyncItemModel.h"
+#include "SyncExclusions.h"
 
-#include <syncs/gui/Twoways/SyncTableView.h>
-#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
-#include <syncs/model/SyncItemModel.h>
-#include "SyncExclusions/SyncExclusions.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
-#include <DialogOpener.h>
 #include <QScreen>
 #include <PermissionsDialog.h>
 #endif
-
 
 #include "ui_SyncSettingsUIBase.h"
 

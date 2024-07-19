@@ -3,7 +3,6 @@
 
 #include <QProgressBar>
 #include "megaapi.h"
-#include "syncs/control/SyncController.h"
 
 class GuiUtilities
 {

@@ -1,7 +1,7 @@
 #ifndef QMLDEVICENAME_H
 #define QMLDEVICENAME_H
 
-#include "UserAttributesRequests/DeviceName.h"
+#include "DeviceName.h"
 
 #include <QObject>
 
