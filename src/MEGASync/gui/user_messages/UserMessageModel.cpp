@@ -56,7 +56,7 @@ Qt::ItemFlags UserMessageModel::flags(const QModelIndex& index) const
     return QAbstractItemModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable;
 }
 
-auto UserMessageModel::findById(QVariant id, UserMessage::Type type)
+auto UserMessageModel::findById(unsigned id, UserMessage::Type type)
 {
     auto it = std::find_if(mUserMessages.begin(), mUserMessages.end(),
                            [id, type](const UserMessage* current)

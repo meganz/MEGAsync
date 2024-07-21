@@ -71,7 +71,7 @@ private:
     void insertNotifications(const mega::MegaNotificationList* notifications);
     void removeNotifications(const mega::MegaNotificationList* notifications);
 
-    auto findById(QVariant id, UserMessage::Type type);
+    auto findById(unsigned id, UserMessage::Type type);
 
 };
 
