@@ -1,7 +1,7 @@
 #ifndef ALERTFILTERTYPE_H
 #define ALERTFILTERTYPE_H
 
-#include "NotificationAlertTypes.h"
+#include "UserMessageTypes.h"
 
 #include <QWidget>
 
@@ -17,7 +17,7 @@ public:
     explicit AlertFilterType(QWidget* parent = 0);
     ~AlertFilterType();
 
-    void setActualFilter(AlertType type);
+    void setActualFilter(MessageType type);
     bool allFilterHasBeenSelected() const;
     void resetAllFilterHasBeenSelected();
 
@@ -30,7 +30,7 @@ protected:
 
 private:
     Ui::AlertFilterType* ui;
-    AlertType mType;
+    MessageType mType;
     bool mAllFilterHasBeenSelected;
 
 };

@@ -1,30 +1,34 @@
-#ifndef MEGA_USER_ALERT_EXT_H
-#define MEGA_USER_ALERT_EXT_H
+#ifndef USER_ALERT_H
+#define USER_ALERT_H
 
-#include "megaapi.h"
-
-#include <QObject>
+#include "UserMessageTypes.h"
+#include "UserMessage.h"
 
 #include <memory>
 
-class MegaUserAlertExt : public QObject
+#include "megaapi.h"
+
+class UserAlert : public UserMessage
 {
     Q_OBJECT
 
 public:
-    MegaUserAlertExt() = delete;
-    MegaUserAlertExt(mega::MegaUserAlert* megaUserAlert, QObject* parent = nullptr);
-    ~MegaUserAlertExt();
+    UserAlert() = delete;
+    UserAlert(mega::MegaUserAlert* megaUserAlert, QObject* parent = nullptr);
+    ~UserAlert();
 
-    MegaUserAlertExt& operator=(MegaUserAlertExt&& megaUserAlert);
+    UserAlert& operator=(UserAlert&& megaUserAlert);
 
     QString getEmail() const;
     void setEmail(QString email);
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 
-    virtual unsigned getId() const;
-    virtual bool getSeen() const;
+    bool sort(UserMessage *checkWith) const override;
+    bool isRowAccepted(MessageType type) const override;
+
+    bool isSeen() const override;
+
     virtual bool getRelevant() const;
     virtual int getType() const;
     virtual mega::MegaHandle getUserHandle() const;
@@ -33,15 +37,19 @@ public:
     virtual mega::MegaHandle getNodeHandle() const;
     virtual const char* getString(unsigned index) const;
     virtual const char* getTitle() const;
+    virtual MessageType getMessageType() const;
 
 signals:
     void emailChanged();
 
 private:
     std::unique_ptr<mega::MegaUserAlert> mMegaUserAlert;
+    MessageType mMessageType;
     QString mEmail;
 
     void init();
+    void initAlertType();
+
 };
 
-#endif // MEGA_USER_ALERT_EXT_H
+#endif // USER_ALERT_H

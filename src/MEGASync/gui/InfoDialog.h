@@ -22,7 +22,7 @@
 #include "StatusInfo.h"
 #include "SyncsMenu.h"
 #include "SyncController.h"
-#include "AlertModel.h"
+#include "MegaDelegateHoverManager.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -127,8 +127,7 @@ public slots:
    void enableTransferAlmostOverquotaAlert();
    void setBandwidthOverquotaState(QuotaState state);
 
-   void updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate);
-   void onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts);
+   void onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts);
 
 private slots:
     void on_bSettings_clicked();
@@ -145,7 +144,7 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
     void onActualFilterClicked();
-    void applyFilterOption(AlertType opt);
+    void applyFilterOption(MessageType opt);
     void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();
@@ -233,6 +232,7 @@ private:
     void hideSomeIssues();
     void showSomeIssues();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
+    MegaDelegateHoverManager mNotificationsViewHoverManager;
 
 protected:
     void updateBlockedState();
@@ -255,7 +255,7 @@ protected:
     mega::MegaTransfer *activeUpload;
     std::shared_ptr<SyncController> mSyncController;
 
- private:
+private:
     void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);
@@ -264,6 +264,7 @@ protected:
     void setupSyncController();
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
+    void initNotificationArea();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;

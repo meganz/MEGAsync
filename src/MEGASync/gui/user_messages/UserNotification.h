@@ -1,9 +1,8 @@
-#ifndef MEGA_NOTIFICATION_EXT_H
-#define MEGA_NOTIFICATION_EXT_H
+#ifndef USER_NOTIFICATION_H
+#define USER_NOTIFICATION_H
 
-#include "ImageDownloader.h"
+#include "UserMessage.h"
 
-#include <QObject>
 #include <QPixmap>
 
 #include <memory>
@@ -13,18 +12,23 @@ namespace mega
 class MegaNotification;
 }
 
-class MegaNotificationExt : public QObject
+class ImageDownloader;
+
+class UserNotification : public UserMessage
 {
     Q_OBJECT
 
 public:
-    MegaNotificationExt() = delete;
-    MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent = nullptr);
-    ~MegaNotificationExt() = default;
+    UserNotification() = delete;
+    UserNotification(const mega::MegaNotification* notification, QObject* parent = nullptr);
+    ~UserNotification() = default;
 
     void reset(const mega::MegaNotification* notification);
 
-    int64_t getID() const;
+    bool isSeen() const override;
+
+    void markAsSeen();
+
     QString getTitle() const;
     QString getDescription() const;
 
@@ -38,6 +42,8 @@ public:
     const char* getActionText() const;
     const char* getActionLink() const;
 
+    bool isRowAccepted(MessageType type) const override;
+
 signals:
     void imageChanged();
     void iconChanged();
@@ -50,10 +56,11 @@ private:
     std::unique_ptr<ImageDownloader> mDownloader;
     QPixmap mImage;
     QPixmap mIcon;
+    bool mSeen;
 
     QString getImageNamePath() const;
     QString getIconNamePath() const;
 
 };
 
-#endif // MEGA_NOTIFICATION_EXT_H
+#endif // USER_NOTIFICATION_H

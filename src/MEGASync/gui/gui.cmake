@@ -10,7 +10,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/InfoDialog.h
     gui/MegaDelegateHoverManager.h
     gui/MegaNodeNames.h
-    gui/MegaUserAlertExt.h
     gui/NotificationsSettings.h
     gui/OverQuotaDialog.h
     gui/ScanningWidget.h
@@ -42,12 +41,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/QRWidget.h
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
-    gui/AlertItem.h
-    gui/AlertModel.h
-    gui/AlertDelegate.h
-    gui/NotificationAlertProxyModel.h
-    gui/FilterAlertWidget.h
-    gui/AlertFilterType.h
     gui/BugReportDialog.h
     gui/VerifyLockMessage.h
     gui/ViewLoadingScene.h
@@ -60,12 +53,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
-    gui/NotificationItem.h
-    gui/NotificationModel.h
-    gui/NotificationDelegate.h
-    gui/NotificationAlertModel.h
-    gui/NotificationAlertDelegate.h
-    gui/MegaNotificationExt.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -108,6 +95,18 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsModel.h
     gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
+    gui/user_messages/UserMessageCacheManager.h
+    gui/user_messages/AlertFilterType.h
+    gui/user_messages/AlertItem.h
+    gui/user_messages/FilterAlertWidget.h
+    gui/user_messages/NotificationItem.h
+    gui/user_messages/UserAlert.h
+    gui/user_messages/UserMessage.h
+    gui/user_messages/UserMessageDelegate.h
+    gui/user_messages/UserMessageModel.h
+    gui/user_messages/UserMessageProxyModel.h
+    gui/user_messages/UserNotification.h
+    gui/user_messages/UserMessageWidget.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -120,7 +119,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/MegaUserAlertExt.cpp
     gui/NotificationsSettings.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
@@ -151,12 +149,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/Login2FA.cpp
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
-    gui/AlertItem.cpp
-    gui/AlertModel.cpp
-    gui/AlertDelegate.cpp
-    gui/NotificationAlertProxyModel.cpp
-    gui/FilterAlertWidget.cpp
-    gui/AlertFilterType.cpp
     gui/BugReportDialog.cpp
     gui/VerifyLockMessage.cpp
     gui/MegaInfoMessage.cpp
@@ -169,12 +161,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
-    gui/NotificationItem.cpp
-    gui/NotificationModel.cpp
-    gui/NotificationDelegate.cpp
-    gui/NotificationAlertModel.cpp
-    gui/NotificationAlertDelegate.cpp
-    gui/MegaNotificationExt.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -216,7 +202,16 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsModel.cpp
     gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
-
+    gui/user_messages/UserMessageCacheManager.cpp
+    gui/user_messages/AlertFilterType.cpp
+    gui/user_messages/AlertItem.cpp
+    gui/user_messages/FilterAlertWidget.cpp
+    gui/user_messages/NotificationItem.cpp
+    gui/user_messages/UserAlert.cpp
+    gui/user_messages/UserMessageDelegate.cpp
+    gui/user_messages/UserMessageModel.cpp
+    gui/user_messages/UserMessageProxyModel.cpp
+    gui/user_messages/UserNotification.cpp
 )
 
 # UI files additions
@@ -492,6 +487,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

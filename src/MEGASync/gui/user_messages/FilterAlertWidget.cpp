@@ -80,24 +80,24 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
 
 void FilterAlertWidget::on_bAll_clicked()
 {
-    emit filterClicked(AlertType::ALL);
+    emit filterClicked(MessageType::ALL);
 }
 
 void FilterAlertWidget::on_bContacts_clicked()
 {
-    emit filterClicked(AlertType::CONTACTS);
+    emit filterClicked(MessageType::ALERT_CONTACTS);
     QApplication::postEvent(ui->bContacts, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bShares_clicked()
 {
-    emit filterClicked(AlertType::SHARES);
+    emit filterClicked(MessageType::ALERT_SHARES);
     QApplication::postEvent(ui->bShares, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bPayment_clicked()
 {
-    emit filterClicked(AlertType::PAYMENTS);
+    emit filterClicked(MessageType::ALERT_PAYMENTS);
     QApplication::postEvent(ui->bPayment, new QEvent(QEvent::Leave));
 }
 

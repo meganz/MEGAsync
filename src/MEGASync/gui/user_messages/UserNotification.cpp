@@ -1,4 +1,4 @@
-#include "MegaNotificationExt.h"
+#include "UserNotification.h"
 
 #include "ImageDownloader.h"
 #include "MegaApplication.h"
@@ -13,93 +13,104 @@ constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 }
 
-MegaNotificationExt::MegaNotificationExt(const mega::MegaNotification* notification, QObject* parent)
-    : QObject(parent)
+UserNotification::UserNotification(const mega::MegaNotification* notification, QObject* parent)
+    : UserMessage(static_cast<unsigned>(notification->getID()), UserMessage::Type::NOTIFICATION, parent)
     , mNotification(notification)
     , mDownloader(std::make_unique<ImageDownloader>(nullptr))
+    , mSeen(false)
 {
     connect(mDownloader.get(), &ImageDownloader::downloadFinished,
-            this, &MegaNotificationExt::onDownloadFinished);
+            this, &UserNotification::onDownloadFinished);
 
     mDownloader->downloadImage(getImageNamePath(), LargeImageWidth, LargeImageHeight);
     mDownloader->downloadImage(getIconNamePath(), SmallImageSize, SmallImageSize);
 }
 
-void MegaNotificationExt::reset(const mega::MegaNotification* notification)
+void UserNotification::reset(const mega::MegaNotification* notification)
 {
     mNotification.reset(notification);
 }
 
-int64_t MegaNotificationExt::getID() const
+bool UserNotification::isSeen() const
 {
-    return mNotification->getID();
+    return mSeen;
 }
 
-QString MegaNotificationExt::getTitle() const
+void UserNotification::markAsSeen()
+{
+    mSeen = true;
+}
+
+QString UserNotification::getTitle() const
 {
     return QString::fromUtf8(mNotification->getTitle());
 }
 
-QString MegaNotificationExt::getDescription() const
+QString UserNotification::getDescription() const
 {
     return QString::fromUtf8(mNotification->getDescription());
 }
 
-bool MegaNotificationExt::showImage() const
+bool UserNotification::showImage() const
 {
     return !QString::fromUtf8(mNotification->getImageName()).isEmpty();
 }
 
-QString MegaNotificationExt::getImageNamePath() const
+QString UserNotification::getImageNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getImageName())
                 + DefaultImageExtension;
 }
 
-bool MegaNotificationExt::showIcon() const
+bool UserNotification::showIcon() const
 {
     return !QString::fromUtf8(mNotification->getIconName()).isEmpty();
 }
 
-QPixmap MegaNotificationExt::getImagePixmap() const
+QPixmap UserNotification::getImagePixmap() const
 {
     return mImage;
 }
 
-QPixmap MegaNotificationExt::getIconPixmap() const
+QPixmap UserNotification::getIconPixmap() const
 {
     return mIcon;
 }
 
-QString MegaNotificationExt::getIconNamePath() const
+QString UserNotification::getIconNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getIconName())
                 + DefaultImageExtension;
 }
 
-int64_t MegaNotificationExt::getStart() const
+int64_t UserNotification::getStart() const
 {
     return mNotification->getStart();
 }
 
-int64_t MegaNotificationExt::getEnd() const
+int64_t UserNotification::getEnd() const
 {
     return mNotification->getEnd();
 }
 
-const char* MegaNotificationExt::getActionText() const
+const char* UserNotification::getActionText() const
 {
     return mNotification->getCallToAction1()->get(KeyCallToActionText);
 }
 
-const char* MegaNotificationExt::getActionLink() const
+const char* UserNotification::getActionLink() const
 {
     return mNotification->getCallToAction1()->get(KeyCallToActionLink);
 }
 
-void MegaNotificationExt::onDownloadFinished(const QImage& image, const QString& imageUrl)
+bool UserNotification::isRowAccepted(MessageType type) const
+{
+    return type == MessageType::ALL;
+}
+
+void UserNotification::onDownloadFinished(const QImage& image, const QString& imageUrl)
 {
     if (image.isNull())
     {

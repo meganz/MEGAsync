@@ -24,6 +24,7 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "UserMessageDelegate.h"
 
 #include "Utilities.h"
 #include "platform/Platform.h"
@@ -102,17 +103,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(filterClicked(AlertType)),
-            this, SLOT(applyFilterOption(AlertType)));
+    connect(filterMenu, SIGNAL(filterClicked(MessageType)),
+            this, SLOT(applyFilterOption(MessageType)));
 
     setUnseenNotifications(0);
 
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-
-    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
@@ -203,6 +201,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     reset();
 
     hideSomeIssues();
+
+    initNotificationArea();
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -1180,29 +1180,21 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
-void InfoDialog::updateNotificationsTreeView(QAbstractItemModel* model, QAbstractItemDelegate* delegate)
+void InfoDialog::onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts)
 {
-    notificationsReady = true;
-    ui->tvNotifications->setModel(model);
-    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
-    ui->tvNotifications->setItemDelegate(delegate);
-    ui->sNotifications->setCurrentWidget(ui->pNotifications);
-}
-
-void InfoDialog::onUnseenAlertsChanged(const QMap<AlertModel::AlertType, long long>& alerts)
-{
-    setUnseenNotifications(alerts[AlertModel::ALERT_ALL]);
-    filterMenu->setUnseenNotifications(alerts[AlertModel::ALERT_ALL],
-                                       alerts[AlertModel::ALERT_CONTACTS],
-                                       alerts[AlertModel::ALERT_SHARES],
-                                       alerts[AlertModel::ALERT_PAYMENT]);
+    setUnseenNotifications(alerts[MessageType::ALL]);
+    filterMenu->setUnseenNotifications(alerts[MessageType::ALL],
+                                       alerts[MessageType::ALERT_CONTACTS],
+                                       alerts[MessageType::ALERT_SHARES],
+                                       alerts[MessageType::ALERT_PAYMENTS]);
+    ui->wSortNotifications->resetAllFilterHasBeenSelected();
 }
 
 void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertType::ALL);
+    ui->wSortNotifications->setActualFilter(MessageType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1442,7 +1434,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(AlertType opt)
+void InfoDialog::applyFilterOption(MessageType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1451,11 +1443,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
     switch (opt)
     {
-        case AlertType::CONTACTS:
+        case MessageType::ALERT_CONTACTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1467,11 +1459,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
             break;
         }
-        case AlertType::SHARES:
+        case MessageType::ALERT_SHARES:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_SHARES))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1483,11 +1475,11 @@ void InfoDialog::applyFilterOption(AlertType opt)
 
             break;
         }
-        case AlertType::PAYMENTS:
+        case MessageType::ALERT_PAYMENTS:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasAlertsOfType(AlertModel::ALERT_PAYMENT))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1498,13 +1490,13 @@ void InfoDialog::applyFilterOption(AlertType opt)
             }
             break;
         }
-        case AlertType::ALL:
-        case AlertType::TAKEDOWNS:
+        case MessageType::ALL:
+        case MessageType::ALERT_TAKEDOWNS:
         default:
         {
             ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->getNotificationController()->hasNotificationsOrAlerts())
+            if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1517,7 +1509,7 @@ void InfoDialog::applyFilterOption(AlertType opt)
         }
     }
 
-    app->getNotificationController()->applyNotificationFilter(opt);
+    app->getNotificationController()->applyFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1577,7 +1569,7 @@ void InfoDialog::sTabsChanged(int tab)
             && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab)
             && ui->wSortNotifications->allFilterHasBeenSelected())
     {
-        app->getNotificationController()->ackSeenAlertsAndNotifications();
+        app->getNotificationController()->ackSeenUserMessages();
         ui->wSortNotifications->resetAllFilterHasBeenSelected();
     }
     lastTab = tab;
@@ -1782,4 +1774,18 @@ void InfoDialog::repositionInfoDialog()
     {
         move(posx, posy);
     }
+}
+
+void InfoDialog::initNotificationArea()
+{
+    mNotificationsViewHoverManager.setView(ui->tvNotifications);
+    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
+    ui->tvNotifications->setModel(app->getNotificationController()->getModel());
+    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
+    auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
+                                                  ui->tvNotifications);
+    ui->tvNotifications->setItemDelegate(delegate);
+    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+    notificationsReady = true;
 }

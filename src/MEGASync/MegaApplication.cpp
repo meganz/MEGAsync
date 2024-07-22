@@ -122,7 +122,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
-    mNotificationAlertController(nullptr),
+    mUserMessageController(nullptr),
     scanStageController(this),
     mDisableGfx (false)
 {
@@ -725,8 +725,8 @@ void MegaApplication::initialize()
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 
-    mNotificationAlertController = std::make_unique<NotificationAlertController>(nullptr);
-    connect(mNotificationAlertController.get(), &NotificationAlertController::userAlertsUpdated,
+    mUserMessageController = std::make_unique<UserMessageController>(nullptr);
+    connect(mUserMessageController.get(), &UserMessageController::userAlertsUpdated,
             mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
 }
 
@@ -1491,7 +1491,7 @@ void MegaApplication::onLogout()
     mTransfersModel->resetModel();
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
-    mNotificationAlertController->reset();
+    mUserMessageController->reset();
     EmailRequester::instance()->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
@@ -2200,7 +2200,7 @@ void MegaApplication::cleanAll()
     delegateListener = nullptr;
     mPricing.reset();
     mCurrency.reset();
-    mNotificationAlertController.reset();
+    mUserMessageController.reset();
 
     delete EmailRequester::instance();
 
@@ -2471,8 +2471,7 @@ void MegaApplication::createInfoDialog()
     connect(mTransferQuota.get(), &TransferQuota::almostOverQuotaMessageNeedsToBeShown, infoDialog.data(), &InfoDialog::enableTransferAlmostOverquotaAlert);
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
-    connect(mNotificationAlertController.get(), &NotificationAlertController::notificationAlertCreated, infoDialog.data(), &InfoDialog::updateNotificationsTreeView);
-    connect(mNotificationAlertController.get(), &NotificationAlertController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
+    connect(mUserMessageController.get(), &UserMessageController::unseenAlertsChanged, infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
 }
 
