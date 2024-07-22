@@ -5,7 +5,6 @@
 
 #include <QObject>
 #include <QSize>
-#include <QVariant>
 
 class UserMessage : public QObject
 {
@@ -40,10 +39,10 @@ public:
     inline QSize sizeHint() const { return mSizeHint; }
     inline void setSizeHint(const QSize& newSizeHint) { mSizeHint = newSizeHint; }
     inline unsigned id() const { return mId; }
-    inline bool hasSameId(QVariant id) const { return mId == id; }
+    inline bool hasSameId(unsigned id) const { return mId == id; }
 
     //In case we know the height of an user message can dynamically change
-    inline void clearSizeHint(){ mSizeHint = QSize();}
+    inline void clearSizeHint(){ mSizeHint = QSize(); }
 
 protected:
     unsigned mId;
