@@ -9,6 +9,11 @@
 
 #include <QDateTime>
 
+UserMessageModel::~UserMessageModel()
+{
+    qDeleteAll(mUserMessages);
+}
+
 QModelIndex UserMessageModel::index(int row, int column, const QModelIndex& parent) const
 {
     if (!hasIndex(row, column, parent))
