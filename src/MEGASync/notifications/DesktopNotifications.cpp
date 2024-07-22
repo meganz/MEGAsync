@@ -3,12 +3,12 @@
 #include "DesktopNotifications.h"
 #include "EmailRequester.h"
 #include "MegaApplication.h"
-#include "QTMegaRequestListener.h"
+#include "RequestListenerManager.h"
 #include "mega/user.h"
 #include "Platform.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "MegaApplication.h"
-#include "transfers/model/TransferMetaData.h"
+#include "TransferMetaData.h"
 #include "TransferNotificationBuilder.h"
 #include "Notificator.h"
 
@@ -389,10 +389,10 @@ DesktopAppNotification* DesktopNotifications::CreateContactNotification(const QS
     return notification;
 }
 
-void DesktopNotifications::replyIncomingPendingRequest(DesktopAppNotification::Action action) const
+void DesktopNotifications::replyIncomingPendingRequest(DesktopAppNotification::Action action)
 {
     DesktopAppNotification *notification = qobject_cast<DesktopAppNotification *>(QObject::sender());
-    if(!notification)
+    if (!notification)
     {
         return;
     }
@@ -400,22 +400,27 @@ void DesktopNotifications::replyIncomingPendingRequest(DesktopAppNotification::A
     const auto requestList = megaApp->getMegaApi()->getIncomingContactRequests();
     const auto sourceEmail = notification->getData().toString();
 
-    for(int iRequest=0; iRequest < requestList->size(); iRequest++)
+    for (int iRequest=0; iRequest < requestList->size(); iRequest++)
     {
         const auto request = requestList->get(iRequest);
-        if(QString::fromUtf8(request->getSourceEmail()) == sourceEmail)
+        if (QString::fromUtf8(request->getSourceEmail()) == sourceEmail)
         {
-            if(action == DesktopAppNotification::Action::firstButton)
+            if (action == DesktopAppNotification::Action::firstButton)
             {
-                megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_ACCEPT,
-                                                           new mega::OnFinishOneShot(megaApp->getMegaApi(), this, [=](bool isContextValid, const mega::MegaRequest&, const mega::MegaError& e){
-                    if (isContextValid && e.getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        UserAttributes::UserAttributesManager::instance().updateEmptyAttributesByUser(sourceEmail.toStdString().c_str());
-                    }
-                }));
+                auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                    this,
+                    [=](mega::MegaRequest* request, mega::MegaError* e) {
+                        if (e->getErrorCode() == mega::MegaError::API_OK)
+                        {
+                            UserAttributes::UserAttributesManager::instance().updateEmptyAttributesByUser(sourceEmail.toStdString().c_str());
+                        }
+                    });
+
+                megaApp->getMegaApi()->replyContactRequest(request,
+                                                           mega::MegaContactRequest::REPLY_ACTION_ACCEPT,
+                                                           listener.get());
             }
-            else if(action == DesktopAppNotification::Action::secondButton)
+            else if (action == DesktopAppNotification::Action::secondButton)
             {
                 megaApp->getMegaApi()->replyContactRequest(request, mega::MegaContactRequest::REPLY_ACTION_DENY);
             }

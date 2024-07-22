@@ -1,15 +1,21 @@
 import QtQuick.Layouts 1.15
 
+import common 1.0
+
 import components.buttons 1.0
 
 CardVerticalButton {
     id: root
 
-    property alias type: syncsType.type
+    property int type: Constants.SyncType.SYNC
 
-    property SyncsType syncs: SyncsType { id: syncsType }
+    Layout.preferredWidth: width
+    Layout.preferredHeight: height
+    contentMargin: 24
+    contentSpacing: 8
+    imageSourceSize: Qt.size(22, 20)
+    checkable: false
 
-    imageSourceSize: Qt.size(64, 64)
 }
 
 

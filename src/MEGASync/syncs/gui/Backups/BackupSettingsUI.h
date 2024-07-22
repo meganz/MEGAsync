@@ -15,8 +15,6 @@ public:
     explicit BackupSettingsUI(QWidget *parent = nullptr);
     ~BackupSettingsUI() override;
 
-    void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) override;
-
 protected:
     QString getFinishWarningIconString() const override;
     QString getFinishIconString() const override;
@@ -34,7 +32,8 @@ protected:
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 
     void setBackupsTitle();
-    void changeEvent(QEvent* event);
+    void addSyncAfterOverQuotaCheck(const QString& remoteFolder) const override;
+    void changeEvent(QEvent* event) override;
 
 protected slots:
     void reqRemoveSync(std::shared_ptr<SyncSettings> backup) override;

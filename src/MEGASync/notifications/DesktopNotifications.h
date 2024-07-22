@@ -58,7 +58,7 @@ public:
     void sendErrorNotification(const QString& title, const QString& message) const;
 
 public slots:
-    void replyIncomingPendingRequest(DesktopAppNotification::Action action) const;
+    void replyIncomingPendingRequest(DesktopAppNotification::Action action);
     void viewContactOnWebClient(DesktopAppNotification::Action activationButton) const;
     void redirectToUpgrade(DesktopAppNotification::Action activationButton) const;
     void redirectToPayBusiness(DesktopAppNotification::Action activationButton) const;

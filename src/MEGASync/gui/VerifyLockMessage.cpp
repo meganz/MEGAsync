@@ -11,6 +11,7 @@
 #include <QStyle>
 #include "Utilities.h"
 #include "MegaApplication.h"
+#include "RequestListenerManager.h"
 
 using namespace mega;
 
@@ -26,7 +27,6 @@ VerifyLockMessage::VerifyLockMessage(int lockStatus, bool isMainDialogAvailable,
     regenerateUI(lockStatus);
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
-    delegateListener = new QTMegaRequestListener(megaApi, this);
 
     QStyle *style = QApplication::style();
     QIcon tmpIcon = style->standardIcon(QStyle::SP_MessageBoxWarning, 0, this);
@@ -110,7 +110,7 @@ void VerifyLockMessage::regenerateUI(int currentStatus, bool force)
     }
 }
 
-void VerifyLockMessage::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
+void VerifyLockMessage::onRequestFinish(MegaRequest* request, MegaError* e)
 {
     int error = e->getErrorCode();
 
@@ -151,7 +151,6 @@ void VerifyLockMessage::onRequestFinish(MegaApi*, MegaRequest* request, MegaErro
 
 VerifyLockMessage::~VerifyLockMessage()
 {
-    delete delegateListener;
     delete m_ui;
 }
 
@@ -170,7 +169,8 @@ void VerifyLockMessage::on_bResendEmail_clicked()
             m_ui->lEmailSent->setProperty("opacity", 0.0);
 
             m_ui->bResendEmail->setEnabled(false);
-            megaApi->resendVerificationEmail(delegateListener);
+            auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
+            megaApi->resendVerificationEmail(listener.get());
             break;
         }
     }

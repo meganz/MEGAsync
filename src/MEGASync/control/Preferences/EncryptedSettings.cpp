@@ -1,5 +1,5 @@
 #include "EncryptedSettings.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 EncryptedSettings::EncryptedSettings(QString file) :
     QSettings(file, QSettings::IniFormat)

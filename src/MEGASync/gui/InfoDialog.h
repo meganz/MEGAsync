@@ -21,7 +21,6 @@
 #include "TransferQuota.h"
 #include "StatusInfo.h"
 #include "SyncsMenu.h"
-#include "SyncController.h"
 #include "MegaDelegateHoverManager.h"
 
 #include <memory>
@@ -35,7 +34,6 @@ class InfoDialog;
 
 class MegaApplication;
 class TransferManager;
-class BindFolderDialog;
 
 class InfoDialog : public QDialog
 {
@@ -100,7 +98,7 @@ public:
     void setTransferManager(TransferManager *transferManager);
 
 private:
-    InfoDialog() = default;
+    InfoDialog() = delete;
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
@@ -118,7 +116,7 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-    void addSync(mega::MegaHandle h = mega::INVALID_HANDLE);
+    void addSync(const QString& remoteFolder = QString());
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
     void updateDialogState();
@@ -216,8 +214,6 @@ private:
 
     QPointer<TransferManager> mTransferManager;
 
-    QPointer<BindFolderDialog> mAddSyncDialog;
-
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
 #endif
@@ -253,15 +249,12 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaTransfer *activeDownload;
     mega::MegaTransfer *activeUpload;
-    std::shared_ptr<SyncController> mSyncController;
 
-private:
-    void onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog);
+ private:
     static double computeRatio(long long completed, long long remaining);
     void enableUserActions(bool newState);
     void changeStatusState(StatusInfo::TRANSFERS_STATES newState,
                            bool animate = true);
-    void setupSyncController();
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
     void initNotificationArea();

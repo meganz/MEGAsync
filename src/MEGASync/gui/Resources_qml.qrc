@@ -87,5 +87,7 @@
         <file>images/qml/mega-cloud@3x.png</file>
         <file>images/qml/alert_circle_filled.svg</file>
         <file>images/qml/check_circle_filled.svg</file>
+        <file>images/qml/syncs/selective_sync.svg</file>
+        <file>images/qml/syncs/full_sync.svg</file>
     </qresource>
 </RCC>

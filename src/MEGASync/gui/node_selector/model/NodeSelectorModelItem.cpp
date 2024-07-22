@@ -2,8 +2,8 @@
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
 #include "SyncInfo.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/Avatar.h"
+#include "FullName.h"
+#include "Avatar.h"
 
 #include "mega/utils.h"
 
@@ -326,12 +326,6 @@ void NodeSelectorModelItem::calculateSyncStatus()
         mStatus = Status::SYNC;
         break;
     }
-    }
-    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
-    if(syncedFolders.contains(mNode->getHandle()))
-    {
-        mStatus = Status::SYNC;
-        return;
     }
 }
 

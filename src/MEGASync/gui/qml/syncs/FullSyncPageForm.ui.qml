@@ -7,16 +7,15 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
-import onboard 1.0
-
 FooterButtonsPage {
     id: root
 
+    required property bool isOnboarding
+
     property alias localFolderChooser: localFolder
-    property alias remoteFolderChooser: remoteFolder
 
     footerButtons.rightPrimary {
-        text: OnboardingStrings.sync
+        text: SyncsStrings.sync
         icons.source: Images.syncIcon
     }
 
@@ -27,23 +26,22 @@ FooterButtonsPage {
             top: parent.top
             left: parent.left
             right: parent.right
-            margins: 0
         }
-        spacing: 24
+        spacing: 32
 
         HeaderTexts {
             id: header
 
             Layout.preferredWidth: parent.width
-            title: OnboardingStrings.selectiveSync
-            description: OnboardingStrings.selectiveSyncDescription
+            title: SyncsStrings.fullSync
+            description: SyncsStrings.fullSyncDescription
         }
 
         InfoAccount {
             id: accountData
 
+            Layout.topMargin: 16
             Layout.preferredWidth: parent.width
-            Layout.topMargin: 8
         }
 
         ChooseSyncFolder {
@@ -51,15 +49,7 @@ FooterButtonsPage {
 
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
-            Layout.topMargin: 16
-        }
-
-        ChooseSyncFolder {
-            id: remoteFolder
-
-            Layout.preferredWidth: parent.width + 8
-            Layout.leftMargin: -4
-            local: false
+            isOnboarding: root.isOnboarding
         }
     }
 }

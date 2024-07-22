@@ -4,7 +4,7 @@
 #include "CommonMessages.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "UserAlert.h"
 
 #include <QDateTime>

@@ -6,7 +6,7 @@
 #include "QMegaMessageBox.h"
 #include "EventUpdater.h"
 #include "SettingsDialog.h"
-#include "platform/PowerOptions.h"
+#include "PowerOptions.h"
 #include "PlatformStrings.h"
 #include "TransferMetaData.h"
 #include <QMegaMessageBox.h>

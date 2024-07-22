@@ -13,19 +13,19 @@
 #include "CommonMessages.h"
 #include "EventUpdater.h"
 #include "GuiUtilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "OverQuotaDialog.h"
 #include "StalledIssuesModel.h"
 #include "TransferMetaData.h"
-#include "DuplicatedNodeDialogs/DuplicatedNodeDialog.h"
+#include "DuplicatedNodeDialog.h"
 #include "NodeSelectorSpecializations.h"
 #include "PlatformStrings.h"
 #include "ProxyStatsEventHandler.h"
 
 #include "UserAttributesManager.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/Avatar.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "FullName.h"
+#include "Avatar.h"
+#include "MyBackupsHandle.h"
 #include "SyncsMenu.h"
 #include "UploadToMegaDialog.h"
 #include "EmailRequester.h"
@@ -36,6 +36,8 @@
 #include "DateTimeFormatter.h"
 #include <StalledIssuesDialog.h>
 #include <DialogOpener.h>
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
 
 #include "mega/types.h"
 
@@ -2997,15 +2999,19 @@ void MegaApplication::processUpgradeSecurityEvent()
     {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
-                if (isContextValid && e.getErrorCode() != MegaError::API_OK)
-                {
-                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                            .arg(tr(e.getErrorString()));
-                    showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
-                    exitApplication();
-                }
-            }));
+            auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                this,
+                [=](::mega::MegaRequest* request, ::mega::MegaError* e) {
+                    if (e->getErrorCode() != MegaError::API_OK)
+                    {
+                        QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                .arg(tr(e->getErrorString()));
+                        showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
+                        exitApplication();
+                    }
+            });
+
+            megaApi->upgradeSecurity(listener.get());
         }
         else
         {
@@ -4834,7 +4840,19 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (infoDialog)
     {
-        infoDialog->addSync(targetFolder);
+        if (targetFolder == ::mega::INVALID_HANDLE)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Invalid Mega handle when trying to add external sync")
+                             .toUtf8()
+                             .constData());
+        }
+        else
+        {
+            auto node = megaApi->getNodeByHandle(targetFolder);
+            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
+            infoDialog->addSync(remoteFolder);
+        }
     }
 }
 
@@ -5178,8 +5196,34 @@ void MegaApplication::openSettings(int tab)
 
 void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
 {
-    openSettings(SettingsDialog::SYNCS_TAB);
-    mSettingsDialog->addSyncFolder(megaFolderHandle);
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        // The onboarding is shown and the remote folder is set
+        // (sync button notification, incoming share with full access)
+        DialogOpener::showDialog(dialog->getDialog());
+    }
+    else
+    {
+        openSettings(SettingsDialog::SYNCS_TAB);
+        if (megaFolderHandle == ::mega::INVALID_HANDLE)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Invalid Mega handle when trying to add sync")
+                             .toUtf8()
+                             .constData());
+        }
+        else
+        {
+            auto node = megaApi->getNodeByHandle(megaFolderHandle);
+            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
+            mSettingsDialog->addSyncFolder(remoteFolder);
+        }
+    }
 }
 
 void MegaApplication::createAppMenus()

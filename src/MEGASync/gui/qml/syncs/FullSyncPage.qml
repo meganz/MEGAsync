@@ -1,7 +1,5 @@
 import QtQuick 2.15
 
-import onboard 1.0
-
 import Syncs 1.0
 import ChooseLocalFolder 1.0
 
@@ -12,9 +10,14 @@ FullSyncPageForm {
     signal fullSyncMoveToSuccess
 
     footerButtons {
+        leftSecondary.onClicked: {
+            if(!root.isOnboarding) {
+                syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
+            }
+        }
 
         rightSecondary.onClicked: {
-            root.fullSyncMoveToBack()
+            root.fullSyncMoveToBack();
         }
 
         rightPrimary.onClicked: {
@@ -23,7 +26,7 @@ FullSyncPageForm {
 
             if (localFolderChooser.choosenPath.length === 0) {
                 localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = OnboardingStrings.invalidLocalPath;
+                localFolderChooser.folderField.hint.text = SyncsStrings.invalidLocalPath;
                 localFolderChooser.folderField.hint.visible = true;
             }
             else if (localFolderChooser.choosenPath !== localFolder.getDefaultFolder(syncs.defaultMegaFolder)
@@ -34,7 +37,7 @@ FullSyncPageForm {
             }
             else {
                 localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = OnboardingStrings.canNotSyncPermissionError;
+                localFolderChooser.folderField.hint.text = SyncsStrings.canNotSyncPermissionError;
                 localFolderChooser.folderField.hint.visible = true;
             }
         }

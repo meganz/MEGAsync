@@ -2,8 +2,8 @@
 #include "NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "UserAttributesRequests/CameraUploadFolder.h"
-#include "UserAttributesRequests/MyChatFilesFolder.h"
+#include "CameraUploadFolder.h"
+#include "MyChatFilesFolder.h"
 #include "MegaNodeNames.h"
 
 #include <QApplication>

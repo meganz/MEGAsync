@@ -1,7 +1,8 @@
 #include "AvatarWidget.h"
+
 #include "Utilities.h"
 #include "MegaApplication.h"
-#include "UserAttributesRequests/Avatar.h"
+#include "Avatar.h"
 #include "StatsEventHandler.h"
 
 #include <QLinearGradient>
