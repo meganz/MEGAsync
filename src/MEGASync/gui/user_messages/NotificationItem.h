@@ -24,6 +24,9 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
+private slots:
+    void onCTAClicked();
+
 private:
     Ui::NotificationItem* mUi;
     UserNotification* mNotificationData;

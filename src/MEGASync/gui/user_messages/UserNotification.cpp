@@ -95,14 +95,14 @@ int64_t UserNotification::getEnd() const
     return mNotification->getEnd();
 }
 
-const char* UserNotification::getActionText() const
+const QString UserNotification::getActionText() const
 {
-    return mNotification->getCallToAction1()->get(KeyCallToActionText);
+    return QString::fromUtf8(mNotification->getCallToAction1()->get(KeyCallToActionText));
 }
 
-const char* UserNotification::getActionLink() const
+const QUrl UserNotification::getActionUrl() const
 {
-    return mNotification->getCallToAction1()->get(KeyCallToActionLink);
+    return QUrl(QString::fromUtf8(mNotification->getCallToAction1()->get(KeyCallToActionLink)));
 }
 
 bool UserNotification::isRowAccepted(MessageType type) const
