@@ -85,7 +85,8 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     setImages();
 
     mUi->bCTA->setText(mNotificationData->getActionText());
-    connect(mUi->bCTA, &QPushButton::clicked, this, &NotificationItem::onCTAClicked);
+    connect(mUi->bCTA, &QPushButton::clicked,
+            this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
 
     mUi->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }
