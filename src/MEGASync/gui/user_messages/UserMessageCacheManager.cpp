@@ -17,26 +17,29 @@ UserMessageCacheManager::UserMessageCacheManager()
 {
 }
 
-QWidget* UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget* parent)
+UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int row,
+                                                              UserMessage* data,
+                                                              QWidget* parent,
+                                                              bool& isNew)
 {
     if(!data)
     {
         return nullptr;
     }
 
-    QWidget* widget(nullptr);
+    UserMessageWidget* widget(nullptr);
     auto cacheIndex(row % mUserMessageItems.maxCost());
 
     switch (data->getType())
     {
         case UserMessage::Type::ALERT:
         {
-            widget = createOrGetWidget<AlertItem>(cacheIndex, data, parent);
+            widget = createOrGetWidget<AlertItem>(cacheIndex, data, parent, isNew);
             break;
         }
         case UserMessage::Type::NOTIFICATION:
         {
-            widget = createOrGetWidget<NotificationItem>(cacheIndex, data, parent);
+            widget = createOrGetWidget<NotificationItem>(cacheIndex, data, parent, isNew);
             break;
         }
         default:
@@ -49,22 +52,26 @@ QWidget* UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget*
 }
 
 template<class Item>
-QWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex, UserMessage* data, QWidget* parent)
+UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
+                                                              UserMessage* data,
+                                                              QWidget* parent,
+                                                              bool& isNew)
 {
     UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
     if(dynamic_cast<Item*>(widget))
     {
-        auto id = widget->getData()->id();
         if(!data->hasSameId(widget->getData()->id()))
         {
             widget->setData(data);
         }
+        isNew = false;
     }
     else
     {
         widget = new Item(parent);
         widget->setData(data);
         mUserMessageItems.insert(cacheIndex, widget);
+        isNew = true;
     }
 
     if(widget)
