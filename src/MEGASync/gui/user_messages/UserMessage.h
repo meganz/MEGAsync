@@ -44,6 +44,9 @@ public:
     //In case we know the height of an user message can dynamically change
     inline void clearSizeHint(){ mSizeHint = QSize(); }
 
+signals:
+    void expired(unsigned id);
+
 protected:
     unsigned mId;
 

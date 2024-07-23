@@ -2,6 +2,7 @@
 #define NOTIFICATION_ITEM_H
 
 #include "UserMessageWidget.h"
+#include "Utilities.h"
 
 class UserNotification;
 
@@ -26,13 +27,16 @@ public:
 
 private slots:
     void onCTAClicked();
+    void onTimerExpirated(int64_t remainingTimeSecs);
 
 private:
     Ui::NotificationItem* mUi;
     UserNotification* mNotificationData;
+    IntervalTimer mExpirationTimer;
 
     void setNotificationData(UserNotification* newNotificationData);
     void setImages();
+    void updateExpirationText();
 
 };
 

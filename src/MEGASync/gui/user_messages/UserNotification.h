@@ -30,6 +30,7 @@ public:
     void reset(const mega::MegaNotification* notification);
 
     void markAsSeen();
+    void markAsExpired();
 
     QString getTitle() const;
     QString getDescription() const;

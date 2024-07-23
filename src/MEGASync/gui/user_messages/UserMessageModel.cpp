@@ -234,6 +234,14 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
     for (int i = 0; i < notifications->size(); i++)
     {
         const mega::MegaNotification* notification = notifications->get(i);
+
+        auto currentTime = QDateTime::currentSecsSinceEpoch();
+        if(currentTime < notification->getStart() ||
+            currentTime >= notification->getEnd())
+        {
+            continue;
+        }
+
         auto it = findById(notification->getID(), UserMessage::Type::NOTIFICATION);
         if (it == mUserMessages.end())
         {
@@ -261,6 +269,8 @@ void UserMessageModel::insertNotifications(const mega::MegaNotificationList* not
                 item->markAsSeen();
             }
         }
+
+        connect(item, &UserMessage::expired, this, &UserMessageModel::onExpired);
     }
     endInsertRows();
 }
@@ -346,6 +356,20 @@ void UserMessageModel::setLastSeenNotification(uint32_t id)
                 mSeenStatusManager.markAsSeen(MessageType::NOTIFICATIONS);
             }
         }
+    }
+}
+
+void UserMessageModel::onExpired(unsigned id)
+{
+    // For now, only notifications can expire
+    auto it = findById(id, UserMessage::Type::NOTIFICATION);
+    if (it != mUserMessages.end())
+    {
+        int row = std::distance(mUserMessages.begin(), it);
+        beginRemoveRows(QModelIndex(), row, row);
+        delete mUserMessages[row];
+        mUserMessages.erase(it);
+        endRemoveRows();
     }
 }
 

@@ -2,25 +2,29 @@
 
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
-#include "Utilities.h"
 
 #include "megaapi.h"
+
+#include <QDateTime>
 
 namespace
 {
 const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-height:22px;\">");
 const QLatin1String DescriptionHtmlEnd("</p></body></html>");
+const QLatin1String ExpiredSoonColor("color: #D64446;");
 constexpr int SpacingWithoutLargeImage = 6;
 constexpr int SpacingWithoutSmallImage = 0;
 constexpr int SmallImageSize = 48;
 constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
+constexpr int NumSecsToWaitBeforeRemove = 2;
 }
 
 NotificationItem::NotificationItem(QWidget *parent)
     : UserMessageWidget(parent)
     , mUi(new Ui::NotificationItem)
+    , mExpirationTimer(this)
 {
     mUi->setupUi(this);
 }
@@ -71,6 +75,56 @@ void NotificationItem::onCTAClicked()
     Utilities::openUrl(actionUrl);
 }
 
+void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
+{
+    if(remainingTimeSecs <= 0)
+    {
+        mUi->lTime->setText(tr("Offer expired"));
+        mUi->lTime->setStyleSheet(ExpiredSoonColor);
+        emit needsUpdate();
+
+        if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
+        {
+            mExpirationTimer.stop();
+            mNotificationData->markAsExpired();
+        }
+
+        return;
+    }
+
+    TimeInterval timeInterval(remainingTimeSecs);
+    QString timeText;
+    if(timeInterval.days > 0)
+    {
+        timeText = tr("Offer expires in %1 days").arg(timeInterval.days);
+    }
+    else if(timeInterval.hours > 0)
+    {
+        timeText = tr("Offer expires in %1 hours").arg(timeInterval.hours);
+    }
+    else if(timeInterval.minutes > 0)
+    {
+        if(timeInterval.seconds == 0)
+        {
+            timeText = tr("Offer expires in %1m").arg(timeInterval.minutes);
+        }
+        else
+        {
+            timeText = tr("Offer expires in %1m %2s")
+                           .arg(timeInterval.minutes)
+                           .arg(timeInterval.seconds);
+        }
+        mUi->lTime->setStyleSheet(ExpiredSoonColor);
+    }
+    else if(timeInterval.seconds > 0)
+    {
+        timeText = tr("Offer expires in %1s").arg(timeInterval.seconds);
+        mUi->lTime->setStyleSheet(ExpiredSoonColor);
+    }
+    mUi->lTime->setText(timeText);
+    emit needsUpdate();
+}
+
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
     mNotificationData = newNotificationData;
@@ -88,7 +142,10 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     connect(mUi->bCTA, &QPushButton::clicked,
             this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
 
-    mUi->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
+    connect(&mExpirationTimer, &IntervalTimer::expired,
+            this, &NotificationItem::onTimerExpirated);
+    mExpirationTimer.startExpirationTime(mNotificationData->getEnd());
+    updateExpirationText();
 }
 
 void NotificationItem::setImages()
@@ -122,4 +179,9 @@ void NotificationItem::setImages()
     {
         mUi->hlDescription->setSpacing(SpacingWithoutSmallImage);
     }
+}
+
+void NotificationItem::updateExpirationText()
+{
+    onTimerExpirated(mExpirationTimer.getRemainingTime());
 }

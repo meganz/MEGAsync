@@ -36,6 +36,9 @@ public:
     uint32_t checkLocalLastSeenNotification();
     void setLastSeenNotification(uint32_t id);
 
+private slots:
+    void onExpired(unsigned id);
+
 private:
     class SeenStatusManager
     {
