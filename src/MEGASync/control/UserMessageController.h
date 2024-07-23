@@ -33,6 +33,9 @@ signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
     void unseenAlertsChanged(const UnseenUserMessagesMap& alerts);
 
+protected:
+    bool event(QEvent* event) override;
+
 private:
     mega::MegaApi* mMegaApi;
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;

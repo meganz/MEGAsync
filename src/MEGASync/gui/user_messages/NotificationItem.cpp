@@ -40,6 +40,10 @@ void NotificationItem::setData(UserMessage* data)
     if(notification)
     {
         setNotificationData(notification);
+        connect(notification, &UserNotification::dataChanged, this, [this, notification]()
+        {
+            setNotificationData(notification);
+        });
     }
 }
 
@@ -61,6 +65,17 @@ QSize NotificationItem::sizeHint() const
         size.setHeight(HeightWithoutImage);
     }
     return size;
+}
+
+void NotificationItem::changeEvent(QEvent* event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+        updateExpirationText();
+    }
+
+    QWidget::changeEvent(event);
 }
 
 void NotificationItem::onCTAClicked()
@@ -96,11 +111,11 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     QString timeText;
     if(timeInterval.days > 0)
     {
-        timeText = tr("Offer expires in %1 days").arg(timeInterval.days);
+        timeText = tr("Offer expires in %n day", "", timeInterval.days);
     }
     else if(timeInterval.hours > 0)
     {
-        timeText = tr("Offer expires in %1 hours").arg(timeInterval.hours);
+        timeText = tr("Offer expires in %n hour", "", timeInterval.hours);
     }
     else if(timeInterval.minutes > 0)
     {
@@ -156,9 +171,9 @@ void NotificationItem::setImages()
     {
         mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
         connect(mNotificationData, &UserNotification::imageChanged, this, [this]()
-                {
-                    mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-                });
+        {
+            mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
+        });
     }
     else
     {

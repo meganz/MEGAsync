@@ -25,6 +25,9 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
+protected:
+    void changeEvent(QEvent* event) override;
+
 private slots:
     void onCTAClicked();
     void onTimerExpirated(int64_t remainingTimeSecs);

@@ -28,6 +28,7 @@ public:
     bool isRowAccepted(MessageType type) const override;
 
     void reset(const mega::MegaNotification* notification);
+    bool equals(const mega::MegaNotification* notification) const;
 
     void markAsSeen();
     void markAsExpired();
@@ -50,6 +51,7 @@ public:
 signals:
     void imageChanged();
     void iconChanged();
+    void dataChanged();
 
 private slots:
     void onDownloadFinished(const QImage& image, const QString& imageUrl);

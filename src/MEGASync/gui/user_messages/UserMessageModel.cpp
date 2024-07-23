@@ -223,56 +223,67 @@ void UserMessageModel::processNotifications(const mega::MegaNotificationList* no
     int numNotifications = notifications ? notifications->size() : 0;
     if (numNotifications)
     {
+        QList<mega::MegaNotification*> newNotifications;
+        for (int i = 0; i < numNotifications; i++)
+        {
+            const mega::MegaNotification* notification = notifications->get(i);
+
+            auto currentTime = QDateTime::currentSecsSinceEpoch();
+            if(currentTime < notification->getStart() ||
+                currentTime >= notification->getEnd())
+            {
+                continue;
+            }
+
+            auto it = findById(notification->getID(), UserMessage::Type::NOTIFICATION);
+            if (it == mUserMessages.end())
+            {
+                newNotifications.append(notification->copy());
+            }
+            else
+            {
+                updateNotification(std::distance(mUserMessages.begin(), it), notification);
+            }
+        }
+
         removeNotifications(notifications);
-        insertNotifications(notifications);
+        insertNotifications(newNotifications);
     }
 }
 
-void UserMessageModel::insertNotifications(const mega::MegaNotificationList* notifications)
+void UserMessageModel::insertNotifications(const QList<mega::MegaNotification*>& notifications)
 {
-    QList<const mega::MegaNotification*> newNotifications;
-    for (int i = 0; i < notifications->size(); i++)
-    {
-        const mega::MegaNotification* notification = notifications->get(i);
-
-        auto currentTime = QDateTime::currentSecsSinceEpoch();
-        if(currentTime < notification->getStart() ||
-            currentTime >= notification->getEnd())
-        {
-            continue;
-        }
-
-        auto it = findById(notification->getID(), UserMessage::Type::NOTIFICATION);
-        if (it == mUserMessages.end())
-        {
-            newNotifications.append(notification->copy());
-        }
-    }
-
-    if(newNotifications.size() <= 0)
+    if(notifications.size() <= 0)
     {
         return;
     }
 
     beginInsertRows(QModelIndex(),
                     mUserMessages.size(),
-                    mUserMessages.size() + newNotifications.size() - 1);
-    for (auto& notification : newNotifications)
+                    mUserMessages.size() + notifications.size() - 1);
+    for (auto& notification : notifications)
     {
         auto item = new UserNotification(notification);
         mUserMessages.push_back(item);
 
-        if(!item->isSeen())
+        if(!mSeenStatusManager.markNotificationAsUnseen(item->id()))
         {
-            if(!mSeenStatusManager.markNotificationAsUnseen(item->id()))
-            {
-                item->markAsSeen();
-            }
+            item->markAsSeen();
         }
 
         connect(item, &UserMessage::expired, this, &UserMessageModel::onExpired);
     }
     endInsertRows();
+}
+
+void UserMessageModel::updateNotification(int row, const mega::MegaNotification* notification)
+{
+    auto item = qobject_cast<UserNotification*>(mUserMessages[row]);
+    if(!item->equals(notification))
+    {
+        item->reset(notification->copy());
+        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+    }
 }
 
 void UserMessageModel::removeNotifications(const mega::MegaNotificationList* notifications)

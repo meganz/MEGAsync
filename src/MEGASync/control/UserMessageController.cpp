@@ -163,3 +163,13 @@ QAbstractItemModel* UserMessageController::getModel() const
 {
     return mUserMessagesProxyModel.get();
 }
+
+bool UserMessageController::event(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        requestNotifications();
+    }
+
+    return QObject::event(event);
+}

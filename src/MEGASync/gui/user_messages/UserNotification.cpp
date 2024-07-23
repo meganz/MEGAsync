@@ -3,6 +3,8 @@
 #include "ImageDownloader.h"
 #include "MegaApplication.h"
 
+#include <cstring>
+
 namespace
 {
 const QLatin1String DefaultImageExtension(".png");
@@ -28,7 +30,41 @@ UserNotification::UserNotification(const mega::MegaNotification* notification, Q
 
 void UserNotification::reset(const mega::MegaNotification* notification)
 {
+    QString oldImageNamePath = getImageNamePath();
+    QString oldIconNamePath = getIconNamePath();
+
     mNotification.reset(notification);
+
+    if(oldImageNamePath != getImageNamePath())
+    {
+        mDownloader->downloadImage(getImageNamePath(), LargeImageWidth, LargeImageHeight);
+    }
+
+    if(oldIconNamePath != getIconNamePath())
+    {
+        mDownloader->downloadImage(getIconNamePath(), SmallImageSize, SmallImageSize);
+    }
+
+    emit dataChanged();
+}
+
+bool UserNotification::equals(const mega::MegaNotification* notification) const
+{
+    if (strcmp(mNotification->getTitle(), notification->getTitle()) != 0
+            || strcmp(mNotification->getDescription(), notification->getDescription()) != 0
+            || strcmp(mNotification->getImageName(), notification->getImageName()) != 0
+            || strcmp(mNotification->getIconName(), notification->getIconName()) != 0
+            || mNotification->getStart() != notification->getStart()
+            || mNotification->getEnd() != notification->getEnd()
+            || strcmp(mNotification->getCallToAction1()->get(KeyCallToActionText),
+                      notification->getCallToAction1()->get(KeyCallToActionText)) != 0
+            || strcmp(mNotification->getCallToAction1()->get(KeyCallToActionLink),
+                      notification->getCallToAction1()->get(KeyCallToActionLink)) != 0)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool UserNotification::isSeen() const
