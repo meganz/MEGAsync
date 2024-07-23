@@ -102,19 +102,6 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
     }
 }
 
-void UserMessageController::reset()
-{
-    if (mUserMessagesModel)
-    {
-        mUserMessagesModel.reset();
-    }
-
-    if (mUserMessagesProxyModel)
-    {
-        mUserMessagesProxyModel.reset();
-    }
-}
-
 bool UserMessageController::hasNotifications()
 {
     return mUserMessagesModel->rowCount() > 0;

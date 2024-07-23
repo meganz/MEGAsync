@@ -4,6 +4,7 @@
 #include "UserMessage.h"
 
 #include <QPixmap>
+#include <QUrl>
 
 #include <memory>
 
@@ -23,9 +24,10 @@ public:
     UserNotification(const mega::MegaNotification* notification, QObject* parent = nullptr);
     ~UserNotification() = default;
 
-    void reset(const mega::MegaNotification* notification);
-
     bool isSeen() const override;
+    bool isRowAccepted(MessageType type) const override;
+
+    void reset(const mega::MegaNotification* notification);
 
     void markAsSeen();
 
@@ -39,10 +41,10 @@ public:
 
     int64_t getStart() const;
     int64_t getEnd() const;
-    const char* getActionText() const;
-    const char* getActionLink() const;
 
-    bool isRowAccepted(MessageType type) const override;
+    // For now, call to action 2 is not used
+    const QString getActionText() const;
+    const QUrl getActionUrl() const;
 
 signals:
     void imageChanged();

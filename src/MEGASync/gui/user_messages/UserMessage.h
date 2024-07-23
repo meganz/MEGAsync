@@ -27,7 +27,7 @@ public:
     {
     }
 
-    ~UserMessage() = default;
+    virtual ~UserMessage() = default;
 
     inline virtual bool isSeen() const = 0;
     inline virtual bool isRowAccepted(MessageType type) const = 0;

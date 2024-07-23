@@ -727,9 +727,7 @@ void MegaApplication::initialize()
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 
-    mUserMessageController = std::make_unique<UserMessageController>(nullptr);
-    connect(mUserMessageController.get(), &UserMessageController::userAlertsUpdated,
-            mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
+    createUserMessageController();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1493,7 +1491,6 @@ void MegaApplication::onLogout()
     mTransfersModel->resetModel();
     mStalledIssuesModel->fullReset();
     mStatusController->reset();
-    mUserMessageController->reset();
     EmailRequester::instance()->reset();
 
     // Queue processing of logout cleanup to avoid race conditions
@@ -1518,6 +1515,12 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                if(infoDialog)
+                {
+                    infoDialog->deleteUserMessageDelegate();
+                    mUserMessageController.reset();
+                    createUserMessageController();
+                }
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
                 start();
@@ -4512,6 +4515,19 @@ void MegaApplication::sendPeriodicStats() const
         if(Utilities::monthHasChangedSince(lastTime))
         {
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::MONTHLY_ACTIVE_USER, { accountType });
+        }
+    }
+}
+
+void MegaApplication::createUserMessageController()
+{
+    if(!mUserMessageController)
+    {
+        mUserMessageController = std::make_unique<UserMessageController>(nullptr);
+        if(mOsNotifications)
+        {
+            connect(mUserMessageController.get(), &UserMessageController::userAlertsUpdated,
+                    mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
         }
     }
 }

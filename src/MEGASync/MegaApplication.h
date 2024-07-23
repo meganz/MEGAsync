@@ -613,6 +613,8 @@ private:
 
     void sendPeriodicStats() const;
 
+    void createUserMessageController();
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();

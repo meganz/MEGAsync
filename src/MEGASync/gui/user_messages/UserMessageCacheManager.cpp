@@ -17,7 +17,7 @@ UserMessageCacheManager::UserMessageCacheManager()
 {
 }
 
-QWidget *UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget* parent)
+QWidget* UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget* parent)
 {
     if(!data)
     {

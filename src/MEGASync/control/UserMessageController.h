@@ -22,7 +22,6 @@ public:
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUserAlertList* list) override;
 
-    void reset();
     bool hasNotifications();
     bool hasElementsOfType(MessageType type);
     void applyFilter(MessageType type);

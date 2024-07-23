@@ -2,6 +2,9 @@
 
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
+#include "Utilities.h"
+
+#include "megaapi.h"
 
 namespace
 {
@@ -56,6 +59,18 @@ QSize NotificationItem::sizeHint() const
     return size;
 }
 
+void NotificationItem::onCTAClicked()
+{
+    auto actionUrl = mNotificationData->getActionUrl();
+    if(actionUrl.isEmpty())
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
+                           "Empty action URL in notification item.");
+        return;
+    }
+    Utilities::openUrl(actionUrl);
+}
+
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
     mNotificationData = newNotificationData;
@@ -69,7 +84,10 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
 
     setImages();
 
-    mUi->bCTA->setText(QString::fromUtf8(mNotificationData->getActionText()));
+    mUi->bCTA->setText(mNotificationData->getActionText());
+    connect(mUi->bCTA, &QPushButton::clicked,
+            this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
+
     mUi->lTime->setText(QString::fromLatin1("Offer expires in 5 days"));
 }
 

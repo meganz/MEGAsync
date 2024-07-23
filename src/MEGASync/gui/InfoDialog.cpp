@@ -1167,6 +1167,12 @@ void InfoDialog::reset()
     transferQuotaState = QuotaState::OK;
 }
 
+void InfoDialog::deleteUserMessageDelegate()
+{
+    delete ui->tvNotifications->itemDelegate();
+    ui->tvNotifications->setItemDelegate(nullptr);
+}
+
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
@@ -1730,7 +1736,7 @@ void InfoDialog::initNotificationArea()
     ui->tvNotifications->setModel(app->getNotificationController()->getModel());
     ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
     auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
-                                                  ui->tvNotifications);
+                                            ui->tvNotifications);
     ui->tvNotifications->setItemDelegate(delegate);
     ui->sNotifications->setCurrentWidget(ui->pNotifications);
     notificationsReady = true;

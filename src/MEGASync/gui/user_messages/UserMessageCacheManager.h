@@ -12,6 +12,8 @@ class UserMessageCacheManager
 
 public:
     UserMessageCacheManager();
+    virtual ~UserMessageCacheManager() = default;
+
     QWidget* getWidget(int row, UserMessage* data, QWidget* parent);
 
 private:
