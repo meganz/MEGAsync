@@ -24,6 +24,7 @@ constexpr int NumSecsToWaitBeforeRemove = 2;
 NotificationItem::NotificationItem(QWidget *parent)
     : UserMessageWidget(parent)
     , mUi(new Ui::NotificationItem)
+    , mNotificationData(nullptr)
     , mExpirationTimer(this)
 {
     mUi->setupUi(this);
@@ -42,7 +43,7 @@ void NotificationItem::setData(UserMessage* data)
         setNotificationData(notification);
         connect(notification, &UserMessage::dataChanged, this, [this, notification]()
         {
-            setNotificationData(notification);
+            updateNotificationData(notification);
         });
     }
 }
@@ -72,7 +73,7 @@ void NotificationItem::changeEvent(QEvent* event)
     if(event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-        updateExpirationText();
+        updateNotificationData();
     }
 
     QWidget::changeEvent(event);
@@ -94,10 +95,12 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
     if(remainingTimeSecs <= 0)
     {
-        mUi->lTime->setText(tr("Offer expired"));
-        mUi->lTime->setStyleSheet(ExpiredSoonColor);
-
-        if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
+        if(remainingTimeSecs == 0)
+        {
+            mUi->lTime->setText(tr("Offer expired"));
+            mUi->lTime->setStyleSheet(ExpiredSoonColor);
+        }
+        else if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
         {
             mExpirationTimer.stop();
             mNotificationData->markAsExpired();
@@ -140,8 +143,45 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
+    if(!newNotificationData)
+    {
+        return;
+    }
+
+    connect(mUi->bCTA, &QPushButton::clicked,
+            this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
+
+    connect(&mExpirationTimer, &IntervalTimer::expired,
+            this, &NotificationItem::onTimerExpirated);
+
+    updateNotificationData(newNotificationData);
+}
+
+void NotificationItem::updateNotificationData(UserNotification* newNotificationData)
+{
+    if(!newNotificationData)
+    {
+        return;
+    }
+
+    bool imageHasChanged = true;
+    bool iconHasChanged = true;
+    if(mNotificationData != nullptr)
+    {
+        imageHasChanged = mNotificationData->getImageNamePath()
+                            != newNotificationData->getImageNamePath();
+        iconHasChanged = mNotificationData->getIconNamePath()
+                            != newNotificationData->getIconNamePath();
+    }
+
     mNotificationData = newNotificationData;
 
+    updateNotificationData(imageHasChanged, iconHasChanged);
+}
+
+void NotificationItem::updateNotificationData(bool downloadImage,
+                                              bool downloadIcon)
+{
     mUi->lTitle->setText(mNotificationData->getTitle());
 
     QString labelText(DescriptionHtmlStart);
@@ -149,19 +189,24 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     labelText += DescriptionHtmlEnd;
     mUi->lDescription->setText(labelText);
 
-    setImages();
-
     mUi->bCTA->setText(mNotificationData->getActionText());
-    connect(mUi->bCTA, &QPushButton::clicked,
-            this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
 
-    connect(&mExpirationTimer, &IntervalTimer::expired,
-            this, &NotificationItem::onTimerExpirated);
+    // Avoid to download images again if they have not changed
+    if(downloadImage)
+    {
+        setImage();
+    }
+
+    if(downloadIcon)
+    {
+        setIcon();
+    }
+
     mExpirationTimer.startExpirationTime(mNotificationData->getEnd());
     updateExpirationText();
 }
 
-void NotificationItem::setImages()
+void NotificationItem::setImage()
 {
     bool showImage = mNotificationData->showImage();
     mUi->lImageLarge->setVisible(showImage);
@@ -177,7 +222,10 @@ void NotificationItem::setImages()
     {
         mUi->vlContent->setSpacing(SpacingWithoutLargeImage);
     }
+}
 
+void NotificationItem::setIcon()
+{
     bool showIcon = mNotificationData->showIcon();
     mUi->lImageSmall->setVisible(showIcon);
     if(showIcon)

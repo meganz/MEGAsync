@@ -1756,6 +1756,7 @@ IntervalTimer::IntervalTimer(int64_t expirationTimeSecs, QObject* parent)
 
 void IntervalTimer::startExpirationTime(int64_t expirationTimeSecs)
 {
+    stop();
     mExpirationTimeSecs = expirationTimeSecs;
     onTimeout();
 }

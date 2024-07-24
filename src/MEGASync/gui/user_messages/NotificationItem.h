@@ -38,7 +38,11 @@ private:
     IntervalTimer mExpirationTimer;
 
     void setNotificationData(UserNotification* newNotificationData);
-    void setImages();
+    void updateNotificationData(UserNotification* newNotificationData);
+    void updateNotificationData(bool downloadImage = false,
+                                bool downloadIcon = false);
+    void setImage();
+    void setIcon();
     void updateExpirationText();
 
 };

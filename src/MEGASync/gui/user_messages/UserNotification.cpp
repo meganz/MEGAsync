@@ -3,6 +3,8 @@
 #include "ImageDownloader.h"
 #include "MegaApplication.h"
 
+#include "megaapi.h"
+
 #include <cstring>
 
 namespace
@@ -52,6 +54,7 @@ bool UserNotification::equals(const mega::MegaNotification* notification) const
 {
     if (strcmp(mNotification->getTitle(), notification->getTitle()) != 0
             || strcmp(mNotification->getDescription(), notification->getDescription()) != 0
+            || strcmp(mNotification->getImagePath(), notification->getImagePath()) != 0
             || strcmp(mNotification->getImageName(), notification->getImageName()) != 0
             || strcmp(mNotification->getIconName(), notification->getIconName()) != 0
             || mNotification->getStart() != notification->getStart()

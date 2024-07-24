@@ -38,6 +38,8 @@ public:
 
     bool showImage() const;
     bool showIcon() const;
+    QString getImageNamePath() const;
+    QString getIconNamePath() const;
     QPixmap getImagePixmap() const;
     QPixmap getIconPixmap() const;
 
@@ -61,9 +63,6 @@ private:
     QPixmap mImage;
     QPixmap mIcon;
     bool mSeen;
-
-    QString getImageNamePath() const;
-    QString getIconNamePath() const;
 
 };
 
