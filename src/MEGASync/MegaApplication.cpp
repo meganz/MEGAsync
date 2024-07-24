@@ -2205,9 +2205,11 @@ void MegaApplication::cleanAll()
     delegateListener = nullptr;
     mPricing.reset();
     mCurrency.reset();
-    mUserMessageController.reset();
 
     delete EmailRequester::instance();
+
+    infoDialog->deleteUserMessageDelegate();
+    mUserMessageController.reset();
 
     infoDialog->deleteLater();
 
