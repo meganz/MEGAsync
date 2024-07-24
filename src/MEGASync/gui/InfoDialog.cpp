@@ -1731,6 +1731,7 @@ void InfoDialog::repositionInfoDialog()
 void InfoDialog::initNotificationArea()
 {
     mNotificationsViewHoverManager.setView(ui->tvNotifications);
+
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
     ui->tvNotifications->setModel(app->getNotificationController()->getModel());
@@ -1738,6 +1739,14 @@ void InfoDialog::initNotificationArea()
     auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
                                             ui->tvNotifications);
     ui->tvNotifications->setItemDelegate(delegate);
-    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+
+    applyFilterOption(MessageType::ALL);
+    connect(app->getNotificationController(), &UserMessageController::userMessagesReceived, this, [this]()
+    {
+        // We need to check if there is any user message to display or not
+        // with the actual selected filter.
+        applyFilterOption(filterMenu->getCurrentFilter());
+    });
+
     notificationsReady = true;
 }

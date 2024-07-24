@@ -5,20 +5,27 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class FilterAlertWidget;
 }
 
 class FilterAlertWidget : public QWidget
 {
     Q_OBJECT
+
     static const int RED_BUBBLE_MARGIN;
+
 public:
-    explicit FilterAlertWidget(QWidget *parent = 0);
+    explicit FilterAlertWidget(QWidget* parent = 0);
     ~FilterAlertWidget();
 
-    void setUnseenNotifications(long long all = 0, long long contacts = 0, long long shares = 0, long long payment = 0);
+    void setUnseenNotifications(long long all = 0,
+                                long long contacts = 0,
+                                long long shares = 0,
+                                long long payment = 0);
     void reset();
+    MessageType getCurrentFilter() const;
 
 private slots:
     void on_bAll_clicked();
@@ -30,10 +37,12 @@ signals:
     void filterClicked(MessageType);
 
 private:
-    Ui::FilterAlertWidget *ui;
+    Ui::FilterAlertWidget* mUi;
+    MessageType mCurrentFilter;
 
 protected:
-    void changeEvent(QEvent *event);
+    void changeEvent(QEvent* event);
+
 };
 
 #endif // FILTERALERTWIDGET_H

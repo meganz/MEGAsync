@@ -184,7 +184,7 @@ private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 
-    FilterAlertWidget *filterMenu;
+    FilterAlertWidget* filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *sharesItem;

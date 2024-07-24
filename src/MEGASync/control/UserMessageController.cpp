@@ -32,6 +32,7 @@ void UserMessageController::onRequestFinish(mega::MegaApi* api, mega::MegaReques
                 {
                     mUserMessagesModel->processNotifications(notificationList);
                     mMegaApi->getLastReadNotification();
+                    emit userMessagesReceived();
                 }
             }
             break;
@@ -64,6 +65,8 @@ void UserMessageController::populateUserAlerts(mega::MegaUserAlertList* alertLis
 
     mUserMessagesModel->processAlerts(alertList);
     checkUseenNotifications();
+
+    emit userMessagesReceived();
 
     // Used by DesktopNotifications because the current architecture
     emit userAlertsUpdated(alertList);

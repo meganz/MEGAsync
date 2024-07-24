@@ -32,6 +32,7 @@ public:
 signals:
     void userAlertsUpdated(mega::MegaUserAlertList* list);
     void unseenAlertsChanged(const UnseenUserMessagesMap& alerts);
+    void userMessagesReceived();
 
 protected:
     bool event(QEvent* event) override;

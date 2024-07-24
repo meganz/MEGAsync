@@ -3,11 +3,12 @@
 
 const int FilterAlertWidget::RED_BUBBLE_MARGIN = 17;
 
-FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::FilterAlertWidget)
+FilterAlertWidget::FilterAlertWidget(QWidget* parent)
+    : QWidget(parent)
+    , mUi(new Ui::FilterAlertWidget)
+    , mCurrentFilter(MessageType::ALL)
 {
-    ui->setupUi(this);
+    mUi->setupUi(this);
     setUnseenNotifications(0, 0, 0, 0);
 
     setWindowFlags(windowFlags() | Qt::FramelessWindowHint | Qt::Popup);
@@ -17,12 +18,17 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
 
 FilterAlertWidget::~FilterAlertWidget()
 {
-    delete ui;
+    delete mUi;
 }
 
 void FilterAlertWidget::reset()
 {
     setUnseenNotifications(0, 0, 0, 0);
+}
+
+MessageType FilterAlertWidget::getCurrentFilter() const
+{
+    return mCurrentFilter;
 }
 
 void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts, long long shares, long long payment)
@@ -34,78 +40,82 @@ void FilterAlertWidget::setUnseenNotifications(long long all, long long contacts
 
     if (!allUnseen)
     {
-        ui->bNumberNotifications->hide();
+        mUi->bNumberNotifications->hide();
     }
     else
     {
-        ui->bNumberNotifications->setText(QString::number(allUnseen));
-        ui->bNumberNotifications->setFixedWidth(ui->bNumberNotifications->fontMetrics().horizontalAdvance(QString::number(allUnseen)) + RED_BUBBLE_MARGIN);
-        ui->bNumberNotifications->show();
+        mUi->bNumberNotifications->setText(QString::number(allUnseen));
+        mUi->bNumberNotifications->setFixedWidth(mUi->bNumberNotifications->fontMetrics().horizontalAdvance(QString::number(allUnseen)) + RED_BUBBLE_MARGIN);
+        mUi->bNumberNotifications->show();
     }
 
     if (!contactsUnseen)
     {
-        ui->bNumberNotificationsContacts->hide();
+        mUi->bNumberNotificationsContacts->hide();
     }
     else
     {
-        ui->bNumberNotificationsContacts->setText(QString::number(contactsUnseen));
-        ui->bNumberNotificationsContacts->setFixedWidth(ui->bNumberNotificationsContacts->fontMetrics().horizontalAdvance(QString::number(contactsUnseen)) + RED_BUBBLE_MARGIN);
-        ui->bNumberNotificationsContacts->show();
+        mUi->bNumberNotificationsContacts->setText(QString::number(contactsUnseen));
+        mUi->bNumberNotificationsContacts->setFixedWidth(mUi->bNumberNotificationsContacts->fontMetrics().horizontalAdvance(QString::number(contactsUnseen)) + RED_BUBBLE_MARGIN);
+        mUi->bNumberNotificationsContacts->show();
     }
 
     if (!sharesUnseen)
     {
-        ui->bNumberNotificationsShares->hide();
+        mUi->bNumberNotificationsShares->hide();
     }
     else
     {
-        ui->bNumberNotificationsShares->setText(QString::number(sharesUnseen));
-        ui->bNumberNotificationsShares->setFixedWidth(ui->bNumberNotificationsShares->fontMetrics().horizontalAdvance(QString::number(sharesUnseen)) + RED_BUBBLE_MARGIN);
-        ui->bNumberNotificationsShares->show();
+        mUi->bNumberNotificationsShares->setText(QString::number(sharesUnseen));
+        mUi->bNumberNotificationsShares->setFixedWidth(mUi->bNumberNotificationsShares->fontMetrics().horizontalAdvance(QString::number(sharesUnseen)) + RED_BUBBLE_MARGIN);
+        mUi->bNumberNotificationsShares->show();
     }
 
     if (!paymentUnseen)
     {
-        ui->bNumberNotificationsPayments->hide();
+        mUi->bNumberNotificationsPayments->hide();
     }
     else
     {
-        ui->bNumberNotificationsPayments->setText(QString::number(paymentUnseen));
-        ui->bNumberNotificationsPayments->setFixedWidth(ui->bNumberNotificationsPayments->fontMetrics().horizontalAdvance(QString::number(paymentUnseen)) + RED_BUBBLE_MARGIN);
-        ui->bNumberNotificationsPayments->show();
+        mUi->bNumberNotificationsPayments->setText(QString::number(paymentUnseen));
+        mUi->bNumberNotificationsPayments->setFixedWidth(mUi->bNumberNotificationsPayments->fontMetrics().horizontalAdvance(QString::number(paymentUnseen)) + RED_BUBBLE_MARGIN);
+        mUi->bNumberNotificationsPayments->show();
     }
     adjustSize();
 }
 
 void FilterAlertWidget::on_bAll_clicked()
 {
-    emit filterClicked(MessageType::ALL);
+    mCurrentFilter = MessageType::ALL;
+    emit filterClicked(mCurrentFilter);
 }
 
 void FilterAlertWidget::on_bContacts_clicked()
 {
-    emit filterClicked(MessageType::ALERT_CONTACTS);
-    QApplication::postEvent(ui->bContacts, new QEvent(QEvent::Leave));
+    mCurrentFilter = MessageType::ALERT_CONTACTS;
+    emit filterClicked(mCurrentFilter);
+    QApplication::postEvent(mUi->bContacts, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bShares_clicked()
 {
-    emit filterClicked(MessageType::ALERT_SHARES);
-    QApplication::postEvent(ui->bShares, new QEvent(QEvent::Leave));
+    mCurrentFilter = MessageType::ALERT_SHARES;
+    emit filterClicked(mCurrentFilter);
+    QApplication::postEvent(mUi->bShares, new QEvent(QEvent::Leave));
 }
 
 void FilterAlertWidget::on_bPayment_clicked()
 {
-    emit filterClicked(MessageType::ALERT_PAYMENTS);
-    QApplication::postEvent(ui->bPayment, new QEvent(QEvent::Leave));
+    mCurrentFilter = MessageType::ALERT_PAYMENTS;
+    emit filterClicked(mCurrentFilter);
+    QApplication::postEvent(mUi->bPayment, new QEvent(QEvent::Leave));
 }
 
-void FilterAlertWidget::changeEvent(QEvent *event)
+void FilterAlertWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        ui->retranslateUi(this);
+        mUi->retranslateUi(this);
     }
     QWidget::changeEvent(event);
 }
