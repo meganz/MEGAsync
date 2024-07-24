@@ -43,6 +43,10 @@ void AlertItem::setData(UserMessage* data)
     if (alert)
     {
         setAlertData(alert);
+        connect(alert, &UserMessage::dataChanged, this, [this]()
+        {
+            updateAlertData();
+        });
     }
 }
 
@@ -76,11 +80,6 @@ void AlertItem::setAlertData(UserAlert* alert)
             mUi->wAvatarContact->setUserEmail(mMegaApi->getMyEmail());
         }
     }
-
-    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this]()
-    {
-        emit refreshAlertItem(mAlertData->id());
-    });
 
     onAttributesReady();
 }
@@ -133,8 +132,6 @@ void AlertItem::updateAlertData()
     setAlertContent(mAlertData);
     setAlertTimeStamp(mAlertData->getTimestamp(0));
     mAlertData->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
-
-    emit refreshAlertItem(mAlertData->id());
 }
 
 void AlertItem::updateAlertType()

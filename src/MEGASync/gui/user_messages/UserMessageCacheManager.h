@@ -16,8 +16,7 @@ public:
 
     UserMessageWidget* createOrGetWidget(int row,
                                          UserMessage* data,
-                                         QWidget* parent,
-                                         bool& isNew);
+                                         QWidget* parent);
 
 private:
     QCache<int, UserMessageWidget> mUserMessageItems;
@@ -25,8 +24,7 @@ private:
     template<class Item>
     UserMessageWidget* createOrGetWidget(int cacheIndex,
                                          UserMessage* data,
-                                         QWidget* parent,
-                                         bool& isNew);
+                                         QWidget* parent);
 
     UserMessageWidget* getWidgetFromCache(int cacheIndex);
 

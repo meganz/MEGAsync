@@ -51,7 +51,6 @@ public:
 signals:
     void imageChanged();
     void iconChanged();
-    void dataChanged();
 
 private slots:
     void onDownloadFinished(const QImage& image, const QString& imageUrl);

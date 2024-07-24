@@ -37,9 +37,6 @@ protected slots:
     void onHoverEnter(const QModelIndex& index);
     void onHoverLeave(const QModelIndex& index);
 
-private slots:
-    void updateView();
-
 private:
     class EditorInfo
     {

@@ -19,8 +19,7 @@ UserMessageCacheManager::UserMessageCacheManager()
 
 UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int row,
                                                               UserMessage* data,
-                                                              QWidget* parent,
-                                                              bool& isNew)
+                                                              QWidget* parent)
 {
     if(!data)
     {
@@ -34,12 +33,12 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int row,
     {
         case UserMessage::Type::ALERT:
         {
-            widget = createOrGetWidget<AlertItem>(cacheIndex, data, parent, isNew);
+            widget = createOrGetWidget<AlertItem>(cacheIndex, data, parent);
             break;
         }
         case UserMessage::Type::NOTIFICATION:
         {
-            widget = createOrGetWidget<NotificationItem>(cacheIndex, data, parent, isNew);
+            widget = createOrGetWidget<NotificationItem>(cacheIndex, data, parent);
             break;
         }
         default:
@@ -54,8 +53,7 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int row,
 template<class Item>
 UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
                                                               UserMessage* data,
-                                                              QWidget* parent,
-                                                              bool& isNew)
+                                                              QWidget* parent)
 {
     UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
     if(dynamic_cast<Item*>(widget))
@@ -64,14 +62,12 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
         {
             widget->setData(data);
         }
-        isNew = false;
     }
     else
     {
         widget = new Item(parent);
         widget->setData(data);
         mUserMessageItems.insert(cacheIndex, widget);
-        isNew = true;
     }
 
     if(widget)

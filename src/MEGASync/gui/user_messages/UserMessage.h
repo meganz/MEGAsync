@@ -46,6 +46,7 @@ public:
 
 signals:
     void expired(unsigned id);
+    void dataChanged();
 
 protected:
     unsigned mId;

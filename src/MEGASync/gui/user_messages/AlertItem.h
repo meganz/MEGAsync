@@ -41,9 +41,6 @@ public:
     void contactEmailChanged();
     QString getHeadingString();
 
-signals:
-    void refreshAlertItem(unsigned item);
-
 protected:
     void mousePressEvent(QMouseEvent* event) override;
     void changeEvent(QEvent* event) override;

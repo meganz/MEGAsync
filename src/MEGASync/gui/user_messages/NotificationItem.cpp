@@ -40,7 +40,7 @@ void NotificationItem::setData(UserMessage* data)
     if(notification)
     {
         setNotificationData(notification);
-        connect(notification, &UserNotification::dataChanged, this, [this, notification]()
+        connect(notification, &UserMessage::dataChanged, this, [this, notification]()
         {
             setNotificationData(notification);
         });
@@ -96,7 +96,6 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     {
         mUi->lTime->setText(tr("Offer expired"));
         mUi->lTime->setStyleSheet(ExpiredSoonColor);
-        emit needsUpdate();
 
         if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
         {
@@ -137,7 +136,6 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
         mUi->lTime->setStyleSheet(ExpiredSoonColor);
     }
     mUi->lTime->setText(timeText);
-    emit needsUpdate();
 }
 
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)

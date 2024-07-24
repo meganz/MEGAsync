@@ -195,11 +195,6 @@ void UserMessageDelegate::onHoverLeave(const QModelIndex& index)
     });
 }
 
-void UserMessageDelegate::updateView()
-{
-    mView->viewport()->update();
-}
-
 QModelIndex UserMessageDelegate::getEditorCurrentIndex() const
 {
     if(mEditor)
@@ -219,13 +214,7 @@ QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
-            bool isNew = false;
-            widget = mCacheManager->createOrGetWidget(index.row(), item, mView->viewport(), isNew);
-            if(isNew)
-            {
-                connect(widget, &UserMessageWidget::needsUpdate,
-                        this, &UserMessageDelegate::updateView);
-            }
+            widget = mCacheManager->createOrGetWidget(index.row(), item, mView->viewport());
         }
     }
     return widget;
