@@ -7,7 +7,7 @@
 #include <QMessageBox>
 
 #include "megaapi.h"
-#include "control/LinkProcessor.h"
+#include "LinkProcessor.h"
 #include "QTMegaTransferListener.h"
 #include <memory>
 

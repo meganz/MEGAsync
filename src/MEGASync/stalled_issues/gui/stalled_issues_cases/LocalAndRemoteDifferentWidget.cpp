@@ -12,6 +12,7 @@
 #include <PlatformStrings.h>
 #include <QMegaMessageBox.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include "StalledIssueChooseWidget.h"
 #include <Preferences/Preferences.h>
 
 #include "mega/types.h"
@@ -19,16 +20,17 @@
 #include <QMessageBox>
 #include <QFile>
 
-namespace
-{
-Text::Bold boldTextDecorator;
-const Text::Decorator textDecorator(&boldTextDecorator);
-}
+
+const QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
+    = QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
+                                                                                                           << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose;
+
 
 LocalAndRemoteDifferentWidget::LocalAndRemoteDifferentWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     originalStall(originalStall),
-    ui(new Ui::LocalAndRemoteDifferentWidget)
+    ui(new Ui::LocalAndRemoteDifferentWidget),
+    mFailedItem(nullptr)
 {
     ui->setupUi(this);
 
@@ -51,11 +53,13 @@ LocalAndRemoteDifferentWidget::~LocalAndRemoteDifferentWidget()
 
 void LocalAndRemoteDifferentWidget::refreshUi()
 {
-    auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
+    const auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
+    const auto isFailed(issue->isFailed());
+    const auto chosenSide(isFailed ? LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::NONE : issue->getChosenSide());
 
     if(issue->consultLocalData())
     {
-        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), issue->getChosenSide());
+        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), chosenSide);
 
         ui->chooseLocalCopy->show();
     }
@@ -66,7 +70,7 @@ void LocalAndRemoteDifferentWidget::refreshUi()
 
     if(issue->consultCloudData())
     {
-        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), issue->getChosenSide());
+        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), chosenSide);
 
         ui->chooseRemoteCopy->show();
     }
@@ -75,81 +79,177 @@ void LocalAndRemoteDifferentWidget::refreshUi()
         ui->chooseRemoteCopy->hide();
     }
 
-    GenericChooseWidget::GenericInfo bothInfo;
-    bothInfo.buttonText = tr("Choose both");
-    QString bothInfoTitle = tr("[B]Keep both[/B]");
-    textDecorator.process(bothInfoTitle);
-    bothInfo.title = bothInfoTitle;
-    bothInfo.icon = QLatin1String(":/images/copy.png");
-    bothInfo.solvedText = tr("Chosen");
-    ui->keepBothOption->setInfo(bothInfo);
-
-    GenericChooseWidget::GenericInfo lastModifiedInfo;
-    lastModifiedInfo.buttonText = tr("Choose");
-    QString lastModifiedInfoTitle;
-    if (issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+    if(issue->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
-        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
-    }
-    else
-    {
-        lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
-    }
-        textDecorator.process(lastModifiedInfoTitle);
-        lastModifiedInfo.title = lastModifiedInfoTitle;
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-        lastModifiedInfo.solvedText = tr("Chosen");
-        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
+        GenericChooseWidget::GenericInfo bothInfo;
+        bothInfo.buttonText = tr("Choose both");
+        QString bothInfoTitle = tr("[B]Keep both[/B]");
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
+        bothInfo.title = bothInfoTitle;
+        bothInfo.icon = QLatin1String(":/images/copy.png");
+        bothInfo.solvedText = ui->keepBothOption->chosenString();
+        ui->keepBothOption->setInfo(bothInfo);
 
-        if (issue->isSolved()) {
-        ui->keepBothOption->setChosen(false);
-        ui->keepLastModifiedOption->hide();
-
-        if(issue->isPotentiallySolved())
+        GenericChooseWidget::GenericInfo lastModifiedInfo;
+        lastModifiedInfo.buttonText = tr("Choose");
+        QString lastModifiedInfoTitle;
+        if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
         {
-            ui->chooseLocalCopy->hideActionButton();
-            ui->chooseRemoteCopy->hideActionButton();
+            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
         }
         else
         {
-            if(issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Both)
+            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
+        }
+
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
+        lastModifiedInfo.title = lastModifiedInfoTitle;
+        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
+        lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
+        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
+    }
+    else
+    {
+        ui->chooseRemoteCopy->setActionButtonVisibility(false);
+        ui->keepBothOption->hide();
+        ui->keepLastModifiedOption->hide();
+    }
+
+    if (issue->isSolved())
+    {
+        unSetFailedChooseWidget();
+
+        ui->keepBothOption->setSolved(true, issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
+        ui->keepLastModifiedOption->hide();
+
+        if (issue->isPotentiallySolved())
+        {
+            ui->chooseLocalCopy->setActionButtonVisibility(false);
+            ui->chooseRemoteCopy->setActionButtonVisibility(false);
+        }
+
+    }
+    else if(issue->isFailed())
+    {
+        ui->keepBothOption->setSolved(false, false);
+        ui->keepLastModifiedOption->show();
+        ui->chooseLocalCopy->setActionButtonVisibility(true);
+        ui->chooseRemoteCopy->setActionButtonVisibility(true);
+
+        unSetFailedChooseWidget();
+
+        switch(issue->getChosenSide())
+        {
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
             {
-                ui->keepBothOption->setChosen(true);
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the local file") : tr("Unable to remove the local folder");
+                ui->chooseRemoteCopy->setFailed(true, errorStr);
+                mFailedItem = ui->chooseRemoteCopy;
+                break;
+            }
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
+            {
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the file stored in MEGA")
+                                                                    : tr("Unable to remove the folder stored in MEGA");
+                ui->chooseLocalCopy->setFailed(true, errorStr);
+                mFailedItem = ui->chooseLocalCopy;
+                break;
+            }
+            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
+            {
+                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to update both local and MEGA files")
+                                                                    : tr("Unable to update both local and MEGA folders");
+                ui->keepBothOption->setFailed(true, errorStr);
+                mFailedItem = ui->keepBothOption;
+                break;
+            }
+            default:
+            {
+                break;
             }
         }
 
-        updateSizeHint();
+    }
+
+    updateSizeHint();
+    ui->retranslateUi(this);
+}
+
+QString LocalAndRemoteDifferentWidget::keepLocalSideString(const KeepSideInfo& info)
+{
+    if(info.numberOfIssues > 1)
+    {
+        if(info.isFile)
+        {
+            return tr("Keep the [B]local files[/B]?");
+        }
+        else
+        {
+            return tr("Keep the [B]local folders[/B]?");
+        }
+    }
+    else
+    {
+        if(info.isFile)
+        {
+            return tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(info.itemName);
+        }
+        else
+        {
+            return tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(info.itemName);
+        }
+    }
+}
+
+QString LocalAndRemoteDifferentWidget::keepRemoteSideString(const KeepSideInfo& info)
+{
+    if(info.numberOfIssues > 1)
+    {
+        if(info.isFile)
+        {
+            return tr("Keep the [B]remote files[/B]?");
+        }
+        else
+        {
+            return tr("Keep the [B]remote folders[/B]?");
+        }
+    }
+    else
+    {
+        if(info.isFile)
+        {
+            return tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(info.itemName);
+        }
+        else
+        {
+            return tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(info.itemName);
+        }
     }
 }
 
 void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
 
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
-    QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
-    if(localInfo.isFile())
-    {
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local file[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
-        if(info.selection.size() > 1)
-        {
-            info.msgInfo.text = tr("Keep the [B]local files[/B]?");
-        }
-    }
-    else
-    {
+    auto node(getNode());
 
-        info.msgInfo.text = tr("Are you sure you want to keep the [B]local folder[/B] %1?").arg(ui->chooseLocalCopy->data()->getFileName());
-        if(info.selection.size() > 1)
-        {
-            info.msgInfo.text = tr("Keep the [B]local folders[/B]?");
-        }
+    if(!node)
+    {
+        return;
     }
-    textDecorator.process(info.msgInfo.text);
+
+    QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
+
+    KeepSideInfo stringInfo;
+    stringInfo.isFile = localInfo.isFile();
+    stringInfo.itemName = ui->chooseLocalCopy->data()->getFileName();
+    stringInfo.numberOfIssues = info.selection.size();
+    info.msgInfo.text = keepLocalSideString(stringInfo);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
 
     if(node->isFile())
     {
@@ -162,7 +262,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "current file, which will be moved to the SyncDebris folder in your MEGA "
                         "Rubbish bin.")
                             .arg(localInfo.fileName()) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
             else
             {
@@ -170,7 +270,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                     tr("The [B]local files[/B] will be uploaded to MEGA and replace the "
                         "current files, which will be moved to the SyncDebris folder in your MEGA "
                         "Rubbish bin.") +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
         }
         else
@@ -183,7 +283,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "the "
                         "remote files.\nPlease wait for the upload to complete.")
                             .arg(localInfo.fileName())) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
             else
             {
@@ -192,7 +292,7 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
                         "to "
                         "the remote file.\nPlease wait for the upload to complete.")
                             .arg(localInfo.fileName())) +
-                    QString::fromUtf8("<br>");
+                    QString::fromUtf8("[BR]");
             }
         }
     }
@@ -203,15 +303,14 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
         {
             info.msgInfo.informativeText = tr("The [B]remote folders[/B] will be moved to MEGA Rubbish Bin.[BR]You will be able to retrieve the folders from there.[/BR]");
         }
-        info.msgInfo.informativeText.replace(QString::fromUtf8("[BR]"), QString::fromUtf8("<br>"));
-        info.msgInfo.informativeText.replace(QString::fromUtf8("[/BR]"), QString::fromUtf8("</br>"));
     }
 
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
-        info.msgInfo.informativeText.append(QString::fromUtf8("<br>") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("<br>"));
+        info.msgInfo.informativeText.append(QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", info.selection.size()) + QString::fromUtf8("[BR]"));
     }
-    textDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(info.msgInfo.informativeText);
 
     info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
     {
@@ -234,31 +333,26 @@ void LocalAndRemoteDifferentWidget::onLocalButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
     
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    auto node(getNode());
+
+    if(!node)
+    {
+        return;
+    }
+
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
     if(node)
     {
-        if(node->isFile())
-        {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote file[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
-            if (info.selection.size() > 1)
-            {
-                info.msgInfo.text = tr("Keep the [B]remote files[/B]?");
-            }
-        }
-        else
-        {
-            info.msgInfo.text = tr("Are you sure you want to keep the [B]remote folder[/B] %1?").arg(ui->chooseRemoteCopy->data()->getFileName());
-            if (info.selection.size() > 1)
-            {
-                info.msgInfo.text = tr("Keep the [B]remote folders[/B]?");
-            }
-        }
+        KeepSideInfo stringInfo;
+        stringInfo.isFile = node->isFile();
+        stringInfo.itemName = ui->chooseRemoteCopy->data()->getFileName();
+        stringInfo.numberOfIssues = info.selection.size();
+        info.msgInfo.text = keepRemoteSideString(stringInfo);
     }
     else
     {
@@ -268,7 +362,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             info.msgInfo.text = tr("Keep the [B]remote items[/B]?");
         }
     }
-    textDecorator.process(info.msgInfo.text);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.text);
     //For the moment, TYPE_TWOWAY or TYPE_UNKNOWN
     if(getData().consultData()->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
     {
@@ -308,7 +402,7 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
             }
         }
     }
-    textDecorator.process(info.msgInfo.informativeText);
+    StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
     info.msgInfo.finishFunc = [this, info](QMessageBox* msgBox)
     {
@@ -348,12 +442,18 @@ void LocalAndRemoteDifferentWidget::onRemoteButtonClicked(int)
 void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
 {
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
 
-    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(ui->chooseRemoteCopy->data()->getFilePath().toUtf8().constData()));
+    auto node(getNode());
+
+    if(!node)
+    {
+        return;
+    }
+
     QFileInfo localInfo(ui->chooseLocalCopy->data()->getFilePath());
         if(localInfo.isFile())
     {
@@ -375,7 +475,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
     std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
     if(parentNode)
     {
-        auto newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+        //auto newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
 
         if(node->isFile())
         {
@@ -385,7 +485,7 @@ void LocalAndRemoteDifferentWidget::onKeepBothButtonClicked(int)
         {
             info.msgInfo.informativeText = tr("The [B]remote folder[/B] will have a suffix like (1) added", "", info.selection.size());
         }
-        textDecorator.process(info.msgInfo.informativeText);
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(info.msgInfo.informativeText);
 
         info.msgInfo.finishFunc = [info](QMessageBox* msgBox)
         {
@@ -411,13 +511,13 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     auto issue = getData().convert<LocalOrRemoteUserMustChooseStalledIssue>();
 
     SelectionInfo info;
-    if (!checkSelection(info))
+    if (!checkSelection(ReasonsToCheck, info))
     {
         return;
     }
 
     info.msgInfo.text = tr("Are you sure you want to choose the latest modified side?");
-    if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::Local)
+    if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
     {
         info.msgInfo.informativeText = tr("This action will choose the local side");
     }
@@ -444,66 +544,26 @@ void LocalAndRemoteDifferentWidget::onKeepLastModifiedTimeButtonClicked(int)
     QMegaMessageBox::warning(info.msgInfo);
 }
 
-bool LocalAndRemoteDifferentWidget::checkIssue(QDialog *dialog)
+void LocalAndRemoteDifferentWidget::unSetFailedChooseWidget()
 {
-    if(MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(getCurrentIndex()))
+    if(mFailedItem)
     {
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok;
-        QMap<QMessageBox::StandardButton, QString> buttonsText;
-        buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
-        msgInfo.buttonsText = buttonsText;
-        msgInfo.text = tr("The issue may have been solved externally.\nPlease, refresh the list.");
-        msgInfo.finishFunc = [this](QPointer<QMessageBox>){
-            MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
-        };
-
-        QMegaMessageBox::warning(msgInfo);
-
-
-        ui->chooseLocalCopy->hideActionButton();
-        ui->chooseRemoteCopy->hideActionButton();
-
-        updateSizeHint();
-
-        return true;
+        mFailedItem->setFailed(false);
+        mFailedItem = nullptr;
     }
-
-    return false;
 }
 
-bool LocalAndRemoteDifferentWidget::checkSelection(SelectionInfo& info)
+std::unique_ptr<mega::MegaNode> LocalAndRemoteDifferentWidget::getNode()
 {
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    auto cloudData = ui->chooseRemoteCopy->data()->convert<CloudStalledIssueData>();
 
-    if(checkIssue(dialog ? dialog->getDialog() : nullptr))
+    if(!cloudData)
     {
-        return false;
+        return nullptr;
     }
 
-    info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    info.msgInfo.title = MegaSyncApp->getMEGAString();
-    info.msgInfo.textFormat = Qt::RichText;
-    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    std::unique_ptr<mega::MegaNode> node(
+        MegaSyncApp->getMegaApi()->getNodeByHandle(cloudData->getPathHandle()));
 
-    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-    auto reasons(QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose
-                                                               << mega::MegaSyncStall::LocalAndRemotePreviouslyUnsyncedDiffer_userMustChoose);
-    info.selection = dialog->getDialog()->getSelection(reasons);
-    info.similarSelection = MegaSyncApp->getStalledIssuesModel()->getIssuesByReason(reasons);
-    if(info.similarSelection.size() != info.selection.size())
-    {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
-        info.msgInfo.checkBox = checkBox;
-    }
-    info.msgInfo.buttonsText = textsByButton;
-
-    return true;
+    return node;
 }

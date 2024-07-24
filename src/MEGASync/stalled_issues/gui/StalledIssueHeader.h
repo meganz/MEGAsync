@@ -38,12 +38,8 @@ public:
 
     void expand(bool state) override;
     bool isExpandable() const;
-    void setIsExpandable(bool newIsExpandable);
 
     virtual bool adaptativeHeight();
-
-    //void showAction(const QString& actionButtonText);
-    //void hideAction();
 
     struct ActionInfo
     {
@@ -63,15 +59,15 @@ public:
     void hideAction();
 
     void showMessage(const QString& message, const QPixmap &pixmap);
-    void showSolvedMessage(const QString& customMessage = QString());
+    void updateIssueState();
 
-    void setText(const QString& text);
+    void setText(const QString& text, const QString& tooltip = QString());
     QString displayFileName(bool preferCloud = false);
 
     void setTitleDescriptionText(const QString& text);
 
     void setData(StalledIssueHeaderCase* issueData);
-    void reset();
+    void reset() override;
 
     void refreshCaseTitles();
     void refreshCaseActions();
@@ -83,8 +79,8 @@ private slots:
     void onMultipleActionClicked();
 
 private:
+    void setIsExpandable(bool newIsExpandable);
     void showIgnoreFile();
-    void issueIgnored();
     void onIgnoreFileActionClicked();
 
     void propagateButtonClick();

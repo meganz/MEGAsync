@@ -48,59 +48,75 @@ bool QMegaMessageBox::event(QEvent *event)
 
 void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
 {
-    QMessageBox* msgBox = new QMegaMessageBox(info.parent);
-
-    msgBox->setIcon(icon);
-    msgBox->setWindowTitle(info.title.isEmpty() ? QString::fromLatin1("MEGA") : info.title);
-    msgBox->setText(info.text);
-    msgBox->setInformativeText(info.informativeText);
-    msgBox->setTextFormat(info.textFormat);
-    msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
-    if (info.checkBox)
+    auto showMsgBox = [icon, info]()
     {
-        msgBox->setCheckBox(info.checkBox);
-    }
-    QDialogButtonBox *buttonBox = msgBox->findChild<QDialogButtonBox*>();
-    Q_ASSERT(buttonBox != 0);
+        QMessageBox* msgBox = new QMegaMessageBox(info.parent);
 
-    uint mask = FirstButton;
-    while (mask <= LastButton) {
-     uint sb = info.buttons & mask;
-     mask <<= 1;
-     if (!sb)
-         continue;
-     StandardButton buttonType = static_cast<StandardButton>(sb);
-     QPushButton *button = msgBox->addButton(buttonType);
+        msgBox->setIcon(icon);
+        msgBox->setWindowTitle(info.title.isEmpty() ? QString::fromLatin1("MEGA") : info.title);
+        msgBox->setText(info.text);
+        msgBox->setInformativeText(info.informativeText);
+        msgBox->setTextFormat(info.textFormat);
+        msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
+        if(info.checkBox)
+        {
+            msgBox->setCheckBox(info.checkBox);
+        }
+        QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();
+        Q_ASSERT(buttonBox != 0);
+
+        uint mask = FirstButton;
+        while(mask <= LastButton)
+        {
+            uint sb = info.buttons & mask;
+            mask <<= 1;
+            if(!sb)
+                continue;
+            StandardButton buttonType = static_cast<StandardButton>(sb);
+            QPushButton* button = msgBox->addButton(buttonType);
 #ifdef Q_OS_MACOS
-     // Work-around for default buttons not highlighted correctly in MacOS(
-     button->setFixedHeight(32);
-#endif
-     //Change button text if needed
-     if(info.buttonsText.contains(buttonType))
-     {
-         button->setText(info.buttonsText.value((StandardButton)sb));
-     }
+            // Work-around for default buttons not highlighted correctly in MacOS(
+            button->setFixedHeight(32);
+#endif \
+    //Change button text if needed
+            if(info.buttonsText.contains(buttonType))
+            {
+                button->setText(info.buttonsText.value((StandardButton) sb));
+            }
 
-     // Choose the first accept role as the default
-     if (msgBox->defaultButton())
-         continue;
-     if ((info.defaultButton == NoButton && buttonBox && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
-             || (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
-     {
-         msgBox->setDefaultButton(button);
-     }
-    }
+            // Choose the first accept role as the default
+            if(msgBox->defaultButton())
+                continue;
+            if((info.defaultButton == NoButton && buttonBox &&
+                   buttonBox->buttonRole((QAbstractButton*) button) ==
+                       QDialogButtonBox::AcceptRole) ||
+                (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
+            {
+                msgBox->setDefaultButton(button);
+            }
+        }
 
-    if(!info.iconPixmap.isNull())
+        if(!info.iconPixmap.isNull())
+        {
+            msgBox->setIconPixmap(info.iconPixmap);
+        }
+
+        if(!info.checkboxText.isEmpty())
+        {
+            QCheckBox* checkbox = new QCheckBox(info.checkboxText);
+            msgBox->setCheckBox(checkbox);
+        }
+
+        DialogOpener::showMessageBox(msgBox, info);
+    };
+
+    //ALWAYS show messagebox on GUI thread
+    if(MegaSyncApp->thread() != MegaSyncApp->thread()->currentThread())
     {
-        msgBox->setIconPixmap(info.iconPixmap);
+        Utilities::queueFunctionInAppThread([showMsgBox]() { showMsgBox(); });
     }
-
-    if (!info.checkboxText.isEmpty())
+    else
     {
-        QCheckBox* checkbox = new QCheckBox(info.checkboxText);
-        msgBox->setCheckBox(checkbox);
+        showMsgBox();
     }
-
-    DialogOpener::showMessageBox(msgBox, info);
 }

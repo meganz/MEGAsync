@@ -2,10 +2,11 @@
 #include "gui/MegaProxyStyle.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
-#include "control/ProxyStatsEventHandler.h"
-#include "control/CrashHandler.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"
+#include "ProxyStatsEventHandler.h"
+#include "StatsEventHandler.h"
+#include "CrashHandler.h"
 
 #include <QFontDatabase>
 #include <assert.h>

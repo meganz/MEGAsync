@@ -241,6 +241,7 @@ void WaitingSpinnerWidget::rotate() {
         _currentCounter = 0;
     }
     update();
+    emit needsUpdate();
 }
 
 void WaitingSpinnerWidget::updateSize() {

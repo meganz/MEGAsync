@@ -1,5 +1,5 @@
 #include "LinkProcessor.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "MegaApplication.h"
 #include "CommonMessages.h"
 #include <QDir>

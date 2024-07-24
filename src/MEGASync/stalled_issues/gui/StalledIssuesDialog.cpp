@@ -20,8 +20,6 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     mDelegate(nullptr)
 {
     ui->setupUi(this);
-    setLearnMoreLabel();
-
 #ifndef Q_OS_MACOS
     Qt::WindowFlags flags =  Qt::Window;
     this->setWindowFlags(flags);
@@ -41,7 +39,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
     {
-        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::toggleTab);
+        connect(tab, &StalledIssueTab::tabToggled, this, &StalledIssuesDialog::onTabToggled);
     }
 
     ui->allIssuesTab->setItsOn(true);
@@ -51,12 +49,13 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
     connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
 
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::updateLoadingMessage, ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::updateMessage, Qt::QueuedConnection);
-    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onStopPressed, this, [this](){
-        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues();
+    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onButtonPressed, this, [this](MessageInfo::ButtonType buttonType){
+        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(buttonType);
     });
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
+    connect(mDelegate, &StalledIssueDelegate::goToIssue, this, &StalledIssuesDialog::toggleTabAndScroll);
     connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneVisibilityChange);
 
     connect(ui->SettingsButton, &QPushButton::clicked, this, [](){
@@ -67,25 +66,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
         Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
     });
 
-    connect(ui->SelectButton, &QPushButton::clicked, this, [this](){
-        auto valueChanged = setNewModeToPreferences();
-        showView(valueChanged);
-    });
-
-    if(Preferences::instance()->stalledIssuesMode() == Preferences::StalledIssuesModeType::None)
+    showView();
+    if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
     {
-        connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-        showModeSelector();
+        onUiBlocked();
     }
-    else
-    {
-        showView(true);
-        if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
-        {
-            onUiBlocked();
-        }
-    }
-    selectNewMode();
 }
 
 StalledIssuesDialog::~StalledIssuesDialog()
@@ -127,56 +112,6 @@ QModelIndexList StalledIssuesDialog::getSelection(std::function<bool (const std:
     return list;
 }
 
-bool StalledIssuesDialog::eventFilter(QObject* obj, QEvent* event)
-{
-    if(event->type() == QEvent::MouseButtonRelease)
-    {
-        if(auto wid = dynamic_cast<QWidget*>(obj))
-        {
-            if(wid->isEnabled())
-            {
-                if(obj == ui->Advance)
-                {
-                    mModeSelected = Preferences::StalledIssuesModeType::Advance;
-                }
-                else if(obj == ui->Smart)
-                {
-                    mModeSelected = Preferences::StalledIssuesModeType::Smart;
-                }
-
-                selectNewMode();
-            }
-        }
-    }
-    else if(mModeSelected == Preferences::StalledIssuesModeType::None)
-    {
-        if(event->type() == QEvent::Enter)
-        {
-            if(obj == ui->Advance)
-            {
-                hoverMode(Preferences::StalledIssuesModeType::Advance);
-            }
-            else if(obj == ui->Smart)
-            {
-                hoverMode(Preferences::StalledIssuesModeType::Smart);
-            }
-        }
-        else if(event->type() == QEvent::Leave)
-        {
-            if(obj == ui->Advance)
-            {
-                unhoverMode(Preferences::StalledIssuesModeType::Advance);
-            }
-            else if(obj == ui->Smart)
-            {
-                unhoverMode(Preferences::StalledIssuesModeType::Smart);
-            }
-        }
-    }
-
-    return QDialog::eventFilter(obj, event);
-}
-
 void StalledIssuesDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     //User cliked outside the view
@@ -193,6 +128,14 @@ void StalledIssuesDialog::on_doneButton_clicked()
 void StalledIssuesDialog::on_refreshButton_clicked()
 {
     mProxyModel->updateStalledIssues();
+
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() == StalledIssueFilterCriterion::FAILED_CONFLICTS)
+        {
+            toggleTabAndScroll(StalledIssueFilterCriterion::ALL_ISSUES, QModelIndex());
+        }
+    }
 }
 
 void StalledIssuesDialog::checkIfViewIsEmpty()
@@ -204,7 +147,7 @@ void StalledIssuesDialog::checkIfViewIsEmpty()
     }
 }
 
-void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
+void StalledIssuesDialog::onTabToggled(StalledIssueFilterCriterion filterCriterion)
 {
   if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
   {
@@ -212,6 +155,52 @@ void StalledIssuesDialog::toggleTab(StalledIssueFilterCriterion filterCriterion)
       ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
       proxyModel->filter(filterCriterion);
   }
+}
+
+bool StalledIssuesDialog::toggleTabAndScroll(
+    StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex)
+{
+    if(auto proxyModel = dynamic_cast<StalledIssuesProxyModel*>(ui->stalledIssuesTree->model()))
+    {
+        if(proxyModel->filterCriterion() != filterCriterion)
+        {
+            //Show the view to show the loading view
+            ui->TreeViewContainer->setCurrentWidget(ui->TreeViewContainerPage);
+            proxyModel->filter(filterCriterion);
+
+            auto tabs = ui->header->findChildren<StalledIssueTab*>();
+            auto foundTab = std::find_if(tabs.begin(),
+                tabs.end(),
+                [filterCriterion](const StalledIssueTab* tabToCheck)
+                { return tabToCheck->filterCriterion() == static_cast<int>(filterCriterion); });
+            if(foundTab != tabs.end())
+            {
+                (*foundTab)->toggleTab();
+            }
+
+            if(sourceIndex.isValid())
+            {
+                QObject* tempObject(new QObject());
+                connect(proxyModel,
+                    &StalledIssuesProxyModel::modelFiltered,
+                    tempObject,
+                    [this, proxyModel, tempObject, sourceIndex]()
+                    {
+                        auto proxyIndex(proxyModel->mapFromSource(sourceIndex));
+                        if(proxyIndex.isValid())
+                        {
+                            ui->stalledIssuesTree->scrollTo(sourceIndex);
+                            mDelegate->expandIssue(proxyIndex);
+                        }
+                        tempObject->deleteLater();
+                    });
+            }
+
+            return true;
+        }
+    }
+
+    return false;
 }
 
 void StalledIssuesDialog::onUiBlocked()
@@ -255,129 +244,10 @@ void StalledIssuesDialog::onLoadingSceneVisibilityChange(bool state)
     ui->header->setDisabled(state);
 }
 
-void StalledIssuesDialog::showModeSelector()
-{
-    auto mode = Preferences::instance()->stalledIssuesMode();
-    if(mode != Preferences::StalledIssuesModeType::None)
-    {
-        if(mode == Preferences::StalledIssuesModeType::Smart)
-        {
-            ui->Smart->setProperty(MODE_SELECTED, true);
-            ui->Advance->setProperty(MODE_SELECTED, false);
-        }
-        else
-        {
-            ui->Smart->setProperty(MODE_SELECTED, false);
-            ui->Advance->setProperty(MODE_SELECTED, true);
-        }
-
-        ui->SelectButton->setEnabled(true);
-        mModeSelected = mode;
-        mModeSelected = Preferences::StalledIssuesModeType::Advance;
-    }
-    else
-    {
-        ui->Smart->setProperty(MODE_SELECTED, false);
-        ui->Advance->setProperty(MODE_SELECTED, false);
-    }
-
-    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
-    ui->stackedWidget->setCurrentWidget(ui->ModeSelector);
-    ui->Advance->installEventFilter(this);
-    ui->Advance->setMouseTracking(true);
-    ui->Smart->installEventFilter(this);
-    ui->Smart->setMouseTracking(true);
-
-    ui->AdvanceIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-    ui->SmartIcon->setAttribute(Qt::WA_TransparentForMouseEvents);
-}
-
-void StalledIssuesDialog::onPreferencesValueChanged(QString key)
-{
-    if(ui->ModeSelector->isVisible() && key == Preferences::stalledIssuesModeKey)
-    {
-        auto newModeSelected = Preferences::instance()->stalledIssuesMode();
-
-        if(newModeSelected != mModeSelected)
-        {
-            mModeSelected = newModeSelected;
-            mModeSelected = Preferences::StalledIssuesModeType::Advance;
-            selectNewMode();
-        }
-    }
-}
-
-void StalledIssuesDialog::showView(bool update)
+void StalledIssuesDialog::showView()
 {
     ui->stackedWidget->setCurrentWidget(ui->View);
-
-    if(update)
-    {
-        on_refreshButton_clicked();
-    }
-}
-
-void StalledIssuesDialog::selectNewMode()
-{
-    bool smartSelected(mModeSelected == Preferences::StalledIssuesModeType::Smart);
-
-    ui->Smart->setProperty(MODE_SELECTED, smartSelected);
-    ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    ui->Advance->setProperty(MODE_SELECTED, !smartSelected);
-    ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-
-    ui->SelectButton->setEnabled(mModeSelected != Preferences::StalledIssuesModeType::None);
-}
-
-void StalledIssuesDialog::hoverMode(Preferences::StalledIssuesModeType mode)
-{
-    if(mode == Preferences::StalledIssuesModeType::Advance)
-    {
-        ui->Advance->setProperty(MODE_SELECTED, true);
-        ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-    }
-    else if(mode == Preferences::StalledIssuesModeType::Smart)
-    {
-        ui->Smart->setProperty(MODE_SELECTED, true);
-        ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    }
-}
-
-void StalledIssuesDialog::unhoverMode(Preferences::StalledIssuesModeType mode)
-{
-    if(mode == Preferences::StalledIssuesModeType::Advance)
-    {
-        ui->Advance->setProperty(MODE_SELECTED, false);
-        ui->Advance->setStyleSheet(ui->Advance->styleSheet());
-    }
-    else if(mode == Preferences::StalledIssuesModeType::Smart)
-    {
-        ui->Smart->setProperty(MODE_SELECTED, false);
-        ui->Smart->setStyleSheet(ui->Smart->styleSheet());
-    }
-}
-
-void StalledIssuesDialog::setLearnMoreLabel()
-{
-    QString learnMoretext = tr("[A]Learn more[/A]");
-    learnMoretext.replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.io/installs-apps/desktop-syncing/sync-v2\" \n   style=\"text-decoration: none\">"));
-    learnMoretext.replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>"));
-
-    ui->LearnMoreLabel->setText(learnMoretext);
-}
-
-bool StalledIssuesDialog::setNewModeToPreferences()
-{
-    disconnect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-    auto valueChanged(mModeSelected != Preferences::instance()->stalledIssuesMode());
-    if(valueChanged)
-    {
-        Preferences::instance()->setStalledIssuesMode(mModeSelected);
-    }
-    connect(Preferences::instance().get(), &Preferences::valueChanged, this, &StalledIssuesDialog::onPreferencesValueChanged);
-    return valueChanged;
+    on_refreshButton_clicked();
 }
 
 void StalledIssuesDialog::onGlobalSyncStateChanged(bool)
@@ -390,7 +260,8 @@ void StalledIssuesDialog::changeEvent(QEvent *event)
     if(event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        setLearnMoreLabel();
+        MegaSyncApp->getStalledIssuesModel()->languageChanged();
+        ui->stalledIssuesTree->update();
     }
 
     QWidget::changeEvent(event);

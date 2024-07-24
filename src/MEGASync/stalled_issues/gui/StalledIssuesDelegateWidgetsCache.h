@@ -25,6 +25,10 @@ public:
     StalledIssueHeader* getStalledIssueHeaderWidget(const QModelIndex& sourceIndex, const QModelIndex &proxyIndex, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
     StalledIssueBaseDelegateWidget* getStalledIssueInfoWidget(const QModelIndex& index, const QModelIndex &proxyIndex, QWidget *parent, const StalledIssueVariant &issue, const QSize& size) const;
 
+    void updateEditor(const QModelIndex& sourceIndex,
+        StalledIssueBaseDelegateWidget* item,
+        const StalledIssueVariant& issue) const;
+
     static bool adaptativeHeight(mega::MegaSyncStall::SyncStallReason reason);
 
     void setProxyModel(StalledIssuesProxyModel *proxyModel);

@@ -1,7 +1,7 @@
 #ifndef FULLNAMEATTRIBUTESREQUESTS_H
 #define FULLNAMEATTRIBUTESREQUESTS_H
 
-#include <control/UserAttributesManager.h>
+#include "UserAttributesManager.h"
 
 namespace UserAttributes
 {

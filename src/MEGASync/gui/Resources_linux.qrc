@@ -707,15 +707,9 @@
         <file>animations/full-storage@3x.gif</file>
         <file>animations/full-storage@2x.gif</file>
         <file>animations/full-storage.gif</file>
-        <file>animations/uploading@3x.gif</file>
-        <file>animations/uploading@2x.gif</file>
-        <file>animations/uploading.gif</file>
         <file>animations/synching@3x.gif</file>
         <file>animations/synching@2x.gif</file>
         <file>animations/synching.gif</file>
-        <file>animations/downloading@3x.gif</file>
-        <file>animations/downloading@2x.gif</file>
-        <file>animations/downloading.gif</file>
         <file>images/import_toolbar_ico.png</file>
         <file>images/import_toolbar_ico@2x.png</file>
         <file>images/import_toolbar_ico@3x.png</file>
@@ -728,15 +722,9 @@
         <file>images/icons/pc/pc-linux_24.png</file>
         <file>images/icons/pc/pc-linux_24@2x.png</file>
         <file>images/icons/pc/pc-linux_24@3x.png</file>
-        <file>images/icons/pc/pc-linux_48.png</file>
-        <file>images/icons/pc/pc-linux_48@2x.png</file>
-        <file>images/icons/pc/pc-linux_48@3x.png</file>
         <file>images/icons/folder/folder-mono_24.png</file>
         <file>images/icons/folder/folder-mono_24@2x.png</file>
         <file>images/icons/folder/folder-mono_24@3x.png</file>
-        <file>images/icons/folder/folder-mono-with-warning_24.png</file>
-        <file>images/icons/folder/folder-mono-with-warning_24@2x.png</file>
-        <file>images/icons/folder/folder-mono-with-warning_24@3x.png</file>
         <file>images/settings-backup.png</file>
         <file>images/settings-backup@3x.png</file>
         <file>images/settings-backup@2x.png</file>
@@ -794,7 +782,6 @@
         <file>images/Switches/switch_unchecked_down.svg</file>
         <file>images/Switches/switch_unchecked_hover.svg</file>
         <file>images/Switches/switch_unchecked_rest.svg</file>
-        <file>animations/loading.gif</file>
         <file>images/node_selector/icon-small-MEGA.png</file>
         <file>images/node_selector/icon-small-MEGA@2x.png</file>
         <file>images/node_selector/icon-small-MEGA@3x.png</file>
@@ -1449,27 +1436,6 @@
         <file>images/sync_states/hand-error.png</file>
         <file>images/sync_states/hand-error@2x.png</file>
         <file>images/sync_states/hand-error@3x.png</file>
-        <file>images/StalledIssues/advanced-mode.png</file>
-        <file>images/StalledIssues/advanced-mode@2x.png</file>
-        <file>images/StalledIssues/advanced-mode@3x.png</file>
-        <file>images/StalledIssues/smart-mode.png</file>
-        <file>images/StalledIssues/smart-mode@2x.png</file>
-        <file>images/StalledIssues/smart-mode@3x.png</file>
-        <file>images/StalledIssues/solve-issues-button.png</file>
-        <file>images/StalledIssues/solve-issues-button@2x.png</file>
-        <file>images/StalledIssues/solve-issues-button@3x.png</file>
-        <file>images/StalledIssues/solved-issues-outline.png</file>
-        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
-        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
-        <file>images/StalledIssues/solved-issues-solid.png</file>
-        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
-        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
-        <file>images/StalledIssues/help-circle-link.png</file>
-        <file>images/StalledIssues/help-circle-link@2x.png</file>
-        <file>images/StalledIssues/help-circle-link@3x.png</file>
-        <file>images/StalledIssues/help-stalled-issues.png</file>
-        <file>images/StalledIssues/help-stalled-issues@2x.png</file>
-        <file>images/StalledIssues/help-stalled-issues@3x.png</file>
         <file>images/StalledIssues/settings-stalled-issues.png</file>
         <file>images/StalledIssues/settings-stalled-issues@2x.png</file>
         <file>images/StalledIssues/settings-stalled-issues@3x.png</file>
@@ -1495,8 +1461,32 @@
         <file>images/copy@3x.png</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
+        <file>images/StalledIssues/rotate-ccw.png</file>
+        <file>images/StalledIssues/rotate-ccw@2x.png</file>
+        <file>images/StalledIssues/rotate-ccw@3x.png</file>
         <file>images/icons/folder/synced-folder.png</file>
         <file>images/icons/folder/synced-folder@2x.png</file>
         <file>images/icons/folder/synced-folder@3x.png</file>
+        <file>images/StalledIssues/solved-issues-outline.png</file>
+        <file>images/StalledIssues/solved-issues-outline@2x.png</file>
+        <file>images/StalledIssues/solved-issues-outline@3x.png</file>
+        <file>images/StalledIssues/solved-issues-solid.png</file>
+        <file>images/StalledIssues/solved-issues-solid@2x.png</file>
+        <file>images/StalledIssues/solved-issues-solid@3x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@2x.png</file>
+        <file>images/StalledIssues/states/auto_solved_state@3x.png</file>
+        <file>images/StalledIssues/states/failed_state.png</file>
+        <file>images/StalledIssues/states/failed_state@2x.png</file>
+        <file>images/StalledIssues/states/failed_state@3x.png</file>
+        <file>images/StalledIssues/states/solved_state.png</file>
+        <file>images/StalledIssues/states/solved_state@2x.png</file>
+        <file>images/StalledIssues/states/solved_state@3x.png</file>
+        <file>images/StalledIssues/x-circle-outline.png</file>
+        <file>images/StalledIssues/x-circle-outline@2x.png</file>
+        <file>images/StalledIssues/x-circle-outline@3x.png</file>
+        <file>images/StalledIssues/x-circle-solid.png</file>
+        <file>images/StalledIssues/x-circle-solid@2x.png</file>
+        <file>images/StalledIssues/x-circle-solid@3x.png</file>
     </qresource>
 </RCC>

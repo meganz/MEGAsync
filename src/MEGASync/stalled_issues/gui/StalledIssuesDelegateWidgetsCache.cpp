@@ -4,6 +4,7 @@
 #include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
 #include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
 #include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
+#include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
 #include "StalledIssueFilePath.h"
 
@@ -63,7 +64,10 @@ StalledIssueHeader *StalledIssuesDelegateWidgetsCache::getStalledIssueHeaderWidg
         header->setDelegate(mDelegate);
     }
 
-    createHeaderCaseWidget(header, issue);
+    if(needsUpdate)
+    {
+        createHeaderCaseWidget(header, issue);
+    }
 
     if(isNew)
     {
@@ -102,10 +106,10 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
     auto& itemsByRowMap = mStalledIssueWidgets[toInt(reason)];
     auto& item = itemsByRowMap[row];
 
-    bool needsUpdate(!item ||
+    bool isNew(!item ||
                item->getCurrentIndex() != sourceIndex);
 
-    if(needsUpdate)
+    if(isNew)
     {
         if(item)
         {
@@ -121,12 +125,30 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::getStalledIss
 
         itemsByRowMap.insert(row, item);
     }
-    else if(needsUpdate || issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
+    else if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
     {
         item->updateUi(sourceIndex, issue);
     }
 
     return item;
+}
+
+void StalledIssuesDelegateWidgetsCache::updateEditor(const QModelIndex& sourceIndex, StalledIssueBaseDelegateWidget* item, const StalledIssueVariant& issue) const
+{
+    if(sourceIndex.parent().isValid())
+    {
+        if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Body))
+        {
+            item->updateUi(sourceIndex, issue);
+        }
+    }
+    else
+    {
+        if(issue.consultData()->needsUIUpdate(StalledIssue::Type::Header))
+        {
+            item->updateUi(sourceIndex, issue);
+        }
+    }
 }
 
 StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWidget(QWidget *parent, const StalledIssueVariant &issue) const
@@ -147,8 +169,12 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new LocalAndRemoteNameConflicts(parent);
             break;
         }
-        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
+        {
+            item = new MoveOrRenameCannotOccur(parent);
+            break;
+        }
+        case mega::MegaSyncStall::SyncStallReason::FileIssue:
         case mega::MegaSyncStall::SyncStallReason::DeleteOrMoveWaitingOnScanning:
         case mega::MegaSyncStall::SyncStallReason::DeleteWaitingOnMoves:
         case mega::MegaSyncStall::SyncStallReason::UploadIssue:
@@ -204,10 +230,6 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             {
                 headerCase = new SymLinkHeader(header);
             }
-            else if(issue.consultData()->isUndecrypted())
-            {
-                headerCase = new CloudNodeUndecryptedHeader(header);
-            }
             else
             {
                 headerCase = new FileIssueHeader(header);
@@ -239,6 +261,10 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
             if(issue.consultData()->missingFingerprint())
             {
                 headerCase = new CloudFingerprintMissingHeader(header);
+            }
+            else if(StalledIssue::isCloudNodeBlocked(issue.consultData()->getOriginalStall().get()))
+            {
+                headerCase = new CloudNodeIsBlockedHeader(header);
             }
             else
             {

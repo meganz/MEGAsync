@@ -4,8 +4,8 @@
 #include "AccountDetailsDialog.h"
 #include "DownloadFromMegaDialog.h"
 #include "ChangePassword.h"
-#include "Preferences/Preferences.h"
-#include "control/Utilities.h"
+#include "Preferences.h"
+#include "Utilities.h"
 
 #include "syncs/control/SyncInfo.h"
 #include "megaapi.h"
@@ -64,6 +64,9 @@ public:
     // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
+
+    // Backups
+    void setBackupsAddButtonEnabled(bool enabled);
 
 signals:
     void userActivity();

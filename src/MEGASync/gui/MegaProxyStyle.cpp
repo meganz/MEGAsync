@@ -1,6 +1,5 @@
 #include "MegaProxyStyle.h"
 #include "gui/MegaTransferView.h"
-#include "control/HTTPServer.h"
 #include "MegaApplication.h"
 #include "StatsEventHandler.h"
 

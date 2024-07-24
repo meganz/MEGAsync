@@ -7,6 +7,7 @@
 #include <MegaApplication.h>
 #include <Utilities.h>
 #include <syncs/control/SyncInfo.h>
+#include <TextDecorator.h>
 
 #include <QObject>
 #include <QString>
@@ -17,6 +18,33 @@
 
 #include <memory>
 
+class StalledIssuesBoldTextDecorator
+{
+public:
+    StalledIssuesBoldTextDecorator() = default;
+    static const Text::Decorator boldTextDecorator;
+};
+
+class StalledIssuesNewLineTextDecorator
+{
+public:
+    StalledIssuesNewLineTextDecorator() = default;
+
+    static const Text::Decorator newLineTextDecorator;
+};
+
+class StalledIssuesLinkTextDecorator
+{
+public:
+    StalledIssuesLinkTextDecorator() = default;
+
+    static void process(const QStringList& links, QString& input)
+    {
+        Text::Decorator linkTextDecorator(new Text::Link(links));
+        linkTextDecorator.process(input);
+    }
+};
+
 class StalledIssuesUtilities : public QObject
 {
     Q_OBJECT
@@ -24,13 +52,16 @@ class StalledIssuesUtilities : public QObject
 public:
     StalledIssuesUtilities();
 
-    bool removeRemoteFile(const QString& path);
-    bool removeRemoteFile(mega::MegaNode* node);
-    bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(const QString& path);
+    static std::shared_ptr<mega::MegaError> removeRemoteFile(mega::MegaNode* node);
+    static bool removeLocalFile(const QString& path, const mega::MegaHandle& syncId);
 
     static QIcon getLocalFileIcon(const QFileInfo& fileInfo, bool hasProblem);
     static QIcon getRemoteFileIcon(mega::MegaNode* node, const QFileInfo &fileInfo, bool hasProblem);
     static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
+
+    static void openLink(bool isCloud, const QString& path);
+    static QString getLink(bool isCloud, const QString& path);
 
 signals:
     void actionFinished();
@@ -45,15 +76,16 @@ class StalledIssuesBySyncFilter
 public:
     StalledIssuesBySyncFilter(){}
 
-    void resetFilter(){mSyncIdCache.clear();}
-
-    mega::MegaHandle filterByPath(const QString& path, bool cloud);
+    static void resetFilter();
+    static QSet<mega::MegaHandle> getSyncIdsByStall(const mega::MegaSyncStall* stall);
 
 private:
-    bool isBelow(mega::MegaHandle syncRootNode, mega::MegaHandle checkNode);
-    bool isBelow(const QString& syncRootPath, const QString& checkPath);
+    static mega::MegaHandle filterByPath(const QString& path, bool cloud);
+    static bool isBelow(mega::MegaHandle syncRootNode, mega::MegaHandle checkNode);
+    static bool isBelow(const QString& syncRootPath, const QString& checkPath);
 
     static QMap<QVariant, mega::MegaHandle> mSyncIdCache;
+    static QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> mSyncIdCacheByStall;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

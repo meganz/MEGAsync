@@ -4,7 +4,6 @@
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
 #include "StalledIssueLoadingItem.h"
-#include "control/Preferences/Preferences.h"
 
 #include <ViewLoadingScene.h>
 
@@ -30,7 +29,6 @@ public:
     QModelIndexList getSelection(std::function<bool (const std::shared_ptr<const StalledIssue>)> checker) const;
 
 protected:
-    bool eventFilter(QObject *, QEvent *) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
     void changeEvent(QEvent *) override;
 
@@ -40,7 +38,8 @@ private slots:
     void checkIfViewIsEmpty();
     void onGlobalSyncStateChanged(bool);
 
-    void toggleTab(StalledIssueFilterCriterion filterCriterion);
+    void onTabToggled(StalledIssueFilterCriterion filterCriterion);
+    bool toggleTabAndScroll(StalledIssueFilterCriterion filterCriterion, const QModelIndex& sourceIndex);
 
     void onUiBlocked();
     void onUiUnblocked();
@@ -49,18 +48,8 @@ private slots:
     void onModelFiltered();
     void onLoadingSceneVisibilityChange(bool state);
 
-    void showModeSelector();
-    void onPreferencesValueChanged(QString key);
-
 private:
-    void showView(bool update);
-    void selectNewMode();
-    void hoverMode(Preferences::StalledIssuesModeType mode);
-    void unhoverMode(Preferences::StalledIssuesModeType mode);
-
-    void setLearnMoreLabel();
-
-    bool setNewModeToPreferences();
+    void showView();
 
     Ui::StalledIssuesDialog *ui;
     MegaDelegateHoverManager mViewHoverManager;
@@ -68,7 +57,6 @@ private:
     StalledIssuesProxyModel* mProxyModel;
     StalledIssueDelegate* mDelegate;
 
-    Preferences::StalledIssuesModeType mModeSelected = Preferences::StalledIssuesModeType::Smart;
 };
 
 #endif // STALLEDISSUESDIALOG_H

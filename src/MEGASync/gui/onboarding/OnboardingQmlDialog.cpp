@@ -1,4 +1,5 @@
 #include "OnboardingQmlDialog.h"
+
 #include "MegaApplication.h"
 #include "LoginController.h"
 
@@ -11,11 +12,6 @@ OnboardingQmlDialog::OnboardingQmlDialog(QWindow *parent)
     , mCloseClicked(false)
     , mForceClose(false)
     , mCreatingAccount(false)
-{
-    connect(this, &OnboardingQmlDialog::requestPageFocus, this, &OnboardingQmlDialog::onRequestPageFocus, Qt::QueuedConnection);
-}
-
-OnboardingQmlDialog::~OnboardingQmlDialog()
 {
 }
 

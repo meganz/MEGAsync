@@ -2,14 +2,12 @@
 #define LOCALANDREMOTEDIFFERENTWIDGET_H
 
 #include "StalledIssueBaseDelegateWidget.h"
-#include "QMegaMessageBox.h"
-
-#include <QWidget>
-#include <memory>
 
 namespace Ui {
 class LocalAndRemoteDifferentWidget;
 }
+
+class StalledIssueChooseWidget;
 
 class LocalAndRemoteDifferentWidget : public StalledIssueBaseDelegateWidget
 {
@@ -23,6 +21,17 @@ public:
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
 
+    //Commong strings for Local/Remote selection
+    struct KeepSideInfo
+    {
+        bool isFile = false;
+        int numberOfIssues = 1;
+        QString itemName;
+    };
+
+    static QString keepLocalSideString(const KeepSideInfo& info);
+    static QString keepRemoteSideString(const KeepSideInfo& info);
+
 private slots:
     void onLocalButtonClicked(int);
     void onRemoteButtonClicked(int);
@@ -30,17 +39,11 @@ private slots:
     void onKeepLastModifiedTimeButtonClicked(int);
 
 private:
-    bool checkIssue(QDialog* dialog);
-
-    struct SelectionInfo
-    {
-        QModelIndexList selection;
-        QModelIndexList similarSelection;
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-    };
-    bool checkSelection(SelectionInfo& info);
+    void unSetFailedChooseWidget();
+    std::unique_ptr<mega::MegaNode> getNode();
 
     Ui::LocalAndRemoteDifferentWidget *ui;
+    StalledIssueChooseWidget* mFailedItem;
 };
 
 #endif // LOCALANDREMOTEDIFFERENTWIDGET_H

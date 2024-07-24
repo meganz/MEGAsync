@@ -21,6 +21,7 @@ enum class StalledIssueFilterCriterion
     NAME_CONFLICTS,
     ITEM_TYPE_CONFLICTS,
     OTHER_CONFLICTS,
+    FAILED_CONFLICTS,
     SOLVED_CONFLICTS
 };
 
@@ -31,6 +32,7 @@ public:
     {
         QString path;
         mega::MegaSyncStall::SyncPathProblem pathProblem = mega::MegaSyncStall::SyncPathProblem::NoProblem;
+        bool showDirectoryInHyperLink = false;
 
         Path(){}
         bool isEmpty() const {return path.isEmpty() && pathProblem == mega::MegaSyncStall::SyncPathProblem::NoProblem;}
@@ -70,14 +72,28 @@ public:
     virtual void initFileFolderAttributes()
     {}
 
+    void setRenamedFileName(const QString& newRenamedFileName)
+    {
+        mRenamedFileName = newRenamedFileName;
+    }
+
+    const QString& renamedFileName() const
+    {
+        return mRenamedFileName;
+    }
+
 protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
+    friend class MoveOrRenameCannotOccurIssue;
 
     Path mMovePath;
     Path mPath;
 
     std::shared_ptr<FileFolderAttributes> mAttributes;
+
+private:
+    QString mRenamedFileName;
 };
 
 Q_DECLARE_TYPEINFO(StalledIssueData, Q_MOVABLE_TYPE);
@@ -93,9 +109,6 @@ Q_DECLARE_METATYPE(StalledIssuesDataList)
 class CloudStalledIssueData : public StalledIssueData
 {
 public:
-
-
-
     CloudStalledIssueData()
         : StalledIssueData(),
           mPathHandle(mega::INVALID_HANDLE),
@@ -147,6 +160,7 @@ public:
 private:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
+    friend class MoveOrRenameCannotOccurIssue;
 
     mutable std::shared_ptr<mega::MegaNode> mRemoteNode;
 
@@ -214,8 +228,11 @@ Q_DECLARE_METATYPE(LocalStalledIssueDataList)
 struct UploadTransferInfo;
 struct DownloadTransferInfo;
 
-class StalledIssue
+class MultiStepIssueSolverBase;
+
+class StalledIssue : public QObject
 {
+    Q_OBJECT
     class FileSystemSignalHandler : public QObject
     {
     public:
@@ -228,7 +245,7 @@ class StalledIssue
 
         void createFileWatcher()
         {
-            if(!mFileWatcher)
+            if(!mFileWatcher && !mIssue->getLocalFiles().isEmpty())
             {
                 auto deleter = [](QFileSystemWatcher* object){
                     object->deleteLater();
@@ -265,6 +282,8 @@ public:
     StalledIssue(const mega::MegaSyncStall* stallIssue);
     virtual ~StalledIssue(){}
 
+    virtual bool isValid() const{ return true;}
+
     const LocalStalledIssueDataPtr consultLocalData() const;
     const CloudStalledIssueDataPtr consultCloudData() const;
 
@@ -287,27 +306,35 @@ public:
 
     enum SolveType
     {
-        Unsolved,
-        Solved,
-        PotentiallySolved
+        UNSOLVED,
+        FAILED,
+        BEING_SOLVED,
+        POTENTIALLY_SOLVED,
+        SOLVED
     };
 
+    bool isUnsolved() const;
     bool isSolved() const;
     bool isPotentiallySolved() const;
-    void setIsSolved(bool potentially);
-    virtual bool autoSolveIssue(){return false;}
-    virtual bool isSolvable() const {return false;}
-    virtual bool refreshListAfterSolving() const {return false;}
+    bool isBeingSolved() const;
+    bool isFailed() const;
+
+    SolveType getIsSolved() const {return mIsSolved;}
+    virtual void setIsSolved(SolveType type);
+
+    virtual bool autoSolveIssue() {return false;}
+    virtual bool isAutoSolvable() const;
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
-    virtual bool isSymLink() const {return false;}
-    bool missingFingerprint() const;
-    bool canBeIgnored() const;
-    virtual QStringList getLocalFiles();
-    QStringList getIgnoredFiles() const;
+    virtual void finishAsyncIssueSolving(){}
+    virtual void startAsyncIssueSolving();
 
-    bool isUndecrypted() const;
+    virtual bool isSymLink() const {return false;}
+    virtual bool isSpecialLink() const {return false;}
+    bool missingFingerprint() const;
+    static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
+    virtual QStringList getLocalFiles();
 
     bool mDetectedMEGASide = false;
 
@@ -324,10 +351,15 @@ public:
     QSize getDelegateSize(Type type) const;
     void setDelegateSize(const QSize& newDelegateSize, Type type);
     void removeDelegateSize(Type type);
+    void resetDelegateSize();
 
     const std::shared_ptr<mega::MegaSyncStall>& getOriginalStall() const;
 
     virtual void fillIssue(const mega::MegaSyncStall* stall);
+    void fillBasicInfo(const mega::MegaSyncStall* stall);
+    //In order to show the filepath or the directory path when the path is used for a hyperlink
+    virtual bool showDirectoryInHyperlink() const {return false;}
+
     virtual void endFillingIssue();
 
     template <class Type>
@@ -343,11 +375,22 @@ public:
     void createFileWatcher();
     void removeFileWatcher();
 
-    const QList<mega::MegaHandle> &syncIds() const;
+    mega::MegaHandle firstSyncId() const;
+    const QSet<mega::MegaHandle>& syncIds() const;
     //In case there are two syncs, use the first one
     mega::MegaSync::SyncType getSyncType() const;
 
     virtual bool shouldBeIgnored() const {return false;}
+
+    bool wasAutoResolutionApplied() const;
+    void setAutoResolutionApplied(bool newAutoResolutionApplied);
+
+    virtual bool isExpandable() const;
+
+signals:
+    void asyncIssueSolvingStarted();
+    void asyncIssueSolvingFinished(StalledIssue*);
+    void dataUpdated(StalledIssue*);
 
 protected:
     bool initLocalIssue();
@@ -356,21 +399,21 @@ protected:
     bool initCloudIssue();
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
-    void fillSyncId(const QString& path, bool cloud);
-
     void setIsFile(const QString& path, bool isLocal);
+
+    void performFinishAsyncIssueSolving(bool hasFailed);
 
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
-    QList<mega::MegaHandle> mSyncIds;
-    mutable SolveType mIsSolved = SolveType::Unsolved;
+    QSet<mega::MegaHandle> mSyncIds;
+    mutable SolveType mIsSolved = SolveType::UNSOLVED;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
-    QStringList mIgnoredPaths;
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
     std::shared_ptr<FileSystemSignalHandler> mFileSystemWatcher;
+    bool mAutoResolutionApplied;
 };
 
 class StalledIssueVariant
@@ -378,13 +421,22 @@ class StalledIssueVariant
 public:
     StalledIssueVariant(){}
     StalledIssueVariant(const StalledIssueVariant& tdr) : mData(tdr.mData) {}
-    StalledIssueVariant(const std::shared_ptr<StalledIssue> data)
+    StalledIssueVariant(std::shared_ptr<StalledIssue> data, const mega::MegaSyncStall* stall = nullptr)
         : mData(data)
-    {}
+    {
+        if(stall)
+        {
+            mData->fillIssue(stall);
+        }
+    }
 
     const std::shared_ptr<const StalledIssue> consultData() const
     {
         return mData;
+    }
+    bool isValid() const
+    {
+        return mData != nullptr;
     }
 
     void updateData(const mega::MegaSyncStall* stallIssue)
@@ -434,7 +486,8 @@ public:
 
 private:
     friend class StalledIssuesModel;
-    friend class StalledIssuesReceiver;
+    friend class StalledIssuesCreator;
+    friend class MoveOrRenameCannotOccurFactory;
 
     std::shared_ptr<StalledIssue>& getData()
     {

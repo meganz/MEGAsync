@@ -112,8 +112,11 @@ void StalledIssueDelegate::updateVisibleIndexesSizeHint(int updateDelay, bool fo
                     mVisibleIndexesRange.append(row);
 
                     StalledIssueVariant stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
-                    stalledIssueItem.removeDelegateSize(StalledIssue::Header);
-                    stalledIssueItem.removeDelegateSize(StalledIssue::Body);
+                    if(stalledIssueItem.isValid())
+                    {
+                        stalledIssueItem.removeDelegateSize(StalledIssue::Header);
+                        stalledIssueItem.removeDelegateSize(StalledIssue::Body);
+                    }
 
                     sizeHintUpdateNeeded = true;
                 }
@@ -224,9 +227,19 @@ void StalledIssueDelegate::resetCache()
     mCacheManager.reset();
 }
 
+void StalledIssueDelegate::updateView()
+{
+    mView->viewport()->update();
+}
+
 void StalledIssueDelegate::updateSizeHint()
 {
     mUpdateSizeHintTimer.start(UPDATE_SIZE_TIMER);
+}
+
+void StalledIssueDelegate::expandIssue(const QModelIndex& sourceIndex)
+{
+    mView->expand(sourceIndex);
 }
 
 void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -238,7 +251,9 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
     if (index.isValid() && row < rowCount)
     {
-        bool isExpanded(mView->isExpanded(index));
+        auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
+
+        bool isExpanded(mView->isExpanded(index) && stalledIssueItem.consultData()->isExpandable());
 
         auto pos (option.rect.topLeft());
         QRect geometry(option.rect);
@@ -372,7 +387,6 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         if(renderDelegate)
         {
-            auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
             StalledIssueBaseDelegateWidget* w (getStalledIssueItemWidget(index, stalledIssueItem, geometry.size()));
             if(!w)
             {
@@ -390,6 +404,11 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             painter->restore();
         }
+        else if(mEditor)
+        {
+            auto sourceIndex = mProxyModel->mapToSource(index);
+            mCacheManager.updateEditor(sourceIndex, mEditor, stalledIssueItem);
+        }
 
         bool drawBottomLine(false);
 
@@ -399,7 +418,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
         else
         {
-            if(!mView->isExpanded(index))
+            if(!isExpanded)
             {
                 drawBottomLine = true;
             }
@@ -426,7 +445,7 @@ bool StalledIssueDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
     return QStyledItemDelegate::editorEvent(event, model, option, index);
 }
 
-QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *StalledIssueDelegate::createEditor(QWidget*, const QStyleOptionViewItem &, const QModelIndex &index) const
 {
     auto stalledIssueItem (qvariant_cast<StalledIssueVariant>(index.data(Qt::DisplayRole)));
 
@@ -514,24 +533,40 @@ bool StalledIssueDelegate::eventFilter(QObject *object, QEvent *event)
                 {
                     if(auto header = dynamic_cast<StalledIssueHeader*>(mEditor.data()))
                     {
-                        if(header->isExpandable())
+                        auto data(header->getData());
+                        if(data.isValid())
                         {
                             auto currentState = mView->isExpanded(index);
-                            currentState ? mView->collapse(index) : mView->expand(index);
 
-                            mEditor->expand(!currentState);
-
-                            auto childIndex = index.model()->index(0,0,index);
-                            //If it is going to be expanded
-                            if(!currentState)
+                            //Allow to collapse, but when expanded, change the category
+                            if(!currentState && data.consultData()->isFailed())
                             {
-                                if(childIndex.isValid())
+                                auto sourceIndex(mProxyModel->mapToSource(index));
+                                //Don´t expand if we really change the tab, otherwise we need to expand it
+                                if(emit goToIssue(StalledIssueFilterCriterion::FAILED_CONFLICTS, sourceIndex))
                                 {
-                                    mView->scrollTo(childIndex);
+                                    return true;
                                 }
                             }
 
-                            return true;
+                            if(header->isExpandable())
+                            {
+                                currentState ? mView->collapse(index) : mView->expand(index);
+
+                                mEditor->expand(!currentState);
+
+                                auto childIndex = index.model()->index(0, 0, index);
+                                //If it is going to be expanded
+                                if(!currentState)
+                                {
+                                    if(childIndex.isValid())
+                                    {
+                                        mView->scrollTo(childIndex);
+                                    }
+                                }
+
+                                return true;
+                            }
                         }
                     }
                 }

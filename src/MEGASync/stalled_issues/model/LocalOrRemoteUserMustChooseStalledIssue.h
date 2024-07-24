@@ -13,34 +13,41 @@ public:
     ~LocalOrRemoteUserMustChooseStalledIssue();
 
     bool autoSolveIssue() override;
-    bool isSolvable() const override;
+    bool isAutoSolvable() const override;
+    void setIsSolved(SolveType type) override;
+    bool checkForExternalChanges() override;
 
     void fillIssue(const mega::MegaSyncStall *stall) override;
     void endFillingIssue() override;
 
-    void chooseLocalSide();
-    void chooseRemoteSide();
-    void chooseLastMTimeSide();
-    void chooseBothSides(QStringList *namesUsed);
-
+    bool chooseLocalSide();
+    bool chooseRemoteSide();
+    bool chooseLastMTimeSide();
+    bool chooseBothSides(QStringList *namesUsed);
 
     bool UIShowFileAttributes() const override;
 
     enum class ChosenSide
     {
-        None = 0,
-        Remote,
-        Local,
-        Both
+        NONE = 0,
+        REMOTE,
+        LOCAL,
+        BOTH
     };
 
     ChosenSide getChosenSide() const;
     ChosenSide lastModifiedSide() const;
 
+    std::shared_ptr<mega::MegaError> getRemoveRemoteError() const;
+
 private:
     MegaUploader* mUploader;
-    ChosenSide mChosenSide = ChosenSide::None;
+    ChosenSide mChosenSide = ChosenSide::NONE;
     QString mNewName;
+    std::shared_ptr<mega::MegaError> mError;
+
+    QString mLocalCRCAtStart;
+    QString mRemoteCRCAtStart;
 };
 
 #endif // LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H

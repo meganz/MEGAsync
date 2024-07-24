@@ -4,10 +4,14 @@ import QtQuick.Controls 2.15
 
 import common 1.0
 
+import components.pages 1.0
+
 import onboard 1.0
 import onboard.syncs_types 1.0
 
-SyncsPage {
+FooterButtonsPage {
+    id: root
+
     property alias buttonGroup: buttonGroup
     property alias fullSyncButton: fullSyncButtonItem
 
@@ -23,7 +27,7 @@ SyncsPage {
         }
         spacing: 32
 
-        Header {
+        HeaderTexts {
             id: header
 
             title: OnboardingStrings.syncTitle

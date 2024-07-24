@@ -3,7 +3,7 @@
 
 #include "TransferScanCancelUi.h"
 #include "megaapi.h"
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "MenuItemAction.h"
 #include "Utilities.h"
 #include "TransferItem.h"

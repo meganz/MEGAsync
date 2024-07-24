@@ -9,7 +9,6 @@
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <syncs/model/SyncItemModel.h>
 #include "SyncExclusions/SyncExclusions.h"
-#include "SyncExclusions/ExclusionsQmlDialog.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
 #include <DialogOpener.h>
@@ -142,7 +141,7 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
                     }
                 }
                 break;
-        }
+            }
 }
 
 #ifdef Q_OS_MACOS
@@ -160,6 +159,11 @@ void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
     syncsStateInformation(SAVING_FINISHED);
 }
 #endif
+
+void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
+{
+    ui->gSyncs->setAddButtonEnabled(enabled);
+}
 
 void SyncSettingsUIBase::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {

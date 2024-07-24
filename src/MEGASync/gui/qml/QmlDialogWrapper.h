@@ -122,17 +122,34 @@ public:
             }
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
-            connect(mWindow, &QmlDialog::finished, this, [this](){
+
+            connect(mWindow, &QmlDialog::finished, this, [this]()
+            {
                 QmlDialogWrapperBase::onWindowFinished();
             });
-            connect(mWindow, &QmlDialog::accepted, this, [this](){
+
+            connect(mWindow, &QmlDialog::accepted, this, [this]()
+            {
                 accept();
             });
-            connect(mWindow, &QmlDialog::rejected, this, [this](){
+
+            connect(mWindow, &QmlDialog::rejected, this, [this]()
+            {
                 reject();
             });
 
-            connect(mWindow, &QQuickWindow::screenChanged, this, [this](){
+            connect(mWindow, &QmlDialog::accept, this, [this]()
+            {
+                QmlDialogWrapperBase::accept();
+            });
+
+            connect(mWindow, &QmlDialog::reject, this, [this]()
+            {
+                QmlDialogWrapperBase::reject();
+            });
+
+            connect(mWindow, &QQuickWindow::screenChanged, this, [this]()
+            {
                 QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
             });
 
@@ -147,6 +164,11 @@ public:
             * All errors will be printed, using qDebug() some errors were hidden.
             */
             ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_ERROR, qmlComponent.errorString().toStdString().c_str());
+            for(const QString& path : engine->importPathList())
+            {
+                QString message = QString::fromUtf8("QML import path: ") + path;
+                ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toStdString().c_str());
+            }
         }
     }
 

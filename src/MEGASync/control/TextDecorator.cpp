@@ -20,17 +20,34 @@ void Decorator::process(QString &input) const
     }
 }
 
-Link::Link(const QString &link, QObject *parent) :
+Link::Link(const QStringList& links, QObject *parent) :
     Decorator(parent),
-    mLinkAddress(link)
+    mLinkAddresses(links)
 {
 }
 
+Link::Link(const QString& link, QObject* parent):
+    Decorator(parent),
+    mLinkAddresses(link)
+{
+
+}
+
 //Use [A] for url replacement
+static const QString headerTag = QLatin1String("[A]");
 void Link::process(QString &input) const
 {
     Decorator::process(input);
-    input.replace(QLatin1String("[A]"), QString::fromUtf8("<a href=\"%1\">").arg(mLinkAddress));
+
+    auto headerLength(headerTag.length());
+    auto currentIndex(0);
+    foreach(auto link, mLinkAddresses)
+    {
+        currentIndex = input.indexOf(headerTag, currentIndex);
+        input.replace(currentIndex, headerLength, QString::fromUtf8("<a href=\"%1\">").arg(link));
+        currentIndex += headerLength;
+    }
+
     input.replace(QLatin1String("[/A]"), QLatin1String("</a>"));
 }
 
@@ -56,5 +73,17 @@ void Bold::process(QString &input) const
     Decorator::process(input);
     input.replace(QLatin1String("[B]"), QLatin1String("<b>"));
     input.replace(QLatin1String("[/B]"), QLatin1String("</b>"));
+}
+
+NewLine::NewLine(QObject *parent) : Decorator(parent)
+{
+}
+
+//Use [BR] for new line tags replacement
+void NewLine::process(QString &input) const
+{
+    Decorator::process(input);
+    input.replace(QLatin1String("[BR]"), QLatin1String("<br>"));
+    input.replace(QLatin1String("[/BR]"), QLatin1String(""));
 }
 }

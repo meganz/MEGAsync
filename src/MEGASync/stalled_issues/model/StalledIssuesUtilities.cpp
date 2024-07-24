@@ -4,29 +4,47 @@
 #include <mega/types.h>
 #include <MegaDownloader.h>
 #include <QTMegaRequestListener.h>
+#include <MegaApiSynchronizedRequest.h>
+#include <QMegaMessageBox.h>
+#include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
+#include <MoveToMEGABin.h>
+
 
 #include <QFile>
 #include <QDir>
+
+const Text::Decorator StalledIssuesBoldTextDecorator::boldTextDecorator = Text::Decorator(new Text::Bold());
+const Text::Decorator StalledIssuesNewLineTextDecorator::newLineTextDecorator = Text::Decorator(new Text::NewLine());
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
-bool StalledIssuesUtilities::removeRemoteFile(const QString& path)
+std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
     std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
     return removeRemoteFile(fileNode.get());
 }
 
-bool StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
+std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(mega::MegaNode *node)
 {
+    std::shared_ptr<mega::MegaError> error;
+
     if(node)
     {
-        std::unique_ptr<MoveToCloudBinUtilities> utilities(new MoveToCloudBinUtilities());
-        return utilities->moveToBin(QList<mega::MegaHandle>() << node->getHandle(), QLatin1String("SyncDebris"), true);
+        auto moveToBinError = MoveToMEGABin::moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
+        if(moveToBinError.binFolderCreationError)
+        {
+            error = moveToBinError.binFolderCreationError;
+        }
+        else if(moveToBinError.moveError)
+        {
+            error = moveToBinError.moveError;
+        }
     }
 
-    return false;
+    return error;
 }
 
 bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::MegaHandle& syncId)
@@ -38,20 +56,34 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
     {
         if(syncId != mega::INVALID_HANDLE)
         {
-            QEventLoop moveEventLoop;
-            MegaSyncApp->getMegaApi()->moveToDebris(path.toStdString().c_str(),syncId, new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(),
-                                                                                                           this,
-                                                                                                           [=, &result, &moveEventLoop](bool,
-                                                                                                           const mega::MegaRequest&,
-                                                                                                           const mega::MegaError& e){
-                //In case of error, move to OS trash
-                if (e.getErrorCode() != mega::MegaError::API_OK)
+            MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
+                MegaSyncApp->getMegaApi(),
+                [=, &result, &file](
+                    const mega::MegaRequest&, const mega::MegaError& e)
                 {
-                    result = QFile::moveToTrash(path);
-                }
-                moveEventLoop.quit();
-            }));
-            moveEventLoop.exec();
+                    //In case of error, move to OS trash
+                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    {
+                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                            QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
+                                .arg(path, Utilities::getTranslatedError(&e))
+                                .toUtf8()
+                                .constData());
+                        result = QFile::moveToTrash(path);
+#ifdef Q_OS_WIN
+                        //When the file has no rights, the QFile::moveToTrash fails on Windows
+                        if(result && file.exists())
+                        {
+                            result = false;
+                        }
+#endif
+                    }
+                    else
+                    {
+                        result = true;
+                    }
+                },path.toStdString().c_str(),
+                syncId);
         }
         else
         {
@@ -122,10 +154,105 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
     return fileTypeIcon;
 }
 
+void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
+{
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+
+    if(isCloud)
+    {
+        auto url(getLink(isCloud, path));
+        if (!url.isEmpty())
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+        }
+        else
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+            msgInfo.title = QMegaMessageBox::warningTitle();
+            msgInfo.text = QString::fromUtf8("Node %1 does not exist.").arg(path);
+            QMegaMessageBox::warning(msgInfo);
+        }
+    }
+    else
+    {
+        QFile file(path);
+        if(file.exists())
+        {
+            QtConcurrent::run([=]
+                {
+                    Platform::getInstance()->showInFolder(path);
+                });
+        }
+        else
+        {
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+            msgInfo.title = QMegaMessageBox::warningTitle();
+            msgInfo.text =  QString::fromUtf8("Path %1 does not exist.").arg(path);
+            QMegaMessageBox::warning(msgInfo);
+        }
+    }
+}
+
+QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
+{
+    QString url;
+
+    if(isCloud)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
+        if(node)
+        {
+            std::unique_ptr<char[]> handle(node->getBase64Handle());
+            url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+        }
+    }
+
+    return url;
+}
+
 //////////////////////////////////////////////////
 QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
+QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();
 
-mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString &path, bool cloud)
+void StalledIssuesBySyncFilter::resetFilter()
+{
+    mSyncIdCache.clear();
+    mSyncIdCacheByStall.clear();
+}
+
+QSet<mega::MegaHandle> StalledIssuesBySyncFilter::getSyncIdsByStall(const mega::MegaSyncStall* stall)
+{
+    if(!mSyncIdCacheByStall.contains(stall))
+    {
+        QSet<mega::MegaHandle> syncIds;
+
+        auto addToSet = [&syncIds](mega::MegaHandle value){
+            if(value != mega::INVALID_HANDLE)
+            {
+                syncIds.insert(value);
+            }
+        };
+
+
+        auto localSourcePath = QString::fromUtf8(stall->path(false, 0));
+        addToSet(filterByPath(localSourcePath, false));
+        auto localTargetPath = QString::fromUtf8(stall->path(false, 1));
+        addToSet(filterByPath(localTargetPath, false));
+
+        auto cloudSourcePath = QString::fromUtf8(stall->path(true, 0));
+        addToSet(filterByPath(cloudSourcePath, true));
+        auto cloudTargetPath = QString::fromUtf8(stall->path(true, 1));
+        addToSet(filterByPath(cloudTargetPath, true));
+
+        mSyncIdCacheByStall.insert(stall, syncIds);
+    }
+
+    return mSyncIdCacheByStall.value(stall);
+}
+
+mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString& path, bool cloud)
 {
     QVariant key;
 
@@ -146,7 +273,8 @@ mega::MegaHandle StalledIssuesBySyncFilter::filterByPath(const QString &path, bo
     else
     {
         QFileInfo fileDir(path);
-        if(!fileDir.exists())
+        QFileInfo folderDir(fileDir.absolutePath());
+        if(!folderDir.exists())
         {
             return mega::INVALID_HANDLE;
         }

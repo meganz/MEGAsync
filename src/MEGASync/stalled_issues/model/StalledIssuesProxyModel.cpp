@@ -99,9 +99,18 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
     if(index.data().isValid())
     {
         const auto d (qvariant_cast<StalledIssueVariant>(index.data()));
-        if(d.consultData() && d.consultData()->isSolved() && !d.consultData()->isPotentiallySolved())
+
+        if(d.consultData() && !d.consultData()->isUnsolved())
         {
-            return  mFilterCriterion == StalledIssueFilterCriterion::SOLVED_CONFLICTS;
+            if(d.consultData()->isSolved() &&
+                !d.consultData()->isPotentiallySolved())
+            {
+                return mFilterCriterion == StalledIssueFilterCriterion::SOLVED_CONFLICTS;
+            }
+            else if(d.consultData()->isFailed() && mFilterCriterion == StalledIssueFilterCriterion::FAILED_CONFLICTS)
+            {
+                return true;
+            }
         }
 
         if(mFilterCriterion == StalledIssueFilterCriterion::ALL_ISSUES)
@@ -124,4 +133,9 @@ void StalledIssuesProxyModel::onModelSortedFiltered()
 {
     emit layoutChanged();
     emit modelFiltered();
+}
+
+StalledIssueFilterCriterion StalledIssuesProxyModel::filterCriterion() const
+{
+    return mFilterCriterion;
 }

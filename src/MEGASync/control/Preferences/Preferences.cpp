@@ -1,4 +1,4 @@
-#include "Preferences/Preferences.h"
+#include "Preferences.h"
 #include "Version.h"
 #include "platform/Platform.h"
 #include "UserAttributesRequests/FullName.h"
@@ -68,6 +68,7 @@ const qint16 Preferences::HTTP_PORT  = 6341;
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QString Preferences::BASE_URL = QString::fromLatin1("https://mega.nz");
 QString Preferences::BASE_MEGA_IO_URL = QString::fromLatin1("https://mega.io");
+QString Preferences::BASE_MEGA_HELP_URL = QString::fromLatin1("https://help.mega.io");
 const QStringList Preferences::HTTPS_ALLOWED_ORIGINS = QStringList() << Preferences::BASE_URL
                                                                      << QLatin1String("https://mega.co.nz")
                                                                      << QLatin1String("chrome-extension://*")
@@ -152,7 +153,7 @@ const bool Preferences::defaultDeprecatedNotifications      = true;
 const QString Preferences::showDeprecatedNotificationsKey   = QString::fromLatin1("showNotifications");
 
 //Stalled Issues
-const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::None;
+const Preferences::StalledIssuesModeType Preferences::defaultStalledIssuesMode = Preferences::StalledIssuesModeType::Smart;
 const QString Preferences::stalledIssuesModeKey   = QString::fromLatin1("stalledIssuesSmartMode");
 
 const QString Preferences::stalledIssuesEventDateKey = QString::fromLatin1("stalledIssuesEventDate");
@@ -1274,6 +1275,11 @@ void Preferences::setStalledIssuesMode(StalledIssuesModeType value)
 
         setValueAndSyncConcurrent(stalledIssuesModeKey, static_cast<int>(value), true);
     }
+}
+
+bool Preferences::isStalledIssueSmartModeActivated()
+{
+    return stalledIssuesMode() == Preferences::StalledIssuesModeType::Smart;
 }
 
 QDate Preferences::stalledIssuesEventLastDate()

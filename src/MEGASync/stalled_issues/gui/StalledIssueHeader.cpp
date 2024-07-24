@@ -2,9 +2,9 @@
 
 #include <stalled_issues/model/StalledIssuesModel.h>
 #include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
+#include <stalled_issues/model/IgnoredStalledIssue.h>
 
 #include <MegaApplication.h>
-#include "control/Preferences/Preferences.h"
 
 #include <QDialogButtonBox>
 #include "Utilities.h"
@@ -26,6 +26,7 @@ const int StalledIssueHeader::HEIGHT = 60;
 const char* MULTIACTION_ICON = "MULTIACTION_ICON";
 const char* FILENAME_PROPERTY = "FILENAME_PROPERTY";
 const char* MULTIPLE_ACTIONS_PROPERTY = "ACTIONS_PROPERTY";
+const char* ISSUE_STATE = "STATE";
 
 StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
@@ -33,6 +34,7 @@ StalledIssueHeader::StalledIssueHeader(QWidget *parent) :
     mIsExpandable(true)
 {
     ui->setupUi(this);
+    connect(ui->actionWaitingSpinner, &WaitingSpinnerWidget::needsUpdate, this, &StalledIssueHeader::needsUpdate);
     connect(ui->multipleActionButton, &QPushButton::clicked, this, &StalledIssueHeader::onMultipleActionClicked);
     ui->fileNameTitle->setTextFormat(Qt::TextFormat::AutoText);
     ui->errorDescriptionText->setTextFormat(Qt::TextFormat::AutoText);
@@ -48,8 +50,13 @@ StalledIssueHeader::~StalledIssueHeader()
 
 void StalledIssueHeader::expand(bool state)
 {
-    auto arrowIcon = Utilities::getCachedPixmap(state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png") :  QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
-    ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+    if(mIsExpandable)
+    {
+        auto arrowIcon = Utilities::getCachedPixmap(
+            state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png")
+                  : QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
+        ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
+    }
 }
 
 bool StalledIssueHeader::isExpandable() const
@@ -74,9 +81,14 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
-    auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
+    auto canBeIgnoredChecker = [this](const std::shared_ptr<const StalledIssue> issue){
         //Symlinks are treated differently
-        return !issue->isSymLink() && issue->canBeIgnored();
+        if(getData().convert<IgnoredStalledIssue>())
+        {
+            return !issue->isSymLink();
+        }
+
+        return false;
     };
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -121,11 +133,6 @@ void StalledIssueHeader::showIgnoreFile()
 {
     StalledIssueHeader::ActionInfo action(tr("Ignore"), ActionsId::Ignore);
     showAction(action);
-}
-
-void StalledIssueHeader::issueIgnored()
-{
-    showSolvedMessage(tr("Ignored"));
 }
 
 void StalledIssueHeader::propagateButtonClick()
@@ -216,27 +223,98 @@ void StalledIssueHeader::onMultipleActionClicked()
 void StalledIssueHeader::showMessage(const QString &message, const QPixmap& pixmap)
 {
     ui->actionContainer->show();
-    ui->actionMessageContainer->setVisible(true);
+    if(!message.isEmpty() || !pixmap.isNull())
+    {
+        ui->actionMessageContainer->setVisible(true);
+    }
+
     ui->actionMessage->setText(message);
 
     if(!pixmap.isNull())
     {
+        ui->actionMessageIcon->show();
         ui->actionMessageIcon->setPixmap(pixmap);
+    }
+    else
+    {
+        ui->actionMessageIcon->hide();
     }
 }
 
-void StalledIssueHeader::showSolvedMessage(const QString& customMessage)
+void StalledIssueHeader::updateIssueState()
 {
-    if(!getData().consultData()->isPotentiallySolved())
+    auto type(getData().consultData()->getIsSolved());
+
+    if(type == StalledIssue::SolveType::BEING_SOLVED)
     {
-        QIcon icon(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
-        QString defaultSolveMessage(tr("Solved"));
-        showMessage(customMessage.isEmpty() ? defaultSolveMessage : customMessage, icon.pixmap(24,24));
+        ui->actionWaitingSpinner->start();
     }
+    else
+    {
+        ui->actionWaitingSpinner->stop();
+    }
+
+    QIcon icon;
+    QString message;
+
+    switch(type)
+    {
+        case StalledIssue::SolveType::BEING_SOLVED:
+        {
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("being solved"));
+            message = tr("Being solved");
+            break;
+        }
+        case StalledIssue::SolveType::SOLVED:
+        {
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
+
+            if(getData().convert<IgnoredStalledIssue>())
+            {
+                icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                message = tr("Ignored");
+            }
+            else
+            {
+                if(getData().consultData()->wasAutoResolutionApplied())
+                {
+                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/auto_solved_state.png"));
+                    message = tr("Auto-solved");
+                }
+                else
+                {
+                    icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
+                    message = tr("Solved");
+                }
+            }
+
+            break;
+        }
+        case StalledIssue::SolveType::FAILED:
+        {
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
+            icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
+            message = tr("Failed");
+
+            break;
+        }
+        case StalledIssue::SolveType::UNSOLVED:
+        {
+            ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
+            if(getData().convert<IgnoredStalledIssue>())
+            {
+                showIgnoreFile();
+            }
+            break;
+        }
+    }
+
+    showMessage(message, icon.pixmap(16, 16));
+    ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
     ui->multipleActionButton->hide();
 }
 
-void StalledIssueHeader::setText(const QString &text)
+void StalledIssueHeader::setText(const QString &text, const QString& tooltip)
 {
     if(text.isEmpty())
     {
@@ -246,6 +324,7 @@ void StalledIssueHeader::setText(const QString &text)
     {
         ui->fileNameTitle->show();
         ui->fileNameTitle->setText(text);
+        ui->fileNameTitle->setToolTip(tooltip);
     }
 }
 
@@ -282,6 +361,10 @@ void StalledIssueHeader::refreshCaseTitles()
 {
     if(mHeaderCase)
     {
+        //Reset strings first
+        setText(QString());
+        setTitleDescriptionText(QString());
+
         mHeaderCase->refreshCaseTitles(this);
     }
 }
@@ -352,38 +435,24 @@ void StalledIssueHeader::refreshUi()
     if(getData().consultData()->filesCount() > 0)
     {
         fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                      getData().consultData()->getFileName(false), QLatin1Literal(":/images/drag_")));
+                                                      getData().consultData()->getFileName(false), QLatin1String(":/images/drag_")));
     }
     else
     {
-        fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default@2x.png"));
+        fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default@2x.png"));
     }
 
     ui->fileTypeIcon->setPixmap(fileTypeIcon.pixmap(ui->fileTypeIcon->size()));
 
     resetSolvingWidgets();
 
-    if(getData().consultData()->isSolved())
-    {
-        if(getData().consultData()->canBeIgnored())
-        {
-            issueIgnored();
-        }
-        else
-        {
-            showSolvedMessage();
-        }
-    }
-    else
-    {
-        if(getData().consultData()->canBeIgnored())
-        {
-            showIgnoreFile();
-        }
-    }
+    updateIssueState();
 
-   //By default it is expandable
-   setIsExpandable(true);
+    //By default it is expandable
+    if(getData().consultData())
+    {
+        setIsExpandable(getData().consultData()->isExpandable());
+    }
 }
 
 void StalledIssueHeader::resetSolvingWidgets()

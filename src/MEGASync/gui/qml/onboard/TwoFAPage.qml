@@ -74,7 +74,7 @@ TwoFAPageForm {
     }
 
     Connections {
-        target: onboardingWindow
+        target: window
 
         function onInitializePageFocus() {
             twoFAField.forceActiveFocus();

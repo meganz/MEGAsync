@@ -1,6 +1,6 @@
 #include "ImportListWidgetItem.h"
 #include "ui_ImportListWidgetItem.h"
-#include "control/Utilities.h"
+#include "Utilities.h"
 
 #include <QFileInfo>
 

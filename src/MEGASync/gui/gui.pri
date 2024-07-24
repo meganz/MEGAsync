@@ -87,20 +87,22 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/qml/QmlDialogWrapper.cpp \
     $$PWD/qml/QmlManager.cpp \
     $$PWD/qml/StandardIconProvider.cpp \
-    $$PWD/onboarding/ChooseFolder.cpp \
+    $$PWD/qml/AccountInfoData.cpp \
+    $$PWD/qml/ChooseFolder.cpp \
+    $$PWD/qml/QmlDeviceName.cpp \
     $$PWD/onboarding/Onboarding.cpp \
-    $$PWD/onboarding/AccountInfoData.cpp \
-    $$PWD/onboarding/BackupsModel.cpp \
     $$PWD/onboarding/Syncs.cpp \
-    $$PWD/onboarding/QmlDeviceName.cpp \
     $$PWD/onboarding/PasswordStrengthChecker.cpp \
-    $$PWD/onboarding/BackupsController.cpp \
     $$PWD/onboarding/GuestQmlDialog.cpp \
     $$PWD/onboarding/OnboardingQmlDialog.cpp \
     $$PWD/onboarding/GuestContent.cpp \
     $$PWD/SyncExclusions/SyncExclusions.cpp \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.cpp \
-    $$PWD/SyncExclusions/ExclusionRulesModel.cpp
+    $$PWD/SyncExclusions/ExclusionRulesModel.cpp \
+    $$PWD/backups/Backups.cpp \
+    $$PWD/backups/BackupsModel.cpp \
+    $$PWD/backups/BackupsController.cpp \
+    $$PWD/backups/BackupsQmlDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AutoResizeStackedWidget.h \
@@ -187,21 +189,22 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/qml/ApiEnums.h \
     $$PWD/qml/QmlManager.h \
     $$PWD/qml/StandardIconProvider.h \
-    $$PWD/onboarding/ChooseFolder.h \
+    $$PWD/qml/AccountInfoData.h \
+    $$PWD/qml/ChooseFolder.h \
+    $$PWD/qml/QmlDeviceName.h \
     $$PWD/onboarding/Onboarding.h \
-    $$PWD/onboarding/AccountInfoData.h \
-    $$PWD/onboarding/BackupsModel.h \
     $$PWD/onboarding/Syncs.h \
-    $$PWD/onboarding/QmlDeviceName.h \
     $$PWD/onboarding/PasswordStrengthChecker.h \
-    $$PWD/onboarding/BackupsController.h \
     $$PWD/onboarding/GuestQmlDialog.h \
     $$PWD/onboarding/OnboardingQmlDialog.h \
     $$PWD/onboarding/GuestContent.h \
     $$PWD/SyncExclusions/SyncExclusions.h \
     $$PWD/SyncExclusions/ExclusionsQmlDialog.h \
-    $$PWD/onboarding/GuestContent.h \
-    $$PWD/SyncExclusions/ExclusionRulesModel.h
+    $$PWD/SyncExclusions/ExclusionRulesModel.h \
+    $$PWD/backups/Backups.h \
+    $$PWD/backups/BackupsModel.h \
+    $$PWD/backups/BackupsController.h \
+    $$PWD/backups/BackupsQmlDialog.h
 
 INCLUDEPATH += $$PWD
 

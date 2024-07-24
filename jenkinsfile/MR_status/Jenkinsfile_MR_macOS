@@ -32,30 +32,12 @@ pipeline {
                             println env.ARCHITECTURE
                         }
                     }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the additional build parameters :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
-                        }
-                    }
                 }
                 stage('Get SDK branch'){
                     steps {
                         script{
                             env.SDK_BRANCH = sh(script: 'echo "$gitlabMergeRequestDescription" | grep SDK_SUBMODULE_TEST | awk -F "SDK_SUBMODULE_TEST="  \'{print \$2}\' | cut -d" " -f1', returnStdout: true).trim()
                             println SDK_BRANCH
-                        }
-                    }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the SDK branch :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
                         }
                     }
                 }
@@ -72,19 +54,9 @@ pipeline {
                             println MEGASYNC_TEAM
                         }
                     }
-                    post{
-                        always {
-                            script{                        
-                                if (currentBuild.currentResult == 'FAILURE'){
-                                    addGitLabMRComment(comment: ":red_circle: ${env.JOB_NAME} FAILURE when getting the MEGASYNC team :worried:<br/>Build results: [Jenkins [${env.JOB_NAME} ${env.BUILD_DISPLAY_NAME}]](${env.RUN_DISPLAY_URL})<br/>Commit: ${env.GIT_COMMIT}" )
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
-
         stage('Checkout macOS'){
             steps {
                 script {
@@ -105,7 +77,7 @@ pipeline {
                         sh "echo Cloning SDK branch ${SDK_BRANCH}"
                         checkout([
                             $class: 'GitSCM',
-                            branches: [[name: "origin/${SDK_BRANCH}"]],
+                            branches: [[name: "${SDK_BRANCH}"]],
                             userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
                             extensions: [
                                 [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
@@ -139,31 +111,12 @@ pipeline {
                 dir(macos_sources_workspace){
                     sh "mkdir build_dir"
                     sh "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_VERBOSE_MAKEFILE=1 -DVCPKG_ROOT=${VCPKGPATH} ${BUILD_OPTIONS} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -S ${macos_sources_workspace} -B ${macos_sources_workspace}/${BUILD_DIR}"
-                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAsync -j1"
-                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAupdater -j1"
+                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAsync -j2"
+                    sh "cmake --build ${macos_sources_workspace}/${BUILD_DIR} --target MEGAupdater -j2"
                     sh "xcodebuild clean build CODE_SIGN_IDENTITY=\"-\" CODE_SIGNING_REQUIRED=NO -jobs 1 -configuration Debug -target MEGAShellExtFinder -project src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/"
                 }
-            }
-            post{
-                always {
-                    script{
-                        if (currentBuild.currentResult == 'SUCCESS'){
-                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} :green_apple: <b>macOS</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'success')
-                        }                                
-                        if (currentBuild.currentResult == 'FAILURE'){
-                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} :green_apple: <b>macOS</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'failed')
-                        }
-                        if (currentBuild.currentResult == 'ABORTED'){
-                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} :green_apple: <b>macOS</b> ABORTED  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'canceled')
-                        }                                
-                        if (currentBuild.currentResult == 'UNSTABLE'){
-                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} :green_apple: <b>macOS</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'failed')
-                        }
-                    }
+                script {
+                    uploadPackagesExecuted = false
                 }
             }
         }
@@ -218,27 +171,37 @@ pipeline {
                                 if (env.ARCHITECTURE == "x86_64"){
                                     sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/macos/x86_64"
                                     sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64/"
-                                } 
+                                }
+                                uploadPackagesExecuted = true
                             }
                         }
                     }
                 }
             }
-            post {
-                always {
-                    script{
-                        if (currentBuild.currentResult == 'SUCCESS'){
-                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} :green_apple: <b>macOS</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL: [${env.REPO_URL}/MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos]" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'success')
-                        }
-                        if (currentBuild.currentResult == 'FAILURE'){
-                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} :green_apple: <b>macOS</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
-                            updateGitlabCommitStatus(name: 'Build macOS', state: 'failed')
-                            error "Job failed"
-                        }
-                    }
+        }
+    }
+    post {
+        always {
+            deleteDir()
+        }
+        success {
+            script {
+                if (uploadPackagesExecuted) {
+                    addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} :green_apple: <b>macOS</b>  SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}<br/>Packages URL: [${env.REPO_URL}/MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos]" )
+                    updateGitlabCommitStatus(name: 'Build macOS', state: 'success')
+                } else {
+                    addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} :green_apple: <b>macOS</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                    updateGitlabCommitStatus(name: 'Build macOS', state: 'success')
                 }
             }
+        }
+        failure {
+            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} :green_apple: <b>macOS</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+            updateGitlabCommitStatus(name: 'Build macOS', state: 'failed')
+        }
+        aborted {
+            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} :green_apple: <b>macOS</b> FAILURE  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+            updateGitlabCommitStatus(name: 'Build macOS', state: 'canceled')
         }
     }
 }

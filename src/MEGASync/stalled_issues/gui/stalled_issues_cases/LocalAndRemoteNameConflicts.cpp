@@ -4,9 +4,6 @@
 #include <StalledIssueHeader.h>
 #include <NameConflictStalledIssue.h>
 
-const QString FILES_DESCRIPTION = QString::fromLatin1(QT_TRANSLATE_NOOP("LocalAndRemoteNameConflicts",
-                                                                        "Click Rename to resolve this issue, or click the folders below to make adjustments in the local filesystem or in MEGA"));
-
 LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
     StalledIssueBaseDelegateWidget(parent),
     ui(new Ui::LocalAndRemoteNameConflicts)
@@ -19,9 +16,6 @@ LocalAndRemoteNameConflicts::LocalAndRemoteNameConflicts(QWidget *parent) :
 
     connect(ui->cloudConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
     connect(ui->localConflictNames, &NameConflict::refreshUi, this, &LocalAndRemoteNameConflicts::refreshUi);
-
-    connect(ui->cloudConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
-    connect(ui->localConflictNames, &NameConflict::allSolved, this, &LocalAndRemoteNameConflicts::onNameConflictSolved);
 
     ui->cloudConflictNames->setDelegate(this);
     ui->localConflictNames->setDelegate(this);
@@ -57,12 +51,7 @@ void LocalAndRemoteNameConflicts::refreshUi()
             ui->localConflictNames->updateUi(nameConflict);
             ui->localConflictNames->show();
         }
-        ui->selectLabel->setText(FILES_DESCRIPTION);
-    }
-}
 
-void LocalAndRemoteNameConflicts::onNameConflictSolved()
-{
-    ui->cloudConflictNames->setDisabled();
-    ui->localConflictNames->setDisabled();
+        ui->retranslateUi(this);
+    }
 }

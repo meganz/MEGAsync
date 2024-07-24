@@ -34,7 +34,6 @@ public:
     virtual ~NameConflict();
 
     void updateUi(std::shared_ptr<const NameConflictedStalledIssue> data);
-    void setDisabled();
 
     void setDelegate(QPointer<StalledIssueBaseDelegateWidget> newDelegate);
 
@@ -59,12 +58,14 @@ private:
     void initTitle(StalledIssueActionTitle* title, int index, const QString& conflictedName);
     void initActionButtons(StalledIssueActionTitle* title);
     void updateTitleExtraInfo(StalledIssueActionTitle* title, std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> info);
+    void checkIfAreAllSolved(bool areAllSolved);
 
     Ui::NameConflict *ui;
     StalledIssuesUtilities mUtilities;
     QPointer<StalledIssueBaseDelegateWidget> mDelegateWidget;
     QMap<int, QPointer<StalledIssueActionTitle>> mTitlesByIndex;
     QMap<int, QPointer<QWidget>> mContainerByDuplicateByGroupId;
+    bool mSolvedStatusAppliedToUi;
 };
 
 class CloudNameConflict : public NameConflict

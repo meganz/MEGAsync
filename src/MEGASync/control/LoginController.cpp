@@ -1,12 +1,15 @@
 #include "LoginController.h"
+
 #include "MegaApplication.h"
-#include "Preferences/Preferences.h"
 #include "ConnectivityChecker.h"
 #include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "mega/types.h"
+
 #include "TextDecorator.h"
 #include "StatsEventHandler.h"
+
+#include "Preferences.h"
+#include "qml/QmlDialogManager.h"
 
 #include <QQmlContext>
 

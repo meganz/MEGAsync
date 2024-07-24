@@ -2,11 +2,14 @@
 
 #include "QmlDialogWrapper.h"
 
+#include "backups/Backups.h"
+
 #include "onboarding/Onboarding.h"
 #include "onboarding/GuestContent.h"
 #include "onboarding/OnboardingQmlDialog.h"
 #include "onboarding/GuestQmlDialog.h"
 
+#include "WhatsNewWindow.h"
 #include "DialogOpener.h"
 #include "LoginController.h"
 #include "AccountStatusController.h"
@@ -56,6 +59,21 @@ bool QmlDialogManager::openOnboardingDialog()
         DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
     }
     return true;
+}
+
+void QmlDialogManager::openBackupsDialog(bool fromSettings)
+{
+    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
+    {
+        backupsDialog = dialog->getDialog();
+    }
+    else
+    {
+        backupsDialog = new QmlDialogWrapper<Backups>();
+    }
+    DialogOpener::showDialog(backupsDialog);
+    backupsDialog->wrapper()->setComesFromSettings(fromSettings);
 }
 
 bool QmlDialogManager::raiseGuestDialog()
@@ -116,3 +134,25 @@ void QmlDialogManager::forceCloseOnboardingDialog()
         static_cast<OnboardingQmlDialog*>(dialog->getDialog()->window())->forceClose();
     }
 }
+
+bool QmlDialogManager::openWhatsNewDialog()
+{
+    if(MegaSyncApp->finished())
+    {
+        return false;
+    }
+
+    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<WhatsNewWindow>>())
+    {
+        DialogOpener::showDialog(dialog->getDialog());
+        dialog->getDialog()->raise();
+    }
+    else
+    {
+        QPointer<QmlDialogWrapper<WhatsNewWindow>> whatsNew = new QmlDialogWrapper<WhatsNewWindow>();
+        DialogOpener::showDialog(whatsNew);
+        whatsNew->raise();
+    }
+    return true;
+}
+

@@ -65,8 +65,6 @@ signals:
     void maximumAllowedUnitChanged(int);
     void sizeExclusionStatusChanged(SizeExclusionStatus);
     void folderNameChanged(QString);
-    void fileChoosen(QString relativeFileName);
-    void folderChoosen(QString relativeFolderName);
     void askOnExclusionRemoveChanged(bool);
 
 private:

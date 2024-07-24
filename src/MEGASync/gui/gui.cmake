@@ -83,21 +83,25 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlManager.h
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
-    gui/onboarding/ChooseFolder.h
+    gui/qml/ChooseFolder.h
     gui/qml/ChooseFile.h
+    gui/qml/QmlDeviceName.h
+    gui/qml/AccountInfoData.h
+    gui/qml/WhatsNewWindow.h
     gui/onboarding/Onboarding.h
-    gui/onboarding/AccountInfoData.h
-    gui/onboarding/BackupsModel.h
     gui/onboarding/Syncs.h
-    gui/onboarding/QmlDeviceName.h
     gui/onboarding/PasswordStrengthChecker.h
-    gui/onboarding/BackupsController.h
     gui/onboarding/GuestQmlDialog.h
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
+    gui/backups/Backups.h
+    gui/backups/BackupsController.h
+    gui/backups/BackupsModel.h
+    gui/backups/BackupsQmlDialog.h
+    gui/SyncExclusions/AddExclusionRule.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -181,21 +185,25 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp
     gui/qml/StandardIconProvider.cpp
-    gui/onboarding/ChooseFolder.cpp
-    gui/onboarding/Onboarding.cpp
+    gui/qml/ChooseFolder.cpp
     gui/qml/ChooseFile.cpp
-    gui/onboarding/AccountInfoData.cpp
-    gui/onboarding/BackupsModel.cpp
+    gui/qml/QmlDeviceName.cpp
+    gui/qml/AccountInfoData.cpp
+    gui/qml/WhatsNewWindow.cpp
+    gui/onboarding/Onboarding.cpp
     gui/onboarding/Syncs.cpp
-    gui/onboarding/QmlDeviceName.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
-    gui/onboarding/BackupsController.cpp
     gui/onboarding/GuestQmlDialog.cpp
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
+    gui/backups/Backups.cpp
+    gui/backups/BackupsController.cpp
+    gui/backups/BackupsModel.cpp
+    gui/backups/BackupsQmlDialog.cpp
+    gui/SyncExclusions/AddExclusionRule.cpp
 
 )
 

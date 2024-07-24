@@ -333,11 +333,46 @@
      <property name="styleSheet">
       <string notr="true">#actionMessage
 {
-   font-size:14px;
-   color: #333333;
+   font-size:12px;
+}
+
+#actionMessageContainer[STATE=&quot;being solved&quot;]
+{
+	background-color: #F3F4F4;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;being solved&quot;] QLabel
+{
+    color: #616366;
+}
+
+#actionMessageContainer[STATE=&quot;solved&quot;]
+{
+	background-color: #CFFCDB;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;solved&quot;] QLabel
+{
+    color: #007C3E;
+}
+
+#actionMessageContainer[STATE=&quot;failed&quot;]
+{
+	background-color: #FFE4E8;
+	border-radius: 4px;
+}
+
+#actionMessageContainer[STATE=&quot;failed&quot;] QLabel
+{
+	color: #E31B57;
 }</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>20</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -382,24 +417,64 @@
       </item>
       <item>
        <widget class="QWidget" name="actionMessageContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>24</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
           <number>5</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
+          <widget class="WaitingSpinnerWidget" name="actionWaitingSpinner" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QLabel" name="actionMessageIcon">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
            <property name="text">
             <string notr="true"/>
            </property>
@@ -425,6 +500,12 @@
    <class>WordWrapLabel</class>
    <extends>QTextEdit</extends>
    <header>WordWrapLabel.h</header>
+  </customwidget>
+  <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>WaitingSpinnerWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

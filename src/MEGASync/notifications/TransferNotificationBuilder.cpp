@@ -11,9 +11,9 @@ TransferNotificationBuilder::TransferNotificationBuilder(const std::shared_ptr<T
 {
 }
 
-FinishedTransferNotificationInfo TransferNotificationBuilder::buildNotification()
+DesktopNotifications::NotificationInfo TransferNotificationBuilder::buildNotification()
 {
-    FinishedTransferNotificationInfo info;
+    DesktopNotifications::NotificationInfo info;
 
     if (data->isUpload())
     {

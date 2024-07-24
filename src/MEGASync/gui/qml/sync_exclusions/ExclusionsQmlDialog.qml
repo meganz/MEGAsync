@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import QtQuick.Window 2.15
 
 import common 1.0
 
@@ -10,7 +11,6 @@ import components.buttons 1.0 as Buttons
 import components.checkBoxes 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
-import QtQuick.Window 2.15
 
 import ExclusionsQmlDialog 1.0
 
@@ -19,22 +19,6 @@ ExclusionsQmlDialog {
 
     readonly property int dialogMargins: 24
     readonly property int disabledExclusionStatusIndex: 3
-
-    function formatNumber(value, decimalPoints) {
-        let str = value.toFixed(decimalPoints);
-        if (str.indexOf('.') !== -1) {
-            str = str.replace(/\.?0+$/, ''); // Remove trailing zeros and decimal point if no decimals
-        }
-        return str;
-    }
-
-    function allowThreeDigits(text){
-        var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
-        if(text.length > maxLength){
-            return text.substring(0, maxLength);
-        }
-        return text;
-    }
 
     width: 640
     height: 680
@@ -54,18 +38,18 @@ ExclusionsQmlDialog {
     }
 
     AddRuleDialog {
-            id: addExlcusionRule
+        id: addExlcusionRule
 
-            visible: false
+        visible: false
 
-            onAccepted: {
-                if(rulesTable.editIndex === -1){
-                    syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
-                }
-                else{
-                    syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
-                }
+        onAccepted: {
+            if(rulesTable.editIndex === -1){
+                syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
             }
+            else{
+                syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
+            }
+        }
     }
 
     Item {
@@ -249,29 +233,30 @@ ExclusionsQmlDialog {
                     leftMargin: 8 - sizeLimitComboBox.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
                 sizes.iconMargin: 6
-                text:  formatNumber(syncExclusionsAccess.minimumAllowedSize, 2)
+                text:  Utilities.formatNumber(syncExclusionsAccess.minimumAllowedSize, 2)
                 enabled: sizeRuleCheckbox.checked
                 implicitWidth: 48
                 colors.border: colorStyle.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 // RegExpValidator to validate numbers from 1 to 999 with up to two decimal places
                 validator: RegExpValidator {
-                    regExp:/^(\d{0,3}(?:\.\d{0,2})?)?$/
+                    regExp: RegexExpressions.allow3DigitsOnly
                 }
 
                 onTextChanged: {
-                    syncExclusionsAccess.minimumAllowedSize = text;
-                    text = allowThreeDigits(text);
+                    var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
+                    if(text.length > maxLength){
+                        text = text.substring(0, maxLength);
+                    }
                 }
                 onEditingFinished: {
                     if(text.trim() !== "" && parseFloat(text) > 0){
                         syncExclusionsAccess.minimumAllowedSize = text;
-                    }
+                    } 
                     else {
-                        text = "1";
+                        text = 1;
                     }
                 }
-
             }
 
             ComboBox {
@@ -321,25 +306,26 @@ ExclusionsQmlDialog {
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth
                 }
                 implicitWidth: 48
-                text: formatNumber(syncExclusionsAccess.maximumAllowedSize, 2)
+                text: Utilities.formatNumber(syncExclusionsAccess.maximumAllowedSize, 2)
                 colors.border: colorStyle.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
                 validator: RegExpValidator {
-                    regExp: /^(\d{0,3}(?:\.\d{0,2})?)?$/
+                    regExp: RegexExpressions.allow3DigitsOnly
                 }
                 sizes.iconMargin: 6
                 onTextChanged: {
-                    syncExclusionsAccess.maximumAllowedSize = text;
                     var maxLength =(text.indexOf('.') !== -1)? 4 : 3;
-                    text = allowThreeDigits(text);
+                    if(text.length > maxLength){
+                        text = text.substring(0, maxLength);
+                    }
                 }
                 onEditingFinished: {
                     if(text.trim() !== "" && parseFloat(text) > 0){
                         syncExclusionsAccess.maximumAllowedSize = text;
-                    }
+                    } 
                     else {
-                        text = "1";
+                        text = 1;
                     }
                 }
             }

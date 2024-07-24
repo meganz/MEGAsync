@@ -10,10 +10,9 @@ Item {
     id: root
     
     readonly property int contentSpacing: 24
-    readonly property int buttonsBottomMargin: 28
 
     function setInitialFocusPosition() {
-        onboardingWindow.requestPageFocus();
+        window.requestPageFocus();
     }
 
     Texts.Text {
@@ -22,6 +21,7 @@ Item {
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: root.bottom
+            bottomMargin: (Constants.defaultWindowMargin - statusText.height) / 2
         }
         font.pixelSize: Texts.Text.Size.SMALL
         color: colorStyle.textSecondary

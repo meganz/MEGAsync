@@ -54,7 +54,7 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     { AppStatsEvents::EventType::SI_CHANGE_TO_SMART_MODE                   , 99546 },
     { AppStatsEvents::EventType::SI_CHANGE_TO_ADVANCED_MODE                , 99547 },
     { AppStatsEvents::EventType::SI_FINGERPRINT_MISSING_SOLVED_MANUALLY    , 99548 },
-    //{ (Stalled issues reserved)                                          , 99549 },
+    { AppStatsEvents::EventType::SI_MOVERENAME_CANNOT_OCCUR_SOLVED_MANUALLY, 99549 },
     //{ (Stalled issues reserved)                                          , 99550 },
     //{ (Stalled issues reserved)                                          , 99551 },
     //{ (Stalled issues reserved)                                          , 99552 },

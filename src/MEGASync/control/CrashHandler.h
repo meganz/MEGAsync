@@ -8,7 +8,6 @@
 #include <QCryptographicHash>
 #include <QEventLoop>
 #include <QTimer>
-#include "control/Utilities.h"
 
 class CrashHandlerPrivate;
 class CrashHandler: public QObject

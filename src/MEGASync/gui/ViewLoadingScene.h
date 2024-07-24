@@ -130,7 +130,7 @@ public:
     explicit LoadingSceneDelegate(QAbstractItemView* view) : LoadingSceneDelegateBase(view)
     {}
 
-    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const
+    inline QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const override
     {
         return DelegateWidget::widgetSize();
     }
@@ -205,9 +205,9 @@ struct MessageInfo
 {
     enum ButtonType
     {
-        None,
-        Stop,
-        Ok
+        NONE,
+        STOP,
+        OK
     };
 
     QString message;
@@ -226,6 +226,9 @@ public:
     LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI* viewBaseUI, QWidget* viewBase);
     ~LoadingSceneMessageHandler();
 
+    bool needsAnswerFromUser() const;
+
+    MessageInfo::ButtonType getButtonType() const;
 
     void hideLoadingMessage();
     void setTopParent(QWidget* widget);
@@ -236,7 +239,7 @@ public slots:
     void updateMessage(std::shared_ptr<MessageInfo> info);
 
 signals:
-    void onStopPressed();
+    void onButtonPressed(MessageInfo::ButtonType);
     void loadingMessageVisibilityChange(bool value);
 
 protected:
@@ -388,6 +391,12 @@ public:
             {
                 mDelayTimerToShow.stop();
             }
+            return;
+        }
+
+        //Don´t close the loading view if we need interaction from the user (like clicking ok or stop...)
+        if(!state && getLoadingMessageHandler() && getLoadingMessageHandler()->needsAnswerFromUser())
+        {
             return;
         }
 

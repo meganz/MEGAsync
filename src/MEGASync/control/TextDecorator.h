@@ -17,10 +17,11 @@ public:
 class Link : public Decorator
 {
 public:
+   explicit Link(const QStringList& links, QObject* parent = nullptr);
    explicit Link(const QString& link, QObject* parent = nullptr);
    void process(QString& input) const override;
 private:
-   QString mLinkAddress;
+   QStringList mLinkAddresses;
 };
 
 class ClearLink : public Decorator
@@ -35,6 +36,13 @@ class Bold : public Decorator
 public:
    explicit Bold(QObject* parent = nullptr);
    void process(QString& input) const override;
+};
+
+class NewLine : public Decorator
+{
+public:
+    explicit NewLine(QObject* parent = nullptr);
+    void process(QString& input) const override;
 };
 }
 

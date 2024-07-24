@@ -20,11 +20,34 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
     mSymLinksIgnoredInSyncs.clear();
 }
 
-bool IgnoredStalledIssue::isSolvable() const
+bool IgnoredStalledIssue::isAutoSolvable() const
 {
+    //Always autosolvable for special links and ToS takedown files, we don´t need to check if smart mode is active
     return !isSolved() &&
            !syncIds().isEmpty() &&
            isSpecialLink();
+}
+
+void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
+{
+    StalledIssue::fillIssue(stall);
+
+    if(stall->couldSuggestIgnoreThisPath(false, 0))
+    {
+        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), IgnoredPath::IgnorePathSide::LOCAL});
+    }
+    if(stall->couldSuggestIgnoreThisPath(false, 1))
+    {
+        mIgnoredPaths.append({getLocalData()->getNativeFilePath(), IgnoredPath::IgnorePathSide::LOCAL});
+    }
+    if(stall->couldSuggestIgnoreThisPath(true, 0))
+    {
+        mIgnoredPaths.append({getCloudData()->getNativeFilePath(), IgnoredPath::IgnorePathSide::REMOTE});
+    }
+    if(stall->couldSuggestIgnoreThisPath(true, 1))
+    {
+        mIgnoredPaths.append({getCloudData()->getNativeFilePath(), IgnoredPath::IgnorePathSide::REMOTE});
+    }
 }
 
 bool IgnoredStalledIssue::isSymLink() const
@@ -43,11 +66,24 @@ bool IgnoredStalledIssue::isSpecialLink() const
             consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
 }
 
+bool IgnoredStalledIssue::isExpandable() const
+{
+    return !isSymLink();
+}
+
+bool IgnoredStalledIssue::checkForExternalChanges()
+{
+    return false;
+}
+
 bool IgnoredStalledIssue::autoSolveIssue()
 {
+    setAutoResolutionApplied(true);
+    auto result(false);
+
     if(!syncIds().isEmpty())
     {
-        auto syncId(syncIds().first());
+        auto syncId(firstSyncId());
         //We could do it without this static list
         //as the MegaIgnoreManager checks if the rule already exists
         //but with the list we save the megaignore parser, so it is more efficient
@@ -67,33 +103,30 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 }
                 else
                 {
-                    QDir dir(folderPath);
+                    QDir dir;
                     foreach(auto ignoredPath, mIgnoredPaths)
                     {
-                        ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(ignoredPath));
+                        if(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE)
+                        {
+                            dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
+                        }
+                        else
+                        {
+                            dir.setPath(folderPath);
+                        }
+
+                        ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                            dir.relativeFilePath(ignoredPath.path));
                     }
                 }
 
                 auto changesApplied(ignoreManager.applyChanges());
                 if(changesApplied < MegaIgnoreManager::ApplyChangesError::NO_WRITE_PERMISSION)
                 {
-                    setIsSolved(false);
+                    result = true;
                 }
                 else
                 {
-                    Utilities::queueFunctionInAppThread([]()
-                    {
-                        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-
-                        QMegaMessageBox::MessageBoxInfo msgInfo;
-                        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-                        msgInfo.title = MegaSyncApp->getMEGAString();
-                        msgInfo.textFormat = Qt::RichText;
-                        msgInfo.buttons = QMessageBox::Ok;
-                        msgInfo.text = QCoreApplication::translate("IgnoredStalledIssue", "We could not update the megaignore file. Please, check if it has write permissions.");
-                        QMegaMessageBox::warning(msgInfo);
-                    });
-
                     if(isSymLink())
                     {
                         mSymLinksIgnoredInSyncs.remove(syncId);
@@ -104,9 +137,36 @@ bool IgnoredStalledIssue::autoSolveIssue()
         //Only done for sym links
         else if(mSymLinksIgnoredInSyncs.value(syncId) == true)
         {
-            setIsSolved(false);
+            result = true;
         }
     }
 
-    return isSolved();
+    return result;
+}
+
+CloudNodeIsBlockedIssue::CloudNodeIsBlockedIssue(const mega::MegaSyncStall* stallIssue)
+    : IgnoredStalledIssue(stallIssue)
+{
+
+}
+
+bool CloudNodeIsBlockedIssue::isAutoSolvable() const
+{
+    return true;
+}
+
+void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
+{
+    IgnoredStalledIssue::fillIssue(stall);
+    mIgnoredPaths.append({consultCloudData()->getFilePath(), IgnoredPath::IgnorePathSide::REMOTE});
+}
+
+bool CloudNodeIsBlockedIssue::showDirectoryInHyperlink() const
+{
+    return true;
+}
+
+bool CloudNodeIsBlockedIssue::isExpandable() const
+{
+    return true;
 }

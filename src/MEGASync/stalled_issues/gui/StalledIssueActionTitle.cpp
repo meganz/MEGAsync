@@ -12,17 +12,17 @@
 #include <QFileInfo>
 #include <QHBoxLayout>
 #include <QSpacerItem>
+#include <QGraphicsOpacityEffect>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";
 const char* MAIN_BUTTON = "main";
 const char* DISCARDED = "discarded";
+const char* FAILED_BACKGROUND = "failed";
 const char* DISABLE_BACKGROUND = "disable_background";
 const char* MESSAGE_TEXT = "message_text";
 const char* EXTRAINFO_INFO = "extrainfo_info";
 const char* EXTRAINFO_SIZE = "extrainfo_size";
-
-#include <QGraphicsOpacityEffect>
 
 StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     QWidget(parent),
@@ -38,9 +38,11 @@ StalledIssueActionTitle::StalledIssueActionTitle(QWidget* parent) :
     ui->extraInfoContainer->hide();
     ui->generalContainer->installEventFilter(this);
     ui->titleLabel->installEventFilter(this);
+    ui->hoverIcon->hide();
 
     ui->backgroundWidget->setProperty(DISABLE_BACKGROUND, false);
-    setSolved(false);
+    ui->backgroundWidget->setProperty(DISCARDED,false);
+    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, false);
 }
 
 StalledIssueActionTitle::~StalledIssueActionTitle()
@@ -82,8 +84,27 @@ QString StalledIssueActionTitle::title() const
     return ui->titleLabel->toPlainText();
 }
 
+void StalledIssueActionTitle::setHyperLinkMode()
+{
+    ui->titleContainer->setCursor(Qt::PointingHandCursor);
+    ui->titleContainer->installEventFilter(this);
+    ui->titleContainer->setMouseTracking(true);
+}
+
 void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& text, int id, bool mainButton)
 {
+    //Update existing buttons
+    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
+    foreach(auto& button, buttons)
+    {
+        if(button->property(BUTTON_ID).toInt() == id)
+        {
+            button->setIcon(icon);
+            button->setText(text);
+            return;;
+        }
+    }
+
     auto button = new QPushButton(icon, text, this);
 
     button->setProperty(BUTTON_ID, id);
@@ -113,7 +134,7 @@ void StalledIssueActionTitle::addActionButton(const QIcon& icon,const QString& t
     ui->actionContainer->show();
 }
 
-void StalledIssueActionTitle::hideActionButton(int id)
+void StalledIssueActionTitle::setActionButtonVisibility(int id, bool state)
 {
     bool allHidden(true);
 
@@ -122,7 +143,12 @@ void StalledIssueActionTitle::hideActionButton(int id)
     {
         if(button->property(BUTTON_ID).toInt() == id)
         {
-            button->hide();
+            button->setVisible(state);
+            if(state)
+            {
+                setMessage(QString(), QPixmap());
+                allHidden = false;
+            }
         }
         else if(button->isVisible())
         {
@@ -134,19 +160,9 @@ void StalledIssueActionTitle::hideActionButton(int id)
     {
         ui->actionContainer->hide();
     }
-}
-
-void StalledIssueActionTitle::setActionButtonInfo(const QIcon &icon, const QString &text, int id)
-{
-    auto buttons = ui->actionContainer->findChildren<QPushButton*>();
-    foreach(auto& button, buttons)
+    else if(ui->actionContainer->isHidden())
     {
-        if(button->property(BUTTON_ID).toInt() == id)
-        {
-            button->setIcon(icon);
-            button->setText(text);
-            break;
-        }
+        ui->actionContainer->show();
     }
 }
 
@@ -163,22 +179,20 @@ void StalledIssueActionTitle::showIcon()
     }
 }
 
-void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap)
+void StalledIssueActionTitle::setMessage(const QString& message, const QPixmap& pixmap, const QString& tooltip)
 {
     updateSizeHints();
     ui->messageContainer->show();
     ui->messageContainer->installEventFilter(this);
+    ui->messageContainer->setToolTip(tooltip);
 
-    if(!pixmap.isNull())
-    {
-        ui->iconLabel->setPixmap(pixmap);
-    }
+    ui->iconLabel->setPixmap(pixmap);
 
     ui->messageLabel->setText(ui->messageLabel->fontMetrics().elidedText(message, Qt::ElideMiddle, ui->contents->width()/3));
     ui->messageLabel->setProperty(MESSAGE_TEXT, message);
 }
 
-QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QString& info, int level)
+void StalledIssueActionTitle::addExtraInfo(AttributeType type, const QString& title, const QString& info, int level)
 {
     ui->extraInfoContainer->show();
 
@@ -186,6 +200,9 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     auto infoLabel = new QLabel(info, this);
     infoLabel->setProperty(MESSAGE_TEXT, info);
     infoLabel->setProperty(EXTRAINFO_INFO, true);
+
+    mTitleLabels[type] = titleLabel;
+    mUpdateLabels[type] = infoLabel;
 
     QHBoxLayout* rowLayout(nullptr);
     auto rowItem = ui->extraInfoLayout->itemAt(level);
@@ -209,14 +226,42 @@ QLabel* StalledIssueActionTitle::addExtraInfo(const QString& title, const QStrin
     rowLayout->insertItem(rowLayout->count()-1, new QSpacerItem(20,10,QSizePolicy::Fixed, QSizePolicy::Fixed));
 
     setStyleSheet(styleSheet());
-
-    return infoLabel;
 }
 
-void StalledIssueActionTitle::setSolved(bool state)
+void StalledIssueActionTitle::setFailed(bool state, const QString& errorTooltip)
+{
+    setToolTip(errorTooltip);
+    ui->backgroundWidget->setProperty(FAILED_BACKGROUND, state);
+    setStyleSheet(styleSheet());
+}
+
+void StalledIssueActionTitle::setDisable(bool state)
 {
     ui->backgroundWidget->setProperty(DISCARDED,state);
+
     setStyleSheet(styleSheet());
+
+    if(state)
+    {
+        if(!ui->titleContainer->graphicsEffect())
+        {
+            auto titleEffect = new QGraphicsOpacityEffect(this);
+            titleEffect->setOpacity(0.3);
+            ui->titleContainer->setGraphicsEffect(titleEffect);
+        }
+
+        if(!ui->extraInfoContainer->graphicsEffect())
+        {
+            auto extraInfoDisableEffect = new QGraphicsOpacityEffect(this);
+            extraInfoDisableEffect->setOpacity(0.3);
+            ui->extraInfoContainer->setGraphicsEffect(extraInfoDisableEffect);
+        }
+    }
+    else
+    {
+        ui->titleContainer->setGraphicsEffect(nullptr);
+        ui->extraInfoContainer->setGraphicsEffect(nullptr);
+    }
 }
 
 bool StalledIssueActionTitle::isSolved() const
@@ -245,24 +290,41 @@ bool StalledIssueActionTitle::eventFilter(QObject* watched, QEvent* event)
             ui->messageLabel->setText(elidedText);
         }
     }
+    else if(watched == ui->titleContainer)
+    {
+        if(event->type() == QEvent::MouseButtonRelease)
+        {
+            StalledIssuesUtilities::openLink(mIsCloud, mPath);
+        }
+        else if(event->type() == QEvent::Enter)
+        {
+            ui->hoverIcon->show();
+        }
+        else if(event->type() == QEvent::Leave)
+        {
+            ui->hoverIcon->hide();
+        }
+    }
 
     return QWidget::eventFilter(watched, event);
 }
 
 bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
 {
-    auto& userLabel = mUpdateLabels[AttributeType::User];
+    auto userLabel = mUpdateLabels.value(AttributeType::User);
     bool visible(userLabel && !userLabel->text().isEmpty());
 
     if(show)
     {
+        auto titleString(tr("Upload by:"));
         auto userText = user.isEmpty() ? tr("Loading user…") : user;
         if(!userLabel)
         {
-            userLabel = addExtraInfo(tr("Upload by:"), userText, 1);
+            addExtraInfo(AttributeType::User, titleString, userText, 1);
         }
         else
         {
+            mTitleLabels[AttributeType::User]->setText(titleString);
             updateLabel(userLabel, userText);
         }
 
@@ -284,19 +346,21 @@ bool StalledIssueActionTitle::updateUser(const QString& user, bool show)
 
 bool StalledIssueActionTitle::updateVersionsCount(int versions)
 {
-    auto& versionsLabel = mUpdateLabels[AttributeType::Versions];
+    auto versionsLabel = mUpdateLabels.value(AttributeType::Versions);
     bool visible(versionsLabel && !versionsLabel->text().isEmpty());
     bool show(versions > 1);
 
     if(show)
     {
+        auto titleString(tr("Versions:"));
         QString versionsText(QString::number(versions));
         if(!versionsLabel)
         {
-            versionsLabel = addExtraInfo(tr("Versions:"), versionsText, 1);
+            addExtraInfo(AttributeType::Versions, titleString, versionsText, 1);
         }
         else
         {
+            mTitleLabels[AttributeType::Versions]->setText(titleString);
             updateLabel(versionsLabel, versionsText);
         }
 
@@ -330,13 +394,15 @@ void StalledIssueActionTitle::updateSize(int64_t size)
         sizeText = tr("Loading size");
     }
 
-    auto& sizeLabel = mUpdateLabels[AttributeType::Size];
+    auto titleString(tr("Size:"));
+    auto sizeLabel = mUpdateLabels.value(AttributeType::Size);
     if(!sizeLabel)
     {
-        sizeLabel = addExtraInfo(tr("Size:"), sizeText, 0);
+        addExtraInfo(AttributeType::Size, titleString, sizeText, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::Size]->setText(titleString);
         updateLabel(sizeLabel, sizeText);
     }
 
@@ -351,13 +417,15 @@ void StalledIssueActionTitle::updateCRC(const QString& fp)
     {
         QString fpText = fp.isEmpty() ? QLatin1String("-") : fp;
 
-        auto& fpLabel = mUpdateLabels[AttributeType::CRC];
+        auto titleString(tr("CRC:"));
+        auto fpLabel = mUpdateLabels.value(AttributeType::CRC);
         if(!fpLabel)
         {
-            fpLabel = addExtraInfo(tr("CRC:"), fpText, 0);
+            addExtraInfo(AttributeType::CRC, titleString, fpText, 0);
         }
         else
         {
+            mTitleLabels[AttributeType::CRC]->setText(titleString);
             updateLabel(fpLabel, fpText);
         }
 
@@ -382,13 +450,15 @@ void StalledIssueActionTitle::updateLastTimeModified(const QDateTime& time)
         timeString = tr("Loading time…");
     }
 
-    auto& lastTimeLabel = mUpdateLabels[AttributeType::LastModified];
+    auto titleString(tr("Last modified:"));
+    auto lastTimeLabel = mUpdateLabels.value(AttributeType::LastModified);
     if(!lastTimeLabel)
     {
-        lastTimeLabel = addExtraInfo(tr("Last modified:"), timeString, 0);
+        addExtraInfo(AttributeType::LastModified, titleString, timeString, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::LastModified]->setText(titleString);
         updateLabel(lastTimeLabel, timeString);
     }
 
@@ -408,13 +478,16 @@ void StalledIssueActionTitle::updateCreatedTime(const QDateTime& time)
         timeString = tr("Loading time…");
     }
 
-    auto& createdTimeLabel = mUpdateLabels[AttributeType::CreatedTime];
+    auto titleString(mIsCloud ? tr("Upload at:") : tr("Created at:"));
+
+    auto createdTimeLabel = mUpdateLabels.value(AttributeType::CreatedTime);
     if(!createdTimeLabel)
     {
-        createdTimeLabel = addExtraInfo(mIsCloud ? tr("Upload at:") : tr("Created at:"),  timeString, 0);
+        addExtraInfo(AttributeType::CreatedTime, titleString, timeString, 0);
     }
     else
     {
+        mTitleLabels[AttributeType::CreatedTime]->setText(titleString);
         updateLabel(createdTimeLabel, timeString);
     }
 

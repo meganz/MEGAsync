@@ -10,10 +10,11 @@ import components.buttons 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
 
+import QmlDialog 1.0
 import ChooseLocalFolder 1.0
 import ChooseLocalFile 1.0
 
-Window{
+QmlDialog{
     id: root
 
     readonly property int dialogWidth: 480
@@ -29,40 +30,43 @@ Window{
     property alias headTitle: title.text
 
     function getTextFieldTitle() {
+        let result = "";
         if (targetComboBox.currentText === ExclusionsStrings.extensions){
-            return ExclusionsStrings.filesWithExtension;
-        }else if (valueTypeCombo.currentText === ExclusionsStrings.containing){
+            result = ExclusionsStrings.filesWithExtension;
+        }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.containing){
             if(targetComboBox.currentText === ExclusionsStrings.files){
-                return ExclusionsStrings.filesContaining
+                result = ExclusionsStrings.filesContaining
             }
             else{
-                return ExclusionsStrings.foldersContaining
+                result = ExclusionsStrings.foldersContaining;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.endingWith){
             if(targetComboBox.currentText === ExclusionsStrings.files){
-                return ExclusionsStrings.filesEndingWith
+                result = ExclusionsStrings.filesEndingWith;
             }
             else{
-                return ExclusionsStrings.foldersEndingWith
+                result = ExclusionsStrings.foldersEndingWith;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.beginningWith){
             if(targetComboBox.currentText === ExclusionsStrings.files){
-                return ExclusionsStrings.filesBeginningWith
+                result = ExclusionsStrings.filesBeginningWith
             }
             else{
-                return ExclusionsStrings.foldersBeginningWith
+                result = ExclusionsStrings.foldersBeginningWith;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.equalTo){
             if(targetComboBox.currentText === ExclusionsStrings.files){
-                return ExclusionsStrings.filesEqualTo
+                result = ExclusionsStrings.filesEqualTo;
             }
             else{
-                return ExclusionsStrings.foldersEqualTo
+                result = ExclusionsStrings.foldersEqualTo;
             }
         }
+        return result;
     }
 
     signal accepted
@@ -186,34 +190,6 @@ Window{
                     }
                 }
             }
-            ChooseLocalFolder {
-                id: folderDialog
-
-                title: ExclusionsStrings.selectFolderTitle
-            }
-            ChooseLocalFile {
-                id: fileDialog
-
-                title: ExclusionsStrings.selectFileTitle
-            }
-            Connections {
-                id: chooseLocalFolderConnection
-
-                target: folderDialog
-
-                function onFolderChoosen(folderPath) {
-                    valueTextField.text = folderPath;
-                }
-            }
-            Connections {
-                id: chooseLocalFileConnection
-
-                target: fileDialog
-
-                function onFileChoosen(filePath) {
-                    valueTextField.text = filePath;
-                }
-            }
             TextField {
                 id: valueTextField
 
@@ -233,11 +209,21 @@ Window{
                     root.ruleValue = text;
                 }
                 rightIconMouseArea.onClicked: {
-                    if(targetComboBox.currentText === ExclusionsStrings.files){
-                        fileDialog.openRelativeFileSelector(syncExclusionsAccess.folderPath)
+                    if(targetComboBox.currentText === ExclusionsStrings.files) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            fileDialog.openRelativeFileSelector(syncExclusionsAccess.folderPath);
+                        }
+                        else {
+                            fileDialog.openFileSelector();
+                        }
                     }
-                    else if(targetComboBox.currentText === ExclusionsStrings.folders){
-                        folderDialog.openFolderSelector(syncExclusionsAccess.folderPath, false);
+                    else if(targetComboBox.currentText === ExclusionsStrings.folders) {
+                        if(typeof syncExclusionsAccess !== "undefined" && syncExclusionsAccess !== null) {
+                            folderDialog.openRelativeFolderSelector(syncExclusionsAccess.folderPath, false);
+                        }
+                        else {
+                            folderDialog.openFolderSelector();
+                        }
                     }
                 }
             } // TextField: valueTextField
@@ -285,10 +271,34 @@ Window{
                 enabled: valueTextField.text.trim().length !== 0
                 icons.position: Icon.Position.LEFT
                 onClicked: {
+                    if(typeof addRuleDialogAccess !== "undefined" && addRuleDialogAccess !== null) {
+                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType, root.ruleValue);
+                    }
                     root.accepted();
                     root.close();
                 }
             }
         } //RowLayou: buttonsLayout
     } // Column: mainColumn
+
+    ChooseLocalFolder {
+        id: folderDialog
+
+        title: ExclusionsStrings.selectFolderTitle
+
+        onFolderChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
+    ChooseLocalFile {
+        id: fileDialog
+
+        title: ExclusionsStrings.selectFileTitle
+
+        onFileChoosen: (folderPath) => {
+            root.ruleValue = folderPath;
+        }
+    }
+
 } // Item: root
