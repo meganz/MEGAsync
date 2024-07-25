@@ -296,6 +296,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
+    if(ui->tvNotifications->itemDelegate())
+    {
+        // Remove delegate cache before deleting the parent QTreeView widget
+        delete ui->tvNotifications->itemDelegate();
+    }
     delete ui;
     delete animation;
     delete filterMenu;
@@ -1165,12 +1170,6 @@ void InfoDialog::reset()
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
     transferQuotaState = QuotaState::OK;
-}
-
-void InfoDialog::deleteUserMessageDelegate()
-{
-    delete ui->tvNotifications->itemDelegate();
-    ui->tvNotifications->setItemDelegate(nullptr);
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)

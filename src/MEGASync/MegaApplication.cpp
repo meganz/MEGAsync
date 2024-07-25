@@ -1515,17 +1515,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
-                if(infoDialog)
-                {
-                    // Delete user message delegate before the model and then
-                    // create a new user message controller.
-                    // This is required because the use of deleteLater on the infoDialog to
-                    // delete things in order (a new info dialog could be created before
-                    // the current one is deleted, using the wrong user message controller).
-                    infoDialog->deleteUserMessageDelegate();
-                    mUserMessageController.reset();
-                    createUserMessageController();
-                }
+                mUserMessageController.reset();
+                createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
                 start();
@@ -2213,10 +2204,7 @@ void MegaApplication::cleanAll()
 
     delete EmailRequester::instance();
 
-    // Delete user message delegate before the model.
-    infoDialog->deleteUserMessageDelegate();
     mUserMessageController.reset();
-
     infoDialog->deleteLater();
 
     // Delete menus and menu items

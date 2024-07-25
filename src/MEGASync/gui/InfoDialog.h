@@ -77,7 +77,6 @@ public:
     bool updateOverStorageState(int state);
 
     void reset();
-    void deleteUserMessageDelegate();
 
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
