@@ -4,6 +4,8 @@
 #include "UserMessageWidget.h"
 #include "Utilities.h"
 
+#include <QPointer>
+
 class UserNotification;
 
 namespace Ui
@@ -34,7 +36,7 @@ private slots:
 
 private:
     Ui::NotificationItem* mUi;
-    UserNotification* mNotificationData;
+    QPointer<UserNotification> mNotificationData;
     IntervalTimer mExpirationTimer;
 
     void setNotificationData(UserNotification* newNotificationData);

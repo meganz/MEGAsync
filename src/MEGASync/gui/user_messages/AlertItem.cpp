@@ -43,16 +43,13 @@ void AlertItem::setData(UserMessage* data)
     if (alert)
     {
         setAlertData(alert);
-        connect(alert, &UserMessage::dataChanged, this, [this]()
-        {
-            updateAlertData();
-        });
+        connect(mAlertData, &UserMessage::dataChanged, this, &AlertItem::updateAlertData);
     }
 }
 
 UserMessage* AlertItem::getData() const
 {
-    return mAlertData;
+    return mAlertData.data();
 }
 
 void AlertItem::setAlertData(UserAlert* alert)
@@ -61,10 +58,7 @@ void AlertItem::setAlertData(UserAlert* alert)
 
     connect(mAlertData, &UserAlert::emailChanged,
             this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-    connect(mAlertData, &UserAlert::emailChanged, this, [=]()
-    {
-        updateAlertData();
-    });
+    connect(mAlertData, &UserAlert::emailChanged, this, &AlertItem::updateAlertData);
 
     if (mAlertData->getUserHandle() != INVALID_HANDLE)
     {
@@ -91,7 +85,7 @@ void AlertItem::contactEmailChanged()
 
 void AlertItem::requestFullName()
 {
-    if (mAlertData->getEmail().isEmpty())
+    if (!mAlertData || (mAlertData && mAlertData->getEmail().isEmpty()))
     {
         return;
     }
@@ -127,6 +121,11 @@ void AlertItem::onAttributesReady()
 
 void AlertItem::updateAlertData()
 {
+    if(!mAlertData)
+    {
+        return;
+    }
+
     updateAlertType();
     setAlertHeading(mAlertData);
     setAlertContent(mAlertData);
@@ -137,6 +136,11 @@ void AlertItem::updateAlertData()
 void AlertItem::updateAlertType()
 {
     mUi->wNotificationIcon->hide();
+
+    if(!mAlertData)
+    {
+        return;
+    }
 
     QString notificationTitle;
     QString notificationColor;
@@ -396,8 +400,13 @@ void AlertItem::setAlertContent(UserAlert *alert)
                 }
                 else //Access for the user was removed by share owner
                 {
-                    notificationContent = !mAlertData->getEmail().isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
-                                                            : tr("Access to shared folder was removed");
+                    if(mAlertData)
+                    {
+                        notificationContent = !mAlertData->getEmail().isEmpty()
+                                                ? tr("Access to shared folder was removed by [A]")
+                                                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
+                                                : tr("Access to shared folder was removed");
+                    }
                 }
                 break;
             }
@@ -526,6 +535,11 @@ QSize AlertItem::sizeHint() const
 
 void AlertItem::mousePressEvent(QMouseEvent* event)
 {
+    if(!mAlertData)
+    {
+        return;
+    }
+
     switch(mAlertData->getType())
     {
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
@@ -582,7 +596,7 @@ void AlertItem::processIncomingPendingContactClick()
             }
 
             const char* email = request->getSourceEmail();
-            if (mAlertData->getEmail().toStdString().c_str() == email)
+            if (mAlertData && mAlertData->getEmail().toStdString().c_str() == email)
             {
                 found = true;
                 Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
@@ -632,9 +646,12 @@ void AlertItem::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         updateAlertType();
-        setAlertHeading(mAlertData);
-        setAlertContent(mAlertData);
-        setAlertTimeStamp(mAlertData->getTimestamp(0));
+        if (mAlertData)
+        {
+            setAlertHeading(mAlertData);
+            setAlertContent(mAlertData);
+            setAlertTimeStamp(mAlertData->getTimestamp(0));
+        }
     }
     QWidget::changeEvent(event);
 }
@@ -652,6 +669,6 @@ QString AlertItem::getUserFullName()
         return mFullNameAttributes->getRichFullName();
     }
 
-    return mAlertData->getEmail();
+    return mAlertData ? mAlertData->getEmail() : QString::fromUtf8("");
 }
 

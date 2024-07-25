@@ -6,6 +6,7 @@
 #include "megaapi.h"
 
 #include <QFutureWatcher>
+#include <QPointer>
 
 #include <memory>
 
@@ -47,12 +48,13 @@ protected:
 
 private slots:
     void onAttributesReady();
+    void updateAlertData();
 
 private:
     Ui::AlertItem* mUi;
     mega::MegaApi* mMegaApi;
     QString mNotificationHeading;
-    UserAlert* mAlertData;
+    QPointer<UserAlert> mAlertData;
     std::unique_ptr<mega::MegaNode> mAlertNode;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
     QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
@@ -61,7 +63,6 @@ private:
     QString formatRichString(const QString& str);
     QString getUserFullName();
     void requestFullName();
-    void updateAlertData();
     void processIncomingPendingContactClick();
     void processIncomingContactChangeOrAcceptedClick();
     void processShareOrTakedownClick();

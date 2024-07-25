@@ -51,7 +51,7 @@ void NotificationItem::setData(UserMessage* data)
 
 UserMessage* NotificationItem::getData() const
 {
-    return mNotificationData;
+    return mNotificationData.data();
 }
 
 QSize NotificationItem::minimumSizeHint() const
