@@ -18,6 +18,7 @@ constexpr int SmallImageSize = 48;
 constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
+constexpr int HeightWithImage = 346;
 constexpr int NumSecsToWaitBeforeRemove = 2;
 }
 
@@ -61,7 +62,11 @@ QSize NotificationItem::minimumSizeHint() const
 QSize NotificationItem::sizeHint() const
 {
     QSize size = this->size();
-    if(!mNotificationData->showImage())
+    if(mNotificationData->showImage())
+    {
+        size.setHeight(HeightWithImage);
+    }
+    else
     {
         size.setHeight(HeightWithoutImage);
     }
