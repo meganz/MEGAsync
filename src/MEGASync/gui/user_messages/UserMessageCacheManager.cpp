@@ -58,7 +58,7 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
     UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
     if(dynamic_cast<Item*>(widget))
     {
-        if(!data->hasSameId(widget->getData()->id()))
+        if(!widget->getData() || !data->hasSameId(widget->getData()->id()))
         {
             widget->setData(data);
         }
