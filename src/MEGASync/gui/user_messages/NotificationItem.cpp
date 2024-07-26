@@ -2,6 +2,8 @@
 
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
+#include "StatsEventHandler.h"
+#include "MegaApplication.h"
 
 #include "megaapi.h"
 
@@ -27,6 +29,7 @@ NotificationItem::NotificationItem(QWidget *parent)
     , mUi(new Ui::NotificationItem)
     , mNotificationData(nullptr)
     , mExpirationTimer(this)
+    , mDisplayEventSent(false)
 {
     mUi->setupUi(this);
 }
@@ -46,6 +49,7 @@ void NotificationItem::setData(UserMessage* data)
         {
             updateNotificationData(notification);
         });
+        mDisplayEventSent = false;
     }
 }
 
@@ -84,6 +88,21 @@ void NotificationItem::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
+void NotificationItem::showEvent(QShowEvent* event)
+{
+    if(!mDisplayEventSent && mNotificationData)
+    {
+        // Avoid to send this event every time
+        MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+            AppStatsEvents::EventType::NOTIFICATION_DISPLAYED,
+            { QString::number(mNotificationData->id()) });
+
+        mDisplayEventSent = true;
+    }
+
+    QWidget::showEvent(event);
+}
+
 void NotificationItem::onCTAClicked()
 {
     auto actionUrl = mNotificationData->getActionUrl();
@@ -94,6 +113,10 @@ void NotificationItem::onCTAClicked()
         return;
     }
     Utilities::openUrl(actionUrl);
+
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+        AppStatsEvents::EventType::NOTIFICATION_CTA_CLICKED,
+        { QString::number(mNotificationData->id()) });
 }
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)

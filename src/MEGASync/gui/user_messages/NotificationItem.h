@@ -29,6 +29,7 @@ public:
 
 protected:
     void changeEvent(QEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private slots:
     void onCTAClicked();
@@ -38,6 +39,7 @@ private:
     Ui::NotificationItem* mUi;
     QPointer<UserNotification> mNotificationData;
     IntervalTimer mExpirationTimer;
+    bool mDisplayEventSent = false;
 
     void setNotificationData(UserNotification* newNotificationData);
     void updateNotificationData(UserNotification* newNotificationData);
