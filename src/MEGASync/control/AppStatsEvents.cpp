@@ -189,14 +189,20 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" }
 };
 
-const char* AppStatsEvents::getEventMessage(EventType event)
+QString AppStatsEvents::getEventMessage(EventType event,
+                                         const QStringList& args)
 {
     if (!mMessageMap.contains(event))
     {
-        return "";
+        return QString();
     }
 
-    return mMessageMap[event];
+    QString message(QString::fromUtf8(mMessageMap[event]));
+    for (const QString& arg : args)
+    {
+        message = message.arg(arg);
+    }
+    return message;
 }
 
 int AppStatsEvents::getEventType(EventType event)
