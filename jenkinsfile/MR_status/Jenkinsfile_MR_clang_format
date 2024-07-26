@@ -1,0 +1,113 @@
+pipeline {
+    agent none
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '135', daysToKeepStr: '21'))
+        gitLabConnection('GitLabConnectionJenkins')
+    }
+    stages {
+        stage('Update Gitlab commit status') {
+            agent any
+            steps {
+                updateGitlabCommitStatus(name: 'clang format', state: 'running')
+            }
+        }
+        stage('Build'){
+            agent { label 'docker' }
+            stages {
+                stage('Checkout'){
+                    steps {
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: "origin/${env.gitlabSourceBranch}"]],
+                            userRemoteConfigs: [[ url: "${env.GIT_URL_DESKTOP}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                            extensions: [
+                                [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"],
+                                [$class: 'PreBuildMerge', options: [fastForwardMode: 'FF', mergeRemote: "origin", mergeStrategy: 'DEFAULT', mergeTarget: "${env.gitlabTargetBranch}"]]
+                                ]
+                        ])
+                    }
+                }
+                stage('Clang format'){
+                    agent {
+                        docker {
+                            image 'mega-docker.artifactory.developers.mega.co.nz:8443/clang-format:latest'
+                            reuseNode true
+                        }
+                    }
+                    steps {
+                        sh """#!/bin/bash
+
+                            COMMITS=\$(git log --pretty=format:%H origin/${env.gitlabTargetBranch}..origin/${env.gitlabSourceBranch})
+
+                            echo "    ######################"
+                            echo "    # ClangFormat output #"
+                            echo "    ######################"
+                            echo ""
+                            echo "    Commits:" \$COMMITS
+                            echo ""
+
+                            for COMMIT in \$COMMITS
+                            do
+                                OUTPUT=\$(git -c color.ui=always clang-format --diff \
+                                    --extensions "c,c++,c++m,cc,ccm,cp,cpp,cppm,cxx,cxxm,h,hh,hpp,hxx" \
+                                    \$COMMIT^ \$COMMIT)
+
+                                echo "    Commit: " "\$COMMIT"
+                                echo "    ClangFormat:"
+                                echo "    \$OUTPUT"
+                                echo ""
+
+                                if [ -z "\$OUTPUT" ]
+                                then
+                                    continue
+                                fi
+
+                                if echo \$OUTPUT | grep -q 'no modified files to format'
+                                then
+                                    continue
+                                fi
+
+                                if echo \$OUTPUT | grep -q 'clang-format did not modify any files'
+                                then
+                                    continue
+                                fi
+
+                                printf '%s\\n' "\$OUTPUT" '%s\\n'
+
+                                exit 1
+                            done
+
+                            echo "    #############################"
+                            echo "    # End of ClangFormat output #"
+                            echo "    #############################"
+                            echo ""
+                        """
+                    }
+                }
+            }
+            post{
+                always {
+                    deleteDir()
+                    script{
+                        if (currentBuild.currentResult == 'SUCCESS'){
+                            updateGitlabCommitStatus(name: 'clang format', state: 'success')
+                            addGitLabMRComment(comment: ":white_check_mark: ${currentBuild.projectName} :page_with_curl: <b>ClangFormat</b> SUCCEEDED :muscle:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                        if (currentBuild.currentResult == 'FAILURE'){
+                            updateGitlabCommitStatus(name: 'clang format', state: 'failed')
+                            addGitLabMRComment(comment: ":red_circle: ${currentBuild.projectName} :page_with_curl: <b>ClangFormat</b> FAILURE  :worried:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                        if (currentBuild.currentResult == 'ABORTED'){
+                            updateGitlabCommitStatus(name: 'clang format', state: 'canceled')
+                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} :page_with_curl: <b>ClangFormat</b> ABORTED  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                        if (currentBuild.currentResult == 'UNSTABLE'){
+                            updateGitlabCommitStatus(name: 'clang format', state: 'failed')
+                            addGitLabMRComment(comment: ":interrobang: ${currentBuild.projectName} :page_with_curl::cross_mark: <b>ClangFormat</b> UNSTABLE  :confused:<br/>Build results: [Jenkins [${currentBuild.displayName}]](${currentBuild.absoluteUrl})<br/>Commit: ${env.GIT_COMMIT}" )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
