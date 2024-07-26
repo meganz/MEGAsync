@@ -590,26 +590,25 @@ void LoginController::fetchNodes(const QString& email)
     }
     else // we will ask the SDK the email
     {
-        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(), new mega::OnFinishOneShot(mMegaApi,  this, [loadMigrateAndFetchNodes]
-                                (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e) {
-                                    QString email;
+        auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+            this,
+            [loadMigrateAndFetchNodes](mega::MegaRequest* request, mega::MegaError* e) {
+                    QString email;
 
-                                    if (e.getErrorCode() == mega::MegaError::API_OK)
-                                    {
-                                        auto emailFromRequest = request.getEmail();
-                                        if (emailFromRequest)
-                                        {
-                                            email = QString::fromUtf8(emailFromRequest);
-                                        }
-                                    }
+                    if (e->getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        auto emailFromRequest = request->getEmail();
+                        if (emailFromRequest)
+                        {
+                            email = QString::fromUtf8(emailFromRequest);
+                        }
+                    }
 
-                                    // in any case, proceed:
-                                    if(isContextValid)
-                                    {
-                                        loadMigrateAndFetchNodes(email);
-                                    }
-                                  }));
+                    // in any case, proceed:
+                    loadMigrateAndFetchNodes(email);
+                });
 
+        mMegaApi->getUserEmail(mMegaApi->getMyUserHandleBinary(), listener.get());
     }
 }
 
@@ -645,31 +644,36 @@ void LoginController::migrateSyncConfToSdk(const QString& email)
 
     foreach(SyncData osd, oldCachedSyncs)
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Copying sync data to SDK cache: %1. Name: %2")
-                                                                .arg(osd.mLocalFolder).arg(osd.mName).toUtf8().constData());
+        QString msg1 = QString::fromUtf8("Copying sync data to SDK cache: ") + osd.mLocalFolder
+                           + QString::fromUtf8(". Name: ") + osd.mName;
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg1.toUtf8().constData());
+
+        auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+            this,
+            [this, osd, &oldCacheSyncsCount, needsMigratingFromOldSession, email](mega::MegaRequest* request, mega::MegaError* e) {
+                if (e->getErrorCode() == mega::MegaError::API_OK)
+                {
+                    //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
+                    SyncInfo::instance()->pickInfoFromOldSync(osd, request->getParentHandle(), needsMigratingFromOldSession);
+                    mPreferences->removeOldCachedSync(osd.mPos, email);
+                }
+                else
+                {
+                    QString msg2 = QString::fromUtf8("Failed to copy sync ") + osd.mLocalFolder
+                                       + QString::fromUtf8(": ") + QString::fromUtf8(e->getErrorString());
+                    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, msg2.toUtf8().constData());
+                }
+
+                --oldCacheSyncsCount;
+                if (oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
+                {
+                    mMegaApi->fetchNodes();
+                }
+            });
 
         mMegaApi->copySyncDataToCache(osd.mLocalFolder.toUtf8().constData(), osd.mName.toUtf8().constData(),
-                                         osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
-                                         osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled,
-                                         new mega::OnFinishOneShot(mMegaApi, this, [this, osd, &oldCacheSyncsCount, needsMigratingFromOldSession, email](bool, const mega::MegaRequest& request, const mega::MegaError& e)
-                                                                       {
-                                                                           if (e.getErrorCode() == mega::MegaError::API_OK)
-                                                                           {
-                                                                               //preload the model with the restored configuration: that includes info that the SDK does not handle (e.g: syncID)
-                                                                               SyncInfo::instance()->pickInfoFromOldSync(osd, request.getParentHandle(), needsMigratingFromOldSession);
-                                                                               mPreferences->removeOldCachedSync(osd.mPos, email);
-                                                                           }
-                                                                           else
-                                                                           {
-                                                                               mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to copy sync %1: %2").arg(osd.mLocalFolder).arg(QString::fromUtf8(e.getErrorString())).toUtf8().constData());
-                                                                           }
-
-                                                                           --oldCacheSyncsCount;
-                                                                           if (oldCacheSyncsCount == 0)//All syncs copied to sdk, proceed with fetchnodes
-                                                                           {
-                                                                               mMegaApi->fetchNodes();
-                                                                           }
-                                                                       }));
+                                      osd.mMegaHandle, osd.mMegaFolder.toUtf8().constData(),
+                                      osd.mLocalfp, osd.mEnabled, osd.mTemporarilyDisabled, listener.get());
     }
 
     if (oldCacheSyncsCount == 0)//No syncs to be copied to sdk, proceed with fetchnodes

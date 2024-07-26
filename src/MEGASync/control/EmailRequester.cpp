@@ -2,7 +2,7 @@
 #include "MegaApplication.h"
 
 #include "mega/types.h"
-
+#include "RequestListenerManager.h"
 #include <QMutexLocker>
 
 EmailRequester* EmailRequester::mInstance = nullptr;
@@ -128,29 +128,31 @@ void EmailRequester::requestEmail(mega::MegaHandle userHandle)
         }
 
         (*foundUserHandleIt)->requestFinished = false;
-        mMegaApi->getUserEmail(userHandle, new mega::OnFinishOneShot(mMegaApi,  this, [this]
-            (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& error)
+
+    auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+        this,
+        [this](mega::MegaRequest* request, mega::MegaError* e) {
+            if (request->getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
             {
-                if(isContextValid && request.getType() == mega::MegaRequest::TYPE_GET_USER_EMAIL)
+                QString email;
+
+                if (e->getErrorCode() == mega::MegaError::API_OK && request->getEmail() != nullptr)
                 {
-                    QString email;
-
-                    if (error.getErrorCode() == mega::MegaError::API_OK && request.getEmail() != nullptr)
-                    {
-                        email = QString::fromUtf8(request.getEmail());
-                    }
-
-                    QMutexLocker locker(&mRequestsDataLock);
-
-                    auto foundUserHandleIt = mRequestsData.find(request.getNodeHandle());
-                    if (foundUserHandleIt != mRequestsData.end())
-                    {
-                        (*foundUserHandleIt)->requestFinished = true;
-                        (*foundUserHandleIt)->setEmail(email);
-                    }
+                    email = QString::fromUtf8(request->getEmail());
                 }
-            })
-        );
+
+                QMutexLocker locker(&mRequestsDataLock);
+
+                auto foundUserHandleIt = mRequestsData.find(request->getNodeHandle());
+                if (foundUserHandleIt != mRequestsData.end())
+                {
+                    (*foundUserHandleIt)->requestFinished = true;
+                    (*foundUserHandleIt)->setEmail(email);
+                }
+            }
+        });
+
+        mMegaApi->getUserEmail(userHandle, listener.get());
     }
 }
 
