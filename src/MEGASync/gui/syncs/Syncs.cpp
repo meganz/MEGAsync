@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "TextDecorator.h"
 #include "ChooseFolder.h"
+
 #include "mega/types.h"
 
 const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
