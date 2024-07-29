@@ -52,21 +52,22 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
     bool result(false);
 
     QFile file(path);
-    if(file.exists())
+    if (file.exists())
     {
-        if(syncId != mega::INVALID_HANDLE)
+        if (syncId != mega::INVALID_HANDLE)
         {
-            MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
+            MegaApiSynchronizedRequest::runRequestWithResult(
+                &mega::MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result, &file](
-                    const mega::MegaRequest&, const mega::MegaError& e)
+                [=, &result, &file](mega::MegaRequest*, mega::MegaError* e)
                 {
-                    //In case of error, move to OS trash
-                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    // In case of error, move to OS trash
+                    if (e->getErrorCode() != mega::MegaError::API_OK)
                     {
-                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_ERROR,
                             QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
-                                .arg(path, Utilities::getTranslatedError(&e))
+                                .arg(path, Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);
@@ -82,7 +83,8 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                     {
                         result = true;
                     }
-                },path.toStdString().c_str(),
+                },
+                path.toStdString().c_str(),
                 syncId);
         }
         else
