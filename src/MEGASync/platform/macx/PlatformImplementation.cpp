@@ -160,7 +160,7 @@ void PlatformImplementation::streamWithApp(const QString &app, const QString &ur
 
 void PlatformImplementation::processSymLinks()
 {
-    string appBundle = appBundlePath().toStdString();
+    string appBundle = appBundlePath().toUtf8().constData();
     string symlinksPath = appBundle + "/Contents/Resources/mega.links";
 
     std::cout << "Opening file to recreate symlinks." << std::endl;
@@ -390,7 +390,7 @@ QString PlatformImplementation::getDeviceName()
                                                                        "grep \"Model Name\" | awk -F \"Model "
                                                                        "Name: \" '{print $2}' | tr -d '\n'"));
     proc.waitForFinished();
-    deviceName = QString::fromStdString(proc.readAll().toStdString());
+    deviceName = QString::fromUtf8(proc.readAll());
 
     if (deviceName.isEmpty() || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {

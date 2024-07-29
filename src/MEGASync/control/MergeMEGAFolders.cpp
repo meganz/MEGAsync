@@ -77,7 +77,7 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
                        MegaSyncApp->getMegaApi(),
                        node,
                        mFolderTarget,
-                    newName.toStdString().c_str());
+                    newName.toUtf8().constData());
 
                 if(error)
                 {

@@ -231,7 +231,8 @@ QString MegaDownloader::buildEscapedPath(const char *nodeName, QString currentPa
 {
     // Get a c-string with the escaped name. This string will have to be deleted because
     // megaApi->escapeFsIncompatible allocates it.
-    char *escapedName = megaApi->escapeFsIncompatible(nodeName, currentPathWithSep.toStdString().c_str());
+    char *escapedName = megaApi->escapeFsIncompatible(nodeName,
+                                                      currentPathWithSep.toUtf8().constData());
     QString escapedNameStr = QString::fromUtf8(escapedName);
     delete [] escapedName;
     return currentPathWithSep + escapedNameStr;

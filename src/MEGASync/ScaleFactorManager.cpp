@@ -6,6 +6,8 @@
 #include <QScreen>
 #include <stdexcept>
 
+const QString LINUX_OS_DEEPIN_20 = QString::fromUtf8("Deepin 20");
+
 double getDpiOnLinux()
 {
     //the best cross platform solution found (caveat: screen agnostic)
@@ -46,19 +48,19 @@ double getWindowScalingFactorOnXcfe()
     return windowScalingFactor;
 }
 
-ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
+ScreensInfo createScreensInfo(OsType osType, const QString& desktopName)
 {
-    if(QSysInfo::prettyProductName().toStdString() == "Deepin 20")
+    if (QSysInfo::prettyProductName() == LINUX_OS_DEEPIN_20)
     {
         return {};
     }
 
     auto linuxDpi = 0.;
-    if(osType == OsType::LINUX)
+    if (osType == OsType::LINUX)
     {
         linuxDpi = getDpiOnLinux();
 
-        if(desktopName == "XFCE")
+        if (desktopName == QString::fromUtf8("XFCE"))
         {
             linuxDpi *= getWindowScalingFactorOnXcfe();
         }
@@ -85,65 +87,75 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
     return screensInfo;
 }
 
-std::string getDesktopName()
+QString getDesktopName()
 {
-    std::string desktopName;
-    const auto xdgCurrentDesktop = getenv("XDG_CURRENT_DESKTOP");
+    QString desktopName;
+    char* xdgCurrentDesktop = getenv("XDG_CURRENT_DESKTOP");
     if (xdgCurrentDesktop)
     {
-        desktopName = xdgCurrentDesktop;
+        desktopName = QString::fromUtf8(xdgCurrentDesktop);
     }
     return desktopName;
 }
 
-ScaleFactorManager::ScaleFactorManager(OsType osType)
-    :ScaleFactorManager{osType, createScreensInfo(osType, getDesktopName()), QSysInfo::prettyProductName().toStdString(), getDesktopName()}
-{
-}
+ScaleFactorManager::ScaleFactorManager(OsType osType):
+    ScaleFactorManager{osType,
+                       createScreensInfo(osType, getDesktopName()),
+                       QSysInfo::prettyProductName(),
+                       getDesktopName()}
+{}
 
-ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName, std::string desktopName)
-    :mOsType{osType}, mOsName{osName}, mScreensInfo{screensInfo}, mDesktopName{desktopName}
+ScaleFactorManager::ScaleFactorManager(OsType osType,
+                                       ScreensInfo screensInfo,
+                                       const QString& osName,
+                                       const QString& desktopName):
+    mOsType{osType},
+    mOsName{osName},
+    mScreensInfo{screensInfo},
+    mDesktopName{desktopName}
 {
-    if(mDesktopName.empty())
+    if (mDesktopName.isEmpty())
     {
-        mLogMessages.emplace_back(mOsName);
+        mLogMessages.push_back(mOsName);
     }
     else
     {
-        mLogMessages.emplace_back(mOsName + " (" + mDesktopName + ")");
+        mLogMessages.push_back(mOsName + QString::fromUtf8(" (") + mDesktopName +
+                               QString::fromUtf8(")"));
     }
 
-    for(const auto& screenInfo : mScreensInfo)
+    for (const auto& screenInfo: mScreensInfo)
     {
         QString msg = QString::fromUtf8("Screen detected: ") + screenInfo.toString();
-        mLogMessages.emplace_back(msg.toUtf8().constData());
+        mLogMessages.push_back(msg);
     }
 }
 
-std::string createScreenScaleFactorsVariable(std::vector<double> calculatedScales)
+QString createScreenScaleFactorsVariable(std::vector<double> calculatedScales)
 {
-    std::string screenScaleFactorVariable;
-    for(const auto calculatedScale : calculatedScales)
+    QString screenScaleFactorVariable;
+    for (const double& calculatedScale : calculatedScales)
     {
-        if(!screenScaleFactorVariable.empty())
+        if (!screenScaleFactorVariable.isEmpty())
         {
-            screenScaleFactorVariable.append(";");
+            screenScaleFactorVariable.append(QString::fromUtf8(";"));
         }
-        screenScaleFactorVariable.append(std::to_string(calculatedScale));
+
+        screenScaleFactorVariable.append(QString::number(calculatedScale));
     }
     return screenScaleFactorVariable;
 }
 
 void ScaleFactorManager::setScaleFactorEnvironmentVariable()
 {
-    if(mScreensInfo.empty() && mOsName != "Deepin 20")
+    if (mScreensInfo.empty() && mOsName != LINUX_OS_DEEPIN_20)
     {
         throw std::runtime_error("No screens found");
     }
 
     if(!checkEnvironmentVariables())
     {
-        if(mOsName == "Deepin 20")
+        if (mOsName == LINUX_OS_DEEPIN_20)
         {
             const auto scale = getDpiOnLinux() / 96.0;
             qputenv("QT_SCALE_FACTOR", QString::number(scale).toLatin1());
@@ -155,35 +167,39 @@ void ScaleFactorManager::setScaleFactorEnvironmentVariable()
         {
             if(mScreensInfo.size() > 1)
             {
-                if(mOsName == "Deepin 20")
+                if (mOsName == LINUX_OS_DEEPIN_20)
                 {
-                    const auto minCalculatedScale = *std::min_element(mCalculatedScales.begin(), mCalculatedScales.end());
-                    const auto minCalculatedScaleString = QString::number(minCalculatedScale).toLatin1();
-                    qputenv("QT_SCALE_FACTOR", minCalculatedScaleString);
-                    mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + minCalculatedScaleString);
+                    const auto minCalculatedScale =
+                        *std::min_element(mCalculatedScales.begin(), mCalculatedScales.end());
+                    const QString minCalculatedScaleString = QString::number(minCalculatedScale);
+                    qputenv("QT_SCALE_FACTOR", minCalculatedScaleString.toUtf8());
+                    mLogMessages.push_back(QString::fromUtf8("QT_SCALE_FACTOR set to ") +
+                                           minCalculatedScaleString);
                 }
                 else
                 {
-                    const auto screenScaleFactorVariable = createScreenScaleFactorsVariable(mCalculatedScales);
-                    qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.c_str());
-                    mLogMessages.emplace_back("QT_SCREEN_SCALE_FACTORS set to " + screenScaleFactorVariable);
+                    const auto screenScaleFactorVariable =
+                        createScreenScaleFactorsVariable(mCalculatedScales);
+                    qputenv("QT_SCREEN_SCALE_FACTORS", screenScaleFactorVariable.toUtf8());
+                    mLogMessages.push_back(QString::fromUtf8("QT_SCREEN_SCALE_FACTORS set to ") +
+                                           screenScaleFactorVariable);
                 }
             }
             else
             {
-                const auto scaleString = QString::number(mCalculatedScales.front()).toLatin1();
-                qputenv("QT_SCALE_FACTOR", scaleString);
-                mLogMessages.emplace_back("QT_SCALE_FACTOR set to " + scaleString);
+                const QString scaleString = QString::number(mCalculatedScales.front());
+                qputenv("QT_SCALE_FACTOR", scaleString.toUtf8());
+                mLogMessages.push_back(QString::fromUtf8("QT_SCALE_FACTOR set to ") + scaleString);
             }
         }
         else
         {
-            mLogMessages.emplace_back("Scaling not needed.");
+            mLogMessages.push_back(QString::fromUtf8("Scaling not needed."));
         }
     }
 }
 
-std::vector<std::string> ScaleFactorManager::getLogMessages() const
+QVector<QString> ScaleFactorManager::getLogMessages() const
 {
     return mLogMessages;
 }
@@ -200,7 +216,7 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
             QString::fromUtf8(
                 "Scale factor not calculated because QT_SCALE_FACTOR is already set to: ") +
             envValueQtScaleFactor;
-        mLogMessages.emplace_back(msg.toUtf8().constData());
+        mLogMessages.push_back(msg);
         return true;
     }
 
@@ -222,7 +238,7 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
                     envValueQtScreenScaleFactors;
 
                 qDebug() << msg;
-                mLogMessages.emplace_back(msg.toUtf8().constData());
+                mLogMessages.push_back(msg);
                 break;
             }
         }
@@ -234,7 +250,7 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
             QString msg = QString::fromUtf8("Scale factor not calculated because "
                                             "QT_SCREEN_SCALE_FACTORS is already set to: ") +
                           envValueQtScreenScaleFactors;
-            mLogMessages.emplace_back(msg.toUtf8().constData());
+            mLogMessages.push_back(msg);
             return true;
         }
     }

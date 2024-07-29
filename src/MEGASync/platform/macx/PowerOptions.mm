@@ -30,7 +30,9 @@ public:
             mKeepPCAwayState = newState;
             result = mKeepPCAwayState ? registerForSleepWakeNotifications() : unRegisterForSleepWakeNotifications();
 
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, QString(QLatin1String("Sleep setting has changed. New state: %1")).arg(mKeepPCAwayState).toStdString().c_str());
+            QString msg = QString::fromUtf8("Sleep setting has changed. New state: ") +
+                          QString::fromUtf8(mKeepPCAwayState ? "true" : "false");
+            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         }
 
         return result;
