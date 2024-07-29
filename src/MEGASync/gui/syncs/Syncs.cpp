@@ -359,13 +359,23 @@ QString Syncs::getRemoteError() const
 
 void Syncs::cleanErrors()
 {
-    mRemoteError.reset();
-    mLocalError.reset();
-    mRemoteStringMessage.clear();
+    clearLocalError();
+    clearRemoteError();
+}
 
+void Syncs::clearRemoteError()
+{
+    mRemoteError.reset();
+    mRemoteStringMessage.clear();
     mRemoteMegaError.error = mega::MegaError::API_OK;
     mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 
-    emit localErrorChanged();
     emit remoteErrorChanged();
+}
+
+void Syncs::clearLocalError()
+{
+    mLocalError.reset();
+
+    emit localErrorChanged();
 }

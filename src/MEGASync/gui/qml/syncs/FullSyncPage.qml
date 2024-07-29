@@ -9,9 +9,9 @@ FullSyncPageForm {
     signal fullSyncMoveToBack
     signal fullSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text : syncs.localError
-    localFolderChooser.folderField.hint.visible : syncs.localError.length !== 0
-    localFolderChooser.folderField.error : syncs.localError.length !== 0
+    localFolderChooser.folderField.hint.text : root.syncs.localError
+    localFolderChooser.folderField.hint.visible : root.syncs.localError.length !== 0
+    localFolderChooser.folderField.error : root.syncs.localError.length !== 0
 
     function enableScreen() {
         root.enabled = true;
@@ -33,7 +33,7 @@ FullSyncPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-            syncs.addSync(localFolderChooser.choosenPath);
+            root.syncs.addSync(localFolderChooser.choosenPath);
         }
     }
 
@@ -41,21 +41,21 @@ FullSyncPageForm {
         id: localFolder
     }
 
-    Syncs {
-        id: syncs
+    Connections {
+        target: root.syncs
 
-        onSyncSetupSuccess: {
+        function onSyncSetupSuccess() {
             root.enabled = true;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
             root.fullSyncMoveToSuccess();
             localFolderChooser.reset();
         }
 
-        onLocalErrorChanged: {
+        function onLocalErrorChanged() {
             enableScreen();
         }
 
-        onRemoteErrorChanged: {
+        function onRemoteErrorChanged() {
             enableScreen();
         }
     }

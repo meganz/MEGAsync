@@ -16,6 +16,7 @@ FocusScope {
     id: root
 
     required property bool isOnboarding
+    required property Syncs syncs
 
     readonly property int textEditMargin: 2
 
@@ -73,10 +74,6 @@ FocusScope {
     Layout.preferredWidth: width
     Layout.preferredHeight: folderItem.height
 
-    Syncs {
-        id: syncs
-    }
-
     Connections {
         id: syncsConnection
 
@@ -121,9 +118,11 @@ FocusScope {
         text: Strings.choose
         onClicked: {
             if (local) {
+                syncs.clearLocalError();
                 localFolderChooser.openFolderSelector(folderItem.text);
             }
             else {
+                syncs.clearRemoteError();
                 remoteFolderChooser.openFolderSelector();
             }
         }

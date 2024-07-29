@@ -9,13 +9,13 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
 
-    localFolderChooser.folderField.hint.text : syncs.localError
-    localFolderChooser.folderField.hint.visible : syncs.localError.length !== 0
-    localFolderChooser.folderField.error : syncs.localError.length !== 0
+    localFolderChooser.folderField.hint.text: root.syncs.localError
+    localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
+    localFolderChooser.folderField.error: root.syncs.localError.length !== 0
 
-    remoteFolderChooser.folderField.hint.text : syncs.remoteError
-    remoteFolderChooser.folderField.hint.visible : syncs.remoteError.length !== 0
-    remoteFolderChooser.folderField.error : syncs.remoteError.length !== 0
+    remoteFolderChooser.folderField.hint.text: root.syncs.remoteError
+    remoteFolderChooser.folderField.hint.visible: root.syncs.remoteError.length !== 0
+    remoteFolderChooser.folderField.error: root.syncs.remoteError.length !== 0
 
     function enableScreen() {
         root.enabled = true;
@@ -35,7 +35,7 @@ SelectiveSyncPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-            syncs.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+            root.syncs.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
         }
     }
 
@@ -43,21 +43,20 @@ SelectiveSyncPageForm {
         id: localFolder
     }
 
-    Syncs {
-        id: syncs
+    Connections {
+        target: root.syncs
 
-        onSyncSetupSuccess: {
+        function onSyncSetupSuccess() {
             enableScreen();
-
             remoteFolderChooser.reset();
             root.selectiveSyncMoveToSuccess();
         }
 
-        onLocalErrorChanged: {
+        function onLocalErrorChanged() {
             enableScreen();
         }
 
-        onRemoteErrorChanged: {
+        function onRemoteErrorChanged() {
             enableScreen();
         }
     }
