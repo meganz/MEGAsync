@@ -68,16 +68,17 @@ ScreensInfo createScreensInfo(OsType osType, const std::string& desktopName)
     QGuiApplication app{argc, nullptr};
     const auto screens = app.screens();
     ScreensInfo screensInfo;
-    for (const auto& screen : screens)
+    for (const auto& screen: screens)
     {
         ScreenInfo screenInfo;
-        screenInfo.name = screen->name().toStdString();
+        screenInfo.name = screen->name();
         screenInfo.availableWidthPixels = screen->availableGeometry().width();
         screenInfo.availableHeightPixels = screen->availableGeometry().height();
         screenInfo.devicePixelRatio = screen->devicePixelRatio();
 
-        const bool isLinuxAndDpiCalculationIsCorrect{osType==OsType::LINUX && linuxDpi > 0};
-        screenInfo.dotsPerInch = isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
+        const bool isLinuxAndDpiCalculationIsCorrect{osType == OsType::LINUX && linuxDpi > 0};
+        screenInfo.dotsPerInch =
+            isLinuxAndDpiCalculationIsCorrect ? linuxDpi : screen->logicalDotsPerInch();
 
         screensInfo.push_back(screenInfo);
     }
@@ -114,7 +115,8 @@ ScaleFactorManager::ScaleFactorManager(OsType osType, ScreensInfo screensInfo, s
 
     for(const auto& screenInfo : mScreensInfo)
     {
-        mLogMessages.emplace_back("Screen detected: "+screenInfo.toString());
+        QString msg = QString::fromUtf8("Screen detected: ") + screenInfo.toString();
+        mLogMessages.emplace_back(msg.toUtf8().constData());
     }
 }
 
@@ -188,38 +190,51 @@ std::vector<std::string> ScaleFactorManager::getLogMessages() const
 
 bool ScaleFactorManager::checkEnvironmentVariables() const
 {
-    if (getenv("QT_SCALE_FACTOR"))
+    QString envValueQtScaleFactor = QString::fromUtf8(getenv("QT_SCALE_FACTOR"));
+
+    if (!envValueQtScaleFactor.isEmpty())
     {
-        qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
-        mLogMessages.emplace_back("Scale factor not calculated because QT_SCALE_FACTOR is already set to: "+
-                                 std::string(getenv("QT_SCALE_FACTOR")));
+        qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR="
+                 << envValueQtScaleFactor;
+        QString msg =
+            QString::fromUtf8(
+                "Scale factor not calculated because QT_SCALE_FACTOR is already set to: ") +
+            envValueQtScaleFactor;
+        mLogMessages.emplace_back(msg.toUtf8().constData());
         return true;
     }
 
-    if (getenv("QT_SCREEN_SCALE_FACTORS"))
-    {
-        qDebug() << "Predefined QT_SCREEN_SCALE_FACTORS found:" << getenv("QT_SCREEN_SCALE_FACTORS");
+    QString envValueQtScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
 
-        const auto predefinedScreenScaleFactors = std::string(getenv("QT_SCREEN_SCALE_FACTORS"));
+    if (!envValueQtScreenScaleFactors.isEmpty())
+    {
+        qDebug() << "Predefined QT_SCREEN_SCALE_FACTORS found:" << envValueQtScreenScaleFactors;
+
         bool screenScaleFactorsValid = true;
-        for (const auto& screenInfo : mScreensInfo)
+        for (const auto& screenInfo: mScreensInfo)
         {
-            const bool textFound{predefinedScreenScaleFactors.find(screenInfo.name) != std::string::npos};
-            if (!textFound)
+            if (!envValueQtScreenScaleFactors.contains(screenInfo.name))
             {
                 screenScaleFactorsValid = false;
-                qDebug() << "Screen name " << QString::fromStdString(screenInfo.name) << " not found in predefined QT_SCREEN_SCALE_FACTORS: " << getenv("QT_SCREEN_SCALE_FACTORS");
-                mLogMessages.emplace_back("Screen name " + screenInfo.name + " not found in predefined QT_SCREEN_SCALE_FACTORS: " +
-                               std::string(getenv("QT_SCREEN_SCALE_FACTORS")));
+                QString msg =
+                    QString::fromUtf8("Screen name ") + screenInfo.name +
+                    QString::fromUtf8(" not found in predefined QT_SCREEN_SCALE_FACTORS: ") +
+                    envValueQtScreenScaleFactors;
+
+                qDebug() << msg;
+                mLogMessages.emplace_back(msg.toUtf8().constData());
                 break;
             }
         }
 
         if (screenScaleFactorsValid)
         {
-            qDebug() << "Not setting scale factors. Using predefined QT_SCREEN_SCALE_FACTORS=" << getenv("QT_SCREEN_SCALE_FACTORS");
-            mLogMessages.emplace_back("Scale factor not calculated because QT_SCREEN_SCALE_FACTORS is already set to: "+
-                                     std::string(getenv("QT_SCREEN_SCALE_FACTORS")));
+            qDebug() << "Not setting scale factors. Using predefined QT_SCREEN_SCALE_FACTORS="
+                     << envValueQtScreenScaleFactors;
+            QString msg = QString::fromUtf8("Scale factor not calculated because "
+                                            "QT_SCREEN_SCALE_FACTORS is already set to: ") +
+                          envValueQtScreenScaleFactors;
+            mLogMessages.emplace_back(msg.toUtf8().constData());
             return true;
         }
     }
