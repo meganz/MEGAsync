@@ -56,7 +56,7 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    void addSyncFolder(const QString& remoteFolder) const;
+    void addSyncFolder(mega::MegaHandle remoteHandle) const;
 
     // Folders
     void updateUploadFolder();

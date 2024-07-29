@@ -162,27 +162,6 @@ void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
     ui->gSyncs->setAddButtonEnabled(enabled);
 }
 
-void SyncSettingsUIBase::addButtonClicked(const QString& remoteFolder) const
-{
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [remoteFolder, overQuotaDialog, this]()
-    {
-        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            addSyncAfterOverQuotaCheck(remoteFolder);
-        }
-    };
-
-    if (overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
-}
-
 #ifndef Q_OS_WIN
 void SyncSettingsUIBase::onPermissionsClicked()
 {

@@ -1349,9 +1349,9 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-void SettingsDialog::addSyncFolder(const QString& remoteFolder) const
+void SettingsDialog::addSyncFolder(mega::MegaHandle remoteHandle) const
 {
-    mUi->syncSettings->addButtonClicked(remoteFolder);
+    mUi->syncSettings->addButtonClicked(remoteHandle);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)

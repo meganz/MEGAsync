@@ -14,6 +14,8 @@ public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
     ~SyncSettingsUI() override = default;
 
+    void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) override;
+
 protected:
     QString getFinishWarningIconString() const override;
     QString getFinishIconString() const override;
@@ -32,7 +34,6 @@ protected:
 
     void setSyncsTitle();
     void changeEvent(QEvent *) override;
-    void addSyncAfterOverQuotaCheck(const QString& remoteFolder) const override;
 
 private slots:
     void storageStateChanged(int newStorageState);

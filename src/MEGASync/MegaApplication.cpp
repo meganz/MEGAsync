@@ -5283,9 +5283,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            auto node = megaApi->getNodeByHandle(megaFolderHandle);
-            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
-            mSettingsDialog->addSyncFolder(remoteFolder);
+            mSettingsDialog->addSyncFolder(megaFolderHandle);
         }
     }
 }

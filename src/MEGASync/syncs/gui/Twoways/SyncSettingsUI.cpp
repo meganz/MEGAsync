@@ -7,6 +7,7 @@
 #include "SyncItemModel.h"
 #include "MegaApplication.h"
 #include "SyncsComponent.h"
+#include "AddSyncFromUiManager.h"
 
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
@@ -41,6 +42,19 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
+}
+
+void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
+{
+    auto syncManager = AddSyncFromUiManager::addSync_static(megaFolderHandle, false, true);
+
+    connect(syncManager, &AddSyncFromUiManager::syncAddingStarted, this, [this](){
+        syncsStateInformation(SyncStateInformation::SAVING);
+    });
+
+    connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
+        syncsStateInformation(SyncStateInformation::SAVING_FINISHED);
+    });
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -109,11 +123,6 @@ void SyncSettingsUI::changeEvent(QEvent* event)
     }
 
     SyncSettingsUIBase::changeEvent(event);
-}
-
-void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
-{
-    QmlDialogManager::instance()->openAddSync(remoteFolder, true);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

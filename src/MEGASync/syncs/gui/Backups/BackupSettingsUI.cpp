@@ -7,9 +7,9 @@
 #include "Backups.h"
 #include "Onboarding.h"
 
-#include "DialogOpener.h"
-#include "RemoveBackupDialog.h"
+#include "AddBackupFromUiManager.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include "ui_SyncSettingsUIBase.h"
 
@@ -52,6 +52,11 @@ BackupSettingsUI::~BackupSettingsUI()
 {
 }
 
+void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
+{
+    AddBackupFromUiManager::addBackup_static(false);
+}
+
 void BackupSettingsUI::changeEvent(QEvent *event)
 {    
     if(event->type() == QEvent::LanguageChange)
@@ -71,16 +76,7 @@ void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
-
-    DialogOpener::showDialog(dialog,[this, dialog]()
-    {
-        if(dialog->result() == QDialog::Accepted)
-        {
-            syncsStateInformation(SyncStateInformation::SAVING);
-            mSyncController->removeSync(dialog->backupToRemove(), dialog->targetFolder());
-        }
-    });
+    AddBackupFromUiManager::removeBackup_static(backup, this);
 }
 
 QString BackupSettingsUI::getFinishWarningIconString() const
@@ -132,13 +128,6 @@ QString BackupSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> 
 void BackupSettingsUI::setBackupsTitle()
 {
     setTitle(tr("Backups"));
-}
-
-void BackupSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
-{
-    Q_UNUSED(remoteFolder);
-
-    QmlDialogManager::instance()->openBackupsDialog(true);
 }
 
 QString BackupSettingsUI::disableString() const

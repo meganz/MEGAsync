@@ -174,7 +174,7 @@ public:
     }
 
 public slots:
-    void addButtonClicked(const QString& remoteFolder) const;
+    virtual void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) = 0;
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
@@ -202,8 +202,6 @@ protected:
     //Error removing
     virtual QString getErrorRemovingTitle() const = 0;
     virtual QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) = 0;
-
-    virtual void addSyncAfterOverQuotaCheck(const QString& remoteFolder) const = 0;
 
 protected slots:
     virtual void removeSyncButtonClicked();
