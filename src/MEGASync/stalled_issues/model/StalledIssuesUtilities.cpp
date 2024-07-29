@@ -23,7 +23,8 @@ StalledIssuesUtilities::StalledIssuesUtilities()
 
 std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
-    std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    std::unique_ptr<mega::MegaNode> fileNode(
+        MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
     return removeRemoteFile(fileNode.get());
 }
 
@@ -84,7 +85,7 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                         result = true;
                     }
                 },
-                path.toStdString().c_str(),
+                path.toUtf8().constData(),
                 syncId);
         }
         else

@@ -711,7 +711,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         std::vector<std::string> vExclusions;
         for (const QString& exclusion : exclusions)
         {
-            vExclusions.push_back(exclusion.toStdString());
+            vExclusions.push_back(exclusion.toUtf8().constData());
         }
         mMegaApi->setLegacyExcludedNames(&vExclusions);
     }
@@ -721,7 +721,7 @@ void LoginController::loadSyncExclusionRules(const QString& email)
         std::vector<std::string> vExclusionPaths;
         for (const QString& exclusionPath : exclusionPaths)
         {
-            vExclusionPaths.push_back(exclusionPath.toStdString());
+            vExclusionPaths.push_back(exclusionPath.toUtf8().constData());
         }
         mMegaApi->setLegacyExcludedPaths(&vExclusionPaths);
     }
