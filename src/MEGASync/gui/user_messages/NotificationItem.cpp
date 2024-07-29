@@ -21,7 +21,7 @@ constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
 constexpr int HeightWithImage = 346;
-constexpr int NumSecsToWaitBeforeRemove = 2;
+constexpr int NumSecsToWaitBeforeRemove = 1;
 }
 
 NotificationItem::NotificationItem(QWidget* parent)
@@ -121,9 +121,10 @@ void NotificationItem::onCTAClicked()
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
-    if(remainingTimeSecs <= 0)
+    // It is required to display this text after the expiration time.
+    if(remainingTimeSecs <= 1)
     {
-        if(remainingTimeSecs == 0)
+        if(remainingTimeSecs == 1)
         {
             mUi->lTime->setText(tr("Offer expired"));
             mUi->lTime->setStyleSheet(ExpiredSoonColor);
@@ -137,7 +138,9 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
         return;
     }
 
-    TimeInterval timeInterval(remainingTimeSecs);
+    // The timer is accurate and the requirement is to display remaining
+    // time rounded down to the nearest hour or day.
+    TimeInterval timeInterval(remainingTimeSecs - 1);
     QString timeText;
     if(timeInterval.days > 0)
     {
@@ -179,6 +182,9 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     connect(mUi->bCTA, &QPushButton::clicked,
             this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
 
+    // NotificationExpirationTimer is a QTimer optimized for this use case.
+    // We want only update the remaining time every second, minute, hour or day
+    // depending in the remaining time, not always to update every second.
     connect(&mExpirationTimer, &NotificationExpirationTimer::expired,
             this, &NotificationItem::onTimerExpirated);
 

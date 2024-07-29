@@ -46,17 +46,17 @@ void NotificationExpirationTimer::singleShot(int64_t remainingTimeSecs)
     int interval = 0;
 
     if (timeInterval.days > 0
-        && timeInterval.days > mLastTimeInterval.days)
+            && timeInterval.days > mLastTimeInterval.days)
     {
         // Time until the next change of day
-        int secondsUntilNextDay = static_cast<int>(remainingTimeSecs) - SecsIn1Day;
+        int secondsUntilNextDay = static_cast<int>(remainingTimeSecs) - timeInterval.days * SecsIn1Day;
         interval = secondsUntilNextDay * MsecIn1Sec;
     }
     else if ((timeInterval.days == 1 && timeInterval.hours == 0)
              || (timeInterval.hours > 0 && timeInterval.hours > mLastTimeInterval.hours))
     {
         // Time until the next change of hour
-        int secondsUntilNextHour = static_cast<int>(remainingTimeSecs) - SecsIn1Hour;
+        int secondsUntilNextHour = static_cast<int>(remainingTimeSecs) - timeInterval.hours * SecsIn1Hour;
         interval = secondsUntilNextHour * MsecIn1Sec;
     }
     else
