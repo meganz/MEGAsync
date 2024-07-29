@@ -119,6 +119,7 @@ FocusScope {
         }
         focus: true
         text: Strings.choose
+        enabled: (!root.local && syncsComponentAccess != null) ? !syncsComponentAccess.remoteFolderDisabled : true;
         onClicked: {
             folderItem.error = false;
             folderItem.hint.visible = false;

@@ -4915,9 +4915,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
         }
         else
         {
-            auto node = megaApi->getNodeByHandle(targetFolder);
-            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
-            infoDialog->addSync(remoteFolder);
+            infoDialog->addSync(targetFolder);
         }
     }
 }

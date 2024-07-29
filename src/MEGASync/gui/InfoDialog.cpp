@@ -24,6 +24,8 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "AddSyncFromUiManager.h"
+#include "AddBackupFromUiManager.h"
 
 #include "Utilities.h"
 #include "Platform.h"
@@ -1040,9 +1042,9 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(const QString& remoteFolder)
+void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    QmlDialogManager::instance()->openAddSync(remoteFolder, false);
+    AddSyncFromUiManager::addSync_static(handle, handle == mega::INVALID_HANDLE ? false : true);
 }
 
 void InfoDialog::addBackup()

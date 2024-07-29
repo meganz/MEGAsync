@@ -62,6 +62,17 @@ QString SyncsComponent::getRemoteFolder() const
     return mRemoteFolder;
 }
 
+void SyncsComponent::setRemoteFolderDisabled(bool remoteFolderDisabled)
+{
+    mRemoteFolderDisabled = remoteFolderDisabled;
+    emit remoteFolderDisabledChanged();
+}
+
+bool SyncsComponent::isRemoteFolderDisabled() const
+{
+    return mRemoteFolderDisabled;
+}
+
 void SyncsComponent::setComesFromSettings(bool value)
 {
     mComesFromSettings = value;

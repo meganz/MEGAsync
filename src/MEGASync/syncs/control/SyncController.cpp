@@ -165,6 +165,8 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
                                                                                remoteHandle,
                                                                                listener.get());
             }
+
+            emit syncRemoveStatus(e->getErrorCode());
         });
 
     mApi->removeSync(backupId, removeSyncListener.get());

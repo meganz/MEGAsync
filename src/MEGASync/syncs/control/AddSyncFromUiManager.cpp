@@ -2,7 +2,6 @@
 
 #include <GuiUtilities.h>
 #include <DialogOpener.h>
-#include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/control/SyncSettings.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <QmlDialogWrapper.h>
@@ -75,6 +74,8 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
 
 void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
 {
+    bool invalidSync(true);
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
     if(node)
     {
@@ -91,34 +92,32 @@ void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWid
                     {
                         auto syncController = new SyncController(this);
                         syncController->removeSync(syncSettings, remoteHandle);
-
                         SyncController::connect(syncController,
                             &SyncController::syncRemoveStatus,
                             this,
                             [this, syncController](const int)
                             {
                                 syncController->deleteLater();
-                                deleteLater();
                                 emit syncRemoved();
+                                deleteLater();
                             });
                     }
                     else
                     {
                         deleteLater();
-                        return;
                     }
                 });
 
-            //Dialog correctly shown
-            return;
+            //Node and sync settings found, removing has started asynchronously
+            invalidSync = false;
         }
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = QCoreApplication::translate("MegaSyncError", "Sync removal failed. Sync not found");
-    msgInfo.buttons = QMessageBox::Ok;
-    QMegaMessageBox::information(msgInfo);
-
-    deleteLater();
+    if(invalidSync)
+    {
+        //Even if the node is invalid or the sync has not been found, that means that the sync is no longer valid, so we
+        //remove it from the UI without warning the user...
+        emit syncRemoved();
+        deleteLater();
+    }
 }
