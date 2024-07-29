@@ -24,7 +24,7 @@ constexpr int HeightWithImage = 346;
 constexpr int NumSecsToWaitBeforeRemove = 2;
 }
 
-NotificationItem::NotificationItem(QWidget *parent)
+NotificationItem::NotificationItem(QWidget* parent)
     : UserMessageWidget(parent)
     , mUi(new Ui::NotificationItem)
     , mNotificationData(nullptr)
@@ -179,7 +179,7 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     connect(mUi->bCTA, &QPushButton::clicked,
             this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
 
-    connect(&mExpirationTimer, &IntervalTimer::expired,
+    connect(&mExpirationTimer, &NotificationExpirationTimer::expired,
             this, &NotificationItem::onTimerExpirated);
 
     updateNotificationData(newNotificationData);

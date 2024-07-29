@@ -3,6 +3,7 @@
 
 #include "UserMessageWidget.h"
 #include "Utilities.h"
+#include "NotificationExpirationTimer.h"
 
 #include <QPointer>
 
@@ -38,7 +39,7 @@ private slots:
 private:
     Ui::NotificationItem* mUi;
     QPointer<UserNotification> mNotificationData;
-    IntervalTimer mExpirationTimer;
+    NotificationExpirationTimer mExpirationTimer;
     bool mDisplayEventSent = false;
 
     void setNotificationData(UserNotification* newNotificationData);

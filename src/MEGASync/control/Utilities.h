@@ -511,32 +511,6 @@ private:
     bool mUndelete;
 };
 
-class IntervalTimer : public QTimer
-{
-    Q_OBJECT
-
-public:
-    explicit IntervalTimer(QObject* parent = nullptr);
-    explicit IntervalTimer(int64_t expirationTimeSecs, QObject* parent = nullptr);
-    virtual ~IntervalTimer() = default;
-
-    void startExpirationTime(int64_t expirationTimeSecs);
-    int64_t getRemainingTime() const;
-
-signals:
-    void expired(int remainingTimeSecs);
-
-private slots:
-    void onTimeout();
-
-private:
-    TimeInterval mLastTimeInterval;
-    int64_t mExpirationTimeSecs;
-
-    void singleShot(int64_t remainingTimeSecs);
-
-};
-
 Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
 
 #endif // UTILITIES_H
