@@ -82,8 +82,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         localError = LocalErrors::EmptyPath;
     }
-
-    if (!localError.has_value())
+    else
     {
         auto localFolderPath = QDir::toNativeSeparators(path);
         QDir openFromFolderDir(localFolderPath);
@@ -108,7 +107,7 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         QString errorMessage;
         auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
-        if (syncability == SyncController::WARN_SYNC)
+        if (syncability == SyncController::WARN_SYNC || syncability == SyncController::CANT_SYNC)
         {
             // Only local WARN_SYNC at this point
             //local warning write permission needs to be different for this case
@@ -134,8 +133,7 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     {
         remoteError = RemoteErrors::EmptyPath;
     }
-
-    if (!remoteError.has_value())
+    else
     {
         SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
         auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
@@ -163,14 +161,14 @@ bool Syncs::checkLocalSync(const QString& path)
 {
     helperCheckLocalSync(path);
 
-    return (mLocalError.has_value());
+    return (!mLocalError.has_value());
 }
 
 bool Syncs::checkRemoteSync(const QString& path)
 {
     helperCheckRemoteSync(path);
 
-    return (mRemoteError.has_value());
+    return (!mRemoteError.has_value());
 }
 
 QString Syncs::getDefaultMegaFolder() const

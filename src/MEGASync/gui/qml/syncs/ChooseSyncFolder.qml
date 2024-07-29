@@ -64,6 +64,13 @@ FocusScope {
 
         if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
             defaultFolder = "";
+
+            if (local) {
+                syncs.clearLocalError();
+            }
+            else {
+                syncs.clearRemoteError();
+            }
         }
 
         return defaultFolder;
