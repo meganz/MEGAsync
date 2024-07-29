@@ -22,7 +22,8 @@ void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
     }
 
     updateTrackInfo(fromInfoDialog);
-    send(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+    const bool addJourneyId = true;
+    send(type, AppStatsEvents::getEventMessage(type), addJourneyId, mViewID);
 }
 
 void ProxyStatsEventHandler::sendTrackedEventArg(AppStatsEvents::EventType type,
@@ -35,7 +36,8 @@ void ProxyStatsEventHandler::sendTrackedEventArg(AppStatsEvents::EventType type,
     }
 
     updateTrackInfo(fromInfoDialog);
-    send(type, AppStatsEvents::getEventMessage(type, args), true, mViewID);
+    const bool addJourneyId = true;
+    send(type, AppStatsEvents::getEventMessage(type, args), addJourneyId, mViewID);
 }
 
 void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
@@ -110,16 +112,19 @@ QString ProxyStatsEventHandler::encodeMessage(const QString& msg) const
 
 void ProxyStatsEventHandler::updateTrackInfo(bool fromInfoDialog)
 {
-    if(mUpdateViewID)
+    if (!mUpdateViewID)
     {
-        if(!fromInfoDialog || (fromInfoDialog && mLastInfoDialogEventSent))
-        {
-            mViewID = mMegaApi->generateViewId();
-            mUpdateViewID = false;
-        }
-        else if(fromInfoDialog && !mLastInfoDialogEventSent)
-        {
-            mLastInfoDialogEventSent = true;
-        }
+        return;
+    }
+
+    if (!fromInfoDialog || mLastInfoDialogEventSent)
+    {
+        mViewID = mMegaApi->generateViewId();
+        mUpdateViewID = false;
+    }
+    else
+    {
+        mLastInfoDialogEventSent = true;
     }
 }
+
