@@ -139,6 +139,7 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
+    void selectIndex(const QModelIndex& index, bool setCurrent);
 
     ButtonIconManager mButtonIconManager;
     bool first;
