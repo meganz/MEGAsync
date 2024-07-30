@@ -175,7 +175,8 @@ public:
     void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
 
     //IgnoreConflicts
-    void ignoreItems(const QModelIndexList& list, bool isSymLink);
+    void ignoreItems(const QModelIndexList& list);
+    void ignoreAllSimilarIssues();
     void ignoreSymLinks();
     void showIgnoreItemsError(bool allFailed);
 
@@ -296,9 +297,6 @@ private:
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
-
-    //Ignored items
-    QMap<mega::MegaHandle, QStringList> mIgnoredItemsBySync;
     
     //Fix fingerprint
     QList<StalledIssueVariant> mFingerprintIssuesToFix;

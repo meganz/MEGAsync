@@ -330,13 +330,9 @@ public:
     virtual void finishAsyncIssueSolving(){}
     virtual void startAsyncIssueSolving();
 
-    virtual bool isSymLink() const {return false;}
-    virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
     static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
-    bool canBeIgnored() const;
     virtual QStringList getLocalFiles();
-    QStringList getIgnoredFiles() const;
 
     bool mDetectedMEGASide = false;
 
@@ -411,7 +407,7 @@ protected:
     mutable SolveType mIsSolved = SolveType::UNSOLVED;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
-    QStringList mIgnoredPaths;
+
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
