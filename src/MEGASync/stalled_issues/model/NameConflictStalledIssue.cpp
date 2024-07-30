@@ -449,7 +449,7 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
                         conflictedNode.get(),
-                        renameFrom.toStdString().c_str());
+                        renameFrom.toUtf8().constData());
 
                     //Fail string pending
                     conflictName->setFailed(tr("Unable to rename the local file"));
@@ -560,15 +560,15 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                     MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
-                        [this, &error](const mega::MegaRequest&, const mega::MegaError& e)
+                        [this, &error](mega::MegaRequest*, mega::MegaError* e)
                         {
-                            if(e.getErrorCode() != mega::MegaError::API_OK)
+                            if(e->getErrorCode() != mega::MegaError::API_OK)
                             {
-                                error.reset(e.copy());
+                                error.reset(e->copy());
                             }
                         },
                         conflictedNode.get(),
-                        newName.toStdString().c_str());
+                        newName.toUtf8().constData());
 
                     if(error)
                     {
@@ -644,29 +644,35 @@ bool NameConflictedStalledIssue::renameLocalItemsAutomatically(const QList<std::
     return result;
 }
 
-bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item, const QString &newName)
+bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNameInfo> item,
+                                                    const QString& newName)
 {
     std::shared_ptr<mega::MegaError> error(nullptr);
-    if(item)
+    if (item)
     {
-        std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(item->mHandle));
-        if(conflictedNode)
+        std::unique_ptr<mega::MegaNode> conflictedNode(
+            MegaSyncApp->getMegaApi()->getNodeByHandle(item->mHandle));
+        if (conflictedNode)
         {
-            std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNode->getParentHandle()));
+            std::unique_ptr<mega::MegaNode> parentNode(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedNode->getParentHandle()));
             MegaApiSynchronizedRequest::runRequestWithResult(
                 &mega::MegaApi::renameNode,
                 MegaSyncApp->getMegaApi(),
-                [&error](const mega::MegaRequest&, const mega::MegaError& e)
+                [&error](mega::MegaRequest*, mega::MegaError* e)
                 {
-                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    if (e->getErrorCode() != mega::MegaError::API_OK)
                     {
-                        error.reset(e.copy());
+                        error.reset(e->copy());
                     }
                 },
                 conflictedNode.get(),
-                newName.toStdString().c_str());
+                newName.toUtf8().constData());
 
-            error ? item->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(error.get(), conflictedNode->isFile())) : item->solveByRename(newName);
+            error ? item->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(
+                        error.get(),
+                        conflictedNode->isFile())) :
+                    item->solveByRename(newName);
         }
     }
 

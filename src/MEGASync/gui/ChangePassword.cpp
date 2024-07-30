@@ -4,14 +4,14 @@
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 #include "Login2FA.h"
+#include "RequestListenerManager.h"
 
 using namespace mega;
 
-ChangePassword::ChangePassword(QWidget* parent) :
-    QDialog(parent),
-    mUi(new Ui::ChangePassword),
-    mMegaApi (((MegaApplication*)qApp)->getMegaApi()),
-    mDelegateListener (new QTMegaRequestListener(mMegaApi, this))
+ChangePassword::ChangePassword(QWidget* parent)
+    : QDialog(parent)
+    , mUi(new Ui::ChangePassword)
+    , mMegaApi (((MegaApplication*)qApp)->getMegaApi())
 {
     mUi->setupUi(this);
     mUi->bOk->setDefault(true);
@@ -27,9 +27,8 @@ QString ChangePassword::confirmNewPassword()
     return mUi->lConfirmNewPassword->text();
 }
 
-void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req, mega::MegaError* e)
+void ChangePassword::onRequestFinish(mega::MegaRequest* req, mega::MegaError* e)
 {
-    Q_UNUSED (api)
     switch(req->getType())
     {
         case MegaRequest::TYPE_MULTI_FACTOR_AUTH_CHECK:
@@ -42,9 +41,10 @@ void ChangePassword::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* req,
                 }
                 else
                 {
+                    auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
                     mMegaApi->changePassword(nullptr,
                                              newPassword().toUtf8().constData(),
-                                             mDelegateListener);
+                                             listener.get());
                 }
             }
             else
@@ -116,10 +116,11 @@ void ChangePassword::show2FA(bool invalidCode)
             QString pin = verification->pinCode();
             setDisabled(true);
 
+            auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
             mMegaApi->multiFactorAuthChangePassword(nullptr,
                                                     newPassword().toUtf8().constData(),
                                                     pin.toUtf8().constData(),
-                                                    mDelegateListener);
+                                                    listener.get());
         }
         else
         {
@@ -131,7 +132,6 @@ void ChangePassword::show2FA(bool invalidCode)
 ChangePassword::~ChangePassword()
 {
     delete mUi;
-    delete mDelegateListener;
 }
 
 void ChangePassword::on_bOk_clicked()
@@ -171,16 +171,17 @@ void ChangePassword::on_bOk_clicked()
     {
         setDisabled(true);
 
+        auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
         char* email = mMegaApi->getMyEmail();
         if (email)
         {
-            mMegaApi->multiFactorAuthCheck(email, mDelegateListener);
+            mMegaApi->multiFactorAuthCheck(email, listener.get());
             delete [] email;
         }
         else
         {
             mMegaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(),
-                                           mDelegateListener);
+                                           listener.get());
         }
     }
 }

@@ -122,7 +122,7 @@ void MegaIgnoreManager::parseIgnoresFile()
             }
             ignore.close();
         }
-        std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+        std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toUtf8().constData()));
         mIgnoreCRC = QString::fromUtf8(crc.get());
     }
 
@@ -372,7 +372,7 @@ void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool create
 
 bool MegaIgnoreManager::hasChanged() const
 {
-    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toUtf8().constData()));
     auto IgnoreCRC = QString::fromUtf8(crc.get());
     return mIgnoreCRC.compare(IgnoreCRC) != 0;
 }

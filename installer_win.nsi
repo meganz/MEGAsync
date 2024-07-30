@@ -456,9 +456,18 @@ done:
 FunctionEnd
 
 !macro Install3264DLL  source target
-  File "${source}"
-  AccessControl::SetFileOwner ${target} "$USERNAME"
-  AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
+  ; If the dll already exists, rename it and try to delete it.
+  ; This is to avoid issues with shared dlls loaded in another process
+  ; (moving the dll does not break anything, and we can copy our new dll without issue).
+  IfFileExists ${target} 0 new_install_${target}
+	GetTempFileName $0
+	Delete $0
+	Rename ${target} $0
+	!insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED $0
+  new_install_${target}:
+	  File "${source}"
+	  AccessControl::SetFileOwner ${target} "$USERNAME"
+	  AccessControl::GrantOnFile ${target} "$USERNAME" "GenericRead + GenericWrite"
 !macroend
 
 
@@ -525,6 +534,61 @@ modeselected:
   SetOverwrite on
 
   SetOutPath "$INSTDIR"
+
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
+
+  !insertmacro DEBUG_MSG "Registering DLLs"
+
+; UnRegister shell extensions first
+  IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
+        !define LIBRARY_COM
+		!define LIBRARY_SHELL_EXTENSION
+		!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+		!undef LIBRARY_COM
+		!undef LIBRARY_SHELL_EXTENSION
+		GetTempFileName $0
+		Delete $0
+		Rename "$INSTDIR\ShellExtX32.dll" $0
+		Delete /REBOOTOK $0
+  
+  new_installation_x32:
+  !ifndef BUILD_X64_VERSION
+        !define LIBRARY_COM
+        !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+        !undef LIBRARY_COM
+        !undef LIBRARY_SHELL_EXTENSION
+
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+  !endif
+
+  ${If} ${RunningX64}
+        IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
+			!define LIBRARY_X64
+			!define LIBRARY_COM
+			!define LIBRARY_SHELL_EXTENSION
+			!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+			!undef LIBRARY_X64
+			!undef LIBRARY_COM
+			!undef LIBRARY_SHELL_EXTENSION
+			GetTempFileName $0
+			Delete $0
+			Rename "$INSTDIR\ShellExtX64.dll" $0
+			Delete /REBOOTOK $0
+        
+		new_installation_x64:
+        !define LIBRARY_X64
+        !define LIBRARY_COM
+        !define LIBRARY_SHELL_EXTENSION
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+        !undef LIBRARY_X64
+        !undef LIBRARY_COM
+        !undef LIBRARY_SHELL_EXTENSION
+
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
+  ${EndIf}
 
   !ifdef BUILD_X64_VERSION
     !insertmacro Install3264DLL "${VcRedist64Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
@@ -638,8 +702,8 @@ modeselected:
 !endif
 
   ; Remove unused Qt libs
-  Delete "$INSTDIR\Qt5Xml.dll"
-  Delete "$INSTDIR\Qt5Concurrent.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\Qt5Xml.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\Qt5Concurrent.dll"
 
   ;Disable bearer plugin if it's a reinstallation
   RMDir /r "$INSTDIR\bearer"
@@ -680,24 +744,24 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\swresample-4.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   ;remove old DLLs that we no longer use (some became static; some have later version number)
-  Delete "$INSTDIR\avcodec-57.dll"
-  Delete "$INSTDIR\avformat-57.dll"
-  Delete "$INSTDIR\avutil-55.dll"
-  Delete "$INSTDIR\swscale-4.dll"
-  Delete "$INSTDIR\swresample-2.dll"
-  Delete "$INSTDIR\libsodium.dll"
-  Delete "$INSTDIR\pdfium.dll"
-  Delete "$INSTDIR\avcodec-58.dll"
-  Delete "$INSTDIR\avformat-58.dll"
-  Delete "$INSTDIR\avutil-56.dll"
-  Delete "$INSTDIR\swscale-5.dll"
-  Delete "$INSTDIR\swresample-3.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-55.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-2.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libsodium.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\pdfium.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avcodec-58.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avformat-58.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\avutil-56.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swscale-5.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\swresample-3.dll"
 
-  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  Delete "$INSTDIR\libssl-1_1-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1-x64.dll"
 
-  Delete "$INSTDIR\libcrypto-1_1.dll"
-  Delete "$INSTDIR\libssl-1_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libcrypto-1_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\libssl-1_1.dll"
 
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
@@ -705,48 +769,7 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME" "GenericRead + GenericWrite"
 !endif
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM explorer.exe"
-  IfFileExists "$INSTDIR\ShellExtX32.dll" 0 new_installation_x32
-        GetTempFileName $0
-        Delete $0
-        Rename "$INSTDIR\ShellExtX32.dll" $0
-        Delete /REBOOTOK $0
-  new_installation_x32:
 
-  !insertmacro DEBUG_MSG "Registering DLLs"
-
-  !ifndef BUILD_X64_VERSION
-        ; Register shell extension 1 (x86_32)
-        !define LIBRARY_COM
-        !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
-        !undef LIBRARY_COM
-        !undef LIBRARY_SHELL_EXTENSION
-
-        AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
-        AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
-  !endif
-
-  ${If} ${RunningX64}
-        IfFileExists "$INSTDIR\ShellExtX64.dll" 0 new_installation_x64
-                GetTempFileName $0
-                Delete $0
-                Rename "$INSTDIR\ShellExtX64.dll" $0
-                Delete /REBOOTOK $0
-        new_installation_x64:
-
-        ; Register shell extension 1 (x86_64)
-        !define LIBRARY_X64
-        !define LIBRARY_COM
-        !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
-        !undef LIBRARY_X64
-        !undef LIBRARY_COM
-        !undef LIBRARY_SHELL_EXTENSION
-
-        AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
-        AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
-  ${EndIf}
   ${UAC.CallFunctionAsUser} RunExplorer
 
 #  !insertmacro DEBUG_MSG "Adding firewall rule"
@@ -831,6 +854,7 @@ FunctionEnd
 
 Section Uninstall
   ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
+
   Sleep 1000
   ${UAC.CallFunctionAsUser} un.UninstallSyncs
   Sleep 1000
@@ -839,166 +863,157 @@ Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
   Delete "$INSTDIR\${UNINSTALLER_NAME}"
 
+  ;Shell extension(s)
+  !define LIBRARY_COM
+  !define LIBRARY_SHELL_EXTENSION
+  !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+  !undef LIBRARY_COM
+  !undef LIBRARY_SHELL_EXTENSION
+
+  ${If} ${RunningX64}
+	!define LIBRARY_X64
+	!define LIBRARY_COM
+	!define LIBRARY_SHELL_EXTENSION
+	!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+	!undef LIBRARY_X64
+	!undef LIBRARY_COM
+	!undef LIBRARY_SHELL_EXTENSION
+  ${EndIf}
+
   ;QT4 files
-  Delete "$INSTDIR\QtNetwork4.dll"
-  Delete "$INSTDIR\QtGui4.dll"
-  Delete "$INSTDIR\QtCore4.dll"
-  Delete "$INSTDIR\QtSvg4.dll"
-  Delete "$INSTDIR\QtXml4.dll"
-  Delete "$INSTDIR\imageformats\qgif4.dll"
-  Delete "$INSTDIR\imageformats\qico4.dll"
-  Delete "$INSTDIR\imageformats\qjpeg4.dll"
-  Delete "$INSTDIR\imageformats\qmng4.dll"
-  Delete "$INSTDIR\imageformats\qsvg4.dll"
-  Delete "$INSTDIR\imageformats\qtga4.dll"
-  Delete "$INSTDIR\imageformats\qtiff4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtNetwork4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtGui4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtCore4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtSvg4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\QtXml4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qgif4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qico4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qjpeg4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qmng4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qsvg4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qtga4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qtiff4.dll"
 
   ;QT5 files
-  Delete "$INSTDIR\Qt5Core.dll"
-  Delete "$INSTDIR\Qt5Gui.dll"
-  Delete "$INSTDIR\Qt5Widgets.dll"
-  Delete "$INSTDIR\Qt5Network.dll"
-  Delete "$INSTDIR\Qt5Xml.dll"
-  Delete "$INSTDIR\Qt5Svg.dll"
-  Delete "$INSTDIR\Qt5Concurrent.dll"
-  Delete "$INSTDIR\icudt53.dll"
-  Delete "$INSTDIR\icuin53.dll"
-  Delete "$INSTDIR\icuuc53.dll"
-  Delete "$INSTDIR\icudt54.dll"
-  Delete "$INSTDIR\icuin54.dll"
-  Delete "$INSTDIR\icuuc54.dll"
-  Delete "$INSTDIR\imageformats\qdds.dll"
-  Delete "$INSTDIR\imageformats\qgif.dll"
-  Delete "$INSTDIR\imageformats\qicns.dll"
-  Delete "$INSTDIR\imageformats\qico.dll"
-  Delete "$INSTDIR\imageformats\qjp2.dll"
-  Delete "$INSTDIR\imageformats\qjpeg.dll"
-  Delete "$INSTDIR\imageformats\qmng.dll"
-  Delete "$INSTDIR\imageformats\qsvg.dll"
-  Delete "$INSTDIR\imageformats\qtga.dll"
-  Delete "$INSTDIR\imageformats\qtiff.dll"
-  Delete "$INSTDIR\imageformats\qwbmp.dll"
-  Delete "$INSTDIR\imageformats\qwebp.dll"
-  Delete "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll"
-  Delete "$INSTDIR\accessible\qtaccessiblewidgets4.dll"
-  Delete "$INSTDIR\iconengines\qsvgicon.dll"
-  Delete "$INSTDIR\platforms\qwindows.dll"
-  Delete "$INSTDIR\styles\qwindowsvistastyle.dll"
-  Delete "$INSTDIR\bearer\qgenericbearer.dll"
-  Delete "$INSTDIR\bearer\qnativewifibearer.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Core.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Gui.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Widgets.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Network.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Xml.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Svg.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\Qt5Concurrent.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icudt53.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icuin53.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icuuc53.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icudt54.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icuin54.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\icuuc54.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qdds.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qgif.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qicns.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qico.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qjp2.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qjpeg.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qmng.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qsvg.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qtga.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qtiff.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qwbmp.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\imageformats\qwebp.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\accessible\qtaccessiblewidgets4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\iconengines\qsvgicon.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\platforms\qwindows.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\styles\qwindowsvistastyle.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\bearer\qgenericbearer.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\bearer\qnativewifibearer.dll"
   Delete "$INSTDIR\leftbanner\*"
 
   ;VC++ Redistributable
-  Delete "$INSTDIR\vcruntime140.dll"
-  Delete "$INSTDIR\vcruntime140_1.dll"
-  Delete "$INSTDIR\msvcp140.dll"
-  Delete "$INSTDIR\msvcp140_1.dll"
-  Delete "$INSTDIR\msvcp140_2.dll"
-  Delete "$INSTDIR\msvcp140_codecvt_ids.dll"
-  Delete "$INSTDIR\msvcp140_atomic_wait.dll"
-  Delete "$INSTDIR\concrt140.dll"
-  Delete "$INSTDIR\vccorlib140.dll"
-  Delete "$INSTDIR\vcomp140.dll"
-  Delete "$INSTDIR\ucrtbase.dll"
-  Delete "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
-  Delete "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
-  Delete "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\vcruntime140_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\msvcp140.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\msvcp140_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\msvcp140_2.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\msvcp140_codecvt_ids.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\msvcp140_atomic_wait.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\concrt140.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\vccorlib140.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\vcomp140.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\vcruntime140.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\ucrtbase.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED  "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
 
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAupdater.exe"
-  Delete "$INSTDIR\libeay32.dll"
-  Delete "$INSTDIR\ssleay32.dll"
-  Delete "$INSTDIR\libcurl.dll"
-  Delete "$INSTDIR\cares.dll"
-  Delete "$INSTDIR\libuv.dll"
-  Delete "$INSTDIR\qt.conf"
-  Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
-  Delete "$INSTDIR\avcodec-59.dll"
-  Delete "$INSTDIR\avformat-59.dll"
-  Delete "$INSTDIR\avutil-57.dll"
-  Delete "$INSTDIR\swscale-6.dll"
-  Delete "$INSTDIR\swresample-4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libeay32.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\ssleay32.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcurl.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\cares.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libuv.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\qt.conf"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\NSIS.Library.RegTool*.exe"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avcodec-59.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avformat-59.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avutil-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\swscale-6.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\swresample-4.dll"
 
   ;Still remove old DLLs though we no longer produce them (non-VCPKG may still produce them)
-  Delete "$INSTDIR\avcodec-57.dll"
-  Delete "$INSTDIR\avformat-57.dll"
-  Delete "$INSTDIR\avutil-55.dll"
-  Delete "$INSTDIR\swscale-4.dll"
-  Delete "$INSTDIR\swresample-2.dll"
-  Delete "$INSTDIR\libsodium.dll"
-  Delete "$INSTDIR\pdfium.dll"
-  Delete "$INSTDIR\libcrypto-1_1-x64.dll"
-  Delete "$INSTDIR\libssl-1_1-x64.dll"
-  Delete "$INSTDIR\libcrypto-1_1.dll"
-  Delete "$INSTDIR\libssl-1_1.dll"
-  Delete "$INSTDIR\libssl-3-x64.dll"
-  Delete "$INSTDIR\libcrypto-3-x64.dll"
-  Delete "$INSTDIR\libssl-3.dll"
-  Delete "$INSTDIR\libcrypto-3.dll"
-
-  !define LIBRARY_COM
-  !define LIBRARY_SHELL_EXTENSION
-  !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX32.dll"
-  !undef LIBRARY_COM
-  !undef LIBRARY_SHELL_EXTENSION
-
-  GetTempFileName $0
-  Delete $0
-  Rename "$INSTDIR\ShellExtX32.dll" $0
-  Delete /REBOOTOK $0
-
-  ${If} ${RunningX64}
-        !define LIBRARY_X64
-        !define LIBRARY_COM
-        !define LIBRARY_SHELL_EXTENSION
-        !insertmacro UnInstallLib REGDLL NOTSHARED NOREMOVE "$INSTDIR\ShellExtX64.dll"
-        !undef LIBRARY_X64
-        !undef LIBRARY_COM
-        !undef LIBRARY_SHELL_EXTENSION
-
-        GetTempFileName $0
-        Delete $0
-        Rename "$INSTDIR\ShellExtX64.dll" $0
-        Delete /REBOOTOK $0
-  ${EndIf}
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avcodec-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avformat-57.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\avutil-55.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\swscale-4.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\swresample-2.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libsodium.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\pdfium.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcrypto-1_1-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libssl-1_1-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcrypto-1_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libssl-1_1.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libssl-3-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcrypto-3-x64.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libssl-3.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcrypto-3.dll"
 
   SetShellVarContext current
   Delete "$SMPROGRAMS\$ICONS_GROUP\Uninstall.lnk"

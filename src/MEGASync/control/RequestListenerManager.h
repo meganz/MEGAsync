@@ -10,7 +10,6 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include <mutex>
-#include <type_traits>
 
 struct onRequestFinishOnlyListenerCallback
 {
@@ -26,6 +25,7 @@ struct ListenerCallbacks
     std::function<void(mega::MegaRequest *request)> onRequestUpdate;
     std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError;
     bool removeAfterReqFinish = false;
+    bool isSynchronousOneShotReq = false;
 };
 
 class ObserverRequestListener : public QObject, public mega::MegaRequestListener
@@ -81,11 +81,38 @@ public:
     {
         ListenerCallbacks callbacks;
         callbacks.callbackClass = callbackClass;
-        callbacks.onRequestFinish = [callbackClass](mega::MegaRequest* request, mega::MegaError* error) {
+        callbacks.onRequestFinish = [callbackClass](::mega::MegaRequest* request, ::mega::MegaError* error) {
             callbackClass->onRequestFinish(request, error);
         };
         callbacks.removeAfterReqFinish = removeAfterReqFinish;
 
+        return registerAndGetListener(callbacks);
+    }
+
+    //! This function will primarily be used for "single shot" purposes:
+    //! One request, one "onRequestFinish" callback
+    //! Hence, the default value of removeAfterReqFinish is "true"
+    template<typename T>
+    std::shared_ptr<::mega::QTMegaRequestListener> registerAndGetCustomFinishListener(
+        T* callbackClass,
+        std::function<void(::mega::MegaRequest*, ::mega::MegaError*)> onRequestFinish,
+        bool removeAfterReqFinish = true)
+    {
+        ListenerCallbacks callbacks;
+        callbacks.callbackClass = callbackClass;
+        callbacks.onRequestFinish = onRequestFinish;
+        callbacks.removeAfterReqFinish = removeAfterReqFinish;
+        return registerAndGetListener(callbacks);
+    }
+
+    std::shared_ptr<::mega::QTMegaRequestListener> registerAndGetSynchronousFinishListener(
+        std::function<void(::mega::MegaRequest*, ::mega::MegaError*)> onRequestFinish)
+    {
+        ListenerCallbacks callbacks;
+        callbacks.callbackClass = nullptr;
+        callbacks.onRequestFinish = onRequestFinish;
+        callbacks.removeAfterReqFinish = true;
+        callbacks.isSynchronousOneShotReq = true;
         return registerAndGetListener(callbacks);
     }
 
