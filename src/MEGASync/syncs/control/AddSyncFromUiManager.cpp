@@ -7,10 +7,10 @@
 #include <QmlDialogWrapper.h>
 #include <syncs/SyncsComponent.h>
 
-const AddSyncFromUiManager* const AddSyncFromUiManager::addSync_static(mega::MegaHandle handle, bool disableUi, bool comesFromSettings)
+const AddSyncFromUiManager* const AddSyncFromUiManager::addSync_static(mega::MegaHandle handle, bool comesFromSettings)
 {
     auto syncManager(new AddSyncFromUiManager());
-    syncManager->addSync(handle, disableUi, comesFromSettings);
+    syncManager->addSync(handle, comesFromSettings);
     return syncManager;
 }
 
@@ -21,9 +21,9 @@ const AddSyncFromUiManager* const AddSyncFromUiManager::removeSync_static(mega::
     return syncManager;
 }
 
-void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi, bool comesFromSettings)
+void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool comesFromSettings)
 {
-    performAddSync(handle, disableUi, comesFromSettings);
+    performAddSync(handle, comesFromSettings);
 }
 
 void AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
@@ -31,7 +31,7 @@ void AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
     performRemoveSync(handle, parent);
 }
 
-void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableUi, bool comesFromSettings)
+void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool comesFromSettings)
 {
     QString remoteFolder;
 
@@ -42,7 +42,7 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, handle, disableUi, comesFromSettings, remoteFolder, this]()
+    auto addSyncLambda = [overQuotaDialog, handle, comesFromSettings, remoteFolder, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -57,7 +57,6 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
             }
             syncsDialog->wrapper()->setComesFromSettings(comesFromSettings);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            syncsDialog->wrapper()->setRemoteFolderDisabled(disableUi);
             DialogOpener::showDialog(syncsDialog);
         }
     };

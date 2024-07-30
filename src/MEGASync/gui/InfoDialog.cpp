@@ -1044,7 +1044,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    AddSyncFromUiManager::addSync_static(handle, handle == mega::INVALID_HANDLE ? false : true);
+    AddSyncFromUiManager::addSync_static(handle);
 }
 
 void InfoDialog::addBackup()

@@ -13,10 +13,10 @@ public:
     AddSyncFromUiManager() = default;
     ~AddSyncFromUiManager() = default;
 
-    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false, bool comesFromSettings = false);
+    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);
     void removeSync(mega::MegaHandle handle, QWidget* parent);
 
-    static const AddSyncFromUiManager* const addSync_static(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false, bool comesFromSettings = false);
+    static const AddSyncFromUiManager* const addSync_static(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);
     static const AddSyncFromUiManager* const removeSync_static(mega::MegaHandle handle, QWidget* parent);
 
 signals:
@@ -25,7 +25,7 @@ signals:
     void syncRemoved();
 
 private:
-    void performAddSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool disableUi = false, bool comesFromSettings = false);
+    void performAddSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);
     void performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent);
 };
 

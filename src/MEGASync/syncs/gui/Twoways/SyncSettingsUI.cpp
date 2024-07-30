@@ -46,7 +46,7 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    AddSyncFromUiManager::addSync_static(megaFolderHandle, false, true);
+    AddSyncFromUiManager::addSync_static(megaFolderHandle, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
