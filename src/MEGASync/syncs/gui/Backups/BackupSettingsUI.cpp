@@ -18,7 +18,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setBackupsTitle();
-    setTable<BackupTableView, BackupItemModel>();
+    setTable<BackupTableView, BackupItemModel, BackupsController>();
 
     connect(&BackupsController::instance(), &BackupsController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
@@ -68,11 +68,6 @@ void BackupSettingsUI::changeEvent(QEvent *event)
     }
 
     SyncSettingsUIBase::changeEvent(event);
-}
-
-void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
-{
-    removeSync(backup);
 }
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)

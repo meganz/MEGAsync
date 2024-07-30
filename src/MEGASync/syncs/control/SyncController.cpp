@@ -11,10 +11,11 @@
 using namespace mega;
 
 SyncController::SyncController(QObject* parent)
-    : QObject(parent),
-      mPendingBackups(QMap<QString, QString>()),
-      mApi(MegaSyncApp->getMegaApi()),
-      mSyncInfo(SyncInfo::instance())
+    : QObject(parent)
+    , mPendingBackups(QMap<QString, QString>())
+    , mApi(MegaSyncApp->getMegaApi())
+    , mSyncInfo(SyncInfo::instance())
+    , mActiveOperations(0)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncInfo available
     assert(mApi);
@@ -37,9 +38,11 @@ void SyncController::addBackup(const QString& localFolder, const QString& syncNa
     mPendingBackups.insert(localFolder, syncName);
 
     auto request = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [this](){
+    connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [this]()
+    {
       createPendingBackups();
-    }, Qt::UniqueConnection);
+    });
+
     if(request->isAttributeReady())
     {
         createPendingBackups();
@@ -73,6 +76,9 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
                  .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
+
+    syncOperationBegins();
+
     QString syncCleanName = syncName;
     if(syncCleanName.isEmpty())
     {
@@ -99,6 +105,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
             }
 
             emit syncAddStatus(errorCode, syncErrorCode, localFolder);
+            syncOperationEnds();
         });
 
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
@@ -120,13 +127,15 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Removing sync (%1) \"%2\"")
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->name()).toUtf8().constData());
 
+    syncOperationBegins();
+
     bool isBackup = syncSetting->getType() == MegaSync::TYPE_BACKUP;
     MegaHandle backupRoot = syncSetting->getMegaHandle();
     MegaHandle backupId = syncSetting->backupId();
 
     auto removeSyncListener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e){
+        [=](MegaRequest*, MegaError* e){
             if (e->getErrorCode() != MegaError::API_OK)
             {
                 QString errorMsg = QString::fromUtf8(e->getErrorString());
@@ -166,6 +175,7 @@ void SyncController::removeSync(std::shared_ptr<SyncSettings> syncSetting, const
                                                                                listener.get());
             }
 
+            syncOperationEnds();
             emit syncRemoveStatus(e->getErrorCode());
         });
 
@@ -184,10 +194,11 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
+    syncOperationBegins();
+
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e){
-            emit signalSyncOperationEnds(syncSetting);
+        [=](MegaRequest*, MegaError* e){
             auto syncErrorCode (static_cast<MegaSync::Error>(e->getSyncError()));
             auto errorCode(e->getErrorCode());
 
@@ -218,6 +229,8 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
                     errorMsg);
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
             }
+
+            syncOperationEnds();
         });
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_RUNNING, listener.get());
@@ -235,18 +248,19 @@ void SyncController::setSyncToPause(std::shared_ptr<SyncSettings> syncSetting)
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
-    emit signalSyncOperationBegins(syncSetting);
+    syncOperationBegins();
 
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e){
+        [=](MegaRequest*, MegaError* e){
             updateSyncSettings(*e, syncSetting);
 
-            emit signalSyncOperationEnds(syncSetting);
             if (e->getErrorCode() != MegaError::API_OK)
             {
                 emit signalSyncOperationError(syncSetting);
             }
+
+            syncOperationEnds();
         });
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_PAUSED, listener.get());
@@ -264,18 +278,18 @@ void SyncController::setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting)
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
-    emit signalSyncOperationBegins(syncSetting);
+    syncOperationBegins();
 
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e){
+        [=](MegaRequest*, MegaError* e){
             updateSyncSettings(*e, syncSetting);
 
-            emit signalSyncOperationEnds(syncSetting);
             if (e->getErrorCode() != MegaError::API_OK)
             {
                 emit signalSyncOperationError(syncSetting);
             }
+            syncOperationEnds();
         });
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_SUSPENDED, listener.get());
@@ -293,9 +307,11 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
                  .arg(getSyncTypeString(syncSetting->getType()), syncSetting->getLocalFolder(), syncSetting->getMegaFolder())
                  .toUtf8().constData());
 
+    syncOperationBegins();
+
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e){
+        [=](MegaRequest*, MegaError* e){
             if (!syncSetting)
             {
                 return;
@@ -305,7 +321,6 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
 
             // NOTE: As of sdk commit 94e2b9dd1db6a886e21cc1ee826bda58c8c33f99, this never fails
             // and errorCode is always MegaError::API_OK.
-            emit signalSyncOperationEnds(syncSetting);
             auto errorCode (e->getErrorCode());
             if (errorCode != MegaError::API_OK)
             {
@@ -336,6 +351,8 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
                 }
             }
+
+            syncOperationEnds();
         });
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, listener.get());
@@ -648,4 +665,20 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
         }
     }
     return typeString;
+}
+
+//This system has been designed for Backups, as several backups can be created in a row
+//and only after the last one the signal should be sent
+void SyncController::syncOperationBegins()
+{
+    emit signalSyncOperationBegins();
+    mActiveOperations++;
+}
+
+void SyncController::syncOperationEnds()
+{
+    if(--mActiveOperations == 0)
+    {
+        emit signalSyncOperationEnds();
+    }
 }

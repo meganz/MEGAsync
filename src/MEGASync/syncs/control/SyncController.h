@@ -75,8 +75,8 @@ signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
     void syncRemoveStatus(int errorCode);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
-    void signalSyncOperationBegins(std::shared_ptr<SyncSettings> sync);
-    void signalSyncOperationEnds(std::shared_ptr<SyncSettings> sync);
+    void signalSyncOperationBegins();
+    void signalSyncOperationEnds();
     void signalSyncOperationError(std::shared_ptr<SyncSettings> sync);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
 
@@ -89,6 +89,11 @@ private:
     QString getSyncAPIErrorMsg(int megaError);
     QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
+
+    //Sync/Backup operation signals
+    void syncOperationBegins();
+    void syncOperationEnds();
+    uint mActiveOperations;
 
     mega::MegaApi* mApi;
 

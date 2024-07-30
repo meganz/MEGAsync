@@ -8,13 +8,13 @@
 #include "MegaApplication.h"
 #include "SyncsComponent.h"
 #include "AddSyncFromUiManager.h"
-
+#include "RemoveSyncConfirmationDialog.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setSyncsTitle();
-    setTable<SyncTableView,SyncItemModel>();
+    setTable<SyncTableView,SyncItemModel, SyncController>();
 
     mSyncElement.initElements(this);
 
@@ -46,15 +46,7 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    auto syncManager = AddSyncFromUiManager::addSync_static(megaFolderHandle, false, true);
-
-    connect(syncManager, &AddSyncFromUiManager::syncAddingStarted, this, [this](){
-        syncsStateInformation(SyncStateInformation::SAVING);
-    });
-
-    connect(syncManager, &AddSyncFromUiManager::syncAdded, this, [this](){
-        syncsStateInformation(SyncStateInformation::SAVING_FINISHED);
-    });
+    AddSyncFromUiManager::addSync_static(megaFolderHandle, false, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -107,6 +99,11 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
 {
     return tr("Your sync can't be removed. Reason: %1")
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
+}
+
+void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
+{
+    AddSyncFromUiManager::removeSync_static(sync->getMegaHandle(), this);
 }
 
 void SyncSettingsUI::setSyncsTitle()
