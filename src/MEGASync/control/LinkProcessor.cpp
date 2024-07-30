@@ -3,6 +3,7 @@
 #include "MegaApplication.h"
 #include "CommonMessages.h"
 #include <QDir>
+#include "RequestListenerManager.h"
 
 using namespace mega;
 
@@ -16,11 +17,13 @@ LinkProcessor::LinkProcessor(const QStringList& linkList, MegaApi* megaApi, Mega
     , mMegaApiFolders(megaApiFolders)
     , mLinkList(linkList)
     , mImportParentFolder(mega::INVALID_HANDLE)
-    , mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this))
     , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
     , mCurrentIndex(0)
 {
     resetAndSetLinkList(linkList);
+
+    // Register for SDK Request callbacks
+    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
 }
 
 LinkProcessor::~LinkProcessor()
@@ -105,7 +108,7 @@ void LinkProcessor::createInvalidLinkObject(int index, int error)
                                            linkStatus::FAILED);
 }
 
-void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
+void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
 {
     const int error = e->getErrorCode();
 
@@ -168,7 +171,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
 
         if (error == MegaError::API_OK)
         {
-            mMegaApiFolders->fetchNodes(this);
+            mMegaApiFolders->fetchNodes(mDelegateListener.get());
         }
         else
         {

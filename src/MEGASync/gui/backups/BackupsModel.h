@@ -4,7 +4,7 @@
 #include "BackupsController.h"
 
 #include "FileFolderAttributes.h"
-#include "syncs/control/SyncController.h"
+#include "SyncController.h"
 
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>

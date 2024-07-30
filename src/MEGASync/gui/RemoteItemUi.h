@@ -27,7 +27,7 @@ public:
     void setAddButtonEnabled(bool enabled);
 
 signals:
-    void addClicked(mega::MegaHandle);
+    void addClicked(const QString& remoteFolder = QString());
     void deleteClicked();
 
 #ifndef Q_OS_WIN

@@ -49,11 +49,6 @@ RowLayout {
 
         OutlineButton {
             id: leftPrimaryButton
-
-            text: Strings.skip
-            onClicked: {
-                window.close();
-            }
         }
 
         SecondaryButton {

@@ -66,9 +66,13 @@ if (UNIX AND NOT APPLE)
     )
 endif()
 
+set (INCLUDE_DIRECTORIES
+    ${CMAKE_CURRENT_LIST_DIR}
+)
+
 target_include_directories(MEGAsync
     PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}
+    ${INCLUDE_DIRECTORIES}
     $<$<BOOL:${WIN32}>:${CMAKE_CURRENT_LIST_DIR}/win>
     $<$<BOOL:${APPLE}>:${CMAKE_CURRENT_LIST_DIR}/macx>
 )

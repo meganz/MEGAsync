@@ -35,7 +35,8 @@ void ObserverRequestListener::onRequestStart(MegaApi*, MegaRequest* request)
 
 void ObserverRequestListener::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
-    if (mCallbacks.onRequestFinish && mCallbacks.callbackClass)
+    if (mCallbacks.onRequestFinish &&
+        (mCallbacks.isSynchronousOneShotReq || mCallbacks.callbackClass))
     {
         mCallbacks.onRequestFinish(request, error);
     }

@@ -2,8 +2,8 @@
 #include "NodeSelectorModelSpecialised.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "UserAttributesRequests/CameraUploadFolder.h"
-#include "UserAttributesRequests/MyChatFilesFolder.h"
+#include "CameraUploadFolder.h"
+#include "MyChatFilesFolder.h"
 #include "MegaNodeNames.h"
 
 #include <QApplication>
@@ -53,22 +53,22 @@ void NodeRequester::requestNodeAndCreateChildren(NodeSelectorModelItem* item, co
             item->setRequestingChildren(true);
             mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-            auto childNodesFiltered = mega::MegaNodeList::createInstance();
             mNodesRequested = true;
-            mShowFiles ?
-                childNodesFiltered = megaApi->getChildren(node.get(), mega::MegaApi::ORDER_NONE, mCancelToken.get())
-                    : childNodesFiltered = megaApi->getChildrenFromType(item->getNode().get(), mega::MegaNode::TYPE_FOLDER, mega::MegaApi::ORDER_NONE, mCancelToken.get());
+
+            std::unique_ptr<mega::MegaSearchFilter> searchFilter(mega::MegaSearchFilter::createInstance());
+            searchFilter->byNodeType(mShowFiles ? mega::MegaNode::TYPE_UNKNOWN : mega::MegaNode::TYPE_FOLDER);
+            searchFilter->byLocationHandle(node->getHandle());
+
+            std::unique_ptr<mega::MegaNodeList> childNodesFiltered(megaApi->getChildren(searchFilter.get(),
+                                                                                        mega::MegaApi::ORDER_NONE,
+                                                                                        mCancelToken.get()));
             mNodesRequested = false;
             if(!isAborted())
             {
                 lockDataMutex(true);
-                item->createChildItems(std::unique_ptr<mega::MegaNodeList>(childNodesFiltered));
+                item->createChildItems(std::move(childNodesFiltered));
                 lockDataMutex(false);
                 emit nodesReady(item);
-            }
-            else
-            {
-                delete childNodesFiltered;
             }
         }
     }

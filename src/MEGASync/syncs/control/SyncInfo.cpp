@@ -1,8 +1,8 @@
 
 #include "SyncInfo.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MyBackupsHandle.h"
 #include <MegaNodeNames.h>
 #include <mega/types.h>
 #include "StatsEventHandler.h"
@@ -387,7 +387,7 @@ QStringList SyncInfo::getCloudDriveSyncMegaFolders(bool cloudDrive)
         for (auto &cs : configuredSyncs[type])
         {
             QString megaFolder = configuredSyncsMap[cs]->getMegaFolder();
-            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
+            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toUtf8().constData()));
 
             while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
             {

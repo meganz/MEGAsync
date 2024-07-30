@@ -560,49 +560,6 @@
     </message>
 </context>
 <context>
-    <name>BindFolderDialog</name>
-    <message>
-        <source>Please select a local folder and a MEGA folder</source>
-        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Select a local folder and a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Add folder</source>
-        <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation>Add folder</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder</source>
-        <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation>Add synchronised folder</translation>
-    </message>
-    <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
-        <translation>Add exclusions</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
-        <translation>Add</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder:</source>
-        <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation>Add synchronised folder:</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Do you want to continue?</translation>
-    </message>
-</context>
-<context>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
@@ -921,6 +878,14 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Resolve</translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1954,39 +1919,6 @@ In some cases they may contain details about your data, such as file or folder n
             <numerusform>%n folder</numerusform>
             <numerusform>%n folders</numerusform>
         </translation>
-    </message>
-</context>
-<context>
-    <name>FolderBinder</name>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Local folder:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>MEGA folder:</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Select local folder</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>You can’t sync a shared folder without full access permissions</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
-        <translation>Select</translation>
     </message>
 </context>
 <context>
@@ -4126,7 +4058,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Changes Undone</source>
         <translatorcomment>Informative message shown when the user selects local or remote option, explaining that the local or remote changes are undone in order to keep the other side changes. SAT-973</translatorcomment>
-        <translation>Changes Undone</translation>
+        <translation>Changes undone</translation>
     </message>
 </context>
 <context>
@@ -4134,12 +4066,12 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>The local and remote locations have changed at the same time</source>
         <translatorcomment>Subtitle description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
-        <translation>The local and remote locations have changed at the same time</translation>
+        <translation>The local and MEGA folders have changed at the same time</translation>
     </message>
     <message>
         <source>Can’t move or rename some items in [B]%1[/B]</source>
         <translatorcomment>Title description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Unable to move or rename some items in [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -4160,7 +4092,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     <message>
         <source>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</source>
         <translatorcomment>Notification sent when at least one MoveOrRenameCannotOccur has failed. SAT-1016.</translatorcomment>
-        <translation>Some issues couldn&apos;t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</translation>
+        <translation>Some issues couldn’t be resolved.[BR]Check the Issues screen for resolution options, and try to resolve the issues again.</translation>
     </message>
 </context>
 <context>
@@ -4244,11 +4176,24 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
+    <name>NameConflictedStalledIssue</name>
+    <message>
+        <source>Unable to rename the file in MEGA</source>
+        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to rename the local file</source>
+        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
         <translatorcomment>Error message shown as a tooltip when merging folders failed in a name conflict stalled issue. SAT-1110</translatorcomment>
-        <translation>Unable to merge this folder.</translation>
+        <translation>Unable to merge these folders</translation>
     </message>
 </context>
 <context>
@@ -4709,11 +4654,6 @@ Enter a different name.</translation>
         <translation>Cancel</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
         <source>Change folder</source>
         <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
         <translation>Change folder</translation>
@@ -4854,19 +4794,9 @@ Enter a different name.</translation>
         <translation>First name</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sync your entire MEGA account with your local device.</translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation>Full sync</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with a local device.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4977,16 +4907,6 @@ Enter a different name.</translation>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>Select a MEGA folder</translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sync selected folders in your MEGA account with your local device.</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sync specific folders in your MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5212,6 +5132,21 @@ Enter a different name.</translation>
         <source>Set Exclusions</source>
         <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
         <translation>Set exclusions</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Choose</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation type="unfinished">Sync your entire MEGA Cloud drive with your local device.</translation>
     </message>
 </context>
 <context>
@@ -6100,7 +6035,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Remote</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose remote version when conflicts occur. SAT-973</translatorcomment>
-        <translation>Remote</translation>
+        <translation>In MEGA</translation>
     </message>
 </context>
 <context>
@@ -7144,17 +7079,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>Being solved</translation>
+        <translation>Solving…</translation>
     </message>
     <message>
         <source>Auto-solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
-        <translation>Auto-solved</translation>
-    </message>
-    <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>Auto-failed</translation>
+        <translation>Auto-resolved</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7289,24 +7219,24 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n issue failed</numerusform>
-            <numerusform>%n issues failed</numerusform>
+            <numerusform>%n issue failed to resolve</numerusform>
+            <numerusform>%n issues failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>1 issue fixed and %n issues failed</source>
         <translatorcomment>In-view message displayed when one issue has been solved and several issues have failed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>1 issue fixed and %n issue failed</numerusform>
-            <numerusform>1 issue fixed and %n issues failed</numerusform>
+            <numerusform>1 issue fixed and %n issue failed to resolve</numerusform>
+            <numerusform>1 issue fixed and %n issues failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>%n issues fixed and 1 issue failed</source>
         <translatorcomment>In-view message displayed when one issue has failed and several issues have been solved. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%n issue fixed and 1 issue failed</numerusform>
-            <numerusform>%n issues fixed and 1 issue failed</numerusform>
+            <numerusform>%n issue fixed and 1 issue failed to resolve</numerusform>
+            <numerusform>%n issues fixed and 1 issue failed to resolve</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -7314,8 +7244,8 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <translatorcomment>In-view message displayed when several issues have failed and fixed. This string is the second part of string for multi plural support
         being the first part about the issues fixed. SAT-1034</translatorcomment>
         <translation>
-            <numerusform>%1 and %n issue failed</numerusform>
-            <numerusform>%1 and %n issues failed</numerusform>
+            <numerusform>%1 and %n issue failed to resolve</numerusform>
+            <numerusform>%1 and %n issues failed to resolve</numerusform>
         </translation>
     </message>
 </context>
@@ -8091,6 +8021,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
         <translation>“%1” folder doesn’t exist</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsStrings</name>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>

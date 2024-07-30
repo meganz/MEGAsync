@@ -9,13 +9,7 @@ Source0:	nautilus-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires:  nautilus-devel
-
-%if 0%{?suse_version} || 0%{?sle_version}
-BuildRequires: libqt5-qtbase-devel
-%else
-BuildRequires: qt5-qtbase-devel
-%endif
+BuildRequires: nautilus-devel, cmake, gcc-c++
 
 %if 0%{?rhel_version}
 BuildRequires: redhat-logos
@@ -24,10 +18,10 @@ BuildRequires: redhat-logos
 BuildRequires: fedora-logos
 %endif
 %if 0%{?scientificlinux_version}
-BuildRequires: sl-logos, gcc-c++
+BuildRequires: sl-logos
 %endif
 
-Requires:       nautilus, megasync >= 5.3.0
+Requires: nautilus, megasync >= 5.3.0
 
 %description
 - Easily see and track your sync statuses.
@@ -42,32 +36,14 @@ Requires:       nautilus, megasync >= 5.3.0
 %setup -q
 
 %build
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
-NAUTILUS_VERSION=`(rpm -qi nautilus-extensions | grep ^Version) | awk -F':' '{print $2}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}'`
-
-if [ 0$NAUTILUS_VERSION -gt 31503 ]; then
-    for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
-    echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"
-else
-    rm data/emblems/64x64/*smaller.png
-    echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
-fi
-
-qmake-qt5 || qmake
-
-%if 0%{?fedora_version} >= 27 || 0%{?centos_version} == 800
-#tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
-#   causing "gdb-add-index: No index was created for ..." which lead to error "Empty %files file ....debugsourcefiles.list"
-sed "s# gcc# gcc -g#g" -i Makefile
-%endif
-make
+cmake -S . -B %{_builddir} -DCMAKE_INSTALL_PREFIX=%{_prefix}
+cmake --build %{_builddir}
 
 %install
-make install
+DESTDIR=%{buildroot} cmake --install %{_builddir}
 
 # clean up
-rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
+rm -fr %{buildroot}/%{_datadir}/icons/hicolor/icon-theme.cache || true
 
 %post
 %if 0%{?suse_version} >= 1140

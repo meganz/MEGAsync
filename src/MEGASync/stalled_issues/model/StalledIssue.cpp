@@ -1,7 +1,7 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 #include "MultiStepIssueSolver.h"
@@ -268,6 +268,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getCloudData()->mPath.path = cloudSourcePath;
         getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         getCloudData()->mPath.pathProblem = cloudSourcePathProblem;
+        //In order to show the filepath or the directory path when the path is used for a hyperlink
+        getCloudData()->mPath.showDirectoryInHyperLink = showDirectoryInHyperlink();
 
         if(stall->couldSuggestIgnoreThisPath(true, 0))
         {
@@ -283,6 +285,8 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getCloudData()->mMovePath.path = cloudTargetPath;
         getCloudData()->mMovePathHandle = stall->cloudNodeHandle(1);
         getCloudData()->mMovePath.pathProblem = cloudTargetPathProblem;
+        //In order to show the filepath or the directory path when the path is used for a hyperlink
+        getCloudData()->mMovePath.showDirectoryInHyperLink = showDirectoryInHyperlink();
 
         if(stall->couldSuggestIgnoreThisPath(true, 1))
         {
@@ -523,6 +527,12 @@ bool StalledIssue::missingFingerprint() const
            consultCloudData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::CloudNodeInvalidFingerprint;
 }
 
+bool StalledIssue::isCloudNodeBlocked(const mega::MegaSyncStall* stall)
+{
+    return stall->reason() == mega::MegaSyncStall::DownloadIssue &&
+           stall->pathProblem(true, 0) == mega::MegaSyncStall::SyncPathProblem::CloudNodeIsBlocked;
+}
+
 bool StalledIssue::canBeIgnored() const
 {
     return !mIgnoredPaths.isEmpty();
@@ -616,7 +626,8 @@ void StalledIssue::setIsFile(const QString& path, bool isLocal)
     }
     else
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
         if(node)
         {
             node->isFile()  ? mFiles++ : mFolders++;

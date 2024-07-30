@@ -1,7 +1,7 @@
 #ifndef SYNCTABLEVIEW_H
 #define SYNCTABLEVIEW_H
 
-#include "syncs/control/SyncController.h"
+#include "SyncController.h"
 
 #include <QObject>
 #include <QTableView>

@@ -18,8 +18,13 @@ Syncs::Syncs(QObject *parent)
     , mCreatingFolder(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
+
     connect(mSyncController.get(), &SyncController::syncAddStatus,
             this, &Syncs::onSyncAddRequestStatus);
+    connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
+            this, &Syncs::onSyncRemoved);
+
+    onSyncRemoved(nullptr);
 }
 
 void Syncs::addSync(const QString& local, const QString& remote)
@@ -30,7 +35,7 @@ void Syncs::addSync(const QString& local, const QString& remote)
     }
 
     auto remoteHandle = mega::INVALID_HANDLE;
-    auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remote.toStdString().c_str()));
+    auto megaNode = std::unique_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(remote.toUtf8().constData()));
     if (megaNode != nullptr)
     {
         remoteHandle = megaNode->getHandle();
@@ -51,7 +56,8 @@ void Syncs::addSync(const QString& local, const QString& remote)
         }
 
         mLocalFolder = local;
-        mMegaApi->createFolder(mRemoteFolder.toStdString().c_str(), MegaSyncApp->getRootNode().get());
+        mMegaApi->createFolder(mRemoteFolder.toUtf8().constData(),
+                               MegaSyncApp->getRootNode().get());
     }
     else
     {
@@ -122,7 +128,8 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
     }
 
     SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
-    auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toStdString().c_str()));
+    auto megaNode =
+        std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toUtf8().constData()));
     if (megaNode)
     {
         syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
@@ -177,6 +184,20 @@ QString Syncs::getDefaultMegaPath() const
     return DEFAULT_MEGA_PATH;
 }
 
+Syncs::SyncStatusCode Syncs::getSyncStatus() const
+{
+    return mSyncStatus;
+}
+
+void Syncs::setSyncStatus(SyncStatusCode status)
+{
+    if(status != mSyncStatus)
+    {
+        mSyncStatus = status;
+        emit syncStatusChanged();
+    }
+}
+
 void Syncs::onRequestFinish(mega::MegaApi* api,
                             mega::MegaRequest* request,
                             mega::MegaError* error)
@@ -190,7 +211,9 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
 
         if (error->getErrorCode() == mega::MegaError::API_OK)
         {
-            auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(mRemoteFolder.toStdString().c_str(), MegaSyncApp->getRootNode().get()));
+            auto megaNode = std::shared_ptr<mega::MegaNode>(
+                mMegaApi->getNodeByPath(mRemoteFolder.toUtf8().constData(),
+                                        MegaSyncApp->getRootNode().get()));
             if (megaNode != nullptr)
             {
                 mSyncController->addSync(mLocalFolder, request->getNodeHandle());
@@ -206,6 +229,22 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             emit cantSync(QCoreApplication::translate("MegaError", error->getErrorString()), false);
         }
     }
+}
+
+void Syncs::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
+{
+    Q_UNUSED(syncSettings)
+
+    SyncInfo* syncInfo = SyncInfo::instance();
+    if(syncInfo->getNumSyncedFolders(mega::MegaSync::SyncType::TYPE_TWOWAY) <= 0)
+    {
+        setSyncStatus(NONE);
+    }
+    else
+    {
+        setSyncStatus(FULL);
+    }
+    emit syncRemoved();
 }
 
 void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name)

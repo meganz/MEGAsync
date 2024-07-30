@@ -1,8 +1,7 @@
-#include "syncs/model/SyncItemModel.h"
-#include "syncs/gui/SyncTooltipCreator.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncItemModel.h"
 
-#include "MegaApplication.h"
+#include "SyncTooltipCreator.h"
+#include "SyncInfo.h"
 
 #include <QCoreApplication>
 #include <QIcon>

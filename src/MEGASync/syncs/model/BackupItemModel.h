@@ -1,7 +1,7 @@
 #ifndef BACKUPITEMMODEL_H
 #define BACKUPITEMMODEL_H
 
-#include "syncs/model/SyncItemModel.h"
+#include "SyncItemModel.h"
 
 class BackupItemModel : public SyncItemModel
 {

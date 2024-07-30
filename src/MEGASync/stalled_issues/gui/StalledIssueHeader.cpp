@@ -1,7 +1,7 @@
 #include "StalledIssueHeader.h"
 
-#include <stalled_issues/model/StalledIssuesModel.h>
-#include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
+#include "StalledIssuesModel.h"
+#include "StalledIssuesCaseHeaders.h"
 
 #include <MegaApplication.h>
 
@@ -287,14 +287,7 @@ void StalledIssueHeader::updateIssueState()
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
             icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
-            if(getData().consultData()->wasAutoResolutionApplied())
-            {
-                message = tr("Auto-failed");
-            }
-            else
-            {
-                message = tr("Failed");
-            }
+            message = tr("Failed");
 
             break;
         }
@@ -363,6 +356,10 @@ void StalledIssueHeader::refreshCaseTitles()
 {
     if(mHeaderCase)
     {
+        //Reset strings first
+        setText(QString());
+        setTitleDescriptionText(QString());
+
         mHeaderCase->refreshCaseTitles(this);
     }
 }
