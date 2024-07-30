@@ -30,7 +30,6 @@ public:
 signals:
     void comesFromSettingsChanged();
     void remoteFolderChanged();
-    void remoteFolderDisabledChanged();
 
 private:
     bool mComesFromSettings;
