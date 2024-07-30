@@ -4178,11 +4178,7 @@ void MegaApplication::runUploadActionWithTargetHandle(const MegaHandle &targetFo
                 }
                 else
                 {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
-                    msgInfo.title = QMegaMessageBox::errorTitle();
-                    msgInfo.text = QCoreApplication::translate("ShellExtension", "Folder no longer exists. Refresh view");
-                    msgInfo.buttons = QMessageBox::Ok;
-                    QMegaMessageBox::information(msgInfo);
+                    NodeSelector::showNotFoundNodeMessageBox();
                 }
             }
         };

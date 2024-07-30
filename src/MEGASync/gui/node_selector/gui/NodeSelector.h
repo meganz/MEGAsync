@@ -55,6 +55,7 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void closeEvent(QCloseEvent* event) override;
+    static void showNotFoundNodeMessageBox();
 
 protected:
     void changeEvent(QEvent * event) override;
@@ -62,7 +63,6 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
-    void showNotFoundNodeMessageBox();
     void makeConnections(SelectTypeSPtr selectType);
     bool eventFilter(QObject *obj, QEvent *event) override;
 

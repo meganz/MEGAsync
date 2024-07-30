@@ -391,9 +391,6 @@ void NodeSelector::showNotFoundNodeMessageBox()
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.title = QMegaMessageBox::errorTitle();
     msgInfo.text = tr("The item you selected has been removed. To reselect, close this window and try again.");
-    msgInfo.finishFunc = [this](QPointer<QMessageBox> msg){
-        reject();
-    };
     QMegaMessageBox::warning(msgInfo);
 }
 

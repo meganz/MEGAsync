@@ -6859,10 +6859,6 @@ Do you want to delete it anyway?</translation>
         <source>Are you sure you want to upload it to %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Folder no longer exists. Refresh view</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Sizes</name>
