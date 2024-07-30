@@ -14,6 +14,8 @@
 #include <QPointer>
 #include <QShortcut>
 
+#include <optional>
+
 using namespace mega;
 
 const char* ITS_ON_NS = "itsOn";
@@ -340,7 +342,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
 {
     if(node)
     {
-        TabItem option = SHARES;
+        std::optional<TabItem> option;
         if(mMegaApi->isInCloud(node.get()))
         {
             option = CLOUD_DRIVE;
@@ -349,7 +351,16 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         {
             option = BACKUPS;
         }
-        onOptionSelected(option);
+        else if (mMegaApi->isInShare(node.get()))
+        {
+            option = SHARES;
+        }
+
+        if (option.has_value())
+        {
+            onOptionSelected(option.value());
+        }
+
         auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
         tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
     }
