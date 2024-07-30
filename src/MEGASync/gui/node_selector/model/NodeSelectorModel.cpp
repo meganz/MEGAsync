@@ -800,10 +800,10 @@ bool NodeSelectorModel::dropMimeData(
                                                     { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
                                                     MegaSyncApp->getMegaApi(),
                                                     [moveNode, parentNode, moveInfo](
-                                                        const mega::MegaRequest&,
-                                                        const mega::MegaError& e)
+                                                        mega::MegaRequest*,
+                                                        mega::MegaError* e)
                                                     {
-                                                        if(e.getErrorCode() ==
+                                                        if(e->getErrorCode() ==
                                                             mega::MegaError::API_OK)
                                                         {
                                                             MergeMEGAFolders merge(

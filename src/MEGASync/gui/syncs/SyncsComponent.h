@@ -9,7 +9,6 @@ class SyncsComponent : public QMLComponent
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
     Q_PROPERTY(QString remoteFolder READ getRemoteFolder NOTIFY remoteFolderChanged)
-    Q_PROPERTY(bool remoteFolderDisabled READ isRemoteFolderDisabled WRITE setRemoteFolderDisabled NOTIFY remoteFolderDisabledChanged)
 
 public:
     explicit SyncsComponent(QObject* parent = 0);
@@ -27,9 +26,6 @@ public:
 
     void setRemoteFolder(const QString& remoteFolder);
     QString getRemoteFolder() const;
-
-    void setRemoteFolderDisabled(bool remoteFolderDisabled);
-    bool isRemoteFolderDisabled() const;
 
 signals:
     void comesFromSettingsChanged();

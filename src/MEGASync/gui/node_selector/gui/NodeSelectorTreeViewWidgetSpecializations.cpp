@@ -5,6 +5,7 @@
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorModelSpecialised.h"
+#include "RequestListenerManager.h"
 
 #include "MegaNodeNames.h"
 
@@ -410,22 +411,21 @@ void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandl
         if (node)
         {
             auto newParent = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
-            mMegaApi->moveNode(node.get(),
-                               newParent.get(),
-                               new mega::OnFinishOneShot(MegaSyncApp->getMegaApi(), this,
-                                                         [this, handle]
-                                                         (bool isContextValid, const mega::MegaRequest& request, const mega::MegaError& e)
-                                                         {
-                                   if(isContextValid &&
-                                       e.getErrorCode() == mega::MegaError::API_OK)
-                                   {
-                                       mRestoredItems.removeOne(handle);
-                                       if(mRestoredItems.isEmpty())
-                                       {
-                                           emit itemsRestored(mFirstRestoredHandle, mFirstRestoredHandleParentLoaded);
-                                       }
-                                   }
-                               }));
+
+            auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                this,
+                [=](mega::MegaRequest*, mega::MegaError* e) {
+                    if(e->getErrorCode() == mega::MegaError::API_OK)
+                    {
+                        mRestoredItems.removeOne(handle);
+                        if(mRestoredItems.isEmpty())
+                        {
+                            emit itemsRestored(mFirstRestoredHandle, mFirstRestoredHandleParentLoaded);
+                        }
+                    }
+                });
+
+            mMegaApi->moveNode(node.get(), newParent.get(), listener.get());
         }
     }
 }

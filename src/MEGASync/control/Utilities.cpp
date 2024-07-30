@@ -1635,14 +1635,14 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
             MegaApiSynchronizedRequest::runRequestWithResult(&MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
                 [=, &result, &file](
-                    const MegaRequest&, const MegaError& e)
+                    MegaRequest*, MegaError* e)
                 {
                     //In case of error, move to OS trash
-                    if(e.getErrorCode() != MegaError::API_OK)
+                    if(e->getErrorCode() != MegaError::API_OK)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                             QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
-                                .arg(path, Utilities::getTranslatedError(&e))
+                                .arg(path, Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);

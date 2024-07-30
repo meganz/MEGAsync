@@ -3891,10 +3891,6 @@ You will not be able to regain access to your stored data or be authorised to re
         <translatorcomment>SDK error shown when it is Unable to write sync config to disk.SAT-815/CON-537</translatorcomment>
         <translation>Couldn’t update sync or backup configuration. Try again later or check folder permissions.</translation>
     </message>
-    <message>
-        <source>Sync removal failed. Sync not found</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MegaTransferView</name>
