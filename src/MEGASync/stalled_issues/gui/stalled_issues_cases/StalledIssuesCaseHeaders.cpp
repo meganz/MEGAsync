@@ -56,11 +56,6 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     header->setTitleDescriptionText(QString());
 }
 
-void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    //These issues are ignored automatically, so no button needed
-}
-
 //Detected Hard or SpecialLink
 HardSpecialLinkHeader::HardSpecialLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
@@ -86,12 +81,6 @@ void HardSpecialLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
         header->setTitleDescriptionText(QString());
     }
 }
-
-void HardSpecialLinkHeader::refreshCaseActions(StalledIssueHeader*)
-{
-    //These issues are ignored automatically, so no button needed
-}
-
 
 //Cloud Fingerprint missing
 CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader *header)

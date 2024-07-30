@@ -45,7 +45,6 @@ public:
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
-    void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
 class HardSpecialLinkHeader : public StalledIssueHeaderCase
@@ -57,7 +56,6 @@ public:
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
-    void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
 //Cloud Fingerprint missing
