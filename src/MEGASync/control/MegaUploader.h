@@ -12,7 +12,6 @@
 #include <QQueue>
 #include "FolderTransferListener.h"
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include "QTMegaTransferListener.h"
 
 class MegaUploader : public QObject

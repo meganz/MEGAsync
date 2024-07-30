@@ -3,8 +3,6 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
-#include "QTMegaRequestListener.h"
-
 #include <QString>
 #include <QHash>
 #include <QPixmap>
@@ -450,7 +448,7 @@ public:
 
     EnumType  getEnum(const QString& typeAsString)
     {
-        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toUtf8().constData()));
     }
 
 private:

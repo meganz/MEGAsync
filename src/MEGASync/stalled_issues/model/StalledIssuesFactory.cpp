@@ -73,6 +73,10 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 {
                     d = std::make_shared<IgnoredStalledIssue>(stall);
                 }
+                else if(StalledIssue::isCloudNodeBlocked(stall))
+                {
+                    d = std::make_shared<CloudNodeIsBlockedIssue>(stall);
+                }
                 else if(stall->reason() ==
                             mega::MegaSyncStall::SyncStallReason::
                                 LocalAndRemoteChangedSinceLastSyncedState_userMustChoose ||

@@ -1,6 +1,6 @@
 #include "MegaTransferView.h"
 #include "MegaApplication.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "Utilities.h"
 #include "QMegaMessageBox.h"
 #include "TransfersWidget.h"

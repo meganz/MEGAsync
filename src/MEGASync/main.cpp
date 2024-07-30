@@ -1,6 +1,6 @@
 #include "MegaApplication.h"
 #include "MegaProxyStyle.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
 #include "ScaleFactorManager.h"
 #include "PowerOptions.h"
@@ -433,9 +433,10 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_LINUX)
     if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
     {
-        if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+        //!  If unsetenv succeeds, it returns 0. If unsetenv fails, it returns -1.
+        if (unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
         {
-            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble" << std::endl;
+            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble. errno=" << errno << std::endl;
         }
     }
     if (!(getenv("DO_NOT_UNSET_SHLVL")) && getenv("SHLVL"))
@@ -465,7 +466,7 @@ int main(int argc, char *argv[])
 
     for(const auto &message : logMessages)
     {
-        MegaApi::log(message.logLevel, message.message.toStdString().c_str());
+        MegaApi::log(message.logLevel, message.message.toUtf8().constData());
     }
 
 #ifdef Q_OS_LINUX
@@ -478,19 +479,19 @@ int main(int argc, char *argv[])
 #endif
 
 #ifndef Q_OS_MACX
-    const auto scaleFactorLogMessages = scaleFactorManager.getLogMessages();
-    for(const auto& message : scaleFactorLogMessages)
+    const QVector<QString> scaleFactorLogMessages = scaleFactorManager.getLogMessages();
+    for (const QString& message: scaleFactorLogMessages)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.c_str());
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
     }
 #endif
 
 #if defined(Q_OS_LINUX)
     for (const auto& screen : app.screens())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
-                                               screen->name().toStdString() + "': " +
-                                               std::to_string(screen->devicePixelRatio())).c_str());
+        QString msg = QString::fromUtf8("Device pixel ratio on '") + screen->name() +
+                      QString::fromUtf8("': ") + QString::number(screen->devicePixelRatio());
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, msg.toUtf8().constData());
     }
 #endif
 

@@ -4,7 +4,6 @@
 #include "ShellNotifier.h"
 
 #include <memory>
-#include <string>
 #include <QString>
 
 /**

@@ -1,6 +1,6 @@
 
 #include "SyncSettings.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include <assert.h>
 

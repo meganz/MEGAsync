@@ -23,7 +23,8 @@ StalledIssuesUtilities::StalledIssuesUtilities()
 
 std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
-    std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    std::unique_ptr<mega::MegaNode> fileNode(
+        MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
     return removeRemoteFile(fileNode.get());
 }
 
@@ -52,30 +53,39 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
     bool result(false);
 
     QFile file(path);
-    if(file.exists())
+    if (file.exists())
     {
-        if(syncId != mega::INVALID_HANDLE)
+        if (syncId != mega::INVALID_HANDLE)
         {
-            MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
+            MegaApiSynchronizedRequest::runRequestWithResult(
+                &mega::MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result](
-                    const mega::MegaRequest&, const mega::MegaError& e)
+                [=, &result, &file](mega::MegaRequest*, mega::MegaError* e)
                 {
-                    //In case of error, move to OS trash
-                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    // In case of error, move to OS trash
+                    if (e->getErrorCode() != mega::MegaError::API_OK)
                     {
-                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_ERROR,
                             QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
-                                .arg(path, Utilities::getTranslatedError(&e))
+                                .arg(path, Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);
+#ifdef Q_OS_WIN
+                        //When the file has no rights, the QFile::moveToTrash fails on Windows
+                        if(result && file.exists())
+                        {
+                            result = false;
+                        }
+#endif
                     }
                     else
                     {
                         result = true;
                     }
-                },path.toStdString().c_str(),
+                },
+                path.toUtf8().constData(),
                 syncId);
         }
         else
@@ -153,14 +163,10 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
 
     if(isCloud)
     {
-        mega::MegaNode* node (MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
-        if (node)
+        auto url(getLink(isCloud, path));
+        if (!url.isEmpty())
         {
-            const char* handle = node->getBase64Handle();
-            QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-            delete [] handle;
-            delete node;
         }
         else
         {
@@ -190,6 +196,23 @@ void StalledIssuesUtilities::openLink(bool isCloud, const QString& path)
             QMegaMessageBox::warning(msgInfo);
         }
     }
+}
+
+QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
+{
+    QString url;
+
+    if(isCloud)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
+        if(node)
+        {
+            std::unique_ptr<char[]> handle(node->getBase64Handle());
+            url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+        }
+    }
+
+    return url;
 }
 
 //////////////////////////////////////////////////

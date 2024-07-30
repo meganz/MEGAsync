@@ -17,7 +17,9 @@ public:
         std::shared_ptr<mega::MegaError> binFolderCreationError;
     };
 
-    static MoveToBinError moveToBin(mega::MegaHandle handle, const QString& binFolderName, bool addDateFolder);
+    static MoveToBinError moveToBin(mega::MegaHandle handle,
+                                    const QString& binFolderName,
+                                    bool addDateFolder);
 };
 
 

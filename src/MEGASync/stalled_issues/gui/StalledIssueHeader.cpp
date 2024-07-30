@@ -1,7 +1,8 @@
 #include "StalledIssueHeader.h"
 
-#include <stalled_issues/model/StalledIssuesModel.h>
-#include <stalled_issues/gui/stalled_issues_cases/StalledIssuesCaseHeaders.h>
+#include "StalledIssuesModel.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "IgnoredStalledIssue.h"
 
 #include <MegaApplication.h>
 
@@ -52,8 +53,8 @@ void StalledIssueHeader::expand(bool state)
     if(mIsExpandable)
     {
         auto arrowIcon = Utilities::getCachedPixmap(
-            state ? QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Down.png")
-                  : QLatin1Literal(":/images/node_selector/Icon-Small-Arrow-Left.png"));
+            state ? QLatin1String(":/images/node_selector/Icon-Small-Arrow-Down.png")
+                  : QLatin1String(":/images/node_selector/Icon-Small-Arrow-Left.png"));
         ui->arrow->setPixmap(arrowIcon.pixmap(ui->arrow->size()));
     }
 }
@@ -74,6 +75,7 @@ bool StalledIssueHeader::adaptativeHeight()
     return false;
 }
 
+//For all issue with ignorable paths which are not special, hard or sym links
 void StalledIssueHeader::onIgnoreFileActionClicked()
 {
     propagateButtonClick();
@@ -81,8 +83,7 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
 
     auto canBeIgnoredChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        //Symlinks are treated differently
-        return !issue->isSymLink() && issue->canBeIgnored();
+        return StalledIssue::convert<IgnoredStalledIssue>(issue) != nullptr;
     };
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -110,11 +111,11 @@ void StalledIssueHeader::onIgnoreFileActionClicked()
         {
             if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
             {
-                MegaSyncApp->getStalledIssuesModel()->ignoreItems(QModelIndexList(), false);
+                MegaSyncApp->getStalledIssuesModel()->ignoreAllSimilarIssues();
             }
             else
             {
-            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, false);
+            MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection);
             }
         }
     };
@@ -262,7 +263,7 @@ void StalledIssueHeader::updateIssueState()
         case StalledIssue::SolveType::SOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("solved"));
-            if(getData().consultData()->canBeIgnored())
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/solved_state.png"));
                 message = tr("Ignored");
@@ -287,31 +288,27 @@ void StalledIssueHeader::updateIssueState()
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QLatin1String("failed"));
             icon = QIcon(QString::fromUtf8(":/images/StalledIssues/states/failed_state.png"));
-            if(getData().consultData()->wasAutoResolutionApplied())
-            {
-                message = tr("Auto-failed");
-            }
-            else
-            {
-                message = tr("Failed");
-            }
+            message = tr("Failed");
 
             break;
         }
         case StalledIssue::SolveType::UNSOLVED:
         {
             ui->actionMessageContainer->setProperty(ISSUE_STATE, QString());
-            if(getData().consultData()->canBeIgnored())
+            if(getData().convert<IgnoredStalledIssue>())
             {
                 showIgnoreFile();
             }
+            break;
+        }
+        default:
+        {
             break;
         }
     }
 
     showMessage(message, icon.pixmap(16, 16));
     ui->actionMessageContainer->setStyleSheet(ui->actionMessageContainer->styleSheet());
-    ui->multipleActionButton->hide();
 }
 
 void StalledIssueHeader::setText(const QString &text, const QString& tooltip)
@@ -361,6 +358,10 @@ void StalledIssueHeader::refreshCaseTitles()
 {
     if(mHeaderCase)
     {
+        //Reset strings first
+        setText(QString());
+        setTitleDescriptionText(QString());
+
         mHeaderCase->refreshCaseTitles(this);
     }
 }
@@ -412,7 +413,7 @@ QString StalledIssueHeader::fileName()
 
 void StalledIssueHeader::refreshUi()
 {
-    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/ico_menu_full.png"));
+    auto errorTitleIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/ico_menu_full.png"));
     ui->errorTitleIcon->setPixmap(errorTitleIcon.pixmap(ui->errorTitleIcon->size()));
 
     QIcon fileTypeIcon;

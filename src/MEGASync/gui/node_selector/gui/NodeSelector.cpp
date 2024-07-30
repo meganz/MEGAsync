@@ -4,10 +4,9 @@
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 #include "megaapi.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "../model/NodeSelectorModel.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "NodeSelectorSpecializations.h"
 
 #include "MegaNodeNames.h"
 
@@ -26,7 +25,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
+    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked, Qt::QueuedConnection);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);

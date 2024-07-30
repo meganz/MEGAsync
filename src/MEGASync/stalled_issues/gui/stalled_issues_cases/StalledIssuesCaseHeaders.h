@@ -42,14 +42,23 @@ class SymLinkHeader : public StalledIssueHeaderCase
 
 public:
     SymLinkHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
-    void refreshCaseActions(StalledIssueHeader *header) override;
 };
 
-//Sym Link
+class HardSpecialLinkHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    HardSpecialLinkHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
+};
+
+//Cloud Fingerprint missing
 class CloudFingerprintMissingHeader : public StalledIssueHeaderCase
 {
     Q_OBJECT
@@ -61,6 +70,18 @@ public:
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
     void refreshCaseActions(StalledIssueHeader *header) override;
+};
+
+//Cloud Fingerprint missing
+class CloudNodeIsBlockedHeader : public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    CloudNodeIsBlockedHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
 //Create folder failed

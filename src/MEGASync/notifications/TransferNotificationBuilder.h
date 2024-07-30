@@ -1,7 +1,7 @@
 #ifndef TRANSFERNOTIFICATIONBUILDER_H
 #define TRANSFERNOTIFICATIONBUILDER_H
 
-#include "model/TransferMetaData.h"
+#include "TransferMetaData.h"
 #include "DesktopNotifications.h"
 
 #include <megaapi.h>

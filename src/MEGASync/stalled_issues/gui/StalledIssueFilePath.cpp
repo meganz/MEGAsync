@@ -96,14 +96,15 @@ void StalledIssueFilePath::fillFilePath()
     if(!mData->getPath().isEmpty())
     {
         ui->file->show();
+        const auto pathProblem(mData->getPath().pathProblem);
 
-        auto hasProblem(mData->getPath().pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem);
+        auto hasProblem(pathProblem != mega::MegaSyncStall::SyncPathProblem::NoProblem && showError(pathProblem));
 
         if(hasProblem)
         {
-            ui->pathProblemMessage->setText(getSyncPathProblemString(mData->getPath().pathProblem));
+            ui->pathProblemMessage->setText(getSyncPathProblemString(pathProblem));
             ui->filePathContainer->setCursor(Qt::ArrowCursor);
-            auto helpLink = getHelpLink(mData->getPath().pathProblem);
+            auto helpLink = getHelpLink(pathProblem);
             helpLink.isEmpty() ? ui->helpIcon->hide() : ui->helpIcon->show();
         }
         else
@@ -137,7 +138,8 @@ QString StalledIssueFilePath::getFilePath() const
     QString filePath;
     if(mData)
     {
-        filePath = mShowFullPath? mData->getNativeFilePath() : mData->getNativePath();
+        QFileInfo fileInfo(mShowFullPath? mData->getNativeFilePath() : mData->getNativePath());
+        filePath = mData->getPath().showDirectoryInHyperLink ? fileInfo.path() : fileInfo.filePath();
         mData->checkTrailingSpaces(filePath);
     }
     return filePath;
@@ -173,7 +175,8 @@ void StalledIssueFilePath::fillMoveFilePath()
 
 QString StalledIssueFilePath::getMoveFilePath() const
 {
-    return mShowFullPath? mData->getNativeMoveFilePath() : mData->getNativeMovePath();
+    QFileInfo fileInfo(mShowFullPath? mData->getNativeMoveFilePath() : mData->getNativeMovePath());
+    return mData->getMovePath().showDirectoryInHyperLink ? fileInfo.path() : fileInfo.filePath();
 }
 
 std::unique_ptr<mega::MegaNode> StalledIssueFilePath::getNode() const
@@ -473,6 +476,21 @@ QString StalledIssueFilePath::getSyncPathProblemString(mega::MegaSyncStall::Sync
         }
     }
     return tr("Error not detected");
+}
+
+bool StalledIssueFilePath::showError(mega::MegaSyncStall::SyncPathProblem pathProblem)
+{
+    switch(pathProblem)
+    {
+        case mega::MegaSyncStall::CloudNodeIsBlocked:
+        {
+            return false;
+        }
+        default:
+        {
+            return true;
+        }
+    }
 }
 
 QString StalledIssueFilePath::getHelpLink(mega::MegaSyncStall::SyncPathProblem pathProblem)

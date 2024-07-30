@@ -6,7 +6,7 @@
 #include <megaapi.h>
 #include <MegaApplication.h>
 #include <Utilities.h>
-#include <syncs/control/SyncInfo.h>
+#include "SyncInfo.h"
 #include <TextDecorator.h>
 
 #include <QObject>
@@ -23,9 +23,6 @@ class StalledIssuesBoldTextDecorator
 public:
     StalledIssuesBoldTextDecorator() = default;
     static const Text::Decorator boldTextDecorator;
-
-private:
-    Text::Bold boldTD;
 };
 
 class StalledIssuesNewLineTextDecorator
@@ -34,9 +31,18 @@ public:
     StalledIssuesNewLineTextDecorator() = default;
 
     static const Text::Decorator newLineTextDecorator;
+};
 
-private:
-    Text::NewLine newLineTD;
+class StalledIssuesLinkTextDecorator
+{
+public:
+    StalledIssuesLinkTextDecorator() = default;
+
+    static void process(const QStringList& links, QString& input)
+    {
+        Text::Decorator linkTextDecorator(new Text::Link(links));
+        linkTextDecorator.process(input);
+    }
 };
 
 class StalledIssuesUtilities : public QObject
@@ -55,6 +61,7 @@ public:
     static QIcon getIcon(bool isFile, const QFileInfo &fileInfo, bool hasProblem);
 
     static void openLink(bool isCloud, const QString& path);
+    static QString getLink(bool isCloud, const QString& path);
 
 signals:
     void actionFinished();

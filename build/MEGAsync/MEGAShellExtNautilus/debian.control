@@ -4,12 +4,8 @@ Priority: optional
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
 Build-Depends:  debhelper,
-                qtbase5-dev,
-                qt5-qmake,
-                intltool,
-                autotools-dev,
+                cmake,
                 libnautilus-extension-dev (>= 2.16.0),
-                libgtk-3-bin,
                 cdbs
 
 Package: nautilus-megasync

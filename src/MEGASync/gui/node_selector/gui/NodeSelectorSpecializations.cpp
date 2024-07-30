@@ -120,6 +120,26 @@ SyncNodeSelector::SyncNodeSelector(QWidget *parent) : NodeSelector(parent)
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
     makeConnections(selectType);
+
+    if (isFullSync())
+    {
+        ui->fCloudDrive->setVisible(false);
+        emit ui->bShowIncomingShares->clicked();
+    }
+}
+
+bool SyncNodeSelector::isFullSync()
+{
+    auto syncsList = SyncInfo::instance()->getSyncSettingsByType(SyncInfo::SyncType::TYPE_TWOWAY);
+    auto foundIt =
+        std::find_if(syncsList.cbegin(),
+                     syncsList.cend(),
+                     [](const auto& sync)
+                     {
+                         return (sync->getMegaFolder() == QLatin1String("/") && sync->isActive());
+                     });
+
+    return foundIt != syncsList.cend();
 }
 
 void SyncNodeSelector::checkSelection()

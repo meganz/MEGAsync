@@ -34,6 +34,7 @@ public:
 
 private:
     void checkSelection() override;
+    bool isFullSync();
 };
 
 class StreamNodeSelector : public NodeSelector

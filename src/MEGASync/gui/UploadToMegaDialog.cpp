@@ -4,7 +4,7 @@
 #include "MegaApplication.h"
 #include "DialogOpener.h"
 #include "CommonMessages.h"
-
+#include "RequestListenerManager.h"
 #include <QPointer>
 
 using namespace mega;
@@ -20,7 +20,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     ui->setupUi(this);
 
     this->megaApi = megaApi;
-    this->delegateListener = new QTMegaRequestListener(megaApi, this);
 
     selectedHandle = mega::INVALID_HANDLE;
     updatePath();
@@ -32,7 +31,6 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
 
 UploadToMegaDialog::~UploadToMegaDialog()
 {
-    delete delegateListener;
     delete ui;
 }
 
@@ -60,7 +58,7 @@ void UploadToMegaDialog::setDefaultFolder(long long handle)
     }
 }
 
-void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
+void UploadToMegaDialog::onRequestFinish(MegaRequest *request, MegaError *e)
 {
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
@@ -120,8 +118,9 @@ std::unique_ptr<MegaNode> UploadToMegaDialog::getUploadFolder()
         auto rootNode = ((MegaApplication*)qApp)->getRootNode();
         if (rootNode)
         {
+            auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
             megaApi->createFolder(CommonMessages::getDefaultUploadFolderName().toUtf8().constData(),
-                                  rootNode.get(), delegateListener);
+                                  rootNode.get(), listener.get());
             //Disable the UI for the moment
             ui->bChange->setEnabled(false);
             ui->bOK->setEnabled(false);
