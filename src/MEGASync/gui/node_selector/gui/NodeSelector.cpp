@@ -480,7 +480,7 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title =  MegaSyncApp->getMEGAString();
-            msgInfo.text =   tr("Error:") + QLatin1String(" ") + QCoreApplication::translate("MegaError", e->getErrorString());
+            msgInfo.text =   tr("Error:") + QLatin1String(" ") + Utilities::getTranslatedError(e);
             QMegaMessageBox::critical(msgInfo);
         }
     }

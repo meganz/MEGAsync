@@ -3765,6 +3765,9 @@ border: none;
                  <property name="cursor">
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
+                 <property name="toolTip">
+                  <string>Open Cloud Drive</string>
+                 </property>
                  <property name="text">
                   <string/>
                  </property>

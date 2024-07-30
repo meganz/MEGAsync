@@ -303,7 +303,7 @@ min-height:36px;
                <bool>true</bool>
               </property>
               <property name="text">
-               <string>Cloud Drive</string>
+               <string notr="true">Cloud Drive</string>
               </property>
               <property name="icon">
                <iconset theme="cloud_ico" resource="../../../Resources_macx.qrc">
@@ -387,7 +387,7 @@ min-height:36px;
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="text">
-               <string>Backups</string>
+               <string notr="true">Backups</string>
               </property>
               <property name="icon">
                <iconset theme="backups_ico" resource="../../../Resources_macx.qrc">
@@ -486,10 +486,10 @@ min-height:36px;
                <bool>true</bool>
               </property>
               <property name="text">
-               <string>Incoming Shares</string>
+               <string notr="true">Incoming Shares</string>
               </property>
               <property name="icon">
-               <iconset resource="../../../Resources_macx.qrc">
+               <iconset resource="../../../Resources_win.qrc">
                 <normaloff>:/images/node_selector/sidebar/folder-users_default.png</normaloff>:/images/node_selector/sidebar/folder-users_default.png</iconset>
               </property>
               <property name="checkable">
@@ -542,7 +542,7 @@ min-height:36px;
                <bool>true</bool>
               </property>
               <property name="text">
-               <string>Rubbish</string>
+               <string notr="true">Rubbish bin</string>
               </property>
               <property name="icon">
                <iconset resource="../../../Resources_macx.qrc">

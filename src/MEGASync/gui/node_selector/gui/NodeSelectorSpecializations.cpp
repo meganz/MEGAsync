@@ -6,6 +6,7 @@
 #include "ui_NodeSelector.h"
 #include <DialogOpener.h>
 #include <UploadToMegaDialog.h>
+#include "MegaNodeNames.h"
 
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {
@@ -233,7 +234,7 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget *parent) : NodeSelector(p
     mDragBackDrop = new QWidget(this);
     mDragBackDrop->hide();
 
-    setWindowTitle(tr("Cloud Drive"));
+    setWindowTitle(MegaNodeNames::getCloudDriveName());
     SelectTypeSPtr selectType = SelectTypeSPtr(new CloudDriveType);
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(selectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -280,11 +281,7 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
         }
         else
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = tr("Unexpected error. Target node not found");
-            QMegaMessageBox::warning(msgInfo);
+            showNotFoundNodeMessageBox();
         }
     }
     else if(id == CloudDriveType::Download)

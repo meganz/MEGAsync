@@ -1482,10 +1482,10 @@ QMap<int, QPushButton *> CloudDriveType::addCustomBottomButtons(NodeSelectorTree
     auto& buttons = mCustomBottomButtons[wdg];
     if(buttons.isEmpty())
     {
-        auto uploadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/upload_toolbar_ico_default.png")),NodeSelectorTreeViewWidget::tr("Upload")));
+        auto uploadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/upload_toolbar_ico_default.png")), MegaApplication::tr("Upload")));
         buttons.insert(ButtonId::Upload, uploadButton);
 
-        auto downloadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/download_toolbar_ico_default.png")), NodeSelectorTreeViewWidget::tr("Download")));
+        auto downloadButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/toolbar/download_toolbar_ico_default.png")), MegaApplication::tr("Download")));
         buttons.insert(ButtonId::Download, downloadButton);
 
         auto clearRubbishButton(new QPushButton(QIcon(QString::fromUtf8("://images/transfer_manager/sidebar/cancel_all_ico_hover.png")), NodeSelectorTreeViewWidget::tr("Empty rubbish bin")));

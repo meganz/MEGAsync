@@ -560,17 +560,6 @@
     </message>
 </context>
 <context>
-    <name>BindFolderDialog</name>
-    <message>
-        <source>Please select a local folder and a MEGA folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
@@ -836,14 +825,6 @@
 </context>
 <context>
     <name>CloudDriveNodeSelector</name>
-    <message>
-        <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud drive</translation>
-    </message>
-    <message>
-        <source>Unexpected error. Target node not found</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Empty</source>
         <translation type="unfinished"></translation>
@@ -1960,17 +1941,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>FolderBinder</name>
-    <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translation type="unfinished">Select local folder</translation>
-    </message>
-</context>
-<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
@@ -2401,6 +2371,10 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew. </source>
         <translatorcomment>Message displayed in the InfoDialog when the transfer quota reaches warning stage</translatorcomment>
         <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
+    </message>
+    <message>
+        <source>Open Cloud Drive</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4444,14 +4418,6 @@ Enter a different name.</translation>
         <translation>Search</translation>
     </message>
     <message>
-        <source>Rubbish Bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rubbish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error:</source>
         <translation type="unfinished">Error:</translation>
     </message>
@@ -4595,14 +4561,6 @@ Would you like to proceed?</source>
     <message>
         <source>Are you sure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upload</source>
-        <translation type="unfinished">Upload</translation>
-    </message>
-    <message>
-        <source>Download</source>
-        <translation type="unfinished">Download</translation>
     </message>
     <message>
         <source>Empty rubbish bin</source>

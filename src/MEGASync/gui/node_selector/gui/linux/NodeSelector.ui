@@ -552,7 +552,7 @@ min-height:36px;
                <bool>true</bool>
               </property>
               <property name="text">
-               <string>Rubbish Bin</string>
+               <string notr="true">Rubbish bin</string>
               </property>
               <property name="icon">
                <iconset resource="../../../Resources_linux.qrc">
