@@ -477,8 +477,6 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            //ui->tMegaFolders->setEnabled(true);
-
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title =  MegaSyncApp->getMEGAString();

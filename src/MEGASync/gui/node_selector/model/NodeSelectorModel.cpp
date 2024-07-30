@@ -1126,7 +1126,6 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
                 emit blockUi(true);
                 QFuture<void> filtered = QtConcurrent::run([this, item, sync](){
 
-                    qDebug() << "Update child/parent" << sync->isActive() << sync.get() << this;
                     //Update its children
                     if(item->areChildrenInitialized())
                     {

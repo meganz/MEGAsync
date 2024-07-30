@@ -9,7 +9,6 @@
 #include <QItemSelection>
 #include <QTimer>
 #include <QGraphicsDropShadowEffect>
-#include <QFrame>
 
 #include <memory>
 
