@@ -2,16 +2,15 @@
 
 #include <GuiUtilities.h>
 #include <DialogOpener.h>
-#include <syncs/gui/Twoways/BindFolderDialog.h>
 #include <syncs/control/SyncSettings.h>
 #include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
 #include <QmlDialogWrapper.h>
 #include <syncs/SyncsComponent.h>
 
-const AddSyncFromUiManager* const AddSyncFromUiManager::addSync_static(mega::MegaHandle handle, bool disableUi)
+const AddSyncFromUiManager* const AddSyncFromUiManager::addSync_static(mega::MegaHandle handle, bool comesFromSettings)
 {
     auto syncManager(new AddSyncFromUiManager());
-    syncManager->addSync(handle, disableUi);
+    syncManager->addSync(handle, comesFromSettings);
     return syncManager;
 }
 
@@ -22,9 +21,9 @@ const AddSyncFromUiManager* const AddSyncFromUiManager::removeSync_static(mega::
     return syncManager;
 }
 
-void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool disableUi)
+void AddSyncFromUiManager::addSync(mega::MegaHandle handle, bool comesFromSettings)
 {
-    performAddSync(handle, disableUi);
+    performAddSync(handle, comesFromSettings);
 }
 
 void AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
@@ -32,7 +31,7 @@ void AddSyncFromUiManager::removeSync(mega::MegaHandle handle, QWidget* parent)
     performRemoveSync(handle, parent);
 }
 
-void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableUi)
+void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool comesFromSettings)
 {
     QString remoteFolder;
 
@@ -43,7 +42,7 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, handle, disableUi, remoteFolder, this]()
+    auto addSyncLambda = [overQuotaDialog, handle, comesFromSettings, remoteFolder, this]()
     {
         if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
@@ -56,9 +55,8 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
             {
                 syncsDialog = new QmlDialogWrapper<SyncsComponent>();
             }
-            syncsDialog->wrapper()->setComesFromSettings(false);
+            syncsDialog->wrapper()->setComesFromSettings(comesFromSettings);
             syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            syncsDialog->wrapper()->setRemoteFolderDisabled(disableUi);
             DialogOpener::showDialog(syncsDialog);
         }
     };
@@ -75,6 +73,8 @@ void AddSyncFromUiManager::performAddSync(mega::MegaHandle handle, bool disableU
 
 void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
 {
+    bool invalidSync(true);
+
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
     if(node)
     {
@@ -89,35 +89,32 @@ void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWid
                 {
                     if(dialog->result() == QDialog::Accepted)
                     {
-                        auto syncController = new SyncController(this);
-                        syncController->removeSync(syncSettings, remoteHandle);
-
-                        SyncController::connect(syncController,
+                        SyncController::instance().removeSync(syncSettings, remoteHandle);
+                        connect(&SyncController::instance(),
                             &SyncController::syncRemoveStatus,
                             this,
-                            [this, syncController](const int)
+                            [this](const int)
                             {
-                                syncController->deleteLater();
+                                emit syncRemoved();
                                 deleteLater();
                             });
                     }
                     else
                     {
                         deleteLater();
-                        return;
                     }
                 });
 
-            //Dialog correctly shown
-            return;
+            //Node and sync settings found, removing has started asynchronously
+            invalidSync = false;
         }
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.title = QMegaMessageBox::errorTitle();
-    msgInfo.text = QCoreApplication::translate("MegaSyncError", "Sync removal failed. Sync not found");
-    msgInfo.buttons = QMessageBox::Ok;
-    QMegaMessageBox::information(msgInfo);
-
-    deleteLater();
+    if(invalidSync)
+    {
+        //Even if the node is invalid or the sync has not been found, that means that the sync is no longer valid, so we
+        //remove it from the UI without warning the user...
+        emit syncRemoved();
+        deleteLater();
+    }
 }

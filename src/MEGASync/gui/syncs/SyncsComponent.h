@@ -39,8 +39,6 @@ signals:
 private:
     bool mComesFromSettings;
     QString mRemoteFolder;
-    bool mRemoteFolderDisabled;
-
 };
 
 #endif // SYNCS_COMPONENT_H

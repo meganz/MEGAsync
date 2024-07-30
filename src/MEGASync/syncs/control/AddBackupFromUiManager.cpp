@@ -2,7 +2,7 @@
 
 #include "qml/QmlDialogManager.h"
 #include "DialogOpener.h"
-#include "syncs/control/SyncController.h"
+#include "backups/BackupsController.h"
 #include "syncs/gui/Backups/RemoveBackupDialog.h"
 #include "syncs/control/SyncSettings.h"
 
@@ -60,19 +60,16 @@ void AddBackupFromUiManager::performRemoveBackup(std::shared_ptr<SyncSettings> b
         {
             if(dialog->result() == QDialog::Accepted)
             {
-                auto syncController = new SyncController();
-
-                SyncController::connect(syncController,
-                    &SyncController::syncRemoveStatus,
+                connect(&BackupsController::instance(),
+                    &BackupsController::syncRemoveStatus,
                     this,
-                    [this, syncController](
+                    [this](
                         const int)
                     {
-                        syncController->deleteLater();
                         deleteLater();
                     });
 
-                syncController->removeSync(dialog->backupToRemove(), dialog->targetFolder());
+                BackupsController::instance().removeSync(dialog->backupToRemove(), dialog->targetFolder());
             }
             else
             {

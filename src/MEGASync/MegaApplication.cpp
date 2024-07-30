@@ -1083,7 +1083,6 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     receivedStorageSum = 0;
-    mSyncController.reset();
 
     for (unsigned i = 3; i--; )
     {
@@ -2228,7 +2227,6 @@ void MegaApplication::cleanAll()
 
     Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
-    mSyncController.reset();
 
     DialogOpener::closeAllDialogs();
     QmlDialogManager::instance()->forceCloseOnboardingDialog();
@@ -3058,15 +3056,19 @@ void MegaApplication::processUpgradeSecurityEvent()
     {
         if (msg->result() == QMessageBox::Ok)
         {
-            megaApi->upgradeSecurity(new OnFinishOneShot(megaApi, this, [=](bool isContextValid, const MegaRequest&, const MegaError& e){
-                if (isContextValid && e.getErrorCode() != MegaError::API_OK)
-                {
-                    QString errorMessage = tr("Failed to ugrade security. Error: %1")
-                            .arg(tr(e.getErrorString()));
-                    showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
-                    exitApplication();
-                }
-            }));
+            auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                this,
+                [=](::mega::MegaRequest* request, ::mega::MegaError* e) {
+                    if (e->getErrorCode() != MegaError::API_OK)
+                    {
+                        QString errorMessage = tr("Failed to ugrade security. Error: %1")
+                                .arg(tr(e->getErrorString()));
+                        showErrorMessage(errorMessage, QMegaMessageBox::errorTitle());
+                        exitApplication();
+                    }
+            });
+
+            megaApi->upgradeSecurity(listener.get());
         }
         else
         {

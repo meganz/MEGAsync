@@ -27,6 +27,9 @@
 #include "syncs/control/AddSyncFromUiManager.h"
 #include "syncs/control/AddBackupFromUiManager.h"
 #include "StatsEventHandler.h"
+#include "AddSyncFromUiManager.h"
+#include "AddBackupFromUiManager.h"
+
 #include "Utilities.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
@@ -1044,7 +1047,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    auto syncManager(AddSyncFromUiManager::addSync_static(handle));
+    AddSyncFromUiManager::addSync_static(handle);
 }
 
 void InfoDialog::addBackup()

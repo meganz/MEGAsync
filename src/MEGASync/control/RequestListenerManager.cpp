@@ -35,7 +35,8 @@ void ObserverRequestListener::onRequestStart(MegaApi*, MegaRequest* request)
 
 void ObserverRequestListener::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* error)
 {
-    if (mCallbacks.onRequestFinish && mCallbacks.callbackClass)
+    if (mCallbacks.onRequestFinish &&
+        (mCallbacks.isSynchronousOneShotReq || mCallbacks.callbackClass))
     {
         mCallbacks.onRequestFinish(request, error);
     }
@@ -79,28 +80,6 @@ std::shared_ptr<QTMegaRequestListener> RequestListenerManager::registerAndGetLis
     connect(listener.get(), &ObserverRequestListener::removeListener, this, &RequestListenerManager::removeListener);
     return listener->getDelegateListener();
 }
-
-// std::shared_ptr<mega::QTMegaRequestListener> RequestListenerManager::registerAndGetFinishListener(const onRequestFinishOnlyListenerCallback& callback)
-// {
-//     ListenerCallbacks callbacks;
-//     callbacks.callbackClass = callback.callbackClass;
-//     callbacks.onRequestFinish = callback.onRequestFinish;
-//     callbacks.removeAfterReqFinish = callback.removeAfterReqFinish;
-
-//     return registerAndGetListener(callbacks);
-// }
-// template<typename T>
-// std::shared_ptr<mega::QTMegaRequestListener> RequestListenerManager::registerAndGetFinishListener(T* callbackClass)
-// {
-//     ListenerCallbacks callbacks;
-//     callbacks.callbackClass = callbackClass;
-//     callbacks.onRequestFinish = [callbackClass](mega::MegaRequest* request, mega::MegaError* error) {
-//         callbackClass->onRequestFinish(request, error);
-//     };
-//     callbacks.removeAfterReqFinish = true;  // Assuming it should be removed after finish
-
-//     return registerAndGetListener(callbacks);
-// }
 
 void RequestListenerManager::removeListener(ObserverRequestListener *listener)
 {

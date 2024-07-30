@@ -3,15 +3,13 @@
 
 #include <QDialog>
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
-
 #include <memory>
 
 namespace Ui {
 class UploadToMegaDialog;
 }
 
-class UploadToMegaDialog : public QDialog, public mega::MegaRequestListener
+class UploadToMegaDialog : public QDialog
 {
     Q_OBJECT
 
@@ -25,7 +23,7 @@ public:
     bool isDefaultFolder();
     void setDefaultFolder(long long handle);
 
-    virtual void onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e);
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError *e);
 
 private slots:
     void on_bChange_clicked();
@@ -47,7 +45,6 @@ private:
     Ui::UploadToMegaDialog *ui;
     mega::MegaApi *megaApi;
     mega::MegaHandle selectedHandle;
-    mega::QTMegaRequestListener *delegateListener;
 };
 
 #endif // UPLOADTOMEGADIALOG_H

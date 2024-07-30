@@ -6,10 +6,9 @@
 #include "Utilities.h"
 
 BackupsController::BackupsController(QObject *parent)
-    : QObject(parent)
-    , mBackupController(new SyncController())
+    : SyncController(parent)
 {
-    connect(mBackupController, &SyncController::syncAddStatus,
+    connect(this, &SyncController::syncAddStatus,
             this, &BackupsController::onBackupAddRequestStatus);
 }
 
@@ -29,7 +28,7 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
     mBackupsProcessedWithError = 0;
     mBackupsToDoSize = backupsInfoList.size();
     mBackupsToDoList = backupsInfoList;
-    mBackupController->addBackup(mBackupsToDoList.first().first,
+    addBackup(mBackupsToDoList.first().first,
                                  mBackupsToDoList.first().second);
 }
 
@@ -61,7 +60,7 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     mBackupsToDoList.removeFirst();
     if(mBackupsToDoList.size() > 0)
     {
-        mBackupController->addBackup(mBackupsToDoList.first().first,
+        addBackup(mBackupsToDoList.first().first,
                                      mBackupsToDoList.first().second);
     }
     else if(mBackupsToDoList.size() == 0)

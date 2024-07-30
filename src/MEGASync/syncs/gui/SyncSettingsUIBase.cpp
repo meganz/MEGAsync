@@ -4,7 +4,6 @@
 
 #include "DialogOpener.h"
 #include "SyncTableView.h"
-#include "RemoveSyncConfirmationDialog.h"
 #include "SyncItemModel.h"
 #include "SyncExclusions.h"
 
@@ -22,7 +21,6 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     QWidget(parent),
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
-    mSyncController(new SyncController(this)),
     mParentDialog(nullptr),
     mSyncInfo(SyncInfo::instance()),
     mToolBarItem(nullptr)
@@ -145,15 +143,11 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 void SyncSettingsUIBase::setToolBarItem(QMacToolBarItem *item)
 {
     mToolBarItem = item;
-
-    syncsStateInformation(SAVING_FINISHED);
 }
 #else
 void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
 {
     mToolBarItem = item;
-
-    syncsStateInformation(SAVING_FINISHED);
 }
 #endif
 
@@ -200,51 +194,8 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
     if (mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        reqRemoveSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
-}
-
-void SyncSettingsUIBase::reqRemoveSync(std::shared_ptr<SyncSettings> sync)
-{
-    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
-
-    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog, [dialog, this, sync]()
-    {
-        if (dialog->result() == QDialog::Accepted)
-        {
-            removeSync(sync);
-        }
-    });
-}
-
-void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->removeSync(sync);
-}
-
-void SyncSettingsUIBase::setSyncToRun(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToRun(sync);
-}
-
-void SyncSettingsUIBase::setSyncToPause(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToPause(sync);
-}
-
-void SyncSettingsUIBase::setSyncToSuspend(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToSuspend(sync);
-}
-
-void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToDisabled(sync);
 }
 
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)

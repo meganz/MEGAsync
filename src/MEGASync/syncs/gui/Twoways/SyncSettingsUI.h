@@ -14,7 +14,7 @@ public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
     ~SyncSettingsUI() override = default;
 
-    void addButtonClicked(mega::MegaHandle megaFolderHandle) override;
+    void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE) override;
 
 protected:
     QString getFinishWarningIconString() const override;
@@ -31,6 +31,8 @@ protected:
     //Error removing
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
+
+    void removeSync(std::shared_ptr<SyncSettings> sync) override;
 
     void setSyncsTitle();
     void changeEvent(QEvent *) override;

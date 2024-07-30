@@ -3,14 +3,15 @@
 #include "AddBackupFromUiManager.h"
 #include "BackupTableView.h"
 #include "BackupItemModel.h"
+#include "BackupsController.h"
 
 #include "QmlDialogWrapper.h"
 #include "Backups.h"
 #include "Onboarding.h"
 
-#include "DialogOpener.h"
-#include "RemoveBackupDialog.h"
+#include "AddBackupFromUiManager.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include "ui_SyncSettingsUIBase.h"
 
@@ -18,9 +19,9 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setBackupsTitle();
-    setTable<BackupTableView, BackupItemModel>();
+    setTable<BackupTableView, BackupItemModel, BackupsController>();
 
-    connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
+    connect(&BackupsController::instance(), &BackupsController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_FINISHED);
         QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -68,11 +69,6 @@ void BackupSettingsUI::changeEvent(QEvent *event)
     }
 
     SyncSettingsUIBase::changeEvent(event);
-}
-
-void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
-{
-    removeSync(backup);
 }
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)

@@ -1,20 +1,23 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include <string>
+#include <QString>
 
 struct ScreenInfo
 {
-    std::string name;
+    QString name;
     int availableWidthPixels;
     int availableHeightPixels;
     double dotsPerInch;
     double devicePixelRatio;
 
-    std::string toString() const
+    QString toString() const
     {
-        return name + ", " + std::to_string(availableWidthPixels) + ", " + std::to_string(availableHeightPixels)
-                + ", " + std::to_string(dotsPerInch) + ", " + std::to_string(devicePixelRatio);
+        return name + QString::fromUtf8(", ") +
+               QString::number(availableWidthPixels) + QString::fromUtf8(", ") +
+               QString::number(availableHeightPixels) + QString::fromUtf8(", ") +
+               QString::number(dotsPerInch) + QString::fromUtf8(", ") +
+               QString::number(devicePixelRatio);
     }
 };
 
