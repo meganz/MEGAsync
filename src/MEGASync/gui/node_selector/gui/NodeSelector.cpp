@@ -340,14 +340,15 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
-    if(node)
+    if (node)
     {
         std::optional<TabItem> option;
-        if(mMegaApi->isInCloud(node.get()))
+
+        if (mMegaApi->isInCloud(node.get()))
         {
             option = CLOUD_DRIVE;
         }
-        else if(mMegaApi->isInVault(node.get()))
+        else if (mMegaApi->isInVault(node.get()))
         {
             option = BACKUPS;
         }
@@ -359,9 +360,10 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         if (option.has_value())
         {
             onOptionSelected(option.value());
-        }
 
-        auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+            auto tree_view_widget =
+                static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+            tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+        }
     }
 }
