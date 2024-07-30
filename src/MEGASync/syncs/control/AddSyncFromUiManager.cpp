@@ -90,14 +90,12 @@ void AddSyncFromUiManager::performRemoveSync(mega::MegaHandle remoteHandle, QWid
                 {
                     if(dialog->result() == QDialog::Accepted)
                     {
-                        auto syncController = new SyncController(this);
-                        syncController->removeSync(syncSettings, remoteHandle);
-                        SyncController::connect(syncController,
+                        SyncController::instance().removeSync(syncSettings, remoteHandle);
+                        connect(&SyncController::instance(),
                             &SyncController::syncRemoveStatus,
                             this,
-                            [this, syncController](const int)
+                            [this](const int)
                             {
-                                syncController->deleteLater();
                                 emit syncRemoved();
                                 deleteLater();
                             });

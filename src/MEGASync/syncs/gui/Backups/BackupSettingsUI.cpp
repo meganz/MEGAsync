@@ -2,6 +2,7 @@
 
 #include "BackupTableView.h"
 #include "BackupItemModel.h"
+#include "BackupsController.h"
 
 #include "QmlDialogWrapper.h"
 #include "Backups.h"
@@ -19,7 +20,7 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     setBackupsTitle();
     setTable<BackupTableView, BackupItemModel>();
 
-    connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
+    connect(&BackupsController::instance(), &BackupsController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_FINISHED);
         QMegaMessageBox::MessageBoxInfo msgInfo;

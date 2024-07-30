@@ -6,10 +6,7 @@
 #include <QObject>
 #include <QPointer>
 
-class BindFolderDialog;
-class SyncController;
 class SyncSettings;
-class RemoveBackupDialog;
 
 class AddBackupFromUiManager : public QObject
 {

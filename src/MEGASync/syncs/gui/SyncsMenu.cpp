@@ -147,7 +147,7 @@ void SyncsMenu::refresh()
         {
             activeFolders++;
             auto* action =
-                new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
+                new MenuItemAction(SyncController::instance().getSyncNameFromPath(syncSetting->getLocalFolder(true)),
                                    QLatin1String("://images/icons/folder/folder-mono_24.png"),
                                    mMenu);
             action->setManagesHoverStates(true);

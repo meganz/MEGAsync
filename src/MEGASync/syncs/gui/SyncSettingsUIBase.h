@@ -15,6 +15,7 @@
 #include <Utilities.h>
 #include <GuiUtilities.h>
 #include <MegaApplication.h>
+#include <SyncController.h>
 
 namespace Ui {
 class SyncSettingsUIBase;
@@ -22,7 +23,6 @@ class SyncSettingsUIBase;
 
 class SyncItemModel;
 class SyncItemSortModel;
-class SyncController;
 class SyncTableView;
 
 class SyncSettingsUIBase : public QWidget
@@ -82,17 +82,17 @@ public:
         sortModel->setSourceModel(model);
         table->setModel(sortModel);
 
-        connect(mSyncController, &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&SyncController::instance(), &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
         {
             syncsStateInformation(SyncStateInformation::SAVING);
         });
 
-        connect(mSyncController, &SyncController::signalSyncOperationEnds, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&SyncController::instance(), &SyncController::signalSyncOperationEnds, this, [this](std::shared_ptr<SyncSettings> sync)
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_FINISHED);
         });
 
-        connect(mSyncController, &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&SyncController::instance(), &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
         {
             QString messageBoxTitle(getOperationFailTitle());
             auto it = messageBoxTitle.begin();
@@ -105,7 +105,7 @@ public:
             QMegaMessageBox::critical(msgInfo);
         });
 
-        connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString localPath)
+        connect(&SyncController::instance(), &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString localPath)
         {
             const QString title = getErrorAddingTitle();
 
@@ -131,7 +131,7 @@ public:
 
                     Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
                     Text::Decorator dec(&link);
-                    QString msg = SyncController::getErrorString(errorCode, syncErrorCode);
+                    QString msg = SyncController::instance().getErrorString(errorCode, syncErrorCode);
                     dec.process(msg);
 
                     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -144,7 +144,7 @@ public:
             }
         });
 
-        connect(mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
+        connect(&SyncController::instance(), &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
         {
             onSavingSyncsCompleted(SAVING_FINISHED);
 
@@ -185,7 +185,6 @@ signals:
 protected:
     Ui::SyncSettingsUIBase* ui;
     SyncTableView* mTable;
-    SyncController* mSyncController;
     QDialog* mParentDialog;
 
     virtual QString getFinishWarningIconString() const = 0;

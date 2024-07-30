@@ -4,11 +4,6 @@
 #include <megaapi.h>
 
 #include <QObject>
-#include <QPointer>
-
-class BindFolderDialog;
-class SyncController;
-class SyncSettings;
 
 class AddSyncFromUiManager : public QObject
 {

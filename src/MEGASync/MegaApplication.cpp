@@ -1082,7 +1082,6 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     receivedStorageSum = 0;
-    mSyncController.reset();
 
     for (unsigned i = 3; i--; )
     {
@@ -2227,7 +2226,6 @@ void MegaApplication::cleanAll()
 
     Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
-    mSyncController.reset();
 
     DialogOpener::closeAllDialogs();
     QmlDialogManager::instance()->forceCloseOnboardingDialog();

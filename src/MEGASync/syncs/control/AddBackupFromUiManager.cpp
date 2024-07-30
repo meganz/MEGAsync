@@ -60,19 +60,16 @@ void AddBackupFromUiManager::performRemoveBackup(std::shared_ptr<SyncSettings> b
         {
             if(dialog->result() == QDialog::Accepted)
             {
-                auto syncController = new SyncController();
-
-                SyncController::connect(syncController,
+                connect(&SyncController::instance(),
                     &SyncController::syncRemoveStatus,
                     this,
-                    [this, syncController](
+                    [this](
                         const int)
                     {
-                        syncController->deleteLater();
                         deleteLater();
                     });
 
-                syncController->removeSync(dialog->backupToRemove(), dialog->targetFolder());
+                SyncController::instance().removeSync(dialog->backupToRemove(), dialog->targetFolder());
             }
             else
             {

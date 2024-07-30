@@ -22,7 +22,6 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     QWidget(parent),
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
-    mSyncController(new SyncController(this)),
     mParentDialog(nullptr),
     mSyncInfo(SyncInfo::instance()),
     mToolBarItem(nullptr)
@@ -220,31 +219,31 @@ void SyncSettingsUIBase::reqRemoveSync(std::shared_ptr<SyncSettings> sync)
 void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
-    mSyncController->removeSync(sync);
+    SyncController::instance().removeSync(sync);
 }
 
 void SyncSettingsUIBase::setSyncToRun(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
-    mSyncController->setSyncToRun(sync);
+    SyncController::instance().setSyncToRun(sync);
 }
 
 void SyncSettingsUIBase::setSyncToPause(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
-    mSyncController->setSyncToPause(sync);
+    SyncController::instance().setSyncToPause(sync);
 }
 
 void SyncSettingsUIBase::setSyncToSuspend(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
-    mSyncController->setSyncToSuspend(sync);
+    SyncController::instance().setSyncToSuspend(sync);
 }
 
 void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
 {
     syncsStateInformation(SAVING);
-    mSyncController->setSyncToDisabled(sync);
+    SyncController::instance().setSyncToDisabled(sync);
 }
 
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
