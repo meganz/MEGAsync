@@ -17,13 +17,13 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
     ui->tableSegementedControl->configureTableSegment();
     connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked,
             this, [this](){
-        emit addClicked(mega::INVALID_HANDLE);
+        emit addClicked();
     });
     connect(ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked,
             this,  &RemoteItemUi::deleteClicked);
 #else
     connect(ui->bAdd, &QPushButton::clicked, this, [this](){
-        emit addClicked(mega::INVALID_HANDLE);
+        emit addClicked();
     });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
     ui->bAdd->setAutoDefault(true);

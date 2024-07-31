@@ -306,7 +306,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
 {
     QByteArray response;
     string command = "P:";
-    command += localPath.toStdString();
+    string pathString = localPath.toUtf8().constData();
+    command += pathString;
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
@@ -317,7 +318,6 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
         command.append(QString::number(newState).toUtf8().constData());
         addOverlayIconsDisabledToCommand(&command);
 
-        std::string pathString(localPath.toStdString());
         const bool isIncomingShare = false;
         addIsIncomingShareToCommand(&pathString, &command, isIncomingShare);
 

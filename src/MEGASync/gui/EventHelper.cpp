@@ -65,7 +65,7 @@ QString EventManager::GetStringFromEventType(const QEvent::Type& eType)
 EventHelper* EventManager::GetHelper(QObject *obj, const QEvent::Type &eType)
 {
     QString eventName = GetStringFromEventType(eType);
-    return obj->property(eventName.toStdString().c_str()).value<EventHelper*>();
+    return obj->property(eventName.toUtf8().constData()).value<EventHelper*>();
 }
 
 void EventManager::addEvent(const EventHelper::Data& data)
@@ -87,7 +87,7 @@ void EventManager::addEvent(const EventHelper::Data& data)
     }
 
     EventHelper* helper = new EventHelper(data);
-    data.object->setProperty(GetStringFromEventType(data.eventType).toStdString().c_str(),
+    data.object->setProperty(GetStringFromEventType(data.eventType).toUtf8().constData(),
                              QVariant::fromValue(helper));
 }
 
@@ -102,7 +102,7 @@ void EventManager::removeEvent(QObject* obj, const QEvent::Type& eType)
     if(auto helper = GetHelper(obj, eType))
     {
         helper->deleteLater();
-        obj->setProperty(eventName.toStdString().c_str(), QVariant());
+        obj->setProperty(eventName.toUtf8().constData(), QVariant());
     }
 }
 

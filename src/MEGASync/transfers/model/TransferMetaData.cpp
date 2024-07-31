@@ -764,8 +764,8 @@ QStringList DownloadTransferMetaData::getLocalPaths() const
         QFileInfo fileInfo(id.path);
         QString localPath(fileInfo.path());
 
-        char *escapedName = MegaSyncApp->getMegaApi()->escapeFsIncompatible(id.name.toStdString().c_str(),
-                                                                            localPath.toStdString().c_str());
+        char *escapedName = MegaSyncApp->getMegaApi()->escapeFsIncompatible(id.name.toUtf8().constData(),
+                                                                            localPath.toUtf8().constData());
         QString nodeName = QString::fromUtf8(escapedName);
         delete [] escapedName;
 

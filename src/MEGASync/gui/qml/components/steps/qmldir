@@ -1,3 +1,4 @@
 module components.steps
 Step 1.0 Step.qml
 SubStep 1.0 SubStep.qml
+StepPanel 1.0 StepPanel.qml

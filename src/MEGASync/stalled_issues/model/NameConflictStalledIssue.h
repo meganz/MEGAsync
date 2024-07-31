@@ -526,8 +526,8 @@ public:
     bool solveLocalConflictedNameByRemove(int conflictIndex);
     bool solveCloudConflictedNameByRemove(int conflictIndex);
 
-    bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo);
-    bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo);
+    bool solveCloudConflictedNameByRename(int conflictIndex, const QString& renameTo, const QString& renameFrom);
+    bool solveLocalConflictedNameByRename(int conflictIndex, const QString& renameTo, const QString& renameFrom);
 
     bool hasFoldersToMerge() const;
 

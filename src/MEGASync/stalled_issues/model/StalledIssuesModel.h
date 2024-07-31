@@ -157,11 +157,11 @@ public:
 
     //Name conflicts
     bool solveLocalConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveLocalConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveLocalConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveLocalConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     bool solveCloudConflictedNameByRemove(int conflictIndex, const QModelIndex& index);
-    bool solveCloudConflictedNameByRename(const QString& renameTo, int conflictIndex, const QModelIndex& index);
+    bool solveCloudConflictedNameByRename(const QString& renameTo, const QString& renameFrom, int conflictIndex, const QModelIndex& index);
     void solveCloudConflictedNameFailed(int conflictIndex, const QModelIndex& index, const QString& error);
 
     void finishConflictManually();
@@ -175,7 +175,8 @@ public:
     void semiAutoSolveLocalRemoteIssues(const QModelIndexList& list);
 
     //IgnoreConflicts
-    void ignoreItems(const QModelIndexList& list, bool isSymLink);
+    void ignoreItems(const QModelIndexList& list);
+    void ignoreAllSimilarIssues();
     void ignoreSymLinks();
     void showIgnoreItemsError(bool allFailed);
 
@@ -296,9 +297,6 @@ private:
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
-
-    //Ignored items
-    QMap<mega::MegaHandle, QStringList> mIgnoredItemsBySync;
     
     //Fix fingerprint
     QList<StalledIssueVariant> mFingerprintIssuesToFix;

@@ -6,10 +6,14 @@
 #include <QMutex>
 #include <memory>
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include "QTMegaTransferListener.h"
 #include "AsyncHandler.h"
 #include "SetTypes.h"
+
+namespace mega
+{
+    class QTMegaRequestListener;
+}
 
 enum class SetManagerState
 {
@@ -49,6 +53,8 @@ public:
     SetManager(mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     virtual ~SetManager();
 
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
+
 signals:
     void onFetchSetFromLink(const AlbumCollection& collection);
     void onSetDownloadFinished(const QString& setName,
@@ -75,7 +81,6 @@ public slots:
 
 private:
     void handleTriggerAction(bool&) override;
-    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer* transfer, mega::MegaError* error) override;
 
     // State Machine

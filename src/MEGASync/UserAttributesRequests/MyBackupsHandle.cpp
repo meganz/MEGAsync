@@ -2,15 +2,15 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "RequestListenerManager.h"
 
 namespace UserAttributes
 {
 MyBackupsHandle::MyBackupsHandle(const QString &userEmail)
- : AttributeRequest(userEmail),
-   mMyBackupsFolderHandle(mega::INVALID_HANDLE),
-   mMyBackupsFolderPath(QString()),
-   mCreationRequested(false),
-   mCreateBackupsListener(nullptr)
+    : AttributeRequest(userEmail)
+    , mMyBackupsFolderHandle(mega::INVALID_HANDLE)
+    , mMyBackupsFolderPath(QString())
+    , mCreationRequested(false)
 {
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 }
@@ -27,7 +27,6 @@ void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incomin
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Got MyBackups folder from remote");
         newValue = incoming_request->getNodeHandle();
-        mCreateBackupsListener.reset();
     }
     else if(error->getErrorCode() == mega::MegaError::API_ENOENT)
     {
@@ -47,6 +46,28 @@ void MyBackupsHandle::onRequestFinish(mega::MegaApi*, mega::MegaRequest* incomin
     }
 
     onMyBackupsFolderReady(newValue);
+}
+
+void MyBackupsHandle::onRequestFinish(mega::MegaRequest* request,
+                                                        mega::MegaError* error)
+{
+    if (request->getType() != mega::MegaRequest::TYPE_SET_MY_BACKUPS)
+    {
+        return;
+    }
+
+    if (error->getErrorCode() == mega::MegaError::API_OK)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "MyBackups folder created");
+    }
+    else
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                           QString::fromUtf8("Error creating MyBackups folder: %1")
+                               .arg(error->getErrorCode()).toUtf8().constData());
+    }
+
+    onMyBackupsFolderReady(request->getNodeHandle());
 }
 
 void MyBackupsHandle::onMyBackupsFolderReady(mega::MegaHandle h)
@@ -111,52 +132,24 @@ QString MyBackupsHandle::getNodeLocalizedPath(QString path) const
 
 void MyBackupsHandle::createMyBackupsFolderIfNeeded()
 {
-    if(!isAttributeReady()
-            && !isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
-            && !attributeRequestNeedsRetry(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
+    if (!isAttributeReady()
+        && !isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER)
+        && !attributeRequestNeedsRetry(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
     {
         QString name = MegaNodeNames::getBackupsName();
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Creating MyBackups folder");
-        if (!mCreateBackupsListener)
-        {
-            mCreateBackupsListener.reset(new CreateMyBackupsListener());
-            connect(mCreateBackupsListener.get(), &CreateMyBackupsListener::backupFolderCreated, this, &MyBackupsHandle::onMyBackupsFolderReady);
-        }
-        MegaSyncApp->getMegaApi()->setMyBackupsFolder(name.toUtf8().constData(), mCreateBackupsListener.get());
+
+        // Register for SDK Request callbacks
+        auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this);
+
+        MegaSyncApp->getMegaApi()->setMyBackupsFolder(name.toUtf8().constData(), listener.get());
+
         mCreationRequested = false;
     }
     else if(isAttributeRequestPending(mega::MegaApi::USER_ATTR_MY_BACKUPS_FOLDER))
     {
         mCreationRequested = true;
     }
-}
-
-CreateMyBackupsListener::CreateMyBackupsListener()
-    : mDelegateListener(new mega::QTMegaRequestListener(MegaSyncApp->getMegaApi(), this))
-{
-}
-
-void CreateMyBackupsListener::onRequestFinish(mega::MegaApi *, mega::MegaRequest *incoming_request, mega::MegaError *error)
-{
-    if(incoming_request->getType() == mega::MegaRequest::TYPE_SET_MY_BACKUPS)
-    {
-        if(error->getErrorCode() == mega::MegaError::API_OK)
-        {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "MyBackups folder created");
-        }
-        else
-        {
-            mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
-                               QString::fromUtf8("Error creating MyBackups folder: %1")
-                               .arg(error->getErrorCode()).toUtf8().constData());
-        }
-        emit backupFolderCreated(incoming_request->getNodeHandle());
-    }
-}
-
-CreateMyBackupsListener::~CreateMyBackupsListener()
-{
-    mDelegateListener->deleteLater();
 }
 
 }//end namespace UserAttributes

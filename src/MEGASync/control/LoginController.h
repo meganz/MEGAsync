@@ -2,13 +2,17 @@
 #define LOGINCONTROLLER_H
 
 #include "megaapi.h"
-#include "mega/bindings/qt/QTMegaRequestListener.h"
 #include "mega/bindings/qt/QTMegaGlobalListener.h"
 
 #include <QObject>
 #include <QTimer>
 
 #include <memory>
+
+namespace mega
+{
+    class QTMegaRequestListener;
+}
 
 class Preferences;
 class LoginController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
@@ -72,9 +76,9 @@ public:
 
     bool isFetchNodesFinished() const;
 
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
-    void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest* request) override;
-    void onRequestStart(mega::MegaApi *api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
+    void onRequestUpdate(mega::MegaRequest* request);
+    void onRequestStart(mega::MegaRequest *request);
 
     void onEvent(mega::MegaApi*, mega::MegaEvent* event) override;
 
@@ -120,7 +124,7 @@ private:
     QString getRepeatedEmailMsg();
     void setEmail(const QString& email);
 
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
+    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     std::unique_ptr<mega::MegaEvent> eventPendingStorage;
 
@@ -160,16 +164,15 @@ class LogoutController : public QObject, mega::MegaRequestListener
 public:
     explicit LogoutController(QObject* parent =  nullptr);
     virtual ~LogoutController();
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
-    void onRequestStart(mega::MegaApi *api, mega::MegaRequest *request) override;
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
+    void onRequestStart(mega::MegaRequest *request);
 
 signals:
     void logout(bool isLocalLogout);
 
 private:
     mega::MegaApi * mMegaApi;
-    std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
-
+    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     bool mLoginInWithoutSession;
 };
 

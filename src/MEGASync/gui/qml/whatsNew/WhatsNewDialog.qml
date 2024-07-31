@@ -7,9 +7,9 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0
 
-import WhatsNewDialog 1.0
+import QmlDialog 1.0
 
-WhatsNewDialog {
+QmlDialog {
     id: window
 
     readonly property int contentMargins: 48
@@ -24,8 +24,10 @@ WhatsNewDialog {
     color: colorStyle.surface1
     title: WhatsNewStrings.whatsNew
 
-    x: Math.round((parent.width - width) / 2)
-    y: Math.round((parent.height - height) / 2)
+    Component.onCompleted: {
+        x: Math.round((Screen.desktopAvailableWidth - width) / 2)
+        y: Math.round((Screen.desktopAvailableHeight - height) / 2)
+    }
 
     Rectangle {
         id: content
@@ -41,7 +43,7 @@ WhatsNewDialog {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             text: WhatsNewStrings.updates
-            color:colorStyle.textPrimary
+            color: colorStyle.textPrimary
             lineHeightMode: Text.FixedHeight
             font{
                 pixelSize: Texts.Text.Size.EXTRA_LARGE

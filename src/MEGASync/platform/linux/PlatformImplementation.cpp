@@ -40,7 +40,7 @@ void PlatformImplementation::notifyItemChange(const QString& path, int)
     {
         if (notify_server && !Preferences::instance()->overlayIconsDisabled())
         {
-            std::string stdPath = path.toStdString();
+            std::string stdPath = path.toUtf8().constData();
             notify_server->notifyItemChange(&stdPath);
         }
         mShellNotifier->notify(path);

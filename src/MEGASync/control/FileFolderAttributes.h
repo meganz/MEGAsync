@@ -1,8 +1,7 @@
 #ifndef FILEFOLDERATTRIBUTES_H
 #define FILEFOLDERATTRIBUTES_H
 
-#include <QTMegaRequestListener.h>
-
+#include "megaapi.h"
 #include <QDateTime>
 #include <QFutureWatcher>
 

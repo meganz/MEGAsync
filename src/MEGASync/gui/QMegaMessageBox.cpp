@@ -60,6 +60,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
         if(info.checkBox)
         {
+#ifdef Q_OS_MACOS
+            //This little hack is done in order to have the same font as the Informative text on macOS (the only one with different font)
+            info.checkBox->setFont(qApp->font("QTipLabel"));
+#endif
             msgBox->setCheckBox(info.checkBox);
         }
         QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();

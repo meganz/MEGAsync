@@ -2,7 +2,7 @@
 #include "ui_InfoDialogTransferDelegateWidget.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include <TransferItem.h>
 
 #include <QImageReader>

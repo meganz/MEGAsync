@@ -1,8 +1,9 @@
 #include "InfoDialogTransfersWidget.h"
+
 #include "ui_InfoDialogTransfersWidget.h"
 #include "MegaApplication.h"
 #include "MegaTransferDelegate.h"
-#include "model/InfoDialogTransfersProxyModel.h"
+#include "InfoDialogTransfersProxyModel.h"
 
 using namespace mega;
 

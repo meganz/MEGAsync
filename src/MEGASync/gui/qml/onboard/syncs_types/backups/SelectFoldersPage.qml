@@ -1,3 +1,5 @@
+import common 1.0
+
 import BackupsModel 1.0
 
 SelectFoldersPageForm {
@@ -7,6 +9,11 @@ SelectFoldersPageForm {
     signal selectFolderMoveToConfirm
 
     footerButtons {
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
+
         rightSecondary.onClicked: {
             root.selectFolderMoveToBack();
         }

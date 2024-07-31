@@ -2,10 +2,9 @@
 
 #include "QmlManager.h"
 #include "StandardIconProvider.h"
-#include "syncs/control/SyncController.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncController.h"
+#include "SyncInfo.h"
 
-#include "MegaApplication.h"
 #include "Utilities.h"
 
 #include "megaapi.h"

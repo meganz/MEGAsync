@@ -3,7 +3,7 @@
 
 #include <QQuickWindow>
 
-class QmlDialog : public QQuickWindow
+class QmlDialog: public QQuickWindow
 {
     Q_OBJECT
 
@@ -19,19 +19,18 @@ signals:
     void accept();
     void reject();
     void finished();
-    void languageChanged();
     void accepted();
     void rejected();
     void requestPageFocus();
     void initializePageFocus();
+    void languageChanged();
 
 protected:
-    bool event(QEvent*) override;
+    bool event(QEvent* event) override;
     void onRequestPageFocus();
 
 private:
     QString mIconSrc;
-
 };
 
 #endif // QMLDIALOG_H
