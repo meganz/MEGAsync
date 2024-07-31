@@ -532,7 +532,7 @@ void TransferManager::refreshStateStats()
 {
     QLabel* countLabel (nullptr);
     QString countLabelText;
-    long long processedNumber (0LL);
+    uint processedNumber (0);
 
     // First check Finished states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB];

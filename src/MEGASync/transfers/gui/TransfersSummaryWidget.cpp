@@ -615,7 +615,7 @@ void TransfersSummaryWidget::updateDownloads()
     update();
 }
 
-void TransfersSummaryWidget::setUploads(long long completed, long long total)
+void TransfersSummaryWidget::setUploads(uint completed, uint total)
 {
     if(total == 0)
     {
@@ -629,7 +629,7 @@ void TransfersSummaryWidget::setUploads(long long completed, long long total)
     updateUploads();
 }
 
-void TransfersSummaryWidget::setDownloads(long long completed, long long total)
+void TransfersSummaryWidget::setDownloads(uint completed, uint total)
 {
     if(total == 0)
     {

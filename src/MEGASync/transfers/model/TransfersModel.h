@@ -20,14 +20,14 @@
 
 struct TransfersCount
 {
-    int totalUploads;
-    int totalDownloads;
+    uint totalUploads;
+    uint totalDownloads;
 
-    int pendingUploads;
-    int pendingDownloads;
+    uint pendingUploads;
+    uint pendingDownloads;
 
-    int failedUploads;
-    int failedDownloads;
+    uint failedUploads;
+    uint failedDownloads;
 
     long long completedUploadBytes;
     long long completedDownloadBytes;
@@ -51,11 +51,11 @@ struct TransfersCount
         totalDownloadBytes(0)
     {}
 
-    int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
-    int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
-    int pendingTransfers() const {return pendingDownloads + pendingUploads;}
+    uint completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
+    uint completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
+    uint pendingTransfers() const {return pendingDownloads + pendingUploads;}
 
-    int totalFailedTransfers() const {return failedUploads + failedDownloads;}
+    uint totalFailedTransfers() const {return failedUploads + failedDownloads;}
 
     void clear()
     {

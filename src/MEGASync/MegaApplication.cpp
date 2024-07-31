@@ -2062,7 +2062,7 @@ void MegaApplication::checkOverStorageStates()
         }
 
         auto transferCount = getTransfersModel()->getTransfersCount();
-        long long pendingTransfers =  transferCount.pendingUploads || transferCount.pendingDownloads;
+        uint pendingTransfers =  transferCount.pendingUploads || transferCount.pendingDownloads;
 
         if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
                               && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
