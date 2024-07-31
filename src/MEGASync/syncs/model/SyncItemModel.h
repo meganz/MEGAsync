@@ -5,6 +5,8 @@
 #include <QAbstractItemModel>
 #include <QCollator>
 
+#include <memory>
+
 #include "megaapi.h"
 
 class SyncInfo;
