@@ -17,14 +17,16 @@ UserMessageCacheManager::UserMessageCacheManager()
 {
 }
 
-QWidget* UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget* parent)
+UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int row,
+                                                              UserMessage* data,
+                                                              QWidget* parent)
 {
     if(!data)
     {
         return nullptr;
     }
 
-    QWidget* widget(nullptr);
+    UserMessageWidget* widget(nullptr);
     auto cacheIndex(row % mUserMessageItems.maxCost());
 
     switch (data->getType())
@@ -49,13 +51,14 @@ QWidget* UserMessageCacheManager::getWidget(int row, UserMessage* data, QWidget*
 }
 
 template<class Item>
-QWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex, UserMessage* data, QWidget* parent)
+UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
+                                                              UserMessage* data,
+                                                              QWidget* parent)
 {
     UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
     if(dynamic_cast<Item*>(widget))
     {
-        auto id = widget->getData()->id();
-        if(!data->hasSameId(widget->getData()->id()))
+        if(!widget->getData() || !data->hasSameId(widget->getData()->id()))
         {
             widget->setData(data);
         }

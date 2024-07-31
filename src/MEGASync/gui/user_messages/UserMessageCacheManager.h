@@ -14,13 +14,18 @@ public:
     UserMessageCacheManager();
     virtual ~UserMessageCacheManager() = default;
 
-    QWidget* getWidget(int row, UserMessage* data, QWidget* parent);
+    UserMessageWidget* createOrGetWidget(int row,
+                                         UserMessage* data,
+                                         QWidget* parent);
 
 private:
     QCache<int, UserMessageWidget> mUserMessageItems;
 
     template<class Item>
-    QWidget* createOrGetWidget(int cacheIndex, UserMessage* data, QWidget* parent);
+    UserMessageWidget* createOrGetWidget(int cacheIndex,
+                                         UserMessage* data,
+                                         QWidget* parent);
+
     UserMessageWidget* getWidgetFromCache(int cacheIndex);
 
 };

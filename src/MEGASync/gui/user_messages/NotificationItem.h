@@ -2,6 +2,10 @@
 #define NOTIFICATION_ITEM_H
 
 #include "UserMessageWidget.h"
+#include "Utilities.h"
+#include "NotificationExpirationTimer.h"
+
+#include <QPointer>
 
 class UserNotification;
 
@@ -24,15 +28,27 @@ public:
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
 
+protected:
+    void changeEvent(QEvent* event) override;
+    void showEvent(QShowEvent* event) override;
+
 private slots:
     void onCTAClicked();
+    void onTimerExpirated(int64_t remainingTimeSecs);
 
 private:
     Ui::NotificationItem* mUi;
-    UserNotification* mNotificationData;
+    QPointer<UserNotification> mNotificationData;
+    NotificationExpirationTimer mExpirationTimer;
+    bool mDisplayEventSent = false;
 
     void setNotificationData(UserNotification* newNotificationData);
-    void setImages();
+    void updateNotificationData(UserNotification* newNotificationData);
+    void updateNotificationData(bool downloadImage = false,
+                                bool downloadIcon = false);
+    void setImage();
+    void setIcon();
+    void updateExpirationText();
 
 };
 

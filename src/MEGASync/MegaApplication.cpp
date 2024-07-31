@@ -1515,12 +1515,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
-                if(infoDialog)
-                {
-                    infoDialog->deleteUserMessageDelegate();
-                    mUserMessageController.reset();
-                    createUserMessageController();
-                }
+                mUserMessageController.reset();
+                createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
                 start();
@@ -2205,10 +2201,10 @@ void MegaApplication::cleanAll()
     delegateListener = nullptr;
     mPricing.reset();
     mCurrency.reset();
-    mUserMessageController.reset();
 
     delete EmailRequester::instance();
 
+    mUserMessageController.reset();
     infoDialog->deleteLater();
 
     // Delete menus and menu items

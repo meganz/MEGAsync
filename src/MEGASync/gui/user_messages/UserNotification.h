@@ -2,6 +2,7 @@
 #define USER_NOTIFICATION_H
 
 #include "UserMessage.h"
+#include "ImageDownloader.h"
 
 #include <QPixmap>
 #include <QUrl>
@@ -12,8 +13,6 @@ namespace mega
 {
 class MegaNotification;
 }
-
-class ImageDownloader;
 
 class UserNotification : public UserMessage
 {
@@ -28,14 +27,18 @@ public:
     bool isRowAccepted(MessageType type) const override;
 
     void reset(const mega::MegaNotification* notification);
+    bool equals(const mega::MegaNotification* notification) const;
 
     void markAsSeen();
+    void markAsExpired();
 
     QString getTitle() const;
     QString getDescription() const;
 
     bool showImage() const;
     bool showIcon() const;
+    QString getImageNamePath() const;
+    QString getIconNamePath() const;
     QPixmap getImagePixmap() const;
     QPixmap getIconPixmap() const;
 
@@ -59,9 +62,6 @@ private:
     QPixmap mImage;
     QPixmap mIcon;
     bool mSeen;
-
-    QString getImageNamePath() const;
-    QString getIconNamePath() const;
 
 };
 

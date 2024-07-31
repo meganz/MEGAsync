@@ -4,6 +4,7 @@
 #include "UserMessageProxyModel.h"
 #include "UserMessageCacheManager.h"
 #include "UserMessage.h"
+#include "UserMessageWidget.h"
 
 #include <QPainter>
 #include <QTreeView>
@@ -206,14 +207,14 @@ QModelIndex UserMessageDelegate::getEditorCurrentIndex() const
 
 QWidget* UserMessageDelegate::getWidget(const QModelIndex& index) const
 {
-    QWidget* widget = nullptr;
+    UserMessageWidget* widget = nullptr;
     if (index.isValid() && index.row() >= 0)
     {
         QModelIndex filteredIndex = mProxyModel->mapToSource(index);
         if (filteredIndex.isValid() && filteredIndex.row() >= 0)
         {
             UserMessage* item = static_cast<UserMessage*>(filteredIndex.internalPointer());
-            widget = mCacheManager->getWidget(index.row(), item, mView->viewport());
+            widget = mCacheManager->createOrGetWidget(index.row(), item, mView->viewport());
         }
     }
     return widget;

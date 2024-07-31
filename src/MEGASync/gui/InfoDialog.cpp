@@ -296,6 +296,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
+    if(ui->tvNotifications->itemDelegate())
+    {
+        // Remove delegate cache before deleting the parent QTreeView widget
+        delete ui->tvNotifications->itemDelegate();
+    }
     delete ui;
     delete animation;
     delete filterMenu;
@@ -1167,12 +1172,6 @@ void InfoDialog::reset()
     transferQuotaState = QuotaState::OK;
 }
 
-void InfoDialog::deleteUserMessageDelegate()
-{
-    delete ui->tvNotifications->itemDelegate();
-    ui->tvNotifications->setItemDelegate(nullptr);
-}
-
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
@@ -1731,6 +1730,7 @@ void InfoDialog::repositionInfoDialog()
 void InfoDialog::initNotificationArea()
 {
     mNotificationsViewHoverManager.setView(ui->tvNotifications);
+
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
     ui->tvNotifications->setModel(app->getNotificationController()->getModel());
@@ -1738,6 +1738,14 @@ void InfoDialog::initNotificationArea()
     auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
                                             ui->tvNotifications);
     ui->tvNotifications->setItemDelegate(delegate);
-    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+
+    applyFilterOption(MessageType::ALL);
+    connect(app->getNotificationController(), &UserMessageController::userMessagesReceived, this, [this]()
+    {
+        // We need to check if there is any user message to display or not
+        // with the actual selected filter.
+        applyFilterOption(filterMenu->getCurrentFilter());
+    });
+
     notificationsReady = true;
 }

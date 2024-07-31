@@ -36,6 +36,9 @@ public:
     uint32_t checkLocalLastSeenNotification();
     void setLastSeenNotification(uint32_t id);
 
+private slots:
+    void onExpired(unsigned id);
+
 private:
     class SeenStatusManager
     {
@@ -68,7 +71,8 @@ private:
     void updateAlerts(const QList<mega::MegaUserAlert*>& alerts);
     void removeAlerts(const QList<mega::MegaUserAlert*>& alerts);
 
-    void insertNotifications(const mega::MegaNotificationList* notifications);
+    void insertNotifications(const QList<mega::MegaNotification*>& notifications);
+    void updateNotification(int row, const mega::MegaNotification* notification);
     void removeNotifications(const mega::MegaNotificationList* notifications);
 
     auto findById(unsigned id, UserMessage::Type type);

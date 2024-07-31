@@ -19,9 +19,6 @@ public:
     virtual void setData(UserMessage* data) = 0;
     virtual UserMessage* getData() const = 0;
 
-signals:
-    void needsUpdate();
-
 };
 
 #endif // USER_MESSAGE_WIDGET_H

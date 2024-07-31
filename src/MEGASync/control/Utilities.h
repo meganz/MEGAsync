@@ -15,6 +15,7 @@
 #include <QQueue>
 #include <QEventLoop>
 #include <QMetaEnum>
+#include <QTimer>
 
 #include <QEasingCurve>
 
@@ -280,7 +281,9 @@ protected:
 
 struct TimeInterval
 {
-    TimeInterval(long long secs, bool secondPrecision);
+    TimeInterval(long long secs, bool secondPrecision = true);
+
+    TimeInterval& operator=(const TimeInterval& other);
 
     int days;
     int hours;

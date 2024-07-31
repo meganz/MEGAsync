@@ -43,12 +43,13 @@ void AlertItem::setData(UserMessage* data)
     if (alert)
     {
         setAlertData(alert);
+        connect(mAlertData, &UserMessage::dataChanged, this, &AlertItem::updateAlertData);
     }
 }
 
 UserMessage* AlertItem::getData() const
 {
-    return mAlertData;
+    return mAlertData.data();
 }
 
 void AlertItem::setAlertData(UserAlert* alert)
@@ -57,10 +58,7 @@ void AlertItem::setAlertData(UserAlert* alert)
 
     connect(mAlertData, &UserAlert::emailChanged,
             this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-    connect(mAlertData, &UserAlert::emailChanged, this, [=]()
-    {
-        updateAlertData();
-    });
+    connect(mAlertData, &UserAlert::emailChanged, this, &AlertItem::updateAlertData);
 
     if (mAlertData->getUserHandle() != INVALID_HANDLE)
     {
@@ -77,11 +75,6 @@ void AlertItem::setAlertData(UserAlert* alert)
         }
     }
 
-    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, [this]()
-    {
-        emit refreshAlertItem(mAlertData->id());
-    });
-
     onAttributesReady();
 }
 
@@ -92,7 +85,7 @@ void AlertItem::contactEmailChanged()
 
 void AlertItem::requestFullName()
 {
-    if (mAlertData->getEmail().isEmpty())
+    if (!mAlertData || (mAlertData && mAlertData->getEmail().isEmpty()))
     {
         return;
     }
@@ -101,7 +94,8 @@ void AlertItem::requestFullName()
 
     if(mFullNameAttributes)
     {
-        connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady, this, &AlertItem::onAttributesReady);
+        connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady,
+                this, &AlertItem::onAttributesReady);
     }
 
     mUi->wAvatarContact->setUserEmail(mAlertData->getEmail().toUtf8().constData());
@@ -128,18 +122,26 @@ void AlertItem::onAttributesReady()
 
 void AlertItem::updateAlertData()
 {
+    if(!mAlertData)
+    {
+        return;
+    }
+
     updateAlertType();
     setAlertHeading(mAlertData);
     setAlertContent(mAlertData);
     setAlertTimeStamp(mAlertData->getTimestamp(0));
     mAlertData->isSeen() ? mUi->lNew->hide() : mUi->lNew->show();
-
-    emit refreshAlertItem(mAlertData->id());
 }
 
 void AlertItem::updateAlertType()
 {
     mUi->wNotificationIcon->hide();
+
+    if(!mAlertData)
+    {
+        return;
+    }
 
     QString notificationTitle;
     QString notificationColor;
@@ -213,7 +215,8 @@ void AlertItem::updateAlertType()
         }
     }
 
-    mUi->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
+    mUi->lTitle->setStyleSheet(QString::fromLatin1("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ")
+                                   .arg(notificationColor));
     mUi->lTitle->setText(notificationTitle);
 }
 
@@ -326,11 +329,15 @@ void AlertItem::setAlertHeading(UserAlert* alert)
 
 
     mUi->lHeading->ensurePolished();
-    mUi->lHeading->setText(mUi->lHeading->fontMetrics().elidedText(mNotificationHeading, Qt::ElideMiddle,mUi->lHeading->minimumWidth()));
+    mUi->lHeading->setText(mUi->lHeading->fontMetrics()
+                                .elidedText(mNotificationHeading,
+                                           Qt::ElideMiddle,mUi->lHeading->minimumWidth()));
 
     if(!mAlertData->getEmail().isEmpty())
     {
-        mNotificationHeading.append(QString::fromLatin1(" (") + mAlertData->getEmail() + QString::fromLatin1(")"));
+        mNotificationHeading.append(QString::fromLatin1(" (")
+                                        + mAlertData->getEmail()
+                                        + QString::fromLatin1(")"));
         setToolTip(mNotificationHeading);
     }
 }
@@ -340,160 +347,196 @@ void AlertItem::setAlertContent(UserAlert *alert)
     QString notificationContent;
     switch (alert->getType())
     {
-            // Contact notifications
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
-                notificationContent = tr("[A] sent you a contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
-                notificationContent = tr("[A] cancelled their contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-                notificationContent = tr("Reminder: You have a contact request");
-                break;
-            case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
-                notificationContent = tr("[A] deleted you as a contact")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
-                notificationContent = tr("[A] has been deleted/deactivated")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-                notificationContent = tr("[A] accepted your contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
-                notificationContent = tr("[A] blocked you as contact")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-                notificationContent = tr("You ignored a contact request");
-                break;
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
-                notificationContent = tr("You accepted a contact request");
-                break;
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
-                notificationContent = tr("You denied a contact request");
-                break;
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
-                notificationContent = tr("[A] accepted your contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
-                notificationContent = tr("[A] denied your contact request")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            // Share notifications
-            case MegaUserAlert::TYPE_NEWSHARE:
-                notificationContent = tr("New shared folder from [A]")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            case MegaUserAlert::TYPE_DELETEDSHARE:
+        // Contact notifications
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        {
+            notificationContent = tr("[A] sent you a contact request")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+        {
+            notificationContent = tr("[A] cancelled their contact request")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        {
+            notificationContent = tr("Reminder: You have a contact request");
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+        {
+            notificationContent = tr("[A] deleted you as a contact")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+        {
+            notificationContent = tr("[A] has been deleted/deactivated")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        {
+            notificationContent = tr("[A] accepted your contact request")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+        {
+            notificationContent = tr("[A] blocked you as contact")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+        {
+            notificationContent = tr("You ignored a contact request");
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        {
+            notificationContent = tr("You accepted a contact request");
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+        {
+            notificationContent = tr("You denied a contact request");
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        {
+            notificationContent = tr("[A] accepted your contact request")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        {
+            notificationContent = tr("[A] denied your contact request")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        // Share notifications
+        case MegaUserAlert::TYPE_NEWSHARE:
+        {
+            notificationContent = tr("New shared folder from [A]")
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_DELETEDSHARE:
+        {
+            if (alert->getNumber(0) == 0) //Someone left the folder
             {
-                if (alert->getNumber(0) == 0) //Someone left the folder
+                notificationContent = tr("[A] has left the shared folder")
+                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            }
+            else //Access for the user was removed by share owner
+            {
+                if(mAlertData)
                 {
-                    notificationContent = tr("[A] has left the shared folder")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+                    notificationContent = !mAlertData->getEmail().isEmpty()
+                                            ? tr("Access to shared folder was removed by [A]")
+                                                .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
+                                            : tr("Access to shared folder was removed");
                 }
-                else //Access for the user was removed by share owner
+            }
+            break;
+        }
+        case MegaUserAlert::TYPE_NEWSHAREDNODES:
+        {
+            int64_t updatedItems = alert->getNumber(1) + alert->getNumber(0);
+            notificationContent = tr("[A] added %n item", "", static_cast<int>(updatedItems))
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        {
+            int64_t updatedItems = alert->getNumber(0);
+            notificationContent = tr("[A] removed %n item", "", static_cast<int>(updatedItems))
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+        {
+            int64_t updatedItems = alert->getNumber(0);
+            notificationContent = tr("[A] updated %n item", "", static_cast<int>(updatedItems))
+                    .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
+            break;
+        }
+        // Payment notifications
+        case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        {
+            notificationContent = tr("Your payment for the [A] plan was received")
+                    .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
+            break;
+        }
+        case MegaUserAlert::TYPE_PAYMENT_FAILED:
+        {
+            notificationContent = tr("Your payment for the [A] plan was unsuccessful")
+                    .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
+            break;
+        }
+        case MegaUserAlert::TYPE_PAYMENTREMINDER:
+        {
+            notificationContent = CommonMessages::createPaymentReminder(alert->getTimestamp(1));
+            break;
+        }
+        // Takedown notifications
+        case MegaUserAlert::TYPE_TAKEDOWN:
+        {
+            if (mAlertNode)
+            {
+                if (mAlertNode->getType() == MegaNode::TYPE_FILE)
                 {
-                    notificationContent = !mAlertData->getEmail().isEmpty() ? tr("Access to shared folder was removed by [A]").replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()))
-                                                            : tr("Access to shared folder was removed");
+                    notificationContent = tr("Your publicly shared file ([A]) has been taken down")
+                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                 }
-                break;
-            }
-
-            case MegaUserAlert::TYPE_NEWSHAREDNODES:
-            {
-                int64_t updatedItems = alert->getNumber(1) + alert->getNumber(0);
-                notificationContent = tr("[A] added %n item", "", static_cast<int>(updatedItems))
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            }
-            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
-            {
-                int64_t updatedItems = alert->getNumber(0);
-                notificationContent = tr("[A] removed %n item", "", static_cast<int>(updatedItems))
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            }
-            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
-            {
-                int64_t updatedItems = alert->getNumber(0);
-                notificationContent = tr("[A] updated %n item", "", static_cast<int>(updatedItems))
-                        .replace(QString::fromUtf8("[A]"), formatRichString(getUserFullName()));
-                break;
-            }
-            // Payment notifications
-            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
-                notificationContent = tr("Your payment for the [A] plan was received")
-                        .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
-                break;
-            case MegaUserAlert::TYPE_PAYMENT_FAILED:
-                notificationContent = tr("Your payment for the [A] plan was unsuccessful")
-                        .replace(QString::fromUtf8("[A]"), alert->getString(0) ? QString::fromUtf8(alert->getString(0)) : QString::fromUtf8(""));
-                break;
-            case MegaUserAlert::TYPE_PAYMENTREMINDER:
-            {
-                notificationContent = CommonMessages::createPaymentReminder(alert->getTimestamp(1));
-                break;
-            }
-            // Takedown notifications
-            case MegaUserAlert::TYPE_TAKEDOWN:
-            {
-                if (mAlertNode)
+                else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
-                    if (mAlertNode->getType() == MegaNode::TYPE_FILE)
-                    {
-                        notificationContent = tr("Your publicly shared file ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
-                    }
-                    else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
-                    {
-                        notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
-                    }
-                    else
-                    {
-                        notificationContent = tr("Your publicly shared has been taken down");
-                    }
+                    notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
+                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                 }
                 else
                 {
                     notificationContent = tr("Your publicly shared has been taken down");
                 }
-                break;
             }
-            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+            else
             {
-                if (mAlertNode)
+                notificationContent = tr("Your publicly shared has been taken down");
+            }
+            break;
+        }
+        case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+        {
+            if (mAlertNode)
+            {
+                if (mAlertNode->getType() == MegaNode::TYPE_FILE)
                 {
-                    if (mAlertNode->getType() == MegaNode::TYPE_FILE)
-                    {
-                        notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
-                    }
-                    else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
-                    {
-                        notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
-                                .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
-                    }
-                    else
-                    {
-                        notificationContent = tr("Your taken down has been reinstated");
-                    }
+                    notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
+                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
+                }
+                else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
+                {
+                    notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
+                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
                 }
                 else
                 {
                     notificationContent = tr("Your taken down has been reinstated");
                 }
-                break;
             }
-            default:
-                notificationContent = QString::fromUtf8(alert->getTitle());
-                break;
+            else
+            {
+                notificationContent = tr("Your taken down has been reinstated");
+            }
+            break;
+        }
+        default:
+        {
+            notificationContent = QString::fromUtf8(alert->getTitle());
+            break;
+        }
     }
 
     mUi->lDesc->setText(notificationContent);
@@ -529,6 +572,11 @@ QSize AlertItem::sizeHint() const
 
 void AlertItem::mousePressEvent(QMouseEvent* event)
 {
+    if(!mAlertData)
+    {
+        return;
+    }
+
     switch(mAlertData->getType())
     {
         case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
@@ -585,7 +633,7 @@ void AlertItem::processIncomingPendingContactClick()
             }
 
             const char* email = request->getSourceEmail();
-            if (mAlertData->getEmail().toStdString().c_str() == email)
+            if (mAlertData && mAlertData->getEmail().toStdString().c_str() == email)
             {
                 found = true;
                 Utilities::openUrl(QUrl(QString::fromUtf8("mega://#fm/ipc")));
@@ -635,9 +683,12 @@ void AlertItem::changeEvent(QEvent *event)
     {
         mUi->retranslateUi(this);
         updateAlertType();
-        setAlertHeading(mAlertData);
-        setAlertContent(mAlertData);
-        setAlertTimeStamp(mAlertData->getTimestamp(0));
+        if (mAlertData)
+        {
+            setAlertHeading(mAlertData);
+            setAlertContent(mAlertData);
+            setAlertTimeStamp(mAlertData->getTimestamp(0));
+        }
     }
     QWidget::changeEvent(event);
 }
@@ -655,6 +706,6 @@ QString AlertItem::getUserFullName()
         return mFullNameAttributes->getRichFullName();
     }
 
-    return mAlertData->getEmail();
+    return mAlertData ? mAlertData->getEmail() : QString::fromUtf8("");
 }
 

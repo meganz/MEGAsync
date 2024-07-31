@@ -77,7 +77,6 @@ public:
     bool updateOverStorageState(int state);
 
     void reset();
-    void deleteUserMessageDelegate();
 
     void enterBlockingState();
     void leaveBlockingState(bool fromCancellation);
@@ -184,7 +183,7 @@ private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 
-    FilterAlertWidget *filterMenu;
+    FilterAlertWidget* filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *sharesItem;

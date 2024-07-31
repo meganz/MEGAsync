@@ -129,6 +129,7 @@ void UserAlert::reset(mega::MegaUserAlert* alert)
     mMegaUserAlert.reset(alert);
     mId = mMegaUserAlert->getId();
     init();
+    emit dataChanged();
 }
 
 bool UserAlert::isSeen() const

@@ -105,7 +105,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     { AppStatsEvents::EventType::SETTINGS_NOTIFICATIONS_TAB_CLICKED        , 99597 },
     { AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED               , 99598 },
     { AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED          , 99599 },
-    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED             , 600000 }
+    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED             , 600000 },
+    { AppStatsEvents::EventType::NOTIFICATION_DISPLAYED                    , 600001 },
+    { AppStatsEvents::EventType::NOTIFICATION_CTA_CLICKED                  , 600002 }
 };
 
 // Deprecated are not displayed
@@ -186,17 +188,25 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     { AppStatsEvents::EventType::SETTINGS_NOTIFICATIONS_TAB_CLICKED, "Settings notifications tab clicked" },
     { AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED, "Settings export key clicked" },
     { AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED, "Settings change password clicked" },
-    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" }
+    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" },
+    { AppStatsEvents::EventType::NOTIFICATION_DISPLAYED, "Notification displayed - id: %1" },
+    { AppStatsEvents::EventType::NOTIFICATION_CTA_CLICKED, "Notification CTA button clicked - id: %1" }
 };
 
-const char* AppStatsEvents::getEventMessage(EventType event)
+QString AppStatsEvents::getEventMessage(EventType event,
+                                         const QStringList& args)
 {
     if (!mMessageMap.contains(event))
     {
-        return "";
+        return QString();
     }
 
-    return mMessageMap[event];
+    QString message(QString::fromUtf8(mMessageMap[event]));
+    for (const QString& arg : args)
+    {
+        message = message.arg(arg);
+    }
+    return message;
 }
 
 int AppStatsEvents::getEventType(EventType event)
