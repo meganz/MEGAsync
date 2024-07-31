@@ -7,6 +7,7 @@
 
 #include <QString>
 #include <QDir>
+#include <mutex>
 
 /**
  * @brief Sync Controller class
@@ -69,7 +70,7 @@ public:
     //Error strings
     QString getErrStrCurrentBackupOverExistingBackup();
     QString getErrStrCurrentBackupInsideExistingBackup();
-    QString getErrorString(int errorCode, int syncErrorCode);
+    QString getErrorString(int errorCode, int syncErrorCode) const;
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
@@ -86,7 +87,7 @@ protected:
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
     void createPendingBackups();
-    QString getSyncAPIErrorMsg(int megaError);
+    QString getSyncAPIErrorMsg(int megaError) const;
     QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 

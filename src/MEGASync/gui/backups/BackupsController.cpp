@@ -28,8 +28,8 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
     mBackupsProcessedWithError = 0;
     mBackupsToDoSize = backupsInfoList.size();
     mBackupsToDoList = backupsInfoList;
-    addBackup(mBackupsToDoList.first().first,
-                                 mBackupsToDoList.first().second);
+    const auto&[fullPath, backupName] = mBackupsToDoList.first();
+    addBackup(fullPath, backupName);
 }
 
 bool BackupsController::existsName(const QString& name) const
@@ -60,8 +60,8 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     mBackupsToDoList.removeFirst();
     if(mBackupsToDoList.size() > 0)
     {
-        addBackup(mBackupsToDoList.first().first,
-                                     mBackupsToDoList.first().second);
+        const auto&[fullPath, backupName] = mBackupsToDoList.first();
+        addBackup(fullPath, backupName);
     }
     else if(mBackupsToDoList.size() == 0)
     {
@@ -69,7 +69,7 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     }
 }
 
-QString BackupsController::getErrorString(int errorCode, int syncErrorCode)
+QString BackupsController::getErrorString(int errorCode, int syncErrorCode) const
 {
     QString errorMsg;
     if(errorCode != mega::MegaError::API_OK)

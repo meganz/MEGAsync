@@ -53,7 +53,7 @@ void SyncController::addBackup(const QString& localFolder, const QString& syncNa
     }
 }
 
-QString SyncController::getErrorString(int errorCode, int syncErrorCode)
+QString SyncController::getErrorString(int errorCode, int syncErrorCode) const
 {
     QString errorMsg;
     if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
@@ -617,7 +617,7 @@ QString SyncController::getErrStrCurrentBackupInsideExistingBackup()
     return tr("You can't backup this folder as it's already inside a backed up folder.");
 }
 
-QString SyncController::getSyncAPIErrorMsg(int megaError)
+QString SyncController::getSyncAPIErrorMsg(int megaError) const
 {
     switch (megaError)
     {
@@ -672,7 +672,7 @@ QString SyncController::getSyncTypeString(const mega::MegaSync::SyncType& syncTy
 void SyncController::syncOperationBegins()
 {
     emit signalSyncOperationBegins();
-    mActiveOperations++;
+    ++mActiveOperations;
 }
 
 void SyncController::syncOperationEnds()

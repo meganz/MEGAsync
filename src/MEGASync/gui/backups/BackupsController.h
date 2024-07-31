@@ -3,6 +3,8 @@
 
 #include "SyncController.h"
 
+#include <mutex>
+
 class BackupsController : public SyncController
 {
     Q_OBJECT
@@ -30,7 +32,7 @@ public:
 
     QSet<QString> getRemoteFolders() const;
 
-    QString getErrorString(int errorCode, int syncErrorCode);
+    QString getErrorString(int errorCode, int syncErrorCode) const;
 
 signals:
     void backupFinished(const QString& folder, int errorCode, int syncErrorCode);
