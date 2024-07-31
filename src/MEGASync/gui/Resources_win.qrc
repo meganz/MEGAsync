@@ -1546,10 +1546,5 @@
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
         <file>images/themed/dark/checkbox_unchecked.svg</file>
         <file>images/themed/light/checkbox_unchecked.svg</file>
-        <file>images/account_details/trash.svg</file>
-        <file>images/account_details/pie.svg</file>
-        <file>images/account_details/database.svg</file>
-        <file>images/account_details/cloud.svg</file>
-        <file>images/account_details/versions.svg</file>
     </qresource>
 </RCC>

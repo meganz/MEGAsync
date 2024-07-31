@@ -367,7 +367,7 @@ min-width:219px;
             <item row="2" column="1">
              <spacer name="verticalSpacer_6">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -380,7 +380,7 @@ min-width:219px;
             <item row="0" column="1">
              <spacer name="verticalSpacer_5">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -406,7 +406,7 @@ min-width:219px;
             <item row="1" column="0">
              <spacer name="horizontalSpacer_7">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -419,7 +419,7 @@ min-width:219px;
             <item row="1" column="2">
              <spacer name="horizontalSpacer_8">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -514,7 +514,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer">
                     <property name="orientation">
-                     <enum>Qt::Vertical</enum>
+                     <enum>Qt::Orientation::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -547,7 +547,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_2">
                     <property name="orientation">
-                     <enum>Qt::Vertical</enum>
+                     <enum>Qt::Orientation::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -629,7 +629,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_3">
                     <property name="orientation">
-                     <enum>Qt::Vertical</enum>
+                     <enum>Qt::Orientation::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -662,7 +662,7 @@ min-width:219px;
                   <item>
                    <spacer name="verticalSpacer_4">
                     <property name="orientation">
-                     <enum>Qt::Vertical</enum>
+                     <enum>Qt::Orientation::Vertical</enum>
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
@@ -753,7 +753,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources.qrc">
              <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
            </property>
            <property name="iconSize">
@@ -858,8 +858,8 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/account_details/database.svg</normaloff>:/images/account_details/database.svg</iconset>
            </property>
            <property name="iconSize">
             <size>
@@ -963,7 +963,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources.qrc">
              <normaloff>:/images/account_details/trash.svg</normaloff>:/images/account_details/trash.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1068,7 +1068,7 @@ min-width:219px;
             </size>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources.qrc">
              <normaloff>:/images/account_details/pie.svg</normaloff>:/images/account_details/pie.svg</iconset>
            </property>
            <property name="iconSize">
@@ -1087,14 +1087,14 @@ min-width:219px;
            <property name="rightMargin">
             <number>8</number>
            </property>
-           <item alignment="Qt::AlignVCenter">
+           <item alignment="Qt::AlignmentFlag::AlignVCenter">
             <widget class="QLabel" name="lAvailable">
              <property name="text">
               <string>Available storage</string>
              </property>
             </widget>
            </item>
-           <item alignment="Qt::AlignRight|Qt::AlignVCenter">
+           <item alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
             <widget class="QLabel" name="lAvailableStorage"/>
            </item>
           </layout>
@@ -1123,10 +1123,10 @@ min-width:219px;
          </size>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Plain</enum>
+         <enum>QFrame::Shadow::Plain</enum>
         </property>
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -1153,7 +1153,7 @@ min-width:219px;
            </size>
           </property>
           <property name="icon">
-           <iconset resource="../Resources_linux.qrc">
+           <iconset resource="../Resources.qrc">
             <normaloff>:/images/account_details/versions.svg</normaloff>:/images/account_details/versions.svg</iconset>
           </property>
           <property name="iconSize">
@@ -1203,7 +1203,7 @@ min-width:219px;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -2,5 +2,10 @@
     <qresource prefix="/">
         <file>colors/ColorThemedTokens.json</file>
         <file>style/WidgetsComponentsStyleSheets.css</file>
+        <file>images/account_details/versions.svg</file>
+        <file>images/account_details/trash.svg</file>
+        <file>images/account_details/pie.svg</file>
+        <file>images/account_details/database.svg</file>
+        <file>images/account_details/cloud.svg</file>
     </qresource>
 </RCC>
