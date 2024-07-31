@@ -123,7 +123,7 @@ public:
     explicit DuplicatedRenameItem(QWidget *parent = nullptr);
     ~DuplicatedRenameItem() = default;
 
-    void setInfo(std::shared_ptr<DuplicatedNodeInfo> conflict);
+    void setRenameInfo(std::shared_ptr<DuplicatedNodeInfo> conflict);
 
 protected:
     QString getNodeName() override;

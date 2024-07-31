@@ -241,7 +241,7 @@ DuplicatedRenameItem::DuplicatedRenameItem(QWidget *parent)
 {
 }
 
-void DuplicatedRenameItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)
+void DuplicatedRenameItem::setRenameInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)
 {
     DuplicatedLocalItem::setInfo(conflict, NodeItemType::UPLOAD_AND_RENAME);
 }
