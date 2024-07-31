@@ -18,14 +18,14 @@ pipeline {
                             ]
                     ])
                 }
-                script { 
+                script {
                     desktop_sources_workspace = WORKSPACE
                 }
             }
         }
         stage('Build desktop'){
             environment {
-                VCPKGPATH  = "${desktop_sources_workspace}\\..\\vcpkg"
+                VCPKGPATH  = "${desktop_sources_workspace}\\..\\..\\vcpkg"
                 MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
                 _MSPDBSRV_ENDPOINT_ = "${BUILD_TAG}"
                 TMP       = "${desktop_sources_workspace}\\tmp"
