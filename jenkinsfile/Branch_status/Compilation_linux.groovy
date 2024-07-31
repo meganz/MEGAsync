@@ -1,3 +1,18 @@
+def sendSlackNotification(String initialMessage) {
+    def resultMessage = """
+        ${initialMessage}
+        *JOB_URL*: ${env.BUILD_URL}
+        *SDK_BRANCH*: \\`${SDK_BRANCH}\\`
+    """.stripIndent()
+    withCredentials([string(credentialsId: 'slack_webhook_ast_report', variable: 'SLACK_WEBHOOK_AST_REPORT')]) {
+        env.RESULT_MESSAGE = resultMessage
+        sh """
+            curl -X POST -H 'Content-type: application/json' --data '{
+                "text": "'"${env.RESULT_MESSAGE}"'"
+                }' ${SLACK_WEBHOOK_AST_REPORT}
+        """
+    }
+}
 pipeline {
     agent { label 'linux && amd64' }
     options { 
@@ -41,11 +56,14 @@ pipeline {
         always {
             deleteDir()
         }
-        // success {
-        // }
-        // failure {
-        // }
-        // aborted {
-        // }
+        success {
+            sendSlackNotification(":white_check_mark: *Jenkins job ${env.JOB_BASE_NAME} succeed*")
+        }
+        failure {
+            sendSlackNotification(":red_circle: *Jenkins job ${env.JOB_BASE_NAME} failed*")
+        }
+        aborted {
+            sendSlackNotification(":red_circle: *Jenkins job ${env.JOB_BASE_NAME} aborted*")
+        }
     }
 }
