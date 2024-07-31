@@ -67,7 +67,7 @@ private:
         EmptyPath,
         NoAccessPermissionsNoExist,
         NoAccessPermissionsCantCreate,
-        WarnSyncable
+        CantSync
     };
 
     enum class RemoteErrors

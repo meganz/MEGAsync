@@ -32,6 +32,9 @@ void Syncs::addSync(const QString& local, const QString& remote)
 {
     cleanErrors();
 
+    mRemoteFolder = remote;
+    mLocalFolder = local;
+
     if (checkErrorsOnSyncPaths(local, remote))
     {
         return;
@@ -47,7 +50,6 @@ void Syncs::addSync(const QString& local, const QString& remote)
     if (remoteHandle == mega::INVALID_HANDLE)
     {
         mCreatingFolder = true;
-        mRemoteFolder = remote;
 
         /*
          *  need to remove the first / from the remote path,
@@ -58,7 +60,6 @@ void Syncs::addSync(const QString& local, const QString& remote)
             mRemoteFolder.remove(0,1);
         }
 
-        mLocalFolder = local;
         mMegaApi->createFolder(mRemoteFolder.toUtf8().constData(),
                                MegaSyncApp->getRootNode().get());
     }
@@ -109,16 +110,9 @@ void Syncs::helperCheckLocalSync(const QString& path)
     {
         QString errorMessage;
         auto syncability = SyncController::isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
-        if (syncability == SyncController::WARN_SYNC || syncability == SyncController::CANT_SYNC)
+        if (syncability == SyncController::CANT_SYNC)
         {
-            // Only local WARN_SYNC at this point
-            //local warning write permission needs to be different for this case
-            //on onboarding so we will make up it here
-            localError = LocalErrors::WarnSyncable;
-
-#if defined DEBUG
-            qDebug() << "localPath : " << path << " syncability : " << syncability << " message : " << errorMessage;
-#endif
+            localError = LocalErrors::CantSync;
         }
     }
 
@@ -294,9 +288,11 @@ QString Syncs::getLocalError() const
             return QCoreApplication::translate("MegaSyncError", "Local path not available");
         }
 
-        case LocalErrors::WarnSyncable:
+        case LocalErrors::CantSync:
         {
-            return tr("Folder can't be synced as you don't have write permissions.");
+            QString errorMessage;
+            SyncController::isLocalFolderSyncable(mLocalFolder, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+            return errorMessage;
         }
     }
 
