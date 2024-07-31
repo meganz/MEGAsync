@@ -55,13 +55,13 @@ public:
         ConflictedNameInfo(const QFileInfo& fileInfo,
             bool isFile,
             std::shared_ptr<FileFolderAttributes> attributes)
-            : mConflictedName(fileInfo.fileName())
-            , mHandle(mega::INVALID_HANDLE)
+            : mHandle(mega::INVALID_HANDLE)
             , mConflictedPath(fileInfo.filePath())
-            , mDuplicatedGroupId(-1)
             , mDuplicated(false)
+            , mDuplicatedGroupId(-1)
             , mIsFile(isFile)
             , mItemAttributes(attributes)
+            , mConflictedName(fileInfo.fileName())
             , mSolved(SolvedType::UNSOLVED)
         {
         }
