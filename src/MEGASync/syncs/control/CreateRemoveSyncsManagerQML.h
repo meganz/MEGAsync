@@ -11,12 +11,14 @@ class CreateRemoveSyncsManager;
 
 class CreateRemoveSyncsManagerQML
 {
+    Q_GADGET
+
 public:
-    CreateRemoveSyncsManagerQML() = default;
+    explicit CreateRemoveSyncsManagerQML() = default;
     ~CreateRemoveSyncsManagerQML() = default;
 
-    const CreateRemoveSyncsManager* const addBackup(bool comesFromSettings);
-    const CreateRemoveSyncsManager* const removeBackup(mega::MegaHandle handle, QWidget* parent);
+    Q_INVOKABLE void addBackup(bool comesFromSettings);
+    Q_INVOKABLE void removeBackup(mega::MegaHandle handle, QWidget* parent);
 };
 
 #endif // CREATEREMOVESYNCSMANAGERQML_H

@@ -31,14 +31,8 @@ public:
 
     static SyncController& instance()
     {
-        static std::unique_ptr<SyncController> instance;
-        static std::once_flag flag;
-
-        std::call_once(flag, [&]() {
-            instance.reset(new SyncController());
-        });
-
-        return *instance;
+        static SyncController instance;
+        return instance;
     }
 
     SyncController(const SyncController&) = delete;

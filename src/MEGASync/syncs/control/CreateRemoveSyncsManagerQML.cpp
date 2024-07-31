@@ -3,13 +3,12 @@
 #include "CreateRemoveSyncsManager.h"
 #include "SyncSettings.h"
 
-const CreateRemoveSyncsManager* const CreateRemoveSyncsManagerQML::addBackup(bool comesFromSettings)
+void CreateRemoveSyncsManagerQML::addBackup(bool comesFromSettings)
 {
-    return CreateRemoveSyncsManager::addSync(comesFromSettings);
+    CreateRemoveSyncsManager::addSync(comesFromSettings);
 }
 
-const CreateRemoveSyncsManager* const
-    CreateRemoveSyncsManagerQML::removeBackup(mega::MegaHandle handle, QWidget* parent)
+void CreateRemoveSyncsManagerQML::removeBackup(mega::MegaHandle handle, QWidget* parent)
 {
-    return CreateRemoveSyncsManager::removeSync(handle, parent);
+    CreateRemoveSyncsManager::removeSync(handle, parent);
 }

@@ -3,15 +3,13 @@
 #include "CreateRemoveBackupsManager.h"
 #include "SyncSettings.h"
 
-
-const CreateRemoveBackupsManager* const CreateRemoveBackupsManagerQML::addBackup(
-    bool comesFromSettings)
+void CreateRemoveBackupsManagerQML::addBackup(bool comesFromSettings)
 {
-    return CreateRemoveBackupsManager::addBackup(comesFromSettings);
+    CreateRemoveBackupsManager::addBackup(comesFromSettings);
 }
 
-const CreateRemoveBackupsManager* const CreateRemoveBackupsManagerQML::removeBackup(
-    std::shared_ptr<SyncSettings> backup, QWidget* parent)
+void CreateRemoveBackupsManagerQML::removeBackup(std::shared_ptr<SyncSettings> backup,
+                                                 QWidget* parent)
 {
-    return CreateRemoveBackupsManager::removeBackup(backup, parent);
+    CreateRemoveBackupsManager::removeBackup(backup, parent);
 }
