@@ -9,6 +9,19 @@ SelectiveSyncPageForm {
     signal selectiveSyncMoveToBack
     signal selectiveSyncMoveToSuccess
 
+    localFolderChooser.folderField.hint.text: root.syncs.localError
+    localFolderChooser.folderField.hint.visible: root.syncs.localError.length !== 0
+    localFolderChooser.folderField.error: root.syncs.localError.length !== 0
+
+    remoteFolderChooser.folderField.hint.text: root.syncs.remoteError
+    remoteFolderChooser.folderField.hint.visible: root.syncs.remoteError.length !== 0
+    remoteFolderChooser.folderField.error: root.syncs.remoteError.length !== 0
+
+    function enableScreen() {
+        root.enabled = true;
+        footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+    }
+
     footerButtons {
         leftSecondary.onClicked: {
             syncsComponentAccess.openExclusionsDialog(localFolderChooser.choosenPath);
@@ -19,43 +32,10 @@ SelectiveSyncPageForm {
         }
 
         rightPrimary.onClicked: {
-            localFolderChooser.folderField.hint.visible = false;
-            localFolderChooser.folderField.error = false;
-
-            remoteFolderChooser.folderField.hint.visible = false;
-            remoteFolderChooser.folderField.error = false;
-
-            var localFolderError = false;
-            if (localFolderChooser.choosenPath.length === 0) {
-                localFolderError = true;
-                localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = SyncsStrings.invalidLocalPath;
-                localFolderChooser.folderField.hint.visible = true;
-            }
-
-            var remoteFolderError = false;
-            if (remoteFolderChooser.choosenPath.length === 0) {
-                remoteFolderError = true;
-                remoteFolderChooser.folderField.error = true;
-                remoteFolderChooser.folderField.hint.text = SyncsStrings.invalidRemotePath;
-                remoteFolderChooser.folderField.hint.visible = true;
-            }
-
-            if (localFolderError || remoteFolderError) {
-                return;
-            }
-
-            if (localFolderChooser.choosenPath === localFolder.getDefaultFolder(syncs.defaultMegaFolder)
-                    && !localFolder.createFolder(localFolderChooser.choosenPath)) {
-                localFolderChooser.folderField.error = true;
-                localFolderChooser.folderField.hint.text = SyncsStrings.canNotSyncPermissionError;
-                localFolderChooser.folderField.hint.visible = true;
-                return;
-            }
-
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            syncs.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+
+            root.syncs.addSync(localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
         }
     }
 
@@ -63,36 +43,21 @@ SelectiveSyncPageForm {
         id: localFolder
     }
 
-    Syncs {
-        id: syncs
+    Connections {
+        target: root.syncs
 
-        onSyncSetupSuccess: {
-            root.enabled = true;
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+        function onSyncSetupSuccess() {
+            enableScreen();
             remoteFolderChooser.reset();
             root.selectiveSyncMoveToSuccess();
         }
 
-        onCantSync: (message, localFolderError) => {
-            root.enabled = true;
-            footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
+        function onLocalErrorChanged() {
+            enableScreen();
+        }
 
-            if(message.length === 0) {
-                return;
-            }
-
-            var folderChooser;
-            if(localFolderError) {
-                folderChooser = localFolderChooser;
-            }
-            else {
-                folderChooser = remoteFolderChooser;
-            }
-            folderChooser.folderField.error = true;
-            folderChooser.folderField.hint.text = message;
-            folderChooser.folderField.hint.visible = true;
-
-            console.log("Selective sync can't sync, message -> " + message);
+        function onRemoteErrorChanged() {
+            enableScreen();
         }
     }
 
@@ -101,12 +66,6 @@ SelectiveSyncPageForm {
 
         function onInitializePageFocus() {
             localFolderChooser.forceActiveFocus();
-        }
-
-        function onLanguageChanged() {
-            if (localFolderChooser.folderField.hint.visible || remoteFolderChooser.folderField.hint.visible) {
-                footerButtons.rightPrimary.clicked();
-            }
         }
     }
 }
