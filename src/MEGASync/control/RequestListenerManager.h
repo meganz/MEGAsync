@@ -60,8 +60,14 @@ class RequestListenerManager : public QObject
 public:
     static RequestListenerManager& instance()
     {
-        static RequestListenerManager instance;
-        return instance;
+        static std::unique_ptr<RequestListenerManager> instance;
+        static std::once_flag flag;
+
+        std::call_once(flag, [&]() {
+            instance.reset(new RequestListenerManager());
+        });
+
+        return *instance;
     }
 
     RequestListenerManager(const RequestListenerManager&) = delete;
