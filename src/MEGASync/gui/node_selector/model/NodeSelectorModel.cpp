@@ -766,7 +766,8 @@ bool NodeSelectorModel::dropMimeData(
 
                 std::unique_ptr<mega::MegaNode> firstMoveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandles.first()));
 
-                if(firstMoveNode->getParentHandle() == targetFolder)
+                if(firstMoveNode->getParentHandle() == targetFolder
+                    || firstMoveNode->getHandle() == targetFolder)
                 {
                     return false;
                 }

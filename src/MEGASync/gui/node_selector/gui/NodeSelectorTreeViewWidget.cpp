@@ -274,8 +274,9 @@ void NodeSelectorTreeViewWidget::onProxyModelSorted()
 {
     if (mNewFolderAdded)
     {
-        mNewFolderAdded = false;
         onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+        mNewFolderAdded = false;
+        mNewFolderHandle = mega::INVALID_HANDLE;
     }
 }
 
