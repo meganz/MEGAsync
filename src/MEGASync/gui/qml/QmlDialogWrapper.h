@@ -161,11 +161,11 @@ public:
             * Errors will be printed respecting the original format (with links to source qml that fails).
             * All errors will be printed, using qDebug() some errors were hidden.
             */
-            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_ERROR, qmlComponent.errorString().toStdString().c_str());
+            ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_ERROR, qmlComponent.errorString().toUtf8().constData());
             for(const QString& path : engine->importPathList())
             {
                 QString message = QString::fromUtf8("QML import path: ") + path;
-                ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toStdString().c_str());
+                ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
             }
         }
     }

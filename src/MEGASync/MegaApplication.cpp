@@ -3619,11 +3619,7 @@ void MegaApplication::notifyChangeToAllFolders()
     {
         ++mProcessingShellNotifications;
 
-#ifdef _WIN32
-        string stdLocalFolder((const char*)localFolder.utf16(), localFolder.size()*sizeof(wchar_t));
-#else
-        string stdLocalFolder = localFolder.toStdString();
-#endif
+        string stdLocalFolder = localFolder.toUtf8().constData();
         Platform::getInstance()->notifyItemChange(localFolder, megaApi->syncPathState(&stdLocalFolder));
     }
 }

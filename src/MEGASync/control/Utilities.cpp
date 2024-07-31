@@ -754,7 +754,7 @@ QString Utilities::getSizeStringLocalized(quint64 bytes)
     if (foundIt != unitsSize.constEnd())
     {
         return locale.toString(toDoubleInUnit(bytes, foundIt->second)) + QString::fromLatin1(" ")
-                + QCoreApplication::translate("Utilities", foundIt->first.toStdString().c_str());
+                + QCoreApplication::translate("Utilities", foundIt->first.toUtf8().constData());
     }
     else
     {
