@@ -1,11 +1,11 @@
 #include "UserMessageController.h"
 
+#include "RequestListenerManager.h"
 #include "MegaApplication.h"
 
 UserMessageController::UserMessageController(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
     , mGlobalListener(std::make_unique<mega::QTMegaGlobalListener>(MegaSyncApp->getMegaApi(), this))
     , mUserMessagesModel(std::make_unique<UserMessageModel>(nullptr))
     , mUserMessagesProxyModel(std::make_unique<UserMessageProxyModel>(nullptr))
@@ -14,18 +14,17 @@ UserMessageController::UserMessageController(QObject* parent)
     mUserMessagesProxyModel->setSourceModel(mUserMessagesModel.get());
     mUserMessagesProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
 
-    mMegaApi->addRequestListener(mDelegateListener.get());
+    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
     mMegaApi->addGlobalListener(mGlobalListener.get());
 }
 
-void UserMessageController::onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e)
+void UserMessageController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
 {
-    Q_UNUSED(api)
     switch(request->getType())
     {
         case mega::MegaRequest::TYPE_GET_NOTIFICATIONS:
         {
-            if (e->getErrorCode() == mega::MegaError::API_OK)
+            if (error->getErrorCode() == mega::MegaError::API_OK)
             {
                 auto notificationList = request->getMegaNotifications();
                 if (notificationList)
@@ -40,7 +39,7 @@ void UserMessageController::onRequestFinish(mega::MegaApi* api, mega::MegaReques
         case mega::MegaRequest::TYPE_SET_ATTR_USER:
         case mega::MegaRequest::TYPE_GET_ATTR_USER:
         {
-            if (e->getErrorCode() == mega::MegaError::API_OK
+            if (error->getErrorCode() == mega::MegaError::API_OK
                     && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
                     && mUserMessagesModel)
             {
@@ -127,7 +126,7 @@ void UserMessageController::requestNotifications() const
         return;
     }
 
-    mMegaApi->getNotifications();
+    mMegaApi->getNotifications(mDelegateListener.get());
 }
 
 void UserMessageController::checkUseenNotifications()
@@ -148,16 +147,13 @@ void UserMessageController::checkUseenNotifications()
 
 void UserMessageController::ackSeenUserMessages()
 {
-    // TODO: REMOVE AFTER TESTS
-    //mMegaApi->setLastReadNotification(0);
-
     if (mAllUnseenAlerts > 0 && hasNotifications())
     {
-        mMegaApi->acknowledgeUserAlerts();
+        mMegaApi->acknowledgeUserAlerts(mDelegateListener.get());
         auto lastSeen = mUserMessagesModel->checkLocalLastSeenNotification();
         if(lastSeen > 0)
         {
-            mMegaApi->setLastReadNotification(lastSeen);
+            mMegaApi->setLastReadNotification(lastSeen, mDelegateListener.get());
         }
     }
 }
