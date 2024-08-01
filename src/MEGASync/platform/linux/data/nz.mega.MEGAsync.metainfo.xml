@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 Artem Polishchuk <ego.cordatus@gmail.com> -->
+<component type="desktop-application">
+  <id>nz.mega.MEGAsync</id>
+  <metadata_license>CC0-1.0</metadata_license>
+
+  <!-- MEGAsync is under a proprietary license, except the SDK which is BSD -->
+  <project_license>LicenseRef-proprietary</project_license>
+
+  <name>MEGAsync</name>
+  <launchable type="desktop-id">megasync.desktop</launchable>
+  <provides>
+    <binary>megasync</binary>
+  </provides>
+
+  <content_rating type="oars-1.0">
+  </content_rating>
+
+  <summary>
+    Easy automated syncing
+  </summary>
+
+  <developer id="tld.vendor">
+    <name>MEGA CLOUD SERVICES LIMITED</name>
+  </developer>
+
+  <description>
+    <p>Easy automated synchronisation between your computer and your MEGA
+    cloud.</p>
+
+    <p>Sync and lots more with the MEGA Desktop App</p>
+
+    <p>For all major platforms — Compatible with Windows, macOS and Linux,
+    including syncing between different platforms.</p>
+
+    <p>Stream files directly from MEGA — The MEGA app allows you to stream any
+    file from your MEGA cloud or from a file link, straight to your favourite
+    player.</p>
+
+    <p>Deleted data retention — MEGA moves deleted files to a special folder on
+    your local computer and in your MEGA cloud so they can be restored if you
+    need to.</p>
+
+    <p>Powerful Transfer Manager — Full control over active and completed
+    transfers: prioritise, pause/resume, open, generate links and more…</p>
+
+    <p>Easy Automated Synchronisation — Access and work with your data securely
+    across different locations and devices. It’s always on and fully
+    automatic.</p>
+
+    <p>Browser Integration — All MEGA browser file transfers can be
+    automatically handled by the MEGA app, significantly enhancing the
+    reliability, performance and speed. This avoids browser limitations,
+    especially for large files.</p>
+
+    <p>File Manager — As well as syncing specified folders, you can upload and
+    download selected files/folders, enable file versioning and overlay sync
+    icons in your standard file explorer.</p>
+  </description>
+
+  <releases>
+    <release date="@DATE@" version="@VERSION@"></release>
+    <release date="2020-07-27" version="4.3.3.0"></release>
+  </releases>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://eu.static.mega.co.nz/3//images/mega/bottom-page/sp_sync_1_v3@2x.png</image>
+      <caption>Screenshot 1</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://eu.static.mega.co.nz/3//images/mega/bottom-page/sp_sync_2_v2@2x.png</image>
+      <caption>Screenshot 2</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://eu.static.mega.co.nz/3//images/mega/bottom-page/sp_sync_3_v2@2x.png</image>
+      <caption>Screenshot 3</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://eu.static.mega.co.nz/3//images/mega/bottom-page/sp_sync_4@2x.png</image>
+      <caption>Screenshot 4</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://eu.static.mega.co.nz/3//images/mega/bottom-page/sp_sync_5@2x.png</image>
+      <caption>Screenshot 5</caption>
+    </screenshot>
+  </screenshots>
+
+  <keywords>
+    <keyword>cloud</keyword>
+    <keyword>filesharing</keyword>
+    <keyword>sync</keyword>
+  </keywords>
+
+  <url type="bugtracker">https://github.com/meganz/MEGAsync/issues</url>
+  <url type="help">https://mega.nz/help/client/megasync/</url>
+  <url type="homepage">https://mega.nz/sync</url>
+</component>
