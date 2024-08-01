@@ -464,6 +464,7 @@ endif()
 
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
 )
 
 target_sources(MEGAsync
