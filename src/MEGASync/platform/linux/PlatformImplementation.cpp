@@ -108,7 +108,9 @@ bool PlatformImplementation::isStartOnStartupActive()
 bool PlatformImplementation::isTilingWindowManager()
 {
     static const QSet<QString> tiling_wms = {
-        QString::fromUtf8("i3")
+        QLatin1String("i3"),
+        QLatin1String("Hyprland"),
+        QLatin1String("sway")
     };
 
     return getValue("MEGASYNC_ASSUME_TILING_WM", false)
@@ -331,51 +333,65 @@ QString PlatformImplementation::getWindowManagerName()
 
     if (!cached)
     {
-        const int maxLen = 1024;
-        const auto connection = QX11Info::connection();
-        const auto appRootWindow = static_cast<xcb_window_t>(QX11Info::appRootWindow());
-
-        auto wmCheckAtom = getAtom(QX11Info::connection(), "_NET_SUPPORTING_WM_CHECK");
-        // Get window manager
-        auto reply = xcb_get_property_reply(connection,
-                                            xcb_get_property(connection,
-                                                             false,
-                                                             appRootWindow,
-                                                             wmCheckAtom,
-                                                             XCB_ATOM_WINDOW,
-                                                             0,
-                                                             maxLen),
-                                            nullptr);
-
-        if (reply && reply->format == 32 && reply->type == XCB_ATOM_WINDOW)
+        if (QX11Info::isPlatformX11())
         {
-            // Get window manager name
-            const xcb_window_t windowManager = *(static_cast<xcb_window_t*>(xcb_get_property_value(reply)));
+            const int maxLen = 1024;
+            const auto connection = QX11Info::connection();
+            const auto appRootWindow = static_cast<xcb_window_t>(QX11Info::appRootWindow());
 
-            if (windowManager != XCB_WINDOW_NONE)
+            if (connection != nullptr)
             {
-                const auto utf8StringAtom = getAtom(connection, "UTF8_STRING");
-                const auto wmNameAtom = getAtom(connection, "_NET_WM_NAME");
+                auto wmCheckAtom = getAtom(connection, "_NET_SUPPORTING_WM_CHECK");
+                // Get window manager
+                auto reply = xcb_get_property_reply(connection,
+                                                    xcb_get_property(connection,
+                                                                     false,
+                                                                     appRootWindow,
+                                                                     wmCheckAtom,
+                                                                     XCB_ATOM_WINDOW,
+                                                                     0,
+                                                                     maxLen),
+                                                    nullptr);
 
-                auto wmReply = xcb_get_property_reply(connection,
-                                                      xcb_get_property(connection,
-                                                                       false,
-                                                                       windowManager,
-                                                                       wmNameAtom,
-                                                                       utf8StringAtom,
-                                                                       0,
-                                                                       maxLen),
-                                                      nullptr);
-                if (wmReply && wmReply->format == 8 && wmReply->type == utf8StringAtom)
+                if (reply && reply->format == 32 && reply->type == XCB_ATOM_WINDOW)
                 {
-                    wmName = QString::fromUtf8(static_cast<const char*>(xcb_get_property_value(wmReply)),
-                                                                        xcb_get_property_value_length(wmReply));
+                    // Get window manager name
+                    const xcb_window_t windowManager = *(static_cast<xcb_window_t*>(xcb_get_property_value(reply)));
+
+                    if (windowManager != XCB_WINDOW_NONE)
+                    {
+                        const auto utf8StringAtom = getAtom(connection, "UTF8_STRING");
+                        const auto wmNameAtom = getAtom(connection, "_NET_WM_NAME");
+
+                        auto wmReply = xcb_get_property_reply(connection,
+                                                              xcb_get_property(connection,
+                                                                               false,
+                                                                               windowManager,
+                                                                               wmNameAtom,
+                                                                               utf8StringAtom,
+                                                                               0,
+                                                                               maxLen),
+                                                              nullptr);
+                        if (wmReply && wmReply->format == 8 && wmReply->type == utf8StringAtom)
+                        {
+                            wmName = QString::fromUtf8(static_cast<const char*>(xcb_get_property_value(wmReply)),
+                                                                                xcb_get_property_value_length(wmReply));
+                        }
+                        free(wmReply);
+                    }
                 }
-                free(wmReply);
+                free(reply);
+                cached = true;
             }
         }
-        free(reply);
-        cached = true;
+
+        if (!cached)
+        {
+            // The previous method failed. We are most probably on Wayland.
+            // Try to get info from environment.
+            wmName = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+            cached = !wmName.isEmpty();
+        }
     }
     return wmName;
 }
