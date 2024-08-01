@@ -24,15 +24,14 @@ void UserMessageController::onRequestFinish(mega::MegaRequest* request, mega::Me
     {
         case mega::MegaRequest::TYPE_GET_NOTIFICATIONS:
         {
-            if (error->getErrorCode() == mega::MegaError::API_OK)
+            if (error->getErrorCode() == mega::MegaError::API_OK
+                    || error->getErrorCode() == mega::MegaError::API_ENOENT)
             {
+                // If empty list (API_ENOENT), clear notifications.
                 auto notificationList = request->getMegaNotifications();
-                if (notificationList)
-                {
-                    mUserMessagesModel->processNotifications(notificationList);
-                    mMegaApi->getLastReadNotification();
-                    emit userMessagesReceived();
-                }
+                mUserMessagesModel->processNotifications(notificationList);
+                mMegaApi->getLastReadNotification(mDelegateListener.get());
+                emit userMessagesReceived();
             }
             break;
         }

@@ -221,7 +221,7 @@ bool UserMessageModel::hasAlertsOfType(MessageType type)
 void UserMessageModel::processNotifications(const mega::MegaNotificationList* notifications)
 {
     int numNotifications = notifications ? notifications->size() : 0;
-    if (numNotifications)
+    if (numNotifications > 0)
     {
         QList<mega::MegaNotification*> newNotifications;
         for (int i = 0; i < numNotifications; i++)
@@ -248,6 +248,10 @@ void UserMessageModel::processNotifications(const mega::MegaNotificationList* no
 
         removeNotifications(notifications);
         insertNotifications(newNotifications);
+    }
+    else
+    {
+        removeNotifications(nullptr);
     }
 }
 
@@ -288,21 +292,24 @@ void UserMessageModel::updateNotification(int row, const mega::MegaNotification*
 
 void UserMessageModel::removeNotifications(const mega::MegaNotificationList* notifications)
 {
-    for (int row = 0; row < mUserMessages.size(); ++row)
+    for (int row = mUserMessages.size()-1; row >= 0; --row)
     {
-        auto item = mUserMessages[row];
+        auto item = mUserMessages.at(row);
         if(!item->isOfType(UserMessage::Type::NOTIFICATION))
         {
             continue;
         }
 
-        unsigned i = 0;
         bool found = false;
         auto notification = qobject_cast<UserNotification*>(item);
-        while (i < notifications->size() && !found)
+        if(notifications)
         {
-            found = notification->hasSameId(notifications->get(i)->getID());
-            ++i;
+            unsigned i = 0;
+            while (i < notifications->size() && !found)
+            {
+                found = notification->hasSameId(notifications->get(i)->getID());
+                ++i;
+            }
         }
 
         if (!found)
@@ -316,8 +323,6 @@ void UserMessageModel::removeNotifications(const mega::MegaNotificationList* not
             delete mUserMessages[row];
             mUserMessages.removeAt(row);
             endRemoveRows();
-
-            --row;
         }
     }
 }
