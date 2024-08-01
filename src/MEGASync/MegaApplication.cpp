@@ -1491,14 +1491,7 @@ if (!preferences->lastExecutionTime())
         megaApi->getPublicNode(link.toUtf8().constData());
     }
 
-    if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
-    {
-        preferences->setUsedStorage(preferences->totalStorage());
-    }
-    else
-    {
-        preferences->setUsedStorage(receivedStorageSum);
-    }
+    updateUsedStorage();
     refreshStorageUIs();
 
     onGlobalSyncStateChanged(megaApi);
@@ -2535,6 +2528,28 @@ void MegaApplication::createInfoDialog()
     connect(infoDialog, SIGNAL(cancelScanning()), this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup, infoDialog.data(), &InfoDialog::onAddBackup);
     scanStageController.updateReference(infoDialog);
+}
+
+void MegaApplication::updateUsedStorage(const bool sendEvent)
+{
+    if (storageState == MegaApi::STORAGE_STATE_RED
+            && receivedStorageSum < preferences->totalStorage())
+    {
+        preferences->setUsedStorage(preferences->totalStorage());
+        if(sendEvent)
+        {
+            mStatsEventHandler->sendEvent(AppStatsEvents::EventType::RED_LIGHT_USED_STORAGE_MISMATCH);
+        }
+    }
+    else
+    {
+        preferences->setUsedStorage(receivedStorageSum);
+    }
+}
+
+QPointer<UpgradeOverStorage> MegaApplication::getStorageOverquotaDialog() const
+{
+    return mStorageOverquotaDialog;
 }
 
 QuotaState MegaApplication::getTransferQuotaState() const
@@ -5736,15 +5751,7 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
             return;
         }
 
-        if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
-        {
-            preferences->setUsedStorage(preferences->totalStorage());
-        }
-        else
-        {
-            preferences->setUsedStorage(receivedStorageSum);
-        }
-
+        updateUsedStorage();
         refreshStorageUIs();
     }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
