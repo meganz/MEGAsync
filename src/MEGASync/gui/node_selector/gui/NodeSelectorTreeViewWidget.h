@@ -170,10 +170,11 @@ class SelectType
 {
 public:
     explicit SelectType() = default;
+    virtual ~SelectType() = default;
     virtual bool isAllowedToNavigateInside(const QModelIndex& index);
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
     virtual bool okButtonEnabled(const QModelIndexList &selected) = 0;
-    virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)};
+    virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget*){}
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 };
 

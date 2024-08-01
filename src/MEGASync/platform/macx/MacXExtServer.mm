@@ -79,7 +79,6 @@ void MacXExtServer::onClientData(QByteArray data)
         return;
     }
 
-    qint64 len;
     QByteArray buf;
     QByteArray response;
     while (client->readCommand(&buf) > 0)

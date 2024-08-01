@@ -232,7 +232,7 @@ void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesRece
                         issue.getData().get(),
                         &StalledIssue::asyncIssueSolvingStarted,
                         this,
-                        [this]()
+                        []()
                         {
                             //In case we want to implement it in the future
                         });
@@ -899,11 +899,8 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
        if(!info.async)
        {
-           bool sendMessage(true);
-
            if(issuesExternallyChanged > 0)
            {
-               sendMessage = false;
                unBlockUi();
                showIssueExternallyChangedMessageBox();
            }

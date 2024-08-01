@@ -459,8 +459,6 @@ quint64 PlatformImplementation::getBaseUnitsSize() const
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
 {
-    int xSign = 1;
-    int ySign = 1;
     QPoint position;
     QRect screenGeometry;
     QSystemTrayIcon* trayIcon = MegaSyncApp->getTrayIcon();

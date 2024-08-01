@@ -37,7 +37,7 @@ CocoaSwitchButton::CocoaSwitchButton(QWidget *pParent /* = 0 */)
     setCocoaView((__bridge NSSwitch *)m_pButton);
 
     /* Make sure all is properly resized */
-    resize(frame.size.width, frame.size.height);
+    resize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
@@ -45,7 +45,7 @@ QSize CocoaSwitchButton::sizeHint() const
 {
     [(__bridge NSSwitch *)m_pButton sizeToFit];
     NSRect frame = [(__bridge NSSwitch *)m_pButton frame];
-    return QSize(frame.size.width, frame.size.height);
+    return QSize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
 }
 
 void CocoaSwitchButton::onClicked()

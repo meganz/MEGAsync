@@ -125,7 +125,7 @@ void SyncSettings::setSync(MegaSync *sync)
     }
     else
     {
-        assert("SyncSettings constructor with null sync");
+        assert(true && "SyncSettings constructor with null sync");
         mSync.reset(new MegaSync()); // MegaSync getter return fair enough defaults
     }
 }

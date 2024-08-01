@@ -106,7 +106,7 @@ void QSegmentedControl::clicked(long segment)
             {
                 return;
             }
-            emit segmentClicked(segment);
+            emit segmentClicked(static_cast<int>(segment));
             break;
         default:
             break;

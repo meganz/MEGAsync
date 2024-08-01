@@ -35,8 +35,8 @@ struct TransfersCount
     long long totalUploadBytes;
     long long totalDownloadBytes;
 
-    QMap<Utilities::FileType, long long> transfersByType;
-    QMap<Utilities::FileType, long long> transfersFinishedByType;
+    QMap<Utilities::FileType, uint> transfersByType;
+    QMap<Utilities::FileType, uint> transfersFinishedByType;
 
     TransfersCount():
         totalUploads(0),
@@ -265,11 +265,11 @@ public:
 
     void lockModelMutex(bool lock);
 
-    long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
-    long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
+    uint getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
+    uint  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
     TransfersCount getLastTransfersCount();
-    long long failedTransfers();
+    uint failedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
     void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer, int row);

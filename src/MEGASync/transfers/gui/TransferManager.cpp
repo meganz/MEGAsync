@@ -1205,7 +1205,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 || previousTab == TransfersWidget::FAILED_TAB
                 || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
-            int transfers(0);
+            uint transfers(0);
 
             if(previousTab == TransfersWidget::COMPLETED_TAB)
             {

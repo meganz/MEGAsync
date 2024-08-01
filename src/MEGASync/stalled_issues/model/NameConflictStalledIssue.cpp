@@ -560,7 +560,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                     MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
-                        [this, &error](mega::MegaRequest*, mega::MegaError* e)
+                        [&error](mega::MegaRequest*, mega::MegaError* e)
                         {
                             if(e->getErrorCode() != mega::MegaError::API_OK)
                             {

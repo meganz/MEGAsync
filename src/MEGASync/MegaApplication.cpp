@@ -939,7 +939,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        int transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        uint transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
@@ -991,7 +991,7 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        int transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        uint transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
@@ -4901,7 +4901,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (infoDialog)
     {
-        if (targetFolder == ::mega::INVALID_HANDLE)
+        if (static_cast<MegaHandle>(targetFolder) == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                          QString::fromUtf8("Invalid Mega handle when trying to add external sync")
@@ -6166,7 +6166,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_SEND_EVENT:
     {
-        switch (AppStatsEvents::getEventType(request->getNumber()))
+        // MegaApi uses an int to define the max number of events, but request->getNumber returns a
+        // unsigned long long
+        switch (AppStatsEvents::getEventType(static_cast<int>(request->getNumber())))
         {
             case AppStatsEvents::EventType::FIRST_START:
                 preferences->setFirstStartDone();

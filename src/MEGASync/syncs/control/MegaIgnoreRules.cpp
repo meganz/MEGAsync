@@ -363,7 +363,7 @@ QString MegaIgnoreSizeRule::getModifiedRule() const
     }
 }
 
-double MegaIgnoreSizeRule::value() const
+unsigned long long MegaIgnoreSizeRule::value() const
 {
     return mValue;
 }
@@ -396,7 +396,7 @@ const QStringList& MegaIgnoreSizeRule::getUnitsForDisplay()
     return units;
 }
 
-void MegaIgnoreSizeRule::setValue(int newValue)
+void MegaIgnoreSizeRule::setValue(unsigned long long newValue)
 {
     if (mValue != newValue)
     {

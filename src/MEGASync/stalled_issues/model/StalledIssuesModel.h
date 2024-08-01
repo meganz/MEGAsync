@@ -21,46 +21,75 @@
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
 
-namespace StalledIssuesStrings
+class StalledIssuesStrings
 {
-static QString RemoveFileFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
-static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));}
-static QString RemoveLocalFileFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the file is in use, and the permissions of the file, then try again."));}
-static QString RemoveLocalFolderFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the folder is in use, and the permissions of the file, then try again."));}
-static QString RemoveRemoteFailedDescription(const mega::MegaError* error){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));}
+public:
+    static QString RemoveFileFailedTitle()
+    {
+        return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));
+    }
 
-static QString RemoveRemoteFailedFile(const mega::MegaError* error)
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
-                           .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveFolderFailedTitle()
+    {
+        return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));
+    }
 
-static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
-                           .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveLocalFileFailedDescription()
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String(
+                "Check if the file is in use, and the permissions of the file, then try again."));
+    }
 
-static QString RemoveLocalFailedFile()
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
-    errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveLocalFolderFailedDescription()
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String(
+                "Check if the folder is in use, and the permissions of the file, then try again."));
+    }
 
-static QString RemoveLocalFailedFolder()
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
-    errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
-}
+    static QString RemoveRemoteFailedDescription(const mega::MegaError* error)
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));
+    }
+
+    static QString RemoveRemoteFailedFile(const mega::MegaError* error)
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
+                               .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
+    {
+        QString errorStr =
+            QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
+                .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveLocalFailedFile()
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
+        errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveLocalFailedFolder()
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
+        errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+};
 
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {

@@ -63,7 +63,6 @@ constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
 static constexpr int NUMBER_OF_CLICKS_TO_DEBUG {5};
-static constexpr int NETWORK_LIMITS_MAX {9999};
 
 long long calculateCacheSize()
 {
@@ -1336,7 +1335,7 @@ void SettingsDialog::on_bLogout_clicked()
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this,unlink](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [unlink](QPointer<QMessageBox> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {

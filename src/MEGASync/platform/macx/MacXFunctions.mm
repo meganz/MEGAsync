@@ -478,7 +478,7 @@ bool runHttpServer()
             continue;
         }
 
-        int position = strlen(processPath);
+        auto position = strlen(processPath);
         if (position > 0)
         {
             while (position >= 0 && processPath[position] != '/')

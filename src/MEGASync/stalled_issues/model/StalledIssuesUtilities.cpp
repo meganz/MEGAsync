@@ -60,7 +60,11 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
             MegaApiSynchronizedRequest::runRequestWithResult(
                 &mega::MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result, &file](mega::MegaRequest*, mega::MegaError* e)
+                [=, &result
+#ifdef Q_OS_WIN
+                    ,&file
+#endif
+                ](mega::MegaRequest*, mega::MegaError* e)
                 {
                     // In case of error, move to OS trash
                     if (e->getErrorCode() != mega::MegaError::API_OK)

@@ -275,7 +275,7 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
     {
         result = ApplyChangesError::OK;
 
-        for (const auto extension : updatedExtensions)
+        for (const auto& extension : updatedExtensions)
         {
             auto trimmedExtension = extension.trimmed();
 

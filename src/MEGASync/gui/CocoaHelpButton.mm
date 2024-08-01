@@ -15,7 +15,7 @@
     m_pTarget = object;
     return self;
 }
--(IBAction)clicked:(id)sender;
+-(IBAction)clicked:(id)sender
 {
     m_pTarget->onClicked();
 }
@@ -40,14 +40,14 @@ CocoaHelpButton::CocoaHelpButton(QWidget *pParent /* = 0 */)
 
     setCocoaView((__bridge NSButton *) m_pButton);
     /* Make sure all is properly resized */
-    resize(frame.size.width, frame.size.height);
+    resize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 QSize CocoaHelpButton::sizeHint() const
 {
     NSRect frame = [(__bridge NSButton *) m_pButton frame];
-    return QSize(frame.size.width, frame.size.height);
+    return QSize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
 }
 
 void CocoaHelpButton::onClicked()

@@ -15,7 +15,7 @@ namespace mega
 }
 
 class Preferences;
-class LoginController : public QObject, public mega::MegaRequestListener, public mega::MegaGlobalListener
+class LoginController : public QObject, public mega::MegaGlobalListener
 {
     Q_OBJECT
     Q_PROPERTY(bool newAccount MEMBER mNewAccount CONSTANT)
@@ -157,7 +157,7 @@ protected:
 
 };
 
-class LogoutController : public QObject, mega::MegaRequestListener
+class LogoutController : public QObject
 {
     Q_OBJECT
 

@@ -127,7 +127,7 @@ std::unique_ptr<MegaNode> UploadToMegaDialog::getUploadFolder()
         }
     }
 
-    return std::move(node);
+    return node;
 }
 
 void UploadToMegaDialog::showNodeSelector()

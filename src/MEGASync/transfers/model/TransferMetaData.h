@@ -44,9 +44,7 @@ struct TransferMetaDataItem
     TransferMetaDataItem(const TransferMetaDataItemId& uid)
         :id(uid), state(TransferData::TRANSFER_ACTIVE), failedTransfer(nullptr){}
 
-    ~TransferMetaDataItem()
-    {
-    }
+    virtual ~TransferMetaDataItem() = default;
 
     TransferMetaDataItemId id;
     TransferMetaDataItemId topLevelFolderId;

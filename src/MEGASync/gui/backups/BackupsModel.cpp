@@ -22,11 +22,11 @@ BackupFolder::BackupFolder(const QString& folder,
     , mDone(false)
     , mFolderSizeReady(false)
     , mError(0)
-    , mFolderAttr(nullptr)
-    , mFolder(folder)
     , mFolderSize(FileFolderAttributes::NOT_READY)
     , mSdkError(-1)
     , mSyncError(-1)
+    , mFolderAttr(nullptr)
+    , mFolder(folder)
 {
 }
 

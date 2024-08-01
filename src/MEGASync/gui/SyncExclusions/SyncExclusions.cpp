@@ -5,6 +5,7 @@
 #include "Preferences.h"
 
 #include <QQmlEngine>
+#include <cmath>
 
 using namespace mega;
 
@@ -235,23 +236,26 @@ void SyncExclusions::setAskOnExclusionRemove(bool value)
     Preferences::instance()->setAskOnExclusionRemove(value);
 }
 
-std::pair<int, int> SyncExclusions::fromDisplay(double value , int unit) const
+std::pair<unsigned long long, int> SyncExclusions::fromDisplay(double value , int unit) const
 {
-    int intgerValue = value * 100;
-    if(unit == MegaIgnoreSizeRule::B || (intgerValue % 100) == 0)
+    double whole, fractional;
+    fractional = std::modf(value, &whole);
+
+    if(unit == MegaIgnoreSizeRule::B || isEqual(fractional, 0.0))
     {
-        return {value , unit};
+        auto truncatedValue(static_cast<unsigned long long>(trunc(value)));
+        return {truncatedValue, unit};
     }
 
-    intgerValue = value * 1024.0;
+    auto nextUnitTruncatedValue(trunc(value * 1024.0));
     --unit;
-    return {intgerValue, unit};
+    return {static_cast<unsigned long long>(nextUnitTruncatedValue), unit};
 }
 
 
-std::pair<double, int> SyncExclusions::toDisplay(int value , int unit) const
+std::pair<double, int> SyncExclusions::toDisplay(unsigned long long value , int unit) const
 {
-    double doubleValue = value;
+    double doubleValue = static_cast<double>(value);
     int updatedUnit = unit;
     for (int unitIterator = unit; unitIterator < MegaIgnoreSizeRule::G; unitIterator++)
     {

@@ -50,7 +50,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
         if (!alert)
         {
-            assert(false || "No alert found");
+            assert(true && "No alert found");
             QStyledItemDelegate::paint(painter, option, index);
             return;
         }
