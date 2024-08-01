@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>399</height>
+    <width>536</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -38,8 +38,23 @@ font-weight: 400;
 font-size:12px;
 }
 
-#moveToContainer {
-border-radius:3px;
+#lTarget
+{
+border-radius: 8px;
+border-style: solid;
+border-width: 1px;
+background: #FFFFFF; /* colorToken.page-background*/
+padding-left: 10px;
+}
+
+#lTarget::enabled
+{
+border-color: #D8D9DB; /*colorToken.border-strong*/
+}
+
+#lTarget::disabled
+{
+border-color: #D8D9DB; /*colorToken.border-disabled*/
 }
 
 #lMoveTo
@@ -48,11 +63,21 @@ font-weight: 600;
 font-size:12px;
 }
 
-*::disabled
+#moveToContainer *::disabled
 {
 color: rgba(0, 0, 0, 0.2)
 }
-</string>
+
+#bChange
+{
+background-color:  #F3F4F4; /*colorToken.button-secondary*/
+color: #616366; /*colorToken.text-secondary*/
+border-color:  #F3F4F4; /*colorToken.button-secondary*/
+border-width: 0px;
+border-style: solid;
+border-radius: 5px;
+padding: 3px 10px 3px 10px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -126,6 +151,12 @@ color: rgba(0, 0, 0, 0.2)
      </item>
      <item>
       <widget class="QWidget" name="moveToContainer" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>69</height>
+        </size>
+       </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="leftMargin">
          <number>15</number>
@@ -135,84 +166,70 @@ color: rgba(0, 0, 0, 0.2)
         </property>
         <item>
          <widget class="QLabel" name="lMoveTo">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
           <property name="text">
            <string>Move to:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QWidget" name="hDataTarget" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>28</height>
-           </size>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="leftMargin">
+           <number>1</number>
           </property>
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>28</height>
-           </size>
+          <property name="topMargin">
+           <number>1</number>
           </property>
-          <property name="styleSheet">
-           <string notr="true"/>
+          <property name="rightMargin">
+           <number>1</number>
           </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
-           <property name="spacing">
-            <number>7</number>
-           </property>
-           <property name="leftMargin">
-            <number>8</number>
-           </property>
-           <property name="topMargin">
-            <number>0</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLineEdit" name="lTarget">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="bChange">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Change</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QLineEdit" name="lTarget">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bChange">
+            <property name="minimumSize">
+             <size>
+              <width>85</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>35</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Change</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
