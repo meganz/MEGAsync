@@ -229,7 +229,6 @@ target_sources_conditional(MEGAsync
     gui/win/ImportListWidgetItem.ui
     gui/win/CrashReportDialog.ui
     gui/win/SettingsDialog.ui
-    gui/win/AccountDetailsDialog.ui
     gui/win/DownloadFromMegaDialog.ui
     gui/win/ChangeLogDialog.ui
     gui/win/StreamingFromMegaDialog.ui
@@ -276,7 +275,6 @@ target_sources_conditional(MEGAsync
    gui/macx/ImportListWidgetItem.ui
    gui/macx/CrashReportDialog.ui
    gui/macx/SettingsDialog.ui
-   gui/macx/AccountDetailsDialog.ui
    gui/macx/DownloadFromMegaDialog.ui
    gui/macx/ChangeLogDialog.ui
    gui/macx/StreamingFromMegaDialog.ui
@@ -326,7 +324,6 @@ target_sources_conditional(MEGAsync
     gui/linux/ImportListWidgetItem.ui
     gui/linux/CrashReportDialog.ui
     gui/linux/SettingsDialog.ui
-    gui/linux/AccountDetailsDialog.ui
     gui/linux/DownloadFromMegaDialog.ui
     gui/linux/ChangeLogDialog.ui
     gui/linux/StreamingFromMegaDialog.ui
@@ -406,17 +403,17 @@ target_sources_conditional(MEGAsync
 if (WIN32)
     set_property(TARGET MEGAsync
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/win gui/node_selector/gui/win
+        gui/win gui/node_selector/gui/win gui/ui
     )
 elseif (APPLE)
     set_property(TARGET MEGAsync
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/macx gui/node_selector/gui/macx
+        gui/macx gui/node_selector/gui/macx gui/ui
     )
     elseif(UNIX)
         set_property(TARGET MEGAsync
             PROPERTY AUTOUIC_SEARCH_PATHS
-            gui/linux gui/node_selector/gui/linux
+            gui/linux gui/node_selector/gui/linux gui/ui
         )
 endif()
 
@@ -465,12 +462,17 @@ if (CMAKE_HOST_APPLE)
             )
 endif()
 
+set (DESKTOP_APP_GUI_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
+)
+
 target_sources(MEGAsync
     PRIVATE
     ${DESKTOP_APP_GUI_HEADERS}
     ${DESKTOP_APP_GUI_SOURCES}
     ${DESKTOP_APP_GUI_RESOURCES}
     ${DESKTOP_APP_QM_FILES}
+    ${DESKTOP_APP_GUI_UI_FILES}
 )
 
 target_include_directories(MEGAsync PRIVATE
@@ -488,6 +490,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/syncs
+    ${CMAKE_CURRENT_LIST_DIR}/ui
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

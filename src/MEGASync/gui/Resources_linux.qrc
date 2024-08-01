@@ -1214,18 +1214,6 @@
         <file>images/StalledIssues/tree_double_link_default.png</file>
         <file>images/StalledIssues/tree_double_link_default@2x.png</file>
         <file>images/StalledIssues/tree_double_link_default@3x.png</file>
-        <file>images/account_details/versions@3x.png</file>
-        <file>images/account_details/versions@2x.png</file>
-        <file>images/account_details/versions.png</file>
-        <file>images/account_details/available_storage@3x.png</file>
-        <file>images/account_details/available_storage@2x.png</file>
-        <file>images/account_details/available_storage.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico@3x.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico@2x.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico.png</file>
-        <file>images/account_details/Bin_24_ico@3x.png</file>
-        <file>images/account_details/Bin_24_ico@2x.png</file>
-        <file>images/account_details/Bin_24_ico.png</file>
         <file>images/settings-backups-warn@3x.png</file>
         <file>images/settings-backups-warn@2x.png</file>
         <file>images/settings-backups-warn.png</file>
@@ -1523,10 +1511,5 @@
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
         <file>images/themed/dark/checkbox_unchecked.svg</file>
         <file>images/themed/light/checkbox_unchecked.svg</file>
-        <file>images/account_details/trash.svg</file>
-        <file>images/account_details/pie.svg</file>
-        <file>images/account_details/database.svg</file>
-        <file>images/account_details/cloud.svg</file>
-        <file>images/account_details/versions.svg</file>
     </qresource>
 </RCC>

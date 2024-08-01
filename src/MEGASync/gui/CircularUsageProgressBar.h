@@ -26,15 +26,15 @@ public:
     void setState(STATE state);
     void setTotalValueUnknown(bool isEmptyBar = true);
 
-    Q_PROPERTY(QString outerCircleBackgroundColor WRITE setOuterCircleBackgroundColor NOTIFY colorChanged)
-    Q_PROPERTY(QString innerCircleBackgroundColor WRITE setInnerCircleBackgroundColor NOTIFY colorChanged)
-    Q_PROPERTY(QString okStateTextColor WRITE setOkStateTextColor NOTIFY colorChanged)
-    Q_PROPERTY(QString lightOkProgressBarColors WRITE setLightOkProgressBarColor NOTIFY colorChanged)
-    Q_PROPERTY(QString darkOkProgressBarColors WRITE setDarkOkProgressBarColor NOTIFY colorChanged)
-    Q_PROPERTY(QString lightWarnProgressBarColors WRITE setLightWarnProgressBarColor NOTIFY colorChanged)
-    Q_PROPERTY(QString darkWarnProgressBarColors WRITE setDarkWarnProgressBarColor NOTIFY colorChanged)
-    Q_PROPERTY(QString lightFullProgressBarColors WRITE setLightFullProgressBarColor NOTIFY colorChanged)
-    Q_PROPERTY(QString darkFullProgressBarColors WRITE setDarkFullProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString outerCircleBackgroundColor READ getOuterCircleBackgroundColor  WRITE setOuterCircleBackgroundColor NOTIFY colorChanged)
+    Q_PROPERTY(QString innerCircleBackgroundColor READ getInnerCircleBackgroundColor WRITE setInnerCircleBackgroundColor NOTIFY colorChanged)
+    Q_PROPERTY(QString okStateTextColor READ getOkStateTextColor WRITE setOkStateTextColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightOkProgressBarColors READ getLightOkProgressBarColor WRITE setLightOkProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkOkProgressBarColors READ getDarkOkProgressBarColor WRITE setDarkOkProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightWarnProgressBarColors READ getLightWarnProgressBarColor WRITE setLightWarnProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkWarnProgressBarColors READ getDarkWarnProgressBarColor WRITE setDarkWarnProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString lightFullProgressBarColors READ getLightFullProgressBarColor WRITE setLightFullProgressBarColor NOTIFY colorChanged)
+    Q_PROPERTY(QString darkFullProgressBarColors READ getDarkFullProgressBarColor WRITE setDarkFullProgressBarColor NOTIFY colorChanged)
 
 signals:
     void colorChanged();
@@ -49,15 +49,25 @@ private:
     void setBarTotalValueUnkown(int value, QConicalGradient* gradient);
 
     void setOuterCircleBackgroundColor(const QString& color);
+    QString getOuterCircleBackgroundColor(){ return {}; }
     void setInnerCircleBackgroundColor(const QString& color);
+    QString getInnerCircleBackgroundColor(){ return {}; }
     void setLightOkProgressBarColor(const QString& color);
+    QString getLightOkProgressBarColor(){ return {}; }
     void setDarkOkProgressBarColor(const QString& color);
+    QString getDarkOkProgressBarColor(){ return {}; }
     void setLightWarnProgressBarColor(const QString& color);
+    QString getLightWarnProgressBarColor(){ return {}; }
     void setDarkWarnProgressBarColor(const QString& color);
+    QString getDarkWarnProgressBarColor(){ return {}; }
     void setLightFullProgressBarColor(const QString& color);
+    QString getLightFullProgressBarColor(){ return {}; }
     void setDarkFullProgressBarColor(const QString& color);
+    QString getDarkFullProgressBarColor(){ return {}; }
     void setOkStateTextColor(const QString& color);
+    QString getOkStateTextColor(){ return {}; }
     void setProgressBarColors(const QString& color, STATE state, bool light);
+    QString getProgressBarColors(){ return {}; }
 
     int     mPbValue;
     double  mPenWidth;
