@@ -128,7 +128,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mDisableGfx (false)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
-    if (!getenv("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
+    if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
     {
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
@@ -1200,7 +1200,8 @@ void MegaApplication::start()
         {
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::FIRST_START);
         }
-        else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
+        else if (!QSystemTrayIcon::isSystemTrayAvailable() &&
+                 !qEnvironmentVariableIsSet("START_MEGASYNC_IN_BACKGROUND"))
         {
             showInfoDialog();
         }
@@ -1377,7 +1378,7 @@ if (!preferences->lastExecutionTime())
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         checkSystemTray();
-        if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+        if (!qEnvironmentVariableIsSet("START_MEGASYNC_IN_BACKGROUND"))
         {
             showInfoDialog();
         }
@@ -2192,7 +2193,8 @@ void MegaApplication::periodicTasks()
     if (trayIcon)
     {
 #ifdef Q_OS_LINUX
-        if (counter==4 && getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"XFCE"))
+        const QString xdgEnvVar = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+        if (counter == 4 && !xdgEnvVar.isEmpty() && xdgEnvVar == QString::fromUtf8("XFCE"))
         {
             trayIcon->hide();
         }
@@ -5108,14 +5110,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
 #ifdef Q_OS_LINUX
-    if (getenv("XDG_CURRENT_DESKTOP") && (
-                !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
-                || !strcmp(getenv("XDG_CURRENT_DESKTOP"),"LXDE")
-                                          )
-            )
+    const QString desktopEnv = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+    if (!desktopEnv.isEmpty() && (
+            desktopEnv == QString::fromUtf8("ubuntu:GNOME") ||
+            desktopEnv == QString::fromUtf8("LXDE")))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignoring unexpected trayIconActivated detected in %1")
-                     .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"))).toUtf8().constData());
+        QString msg =
+            QString::fromUtf8("Ignoring unexpected trayIconActivated detected in ") + desktopEnv;
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, msg.toUtf8().constData());
         return;
     }
 #endif
