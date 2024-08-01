@@ -7,5 +7,6 @@
         <file>images/account_details/pie.svg</file>
         <file>images/account_details/database.svg</file>
         <file>images/account_details/cloud.svg</file>
+        <file>images/minus-circle.svg</file>
     </qresource>
 </RCC>

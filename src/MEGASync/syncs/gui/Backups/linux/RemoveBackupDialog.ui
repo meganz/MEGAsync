@@ -20,10 +20,21 @@
    <string>Stop backup</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTitle
+   <string notr="true">/*ColorTokenIcon;Button;bConfirm;normal;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;disabled;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;active;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;selected;off;colorToken.text-inverse-accent*/
+
+#lTitle
 {
 font-weight: 600;
 font-size:16px;
+}
+
+#bConfirm
+{
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
 }
 
 #rMoveFolder, #rDeleteFolder
@@ -317,21 +328,49 @@ padding: 3px 10px 3px 10px;
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="bConfirm">
-       <property name="text">
-        <string>Confirm</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="bCancel">
+       <property name="minimumSize">
+        <size>
+         <width>84</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>
        <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bConfirm">
+       <property name="minimumSize">
+        <size>
+         <width>146</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Stop Backup</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../../gui/Resources.qrc">
+         <normaloff>:/images/minus-circle.svg</normaloff>:/images/minus-circle.svg</iconset>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
         <bool>false</bool>
        </property>
       </widget>
@@ -340,6 +379,8 @@ padding: 3px 10px 3px 10px;
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../gui/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

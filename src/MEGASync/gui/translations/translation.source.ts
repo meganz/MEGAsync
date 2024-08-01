@@ -6106,6 +6106,10 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
     </message>
+    <message>
+        <source>Stop Backup</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RemoveSyncConfirmationDialog</name>
