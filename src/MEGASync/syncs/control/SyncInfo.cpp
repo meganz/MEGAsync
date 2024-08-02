@@ -543,9 +543,9 @@ QList<std::shared_ptr<SyncSettings>> SyncInfo::getSyncSettingsByType(const QVect
     return syncs;
 }
 
-bool SyncInfo::hasSyncs() const
+bool SyncInfo::hasSyncs()
 {
-    return !configuredSyncs.isEmpty();
+    return getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) > 0;
 }
 
 std::shared_ptr<SyncSettings> SyncInfo::getSyncSettingByTag(MegaHandle tag) const

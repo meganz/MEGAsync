@@ -116,7 +116,7 @@ public:
     QList<std::shared_ptr<SyncSettings>> getAllSyncSettings()
         {return getSyncSettingsByType(AllHandledSyncTypes);}
 
-    bool hasSyncs() const;
+    bool hasSyncs();
 
     int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
     int getNumSyncedFolders(SyncType type)
