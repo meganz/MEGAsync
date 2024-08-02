@@ -338,6 +338,12 @@ void InfoDialog::setBandwidthOverquotaState(QuotaState state)
     setUsage();
 }
 
+void InfoDialog::updateUsageAndAccountType()
+{
+    setUsage();
+    setAccountType(mPreferences->accountType());
+}
+
 void InfoDialog::enableTransferOverquotaAlert()
 {
     if (!transferOverquotaAlertEnabled)

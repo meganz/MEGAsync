@@ -4,6 +4,7 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "TransferQuota.h"
+#include "AccountDetailsManager.h"
 
 #include <QStyle>
 
@@ -44,7 +45,7 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->attachStorageObserver(*this);
-    MegaSyncApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+    MegaSyncApp->accountDetailsManager()->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()

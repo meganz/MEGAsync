@@ -1,19 +1,113 @@
 #include "AccountDetailsManager.h"
 
-#include "Utilities.h"
+#include "Preferences.h"
 #include "StatsEventHandler.h"
 #include "DialogOpener.h"
 #include "SettingsDialog.h"
 
-AccountDetailsManager::AccountDetailsManager(mega::MegaApi* megaApi, QObject* parent)
+namespace
+{
+const int UserStatsStorageFlag = 0x01;
+const int UserStatsTransferFlag = 0x02;
+const int UserStatsProFlag = 0x04;
+}
+
+//
+// Private UserStatsFlags definition.
+//
+AccountDetailsManager::UserStatsFlags::UserStatsFlags()
+    : storage(false)
+    , transfer(false)
+    , pro(false)
+{
+}
+
+AccountDetailsManager::UserStatsFlags::UserStatsFlags(bool storage,
+                                                      bool transfer,
+                                                      bool pro)
+    : storage(storage)
+    , transfer(transfer)
+    , pro(pro)
+{
+}
+
+void AccountDetailsManager::UserStatsFlags::parse(int flags)
+{
+    storage = flags & UserStatsStorageFlag;
+    transfer = flags & UserStatsTransferFlag;
+    pro = flags & UserStatsProFlag;
+}
+
+//
+// Private UserStats definition.
+//
+template<typename Type>
+void AccountDetailsManager::UserStats<Type>::updateWithValue(const UserStatsFlags &flags,
+                                                             Type value)
+{
+    if (flags.storage)
+    {
+        mStorageValue = value;
+    }
+    if (flags.transfer)
+    {
+        mTransferValue = value;
+    }
+    if (flags.pro)
+    {
+        mProValue = value;
+    }
+}
+
+template<typename Type>
+void AccountDetailsManager::UserStats<Type>::updateWithValue(Type value)
+{
+    mStorageValue = value;
+    mTransferValue = value;
+    mProValue = value;
+}
+
+template<typename Type>
+Type AccountDetailsManager::UserStats<Type>::storageValue() const
+{
+    return mStorageValue;
+}
+
+template<typename Type>
+Type AccountDetailsManager::UserStats<Type>::transferValue() const
+{
+    return mTransferValue;
+}
+
+template<typename Type>
+Type AccountDetailsManager::UserStats<Type>::proValue() const
+{
+    return mProValue;
+}
+
+//
+// Public AccountDetailsManager definition.
+//
+AccountDetailsManager::AccountDetailsManager(mega::MegaApi* megaApi,
+                                             QObject* parent)
     : QObject(parent)
     , mMegaApi(megaApi)
     , mPreferences(Preferences::instance())
-    , mFlags(std::make_unique<UserStatsFlags>())
-    , mInflightUserStats(UserStats<bool>(mFlags))
-    , mQueuedUserStats(UserStats<bool>(mFlags))
-    , mLastRequestUserStats(UserStats<long long>(mFlags))
 {
+    reset();
+    mProExpirityTimer.setSingleShot(true);
+    connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
+    {
+        updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
+    });
+}
+
+void AccountDetailsManager::reset()
+{
+    mInflightUserStats.updateWithValue(false);
+    mLastRequestUserStats.updateWithValue(0);
+    mQueuedUserStats.updateWithValue(false);
+    mQueuedStorageUserStatsReason = 0;
 }
 
 void AccountDetailsManager::onRequestFinish(mega::MegaRequest* request,
@@ -33,6 +127,85 @@ void AccountDetailsManager::onRequestFinish(mega::MegaRequest* request,
     }
 }
 
+void AccountDetailsManager::updateUserStats(bool storage, bool transfer, bool pro, bool force, int source)
+{
+    if (MegaSyncApp->finished())
+    {
+        return;
+    }
+
+    // If any are already pending, we don't need to fetch again.
+    if (mInflightUserStats.storageValue())
+    {
+        storage = false;
+    }
+    if (mInflightUserStats.transferValue())
+    {
+        transfer = false;
+    }
+    if (mInflightUserStats.proValue())
+    {
+        pro = false;
+    }
+
+    if (!storage && !transfer && !pro)
+    {
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
+                           "Skipped call to getSpecificAccountDetails()");
+        return;
+    }
+
+    // If the oldest of the ones we want is too recent, skip (unless force).
+    long long lastRequest = 0;
+    if (storage && (!lastRequest || lastRequest > mLastRequestUserStats.storageValue()))
+    {
+        lastRequest = mLastRequestUserStats.storageValue();
+    }
+    if (transfer && (!lastRequest || lastRequest > mLastRequestUserStats.transferValue()))
+    {
+        lastRequest = mLastRequestUserStats.transferValue();
+    }
+    if (pro && (!lastRequest || lastRequest > mLastRequestUserStats.proValue()))
+    {
+        lastRequest = mLastRequestUserStats.proValue();
+    }
+
+    if (storage && source >= 0)
+    {
+        mQueuedStorageUserStatsReason |= (1 << source);
+    }
+
+    UserStatsFlags flags(storage, transfer, pro);
+    long long lastRequestInterval = (QDateTime::currentMSecsSinceEpoch() - lastRequest);
+    if (force || !lastRequest || lastRequestInterval > Preferences::MIN_UPDATE_STATS_INTERVAL)
+    {
+        mMegaApi->getSpecificAccountDetails(storage, transfer, pro, storage ? mQueuedStorageUserStatsReason : -1);
+        if (flags.storage)
+        {
+            mQueuedStorageUserStatsReason = 0;
+        }
+
+        mInflightUserStats.updateWithValue(flags, true);
+        mLastRequestUserStats.updateWithValue(flags, QDateTime::currentMSecsSinceEpoch());
+    }
+    else
+    {
+        mQueuedUserStats.updateWithValue(flags, true);
+    }
+}
+
+void AccountDetailsManager::periodicUpdate()
+{
+    if (mQueuedUserStats.storageValue() || mQueuedUserStats.transferValue() || mQueuedUserStats.proValue())
+    {
+        bool storage = mQueuedUserStats.storageValue();
+        bool transfer = mQueuedUserStats.transferValue();
+        bool pro = mQueuedUserStats.proValue();
+        mQueuedUserStats.updateWithValue(false);
+        updateUserStats(storage, transfer, pro, false, -1);
+    }
+}
+
 void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request,
                                                       mega::MegaError* error)
 {
@@ -42,33 +215,29 @@ void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request
     }
 
     mFlags.parse(request->getNumDetails());
-    mInflightUserStats.updateWithValue(false);
+    mInflightUserStats.updateWithValue(mFlags, false);
 
     //Account details retrieved, update the preferences and the information dialog
-    shared_ptr<mega::MegaAccountDetails> details(request->getMegaAccountDetails());
+    std::shared_ptr<mega::MegaAccountDetails> details(request->getMegaAccountDetails());
 
     MegaSyncApp->pushToThreadPool([=]()
     {
-        shared_ptr<mega::MegaNodeList> inShares(mFlags->storage ? mMegaApi->getInShares() : nullptr);
+        std::shared_ptr<mega::MegaNodeList> inShares(mFlags.storage ? mMegaApi->getInShares() : nullptr);
 
         Utilities::queueFunctionInAppThread([=]()
         {
-            processProFlags(details.get());
-            processStorageFlag(details.get(), inShares.get());
-            processTransferFlags(details.get());
+            processProFlag(details);
+            processStorageFlag(details, inShares);
+            processTransferFlag(details);
 
-            if (infoDialog)
-            {
-                infoDialog->setUsage();
-                infoDialog->setAccountType(mPreferences->accountType());
-            }
+            emit accountDetailsUpdated();
         });
     });
 }
 
 void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
-    if (!mFlags->pro)
+    if (!mFlags.pro)
     {
         return;
     }
@@ -80,25 +249,25 @@ void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccou
                 && mPreferences->proExpirityTime() != details->getProExpiration())
         {
             mPreferences->setProExpirityTime(details->getProExpiration());
-            proExpirityTimer.stop();
+            mProExpirityTimer.stop();
             const long long interval = qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch());
-            proExpirityTimer.setInterval(static_cast<int>(interval));
-            proExpirityTimer.start();
+            mProExpirityTimer.setInterval(static_cast<int>(interval));
+            mProExpirityTimer.start();
         }
     }
     else
     {
         mPreferences->setProExpirityTime(0);
-        proExpirityTimer.stop();
+        mProExpirityTimer.stop();
     }
 
     notifyAccountObservers();
 }
 
-void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::~MegaAccountDetails>& details,
+void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::MegaAccountDetails>& details,
                                                const std::shared_ptr<mega::MegaNodeList>& inShares)
 {
-    if (!mFlags->storage)
+    if (!mFlags.storage)
     {
         return;
     }
@@ -107,19 +276,10 @@ void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::~Mega
     MegaSyncApp->updateUsedStorage(true);
 
     // Set in preferences the storage, files and folder for the cloud drive, rubbish and vault.
-    processNodes();
-
-    // For versions, match the webclient by only counting the user's own nodes.
-    // Versions in inshares are not cleared by 'clear versions'.
-    // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.
-    // Inshare storage count should include versions.
-    mPreferences->setVersionsStorage(details->getVersionStorageUsed(cloudDriveHandle)
-                                        + details->getVersionStorageUsed(vaultHandle)
-                                        + details->getVersionStorageUsed(rubbishHandle));
+    processNodesAndVersionsStorage(details);
 
     // Inshares
-    processInShares(inShares);
-
+    processInShares(details, inShares);
 
     if (auto dialog = DialogOpener::findDialog<SettingsDialog>())
     {
@@ -137,7 +297,7 @@ void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::~Mega
 
 void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
-    if (!transfer)
+    if (!mFlags.transfer)
     {
         return;
     }
@@ -165,43 +325,53 @@ void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::Mega
     }
 }
 
-void AccountDetailsManager::processNode(const mega::MegaNode* node,
-                                        const std::shared_ptr<mega::MegaAccountDetails>& details,
-                                        std::function<void (mega::MegaHandle)> setStorageUsed,
-                                        std::function<void (mega::MegaHandle)> setNumFiles,
-                                        std::function<void (mega::MegaHandle)> setNumFolders)
+mega::MegaHandle AccountDetailsManager::processNode(const std::shared_ptr<mega::MegaNode>& node,
+                                                    const std::shared_ptr<mega::MegaAccountDetails>& details,
+                                                    std::function<void (mega::MegaHandle)> setStorageUsed,
+                                                    std::function<void (mega::MegaHandle)> setNumFiles,
+                                                    std::function<void (mega::MegaHandle)> setNumFolders)
 {
     mega::MegaHandle handle = node ? node->getHandle() : mega::INVALID_HANDLE;
     setStorageUsed(details->getStorageUsed(handle));
     setNumFiles(details->getNumFiles(handle));
     setNumFolders(details->getNumFolders(handle));
+    return handle;
 }
 
-void AccountDetailsManager::processNodes()
+void AccountDetailsManager::processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
     // Cloud Drive
-    processNode(MegaSyncApp->getRootNode(),
-                details,
-                std::bind(&Preferences::setCloudDriveStorage, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setCloudDriveFiles, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setCloudDriveFolders, mPreferences, std::placeholders::_1));
+    auto cloudDriveHandle = processNode(MegaSyncApp->getRootNode(),
+                                        details,
+                                        std::bind(&Preferences::setCloudDriveStorage, mPreferences, std::placeholders::_1),
+                                        std::bind(&Preferences::setCloudDriveFiles, mPreferences, std::placeholders::_1),
+                                        std::bind(&Preferences::setCloudDriveFolders, mPreferences, std::placeholders::_1));
 
     // Vault
-    processNode(MegaSyncApp->getVaultNode(),
-                details,
-                std::bind(&Preferences::setVaultStorage, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setVaultFiles, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setVaultFolders, mPreferences, std::placeholders::_1));
+    auto vaultHandle = processNode(MegaSyncApp->getVaultNode(),
+                                   details,
+                                   std::bind(&Preferences::setVaultStorage, mPreferences, std::placeholders::_1),
+                                   std::bind(&Preferences::setVaultFiles, mPreferences, std::placeholders::_1),
+                                   std::bind(&Preferences::setVaultFolders, mPreferences, std::placeholders::_1));
 
     // Rubbish
-    processNode(MegaSyncApp->getRubbishNode(),
-                details,
-                std::bind(&Preferences::setRubbishStorage, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setRubbishFiles, mPreferences, std::placeholders::_1),
-                std::bind(&Preferences::setRubbishFolders, mPreferences, std::placeholders::_1));
+    auto rubbishHandle = processNode(MegaSyncApp->getRubbishNode(),
+                                     details,
+                                     std::bind(&Preferences::setRubbishStorage, mPreferences, std::placeholders::_1),
+                                     std::bind(&Preferences::setRubbishFiles, mPreferences, std::placeholders::_1),
+                                     std::bind(&Preferences::setRubbishFolders, mPreferences, std::placeholders::_1));
+
+    // For versions, match the webclient by only counting the user's own nodes.
+    // Versions in inshares are not cleared by 'clear versions'.
+    // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.
+    // Inshare storage count should include versions.
+    mPreferences->setVersionsStorage(details->getVersionStorageUsed(cloudDriveHandle)
+                                        + details->getVersionStorageUsed(vaultHandle)
+                                        + details->getVersionStorageUsed(rubbishHandle));
 }
 
-void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaNodeList>& inShares)
+void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaAccountDetails>& details,
+                                            const std::shared_ptr<mega::MegaNodeList>& inShares)
 {
     long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
     for (int i = 0; i < inShares->size(); i++)

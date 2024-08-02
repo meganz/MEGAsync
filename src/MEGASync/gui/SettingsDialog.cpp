@@ -20,6 +20,7 @@
 #include "StatsEventHandler.h"
 #include "AccountDetailsDialog.h"
 #include "ChangePassword.h"
+#include "AccountDetailsManager.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -870,7 +871,7 @@ void SettingsDialog::on_bClearFileVersions_clicked()
                 Q_UNUSED(request)
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                    MegaSyncApp->accountDetailsManager()->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
                 }
             }));
         }

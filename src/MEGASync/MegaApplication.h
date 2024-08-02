@@ -67,6 +67,7 @@ class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
+class AccountDetailsManager;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -153,7 +154,6 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -217,7 +217,9 @@ public:
 
     QPointer<UpgradeOverStorage> getStorageOverquotaDialog() const;
 
-    void updateUsedStorage(bool sendEvent = false);
+    void updateUsedStorage(const bool sendEvent = false);
+
+    AccountDetailsManager*accountDetailsManager() const;
 
 signals:
     void startUpdaterThread();
@@ -293,7 +295,6 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
-    void proExpirityTimedOut();
     void applyNotificationFilter(int opt);
     void changeState();
 
@@ -404,7 +405,6 @@ protected:
 #endif
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    QTimer proExpirityTimer;
     int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
@@ -430,10 +430,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool queuedUserStats[3];
-    int queuedStorageUserStatsReason;
-    long long userStatsLastRequest[3];
-    bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
@@ -523,6 +519,7 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
+    std::unique_ptr<AccountDetailsManager> mAccountDetailsManager;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
