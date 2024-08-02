@@ -419,13 +419,14 @@ bool registerUpdateDaemon()
             @"StandardOutPath": @"/dev/null",
      };
 
-    const char* home = getenv("HOME");
-    if (!home)
+    QString home = qEnvironmentVariable("HOME");
+
+    if (home.isEmpty())
     {
         return false;
     }
 
-    NSString *homepath = [NSString stringWithUTF8String:home];
+    NSString *homepath = [NSString stringWithUTF8String:home.toUtf8().constData()];
     if (!homepath)
     {
         return false;

@@ -302,22 +302,26 @@ QString PlatformImplementation::getDefaultOpenAppByMimeType(QString mimeType)
 
 bool PlatformImplementation::getValue(const char * const name, const bool default_value)
 {
-    const char * const value = getenv(name);
+    QString value = qEnvironmentVariable(name);
 
-    if (!value)
+    if (value.isEmpty())
+    {
         return default_value;
+    }
 
-    return strcmp(value, "0") != 0;
+    return value != QString::fromUtf8("0");
 }
 
 std::string PlatformImplementation::getValue(const char * const name, const std::string &default_value)
 {
-    const char * const value = getenv(name);
+    QString value = qEnvironmentVariable(name);
 
-    if (!value)
+    if (value.isEmpty())
+    {
         return default_value;
+    }
 
-    return value;
+    return value.toUtf8().constData();
 }
 
 QString PlatformImplementation::getWindowManagerName()
