@@ -6,31 +6,88 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>340</height>
+    <width>536</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>536</width>
-    <height>340</height>
+    <height>350</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Stop backup</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QDialog{
-background-color:#ECECEC;
+   <string notr="true">/*ColorTokenIcon;Button;bConfirm;normal;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;disabled;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;active;off;colorToken.text-inverse-accent*/
+/*ColorTokenIcon;Button;bConfirm;selected;off;colorToken.text-inverse-accent*/
+
+#lTitle
+{
+font-weight: 600;
+font-size:16px;
 }
 
-QRadioButton::indicator{
-width: 13px;
-height: 13px;
-}
-QLabel
+#bConfirm
 {
-font-family:Lato Regular;
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
+}
+
+#rMoveFolder, #rDeleteFolder
+{
+font-weight: 600;
+font-size:14px;
+}
+
+#lDeleteFolder, #lMoveFolder
+{
+font-weight: 400;
+font-size:12px;
+}
+
+#lTarget
+{
+border-radius: 8px;
+border-style: solid;
+border-width: 1px;
+background: #FFFFFF; /* colorToken.page-background*/
+padding-left: 10px;
+}
+
+#lTarget::enabled
+{
+border-color: #D8D9DB; /*colorToken.border-strong*/
+}
+
+#lTarget::disabled
+{
+border-color: #D8D9DB; /*colorToken.border-disabled*/
+}
+
+#lMoveTo
+{
+font-weight: 600;
+font-size:12px;
+}
+
+#moveToContainer *::disabled
+{
+color: rgba(0, 0, 0, 0.2)
+}
+
+#bChange
+{
+background-color:  #F3F4F4; /*colorToken.button-secondary*/
+color: #616366; /*colorToken.text-secondary*/
+border-color:  #F3F4F4; /*colorToken.button-secondary*/
+border-width: 0px;
+border-style: solid;
+border-radius: 5px;
+padding: 3px 10px 3px 10px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -51,13 +108,6 @@ font-family:Lato Regular;
    </property>
    <item>
     <widget class="QLabel" name="lTitle">
-     <property name="styleSheet">
-      <string notr="true">QLabel{
-font-family: SF Pro Text Regular;
-font-size:16px;
-color:#333333;
-}</string>
-     </property>
      <property name="text">
       <string>Stop backing up folder?</string>
      </property>
@@ -65,12 +115,6 @@ color:#333333;
    </item>
    <item>
     <widget class="QLabel" name="lSecondaryText">
-     <property name="styleSheet">
-      <string notr="true">QLabel{
-font-size:12px;
-color:#666666;
-}</string>
-     </property>
      <property name="text">
       <string>To stop backing up this folder, you need to either move it or delete it.</string>
      </property>
@@ -88,33 +132,25 @@ color:#666666;
       <number>16</number>
      </property>
      <property name="topMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
      <property name="bottomMargin">
-      <number>25</number>
+      <number>15</number>
      </property>
-     <item alignment="Qt::AlignTop">
+     <item>
       <widget class="QRadioButton" name="rMoveFolder">
-       <property name="styleSheet">
-        <string notr="true">*{
-font-family:Lato Medium;
-font-size:14px;
-color:#111111;
-}</string>
-       </property>
        <property name="text">
         <string>Move folder</string>
        </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignTop">
+     <item>
       <widget class="QLabel" name="lMoveFolder">
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-font-size:11px;
-color: #333333;
-padding-left:15px;
-}</string>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="text">
         <string>Move this folder from backups to another location in your cloud drive to get full access to your data. This folder will stop being backed up.</string>
@@ -125,109 +161,78 @@ padding-left:15px;
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="leftMargin">
-        <number>15</number>
+      <widget class="QWidget" name="moveToContainer" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>69</height>
+        </size>
        </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="moveToContainer" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>28</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>28</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#moveToContainer{
-background-color:#E2E2E2;
-border-radius:3px;
-}
-
-*::disabled
-{
-color: rgba(0, 0, 0, 0.2)
-}
-</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>7</number>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <property name="leftMargin">
+         <number>15</number>
+        </property>
+        <property name="bottomMargin">
+         <number>1</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="lMoveTo">
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
           </property>
+          <property name="text">
+           <string>Move to:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="leftMargin">
-           <number>8</number>
+           <number>1</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>1</number>
           </property>
           <property name="rightMargin">
-           <number>4</number>
+           <number>1</number>
           </property>
           <property name="bottomMargin">
-           <number>0</number>
+           <number>1</number>
           </property>
-          <item alignment="Qt::AlignVCenter">
-           <widget class="QLabel" name="label_5">
-            <property name="styleSheet">
-             <string notr="true">QLabel{
-font-family:SF Pro Regular;
-font-size:13px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Move to:</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignVCenter">
+          <item>
            <widget class="QLineEdit" name="lTarget">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>20</height>
+              <height>35</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>35</height>
              </size>
-            </property>
-            <property name="acceptDrops">
-             <bool>false</bool>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QLineEdit{
-font-family:SF NS Display Regular;
-font-size:13px;
-border:0px;
-}</string>
             </property>
             <property name="text">
              <string/>
             </property>
            </widget>
           </item>
-          <item alignment="Qt::AlignVCenter">
+          <item>
            <widget class="QPushButton" name="bChange">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>20</height>
+              <width>85</width>
+              <height>35</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>20</height>
+              <height>35</height>
              </size>
             </property>
             <property name="text">
@@ -236,17 +241,17 @@ border:0px;
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-      </layout>
+        </item>
+       </layout>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeType">
-        <enum>QSizePolicy::Fixed</enum>
+        <enum>QSizePolicy::Policy::Fixed</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -256,29 +261,18 @@ border:0px;
        </property>
       </spacer>
      </item>
-     <item alignment="Qt::AlignTop">
+     <item>
       <widget class="QRadioButton" name="rDeleteFolder">
-       <property name="styleSheet">
-        <string notr="true">*{
-font-family:Lato Medium;
-font-size:14px;
-color:#111111;
-}</string>
-       </property>
        <property name="text">
         <string>Delete folder permanently</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignTop">
+     <item>
       <widget class="QLabel" name="lDeleteFolder">
-       <property name="styleSheet">
-        <string notr="true">QLabel{
-font-size:11px;
-color: #333333;
-padding-left:15px;
-}</string>
-       </property>
        <property name="text">
         <string>Folder will be deleted from MEGA. It won't be deleted from your computer. This action cannot be undone.</string>
        </property>
@@ -290,7 +284,7 @@ padding-left:15px;
      <item>
       <spacer name="verticalSpacer_2">
        <property name="orientation">
-        <enum>Qt::Vertical</enum>
+        <enum>Qt::Orientation::Vertical</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -304,16 +298,11 @@ padding-left:15px;
    </item>
    <item>
     <widget class="Line" name="line">
-     <property name="styleSheet">
-      <string notr="true">QFrame{
-color:rgba(0,0,0,0.1);
-}</string>
-     </property>
      <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
+      <enum>QFrame::Shadow::Plain</enum>
      </property>
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
     </widget>
    </item>
@@ -328,7 +317,7 @@ color:rgba(0,0,0,0.1);
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>
@@ -339,21 +328,49 @@ color:rgba(0,0,0,0.1);
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="bConfirm">
-       <property name="text">
-        <string>Confirm</string>
-       </property>
-       <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="bCancel">
+       <property name="minimumSize">
+        <size>
+         <width>84</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>
        <property name="default">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="bConfirm">
+       <property name="minimumSize">
+        <size>
+         <width>146</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="text">
+        <string>Stop Backup</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../../gui/Resources.qrc">
+         <normaloff>:/images/minus-circle.svg</normaloff>:/images/minus-circle.svg</iconset>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
         <bool>false</bool>
        </property>
       </widget>
@@ -362,6 +379,8 @@ color:rgba(0,0,0,0.1);
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../../gui/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

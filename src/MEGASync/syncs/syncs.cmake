@@ -49,7 +49,6 @@ target_sources_conditional(MEGAsync
    syncs/gui/Twoways/win/SyncAccountFullMessage.ui
    syncs/gui/Twoways/win/SyncSettingsUIBase.ui
    syncs/gui/Twoways/win/SyncStallModeSelector.ui
-   syncs/gui/Backups/win/RemoveBackupDialog.ui
    syncs/gui/Backups/win/OpenBackupsFolder.ui
 )
 
@@ -61,7 +60,6 @@ target_sources_conditional(MEGAsync
    syncs/gui/Twoways/macx/SyncAccountFullMessage.ui
    syncs/gui/Twoways/macx/SyncSettingsUIBase.ui
    syncs/gui/Twoways/macx/SyncStallModeSelector.ui
-   syncs/gui/Backups/macx/RemoveBackupDialog.ui
    syncs/gui/Backups/macx/OpenBackupsFolder.ui
 )
 
@@ -73,7 +71,6 @@ target_sources_conditional(MEGAsync
    syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
    syncs/gui/Twoways/linux/SyncSettingsUIBase.ui
    syncs/gui/Twoways/linux/SyncStallModeSelector.ui
-   syncs/gui/Backups/linux/RemoveBackupDialog.ui
    syncs/gui/Backups/linux/OpenBackupsFolder.ui
 )
 
