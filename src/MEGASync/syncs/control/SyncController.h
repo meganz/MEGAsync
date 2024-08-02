@@ -57,6 +57,7 @@ public:
     static QString getErrStrCurrentBackupOverExistingBackup();
     static QString getErrStrCurrentBackupInsideExistingBackup();
     static QString getErrorString(int errorCode, int syncErrorCode);
+    static QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);

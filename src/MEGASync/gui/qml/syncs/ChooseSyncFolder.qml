@@ -16,6 +16,7 @@ FocusScope {
     id: root
 
     required property bool isOnboarding
+    required property Syncs syncs
 
     readonly property int textEditMargin: 2
 
@@ -63,6 +64,13 @@ FocusScope {
 
         if ((local && !syncs.checkLocalSync(defaultFolder)) || (!local && !syncs.checkRemoteSync(defaultFolder))) {
             defaultFolder = "";
+
+            if (local) {
+                syncs.clearLocalError();
+            }
+            else {
+                syncs.clearRemoteError();
+            }
         }
 
         return defaultFolder;
@@ -72,10 +80,6 @@ FocusScope {
     height: folderItem.height
     Layout.preferredWidth: width
     Layout.preferredHeight: folderItem.height
-
-    Syncs {
-        id: syncs
-    }
 
     Connections {
         id: syncsConnection
@@ -120,13 +124,12 @@ FocusScope {
         focus: true
         text: Strings.choose
         onClicked: {
-            folderItem.error = false;
-            folderItem.hint.visible = false;
-
             if (local) {
+                syncs.clearLocalError();
                 localFolderChooser.openFolderSelector(folderItem.text);
             }
             else {
+                syncs.clearRemoteError();
                 remoteFolderChooser.openFolderSelector();
             }
         }

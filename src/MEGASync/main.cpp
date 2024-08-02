@@ -363,11 +363,12 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifndef Q_OS_MACX
-   const auto autoScreenScaleFactor = getenv("QT_AUTO_SCREEN_SCALE_FACTOR");
-   const bool autoScreenScaleFactorDisabled{autoScreenScaleFactor && autoScreenScaleFactor == std::string("0")};
-   if(autoScreenScaleFactorDisabled)
-   {
-       logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, QStringLiteral("auto screen scale factor disabled because of QT_AUTO_SCREEN_SCALE_FACTOR set to 0"));
+    const QString autoScreenScaleFactor = qEnvironmentVariable("QT_AUTO_SCREEN_SCALE_FACTOR");
+    if (autoScreenScaleFactor == QString::fromUtf8("0"))
+    {
+        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG,
+                                 QStringLiteral("auto screen scale factor disabled because of "
+                                                "QT_AUTO_SCREEN_SCALE_FACTOR set to 0"));
    }
    else
    {
@@ -391,7 +392,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_LINUX)
-    if (!(getenv("DO_NOT_SET_QT_PLUGIN_PATH")))
+    if (!qEnvironmentVariableIsSet("DO_NOT_SET_QT_PLUGIN_PATH"))
     {
         if (QDir(QString::fromUtf8("/opt/mega/plugins")).exists())
         {
@@ -401,12 +402,13 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_LINUX)
-    if (!(getenv("DO_NOT_UNSET_XDG_SESSION_TYPE")))
+    if (!qEnvironmentVariableIsSet("DO_NOT_UNSET_XDG_SESSION_TYPE"))
     {
-        if ( getenv("XDG_SESSION_TYPE") && !strcmp(getenv("XDG_SESSION_TYPE"),"wayland") )
+        QString sessionType = qEnvironmentVariable("XDG_SESSION_TYPE");
+        if (!sessionType.isEmpty() && sessionType == QString::fromUtf8("wayland"))
         {
             std::cerr << "Avoiding wayland" << std::endl;
-            unsetenv("XDG_SESSION_TYPE");
+            qunsetenv("XDG_SESSION_TYPE");
         }
     }
 #endif
@@ -431,22 +433,26 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_LINUX)
-    if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
+    if (!qEnvironmentVariableIsSet("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME") &&
+        qEnvironmentVariableIsSet("QT_QPA_PLATFORMTHEME"))
     {
-        //!  If unsetenv succeeds, it returns 0. If unsetenv fails, it returns -1.
-        if (unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+        if (qunsetenv("QT_QPA_PLATFORMTHEME") !=
+            0) // open folder dialog & similar crashes is fixed with this
         {
-            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble. errno=" << errno << std::endl;
+            std::cerr << "Error unsetting QT_QPA_PLATFORMTHEME vble. errno=" << errno << std::endl;
         }
     }
-    if (!(getenv("DO_NOT_UNSET_SHLVL")) && getenv("SHLVL"))
+
+    if (!qEnvironmentVariableIsSet("DO_NOT_UNSET_SHLVL") && qEnvironmentVariableIsSet("SHLVL"))
     {
-        if (!unsetenv("SHLVL")) // reported failure in mint
+        if (qunsetenv("SHLVL") != 0) // reported failure in mint
         {
-            //std::cerr <<  "Error unsetting SHLVL vble" << std::endl; //Fedora fails to unset this env var ... too verbose error
+            // std::cerr <<  "Error unsetting SHLVL vble" << std::endl; // Fedora fails to unset
+            // this env var ... too verbose error
         }
     }
-    if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
+
+    if (!qEnvironmentVariableIsSet("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE"))
     {
         QApplication::setDesktopSettingsAware(false);
     }
@@ -470,8 +476,8 @@ int main(int argc, char *argv[])
     }
 
 #ifdef Q_OS_LINUX
-    auto megaLibGL = getenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
-    if (megaLibGL && !strcmp(megaLibGL, "1"))
+    QByteArray megaLibGL = qgetenv("MEGA_LIBGL_ALWAYS_SOFTWARE");
+    if (!megaLibGL.isEmpty() && megaLibGL == "1")
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Setting LIBGL_ALWAYS_SOFTWARE to 1");
         qputenv("LIBGL_ALWAYS_SOFTWARE", "1");

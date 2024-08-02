@@ -167,7 +167,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #endif
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
+    if (qEnvironmentVariableIsSet("QT_SCREEN_SCALE_FACTORS") ||
+        qEnvironmentVariableIsSet("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
@@ -1225,7 +1226,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 #ifdef Q_OS_LINUX
     static bool firstime = true;
-    if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
+    if (qEnvironmentVariableIsSet("START_MEGASYNC_MINIMIZED") && firstime &&
+        (obj == this && e->type() == QEvent::Paint))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog (reason: %1)...").arg(e->type()).toUtf8().constData());
         showMinimized();

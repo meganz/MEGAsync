@@ -89,30 +89,24 @@ ScreensInfo createScreensInfo(OsType osType, const QString& desktopName)
 
 QString getDesktopName()
 {
-    QString desktopName;
-    char* xdgCurrentDesktop = getenv("XDG_CURRENT_DESKTOP");
-    if (xdgCurrentDesktop)
-    {
-        desktopName = QString::fromUtf8(xdgCurrentDesktop);
-    }
-    return desktopName;
+    return qEnvironmentVariable("XDG_CURRENT_DESKTOP");
 }
 
 ScaleFactorManager::ScaleFactorManager(OsType osType):
-    ScaleFactorManager{osType,
+    ScaleFactorManager(osType,
                        createScreensInfo(osType, getDesktopName()),
                        QSysInfo::prettyProductName(),
-                       getDesktopName()}
+                       getDesktopName())
 {}
 
 ScaleFactorManager::ScaleFactorManager(OsType osType,
                                        ScreensInfo screensInfo,
                                        const QString& osName,
                                        const QString& desktopName):
-    mOsType{osType},
-    mOsName{osName},
-    mScreensInfo{screensInfo},
-    mDesktopName{desktopName}
+    mOsType(osType),
+    mOsName(osName),
+    mScreensInfo(screensInfo),
+    mDesktopName(desktopName)
 {
     if (mDesktopName.isEmpty())
     {
@@ -206,7 +200,7 @@ QVector<QString> ScaleFactorManager::getLogMessages() const
 
 bool ScaleFactorManager::checkEnvironmentVariables() const
 {
-    QString envValueQtScaleFactor = QString::fromUtf8(getenv("QT_SCALE_FACTOR"));
+    QString envValueQtScaleFactor = qEnvironmentVariable("QT_SCALE_FACTOR");
 
     if (!envValueQtScaleFactor.isEmpty())
     {
@@ -220,7 +214,7 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
         return true;
     }
 
-    QString envValueQtScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
+    QString envValueQtScreenScaleFactors = qEnvironmentVariable("QT_SCREEN_SCALE_FACTORS");
 
     if (!envValueQtScreenScaleFactors.isEmpty())
     {

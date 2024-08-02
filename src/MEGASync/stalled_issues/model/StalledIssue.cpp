@@ -234,11 +234,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getLocalData()->mPath.path = localSourcePath;
         getLocalData()->mPath.pathProblem = localSourcePathProblem;
 
-        if(stall->couldSuggestIgnoreThisPath(false, 0))
-        {
-            mIgnoredPaths.append(getLocalData()->getNativeFilePath());
-        }
-
         setIsFile(localSourcePath, true);
     }
 
@@ -247,11 +242,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         initLocalIssue();
         getLocalData()->mMovePath.path = localTargetPath;
         getLocalData()->mMovePath.pathProblem = localTargetPathProblem;
-
-        if(stall->couldSuggestIgnoreThisPath(false, 1))
-        {
-            mIgnoredPaths.append(getLocalData()->getNativeMoveFilePath());
-        }
 
         setIsFile(localTargetPath, true);
     }
@@ -271,11 +261,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         //In order to show the filepath or the directory path when the path is used for a hyperlink
         getCloudData()->mPath.showDirectoryInHyperLink = showDirectoryInHyperlink();
 
-        if(stall->couldSuggestIgnoreThisPath(true, 0))
-        {
-            mIgnoredPaths.append(cloudSourcePath);
-        }
-
         setIsFile(cloudSourcePath, false);
     }
 
@@ -287,11 +272,6 @@ void StalledIssue::fillIssue(const mega::MegaSyncStall* stall)
         getCloudData()->mMovePath.pathProblem = cloudTargetPathProblem;
         //In order to show the filepath or the directory path when the path is used for a hyperlink
         getCloudData()->mMovePath.showDirectoryInHyperLink = showDirectoryInHyperlink();
-
-        if(stall->couldSuggestIgnoreThisPath(true, 1))
-        {
-            mIgnoredPaths.append(cloudTargetPath);
-        }
 
         setIsFile(cloudTargetPath, false);
     }
@@ -531,16 +511,6 @@ bool StalledIssue::isCloudNodeBlocked(const mega::MegaSyncStall* stall)
 {
     return stall->reason() == mega::MegaSyncStall::DownloadIssue &&
            stall->pathProblem(true, 0) == mega::MegaSyncStall::SyncPathProblem::CloudNodeIsBlocked;
-}
-
-bool StalledIssue::canBeIgnored() const
-{
-    return !mIgnoredPaths.isEmpty();
-}
-
-QStringList StalledIssue::getIgnoredFiles() const
-{
-    return mIgnoredPaths;
 }
 
 bool StalledIssue::isFile() const

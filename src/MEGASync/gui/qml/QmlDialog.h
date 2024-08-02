@@ -23,7 +23,6 @@ signals:
     void rejected();
     void requestPageFocus();
     void initializePageFocus();
-    void languageChanged();
 
 protected:
     bool event(QEvent* event) override;

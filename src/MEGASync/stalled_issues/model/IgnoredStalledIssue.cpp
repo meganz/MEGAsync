@@ -10,7 +10,8 @@
 QMap<mega::MegaHandle, bool> IgnoredStalledIssue::mSymLinksIgnoredInSyncs = QMap<mega::MegaHandle, bool>();
 
 IgnoredStalledIssue::IgnoredStalledIssue(const mega::MegaSyncStall *stallIssue)
-    : StalledIssue(stallIssue)
+    : StalledIssue(stallIssue) ,
+    mLinkType(mega::MegaSyncStall::SyncPathProblem::NoProblem)
 {
 
 }
@@ -20,33 +21,97 @@ void IgnoredStalledIssue::clearIgnoredSyncs()
     mSymLinksIgnoredInSyncs.clear();
 }
 
+mega::MegaSyncStall::SyncPathProblem IgnoredStalledIssue::linkType() const
+{
+    return mLinkType;
+}
+
 bool IgnoredStalledIssue::isAutoSolvable() const
 {
-    //Always autosolvable for special links and ToS takedown files, we don´t need to check if smart mode is active
-    return !isSolved() &&
-           !syncIds().isEmpty() &&
-           isSpecialLink();
+    //Always autosolvable, we don´t need to check if smart mode is active
+    return !isSolved() && !syncIds().isEmpty() &&
+           (mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink ||
+            mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink ||
+            mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
+}
+
+void IgnoredStalledIssue::fillIssue(const mega::MegaSyncStall* stall)
+{
+    StalledIssue::fillIssue(stall);
+    if(getReason() == mega::MegaSyncStall::FileIssue && consultLocalData())
+    {
+        mLinkType = consultLocalData()->getPath().pathProblem;
+    }
+
+    //FILL LOCAL IGNORED PATHS
+    {
+        auto fillLocalIgnoredPath = [this](const QString& path)
+        {
+            QFileInfo info(path);
+            if(info.exists())
+            {
+                mIgnoredPaths.append({path,
+                    IgnoredPath::IgnorePathSide::LOCAL,
+                    info.isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
+            }
+        };
+
+        if(stall->couldSuggestIgnoreThisPath(false, 0))
+        {
+            fillLocalIgnoredPath(consultLocalData()->getNativeFilePath());
+        }
+
+        if(stall->couldSuggestIgnoreThisPath(false, 1))
+        {
+            fillLocalIgnoredPath(consultLocalData()->getNativeMoveFilePath());
+        }
+    }
+
+    //FILL MEGA IGNORED PATHS
+    {
+        auto fillCloudIgnoredPath = [this](const mega::MegaHandle& handle, const QString& path)
+        {
+            std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+            if(node)
+            {
+                mIgnoredPaths.append({path,
+                    IgnoredPath::IgnorePathSide::REMOTE,
+                    node->isFile() ? MegaIgnoreNameRule::Target::f : MegaIgnoreNameRule::Target::d});
+            }
+        };
+
+        if(stall->couldSuggestIgnoreThisPath(true, 0))
+        {
+            fillCloudIgnoredPath(
+                consultCloudData()->getPathHandle(), consultCloudData()->getNativeFilePath());
+        }
+
+        if(stall->couldSuggestIgnoreThisPath(true, 1))
+        {
+            fillCloudIgnoredPath(consultCloudData()->getMovePathHandle(),
+                consultCloudData()->getNativeMoveFilePath());
+        }
+    }
 }
 
 bool IgnoredStalledIssue::isSymLink() const
 {
-    return getReason() == mega::MegaSyncStall::FileIssue &&
-           consultLocalData() &&
-           consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
+    return mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink;
 }
 
 bool IgnoredStalledIssue::isSpecialLink() const
 {
-    return getReason() == mega::MegaSyncStall::FileIssue &&
-           consultLocalData() &&
-           (consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSymlink ||
-            consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink ||
-            consultLocalData()->getPath().pathProblem == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile);
+    return mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedSpecialFile;
+}
+
+bool IgnoredStalledIssue::isHardLink() const
+{
+    return mLinkType == mega::MegaSyncStall::SyncPathProblem::DetectedHardLink;
 }
 
 bool IgnoredStalledIssue::isExpandable() const
 {
-    return !isSymLink();
+    return false;
 }
 
 bool IgnoredStalledIssue::checkForExternalChanges()
@@ -54,6 +119,7 @@ bool IgnoredStalledIssue::checkForExternalChanges()
     return false;
 }
 
+//Only for Symbolic, hard and special links
 bool IgnoredStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
@@ -81,10 +147,20 @@ bool IgnoredStalledIssue::autoSolveIssue()
                 }
                 else
                 {
-                    QDir dir(folderPath);
+                    QDir dir;
                     foreach(auto ignoredPath, mIgnoredPaths)
                     {
-                        ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(ignoredPath));
+                        if(ignoredPath.pathSide == IgnoredPath::IgnorePathSide::REMOTE)
+                        {
+                            dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
+                        }
+                        else
+                        {
+                            dir.setPath(folderPath);
+                        }
+
+                        ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                            dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                     }
                 }
 
@@ -126,7 +202,7 @@ bool CloudNodeIsBlockedIssue::isAutoSolvable() const
 void CloudNodeIsBlockedIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
     IgnoredStalledIssue::fillIssue(stall);
-    mIgnoredPaths.append(consultCloudData()->getFilePath());
+    mIgnoredPaths.append({consultCloudData()->getFilePath(), IgnoredPath::IgnorePathSide::REMOTE, MegaIgnoreNameRule::Target::f});
 }
 
 bool CloudNodeIsBlockedIssue::showDirectoryInHyperlink() const
