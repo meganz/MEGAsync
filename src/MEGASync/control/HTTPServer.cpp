@@ -2,7 +2,6 @@
 #include "Preferences.h"
 #include "Utilities.h"
 #include "MegaApplication.h"
-#include "mega/setandelement.h"
 #include "StatsEventHandler.h"
 
 #include <QtConcurrent/QtConcurrent>
@@ -618,7 +617,7 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
     {
         QByteArray ba = eId.toLocal8Bit();
         const char *c_str2 = ba.data();
-        size_t size = mega::SetElement::HANDLESIZE;
+        size_t size = /*mega::SetElement::HANDLESIZE*/8;
         unsigned char* result;
         megaApi->base64ToBinary(c_str2, &result, &size);
         const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
