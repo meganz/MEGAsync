@@ -127,14 +127,14 @@ bool Syncs::helperCheckRemoteSync(const QString& path, QString& errorMessage) co
         return false;
     }
 
-    SyncController::Syncability syncability = SyncController::Syncability::CAN_SYNC;
+    SyncController::Syncability syncability {SyncController::Syncability::CAN_SYNC};
     auto megaNode =
         std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(path.toUtf8().constData()));
     if (megaNode)
     {
         syncability = SyncController::isRemoteFolderSyncable(megaNode, errorMessage);
     }
-    else if(path != Syncs::DEFAULT_MEGA_PATH)
+    else if (path != Syncs::DEFAULT_MEGA_PATH)
     {
         syncability = SyncController::CANT_SYNC;
         errorMessage = tr("Folder can't be synced as it can't be located. "
