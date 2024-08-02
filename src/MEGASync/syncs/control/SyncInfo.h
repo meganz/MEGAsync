@@ -67,6 +67,7 @@ public:
         ONBOARDING_ORIGIN ,
         MAIN_APP_ORIGIN
     };
+    Q_ENUM(SyncOrigin)
 
 protected:
     mutable QMutex syncMutex;

@@ -21,28 +21,28 @@ SyncController::SyncController(QObject* parent)
     assert(mSyncInfo);
 }
 
-void SyncController::createPendingBackups()
+void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
 {
     for(auto it = mPendingBackups.cbegin(); it != mPendingBackups.cend(); it++)
     {
         addSync(QDir::toNativeSeparators(it.key()), mega::INVALID_HANDLE,
                 it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value(),
-                mega::MegaSync::TYPE_BACKUP, SyncInfo::ONBOARDING_ORIGIN);
+                mega::MegaSync::TYPE_BACKUP, origin);
     }
     mPendingBackups.clear();
 }
 
-void SyncController::addBackup(const QString& localFolder, const QString& syncName)
+void SyncController::addBackup(const QString& localFolder, const QString& syncName, SyncInfo::SyncOrigin origin)
 {
     mPendingBackups.insert(localFolder, syncName);
 
     auto request = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [this](){
-      createPendingBackups();
+    connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [this, origin](){
+      createPendingBackups(origin);
     }, Qt::UniqueConnection);
     if(request->isAttributeReady())
     {
-        createPendingBackups();
+        createPendingBackups(origin);
     }
     else
     {

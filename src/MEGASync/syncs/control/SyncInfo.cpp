@@ -44,6 +44,7 @@ SyncInfo::SyncInfo() : QObject(),
     mShowErrorTimer.setSingleShot(true);
     mShowErrorTimer.setInterval(500);
     connect(&mShowErrorTimer, &QTimer::timeout, this, &SyncInfo::checkUnattendedDisabledSyncsForErrors);
+    qRegisterMetaType<SyncOrigin>("SyncOrigin");
 }
 
 bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const

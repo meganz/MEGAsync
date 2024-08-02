@@ -6144,6 +6144,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setFirstFileSynced();
                 break;
             case AppStatsEvents::EventType::FIRST_BACKUP:
+            case AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING:
                 preferences->setFirstBackupDone();
                 break;
             case AppStatsEvents::EventType::FIRST_BACKED_UP_FILE:
