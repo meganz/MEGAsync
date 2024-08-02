@@ -13,10 +13,10 @@
 
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
-    mSyncController(this),
-    mIsFirstTime(true),
     mContextMenuName("SyncContextMenu"),
-    mType(mega::MegaSync::TYPE_TWOWAY)
+    mType(mega::MegaSync::TYPE_TWOWAY),
+    mSyncController(this),
+    mIsFirstTime(true)
 {
     setIconSize(QSize(24, 24));
 
