@@ -1,18 +1,166 @@
 import QtQuick 2.0
+import QtQuick.Layouts 1.15
+
+import common 1.0
+import components.images 1.0
 import components.texts 1.0 as Texts
+
+import DeviceOs 1.0
+import SyncStatus 1.0
 
 Item {
     id:root
 
+    property string deviceId
+
     Rectangle {
         id: contentItem
 
-        anchors.fill: parent
-        color:"lightgray";
+        anchors {
+            fill: parent;
+            leftMargin: 8;
+            rightMargin: 8;
+            topMargin: 4;
+            bottomMargin: 4;
+        }
+
+        color: colorStyle.surface1;
+        radius: 8;
+
+        SvgImage {
+            id: deviceImage
+
+            anchors {
+                left: parent.left;
+                leftMargin: 24;
+                top: parent.top;
+                topMargin: 12;
+                bottom: parent.bottom
+                bottomMargin: 12;
+            }
+
+            source: Images.pcMac
+            sourceSize: Qt.size(96, 96)
+        }
+
+        Item {
+            anchors {
+                left: deviceImage.right;
+                leftMargin: 24;
+                right: parent.right;
+                top: parent.top;
+                topMargin: 12;
+                bottom: parent.bottom
+                bottomMargin: 12;
+            }
+
+            Texts.RichText {
+                id: deviceTitle
+
+                anchors {
+                    left: parent.left
+                    bottom: parent.verticalCenter
+                    bottomMargin: 5
+                }
+
+                font {
+                    pixelSize: Texts.Text.Size.MEDIUM_LARGE
+                    weight: Font.DemiBold
+                }
+                color: colorStyle.textPrimary
+                wrapMode: Text.NoWrap
+
+                text: "";
+            }
+
+            RowLayout {
+
+                spacing: 150
+
+                anchors {
+                    left: parent.left
+                    top: parent.verticalCenter
+                    topMargin: 5
+                }
+                DeviceWidgetProperty {
+                    id: deviceStatus
+
+                    name: DeviceCenterStrings.statusLabel
+                    value: DeviceCenterStrings.statusUpToDate
+                    icon: Images.statusUpToDate
+                }
+
+                DeviceWidgetProperty {
+                    id: deviceContains
+
+                    name: DeviceCenterStrings.contains
+                    value: DeviceCenterStrings.folderCount(0)
+                }
+
+                DeviceWidgetProperty {
+                    id: deviceTotalSize
+
+                    name: DeviceCenterStrings.totalSize
+                    value: deviceCenterAccess.getSizeString(0)
+                }
+            }
+        }
     }
-    Texts.RichText {
-        anchors.centerIn: parent
-        wrapMode: Text.NoWrap
-        text: "Device Page Header (" + root.width + ", " + root.height+")";
+
+    onDeviceIdChanged: {
+        deviceCenterAccess.retrieveDeviceData(deviceId);
+    }
+
+    Connections {
+        id: deviceCenterConnection
+
+        target: deviceCenterAccess
+
+        function onDeviceNameReceived(deviceName) {
+            deviceTitle.text = deviceName;
+        }
+
+        function onDeviceDataUpdated(deviceData) {
+            deviceTitle.text = deviceData.name;
+
+            if (deviceData.os === DeviceOs.LINUX) {
+                deviceImage.source = Images.pcLinux
+            }
+            else if (deviceData.os === DeviceOs.MAC) {
+                deviceImage.source = Images.pcMac
+            }
+            else {
+                deviceImage.source = Images.pcWindows
+            }
+
+            if (deviceData.folderCount > 0)
+            {
+                deviceStatus.visible = true
+                if (deviceData.status === SyncStatus.UP_TO_DATE) {
+                    deviceStatus.icon = Images.statusUpToDate
+                    deviceStatus.value = DeviceCenterStrings.statusUpToDate
+                }
+                else if (deviceData.status === SyncStatus.UPDATING) {
+                    deviceStatus.icon = Images.statusUpdating
+                    deviceStatus.value = DeviceCenterStrings.statusUpdating
+                }
+                else if (deviceData.status === SyncStatus.PAUSED) {
+                    deviceStatus.icon = Images.statusPaused
+                    deviceStatus.value = DeviceCenterStrings.statusPaused
+                }
+                else {
+                    deviceStatus.icon = Images.statusStopped
+                    deviceStatus.value = DeviceCenterStrings.statusStopped
+                }
+            }
+            else
+            {
+                deviceStatus.visible = false
+            }
+
+            deviceContains.value = DeviceCenterStrings.folderCount(deviceData.folderCount)
+            deviceTotalSize.value = deviceCenterAccess.getSizeString(deviceData.totalSize)
+
+        }
     }
 }

@@ -182,5 +182,6 @@
         <file>deviceCenter/NoInternetPage.qml</file>
         <file>deviceCenter/NoConnectionsPage.qml</file>
         <file>deviceCenter/SyncTablePage.qml</file>
+        <file>deviceCenter/DeviceWidgetProperty.qml</file>
     </qresource>
 </RCC>

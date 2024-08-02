@@ -7,17 +7,6 @@ Item {
     readonly property int verticalMargins: 24
     readonly property int headerHeight: 128
 
-    Rectangle {
-        id: contentItem
-
-        anchors.fill: parent
-        color:"lightblue";
-    }
-    Texts.RichText {
-        anchors.centerIn: parent
-        wrapMode: Text.NoWrap
-        text: "Device Page (" + root.width + ", " + root.height+")";
-    }
     DevicePageHeader{
         id: header
 
@@ -39,4 +28,10 @@ Item {
             right: parent.right
         }
     }// content
+
+    Component.onCompleted: {
+
+        var deviceId = deviceCenterAccess.getThisDeviceId();
+        header.deviceId = deviceId;
+    }
 } //root

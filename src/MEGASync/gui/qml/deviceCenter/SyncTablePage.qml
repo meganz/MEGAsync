@@ -13,59 +13,13 @@ Item {
     readonly property int dividerMargins: 4
 
     anchors.fill: parent
-    // Keeping this only for quick testing with QML preview
-    ListModel {
-        id: mModel
-        ListElement {
-            name: "Folder-1"
-            type: "Sync"
-            size: "10.5 GB"
-            dateAdded: "5 Jan 2024"
-            dateModified: "10 Jan 2024"
-        }
-        ListElement {
-            name: "Folder-2"
-            type: "Backup"
-            size: "12.2 GB"
-            dateAdded: "15 Jan 2024"
-            dateModified: "20 Jan 2024"
-        }
-        ListElement {
-            name: "Folder-3"
-            type: "Sync"
-            size: "3.1 MB"
-            dateAdded: "1 Feb 2024"
-            dateModified: "1 March 2024"
-        }
-        ListElement {
-            name: "Folder-1"
-            type: "Backup"
-            size: "10.5 GB"
-            dateAdded: "1 April 2024"
-            dateModified: "16 April 2024"
-        }
-        ListElement {
-            name: "Folder-2"
-            type: "Backup"
-            size: "12.2 GB"
-            dateAdded: "1 Jan 2024"
-            dateModified: "1 Jan 2024"
-        }
-        ListElement {
-            name: "Folder-3"
-            type: "Backup"
-            size: "3.1 MB"
-            dateAdded: "1 Jan 2024"
-            dateModified: "1 Jan 2024"
-        }
-    }
 
     TableView {
         id: tableView
 
         anchors.fill: parent
         anchors.bottomMargin: 20
-        model: deviceCenterAccess.syncModel //mModel
+        model: deviceCenterAccess.syncModel
         alternatingRowColors: false
 
         style: TableViewStyle {

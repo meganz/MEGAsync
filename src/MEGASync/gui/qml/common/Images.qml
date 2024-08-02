@@ -87,8 +87,16 @@ QtObject {
 
     readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
     readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
+
     readonly property url addBackup: imagesDeviceCenterPath + "addbackup.svg"
     readonly property url addSync: imagesDeviceCenterPath + "addsync.svg"
+    readonly property url pcWindows: imagesDeviceCenterPath + "pc-windows.svg"
+    readonly property url pcMac: imagesDeviceCenterPath + "pc-mac.svg"
+    readonly property url pcLinux: imagesDeviceCenterPath + "pc-linux.svg"
+    readonly property url statusPaused: imagesDeviceCenterPath + "status-paused.svg"
+    readonly property url statusStopped: imagesDeviceCenterPath + "status-stopped.svg"
+    readonly property url statusUpdating: imagesDeviceCenterPath + "status-updating.svg"
+    readonly property url statusUpToDate: imagesDeviceCenterPath + "status-uptodate.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

@@ -31,7 +31,7 @@ DeviceCenterQmlDialog {
         }
         width: 256
     }
-    Toolbar{
+    Toolbar {
         id: toolbar
 
         anchors{

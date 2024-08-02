@@ -12,7 +12,6 @@ import components.checkBoxes 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
 
-import ExclusionsQmlDialog 1.0
 
 ExclusionsQmlDialog {
     id: root

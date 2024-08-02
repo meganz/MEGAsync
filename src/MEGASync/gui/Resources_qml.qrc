@@ -38,6 +38,13 @@
         <file>images/qml/onboarding/mail.svg</file>
         <file>images/qml/device_center/addbackup.svg</file>
         <file>images/qml/device_center/addsync.svg</file>
+        <file>images/qml/device_center/pc-windows.svg</file>
+        <file>images/qml/device_center/pc-mac.svg</file>
+        <file>images/qml/device_center/pc-linux.svg</file>
+        <file>images/qml/device_center/status-paused.svg</file>
+        <file>images/qml/device_center/status-stopped.svg</file>
+        <file>images/qml/device_center/status-updating.svg</file>
+        <file>images/qml/device_center/status-uptodate.svg</file>
         <file>images/qml/ok.png</file>
         <file>images/qml/ok@2x.png</file>
         <file>images/qml/ok@3x.png</file>
