@@ -195,7 +195,7 @@ public:
 
     void finishConflictManually();
 
-    void semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option);
+    void semiAutoSolveNameConflictIssues(const QModelIndexList& list, uint option);
 
     //LocalOrRemoteConflicts
     void chooseRemoteForBackups(const QModelIndexList& list);

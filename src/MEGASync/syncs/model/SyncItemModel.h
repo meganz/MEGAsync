@@ -24,7 +24,7 @@ public:
         UPLOADS,
         MENU
     };
-    const unsigned int kColumns = 8;
+    const int kColumns = 8;
 
     static const int ICON_SIZE;
     static const int STATES_ICON_SIZE;

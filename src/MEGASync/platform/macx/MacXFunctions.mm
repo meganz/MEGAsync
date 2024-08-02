@@ -398,7 +398,7 @@ QString defaultOpenApp(QString extension)
     }
 
     CFIndex size = CFStringGetMaximumSizeOfFileSystemRepresentation(info);
-    buffer = new char[size];
+    buffer = new char[static_cast<unsigned long>(size)];
     CFStringGetCString (info, buffer, size, kCFStringEncodingUTF8);
     QString defaultAppPath = QString::fromUtf8(buffer);
     delete [] buffer;
@@ -457,14 +457,14 @@ bool registerUpdateDaemon()
 // Check if it's needed to start the local HTTP server
 // for communications with the webclient
 bool runHttpServer()
-{   
-    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-    int pidBufSize = nProcesses * sizeof(pid_t);
+{
+    size_t nProcesses = static_cast<size_t>(proc_listpids(PROC_ALL_PIDS, 0, NULL, 0));
+    size_t pidBufSize = nProcesses * sizeof(pid_t);
     pid_t *pids = new pid_t[nProcesses];
     memset(pids, 0, pidBufSize);
-    proc_listpids(PROC_ALL_PIDS, 0, pids, pidBufSize);
+    proc_listpids(PROC_ALL_PIDS, 0, pids, static_cast<int>(pidBufSize));
 
-    for (int i = 0; i < nProcesses; ++i)
+    for (size_t i = 0; i < nProcesses; ++i)
     {
         if (pids[i] == 0)
         {

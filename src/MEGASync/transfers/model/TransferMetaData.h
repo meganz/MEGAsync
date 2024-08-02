@@ -57,7 +57,7 @@ struct TransferMetaDataItem
 
 template <class Type>
 struct TransferMetaDataItemsByState
-{ 
+{
     int size() const {return pendingTransfers.size() + completedTransfers.size() + failedTransfers.size() + cancelledTransfers.size() + nonExistFailedTransfers.size();}
 
     QMap<TransferMetaDataItemId, std::shared_ptr<Type>> pendingTransfers;
@@ -295,7 +295,7 @@ public:
     void addFileFromFolder(int folderTag, int fileTag);
 
     //Top Level folders
-    void topLevelFolderScanningFinished(int filecount);
+    void topLevelFolderScanningFinished(unsigned int filecount);
 
     //Folder controller
     void processCancelled();

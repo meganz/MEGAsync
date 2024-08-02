@@ -14,15 +14,15 @@ NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
-    auto localConflictNames = stall->pathCount(false);
+    auto localConflictNames = static_cast<int>(stall->pathCount(false));
 
     if(localConflictNames > 0)
     {
         initLocalIssue();
 
-        for(unsigned int index = 0; index < localConflictNames; ++index)
+        for(int index = 0; index < localConflictNames; ++index)
         {
-            QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
+            QFileInfo localPath(QString::fromUtf8(stall->path(false, index)));
 
             if(consultLocalData()->mPath.isEmpty())
             {
@@ -39,7 +39,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         }
     }
 
-    auto cloudConflictNames = stall->pathCount(true);
+    auto cloudConflictNames = static_cast<int>(stall->pathCount(true));
 
     if(cloudConflictNames > 0)
     {
@@ -54,7 +54,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         }
 
-        for(unsigned int index = 0; index < cloudConflictNames; ++index)
+        for(int index = 0; index < cloudConflictNames; ++index)
         {
             auto cloudHandle(stall->cloudNodeHandle(index));
             auto cloudPath = QString::fromUtf8(stall->path(true, index));
@@ -72,7 +72,12 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
                 if(node->isFile())
                 {
-                    mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                    mCloudConflictedNames.addFileConflictedName(
+                        static_cast<unsigned long long>(node->getModificationTime()),
+                        node->getSize(),
+                        static_cast<unsigned long long>(node->getCreationTime()),
+                        QString::fromUtf8(node->getFingerprint()),
+                        info);
                     mFiles++;
                 }
                 else
@@ -242,9 +247,15 @@ void NameConflictedStalledIssue::updateHandle(mega::MegaHandle handle)
         {
             mLastModifiedNode.cloudItem->mHandle = handle;
 
-            if(node->isFile())
+            if (node->isFile())
             {
-                mCloudConflictedNames.updateFileConflictedName(node->getModificationTime(), node->getSize(), oldNode->getCreationTime(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), mLastModifiedNode.cloudItem);
+                mCloudConflictedNames.updateFileConflictedName(
+                    static_cast<unsigned long long>(node->getModificationTime()),
+                    node->getSize(),
+                    static_cast<unsigned long long>(oldNode->getCreationTime()),
+                    static_cast<unsigned long long>(node->getCreationTime()),
+                    QString::fromUtf8(node->getFingerprint()),
+                    mLastModifiedNode.cloudItem);
             }
         }
 

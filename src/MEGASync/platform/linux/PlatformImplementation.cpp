@@ -497,8 +497,8 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString& path)
     struct statvfs statData;
     const int result = statvfs(path.toUtf8().constData(), &statData);
     data.mIsReady = (result == 0);
-    data.mTotalSpace = static_cast<qint64>(statData.f_blocks * statData.f_bsize);
-    data.mAvailableSpace = static_cast<qint64>(statData.f_bfree * statData.f_bsize);
+    data.mTotalSpace = static_cast<long long>(statData.f_blocks * statData.f_bsize);
+    data.mAvailableSpace = static_cast<long long>(statData.f_bfree * statData.f_bsize);
     return data;
 }
 

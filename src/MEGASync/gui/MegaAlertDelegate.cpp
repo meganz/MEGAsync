@@ -17,6 +17,8 @@
 
 using namespace mega;
 
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QObject *parent)
     : QStyledItemDelegate(parent),
       mAlertsModel(model),

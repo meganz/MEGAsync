@@ -44,18 +44,18 @@ std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_UI_ALERT_DISABLE_DURATI
 std::chrono::milliseconds Preferences::ALMOST_OVER_QUOTA_OS_NOTIFICATION_DISABLE_DURATION{std::chrono::hours(36)};
 std::chrono::milliseconds Preferences::OVER_QUOTA_ACTION_DIALOGS_DISABLE_TIME{std::chrono::hours{12}};
 
-long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
-long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
+long long Preferences::MIN_UPDATE_STATS_INTERVAL              = 300000;
+long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS        = 7200000;
 long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
 long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
-unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
-unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
-unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
-unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
-unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
+int Preferences::UPDATE_INITIAL_DELAY_SECS                    = 60;
+int Preferences::UPDATE_RETRY_INTERVAL_SECS                   = 7200;
+int Preferences::UPDATE_TIMEOUT_SECS                          = 600;
+int Preferences::MAX_LOGIN_TIME_MS                            = 40000;
+int Preferences::PROXY_TEST_TIMEOUT_MS                        = 10000;
 unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
@@ -63,7 +63,7 @@ unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
 
-const qint16 Preferences::HTTP_PORT  = 6341;
+const unsigned short Preferences::HTTP_PORT                   = 6341;
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QString Preferences::BASE_URL = QString::fromLatin1("https://mega.nz");
@@ -206,7 +206,6 @@ const QString Preferences::uploadFolderKey          = QString::fromLatin1("uploa
 const QString Preferences::importFolderKey          = QString::fromLatin1("importFolder");
 const QString Preferences::hasDefaultUploadFolderKey    = QString::fromLatin1("hasDefaultUploadFolder");
 const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromLatin1("hasDefaultDownloadFolder");
-const QString Preferences::hasDefaultImportFolderKey    = QString::fromLatin1("hasDefaultImportFolder");
 const QString Preferences::localFingerprintKey      = QString::fromLatin1("localFingerprint");
 const QString Preferences::isCrashedKey             = QString::fromLatin1("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPaused");
@@ -275,12 +274,12 @@ const int  Preferences::defaultDownloadLimitKB      = 0;
 const long long Preferences::defaultTimeStamp       = 0;
 
 //The default appDataId starts from 1, as 0 will be used for invalid appDataId
-const unsigned long long  Preferences::defaultTransferIdentifier   = 1;
-const int  Preferences::defaultParallelUploadConnections      = 3;
-const int  Preferences::defaultParallelDownloadConnections    = 4;
-const long long  Preferences::defaultUpperSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
-const long long  Preferences::defaultLowerSizeLimitValue              = 1; //Input UI range 1-9999. Use 1 as default value
-const int  Preferences::defaultCleanerDaysLimitValue            = 30;
+const unsigned long long  Preferences::defaultTransferIdentifier            = 1;
+const int  Preferences::defaultParallelUploadConnections                    = 3;
+const int  Preferences::defaultParallelDownloadConnections                  = 4;
+const unsigned long long  Preferences::defaultUpperSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
+const unsigned long long  Preferences::defaultLowerSizeLimitValue           = 1; //Input UI range 1-9999. Use 1 as default value
+const int  Preferences::defaultCleanerDaysLimitValue                        = 30;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultFolderPermissions = 0;
@@ -292,7 +291,7 @@ const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_NO
 #endif
 const int  Preferences::defaultProxyProtocol        = Preferences::PROXY_PROTOCOL_HTTP;
 const QString  Preferences::defaultProxyServer      = QString::fromLatin1("127.0.0.1");
-const int Preferences::defaultProxyPort             = 8080;
+const unsigned short Preferences::defaultProxyPort  = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
 const QString Preferences::defaultProxyUsername     = QString::fromLatin1("");
 const QString Preferences::defaultProxyPassword     = QString::fromLatin1("");
@@ -1369,11 +1368,6 @@ bool Preferences::hasDefaultDownloadFolder()
     return getValueConcurrent<bool>(hasDefaultDownloadFolderKey, !downloadFolder().isEmpty());
 }
 
-bool Preferences::hasDefaultImportFolder()
-{
-    return getValueConcurrent<bool>(hasDefaultImportFolderKey, importFolder() != 0);
-}
-
 void Preferences::setHasDefaultUploadFolder(bool value)
 {
     setValueConcurrently(hasDefaultUploadFolderKey, value);
@@ -1382,11 +1376,6 @@ void Preferences::setHasDefaultUploadFolder(bool value)
 void Preferences::setHasDefaultDownloadFolder(bool value)
 {
     setValueConcurrently(hasDefaultDownloadFolderKey, value);
-}
-
-void Preferences::setHasDefaultImportFolder(bool value)
-{
-    setValueConcurrently(hasDefaultImportFolderKey, value);
 }
 
 bool Preferences::canUpdate(QString filePath)
@@ -1557,13 +1546,13 @@ void Preferences::setUpperSizeLimit(bool value)
     setValueConcurrently(upperSizeLimitKey, value);
 }
 
-long long Preferences::upperSizeLimitValue()
+unsigned long long Preferences::upperSizeLimitValue()
 {
     assert(logged());
-    return getValueConcurrent<long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
+    return getValueConcurrent<unsigned long long>(upperSizeLimitValueKey, defaultUpperSizeLimitValue);
 }
 
-void Preferences::setUpperSizeLimitValue(long long value)
+void Preferences::setUpperSizeLimitValue(unsigned long long value)
 {
     assert(logged());
     setValueConcurrently(upperSizeLimitValueKey, value);
@@ -1612,13 +1601,13 @@ void Preferences::setLowerSizeLimit(bool value)
     setValueConcurrently(lowerSizeLimitKey, value);
 }
 
-long long Preferences::lowerSizeLimitValue()
+unsigned long long Preferences::lowerSizeLimitValue()
 {
     assert(logged());
-    return getValueConcurrent<long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
+    return getValueConcurrent<unsigned long long>(lowerSizeLimitValueKey, defaultLowerSizeLimitValue);
 }
 
-void Preferences::setLowerSizeLimitValue(long long value)
+void Preferences::setLowerSizeLimitValue(unsigned long long value)
 {
     assert(logged());
     setValueConcurrently(lowerSizeLimitValueKey, value);
@@ -1692,12 +1681,12 @@ void Preferences::setProxyServer(const QString &value)
     setValueConcurrently(proxyServerKey, value);
 }
 
-int Preferences::proxyPort()
+unsigned short Preferences::proxyPort()
 {
-    return getValueConcurrent<int>(proxyPortKey, defaultProxyPort);
+    return getValueConcurrent<unsigned short>(proxyPortKey, defaultProxyPort);
 }
 
-void Preferences::setProxyPort(int value)
+void Preferences::setProxyPort(unsigned short value)
 {
     setValueConcurrently(proxyPortKey, value);
 }
@@ -1868,12 +1857,12 @@ void Preferences::setLastCustomStreamingApp(const QString &value)
     setValueConcurrently(lastCustomStreamingAppKey, value);
 }
 
-long long Preferences::getMaxMemoryUsage()
+unsigned long long Preferences::getMaxMemoryUsage()
 {
-    return getValueConcurrent<long long>(maxMemoryUsageKey, 0);
+    return getValueConcurrent<unsigned long long>(maxMemoryUsageKey, 0);
 }
 
-void Preferences::setMaxMemoryUsage(long long value)
+void Preferences::setMaxMemoryUsage(unsigned long long value)
 {
     setValueConcurrently(maxMemoryUsageKey, value);
 }
@@ -1951,13 +1940,13 @@ void Preferences::setUploadFolder(mega::MegaHandle value)
     setValueConcurrently(uploadFolderKey, value);
 }
 
-long long Preferences::importFolder()
+mega::MegaHandle Preferences::importFolder()
 {
     assert(logged());
-    return getValueConcurrent<long long>(importFolderKey);
+    return getValueConcurrent<mega::MegaHandle>(importFolderKey);
 }
 
-void Preferences::setImportFolder(long long value)
+void Preferences::setImportFolder(MegaHandle value)
 {
     assert(logged());
     setValueConcurrently(importFolderKey, value);
@@ -2550,7 +2539,7 @@ void Preferences::setEmailAndGeneralSettings(const QString &email)
 {
     int proxyType = this->proxyType();
     QString proxyServer = this->proxyServer();
-    int proxyPort = this->proxyPort();
+    auto proxyPort = this->proxyPort();
     int proxyProtocol = this->proxyProtocol();
     bool proxyAuth = this->proxyRequiresAuth();
     QString proxyUsername = this->getProxyUsername();
@@ -2696,13 +2685,25 @@ void Preferences::readFolders()
     mutex.unlock();
 }
 
-
-SyncData::SyncData(QString name, QString localFolder, long long  megaHandle, QString megaFolder, long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID)
-    : mName(name), mLocalFolder(localFolder), mMegaHandle(megaHandle), mMegaFolder(megaFolder), mLocalfp(localfp),
-      mEnabled(enabled), mTemporarilyDisabled(tempDisabled), mPos(pos), mSyncID(syncID)
-{
-
-}
+SyncData::SyncData(QString name,
+                   QString localFolder,
+                   mega::MegaHandle megaHandle,
+                   QString megaFolder,
+                   long long localfp,
+                   bool enabled,
+                   bool tempDisabled,
+                   int pos,
+                   QString syncID):
+    mName(name),
+    mLocalFolder(localFolder),
+    mMegaHandle(megaHandle),
+    mMegaFolder(megaFolder),
+    mLocalfp(localfp),
+    mEnabled(enabled),
+    mTemporarilyDisabled(tempDisabled),
+    mPos(pos),
+    mSyncID(syncID)
+{}
 
 void Preferences::removeOldCachedSync(int position, QString email)
 {
@@ -2786,16 +2787,16 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
             // to the SDK)
         }
 
-        oldSyncs.push_back(SyncData(mSettings->value(syncNameKey).toString(),
-                                    mSettings->value(localFolderKey).toString(),
-                                    mSettings->value(megaFolderHandleKey, static_cast<long long>(INVALID_HANDLE)).toLongLong(),
-                                    mSettings->value(megaFolderKey).toString(),
-                                    mSettings->value(localFingerprintKey, 0).toLongLong(),
-                                    enabled,
-                                    mSettings->value(temporaryInactiveKey, false).toBool(),
-                                     i,
-                                    mSettings->value(syncIdKey, true).toString()
-                                    ));
+        oldSyncs.push_back(SyncData(
+            mSettings->value(syncNameKey).toString(),
+            mSettings->value(localFolderKey).toString(),
+            mSettings->value(megaFolderHandleKey, INVALID_HANDLE).value<mega::MegaHandle>(),
+            mSettings->value(megaFolderKey).toString(),
+            mSettings->value(localFingerprintKey, 0).toLongLong(),
+            enabled,
+            mSettings->value(temporaryInactiveKey, false).toBool(),
+            i,
+            mSettings->value(syncIdKey, true).toString()));
 
         mSettings->endGroup();
     }

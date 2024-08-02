@@ -128,7 +128,7 @@ public:
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
 
-    void setMaxTransfersToProcess(uint16_t max);
+    void setMaxTransfersToProcess(int max);
 
     TransfersToProcess processTransfers();
     void clear();
@@ -181,7 +181,7 @@ private:
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
-    std::atomic<int16_t> mMaxTransfersToProcess;
+    std::atomic<int> mMaxTransfersToProcess;
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
@@ -355,7 +355,7 @@ private:
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
 
-    void setUiBlockedModeByCounter(uint32_t transferCount);
+    void setUiBlockedModeByCounter(int transferCount);
     void updateUiBlockedByCounter(int updates);
     bool isUiBlockedByCounter() const;
     void setUiBlockedByCounterMode(bool state);

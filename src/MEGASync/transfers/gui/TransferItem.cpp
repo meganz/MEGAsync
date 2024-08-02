@@ -85,14 +85,14 @@ void TransferData::update(mega::MegaTransfer* transfer)
         mErrorValue = 0LL;
         mTemporaryError = false;
         mFailedTransfer = nullptr;
-        mTransferredBytes = static_cast<unsigned long long>(transfer->getTransferredBytes());
-        mTotalSize = static_cast<unsigned long long>(transfer->getTotalBytes());
+        mTransferredBytes = transfer->getTransferredBytes();
+        mTotalSize = transfer->getTotalBytes();
         mIgnorePauseQueueState = false;
 
         if(mState & TransferData::FINISHED_STATES_MASK)
         {
             mFinishedTime = transfer->getUpdateTime();
-            mSpeed = transfer->getMeanSpeed() != 0 ?  static_cast<unsigned long long>(transfer->getMeanSpeed()) : mTotalSize;
+            mSpeed = transfer->getMeanSpeed() != 0 ?  transfer->getMeanSpeed() : mTotalSize;
         }
         else
         {
@@ -102,7 +102,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
             }
             else
             {
-                long long httpSpeed = static_cast<unsigned long long>(megaApi->getCurrentSpeed(transfer->getType()));
+                auto httpSpeed = static_cast<long long>(megaApi->getCurrentSpeed(transfer->getType()));
                 mSpeed = std::min(transfer->getSpeed(), httpSpeed);
             }
 
@@ -112,7 +112,7 @@ void TransferData::update(mega::MegaTransfer* transfer)
 
         if(mTotalSize > mTransferredBytes)
         {
-            unsigned long long remBytes = mTotalSize - mTransferredBytes;
+            long long remBytes = mTotalSize - mTransferredBytes;
             TransferRemainingTime rem(mSpeed, remBytes);
             mRemainingTime = rem.calculateRemainingTimeSeconds(mSpeed, remBytes).count();
         }

@@ -93,9 +93,9 @@ using DirectLogFunction = std::function <void (std::ostream *)>;
 struct LogLinkedList
 {
     LogLinkedList* next = nullptr;
-    unsigned allocated = 0;
-    unsigned used = 0;
-    int lastmessage = -1;
+    size_t allocated = 0;
+    size_t used = 0;
+    long long lastmessage = -1;
     int lastmessageRepeats = 0;
     bool oomGap = false;
     DirectLogFunction *mDirectLoggingFunction = nullptr; // we cannot use a non pointer due to the malloc allocation of new entries
@@ -108,7 +108,7 @@ struct LogLinkedList
         if (entry)
         {
             entry->next = nullptr;
-            entry->allocated = unsigned(size - sizeof(LogLinkedList));
+            entry->allocated = size - sizeof(LogLinkedList);
             entry->used = 0;
             entry->lastmessage = -1;
             entry->lastmessageRepeats = 0;
@@ -130,9 +130,9 @@ struct LogLinkedList
         return mDirectLoggingFunction != nullptr;
     }
 
-    void append(const char* s, unsigned int n = 0)
+    void append(const char* s, size_t n = 0)
     {
-        n = n ? n : unsigned(strlen(s));
+        n = n ? n : strlen(s);
         assert(used + n + 1 < allocated);
         strcpy(message + used, s);
         used += n;
@@ -629,7 +629,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 
     auto messageLen = strlen(message);
     auto threadnameLen = strlen(threadname);
-    auto lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
+    size_t lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
     bool notify = false;
 
     {
@@ -645,7 +645,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
         }
         else
         {
-            unsigned reportRepeats = logListLast != &logListFirst ? logListLast->lastmessageRepeats : 0;
+            auto reportRepeats = logListLast != &logListFirst ? logListLast->lastmessageRepeats : 0;
             if (reportRepeats)
             {
                 lineLen += 30;
@@ -680,7 +680,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 
                         for(int i = 0; i < numberMessages; i++)
                         {
-                            oss->write(directMessages[i], directMessagesSizes[i]);
+                            oss->write(directMessages[i], static_cast<std::streamsize>(directMessagesSizes[i]));
                         }
                         *oss << std::endl;
                     };
@@ -719,14 +719,17 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
                     if (reportRepeats)
                     {
                         char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
-                        int n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
-                        logListLast->append(repeatbuf, n);
+                        auto n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
+                        if(n >= 0)
+                        {
+                            logListLast->append(repeatbuf, static_cast<size_t>(n));
+                        }
                     }
                     logListLast->append(timebuf, LOG_TIME_CHARS);
-                    logListLast->append(threadname, unsigned(threadnameLen));
+                    logListLast->append(threadname, threadnameLen);
                     logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
-                    logListLast->lastmessage = logListLast->used;
-                    logListLast->append(message, unsigned(messageLen));
+                    logListLast->lastmessage = static_cast<long long>(logListLast->used);
+                    logListLast->append(message, messageLen);
                     logListLast->append("\n", 1);
                     notify = logListLast->used + 1024 > logListLast->allocated;
                 }

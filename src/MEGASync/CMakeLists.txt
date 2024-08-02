@@ -149,7 +149,7 @@ if (ENABLE_DESKTOP_APP_WERROR)
         WINDOWS /WX
         UNIX  $<$<CONFIG:Debug>: -Werror
                                  -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
-        APPLE $<$<CONFIG:Debug>: -Wno-sign-conversion
+        APPLE $<$<CONFIG:Debug>:
                                  -Wno-reorder-ctor>
     )
 endif()

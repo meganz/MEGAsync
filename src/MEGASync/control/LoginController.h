@@ -117,7 +117,7 @@ private slots:
     void onConnectivityCheckFinished(bool success);
 
 private:
-    long long computeExclusionSizeLimit(const long long sizeLimitValue, const int unit);
+    unsigned long long computeExclusionSizeLimit(const unsigned long long& sizeLimitValue, const int unit);
     void migrateSyncConfToSdk(const QString& email);
     void loadSyncExclusionRules(const QString& email);
     void dumpSession();

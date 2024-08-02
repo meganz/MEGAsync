@@ -275,7 +275,7 @@ bool TransferMetaData::isSingleTransfer() const
 
 int TransferMetaData::getTotalFiles() const
 {
-    return mFiles.size();
+    return static_cast<int>(mFiles.size());
 }
 
 int TransferMetaData::getPendingFiles() const
@@ -449,10 +449,10 @@ void TransferMetaData::addFileFromFolder(int folderTag, int fileTag)
     folderItem->files.pendingTransfers.insert(fileId, fileItem);
 }
 
-void TransferMetaData::topLevelFolderScanningFinished(int filecount)
+void TransferMetaData::topLevelFolderScanningFinished(unsigned int filecount)
 {
     mTotalFileCount += filecount;
-    QString message = QString::fromUtf8("Folder Controller: Folder scanning finished. Containing %1 files").arg(filecount);
+    QString message = QString::fromUtf8("Folder Controller: Folder scanning finished. Containing %1 files").arg(static_cast<int>(filecount));
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
     mStartedTopLevelTransfers++;
     checkScanningState();

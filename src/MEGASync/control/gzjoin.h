@@ -70,6 +70,8 @@
 
 #define local static
 
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 class gzjoinex : public std::exception
 {
 public:

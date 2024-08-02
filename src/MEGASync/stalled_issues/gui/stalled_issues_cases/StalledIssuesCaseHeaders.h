@@ -14,7 +14,7 @@ public:
 
     virtual void refreshCaseActions(StalledIssueHeader* header){}
     virtual void refreshCaseTitles(StalledIssueHeader* header) = 0;
-    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
+    virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, uint){}
 };
 
 //DefaultHeader failed
@@ -65,7 +65,7 @@ class CloudFingerprintMissingHeader : public StalledIssueHeaderCase
 
 public:
     CloudFingerprintMissingHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, uint) override;
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
@@ -245,7 +245,7 @@ class NameConflictsHeader : public StalledIssueHeaderCase
 
 public:
     NameConflictsHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index) override;
 
 protected slots:
     void refreshCaseActions(StalledIssueHeader *header) override;

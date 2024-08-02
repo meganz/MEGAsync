@@ -43,13 +43,13 @@ public:
 
     struct ActionInfo
     {
-        ActionInfo(const QString& text, int id):
+        ActionInfo(const QString& text, uint id):
             actionText(text),
             id(id)
         {}
 
         QString actionText;
-        int id;
+        uint id;
     };
 
     void updateHeaderSizes();

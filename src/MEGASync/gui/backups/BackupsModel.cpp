@@ -30,7 +30,7 @@ BackupFolder::BackupFolder(const QString& folder,
 {
 }
 
-void BackupFolder::setSize(qint64 size)
+void BackupFolder::setSize(long long size)
 {
     QVector<int> changedRoles;
     changedRoles.append(BackupsModel::SIZE_READY_ROLE);
@@ -39,7 +39,7 @@ void BackupFolder::setSize(qint64 size)
 
     if(size > FileFolderAttributes::NOT_READY)
     {
-        mFolderSize = static_cast<quint64>(size);
+        mFolderSize = size;
         mSize = Utilities::getSizeStringLocalized(mFolderSize);
         changedRoles.append(BackupsModel::SIZE_ROLE);
     }
@@ -59,7 +59,7 @@ void BackupFolder::setFolder(const QString &folder)
     {
         mFolderAttr->setPath(mFolder);
     }
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -76,7 +76,7 @@ void BackupFolder::setError(int error)
 void BackupFolder::calculateFolderSize()
 {
     createFileFolderAttributes();
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -429,7 +429,7 @@ void BackupsModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
     auto lastTotalSize = mBackupsTotalSize;
-    unsigned long long totalSize = 0;
+    long long totalSize = 0;
 
     int selectedAndSizeReadyFolders = 0;
 

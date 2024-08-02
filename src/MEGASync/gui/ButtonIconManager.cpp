@@ -280,9 +280,9 @@ void ButtonIconManager::addIconSpacing(QAbstractButton *button)
     if(button->property(ICON_SPACING).isValid())
     {
         QString spaceChar(QLatin1String(" "));
-        uint spacing = button->property(ICON_SPACING).toUInt();
-        uint space_size = button->fontMetrics().horizontalAdvance(spaceChar);
-        uint number_of_spaces = spacing / space_size;
+        auto spacing = button->property(ICON_SPACING).toInt();
+        auto space_size = button->fontMetrics().horizontalAdvance(spaceChar);
+        auto number_of_spaces = spacing / space_size;
         button->setText(spaceChar.repeated(number_of_spaces) + button->text());
     }
 }

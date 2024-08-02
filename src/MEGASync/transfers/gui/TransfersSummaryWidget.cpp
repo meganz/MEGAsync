@@ -383,14 +383,7 @@ void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent*)
 
     if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
     {
-        //This is not necessary: bpause captures the click otherwise
-//        if ((!upEllipseWidth && !dlEllipseWidth) || sqrt(pow( pos.x() - (ui->bpause->x() + ui->bpause->size().width() / 2.0),2.0)
-//                          + pow( pos.y() - (ui->bpause->y() + ui->bpause->size().height() / 2.0), 2.0))
-//                          > (ui->bpause->iconSize().width()/2.0) )
-
-        {
-            emit generalAreaClicked();
-        }
+        emit generalAreaClicked();
     }
 }
 
@@ -459,13 +452,21 @@ void TransfersSummaryWidget::adjustFontSizeToText(QFont *font, int maxWidth, QSt
 }
 
 // will return de adjusted size, override text with the final text and the position of the dots
-int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minWidth, int margins, long long partial, long long total, int &posDotsPartial, int &posDotsTotal, QString &text, int fontsize)
+int TransfersSummaryWidget::adjustSizeToText(QFont* font,
+                                             int maxWidth,
+                                             int minWidth,
+                                             int margins,
+                                             uint partial,
+                                             uint total,
+                                             int& posDotsPartial,
+                                             int& posDotsTotal,
+                                             QString& text,
+                                             int fontsize)
 {
+    QString spartial = getQuantityString(partial);
+    QString stotal = getQuantityString(total);
 
-    QString spartial = Utilities::getQuantityString(partial);
-    QString stotal = Utilities::getQuantityString(total);
-
-    text = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
+    text = QString::fromUtf8("%1/%2").arg(spartial, stotal);
 
     int measuredWidth;
     font->setPixelSize(fontsize);
@@ -498,7 +499,7 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
             stotal = stotal.mid(0, posDotsTotal) + QString::fromUtf8("...") + stotal.mid(stotal.size() - trailingChars);
         }
 
-        text = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
+        text = QString::fromUtf8("%1/%2").arg(spartial, stotal);
         measuredWidth=fm.horizontalAdvance(text);
     }
 
@@ -508,7 +509,8 @@ int TransfersSummaryWidget::adjustSizeToText(QFont *font, int maxWidth, int minW
 void TransfersSummaryWidget::updateUploadsText(bool force)
 {
     QString previousText = uploadsText;
-    uploadsText = Utilities::getQuantityString(currentUpload) + QStringLiteral("/") + Utilities::getQuantityString(totalUploads);
+    uploadsText =
+        getQuantityString(currentUpload) + QStringLiteral("/") + getQuantityString(totalUploads);
     int prevUpEllipseWidth = upEllipseWidth;
 
     if (!currentUpload && !totalUploads)
@@ -537,8 +539,8 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
     }
     else if (uploadsText != previousText)
     {
-        QString spartial = Utilities::getQuantityString(currentUpload);
-        QString stotal = Utilities::getQuantityString(totalUploads);
+        QString spartial = getQuantityString(currentUpload);
+        QString stotal = getQuantityString(totalUploads);
         if (upPosDotsPartial && upPosDotsPartial < spartial.size())
         {
             spartial = spartial.mid(0, upPosDotsPartial) + QString::fromUtf8("...") + spartial.mid(spartial.size() - trailingChars);
@@ -547,14 +549,14 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
         {
             stotal = stotal.mid(0, upPosDotsTotal) + QString::fromUtf8("...") + stotal.mid(stotal.size() - trailingChars);
         }
-        uploadsTextToRender = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
+        uploadsTextToRender = QString::fromUtf8("%1/%2").arg(spartial, stotal);
     }
 }
 
 void TransfersSummaryWidget::updateDownloadsText(bool force)
 {
     QString previousText = downloadsText;
-    downloadsText = Utilities::getQuantityString(currentDownload) + QStringLiteral("/") + Utilities::getQuantityString(totalDownloads);
+    downloadsText = getQuantityString(currentDownload) + QStringLiteral("/") + getQuantityString(totalDownloads);
     int prevDlEllipseWidth = dlEllipseWidth;
 
     if (!currentDownload && !totalDownloads)
@@ -589,8 +591,8 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
     }
     else if (downloadsText != previousText)
     {
-        QString spartial = Utilities::getQuantityString(currentDownload);
-        QString stotal = Utilities::getQuantityString(totalDownloads);
+        QString spartial = getQuantityString(currentDownload);
+        QString stotal = getQuantityString(totalDownloads);
         if (dlPosDotsPartial && dlPosDotsPartial < spartial.size())
         {
             spartial = spartial.mid(0, dlPosDotsPartial) + QString::fromUtf8("...") + spartial.mid(spartial.size() - trailingChars);
@@ -599,7 +601,7 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
         {
             stotal = stotal.mid(0, dlPosDotsTotal) + QString::fromUtf8("...") + stotal.mid(stotal.size() - trailingChars);
         }
-        downloadsTextToRender = QString::fromUtf8("%1/%2").arg(spartial).arg(stotal);
+        downloadsTextToRender = QString::fromUtf8("%1/%2").arg(spartial, stotal);
     }
 }
 
@@ -777,4 +779,41 @@ void TransfersSummaryWidget::updateSizes()
 
     lastwidth = this->width();
     lastheigth = this->height();
+}
+
+struct Postfix
+{
+    double value;
+    std::string letter;
+};
+
+const static std::vector<Postfix> postfixes = {
+    {1e12, "T"},
+    {1e9,  "G"},
+    {1e6,  "M"},
+    {1e3,  "K"}
+};
+
+constexpr auto maxStringSize = 4;
+
+QString TransfersSummaryWidget::getQuantityString(uint quantity)
+{
+    for (const auto& postfix: postfixes)
+    {
+        if (static_cast<double>(quantity) >= postfix.value)
+        {
+            const double value{static_cast<double>(quantity) / postfix.value};
+
+            QString valueString{QString::number(value).left(maxStringSize)};
+            if (valueString.contains(QStringLiteral(".")))
+            {
+                valueString.remove(
+                    QRegExp(QStringLiteral("0+$"))); // Remove any number of trailing 0's
+                valueString.remove(QRegExp(
+                    QStringLiteral("\\.$"))); // If the last character is just a '.' then remove it
+            }
+            return valueString + QString::fromStdString(postfix.letter);
+        }
+    }
+    return QString::number(quantity);
 }

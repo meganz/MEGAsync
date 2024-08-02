@@ -35,6 +35,7 @@
 
 #pragma GCC diagnostic ignored "-Wimplicit-int-conversion"
 #pragma GCC diagnostic ignored "-Wshorten-64-to-32"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 
 /*---- Forward declarations for private functions ----*/
 

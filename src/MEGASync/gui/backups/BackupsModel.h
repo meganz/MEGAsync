@@ -25,7 +25,7 @@ public:
     int mError;
 
     // Back (without role)
-    qint64 mFolderSize;
+    long long mFolderSize;
     int mSdkError;
     int mSyncError;
 
@@ -38,7 +38,7 @@ public:
                  bool selected = true, QObject* parent = nullptr);
 
     LocalFileFolderAttributes* mFolderAttr;
-    void setSize(qint64 size);
+    void setSize(long long size);
     void setFolder(const QString& folder);
     void setError(int error);
     QString getFolder() const {return mFolder;}
@@ -138,7 +138,7 @@ private:
 
     QList<BackupFolder*> mBackupFolderList;
     int mSelectedRowsTotal;
-    unsigned long long mBackupsTotalSize;
+    long long mBackupsTotalSize;
     bool mTotalSizeReady;
     SyncController mSyncController;
     std::unique_ptr<BackupsController> mBackupsController;

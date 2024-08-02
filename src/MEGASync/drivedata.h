@@ -12,8 +12,8 @@ public:
 
     bool mIsReady;
 
-    quint64 mAvailableSpace;
-    quint64 mTotalSpace;
+    int64_t mAvailableSpace;
+    int64_t mTotalSpace;
 };
 
 struct DriveDisplayData

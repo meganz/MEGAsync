@@ -339,7 +339,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
     lastTsErrorMessageShown = 0;
-    maxMemoryUsage = 0;
+    mMaxMemoryUsage = 0;
     nodescurrent = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -939,12 +939,12 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        uint transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
             //We won´t never have thousand of millions of failed issues...so overflow is not a problem here
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
             icon = icons["someissues"];
         }
         else
@@ -991,11 +991,11 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        uint transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
             icon = icons["someissues"];
         }
         else
@@ -1935,12 +1935,12 @@ void MegaApplication::checkNetworkInterfaces()
 
 void MegaApplication::checkMemoryUsage()
 {
-    long long numNodes = megaApi->getNumNodes();
-    long long numLocalNodes = megaApi->getNumLocalNodes();
-    long long totalNodes = numNodes + numLocalNodes;
+    auto numNodes = megaApi->getNumNodes();
+    auto numLocalNodes = static_cast<unsigned long long>(megaApi->getNumLocalNodes());
+    auto totalNodes = numNodes + numLocalNodes;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    long long totalTransfers =  transferCount.pendingUploads + transferCount.pendingDownloads;
-    long long procesUsage = 0;
+    auto totalTransfers =  transferCount.pendingUploads + transferCount.pendingDownloads;
+    unsigned long long procesUsage = 0ULL;
 
     if (!totalNodes)
     {
@@ -1953,7 +1953,7 @@ void MegaApplication::checkMemoryUsage()
     {
         return;
     }
-    procesUsage = pmc.PrivateUsage;
+    procesUsage =  static_cast<unsigned long long>(pmc.PrivateUsage);
 #else
     #ifdef __APPLE__
         struct task_basic_info t_info;
@@ -1963,7 +1963,7 @@ void MegaApplication::checkMemoryUsage()
                                       TASK_BASIC_INFO, (task_info_t)&t_info,
                                       &t_info_count))
         {
-            procesUsage = t_info.resident_size;
+            procesUsage = static_cast<unsigned long long>(t_info.resident_size);
         }
         else
         {
@@ -1979,23 +1979,23 @@ void MegaApplication::checkMemoryUsage()
                  .arg(static_cast<float>(procesUsage) / static_cast<float>(totalNodes))
                  .arg(totalTransfers).toUtf8().constData());
 
-    if (procesUsage > maxMemoryUsage)
+    if (procesUsage > mMaxMemoryUsage)
     {
-        maxMemoryUsage = procesUsage;
+        mMaxMemoryUsage = procesUsage;
     }
 
-    if (maxMemoryUsage > preferences->getMaxMemoryUsage()
-            && maxMemoryUsage > 268435456 //256MB
+    if (mMaxMemoryUsage > preferences->getMaxMemoryUsage()
+            && mMaxMemoryUsage > 268435456 //256MB
             + 2028 * totalNodes // 2KB per node
             + 5120 * totalTransfers) // 5KB per transfer
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch();
         if (currentTime - preferences->getMaxMemoryReportTime() > 86400000)
         {
-            preferences->setMaxMemoryUsage(maxMemoryUsage);
+            preferences->setMaxMemoryUsage(mMaxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::MEM_USAGE,
-                                          { QString::number(maxMemoryUsage),
+                                          { QString::number(mMaxMemoryUsage),
                                             QString::number(numNodes),
                                             QString::number(numLocalNodes) });
         }
@@ -3483,7 +3483,7 @@ void MegaApplication::applyProxySettings()
         proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(qint16(preferences->proxyPort()));
+        proxy.setPort(preferences->proxyPort());
         if (preferences->proxyRequiresAuth())
         {
             QString username = preferences->getProxyUsername();
@@ -3510,7 +3510,7 @@ void MegaApplication::applyProxySettings()
             {
                 proxy.setType(QNetworkProxy::HttpProxy);
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(qint16(arguments[1].toInt()));
+                proxy.setPort(arguments[1].toUShort());
             }
         }
     }
@@ -4808,7 +4808,7 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
     }
 }
 
-void MegaApplication::externalFileUpload(qlonglong targetFolder)
+void MegaApplication::externalFileUpload(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4846,7 +4846,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     Platform::getInstance()->fileSelector(info);
 }
 
-void MegaApplication::externalFolderUpload(qlonglong targetFolder)
+void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4892,7 +4892,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     Platform::getInstance()->folderSelector(info);
 }
 
-void MegaApplication::externalFolderSync(qlonglong targetFolder)
+void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4938,23 +4938,6 @@ void MegaApplication::externalOpenTransferManager(int tab)
     }
 
     transferManagerActionClicked(tab);
-}
-
-void MegaApplication::internalDownload(long long handle)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    MegaNode *node = megaApi->getNodeByHandle(handle);
-    if (!node)
-    {
-        return;
-    }
-
-    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
-    processDownloads();
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -6528,8 +6511,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         auto transferCount = mTransfersModel->getTransfersCount();
         mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
-        int pendingUploads = transferCount.pendingUploads;
-        int pendingDownloads = transferCount.pendingDownloads;
+        auto pendingUploads = transferCount.pendingUploads;
+        auto pendingDownloads = transferCount.pendingDownloads;
 
         if (pendingUploads)
         {

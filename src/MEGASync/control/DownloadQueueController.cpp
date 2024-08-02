@@ -28,9 +28,9 @@ void DownloadQueueController::initialize(QQueue<WrappedNode *> *downloadQueue, B
 
 void DownloadQueueController::startAvailableSpaceChecking()
 {
-    mTotalQueueDiskSize = 0;
+    mTotalQueueDiskSize = 0LL;
     mFolderCountPendingSizeComputation = 0;
-    auto accumulator = [this](qint64 partialSum, WrappedNode* currentNode)
+    auto accumulator = [this](long long partialSum, WrappedNode* currentNode)
     {
         MegaNode *node = currentNode->getMegaNode();
         if (node->getType() == MegaNode::TYPE_FILE)
@@ -139,7 +139,6 @@ void DownloadQueueController::askUserForChoice()
     QStorageInfo destinationDrive(mCurrentTargetPath);
 
     const DriveDisplayData driveDisplayData = getDriveDisplayData(destinationDrive);
-
 
     LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, mCachedDriveData.mAvailableSpace,
                               mCachedDriveData.mTotalSpace, driveDisplayData);

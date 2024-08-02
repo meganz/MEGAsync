@@ -169,13 +169,13 @@ public:
     {
         QString fingerprint;
         int64_t size = -1;
-        int64_t modifiedTime = -1;
+        unsigned long long modifiedTime = 0;
     };
 
     class CloudConflictedNamesByAttributes
     {
     public:
-        CloudConflictedNamesByAttributes(QString ufingerprint, int64_t usize, int64_t umodifiedTime)
+        CloudConflictedNamesByAttributes(QString ufingerprint, int64_t usize, unsigned long long umodifiedTime)
         {
             mAttributes.fingerprint = ufingerprint;
             mAttributes.size = usize;
@@ -189,7 +189,7 @@ public:
 
         bool solved = false;
 
-        QMultiMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
+        QMultiMap<unsigned long long, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
 
     class CloudConflictedNames
@@ -205,8 +205,8 @@ public:
             mConflictedNames.append(newConflictedName);
         }
 
-        void updateFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t oldcreationtimestamp,
-                                      int64_t newcreationtimestamp,
+        void updateFileConflictedName(unsigned long long modifiedtimestamp, int64_t size, unsigned long long oldcreationtimestamp,
+                                      unsigned long long newcreationtimestamp,
                                       QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             bool isDuplicated(false);
@@ -255,7 +255,7 @@ public:
             }
         }
 
-        void addFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t creationtimestamp,
+        void addFileConflictedName(unsigned long long modifiedtimestamp, int64_t size, unsigned long long creationtimestamp,
                                    QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             for(int index = 0; index < mConflictedNames.size(); ++index)

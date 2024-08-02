@@ -127,7 +127,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
     }
 
     // Update progress bar
-    unsigned int permil = static_cast<unsigned int>((getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0);
+    int permil = static_cast<int>((getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0);
     mUi->pbTransfer->setValue(permil);
 }
 
@@ -195,7 +195,7 @@ QString InfoDialogTransferDelegateWidget::getTransferName()
     return mUi->lFileName->text();
 }
 
-void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, bool error)
+void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferTypes transferType, bool error)
 {
     QIcon iconCompleted;
 

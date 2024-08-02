@@ -460,7 +460,7 @@ void UpdateTask::addToSignature(QString value)
 
 void UpdateTask::addToSignature(QByteArray bytes)
 {
-    signatureChecker->add(bytes.constData(), bytes.length());
+    signatureChecker->add(bytes.constData(), static_cast<unsigned>(bytes.length()));
 }
 
 void UpdateTask::initSignature()
@@ -499,7 +499,7 @@ bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
     }
 
     QByteArray bytes = file.readAll();
-    tmpHash.add(bytes.constData(), bytes.size());
+    tmpHash.add(bytes.constData(), static_cast<unsigned>(bytes.size()));
     file.close();
 
     return tmpHash.checkSignature(fileSignature.toLatin1().constData());

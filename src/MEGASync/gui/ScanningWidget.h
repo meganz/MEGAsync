@@ -36,7 +36,7 @@ protected:
 private:
     void startAnimation();
 
-    static QString buildScanDescription(const uint32_t folderCount, const uint32_t fileCount);
+    static QString buildScanDescription(const u_int32_t& folderCount, const u_int32_t& fileCount);
 
     static void setRole(QObject* object, const char* name);
 

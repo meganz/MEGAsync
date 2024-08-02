@@ -802,7 +802,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
     }
 }
 
-void TransferThread::setMaxTransfersToProcess(uint16_t max)
+void TransferThread::setMaxTransfersToProcess(int max)
 {
     mMaxTransfersToProcess = max;
 }
@@ -2516,7 +2516,7 @@ void TransfersModel::setUiBlockedMode(bool state)
     }
 }
 
-void TransfersModel::setUiBlockedModeByCounter(uint32_t transferCount)
+void TransfersModel::setUiBlockedModeByCounter(int transferCount)
 {
     if(transferCount > 0 && transferCount > PAUSE_RESUME_THRESHOLD_THREAD)
     {

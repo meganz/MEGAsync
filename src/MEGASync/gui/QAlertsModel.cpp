@@ -8,6 +8,8 @@
 
 using namespace mega;
 
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
