@@ -1084,7 +1084,7 @@ void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
 
     setupSyncController();
-    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY);
+    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
 
     app->createAppMenus();
 }

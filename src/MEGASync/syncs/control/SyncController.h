@@ -33,7 +33,7 @@ public:
 
     void addBackup(const QString& localFolder, const QString& syncName = QString());
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
@@ -76,7 +76,7 @@ private:
     mega::MegaApi* mApi;
 
     //Only use const methods
-    const SyncInfo* mSyncInfo;
+    SyncInfo* mSyncInfo;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)

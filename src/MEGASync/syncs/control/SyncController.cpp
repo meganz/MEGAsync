@@ -27,7 +27,7 @@ void SyncController::createPendingBackups()
     {
         addSync(QDir::toNativeSeparators(it.key()), mega::INVALID_HANDLE,
                 it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value(),
-                mega::MegaSync::TYPE_BACKUP);
+                mega::MegaSync::TYPE_BACKUP, SyncInfo::ONBOARDING_ORIGIN);
     }
     mPendingBackups.clear();
 }
@@ -69,7 +69,7 @@ QString SyncController::getErrorString(int errorCode, int syncErrorCode)
 }
 
 void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
-                             const QString& syncName, MegaSync::SyncType type)
+                             const QString& syncName, MegaSync::SyncType type, SyncInfo::SyncOrigin origin)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
                  .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
@@ -80,6 +80,7 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
     }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
 
+    mSyncInfo->setSyncToCreateOrigin(origin);
     mApi->syncFolder(type, localFolder.toUtf8().constData(),
                      syncCleanName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
                      remoteHandle, nullptr,

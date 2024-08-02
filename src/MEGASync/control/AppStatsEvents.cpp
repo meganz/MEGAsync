@@ -105,7 +105,10 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     { AppStatsEvents::EventType::SETTINGS_NOTIFICATIONS_TAB_CLICKED        , 99597 },
     { AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED               , 99598 },
     { AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED          , 99599 },
-    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED             , 600000 }
+    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED             , 600000 },
+    { AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS   , 600001 },
+    { AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING                , 600002 },
+    { AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING              , 600003 }
 };
 
 // Deprecated are not displayed
