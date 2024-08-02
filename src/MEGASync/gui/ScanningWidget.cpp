@@ -119,7 +119,7 @@ void ScanningWidget::startAnimation()
     }
 }
 
-QString ScanningWidget::buildScanDescription(const u_int32_t& folderCount, const u_int32_t& fileCount)
+QString ScanningWidget::buildScanDescription(const unsigned int& folderCount, const unsigned int& fileCount)
 {
     QString folderStr = tr("%n folder", "", static_cast<int>(folderCount));
     QString fileStr = tr("%n file", "", static_cast<int>(fileCount));
