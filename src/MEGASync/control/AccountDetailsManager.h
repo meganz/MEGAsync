@@ -13,6 +13,11 @@
 
 class Preferences;
 
+namespace mega
+{
+class QTMegaRequestListener;
+}
+
 class AccountDetailsManager
     : public QObject
     , public StorageDetailsObserved
@@ -74,6 +79,7 @@ private:
     };
 
     mega::MegaApi* mMegaApi;
+    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<Preferences> mPreferences;
     UserStatsFlags mFlags;
     UserStats<bool> mInflightUserStats;

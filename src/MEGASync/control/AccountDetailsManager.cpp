@@ -4,6 +4,7 @@
 #include "StatsEventHandler.h"
 #include "DialogOpener.h"
 #include "SettingsDialog.h"
+#include "RequestListenerManager.h"
 
 namespace
 {
@@ -94,6 +95,7 @@ AccountDetailsManager::AccountDetailsManager(mega::MegaApi* megaApi,
     , mMegaApi(megaApi)
     , mPreferences(Preferences::instance())
 {
+    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
     reset();
     mProExpirityTimer.setSingleShot(true);
     connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
@@ -179,7 +181,11 @@ void AccountDetailsManager::updateUserStats(bool storage, bool transfer, bool pr
     long long lastRequestInterval = (QDateTime::currentMSecsSinceEpoch() - lastRequest);
     if (force || !lastRequest || lastRequestInterval > Preferences::MIN_UPDATE_STATS_INTERVAL)
     {
-        mMegaApi->getSpecificAccountDetails(storage, transfer, pro, storage ? mQueuedStorageUserStatsReason : -1);
+        mMegaApi->getSpecificAccountDetails(storage,
+                                            transfer,
+                                            pro,
+                                            storage ? mQueuedStorageUserStatsReason : -1,
+                                            mDelegateListener.get());
         if (flags.storage)
         {
             mQueuedStorageUserStatsReason = 0;

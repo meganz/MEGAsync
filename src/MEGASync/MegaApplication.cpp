@@ -553,8 +553,10 @@ void MegaApplication::initialize()
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
+
     mStatusController = new AccountStatusController(this);
     QmlManager::instance()->setRootContextProperty(mStatusController);
+    mAccountDetailsManager = std::make_unique<AccountDetailsManager>(megaApi);
 
     delegateListener = new QTMegaListener(megaApi, this);
     megaApi->addListener(delegateListener);
@@ -719,8 +721,6 @@ void MegaApplication::initialize()
     connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
-
-    mAccountDetailsManager = std::make_unique<AccountDetailsManager>(megaApi);
 }
 
 QString MegaApplication::applicationFilePath()
