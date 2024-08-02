@@ -86,7 +86,7 @@ enum GetUserStatsReason {
     USERSTATS_REMOVEVERSIONS,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
+class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
@@ -219,7 +219,7 @@ public:
 
     void updateUsedStorage(const bool sendEvent = false);
 
-    AccountDetailsManager*accountDetailsManager() const;
+    AccountDetailsManager* accountDetailsManager() const;
 
 signals:
     void startUpdaterThread();

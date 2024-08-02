@@ -5,6 +5,7 @@
 #include "PlanWidget.h"
 #include "MegaApplication.h"
 #include "DialogOpener.h"
+#include "AccountDetailsManager.h"
 
 using namespace mega;
 
@@ -24,12 +25,12 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::M
     //Keep storage details hidden until we receive the account details
     mUi->lAccountUsed->hide();
 
-    qobject_cast<MegaApplication*>(qApp)->attachAccountObserver(*this);
+    MegaSyncApp->accountDetailsManager()->attachAccountObserver(*this);
 }
 
 UpgradeOverStorage::~UpgradeOverStorage()
 {
-    qobject_cast<MegaApplication*>(qApp)->dettachAccountObserver(*this);
+    MegaSyncApp->accountDetailsManager()->dettachAccountObserver(*this);
 
     delete mUi;
 }

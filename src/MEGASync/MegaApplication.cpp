@@ -5577,7 +5577,7 @@ void MegaApplication::refreshStorageUIs()
         infoDialog->setUsage();
     }
 
-    notifyStorageObservers(); //Ideally this should be the only call here
+    mAccountDetailsManager->notifyStorageObservers(); //Ideally this should be the only call here
 
     if (mStorageOverquotaDialog)
     {

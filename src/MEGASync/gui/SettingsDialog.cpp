@@ -208,9 +208,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    mApp->attachStorageObserver(*this);
-    mApp->attachBandwidthObserver(*this);
-    mApp->attachAccountObserver(*this);
+    mApp->accountDetailsManager()->attachStorageObserver(*this);
+    mApp->accountDetailsManager()->attachBandwidthObserver(*this);
+    mApp->accountDetailsManager()->attachAccountObserver(*this);
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
@@ -220,9 +220,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
 SettingsDialog::~SettingsDialog()
 {
-    mApp->dettachStorageObserver(*this);
-    mApp->dettachBandwidthObserver(*this);
-    mApp->dettachAccountObserver(*this);
+    mApp->accountDetailsManager()->dettachStorageObserver(*this);
+    mApp->accountDetailsManager()->dettachBandwidthObserver(*this);
+    mApp->accountDetailsManager()->dettachAccountObserver(*this);
 
 #ifdef Q_OS_MACOS
     mToolBar->deleteLater();

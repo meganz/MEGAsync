@@ -44,13 +44,13 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     }
 
     // Subscribe to data updates (but detach after 1 callback)
-    MegaSyncApp->attachStorageObserver(*this);
+    MegaSyncApp->accountDetailsManager()->attachStorageObserver(*this);
     MegaSyncApp->accountDetailsManager()->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
-    MegaSyncApp->dettachStorageObserver(*this);
+    MegaSyncApp->accountDetailsManager()->dettachStorageObserver(*this);
     delete mUi;
 }
 
@@ -356,7 +356,7 @@ void AccountDetailsDialog::refresh()
 void AccountDetailsDialog::updateStorageElements()
 {
     // Prevent other updates of these fields (due to events) after the first one
-    MegaSyncApp->dettachStorageObserver(*this);
+    MegaSyncApp->accountDetailsManager()->dettachStorageObserver(*this);
 
     refresh();
 }
