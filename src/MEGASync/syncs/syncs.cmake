@@ -45,7 +45,6 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/win/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/win/SyncAccountFullMessage.ui
    syncs/gui/Twoways/win/SyncSettingsUIBase.ui
    syncs/gui/Twoways/win/SyncStallModeSelector.ui
@@ -56,7 +55,6 @@ target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/macx/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/macx/SyncAccountFullMessage.ui
    syncs/gui/Twoways/macx/SyncSettingsUIBase.ui
    syncs/gui/Twoways/macx/SyncStallModeSelector.ui
@@ -67,7 +65,6 @@ target_sources_conditional(MEGAsync
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/linux/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
    syncs/gui/Twoways/linux/SyncSettingsUIBase.ui
    syncs/gui/Twoways/linux/SyncStallModeSelector.ui
