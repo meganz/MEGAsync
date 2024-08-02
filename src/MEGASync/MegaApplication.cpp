@@ -1319,9 +1319,10 @@ void MegaApplication::onboardingFinished(bool fastLogin)
     int cachedStorageState = preferences->getStorageState();
 
     // Ask for storage on first login or when cached value is invalid
-    mAccountDetailsManager->updateUserStats(!fastLogin || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN,
-                                            true,
-                                            true,
+    bool checkStorage = !fastLogin || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN;
+    mAccountDetailsManager->updateUserStats(checkStorage
+                                                ? AccountDetailsManager::Flag::ALL
+                                                : AccountDetailsManager::Flag::TRANSFER_PRO,
                                             true,
                                             !fastLogin ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
 
@@ -1596,9 +1597,12 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
         // this one is requested with force=false so it can't possibly occur to often.
-        // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
+        // It will in turn result in another call of this function with the actual new state (if it changed),
+        // which is taken care of below with force=true (so that one does not have to wait further).
         // Also request pro state (low cost) in case the storage status is due to expiration of paid period etc.
-        mAccountDetailsManager->updateUserStats(true, false, true, true, USERSTATS_STORAGESTATECHANGE);
+        mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::STORAGE_PRO,
+                                                true,
+                                                USERSTATS_STORAGESTATECHANGE);
         return;
     }
 
@@ -1609,7 +1613,9 @@ void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
         if (storageState != appliedStorageState)
         {
             {
-                mAccountDetailsManager->updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+                mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::STORAGE_PRO,
+                                                        true,
+                                                        USERSTATS_TRAFFICLIGHT);
             }
             if (storageState == MegaApi::STORAGE_STATE_RED)
             {
@@ -2402,7 +2408,9 @@ void MegaApplication::showInfoDialog()
     if (loggedAndNotBandwidthOverquota && transferQuotaWaitTimeExpired)
     {
         transferOverQuotaWaitTimeExpiredReceived = false;
-        mAccountDetailsManager->updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
+        mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::TRANSFER,
+                                                true,
+                                                USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
     }
 
     if (infoDialog)
@@ -2437,7 +2445,9 @@ void MegaApplication::showInfoDialog()
 
     if(!mStatusController->isAccountBlocked())
     {
-        mAccountDetailsManager->updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
+        mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::TRANSFER,
+                                                true,
+                                                USERSTATS_SHOWMAINDIALOG);
     }
 }
 
@@ -5181,7 +5191,9 @@ void MegaApplication::openSettings(int tab)
 #ifndef __MACH__
     if (preferences && !proxyOnly)
     {
-        mAccountDetailsManager->updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);
+        mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::ALL,
+                                                true,
+                                                USERSTATS_OPENSETTINGSDIALOG);
     }
 #endif
 
@@ -6134,7 +6146,10 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
             const auto waitTime = std::chrono::seconds(e->getValue());
             preferences->clearTemporalBandwidth();
             megaApi->getPricing();
-            mAccountDetailsManager->updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
+            // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry).
+            mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::TRANSFER_PRO,
+                                                    true,
+                                                    USERSTATS_TRANSFERTEMPERROR);
             mTransferQuota->setOverQuota(waitTime);
         }
     }
@@ -6148,7 +6163,9 @@ void MegaApplication::onAccountUpdate(MegaApi *)
     }
 
     preferences->clearTemporalBandwidth();
-    mAccountDetailsManager->updateUserStats(true, true, true, true, USERSTATS_ACCOUNTUPDATE);
+    mAccountDetailsManager->updateUserStats(AccountDetailsManager::Flag::ALL,
+                                            true,
+                                            USERSTATS_ACCOUNTUPDATE);
 }
 
 

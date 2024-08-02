@@ -871,7 +871,9 @@ void SettingsDialog::on_bClearFileVersions_clicked()
                 Q_UNUSED(request)
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    MegaSyncApp->accountDetailsManager()->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                    MegaSyncApp->accountDetailsManager()->updateUserStats(AccountDetailsManager::Flag::STORAGE,
+                                                                          true,
+                                                                          USERSTATS_REMOVEVERSIONS);
                 }
             }));
         }

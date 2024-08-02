@@ -45,7 +45,9 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
 
     // Subscribe to data updates (but detach after 1 callback)
     MegaSyncApp->accountDetailsManager()->attachStorageObserver(*this);
-    MegaSyncApp->accountDetailsManager()->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+    MegaSyncApp->accountDetailsManager()->updateUserStats(AccountDetailsManager::Flag::ALL,
+                                                          true,
+                                                          USERSTATS_STORAGECLICKED);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()

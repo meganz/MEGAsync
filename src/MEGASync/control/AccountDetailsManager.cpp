@@ -6,55 +6,22 @@
 #include "SettingsDialog.h"
 #include "RequestListenerManager.h"
 
-namespace
-{
-const int UserStatsStorageFlag = 0x01;
-const int UserStatsTransferFlag = 0x02;
-const int UserStatsProFlag = 0x04;
-}
-
-//
-// Private UserStatsFlags definition.
-//
-AccountDetailsManager::UserStatsFlags::UserStatsFlags()
-    : storage(false)
-    , transfer(false)
-    , pro(false)
-{
-}
-
-AccountDetailsManager::UserStatsFlags::UserStatsFlags(bool storage,
-                                                      bool transfer,
-                                                      bool pro)
-    : storage(storage)
-    , transfer(transfer)
-    , pro(pro)
-{
-}
-
-void AccountDetailsManager::UserStatsFlags::parse(int flags)
-{
-    storage = flags & UserStatsStorageFlag;
-    transfer = flags & UserStatsTransferFlag;
-    pro = flags & UserStatsProFlag;
-}
-
 //
 // Private UserStats definition.
 //
 template<typename Type>
-void AccountDetailsManager::UserStats<Type>::updateWithValue(const UserStatsFlags &flags,
+void AccountDetailsManager::UserStats<Type>::updateWithValue(const Flags& flags,
                                                              Type value)
 {
-    if (flags.storage)
+    if (flags.testFlag(Flag::STORAGE))
     {
         mStorageValue = value;
     }
-    if (flags.transfer)
+    if (flags.testFlag(Flag::TRANSFER))
     {
         mTransferValue = value;
     }
-    if (flags.pro)
+    if (flags.testFlag(Flag::PRO))
     {
         mProValue = value;
     }
@@ -100,7 +67,7 @@ AccountDetailsManager::AccountDetailsManager(mega::MegaApi* megaApi,
     mProExpirityTimer.setSingleShot(true);
     connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
     {
-        updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
+        updateUserStats(Flag::ALL, true, USERSTATS_PRO_EXPIRED);
     });
 }
 
@@ -129,7 +96,7 @@ void AccountDetailsManager::onRequestFinish(mega::MegaRequest* request,
     }
 }
 
-void AccountDetailsManager::updateUserStats(bool storage, bool transfer, bool pro, bool force, int source)
+void AccountDetailsManager::updateUserStats(const Flags& flags, bool force, int source)
 {
     if (MegaSyncApp->finished())
     {
@@ -137,20 +104,12 @@ void AccountDetailsManager::updateUserStats(bool storage, bool transfer, bool pr
     }
 
     // If any are already pending, we don't need to fetch again.
-    if (mInflightUserStats.storageValue())
-    {
-        storage = false;
-    }
-    if (mInflightUserStats.transferValue())
-    {
-        transfer = false;
-    }
-    if (mInflightUserStats.proValue())
-    {
-        pro = false;
-    }
+    Flags flagsToFetch = flags;
+    checkInflightUserStats(flagsToFetch);
 
-    if (!storage && !transfer && !pro)
+    if (!flagsToFetch.testFlag(Flag::STORAGE)
+            && !flagsToFetch.testFlag(Flag::TRANSFER)
+            && !flagsToFetch.testFlag(Flag::PRO))
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG,
                            "Skipped call to getSpecificAccountDetails()");
@@ -158,45 +117,34 @@ void AccountDetailsManager::updateUserStats(bool storage, bool transfer, bool pr
     }
 
     // If the oldest of the ones we want is too recent, skip (unless force).
-    long long lastRequest = 0;
-    if (storage && (!lastRequest || lastRequest > mLastRequestUserStats.storageValue()))
-    {
-        lastRequest = mLastRequestUserStats.storageValue();
-    }
-    if (transfer && (!lastRequest || lastRequest > mLastRequestUserStats.transferValue()))
-    {
-        lastRequest = mLastRequestUserStats.transferValue();
-    }
-    if (pro && (!lastRequest || lastRequest > mLastRequestUserStats.proValue()))
-    {
-        lastRequest = mLastRequestUserStats.proValue();
-    }
+    static long long lastRequest = getLastRequest(flagsToFetch);
 
-    if (storage && source >= 0)
+    if (flagsToFetch.testFlag(Flag::STORAGE) && source >= 0)
     {
         mQueuedStorageUserStatsReason |= (1 << source);
     }
 
-    UserStatsFlags flags(storage, transfer, pro);
     long long lastRequestInterval = (QDateTime::currentMSecsSinceEpoch() - lastRequest);
     if (force || !lastRequest || lastRequestInterval > Preferences::MIN_UPDATE_STATS_INTERVAL)
     {
-        mMegaApi->getSpecificAccountDetails(storage,
-                                            transfer,
-                                            pro,
-                                            storage ? mQueuedStorageUserStatsReason : -1,
+        mMegaApi->getSpecificAccountDetails(flagsToFetch.testFlag(Flag::STORAGE),
+                                            flagsToFetch.testFlag(Flag::TRANSFER),
+                                            flagsToFetch.testFlag(Flag::PRO),
+                                            flagsToFetch.testFlag(Flag::STORAGE)
+                                                ? mQueuedStorageUserStatsReason
+                                                : -1,
                                             mDelegateListener.get());
-        if (flags.storage)
+        if (flagsToFetch.testFlag(Flag::STORAGE))
         {
             mQueuedStorageUserStatsReason = 0;
         }
 
-        mInflightUserStats.updateWithValue(flags, true);
-        mLastRequestUserStats.updateWithValue(flags, QDateTime::currentMSecsSinceEpoch());
+        mInflightUserStats.updateWithValue(flagsToFetch, true);
+        mLastRequestUserStats.updateWithValue(flagsToFetch, QDateTime::currentMSecsSinceEpoch());
     }
     else
     {
-        mQueuedUserStats.updateWithValue(flags, true);
+        mQueuedUserStats.updateWithValue(flagsToFetch, true);
     }
 }
 
@@ -204,11 +152,21 @@ void AccountDetailsManager::periodicUpdate()
 {
     if (mQueuedUserStats.storageValue() || mQueuedUserStats.transferValue() || mQueuedUserStats.proValue())
     {
-        bool storage = mQueuedUserStats.storageValue();
-        bool transfer = mQueuedUserStats.transferValue();
-        bool pro = mQueuedUserStats.proValue();
+        Flags flags;
+        if (mQueuedUserStats.storageValue())
+        {
+            flags |= Flag::STORAGE;
+        }
+        if (mQueuedUserStats.transferValue())
+        {
+            flags |= Flag::TRANSFER;
+        }
+        if (mQueuedUserStats.proValue())
+        {
+            flags |= Flag::PRO;
+        }
         mQueuedUserStats.updateWithValue(false);
-        updateUserStats(storage, transfer, pro, false, -1);
+        updateUserStats(flags, false, -1);
     }
 }
 
@@ -220,7 +178,9 @@ void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request
         return;
     }
 
-    mFlags.parse(request->getNumDetails());
+    mFlags = Flag::ALL;
+    mFlags &= request->getNumDetails();
+
     mInflightUserStats.updateWithValue(mFlags, false);
 
     //Account details retrieved, update the preferences and the information dialog
@@ -228,7 +188,9 @@ void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request
 
     MegaSyncApp->pushToThreadPool([=]()
     {
-        std::shared_ptr<mega::MegaNodeList> inShares(mFlags.storage ? mMegaApi->getInShares() : nullptr);
+        std::shared_ptr<mega::MegaNodeList> inShares(mFlags.testFlag(Flag::STORAGE)
+                                                         ? mMegaApi->getInShares()
+                                                         : nullptr);
 
         Utilities::queueFunctionInAppThread([=]()
         {
@@ -243,7 +205,7 @@ void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request
 
 void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
-    if (!mFlags.pro)
+    if (!mFlags.testFlag(Flag::PRO))
     {
         return;
     }
@@ -273,7 +235,7 @@ void AccountDetailsManager::processProFlag(const std::shared_ptr<mega::MegaAccou
 void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::MegaAccountDetails>& details,
                                                const std::shared_ptr<mega::MegaNodeList>& inShares)
 {
-    if (!mFlags.storage)
+    if (!mFlags.testFlag(Flag::STORAGE))
     {
         return;
     }
@@ -303,7 +265,7 @@ void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::MegaA
 
 void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
-    if (!mFlags.transfer)
+    if (!mFlags.testFlag(Flag::TRANSFER))
     {
         return;
     }
@@ -394,6 +356,43 @@ void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaAcco
     mPreferences->setInShareStorage(inShareSize);
     mPreferences->setInShareFiles(inShareFiles);
     mPreferences->setInShareFolders(inShareFolders);
+}
+
+long long AccountDetailsManager::getLastRequest(const Flags& flags) const
+{
+    long long lastRequest = 0;
+    if (flags.testFlag(Flag::STORAGE)
+        && (!lastRequest || lastRequest > mLastRequestUserStats.storageValue()))
+    {
+        lastRequest = mLastRequestUserStats.storageValue();
+    }
+    if (flags.testFlag(Flag::TRANSFER)
+        && (!lastRequest || lastRequest > mLastRequestUserStats.transferValue()))
+    {
+        lastRequest = mLastRequestUserStats.transferValue();
+    }
+    if (flags.testFlag(Flag::PRO)
+        && (!lastRequest || lastRequest > mLastRequestUserStats.proValue()))
+    {
+        lastRequest = mLastRequestUserStats.proValue();
+    }
+    return lastRequest;
+}
+
+void AccountDetailsManager::checkInflightUserStats(Flags& flags)
+{
+    if (mInflightUserStats.storageValue())
+    {
+        flags.setFlag(Flag::STORAGE, false);
+    }
+    if (mInflightUserStats.transferValue())
+    {
+        flags.setFlag(Flag::TRANSFER, false);
+    }
+    if (mInflightUserStats.proValue())
+    {
+        flags.setFlag(Flag::PRO, false);
+    }
 }
 
 bool AccountDetailsManager::canContinue(mega::MegaError* error) const

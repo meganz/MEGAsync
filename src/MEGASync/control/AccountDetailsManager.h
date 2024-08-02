@@ -27,6 +27,18 @@ class AccountDetailsManager
     Q_OBJECT
 
 public:
+    enum class Flag
+    {
+        NONE = 0x0,
+        STORAGE = 0x01,
+        TRANSFER = 0x02,
+        PRO = 0x04,
+        STORAGE_PRO = STORAGE | PRO, // 0x05
+        TRANSFER_PRO = TRANSFER | PRO, // 0x06
+        ALL = STORAGE | TRANSFER | PRO, // 0x07
+    };
+    Q_DECLARE_FLAGS(Flags, Flag)
+
     AccountDetailsManager(mega::MegaApi* megaApi,
                           QObject* parent = nullptr);
     virtual ~AccountDetailsManager() = default;
@@ -36,26 +48,13 @@ public:
     void onRequestFinish(mega::MegaRequest* request,
                          mega::MegaError* error);
 
-    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
+    void updateUserStats(const Flags& flags, bool force, int source);
     void periodicUpdate();
 
 signals:
     void accountDetailsUpdated();
 
 private:
-    struct UserStatsFlags
-    {
-        UserStatsFlags();
-        UserStatsFlags(bool storage, bool transfer, bool pro);
-        ~UserStatsFlags() = default;
-
-        void parse(int flags);
-
-        bool storage;
-        bool transfer;
-        bool pro;
-    };
-
     template<typename Type>
     class UserStats
     {
@@ -64,7 +63,7 @@ private:
         UserStats() = default;
         ~UserStats() = default;
 
-        void updateWithValue(const UserStatsFlags& flags, Type value);
+        void updateWithValue(const Flags& flags, Type value);
         void updateWithValue(Type value);
 
         Type storageValue() const;
@@ -81,7 +80,7 @@ private:
     mega::MegaApi* mMegaApi;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<Preferences> mPreferences;
-    UserStatsFlags mFlags;
+    Flags mFlags;
     UserStats<bool> mInflightUserStats;
     UserStats<bool> mQueuedUserStats;
     UserStats<long long> mLastRequestUserStats;
@@ -103,7 +102,11 @@ private:
     void processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details);
     void processInShares(const std::shared_ptr<mega::MegaAccountDetails>& details,
                          const std::shared_ptr<mega::MegaNodeList>& inShares);
+    long long getLastRequest(const Flags& flags) const;
+    void checkInflightUserStats(Flags& flags);
 
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(AccountDetailsManager::Flags)
 
 #endif // ACCOUNT_DETAILS_MANAGER_H
