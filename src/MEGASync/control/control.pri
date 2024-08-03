@@ -44,7 +44,6 @@ HEADERS  +=  $$PWD/HTTPServer.h \
     $$PWD/DialogOpener.h \
     $$PWD/FileFolderAttributes.h \
     $$PWD/DownloadQueueController.h \
-    $$PWD/IStatsEventHandler.h \
     $$PWD/LinkObject.h \
     $$PWD/LoginController.h \
     $$PWD/Preferences/Preferences.h \
