@@ -450,7 +450,7 @@ QString PlatformImplementation::getSizeStringLocalizedOSbased(qint64 bytes)
     return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeSIFormat);
 }
 
-quint64 PlatformImplementation::getBaseUnitsSize() const
+qint64 PlatformImplementation::getBaseUnitsSize() const
 {
     constexpr quint64 base = 1000;
 
