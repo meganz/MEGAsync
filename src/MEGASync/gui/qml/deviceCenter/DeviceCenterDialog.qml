@@ -20,6 +20,8 @@ DeviceCenterQmlDialog {
     maximumWidth: deviceCenterWidth
     minimumHeight: deviceCenterHeight
     minimumWidth: deviceCenterWidth
+    color: colorStyle.pageBackground
+
 
     LeftSidebar{
         id: leftSidebar

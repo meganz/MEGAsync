@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QDate>
+#include <Utilities.h>
 
 SyncModel::SyncModel(QObject* parent):
     QAbstractListModel(parent)
@@ -14,7 +15,8 @@ QHash<int, QByteArray> SyncModel::roleNames() const
         {NAME,          "name"        },
         {SIZE,          "size"        },
         {DATE_ADDED,    "dateAdded"   },
-        {DATE_MODIFIED, "dateModified"}
+        {DATE_MODIFIED, "dateModified"},
+        {STATUS,        "status"      }
     };
     return roles;
 }
@@ -145,6 +147,10 @@ QVariant SyncModel::data(const QModelIndex& index, int role) const
         case DATE_MODIFIED:
             result = getDateModified(row);
             break;
+        case STATUS:
+            result = getStatus(row);
+            break;
+
         default:
             break;
     }
@@ -156,14 +162,15 @@ QString SyncModel::getName(int row) const
     return mSyncObjects[row].name;
 }
 
-int SyncModel::getSize(int row) const
+QString SyncModel::getSize(int row) const
 {
-    return mSyncObjects[row].size;
+    return Utilities::getSizeString(mSyncObjects[row].size);
 }
 
-QString SyncModel::getType(int row) const
+SyncModel::SyncType SyncModel::getType(int row) const
 {
-    return mSyncObjects[row].type;
+    return mSyncObjects[row].type == QString::fromUtf8("Sync") ? SyncModel::SYNC :
+                                                                 SyncModel::BACKUP;
 }
 
 QDate SyncModel::getDateAdded(int row) const

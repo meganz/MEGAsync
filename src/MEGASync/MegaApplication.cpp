@@ -1209,7 +1209,6 @@ void MegaApplication::start()
     // The same name is used for fast login
     QmlManager::instance()->setRootContextProperty(QString::fromUtf8("loginControllerAccess"),
                                                    mLoginController);
-
     if (preferences->getSession().isEmpty())
     {
         QmlDialogManager::instance()->openOnboardingDialog();

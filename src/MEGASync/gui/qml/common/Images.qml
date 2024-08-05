@@ -47,6 +47,7 @@ QtObject {
     readonly property url megaCloud: imagesQmlPath + "mega-cloud.png"
     readonly property url contols: imagesQmlPath + "controls.png"
     readonly property url ok: imagesQmlPath + "ok.png"
+    readonly property url threeDots: imagesQmlPath + "three_dots.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"
@@ -90,6 +91,9 @@ QtObject {
 
     readonly property url addBackup: imagesDeviceCenterPath + "addbackup.svg"
     readonly property url addSync: imagesDeviceCenterPath + "addsync.svg"
+    readonly property url syncFolder: imagesDeviceCenterPath + "sync_folder.svg"
+    readonly property url backupFolder: imagesDeviceCenterPath + "backup_folder.svg"
+
     readonly property url pcWindows: imagesDeviceCenterPath + "pc-windows.svg"
     readonly property url pcMac: imagesDeviceCenterPath + "pc-mac.svg"
     readonly property url pcLinux: imagesDeviceCenterPath + "pc-linux.svg"

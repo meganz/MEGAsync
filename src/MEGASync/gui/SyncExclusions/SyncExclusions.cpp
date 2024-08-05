@@ -22,7 +22,12 @@ SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
 {
     qmlRegisterModule("SyncExclusions", 1, 0);
     qmlRegisterType<ExclusionsQmlDialog>("ExclusionsQmlDialog", 1, 0, "ExclusionsQmlDialog");
-    qmlRegisterUncreatableType<MegaIgnoreNameRule>("WildCardEnum", 1, 0, "WildCard", QString::fromLatin1("MyEnum is an uncreatable type"));
+    qmlRegisterUncreatableType<MegaIgnoreNameRule>(
+        "WildCardEnum",
+        1,
+        0,
+        "WildCard",
+        QString::fromLatin1("WildCard is an uncreatable type"));
 
     setFolder(path);
 }
