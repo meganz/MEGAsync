@@ -15,6 +15,20 @@ public:
     virtual void refreshCaseActions(StalledIssueHeader* header){}
     virtual void refreshCaseTitles(StalledIssueHeader* header) = 0;
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, int){}
+
+    struct SelectionInfo
+    {
+        QModelIndexList selection;
+        QModelIndexList similarToSelected;
+
+        bool hasBeenExternallyChanged = false;
+
+        QMegaMessageBox::MessageBoxInfo msgInfo;
+    };
+
+    SelectionInfo getSelectionInfo(
+        StalledIssueHeader* header,
+        std::function<void(const std::shared_ptr<const StalledIssue> issue)> checker);
 };
 
 //DefaultHeader failed
@@ -83,6 +97,7 @@ public:
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
+
 
 //Create folder failed
 class FileIssueHeader : public StalledIssueHeaderCase
@@ -203,6 +218,9 @@ public:
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader *header) override;
+
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
 };
 
 class LocalAndRemoteActionButtonClicked : QObject
