@@ -135,7 +135,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first sync
         if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
         {
-            if (syncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
+            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
             {
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
             }
@@ -144,7 +144,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC);
             }
 
-            syncToCreateOrigin = SyncOrigin::NONE;
+            mSyncToCreateOrigin = SyncOrigin::NONE;
 
         }
         mIsFirstTwoWaySyncDone = true;
@@ -155,7 +155,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first backup
         if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
         {
-            if (syncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
+            if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
             {
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
             }
@@ -164,7 +164,7 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP);
             }
 
-            syncToCreateOrigin = SyncOrigin::NONE;
+            mSyncToCreateOrigin = SyncOrigin::NONE;
         }
         mIsFirstBackupDone = true;
         break;
@@ -608,7 +608,7 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
 
 void SyncInfo::setSyncToCreateOrigin(SyncOrigin newSyncToCreate)
 {
-    syncToCreateOrigin = newSyncToCreate;
+    mSyncToCreateOrigin = newSyncToCreate;
 }
 
 
