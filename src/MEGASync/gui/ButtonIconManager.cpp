@@ -15,7 +15,7 @@ const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
 const char* ButtonIconManager::NOT_CHANGE_TEXT_COLOR = "not_change_text_color";
 
-const QString QRC_PREFIX = QLatin1Literal("qrc");
+const QString QRC_PREFIX = QLatin1String("qrc");
 
 const char* ButtonIconManager::DISABLE_UNCHECK_ON_CLICK = "disable_uncheck_on_click";
 

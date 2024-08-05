@@ -709,7 +709,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             if(newNodeCanBeAdded(updateNode.node.get()) &&
                 (!updateNode.node->isFile() || mModel->showFiles()))
             {
-                mAddedNodesByParentHandle.insertMulti(updateNode.parentHandle, updateNode.node);
+                mAddedNodesByParentHandle.insert(updateNode.parentHandle, updateNode.node);
             }
             if(updateNode.node->getChanges() & MegaNode::CHANGE_TYPE_PARENT)
             {

@@ -38,7 +38,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 {
     QString text = ui->eLinks->toPlainText();
     links = extractLinks(text);
-    links = links.toSet().values();
+    links = QSet<QString>(links.begin(), links.end()).values();
     if (links.size() == 0)
     {
         QMegaMessageBox::MessageBoxInfo info;
