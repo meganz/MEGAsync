@@ -2550,11 +2550,6 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     }
 }
 
-QPointer<UpgradeOverStorage> MegaApplication::getStorageOverquotaDialog() const
-{
-    return mStorageOverquotaDialog;
-}
-
 QuotaState MegaApplication::getTransferQuotaState() const
 {
      QuotaState quotaState (QuotaState::OK);

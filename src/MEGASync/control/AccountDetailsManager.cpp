@@ -270,9 +270,9 @@ void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::MegaA
 
     notifyStorageObservers();
 
-    if (MegaSyncApp->getStorageOverquotaDialog())
+    if (auto dialog = DialogOpener::findDialog<UpgradeOverStorage>())
     {
-        MegaSyncApp->getStorageOverquotaDialog()->refreshStorageDetails();
+        dialog->getDialog()->refreshStorageDetails();
     }
 }
 

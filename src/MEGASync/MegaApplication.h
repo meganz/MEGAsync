@@ -214,8 +214,6 @@ public:
     LoginController* getLoginController();
     AccountStatusController* getAccountStatusController();
 
-    QPointer<UpgradeOverStorage> getStorageOverquotaDialog() const;
-
     void updateUsedStorage(const bool sendEvent = false);
 
 signals:
