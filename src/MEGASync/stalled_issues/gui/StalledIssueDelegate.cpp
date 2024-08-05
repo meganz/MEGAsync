@@ -257,6 +257,7 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         auto pos (option.rect.topLeft());
         QRect geometry(option.rect);
+        QRectF realGeometry(option.rect);
 
 #ifdef __APPLE__
         auto width = mView->size().width();
@@ -300,24 +301,24 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         if(state & (QStyle::State_MouseOver | QStyle::State_Selected))
         {
             path.setFillRule( Qt::WindingFill );
-            path.addRoundedRect(QRectF(geometry.x() + LEFT_MARGIN,
-                                       geometry.y() + TOP_MARGIN,
-                                       geometry.width() - RIGHT_MARGIN,
-                                       geometry.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
+            path.addRoundedRect(QRectF(realGeometry.x() + LEFT_MARGIN,
+                                       realGeometry.y() + TOP_MARGIN,
+                                       realGeometry.width() - RIGHT_MARGIN,
+                                       realGeometry.height() - BOTTON_MARGIN), CORNER_RADIUS, CORNER_RADIUS);
 
             if(index.parent().isValid())
             {
-                path.addRect(QRectF(geometry.x() + LEFT_MARGIN,
-                                    geometry.y(),
-                                    geometry.width() - RIGHT_MARGIN,
+                path.addRect(QRectF(realGeometry.x() + LEFT_MARGIN,
+                                    realGeometry.y(),
+                                    realGeometry.width() - RIGHT_MARGIN,
                                     RECT_BORDERS_MARGIN)); // Bottom corners not rounded
             }
             else if(isExpanded)
             {
-                path.addRect(QRectF(geometry.x() + LEFT_MARGIN,
-                                    geometry.y() + RECT_BORDERS_MARGIN,
-                                    geometry.width() - RIGHT_MARGIN,
-                                    geometry.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
+                path.addRect(QRectF(realGeometry.x() + LEFT_MARGIN,
+                                    realGeometry.y() + RECT_BORDERS_MARGIN,
+                                    realGeometry.width() - RIGHT_MARGIN,
+                                    realGeometry.height() - RECT_BORDERS_MARGIN)); // Bottom corners not rounded
             }
 
             if(state & QStyle::State_MouseOver && state & QStyle::State_Selected)
@@ -361,17 +362,17 @@ void StalledIssueDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
             if(index.parent().isValid())
             {
-                collision = QRectF(geometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   geometry.y() - PEN_WIDTH/2,
-                                   geometry.x() + geometry.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(realGeometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   realGeometry.y() - PEN_WIDTH/2,
+                                   realGeometry.x() + realGeometry.width() - RIGHT_MARGIN - PEN_WIDTH,
                                    PEN_WIDTH);
 
             }
             else if(isExpanded)
             {
-                collision = QRectF(geometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
-                                   geometry.y() + geometry.height() - PEN_WIDTH/2,
-                                   geometry.x() + geometry.width() - RIGHT_MARGIN - PEN_WIDTH,
+                collision = QRectF(realGeometry.x() + LEFT_MARGIN + PEN_WIDTH/2 /* next pixel*/,
+                                   realGeometry.y() + realGeometry.height() - PEN_WIDTH/2,
+                                   realGeometry.x() + realGeometry.width() - RIGHT_MARGIN - PEN_WIDTH,
                                    PEN_WIDTH);
             }
 

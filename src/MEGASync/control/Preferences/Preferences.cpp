@@ -1937,7 +1937,7 @@ MegaHandle Preferences::uploadFolder()
 void Preferences::setUploadFolder(mega::MegaHandle value)
 {
     assert(logged());
-    setValueConcurrently(uploadFolderKey, value);
+    setValueConcurrently(uploadFolderKey, QVariant::fromValue<mega::MegaHandle>(value));
 }
 
 mega::MegaHandle Preferences::importFolder()
@@ -1949,7 +1949,7 @@ mega::MegaHandle Preferences::importFolder()
 void Preferences::setImportFolder(MegaHandle value)
 {
     assert(logged());
-    setValueConcurrently(importFolderKey, value);
+    setValueConcurrently(importFolderKey, QVariant::fromValue<mega::MegaHandle>(value));
 }
 
 bool Preferences::getImportMegaLinksEnabled()
@@ -2790,7 +2790,7 @@ QList<SyncData> Preferences::readOldCachedSyncs(int *cachedBusinessState, int *c
         oldSyncs.push_back(SyncData(
             mSettings->value(syncNameKey).toString(),
             mSettings->value(localFolderKey).toString(),
-            mSettings->value(megaFolderHandleKey, INVALID_HANDLE).value<mega::MegaHandle>(),
+            mSettings->value(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(INVALID_HANDLE)).value<mega::MegaHandle>(),
             mSettings->value(megaFolderKey).toString(),
             mSettings->value(localFingerprintKey, 0).toLongLong(),
             enabled,
@@ -2832,7 +2832,7 @@ void Preferences::saveOldCachedSyncs()
         mSettings->setValue(syncNameKey, osd.mName);
         mSettings->setValue(localFolderKey, osd.mLocalFolder);
         mSettings->setValue(localFingerprintKey, osd.mLocalfp);
-        mSettings->setValue(megaFolderHandleKey, osd.mMegaHandle);
+        mSettings->setValue(megaFolderHandleKey, QVariant::fromValue<mega::MegaHandle>(osd.mMegaHandle));
         mSettings->setValue(megaFolderKey, osd.mMegaFolder);
         mSettings->setValue(folderActiveKey, osd.mEnabled);
         mSettings->setValue(syncIdKey, osd.mSyncID);

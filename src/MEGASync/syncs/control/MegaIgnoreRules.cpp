@@ -2,6 +2,7 @@
 
 #include <Utilities.h>
 #include "MegaApplication.h"
+#include "Platform.h"
 
 #include <QRegularExpression>
 
@@ -370,15 +371,18 @@ unsigned long long MegaIgnoreSizeRule::value() const
 
 double MegaIgnoreSizeRule::valueInBytes()
 {
+    auto baseUnitSize = Platform::getInstance()->getBaseUnitsSize();
+    auto doubleValue(static_cast<double>(mValue));
+
     switch (mUnit) {
-    case MegaIgnoreSizeRule::UnitTypes::G:
-        return mValue*1024*1024*1024;
-    case MegaIgnoreSizeRule::UnitTypes::M:
-        return mValue*1024*1024;
-    case MegaIgnoreSizeRule::UnitTypes::K:
-        return mValue*1024;
-    default:
-        return mValue;
+        case MegaIgnoreSizeRule::UnitTypes::G:
+            return doubleValue*std::pow(baseUnitSize, 3);
+        case MegaIgnoreSizeRule::UnitTypes::M:
+            return doubleValue*std::pow(baseUnitSize, 2);
+        case MegaIgnoreSizeRule::UnitTypes::K:
+            return doubleValue*std::pow(baseUnitSize, 1);
+        default:
+            return doubleValue;
     }
 }
 

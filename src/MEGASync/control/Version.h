@@ -19,14 +19,14 @@
 
 #define VER_SDK_ID                  "7648e68"
 
-// Update scrips relying on this value if you move it
-// Format: 1 item by line, starting from line following the #define
-//#define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences", \
-//"- item 1\n"               \
-//"- item 2\n\"              \
-// [...]
-//"- item n\n"              \
-//)
+/* Update scrips relying on this value if you move it
+Format: 1 item by line, starting from line following the #define
+#define VER_CHANGES_NOTES QT_TRANSLATE_NOOP("Preferences",
+"- item 1\n"
+"- item 2\n\"
+ [...]
+"- item n\n"
+)*/
 #define VER_CHANGES_NOTES  QT_TRANSLATE_NOOP("Preferences", \
 "- Improved handling of sync conflicts.\n" \
 "- Improved management of failures within issue resolution.\n" \

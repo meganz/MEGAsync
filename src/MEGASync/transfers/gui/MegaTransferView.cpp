@@ -714,7 +714,7 @@ QMenu* MegaTransferView::createContextMenu()
             }
             case TransferData::TRANSFER_PAUSED:
                 isMovableRow();
-
+                [[fallthrough]];
             default:
                 overallState |= d->getState();
         }

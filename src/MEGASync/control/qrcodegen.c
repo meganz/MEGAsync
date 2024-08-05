@@ -33,8 +33,13 @@
 	#define testable  // Expose private functions
 #endif
 
+#ifdef linux
+#pragma GCC diagnostic ignored "-Wconversion"
+#else
 #pragma GCC diagnostic ignored "-Wimplicit-int-conversion"
 #pragma GCC diagnostic ignored "-Wshorten-64-to-32"
+#endif
+
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 
 /*---- Forward declarations for private functions ----*/
