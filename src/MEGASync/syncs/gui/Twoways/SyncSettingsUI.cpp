@@ -7,13 +7,14 @@
 #include "SyncItemModel.h"
 #include "MegaApplication.h"
 #include "SyncsComponent.h"
-
+#include "CreateRemoveSyncsManager.h"
+#include "RemoveSyncConfirmationDialog.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setSyncsTitle();
-    setTable<SyncTableView,SyncItemModel>();
+    setTable<SyncTableView,SyncItemModel, SyncController>();
 
     mSyncElement.initElements(this);
 
@@ -41,6 +42,11 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     {
         setAddButtonEnabled(!dialog->getDialog()->isVisible());
     }
+}
+
+void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
+{
+    CreateRemoveSyncsManager::addSync(megaFolderHandle, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -95,6 +101,11 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
+void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
+{
+    CreateRemoveSyncsManager::removeSync(sync->getMegaHandle(), this);
+}
+
 void SyncSettingsUI::setSyncsTitle()
 {
     setTitle(tr("Synced Folders"));
@@ -109,11 +120,6 @@ void SyncSettingsUI::changeEvent(QEvent* event)
     }
 
     SyncSettingsUIBase::changeEvent(event);
-}
-
-void SyncSettingsUI::addSyncAfterOverQuotaCheck(const QString& remoteFolder) const
-{
-    QmlDialogManager::instance()->openAddSync(remoteFolder, true);
 }
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)

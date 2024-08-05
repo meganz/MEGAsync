@@ -118,7 +118,7 @@ public slots:
     void dlAreaHovered(QMouseEvent *event);
     void upAreaHovered(QMouseEvent *event);
 
-    void addSync(const QString& remoteFolder = QString());
+    void addSync(mega::MegaHandle handle = mega::INVALID_HANDLE);
     void onAddSync(mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
     void onAddBackup();
     void updateDialogState();

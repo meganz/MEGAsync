@@ -24,6 +24,8 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "CreateRemoveSyncsManager.h"
+#include "CreateRemoveBackupsManager.h"
 
 #include "Utilities.h"
 #include "Platform.h"
@@ -1041,30 +1043,17 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(const QString& remoteFolder)
+void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    QmlDialogManager::instance()->openAddSync(remoteFolder, false);
+    CreateRemoveSyncsManager::addSync(handle);
 }
 
 void InfoDialog::addBackup()
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, this]()
+    auto manager = CreateRemoveBackupsManager::addBackup(false);
+    if(manager->isBackupsDialogOpen())
     {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QmlDialogManager::instance()->openBackupsDialog();
-            this->hide();
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
-    }
-    else
-    {
-        addBackupLambda();
+        hide();
     }
 }
 

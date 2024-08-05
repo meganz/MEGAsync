@@ -1,11 +1,13 @@
 #ifndef SYNCTABLEVIEW_H
 #define SYNCTABLEVIEW_H
 
-#include "SyncController.h"
-
 #include <QObject>
 #include <QTableView>
 #include <QStyledItemDelegate>
+
+#include <megaapi.h>
+
+class SyncSettings;
 
 class SyncTableView : public QTableView
 {
@@ -45,7 +47,6 @@ private slots:
     virtual void onCellClicked(const QModelIndex &index);
 
 private:
-    SyncController mSyncController;
     bool mIsFirstTime;
 };
 

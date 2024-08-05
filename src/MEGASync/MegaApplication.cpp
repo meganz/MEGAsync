@@ -1082,7 +1082,6 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
     appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;
     receivedStorageSum = 0;
-    mSyncController.reset();
 
     for (unsigned i = 3; i--; )
     {
@@ -2229,7 +2228,6 @@ void MegaApplication::cleanAll()
 
     Preferences::instance()->clearTempTransfersPath();
     PowerOptions::appShutdown();
-    mSyncController.reset();
 
     DialogOpener::closeAllDialogs();
     QmlDialogManager::instance()->forceCloseOnboardingDialog();
@@ -4913,9 +4911,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
         }
         else
         {
-            auto node = megaApi->getNodeByHandle(targetFolder);
-            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
-            infoDialog->addSync(remoteFolder);
+            infoDialog->addSync(targetFolder);
         }
     }
 }
@@ -5283,9 +5279,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            auto node = megaApi->getNodeByHandle(megaFolderHandle);
-            QString remoteFolder = QString::fromUtf8(megaApi->getNodePath(node));
-            mSettingsDialog->addSyncFolder(remoteFolder);
+            mSettingsDialog->addSyncFolder(megaFolderHandle);
         }
     }
 }

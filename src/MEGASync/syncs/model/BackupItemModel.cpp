@@ -88,7 +88,7 @@ QVariant BackupItemModel::data(const QModelIndex& index, int role) const
         }
         else if(role == Qt::DisplayRole)
         {
-            return SyncController::getSyncNameFromPath(sync->getLocalFolder(true));
+            return SyncController::instance().getSyncNameFromPath(sync->getLocalFolder(true));
         }
         else if(role == Qt::ToolTipRole)
         {
