@@ -7,7 +7,6 @@
 
 #include <QString>
 #include <QDir>
-#include <mutex>
 
 /**
  * @brief Sync Controller class

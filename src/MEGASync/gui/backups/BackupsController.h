@@ -3,8 +3,6 @@
 
 #include "SyncController.h"
 
-#include <mutex>
-
 class BackupsController : public SyncController
 {
     Q_OBJECT
