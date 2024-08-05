@@ -1885,7 +1885,7 @@ void MegaApplication::highLightMenuEntry(QAction *action)
 
 void MegaApplication::pauseTransfers(bool pause)
 {
-    if (appfinished)
+    if (appfinished || !megaApi)
     {
         return;
     }
@@ -3056,7 +3056,7 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        if (msg->result() == QMessageBox::Ok)
+        if (msg->result() == QMessageBox::Ok && !appfinished)
         {
             auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
                 this,

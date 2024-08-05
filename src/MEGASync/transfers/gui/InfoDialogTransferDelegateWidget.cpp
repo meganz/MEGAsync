@@ -278,7 +278,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 if (getData()->isPublicNode())
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
-                    update = setActionTransferIcon(mUi->lActionTransfer,
+                    setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromLatin1("://images/link%1.png").arg(QString::fromLatin1(inAction ? "-hover" : "")));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
@@ -295,7 +295,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 bool fileExists = QFile(getData()->path()).exists();
 
                 const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
-                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
+                setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 

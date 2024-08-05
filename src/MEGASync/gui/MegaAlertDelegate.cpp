@@ -30,7 +30,6 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
     if (index.isValid())
     {       
-
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
         MegaUserAlertExt* alert = nullptr;
@@ -64,16 +63,24 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
             connect(ti, &AlertItem::refreshAlertItem, mAlertsModel, &QAlertsModel::refreshAlertItem);
 
             ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
-            mAlertsModel->alertItems.insert(alert->getId(), ti);
+            if(!mAlertsModel->alertItems.insert(alert->getId(), ti))
+            {
+                ti = nullptr;
+            }
         }
 
-        painter->save();
-        painter->translate(option.rect.topLeft());
+        if (ti)
+        {
+            painter->save();
+            painter->translate(option.rect.topLeft());
 
-        ti->resize(option.rect.width(), option.rect.height());
+            ti->resize(option.rect.width(), option.rect.height());
 
-        ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
-        painter->restore();
+            ti->render(painter,
+                       QPoint(0, 0),
+                       QRegion(0, 0, option.rect.width(), option.rect.height()));
+            painter->restore();
+        }
     }
     else
     {

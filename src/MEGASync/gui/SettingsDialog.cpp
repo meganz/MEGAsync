@@ -550,9 +550,9 @@ void SettingsDialog::loadSettings()
     mUi->wAvatar->setUserEmail();
 
     // account type and details
-    updateAccountElements();
-    updateStorageElements();
-    updateBandwidthElements();
+    SettingsDialog::updateAccountElements();
+    SettingsDialog::updateStorageElements();
+    SettingsDialog::updateBandwidthElements();
 
     updateUploadFolder();
     updateDownloadFolder();
