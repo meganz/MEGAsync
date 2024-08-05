@@ -8,6 +8,7 @@
 
 #include <StalledIssuesModel.h>
 #include <StalledIssue.h>
+#include <IgnoredStalledIssue.h>
 #include <NameConflictStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
 #include <QMegaMessageBox.h>
@@ -47,81 +48,6 @@ SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
 {}
 
-void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
-{
-    auto isSymLinkChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return issue->isSymLink();
-    };
-
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
-
-    if(header->checkForExternalChanges(selection.size() == 1))
-    {
-        return;
-    }
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
-
-    if(index == IgnoreType::IgnoreAll)
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-    }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-        if(allSimilarIssues.size() != selection.size())
-        {
-            auto checkbox = new QCheckBox(tr("Apply to all"));
-            msgInfo.checkBox = checkbox;
-        }
-    }
-
-    msgInfo.buttonsText = textsByButton;
-
-    if(index == IgnoreType::IgnoreAll)
-    {
-        msgInfo.text = tr("Are you sure you want to ignore all symlinks in all syncs?");
-        msgInfo.informativeText = tr("This action will ignore all present and future symlinks in all your syncs.");
-    }
-    else
-    {
-        msgInfo.text = tr("Are you sure you want to ignore this symlink?");
-        msgInfo.informativeText = tr("This action will ignore this symlink and it will not be synced.");
-    }
-
-    msgInfo.finishFunc = [index, selection, allSimilarIssues](QMessageBox* msgBox)
-    {
-        if(msgBox->result() == QDialogButtonBox::Ok)
-        {
-            if(index == IgnoreType::IgnoreAll)
-            {
-                MegaSyncApp->getStalledIssuesModel()->ignoreSymLinks();
-            }
-            else
-            {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
-                {
-                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues, true);
-                }
-                else
-                {
-                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, true);
-                }
-            }
-        }
-    };
-    QMegaMessageBox::warning(msgInfo);
-}
-
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Detected sym link: [B]%1[/B]");
@@ -130,15 +56,29 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     header->setTitleDescriptionText(QString());
 }
 
-void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(!header->getData().consultData()->isSolved())
-    {
-        QList<StalledIssueHeader::ActionInfo> actions;
-        actions << StalledIssueHeader::ActionInfo(tr("Ignore symlink"), IgnoreType::IgnoreThis);
-        actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in all syncs"), IgnoreType::IgnoreAll);
+//Detected Hard or SpecialLink
+HardSpecialLinkHeader::HardSpecialLinkHeader(StalledIssueHeader *header)
+    : StalledIssueHeaderCase(header)
+{}
 
-        header->showActions(tr("Ignore"), actions);
+void HardSpecialLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    if(auto ignorableIssue = header->getData().convert<IgnoredStalledIssue>())
+    {
+        QString headerText;
+        if(ignorableIssue->isSpecialLink())
+        {
+            headerText = tr("Detected special link: [B]%1[/B]");
+        }
+        else if(ignorableIssue->isHardLink())
+        {
+            headerText = tr("Detected hard link: [B]%1[/B]");
+        }
+
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
+        header->setText(headerText.arg(
+            header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+        header->setTitleDescriptionText(QString());
     }
 }
 

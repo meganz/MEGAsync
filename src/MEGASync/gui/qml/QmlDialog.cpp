@@ -35,10 +35,6 @@ bool QmlDialog::event(QEvent* event)
     {
         emit finished();
     }
-    else if (event->type() == QEvent::LanguageChange)
-    {
-        emit languageChanged();
-    }
 
     return QQuickWindow::event(event);
 }

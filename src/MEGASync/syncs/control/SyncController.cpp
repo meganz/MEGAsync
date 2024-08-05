@@ -515,16 +515,28 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
 {
     Syncability syncability (Syncability::CANT_SYNC);
     std::unique_ptr<MegaError> err (MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
-    switch (err->getErrorCode())
+
+    if (err->getErrorCode() != MegaError::API_OK)
     {
-        case MegaError::API_OK:
-        {
-            syncability = Syncability::CAN_SYNC;
-            break;
-        }
+        message = getRemoteFolderErrorMessage(err->getErrorCode(), err->getSyncError());
+    }
+    else
+    {
+        syncability = Syncability::CAN_SYNC;
+    }
+
+    return (syncability);
+}
+
+QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncErrorCode)
+{
+    QString message;
+
+    switch (errorCode)
+    {
         case MegaError::API_EACCESS:
         {
-            switch (err->getSyncError())
+            switch (syncErrorCode)
             {
                 case SyncError::SHARE_NON_FULL_ACCESS:
                 {
@@ -546,7 +558,7 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
         }
         case MegaError::API_EEXIST:
         {
-            switch (err->getSyncError())
+            switch (syncErrorCode)
             {
                 case SyncError::ACTIVE_SYNC_SAME_PATH:
                 {
@@ -574,7 +586,8 @@ SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_p
             break;
         }
     }
-    return (syncability);
+
+    return message;
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)
