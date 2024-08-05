@@ -106,9 +106,9 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     { AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED               , 99598 },
     { AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED          , 99599 },
     { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED             , 600000 },
-    { AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS   , 600001 },
-    { AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING                , 600002 },
-    { AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING              , 600003 }
+    { AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS   , 600003 },
+    { AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING                , 600004 },
+    { AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING              , 600005 }
 };
 
 // Deprecated are not displayed
@@ -189,7 +189,10 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     { AppStatsEvents::EventType::SETTINGS_NOTIFICATIONS_TAB_CLICKED, "Settings notifications tab clicked" },
     { AppStatsEvents::EventType::SETTINGS_EXPORT_KEY_CLICKED, "Settings export key clicked" },
     { AppStatsEvents::EventType::SETTINGS_CHANGE_PASSWORD_CLICKED, "Settings change password clicked" },
-    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" }
+    { AppStatsEvents::EventType::SETTINGS_REPORT_ISSUE_CLICKED, "Settings report issue clicked" },
+    { AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS, "Onboarding closed without sync/backup" },
+    { AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING, "First sync created (from onboarding wizard)" },
+    { AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING, "First backup created (from onboarding wizard)" }
 };
 
 const char* AppStatsEvents::getEventMessage(EventType event)
