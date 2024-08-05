@@ -3955,6 +3955,13 @@ void MegaApplication::openDeviceCenter()
         return;
     }
 
+#ifdef Q_OS_MACOS
+    if (infoDialog)
+    {
+        infoDialog->hide();
+    }
+#endif
+
     QmlDialogManager::instance()->openDeviceCenterDialog();
 }
 
