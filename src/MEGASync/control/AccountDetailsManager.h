@@ -106,8 +106,10 @@ private:
     void processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details);
     void processInShares(const std::shared_ptr<mega::MegaAccountDetails>& details,
                          const std::shared_ptr<mega::MegaNodeList>& inShares);
-    long long getLastRequest(const Flags& flags) const;
     void checkInflightUserStats(Flags& flags);
+
+    static long long getLastRequest(const Flags& flags,
+                                    const UserStats<long long>& lastRequestUserStats);
 
 };
 

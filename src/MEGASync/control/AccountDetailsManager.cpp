@@ -130,7 +130,7 @@ void AccountDetailsManager::updateUserStats(const Flags& flags, bool force, int 
     }
 
     // If the oldest of the ones we want is too recent, skip (unless force).
-    static long long lastRequest = getLastRequest(flagsToFetch);
+    static long long lastRequest = getLastRequest(flagsToFetch, mLastRequestUserStats);
 
     if (flagsToFetch.testFlag(Flag::STORAGE) && source >= 0)
     {
@@ -357,7 +357,7 @@ void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaAcco
     long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
     for (int i = 0; i < inShares->size(); i++)
     {
-        mega::MegaNode *node = inShares->get(i);
+        mega::MegaNode* node = inShares->get(i);
         if (node)
         {
             mega::MegaHandle handle = node->getHandle();
@@ -369,27 +369,6 @@ void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaAcco
     mPreferences->setInShareStorage(inShareSize);
     mPreferences->setInShareFiles(inShareFiles);
     mPreferences->setInShareFolders(inShareFolders);
-}
-
-long long AccountDetailsManager::getLastRequest(const Flags& flags) const
-{
-    long long lastRequest = 0;
-    if (flags.testFlag(Flag::STORAGE)
-        && (!lastRequest || lastRequest > mLastRequestUserStats.storageValue()))
-    {
-        lastRequest = mLastRequestUserStats.storageValue();
-    }
-    if (flags.testFlag(Flag::TRANSFER)
-        && (!lastRequest || lastRequest > mLastRequestUserStats.transferValue()))
-    {
-        lastRequest = mLastRequestUserStats.transferValue();
-    }
-    if (flags.testFlag(Flag::PRO)
-        && (!lastRequest || lastRequest > mLastRequestUserStats.proValue()))
-    {
-        lastRequest = mLastRequestUserStats.proValue();
-    }
-    return lastRequest;
 }
 
 void AccountDetailsManager::checkInflightUserStats(Flags& flags)
@@ -406,6 +385,28 @@ void AccountDetailsManager::checkInflightUserStats(Flags& flags)
     {
         flags.setFlag(Flag::PRO, false);
     }
+}
+
+long long AccountDetailsManager::getLastRequest(const Flags& flags,
+                                                const UserStats<long long>& lastRequestUserStats)
+{
+    static long long lastRequest = 0;
+    if (flags.testFlag(Flag::STORAGE)
+            && (!lastRequest || lastRequest > lastRequestUserStats.storageValue()))
+    {
+        lastRequest = lastRequestUserStats.storageValue();
+    }
+    if (flags.testFlag(Flag::TRANSFER)
+            && (!lastRequest || lastRequest > lastRequestUserStats.transferValue()))
+    {
+        lastRequest = lastRequestUserStats.transferValue();
+    }
+    if (flags.testFlag(Flag::PRO)
+            && (!lastRequest || lastRequest > lastRequestUserStats.proValue()))
+    {
+        lastRequest = lastRequestUserStats.proValue();
+    }
+    return lastRequest;
 }
 
 bool AccountDetailsManager::canContinue(mega::MegaError* error) const
