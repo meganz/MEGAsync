@@ -36,6 +36,8 @@ void Backups::registerQmlModules()
         qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
         qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
                                                  QString::fromUtf8("Cannot register BackupsModel::BackupErrorCode in QML"));
+        qmlRegisterUncreatableType<SyncInfo>("SyncInfo", 1, 0, "SyncInfo",
+                                             QString::fromUtf8("Cannot register SyncInfo::SyncOrigin in QML"));
         qmlRegistrationDone = true;
     }
 }

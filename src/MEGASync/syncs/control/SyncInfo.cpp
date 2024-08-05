@@ -44,6 +44,7 @@ SyncInfo::SyncInfo() : QObject(),
     mShowErrorTimer.setSingleShot(true);
     mShowErrorTimer.setInterval(500);
     connect(&mShowErrorTimer, &QTimer::timeout, this, &SyncInfo::checkUnattendedDisabledSyncsForErrors);
+    qRegisterMetaType<SyncOrigin>("SyncOrigin");
 }
 
 bool SyncInfo::hasUnattendedDisabledSyncs(const QVector<SyncType>& types) const
@@ -134,7 +135,17 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first sync
         if (!mIsFirstTwoWaySyncDone && !preferences->isFirstSyncDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC);
+            if (syncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
+            }
+            else
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC);
+            }
+
+            syncToCreateOrigin = SyncOrigin::NONE;
+
         }
         mIsFirstTwoWaySyncDone = true;
         break;
@@ -144,7 +155,16 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         // Send event for the first backup
         if (!mIsFirstBackupDone && !preferences->isFirstBackupDone())
         {
-            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP);
+            if (syncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
+            }
+            else
+            {
+                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP);
+            }
+
+            syncToCreateOrigin = SyncOrigin::NONE;
         }
         mIsFirstBackupDone = true;
         break;
@@ -524,6 +544,11 @@ QList<std::shared_ptr<SyncSettings>> SyncInfo::getSyncSettingsByType(const QVect
     return syncs;
 }
 
+bool SyncInfo::hasSyncs()
+{
+    return getNumSyncedFolders(SyncInfo::AllHandledSyncTypes) > 0;
+}
+
 std::shared_ptr<SyncSettings> SyncInfo::getSyncSettingByTag(MegaHandle tag) const
 {
     QMutexLocker qm(&syncMutex);
@@ -580,6 +605,13 @@ void SyncInfo::checkUnattendedDisabledSyncsForErrors()
         mLastError = mega::MegaSync::NO_SYNC_ERROR;
     }
 }
+
+void SyncInfo::setSyncToCreateOrigin(SyncOrigin newSyncToCreate)
+{
+    syncToCreateOrigin = newSyncToCreate;
+}
+
+
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {

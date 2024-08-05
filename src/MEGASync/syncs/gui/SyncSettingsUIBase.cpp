@@ -233,7 +233,7 @@ void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaF
     }
 
     syncsStateInformation(SyncStateInformation::SAVING);
-    mSyncController->addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), mega::MegaSync::TYPE_TWOWAY);
+    mSyncController->addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
     });
 
 }

@@ -2,6 +2,7 @@
 
 #include "MegaApplication.h"
 #include "TextDecorator.h"
+#include "StatsEventHandler.h"
 
 #include "mega/types.h"
 
@@ -55,7 +56,7 @@ void Syncs::addSync(const QString& local, const QString& remote)
     }
     else
     {
-        mSyncController->addSync(local, remoteHandle);
+        mSyncController->addSync(local, remoteHandle, QString(), mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::ONBOARDING_ORIGIN);
     }
 }
 
@@ -193,7 +194,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             auto megaNode = std::shared_ptr<mega::MegaNode>(mMegaApi->getNodeByPath(mRemoteFolder.toStdString().c_str(), MegaSyncApp->getRootNode().get()));
             if (megaNode != nullptr)
             {
-                mSyncController->addSync(mLocalFolder, request->getNodeHandle());
+                mSyncController->addSync(mLocalFolder, request->getNodeHandle(), QString(), mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::ONBOARDING_ORIGIN);
             }
             else
             {
