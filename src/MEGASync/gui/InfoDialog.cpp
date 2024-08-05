@@ -29,6 +29,7 @@
 #include "Platform.h"
 #include "QmlDialogManager.h"
 #include "SyncsComponent.h"
+#include "AccountDetailsManager.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -292,6 +293,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
+
+    connect(&AccountDetailsManager::instance(), &AccountDetailsManager::accountDetailsUpdated,
+            this, &InfoDialog::updateUsageAndAccountType);
 }
 
 InfoDialog::~InfoDialog()

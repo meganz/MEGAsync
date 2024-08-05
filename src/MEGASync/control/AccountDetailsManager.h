@@ -39,10 +39,12 @@ public:
     };
     Q_DECLARE_FLAGS(Flags, Flag)
 
-    AccountDetailsManager(mega::MegaApi* megaApi,
-                          QObject* parent = nullptr);
-    virtual ~AccountDetailsManager() = default;
+    static AccountDetailsManager& instance();
 
+    AccountDetailsManager(const AccountDetailsManager&) = delete;
+    AccountDetailsManager& operator=(const AccountDetailsManager&) = delete;
+
+    void init(mega::MegaApi* megaApi);
     void reset();
 
     void onRequestFinish(mega::MegaRequest* request,
@@ -86,6 +88,8 @@ private:
     UserStats<long long> mLastRequestUserStats;
     int mQueuedStorageUserStatsReason;
     QTimer mProExpirityTimer;
+
+    AccountDetailsManager(QObject* parent = nullptr);
 
     void handleAccountDetailsReply(mega::MegaRequest* request,
                                    mega::MegaError* error);

@@ -7,7 +7,7 @@
 #include "RequestListenerManager.h"
 
 //
-// Private UserStats definition.
+// UserStats implementation (private).
 //
 template<typename Type>
 void AccountDetailsManager::UserStats<Type>::updateWithValue(const Flags& flags,
@@ -54,21 +54,19 @@ Type AccountDetailsManager::UserStats<Type>::proValue() const
 }
 
 //
-// Public AccountDetailsManager definition.
+// AccountDetailsManager implementation.
 //
-AccountDetailsManager::AccountDetailsManager(mega::MegaApi* megaApi,
-                                             QObject* parent)
+AccountDetailsManager::AccountDetailsManager(QObject* parent)
     : QObject(parent)
-    , mMegaApi(megaApi)
+    , mMegaApi(nullptr)
     , mPreferences(Preferences::instance())
 {
-    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
-    reset();
-    mProExpirityTimer.setSingleShot(true);
-    connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
-    {
-        updateUserStats(Flag::ALL, true, USERSTATS_PRO_EXPIRED);
-    });
+}
+
+AccountDetailsManager& AccountDetailsManager::instance()
+{
+    static AccountDetailsManager instance;
+    return instance;
 }
 
 void AccountDetailsManager::reset()
@@ -77,6 +75,21 @@ void AccountDetailsManager::reset()
     mLastRequestUserStats.updateWithValue(0);
     mQueuedUserStats.updateWithValue(false);
     mQueuedStorageUserStatsReason = 0;
+}
+
+void AccountDetailsManager::init(mega::MegaApi* megaApi)
+{
+    if(!mMegaApi)
+    {
+        mMegaApi = megaApi;
+        mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
+        reset();
+        mProExpirityTimer.setSingleShot(true);
+        connect(&mProExpirityTimer, &QTimer::timeout, this, [this]()
+        {
+            updateUserStats(Flag::ALL, true, USERSTATS_PRO_EXPIRED);
+        });
+    }
 }
 
 void AccountDetailsManager::onRequestFinish(mega::MegaRequest* request,

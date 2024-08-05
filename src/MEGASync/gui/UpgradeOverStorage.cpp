@@ -25,12 +25,12 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi* megaApi, std::shared_ptr<mega::M
     //Keep storage details hidden until we receive the account details
     mUi->lAccountUsed->hide();
 
-    MegaSyncApp->accountDetailsManager()->attachAccountObserver(*this);
+    AccountDetailsManager::instance().attachAccountObserver(*this);
 }
 
 UpgradeOverStorage::~UpgradeOverStorage()
 {
-    MegaSyncApp->accountDetailsManager()->dettachAccountObserver(*this);
+    AccountDetailsManager::instance().dettachAccountObserver(*this);
 
     delete mUi;
 }

@@ -67,7 +67,6 @@ class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
-class AccountDetailsManager;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -218,8 +217,6 @@ public:
     QPointer<UpgradeOverStorage> getStorageOverquotaDialog() const;
 
     void updateUsedStorage(const bool sendEvent = false);
-
-    AccountDetailsManager* accountDetailsManager() const;
 
 signals:
     void startUpdaterThread();
@@ -519,7 +516,6 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
-    std::unique_ptr<AccountDetailsManager> mAccountDetailsManager;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
