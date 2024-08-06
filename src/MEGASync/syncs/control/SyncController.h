@@ -15,6 +15,7 @@
  * Uses SyncInfo.h class as the data model.
  *
  */
+
 class SyncController: public QObject
 {
     Q_OBJECT
@@ -28,6 +29,15 @@ public:
        CANT_SYNC,
     };
 
+    struct SyncConfig
+    {
+        QString localFolder;
+        mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
+        QString syncName;
+        mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY;
+        SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN;
+    };
+
     static SyncController& instance()
     {
         static SyncController instance;
@@ -38,9 +48,10 @@ public:
     SyncController& operator=(const SyncController&) = delete;
     ~SyncController(){}
 
-    void addBackup(const QString& localFolder, const QString& syncName = QString());
-    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+    void addBackup(const QString& localFolder,
+                   const QString& syncName,
+                   SyncInfo::SyncOrigin origin);
+    void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
@@ -80,9 +91,9 @@ protected:
 
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
-    void createPendingBackups();
-    QString getSyncAPIErrorMsg(int megaError) const;
-    QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+    void createPendingBackups(SyncInfo::SyncOrigin origin);
+    static QString getSyncAPIErrorMsg(int megaError);
+    static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 
     //Sync/Backup operation signals
@@ -93,7 +104,7 @@ private:
     mega::MegaApi* mApi;
 
     //Only use const methods
-    const SyncInfo* mSyncInfo;
+    SyncInfo* mSyncInfo;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)

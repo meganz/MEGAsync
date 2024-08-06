@@ -5,8 +5,9 @@
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 
-BackupsController::BackupsController(QObject *parent)
-    : SyncController(parent)
+BackupsController::BackupsController(QObject* parent):
+    SyncController(parent),
+    mBackupsOrigin(SyncInfo::SyncOrigin::NONE)
 {
     connect(this, &SyncController::syncAddStatus,
             this, &BackupsController::onBackupAddRequestStatus);
@@ -17,19 +18,20 @@ QSet<QString> BackupsController::getRemoteFolders() const
     return SyncInfo::getRemoteBackupFolderNames();
 }
 
-void BackupsController::addBackups(const BackupInfoList& backupsInfoList)
+void BackupsController::addBackups(const BackupInfoList& backupsInfoList,
+                                   SyncInfo::SyncOrigin origin)
 {
     if(backupsInfoList.empty())
     {
         emit backupsCreationFinished(true);
         return;
     }
-
+    mBackupsOrigin = origin;
     mBackupsProcessedWithError = 0;
     mBackupsToDoSize = backupsInfoList.size();
     mBackupsToDoList = backupsInfoList;
     const auto&[fullPath, backupName] = mBackupsToDoList.first();
-    addBackup(fullPath, backupName);
+    addBackup(fullPath, backupName, mBackupsOrigin);
 }
 
 bool BackupsController::existsName(const QString& name) const
@@ -61,10 +63,11 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     if(mBackupsToDoList.size() > 0)
     {
         const auto&[fullPath, backupName] = mBackupsToDoList.first();
-        addBackup(fullPath, backupName);
+        addBackup(fullPath, backupName, mBackupsOrigin);
     }
     else if(mBackupsToDoList.size() == 0)
     {
+        mBackupsOrigin = SyncInfo::SyncOrigin::NONE;
         emit backupsCreationFinished(mBackupsProcessedWithError == 0);
     }
 }
