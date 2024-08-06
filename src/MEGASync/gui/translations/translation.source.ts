@@ -4530,12 +4530,12 @@ Enter a different name.</translation>
     <name>NotificationItem</name>
     <message>
         <source>LIMITED TIME OFFER</source>
-        <translatorcomment>Label title for limited time offer category of a notification. CON-868</translatorcomment>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
         <translation type="unfinished">LIMITED TIME OFFER</translation>
     </message>
     <message>
         <source>PROMO</source>
-        <translatorcomment>Label that indicates there is a promotional notification available. CON-868</translatorcomment>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
         <translation type="unfinished">PROMO</translation>
     </message>
     <message>
