@@ -509,7 +509,7 @@ bool runHttpServer()
 bool userActive()
 {
     CFTimeInterval secondsSinceLastEvent = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateHIDSystemState, kCGAnyInputEventType);
-    if (secondsSinceLastEvent > (Preferences::USER_INACTIVITY_MS / 1000))
+    if (secondsSinceLastEvent > static_cast<CFTimeInterval>(Preferences::USER_INACTIVITY_MS / 1000))
     {
          return false;
     }
