@@ -141,19 +141,12 @@ void DeviceCenter::updateLocalData(mega::MegaBackupInfoList& backupList)
     const BackupList deviceBackupList =
         filterBackupList(mDeviceIdFromLastRequest.toLatin1().constData(), backupList);
 
-    mCachedDeviceData.os = DeviceOs::UNDEFINED;
+    mCachedDeviceData.os = DeviceOs::getCurrentOS();
     for (const auto& backup: qAsConst(deviceBackupList))
     {
         QmlSyncData newSync(backup, mMegaApi);
         mSyncModel->addOrUpdate(newSync);
-
-        if (mCachedDeviceData.os == DeviceOs::UNDEFINED)
-        {
-            const char* deviceInfo = backup->deviceUserAgent();
-            mCachedDeviceData.setOsFromAgentString(QString::fromUtf8(deviceInfo));
-        }
     }
-
     updateDeviceData();
 }
 
@@ -185,4 +178,9 @@ DeviceCenter::BackupList DeviceCenter::filterBackupList(const char* deviceId,
         }
     }
     return filteredList;
+}
+
+DeviceOs::Os DeviceCenter::getCurrentOS()
+{
+    return DeviceOs::getCurrentOS();
 }

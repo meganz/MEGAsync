@@ -18,6 +18,19 @@ enum Os
     WINDOWS
 };
 Q_ENUM_NS(Os)
+
+inline DeviceOs::Os getCurrentOS()
+{
+#ifdef Q_OS_WINDOWS
+    return DeviceOs::WINDOWS;
+#endif
+#ifdef Q_OS_MACOS
+    return DeviceOs::MAC;
+#endif
+#ifdef Q_OS_LINUX
+    return DeviceOs::LINUX;
+#endif
+}
 }
 
 class DeviceData

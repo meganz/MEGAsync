@@ -29,7 +29,7 @@ public:
     Q_INVOKABLE QString getThisDeviceId();
     Q_INVOKABLE void retrieveDeviceData(const QString& deviceId);
     Q_INVOKABLE QString getSizeString(unsigned long long bytes);
-
+    Q_INVOKABLE DeviceOs::Os getCurrentOS();
 signals:
     void deviceNameReceived(QString deviceName);
     void deviceDataUpdated(DeviceData data);

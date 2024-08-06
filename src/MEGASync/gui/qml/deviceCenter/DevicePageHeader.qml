@@ -13,6 +13,21 @@ Item {
 
     property string deviceId
 
+    function getOSIcon(os) {
+        var result = "";
+        switch(os) {
+        case DeviceOs.LINUX:
+            result = Images.pcLinux;
+            break;
+        case DeviceOs.MAC:
+            result = Images.pcMac;
+            break;
+        case DeviceOs.WINDOWS:
+            result = Images.pcWindows;
+            break;
+        }
+        return result;
+    }
     Rectangle {
         id: contentItem
 
@@ -39,7 +54,7 @@ Item {
                 bottomMargin: 12;
             }
 
-            source: Images.pcMac
+            source: getOSIcon(deviceCenterAccess.getCurrentOS())
             sourceSize: Qt.size(96, 96)
         }
 
@@ -122,16 +137,7 @@ Item {
 
         function onDeviceDataUpdated(deviceData) {
             deviceTitle.text = deviceData.name;
-
-            if (deviceData.os === DeviceOs.LINUX) {
-                deviceImage.source = Images.pcLinux
-            }
-            else if (deviceData.os === DeviceOs.MAC) {
-                deviceImage.source = Images.pcMac
-            }
-            else {
-                deviceImage.source = Images.pcWindows
-            }
+            deviceImage.source = getOSIcon(deviceData.os);
 
             if (deviceData.folderCount > 0)
             {
