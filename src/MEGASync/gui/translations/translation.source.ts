@@ -4527,6 +4527,55 @@ Enter a different name.</translation>
     </message>
 </context>
 <context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">LIMITED TIME OFFER</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">PROMO</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expired</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n day</numerusform>
+            <numerusform>Offer expires in %n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n hour</numerusform>
+            <numerusform>Offer expires in %n hours</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Offer expires in %1m</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes. The placeholder %1 shall be replaced by the number of minutes. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expires in %1m</translation>
+    </message>
+    <message>
+        <source>Offer expires in %1m %2s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expires in %1m %2s</translation>
+    </message>
+    <message>
+        <source>Offer expires in %1s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 seconds. Placeholder %1 shall be replaced by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expires in %1s</translation>
+    </message>
+</context>
+<context>
     <name>NotificationsSettings</name>
     <message>
         <source>Shares</source>
