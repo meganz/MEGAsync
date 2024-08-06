@@ -85,7 +85,7 @@ enum GetUserStatsReason {
     USERSTATS_REMOVEVERSIONS,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
+class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
@@ -153,7 +153,6 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -214,6 +213,8 @@ public:
     QSystemTrayIcon* getTrayIcon();
     LoginController* getLoginController();
     AccountStatusController* getAccountStatusController();
+
+    void updateUsedStorage(const bool sendEvent = false);
 
 signals:
     void startUpdaterThread();
@@ -289,7 +290,6 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
-    void proExpirityTimedOut();
     void applyNotificationFilter(int opt);
     void changeState();
 
@@ -400,7 +400,6 @@ protected:
 #endif
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    QTimer proExpirityTimer;
     int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
@@ -426,10 +425,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool queuedUserStats[3];
-    int queuedStorageUserStatsReason;
-    long long userStatsLastRequest[3];
-    bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;

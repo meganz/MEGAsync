@@ -123,9 +123,10 @@ public slots:
     void onAddBackup();
     void updateDialogState();
 
-   void enableTransferOverquotaAlert();
-   void enableTransferAlmostOverquotaAlert();
-   void setBandwidthOverquotaState(QuotaState state);
+    void enableTransferOverquotaAlert();
+    void enableTransferAlmostOverquotaAlert();
+    void setBandwidthOverquotaState(QuotaState state);
+    void updateUsageAndAccountType();
 
 private slots:
     void on_bSettings_clicked();
