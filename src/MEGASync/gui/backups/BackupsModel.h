@@ -140,8 +140,6 @@ private:
     int mSelectedRowsTotal;
     long long mBackupsTotalSize;
     bool mTotalSizeReady;
-    SyncController mSyncController;
-    std::unique_ptr<BackupsController> mBackupsController;
     int mConflictsSize;
     Qt::CheckState mCheckAllState;
     int mGlobalError;

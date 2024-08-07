@@ -1,13 +1,17 @@
 #ifndef SYNCITEMMODEL_H
 #define SYNCITEMMODEL_H
 
-#include "SyncSettings.h"
-
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
 #include <QCollator>
 
+#include <memory>
+
+#include "megaapi.h"
+
 class SyncInfo;
+class SyncSettings;
+
 class SyncItemModel : public QAbstractItemModel
 {
     Q_OBJECT

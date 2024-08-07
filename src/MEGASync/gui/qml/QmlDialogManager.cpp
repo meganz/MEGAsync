@@ -55,21 +55,6 @@ bool QmlDialogManager::openOnboardingDialog()
     return true;
 }
 
-void QmlDialogManager::openBackupsDialog(bool fromSettings)
-{
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-    {
-        backupsDialog = dialog->getDialog();
-    }
-    else
-    {
-        backupsDialog = new QmlDialogWrapper<Backups>();
-    }
-    DialogOpener::showDialog(backupsDialog);
-    backupsDialog->wrapper()->setComesFromSettings(fromSettings);
-}
-
 bool QmlDialogManager::raiseGuestDialog()
 {
     bool raisedGuestDialog = false;

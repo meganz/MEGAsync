@@ -48,6 +48,42 @@ MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
     return ret;
 }
 
+QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle() const
+{
+    QList<MegaHandle> ret;
+
+    if(!selectionModel())
+    {
+        return ret;
+    }
+
+    auto selectedRows = selectionModel()->selectedRows();
+
+    //If there is no selection, add the root index
+    if(selectedRows.isEmpty())
+    {
+        auto index(rootIndex());
+        if(index.isValid())
+        {
+            auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
+            if(item)
+            {
+                ret.append(item->getNode()->getHandle());
+            }
+        }
+    }
+    else
+    {
+        foreach(auto& s_index, selectedRows)
+        {
+            if(auto node = proxyModel()->getNode(s_index))
+                ret.append(node->getHandle());
+        }
+    }
+
+    return ret;
+}
+
 void NodeSelectorTreeView::setModel(QAbstractItemModel *model)
 {
     QTreeView::setModel(model);
@@ -167,6 +203,13 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
                 }
             }
         }
+        else if(event->key() == Qt::Key_Delete)
+        {
+            if(areAllEligibleForDeletion())
+            {
+                removeNode();
+            }
+        }
 
         QTreeView::keyPressEvent(event);
     }
@@ -174,39 +217,86 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
 
 void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 {
-        if(!selectionModel() || selectionModel()->selectedRows().size() > 1)
-        {
-            return;
-        }
+    QMenu customMenu;
+    Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
 
-        if(!indexAt(event->pos()).isValid())
-        {
-            return;
-        }
+    if(!selectionModel())
+    {
+        return;
+    }
 
-        QMenu customMenu;
-        Platform::getInstance()->initMenu(&customMenu, "CustomMenu");
-        auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(getSelectedNodeHandle()));
-        auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-        if (parent && node)
-        {
-            int access = mMegaApi->getAccess(node.get());
+    if(!indexAt(event->pos()).isValid())
+    {
+        return;
+    }
 
+
+    if(selectionModel()->selectedRows().size() == 1)
+    {
+        int access = getNodeAccess(getSelectedNodeHandle());
+
+        if (access != MegaShare::ACCESS_UNKNOWN)
+        {
             if (access == MegaShare::ACCESS_OWNER)
             {
-                customMenu.addAction(tr("Get MEGA link"), this, SLOT(getMegaLink()));
+                customMenu.addAction(tr("Get MEGA link"), this, &NodeSelectorTreeView::getMegaLink);
             }
 
-            if (access >= MegaShare::ACCESS_FULL && proxyModel->canBeDeleted() && node->isNodeKeyDecrypted())
+            if (access >= MegaShare::ACCESS_FULL)
             {
-                customMenu.addAction(tr("Rename"), this, SLOT(renameNode()));
-                customMenu.addAction(tr("Delete"), this, SLOT(removeNode()));
+                customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
             }
         }
+    }
 
-        if (!customMenu.actions().isEmpty())
+    //All or none
+    if(areAllEligibleForDeletion())
+    {
+        customMenu.addAction(
+            tr("Delete"), this, [this]() { removeNode(); });
+    }
+
+    if (!customMenu.actions().isEmpty())
             customMenu.exec(mapToGlobal(event->pos()));
+}
+
+bool NodeSelectorTreeView::areAllEligibleForDeletion() const
+{
+    auto selectionHandles(getMultiSelectionNodeHandle());
+
+    foreach(auto&& nodeHandle, selectionHandles)
+    {
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
+        if(!node || !node->isNodeKeyDecrypted() || getNodeAccess(nodeHandle) < MegaShare::ACCESS_FULL)
+        {
+            return false;
+        }
+    }
+
+    //Return false if there are no handles (disabled rows...)
+    return !selectionHandles.isEmpty();
+}
+
+int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
+{
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+    auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
+    if (parent && node)
+    {
+        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+        auto access(mMegaApi->getAccess(node.get()));
+
+        if (access >= MegaShare::ACCESS_FULL && (!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted()))
+        {
+            return MegaShare::ACCESS_UNKNOWN;
+        }
+
+        return access;
+    }
+    else
+    {
+        return MegaShare::ACCESS_UNKNOWN;
+    }
 }
 
 void NodeSelectorTreeView::removeNode()

@@ -2,6 +2,7 @@
 
 #include "SyncTooltipCreator.h"
 #include "SyncInfo.h"
+#include "SyncSettings.h"
 
 #include <QCoreApplication>
 #include <QIcon>
