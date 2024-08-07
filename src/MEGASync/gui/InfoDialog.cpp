@@ -24,12 +24,15 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "CreateRemoveSyncsManager.h"
+#include "CreateRemoveBackupsManager.h"
 #include "UserMessageDelegate.h"
 
 #include "Utilities.h"
 #include "Platform.h"
 #include "QmlDialogManager.h"
 #include "SyncsComponent.h"
+#include "AccountDetailsManager.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -166,7 +169,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #endif
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
+    if (qEnvironmentVariableIsSet("QT_SCREEN_SCALE_FACTORS") ||
+        qEnvironmentVariableIsSet("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
@@ -291,6 +295,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
+
+    connect(&AccountDetailsManager::instance(), &AccountDetailsManager::accountDetailsUpdated,
+            this, &InfoDialog::updateUsageAndAccountType);
 }
 
 InfoDialog::~InfoDialog()
@@ -342,6 +349,12 @@ void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
     setUsage();
+}
+
+void InfoDialog::updateUsageAndAccountType()
+{
+    setUsage();
+    setAccountType(mPreferences->accountType());
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -1047,30 +1060,17 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(const QString& remoteFolder)
+void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    QmlDialogManager::instance()->openAddSync(remoteFolder, false);
+    CreateRemoveSyncsManager::addSync(handle);
 }
 
 void InfoDialog::addBackup()
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, this]()
+    auto manager = CreateRemoveBackupsManager::addBackup(false);
+    if(manager->isBackupsDialogOpen())
     {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QmlDialogManager::instance()->openBackupsDialog();
-            this->hide();
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
-    }
-    else
-    {
-        addBackupLambda();
+        hide();
     }
 }
 
@@ -1236,7 +1236,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 #ifdef Q_OS_LINUX
     static bool firstime = true;
-    if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
+    if (qEnvironmentVariableIsSet("START_MEGASYNC_MINIMIZED") && firstime &&
+        (obj == this && e->type() == QEvent::Paint))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog (reason: %1)...").arg(e->type()).toUtf8().constData());
         showMinimized();

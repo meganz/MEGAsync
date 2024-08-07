@@ -34,7 +34,6 @@ signals:
 private:
     bool mComesFromSettings;
     QString mRemoteFolder;
-
 };
 
 #endif // SYNCS_COMPONENT_H

@@ -22,7 +22,6 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
     , mega::MegaRequestListener()
     , mSolvingStarted(false)
     , mUndoSuccessful(false)
-    , mSyncController(new SyncController())
     , mChosenSide(MoveOrRenameIssueChosenSide::NONE)
     , mCombinedNumberOfIssues(1)
     , mSolveAttempts(0)
@@ -79,7 +78,7 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 
             //We pause the sync and when it is really paused, we continue solving the issue
             //This step is needed as the SDK acts differently if the sync is not paused
-            mSyncController->setSyncToPause(syncSettings);
+            SyncController::instance().setSyncToPause(syncSettings);
 
             startAsyncIssueSolving();
         }
@@ -192,7 +191,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
 
 void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> syncSettings)
 {
-    mSyncController->setSyncToRun(syncSettings);
+    SyncController::instance().setSyncToRun(syncSettings);
     disconnect(SyncInfo::instance(),
         &SyncInfo::syncStateChanged,
         this,

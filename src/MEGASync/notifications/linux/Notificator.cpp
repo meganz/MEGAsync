@@ -57,17 +57,23 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     if (interface->isValid())
     {
         mMode = Freedesktop;
-        if (!getenv("XDG_CURRENT_DESKTOP") || strcmp(getenv("XDG_CURRENT_DESKTOP"), "Unity") ) //unity shows notification with actions as a popup
+        QString xdgCurrentDesktop = qEnvironmentVariable("XDG_CURRENT_DESKTOP");
+        //unity shows notification with actions as a popup
+        if (xdgCurrentDesktop.isEmpty() || xdgCurrentDesktop != QString::fromUtf8("Unity"))
         {
             dbussSupportsActions = true;
         }
         else
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Disabling actions for DBUS notifications: not supported for your desktop environment. XDG_CURRENT_DESKTOP=%1")
-                         .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP")?getenv("XDG_CURRENT_DESKTOP"):"unset")).toUtf8().constData());
+            QString logMessage =
+                QString::fromUtf8("Disabling actions for DBUS notifications: not supported for "
+                                  "your desktop environment. XDG_CURRENT_DESKTOP=");
+            logMessage +=
+                xdgCurrentDesktop.isEmpty() ? QString::fromUtf8("unset") : xdgCurrentDesktop;
+
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, logMessage.toUtf8().constData());
             dbussSupportsActions = false;
         }
-
     }
 #endif
 }
