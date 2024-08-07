@@ -136,39 +136,6 @@ bool QmlDialogManager::openWhatsNewDialog()
     return true;
 }
 
-void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSettings)
-{
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder]()
-    {
-        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
-            {
-                syncsDialog = dialog->getDialog();
-            }
-            else
-            {
-                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
-            }
-
-            syncsDialog->wrapper()->setComesFromSettings(fromSettings);
-            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            DialogOpener::showDialog(syncsDialog);
-        }
-    };
-
-    if (overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
-}
-
 void QmlDialogManager::openDeviceCenterDialog()
 {
     DeviceCenter::registerQmlModules();

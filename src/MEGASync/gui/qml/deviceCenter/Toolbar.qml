@@ -30,7 +30,8 @@ Item {
                 icons.source: Images.addBackup
 
                 onClicked: {
-                    deviceCenterAccess.openAddBackupDialog()
+                    let fromSettings = true;
+                    deviceCenterAccess.openAddBackupDialog(fromSettings);
                 }
             }
 

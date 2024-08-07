@@ -1,10 +1,12 @@
 #include "DeviceCenter.h"
 
+#include "CreateRemoveBackupsManager.h"
+"
 #include "MegaApplication.h"
 
 #include <QTimer>
 
-static bool qmlRegistrationDone = false;
+    static bool qmlRegistrationDone = false;
 
 DeviceCenter::DeviceCenter(QObject* parent):
     QMLComponent(parent),
@@ -110,7 +112,7 @@ void DeviceCenter::registerQmlModules()
 void DeviceCenter::openAddBackupDialog()
 {
     const bool comesFromSettings = true;
-    QmlDialogManager::instance()->openBackupsDialog(comesFromSettings);
+    CreateRemoveBackupsManager::addBackup(comesFromSettings);
 }
 
 QString DeviceCenter::getThisDeviceId()
