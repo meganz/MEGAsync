@@ -74,7 +74,7 @@ public:
 protected:
     mutable QMutex syncMutex;
 
-    SyncOrigin syncToCreateOrigin;
+    SyncOrigin mSyncToCreateOrigin;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;

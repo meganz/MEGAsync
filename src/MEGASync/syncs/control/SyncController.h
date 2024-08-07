@@ -103,7 +103,6 @@ private:
 
     mega::MegaApi* mApi;
 
-    //Only use const methods
     SyncInfo* mSyncInfo;
 };
 
