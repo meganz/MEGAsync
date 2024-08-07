@@ -154,11 +154,11 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     {
         if(timeInterval.seconds == 0)
         {
-            timeText = tr("Offer expires in %1m").arg(timeInterval.minutes);
+            timeText = tr("Offer expires in %1 m").arg(timeInterval.minutes);
         }
         else
         {
-            timeText = tr("Offer expires in %1m %2s")
+            timeText = tr("Offer expires in %1 m %2 s")
                            .arg(timeInterval.minutes)
                            .arg(timeInterval.seconds);
         }
@@ -166,7 +166,7 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     }
     else if(timeInterval.seconds > 0)
     {
-        timeText = tr("Offer expires in %1s").arg(timeInterval.seconds);
+        timeText = tr("Offer expires in %1 s").arg(timeInterval.seconds);
         mUi->lTime->setStyleSheet(ExpiredSoonColor);
     }
     mUi->lTime->setText(timeText);

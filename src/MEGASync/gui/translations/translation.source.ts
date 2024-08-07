@@ -4578,19 +4578,19 @@ Enter a different name.</translation>
         </translation>
     </message>
     <message>
-        <source>Offer expires in %1m</source>
+        <source>Offer expires in %1 m</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes. The placeholder %1 shall be replaced by the number of minutes. CON-868</translatorcomment>
-        <translation type="unfinished">Offer expires in %1m</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Offer expires in %1m %2s</source>
+        <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation type="unfinished">Offer expires in %1m %2s</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Offer expires in %1s</source>
+        <source>Offer expires in %1 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 seconds. Placeholder %1 shall be replaced by the number of seconds. CON-868</translatorcomment>
-        <translation type="unfinished">Offer expires in %1s</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
