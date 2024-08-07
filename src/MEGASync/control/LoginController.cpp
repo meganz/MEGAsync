@@ -170,7 +170,8 @@ void LoginController::processOnboardingClosed()
 {
     if(getState() == LoginController::State::FETCH_NODES_FINISHED_ONBOARDING)
     {
-        if (!SyncInfo::instance()->hasSyncs())
+        if (!Preferences::instance()->isFirstSyncDone() &&
+            !Preferences::instance()->isFirstBackupDone())
         {
             MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS);
         }
