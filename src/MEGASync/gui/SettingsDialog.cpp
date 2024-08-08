@@ -208,9 +208,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    AccountDetailsManager::instance().attachStorageObserver(*this);
-    AccountDetailsManager::instance().attachBandwidthObserver(*this);
-    AccountDetailsManager::instance().attachAccountObserver(*this);
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->attachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->attachAccountObserver(*this);
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
@@ -220,9 +220,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
 SettingsDialog::~SettingsDialog()
 {
-    AccountDetailsManager::instance().dettachStorageObserver(*this);
-    AccountDetailsManager::instance().dettachBandwidthObserver(*this);
-    AccountDetailsManager::instance().dettachAccountObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->dettachAccountObserver(*this);
 
 #ifdef Q_OS_MACOS
     mToolBar->deleteLater();
@@ -871,9 +871,10 @@ void SettingsDialog::on_bClearFileVersions_clicked()
                 Q_UNUSED(request)
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    AccountDetailsManager::instance().updateUserStats(AccountDetailsManager::Flag::STORAGE,
-                                                                      true,
-                                                                      USERSTATS_REMOVEVERSIONS);
+                    AccountDetailsManager::instance()->updateUserStats(
+                        AccountDetailsManager::Flag::STORAGE,
+                        true,
+                        USERSTATS_REMOVEVERSIONS);
                 }
             }));
         }
