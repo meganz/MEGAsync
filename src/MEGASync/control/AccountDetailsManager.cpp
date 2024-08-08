@@ -56,17 +56,21 @@ Type AccountDetailsManager::UserStats<Type>::proValue() const
 //
 // AccountDetailsManager implementation.
 //
+AccountDetailsManager* AccountDetailsManager::mInstance = nullptr;
+
 AccountDetailsManager::AccountDetailsManager(QObject* parent)
     : QObject(parent)
     , mMegaApi(nullptr)
     , mPreferences(Preferences::instance())
-{
-}
+{}
 
-AccountDetailsManager& AccountDetailsManager::instance()
+AccountDetailsManager* AccountDetailsManager::instance()
 {
-    static AccountDetailsManager instance;
-    return instance;
+    if (!mInstance)
+    {
+        mInstance = new AccountDetailsManager;
+    }
+    return mInstance;
 }
 
 void AccountDetailsManager::reset()
@@ -186,15 +190,14 @@ void AccountDetailsManager::periodicUpdate()
 void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request,
                                                       mega::MegaError* error)
 {
+    mFlags = Flag::ALL;
+    mFlags &= request->getNumDetails();
+    mInflightUserStats.updateWithValue(mFlags, false);
+
     if(!canContinue(error))
     {
         return;
     }
-
-    mFlags = Flag::ALL;
-    mFlags &= request->getNumDetails();
-
-    mInflightUserStats.updateWithValue(mFlags, false);
 
     //Account details retrieved, update the preferences and the information dialog
     std::shared_ptr<mega::MegaAccountDetails> details(request->getMegaAccountDetails());
