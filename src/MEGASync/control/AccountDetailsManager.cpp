@@ -308,9 +308,9 @@ void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::Mega
 
 mega::MegaHandle AccountDetailsManager::processNode(const std::shared_ptr<mega::MegaNode>& node,
                                                     const std::shared_ptr<mega::MegaAccountDetails>& details,
-                                                    std::function<void (mega::MegaHandle)> setStorageUsed,
-                                                    std::function<void (mega::MegaHandle)> setNumFiles,
-                                                    std::function<void (mega::MegaHandle)> setNumFolders)
+                                                    std::function<void (long long)> setStorageUsed,
+                                                    std::function<void (long long)> setNumFiles,
+                                                    std::function<void (long long)> setNumFolders)
 {
     mega::MegaHandle handle = node ? node->getHandle() : mega::INVALID_HANDLE;
     setStorageUsed(details->getStorageUsed(handle));
