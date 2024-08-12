@@ -16,6 +16,7 @@ QtObject {
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
     readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
+    readonly property url imagesIconsPath: Qt.resolvedUrl(imagesPath + "icons/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -93,6 +94,7 @@ QtObject {
     readonly property url settings: imagesGuestPath + "settings.svg"
     readonly property url warningGuest: imagesGuestPath + "warning.png"
     readonly property url settingUp: imagesGuestPath + "setting_up.png"
+    readonly property url alertTriangleError: imagesGuestPath + "alert-triangle.png"
 
     readonly property url refresh: imagesExclusionsPath + "refresh.svg"
     readonly property url xSquare: imagesExclusionsPath + "x-square.svg"

@@ -27,22 +27,25 @@ public:
         StandardButton defaultButton;
         QCheckBox* checkBox;
         QMap<StandardButton, QString> buttonsText;
+        QMap<StandardButton, QIcon> buttonsIcons;
         Qt::TextFormat textFormat;
         QPixmap iconPixmap;
         bool enqueue;
         bool ignoreCloseAll;
+        bool hideCloseButton;
         QString checkboxText;
 
-        MessageBoxInfo()
-            : finishFunc(nullptr),
-              parent(nullptr),
-              buttons(Ok),
-              defaultButton(NoButton),
-              checkBox(nullptr),
-              textFormat(Qt::PlainText),
-              enqueue(false),
-              ignoreCloseAll(false),
-              checkboxText(QString())
+        MessageBoxInfo():
+            finishFunc(nullptr),
+            parent(nullptr),
+            buttons(Ok),
+            defaultButton(NoButton),
+            checkBox(nullptr),
+            textFormat(Qt::PlainText),
+            enqueue(false),
+            ignoreCloseAll(false),
+            hideCloseButton(false),
+            checkboxText(QString())
         {}
     };
 

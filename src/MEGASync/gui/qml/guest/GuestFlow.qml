@@ -15,6 +15,8 @@ import onboard 1.0
 
 import ApiEnums 1.0
 import LoginController 1.0
+import AppState 1.0
+import FatalEventHandler 1.0
 
 Item {
     id: root
@@ -29,13 +31,17 @@ Item {
     readonly property string stateFetchNodesFinished: "FETCH_NODES_FINISHED"
     readonly property string stateBlocked: "BLOCKED"
     readonly property string stateInOnboarding: "IN_ONBOARDING"
+    readonly property string stateFatalError: "FATAL_ERROR"
 
     property string title: ""
     property bool indeterminate: true
     property double progressValue: 0.0
 
     function getState() {
-        if(accountStatusControllerAccess.blockedState) {
+        if (appStateAccess.appState === AppState.FATAL_ERROR) {
+            return root.stateFatalError;
+        }
+        else if(accountStatusControllerAccess.blockedState) {
             return root.stateBlocked;
         }
         else {
@@ -115,6 +121,12 @@ Item {
             name: root.stateInOnboarding
             StateChangeScript {
                 script: view.replace(settingUpAccountPageComponent);
+            }
+        },
+        State {
+            name: root.stateFatalError
+            StateChangeScript {
+                script: view.replace(sdkFatalErrorComponent);
             }
         }
     ]
@@ -306,10 +318,12 @@ Item {
             leftButton {
                 text: OnboardingStrings.signUp
                 enabled: false
+                visible: appStateAccess.appState !== AppState.RELOADING
             }
             rightButton {
                 text: OnboardingStrings.login
                 enabled: false
+                visible: appStateAccess.appState !== AppState.RELOADING
             }
             indeterminate: loginControllerAccess.progress === 0
             progressValue: loginControllerAccess.progress
@@ -331,6 +345,7 @@ Item {
             descriptionFontSize: Texts.Text.Size.NORMAL
             descriptionColor: ColorTheme.textPrimary
             descriptionLineHeight: 18
+
             leftButton {
                 text: GuestStrings.logOut
                 onClicked: {
@@ -371,6 +386,64 @@ Item {
             rightButton.visible: false
             spacing: 0
             bottomMargin: 150
+        }
+    }
+
+    Component {
+        id: sdkFatalErrorComponent
+
+        BasePage {
+            id: fatalErrorPage
+
+            function getUrl(defaultValue) {
+                var url = fatalEventHandlerAccess.getErrorReasonUrl();
+                if (url.length > 0) {
+                    return url;
+                }
+                else {
+                    return defaultValue;
+                }
+            }
+
+            showProgressBar: false
+            imageSource: Images.alertTriangleError
+            imageTopMargin: 110
+            title: fatalEventHandlerAccess.getErrorTitle()
+            description: fatalEventHandlerAccess.getErrorReason()
+            descriptionUrl: getUrl(descriptionUrl)
+            descriptionFontSize: Texts.Text.Size.NORMAL
+            descriptionColor: colorStyle.textPrimary
+            descriptionLineHeight: 18
+
+            leftButton {
+                text: fatalEventHandlerAccess.getSecondaryActionLabel()
+                visible: leftButton.text !== ""
+                icons {
+                    position: Icon.Position.LEFT
+                }
+                onClicked: {
+                    fatalEventHandlerAccess.triggerSecondaryAction();
+                }
+            }
+            rightButton {
+                text: fatalEventHandlerAccess.getDefaultActionLabel()
+                visible: rightButton.text !== ""
+                icons {
+                    source: Images.imagesPath + fatalEventHandlerAccess.getDefaultActionIcon()
+                    position: Icon.Position.LEFT
+                }
+                onClicked: {                    
+                    fatalEventHandlerAccess.triggerDefaultAction();
+                }
+            }
+
+            Connections {
+                target: window
+
+                function onInitializePageFocus() {
+                    rightButton.forceActiveFocus();
+                }
+            }
         }
     }
 

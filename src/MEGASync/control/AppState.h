@@ -39,6 +39,7 @@ public:
         NOMINAL,
         RELOADING,
         FATAL_ERROR,
+        FINISHED,
     };
     Q_ENUM(AppStates)
 

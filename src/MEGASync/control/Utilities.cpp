@@ -53,7 +53,7 @@ const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contac
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
-const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop");
+const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;

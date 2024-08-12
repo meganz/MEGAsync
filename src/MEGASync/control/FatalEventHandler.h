@@ -3,8 +3,10 @@
 
 #include "AppState.h"
 #include "BugReportDialog.h"
+#include "megaapi.h"
 #include "MegaSyncLogger.h"
 
+#include <QMessageBox>
 #include <QObject>
 
 #include <memory>
@@ -14,6 +16,7 @@ class FatalEventHandler: public QObject
     Q_OBJECT
 
 public:
+    // Mapping of SDK fatal error codes to app fatal error codes
     enum FatalErrorCode
     {
         ERR_UNKNOWN = mega::MegaEvent::REASON_ERROR_UNKNOWN,
@@ -30,17 +33,43 @@ public:
     };
     Q_ENUM(FatalErrorCode)
 
+    // Corrective actions
+    enum FatalErrorCorrectiveAction
+    {
+        NO_ACTION,
+        CONTACT_SUPPORT,
+        LOGOUT,
+        RESTART_APP,
+        CHECK_PERMISSIONS,
+        RELOAD,
+    };
+    Q_ENUM(FatalErrorCorrectiveAction)
+
     static std::shared_ptr<FatalEventHandler> instance();
 
+    // Returns the error code, as processed by the app
+    FatalErrorCode getErrorCode() const;
+    // Returns the title of the error description
     Q_INVOKABLE QString getErrorTitle() const;
+    // Returns the text body of the error decription
     Q_INVOKABLE QString getErrorReason() const;
+    // Returns the url of an optional link in the error description
     Q_INVOKABLE QString getErrorReasonUrl() const;
 
-    void setLogger(MegaSyncLogger* logger);
+    // This method takes action in reaction to a revceived SDK event <event>, <logger> is passed to
+    // the Bug Report Dialog
+    void processEvent(std::unique_ptr<mega::MegaEvent> event, MegaSyncLogger* logger);
 
-    void processFatalErrorEvent(std::unique_ptr<mega::MegaEvent> event);
-    Q_INVOKABLE void showFatalErrorBugReportDialog(bool respawnWarningDialog = false);
-    Q_INVOKABLE void restartOnFatalError();
+    // Labels to be used on buttons shown to the user
+    Q_INVOKABLE QString getDefaultActionLabel() const;
+    Q_INVOKABLE QString getSecondaryActionLabel() const;
+
+    // Icon to be used on the promary action button
+    Q_INVOKABLE QString getDefaultActionIcon() const;
+
+    // Methods to trigger corrective actions
+    Q_INVOKABLE void triggerDefaultAction();
+    Q_INVOKABLE void triggerSecondaryAction();
 
 signals:
     void requestAppState(AppState::AppStates newAppState);
@@ -51,23 +80,46 @@ signals:
 private:
     explicit FatalEventHandler();
 
-    FatalErrorCode getErrorCode() const;
+    // Returns the name, in the app error code enum, corresponding to the current event error
     QString getErrorCodeString() const;
-    QString getErrorString() const;
 
-    void handleUserAction(int choice);
+    // Returns the actions suggested to fix the issue
+    FatalErrorCorrectiveAction getDefaultAction() const;
+    FatalErrorCorrectiveAction getSecondaryAction() const;
+
+    QString getActionLabel(FatalErrorCorrectiveAction action) const;
+    QString getActionIcon(FatalErrorCorrectiveAction action) const;
+
+    void triggerAction(FatalErrorCorrectiveAction action);
+
+    // Corrective actions
+    void showFatalErrorBugReportDialog();
+    void restartOnFatalError();
+    void logoutOnFatalError();
+    void reloadOnFatalError();
+    void openAppDataFolder();
+
     void clear();
+    bool useContactSupportUrlHandler() const;
 
-    std::unique_ptr<mega::MegaEvent> mEvent;
+    static const QMessageBox::StandardButton DEFAULT_ACTION_BUTTON;
+    static const QMessageBox::StandardButton SECONDARY_ACTION_BUTTON;
+    static const QString SCHEME_CONTACT_SUPPORT_URL;
+    static const QString CONTACT_SUPPORT_URL;
+
+    int64_t mSdkErrorCode;
     FatalErrorCode mErrorCode;
     QPointer<BugReportDialog> mFatalErrorReportDialog;
-    MegaSyncLogger* mLogger; // The life cycle of the object that will be affected here is not the
-                             // responsability of this class. It will be passed
-                             // to mFatalErrorReportDialog at creation.
+    bool mRespawnWarningDialog;
+
+    // The life cycle of the object that will be affected here is not the responsability of this
+    // class. It will be passed to mFatalErrorReportDialog at creation.
+    MegaSyncLogger* mLogger;
 
 private slots:
     void showFatalErrorMessage();
-    void onAppStateChanged(AppState::AppStates newAppState);
+    void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
+    void handleContactSupport(const QUrl& url);
 };
 
 #endif // FATALEVENTHANDLER_H

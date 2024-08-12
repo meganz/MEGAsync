@@ -3472,6 +3472,12 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Transfer quota exceeded</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
         <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
@@ -3694,66 +3700,87 @@ You will not be able to regain access to your stored data or be authorised to si
     </message>
     <message>
         <source>An unknown error has occurred</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A critical error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your local storage is full</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Error reading app system files</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fatal error: DB ondex overflow.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fatal error: No JSON Sync Config Data.</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have please [A]contact support[/A]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please [A]contact support[/A]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="unfinished">Close</translation>
     </message>
     <message>
         <source>Restart MEGA</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Report issue</source>
+        <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Check permissions</source>
+        <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logout</source>
+        <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Label of the button used to contact support for assistance when a fatal error occurs - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log out</source>
+        <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished">Log&#xa0;out</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Label of the button used to reload (fetch nodes) the account to try to resolve a fatal error - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error with sync configuration files</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
