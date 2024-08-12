@@ -237,6 +237,7 @@ void NodeSelectorTreeViewWidget::onProxyModelSorted()
     {
         mNewFolderAdded = false;
         onItemDoubleClick(mProxyModel->getIndexFromHandle(mNewFolderHandle));
+        mNewFolderHandle = mega::INVALID_HANDLE;
     }
 }
 
@@ -443,6 +444,8 @@ void NodeSelectorTreeViewWidget::onItemDoubleClick(const QModelIndex &index)
     setRootIndex(index);
     checkBackForwardButtons();
     checkNewFolderButtonVisibility();
+
+    selectIndex(index, true);
 }
 
 std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidget::createProxyModel()
@@ -792,7 +795,7 @@ void NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
             mUpdatedNodesByPreviousHandle.append(updateNode);
         }
         //New node
-        else if(mNewFolderHandle != updateNode.node->getHandle())
+        else
         {
             if(newNodeCanBeAdded(updateNode.node.get()) &&
                 (!updateNode.node->isFile() || mModel->showFiles()))
@@ -954,6 +957,7 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
                 auto parentIndex = getAddedNodeParent(parentHandle);
                 mModel->addNodes(mAddedNodesByParentHandle.values(parentHandle), parentIndex);
             }
+
             mAddedNodesByParentHandle.clear();
         }
     }
