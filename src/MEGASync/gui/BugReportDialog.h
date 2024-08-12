@@ -30,6 +30,9 @@ private slots:
 
     void onReportUpdated(int value);
 
+    void setReportObject(const QString& title);
+    void setReportText(const QString& desc);
+
 private:
     void closeProgressDialog();
     void openProgressDialog();

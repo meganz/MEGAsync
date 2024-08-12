@@ -14,6 +14,7 @@ public:
 
     static QString warningTitle();
     static QString errorTitle();
+    static QString fatalErrorTitle();
 
     struct MessageBoxInfo
     {

@@ -3692,6 +3692,70 @@ You will not be able to regain access to your stored data or be authorised to si
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Destination storage is full</translation>
     </message>
+    <message>
+        <source>An unknown error has occurred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A critical error has been detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your local storage is full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error reading app system files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fatal error: DB ondex overflow.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fatal error: No JSON Sync Config Data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to make more space available in your local storage to be able to run MEGA.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have please [A]contact support[/A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please [A]contact support[/A]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Close</translation>
+    </message>
+    <message>
+        <source>Restart MEGA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Report issue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logout</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaInfoMessage</name>
@@ -8435,16 +8499,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>Issue detected</numerusform>
             <numerusform>Issues detected</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
-    </message>
-    <message>
-        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
     </message>
 </context>
 <context>

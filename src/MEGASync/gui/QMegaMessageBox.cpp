@@ -16,6 +16,11 @@ QString QMegaMessageBox::errorTitle()
     return QCoreApplication::translate("MegaApplication", "Error");
 }
 
+QString QMegaMessageBox::fatalErrorTitle()
+{
+    return QCoreApplication::translate("MegaApplication", "Alert");
+}
+
 void QMegaMessageBox::information(const MessageBoxInfo& info)
 {
     return showNewMessageBox(Information, info);

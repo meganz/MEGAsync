@@ -135,6 +135,16 @@ void BugReportDialog::openProgressDialog()
     }
 }
 
+void BugReportDialog::setReportObject(const QString& title)
+{
+    ui->leTitleBug->setText(title);
+}
+
+void BugReportDialog::setReportText(const QString& desc)
+{
+    ui->teDescribeBug->setText(desc);
+}
+
 void BugReportDialog::onReportFinished()
 {
     closeProgressDialog();
