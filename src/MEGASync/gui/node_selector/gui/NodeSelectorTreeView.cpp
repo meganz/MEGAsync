@@ -4,7 +4,7 @@
 #include "MegaApplication.h"
 #include "NodeSelectorProxyModel.h"
 #include "Platform.h"
-#include "AddSyncFromUiManager.h"
+#include "CreateRemoveSyncsManager.h"
 #include "NodeSelectorModel.h"
 
 #include <QPainter>
@@ -49,7 +49,7 @@ MegaHandle NodeSelectorTreeView::getSelectedNodeHandle()
     return ret;
 }
 
-QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle()
+QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle() const
 {
     QList<MegaHandle> ret;
 
@@ -60,15 +60,26 @@ QList<MegaHandle> NodeSelectorTreeView::getMultiSelectionNodeHandle()
 
     auto selectedRows = selectionModel()->selectedRows();
 
-    // Sort to keep items in the same order
-    std::sort(selectedRows.begin(), selectedRows.end(),[](QModelIndex check1, QModelIndex check2){
-        return check1.row() > check2.row();
-    });
-
-    foreach(auto& s_index,selectedRows)
+    //If there is no selection, add the root index
+    if(selectedRows.isEmpty())
     {
-        if(auto node = proxyModel()->getNode(s_index))
-            ret.append(node->getHandle());
+        auto index(rootIndex());
+        if(index.isValid())
+        {
+            auto item = proxyModel()->getMegaModel()->getItemByIndex(index);
+            if(item)
+            {
+                ret.append(item->getNode()->getHandle());
+            }
+        }
+    }
+    else
+    {
+        foreach(auto& s_index, selectedRows)
+        {
+            if(auto node = proxyModel()->getNode(s_index))
+                ret.append(node->getHandle());
+        }
     }
 
     return ret;
@@ -203,11 +214,12 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
         }
         else if(event->key() == Qt::Key_Delete)
         {
-            auto selectionHandles(getMultiSelectionNodeHandle());
-
-            if(areAllEligibleForDeletion(selectionHandles))
+            auto handlesToRemove(getMultiSelectionNodeHandle());
+            if(areAllEligibleForDeletion(handlesToRemove))
             {
-                removeNode(selectionHandles, false);
+                std::unique_ptr<mega::MegaNode> node(
+                    mMegaApi->getNodeByHandle(handlesToRemove.first()));
+                removeNode(node && mMegaApi->isInRubbish(node.get()));
             }
         }
 
@@ -230,27 +242,14 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
 
-    if(selectionModel()->selectedRows().size() == 1)
-    {
-        QList<mega::MegaHandle> selectionHandle{getSelectedNodeHandle()};
-        if(areAllEligibleForRestore(selectionHandle))
-        {
-            customMenu.addAction(tr("Restore"), this, [this, selectionHandle](){
-                restore(selectionHandle);
-            });
-        }
+    auto selectionHandles(getMultiSelectionNodeHandle());
 
-        auto nodeHandle(getSelectedNodeHandle());
-        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
-        if(node && mMegaApi->isInRubbish(node.get()))
+    if(selectionHandles.size() == 1)
+    {
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(selectionHandles.first()));
+        if(node && !mMegaApi->isInRubbish(node.get()))
         {
-            customMenu.addAction(tr("Delete permanently"), this, [this, selectionHandle](){
-                removeNode(selectionHandle, true);
-            });
-        }
-        else
-        {
-            int access = getNodeAccess(getSelectedNodeHandle());
+            int access = getNodeAccess(node->getHandle());
 
             if (access != MegaShare::ACCESS_UNKNOWN)
             {
@@ -271,58 +270,52 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                         auto itemStatus = item->getStatus();
                         if(itemStatus == NodeSelectorModelItem::Status::NONE && !(item->getNode()->isFile()))
                         {
-                            customMenu.addAction(tr("Sync"), this, [selectionHandle](){
-                                AddSyncFromUiManager::addSync_static(selectionHandle.first(), true);
+                            customMenu.addAction(tr("Sync"), this, [selectionHandles](){
+                                CreateRemoveSyncsManager::addSync(selectionHandles.first(), true);
                             });
                         }
                         else if(itemStatus == NodeSelectorModelItem::Status::SYNC)
                         {
-                            customMenu.addAction(tr("Unsync"), this, [selectionHandle, this](){
-                                AddSyncFromUiManager::removeSync_static(selectionHandle.first(), this);
+                            customMenu.addAction(tr("Unsync"), this, [selectionHandles, this](){
+                                CreateRemoveSyncsManager::removeSync(selectionHandles.first(), this);
                             });
                         }
                     }
 
                     customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
-                    customMenu.addAction(tr("Delete"), this, [this, selectionHandle](){
-                        removeNode(selectionHandle, false);
-                    });
                 }
             }
         }
     }
-    else
+
+    if(!selectionHandles.isEmpty())
     {
-        auto selectionHandles(getMultiSelectionNodeHandle());
-
-        if(!selectionHandles.isEmpty())
+        //All or none
+        if(areAllEligibleForDeletion(selectionHandles))
         {
-            //All or none
-            if(areAllEligibleForDeletion(selectionHandles))
+            std::unique_ptr<mega::MegaNode> node(
+                mMegaApi->getNodeByHandle(selectionHandles.first()));
+            if(node && mMegaApi->isInRubbish(node.get()))
             {
-                std::unique_ptr<mega::MegaNode> node(
-                    mMegaApi->getNodeByHandle(selectionHandles.first()));
-                if(node && mMegaApi->isInRubbish(node.get()))
-                {
-                    customMenu.addAction(tr("Delete permanently"),
-                        this,
-                        [this, selectionHandles]() { removeNode(selectionHandles, true); });
-                }
-                else
-                {
-                    customMenu.addAction(tr("Delete"),
-                        this,
-                        [this, selectionHandles]() { removeNode(selectionHandles, false); });
-                }
+                customMenu.addAction(tr("Delete permanently"),
+                    this,
+                    [this, selectionHandles]() { removeNode(true); });
             }
-
-            if(areAllEligibleForRestore(selectionHandles))
+            else
             {
-                customMenu.addAction(
-                    tr("Restore"), this, [this, selectionHandles]() { restore(selectionHandles); });
+                customMenu.addAction(tr("Delete"),
+                    this,
+                    [this, selectionHandles]() { removeNode(false); });
             }
         }
+
+        if(areAllEligibleForRestore(selectionHandles))
+        {
+            customMenu.addAction(
+                tr("Restore"), this, [this, selectionHandles]() { restore(selectionHandles); });
+        }
     }
+    
 
     if (!customMenu.actions().isEmpty())
     {
@@ -416,22 +409,27 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
 
 bool NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle> &handles) const
 {
-    auto removableItems(handles.size());
-    foreach(auto&& nodeHandle, handles)
+    auto selectionHandles(handles.isEmpty() ? getMultiSelectionNodeHandle() : handles);
+
+    foreach(auto&& nodeHandle, selectionHandles)
     {
-        if (getNodeAccess(nodeHandle) >= MegaShare::ACCESS_FULL)
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
+        if(!node || !node->isNodeKeyDecrypted() || getNodeAccess(nodeHandle) < MegaShare::ACCESS_FULL)
         {
-            removableItems--;
+            return false;
         }
     }
 
-    return removableItems == 0;
+    //Return false if there are no handles (disabled rows...)
+    return !selectionHandles.isEmpty();
 }
 
 bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &handles) const
 {
-    auto restorableItems(handles.size());
-    foreach(auto&& nodeHandle, handles)
+    auto selectionHandles(handles.isEmpty() ? getMultiSelectionNodeHandle() : handles);
+    auto restorableItems(selectionHandles.size());
+
+    foreach(auto&& nodeHandle, selectionHandles)
     {
         std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
         if(node && mMegaApi->isInRubbish(node.get()))
@@ -451,22 +449,29 @@ bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &han
 
 int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
 {
-    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-    std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(handle));
-    if(node)
+    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
+    auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
+    if (parent && node)
     {
-        if(!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted())
+        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+        auto access(mMegaApi->getAccess(node.get()));
+
+        if (access >= MegaShare::ACCESS_FULL && (!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted()))
         {
             return MegaShare::ACCESS_UNKNOWN;
         }
-    }
 
-    return Utilities::getNodeAccess(handle);
+        return access;
+    }
+    else
+    {
+        return MegaShare::ACCESS_UNKNOWN;
+    }
 }
 
-void NodeSelectorTreeView::removeNode(const QList<MegaHandle> &handles, bool permanently)
+void NodeSelectorTreeView::removeNode(bool permanently)
 {
-    emit removeNodeClicked(handles, permanently);
+    emit removeNodeClicked(permanently);
 }
 
 void NodeSelectorTreeView::renameNode()

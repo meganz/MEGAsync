@@ -1175,33 +1175,46 @@ void StalledIssuesModel::semiAutoSolveLocalRemoteIssues(const QModelIndexList& l
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink)
+void StalledIssuesModel::ignoreItems(const QModelIndexList& list)
 {
-    mIgnoredItemsBySync.clear();
+    auto ignoredItemsBySync = new QMap<mega::MegaHandle, QList<IgnoredStalledIssue::IgnoredPath>>();
 
-    auto resolveIssue = [this](int row) -> bool
+    auto resolveIssue = [this, ignoredItemsBySync](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
-        if(!item.getData()->syncIds().isEmpty())
+        if(auto ignorableItem = StalledIssue::convert<IgnoredStalledIssue>(item.getData()))
         {
-            std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->firstSyncId()));
-            if(sync)
+            if(!item.getData()->syncIds().isEmpty())
             {
-                auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
-                if(MegaIgnoreManager::isValid(folderPath))
+                std::shared_ptr<mega::MegaSync> sync(
+                    MegaSyncApp->getMegaApi()->getSyncByBackupId(item.getData()->firstSyncId()));
+                if(sync)
                 {
-                    auto& items = mIgnoredItemsBySync[item.getData()->firstSyncId()];
-                    auto ignoredItems = item.getData()->getIgnoredFiles();
-                    foreach(auto& ignoredItem, ignoredItems)
+                    auto folderPath(
+                        QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
+                    if(MegaIgnoreManager::isValid(folderPath))
                     {
-                        if(!items.contains(ignoredItem))
+                        auto& items = (*ignoredItemsBySync)[item.getData()->firstSyncId()];
+                        auto ignoredItems = ignorableItem->getIgnoredFiles();
+                        foreach(auto& ignoredItem, ignoredItems)
                         {
-                            items.append(ignoredItem);
-                            MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::SI_IGNORE_SOLVED_MANUALLY);
-                        }
-                    }
+                            auto findRepeatedPath =
+                                [ignoredItem](const IgnoredStalledIssue::IgnoredPath& check) -> bool {
+                                return ignoredItem.pathSide == IgnoredStalledIssue::IgnoredPath::IgnorePathSide::REMOTE &&
+                                       ignoredItem.path == check.path;
+                            };
 
-                    return true;
+                            if(std::find_if(items.cbegin(), items.cend(), findRepeatedPath) ==
+                                items.cend())
+                            {
+                                items.append(ignoredItem);
+                                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                                    AppStatsEvents::EventType::SI_IGNORE_SOLVED_MANUALLY);
+                            }
+                        }
+
+                        return true;
+                    }
                 }
             }
         }
@@ -1209,28 +1222,11 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
         return false;
     };
 
-    QModelIndexList auxList(list);
-    if(auxList.isEmpty())
-    {
-        auto totalRows(rowCount(QModelIndex()));
-        for(int row = 0; row < totalRows; ++row)
-        {
-            auto item = getStalledIssueByRow(row);
-            auto isCompatible(isSymLink ? item.getData()->isSymLink()
-                                        : (item.getData()->canBeIgnored() && !item.getData()->isSymLink()));
-            if(!item.getData()->isSolved() &&
-               isCompatible)
-            {
-                auxList.append(index(row,0));
-            }
-        }
-    }
+    auto issuesToFix(list.size());
 
-    auto issuesToFix(auxList.size());
-
-    auto finishFunc = [this, isSymLink, issuesToFix](int issuesFixed, bool externallyModified)
+    auto finishFunc = [this, ignoredItemsBySync, issuesToFix](int issuesFixed, bool externallyModified)
     {
-        foreach(auto syncId,  mIgnoredItemsBySync.keys())
+        foreach(auto syncId,  ignoredItemsBySync->keys())
         {
             std::shared_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
             if(sync)
@@ -1238,13 +1234,21 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
                 auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
                 MegaIgnoreManager manager(folderPath, false);
 
-                QDir dir(folderPath);
-
-                auto ignoredFiles(mIgnoredItemsBySync.value(syncId));
-                foreach(auto file, ignoredFiles)
+                auto ignoredFiles(ignoredItemsBySync->value(syncId));
+                foreach(auto ignoredPath, ignoredFiles)
                 {
-                    isSymLink ? manager.addIgnoreSymLinkRule(dir.relativeFilePath(file))
-                              : manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE, dir.relativeFilePath(file));
+                    QDir dir;
+                    if(ignoredPath.pathSide == IgnoredStalledIssue::IgnoredPath::IgnorePathSide::REMOTE)
+                    {
+                        dir.setPath(QString::fromUtf8(sync->getLastKnownMegaFolder()));
+                    }
+                    else
+                    {
+                        dir.setPath(folderPath);
+
+                    }
+                    manager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
+                        dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
                 }
 
                 manager.applyChanges();
@@ -1255,12 +1259,34 @@ void StalledIssuesModel::ignoreItems(const QModelIndexList& list, bool isSymLink
         {
             showIgnoreItemsError(issuesFixed == 0);
         }
+
+        delete ignoredItemsBySync;
     };
 
 
-    SolveListInfo info(auxList, resolveIssue);
+    SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishFunc;
     solveListOfIssues(info);
+}
+
+void StalledIssuesModel::ignoreAllSimilarIssues()
+{
+    //Double check needed?
+    QModelIndexList list;
+    auto totalRows(rowCount(QModelIndex()));
+    for(int row = 0; row < totalRows; ++row)
+    {
+        auto item = getStalledIssueByRow(row);
+        if(item.convert<IgnoredStalledIssue>())
+        {
+            if(!item.getData()->isSolved())
+            {
+                list.append(index(row, 0));
+            }
+        }
+    }
+
+    ignoreItems(list);
 }
 
 void StalledIssuesModel::ignoreSymLinks()
@@ -1273,33 +1299,37 @@ void StalledIssuesModel::ignoreSymLinks()
     for(int row = 0; row < totalRows; ++row)
     {
         auto item = getStalledIssueByRow(row);
-        if(item.getData()->isSymLink() &&
-           !item.getData()->isSolved())
+        if(auto ignorableIssue = item.convert<IgnoredStalledIssue>())
         {
-            if(!item.getData()->syncIds().isEmpty())
+            if(ignorableIssue->isSymLink() && !item.getData()->isSolved())
             {
-                auto syncId(item.getData()->firstSyncId());
-                if(!involvedSyncs.contains(syncId))
+                if(!item.getData()->syncIds().isEmpty())
                 {
-                    involvedSyncs.append(syncId);
-
-                    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
-                    if(sync)
+                    auto syncId(item.getData()->firstSyncId());
+                    if(!involvedSyncs.contains(syncId))
                     {
-                        auto folderPath(QDir::toNativeSeparators(QString::fromUtf8(sync->getLocalFolder())));
-                        if(!MegaIgnoreManager::isValid(folderPath))
+                        involvedSyncs.append(syncId);
+
+                        std::unique_ptr<mega::MegaSync> sync(
+                            MegaSyncApp->getMegaApi()->getSyncByBackupId(syncId));
+                        if(sync)
+                        {
+                            auto folderPath(QDir::toNativeSeparators(
+                                QString::fromUtf8(sync->getLocalFolder())));
+                            if(!MegaIgnoreManager::isValid(folderPath))
+                            {
+                                involvedFailedToIgnoreSyncs.append(syncId);
+                            }
+                        }
+                        else
                         {
                             involvedFailedToIgnoreSyncs.append(syncId);
                         }
                     }
-                    else
-                    {
-                        involvedFailedToIgnoreSyncs.append(syncId);
-                    }
                 }
-            }
 
-            list.append(index(row,0));
+                list.append(index(row, 0));
+            }
         }
     }
 

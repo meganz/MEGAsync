@@ -14,6 +14,8 @@
 #include <QPointer>
 #include <QShortcut>
 
+#include <optional>
+
 using namespace mega;
 
 const char* ITS_ON_NS = "itsOn";
@@ -442,20 +444,31 @@ bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
-    if(node)
+    if (node)
     {
-        TabItem option = SHARES;
-        if(mMegaApi->isInCloud(node.get()))
+        std::optional<TabItem> option;
+
+        if (mMegaApi->isInCloud(node.get()))
         {
             option = CLOUD_DRIVE;
         }
-        else if(mMegaApi->isInVault(node.get()))
+        else if (mMegaApi->isInVault(node.get()))
         {
             option = BACKUPS;
         }
-        onOptionSelected(option);
-        auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+        else if (mMegaApi->isInShare(node.get()))
+        {
+            option = SHARES;
+        }
+
+        if (option.has_value())
+        {
+            onOptionSelected(option.value());
+
+            auto tree_view_widget =
+                static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+            tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+        }
     }
 }
 

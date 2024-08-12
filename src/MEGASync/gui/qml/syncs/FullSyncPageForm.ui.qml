@@ -7,16 +7,23 @@ import common 1.0
 import components.accountData 1.0
 import components.pages 1.0
 
+import Syncs 1.0
+
 FooterButtonsPage {
     id: root
 
     required property bool isOnboarding
 
     property alias localFolderChooser: localFolder
+    property alias syncs: syncsItem
 
     footerButtons.rightPrimary {
         text: SyncsStrings.sync
         icons.source: Images.syncIcon
+    }
+
+    Syncs {
+        id: syncsItem
     }
 
     ColumnLayout {
@@ -47,9 +54,11 @@ FooterButtonsPage {
         ChooseSyncFolder {
             id: localFolder
 
+            syncs: syncsItem
             Layout.preferredWidth: parent.width + 8
             Layout.leftMargin: -4
             isOnboarding: root.isOnboarding
         }
     }
+
 }

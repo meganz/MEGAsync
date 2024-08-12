@@ -13,14 +13,8 @@ public:
 
     static BackupsController& instance()
     {
-        static std::unique_ptr<BackupsController> instance;
-        static std::once_flag flag;
-
-        std::call_once(flag, [&]() {
-            instance.reset(new BackupsController());
-        });
-
-        return *instance;
+        static BackupsController instance;
+        return instance;
     }
 
     BackupsController(const BackupsController&) = delete;
@@ -30,7 +24,7 @@ public:
 
     QSet<QString> getRemoteFolders() const;
 
-    QString getErrorString(int errorCode, int syncErrorCode);
+    QString getErrorString(int errorCode, int syncErrorCode) const;
 
 signals:
     void backupFinished(const QString& folder, int errorCode, int syncErrorCode);

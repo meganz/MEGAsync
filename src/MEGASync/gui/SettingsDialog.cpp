@@ -13,13 +13,14 @@
 #include "PowerOptions.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/control/AddSyncFromUiManager.h"
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
 #include "StatsEventHandler.h"
 #include "AccountDetailsDialog.h"
 #include "ChangePassword.h"
+#include "AccountDetailsManager.h"
+#include "CreateRemoveSyncsManager.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -207,9 +208,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    mApp->attachStorageObserver(*this);
-    mApp->attachBandwidthObserver(*this);
-    mApp->attachAccountObserver(*this);
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->attachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->attachAccountObserver(*this);
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
@@ -219,9 +220,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
 SettingsDialog::~SettingsDialog()
 {
-    mApp->dettachStorageObserver(*this);
-    mApp->dettachBandwidthObserver(*this);
-    mApp->dettachAccountObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->dettachAccountObserver(*this);
 
 #ifdef Q_OS_MACOS
     mToolBar->deleteLater();
@@ -870,7 +871,10 @@ void SettingsDialog::on_bClearFileVersions_clicked()
                 Q_UNUSED(request)
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                    AccountDetailsManager::instance()->updateUserStats(
+                        AccountDetailsManager::Flag::STORAGE,
+                        true,
+                        USERSTATS_REMOVEVERSIONS);
                 }
             }));
         }
@@ -1351,7 +1355,7 @@ void SettingsDialog::on_bLogout_clicked()
 // Syncs -------------------------------------------------------------------------------------------
 void SettingsDialog::addSyncFolder(mega::MegaHandle handle) const
 {
-    AddSyncFromUiManager::addSync_static(handle, true);
+    CreateRemoveSyncsManager::addSync(handle, true);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)

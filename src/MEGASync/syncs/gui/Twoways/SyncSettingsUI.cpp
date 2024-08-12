@@ -7,7 +7,8 @@
 #include "SyncItemModel.h"
 #include "MegaApplication.h"
 #include "SyncsComponent.h"
-#include "AddSyncFromUiManager.h"
+#include "CreateRemoveSyncsManager.h"
+#include "RemoveSyncConfirmationDialog.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
@@ -45,7 +46,7 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    AddSyncFromUiManager::addSync_static(megaFolderHandle, true);
+    CreateRemoveSyncsManager::addSync(megaFolderHandle, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -102,7 +103,7 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
 
 void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
 {
-    AddSyncFromUiManager::removeSync_static(sync->getMegaHandle(), this);
+    CreateRemoveSyncsManager::removeSync(sync->getMegaHandle(), this);
 }
 
 void SyncSettingsUI::setSyncsTitle()

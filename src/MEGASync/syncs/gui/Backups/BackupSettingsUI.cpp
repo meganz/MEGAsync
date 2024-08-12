@@ -1,6 +1,5 @@
 #include "BackupSettingsUI.h"
 
-#include "AddBackupFromUiManager.h"
 #include "BackupTableView.h"
 #include "BackupItemModel.h"
 #include "BackupsController.h"
@@ -9,7 +8,7 @@
 #include "Backups.h"
 #include "Onboarding.h"
 
-#include "AddBackupFromUiManager.h"
+#include "CreateRemoveBackupsManager.h"
 #include "QMegaMessageBox.h"
 #include "DialogOpener.h"
 
@@ -56,7 +55,7 @@ BackupSettingsUI::~BackupSettingsUI()
 
 void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
-    AddBackupFromUiManager::addBackup_static(false);
+    CreateRemoveBackupsManager::addBackup(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
@@ -73,7 +72,7 @@ void BackupSettingsUI::changeEvent(QEvent *event)
 
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    AddBackupFromUiManager::removeBackup_static(backup, this);
+    CreateRemoveBackupsManager::removeBackup(backup, this);
 }
 
 QString BackupSettingsUI::getFinishWarningIconString() const

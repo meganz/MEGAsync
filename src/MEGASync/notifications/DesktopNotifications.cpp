@@ -412,7 +412,8 @@ void DesktopNotifications::replyIncomingPendingRequest(DesktopAppNotification::A
                     [=](mega::MegaRequest* request, mega::MegaError* e) {
                         if (e->getErrorCode() == mega::MegaError::API_OK)
                         {
-                            UserAttributes::UserAttributesManager::instance().updateEmptyAttributesByUser(sourceEmail.toStdString().c_str());
+                            UserAttributes::UserAttributesManager::instance()
+                                .updateEmptyAttributesByUser(sourceEmail.toUtf8().constData());
                         }
                     });
 
@@ -1067,7 +1068,8 @@ void DesktopNotifications::replyNewShareReceived(DesktopAppNotification::Action 
     {
         if(!base64Handle.isEmpty())
         {
-            const auto megaFolderHandle = mega::MegaApi::base64ToUserHandle(base64Handle.toStdString().c_str());
+            const auto megaFolderHandle =
+                mega::MegaApi::base64ToUserHandle(base64Handle.toUtf8().constData());
             const auto megaApp = static_cast<MegaApplication*>(qApp);
             megaApp->openSettingsAddSync(megaFolderHandle);
         }

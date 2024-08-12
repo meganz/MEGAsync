@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
-#include <string>
 #include <QString>
+#include <QVector>
 
 struct ScreenInfo
 {
@@ -29,17 +29,20 @@ class ScaleFactorManager
 {
 public:
     ScaleFactorManager(OsType osType);
-    ScaleFactorManager(OsType osType, ScreensInfo screensInfo, std::string osName, std::string desktopName);
+    ScaleFactorManager(OsType osType,
+                       ScreensInfo screensInfo,
+                       const QString& osName,
+                       const QString& desktopName);
     void setScaleFactorEnvironmentVariable();
-    std::vector<std::string> getLogMessages() const;
+    QVector<QString> getLogMessages() const;
 
 private:
     OsType mOsType;
-    std::string mOsName;
+    QString mOsName;
     ScreensInfo mScreensInfo;
-    mutable std::vector<std::string> mLogMessages;
+    mutable QVector<QString> mLogMessages;
     std::vector<double> mCalculatedScales;
-    std::string mDesktopName;
+    QString mDesktopName;
 
     bool checkEnvironmentVariables() const;
     bool computeScales();

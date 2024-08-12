@@ -318,7 +318,7 @@ MegaIgnoreSizeRule::MegaIgnoreSizeRule(const QString& rule, bool isCommented)
             auto value = match.captured(0);
             try
             {
-                mValue = std::stoull(value.toStdString());
+                mValue = value.toULongLong();
             }
             catch (...)
             {

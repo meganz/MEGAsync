@@ -30,14 +30,8 @@ public:
 
     static SyncController& instance()
     {
-        static std::unique_ptr<SyncController> instance;
-        static std::once_flag flag;
-
-        std::call_once(flag, [&]() {
-            instance.reset(new SyncController());
-        });
-
-        return *instance;
+        static SyncController instance;
+        return instance;
     }
 
     SyncController(const SyncController&) = delete;
@@ -69,7 +63,8 @@ public:
     //Error strings
     QString getErrStrCurrentBackupOverExistingBackup();
     QString getErrStrCurrentBackupInsideExistingBackup();
-    QString getErrorString(int errorCode, int syncErrorCode);
+    QString getErrorString(int errorCode, int syncErrorCode) const;
+    QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
@@ -86,7 +81,7 @@ protected:
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
     void createPendingBackups();
-    QString getSyncAPIErrorMsg(int megaError);
+    QString getSyncAPIErrorMsg(int megaError) const;
     QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 

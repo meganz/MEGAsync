@@ -449,7 +449,7 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
                         conflictedNode.get(),
-                        renameFrom.toStdString().c_str());
+                        renameFrom.toUtf8().constData());
 
                     //Fail string pending
                     conflictName->setFailed(tr("Unable to rename the local file"));
@@ -568,7 +568,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                             }
                         },
                         conflictedNode.get(),
-                        newName.toStdString().c_str());
+                        newName.toUtf8().constData());
 
                     if(error)
                     {
@@ -667,7 +667,7 @@ bool NameConflictedStalledIssue::renameCloudSibling(std::shared_ptr<ConflictedNa
                     }
                 },
                 conflictedNode.get(),
-                newName.toStdString().c_str());
+                newName.toUtf8().constData());
 
             error ? item->setFailed(RenameRemoteNodeDialog::renamedFailedErrorString(
                         error.get(),

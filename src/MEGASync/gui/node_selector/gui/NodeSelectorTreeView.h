@@ -19,7 +19,7 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
-    QList<MegaHandle> getMultiSelectionNodeHandle();
+    QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
 
 protected:
@@ -37,14 +37,14 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 signals:
-    void removeNodeClicked(const QList<MegaHandle>& handles, bool permanently);
+    void removeNodeClicked(bool permanently);
     void renameNodeClicked();
     void getMegaLinkClicked();
     void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
-    void removeNode(const QList<MegaHandle>& handles, bool permanently);
+    void removeNode(bool permanently);
     void renameNode();
     void getMegaLink();
     void restore(const QList<MegaHandle>& handles);
@@ -57,9 +57,10 @@ private:
     NodeSelectorProxyModel* proxyModel() const;
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
-    bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
-    bool areAllEligibleForRestore(const QList<mega::MegaHandle>& handles) const;
     int getNodeAccess(mega::MegaHandle handle) const;
+
+    bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
+    bool areAllEligibleForDeletion(const QList<MegaHandle>& handles = QList<MegaHandle>()) const;
 
     MegaApi* mMegaApi;
 };

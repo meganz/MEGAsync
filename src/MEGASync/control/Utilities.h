@@ -453,7 +453,7 @@ public:
 
     EnumType  getEnum(const QString& typeAsString)
     {
-        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toStdString().c_str()));
+        return static_cast<EnumType>(mMetaEnum.keyToValue(typeAsString.toUtf8().constData()));
     }
 
 private:

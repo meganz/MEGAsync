@@ -175,6 +175,18 @@ void NodeSelectorTreeViewWidget::abort()
     mModel->abort();
 }
 
+NodeSelectorModelItem* NodeSelectorTreeViewWidget::rootItem()
+{
+    auto rootIndex = ui->tMegaFolders->rootIndex();
+    if(!rootIndex.isValid())
+    {
+        //Top parent
+        rootIndex = mModel->index(0,0,QModelIndex());
+    }
+
+    return mModel->getItemByIndex(rootIndex);
+}
+
 NodeSelectorProxyModel* NodeSelectorTreeViewWidget::getProxyModel()
 {
     return mProxyModel.get();
@@ -346,9 +358,7 @@ void NodeSelectorTreeViewWidget::onExpandReady()
                 if(indexesAndSelected.needsToBeSelected &&
                     proxyIndex.isValid())
                 {
-                    ui->tMegaFolders->selectionModel()->setCurrentIndex(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                    ui->tMegaFolders->selectionModel()->select(proxyIndex, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-                    ui->tMegaFolders->scrollTo(proxyIndex, QAbstractItemView::ScrollHint::PositionAtCenter);
+                    selectIndex(proxyIndex, true);
                 }
 
                 if(indexesAndSelected.needsToBeEntered)
@@ -362,7 +372,8 @@ void NodeSelectorTreeViewWidget::onExpandReady()
 
 void NodeSelectorTreeViewWidget::onGoBackClicked()
 {
-    auto rootIndexHandle(getHandleByIndex(ui->tMegaFolders->rootIndex()));
+    auto rootIndex(ui->tMegaFolders->rootIndex());
+    auto rootIndexHandle(getHandleByIndex(rootIndex));
     if(rootIndexHandle != mega::INVALID_HANDLE)
     {
         mNavigationInfo.appendToForward(rootIndexHandle);
@@ -374,9 +385,9 @@ void NodeSelectorTreeViewWidget::onGoBackClicked()
     checkBackForwardButtons();
     checkButtonsVisibility();
 
-    if(auto selectionModel = ui->tMegaFolders->selectionModel())
+    if(rootIndex.isValid())
     {
-        selectionHasChanged(selectionModel->selectedRows());
+        selectIndex(rootIndex, true);
     }
 }
 
@@ -628,7 +639,7 @@ void NodeSelectorTreeViewWidget::onModelDataChanged(const QModelIndex &first, co
 
 void NodeSelectorTreeViewWidget::selectionHasChanged(const QModelIndexList &selected)
 {
-    ui->bOk->setEnabled(mSelectType->okButtonEnabled(selected));
+    ui->bOk->setEnabled(mSelectType->okButtonEnabled(this, selected));
     mSelectType->selectionHasChanged(selected, this);
 }
 
@@ -647,13 +658,14 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
     DialogOpener::showDialog(dialog);
 }
 
-void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently)
+void NodeSelectorTreeViewWidget::onDeleteClicked(bool permanently)
 {
-    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
+    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode> {
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         int access = mMegaApi->getAccess(node.get());
 
-        //This is for an extra protection as we don´t show the rename action if oxne of this conditions are not met
+        // This is for an extra protection as we don´t show the delete action if one of this
+        // conditions are not met
         if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
         {
             return nullptr;
@@ -668,7 +680,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
 
         //Double protection in case the node properties changed while the node is deleted
         if (permanently || (access == MegaShare::ACCESS_FULL
-                            && node->isNodeKeyDecrypted()))
+                              && node->isNodeKeyDecrypted()))
         {
             mMegaApi->remove(node.get());
         }
@@ -680,59 +692,51 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
     };
 
     QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
+    mDeletedHandles.clear();
+    mLastValidDeletedParent = QModelIndex();
 
-    if(handles.size() == 1)
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.parent = ui->tMegaFolders;
+    msgInfo.title = MegaSyncApp->getMEGAString();
+    msgInfo.informativeText = tr(
+        "Any shared files or folders will no longer be accessible to the people you shared "
+        "them with. You can still access these items in the Rubbish bin, restore, and share "
+        "them.");
+    msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+    msgInfo.defaultButton = QMessageBox::Yes;
+    msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
+    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
+
+    auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
+
+    if(selectedRows.size() == 1)
     {
-        auto node = getNode(handles.first());
+        QPersistentModelIndex p_index(selectedRows.first());
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = ui->tMegaFolders;
-        msgInfo.title =  MegaSyncApp->getMEGAString();
-        if(permanently)
+        if(auto savedNode = mProxyModel->getNode(p_index))
         {
-            msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", 1);
-            msgInfo.informativeText = tr("You cannot undo this action");
-        }
-        else
-        {
-            msgInfo.text = tr("Are you sure that you want to delete \"%1\"?")
-                               .arg(QString::fromUtf8(node->getName()));
-        }
-        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-        msgInfo.defaultButton = QMessageBox::No;
-        msgInfo.finishFunc = [removeNode, node](QPointer<QMessageBox> msg)
-        {
-            if(msg->result() == QMessageBox::Yes)
+            auto node = getNode(savedNode->getHandle());
+            if(node)
             {
-                removeNode(node);
+                msgInfo.text = tr("Move \"%1\" to Rubbish bin?")
+                                   .arg(QString::fromUtf8(node->getName()));
+                msgInfo.finishFunc = [this, removeNode, node, p_index](QPointer<QMessageBox> msg)
+                {
+                    if(msg->result() == QMessageBox::Yes)
+                    {
+                        mDeletedHandles.insert(node->getHandle(), p_index);
+                        removeNode(node);
+                    }
+                };
+
+                QMegaMessageBox::question(msgInfo);
             }
-            else
-            {
-                return;
-            }
-        };
-        QMegaMessageBox::warning(msgInfo);
+        }
     }
     else
     {
-        auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
-
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = ui->tMegaFolders;
-        msgInfo.title =  MegaSyncApp->getMEGAString();
-        if(permanently)
-        {
-            msgInfo.text = tr("You are about to permanently remove %n file.\nWould you like to proceed?", "", selectedRows.size());
-            msgInfo.informativeText = tr("You cannot undo this action");
-        }
-        else
-        {
-            msgInfo.text = tr("Are you sure that you want to delete %1 items?")
-                               .arg(QString::number(selectedRows.size()));
-        }
-        msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
-        msgInfo.defaultButton = QMessageBox::No;
-        msgInfo.finishFunc = [this, selectedRows, getNode, removeNode](QPointer<QMessageBox> msg)
+        msgInfo.text = tr("Move %n items to Rubbish bin?", "", selectedRows.size());
+        msgInfo.finishFunc = [this, removeNode, getNode, selectedRows](QPointer<QMessageBox> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -741,17 +745,17 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
                     if(auto savedNode = mProxyModel->getNode(s_index))
                     {
                         auto node = getNode(savedNode->getHandle());
-                        removeNode(std::move(node));
+                        if(node)
+                        {
+                            mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
+                            removeNode(node);
+                        }
                     }
                 }
             }
-            else
-            {
-                return;
-            }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        QMegaMessageBox::question(msgInfo);
     }
 
     if (!currentDialog)
@@ -759,6 +763,71 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
         return;
     }
 }
+
+// void NodeSelectorTreeViewWidget::onRequestFinish(MegaRequest *request, MegaError *e)
+// {
+//     if(request->getType() == MegaRequest::TYPE_REMOVE ||
+//         request->getType() == MegaRequest::TYPE_MOVE)
+//     {
+//         auto index = mDeletedHandles.take(request->getNodeHandle());
+
+//         if(e->getErrorCode() == MegaError::API_OK)
+//         {
+//             if(index.isValid())
+//             {
+//                 if(index.parent().isValid())
+//                 {
+//                     mLastValidDeletedParent = index.parent();
+//                 }
+
+//                 mNavigationInfo.remove(mProxyModel->getHandle(index));
+//                 mProxyModel->removeNode(index);
+
+//                 //Only when the last item is removed
+//                 if(mDeletedHandles.isEmpty() && mLastValidDeletedParent.isValid())
+//                 {
+//                     auto parent = mProxyModel->getNode(mLastValidDeletedParent);
+//                     if(parent)
+//                     {
+//                         setSelectedNodeHandle(parent->getHandle());
+//                     }
+//                 }
+//             }
+//         }
+//         else
+//         {
+//             msgInfo.text = tr("Are you sure that you want to delete %1 items?")
+//                                .arg(QString::number(selectedRows.size()));
+//         }
+//         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+//         msgInfo.defaultButton = QMessageBox::No;
+//         msgInfo.finishFunc = [this, selectedRows, getNode, removeNode](QPointer<QMessageBox> msg)
+//         {
+//             if(msg->result() == QMessageBox::Yes)
+//             {
+//                 foreach(auto& s_index, selectedRows)
+//                 {
+//                     if(auto savedNode = mProxyModel->getNode(s_index))
+//                     {
+//                         auto node = getNode(savedNode->getHandle());
+//                         removeNode(std::move(node));
+//                     }
+//                 }
+//             }
+//             else
+//             {
+//                 return;
+//             }
+//         };
+
+//         QMegaMessageBox::warning(msgInfo);
+//     }
+
+//     if (!currentDialog)
+//     {
+//         return;
+//     }
+// }
 
 bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
 {
@@ -961,6 +1030,17 @@ bool NodeSelectorTreeViewWidget::areThereNodesToUpdate()
         !mMovedNodesByHandle.isEmpty();
 }
 
+void NodeSelectorTreeViewWidget::selectIndex(const QModelIndex& index, bool setCurrent)
+{
+    if(setCurrent)
+    {
+        ui->tMegaFolders->selectionModel()->setCurrentIndex(
+            index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    }
+    ui->tMegaFolders->selectionModel()->select(index, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    ui->tMegaFolders->scrollTo(index, QAbstractItemView::ScrollHint::PositionAtCenter);
+}
+
 void NodeSelectorTreeViewWidget::removeItemByHandle(mega::MegaHandle handle)
 {
     auto index = mModel->findItemByNodeHandle(handle, QModelIndex());
@@ -1143,12 +1223,15 @@ void NodeSelectorTreeViewWidget::checkBackForwardButtons()
 }
 
 void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
-{
+{    
     //In case the idx is coming from a potentially hidden column, we always take the NODE column
     //As it is the only one that have childrens
     auto node_column_idx = proxy_idx.sibling(proxy_idx.row(), NodeSelectorModel::COLUMN::NODE);
 
     ui->tMegaFolders->setRootIndex(node_column_idx);
+
+    //Everytime we move among folders, we reset the selection
+    ui->tMegaFolders->selectionModel()->clear();
 
     onRootIndexChanged(node_column_idx);
 
@@ -1156,11 +1239,6 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     {
         setTitleText(getRootText());
 
-        QModelIndexList selectedIndexes = ui->tMegaFolders->selectionModel()->selectedIndexes();
-        foreach(auto& selection, selectedIndexes)
-        {
-            ui->tMegaFolders->selectionModel()->select(selection, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
-        }
         ui->lOwnerIcon->setPixmap(QPixmap());
         ui->avatarSpacer->spacerItem()->changeSize(0, 0);
         ui->lIcon->setPixmap(QPixmap());
@@ -1194,7 +1272,6 @@ void NodeSelectorTreeViewWidget::setRootIndex(const QModelIndex &proxy_idx)
     auto node = item->getNode();
     if(node)
     {
-        ui->tMegaFolders->selectionModel()->select(node_column_idx, QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
         setTitleText(MegaNodeNames::getNodeName(node.get()));
     }
 }
@@ -1279,7 +1356,11 @@ void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaH
 void NodeSelectorTreeViewWidget::Navigation::remove(const mega::MegaHandle &handle)
 {
     backwardHandles.removeAll(handle);
-    forwardHandles.removeAll(handle);
+    int forwardPos = forwardHandles.indexOf(handle);
+    for(int i = 0; i <= forwardPos; i++)
+    {
+        forwardHandles.removeFirst();
+    }
 }
 
 void NodeSelectorTreeViewWidget::Navigation::appendToBackward(const mega::MegaHandle &handle)
@@ -1310,6 +1391,19 @@ bool SelectType::isAllowedToNavigateInside(const QModelIndex &index)
     return !(item->getNode()->isFile() || item->isCloudDrive() || item->isRubbishBin());
 }
 
+bool SelectType::cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg)
+{
+    auto result(false);
+    auto rootItem = wdg->rootItem();
+    if(rootItem)
+    {
+        result = rootItem->getNode() &&
+                 (rootItem->getNode()->getHandle() == MegaSyncApp->getRootNode()->getHandle());
+    }
+
+    return result;
+}
+
 void DownloadType::init(NodeSelectorTreeViewWidget *wdg)
 {
     wdg->ui->bNewFolder->hide();
@@ -1318,9 +1412,15 @@ void DownloadType::init(NodeSelectorTreeViewWidget *wdg)
     wdg->mModel->showReadOnlyFolders(true);
 }
 
-bool DownloadType::okButtonEnabled(const QModelIndexList &selected)
+bool DownloadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected)
 {
-    return !selected.isEmpty();
+    auto result(!selected.isEmpty());
+    if(selected.isEmpty())
+    {
+        result = !cloudDriveIsCurrentRootIndex(wdg);
+    }
+
+    return result;
 }
 
 NodeSelectorModelItemSearch::Types DownloadType::allowedTypes()
@@ -1347,7 +1447,7 @@ void SyncType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
     }
 }
 
-bool SyncType::okButtonEnabled(const QModelIndexList &selected)
+bool SyncType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected)
 {
     bool enable(false);
     if(!selected.isEmpty() && selected.size() < 2)
@@ -1385,7 +1485,7 @@ void StreamType::init(NodeSelectorTreeViewWidget *wdg)
     wdg->mModel->showReadOnlyFolders(true);
 }
 
-bool StreamType::okButtonEnabled(const QModelIndexList &selected)
+bool StreamType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected)
 {
     bool enable(false);
     if(!selected.isEmpty() && selected.size() < 2)
@@ -1418,9 +1518,15 @@ void UploadType::newFolderButtonVisibility(NodeSelectorTreeViewWidget *wdg)
     }
 }
 
-bool UploadType::okButtonEnabled(const QModelIndexList &selected)
+bool UploadType::okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected)
 {
-    return !selected.isEmpty();
+    auto result(!selected.isEmpty());
+    if(selected.isEmpty())
+    {
+        result = !cloudDriveIsCurrentRootIndex(wdg);
+    }
+
+    return result;
 }
 
 NodeSelectorModelItemSearch::Types UploadType::allowedTypes()
@@ -1439,7 +1545,7 @@ void CloudDriveType::init(NodeSelectorTreeViewWidget *wdg)
 }
 
 
-bool CloudDriveType::okButtonEnabled(const QModelIndexList &selected)
+bool CloudDriveType::okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected)
 {
     return !selected.isEmpty();
 }
