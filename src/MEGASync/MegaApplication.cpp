@@ -36,6 +36,7 @@
 #include "QmlDialogManager.h"
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
+#include "ReloadingEventHandler.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
@@ -5736,6 +5737,11 @@ void MegaApplication::onEvent(MegaApi*, MegaEvent* event)
     else if (event->getType() == MegaEvent::EVENT_UPGRADE_SECURITY)
     {
         processUpgradeSecurityEvent();
+    }
+    else if (event->getType() == MegaEvent::EVENT_RELOADING)
+    {
+        ReloadingEventHandler::instance()->processEvent(std::unique_ptr<MegaEvent>(event->copy()),
+                                                        mOsNotifications);
     }
     else if (event->getType() == MegaEvent::EVENT_FATAL_ERROR)
     {

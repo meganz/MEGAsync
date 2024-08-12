@@ -877,10 +877,19 @@ void LoginController::onConnectivityCheckFinished(bool success)
 void LoginController::onAppStateChanged(AppState::AppStates oldAppState,
                                         AppState::AppStates newAppState)
 {
-    // Do fetchNodes on RELOADING State
+    // We are here only interrested by the RELOADING state
     if (newAppState == AppState::RELOADING)
     {
-        fetchNodes();
+        // If previous state was a FATAL ERROR, we force a fetchNodes()
+        if (oldAppState == AppState::FATAL_ERROR)
+        {
+            fetchNodes();
+        }
+        // Otherwise, the fetchnodes has been started by the SDK, and we just need to monitor it
+        else
+        {
+            setState(FETCHING_NODES);
+        }
     }
 }
 

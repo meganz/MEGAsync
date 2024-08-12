@@ -6287,6 +6287,17 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>ReloadingEventHandler</name>
+    <message>
+        <source>Reload needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Desktop App needed to reload your account. This has been done automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoteItemUi</name>
     <message>
         <source>Permissions</source>
