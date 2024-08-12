@@ -31,25 +31,26 @@ StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
 }
 
 StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
-    std::function<void(const std::shared_ptr<const StalledIssue> issue)> checker)
+    StalledIssueHeader* header,
+    std::function<bool (const std::shared_ptr<const StalledIssue>)> checker)
 {
     SelectionInfo info;
 
     auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
     info.selection = dialog->getDialog()->getSelection(checker);
     info.similarToSelected = MegaSyncApp->getStalledIssuesModel()->getIssues(checker);
-    info.hasBeenExternallyChanged = header->checkForExternalChanges(selection.size() == 1);
+    info.hasBeenExternallyChanged = header->checkForExternalChanges(info.selection.size() == 1);
 
     info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
     info.msgInfo.title = MegaSyncApp->getMEGAString();
     info.msgInfo.textFormat = Qt::RichText;
     info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    info.msgInfo.textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    info.msgInfo.textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+    info.msgInfo.buttonsText.insert(QMessageBox::No, QApplication::translate("CloudFingerprintMissingHeader", "Cancel"));
+    info.msgInfo.buttonsText.insert(QMessageBox::Ok, QApplication::translate("CloudFingerprintMissingHeader", "Apply"));
 
     if (info.selection.size() != info.similarToSelected.size())
     {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
+        auto checkBox = new QCheckBox(QApplication::translate("CloudFingerprintMissingHeader", "Apply to all"));
         info.msgInfo.checkBox = checkBox;
     }
 
@@ -113,7 +114,7 @@ CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader 
     : StalledIssueHeaderCase(header)
 {}
 
-void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int)
 {
     auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
         return issue->missingFingerprint();
@@ -135,11 +136,11 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
         selectionInfo.msgInfo.informativeText.append(informativeMessage);
     }
 
-    selectionInfo.msgInfo.finishFunc = [selection, allSimilarIssues](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues: selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
         }
     };
 
@@ -355,57 +356,37 @@ void FolderMatchedAgainstFileHeader::refreshCaseActions(StalledIssueHeader* head
 }
 
 void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
-    StalledIssueHeader* header, int index)
+    StalledIssueHeader* header, int)
 {
-    auto issueChecker = [](const std::shared_ptr<const StalledIssue> issue){
+    auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
         return issue->getReason() == mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile;
-    };
+    }));
 
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    auto selection = dialog->getDialog()->getSelection(issueChecker);
-
-    if(header->checkForExternalChanges(selection.size() == 1))
+    if(selectionInfo.hasBeenExternallyChanged)
     {
         return;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(fingerprintMissingChecker);
-    if(allSimilarIssues.size() != selection.size())
-    {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
-        msgInfo.checkBox = checkBox;
-    }
     auto pluralNumber(1);
-    msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
-    msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
+    selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
+    selectionInfo.msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
         QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
         StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
-        msgInfo.informativeText.append(informativeMessage);
+        selectionInfo.msgInfo.informativeText.append(informativeMessage);
     }
 
-    msgInfo.buttonsText = textsByButton;
-
-    msgInfo.finishFunc = [selection, allSimilarIssues](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues: selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
+    QMegaMessageBox::warning(selectionInfo.msgInfo);
 }
 
 ////////////////////
@@ -547,7 +528,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
-        auto solutionCanBeApplied = [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
+        auto selectionInfo(getSelectionInfo(header, [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
             auto result = issue->getReason() == mega::MegaSyncStall::NamesWouldClashWhenSynced;
             if(result)
             {
@@ -573,77 +554,58 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
                 }
             }
             return result;
-        };
+            }));
 
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
-
-        if(header->checkForExternalChanges(selection.size() == 1))
+        if(selectionInfo.hasBeenExternallyChanged)
         {
             return;
         }
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
-        if(allSimilarIssues.size() != selection.size())
-        {
-            auto checkBox = new QCheckBox(tr("Apply to all"));
-            msgInfo.checkBox = checkBox;
-        }
-        msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("Are you sure you want to solve the issue?");
+        selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?");
 
         if(index == NameConflictedStalledIssue::Rename)
         {
-            msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
+            selectionInfo.msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
-            msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
+            selectionInfo.msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
         }
         else
         {
             if(index == NameConflictedStalledIssue::RemoveDuplicated)
             {
-               msgInfo.informativeText = tr("This action will delete the duplicate files.");
+               selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
             else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()
                                                   .mostRecentlyModified->getConflictedName());
-                msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
+                selectionInfo.msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
-                msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
             else
             {
-                 msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                 selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
         }
 
-        msgInfo.finishFunc = [index, selection, allSimilarIssues, nameConflict](QMessageBox* msgBox)
+        selectionInfo.msgInfo.finishFunc = [index, selectionInfo, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues : selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected : selectionInfo.selection, index);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(allSimilarIssues, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(selectionInfo.similarToSelected, index);
             }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        QMegaMessageBox::warning(selectionInfo.msgInfo);
     }
 }

@@ -28,7 +28,7 @@ public:
 
     SelectionInfo getSelectionInfo(
         StalledIssueHeader* header,
-        std::function<void(const std::shared_ptr<const StalledIssue> issue)> checker);
+        std::function<bool (const std::shared_ptr<const StalledIssue>)> checker);
 };
 
 //DefaultHeader failed
@@ -79,7 +79,7 @@ class CloudFingerprintMissingHeader : public StalledIssueHeaderCase
 
 public:
     CloudFingerprintMissingHeader(StalledIssueHeader* header);
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int index) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader*header, int) override;
 
 protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
@@ -220,7 +220,7 @@ protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
     void refreshCaseActions(StalledIssueHeader *header) override;
 
-    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int) override;
 };
 
 class LocalAndRemoteActionButtonClicked : QObject

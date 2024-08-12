@@ -825,21 +825,6 @@
 </context>
 <context>
     <name>CloudFingerprintMissingHeader</name>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
-    </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
@@ -878,6 +863,21 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Resolve</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
+        <translation>Apply to all</translation>
     </message>
 </context>
 <context>
@@ -4268,21 +4268,6 @@ This may be due to syncing to case insensitive local filesystems, or the effects
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
         <translation>There are multiple items with the same name on one side of your sync that would all become the same single item on the other side of your sync</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
     </message>
     <message>
         <source>Are you sure you want to solve the issue?</source>
