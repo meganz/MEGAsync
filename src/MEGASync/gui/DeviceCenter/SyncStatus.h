@@ -17,4 +17,17 @@ enum Value
 Q_ENUM_NS(Value)
 }
 
+namespace QmlSyncType
+{
+Q_NAMESPACE
+
+enum Type
+{
+    UNDEFINED,
+    SYNC,
+    BACKUP
+};
+Q_ENUM_NS(Type)
+}
+
 #endif // SYNCSTATUS_H

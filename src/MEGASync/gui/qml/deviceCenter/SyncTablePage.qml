@@ -12,6 +12,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.buttons 1.0 as Buttons
 import SyncStatus 1.0
+import QmlSyncType 1.0
 
 
 Item {
@@ -196,7 +197,7 @@ Item {
                 lineHeight: 18
                 text: {
                     if(model) {
-                        return model.type === SyncModel.BACKUP?  DeviceCenterStrings.backup : DeviceCenterStrings.sync
+                        return model.type === QmlSyncType.BACKUP?  DeviceCenterStrings.backup : DeviceCenterStrings.sync
                     }
                     return "";
                 }

@@ -9,8 +9,9 @@
 #include "QmlClipboard.h"
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
-#include "SyncInfo.h"
+#include "QmlDialogManager.h"
 #include "QmlTheme.h"
+#include "SyncInfo.h"
 
 #include <QDataStream>
 #include <QQmlContext>

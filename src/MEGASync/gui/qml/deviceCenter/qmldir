@@ -9,3 +9,5 @@ DevicePageHeader 1.0 DevicePageHeader.qml
 NoInternetPage 1.0 NoInternetPage.qml
 NoConnectionsPage 1.0 NoConnectionsPage.qml
 SyncTablePage 1.0 SyncTablePage.qml
+DevicePage 1.0 DevicePage.qml
+DevicePageHeader 1.0 DevicePageHeader.qml

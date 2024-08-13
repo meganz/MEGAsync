@@ -4,8 +4,6 @@
 #include "CreateRemoveSyncsManager.h"
 #include "MegaApplication.h"
 
-#include <QTimer>
-
 static bool qmlRegistrationDone = false;
 
 DeviceCenter::DeviceCenter(QObject* parent):
@@ -17,11 +15,19 @@ DeviceCenter::DeviceCenter(QObject* parent):
 
     mDelegateListener = new mega::QTMegaListener(mMegaApi, this);
     mMegaApi->addListener(mDelegateListener);
+
+    const int delayToNextCallInMs = 1000;
+    mSizeInfoTimer.setInterval(delayToNextCallInMs);
+    mSizeInfoTimer.setSingleShot(true);
+    connect(&mSizeInfoTimer, &QTimer::timeout, [this]() {
+        mMegaApi->getBackupInfo();
+    });
 }
 
 DeviceCenter::~DeviceCenter()
 {
     mMegaApi->removeListener(mDelegateListener);
+    mSizeInfoTimer.stop();
 }
 
 void DeviceCenter::onRequestFinish(mega::MegaApi* api,
@@ -31,19 +37,18 @@ void DeviceCenter::onRequestFinish(mega::MegaApi* api,
     if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
     {
         mCachedDeviceData.name = QString::fromUtf8(request->getName());
+        emit deviceDataUpdated(mCachedDeviceData);
     }
     else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO)
     {
         mega::MegaBackupInfoList* backupList = request->getMegaBackupInfoList();
         updateLocalData(*backupList);
 
-        if (mCachedDeviceData.status == SyncStatus::UPDATING)
+        if (mSyncModel->hasUpdatingStatus())
         {
-            const int delayToNextCallInMs = 1000;
-            QTimer::singleShot(delayToNextCallInMs, [this]() {
-                mMegaApi->getBackupInfo();
-            });
+            mSizeInfoTimer.start();
         }
+        emit deviceDataUpdated(mCachedDeviceData);
     }
     else if (request->getType() == mega::MegaRequest::TYPE_ADD_SYNC)
     {
@@ -51,14 +56,14 @@ void DeviceCenter::onRequestFinish(mega::MegaApi* api,
         mSyncModel->addOrUpdate(syncObject);
 
         mMegaApi->getBackupInfo();
+        emit deviceDataUpdated(mCachedDeviceData);
     }
     else if (request->getType() == mega::MegaRequest::TYPE_REMOVE_SYNC)
     {
         mSyncModel->remove(request->getParentHandle());
         updateDeviceData();
+        emit deviceDataUpdated(mCachedDeviceData);
     }
-
-    emit deviceDataUpdated(mCachedDeviceData);
 }
 
 void DeviceCenter::onSyncStateChanged(mega::MegaApi*, mega::MegaSync* sync)
@@ -90,7 +95,13 @@ void DeviceCenter::registerQmlModules()
         qmlRegisterModule("DeviceCenter", 1, 0);
         qmlRegisterType<QmlDialog>("DeviceCenterQmlDialog", 1, 0, "DeviceCenterQmlDialog");
         qmlRegisterType<SyncModel>("SyncModel", 1, 0, "SyncModel");
-        qRegisterMetaType<SyncModel::SyncType>("SyncType");
+        qmlRegisterUncreatableMetaObject(
+            QmlSyncType::staticMetaObject,
+            "QmlSyncType",
+            1,
+            0,
+            "QmlSyncType",
+            QString::fromUtf8("QmlSyncType is not meant to be created"));
         qmlRegisterUncreatableMetaObject(DeviceOs::staticMetaObject,
                                          "DeviceOs",
                                          1,

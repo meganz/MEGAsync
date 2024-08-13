@@ -1,5 +1,6 @@
 #include "SyncModel.h"
 
+#include <algorithm>
 #include <QCoreApplication>
 #include <QDate>
 #include <Utilities.h>
@@ -108,6 +109,14 @@ void SyncModel::setStatus(mega::MegaHandle handle, const SyncStatus::Value statu
     }
 }
 
+bool SyncModel::hasUpdatingStatus() const
+{
+    auto finder = [](const QmlSyncData& obj) {
+        return obj.status == SyncStatus::UPDATING;
+    };
+    return std::any_of(mSyncObjects.begin(), mSyncObjects.end(), finder);
+}
+
 int SyncModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
@@ -167,10 +176,10 @@ QString SyncModel::getSize(int row) const
     return Utilities::getSizeString(mSyncObjects[row].size);
 }
 
-SyncModel::SyncType SyncModel::getType(int row) const
+QmlSyncType::Type SyncModel::getType(int row) const
 {
-    return mSyncObjects[row].type == QString::fromUtf8("Sync") ? SyncModel::SYNC :
-                                                                 SyncModel::BACKUP;
+    return mSyncObjects[row].type == QString::fromUtf8("Sync") ? QmlSyncType::SYNC :
+                                                                 QmlSyncType::BACKUP;
 }
 
 QDate SyncModel::getDateAdded(int row) const

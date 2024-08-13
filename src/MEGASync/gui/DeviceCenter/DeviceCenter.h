@@ -6,6 +6,8 @@
 #include "QTMegaListener.h"
 #include "SyncModel.h"
 
+#include <QTimer>
+
 class DeviceCenter: public QMLComponent, public mega::MegaListener
 {
     Q_OBJECT
@@ -48,6 +50,7 @@ private:
     SyncModel* mSyncModel;
     QPointer<mega::QTMegaListener> mDelegateListener;
     QString mDeviceIdFromLastRequest;
+    QTimer mSizeInfoTimer;
 
     DeviceData mCachedDeviceData;
 };

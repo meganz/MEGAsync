@@ -21,13 +21,6 @@ public:
         STATUS
     };
 
-    enum SyncType
-    {
-        SYNC,
-        BACKUP
-    };
-    Q_ENUM(SyncType)
-
     explicit SyncModel(QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -44,11 +37,12 @@ public:
     qint64 computeTotalSize() const;
 
     void setStatus(mega::MegaHandle handle, const SyncStatus::Value status);
+    bool hasUpdatingStatus() const;
 
 public:
     QString getName(int row) const;
     QString getSize(int row) const;
-    SyncType getType(int row) const;
+    QmlSyncType::Type getType(int row) const;
     QDate getDateAdded(int row) const;
     QDate getDateModified(int row) const;
     SyncStatus::Value getStatus(int row) const;
