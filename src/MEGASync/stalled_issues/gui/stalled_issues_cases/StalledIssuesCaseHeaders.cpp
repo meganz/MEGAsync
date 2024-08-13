@@ -382,7 +382,7 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
         }
     };
 

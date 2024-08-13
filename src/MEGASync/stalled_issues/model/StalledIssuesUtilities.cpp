@@ -215,6 +215,54 @@ QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
     return url;
 }
 
+StalledIssuesUtilities::KeepBothSidesState StalledIssuesUtilities::KeepBothSides(
+    std::shared_ptr<mega::MegaNode> node, const QString& localFilePath)
+{
+    KeepBothSidesState result;
+
+    if(node)
+    {
+        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
+        if(parentNode)
+        {
+            result.newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+
+            result.error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::renameNode,
+                MegaSyncApp->getMegaApi(),
+                node.get(),
+                result.newName.toUtf8().constData());
+
+            if(result.error)
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                                                                       .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(result.error.get()))
+                                                                       .toUtf8().constData());
+
+                QFileInfo currentFile(localFilePath);
+                QFile file(currentFile.filePath());
+                if(file.exists())
+                {
+                    result.newName = Utilities::getNonDuplicatedLocalName(currentFile, true, QStringList());
+                    currentFile.setFile(currentFile.path(), result.newName);
+                    if(file.rename(QDir::toNativeSeparators(currentFile.filePath())))
+                    {
+                        result.sideRenamed = KeepBothSidesState::Side::LOCAL;
+
+                        //Error no longer needed, at least we have renamed the local file
+                        result.error.reset();
+                    }
+                }
+            }
+            else
+            {
+                result.sideRenamed = KeepBothSidesState::Side::REMOTE;
+            }
+        }
+    }
+
+    return result;
+}
+
 //////////////////////////////////////////////////
 QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
 QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();

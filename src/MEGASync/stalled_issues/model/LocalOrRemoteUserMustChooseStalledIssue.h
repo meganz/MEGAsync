@@ -23,7 +23,7 @@ public:
     bool chooseLocalSide();
     bool chooseRemoteSide();
     bool chooseLastMTimeSide();
-    bool chooseBothSides(QStringList *namesUsed);
+    bool chooseBothSides();
 
     bool UIShowFileAttributes() const override;
 
