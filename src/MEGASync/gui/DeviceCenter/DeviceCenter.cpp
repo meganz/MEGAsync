@@ -1,12 +1,11 @@
 #include "DeviceCenter.h"
 
 #include "CreateRemoveBackupsManager.h"
-"
 #include "MegaApplication.h"
 
 #include <QTimer>
 
-    static bool qmlRegistrationDone = false;
+static bool qmlRegistrationDone = false;
 
 DeviceCenter::DeviceCenter(QObject* parent):
     QMLComponent(parent),
