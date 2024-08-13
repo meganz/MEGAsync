@@ -14,13 +14,10 @@ class FolderMatchedAgainstFileWidget : public StalledIssueBaseDelegateWidget
     Q_OBJECT
 
 public:
-    explicit FolderMatchedAgainstFileWidget(std::shared_ptr<mega::MegaSyncStall> originalStall, QWidget *parent = nullptr);
+    explicit FolderMatchedAgainstFileWidget(QWidget *parent = nullptr);
     ~FolderMatchedAgainstFileWidget();
 
     void refreshUi() override;
-
-    static QString keepLocalSideString(const KeepSideInfo& info);
-    static QString keepRemoteSideString(const KeepSideInfo& info);
 
 private:
 

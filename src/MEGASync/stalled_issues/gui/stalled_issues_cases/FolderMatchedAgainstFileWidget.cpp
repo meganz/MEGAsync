@@ -14,6 +14,7 @@
 #include "FolderMatchedAgainstFileIssue.h"
 #include "StalledIssueChooseWidget.h"
 #include <Preferences/Preferences.h>
+#include "RenameNodeDialog.h"
 
 #include "mega/types.h"
 
@@ -32,7 +33,7 @@ FolderMatchedAgainstFileWidget::FolderMatchedAgainstFileWidget(QWidget *parent) 
     ui->chooseLayout->setContentsMargins(margins);
 }
 
-FolderMatchedAgainstFileWidget::~LocalAndRemoteDifferentWidget()
+FolderMatchedAgainstFileWidget::~FolderMatchedAgainstFileWidget()
 {
     delete ui;
 }
@@ -40,120 +41,57 @@ FolderMatchedAgainstFileWidget::~LocalAndRemoteDifferentWidget()
 void FolderMatchedAgainstFileWidget::refreshUi()
 {
     const auto issue = getData().convert<FolderMatchedAgainstFileIssue>();
-    const auto isFailed(issue->isFailed());
-    const auto chosenSide(issue->getResult().sideRenamed);
+    const auto result(issue->getResult());
 
     if(issue->consultLocalData())
     {
-        ui->chooseLocalCopy->updateUi(issue->consultLocalData(), chosenSide);
+        ui->localCopy->updateUi(issue->consultLocalData());
+        ui->localCopy->setActionButtonVisibility(false);
 
-        ui->chooseLocalCopy->show();
+        ui->localCopy->show();
     }
     else
     {
-        ui->chooseLocalCopy->hide();
+        ui->localCopy->hide();
     }
 
     if(issue->consultCloudData())
     {
-        ui->chooseRemoteCopy->updateUi(issue->consultCloudData(), chosenSide);
-        ui->chooseRemoteCopy->show();
+        ui->remoteCopy->updateUi(issue->consultCloudData());
+        ui->remoteCopy->setActionButtonVisibility(false);
+        ui->remoteCopy->show();
     }
     else
     {
-        ui->chooseRemoteCopy->hide();
-    }
-
-    if(issue->getSyncType() != mega::MegaSync::SyncType::TYPE_BACKUP)
-    {
-        GenericChooseWidget::GenericInfo bothInfo;
-        bothInfo.buttonText = tr("Choose both");
-        QString bothInfoTitle = tr("[B]Keep both[/B]");
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(bothInfoTitle);
-        bothInfo.title = bothInfoTitle;
-        bothInfo.icon = QLatin1String(":/images/copy.png");
-        bothInfo.solvedText = ui->keepBothOption->chosenString();
-        ui->keepBothOption->setInfo(bothInfo);
-
-        GenericChooseWidget::GenericInfo lastModifiedInfo;
-        lastModifiedInfo.buttonText = tr("Choose");
-        QString lastModifiedInfoTitle;
-        if(issue->lastModifiedSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL)
-        {
-            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (local)");
-        }
-        else
-        {
-            lastModifiedInfoTitle = tr("[B]Keep last modified[/B] (remote)");
-        }
-
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(lastModifiedInfoTitle);
-        lastModifiedInfo.title = lastModifiedInfoTitle;
-        lastModifiedInfo.icon = QLatin1String(":/images/clock_ico.png");
-        lastModifiedInfo.solvedText = ui->keepLastModifiedOption->chosenString();
-        ui->keepLastModifiedOption->setInfo(lastModifiedInfo);
-    }
-    else
-    {
-        ui->chooseRemoteCopy->setActionButtonVisibility(false);
-        ui->keepBothOption->hide();
-        ui->keepLastModifiedOption->hide();
+        ui->remoteCopy->hide();
     }
 
     if (issue->isSolved())
     {
-        unSetFailedChooseWidget();
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/StalledIssues/check_default.png"));
 
-        ui->keepBothOption->setSolved(true, issue->getChosenSide() == LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH);
-        ui->keepLastModifiedOption->hide();
-
-        if (issue->isPotentiallySolved())
+        switch(result.sideRenamed)
         {
-            ui->chooseLocalCopy->setActionButtonVisibility(false);
-            ui->chooseRemoteCopy->setActionButtonVisibility(false);
-        }
-
-    }
-    else if(issue->isFailed())
-    {
-        ui->keepBothOption->setSolved(false, false);
-        ui->keepLastModifiedOption->show();
-        ui->chooseLocalCopy->setActionButtonVisibility(true);
-        ui->chooseRemoteCopy->setActionButtonVisibility(true);
-
-        unSetFailedChooseWidget();
-
-        switch(issue->getChosenSide())
-        {
-            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::REMOTE:
+            case StalledIssuesUtilities::KeepBothSidesState::REMOTE:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the local file") : tr("Unable to remove the local folder");
-                ui->chooseRemoteCopy->setFailed(true, errorStr);
-                mFailedItem = ui->chooseRemoteCopy;
+                ui->remoteCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
                 break;
             }
-            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::LOCAL:
+            case StalledIssuesUtilities::KeepBothSidesState::LOCAL:
             {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to remove the file stored in MEGA")
-                                                                    : tr("Unable to remove the folder stored in MEGA");
-                ui->chooseLocalCopy->setFailed(true, errorStr);
-                mFailedItem = ui->chooseLocalCopy;
-                break;
-            }
-            case LocalOrRemoteUserMustChooseStalledIssue::ChosenSide::BOTH:
-            {
-                auto errorStr = issue->consultLocalData()->isFile() ? tr("Unable to update both local and MEGA files")
-                                                                    : tr("Unable to update both local and MEGA folders");
-                ui->keepBothOption->setFailed(true, errorStr);
-                mFailedItem = ui->keepBothOption;
+                ui->localCopy->setMessage(QApplication::translate("NameConflict", "Renamed to \"%1\"").arg(result.newName), icon.pixmap(16,16), QString());
                 break;
             }
             default:
             {
-                break;
             }
         }
-
+    }
+    else if(issue->isFailed())
+    {
+        ui->remoteCopy->setFailed(true, RenameRemoteNodeDialog::renamedFailedErrorString(result.error.get(), issue->consultCloudData()->getNode()->isFile()));
+        ui->localCopy->setFailed(true, RenameLocalNodeDialog::renamedFailedErrorString(issue->consultLocalData()->isFile()));
     }
 
     updateSizeHint();

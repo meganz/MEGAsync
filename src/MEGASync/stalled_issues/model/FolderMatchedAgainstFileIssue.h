@@ -12,7 +12,9 @@ public:
 
     bool solveIssue();
 
-    const StalledIssuesUtilities::KeepBothSidesState& getResult();
+    const StalledIssuesUtilities::KeepBothSidesState& getResult() const;
+
+    bool UIShowFileAttributes() const override;
 
 private:
     StalledIssuesUtilities::KeepBothSidesState mResult;
