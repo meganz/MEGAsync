@@ -13,6 +13,17 @@ bool FolderMatchedAgainstFileIssue::solveIssue() {
         setIsSolved(SolveType::FAILED);
         return false;
     }
+    else
+    {
+        //Stop pointing to the old local path as it will be pointing to the new REMOTE FOLDER
+        if(mResult.sideRenamed == StalledIssuesUtilities::KeepBothSidesState::LOCAL)
+        {
+            QFileInfo fileInfo;
+            fileInfo.setFile(getLocalData()->getNativePath(), mResult.newName);
+
+            getLocalData()->mPath.path = fileInfo.filePath();
+        }
+    }
 
     return true;
 }
