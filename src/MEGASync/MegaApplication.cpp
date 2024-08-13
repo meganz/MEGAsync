@@ -5949,12 +5949,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setFirstStartDone();
                 break;
             case AppStatsEvents::EventType::FIRST_SYNC:
+            // Fallthrough
+            case AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING:
                 preferences->setFirstSyncDone();
                 break;
             case AppStatsEvents::EventType::FIRST_SYNCED_FILE:
                 preferences->setFirstFileSynced();
                 break;
             case AppStatsEvents::EventType::FIRST_BACKUP:
+            // Fallthrough
+            case AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING:
                 preferences->setFirstBackupDone();
                 break;
             case AppStatsEvents::EventType::FIRST_BACKED_UP_FILE:

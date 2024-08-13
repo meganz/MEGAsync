@@ -25,7 +25,7 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups();
+            backupsProxyModelRef.createBackups(window.syncOrigin);
         }
     }
 
