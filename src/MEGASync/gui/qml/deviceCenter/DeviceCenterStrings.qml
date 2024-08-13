@@ -21,7 +21,7 @@ QtObject {
     readonly property string statusUpdating: qsTr("Updating...")
     readonly property string statusPaused: qsTr("Paused")
     readonly property string statusStopped: qsTr("Stopped")
-    readonly property string deviceCentre: qsTr("Device Centre")
+    readonly property string deviceCenterWindowTitle: qsTr("Device Centre")
 
     function folderCount(count) {
         return qsTr("%n folders", "", count)

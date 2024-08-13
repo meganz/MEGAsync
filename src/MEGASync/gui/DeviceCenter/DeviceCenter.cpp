@@ -1,6 +1,7 @@
 #include "DeviceCenter.h"
 
 #include "CreateRemoveBackupsManager.h"
+#include "CreateRemoveSyncsManager.h"
 #include "MegaApplication.h"
 
 #include <QTimer>
@@ -184,4 +185,10 @@ DeviceCenter::BackupList DeviceCenter::filterBackupList(const char* deviceId,
 DeviceOs::Os DeviceCenter::getCurrentOS()
 {
     return DeviceOs::getCurrentOS();
+}
+
+void DeviceCenter::openAddSyncDialog()
+{
+    const bool comesFromSettings = true;
+    CreateRemoveSyncsManager::addSync(mega::INVALID_HANDLE, comesFromSettings);
 }

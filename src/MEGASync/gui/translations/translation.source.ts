@@ -1291,6 +1291,84 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>DeviceCenterStrings</name>
+    <message>
+        <source>Device Centre</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Backup</source>
+        <translation type="unfinished">Add backup</translation>
+    </message>
+    <message>
+        <source>Add Sync</source>
+        <translation type="unfinished">Add sync</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translation type="unfinished">Sync</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translation type="unfinished">Backup</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Name</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Type</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation type="unfinished">Size</translation>
+    </message>
+    <message>
+        <source>Date added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation type="unfinished">Status</translation>
+    </message>
+    <message>
+        <source>Contains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translation type="unfinished">Up to date</translation>
+    </message>
+    <message>
+        <source>Updating...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translation type="unfinished">Paused</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translation type="unfinished">Stopped</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n folders</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
@@ -3397,6 +3475,10 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation>Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>Device Center</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

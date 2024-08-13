@@ -20,7 +20,7 @@ Item {
             leftMargin: titleMargins
         }
         wrapMode: Text.NoWrap
-        text: DeviceCenterStrings.deviceCentre
+        text: DeviceCenterStrings.deviceCenterWindowTitle
         lineHeight: 30
         font {
             pixelSize: Texts.Text.Size.LARGE

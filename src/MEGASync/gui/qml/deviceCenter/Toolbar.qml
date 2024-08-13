@@ -42,6 +42,7 @@ Item {
                 icons.source: Images.addSync
 
                 onClicked: {
+                    deviceCenterAccess.openAddSyncDialog();
                 }
             }
         }

@@ -9,16 +9,19 @@ import DeviceCenterQmlDialog 1.0
 DeviceCenterQmlDialog {
     id: window
 
-    title: DeviceCenterStrings.windowTitle
+
+    readonly property int deviceCenterWidth: 1024
+    readonly property int deviceCenterHeight: 720
+
+    title: DeviceCenterStrings.deviceCenterWindowTitle
     visible: true
     modality: Qt.NonModal
-    width: 1024
-    height: 720
-    maximumHeight: 720
-    maximumWidth: 1024
-    minimumHeight: 720
-    minimumWidth: 1024
-
+    width: deviceCenterWidth
+    height: deviceCenterHeight
+    maximumHeight: deviceCenterHeight
+    maximumWidth: deviceCenterWidth
+    minimumHeight: deviceCenterHeight
+    minimumWidth: deviceCenterWidth
     color: colorStyle.pageBackground
 
     Component.onCompleted: {
@@ -26,7 +29,7 @@ DeviceCenterQmlDialog {
         y: Math.round((Screen.desktopAvailableHeight - height) / 2)
     }
 
-    LeftSidebar{
+    LeftSidebar {
         id: leftSidebar
 
         anchors{
@@ -46,7 +49,7 @@ DeviceCenterQmlDialog {
         }
         height: 72
     }
-    DevicePage{
+    DevicePage {
         id: content
 
         anchors{

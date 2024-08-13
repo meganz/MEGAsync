@@ -11,9 +11,9 @@ import components.buttons 1.0 as Buttons
 import components.checkBoxes 1.0
 import components.comboBoxes 1.0
 import components.textFields 1.0
+import QmlDialog 1.0
 
-
-ExclusionsQmlDialog {
+QmlDialog {
     id: root
 
     readonly property int dialogMargins: 24

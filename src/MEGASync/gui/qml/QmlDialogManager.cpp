@@ -3,20 +3,19 @@
 #include "AccountStatusController.h"
 #include "Backups.h"
 #include "DeviceCenter.h"
-#include "DialogOpener.h"
-#include "GuestContent.h"
-#include "GuestQmlDialog.h"
-#include "LoginController.h"
-#include "Onboarding.h"
-#include "OnboardingQmlDialog.h"
-#include "QmlDialogWrapper.h"
-#include "SyncsComponent.h"
-#include "WhatsNewWindow.h"
+#include "QmlManager.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
     static std::shared_ptr<QmlDialogManager> manager(new QmlDialogManager());
     return manager;
+}
+
+QmlDialogManager* QmlDialogManager::getQmlInstance(QQmlEngine* qmlEngine, QJSEngine* jsEngine)
+{
+    Q_UNUSED(qmlEngine)
+    Q_UNUSED(jsEngine)
+    return instance().get();
 }
 
 void QmlDialogManager::openGuestDialog()

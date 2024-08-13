@@ -30,7 +30,6 @@ Item {
     }// content
 
     Component.onCompleted: {
-
         var deviceId = deviceCenterAccess.getThisDeviceId();
         header.deviceId = deviceId;
     }
