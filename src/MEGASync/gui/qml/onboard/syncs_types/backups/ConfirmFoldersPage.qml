@@ -3,6 +3,7 @@ import QtQuick 2.15
 import common 1.0
 
 import BackupsModel 1.0
+import SyncInfo 1.0
 
 ConfirmFoldersPageForm {
     id: root
@@ -20,7 +21,7 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups();
+            backupsProxyModelRef.createBackups(SyncInfo.ONBOARDING_ORIGIN);
         }
     }
 

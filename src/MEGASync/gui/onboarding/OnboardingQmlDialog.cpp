@@ -90,7 +90,7 @@ bool OnboardingQmlDialog::event(QEvent *evnt)
             evnt->ignore();
             return true;
         }
-        else
+        else //Already logged in
         {
             MegaSyncApp->getLoginController()->processOnboardingClosed();
         }

@@ -31,9 +31,9 @@ public:
     SyncController(QObject* parent = nullptr);
     ~SyncController(){}
 
-    void addBackup(const QString& localFolder, const QString& syncName = QString());
+    void addBackup(const QString& localFolder, const QString& syncName, SyncInfo::SyncOrigin origin);
     void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY);
+                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
@@ -68,15 +68,14 @@ signals:
 
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
-    void createPendingBackups();
+    void createPendingBackups(SyncInfo::SyncOrigin origin);
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
 
     mega::MegaApi* mApi;
 
-    //Only use const methods
-    const SyncInfo* mSyncInfo;
+    SyncInfo* mSyncInfo;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)

@@ -62,8 +62,17 @@ public:
     // Model data that needs to be kept even before the window is shown
     std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
+    enum SyncOrigin{
+        NONE = 0,
+        ONBOARDING_ORIGIN ,
+        MAIN_APP_ORIGIN
+    };
+    Q_ENUM(SyncOrigin)
+
 protected:
     mutable QMutex syncMutex;
+
+    SyncOrigin mSyncToCreateOrigin;
 
     QMap<SyncType, QList<mega::MegaHandle>> configuredSyncs; //Tags of configured syncs
     QMap<mega::MegaHandle, std::shared_ptr<SyncSettings>> configuredSyncsMap;
@@ -108,6 +117,8 @@ public:
     QList<std::shared_ptr<SyncSettings>> getAllSyncSettings()
         {return getSyncSettingsByType(AllHandledSyncTypes);}
 
+    bool hasSyncs();
+
     int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
     int getNumSyncedFolders(SyncType type)
         {return getNumSyncedFolders(QVector<SyncType>({type}));}
@@ -149,8 +160,10 @@ public:
     void updateMegaFolder(QString newRemotePath, std::shared_ptr<SyncSettings> cs);
 
     void showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting);
+    void setSyncToCreateOrigin(SyncOrigin newSyncToCreate);
 
 protected:
+
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
     void onSyncStateChanged(mega::MegaApi *, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
