@@ -411,14 +411,13 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
                             }
                         }
 
-                        if (!mWaitForAttributes)
-                        {
-                            emit attributeReady(AttributeTypes::SIZE);
-                        }
-
                         if (mEventLoop.isRunning())
                         {
                             mEventLoop.quit();
+                        }
+                        else
+                        {
+                            emit attributeReady(AttributeTypes::SIZE);
                         }
                     });
 
@@ -464,15 +463,13 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
                         }
                     }
 
-                    if(!mWaitForAttributes)
-                    {
-                        //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
-                        emit attributeReady(RemoteAttributeTypes::FILE_COUNT);
-                    }
-
                     if (mEventLoop.isRunning())
                     {
                         mEventLoop.quit();
+                    }
+                    else
+                    {
+                        emit attributeReady(RemoteAttributeTypes::FILE_COUNT);
                     }
                 });
 
