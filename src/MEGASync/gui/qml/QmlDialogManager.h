@@ -16,7 +16,6 @@ public:
     void openGuestDialog();
     bool openOnboardingDialog();
     bool openWhatsNewDialog();
-    void openBackupsDialog(bool fromSettings = false);
     void openAddSync(const QString& remoteFolder, bool fromSettings);
 
     bool raiseGuestDialog();

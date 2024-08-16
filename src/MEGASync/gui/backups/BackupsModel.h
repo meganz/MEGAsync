@@ -140,8 +140,6 @@ private:
     int mSelectedRowsTotal;
     unsigned long long mBackupsTotalSize;
     bool mTotalSizeReady;
-    SyncController mSyncController;
-    std::unique_ptr<BackupsController> mBackupsController;
     int mConflictsSize;
     Qt::CheckState mCheckAllState;
     int mGlobalError;
@@ -194,7 +192,7 @@ public:
     Q_INVOKABLE QStringList getSelectedFolders() const;
 
 public slots:
-    void createBackups();
+    void createBackups(SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
 
 signals:
     void selectedFilterEnabledChanged();

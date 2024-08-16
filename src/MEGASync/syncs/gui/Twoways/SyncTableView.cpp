@@ -4,6 +4,7 @@
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
 #include "SyncItemModel.h"
+#include "SyncSettings.h"
 
 #include <QHeaderView>
 #include <QMenu>
@@ -13,7 +14,6 @@
 
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
-    mSyncController(this),
     mIsFirstTime(true),
     mContextMenuName("SyncContextMenu"),
     mType(mega::MegaSync::TYPE_TWOWAY)

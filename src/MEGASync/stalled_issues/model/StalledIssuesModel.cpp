@@ -1142,8 +1142,7 @@ void StalledIssuesModel::chooseRemoteForBackups(const QModelIndexList& list)
     {
         foreach(auto& sync, mSyncsToDisable)
         {
-            SyncController controller;
-            controller.setSyncToDisabled(sync);
+            SyncController::instance().setSyncToDisabled(sync);
         }
     };
 
