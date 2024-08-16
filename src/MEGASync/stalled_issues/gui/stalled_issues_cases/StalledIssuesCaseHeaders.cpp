@@ -24,6 +24,11 @@
     #include "limits.h"
 #endif
 
+//Convenient strings and method to avoid changing the translation context on Transifex
+const QString SOLVE_BUTTON_STRING = QApplication::translate("CloudFingerprintMissingHeader", "Solve");
+const QString RENAMING_CONFLICTED_ITEMS_STRING = QApplication::translate("NameConflictsHeader", "This action will rename the conflicted items (adding a suffix like (1)).");
+const QString areYouSure(int number){return QApplication::translate("CloudFingerprintMissingHeader", "Are you sure you want to solve the issue?", "", number);}
+
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     :QObject(header)
 {
@@ -126,7 +131,7 @@ void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(Stalled
     }
 
     auto pluralNumber(1);
-    selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
+    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
     selectionInfo.msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
@@ -159,7 +164,7 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
 {
     if(!header->getData().consultData()->isSolved())
     {
-        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
+        header->showAction(StalledIssueHeader::ActionInfo(SOLVE_BUTTON_STRING, 0));
     }
 }
 
@@ -351,7 +356,7 @@ void FolderMatchedAgainstFileHeader::refreshCaseActions(StalledIssueHeader* head
 {
     if(!header->getData().consultData()->isSolved())
     {
-        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
+        header->showAction(StalledIssueHeader::ActionInfo(SOLVE_BUTTON_STRING, 0));
     }
 }
 
@@ -368,15 +373,8 @@ void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
     }
 
     auto pluralNumber(1);
-    selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
-    selectionInfo.msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
-    if(MegaSyncApp->getTransfersModel()->areAllPaused())
-    {
-        QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
-        StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
-        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
-        selectionInfo.msgInfo.informativeText.append(informativeMessage);
-    }
+    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
 
     selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
     {
@@ -565,7 +563,7 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
 
         if(index == NameConflictedStalledIssue::Rename)
         {
-            selectionInfo.msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
+            selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
