@@ -3746,7 +3746,7 @@ background-color: #F4F6F8;
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
-                  <string>Open Cloud Drive</string>
+                  <string>Open Cloud drive</string>
                  </property>
                  <property name="text">
                   <string/>

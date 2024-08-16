@@ -3754,7 +3754,7 @@ border: none;
                   <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
-                  <string>Open Cloud Drive</string>
+                  <string>Open Cloud drive</string>
                  </property>
                  <property name="text">
                   <string/>

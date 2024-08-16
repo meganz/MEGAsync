@@ -16,6 +16,7 @@ FooterButtonsPage {
     property alias deviceNameTextField: deviceNameTextFieldComp
 
     footerButtons.rightSecondary.visible: false
+    footerButtons.leftPrimary.visible: false
 
     ColumnLayout {
         id: mainLayout

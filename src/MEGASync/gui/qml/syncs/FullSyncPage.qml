@@ -33,7 +33,7 @@ FullSyncPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-            root.syncs.addSync(localFolderChooser.choosenPath);
+            root.syncs.addSync(window.syncOrigin, localFolderChooser.choosenPath);
         }
     }
 

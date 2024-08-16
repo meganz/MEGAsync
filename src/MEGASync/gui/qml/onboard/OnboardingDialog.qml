@@ -1,9 +1,12 @@
 import common 1.0
 
 import OnboardingQmlDialog 1.0
+import SyncInfo 1.0
 
 OnboardingQmlDialog {
     id: window
+
+    readonly property int syncOrigin: SyncInfo.ONBOARDING_ORIGIN
 
     title: OnboardingStrings.setUpMEGA
     visible: true

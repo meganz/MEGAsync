@@ -6,9 +6,12 @@ import components.views 1.0
 import components.steps 1.0
 
 import BackupsQmlDialog 1.0
+import SyncInfo 1.0
 
 BackupsQmlDialog {
     id: window
+
+    readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
 
     title: BackupsStrings.backupsWindowTitle
     visible: true

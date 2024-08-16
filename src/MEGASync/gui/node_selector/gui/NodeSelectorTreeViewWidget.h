@@ -77,6 +77,8 @@ public:
 
     void enableDragAndDrop(bool enable);
 
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
+
 public slots:
     virtual void onRowsInserted();
     void onRowsRemoved();
@@ -179,7 +181,17 @@ private:
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
+    enum class DeletedItemsType
+    {
+        NONE = 0x0,
+        FILES = 0x1,
+        FOLDERS = 0x2,
+        BOTH = FILES | FOLDERS
+    };
+
     QMap<mega::MegaHandle, QPersistentModelIndex> mDeletedHandles;
+    bool mMultipleDeletion;
+    DeletedItemsType mDeletedItemsType;
     QPersistentModelIndex mLastValidDeletedParent;
 
     friend class DownloadType;

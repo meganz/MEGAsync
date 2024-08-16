@@ -6,6 +6,7 @@
 #include <DialogOpener.h>
 #include <UploadToMegaDialog.h>
 #include "MegaNodeNames.h"
+#include "TextDecorator.h"
 
 #include "megaapi.h"
 
@@ -301,8 +302,11 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
         textsByButton.insert(QMessageBox::Yes, tr("Empty"));
         textsByButton.insert(QMessageBox::No, tr("Cancel"));
         msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("You are about to permanently remove all items from your Rubbish Bin.");
-        msgInfo.informativeText = tr("You cannot undo this action");
+        msgInfo.text = tr("Empty Rubbish bin?");
+        Text::Bold bold;
+        Text::Decorator dec(&bold);
+        msgInfo.informativeText = tr("All items will be permanently deleted. This action can [B]not[/B] be undone");
+        dec.process(msgInfo.informativeText);
         msgInfo.finishFunc = [](QPointer<QMessageBox> msg){
             if (msg->result() == QMessageBox::Yes)
             {

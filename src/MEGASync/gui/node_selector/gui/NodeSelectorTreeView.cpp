@@ -276,7 +276,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                         }
                         else if(itemStatus == NodeSelectorModelItem::Status::SYNC)
                         {
-                            customMenu.addAction(tr("Unsync"), this, [selectionHandles, this](){
+                            customMenu.addAction(tr("Stop syncing"), this, [selectionHandles, this](){
                                 CreateRemoveSyncsManager::removeSync(selectionHandles.first(), this);
                             });
                         }
@@ -297,7 +297,7 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
                 mMegaApi->getNodeByHandle(selectionHandles.first()));
             if(node && mMegaApi->isInRubbish(node.get()))
             {
-                customMenu.addAction(tr("Delete permanently"),
+                customMenu.addAction(tr("Permanently delete"),
                     this,
                     [this, selectionHandles]() { removeNode(true); });
             }

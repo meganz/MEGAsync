@@ -483,15 +483,56 @@ void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes)
 
 void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
 {
-    if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
+    if(request->getType() == MegaRequest::TYPE_MOVE)
     {
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.parent = this;
-            msgInfo.title =  MegaSyncApp->getMEGAString();
-            msgInfo.text =   tr("Error:") + QLatin1String(" ") + Utilities::getTranslatedError(e);
-            QMegaMessageBox::critical(msgInfo);
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
+            if (node)
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+
+                if (node->isFile())
+                {
+                    msgInfo.title = tr("Error moving file");
+                    msgInfo.text = tr("The file %1 couldn´t be moved. Try again later")
+                                       .arg(MegaNodeNames::getNodeName(node.get()));
+                }
+                else
+                {
+                    msgInfo.title = tr("Error moving folder");
+                    msgInfo.text = tr("The folder %1 couldn´t be moved. Try again later")
+                                       .arg(MegaNodeNames::getNodeName(node.get()));
+                }
+            }
+        }
+    }
+    if (request->getType() == MegaRequest::TYPE_REMOVE)
+    {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
+            if (node)
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.parent = this;
+
+                if (node->isFile())
+                {
+                    msgInfo.title = tr("Error removing file");
+                    msgInfo.text = tr("The file %1 couldn´t be removed. Try again later")
+                                       .arg(MegaNodeNames::getNodeName(node.get()));
+                }
+                else
+                {
+                    msgInfo.title = tr("Error removing folder");
+                    msgInfo.text = tr("The folder %1 couldn´t be removed. Try again later")
+                                       .arg(MegaNodeNames::getNodeName(node.get()));
+                }
+            }
         }
     }
 }
