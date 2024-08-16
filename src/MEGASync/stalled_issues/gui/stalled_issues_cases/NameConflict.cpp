@@ -278,10 +278,12 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
 {
     auto index = title->property(TITLE_INDEX).toInt();
 
-    info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
+    if (!isCloud() || info->mIsFile)
     {
-        mTitlesByIndex.value(index)->updateLastTimeModified(time);
-    });
+        info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time) {
+            mTitlesByIndex.value(index)->updateLastTimeModified(time);
+        });
+    }
 
     if(isCloud())
     {

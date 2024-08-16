@@ -831,15 +831,15 @@ bool NameConflictedStalledIssue::solveIssue(ActionsSelected option)
     if(option & ActionSelected::MergeFolders && foldersCount() > 1)
     {
         auto errorInfo = mCloudConflictedNames.mergeFolders();
-        if(!errorInfo.error.isEmpty())
-        {
-            setCloudFailed(errorInfo.conflictIndex, errorInfo.error);
-            result= false;
-        }
+        result = errorInfo.error.isEmpty();
 
         if(result)
         {
             result = checkAndSolveConflictedNamesSolved();
+        }
+        else
+        {
+            setCloudFailed(errorInfo.conflictIndex, errorInfo.error);
         }
     }
 
