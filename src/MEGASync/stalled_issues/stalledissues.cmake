@@ -81,6 +81,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/win/StalledIssueLoadingItem.ui
    stalled_issues/gui/win/StalledIssueActionTitle.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/win/FolderMatchedAgainstFileWidget.ui
    stalled_issues/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/win/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
@@ -118,6 +119,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/linux/StalledIssueLoadingItem.ui
    stalled_issues/gui/linux/StalledIssueActionTitle.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/linux/FolderMatchedAgainstFileWidget.ui
    stalled_issues/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/linux/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
