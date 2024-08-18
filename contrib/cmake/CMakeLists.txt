@@ -193,7 +193,6 @@ set (FORMS
     ${MEGAsyncDir}/gui/${UiDir}/MegaProgressCustomDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/PlanWidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeDialog.ui
-    ${MEGAsyncDir}/gui/${UiDir}/AddExclusionDialog.ui
     ${MEGAsyncDir}/gui/${UiDir}/StatusInfo.ui
     ${MEGAsyncDir}/gui/${UiDir}/PSAwidget.ui
     ${MEGAsyncDir}/gui/${UiDir}/UpgradeOverStorage.ui
@@ -324,7 +323,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/QFilterAlertsModel.h
     ${MEGAsyncDir}/gui/AccountDetailsDialog.h
-    ${MEGAsyncDir}/gui/AddExclusionDialog.h
     ${MEGAsyncDir}/gui/AvatarWidget.h
     ${MEGAsyncDir}/gui/MenuItemAction.h
     ${MEGAsyncDir}/gui/MegaUserAlertExt.h
@@ -622,7 +620,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
     ${MEGAsyncDir}/gui/MegaUserAlertExt.cpp
-    ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
     ${MEGAsyncDir}/gui/StatusInfo.cpp
     ${MEGAsyncDir}/gui/ChangePassword.cpp
     ${MEGAsyncDir}/gui/PasswordLineEdit.cpp
