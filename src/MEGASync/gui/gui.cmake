@@ -244,7 +244,6 @@ target_sources_conditional(MEGAsync
     gui/win/AlertItem.ui
     gui/win/FilterAlertWidget.ui
     gui/win/AlertFilterType.ui
-    gui/win/BugReportDialog.ui
     gui/win/LockedPopOver.ui
     gui/win/VerifyLockMessage.ui
     gui/win/MegaInfoMessage.ui
@@ -292,7 +291,6 @@ target_sources_conditional(MEGAsync
    gui/macx/AlertItem.ui
    gui/macx/FilterAlertWidget.ui
    gui/macx/AlertFilterType.ui
-   gui/macx/BugReportDialog.ui
    gui/macx/VerifyLockMessage.ui
    gui/macx/MegaInfoMessage.ui
    gui/macx/OverQuotaDialog.ui
@@ -340,7 +338,6 @@ target_sources_conditional(MEGAsync
     gui/linux/AlertItem.ui
     gui/linux/FilterAlertWidget.ui
     gui/linux/AlertFilterType.ui
-    gui/linux/BugReportDialog.ui
     gui/linux/LockedPopOver.ui
     gui/linux/VerifyLockMessage.ui
     gui/linux/MegaInfoMessage.ui
@@ -465,6 +462,7 @@ endif()
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
 )
 
 target_sources(MEGAsync
