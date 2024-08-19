@@ -131,9 +131,9 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
             mUi->lTime->setStyleSheet(ExpiredSoonColor);
             mUi->bCTA->setEnabled(false);
         }
-        else if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
+        else if(remainingTimeSecs == -NumSecsToWaitBeforeRemove)
         {
-            mExpirationTimer.stop();
+            mExpirationTimer.stopExpirationTime();
             mNotificationData->markAsExpired();
         }
 
@@ -188,7 +188,7 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     // We want only update the remaining time every second, minute, hour or day
     // depending in the remaining time, not always to update every second.
     connect(&mExpirationTimer, &NotificationExpirationTimer::expired,
-            this, &NotificationItem::onTimerExpirated);
+            this, &NotificationItem::onTimerExpirated, Qt::UniqueConnection);
 
     updateNotificationData(newNotificationData);
 }
@@ -217,6 +217,7 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
     // Since the notifications can be reused,
     // we need to reset the expiration time color
     mUi->lTime->setStyleSheet(NonExpiredTimeColor);
+    updateExpirationText();
 }
 
 void NotificationItem::updateNotificationData(bool downloadImage,

@@ -14,6 +14,7 @@ NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent)
     : QTimer(parent)
     , mLastTimeInterval(0)
     , mExpirationTimeSecs(0)
+    , mStopped(false)
 {
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
 }
@@ -21,6 +22,7 @@ NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent)
 NotificationExpirationTimer::NotificationExpirationTimer(int64_t expirationTimeSecs, QObject* parent)
     : QTimer(parent)
     , mLastTimeInterval(0)
+    , mStopped(false)
 {
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
     start(expirationTimeSecs);
@@ -30,7 +32,14 @@ void NotificationExpirationTimer::startExpirationTime(int64_t expirationTimeSecs
 {
     stop();
     mExpirationTimeSecs = expirationTimeSecs;
+    mStopped = false;
     onTimeout();
+}
+
+void NotificationExpirationTimer::stopExpirationTime()
+{
+    stop();
+    mStopped = true;
 }
 
 int64_t NotificationExpirationTimer::getRemainingTime() const
@@ -76,6 +85,11 @@ void NotificationExpirationTimer::singleShot(int64_t remainingTimeSecs)
 
 void NotificationExpirationTimer::onTimeout()
 {
+    if(mStopped)
+    {
+        return;
+    }
+
     int64_t remainingTimeSecs = getRemainingTime();
     emit expired(remainingTimeSecs);
     singleShot(remainingTimeSecs);
