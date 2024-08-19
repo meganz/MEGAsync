@@ -6,9 +6,12 @@ import components.views 1.0
 import components.steps 1.0
 
 import SyncsQmlDialog 1.0
+import SyncInfo 1.0
 
 SyncsQmlDialog {
     id: window
+
+    readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
 
     title: SyncsStrings.syncsWindowTitle
     visible: true

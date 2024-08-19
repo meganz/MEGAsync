@@ -31,7 +31,8 @@ AccountInfoData* AccountInfoData::instance(QQmlEngine* qmlEngine, QJSEngine* jsE
 
 void AccountInfoData::requestAccountInfoData()
 {
-    if (!mInitialized) {
+    if (!mInitialized)
+    {
         mMegaApi->getAccountDetails(mDelegateListener.get());
     }
 }
