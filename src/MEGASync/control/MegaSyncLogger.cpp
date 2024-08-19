@@ -134,7 +134,7 @@ struct LogLinkedList
     {
         n = n ? n : strlen(s);
         assert(used + n + 1 < allocated);
-        strlcpy(message + used, s, strlen(message + used));
+        strncpy(message + used, s, strlen(message + used));
         used += n;
     }
 
