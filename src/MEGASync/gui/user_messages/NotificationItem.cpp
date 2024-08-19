@@ -13,6 +13,7 @@ namespace
 {
 const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-height:22px;\">");
 const QLatin1String DescriptionHtmlEnd("</p></body></html>");
+const QLatin1String NonExpiredTimeColor("color: #777777;");
 const QLatin1String ExpiredSoonColor("color: #D64446;");
 constexpr int SpacingWithoutLargeImage = 6;
 constexpr int SpacingWithoutSmallImage = 0;
@@ -212,6 +213,10 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
     mNotificationData = newNotificationData;
 
     updateNotificationData(imageHasChanged, iconHasChanged);
+
+    // Since the notifications can be reused,
+    // we need to reset the expiration time color
+    mUi->lTime->setStyleSheet(NonExpiredTimeColor);
 }
 
 void NotificationItem::updateNotificationData(bool downloadImage,
