@@ -128,6 +128,7 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
         {
             mUi->lTime->setText(tr("Offer expired"));
             mUi->lTime->setStyleSheet(ExpiredSoonColor);
+            mUi->bCTA->setEnabled(false);
         }
         else if(remainingTimeSecs <= -NumSecsToWaitBeforeRemove)
         {
