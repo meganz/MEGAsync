@@ -239,7 +239,6 @@ target_sources_conditional(MEGAsync
     gui/win/PSAwidget.ui
     gui/win/RemoteItemUi.ui
     gui/win/UpgradeOverStorage.ui
-    gui/win/ChangePassword.ui
     gui/win/Login2FA.ui
     gui/win/AlertItem.ui
     gui/win/FilterAlertWidget.ui
@@ -286,7 +285,6 @@ target_sources_conditional(MEGAsync
    gui/macx/PSAwidget.ui
    gui/macx/RemoteItemUi.ui
    gui/macx/UpgradeOverStorage.ui
-   gui/macx/ChangePassword.ui
    gui/macx/Login2FA.ui
    gui/macx/AlertItem.ui
    gui/macx/FilterAlertWidget.ui
@@ -333,7 +331,6 @@ target_sources_conditional(MEGAsync
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
     gui/linux/UpgradeOverStorage.ui
-    gui/linux/ChangePassword.ui
     gui/linux/Login2FA.ui
     gui/linux/AlertItem.ui
     gui/linux/FilterAlertWidget.ui
@@ -463,6 +460,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
 )
 
 target_sources(MEGAsync
