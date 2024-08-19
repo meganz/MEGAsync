@@ -42,7 +42,7 @@ public:
     inline bool hasSameId(unsigned id) const { return mId == id; }
 
     //In case we know the height of an user message can dynamically change
-    inline void clearSizeHint(){ mSizeHint = QSize(); }
+    inline void clearSizeHint() { mSizeHint = QSize(); }
 
 signals:
     void expired(unsigned id);

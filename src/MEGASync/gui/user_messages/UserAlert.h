@@ -24,7 +24,7 @@ public:
     bool isValid() const;
     void reset(mega::MegaUserAlert* alert);
 
-    bool sort(UserMessage *checkWith) const override;
+    bool sort(UserMessage* checkWith) const override;
     bool isRowAccepted(MessageType type) const override;
 
     bool isSeen() const override;

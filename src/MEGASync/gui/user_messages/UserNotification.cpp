@@ -154,6 +154,18 @@ bool UserNotification::isRowAccepted(MessageType type) const
     return type == MessageType::ALL;
 }
 
+bool UserNotification::sort(UserMessage* checkWith) const
+{
+    if(auto checkNotification = dynamic_cast<UserNotification*>(checkWith))
+    {
+        auto thisID = mNotification->getID();
+        auto checkID = checkNotification->mNotification->getID();
+        return thisID > checkID;
+    }
+
+    return UserMessage::sort(checkWith);
+}
+
 void UserNotification::onDownloadFinished(const QImage& image, const QString& imageUrl)
 {
     if (image.isNull())
