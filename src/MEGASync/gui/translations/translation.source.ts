@@ -6128,11 +6128,6 @@ Do you want to delete it anyway?</translation>
         <translation>Folder will be deleted from MEGA. It won’t be deleted from your computer. This action can’t be undone.</translation>
     </message>
     <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Confirm</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>

@@ -7,8 +7,8 @@ RemoveSyncConfirmationDialog::RemoveSyncConfirmationDialog(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->bOK->setDefault(true);
-    setFocusProxy(ui->bOK);
+    ui->bRemove->setDefault(true);
+    setFocusProxy(ui->bRemove);
 }
 
 RemoveSyncConfirmationDialog::~RemoveSyncConfirmationDialog()
@@ -16,7 +16,7 @@ RemoveSyncConfirmationDialog::~RemoveSyncConfirmationDialog()
     delete ui;
 }
 
-void RemoveSyncConfirmationDialog::on_bOK_clicked()
+void RemoveSyncConfirmationDialog::on_bRemove_clicked()
 {
     accept();
 }

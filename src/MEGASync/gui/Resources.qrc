@@ -8,5 +8,6 @@
         <file>images/account_details/database.svg</file>
         <file>images/account_details/cloud.svg</file>
         <file>images/minus-circle.svg</file>
+        <file>images/x.svg</file>
     </qresource>
 </RCC>
