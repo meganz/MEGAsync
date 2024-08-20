@@ -25,12 +25,12 @@ constexpr int ButtonHeightWithSpacing = 40;
 constexpr int NumSecsToWaitBeforeRemove = 1;
 }
 
-NotificationItem::NotificationItem(QWidget* parent)
-    : UserMessageWidget(parent)
-    , mUi(new Ui::NotificationItem)
-    , mNotificationData(nullptr)
-    , mExpirationTimer(this)
-    , mDisplayEventSent(false)
+NotificationItem::NotificationItem(QWidget* parent):
+    UserMessageWidget(parent),
+    mUi(new Ui::NotificationItem),
+    mNotificationData(nullptr),
+    mExpirationTimer(this),
+    mDisplayEventSent(false)
 {
     mUi->setupUi(this);
 }
@@ -43,11 +43,10 @@ NotificationItem::~NotificationItem()
 void NotificationItem::setData(UserMessage* data)
 {
     UserNotification* notification = dynamic_cast<UserNotification*>(data);
-    if(notification)
+    if (notification)
     {
         setNotificationData(notification);
-        connect(notification, &UserMessage::dataChanged, this, [this, notification]()
-        {
+        connect(notification, &UserMessage::dataChanged, this, [this, notification]() {
             updateNotificationData(notification);
         });
         mDisplayEventSent = false;
@@ -67,7 +66,7 @@ QSize NotificationItem::minimumSizeHint() const
 QSize NotificationItem::sizeHint() const
 {
     QSize size = this->size();
-    if(mNotificationData->showImage())
+    if (mNotificationData->showImage())
     {
         size.setHeight(HeightWithImage);
     }
@@ -77,7 +76,7 @@ QSize NotificationItem::sizeHint() const
     }
 
     // If there is no action text, the button is not shown
-    if(mNotificationData->getActionText().isEmpty())
+    if (mNotificationData->getActionText().isEmpty())
     {
         size.setHeight(size.height() - ButtonHeightWithSpacing);
     }
@@ -87,7 +86,7 @@ QSize NotificationItem::sizeHint() const
 
 void NotificationItem::changeEvent(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
         updateNotificationData();
@@ -98,12 +97,12 @@ void NotificationItem::changeEvent(QEvent* event)
 
 void NotificationItem::showEvent(QShowEvent* event)
 {
-    if(!mDisplayEventSent && mNotificationData)
+    if (!mDisplayEventSent && mNotificationData)
     {
         // Avoid to send this event every time
         MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
             AppStatsEvents::EventType::NOTIFICATION_DISPLAYED,
-            { QString::number(mNotificationData->id()) });
+            {QString::number(mNotificationData->id())});
 
         mDisplayEventSent = true;
     }
@@ -113,7 +112,7 @@ void NotificationItem::showEvent(QShowEvent* event)
 
 void NotificationItem::mousePressEvent(QMouseEvent* event)
 {
-    if(!mNotificationData)
+    if (!mNotificationData)
     {
         return;
     }
@@ -126,7 +125,7 @@ void NotificationItem::mousePressEvent(QMouseEvent* event)
 void NotificationItem::onCTAClicked()
 {
     auto actionUrl = mNotificationData->getActionUrl();
-    if(actionUrl.isEmpty())
+    if (actionUrl.isEmpty())
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_WARNING,
                            "Empty action URL in notification item.");
@@ -136,21 +135,21 @@ void NotificationItem::onCTAClicked()
 
     MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
         AppStatsEvents::EventType::NOTIFICATION_CTA_CLICKED,
-        { QString::number(mNotificationData->id()) });
+        {QString::number(mNotificationData->id())});
 }
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
     // It is required to display this text after the expiration time.
-    if(remainingTimeSecs <= 1)
+    if (remainingTimeSecs <= 1)
     {
-        if(remainingTimeSecs == 1)
+        if (remainingTimeSecs == 1)
         {
             mUi->lTime->setText(tr("Offer expired"));
             mUi->lTime->setStyleSheet(ExpiredSoonColor);
             mUi->bCTA->setEnabled(false);
         }
-        else if(remainingTimeSecs == -NumSecsToWaitBeforeRemove)
+        else if (remainingTimeSecs == -NumSecsToWaitBeforeRemove)
         {
             mExpirationTimer.stopExpirationTime();
             mNotificationData->markAsExpired();
@@ -163,17 +162,17 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     // time rounded down to the nearest hour or day.
     TimeInterval timeInterval(remainingTimeSecs - 1);
     QString timeText;
-    if(timeInterval.days > 0)
+    if (timeInterval.days > 0)
     {
         timeText = tr("Offer expires in %n day", "", timeInterval.days);
     }
-    else if(timeInterval.hours > 0)
+    else if (timeInterval.hours > 0)
     {
         timeText = tr("Offer expires in %n hour", "", timeInterval.hours);
     }
-    else if(timeInterval.minutes > 0)
+    else if (timeInterval.minutes > 0)
     {
-        if(timeInterval.seconds == 0)
+        if (timeInterval.seconds == 0)
         {
             timeText = tr("Offer expires in %1 m").arg(timeInterval.minutes);
         }
@@ -185,7 +184,7 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
         }
         mUi->lTime->setStyleSheet(ExpiredSoonColor);
     }
-    else if(timeInterval.seconds > 0)
+    else if (timeInterval.seconds > 0)
     {
         timeText = tr("Offer expires in %1 s").arg(timeInterval.seconds);
         mUi->lTime->setStyleSheet(ExpiredSoonColor);
@@ -195,38 +194,44 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
-    if(!newNotificationData)
+    if (!newNotificationData)
     {
         return;
     }
 
-    connect(mUi->bCTA, &QPushButton::clicked,
-            this, &NotificationItem::onCTAClicked, Qt::UniqueConnection);
+    connect(mUi->bCTA,
+            &QPushButton::clicked,
+            this,
+            &NotificationItem::onCTAClicked,
+            Qt::UniqueConnection);
 
     // NotificationExpirationTimer is a QTimer optimized for this use case.
     // We want only update the remaining time every second, minute, hour or day
     // depending in the remaining time, not always to update every second.
-    connect(&mExpirationTimer, &NotificationExpirationTimer::expired,
-            this, &NotificationItem::onTimerExpirated, Qt::UniqueConnection);
+    connect(&mExpirationTimer,
+            &NotificationExpirationTimer::expired,
+            this,
+            &NotificationItem::onTimerExpirated,
+            Qt::UniqueConnection);
 
     updateNotificationData(newNotificationData);
 }
 
 void NotificationItem::updateNotificationData(UserNotification* newNotificationData)
 {
-    if(!newNotificationData)
+    if (!newNotificationData)
     {
         return;
     }
 
     bool imageHasChanged = true;
     bool iconHasChanged = true;
-    if(mNotificationData != nullptr)
+    if (mNotificationData != nullptr)
     {
-        imageHasChanged = mNotificationData->getImageNamePath()
-                            != newNotificationData->getImageNamePath();
-        iconHasChanged = mNotificationData->getIconNamePath()
-                            != newNotificationData->getIconNamePath();
+        imageHasChanged =
+            mNotificationData->getImageNamePath() != newNotificationData->getImageNamePath();
+        iconHasChanged =
+            mNotificationData->getIconNamePath() != newNotificationData->getIconNamePath();
     }
 
     mNotificationData = newNotificationData;
@@ -239,8 +244,7 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
     updateExpirationText();
 }
 
-void NotificationItem::updateNotificationData(bool downloadImage,
-                                              bool downloadIcon)
+void NotificationItem::updateNotificationData(bool downloadImage, bool downloadIcon)
 {
     mUi->lTitle->setText(mNotificationData->getTitle());
 
@@ -252,18 +256,18 @@ void NotificationItem::updateNotificationData(bool downloadImage,
     // If there is no action text, the button is not shown
     bool showButton = !mNotificationData->getActionText().isEmpty();
     mUi->bCTA->setVisible(showButton);
-    if(showButton)
+    if (showButton)
     {
         mUi->bCTA->setText(mNotificationData->getActionText());
     }
 
     // Avoid to download images again if they have not changed
-    if(downloadImage)
+    if (downloadImage)
     {
         setImage();
     }
 
-    if(downloadIcon)
+    if (downloadIcon)
     {
         setIcon();
     }
@@ -276,11 +280,10 @@ void NotificationItem::setImage()
 {
     bool showImage = mNotificationData->showImage();
     mUi->lImageLarge->setVisible(showImage);
-    if(showImage)
+    if (showImage)
     {
         mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]()
-        {
+        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
             mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
         });
     }
@@ -290,11 +293,10 @@ void NotificationItem::setIcon()
 {
     bool showIcon = mNotificationData->showIcon();
     mUi->lImageSmall->setVisible(showIcon);
-    if(showIcon)
+    if (showIcon)
     {
         mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]()
-        {
+        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
             mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
         });
     }
