@@ -123,6 +123,7 @@ image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
 QRadioButton
 {
 color: #303233; /*colorToken.text-primary*/
+background-color: transparent;
 }
 
 QGroupBox
