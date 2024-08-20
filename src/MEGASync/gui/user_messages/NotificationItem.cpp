@@ -15,13 +15,13 @@ const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-hei
 const QLatin1String DescriptionHtmlEnd("</p></body></html>");
 const QLatin1String NonExpiredTimeColor("color: #777777;");
 const QLatin1String ExpiredSoonColor("color: #D64446;");
-constexpr int SpacingWithoutLargeImage = 6;
 constexpr int SpacingWithoutSmallImage = 0;
 constexpr int SmallImageSize = 48;
 constexpr int LargeImageWidth = 370;
 constexpr int LargeImageHeight = 115;
 constexpr int HeightWithoutImage = 219;
 constexpr int HeightWithImage = 346;
+constexpr int ButtonHeightWithSpacing = 40;
 constexpr int NumSecsToWaitBeforeRemove = 1;
 }
 
@@ -75,6 +75,13 @@ QSize NotificationItem::sizeHint() const
     {
         size.setHeight(HeightWithoutImage);
     }
+
+    // If there is no action text, the button is not shown
+    if(mNotificationData->getActionText().isEmpty())
+    {
+        size.setHeight(size.height() - ButtonHeightWithSpacing);
+    }
+
     return size;
 }
 
@@ -102,6 +109,18 @@ void NotificationItem::showEvent(QShowEvent* event)
     }
 
     QWidget::showEvent(event);
+}
+
+void NotificationItem::mousePressEvent(QMouseEvent* event)
+{
+    if(!mNotificationData)
+    {
+        return;
+    }
+
+    onCTAClicked();
+
+    QWidget::mousePressEvent(event);
 }
 
 void NotificationItem::onCTAClicked()
@@ -230,7 +249,13 @@ void NotificationItem::updateNotificationData(bool downloadImage,
     labelText += DescriptionHtmlEnd;
     mUi->lDescription->setText(labelText);
 
-    mUi->bCTA->setText(mNotificationData->getActionText());
+    // If there is no action text, the button is not shown
+    bool showButton = !mNotificationData->getActionText().isEmpty();
+    mUi->bCTA->setVisible(showButton);
+    if(showButton)
+    {
+        mUi->bCTA->setText(mNotificationData->getActionText());
+    }
 
     // Avoid to download images again if they have not changed
     if(downloadImage)
@@ -258,10 +283,6 @@ void NotificationItem::setImage()
         {
             mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
         });
-    }
-    else
-    {
-        mUi->vlContent->setSpacing(SpacingWithoutLargeImage);
     }
 }
 
