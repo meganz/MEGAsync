@@ -9,6 +9,7 @@
 #include <QHeaderView>
 
 class NodeSelectorProxyModel;
+class NodeSelectorModel;
 
 
 using namespace  mega;
@@ -57,10 +58,9 @@ private:
     NodeSelectorProxyModel* proxyModel() const;
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
-    int getNodeAccess(mega::MegaHandle handle) const;
-
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
-    bool areAllEligibleForDeletion(const QList<MegaHandle>& handles = QList<MegaHandle>()) const;
+
+    NodeSelectorModel* getSourceModel() const;
 
     MegaApi* mMegaApi;
 };

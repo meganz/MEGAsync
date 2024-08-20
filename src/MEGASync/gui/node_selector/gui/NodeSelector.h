@@ -66,7 +66,7 @@ protected:
     void makeConnections(SelectTypeSPtr selectType);
     bool eventFilter(QObject *obj, QEvent *event) override;
 
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;

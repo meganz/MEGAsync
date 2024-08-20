@@ -4,6 +4,7 @@
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
 #include <MegaApplication.h>
+#include "QMegaMessageBox.h"
 #include <megaapi.h>
 
 #include <QAbstractItemModel>
@@ -17,6 +18,8 @@ namespace UserAttributes{
 class CameraUploadFolder;
 class MyChatFilesFolder;
 }
+
+class DuplicatedNodeInfo;
 
 enum class NodeSelectorModelRoles
 {
@@ -139,6 +142,15 @@ public:
       last
     };
 
+    enum class MovedItemsType
+    {
+        NONE = 0x0,
+        FILES = 0x1,
+        FOLDERS = 0x2,
+        BOTH = FILES | FOLDERS
+    };
+    Q_DECLARE_FLAGS(MovedItemsTypes, MovedItemsType)
+
     struct IndexesActionInfo
     {
         bool needsToBeSelected = false;
@@ -163,8 +175,23 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
+
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
-    void removeNode(const QModelIndex &index);
+    void removeNodeFromModel(const QModelIndex &index);
+
+    int getNodeAccess(mega::MegaNode* node);
+
+    std::shared_ptr<mega::MegaNode> getNodeToRemove(mega::MegaHandle handle);
+    void removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently);
+    bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
+    bool areAllNodesEligibleForRestore(const QList<mega::MegaHandle> &handles) const;
+
+    void moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveFolder, std::shared_ptr<mega::MegaNode> conflictTargetFolder, std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile, std::shared_ptr<mega::MegaNode> conflictTargetFile, std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode, const QString& newName, std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveNode(std::shared_ptr<mega::MegaNode> moveNode, std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts);
+
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
 
@@ -209,6 +236,8 @@ public:
         int column,
         const QModelIndex& parent) const override;
 
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
+
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
@@ -220,6 +249,8 @@ signals:
     void blockUi(bool state);
     void forceFilter();
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
+    void showMessageBox(QMegaMessageBox::MessageBoxInfo info);
+    void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -262,9 +293,16 @@ private:
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
+    std::shared_ptr<mega::MegaRequestListener> mListener;
+
     QThread* mNodeRequesterThread;
     bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
     bool mAcceptDragAndDrop;
+
+    //Variables related to move (including moving to rubbish bin or remove)
+    QMap<mega::MegaHandle, int> mRequestByHandle;
+    QMap<mega::MegaHandle, int> mRequestFailedByHandle;
+    MovedItemsTypes mMovedItemsType;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

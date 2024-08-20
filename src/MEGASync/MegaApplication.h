@@ -47,6 +47,7 @@
 #include "BlockingStageProgressController.h"
 #include "QmlManager.h"
 #include "QmlDialogManager.h"
+#include "DuplicatedNodeInfo.h"
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -332,7 +333,7 @@ private slots:
     void cancelScanningStage();
 
 protected slots:
-    void onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog);
+    void onUploadsCheckedAndReady(std::shared_ptr<ConflictTypes> conflicts);
     void onPasteMegaLinksDialogFinish(QPointer<PasteMegaLinksDialog>);
     void onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog> dialog);
     void onDownloadSetFolderDialogFinished(QPointer<DownloadFromMegaDialog> dialog);

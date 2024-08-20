@@ -834,11 +834,11 @@
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
-        <source>You are about to permanently remove all items from your Rubbish Bin.</source>
+        <source>Empty Rubbish bin?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You cannot undo this action</source>
+        <source>All items will be permanently deleted. This action can [B]not[/B] be undone</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2386,7 +2386,7 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Downloading may be interrupted as you have used 90% of your transfer quota on this account. To continue downloading, purchase a new plan, or if you have a recurring subscription with MEGA, you can wait for your plan to renew.</translation>
     </message>
     <message>
-        <source>Open Cloud Drive</source>
+        <source>Open Cloud drive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4430,10 +4430,6 @@ Enter a different name.</translation>
         <translatorcomment>Search button header</translatorcomment>
         <translation>Search</translation>
     </message>
-    <message>
-        <source>Error:</source>
-        <translation type="unfinished">Error:</translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorModel</name>
@@ -4477,6 +4473,86 @@ Enter a different name.</translation>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sort by name</translation>
     </message>
+    <message>
+        <source>Error moving items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be moved. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be moved. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be moved. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn´t be moved. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error moving folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn´t be moved. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing items</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn´t be removed. Try again later</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4500,15 +4576,15 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete permanently</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sync</source>
         <translation type="unfinished">Sync</translation>
     </message>
     <message>
-        <source>Unsync</source>
+        <source>Stop syncing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Permanently delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4555,10 +4631,6 @@ Enter a different name.</translation>
         <translation>OK</translation>
     </message>
     <message>
-        <source>Empty rubbish bin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4580,6 +4652,10 @@ Enter a different name.</translation>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Empty Rubbish bin</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

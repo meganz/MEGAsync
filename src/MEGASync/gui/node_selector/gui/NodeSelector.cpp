@@ -2,12 +2,13 @@
 #include "ui_NodeSelector.h"
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 #include "Utilities.h"
 #include "megaapi.h"
 #include "NodeSelectorProxyModel.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-
+#include "DuplicatedNodeDialog.h"
 #include "MegaNodeNames.h"
 
 #include <QMessageBox>
@@ -420,10 +421,33 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
                 connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestored, this, &NodeSelector::onItemsRestored, Qt::UniqueConnection);
             }
 
-            if(!model)
+            if (!model)
             {
                 model = viewContainer->getProxyModel()->getMegaModel();
-                connect(model, &NodeSelectorModel::updateLoadingMessage, this, &NodeSelector::onUpdateLoadingMessage);
+                connect(model,
+                        &NodeSelectorModel::updateLoadingMessage,
+                        this,
+                        &NodeSelector::onUpdateLoadingMessage);
+                connect(model,
+                        &NodeSelectorModel::showMessageBox,
+                        this,
+                        [this](QMegaMessageBox::MessageBoxInfo info) {
+                            info.parent = this;
+                            QMegaMessageBox::warning(info);
+                    });
+                connect(model,
+                        &NodeSelectorModel::showDuplicatedNodeDialog,
+                        this,
+                        [this, model](std::shared_ptr<ConflictTypes> conflicts) {
+                            auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
+                            checkUploadNameDialog->setConflicts(conflicts);
+
+                            DialogOpener::showDialog<DuplicatedNodeDialog>(
+                                checkUploadNameDialog,
+                                [this, model, conflicts]() {
+                                    model->moveNodesAfterConflictCheck(conflicts);
+                                });
+                        });
             }
         }
     }
@@ -479,60 +503,4 @@ void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes)
     mBackupsWidget->onNodesUpdate(api, nodes);
     mSearchWidget->onNodesUpdate(api, nodes);
     mRubbishWidget->onNodesUpdate(api, nodes);
-}
-
-void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
-{
-    if(request->getType() == MegaRequest::TYPE_MOVE)
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            std::unique_ptr<mega::MegaNode> node(
-                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-            if (node)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = this;
-
-                if (node->isFile())
-                {
-                    msgInfo.title = tr("Error moving file");
-                    msgInfo.text = tr("The file %1 couldn´t be moved. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-                else
-                {
-                    msgInfo.title = tr("Error moving folder");
-                    msgInfo.text = tr("The folder %1 couldn´t be moved. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-            }
-        }
-    }
-    if (request->getType() == MegaRequest::TYPE_REMOVE)
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            std::unique_ptr<mega::MegaNode> node(
-                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-            if (node)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = this;
-
-                if (node->isFile())
-                {
-                    msgInfo.title = tr("Error removing file");
-                    msgInfo.text = tr("The file %1 couldn´t be removed. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-                else
-                {
-                    msgInfo.title = tr("Error removing folder");
-                    msgInfo.text = tr("The folder %1 couldn´t be removed. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-            }
-        }
-    }
 }

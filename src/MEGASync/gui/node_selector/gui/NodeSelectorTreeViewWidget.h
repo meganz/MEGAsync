@@ -47,7 +47,6 @@ class NodeSelectorTreeViewWidget : public QWidget
     static const char* CUSTOM_BOTTOM_BUTTON_ID;
 
 public:
-
     static const int LOADING_VIEW_THRESSHOLD;
     static const int LABEL_ELIDE_MARGIN;
     static const char* FULL_NAME_PROPERTY;
@@ -76,8 +75,6 @@ public:
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
     void enableDragAndDrop(bool enable);
-
-    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 
 public slots:
     virtual void onRowsInserted();
@@ -181,18 +178,6 @@ private:
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
-    enum class DeletedItemsType
-    {
-        NONE = 0x0,
-        FILES = 0x1,
-        FOLDERS = 0x2,
-        BOTH = FILES | FOLDERS
-    };
-
-    QMap<mega::MegaHandle, QPersistentModelIndex> mDeletedHandles;
-    bool mMultipleDeletion;
-    DeletedItemsType mDeletedItemsType;
-    QPersistentModelIndex mLastValidDeletedParent;
 
     friend class DownloadType;
     friend class SyncType;

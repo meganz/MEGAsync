@@ -1686,29 +1686,32 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 
     noUploadedStarted = true;
 
-    auto checkUploadNameDialog = new DuplicatedNodeDialog(node);
-    checkUploadNameDialog->checkUploads(uploadQueue, node);
+    auto conflicts = CheckDuplicatedNodes::checkUploads(uploadQueue, node);
 
-    if(!checkUploadNameDialog->isEmpty())
+    if(!conflicts->isEmpty())
     {
-        DialogOpener::showDialog<DuplicatedNodeDialog>(checkUploadNameDialog, this, &MegaApplication::onUploadsCheckedAndReady);
+        auto checkUploadNameDialog(new DuplicatedNodeDialog());
+        checkUploadNameDialog->setConflicts(conflicts);
+        DialogOpener::showDialog<DuplicatedNodeDialog>(
+            checkUploadNameDialog,
+            [this, checkUploadNameDialog]() {
+                if (checkUploadNameDialog && checkUploadNameDialog->result() == QDialog::Accepted)
+                {
+                    onUploadsCheckedAndReady(checkUploadNameDialog->conflicts());
+                }
+            });
     }
     else
     {
-        checkUploadNameDialog->accept();
-        onUploadsCheckedAndReady(checkUploadNameDialog);
-        checkUploadNameDialog->close();
-        checkUploadNameDialog->deleteLater();
+        onUploadsCheckedAndReady(conflicts);
     }
 }
 
-void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> checkDialog)
+void MegaApplication::onUploadsCheckedAndReady(std::shared_ptr<ConflictTypes> conflicts)
 {
-    if(checkDialog && checkDialog->result() == QDialog::Accepted)
-    {
-        auto uploads = checkDialog->getResolvedConflicts();
+        auto uploads = conflicts->mResolvedConflicts;
 
-        auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(checkDialog->getNode()->getHandle());
+        auto data = TransferMetaDataContainer::createTransferMetaData<UploadTransferMetaData>(conflicts->mTargetNode->getHandle());
         preferences->setOverStorageDismissExecution(0);
 
         auto batch = std::shared_ptr<TransferBatch>(new TransferBatch(data->getAppId()));
@@ -1721,7 +1724,7 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
         foreach(auto uploadInfo, uploads)
         {
             QString filePath = uploadInfo->getSourceItemPath();
-            uploader->upload(filePath, uploadInfo->getNewName(), checkDialog->getNode(), data->getAppId(), batch);
+            uploader->upload(filePath, uploadInfo->getNewName(), conflicts->mTargetNode, data->getAppId(), batch);
 
             //Do not update the last items, leave Qt to do it in its natural way
             //If you update them, the flag mProcessingUploadQueue will be false and the scanning widget
@@ -1743,7 +1746,6 @@ void MegaApplication::onUploadsCheckedAndReady(QPointer<DuplicatedNodeDialog> ch
             mBlockingBatch.removeBatch();
             data->remove();
         }
-    }
 }
 
 void MegaApplication::processDownloadQueue(QString path)

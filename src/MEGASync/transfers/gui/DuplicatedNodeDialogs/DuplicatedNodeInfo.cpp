@@ -3,6 +3,7 @@
 
 #include <Utilities.h>
 #include <MegaApplication.h>
+#include <EventUpdater.h>
 
 DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker)
     : mSolution(NodeItemType::UPLOAD),
@@ -170,4 +171,153 @@ void DuplicatedMoveNodeInfo::setSourceItemHandle(const mega::MegaHandle& sourceI
 bool DuplicatedMoveNodeInfo::sourceItemIsFile() const
 {
     return mSourceItemNode->isFile();
+}
+
+std::shared_ptr<ConflictTypes>
+    CheckDuplicatedNodes::checkMoves(QList<mega::MegaHandle> moveHandles,
+                                     std::shared_ptr<mega::MegaNode> sourceNode,
+                                     std::shared_ptr<mega::MegaNode> targetNode)
+{
+    auto conflicts = std::make_shared<ConflictTypes>();
+    conflicts->mFolderCheck = new DuplicatedMoveFolder();
+    conflicts->mFileCheck = new DuplicatedMoveFile();
+    conflicts->mSourceNode = sourceNode;
+    conflicts->mTargetNode = targetNode;
+
+    std::unique_ptr<mega::MegaNodeList> nodes(
+        MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
+
+    for (int index = 0; index < nodes->size(); ++index)
+    {
+        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+        nodesOnCloudDrive.insert(nodeName, nodes->get(index));
+    }
+
+    auto counter(0);
+    EventUpdater checkUpdater(moveHandles.size());
+
+    while (!moveHandles.isEmpty())
+    {
+        auto moveHandle(moveHandles.takeFirst());
+        std::unique_ptr<mega::MegaNode> moveNode(
+            MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandle));
+        auto moveNodeName(QString::fromUtf8(moveNode->getName()));
+
+        DuplicatedUploadBase* checker(nullptr);
+        if (moveNode->isFile())
+        {
+            checker = conflicts->mFileCheck;
+        }
+        else
+        {
+            checker = conflicts->mFolderCheck;
+        }
+
+        auto info = std::make_shared<DuplicatedMoveNodeInfo>(checker);
+        info->setParentNode(targetNode);
+        info->setSourceItemHandle(moveHandle);
+
+        auto MEGANode(nodesOnCloudDrive.value(moveNodeName));
+        if (MEGANode)
+        {
+            std::shared_ptr<mega::MegaNode> smartNode(MEGANode->copy());
+            info->setConflictNode(smartNode);
+            info->setHasConflict(true);
+            info->setName(moveNodeName);
+            info->setIsNameConflict(true);
+            moveNode->isFile() ? conflicts->mFileNameConflicts.append(info) :
+                                 conflicts->mFolderNameConflicts.append(info);
+        }
+        else
+        {
+            conflicts->mResolvedConflicts.append(info);
+        }
+
+        checkUpdater.update(counter);
+        counter++;
+    }
+
+    return conflicts;
+}
+
+std::shared_ptr<ConflictTypes>
+    CheckDuplicatedNodes::checkUploads(QQueue<QString>& nodePaths,
+                                       std::shared_ptr<mega::MegaNode> targetNode)
+{
+    auto conflicts = std::make_shared<ConflictTypes>();
+    conflicts->mFolderCheck = new DuplicatedUploadFolder();
+    conflicts->mFileCheck = new DuplicatedUploadFile();
+    conflicts->mTargetNode = targetNode;
+
+    std::unique_ptr<mega::MegaNodeList> nodes(
+        MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
+
+    for (int index = 0; index < nodes->size(); ++index)
+    {
+        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
+        nodesOnCloudDrive.insert(nodeName.toLower(), nodes->get(index));
+    }
+
+    auto counter(0);
+    EventUpdater checkUpdater(nodePaths.size());
+
+    while (!nodePaths.isEmpty())
+    {
+        auto localPath(nodePaths.dequeue());
+        QFileInfo localPathInfo(localPath);
+        bool isFile(localPathInfo.isFile());
+        DuplicatedUploadBase* checker(nullptr);
+        if (isFile)
+        {
+            checker = conflicts->mFileCheck;
+        }
+        else
+        {
+            checker = conflicts->mFolderCheck;
+        }
+
+        auto info = std::make_shared<DuplicatedNodeInfo>(checker);
+        info->setSourceItemPath(localPathInfo.absoluteFilePath());
+        info->setParentNode(targetNode);
+
+        QString nodeToUploadName(localPathInfo.fileName());
+        auto node(nodesOnCloudDrive.value(nodeToUploadName.toLower()));
+        if (node)
+        {
+            std::shared_ptr<mega::MegaNode> smartNode(node->copy());
+            info->setConflictNode(smartNode);
+            info->setHasConflict(true);
+            info->setName(nodeToUploadName);
+
+            auto nodeName(QString::fromUtf8(node->getName()));
+            if (nodeName.compare(nodeToUploadName) != 0)
+            {
+                info->setIsNameConflict(true);
+                isFile ? conflicts->mFileNameConflicts.append(info) :
+                         conflicts->mFolderNameConflicts.append(info);
+            }
+            else
+            {
+                isFile ? conflicts->mFileConflicts.append(info) :
+                         conflicts->mFolderConflicts.append(info);
+            }
+        }
+        else
+        {
+            conflicts->mResolvedConflicts.append(info);
+        }
+
+        checkUpdater.update(counter);
+        counter++;
+    }
+
+    return conflicts;
+}
+
+bool ConflictTypes::isEmpty() const
+{
+    return mFileConflicts.isEmpty() && mFolderConflicts.isEmpty() && mFileNameConflicts.isEmpty() &&
+           mFolderNameConflicts.isEmpty();
 }

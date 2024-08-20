@@ -17,21 +17,19 @@ class DuplicatedNodeDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node);
+    explicit DuplicatedNodeDialog(QWidget* parent = nullptr);
     ~DuplicatedNodeDialog();
-
-    void checkUploads(QQueue<QString> &nodePath, std::shared_ptr<mega::MegaNode> parentNode);
-    void checkMoves(QList<mega::MegaHandle> moveHandles, std::shared_ptr<mega::MegaNode> parentNode);
 
     void addNodeItem(DuplicatedNodeItem* item);
     void setHeader(const QString& baseText, const QString &nodeName);
 
     void show();
 
-    const std::shared_ptr<mega::MegaNode>& getNode() const;
-
     const QList<std::shared_ptr<DuplicatedNodeInfo>>& getResolvedConflicts();
     bool isEmpty() const;
+
+    void setConflicts(std::shared_ptr<ConflictTypes> newConflicts);
+    std::shared_ptr<ConflictTypes> conflicts() const;
 
 protected:
     bool eventFilter(QObject *watched, QEvent *event) override;
@@ -55,20 +53,11 @@ private:
     void updateHeader();
 
     Ui::DuplicatedNodeDialog *ui;
-    DuplicatedUploadFolder mFolderCheck;
-    DuplicatedUploadFile mFileCheck;
-
-    DuplicatedMoveFolder mFolderMoveCheck;
-    DuplicatedMoveFile mFileMoveCheck;
 
     QList<std::shared_ptr<DuplicatedNodeInfo>> mConflictsBeingProcessed;
     DuplicatedUploadBase* mChecker;
+    std::shared_ptr<ConflictTypes>  mConflicts;
 
-    QList<std::shared_ptr<DuplicatedNodeInfo>> mResolvedUploads;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileConflicts;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderConflicts;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileNameConflicts;
-    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderNameConflicts;
     bool mApplyToAll;
 
     QString mHeaderBaseName;

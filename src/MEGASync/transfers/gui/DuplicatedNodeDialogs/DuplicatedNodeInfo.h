@@ -99,4 +99,33 @@ private:
     std::shared_ptr<mega::MegaNode> mSourceItemNode;
 };
 
+struct ConflictTypes
+{
+    ConflictTypes() = default;
+
+    std::shared_ptr<mega::MegaNode> mSourceNode = nullptr;
+    std::shared_ptr<mega::MegaNode> mTargetNode = nullptr;
+
+    DuplicatedUploadBase* mFolderCheck = nullptr;
+    DuplicatedUploadBase* mFileCheck = nullptr;
+
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mResolvedConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFileNameConflicts;
+    QList<std::shared_ptr<DuplicatedNodeInfo>> mFolderNameConflicts;
+
+    bool isEmpty() const;
+};
+
+class CheckDuplicatedNodes
+{
+public:
+    static std::shared_ptr<ConflictTypes> checkMoves(QList<mega::MegaHandle> moveHandles,
+                                                     std::shared_ptr<mega::MegaNode> sourceNode,
+                                                     std::shared_ptr<mega::MegaNode> targetNode);
+    static std::shared_ptr<ConflictTypes> checkUploads(
+        QQueue<QString>& nodePaths, std::shared_ptr<mega::MegaNode> targetNode);
+};
+
 #endif // DUPLICATEDNODEINFO_H

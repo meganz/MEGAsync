@@ -9,10 +9,9 @@
 
 #include <QFileInfo>
 
-DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node) :
-    QDialog(nullptr),
-    ui(new Ui::DuplicatedNodeDialog),
-    mNode(node)
+DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget* parent) :
+    QDialog(parent),
+    ui(new Ui::DuplicatedNodeDialog)
 {
     ui->setupUi(this);
 
@@ -22,20 +21,6 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
     layout()->setSizeConstraint(QLayout::SetFixedSize);
 #endif
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
-
-    connect(&mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        onConflictProcessed();
-    });
-    connect(&mFileCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        onConflictProcessed();
-    });
-
-    connect(&mFolderMoveCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        onConflictProcessed();
-    });
-    connect(&mFileMoveCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
-        onConflictProcessed();
-    });
 
     QIcon warningIcon(QString::fromLatin1(":/images/icon_warning.png"));
     ui->lIcon->setPixmap(warningIcon.pixmap(ui->lIcon->size()));
@@ -54,124 +39,6 @@ DuplicatedNodeDialog::DuplicatedNodeDialog(std::shared_ptr<mega::MegaNode> node)
 DuplicatedNodeDialog::~DuplicatedNodeDialog()
 {
     delete ui;
-}
-
-void DuplicatedNodeDialog::checkUploads(QQueue<QString> &nodePaths, std::shared_ptr<mega::MegaNode> parentNode)
-{
-    std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
-    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
-
-    for(int index = 0; index < nodes->size(); ++index)
-    {
-        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
-        nodesOnCloudDrive.insert(nodeName.toLower(), nodes->get(index));
-    }
-
-    auto counter(0);
-    EventUpdater checkUpdater(nodePaths.size());
-
-    while (!nodePaths.isEmpty())
-    {
-        auto localPath(nodePaths.dequeue());
-        QFileInfo localPathInfo(localPath);
-        bool isFile(localPathInfo.isFile());
-        DuplicatedUploadBase* checker(nullptr);
-        if(isFile)
-        {
-            checker = &mFileCheck;
-        }
-        else
-        {
-            checker = &mFolderCheck;
-        }
-
-        auto info = std::make_shared<DuplicatedNodeInfo>(checker);
-        info->setSourceItemPath(localPathInfo.absoluteFilePath());
-        info->setParentNode(parentNode);
-
-        QString nodeToUploadName(localPathInfo.fileName());
-        auto node(nodesOnCloudDrive.value(nodeToUploadName.toLower()));
-        if(node)
-        {
-            std::shared_ptr<mega::MegaNode> smartNode(node->copy());
-            info->setConflictNode(smartNode);
-            info->setHasConflict(true);
-            info->setName(nodeToUploadName);
-
-            auto nodeName(QString::fromUtf8(node->getName()));
-            if(nodeName.compare(nodeToUploadName) != 0)
-            {
-                info->setIsNameConflict(true);
-                isFile ? mFileNameConflicts.append(info) : mFolderNameConflicts.append(info);
-            }
-            else
-            {
-                isFile ? mFileConflicts.append(info) : mFolderConflicts.append(info);
-            }
-        }
-        else
-        {
-            mResolvedUploads.append(info);
-        }
-
-        checkUpdater.update(counter);
-        counter++;
-    }
-}
-
-void DuplicatedNodeDialog::checkMoves(
-    QList<mega::MegaHandle> moveHandles, std::shared_ptr<mega::MegaNode> parentNode)
-{
-    std::unique_ptr<mega::MegaNodeList>nodes(MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
-    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
-
-    for(int index = 0; index < nodes->size(); ++index)
-    {
-        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
-        nodesOnCloudDrive.insert(nodeName, nodes->get(index));
-    }
-
-    auto counter(0);
-    EventUpdater checkUpdater(moveHandles.size());
-
-    while (!moveHandles.isEmpty())
-    {
-        auto moveHandle(moveHandles.takeFirst());
-        std::unique_ptr<mega::MegaNode> moveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandle));
-        auto moveNodeName(QString::fromUtf8(moveNode->getName()));
-
-        DuplicatedUploadBase* checker(nullptr);
-        if(moveNode->isFile())
-        {
-            checker = &mFileMoveCheck;
-        }
-        else
-        {
-            checker = &mFolderMoveCheck;
-        }
-
-        auto info = std::make_shared<DuplicatedMoveNodeInfo>(checker);
-        info->setParentNode(parentNode);
-        info->setSourceItemHandle(moveHandle);
-
-        auto MEGANode(nodesOnCloudDrive.value(moveNodeName));
-        if(MEGANode)
-        {
-            std::shared_ptr<mega::MegaNode> smartNode(MEGANode->copy());
-            info->setConflictNode(smartNode);
-            info->setHasConflict(true);
-            info->setName(moveNodeName);
-            info->setIsNameConflict(true);
-            moveNode->isFile() ? mFileNameConflicts.append(info) : mFolderNameConflicts.append(info);
-        }
-        else
-        {
-            mResolvedUploads.append(info);
-        }
-
-        checkUpdater.update(counter);
-        counter++;
-    }
 }
 
 void DuplicatedNodeDialog::addNodeItem(DuplicatedNodeItem* item)
@@ -233,7 +100,7 @@ void DuplicatedNodeDialog::onConflictProcessed()
 
         if(conflict->getSolution() != NodeItemType::DONT_UPLOAD)
         {
-            mResolvedUploads.append(conflict);
+            mConflicts->mResolvedConflicts.append(conflict);
         }
 
         if(ui->cbApplyToAll->isChecked())
@@ -246,7 +113,7 @@ void DuplicatedNodeDialog::onConflictProcessed()
                 (*it)->setSolution(conflict->getSolution());
                 if((*it)->getSolution() != NodeItemType::DONT_UPLOAD)
                 {
-                    mResolvedUploads.append((*it));
+                    mConflicts->mResolvedConflicts.append((*it));
                 }
 
                 counter++;
@@ -278,12 +145,12 @@ void DuplicatedNodeDialog::onConflictProcessed()
 
 void DuplicatedNodeDialog::processFolderConflicts()
 {
-    if(!mFolderConflicts.isEmpty())
+    if(!mConflicts->mFolderConflicts.isEmpty())
     {
         setDialogTitle(tr("Folder already exists"));
-        mConflictsBeingProcessed = mFolderConflicts;
-        mFolderConflicts.clear();
-        mChecker = &mFolderCheck;
+        mConflictsBeingProcessed = mConflicts->mFolderConflicts;
+        mConflicts->mFolderConflicts.clear();
+        mChecker = mConflicts->mFolderCheck;
         fillDialog();
     }
 }
@@ -291,13 +158,13 @@ void DuplicatedNodeDialog::processFolderConflicts()
 void DuplicatedNodeDialog::processFileConflicts()
 {
     //show files conflicts
-    if(!mFileConflicts.isEmpty())
+    if(!mConflicts->mFileConflicts.isEmpty())
     {
         cleanUi();
         setDialogTitle(tr("File already exists"));
-        mConflictsBeingProcessed = mFileConflicts;
-        mFileConflicts.clear();
-        mChecker = &mFileCheck;
+        mConflictsBeingProcessed = mConflicts->mFileConflicts;
+        mConflicts->mFileConflicts.clear();
+        mChecker = mConflicts->mFileCheck;
         fillDialog();
     }
 }
@@ -305,13 +172,13 @@ void DuplicatedNodeDialog::processFileConflicts()
 void DuplicatedNodeDialog::processFileNameConflicts()
 {
     //show files conflicts
-    if(!mFileNameConflicts.isEmpty())
+    if(!mConflicts->mFileNameConflicts.isEmpty())
     {
         cleanUi();
         setDialogTitle(tr("File already exists"));
-        mConflictsBeingProcessed = mFileNameConflicts;
-        mFileNameConflicts.clear();
-        mChecker = &mFileCheck;
+        mConflictsBeingProcessed = mConflicts->mFileNameConflicts;
+        mConflicts->mFileNameConflicts.clear();
+        mChecker = mConflicts->mFileCheck;
         fillDialog();
     }
 }
@@ -319,32 +186,32 @@ void DuplicatedNodeDialog::processFileNameConflicts()
 void DuplicatedNodeDialog::processFolderNameConflicts()
 {
     //show files conflicts
-    if(!mFolderNameConflicts.isEmpty())
+    if(!mConflicts->mFolderNameConflicts.isEmpty())
     {
         cleanUi();
         setDialogTitle(tr("Folder already exists"));
-        mConflictsBeingProcessed = mFolderNameConflicts;
-        mFolderNameConflicts.clear();
-        mChecker = &mFolderCheck;
+        mConflictsBeingProcessed = mConflicts->mFolderNameConflicts;
+        mConflicts->mFolderNameConflicts.clear();
+        mChecker = mConflicts->mFolderCheck;
         fillDialog();
     }
 }
 
 void DuplicatedNodeDialog::startWithNewCategoryOfConflicts()
 {
-    if(!mFolderConflicts.isEmpty())
+    if(!mConflicts->mFolderConflicts.isEmpty())
     {
         processFolderConflicts();
     }
-    else if(!mFileConflicts.isEmpty())
+    else if(!mConflicts->mFileConflicts.isEmpty())
     {
         processFileConflicts();
     }
-    else if(!mFileNameConflicts.isEmpty())
+    else if(!mConflicts->mFileNameConflicts.isEmpty())
     {
         processFileNameConflicts();
     }
-    else if(!mFolderNameConflicts.isEmpty())
+    else if(!mConflicts->mFolderNameConflicts.isEmpty())
     {
         processFolderNameConflicts();
     }
@@ -379,22 +246,30 @@ void DuplicatedNodeDialog::updateHeader()
     }
 }
 
-const std::shared_ptr<mega::MegaNode>& DuplicatedNodeDialog::getNode() const
+std::shared_ptr<ConflictTypes> DuplicatedNodeDialog::conflicts() const
 {
-    return mNode;
+    return mConflicts;
+}
+
+void DuplicatedNodeDialog::setConflicts(std::shared_ptr<ConflictTypes> newConflicts)
+{
+    mConflicts = newConflicts;
+    connect(mConflicts->mFolderCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
+        onConflictProcessed();
+    });
+    connect(mConflicts->mFileCheck, &DuplicatedUploadBase::selectionDone, this, [this](){
+        onConflictProcessed();
+    });
 }
 
 const QList<std::shared_ptr<DuplicatedNodeInfo> > &DuplicatedNodeDialog::getResolvedConflicts()
 {
-    return mResolvedUploads;
+    return mConflicts->mResolvedConflicts;
 }
 
 bool DuplicatedNodeDialog::isEmpty() const
 {
-    return mFileConflicts.isEmpty() &&
-           mFolderConflicts.isEmpty() &&
-           mFileNameConflicts.isEmpty() &&
-           mFolderNameConflicts.isEmpty();
+    return mConflicts->isEmpty();
 }
 
 void DuplicatedNodeDialog::show()

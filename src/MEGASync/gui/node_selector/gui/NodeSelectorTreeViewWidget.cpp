@@ -212,95 +212,6 @@ void NodeSelectorTreeViewWidget::enableDragAndDrop(bool enable)
         enable ? QAbstractItemView::DragDrop : QAbstractItemView::NoDragDrop);
 }
 
-void NodeSelectorTreeViewWidget::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
-{
-    if(request->getType() == MegaRequest::TYPE_MOVE)
-    {
-        if (e->getErrorCode() != MegaError::API_OK)
-        {
-            std::unique_ptr<mega::MegaNode> node(
-                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-            if (node)
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.parent = this;
-
-                if (node->isFile())
-                {
-                    msgInfo.title = tr("Error moving file");
-                    msgInfo.text = tr("The file %1 couldn´t be moved. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-                else
-                {
-                    msgInfo.title = tr("Error moving folder");
-                    msgInfo.text = tr("The folder %1 couldn´t be moved. Try again later")
-                                       .arg(MegaNodeNames::getNodeName(node.get()));
-                }
-            }
-        }
-    }
-    if (request->getType() == MegaRequest::TYPE_REMOVE)
-    {
-        std::unique_ptr<mega::MegaNode> node(
-            MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-
-        if (node)
-        {
-            mDeletedItemsType |=
-                node->isFile() ? DeletedItemsType::FILES : DeletedItemsType::FOLDERS;
-
-            mDeletedHandles.remove(request->getNodeHandle());
-
-            if (mDeletedHandles.isEmpty())
-            {
-                if (e->getErrorCode() != MegaError::API_OK)
-                {
-                    QMegaMessageBox::MessageBoxInfo msgInfo;
-                    msgInfo.parent = this;
-
-                    if (mMultipleDeletion)
-                    {
-                        if(mDeletedItemsType == DeletedItemsType::FILES)
-                        {
-                            msgInfo.title = tr("Error removing files");
-                            msgInfo.text = tr("The files couldn´t be removed. Try again later");
-                        }
-                        else if(mDeletedItemsType == DeletedItemsType::FOLDERS)
-                        {
-                            msgInfo.title = tr("Error removing folders");
-                            msgInfo.text = tr("The folders couldn´t be removed. Try again later");
-                        }
-                        else
-                        {
-                            msgInfo.title = tr("Error removing items");
-                            msgInfo.text = tr("The items couldn´t be removed. Try again later");
-                        }
-
-                    }
-                    else
-                    {
-                        if (node->isFile())
-                        {
-                            msgInfo.title = tr("Error removing file");
-                            msgInfo.text = tr("The file %1 couldn´t be removed. Try again later")
-                                               .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
-                        else
-                        {
-                            msgInfo.title = tr("Error removing folder");
-                            msgInfo.text = tr("The folder %1 couldn´t be removed. Try again later")
-                                               .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
-                    }
-                }
-
-                mMultipleDeletion = false;
-            }
-        }
-    }
-}
-
 void NodeSelectorTreeViewWidget::setDefaultUploadOption(bool value)
 {
     ui->cbAlwaysUploadToLocation->setChecked(value);
@@ -750,42 +661,11 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked(bool permanently)
 {
-    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode> {
-        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-        int access = mMegaApi->getAccess(node.get());
-
-        // This is for an extra protection as we don´t show the delete action if one of this
-        // conditions are not met
-        if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
-        {
-            return nullptr;
-        }
-
-        return node;
-    };
-
-    auto removeNode = [this, permanently](std::shared_ptr<mega::MegaNode> node)
-    {
-        auto listener = RequestListenerManager::registerAndGetFinishListener(this, true);
-
-        int access = mMegaApi->getAccess(node.get());
-
-        //Double protection in case the node properties changed while the node is deleted
-        if (permanently || (access == MegaShare::ACCESS_FULL
-                              && node->isNodeKeyDecrypted()))
-        {
-            mMegaApi->remove(node.get(), listener.get());
-        }
-        else
-        {
-            auto rubbish = MegaSyncApp->getRubbishNode();
-            mMegaApi->moveNode(node.get(), rubbish.get(), listener.get());
-        }
-    };
-
     QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
-    mDeletedHandles.clear();
-    mLastValidDeletedParent = QModelIndex();
+    if (!currentDialog)
+    {
+        return;
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
@@ -807,53 +687,35 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(bool permanently)
 
         if(auto savedNode = mProxyModel->getNode(p_index))
         {
-            auto node = getNode(savedNode->getHandle());
+            auto node = mModel->getNodeToRemove(savedNode->getHandle());
             if(node)
             {
                 msgInfo.text = tr("Move \"%1\" to Rubbish bin?")
                                    .arg(QString::fromUtf8(node->getName()));
-                msgInfo.finishFunc = [this, removeNode, node, p_index](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        mDeletedHandles.insert(node->getHandle(), p_index);
-                        removeNode(node);
-                    }
-                };
-
-                QMegaMessageBox::question(msgInfo);
             }
         }
     }
     else
     {
         msgInfo.text = tr("Move %n items to Rubbish bin?", "", selectedRows.size());
-        msgInfo.finishFunc = [this, removeNode, getNode, selectedRows](QPointer<QMessageBox> msg)
-        {
-            if(msg->result() == QMessageBox::Yes)
-            {
-                foreach(auto& s_index, selectedRows)
-                {
-                    if(auto savedNode = mProxyModel->getNode(s_index))
-                    {
-                        auto node = getNode(savedNode->getHandle());
-                        if(node)
-                        {
-                            mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
-                            removeNode(node);
-                        }
-                    }
-                }
-            }
-        };
-
-        QMegaMessageBox::question(msgInfo);
     }
 
-    if (!currentDialog)
+    msgInfo.finishFunc = [this, selectedRows, permanently](QPointer<QMessageBox> msg)
     {
-        return;
-    }
+        if(msg->result() == QMessageBox::Yes)
+        {
+            QList<mega::MegaHandle> nodeHandles;
+
+            foreach(auto& index, selectedRows)
+            {
+                nodeHandles.append(getHandleByIndex(index));
+            }
+
+            mModel->removeNodes(nodeHandles, permanently);
+        }
+    };
+
+    QMegaMessageBox::question(msgInfo);
 }
 
 bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)
