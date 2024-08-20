@@ -325,6 +325,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
     connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
     ui->stackedWidget->addWidget(mSearchWidget);
+    NodeSelectorModel* model(nullptr);
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
@@ -334,6 +335,17 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
+            if (!model)
+            {
+                model = viewContainer->getProxyModel()->getMegaModel();
+                connect(model,
+                        &NodeSelectorModel::showMessageBox,
+                        this,
+                        [this](QMegaMessageBox::MessageBoxInfo info) {
+                            info.parent = this;
+                            QMegaMessageBox::warning(info);
+                    });
+            }
         }
     }
 }

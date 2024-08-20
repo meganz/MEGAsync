@@ -193,7 +193,7 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
                     {
                         if(node->isFolder())
                         {
-                            doubleClicked(selectedRows.first());
+                            emit doubleClicked(selectedRows.first());
                         }
                         else
                         {
@@ -205,7 +205,8 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
         }
         else if(event->key() == Qt::Key_Delete)
         {
-            if(areAllEligibleForDeletion())
+            auto handlesToRemove(getMultiSelectionNodeHandle());
+            if(getSourceModel()->areAllNodesEligibleForDeletion(handlesToRemove))
             {
                 removeNode();
             }
@@ -230,27 +231,37 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
         return;
     }
 
+    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+    auto sourceModel = proxyModel->getMegaModel();
+
+    auto selectedHandle(getSelectedNodeHandle());
 
     if(selectionModel()->selectedRows().size() == 1)
     {
-        int access = getNodeAccess(getSelectedNodeHandle());
-
-        if (access != MegaShare::ACCESS_UNKNOWN)
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(selectedHandle));
+        if(node)
         {
-            if (access == MegaShare::ACCESS_OWNER)
-            {
-                customMenu.addAction(tr("Get MEGA link"), this, &NodeSelectorTreeView::getMegaLink);
-            }
+            int access = sourceModel->getNodeAccess(node.get());
 
-            if (access >= MegaShare::ACCESS_FULL)
+            if (access != MegaShare::ACCESS_UNKNOWN)
             {
-                customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
+                if (access == MegaShare::ACCESS_OWNER)
+                {
+                    customMenu.addAction(tr("Get MEGA link"),
+                                         this,
+                                         &NodeSelectorTreeView::getMegaLink);
+                }
+
+                if (proxyModel->isNotAProtectedModel() && access >= MegaShare::ACCESS_FULL)
+                {
+                    customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
+                }
             }
         }
     }
 
     //All or none
-    if(areAllEligibleForDeletion())
+    if(proxyModel->isNotAProtectedModel() && sourceModel->areAllNodesEligibleForDeletion(getMultiSelectionNodeHandle()))
     {
         customMenu.addAction(
             tr("Delete"), this, [this]() { removeNode(); });
@@ -260,43 +271,10 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
             customMenu.exec(mapToGlobal(event->pos()));
 }
 
-bool NodeSelectorTreeView::areAllEligibleForDeletion() const
+NodeSelectorModel* NodeSelectorTreeView::getSourceModel() const
 {
-    auto selectionHandles(getMultiSelectionNodeHandle());
-
-    foreach(auto&& nodeHandle, selectionHandles)
-    {
-        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
-        if(!node || !node->isNodeKeyDecrypted() || getNodeAccess(nodeHandle) < MegaShare::ACCESS_FULL)
-        {
-            return false;
-        }
-    }
-
-    //Return false if there are no handles (disabled rows...)
-    return !selectionHandles.isEmpty();
-}
-
-int NodeSelectorTreeView::getNodeAccess(MegaHandle handle) const
-{
-    auto node = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-    auto parent = std::unique_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
-    if (parent && node)
-    {
-        auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-        auto access(mMegaApi->getAccess(node.get()));
-
-        if (access >= MegaShare::ACCESS_FULL && (!proxyModel->canBeDeleted() || !node->isNodeKeyDecrypted()))
-        {
-            return MegaShare::ACCESS_UNKNOWN;
-        }
-
-        return access;
-    }
-    else
-    {
-        return MegaShare::ACCESS_UNKNOWN;
-    }
+    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+    return proxyModel->getMegaModel();
 }
 
 void NodeSelectorTreeView::removeNode()
