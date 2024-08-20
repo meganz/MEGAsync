@@ -3,6 +3,8 @@ import QtQuick 2.15
 import QtQuick 2.4
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Controls 2.15 as Qml
+import QtQuick.Controls 2.12 as QmlControlsv212
 
 import SyncModel 1.0
 
@@ -10,6 +12,7 @@ import common 1.0
 
 import components.texts 1.0 as Texts
 import components.images 1.0
+import components.menus 1.0
 import components.buttons 1.0 as Buttons
 import SyncStatus 1.0
 import QmlSyncType 1.0
@@ -290,8 +293,42 @@ Item {
                     }
                     icons.source: Images.threeDots
                     visible: true
-                    sizes{
-                        iconWidth: 16
+                    sizes.iconWidth: 16
+                    onClicked: {
+                        menu.open();
+
+                    }
+                }
+                ContextMenu {
+                    id: menu
+
+                    ContextMenuItem {
+                        id: aboutMenuItem
+
+                        text: DeviceCenterStrings.actionOpenInMega
+                        icon.source: Images.megaOutline
+                        onTriggered: {
+                        }
+                    }
+                    QmlControlsv212.MenuSeparator {
+
+                        padding: 0
+                        topPadding: 4
+                        bottomPadding: 4
+                        contentItem: Rectangle {
+                            implicitWidth: parent.width
+                            implicitHeight: 1
+                            color: colorStyle.surface2
+                        }
+                    }
+                    ContextMenuItem {
+                        id: preferencesItem
+
+                        text: DeviceCenterStrings.actionShowFinder
+                        icon.source: Images.settings
+                        onTriggered: {
+
+                        }
                     }
                 }
             }

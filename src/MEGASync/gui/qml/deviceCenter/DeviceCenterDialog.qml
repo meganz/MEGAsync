@@ -9,19 +9,15 @@ import DeviceCenterQmlDialog 1.0
 DeviceCenterQmlDialog {
     id: window
 
-
-    readonly property int deviceCenterWidth: 1024
-    readonly property int deviceCenterHeight: 720
-
     title: DeviceCenterStrings.deviceCenterWindowTitle
     visible: true
     modality: Qt.NonModal
-    width: deviceCenterWidth
-    height: deviceCenterHeight
-    maximumHeight: deviceCenterHeight
-    maximumWidth: deviceCenterWidth
-    minimumHeight: deviceCenterHeight
-    minimumWidth: deviceCenterWidth
+    width: 1024
+    height: 720
+    maximumHeight: 720
+    maximumWidth: 1024
+    minimumHeight: 720
+    minimumWidth: 1024
     color: colorStyle.pageBackground
 
     Component.onCompleted: {

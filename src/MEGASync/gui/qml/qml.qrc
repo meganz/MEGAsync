@@ -139,10 +139,6 @@
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
-        <file>guest/MenuItem.qml</file>
-        <file>common/themes/light/Colors.qml</file>
-        <file>common/themes/dark/Colors.qml</file>
-        <file>common/ColorTheme.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>
@@ -183,5 +179,11 @@
         <file>deviceCenter/NoConnectionsPage.qml</file>
         <file>deviceCenter/SyncTablePage.qml</file>
         <file>deviceCenter/DeviceWidgetProperty.qml</file>
+        <file>components/menus/MenuItem.qml</file>
+        <file>components/menus/qmldir</file>
+        <file>components/menus/ContextMenuItem.qml</file>
+        <file>components/menus/ContextMenu.qml</file>
+        <file>components/menus/Colors.qml</file>
+        <file>components/menus/Sizes.qml</file>
     </qresource>
 </RCC>
