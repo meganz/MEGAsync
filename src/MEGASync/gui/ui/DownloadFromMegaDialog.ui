@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>480</width>
-    <height>210</height>
+    <height>238</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>480</width>
-    <height>210</height>
+    <height>238</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>480</width>
-    <height>210</height>
+    <height>238</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,6 @@
 {
 color: #04101E; /*colorToken.text-inverse-accent*/
 background-color:  #F4F4F5; /*colorToken.button-primary*/
-width: 40px;
 }
 
 #eFolderPath
@@ -59,8 +58,6 @@ font-weight: 400;
 
 #label_2
 {
-color: #303233; /*colorToken.text-primary*/
-font-size: 12px;
 font-weight: 600;
 }
 
@@ -79,6 +76,18 @@ padding: 3px 10px 3px 10px;
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>24</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
+   </property>
+   <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
    </property>
    <item>
     <widget class="QLabel" name="infoLabel">
@@ -148,14 +157,14 @@ padding: 3px 10px 3px 10px;
         <widget class="QPushButton" name="bChange">
          <property name="minimumSize">
           <size>
-           <width>80</width>
-           <height>0</height>
+           <width>85</width>
+           <height>36</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>80</width>
-           <height>16777215</height>
+           <width>85</width>
+           <height>36</height>
           </size>
          </property>
          <property name="text">
@@ -202,7 +211,7 @@ padding: 3px 10px 3px 10px;
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -225,6 +234,24 @@ padding: 3px 10px 3px 10px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>36</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -232,6 +259,24 @@ padding: 3px 10px 3px 10px;
       </item>
       <item>
        <widget class="QPushButton" name="bOK">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>36</height>
+         </size>
+        </property>
         <property name="text">
          <string>OK</string>
         </property>
