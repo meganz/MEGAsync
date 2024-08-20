@@ -296,8 +296,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
 
-    connect(&AccountDetailsManager::instance(), &AccountDetailsManager::accountDetailsUpdated,
-            this, &InfoDialog::updateUsageAndAccountType);
+    connect(AccountDetailsManager::instance(),
+            &AccountDetailsManager::accountDetailsUpdated,
+            this,
+            &InfoDialog::updateUsageAndAccountType);
 }
 
 InfoDialog::~InfoDialog()

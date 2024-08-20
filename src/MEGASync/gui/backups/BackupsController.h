@@ -20,7 +20,8 @@ public:
     BackupsController(const BackupsController&) = delete;
     BackupsController& operator=(const BackupsController&) = delete;
 
-    void addBackups(const BackupInfoList& localPathList);
+    void addBackups(const BackupInfoList& localPathList,
+                    SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::NONE);
 
     QSet<QString> getRemoteFolders() const;
 
@@ -39,6 +40,7 @@ private:
 
     // The first field contains the full path and the second contains the backup name
     BackupInfoList mBackupsToDoList;
+    SyncInfo::SyncOrigin mBackupsOrigin;
 
     bool existsName(const QString& name) const;
 

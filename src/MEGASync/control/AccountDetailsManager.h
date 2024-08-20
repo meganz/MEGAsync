@@ -39,7 +39,7 @@ public:
     };
     Q_DECLARE_FLAGS(Flags, Flag)
 
-    static AccountDetailsManager& instance();
+    static AccountDetailsManager* instance();
 
     AccountDetailsManager(const AccountDetailsManager&) = delete;
     AccountDetailsManager& operator=(const AccountDetailsManager&) = delete;
@@ -110,7 +110,7 @@ private:
 
     static long long getLastRequest(const Flags& flags,
                                     const UserStats<long long>& lastRequestUserStats);
-
+    static AccountDetailsManager* mInstance;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(AccountDetailsManager::Flags)

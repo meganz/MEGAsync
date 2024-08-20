@@ -9,13 +9,12 @@
 const QString Syncs::DEFAULT_MEGA_FOLDER = QString::fromUtf8("MEGA");
 const QString Syncs::DEFAULT_MEGA_PATH = QString::fromUtf8("/") + Syncs::DEFAULT_MEGA_FOLDER;
 
-Syncs::Syncs(QObject *parent)
-    : QObject(parent)
-    , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
-    , mRemoteFolder()
-    , mLocalFolder()
-    , mCreatingFolder(false)
+Syncs::Syncs(QObject* parent):
+    QObject(parent),
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(
+        std::make_unique<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this)),
+    mCreatingFolder(false)
 {
     mMegaApi->addRequestListener(mDelegateListener.get());
 
@@ -27,12 +26,9 @@ Syncs::Syncs(QObject *parent)
     onSyncRemoved(nullptr);
 }
 
-void Syncs::addSync(const QString& local, const QString& remote)
+void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
 {
     cleanErrors();
-
-    mRemoteFolder = remote;
-    mLocalFolder = local;
 
     if (checkErrorsOnSyncPaths(local, remote))
     {
@@ -45,6 +41,11 @@ void Syncs::addSync(const QString& local, const QString& remote)
     {
         remoteHandle = megaNode->getHandle();
     }
+
+    mSyncConfig.localFolder = local;
+    mSyncConfig.origin = origin;
+    mSyncConfig.remoteHandle = remoteHandle;
+    mRemoteFolder = remote;
 
     if (remoteHandle == mega::INVALID_HANDLE)
     {
@@ -64,7 +65,7 @@ void Syncs::addSync(const QString& local, const QString& remote)
     }
     else
     {
-        SyncController::instance().addSync(local, remoteHandle);
+        SyncController::instance().addSync(mSyncConfig);
     }
 }
 
@@ -207,7 +208,8 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
                                         MegaSyncApp->getRootNode().get()));
             if (megaNode != nullptr)
             {
-                SyncController::instance().addSync(mLocalFolder, request->getNodeHandle());
+                mSyncConfig.remoteHandle = request->getNodeHandle();
+                SyncController::instance().addSync(mSyncConfig);
             }
             else
             {
@@ -289,7 +291,9 @@ QString Syncs::getLocalError() const
         case LocalErrors::CantSync:
         {
             QString errorMessage;
-            SyncController::instance().isLocalFolderSyncable(mLocalFolder, mega::MegaSync::TYPE_TWOWAY, errorMessage);
+            SyncController::instance().isLocalFolderSyncable(mSyncConfig.localFolder,
+                                                             mega::MegaSync::TYPE_TWOWAY,
+                                                             errorMessage);
             return errorMessage;
         }
     }

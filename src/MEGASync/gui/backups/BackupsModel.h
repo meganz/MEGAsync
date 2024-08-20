@@ -192,7 +192,7 @@ public:
     Q_INVOKABLE QStringList getSelectedFolders() const;
 
 public slots:
-    void createBackups();
+    void createBackups(SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
 
 signals:
     void selectedFilterEnabledChanged();

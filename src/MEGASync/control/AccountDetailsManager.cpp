@@ -56,17 +56,21 @@ Type AccountDetailsManager::UserStats<Type>::proValue() const
 //
 // AccountDetailsManager implementation.
 //
+AccountDetailsManager* AccountDetailsManager::mInstance = nullptr;
+
 AccountDetailsManager::AccountDetailsManager(QObject* parent)
     : QObject(parent)
     , mMegaApi(nullptr)
     , mPreferences(Preferences::instance())
-{
-}
+{}
 
-AccountDetailsManager& AccountDetailsManager::instance()
+AccountDetailsManager* AccountDetailsManager::instance()
 {
-    static AccountDetailsManager instance;
-    return instance;
+    if (!mInstance)
+    {
+        mInstance = new AccountDetailsManager;
+    }
+    return mInstance;
 }
 
 void AccountDetailsManager::reset()
@@ -186,15 +190,14 @@ void AccountDetailsManager::periodicUpdate()
 void AccountDetailsManager::handleAccountDetailsReply(mega::MegaRequest* request,
                                                       mega::MegaError* error)
 {
+    mFlags = Flag::ALL;
+    mFlags &= request->getNumDetails();
+    mInflightUserStats.updateWithValue(mFlags, false);
+
     if(!canContinue(error))
     {
         return;
     }
-
-    mFlags = Flag::ALL;
-    mFlags &= request->getNumDetails();
-
-    mInflightUserStats.updateWithValue(mFlags, false);
 
     //Account details retrieved, update the preferences and the information dialog
     std::shared_ptr<mega::MegaAccountDetails> details(request->getMegaAccountDetails());
@@ -321,6 +324,12 @@ mega::MegaHandle AccountDetailsManager::processNode(const std::shared_ptr<mega::
 
 void AccountDetailsManager::processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
+    if (!MegaSyncApp->getRootNode() || !MegaSyncApp->getVaultNode() ||
+        !MegaSyncApp->getRubbishNode())
+    {
+        return;
+    }
+
     // Cloud Drive
     auto cloudDriveHandle = processNode(MegaSyncApp->getRootNode(),
                                         details,
@@ -413,14 +422,8 @@ bool AccountDetailsManager::canContinue(mega::MegaError* error) const
 {
     // We need to be both logged AND have fetched the nodes to continue
     // Do not continue if there was an error
-    // TODO: investigate getRootNode, getVaultNode and getRubbishNode conditions.
-    //       Is this case possible and what should we do? Restart the app?
-    if (mPreferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-        || !mPreferences->logged()
-        || error->getErrorCode() != mega::MegaError::API_OK
-        || !MegaSyncApp->getRootNode()
-        || !MegaSyncApp->getVaultNode()
-        || !MegaSyncApp->getRubbishNode())
+    if (mPreferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK ||
+        !mPreferences->logged() || error->getErrorCode() != mega::MegaError::API_OK)
     {
         return false;
     }

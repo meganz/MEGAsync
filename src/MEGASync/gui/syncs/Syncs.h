@@ -37,7 +37,9 @@ public:
     Syncs(QObject* parent = nullptr);
     virtual ~Syncs() = default;
 
-    Q_INVOKABLE void addSync(const QString& local, const QString& remote = QLatin1String("/"));
+    Q_INVOKABLE void addSync(SyncInfo::SyncOrigin origin,
+                             const QString& local,
+                             const QString& remote = QLatin1String("/"));
     Q_INVOKABLE bool checkLocalSync(const QString& path);
     Q_INVOKABLE bool checkRemoteSync(const QString& path);
     Q_INVOKABLE void clearRemoteError();
@@ -88,10 +90,9 @@ private:
     std::unique_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::unique_ptr<SyncController> mSyncController;
     MegaRemoteCodeError mRemoteMegaError;
-    QString mRemoteFolder;
-    QString mLocalFolder;
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
+    QString mRemoteFolder;
     std::optional<LocalErrors> mLocalError;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
@@ -105,6 +106,9 @@ private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
+
+private:
+    SyncController::SyncConfig mSyncConfig;
 };
 
 #endif // SYNCS_H

@@ -24,7 +24,7 @@ ConfirmFoldersPageForm {
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups();
+            backupsProxyModelRef.createBackups(window.syncOrigin);
         }
     }
 
