@@ -2,19 +2,19 @@
 
 #include "AccountInfoData.h"
 #include "ApiEnums.h"
-#include "ChooseFolder.h"
-#include "ChooseFile.h"
-#include "ColorTheme.h"
-#include "QmlClipboard.h"
 #include "AppStatsEvents.h"
+#include "ChooseFile.h"
+#include "ChooseFolder.h"
+#include "ColorTheme.h"
+#include "LoginController.h"
+#include "QmlClipboard.h"
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
+#include "SyncInfo.h"
 
-#include "LoginController.h"
-
+#include <QDataStream>
 #include <QQmlContext>
 #include <QQueue>
-#include <QDataStream>
 
 static const QString DEFAULT_QML_INSTANCES_SUFFIX = QString::fromUtf8("Access");
 
@@ -56,6 +56,12 @@ void QmlManager::registerCommonQmlElements()
                                                 QString::fromUtf8("Cannot create WarningLevel in QML"));
     qmlRegisterUncreatableType<AppStatsEvents>("AppStatsEvents", 1, 0, "AppStatsEvents",
                                                QString::fromUtf8("Not creatable as it is an enum type"));
+    qmlRegisterUncreatableType<SyncInfo>(
+        "SyncInfo",
+        1,
+        0,
+        "SyncInfo",
+        QString::fromUtf8("Cannot register SyncInfo::SyncOrigin in QML"));
     qRegisterMetaType<AppStatsEvents::EventType>();
 
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);

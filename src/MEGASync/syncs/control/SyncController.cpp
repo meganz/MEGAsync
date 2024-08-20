@@ -22,30 +22,37 @@ SyncController::SyncController(QObject* parent)
     assert(mSyncInfo);
 }
 
-void SyncController::createPendingBackups()
+void SyncController::createPendingBackups(SyncInfo::SyncOrigin origin)
 {
     for(auto it = mPendingBackups.cbegin(); it != mPendingBackups.cend(); it++)
     {
-        addSync(QDir::toNativeSeparators(it.key()), mega::INVALID_HANDLE,
-                it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value(),
-                mega::MegaSync::TYPE_BACKUP);
+        SyncConfig conf;
+        conf.localFolder = QDir::toNativeSeparators(it.key());
+        conf.syncName = it.value().isEmpty() ? getSyncNameFromPath(it.key()) : it.value();
+        conf.type = mega::MegaSync::TYPE_BACKUP;
+        conf.origin = origin;
+        addSync(conf);
     }
     mPendingBackups.clear();
 }
 
-void SyncController::addBackup(const QString& localFolder, const QString& syncName)
+void SyncController::addBackup(const QString& localFolder,
+                               const QString& syncName,
+                               SyncInfo::SyncOrigin origin)
 {
     mPendingBackups.insert(localFolder, syncName);
 
     auto request = UserAttributes::MyBackupsHandle::requestMyBackupsHandle();
-    connect(request.get(), &UserAttributes::MyBackupsHandle::attributeReady, this, [this]()
-    {
-      createPendingBackups();
-    });
+    connect(request.get(),
+            &UserAttributes::MyBackupsHandle::attributeReady,
+            this,
+            [this, origin]() {
+                createPendingBackups(origin);
+            });
 
     if(request->isAttributeReady())
     {
-        createPendingBackups();
+        createPendingBackups(origin);
     }
     else
     {
@@ -71,18 +78,20 @@ QString SyncController::getErrorString(int errorCode, int syncErrorCode) const
     return errorMsg;
 }
 
-void SyncController::addSync(const QString& localFolder, const MegaHandle& remoteHandle,
-                             const QString& syncName, MegaSync::SyncType type)
+void SyncController::addSync(SyncConfig& sync)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
-                 .arg(getSyncTypeString(type), syncName, localFolder).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("Adding sync (%1) \"%2\" for path \"%3\"")
+                     .arg(getSyncTypeString(sync.type), sync.syncName, sync.localFolder)
+                     .toUtf8()
+                     .constData());
 
     syncOperationBegins();
 
-    QString syncCleanName = syncName;
+    QString syncCleanName = sync.syncName;
     if(syncCleanName.isEmpty())
     {
-        syncCleanName = SyncController::getSyncNameFromPath(localFolder);
+        syncCleanName = SyncController::getSyncNameFromPath(sync.localFolder);
     }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
 
@@ -95,22 +104,27 @@ void SyncController::addSync(const QString& localFolder, const MegaHandle& remot
             if (syncErrorCode != MegaSync::NO_SYNC_ERROR || errorCode != MegaError::API_OK)
             {
                 std::unique_ptr<MegaNode> remoteNode(MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-                QString logMsg = QString::fromUtf8("Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5").arg(
-                    getSyncTypeString(type),
-                    QString::fromUtf8(request->getName()),
-                    localFolder,
-                    QString::fromUtf8(MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
-                    getErrorString(errorCode, syncErrorCode));
+                QString logMsg =
+                    QString::fromUtf8(
+                        "Error adding sync (%1) \"%2\" for \"%3\" to \"%4\" (request error): %5")
+                        .arg(getSyncTypeString(sync.type),
+                             QString::fromUtf8(request->getName()),
+                             sync.localFolder,
+                             QString::fromUtf8(
+                                 MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
+                             getErrorString(errorCode, syncErrorCode));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
             }
 
-            emit syncAddStatus(errorCode, syncErrorCode, localFolder);
+            emit syncAddStatus(errorCode, syncErrorCode, sync.localFolder);
             syncOperationEnds();
         });
 
-    mApi->syncFolder(type, localFolder.toUtf8().constData(),
+    mSyncInfo->setSyncToCreateOrigin(sync.origin);
+    mApi->syncFolder(sync.type,
+                     sync.localFolder.toUtf8().constData(),
                      syncCleanName.isEmpty() ? nullptr : syncCleanName.toUtf8().constData(),
-                     remoteHandle,
+                     sync.remoteHandle,
                      nullptr,
                      listener.get());
 }
@@ -630,7 +644,7 @@ QString SyncController::getErrStrCurrentBackupInsideExistingBackup()
     return tr("You can't backup this folder as it's already inside a backed up folder.");
 }
 
-QString SyncController::getSyncAPIErrorMsg(int megaError) const
+QString SyncController::getSyncAPIErrorMsg(int megaError)
 {
     switch (megaError)
     {
