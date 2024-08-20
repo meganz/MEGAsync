@@ -364,7 +364,7 @@ padding: 3px 10px 3px 10px;
         <string>Stop Backup</string>
        </property>
        <property name="icon">
-        <iconset resource="../../../../gui/Resources.qrc">
+        <iconset resource="../Resources.qrc">
          <normaloff>:/images/minus-circle.svg</normaloff>:/images/minus-circle.svg</iconset>
        </property>
        <property name="default">
@@ -380,7 +380,7 @@ padding: 3px 10px 3px 10px;
   </layout>
  </widget>
  <resources>
-  <include location="../../../../gui/Resources.qrc"/>
+  <include location="../Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

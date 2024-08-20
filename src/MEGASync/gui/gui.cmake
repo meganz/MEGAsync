@@ -463,6 +463,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
 )
 
 target_sources(MEGAsync
