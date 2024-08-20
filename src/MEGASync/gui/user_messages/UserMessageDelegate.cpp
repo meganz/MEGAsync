@@ -16,7 +16,7 @@
 
 namespace
 {
-constexpr int UpdateDelay = 50;
+constexpr int UPDATE_DELAY = 50;
 }
 
 UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel,
@@ -189,7 +189,7 @@ void UserMessageDelegate::onHoverLeave(const QModelIndex& index)
         mEditor->setData(QModelIndex(), nullptr);
     }
 
-    QTimer::singleShot(UpdateDelay, this, [this, index]()
+    QTimer::singleShot(UPDATE_DELAY, this, [this, index]()
     {
         mView->update(index);
     });

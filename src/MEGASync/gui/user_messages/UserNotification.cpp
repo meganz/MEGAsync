@@ -9,12 +9,12 @@
 
 namespace
 {
-const QLatin1String DefaultImageExtension(".png");
-constexpr char* KeyCallToActionText = "text";
-constexpr char* KeyCallToActionLink = "link";
-constexpr int SmallImageSize = 48;
-constexpr int LargeImageWidth = 370;
-constexpr int LargeImageHeight = 115;
+const QLatin1String DEFAULT_IMAGE_EXTENSION(".png");
+constexpr char* KEY_CALL_TO_ACTION_TEXT = "text";
+constexpr char* KEY_CALL_TO_ACTION_LINK = "link";
+constexpr int SMALL_IMAGE_SIZE = 48;
+constexpr int LARGE_IMAGE_WIDTH = 370;
+constexpr int LARGE_IMAGE_HEIGHT = 115;
 }
 
 UserNotification::UserNotification(const mega::MegaNotification* notification, QObject* parent)
@@ -26,8 +26,8 @@ UserNotification::UserNotification(const mega::MegaNotification* notification, Q
     connect(mDownloader.get(), &ImageDownloader::downloadFinished,
             this, &UserNotification::onDownloadFinished);
 
-    mDownloader->downloadImage(getImageNamePath(), LargeImageWidth, LargeImageHeight);
-    mDownloader->downloadImage(getIconNamePath(), SmallImageSize, SmallImageSize);
+    mDownloader->downloadImage(getImageNamePath(), LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
+    mDownloader->downloadImage(getIconNamePath(), SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
 }
 
 void UserNotification::reset(const mega::MegaNotification* notification)
@@ -39,12 +39,12 @@ void UserNotification::reset(const mega::MegaNotification* notification)
 
     if(oldImageNamePath != getImageNamePath())
     {
-        mDownloader->downloadImage(getImageNamePath(), LargeImageWidth, LargeImageHeight);
+        mDownloader->downloadImage(getImageNamePath(), LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
     }
 
     if(oldIconNamePath != getIconNamePath())
     {
-        mDownloader->downloadImage(getIconNamePath(), SmallImageSize, SmallImageSize);
+        mDownloader->downloadImage(getIconNamePath(), SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
     }
 
     emit dataChanged();
@@ -59,10 +59,10 @@ bool UserNotification::equals(const mega::MegaNotification* notification) const
             || strcmp(mNotification->getIconName(), notification->getIconName()) != 0
             || mNotification->getStart() != notification->getStart()
             || mNotification->getEnd() != notification->getEnd()
-            || strcmp(mNotification->getCallToAction1()->get(KeyCallToActionText),
-                      notification->getCallToAction1()->get(KeyCallToActionText)) != 0
-            || strcmp(mNotification->getCallToAction1()->get(KeyCallToActionLink),
-                      notification->getCallToAction1()->get(KeyCallToActionLink)) != 0)
+            || strcmp(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_TEXT),
+                      notification->getCallToAction1()->get(KEY_CALL_TO_ACTION_TEXT)) != 0
+            || strcmp(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_LINK),
+                      notification->getCallToAction1()->get(KEY_CALL_TO_ACTION_LINK)) != 0)
     {
         return false;
     }
@@ -104,7 +104,7 @@ QString UserNotification::getImageNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getImageName())
-                + DefaultImageExtension;
+                + DEFAULT_IMAGE_EXTENSION;
 }
 
 bool UserNotification::showIcon() const
@@ -126,7 +126,7 @@ QString UserNotification::getIconNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath())
                 + QString::fromUtf8(mNotification->getIconName())
-                + DefaultImageExtension;
+                + DEFAULT_IMAGE_EXTENSION;
 }
 
 int64_t UserNotification::getStart() const
@@ -141,12 +141,12 @@ int64_t UserNotification::getEnd() const
 
 const QString UserNotification::getActionText() const
 {
-    return QString::fromUtf8(mNotification->getCallToAction1()->get(KeyCallToActionText));
+    return QString::fromUtf8(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_TEXT));
 }
 
 const QUrl UserNotification::getActionUrl() const
 {
-    return QUrl(QString::fromUtf8(mNotification->getCallToAction1()->get(KeyCallToActionLink)));
+    return QUrl(QString::fromUtf8(mNotification->getCallToAction1()->get(KEY_CALL_TO_ACTION_LINK)));
 }
 
 bool UserNotification::isRowAccepted(MessageType type) const
@@ -175,13 +175,13 @@ void UserNotification::onDownloadFinished(const QImage& image, const QString& im
 
     if (imageUrl == getImageNamePath())
     {
-        QSize size = QSize(LargeImageWidth, LargeImageHeight);
+        QSize size = QSize(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
         mImage = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         emit imageChanged();
     }
     else if (imageUrl == getIconNamePath())
     {
-        QSize size = QSize(SmallImageSize, SmallImageSize);
+        QSize size = QSize(SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
         mIcon = QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
         emit iconChanged();
     }

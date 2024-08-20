@@ -7,13 +7,13 @@
 
 namespace
 {
-constexpr int MaxCost = 16;
+constexpr int MAX_COST = 16;
 }
 
 using namespace mega;
 
 UserMessageCacheManager::UserMessageCacheManager()
-    : mUserMessageItems(MaxCost)
+    : mUserMessageItems(MAX_COST)
 {
 }
 

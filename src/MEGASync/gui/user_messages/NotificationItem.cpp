@@ -11,18 +11,18 @@
 
 namespace
 {
-const QLatin1String DescriptionHtmlStart("<html><head/><body><p style=\"line-height:22px;\">");
-const QLatin1String DescriptionHtmlEnd("</p></body></html>");
-const QLatin1String NonExpiredTimeColor("color: #777777;");
-const QLatin1String ExpiredSoonColor("color: #D64446;");
-constexpr int SpacingWithoutSmallImage = 0;
-constexpr int SmallImageSize = 48;
-constexpr int LargeImageWidth = 370;
-constexpr int LargeImageHeight = 115;
-constexpr int HeightWithoutImage = 219;
-constexpr int HeightWithImage = 346;
-constexpr int ButtonHeightWithSpacing = 40;
-constexpr int NumSecsToWaitBeforeRemove = 1;
+const QLatin1String DESCRIPTION_HTML_START("<html><head/><body><p style=\"line-height:22px;\">");
+const QLatin1String DESCRIPTION_HTML_END("</p></body></html>");
+const QLatin1String NON_EXPIRED_TIME_COLOR("color: #777777;");
+const QLatin1String EXPIRED_SOON_COLOR("color: #D64446;");
+constexpr int SPACING_WITHOUT_SMALL_IMAGE = 0;
+constexpr int SMALL_IMAGE_SIZE = 48;
+constexpr int LARGE_IMAGE_WIDTH = 370;
+constexpr int LARGE_IMAGE_HEIGHT = 115;
+constexpr int HEIGHT_WITHOUT_IMAGE = 219;
+constexpr int HEIGHT_WITH_IMAGE = 346;
+constexpr int BUTTON_HEIGHT_WITH_SPACING = 40;
+constexpr int NUM_SECS_TO_WAIT_BEFORE_REMOVE = 1;
 }
 
 NotificationItem::NotificationItem(QWidget* parent):
@@ -68,17 +68,17 @@ QSize NotificationItem::sizeHint() const
     QSize size = this->size();
     if (mNotificationData->showImage())
     {
-        size.setHeight(HeightWithImage);
+        size.setHeight(HEIGHT_WITH_IMAGE);
     }
     else
     {
-        size.setHeight(HeightWithoutImage);
+        size.setHeight(HEIGHT_WITHOUT_IMAGE);
     }
 
     // If there is no action text, the button is not shown
     if (mNotificationData->getActionText().isEmpty())
     {
-        size.setHeight(size.height() - ButtonHeightWithSpacing);
+        size.setHeight(size.height() - BUTTON_HEIGHT_WITH_SPACING);
     }
 
     return size;
@@ -146,10 +146,10 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
         if (remainingTimeSecs == 1)
         {
             mUi->lTime->setText(tr("Offer expired"));
-            mUi->lTime->setStyleSheet(ExpiredSoonColor);
+            mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
             mUi->bCTA->setEnabled(false);
         }
-        else if (remainingTimeSecs == -NumSecsToWaitBeforeRemove)
+        else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
         {
             mExpirationTimer.stopExpirationTime();
             mNotificationData->markAsExpired();
@@ -182,12 +182,12 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
                            .arg(timeInterval.minutes)
                            .arg(timeInterval.seconds);
         }
-        mUi->lTime->setStyleSheet(ExpiredSoonColor);
+        mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
     }
     else if (timeInterval.seconds > 0)
     {
         timeText = tr("Offer expires in %1 s").arg(timeInterval.seconds);
-        mUi->lTime->setStyleSheet(ExpiredSoonColor);
+        mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
     }
     mUi->lTime->setText(timeText);
 }
@@ -240,7 +240,7 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
 
     // Since the notifications can be reused,
     // we need to reset the expiration time color
-    mUi->lTime->setStyleSheet(NonExpiredTimeColor);
+    mUi->lTime->setStyleSheet(NON_EXPIRED_TIME_COLOR);
     updateExpirationText();
 }
 
@@ -248,9 +248,9 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
 {
     mUi->lTitle->setText(mNotificationData->getTitle());
 
-    QString labelText(DescriptionHtmlStart);
+    QString labelText(DESCRIPTION_HTML_START);
     labelText += mNotificationData->getDescription();
-    labelText += DescriptionHtmlEnd;
+    labelText += DESCRIPTION_HTML_END;
     mUi->lDescription->setText(labelText);
 
     // If there is no action text, the button is not shown
@@ -302,7 +302,7 @@ void NotificationItem::setIcon()
     }
     else
     {
-        mUi->hlDescription->setSpacing(SpacingWithoutSmallImage);
+        mUi->hlDescription->setSpacing(SPACING_WITHOUT_SMALL_IMAGE);
     }
 }
 

@@ -1,7 +1,10 @@
 #include "FilterAlertWidget.h"
 #include "ui_FilterAlertWidget.h"
 
-const int FilterAlertWidget::RED_BUBBLE_MARGIN = 17;
+namespace
+{
+constexpr int RED_BUBBLE_MARGIN = 17;
+}
 
 FilterAlertWidget::FilterAlertWidget(QWidget* parent)
     : QWidget(parent)
