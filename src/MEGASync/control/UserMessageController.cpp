@@ -38,11 +38,16 @@ void UserMessageController::onRequestFinish(mega::MegaRequest* request, mega::Me
         case mega::MegaRequest::TYPE_SET_ATTR_USER:
         case mega::MegaRequest::TYPE_GET_ATTR_USER:
         {
-            if (error->getErrorCode() == mega::MegaError::API_OK
-                    && request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION
-                    && mUserMessagesModel)
+            if (error->getErrorCode() == mega::MegaError::API_ENOENT)
             {
-                mUserMessagesModel->setLastSeenNotification(static_cast<uint32_t>(request->getNumber()));
+                checkUseenNotifications();
+            }
+            else if (error->getErrorCode() == mega::MegaError::API_OK &&
+                     request->getParamType() == mega::MegaApi::USER_ATTR_LAST_READ_NOTIFICATION &&
+                     mUserMessagesModel)
+            {
+                mUserMessagesModel->setLastSeenNotification(
+                    static_cast<uint32_t>(request->getNumber()));
                 checkUseenNotifications();
             }
             break;
