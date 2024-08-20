@@ -1618,9 +1618,9 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
     unsigned int usecs(std::numeric_limits<unsigned int>::max());
 
     // Avoid overflow. If no overflow, use passed value.
-    if (milliseconds < (usecs/MsecIn1Sec))
+    if (milliseconds < (usecs/MSEC_IN_1_SEC))
     {
-        usecs = milliseconds * MsecIn1Sec;
+        usecs = milliseconds * MSEC_IN_1_SEC;
     }
 
     // Call safely
