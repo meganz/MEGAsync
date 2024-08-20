@@ -617,7 +617,7 @@ void HTTPServer::externalDownloadSetRequest(QString &response, const HTTPRequest
     {
         QByteArray ba = eId.toLocal8Bit();
         const char *c_str2 = ba.data();
-        size_t size = /*mega::SetElement::HANDLESIZE*/8;
+        size_t size = static_cast<size_t>(megaApi->getSetElementHandleSize());
         unsigned char* result;
         megaApi->base64ToBinary(c_str2, &result, &size);
         const mega::MegaHandle* myHandlePtr = reinterpret_cast<mega::MegaHandle*>(result);
