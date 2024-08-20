@@ -140,21 +140,10 @@ void NotificationItem::onCTAClicked()
 
 void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
 {
-    // It is required to display this text after the expiration time.
-    if (remainingTimeSecs <= 1)
+    // It is required to display this text and disable clicks
+    // after the expiration time.
+    if(updateExpiredTimeAndClicks(remainingTimeSecs))
     {
-        if (remainingTimeSecs == 1)
-        {
-            mUi->lTime->setText(tr("Offer expired"));
-            mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
-            mUi->bCTA->setEnabled(false);
-        }
-        else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
-        {
-            mExpirationTimer.stopExpirationTime();
-            mNotificationData->markAsExpired();
-        }
-
         return;
     }
 
@@ -258,8 +247,12 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
     mUi->bCTA->setVisible(showButton);
     if (showButton)
     {
+        mUi->bCTA->setEnabled(true);
+        this->setCursor(Qt::PointingHandCursor);
         mUi->bCTA->setText(mNotificationData->getActionText());
     }
+
+    this->setAttribute(Qt::WA_TransparentForMouseEvents, false);
 
     // Avoid to download images again if they have not changed
     if (downloadImage)
@@ -309,4 +302,27 @@ void NotificationItem::setIcon()
 void NotificationItem::updateExpirationText()
 {
     onTimerExpirated(mExpirationTimer.getRemainingTime());
+}
+
+bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)
+{
+    bool updated = false;
+    if (remainingTimeSecs <= 1)
+    {
+        if (remainingTimeSecs == 1)
+        {
+            mUi->lTime->setText(tr("Offer expired"));
+            mUi->lTime->setStyleSheet(EXPIRED_SOON_COLOR);
+            mUi->bCTA->setEnabled(false);
+            this->setCursor(Qt::ArrowCursor);
+            this->setAttribute(Qt::WA_TransparentForMouseEvents);
+        }
+        else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
+        {
+            mExpirationTimer.stopExpirationTime();
+            mNotificationData->markAsExpired();
+        }
+        updated = true;
+    }
+    return updated;
 }
