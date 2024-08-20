@@ -70,7 +70,11 @@
 
 #define local static
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4068)  // Disable the specific warning
+#elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
 
 class gzjoinex : public std::exception
 {

@@ -17,7 +17,12 @@
 
 using namespace mega;
 
+
+#ifdef _MSC_VER
+#pragma warning(disable : 4068)  // Disable the specific warning
+#elif defined(__GNUC__)
 #pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
 
 MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QObject *parent)
     : QStyledItemDelegate(parent),
