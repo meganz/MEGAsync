@@ -2,21 +2,90 @@
 <ui version="4.0">
  <class>BugReportDialog</class>
  <widget class="QDialog" name="BugReportDialog">
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>480</width>
+    <height>448</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>480</width>
+    <height>448</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>480</width>
+    <height>448</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Bug report</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#lAttachLogs
+{
+font-family: &quot;SF Pro Text&quot;;
+font-size: 12px;
+font-weight: 400;
+}
+
+#bSubmit
+{
+color: #04101E; /*colorToken.text-inverse-accent*/
+background-color:  #F4F4F5; /*colorToken.button-primary*/
+}
+
+#lDescInfoBug
+{
+color: #303233; /*colorToken.text-primary*/
+font-family: &quot;SF Pro Text&quot;;
+font-size: 12px;
+font-weight: 400;
+}
+
+#lTitle, #lDescribeBug
+{
+color: #303233; /*colorToken.text-primary*/
+font-family: &quot;SF Pro Text&quot;;
+font-size: 12px;
+font-weight: 600;
+}
+
+#teDescribeBug, #leTitleBug
+{
+border-radius: 8px;
+border-color: #D8D9DB; /*colorToken.border-strong*/
+border-style: solid;
+border-width: 1px;
+background-color: #FFFFFF; /*colorToken.page-background*/
+}
+
+#leTitleBug
+{
+padding-left: 10px;
+height: 36px;
+width: 432px;
+}
+
+#teDescribeBug
+{
+height: 116px;
+width: 432px;
+}
+
+
+</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <item>
     <widget class="QWidget" name="wHeaderBug" native="true">
@@ -24,12 +93,7 @@
       <item>
        <widget class="QLabel" name="lDescInfoBug">
         <property name="styleSheet">
-         <string notr="true">#lDescInfoBug
-{
-	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
-	font-size: 12px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</string>
@@ -48,12 +112,7 @@
       <item>
        <widget class="QLabel" name="lTitle">
         <property name="styleSheet">
-         <string notr="true">#lTitle
-{
-	color: #242424;
-	font-family: &quot;SF Pro Text&quot;;
-	font-size: 13px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Title</string>
@@ -85,12 +144,7 @@
       <item>
        <widget class="QLabel" name="lDescribeBug">
         <property name="styleSheet">
-         <string notr="true">#lDescribeBug
-{
-	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
-	font-size: 13px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string>Describe the problem</string>
@@ -110,7 +164,7 @@
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>19</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -137,13 +191,7 @@
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">#lAttachLogs
-{
-	color: rgba(0,0,0,0.85);
-	font-family: &quot;SF Pro Text&quot;;
-	font-size: 12px;
-
-}</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Attach diagnostic log files to assist with debugging</string>
@@ -156,12 +204,12 @@
          <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
              <width>1</width>
-             <height>1</height>
+             <height>20</height>
             </size>
            </property>
           </spacer>
@@ -176,20 +224,20 @@
     <widget class="QWidget" name="wButtons" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="topMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Horizontal</enum>
+         <enum>Qt::Orientation::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>1</width>
-          <height>1</height>
+          <width>219</width>
+          <height>20</height>
          </size>
         </property>
        </spacer>
