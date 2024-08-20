@@ -4559,6 +4559,7 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
