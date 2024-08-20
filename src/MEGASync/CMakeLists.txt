@@ -142,6 +142,7 @@ target_platform_compile_options(
             /wd4201 # nameless struct/union (nonstandard)
             /wd4458 # identifier hides class member
             /wd4100 # unreferenced formal parameter
+            /wd4456 # declaration hides previous local declaration
     UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
 )
 

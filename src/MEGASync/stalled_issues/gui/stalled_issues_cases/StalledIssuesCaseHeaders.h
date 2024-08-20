@@ -12,7 +12,7 @@ public:
     StalledIssueHeaderCase(StalledIssueHeader *header);
     ~StalledIssueHeaderCase() = default;
 
-    virtual void refreshCaseActions(StalledIssueHeader* header){}
+    virtual void refreshCaseActions(StalledIssueHeader* ){}
     virtual void refreshCaseTitles(StalledIssueHeader* header) = 0;
     virtual void onMultipleActionButtonOptionSelected(StalledIssueHeader*, uint){}
 };
