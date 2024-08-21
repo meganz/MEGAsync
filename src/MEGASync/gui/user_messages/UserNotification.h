@@ -25,6 +25,7 @@ public:
 
     bool isSeen() const override;
     bool isRowAccepted(MessageType type) const override;
+    bool sort(UserMessage* checkWith) const override;
 
     void reset(const mega::MegaNotification* notification);
     bool equals(const mega::MegaNotification* notification) const;

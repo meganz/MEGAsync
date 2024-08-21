@@ -14,8 +14,6 @@ class FilterAlertWidget : public QWidget
 {
     Q_OBJECT
 
-    static const int RED_BUBBLE_MARGIN;
-
 public:
     explicit FilterAlertWidget(QWidget* parent = 0);
     ~FilterAlertWidget();

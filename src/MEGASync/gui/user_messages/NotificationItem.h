@@ -31,6 +31,7 @@ public:
 protected:
     void changeEvent(QEvent* event) override;
     void showEvent(QShowEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
 private slots:
     void onCTAClicked();
@@ -49,6 +50,7 @@ private:
     void setImage();
     void setIcon();
     void updateExpirationText();
+    bool updateExpiredTimeAndClicks(int64_t remainingTimeSecs);
 
 };
 

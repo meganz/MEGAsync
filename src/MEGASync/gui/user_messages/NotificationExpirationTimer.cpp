@@ -4,16 +4,17 @@
 
 namespace
 {
-constexpr int MsecIn1Sec = 1000;
-constexpr int SecsIn1Minute = 60;
-constexpr int SecsIn1Hour = 3600;
-constexpr int SecsIn1Day = 86400;
+constexpr int MSEC_IN_1_SEC = 1000;
+constexpr int SECS_IN_1_MIN = 60;
+constexpr int SECS_IN_1_HOUR = 3600;
+constexpr int SECS_IN_1_DAY = 86400;
 }
 
 NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent)
     : QTimer(parent)
     , mLastTimeInterval(0)
     , mExpirationTimeSecs(0)
+    , mStopped(false)
 {
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
 }
@@ -21,6 +22,7 @@ NotificationExpirationTimer::NotificationExpirationTimer(QObject* parent)
 NotificationExpirationTimer::NotificationExpirationTimer(int64_t expirationTimeSecs, QObject* parent)
     : QTimer(parent)
     , mLastTimeInterval(0)
+    , mStopped(false)
 {
     connect(this, &QTimer::timeout, this, &NotificationExpirationTimer::onTimeout);
     start(expirationTimeSecs);
@@ -30,7 +32,14 @@ void NotificationExpirationTimer::startExpirationTime(int64_t expirationTimeSecs
 {
     stop();
     mExpirationTimeSecs = expirationTimeSecs;
+    mStopped = false;
     onTimeout();
+}
+
+void NotificationExpirationTimer::stopExpirationTime()
+{
+    stop();
+    mStopped = true;
 }
 
 int64_t NotificationExpirationTimer::getRemainingTime() const
@@ -49,20 +58,20 @@ void NotificationExpirationTimer::singleShot(int64_t remainingTimeSecs)
             && timeInterval.days > mLastTimeInterval.days)
     {
         // Time until the next change of day
-        int secondsUntilNextDay = static_cast<int>(remainingTimeSecs) - timeInterval.days * SecsIn1Day;
-        interval = secondsUntilNextDay * MsecIn1Sec;
+        int secondsUntilNextDay = static_cast<int>(remainingTimeSecs) - timeInterval.days * SECS_IN_1_DAY;
+        interval = secondsUntilNextDay * MSEC_IN_1_SEC;
     }
     else if ((timeInterval.days == 1 && timeInterval.hours == 0)
              || (timeInterval.hours > 0 && timeInterval.hours > mLastTimeInterval.hours))
     {
         // Time until the next change of hour
-        int secondsUntilNextHour = static_cast<int>(remainingTimeSecs) - timeInterval.hours * SecsIn1Hour;
-        interval = secondsUntilNextHour * MsecIn1Sec;
+        int secondsUntilNextHour = static_cast<int>(remainingTimeSecs) - timeInterval.hours * SECS_IN_1_HOUR;
+        interval = secondsUntilNextHour * MSEC_IN_1_SEC;
     }
     else
     {
         // Update every second
-        interval = MsecIn1Sec;
+        interval = MSEC_IN_1_SEC;
     }
 
     if (interval > 0)
@@ -76,6 +85,11 @@ void NotificationExpirationTimer::singleShot(int64_t remainingTimeSecs)
 
 void NotificationExpirationTimer::onTimeout()
 {
+    if(mStopped)
+    {
+        return;
+    }
+
     int64_t remainingTimeSecs = getRemainingTime();
     emit expired(remainingTimeSecs);
     singleShot(remainingTimeSecs);

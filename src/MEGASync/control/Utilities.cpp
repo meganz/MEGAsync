@@ -31,13 +31,13 @@ using namespace mega;
 namespace
 {
 constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
-constexpr int MsecIn1Sec = 1000;
-constexpr int HoursIn1Day = 24;
-constexpr int SecsIn1Minute = 60;
-constexpr int SecsIn1Hour = 3600;
-constexpr int SecsIn1Day = 86400;
-constexpr int SecsIn1Month = 2592000;
-constexpr int SecsIn1Year = 31536000;
+constexpr int MSEC_IN_1_SEC = 1000;
+constexpr int HOURS_IN_1_DAY = 24;
+constexpr int SECS_IN_1_MIN = 60;
+constexpr int SECS_IN_1_HOUR = 3600;
+constexpr int SECS_IN_1_DAY = 86400;
+constexpr int SECS_IN_1_MONTH = 2592000;
+constexpr int SECS_IN_1_YEAR = 31536000;
 }
 
 QHash<QString, QString> Utilities::extensionIcons;
@@ -666,35 +666,35 @@ QString Utilities::getAddedTimeString(long long secs)
     {
         return QCoreApplication::translate("Utilities", "Added just now");
     }
-    else if (secs < SecsIn1Minute)
+    else if (secs < SECS_IN_1_MIN)
     {
         const int secsAsInt = static_cast<int>(secs);
         return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
-    else if (secs < SecsIn1Hour)
+    else if (secs < SECS_IN_1_HOUR)
     {
-        const int minutes = static_cast<int>(secs/SecsIn1Minute);
+        const int minutes = static_cast<int>(secs/SECS_IN_1_MIN);
         return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
-    else if (secs < SecsIn1Day)
+    else if (secs < SECS_IN_1_DAY)
     {
-        const int hours = static_cast<int>(secs/SecsIn1Hour);
+        const int hours = static_cast<int>(secs/SECS_IN_1_HOUR);
         return QCoreApplication::translate("Utilities", "Added %n hour ago", "", hours);
     }
-    else if (secs < SecsIn1Month)
+    else if (secs < SECS_IN_1_MONTH)
     {
-        const int days = static_cast<int>(secs/SecsIn1Day);
+        const int days = static_cast<int>(secs/SECS_IN_1_DAY);
         return QCoreApplication::translate("Utilities", "Added %n day ago", "", days);
     }
-    else if (secs < SecsIn1Year)
+    else if (secs < SECS_IN_1_YEAR)
     {
-        const int months = static_cast<int>(secs/SecsIn1Month);
+        const int months = static_cast<int>(secs/SECS_IN_1_MONTH);
         return QCoreApplication::translate("Utilities", "Added %n month ago", "", months);
     }
     // We might not need century precision... give years.
     else
     {
-        const int years = static_cast<int>(secs/SecsIn1Year);
+        const int years = static_cast<int>(secs/SECS_IN_1_YEAR);
         return QCoreApplication::translate("Utilities", "Added %n year ago", "", years);
     }
 }
@@ -995,7 +995,7 @@ void Utilities::getPROurlWithParameters(QString &url)
     {
         char *base64aff = MegaApi::handleToBase64(aff);
         url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
-                                                                       .arg(timestamp / MsecIn1Sec)
+                                                                       .arg(timestamp / MSEC_IN_1_SEC)
                                                                        .arg(affType));
         delete [] base64aff;
     }
@@ -1270,11 +1270,11 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     }
 
     // Get seconcs diff between now and secsTimestamps
-    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / MsecIn1Sec;
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / MSEC_IN_1_SEC;
 
     // Compute in hours, then in days
-    remainHours = tDiff / SecsIn1Hour;
-    remainDays  = remainHours / HoursIn1Day;
+    remainHours = tDiff / SECS_IN_1_HOUR;
+    remainDays  = remainHours / HOURS_IN_1_DAY;
 }
 
 QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
@@ -1618,9 +1618,9 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
     unsigned int usecs(std::numeric_limits<unsigned int>::max());
 
     // Avoid overflow. If no overflow, use passed value.
-    if (milliseconds < (usecs/MsecIn1Sec))
+    if (milliseconds < (usecs/MSEC_IN_1_SEC))
     {
-        usecs = milliseconds * MsecIn1Sec;
+        usecs = milliseconds * MSEC_IN_1_SEC;
     }
 
     // Call safely
@@ -1722,10 +1722,10 @@ WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)
     : useSecondPrecision(secondPrecision)
 {
-    days = static_cast<int>(secs / SecsIn1Day);
-    hours = static_cast<int>(secs / SecsIn1Hour) % HoursIn1Day;
-    minutes = static_cast<int>((secs / SecsIn1Minute) % SecsIn1Minute);
-    seconds = static_cast<int>(secs % SecsIn1Minute);
+    days = static_cast<int>(secs / SECS_IN_1_DAY);
+    hours = static_cast<int>(secs / SECS_IN_1_HOUR) % HOURS_IN_1_DAY;
+    minutes = static_cast<int>((secs / SECS_IN_1_MIN) % SECS_IN_1_MIN);
+    seconds = static_cast<int>(secs % SECS_IN_1_MIN);
 }
 
 TimeInterval& TimeInterval::operator=(const TimeInterval& other)

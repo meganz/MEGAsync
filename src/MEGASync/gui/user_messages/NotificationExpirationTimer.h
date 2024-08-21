@@ -17,6 +17,7 @@ public:
     virtual ~NotificationExpirationTimer() = default;
 
     void startExpirationTime(int64_t expirationTimeSecs);
+    void stopExpirationTime();
     int64_t getRemainingTime() const;
 
 signals:
@@ -28,6 +29,7 @@ private slots:
 private:
     TimeInterval mLastTimeInterval;
     int64_t mExpirationTimeSecs;
+    bool mStopped;
 
     void singleShot(int64_t remainingTimeSecs);
 
