@@ -229,7 +229,6 @@ target_sources_conditional(MEGAsync
     gui/win/ImportListWidgetItem.ui
     gui/win/CrashReportDialog.ui
     gui/win/SettingsDialog.ui
-    gui/win/DownloadFromMegaDialog.ui
     gui/win/ChangeLogDialog.ui
     gui/win/StreamingFromMegaDialog.ui
     gui/win/MegaProgressCustomDialog.ui
@@ -272,7 +271,6 @@ target_sources_conditional(MEGAsync
    gui/macx/ImportListWidgetItem.ui
    gui/macx/CrashReportDialog.ui
    gui/macx/SettingsDialog.ui
-   gui/macx/DownloadFromMegaDialog.ui
    gui/macx/ChangeLogDialog.ui
    gui/macx/StreamingFromMegaDialog.ui
    gui/macx/PermissionsDialog.ui
@@ -318,7 +316,6 @@ target_sources_conditional(MEGAsync
     gui/linux/ImportListWidgetItem.ui
     gui/linux/CrashReportDialog.ui
     gui/linux/SettingsDialog.ui
-    gui/linux/DownloadFromMegaDialog.ui
     gui/linux/ChangeLogDialog.ui
     gui/linux/StreamingFromMegaDialog.ui
     gui/linux/PermissionsDialog.ui
@@ -460,6 +457,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
 )
 
 target_sources(MEGAsync
