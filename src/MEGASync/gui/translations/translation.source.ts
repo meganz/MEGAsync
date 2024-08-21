@@ -529,26 +529,6 @@
         <translation>Apply</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Upload rate limit:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Download rate limit:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Number of connections per transfer:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Update</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>Use HTTPS for transfers that don’t start</translation>
