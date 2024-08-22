@@ -273,8 +273,6 @@ target_sources_conditional(MEGAsync
    gui/macx/SettingsDialog.ui
    gui/macx/ChangeLogDialog.ui
    gui/macx/StreamingFromMegaDialog.ui
-   gui/macx/PermissionsDialog.ui
-   gui/macx/PermissionsWidget.ui
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
    gui/macx/UpgradeDialog.ui
@@ -318,8 +316,6 @@ target_sources_conditional(MEGAsync
     gui/linux/SettingsDialog.ui
     gui/linux/ChangeLogDialog.ui
     gui/linux/StreamingFromMegaDialog.ui
-    gui/linux/PermissionsDialog.ui
-    gui/linux/PermissionsWidget.ui
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
     gui/linux/UpgradeDialog.ui
@@ -458,6 +454,8 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsWidget.ui
 )
 
 target_sources(MEGAsync

@@ -5391,6 +5391,18 @@ Enter a different name.</translation>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Owner permissions:</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation type="unfinished">Apply</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translation type="unfinished">Permissions</translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
