@@ -247,7 +247,6 @@ target_sources_conditional(MEGAsync
     gui/win/MegaInfoMessage.ui
     gui/win/OverQuotaDialog.ui
     gui/win/ProxySettings.ui
-    gui/win/BandwidthSettings.ui
     gui/win/ScanningWidget.ui
     gui/win/CancelConfirmWidget.ui
     gui/win/NodeNameSetterDialog.ui
@@ -291,7 +290,6 @@ target_sources_conditional(MEGAsync
    gui/macx/MegaInfoMessage.ui
    gui/macx/OverQuotaDialog.ui
    gui/macx/ProxySettings.ui
-   gui/macx/BandwidthSettings.ui
    gui/macx/ScanningWidget.ui
    gui/macx/CancelConfirmWidget.ui
    gui/macx/NodeNameSetterDialog.ui
@@ -337,7 +335,6 @@ target_sources_conditional(MEGAsync
     gui/linux/MegaInfoMessage.ui
     gui/linux/OverQuotaDialog.ui
     gui/linux/ProxySettings.ui
-    gui/linux/BandwidthSettings.ui
     gui/linux/CancelConfirmWidget.ui
     gui/linux/ScanningWidget.ui
     gui/linux/NodeNameSetterDialog.ui
@@ -459,6 +456,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
 )
 

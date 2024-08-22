@@ -123,6 +123,7 @@ image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
 QRadioButton
 {
 color: #303233; /*colorToken.text-primary*/
+background-color: transparent;
 }
 
 QGroupBox
@@ -210,14 +211,42 @@ border-radius: 5px;
 font-weight: bold;
 }
 
-QSpinBox
-{
-height: 20px;
-}
-
 QLineEdit
 {
 height: 20px;
 background-color: #fafafa; /*colorToken.surface-1*/
 border: none;
+}
+
+QSpinBox
+{
+border-radius: 8px;
+border-color: #04101E; /*colorToken.border-strong-selected*/
+border-style: solid;
+border-width: 1px;
+background-color: #FFFFFF; /*colorToken.page-background*/
+height: 25px;
+
+padding-right: 5px;
+padding-left: 5px;
+}
+
+QSpinBox::up-arrow
+{
+image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+}
+
+QSpinBox::down-arrow
+{
+image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+}
+
+QSpinBox::down-button
+{
+background-color: transparent;
+}
+
+QSpinBox::up-button
+{
+background-color: transparent;
 }
