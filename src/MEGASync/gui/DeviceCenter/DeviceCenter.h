@@ -2,6 +2,7 @@
 #define DEVICE_CENTER_H
 
 #include "DeviceData.h"
+#include "DeviceModel.h"
 #include "QmlDialogWrapper.h"
 #include "QTMegaListener.h"
 #include "SyncModel.h"
@@ -12,6 +13,7 @@ class DeviceCenter: public QMLComponent, public mega::MegaListener
 {
     Q_OBJECT
     Q_PROPERTY(SyncModel* syncModel MEMBER mSyncModel CONSTANT)
+    Q_PROPERTY(DeviceModel* deviceModel MEMBER mDeviceModel CONSTANT)
 
 public:
     explicit DeviceCenter(QObject* parent = 0);
@@ -53,6 +55,7 @@ private:
     QTimer mSizeInfoTimer;
 
     DeviceData mCachedDeviceData;
+    DeviceModel* mDeviceModel;
 };
 
 #endif // DEVICE_CENTER_H

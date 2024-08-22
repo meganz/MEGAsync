@@ -101,6 +101,7 @@ QtObject {
     readonly property url statusStopped: imagesDeviceCenterPath + "status-stopped.svg"
     readonly property url statusUpdating: imagesDeviceCenterPath + "status-updating.svg"
     readonly property url statusUpToDate: imagesDeviceCenterPath + "status-uptodate.svg"
+    readonly property url devices: imagesDeviceCenterPath + "devices.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons

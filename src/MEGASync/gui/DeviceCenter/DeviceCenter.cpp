@@ -9,7 +9,8 @@ static bool qmlRegistrationDone = false;
 DeviceCenter::DeviceCenter(QObject* parent):
     QMLComponent(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
-    mSyncModel(new SyncModel(this))
+    mSyncModel(new SyncModel(this)),
+    mDeviceModel(new DeviceModel(this))
 {
     registerQmlModules();
 
@@ -37,6 +38,7 @@ void DeviceCenter::onRequestFinish(mega::MegaApi* api,
     if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
     {
         mCachedDeviceData.name = QString::fromUtf8(request->getName());
+        mDeviceModel->reset(mDeviceIdFromLastRequest, mCachedDeviceData);
         emit deviceDataUpdated(mCachedDeviceData);
     }
     else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO)
@@ -95,6 +97,7 @@ void DeviceCenter::registerQmlModules()
         qmlRegisterModule("DeviceCenter", 1, 0);
         qmlRegisterType<QmlDialog>("DeviceCenterQmlDialog", 1, 0, "DeviceCenterQmlDialog");
         qmlRegisterType<SyncModel>("SyncModel", 1, 0, "SyncModel");
+        qmlRegisterType<DeviceModel>("DeviceModel", 1, 0, "DeviceModel");
         qmlRegisterUncreatableMetaObject(
             QmlSyncType::staticMetaObject,
             "QmlSyncType",

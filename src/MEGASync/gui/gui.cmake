@@ -113,6 +113,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/user_messages/UserMessageWidget.h
     gui/user_messages/NotificationExpirationTimer.h
     gui/DeviceCenter/DeviceCenter.h
+    gui/DeviceCenter/DeviceModel.h
     gui/DeviceCenter/DeviceData.h
     gui/DeviceCenter/SyncModel.h
     gui/DeviceCenter/QmlSyncData.h
@@ -129,9 +130,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/NotificationsSettings.cpp
+    gui/MegaUserAlertExt.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
+    gui/NotificationsSettings.cpp
     gui/QtPositioningBugFixer.cpp
     gui/PasswordLineEdit.cpp
     gui/UploadToMegaDialog.cpp
@@ -228,6 +230,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/user_messages/UserNotification.cpp
     gui/user_messages/NotificationExpirationTimer.cpp
     gui/DeviceCenter/DeviceCenter.cpp
+    gui/DeviceCenter/DeviceModel.cpp
     gui/DeviceCenter/SyncModel.cpp
     gui/DeviceCenter/QmlSyncData.cpp
 )

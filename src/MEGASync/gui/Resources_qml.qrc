@@ -101,5 +101,6 @@
         <file>images/qml/device_center/backup_folder.svg</file>
         <file>images/qml/device_center/sync_folder.svg</file>
         <file>images/qml/three_dots.svg</file>
+        <file>images/qml/device_center/devices.svg</file>
     </qresource>
 </RCC>
