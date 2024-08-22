@@ -381,6 +381,9 @@ MegaApplication::~MegaApplication()
     {
         mMutexStealerThread->join();
     }
+
+    delete megaApi;
+    megaApi = nullptr;
 }
 
 void MegaApplication::showInterface(QString)
@@ -2207,9 +2210,6 @@ void MegaApplication::cleanAll()
     // their deletion
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
-
-    delete megaApi;
-    megaApi = nullptr;
 
     delete megaApiFolders;
     megaApiFolders = nullptr;
