@@ -1,4 +1,4 @@
-#include "MegaSyncLogger.h"
+﻿#include "MegaSyncLogger.h"
 #include "Utilities.h"
 
 #include <fstream>
@@ -25,6 +25,12 @@
 
 #ifdef WIN32
 #include <windows.h>
+#endif
+
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)  // Disable the specific warning
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
 
 //#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
@@ -93,9 +99,9 @@ using DirectLogFunction = std::function <void (std::ostream *)>;
 struct LogLinkedList
 {
     LogLinkedList* next = nullptr;
-    size_t allocated = 0;
-    size_t used = 0;
-    long long lastmessage = -1;
+    unsigned allocated = 0;
+    unsigned used = 0;
+    int lastmessage = -1;
     int lastmessageRepeats = 0;
     bool oomGap = false;
     DirectLogFunction *mDirectLoggingFunction = nullptr; // we cannot use a non pointer due to the malloc allocation of new entries
@@ -108,7 +114,7 @@ struct LogLinkedList
         if (entry)
         {
             entry->next = nullptr;
-            entry->allocated = size - sizeof(LogLinkedList);
+            entry->allocated = unsigned(size - sizeof(LogLinkedList));
             entry->used = 0;
             entry->lastmessage = -1;
             entry->lastmessageRepeats = 0;
@@ -130,11 +136,11 @@ struct LogLinkedList
         return mDirectLoggingFunction != nullptr;
     }
 
-    void append(const char* s, size_t n = 0)
+    void append(const char* s, unsigned int n = 0)
     {
-        n = n ? n : strlen(s);
+        n = n ? n : unsigned(strlen(s));
         assert(used + n + 1 < allocated);
-        strncpy(message + used, s, strlen(message + used));
+        strcpy(message + used, s);
         used += n;
     }
 
@@ -511,17 +517,12 @@ char* filltime(char* s, struct tm*  gmt, int microsec)
     twodigit(s, gmt->tm_sec);
     *s++ = '.';
 
-
-    for(int index = 5; index >= 0; --index)
-    {
-        if(index != 5)
-        {
-            microsec /= 10;
-        }
-        
-        s[index] = static_cast<char>(microsec % 10 + '0');
-    }
-
+    s[5] = static_cast<char>(microsec % 10 + '0');
+    s[4] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[3] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[2] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[1] = static_cast<char>((microsec /= 10) % 10 + '0');
+    s[0] = static_cast<char>((microsec /= 10) % 10 + '0');
     s += 6;
     *s++ = ' ';
     *s = 0;
@@ -630,7 +631,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 
     auto messageLen = strlen(message);
     auto threadnameLen = strlen(threadname);
-    size_t lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
+    auto lineLen = LOG_TIME_CHARS + threadnameLen + LOG_LEVEL_CHARS + messageLen;
     bool notify = false;
 
     {
@@ -646,7 +647,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
         }
         else
         {
-            auto reportRepeats = logListLast != &logListFirst ? logListLast->lastmessageRepeats : 0;
+            unsigned reportRepeats = logListLast != &logListFirst ? logListLast->lastmessageRepeats : 0;
             if (reportRepeats)
             {
                 lineLen += 30;
@@ -681,7 +682,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 
                         for(int i = 0; i < numberMessages; i++)
                         {
-                            oss->write(directMessages[i], static_cast<std::streamsize>(directMessagesSizes[i]));
+                            oss->write(directMessages[i], directMessagesSizes[i]);
                         }
                         *oss << std::endl;
                     };
@@ -720,17 +721,14 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
                     if (reportRepeats)
                     {
                         char repeatbuf[31]; // this one can occur very frequently with many in a row: cURL DEBUG: schannel: failed to decrypt data, need more data
-                        auto n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
-                        if(n >= 0)
-                        {
-                            logListLast->append(repeatbuf, static_cast<size_t>(n));
-                        }
+                        int n = snprintf(repeatbuf, 30, "[repeated x%u]\n", reportRepeats);
+                        logListLast->append(repeatbuf, n);
                     }
                     logListLast->append(timebuf, LOG_TIME_CHARS);
-                    logListLast->append(threadname, threadnameLen);
+                    logListLast->append(threadname, unsigned(threadnameLen));
                     logListLast->append(loglevelstring, LOG_LEVEL_CHARS);
-                    logListLast->lastmessage = static_cast<long long>(logListLast->used);
-                    logListLast->append(message, messageLen);
+                    logListLast->lastmessage = logListLast->used;
+                    logListLast->append(message, unsigned(messageLen));
                     logListLast->append("\n", 1);
                     notify = logListLast->used + 1024 > logListLast->allocated;
                 }
