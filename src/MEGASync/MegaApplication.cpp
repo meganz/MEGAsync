@@ -384,6 +384,9 @@ MegaApplication::~MegaApplication()
 
     delete megaApi;
     megaApi = nullptr;
+
+    delete megaApiFolders;
+    megaApiFolders = nullptr;
 }
 
 void MegaApplication::showInterface(QString)
@@ -2210,9 +2213,6 @@ void MegaApplication::cleanAll()
     // their deletion
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
-
-    delete megaApiFolders;
-    megaApiFolders = nullptr;
 
     trayIcon->deleteLater();
     trayIcon = nullptr;
