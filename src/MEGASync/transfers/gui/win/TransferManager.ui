@@ -2146,6 +2146,16 @@ QGroupBox::title
         </widget>
        </widget>
       </item>
+      <item>
+       <widget class="TransfersAccountInfoWidget" name="wAccountInfo" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>108</height>
+         </size>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -3364,6 +3374,12 @@ QGroupBox::title
    <class>AutoResizeStackedWidget</class>
    <extends>QStackedWidget</extends>
    <header>AutoResizeStackedWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TransfersAccountInfoWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">TransfersAccountInfoWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

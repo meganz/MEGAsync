@@ -1,0 +1,23 @@
+#ifndef TRANSFERS_ACCOUNT_INFO_WIDGET_H
+#define TRANSFERS_ACCOUNT_INFO_WIDGET_H
+
+#include <QWidget>
+
+namespace Ui
+{
+class TransfersAccountInfoWidget;
+}
+
+class TransfersAccountInfoWidget: public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit TransfersAccountInfoWidget(QWidget* parent = nullptr);
+    ~TransfersAccountInfoWidget();
+
+private:
+    Ui::TransfersAccountInfoWidget* ui;
+};
+
+#endif // TRANSFERS_ACCOUNT_INFO_WIDGET_H
