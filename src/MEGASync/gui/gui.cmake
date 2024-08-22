@@ -246,7 +246,6 @@ target_sources_conditional(MEGAsync
     gui/win/VerifyLockMessage.ui
     gui/win/MegaInfoMessage.ui
     gui/win/OverQuotaDialog.ui
-    gui/win/ProxySettings.ui
     gui/win/ScanningWidget.ui
     gui/win/CancelConfirmWidget.ui
     gui/win/NodeNameSetterDialog.ui
@@ -289,7 +288,6 @@ target_sources_conditional(MEGAsync
    gui/macx/VerifyLockMessage.ui
    gui/macx/MegaInfoMessage.ui
    gui/macx/OverQuotaDialog.ui
-   gui/macx/ProxySettings.ui
    gui/macx/ScanningWidget.ui
    gui/macx/CancelConfirmWidget.ui
    gui/macx/NodeNameSetterDialog.ui
@@ -302,7 +300,6 @@ target_sources_conditional(MEGAsync
    gui/node_selector/gui/macx/SearchLineEdit.ui
    gui/macx/LockedPopOver.ui
 )
-
 
 target_sources_conditional(MEGAsync
     FLAG UNIX AND NOT APPLE
@@ -334,7 +331,6 @@ target_sources_conditional(MEGAsync
     gui/linux/VerifyLockMessage.ui
     gui/linux/MegaInfoMessage.ui
     gui/linux/OverQuotaDialog.ui
-    gui/linux/ProxySettings.ui
     gui/linux/CancelConfirmWidget.ui
     gui/linux/ScanningWidget.ui
     gui/linux/NodeNameSetterDialog.ui
@@ -347,7 +343,6 @@ target_sources_conditional(MEGAsync
     gui/node_selector/gui/linux/NodeSelector.ui
     gui/node_selector/gui/linux/SearchLineEdit.ui
 )
-
 
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync
@@ -458,6 +453,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
 )
 
 target_sources(MEGAsync
