@@ -65,7 +65,35 @@ QPushButton
 padding-right: 12px;
 padding-left: 12px;
 }
-</string>
+
+#bUpgrade
+{
+font-family: Inter;
+font-size: 12px;
+line-height: 18px;
+border: 1px solid #0000001A;
+border-radius: 4px;
+color: #FFFFFF;
+padding: 4px 8px;
+background-color:  #00BFA5;
+image-position: left;
+text-align: right;
+}
+
+#bUpgrade::hover
+{
+background-color:  #00A787;
+}
+
+#bUpgrade::pressed
+{
+background-color: #00D7C2;
+}
+
+#bUpgrade::disabled
+{
+background-color: #00BFA54D;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -264,34 +292,7 @@ border: none;
                   <bool>true</bool>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">#bUpgrade
-{
-font-family: Inter;
-font-size: 12px;
-line-height: 18px;
-border: 1px solid #0000001A;
-border-radius: 4px;
-color: #FFFFFF;
-padding: 4px 8px;
-background-color:  #00BFA5;
-image-position: left;
-text-align: right;
-}
-
-#bUpgrade::hover
-{
-background-color:  #00A787;
-}
-
-#bUpgrade::pressed
-{
-background-color: #00D7C2;
-}
-
-#bUpgrade::disabled
-{
-background-color: #00BFA54D;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
                   <string>Upgrade</string>
