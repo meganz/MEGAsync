@@ -61,3 +61,16 @@ void PermissionsDialog::permissionsChanged()
                                                              .arg(ui->wFileGroup->getCurrentPermissions())
                                                              .arg(ui->wFilePublic->getCurrentPermissions()));
 }
+
+void PermissionsDialog::on_bUpdate_clicked()
+{
+    QDialog::setResult(QDialog::Accepted);
+    close();
+}
+
+void PermissionsDialog::on_bCancel_clicked()
+{
+    QDialog::setResult(QDialog::Rejected);
+    close();
+}
+
