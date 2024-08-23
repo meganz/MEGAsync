@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1225</width>
-    <height>802</height>
+    <height>807</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -353,6 +353,81 @@ QGroupBox::title
     color: #333333;
     font-size: 24px;
     font-weight: 400;
+}
+
+/* 
+	TransfersAccountInfoWidget
+*/
+
+#TransferManagerAccountInfo
+{
+	background-color: #FAFAFA;
+}
+
+#wSeparator
+{
+	background-color: #EEEEEE;
+}
+
+#bUpgrade
+{
+	font-family: Inter;
+	font-size: 12px;
+	line-height: 16px;
+	border: 1px solid #0000001A;
+	border-radius: 4px;
+	color: #FFFFFF;
+	padding: 0px 8px;
+	background-color:  #00BFA5;
+}
+
+#lStorage
+{
+	font-family: Inter;
+	font-size: 12px;
+	line-height: 18px;
+	color: #303233;
+}
+
+#bUpgrade::hover
+{
+	background-color:  #00A787;
+}
+
+#bUpgrade::pressed
+{
+	background-color: #00D7C2;
+}
+
+#bUpgrade::disabled
+{
+	background-color: #00BFA54D;
+}
+
+/* 
+	AccountTypeWidget
+*/
+
+#bAccountType
+{
+	font-family: Inter;
+	font-size: 10px;
+    line-height: 14px;
+	font-weight: 600;
+	border-radius: 4px;
+    padding: 0px 8px;
+}
+
+#bAccountType[level=&quot;free&quot;]
+{
+	background-color: #CFFCDB; /*colorToken.notification-success*/
+	color: #007C3E; /*colorToken.text-success*/
+}
+
+#bAccountType[level=&quot;pro&quot;]
+{
+	background-color: #FFE4E8; /*colorToken.notification-error*/
+    color: #E31B57; /*colorToken.text-error*/
 }
 
 </string>
@@ -2191,10 +2266,22 @@ QGroupBox::title
       </item>
       <item>
        <widget class="TransfersAccountInfoWidget" name="wAccountInfo" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>108</height>
+          <height>96</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>96</height>
          </size>
         </property>
        </widget>
