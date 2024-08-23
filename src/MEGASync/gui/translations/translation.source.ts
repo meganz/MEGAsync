@@ -5623,16 +5623,6 @@ Enter a different name.</translation>
         <translation>Apply</translation>
     </message>
     <message>
-        <source>Auto-detect</source>
-        <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
-        <translation>Auto-detect</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Update</translation>
-    </message>
-    <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message shown when there is an error testing the proxy settings.</translatorcomment>
         <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
