@@ -485,17 +485,21 @@ void MegaApplication::initialize()
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
-    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
-    QTMegaEvent::setMegaApi(megaApi);
+    megaApi = new MegaApi(Preferences::CLIENT_KEY,
+                          basePath.toUtf8().constData(),
+                          Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY,
+                                 basePath.toUtf8().constData(),
+                                 Preferences::USER_AGENT.toUtf8().constData());
+    megaApiFolders->disableGfxFeatures(mDisableGfx);
+
+    QTMegaEvent::setMegaApiValid(true);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
-
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
                  .arg(mDisableGfx ? QLatin1String("disabled")
@@ -2212,10 +2216,10 @@ void MegaApplication::cleanAll()
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
 
+    QTMegaEvent::setMegaApiValid(false);
+
     delete megaApi;
     megaApi = nullptr;
-
-    QTMegaEvent::setMegaApi(nullptr);
 
     delete megaApiFolders;
     megaApiFolders = nullptr;
