@@ -20,7 +20,7 @@ DeviceCenter::DeviceCenter(QObject* parent):
     const int delayToNextCallInMs = 1000;
     mSizeInfoTimer.setInterval(delayToNextCallInMs);
     mSizeInfoTimer.setSingleShot(true);
-    connect(&mSizeInfoTimer, &QTimer::timeout, [this]() {
+    connect(&mSizeInfoTimer, &QTimer::timeout, this, [this]() {
         mMegaApi->getBackupInfo();
     });
 }

@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import components.texts 1.0 as Texts
+import common 1.0
 
 Item {
     id:root
 
-    readonly property int verticalMargins: 24
+    readonly property int verticalMargins: Constants.defaultComponentSpacing
     readonly property int headerHeight: 128
 
     DevicePageHeader{

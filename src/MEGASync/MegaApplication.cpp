@@ -5379,7 +5379,7 @@ void MegaApplication::createInfoDialogMenus()
 
     recreateMenuAction(&deviceCenterAction,
                        infoDialogMenu,
-                       tr("Device Center"),
+                       QString::fromLatin1("Device Center"),
                        "://images/ico-cloud-drive.png",
                        &MegaApplication::openDeviceCenter);
 
@@ -5435,12 +5435,13 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->addAction(aboutAction);
     }
 
-
     infoDialogMenu->addAction(myCloudAction);
-    infoDialogMenu->addAction(deviceCenterAction);
+    // infoDialogMenu->addAction(deviceCenterAction);
     infoDialogMenu->addSeparator();
-    if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-    if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());
+    if (mSyncs2waysMenu)
+        infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    if (mBackupsMenu)
+        infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);
