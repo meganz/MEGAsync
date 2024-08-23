@@ -390,33 +390,11 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
         auto siblingItem(findOtherSideItem(cloudConflictedNames, conflictName));
         if(siblingItem)
         {
-            result = renameCloudSibling(siblingItem, renameTo);
+            siblingItem->solveByRename(renameTo);
         }
 
-        //Undo the local name change
-        if(!result)
-        {
-            QFileInfo originalFileInfo(conflictName->mConflictedPath);
-            QFileInfo newFileInfo(originalFileInfo.path(), renameTo);
-            QFile file(newFileInfo.filePath());
-            if(file.exists())
-            {
-                file.rename(QDir::toNativeSeparators(originalFileInfo.filePath()));
-            }
-
-            //Fail string pending
-            conflictName->setFailed(tr("Unable to rename the file in MEGA"));
-        }
-
-        if(result)
-        {
-            conflictName->solveByRename(renameTo);
-        }
-
-        if(!siblingItem || result)
-        {
-            result = checkAndSolveConflictedNamesSolved();
-        }
+        conflictName->solveByRename(renameTo);
+        result = checkAndSolveConflictedNamesSolved();
     }
 
     return result;
@@ -436,35 +414,12 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
             auto siblingItem(findOtherSideItem(mLocalConflictedNames, conflictName));
             if(siblingItem)
             {
-                result = renameLocalSibling(siblingItem, renameTo);
+                siblingItem->solveByRename(renameTo);
             }
 
-             //Undo the local name change
-            if(!result)
-            {
-                std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictName->mHandle));
-                if(conflictedNode)
-                {
-                    MegaApiSynchronizedRequest::runRequest(
-                        &mega::MegaApi::renameNode,
-                        MegaSyncApp->getMegaApi(),
-                        conflictedNode.get(),
-                        renameFrom.toUtf8().constData());
+            conflictName->solveByRename(renameTo);
 
-                    //Fail string pending
-                    conflictName->setFailed(tr("Unable to rename the local file"));
-                }
-            }
-
-            if(result)
-            {
-                conflictName->solveByRename(renameTo);
-            }
-
-            if(!siblingItem || result)
-            {
-                result = checkAndSolveConflictedNamesSolved();
-            }
+            result = checkAndSolveConflictedNamesSolved();
         }
     }
 
