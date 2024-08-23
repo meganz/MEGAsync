@@ -5,7 +5,7 @@
 #include "RequestListenerManager.h"
 #include <QMutexLocker>
 
-EmailRequester* EmailRequester::mInstance = nullptr;
+std::unique_ptr<EmailRequester> EmailRequester::mInstance = std::unique_ptr<EmailRequester>();
 
 EmailRequester::EmailRequester():
     mMegaApi(MegaSyncApp->getMegaApi()),
@@ -45,12 +45,12 @@ RequestInfo* EmailRequester::addUser(mega::MegaHandle userHandle, const QString&
 
 EmailRequester* EmailRequester::instance()
 {
-    if (mInstance == nullptr)
+    if (!mInstance)
     {
-        mInstance = new EmailRequester();
+        mInstance = std::unique_ptr<EmailRequester>(new EmailRequester());
     }
 
-    return mInstance;
+    return mInstance.get();
 }
 
 void EmailRequester::onUsersUpdate(mega::MegaApi* api, mega::MegaUserList* users)

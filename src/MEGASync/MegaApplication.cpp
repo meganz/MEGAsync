@@ -486,6 +486,7 @@ void MegaApplication::initialize()
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
+    QTMegaEvent::setMegaApi(megaApi);
     megaApi->disableGfxFeatures(mDisableGfx);
 
     model = SyncInfo::instance();
@@ -2190,9 +2191,6 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
-    delete AccountDetailsManager::instance();
-    delete EmailRequester::instance();
-
     mUserMessageController.reset();
     infoDialog->deleteLater();
 
@@ -2213,6 +2211,14 @@ void MegaApplication::cleanAll()
     // their deletion
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
+
+    delete megaApi;
+    megaApi = nullptr;
+
+    QTMegaEvent::setMegaApi(nullptr);
+
+    delete megaApiFolders;
+    megaApiFolders = nullptr;
 
     trayIcon->deleteLater();
     trayIcon = nullptr;

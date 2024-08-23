@@ -56,7 +56,7 @@ Type AccountDetailsManager::UserStats<Type>::proValue() const
 //
 // AccountDetailsManager implementation.
 //
-AccountDetailsManager* AccountDetailsManager::mInstance = nullptr;
+AccountDetailsManager AccountDetailsManager::mInstance = AccountDetailsManager();
 
 AccountDetailsManager::AccountDetailsManager(QObject* parent)
     : QObject(parent)
@@ -66,11 +66,7 @@ AccountDetailsManager::AccountDetailsManager(QObject* parent)
 
 AccountDetailsManager* AccountDetailsManager::instance()
 {
-    if (!mInstance)
-    {
-        mInstance = new AccountDetailsManager;
-    }
-    return mInstance;
+    return &mInstance;
 }
 
 void AccountDetailsManager::reset()
