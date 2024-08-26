@@ -57,7 +57,41 @@
 #bUpgrade::disabled
 {
 	background-color: #00BFA54D;
-}</string>
+}
+
+#pbStorage
+{
+	border-style: none;
+	border-radius: 4px;
+	background-color: #0000000D; /*colorToken.indicator-background*/
+	max-height: 8px;
+}
+
+#pbStorage::chunk
+{
+	background-color: #477EF7; /*colorToken.indicator-indigo*/
+	border-radius: 4px;
+}
+
+#pbStorage[state=&quot;default&quot;]
+{
+	background-color: #CFFCDB; /*colorToken.notification-success*/
+	color: #007C3E; /*colorToken.text-success*/
+}
+
+#pbStorage[state=&quot;warning&quot;]
+{
+	background-color: #FFE4E8; /*colorToken.notification-error*/
+	color: #E31B57; /*colorToken.text-error*/
+}
+
+#pbStorage[state=&quot;error&quot;]
+{
+	background-color: #FFE4E8; /*colorToken.notification-error*/
+	color: #E31B57; /*colorToken.text-error*/
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -266,13 +300,13 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>18</height>
+            <height>19</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>18</height>
+            <height>19</height>
            </size>
           </property>
           <property name="text">
