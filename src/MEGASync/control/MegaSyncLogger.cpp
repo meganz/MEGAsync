@@ -27,6 +27,12 @@
 #include <windows.h>
 #endif
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)  // Disable the specific warning
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 //#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 //#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096

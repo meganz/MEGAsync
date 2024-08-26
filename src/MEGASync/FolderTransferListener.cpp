@@ -50,9 +50,9 @@ void FolderTransferListener::reset()
 
 void FolderTransferListener::processEvent()
 {
-    auto folderCount(0);
-    auto fileCount(0);
-    auto createFolderCount(0);
+    uint32_t folderCount(0);
+    uint32_t fileCount(0);
+    uint32_t createFolderCount(0);
 
     mLock.lock();
     mEventsToProcessMap = mEventsReceivedMap;

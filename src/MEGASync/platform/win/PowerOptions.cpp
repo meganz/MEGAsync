@@ -7,6 +7,10 @@
 #include <WinBase.h>
 #include <powersetting.h>
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4996)
+#endif
+
 class PowerOptionsImpl
 {
 public:

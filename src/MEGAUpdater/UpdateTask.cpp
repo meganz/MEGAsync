@@ -190,7 +190,7 @@ string UpdateTask::getAppDataDir()
     if (home)
     {
         path.append(home);
-        path.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
+        path.append("/Library/Application\\ Support/Mega\\ Limited/MEGAsync/");
     }
     return path;
 }

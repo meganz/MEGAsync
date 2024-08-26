@@ -25,7 +25,7 @@ private:
 
     std::mutex dataMutex;
     QTimer uiUpdatingTimer;
-    const unsigned int updateThresholdInMs = 100;
+    const int updateThresholdInMs = 100;
 };
 
 #endif // BlockingStageProgressController_H

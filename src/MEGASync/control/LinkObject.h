@@ -86,7 +86,6 @@ public:
 
 private:
     AlbumCollection mSet;
-    unsigned int mNrElements;
 };
 
 #endif // LINKOBJECT_H

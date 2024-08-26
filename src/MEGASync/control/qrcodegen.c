@@ -33,6 +33,20 @@
 	#define testable  // Expose private functions
 #endif
 
+#ifdef linux
+#pragma GCC diagnostic ignored "-Wconversion"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
+#ifdef __APPLE__
+#pragma GCC diagnostic ignored "-Wimplicit-int-conversion"
+#pragma GCC diagnostic ignored "-Wshorten-64-to-32"
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
+#ifdef _MSC_VER
+#pragma warning(disable: 4244) // conversion from '__int64' to 'int', possible loss of data (in 64 bit build)
+#endif
 
 /*---- Forward declarations for private functions ----*/
 

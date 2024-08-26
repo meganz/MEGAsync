@@ -80,7 +80,7 @@ public:
                const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem *option,
                                 const QModelIndex &index) const override;
-    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 };
 
 class ElideMiddleDelegate : public BackgroundColorDelegate

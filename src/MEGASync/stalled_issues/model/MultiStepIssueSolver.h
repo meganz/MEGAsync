@@ -40,9 +40,9 @@ protected:
     std::unique_ptr<QTimer> mDeadline;
     std::shared_ptr<StalledIssue> mIssue;
     bool mFailed;
-    static uint mSolversFixedInTheSameNotification;
-    static uint mSolversFailedInTheSameNotification;
-    static uint mSolversBeingFixedInTheSameNotification;
+    static int mSolversFixedInTheSameNotification;
+    static int mSolversFailedInTheSameNotification;
+    static int mSolversBeingFixedInTheSameNotification;
 };
 
 template <class ISSUE_TYPE>

@@ -8,6 +8,12 @@
 
 using namespace mega;
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4068)  // Disable the specific warning
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {

@@ -14,11 +14,11 @@ void StalledIssueChooseTitle::showIcon()
 
     if(mIsCloud)
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/cloud_default.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/cloud_default.png"));
     }
     else
     {
-        icon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/monitor_default.png"));
+        icon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/monitor_default.png"));
     }
 
     ui->icon->setPixmap(icon.pixmap(QSize(16,16)));

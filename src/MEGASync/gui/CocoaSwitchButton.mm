@@ -26,31 +26,31 @@ CocoaSwitchButton::CocoaSwitchButton(QWidget *pParent /* = 0 */)
     mChecked(false)
 {
     m_pButton = [[NSSwitch alloc] init];
-    [m_pButton sizeToFit];
-    NSRect frame = [m_pButton frame];
+    [(__bridge NSSwitch *) m_pButton sizeToFit];
+    NSRect frame = [(__bridge NSSwitch *)m_pButton frame];
 
     /* We need a target for the click selector */
     NSSwitchTarget *bt = [[NSSwitchTarget alloc] initWithObject: this];
-    [m_pButton setTarget: bt];
-    [m_pButton setAction: @selector(clicked:)];    
-    [m_pButton setState:NSControlStateValueOff];
-    setCocoaView((NSSwitch *)m_pButton);
+    [(__bridge NSSwitch *)m_pButton setTarget: bt];
+    [(__bridge NSSwitch *)m_pButton setAction: @selector(clicked:)];
+    [(__bridge NSSwitch *)m_pButton setState:NSControlStateValueOff];
+    setCocoaView((__bridge NSSwitch *)m_pButton);
 
     /* Make sure all is properly resized */
-    resize(frame.size.width, frame.size.height);
+    resize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
     setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 }
 
 QSize CocoaSwitchButton::sizeHint() const
 {
-    [m_pButton sizeToFit];
-    NSRect frame = [m_pButton frame];
-    return QSize(frame.size.width, frame.size.height);
+    [(__bridge NSSwitch *)m_pButton sizeToFit];
+    NSRect frame = [(__bridge NSSwitch *)m_pButton frame];
+    return QSize(static_cast<int>(frame.size.width), static_cast<int>(frame.size.height));
 }
 
 void CocoaSwitchButton::onClicked()
 {
-    NSControlStateValue value = [m_pButton state];
+    NSControlStateValue value = [(__bridge NSSwitch *)m_pButton state];
     mChecked = value == NSControlStateValueOn ? true : false;
     emit toggled(mChecked);
 }
@@ -65,7 +65,7 @@ void CocoaSwitchButton::setChecked(bool state)
     if(mChecked != state)
     {
         mChecked = state;
-        [m_pButton setState:mChecked ? NSControlStateValueOn : NSControlStateValueOff];
+        [(__bridge NSSwitch *)m_pButton setState:mChecked ? NSControlStateValueOn : NSControlStateValueOff];
         emit toggled(mChecked);
     }
 }

@@ -20,14 +20,14 @@
 
 struct TransfersCount
 {
-    int totalUploads;
-    int totalDownloads;
+    uint totalUploads;
+    uint totalDownloads;
 
-    int pendingUploads;
-    int pendingDownloads;
+    uint pendingUploads;
+    uint pendingDownloads;
 
-    int failedUploads;
-    int failedDownloads;
+    uint failedUploads;
+    uint failedDownloads;
 
     long long completedUploadBytes;
     long long completedDownloadBytes;
@@ -35,8 +35,8 @@ struct TransfersCount
     long long totalUploadBytes;
     long long totalDownloadBytes;
 
-    QMap<Utilities::FileType, long long> transfersByType;
-    QMap<Utilities::FileType, long long> transfersFinishedByType;
+    QMap<Utilities::FileType, uint> transfersByType;
+    QMap<Utilities::FileType, uint> transfersFinishedByType;
 
     TransfersCount():
         totalUploads(0),
@@ -51,11 +51,11 @@ struct TransfersCount
         totalDownloadBytes(0)
     {}
 
-    int completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
-    int completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
-    int pendingTransfers() const {return pendingDownloads + pendingUploads;}
+    uint completedDownloads()const {return totalDownloads - pendingDownloads - failedDownloads;}
+    uint completedUploads() const {return totalUploads - pendingUploads - failedUploads;}
+    uint pendingTransfers() const {return pendingDownloads + pendingUploads;}
 
-    long long totalFailedTransfers() const {return failedUploads + failedDownloads;}
+    uint totalFailedTransfers() const {return failedUploads + failedDownloads;}
 
     void clear()
     {
@@ -128,7 +128,7 @@ public:
     void resetCompletedDownloads(QList<QExplicitlySharedDataPointer<TransferData>> transfersToReset);
     void resetCompletedTransfers();
 
-    void setMaxTransfersToProcess(uint16_t max);
+    void setMaxTransfersToProcess(int max);
 
     TransfersToProcess processTransfers();
     void clear();
@@ -181,7 +181,7 @@ private:
     QMutex mCountersMutex;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
-    std::atomic<int16_t> mMaxTransfersToProcess;
+    std::atomic<int> mMaxTransfersToProcess;
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
@@ -265,11 +265,11 @@ public:
 
     void lockModelMutex(bool lock);
 
-    long long  getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
-    long long  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
+    uint getNumberOfTransfersForFileType(Utilities::FileType fileType) const;
+    uint  getNumberOfFinishedForFileType(Utilities::FileType fileType) const;
     TransfersCount getTransfersCount();
     TransfersCount getLastTransfersCount();
-    long long failedTransfers();
+    uint failedTransfers();
 
     void startTransfer(QExplicitlySharedDataPointer<TransferData> transfer);
     void updateTransfer(QExplicitlySharedDataPointer<TransferData> transfer, int row);
@@ -355,7 +355,7 @@ private:
     bool isUiBlockedModeActive() const ;
     void setUiBlockedMode(bool state);
 
-    void setUiBlockedModeByCounter(uint32_t transferCount);
+    void setUiBlockedModeByCounter(int transferCount);
     void updateUiBlockedByCounter(int updates);
     bool isUiBlockedByCounter() const;
     void setUiBlockedByCounterMode(bool state);
