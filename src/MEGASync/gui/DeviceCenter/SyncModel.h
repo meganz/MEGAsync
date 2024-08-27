@@ -1,9 +1,9 @@
 #ifndef SYNC_MODEL_H
 #define SYNC_MODEL_H
 
+#include "megaapi.h"
 #include "QmlSyncData.h"
 
-#include <megaapi.h>
 #include <QAbstractListModel>
 
 class SyncModel: public QAbstractListModel

@@ -1,10 +1,11 @@
 import QtQuick 2.0
 
-import DeviceModel 1.0
-
 import common 1.0
+
 import components.images 1.0
 import components.texts 1.0 as Texts
+
+import DeviceModel 1.0
 
 Item {
     id:root

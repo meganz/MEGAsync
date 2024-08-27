@@ -15,7 +15,6 @@ ContextMenuItem {
         LAST = 2
     }
 
-
     property int position: MenuItem.Position.INTER
     property Colors colors: Colors {
         itemBackgroundHover: colorStyle.textInverse

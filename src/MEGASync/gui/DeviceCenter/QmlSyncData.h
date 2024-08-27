@@ -19,7 +19,7 @@ struct QmlSyncData
 
     mega::MegaHandle handle = mega::INVALID_HANDLE;
     QmlSyncType::Type type = QmlSyncType::UNDEFINED;
-    QString name = QString::fromLatin1("");
+    QString name;
     qint64 size = -1;
     QDateTime dateAdded;
     QDateTime dateModified;

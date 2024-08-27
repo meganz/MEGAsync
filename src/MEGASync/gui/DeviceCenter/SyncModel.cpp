@@ -1,9 +1,10 @@
 #include "SyncModel.h"
 
+#include "Utilities.h"
+
 #include <algorithm>
 #include <QCoreApplication>
 #include <QDate>
-#include <Utilities.h>
 
 SyncModel::SyncModel(QObject* parent):
     QAbstractListModel(parent)

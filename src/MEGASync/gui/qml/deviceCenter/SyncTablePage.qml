@@ -6,16 +6,16 @@ import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Controls 2.12 as QmlControlsv212
 
-import SyncModel 1.0
-
 import common 1.0
 
 import components.texts 1.0 as Texts
 import components.images 1.0
 import components.menus 1.0
 import components.buttons 1.0 as Buttons
+
 import SyncStatus 1.0
 import QmlSyncType 1.0
+import SyncModel 1.0
 
 
 Item {
@@ -48,6 +48,7 @@ Item {
         }
         return result;
     }
+
     function getStatusIcon(currentStatus) {
         var result = "";
         switch(currentStatus) {

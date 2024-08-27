@@ -1,4 +1,5 @@
 import QtQuick 2.0
+
 import components.texts 1.0 as Texts
 import components.buttons 1.0 as Buttons
 import components.views 1.0
@@ -10,7 +11,7 @@ Item {
     readonly property string noInternetState: "noInternetState"
     readonly property string syncTableState: "syncTableState"
 
-    StackViewBase{
+    StackViewBase {
         id: stackView
 
         anchors.fill: parent

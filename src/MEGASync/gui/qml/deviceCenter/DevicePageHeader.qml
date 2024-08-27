@@ -28,6 +28,7 @@ Item {
         }
         return result;
     }
+
     Rectangle {
         id: contentItem
 
@@ -97,6 +98,7 @@ Item {
                     top: parent.verticalCenter
                     topMargin: 5
                 }
+
                 DeviceWidgetProperty {
                     id: deviceStatus
 
