@@ -8,7 +8,7 @@
 
 struct QmlSyncData
 {
-    QmlSyncData();
+    QmlSyncData() = default;
     QmlSyncData(mega::MegaSync* sync);
     QmlSyncData(mega::MegaSyncStats* syncStats);
     QmlSyncData(const mega::MegaBackupInfo* backupInfo, mega::MegaApi* api);

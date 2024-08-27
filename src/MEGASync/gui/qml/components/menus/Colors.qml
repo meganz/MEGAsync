@@ -7,6 +7,7 @@ QtObject {
     // menu
     property color menuBackground: colorStyle.pageBackground
     property color menuBorder: colorStyle.borderDisabled
+    property color shadowColor: "#10000000"
 
     // item
     property color focus: colorStyle.focus
@@ -15,6 +16,5 @@ QtObject {
     property color itemBackgroundPressed: colorStyle.surface2
     property color text: colorStyle.textPrimary
     property color icon: colorStyle.iconPrimary
-    property color border
 }
 

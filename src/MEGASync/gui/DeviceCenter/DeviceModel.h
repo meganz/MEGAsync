@@ -27,7 +27,7 @@ public:
 public:
     QString getName(int row) const;
 
-    QList<QPair<QString, DeviceData>> mObjects;
+    QList<QPair<QString, DeviceData>> mDevicesData;
 };
 
 #endif // DEVICEMODEL_H

@@ -10,10 +10,10 @@ Item {
     readonly property int verticalMargins: Constants.defaultComponentSpacing
     readonly property int headerHeight: 128
 
-    DevicePageHeader{
+    DevicePageHeader {
         id: header
 
-        anchors{
+        anchors {
             top: parent.top
             left:parent.left
             right: parent.right
@@ -21,10 +21,11 @@ Item {
         }
         height: root.headerHeight
     } //header
-    DevicePageContent{
+
+    DevicePageContent {
         id: content
 
-        anchors{
+        anchors {
             top: header.bottom
             bottom: parent.bottom
             left: parent.left

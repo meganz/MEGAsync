@@ -130,7 +130,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/MegaUserAlertExt.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
     gui/NotificationsSettings.cpp

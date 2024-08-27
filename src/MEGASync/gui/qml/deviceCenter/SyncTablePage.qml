@@ -75,12 +75,15 @@ Item {
         anchors.fill: parent
         anchors.bottomMargin: 20
         model: deviceCenterAccess.syncModel
+
         style: TableViewStyle {
+
             headerDelegate: Rectangle {
                 id: headercomponent
 
                 color: colorStyle.pageBackground
                 height: root.headerHeight
+
                 Texts.Text {
                     text: styleData.value
                     anchors.left: parent.left
@@ -93,12 +96,15 @@ Item {
                     }
                 }
             }
+
             frame: Rectangle{ } // Make the table borderless
-        } // TableViewStyle
+        }
+
         rowDelegate: Item {
             height: 64
             width: parent.width
         }
+
         TableViewColumn {
             id: nameColumn
 
@@ -107,9 +113,9 @@ Item {
             width: 282
             movable: false
             resizable:false
+
             delegate: Rectangle {
                 id: nameDelegateItem
-
 
                 anchors.fill: parent
                 SvgImage {
@@ -130,6 +136,7 @@ Item {
                     width: root.typeIconSize
                     sourceSize: Qt.size(36, 32)
                 }
+
                 Texts.ElidedText {
                     id: folderName
 
@@ -150,6 +157,7 @@ Item {
                     color: colorStyle.textPrimary
                     text: model? model.name : ""
                 }
+
                 SvgImage {
                     id: statusImage
 
@@ -162,6 +170,7 @@ Item {
                     width: root.statusIconSize
                     sourceSize: Qt.size(14.5, 14.5)
                 }
+
                 Texts.Text {
                     id: statusText
 
@@ -238,6 +247,7 @@ Item {
             width: defaultColumnWidth
             movable: false
             resizable: false
+
             delegate: Texts.ElidedText {
                 id: dateAddedText
 
@@ -262,6 +272,7 @@ Item {
             width: defaultColumnWidth
             movable: false
             resizable: false
+
             delegate: Texts.ElidedText {
                 id: dateUpdatedText
 
@@ -282,6 +293,7 @@ Item {
             width: tableView.width - nameColumn.width - typeColumn.width - sizeColumn.width - dateAddedColumn.width - dateModified.width - 20
             movable: false
             resizable: false
+
             delegate: Rectangle {
                 anchors.fill: parent
                 Buttons.IconButton {
@@ -300,6 +312,7 @@ Item {
 
                     }
                 }
+
                 ContextMenu {
                     id: menu
 
@@ -311,8 +324,8 @@ Item {
                         onTriggered: {
                         }
                     }
-                    QmlControlsv212.MenuSeparator {
 
+                    QmlControlsv212.MenuSeparator {
                         padding: 0
                         topPadding: 4
                         bottomPadding: 4
@@ -322,6 +335,7 @@ Item {
                             color: colorStyle.surface2
                         }
                     }
+
                     ContextMenuItem {
                         id: preferencesItem
 
@@ -335,6 +349,7 @@ Item {
             }
         }
     }
+
     Rectangle {
         id: headerDivider
 

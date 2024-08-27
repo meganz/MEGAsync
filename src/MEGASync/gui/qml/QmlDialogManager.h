@@ -2,7 +2,7 @@
 #define QML_DIALOG_MANAGER_H
 
 #include <memory>
-#include <qqml.h>
+#include <QQmlComponent>
 #include <QTimer>
 
 class QmlDialogManager: public QObject

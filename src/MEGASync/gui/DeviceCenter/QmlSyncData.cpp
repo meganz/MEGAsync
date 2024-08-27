@@ -1,7 +1,5 @@
 #include "QmlSyncData.h"
 
-QmlSyncData::QmlSyncData() {}
-
 QmlSyncData::QmlSyncData(mega::MegaSync* sync)
 {
     handle = sync->getBackupId();

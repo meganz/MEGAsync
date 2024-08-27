@@ -8,7 +8,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 
 Qml.Menu {
-    id: menu
+    id: root
 
     readonly property int defaultPadding: 4
     readonly property int defaultMenuWidth: 240
@@ -36,7 +36,7 @@ Qml.Menu {
             radius: 8.0
             samples: 16
             cached: true
-            color: "#10000000"
+            color: colors.shadowColor
         }
     }
 

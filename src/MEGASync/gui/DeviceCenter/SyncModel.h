@@ -4,6 +4,7 @@
 #include "megaapi.h"
 #include "QmlSyncData.h"
 
+#include <optional>
 #include <QAbstractListModel>
 
 class SyncModel: public QAbstractListModel
@@ -32,7 +33,6 @@ public:
     void addOrUpdate(const QmlSyncData& newSync);
     void remove(mega::MegaHandle handle);
     void clear();
-    int findRowByHandle(mega::MegaHandle handle) const;
     SyncStatus::Value computeDeviceStatus() const;
     qint64 computeTotalSize() const;
 
@@ -46,6 +46,7 @@ public:
     QDate getDateAdded(int row) const;
     QDate getDateModified(int row) const;
     SyncStatus::Value getStatus(int row) const;
+    std::optional<int> findRowByHandle(mega::MegaHandle handle) const;
 
     QList<QmlSyncData> mSyncObjects;
 };

@@ -95,7 +95,6 @@ void DeviceCenter::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("DeviceCenter", 1, 0);
-        qmlRegisterType<QmlDialog>("DeviceCenterQmlDialog", 1, 0, "DeviceCenterQmlDialog");
         qmlRegisterType<SyncModel>("SyncModel", 1, 0, "SyncModel");
         qmlRegisterType<DeviceModel>("DeviceModel", 1, 0, "DeviceModel");
         qmlRegisterUncreatableMetaObject(

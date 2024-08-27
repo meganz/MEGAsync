@@ -32,31 +32,29 @@ void SyncModel::add(const QmlSyncData& newSync)
 
 void SyncModel::addOrUpdate(const QmlSyncData& newSync)
 {
-    const int index = findRowByHandle(newSync.handle);
-    if (index == -1)
+    auto index = findRowByHandle(newSync.handle);
+    if (!index.has_value())
     {
         add(newSync);
     }
     else
     {
-        mSyncObjects[index].updateFields(newSync);
-        emit dataChanged(QAbstractListModel::index(index), QAbstractListModel::index(index));
+        mSyncObjects[index.value()].updateFields(newSync);
+        const QModelIndex modelIndex = QAbstractListModel::index(index.value());
+        emit dataChanged(modelIndex, modelIndex);
     }
 }
 
 void SyncModel::remove(mega::MegaHandle handle)
 {
-    int index = findRowByHandle(handle);
-    beginRemoveRows(QModelIndex(), index, index);
-    auto it = mSyncObjects.begin();
-    for (; it != mSyncObjects.end(); ++it)
-    {
-        if (it->handle == handle)
-        {
-            mSyncObjects.erase(it);
-            break;
-        }
-    }
+    auto index = findRowByHandle(handle);
+
+    auto remover = [handle](const QmlSyncData& obj) {
+        return obj.handle == handle;
+    };
+
+    beginRemoveRows(QModelIndex(), index.value(), index.value());
+    std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
     endRemoveRows();
 }
 
@@ -65,16 +63,17 @@ void SyncModel::clear()
     mSyncObjects.clear();
 }
 
-int SyncModel::findRowByHandle(mega::MegaHandle handle) const
+std::optional<int> SyncModel::findRowByHandle(mega::MegaHandle handle) const
 {
-    for (int i = 0; i < mSyncObjects.size(); ++i)
+    auto finder = [handle](const QmlSyncData& obj) {
+        return obj.handle == handle;
+    };
+    auto itSyncObj = std::find_if(mSyncObjects.begin(), mSyncObjects.end(), finder);
+    if (itSyncObj != mSyncObjects.end())
     {
-        if (mSyncObjects[i].handle == handle)
-        {
-            return i;
-        }
+        return std::distance(mSyncObjects.begin(), itSyncObj);
     }
-    return -1;
+    return std::nullopt;
 }
 
 SyncStatus::Value SyncModel::computeDeviceStatus() const
@@ -102,11 +101,13 @@ qint64 SyncModel::computeTotalSize() const
 
 void SyncModel::setStatus(mega::MegaHandle handle, const SyncStatus::Value status)
 {
-    const int row = findRowByHandle(handle);
-    if (row != -1)
+    auto row = findRowByHandle(handle);
+    if (!row.has_value())
     {
-        mSyncObjects[row].status = status;
-        emit dataChanged(index(row), index(row));
+        mSyncObjects[row.value()].status = status;
+
+        const QModelIndex modelIndex = index(row.value());
+        emit dataChanged(modelIndex, modelIndex);
     }
 }
 

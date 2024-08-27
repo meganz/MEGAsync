@@ -4,9 +4,9 @@ import QtQuick.Window 2.15
 import common 1.0
 import components.views 1.0
 
-import DeviceCenterQmlDialog 1.0
+import QmlDialog 1.0
 
-DeviceCenterQmlDialog {
+QmlDialog {
     id: window
 
     title: DeviceCenterStrings.deviceCenterWindowTitle
@@ -35,6 +35,7 @@ DeviceCenterQmlDialog {
         }
         width: 256
     }
+
     Toolbar {
         id: toolbar
 
@@ -45,6 +46,7 @@ DeviceCenterQmlDialog {
         }
         height: 72
     }
+
     DevicePage {
         id: content
 

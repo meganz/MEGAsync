@@ -18,16 +18,16 @@ QHash<int, QByteArray> DeviceModel::roleNames() const
 
 void DeviceModel::reset(const QString& deviceId, const DeviceData& data)
 {
-    mObjects.clear();
+    mDevicesData.clear();
     beginInsertRows(QModelIndex(), 0, 0);
-    mObjects.append(qMakePair(deviceId, data));
+    mDevicesData.append(qMakePair(deviceId, data));
     endInsertRows();
 }
 
 int DeviceModel::rowCount(const QModelIndex& parent) const
 {
     Q_UNUSED(parent);
-    return mObjects.size();
+    return mDevicesData.size();
 }
 
 int DeviceModel::columnCount(const QModelIndex& parent) const
@@ -60,5 +60,5 @@ QVariant DeviceModel::data(const QModelIndex& index, int role) const
 
 QString DeviceModel::getName(int row) const
 {
-    return mObjects[row].second.name;
+    return mDevicesData[row].second.name;
 }

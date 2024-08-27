@@ -3,7 +3,14 @@
 #include "AccountStatusController.h"
 #include "Backups.h"
 #include "DeviceCenter.h"
+#include "DialogOpener.h"
+#include "GuestContent.h"
+#include "GuestQmlDialog.h"
+#include "LoginController.h"
+#include "Onboarding.h"
+#include "OnboardingQmlDialog.h"
 #include "QmlManager.h"
+#include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
