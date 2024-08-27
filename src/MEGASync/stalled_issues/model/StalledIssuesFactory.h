@@ -62,8 +62,12 @@ public:
     StalledIssuesFactory();
     virtual ~StalledIssuesFactory() = default;
 
-    virtual std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall) = 0;
-    virtual void clear(){}
+    virtual std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver,
+                                                      const mega::MegaSyncStall* stall) = 0;
+
+    virtual void clear() {}
+
+    virtual void finish() {}
 };
 
 enum class UpdateType
@@ -106,6 +110,7 @@ signals:
 
 protected:
     void clear();
+    void finish();
 
     ReceivedStalledIssues mStalledIssues;
 
