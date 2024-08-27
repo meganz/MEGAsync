@@ -25,11 +25,13 @@ TransfersAccountInfoWidget::TransfersAccountInfoWidget(QWidget* parent):
     updateStorageText();
     updateStorageBar();
     AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->attachAccountObserver(*this);
 }
 
 TransfersAccountInfoWidget::~TransfersAccountInfoWidget()
 {
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachAccountObserver(*this);
     delete mUi;
 }
 
@@ -37,6 +39,11 @@ void TransfersAccountInfoWidget::updateStorageElements()
 {
     updateStorageText();
     updateStorageBar();
+}
+
+void TransfersAccountInfoWidget::updateAccountElements()
+{
+    checkUpgradeButtonVisibility();
 }
 
 void TransfersAccountInfoWidget::changeEvent(QEvent* event)
@@ -65,8 +72,7 @@ void TransfersAccountInfoWidget::updateStorageText()
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
             mUi->pbStorage->setValue(std::min(percentage, mUi->pbStorage->maximum()));
-            storageText =
-                Utilities::createCompleteUsedString(usedStorage, totalStorage, percentage);
+            storageText = Utilities::createSimpleUsedOfString(usedStorage, totalStorage);
             updateProgressBarStateUntilFull(percentage);
         }
     }
@@ -127,4 +133,14 @@ void TransfersAccountInfoWidget::refreshProgressBar()
     mUi->pbStorage->style()->unpolish(mUi->pbStorage);
     mUi->pbStorage->style()->polish(mUi->pbStorage);
     mUi->pbStorage->update();
+}
+
+void TransfersAccountInfoWidget::checkUpgradeButtonVisibility()
+{
+    mUi->bUpgrade->setVisible(!Utilities::isBusinessAccount());
+}
+
+void TransfersAccountInfoWidget::on_bUpgrade_clicked()
+{
+    Utilities::upgradeClicked();
 }

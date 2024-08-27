@@ -10,7 +10,7 @@ namespace Ui
 class TransfersAccountInfoWidget;
 }
 
-class TransfersAccountInfoWidget: public QWidget, public IStorageObserver
+class TransfersAccountInfoWidget: public QWidget, public IStorageObserver, public IAccountObserver
 {
     Q_OBJECT
 
@@ -19,9 +19,13 @@ public:
     ~TransfersAccountInfoWidget();
 
     void updateStorageElements() override;
+    void updateAccountElements() override;
 
 protected:
     void changeEvent(QEvent* event) override;
+
+private slots:
+    void on_bUpgrade_clicked();
 
 private:
     Ui::TransfersAccountInfoWidget* mUi;
@@ -30,6 +34,7 @@ private:
     void updateStorageBar();
     void updateProgressBarStateUntilFull(int percentage);
     void refreshProgressBar();
+    void checkUpgradeButtonVisibility();
 };
 
 #endif // TRANSFERS_ACCOUNT_INFO_WIDGET_H
