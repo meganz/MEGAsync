@@ -44,9 +44,7 @@ struct TransferMetaDataItem
     TransferMetaDataItem(const TransferMetaDataItemId& uid)
         :id(uid), state(TransferData::TRANSFER_ACTIVE), failedTransfer(nullptr){}
 
-    ~TransferMetaDataItem()
-    {
-    }
+    virtual ~TransferMetaDataItem() = default;
 
     TransferMetaDataItemId id;
     TransferMetaDataItemId topLevelFolderId;
@@ -59,7 +57,7 @@ struct TransferMetaDataItem
 
 template <class Type>
 struct TransferMetaDataItemsByState
-{ 
+{
     int size() const {return pendingTransfers.size() + completedTransfers.size() + failedTransfers.size() + cancelledTransfers.size() + nonExistFailedTransfers.size();}
 
     QMap<TransferMetaDataItemId, std::shared_ptr<Type>> pendingTransfers;
@@ -297,7 +295,7 @@ public:
     void addFileFromFolder(int folderTag, int fileTag);
 
     //Top Level folders
-    void topLevelFolderScanningFinished(int filecount);
+    void topLevelFolderScanningFinished(unsigned int filecount);
 
     //Folder controller
     void processCancelled();
@@ -339,7 +337,7 @@ protected:
 
 private:
     void retryFailingFile(int tag, mega::MegaHandle nodeHandle);
-    void retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle);
+    void retryFileFromFolderFailingItem(int fileTag, int folderTag, mega::MegaHandle nodeHandle);
     void retryAllPressed();
 
     void addInitialPendingTopLevelTransferFromOtherSession(bool isFolder);

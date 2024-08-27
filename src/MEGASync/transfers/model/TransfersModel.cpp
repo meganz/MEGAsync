@@ -802,7 +802,7 @@ void TransferThread::resetCompletedDownloads(QList<QExplicitlySharedDataPointer<
     }
 }
 
-void TransferThread::setMaxTransfersToProcess(uint16_t max)
+void TransferThread::setMaxTransfersToProcess(int max)
 {
     mMaxTransfersToProcess = max;
 }
@@ -1321,7 +1321,8 @@ void TransfersModel::processCancelTransfers()
 
         mRowsToCancel.clear();
 
-        float cancelledPercentage(indexesToCancel.size()/(rowCount()*1.0));
+        double cancelledPercentage(indexesToCancel.size()*1.0);
+        cancelledPercentage = cancelledPercentage/rowCount();
 
         //For large amount of transfers, this is quite faster: remove all transfers and recreate the tags by row map
         if(indexesToCancel.size() >= QUICK_CANCEL_THRESHOLD
@@ -1782,7 +1783,7 @@ void TransfersModel::openFolderByTag(TransferTag tag)
     }
 }
 
-long long TransfersModel::failedTransfers()
+uint TransfersModel::failedTransfers()
 {
     return mTransfersCount.totalFailedTransfers();
 }
@@ -2307,12 +2308,12 @@ void TransfersModel::lockModelMutex(bool lock)
     }
 }
 
-long long TransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
+uint TransfersModel::getNumberOfTransfersForFileType(Utilities::FileType fileType) const
 {
     return mTransfersCount.transfersByType.value(fileType);
 }
 
-long long TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
+uint TransfersModel::getNumberOfFinishedForFileType(Utilities::FileType fileType) const
 {
     return mTransfersCount.transfersFinishedByType.value(fileType);
 }
@@ -2515,7 +2516,7 @@ void TransfersModel::setUiBlockedMode(bool state)
     }
 }
 
-void TransfersModel::setUiBlockedModeByCounter(uint32_t transferCount)
+void TransfersModel::setUiBlockedModeByCounter(int transferCount)
 {
     if(transferCount > 0 && transferCount > PAUSE_RESUME_THRESHOLD_THREAD)
     {
@@ -2618,7 +2619,7 @@ void TransfersModel::mostPriorityTransferMayChanged(bool state)
 
 void TransfersModel::askForMostPriorityTransfer()
 {
-    auto task = QtConcurrent::run([this]()
+    auto task = QtConcurrent::run([]()
     {
         std::unique_ptr<MegaTransfer> nextUTransfer(MegaSyncApp->getMegaApi()->getFirstTransfer(MegaTransfer::TYPE_UPLOAD));
         auto UTag = nextUTransfer ? nextUTransfer->getTag() : -1;

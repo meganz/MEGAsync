@@ -68,7 +68,7 @@ void DuplicatedUploadFile::fillUi(DuplicatedNodeDialog *dialog, std::shared_ptr<
 
     //Upload and merge item
     DuplicatedRenameItem* uploadAndRename = new DuplicatedRenameItem(dialog);
-    uploadAndRename->setInfo(conflict);
+    uploadAndRename->setRenameInfo(conflict);
     uploadAndRename->setDescription(DuplicatedNodeDialog::tr("The file will be renamed as:"));
     connect(uploadAndRename, &DuplicatedNodeItem::actionClicked, this, &DuplicatedUploadFile::onNodeItemSelected);
     dialog->addNodeItem(uploadAndRename);

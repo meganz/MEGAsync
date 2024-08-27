@@ -4179,19 +4179,6 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
-    <name>NameConflictedStalledIssue</name>
-    <message>
-        <source>Unable to rename the file in MEGA</source>
-        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to rename the local file</source>
-        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>

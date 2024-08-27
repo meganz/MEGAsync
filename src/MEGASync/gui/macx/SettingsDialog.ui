@@ -3753,7 +3753,13 @@ margin-right: 32px;</string>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
+  <customwidgets>
+   <customwidget>
+   <class>WaitingSpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>WaitingSpinnerWidget.h</header>
+   <container>1</container>
+</customwidget>
   <customwidget>
    <class>AvatarWidget</class>
    <extends>QWidget</extends>

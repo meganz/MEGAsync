@@ -62,7 +62,7 @@ private:
     bool mIsHover;
     TransferRemainingTime mTransferRemainingTime;
 
-    void updateFinishedIco(int transferType, bool error);
+    void updateFinishedIco(TransferData::TransferTypes transferType, bool error);
     void updateTransferActive(const QExplicitlySharedDataPointer<TransferData> data);
     void updateTransferCompletedOrFailed(const QExplicitlySharedDataPointer<TransferData> data);
     void updateTransferCompleting(const QExplicitlySharedDataPointer<TransferData> data);

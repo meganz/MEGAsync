@@ -14,15 +14,15 @@ NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 {
-    auto localConflictNames = stall->pathCount(false);
+    auto localConflictNames = static_cast<int>(stall->pathCount(false));
 
     if(localConflictNames > 0)
     {
         initLocalIssue();
 
-        for(unsigned int index = 0; index < localConflictNames; ++index)
+        for(int index = 0; index < localConflictNames; ++index)
         {
-            QFileInfo localPath(QString::fromUtf8(stall->path(false,index)));
+            QFileInfo localPath(QString::fromUtf8(stall->path(false, index)));
 
             if(consultLocalData()->mPath.isEmpty())
             {
@@ -39,7 +39,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
         }
     }
 
-    auto cloudConflictNames = stall->pathCount(true);
+    auto cloudConflictNames = static_cast<int>(stall->pathCount(true));
 
     if(cloudConflictNames > 0)
     {
@@ -54,7 +54,7 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
             getCloudData()->mPathHandle = stall->cloudNodeHandle(0);
         }
 
-        for(unsigned int index = 0; index < cloudConflictNames; ++index)
+        for(int index = 0; index < cloudConflictNames; ++index)
         {
             auto cloudHandle(stall->cloudNodeHandle(index));
             auto cloudPath = QString::fromUtf8(stall->path(true, index));
@@ -72,7 +72,12 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
 
                 if(node->isFile())
                 {
-                    mCloudConflictedNames.addFileConflictedName(node->getModificationTime(), node->getSize(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), info);
+                    mCloudConflictedNames.addFileConflictedName(
+                        static_cast<unsigned long long>(node->getModificationTime()),
+                        node->getSize(),
+                        static_cast<unsigned long long>(node->getCreationTime()),
+                        QString::fromUtf8(node->getFingerprint()),
+                        info);
                     mFiles++;
                 }
                 else
@@ -242,9 +247,15 @@ void NameConflictedStalledIssue::updateHandle(mega::MegaHandle handle)
         {
             mLastModifiedNode.cloudItem->mHandle = handle;
 
-            if(node->isFile())
+            if (node->isFile())
             {
-                mCloudConflictedNames.updateFileConflictedName(node->getModificationTime(), node->getSize(), oldNode->getCreationTime(), node->getCreationTime(), QString::fromUtf8(node->getFingerprint()), mLastModifiedNode.cloudItem);
+                mCloudConflictedNames.updateFileConflictedName(
+                    static_cast<unsigned long long>(node->getModificationTime()),
+                    node->getSize(),
+                    static_cast<unsigned long long>(oldNode->getCreationTime()),
+                    static_cast<unsigned long long>(node->getCreationTime()),
+                    QString::fromUtf8(node->getFingerprint()),
+                    mLastModifiedNode.cloudItem);
             }
         }
 
@@ -390,33 +401,11 @@ bool NameConflictedStalledIssue::solveLocalConflictedNameByRename(int conflictIn
         auto siblingItem(findOtherSideItem(cloudConflictedNames, conflictName));
         if(siblingItem)
         {
-            result = renameCloudSibling(siblingItem, renameTo);
+            siblingItem->solveByRename(renameTo);
         }
 
-        //Undo the local name change
-        if(!result)
-        {
-            QFileInfo originalFileInfo(conflictName->mConflictedPath);
-            QFileInfo newFileInfo(originalFileInfo.path(), renameTo);
-            QFile file(newFileInfo.filePath());
-            if(file.exists())
-            {
-                file.rename(QDir::toNativeSeparators(originalFileInfo.filePath()));
-            }
-
-            //Fail string pending
-            conflictName->setFailed(tr("Unable to rename the file in MEGA"));
-        }
-
-        if(result)
-        {
-            conflictName->solveByRename(renameTo);
-        }
-
-        if(!siblingItem || result)
-        {
-            result = checkAndSolveConflictedNamesSolved();
-        }
+        conflictName->solveByRename(renameTo);
+        result = checkAndSolveConflictedNamesSolved();
     }
 
     return result;
@@ -436,35 +425,12 @@ bool NameConflictedStalledIssue::solveCloudConflictedNameByRename(int conflictIn
             auto siblingItem(findOtherSideItem(mLocalConflictedNames, conflictName));
             if(siblingItem)
             {
-                result = renameLocalSibling(siblingItem, renameTo);
+                siblingItem->solveByRename(renameTo);
             }
 
-             //Undo the local name change
-            if(!result)
-            {
-                std::unique_ptr<mega::MegaNode> conflictedNode(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictName->mHandle));
-                if(conflictedNode)
-                {
-                    MegaApiSynchronizedRequest::runRequest(
-                        &mega::MegaApi::renameNode,
-                        MegaSyncApp->getMegaApi(),
-                        conflictedNode.get(),
-                        renameFrom.toUtf8().constData());
+            conflictName->solveByRename(renameTo);
 
-                    //Fail string pending
-                    conflictName->setFailed(tr("Unable to rename the local file"));
-                }
-            }
-
-            if(result)
-            {
-                conflictName->solveByRename(renameTo);
-            }
-
-            if(!siblingItem || result)
-            {
-                result = checkAndSolveConflictedNamesSolved();
-            }
+            result = checkAndSolveConflictedNamesSolved();
         }
     }
 
@@ -560,7 +526,7 @@ bool NameConflictedStalledIssue::renameCloudNodesAutomatically(const QList<std::
                     MegaApiSynchronizedRequest::runRequestWithResult(
                         &mega::MegaApi::renameNode,
                         MegaSyncApp->getMegaApi(),
-                        [this, &error](mega::MegaRequest*, mega::MegaError* e)
+                        [&error](mega::MegaRequest*, mega::MegaError* e)
                         {
                             if(e->getErrorCode() != mega::MegaError::API_OK)
                             {

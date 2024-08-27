@@ -771,11 +771,11 @@ void LoginController::setEmail(const QString& email)
     }
 }
 
-long long LoginController::computeExclusionSizeLimit(const long long sizeLimitValue, const int unit)
+unsigned long long LoginController::computeExclusionSizeLimit(const unsigned long long& sizeLimitValue, const int unit)
 {
     const double bytesPerKb = 1024;
     const double sizeLimitPower = pow(bytesPerKb, static_cast<double>(unit));
-    return sizeLimitValue * static_cast<long long>(sizeLimitPower);
+    return sizeLimitValue * static_cast<unsigned long long>(trunc(sizeLimitPower));
 }
 
 void LoginController::runConnectivityCheck()

@@ -72,7 +72,7 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         uint mask = FirstButton;
         while(mask <= LastButton)
         {
-            uint sb = info.buttons & mask;
+            int sb = info.buttons & mask;
             mask <<= 1;
             if(!sb)
                 continue;
@@ -94,7 +94,7 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
             if((info.defaultButton == NoButton && buttonBox &&
                    buttonBox->buttonRole((QAbstractButton*) button) ==
                        QDialogButtonBox::AcceptRole) ||
-                (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
+                (info.defaultButton != NoButton && sb == static_cast<int>((info.defaultButton))))
             {
                 msgBox->setDefaultButton(button);
             }

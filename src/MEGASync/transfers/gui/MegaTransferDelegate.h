@@ -18,7 +18,7 @@ public:
     MegaTransferDelegate(TransfersSortFilterProxyBaseModel* model,  QAbstractItemView* view);
     ~MegaTransferDelegate();
 
-    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const;
+    QSize sizeHint(const QStyleOptionViewItem&, const QModelIndex&) const override;
 
 protected:
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;

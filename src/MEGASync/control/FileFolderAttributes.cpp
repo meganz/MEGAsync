@@ -285,7 +285,7 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
 #elif defined(Q_OS_MACOS)
             struct stat the_time;
             stat(mPath.toUtf8(), &the_time);
-            mCreatedTime.setTime_t(the_time.st_birthtimespec.tv_sec);
+            mCreatedTime.setSecsSinceEpoch(the_time.st_birthtimespec.tv_sec);
 #elif defined(Q_OS_LINUX)
             mCreatedTime = QDateTime::fromSecsSinceEpoch(0);
 #endif

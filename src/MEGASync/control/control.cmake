@@ -1,6 +1,7 @@
 
 set(DESKTOP_APP_CONTROL_HEADERS
     control/AccountStatusController.h
+    control/AppState.h
     control/AppStatsEvents.h
     control/AsyncHandler.h
     control/ConnectivityChecker.h
@@ -45,6 +46,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
 
 set(DESKTOP_APP_CONTROL_SOURCES
     control/AccountStatusController.cpp
+    control/AppState.cpp
     control/AppStatsEvents.cpp
     control/ConnectivityChecker.cpp
     control/CrashHandler.cpp
