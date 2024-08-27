@@ -13,7 +13,7 @@ class MultiStepIssueSolverBase : public QObject
 {
     Q_OBJECT
 public:
-    MultiStepIssueSolverBase(std::shared_ptr<StalledIssue> issue);
+    MultiStepIssueSolverBase(StalledIssueSPtr issue);
     virtual ~MultiStepIssueSolverBase() = default;
 
     virtual void resetDeadlineIfNeeded(const StalledIssueVariant& issue) = 0;
@@ -25,7 +25,10 @@ public:
     void sendStartNotification();
     void sendFinishNotification();
 
-    std::shared_ptr<StalledIssue> getIssue() const {return mIssue;}
+    StalledIssueSPtr getIssue() const
+    {
+        return mIssue;
+    }
 
     void setFailed();
     void setFinished();
@@ -38,7 +41,7 @@ protected slots:
 
 protected:
     std::unique_ptr<QTimer> mDeadline;
-    std::shared_ptr<StalledIssue> mIssue;
+    StalledIssueSPtr mIssue;
     bool mFailed;
     static int mSolversFixedInTheSameNotification;
     static int mSolversFailedInTheSameNotification;

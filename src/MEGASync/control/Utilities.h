@@ -401,6 +401,11 @@ public:
 
     static QString getTranslatedError(const mega::MegaError* error);
 
+    static bool restoreNode(mega::MegaNode* node,
+                            mega::MegaApi* megaApi,
+                            bool async,
+                            std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

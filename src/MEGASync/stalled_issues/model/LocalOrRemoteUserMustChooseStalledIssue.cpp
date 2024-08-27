@@ -8,17 +8,13 @@
 #include <MegaApiSynchronizedRequest.h>
 #include <FileFolderAttributes.h>
 
-
-LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue)
-    : StalledIssue(stallIssue),
-      mUploader(new MegaUploader(MegaSyncApp->getMegaApi(), nullptr))
+LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(
+    const mega::MegaSyncStall* stallIssue):
+    StalledIssue(stallIssue)
 {
 }
 
-LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssue()
-{
-    mUploader->deleteLater();
-}
+LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssue() {}
 
 StalledIssue::AutoSolveIssueResult LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
@@ -114,7 +110,7 @@ void LocalOrRemoteUserMustChooseStalledIssue::fillIssue(const mega::MegaSyncStal
 
     std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
     //Check if transfer already exists
-    if(isBeingSolvedByUpload(info))
+    if (isBeingSolvedByUpload(info, true))
     {
         setIsSolved(StalledIssue::SolveType::SOLVED);
     }
@@ -147,7 +143,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
     {
         std::shared_ptr<UploadTransferInfo> info(new UploadTransferInfo());
         //Check if transfer already exists
-        if(!isBeingSolvedByUpload(info))
+        if (!isBeingSolvedByUpload(info, true))
         {
             std::shared_ptr<mega::MegaNode> node(getCloudData()->getNode());
             std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(info->parentHandle));
@@ -172,7 +168,11 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseLocalSide()
                 {
                     //Only upload the file if the versions are enabled
                     //Using appDataId == 0 means that there will be no notification for this upload
-                    mUploader->upload(info->localPath, info->filename, parentNode, 0, nullptr);
+                    StalledIssuesUtilities::getMegaUploader()->upload(info->localPath,
+                                                                      info->filename,
+                                                                      parentNode,
+                                                                      0,
+                                                                      nullptr);
                 }
 
                 return true;

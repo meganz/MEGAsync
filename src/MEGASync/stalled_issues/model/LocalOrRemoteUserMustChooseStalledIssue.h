@@ -41,7 +41,6 @@ public:
     std::shared_ptr<mega::MegaError> getRemoveRemoteError() const;
 
 private:
-    MegaUploader* mUploader;
     ChosenSide mChosenSide = ChosenSide::NONE;
     QString mNewName;
     std::shared_ptr<mega::MegaError> mError;

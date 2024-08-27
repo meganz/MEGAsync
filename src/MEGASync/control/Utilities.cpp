@@ -1538,6 +1538,55 @@ QString Utilities::getTranslatedError(const MegaError* error)
     return QCoreApplication::translate("MegaError", error->getErrorString());
 }
 
+bool Utilities::restoreNode(MegaNode* node,
+                            MegaApi* megaApi,
+                            bool async,
+                            std::function<void(MegaRequest*, MegaError*)> finishFunc)
+{
+    if (node)
+    {
+        auto newParent =
+            std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(node->getRestoreHandle()));
+
+        if (newParent)
+        {
+            if (async)
+            {
+                auto listener =
+                    RequestListenerManager::instance().registerAndGetSynchronousFinishListener(
+                        [finishFunc](MegaRequest* request, MegaError* e) {
+                            if (finishFunc)
+                            {
+                                finishFunc(request, e);
+                            }
+                        });
+
+                megaApi->moveNode(node, newParent.get(), listener.get());
+            }
+            else
+            {
+                MegaApiSynchronizedRequest::runRequestLambdaWithResult(
+                    [](MegaNode* node, MegaNode* targetNode, MegaRequestListener* listener) {
+                        MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+                    },
+                    megaApi,
+                    [finishFunc](MegaRequest* request, MegaError* e) {
+                        if (finishFunc)
+                        {
+                            finishFunc(request, e);
+                        }
+                    },
+                    node,
+                    newParent.get());
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
