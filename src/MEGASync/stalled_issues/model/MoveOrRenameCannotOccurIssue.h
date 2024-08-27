@@ -67,6 +67,8 @@ private:
     bool mSolvingStarted;
     bool mUndoSuccessful;
 
+    QMap<MoveOrRenameIssueChosenSide, bool> mTempInfo;
+
     static QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> mChosenSideBySyncId;
     MoveOrRenameIssueChosenSide mChosenSide;
     int mCombinedNumberOfIssues;

@@ -37,13 +37,29 @@ bool MoveOrRenameCannotOccurIssue::isValid() const
 //We don´t fill the issue as usual
 void MoveOrRenameCannotOccurIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
-    if(stall->detectedCloudSide() && !consultCloudData())
+    if (stall->detectedCloudSide() &&
+        (!consultCloudData() || mTempInfo.value(MoveOrRenameIssueChosenSide::REMOTE)))
     {
         fillCloudSide(stall);
+        mTempInfo.insert(MoveOrRenameIssueChosenSide::REMOTE, false);
+
+        if (!consultLocalData())
+        {
+            fillLocalSide(stall);
+            mTempInfo.insert(MoveOrRenameIssueChosenSide::LOCAL, true);
+        }
     }
-    else if(!stall->detectedCloudSide() && !consultLocalData())
+    else if (!stall->detectedCloudSide() &&
+             (!consultLocalData() || mTempInfo.value(MoveOrRenameIssueChosenSide::LOCAL)))
     {
         fillLocalSide(stall);
+        mTempInfo.insert(MoveOrRenameIssueChosenSide::LOCAL, false);
+
+        if (!consultCloudData())
+        {
+            fillCloudSide(stall);
+            mTempInfo.insert(MoveOrRenameIssueChosenSide::REMOTE, true);
+        }
     }
 }
 
@@ -109,75 +125,93 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
             //We perform the undo in the opposite side
             if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE && consultLocalData())
             {
-                QFileInfo previousPath(consultLocalData()->getFilePath());
-                QFileInfo previousDirectory(previousPath.absolutePath());
-                QString currentPath(consultLocalData()->getNativeMoveFilePath());
-
-                mUndoSuccessful = previousDirectory.exists();
-
-                if (!mUndoSuccessful)
+                if (mTempInfo.value(MoveOrRenameIssueChosenSide::LOCAL))
                 {
-                    mUndoSuccessful = QDir().mkpath(previousDirectory.absolutePath());
+                    mUndoSuccessful =
+                        StalledIssuesUtilities::removeLocalFile(consultLocalData()->getFilePath(),
+                                                                syncId);
                 }
-
-                if (mUndoSuccessful)
+                else
                 {
-                    QFile file(currentPath);
-                    mUndoSuccessful = file.rename(previousPath.absoluteFilePath());
-                }
+                    QFileInfo previousPath(consultLocalData()->getFilePath());
+                    QFileInfo previousDirectory(previousPath.absolutePath());
+                    QString currentPath(consultLocalData()->getNativeMoveFilePath());
 
-                if(!mUndoSuccessful)
-                {
-                    mFailedLocalPaths.insert(currentPath);
+                    mUndoSuccessful = previousDirectory.exists();
+
+                    if (!mUndoSuccessful)
+                    {
+                        mUndoSuccessful = QDir().mkpath(previousDirectory.absolutePath());
+                    }
+
+                    if (mUndoSuccessful)
+                    {
+                        QFile file(currentPath);
+                        mUndoSuccessful = file.rename(previousPath.absoluteFilePath());
+                    }
+
+                    if (!mUndoSuccessful)
+                    {
+                        mFailedLocalPaths.insert(currentPath);
+                    }
                 }
             }
             else if(getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL && consultCloudData())
             {
-                std::unique_ptr<mega::MegaNode> nodeToMove(
-                    MegaSyncApp->getMegaApi()->getNodeByHandle(
-                        consultCloudData()->getMovePathHandle()));
-
-                if (!nodeToMove)
+                if (mTempInfo.value(MoveOrRenameIssueChosenSide::REMOTE))
                 {
-                    nodeToMove.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
-                        consultCloudData()->getMovePath().path.toUtf8().constData()));
+                    mUndoSuccessful = StalledIssuesUtilities::removeRemoteFile(
+                                          consultLocalData()->getFilePath()) == nullptr;
                 }
-
-                if (nodeToMove)
+                else
                 {
-                    QFileInfo targetPath(consultCloudData()->getNativeFilePath());
-                    std::unique_ptr<mega::MegaNode> newParent(
-                        MegaSyncApp->getMegaApi()->getNodeByPath(
-                            targetPath.path().toUtf8().constData()));
+                    std::unique_ptr<mega::MegaNode> nodeToMove(
+                        MegaSyncApp->getMegaApi()->getNodeByHandle(
+                            consultCloudData()->getMovePathHandle()));
 
-                    if (!newParent)
+                    if (!nodeToMove)
                     {
-                        std::shared_ptr<mega::MegaError> error(nullptr);
-                        MEGAPathCreator::mkDir(QString(), targetPath.path(), error);
+                        nodeToMove.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
+                            consultCloudData()->getMovePath().path.toUtf8().constData()));
+                    }
 
-                        if(error)
+                    if (nodeToMove)
+                    {
+                        QFileInfo targetPath(consultCloudData()->getNativeFilePath());
+                        std::unique_ptr<mega::MegaNode> newParent(
+                            MegaSyncApp->getMegaApi()->getNodeByPath(
+                                targetPath.path().toUtf8().constData()));
+
+                        if (!newParent)
                         {
-                            return;
+                            std::shared_ptr<mega::MegaError> error(nullptr);
+                            MEGAPathCreator::mkDir(QString(), targetPath.path(), error);
+
+                            if (error)
+                            {
+                                return;
+                            }
+                            else
+                            {
+                                newParent.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
+                                    targetPath.path().toUtf8().constData()));
+                            }
+                        }
+
+                        QByteArray byteArray = targetPath.fileName().toUtf8();
+                        const char* fileName = byteArray.constData();
+                        if (strcmp(nodeToMove->getName(), fileName) != 0)
+                        {
+                            MegaSyncApp->getMegaApi()->renameNode(nodeToMove.get(),
+                                                                  fileName,
+                                                                  mListener.get());
                         }
                         else
                         {
-                            newParent.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
-                                targetPath.path().toUtf8().constData()));
+                            MegaSyncApp->getMegaApi()->moveNode(nodeToMove.get(),
+                                                                newParent.get(),
+                                                                mListener.get());
                         }
-                    }
-
-                    QByteArray byteArray = targetPath.fileName().toUtf8();
-                    const char* fileName = byteArray.constData();
-                    if (strcmp(nodeToMove->getName(), fileName) != 0)
-                    {
-                        MegaSyncApp->getMegaApi()->renameNode(nodeToMove.get(),
-                                                              fileName,
-                                                              mListener.get());
-                    }
-                    else
-                    {
-                        MegaSyncApp->getMegaApi()->moveNode(
-                            nodeToMove.get(), newParent.get(), mListener.get());
                     }
                 }
             }
