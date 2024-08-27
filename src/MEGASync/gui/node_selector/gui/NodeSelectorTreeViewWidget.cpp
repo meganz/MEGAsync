@@ -546,28 +546,11 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
-    auto getNode = [this](mega::MegaHandle handle) -> std::shared_ptr<mega::MegaNode>{
-        auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-        int access = mMegaApi->getAccess(node.get());
-
-        //This is for an extra protection as we don´t show the delete action if one of this conditions are not met
-        if (!node || access < MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
-        {
-            return nullptr;
-        }
-
-        return node;
-    };
-
-    auto moveToRubbish = [this](std::shared_ptr<mega::MegaNode> node)
-    {
-        auto rubbish = MegaSyncApp->getRubbishNode();
-        mMegaApi->moveNode(node.get(), rubbish.get());
-    };
-
     QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
-    mDeletedHandles.clear();
-    mLastValidDeletedParent = QModelIndex();
+    if (!currentDialog)
+    {
+        return;
+    }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
@@ -589,86 +572,34 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
 
         if(auto savedNode = mProxyModel->getNode(p_index))
         {
-            auto node = getNode(savedNode->getHandle());
+            auto node = mModel->getNodeToRemove(savedNode->getHandle());
             if(node)
             {
-                msgInfo.text = tr("Move \"%1\" to Rubbish bin?")
-                                   .arg(QString::fromUtf8(node->getName()));
-                msgInfo.finishFunc = [this, moveToRubbish, node, p_index](QPointer<QMessageBox> msg)
-                {
-                    if(msg->result() == QMessageBox::Yes)
-                    {
-                        mDeletedHandles.insert(node->getHandle(), p_index);
-                        moveToRubbish(node);
-                    }
-                };
-
-                QMegaMessageBox::question(msgInfo);
+                msgInfo.text =
+                    tr("Move \"%1\" to Rubbish bin?").arg(QString::fromUtf8(node->getName()));
             }
         }
     }
     else
     {
         msgInfo.text = tr("Move %n items to Rubbish bin?", "", selectedRows.size());
-        msgInfo.finishFunc = [this, moveToRubbish, getNode, selectedRows](QPointer<QMessageBox> msg)
-        {
-            if(msg->result() == QMessageBox::Yes)
-            {
-                foreach(auto& s_index, selectedRows)
-                {
-                    if(auto savedNode = mProxyModel->getNode(s_index))
-                    {
-                        auto node = getNode(savedNode->getHandle());
-                        if(node)
-                        {
-                            mDeletedHandles.insert(savedNode->getHandle(), QPersistentModelIndex(s_index));
-                            moveToRubbish(node);
-                        }
-                    }
-                }
-            }
-        };
-
-        QMegaMessageBox::question(msgInfo);
     }
 
-    if (!currentDialog)
-    {
-        return;
-    }
-}
-
-void NodeSelectorTreeViewWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
-{
-    if(request->getType() == MegaRequest::TYPE_REMOVE ||
-        request->getType() == MegaRequest::TYPE_MOVE)
-    {
-        auto index = mDeletedHandles.take(request->getNodeHandle());
-
-        if(e->getErrorCode() == MegaError::API_OK)
+    msgInfo.finishFunc = [this, selectedRows](QPointer<QMessageBox> msg) {
+        if (msg->result() == QMessageBox::Yes)
         {
-            if(index.isValid())
+            QList<mega::MegaHandle> nodeHandles;
+
+            foreach(auto& index, selectedRows)
             {
-                if(index.parent().isValid())
-                {
-                    mLastValidDeletedParent = index.parent();
-                }
-
-                mNavigationInfo.remove(mProxyModel->getHandle(index));
-                mProxyModel->removeNode(index);
-
-                //Only when the last item is removed
-                if(mDeletedHandles.isEmpty() && mLastValidDeletedParent.isValid())
-                {
-                    auto parent = mProxyModel->getNode(mLastValidDeletedParent);
-                    if(parent)
-                    {
-                        setSelectedNodeHandle(parent->getHandle());
-                    }
-                }
+                nodeHandles.append(getHandleByIndex(index));
             }
+
+            mModel->removeNodes(nodeHandles, false);
         }
-    }
+    };
+
+    QMegaMessageBox::question(msgInfo);
 }
 
 bool NodeSelectorTreeViewWidget::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle)

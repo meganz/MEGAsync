@@ -123,7 +123,7 @@ void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
 {
     if(NodeSelectorModel* megaModel = getMegaModel())
     {
-        megaModel->removeNode(mapToSource(item));
+        megaModel->removeNodeFromModel(mapToSource(item));
     }
 }
 
@@ -257,7 +257,7 @@ bool NodeSelectorProxyModel::isModelProcessing() const
     return mFilterWatcher.isRunning();
 }
 
-bool NodeSelectorProxyModel::canBeDeleted() const
+bool NodeSelectorProxyModel::isNotAProtectedModel() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
@@ -325,13 +325,13 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
     emit getMegaModel()->blockUi(false);
 }
 
-bool NodeSelectorProxyModelSearch::canBeDeleted() const
+bool NodeSelectorProxyModelSearch::isNotAProtectedModel() const
 {
     if(mMode & NodeSelectorModelItemSearch::Type::BACKUP)
     {
         return false;
     }
-    return NodeSelectorProxyModel::canBeDeleted();
+    return NodeSelectorProxyModel::isNotAProtectedModel();
 }
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
