@@ -4,33 +4,58 @@
 #include "Preferences.h"
 #include "ui_TransfersAccountInfoWidget.h"
 
+#include <QStyle>
+
+namespace
+{
+constexpr int FULL_PERCENTAGE{100};
+constexpr const char* STATE_PROPERTY_NAME{"state"};
+const QLatin1String STATE_DEFAULT{"default"};
+const QLatin1String STATE_ALMOST{"almost"};
+const QLatin1String STATE_ALMOST_FULL{"almostfull"};
+const QLatin1String STATE_FULL{"full"};
+}
+
 TransfersAccountInfoWidget::TransfersAccountInfoWidget(QWidget* parent):
     QWidget(parent),
     mUi(new Ui::TransfersAccountInfoWidget)
 {
     mUi->setupUi(this);
 
-    updateAccountElements();
-    AccountDetailsManager::instance()->attachAccountObserver(*this);
+    updateStorageText();
+    updateStorageBar();
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
 }
 
 TransfersAccountInfoWidget::~TransfersAccountInfoWidget()
 {
-    AccountDetailsManager::instance()->dettachAccountObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
     delete mUi;
 }
 
-void TransfersAccountInfoWidget::updateAccountElements()
+void TransfersAccountInfoWidget::updateStorageElements()
+{
+    updateStorageText();
+    updateStorageBar();
+}
+
+void TransfersAccountInfoWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        mUi->retranslateUi(this);
+        updateStorageElements();
+    }
+    QWidget::changeEvent(event);
+}
+
+void TransfersAccountInfoWidget::updateStorageText()
 {
     auto totalStorage = Preferences::instance()->totalStorage();
     auto usedStorage = Preferences::instance()->usedStorage();
 
     QString storageText;
-    if (totalStorage == 0)
-    {
-        storageText = QCoreApplication::translate("SettingsDialog", "Data temporarily unavailable");
-    }
-    else
+    if (totalStorage > 0)
     {
         if (Utilities::isBusinessAccount())
         {
@@ -42,18 +67,64 @@ void TransfersAccountInfoWidget::updateAccountElements()
             mUi->pbStorage->setValue(std::min(percentage, mUi->pbStorage->maximum()));
             storageText =
                 Utilities::createCompleteUsedString(usedStorage, totalStorage, percentage);
+            updateProgressBarStateUntilFull(percentage);
         }
     }
 
     mUi->lStorage->setText(storageText);
 }
 
-void TransfersAccountInfoWidget::changeEvent(QEvent* event)
+void TransfersAccountInfoWidget::updateStorageBar()
 {
-    if (event->type() == QEvent::LanguageChange)
+    switch (Preferences::instance()->getStorageState())
     {
-        mUi->retranslateUi(this);
-        updateAccountElements();
+        case mega::MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
+        case mega::MegaApi::STORAGE_STATE_RED:
+        {
+            mUi->pbStorage->setProperty(STATE_PROPERTY_NAME, STATE_FULL);
+            break;
+        }
+        case mega::MegaApi::STORAGE_STATE_ORANGE:
+        {
+            if (mUi->pbStorage->property(STATE_PROPERTY_NAME) != STATE_ALMOST_FULL)
+            {
+                mUi->pbStorage->setProperty(STATE_PROPERTY_NAME, STATE_ALMOST);
+            }
+            break;
+        }
+        case mega::MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
+        case mega::MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
+        default:
+        {
+            mUi->pbStorage->setProperty(STATE_PROPERTY_NAME, STATE_DEFAULT);
+            break;
+        }
     }
-    QWidget::changeEvent(event);
+
+    refreshProgressBar();
+}
+
+void TransfersAccountInfoWidget::updateProgressBarStateUntilFull(int percentage)
+{
+    if (percentage >= FULL_PERCENTAGE &&
+        mUi->pbStorage->property(STATE_PROPERTY_NAME) != STATE_ALMOST_FULL &&
+        Preferences::instance()->getStorageState() != mega::MegaApi::STORAGE_STATE_RED &&
+        Preferences::instance()->getStorageState() != mega::MegaApi::STORAGE_STATE_PAYWALL)
+    {
+        // Force change of style (round border until OQ state is received).
+        mUi->pbStorage->setProperty(STATE_PROPERTY_NAME, STATE_ALMOST_FULL);
+        refreshProgressBar();
+    }
+}
+
+void TransfersAccountInfoWidget::refreshProgressBar()
+{
+    // Forces the update of the style because in some cases
+    // the status of the bar is not updated by itself.
+    mUi->pbStorage->style()->unpolish(mUi->pbStorage);
+    mUi->pbStorage->style()->polish(mUi->pbStorage);
+    mUi->pbStorage->update();
 }

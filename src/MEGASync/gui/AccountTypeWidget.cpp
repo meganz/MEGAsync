@@ -17,7 +17,7 @@ AccountTypeWidget::AccountTypeWidget(QWidget* parent):
 {
     mUi->setupUi(this);
 
-    updateAccountElements();
+    updateAccountText();
     AccountDetailsManager::instance()->attachAccountObserver(*this);
 }
 
@@ -28,6 +28,20 @@ AccountTypeWidget::~AccountTypeWidget()
 }
 
 void AccountTypeWidget::updateAccountElements()
+{
+    updateAccountText();
+}
+
+void AccountTypeWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        updateAccountText();
+    }
+    QWidget::changeEvent(event);
+}
+
+void AccountTypeWidget::updateAccountText()
 {
     auto level = Preferences::instance()->accountType();
     mUi->bAccountType->setText(Utilities::getReadablePlanFromId(level));

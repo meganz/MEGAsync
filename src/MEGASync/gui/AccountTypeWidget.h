@@ -20,8 +20,13 @@ public:
 
     void updateAccountElements() override;
 
+protected:
+    void changeEvent(QEvent* event) override;
+
 private:
     Ui::AccountTypeWidget* mUi;
+
+    void updateAccountText();
 };
 
 #endif // ACCOUNT_TYPE_WIDGET_H
