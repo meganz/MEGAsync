@@ -62,9 +62,7 @@ private:
     NotifyServer *notify_server = nullptr;
     QString autostart_dir;
     QString desktop_file;
-    QString set_icon;
     QString custom_icon;
-    QString remove_icon;
 };
 
 #endif // LINUXPLATFORM_H

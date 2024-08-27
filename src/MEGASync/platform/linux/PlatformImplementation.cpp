@@ -24,8 +24,6 @@ PlatformImplementation::PlatformImplementation()
 {
     autostart_dir = QDir::homePath() + QString::fromLatin1("/.config/autostart/");
     desktop_file = autostart_dir + QString::fromLatin1("megasync.desktop");
-    set_icon = QString::fromUtf8("gio set -t string \"%1\" metadata::custom-icon file://%2");
-    remove_icon = QString::fromUtf8("gio set -t unset \"%1\" metadata::custom-icon");
     custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 }
 
@@ -186,7 +184,8 @@ void PlatformImplementation::syncFolderAdded(QString syncPath, QString /*syncNam
         QFile *folder = new QFile(syncPath);
         if (folder->exists())
         {
-            QProcess::startDetached(set_icon.arg(folder->fileName()).arg(custom_icon));
+            NautilusFileManager::changeFolderIcon(syncPath, custom_icon);
+            DolphinFileManager::changeFolderIcon(syncPath, custom_icon);
         }
         delete folder;
 
@@ -203,7 +202,8 @@ void PlatformImplementation::syncFolderRemoved(QString syncPath, QString /*syncN
     QFile *folder = new QFile(syncPath);
     if (folder->exists())
     {
-        QProcess::startDetached(remove_icon.arg(folder->fileName()));
+        NautilusFileManager::changeFolderIcon(syncPath);
+        DolphinFileManager::changeFolderIcon(syncPath);
     }
     delete folder;
 
