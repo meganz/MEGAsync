@@ -109,6 +109,10 @@ void MegaIgnoreManager::parseIgnoresFile()
                         if (line.compare(QLatin1String(MegaIgnoreRule::IGNORE_SYM_LINK)) == 0)
                         {
                             mIgnoreSymLinkRule = rule;
+
+                            // The ignored symlink rule is a hidden rule: we read and set it, but it
+                            // is invisible for the ignoremanager
+                            continue;
                         }
 
                         addRule(rule);
@@ -271,6 +275,17 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             result = ApplyChangesError::OK;
         }
     }
+
+    if (mIgnoreSymLinkRule)
+    {
+        auto ruleAsText(mIgnoreSymLinkRule->getModifiedRule());
+        if (!ruleAsText.isEmpty())
+        {
+            rules.append(ruleAsText);
+            result = ApplyChangesError::OK;
+        }
+    }
+
     if (updateExtensionRules)
     {
         result = ApplyChangesError::OK;
@@ -320,8 +335,10 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinksRule()
 {
     if (!mIgnoreSymLinkRule)
     {
-        mIgnoreSymLinkRule = std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"), MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
-        addRule(mIgnoreSymLinkRule);
+        mIgnoreSymLinkRule =
+            std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"),
+                                                 MegaIgnoreNameRule::Class::EXCLUDE,
+                                                 MegaIgnoreNameRule::Target::s);
     }
     else if (mIgnoreSymLinkRule->isCommented())
     {
