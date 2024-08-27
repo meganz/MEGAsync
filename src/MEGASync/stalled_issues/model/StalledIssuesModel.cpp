@@ -74,13 +74,14 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent)
     mStalledIssuesThread = new QThread();
     mStalledIssuesReceiver = new StalledIssuesReceiver();
 
-    mRequestListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuesReceiver);
+    mRequestListener =
+        std::make_unique<mega::QTMegaRequestListener>(mMegaApi, mStalledIssuesReceiver);
     mStalledIssuesReceiver->moveToThread(mStalledIssuesThread);
     mRequestListener->moveToThread(mStalledIssuesThread);
-    mMegaApi->addRequestListener(mRequestListener);
+    mMegaApi->addRequestListener(mRequestListener.get());
 
-    mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
-    mMegaApi->addGlobalListener(mGlobalListener);
+    mGlobalListener = std::make_unique<mega::QTMegaGlobalListener>(mMegaApi, this);
+    mMegaApi->addGlobalListener(mGlobalListener.get());
 
     connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](StalledIssuesCreator::IssuesCount count)
     {
@@ -183,9 +184,6 @@ void StalledIssuesModel::onGlobalSyncStateChanged(mega::MegaApi* api)
 
 StalledIssuesModel::~StalledIssuesModel()
 {
-    delete mRequestListener;
-    delete mGlobalListener;
-
     mThreadFinished = true;
 
     mStalledIssuesThread->quit();

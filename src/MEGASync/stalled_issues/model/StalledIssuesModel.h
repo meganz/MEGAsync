@@ -303,8 +303,8 @@ private:
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuesReceiver;
     std::atomic_bool mThreadFinished { false };
-    mega::QTMegaRequestListener* mRequestListener;
-    mega::QTMegaGlobalListener* mGlobalListener;
+    std::unique_ptr<mega::QTMegaRequestListener> mRequestListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     mega::MegaApi* mMegaApi;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
