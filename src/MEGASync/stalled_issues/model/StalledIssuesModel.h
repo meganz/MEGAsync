@@ -134,7 +134,7 @@ class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalLis
 public:
     static const int ADAPTATIVE_HEIGHT_ROLE;
 
-    explicit StalledIssuesModel(QObject* parent = 0);
+    explicit StalledIssuesModel();
     ~StalledIssuesModel();
 
     virtual Qt::DropActions supportedDropActions() const override;

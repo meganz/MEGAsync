@@ -185,6 +185,8 @@ private:
 
     QList<int> mRetriedFolder;
     QList<int> mIgnoredFiles;
+
+    std::unique_ptr<mega::QTMegaTransferListener> mDelegateListener;
 };
 
 struct DownloadTransferInfo
@@ -204,7 +206,7 @@ class TransfersModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit TransfersModel(QObject* parent = 0);
+    explicit TransfersModel();
     ~TransfersModel();
 
     virtual Qt::ItemFlags flags(const QModelIndex& index) const override;
@@ -376,7 +378,6 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
-    std::unique_ptr<mega::QTMegaTransferListener> mDelegateListener;
     QTimer mProcessTransfersTimer;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;

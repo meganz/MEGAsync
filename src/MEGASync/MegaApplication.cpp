@@ -728,10 +728,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mTransfersModel = new TransfersModel(nullptr);
+    mTransfersModel = new TransfersModel();
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
-    mStalledIssuesModel = new StalledIssuesModel(this);
+    mStalledIssuesModel = new StalledIssuesModel();
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
@@ -2206,8 +2206,6 @@ void MegaApplication::cleanAll()
     mLinkProcessor = nullptr;
     delete mSetManager;
     mSetManager = nullptr;
-    delete mStalledIssuesModel;
-    mStalledIssuesModel = nullptr;
     delete httpServer;
     httpServer = nullptr;
     delete uploader;
@@ -2241,6 +2239,13 @@ void MegaApplication::cleanAll()
     QApplication::processEvents();
 
     QTMegaApiManager::removeMegaApis();
+
+    // Remove models after removing Transfer and Stalled issues dialogs
+    // Otherwise we need to set to null the view models as the views will contain dangling pointers
+    delete mStalledIssuesModel;
+    mStalledIssuesModel = nullptr;
+    delete mTransfersModel;
+    mTransfersModel = nullptr;
 
     trayIcon->deleteLater();
     trayIcon = nullptr;
