@@ -156,7 +156,7 @@ void DeviceCenter::retrieveDeviceData(const QString& deviceId)
     mMegaApi->getBackupInfo();
 }
 
-QString DeviceCenter::getSizeString(unsigned long long bytes)
+QString DeviceCenter::getSizeString(long long bytes) const
 {
     return Utilities::getSizeString(bytes);
 }

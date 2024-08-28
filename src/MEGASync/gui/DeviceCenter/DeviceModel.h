@@ -24,7 +24,7 @@ public:
 
     void reset(const QString& deviceId, const DeviceData& data);
 
-public:
+private:
     QString getName(int row) const;
 
     QList<QPair<QString, DeviceData>> mDevicesData;

@@ -30,7 +30,7 @@ public:
 
     Q_INVOKABLE QString getCurrentDeviceId();
     Q_INVOKABLE void retrieveDeviceData(const QString& deviceId);
-    Q_INVOKABLE QString getSizeString(unsigned long long bytes);
+    Q_INVOKABLE QString getSizeString(long long bytes) const;
     Q_INVOKABLE DeviceOs::Os getCurrentOS();
     Q_INVOKABLE void openAddBackupDialog();
     Q_INVOKABLE void openAddSyncDialog();

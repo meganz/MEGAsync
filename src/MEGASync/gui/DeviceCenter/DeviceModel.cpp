@@ -2,7 +2,6 @@
 
 #include <QCoreApplication>
 #include <QDate>
-#include <Utilities.h>
 
 DeviceModel::DeviceModel(QObject* parent):
     QAbstractListModel(parent)
