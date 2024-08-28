@@ -63,7 +63,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
                 cloudPath = cloudPath.remove(0,1);
             }
 
-            std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
             if(node)
             {
                 QFileInfo cloudPathInfo(cloudPath);
