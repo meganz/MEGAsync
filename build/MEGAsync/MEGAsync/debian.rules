@@ -7,6 +7,8 @@ QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 1
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+DISTRO := $(shell lsb_release -ds)
+VER := $(shell lsb_release -rs)
 
 export VCPKG_DEFAULT_BINARY_CACHE := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "/opt/persistent/vcpkg_cache" || echo "")
 export PATH := $(shell [ -f /opt/cmake.tar.gz ] && echo "`pwd`/cmake_inst/bin:${PATH}" || echo "${PATH}")
@@ -37,11 +39,12 @@ build-stamp:
 
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
-	lsb_release -ds > distro
-	if [ -n "$(DEB_TESTING)" ]; then   \
-		echo $(DEB_TESTING) > version; \
-	else                               \
-		lsb_release -rs > version;     \
+	
+	sed -i "s/@DISTRO@/$(DISTRO)/g" debian/postinst
+	if [ -n "$(DEB_TESTING)" ]; then   							\
+		sed -i "s/@VERSION@/$(DEB_TESTING)/g" debian/postinst;	\
+	else                               							\
+		sed -i "s/@VERSION@/$(VER)/g" debian/postinst;        	\
 	fi
 	touch build-stamp
 
@@ -55,8 +58,6 @@ install: build
 	dh_install install_dir/* /
 	dh_install 99-megasync-inotify-limit.conf /etc/sysctl.d/
 	dh_install 99-megasync-udev.rules /etc/udev/rules.d/
-	dh_install distro /usr/share/doc/megasync
-	dh_install version /usr/share/doc/megasync
 
 # Build architecture-independent files here.
 binary-indep: build install
