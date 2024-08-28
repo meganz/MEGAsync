@@ -74,7 +74,7 @@ Item {
 
         anchors.fill: parent
         anchors.bottomMargin: 20
-        model: deviceCenterAccess.syncModel
+        model: deviceCenterAccess.getSyncModel()
 
         style: TableViewStyle {
 

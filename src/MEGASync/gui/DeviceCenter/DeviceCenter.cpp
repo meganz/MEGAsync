@@ -4,7 +4,11 @@
 #include "CreateRemoveSyncsManager.h"
 #include "MegaApplication.h"
 
+namespace
+{
+const uint DELAY_TO_NEXT_CALL_IN_MS = 1000u;
 static bool qmlRegistrationDone = false;
+}
 
 DeviceCenter::DeviceCenter(QObject* parent):
     QMLComponent(parent),
@@ -17,8 +21,7 @@ DeviceCenter::DeviceCenter(QObject* parent):
     mDelegateListener = new mega::QTMegaListener(mMegaApi, this);
     mMegaApi->addListener(mDelegateListener);
 
-    const int delayToNextCallInMs = 1000;
-    mSizeInfoTimer.setInterval(delayToNextCallInMs);
+    mSizeInfoTimer.setInterval(DELAY_TO_NEXT_CALL_IN_MS);
     mSizeInfoTimer.setSingleShot(true);
     connect(&mSizeInfoTimer, &QTimer::timeout, this, [this]() {
         mMegaApi->getBackupInfo();
@@ -35,36 +38,48 @@ void DeviceCenter::onRequestFinish(mega::MegaApi* api,
                                    mega::MegaRequest* request,
                                    mega::MegaError* e)
 {
-    if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
+    if (e->getErrorCode() == mega::MegaError::API_OK)
     {
-        mCachedDeviceData.name = QString::fromUtf8(request->getName());
-        mDeviceModel->reset(mDeviceIdFromLastRequest, mCachedDeviceData);
-        emit deviceDataUpdated(mCachedDeviceData);
-    }
-    else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO)
-    {
-        mega::MegaBackupInfoList* backupList = request->getMegaBackupInfoList();
-        updateLocalData(*backupList);
-
-        if (mSyncModel->hasUpdatingStatus())
+        if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
         {
-            mSizeInfoTimer.start();
+            mCachedDeviceData.name = QString::fromUtf8(request->getName());
+            mDeviceModel->reset(mDeviceIdFromLastRequest, mCachedDeviceData);
+            emit deviceDataUpdated();
         }
-        emit deviceDataUpdated(mCachedDeviceData);
-    }
-    else if (request->getType() == mega::MegaRequest::TYPE_ADD_SYNC)
-    {
-        const QmlSyncData syncObject(request, mMegaApi);
-        mSyncModel->addOrUpdate(syncObject);
+        else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO)
+        {
+            mega::MegaBackupInfoList* backupList = request->getMegaBackupInfoList();
+            updateLocalData(*backupList);
 
-        mMegaApi->getBackupInfo();
-        emit deviceDataUpdated(mCachedDeviceData);
+            if (mSyncModel->hasUpdatingStatus())
+            {
+                mSizeInfoTimer.start();
+            }
+            emit deviceDataUpdated();
+        }
+        else if (request->getType() == mega::MegaRequest::TYPE_ADD_SYNC)
+        {
+            const QmlSyncData syncObject(request, mMegaApi);
+            mSyncModel->addOrUpdate(syncObject);
+
+            mMegaApi->getBackupInfo();
+            emit deviceDataUpdated();
+        }
+        else if (request->getType() == mega::MegaRequest::TYPE_REMOVE_SYNC)
+        {
+            mSyncModel->remove(request->getParentHandle());
+            updateDeviceData();
+            emit deviceDataUpdated();
+        }
     }
-    else if (request->getType() == mega::MegaRequest::TYPE_REMOVE_SYNC)
+    else
     {
-        mSyncModel->remove(request->getParentHandle());
-        updateDeviceData();
-        emit deviceDataUpdated(mCachedDeviceData);
+        const QString errorMsg = QString::fromUtf8(e->getErrorString());
+        const QString requestString = QString::fromUtf8(request->getRequestString());
+        QString logMsg(QString::fromUtf8("Error performing device center %1 request: \"%2\"")
+                           .arg(requestString)
+                           .arg(errorMsg));
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
     }
 }
 
@@ -128,13 +143,10 @@ void DeviceCenter::openAddBackupDialog()
     CreateRemoveBackupsManager::addBackup(comesFromSettings);
 }
 
-QString DeviceCenter::getThisDeviceId()
+QString DeviceCenter::getCurrentDeviceId()
 {
-    auto megaApi = MegaSyncApp->getMegaApi();
-    const char* rawDeviceId = megaApi->getDeviceId();
-    const QString deviceId = QString::fromLatin1(rawDeviceId);
-    delete rawDeviceId;
-    return deviceId;
+    std::unique_ptr<const char> rawDeviceId{mMegaApi->getDeviceId()};
+    return QString::fromLatin1(rawDeviceId.get());
 }
 
 void DeviceCenter::retrieveDeviceData(const QString& deviceId)
@@ -149,7 +161,7 @@ QString DeviceCenter::getSizeString(unsigned long long bytes)
     return Utilities::getSizeString(bytes);
 }
 
-void DeviceCenter::updateLocalData(mega::MegaBackupInfoList& backupList)
+void DeviceCenter::updateLocalData(const mega::MegaBackupInfoList& backupList)
 {
     // TODO Keep a local model with all the data, including other devices.
     // We will need other devices data in the future.
@@ -157,7 +169,7 @@ void DeviceCenter::updateLocalData(mega::MegaBackupInfoList& backupList)
         filterBackupList(mDeviceIdFromLastRequest.toLatin1().constData(), backupList);
 
     mCachedDeviceData.os = DeviceOs::getCurrentOS();
-    for (const auto& backup: qAsConst(deviceBackupList))
+    for (const auto& backup: deviceBackupList)
     {
         QmlSyncData newSync(backup, mMegaApi);
         mSyncModel->addOrUpdate(newSync);
@@ -169,7 +181,7 @@ void DeviceCenter::updateLocalData(const QmlSyncData& syncObj)
 {
     mSyncModel->addOrUpdate(syncObj);
     updateDeviceData();
-    emit deviceDataUpdated(mCachedDeviceData);
+    emit deviceDataUpdated();
 }
 
 void DeviceCenter::updateDeviceData()
@@ -180,13 +192,13 @@ void DeviceCenter::updateDeviceData()
 }
 
 DeviceCenter::BackupList DeviceCenter::filterBackupList(const char* deviceId,
-                                                        mega::MegaBackupInfoList& backupList)
+                                                        const mega::MegaBackupInfoList& backupList)
 {
     BackupList filteredList;
-    const int numBackups = backupList.size();
-    for (int i = 0; i < numBackups; i++)
+    const auto numBackups = backupList.size();
+    for (uint backupIndex = 0; backupIndex < numBackups; backupIndex++)
     {
-        auto backupInfo = backupList.get(i);
+        auto backupInfo = backupList.get(backupIndex);
         if (strcmp(backupInfo->deviceId(), deviceId) == 0)
         {
             filteredList.push_back(backupInfo);
@@ -204,4 +216,14 @@ void DeviceCenter::openAddSyncDialog()
 {
     const bool comesFromSettings = true;
     CreateRemoveSyncsManager::addSync(mega::INVALID_HANDLE, comesFromSettings);
+}
+
+DeviceModel* DeviceCenter::getDeviceModel() const
+{
+    return mDeviceModel;
+}
+
+SyncModel* DeviceCenter::getSyncModel() const
+{
+    return mSyncModel;
 }

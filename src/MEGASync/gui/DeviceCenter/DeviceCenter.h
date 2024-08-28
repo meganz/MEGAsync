@@ -12,8 +12,7 @@
 class DeviceCenter: public QMLComponent, public mega::MegaListener
 {
     Q_OBJECT
-    Q_PROPERTY(SyncModel* syncModel MEMBER mSyncModel CONSTANT)
-    Q_PROPERTY(DeviceModel* deviceModel MEMBER mDeviceModel CONSTANT)
+    Q_PROPERTY(DeviceData deviceData MEMBER mCachedDeviceData CONSTANT)
 
 public:
     explicit DeviceCenter(QObject* parent = 0);
@@ -29,24 +28,26 @@ public:
     QString contextName() override;
     static void registerQmlModules();
 
-    Q_INVOKABLE QString getThisDeviceId();
+    Q_INVOKABLE QString getCurrentDeviceId();
     Q_INVOKABLE void retrieveDeviceData(const QString& deviceId);
     Q_INVOKABLE QString getSizeString(unsigned long long bytes);
     Q_INVOKABLE DeviceOs::Os getCurrentOS();
     Q_INVOKABLE void openAddBackupDialog();
     Q_INVOKABLE void openAddSyncDialog();
+    Q_INVOKABLE DeviceModel* getDeviceModel() const;
+    Q_INVOKABLE SyncModel* getSyncModel() const;
 
 signals:
     void deviceNameReceived(QString deviceName);
-    void deviceDataUpdated(DeviceData data);
+    void deviceDataUpdated();
 
 private:
     using BackupList = QList<const mega::MegaBackupInfo*>;
-    void updateLocalData(mega::MegaBackupInfoList& backupList);
+    void updateLocalData(const mega::MegaBackupInfoList& backupList);
     void updateLocalData(const QmlSyncData& syncObj);
     void updateDeviceData();
 
-    BackupList filterBackupList(const char* deviceId, mega::MegaBackupInfoList& backupList);
+    BackupList filterBackupList(const char* deviceId, const mega::MegaBackupInfoList& backupList);
 
     mega::MegaApi* mMegaApi;
     SyncModel* mSyncModel;

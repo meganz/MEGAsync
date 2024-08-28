@@ -52,7 +52,7 @@ Item {
 
         spacing: 8
 
-        model: deviceCenterAccess.deviceModel
+        model: deviceCenterAccess.getDeviceModel()
         delegate: deviceListDelegate
     }
 

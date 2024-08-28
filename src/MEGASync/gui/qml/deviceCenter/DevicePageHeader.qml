@@ -137,22 +137,22 @@ Item {
             deviceTitle.text = deviceName;
         }
 
-        function onDeviceDataUpdated(deviceData) {
-            deviceTitle.text = deviceData.name;
-            deviceImage.source = getOSIcon(deviceData.os);
+        function onDeviceDataUpdated() {
+            deviceTitle.text = deviceCenterAccess.deviceData.name;
+            deviceImage.source = getOSIcon(deviceCenterAccess.deviceData.os);
 
-            if (deviceData.folderCount > 0)
+            if (deviceCenterAccess.deviceData.folderCount > 0)
             {
                 deviceStatus.visible = true
-                if (deviceData.status === SyncStatus.UP_TO_DATE) {
+                if (deviceCenterAccess.deviceData.status === SyncStatus.UP_TO_DATE) {
                     deviceStatus.icon = Images.statusUpToDate
                     deviceStatus.value = DeviceCenterStrings.statusUpToDate
                 }
-                else if (deviceData.status === SyncStatus.UPDATING) {
+                else if (deviceCenterAccess.deviceData.status === SyncStatus.UPDATING) {
                     deviceStatus.icon = Images.statusUpdating
                     deviceStatus.value = DeviceCenterStrings.statusUpdating
                 }
-                else if (deviceData.status === SyncStatus.PAUSED) {
+                else if (deviceCenterAccess.deviceData.status === SyncStatus.PAUSED) {
                     deviceStatus.icon = Images.statusPaused
                     deviceStatus.value = DeviceCenterStrings.statusPaused
                 }
@@ -166,8 +166,8 @@ Item {
                 deviceStatus.visible = false
             }
 
-            deviceContains.value = DeviceCenterStrings.folderCount(deviceData.folderCount)
-            deviceTotalSize.value = deviceCenterAccess.getSizeString(deviceData.totalSize)
+            deviceContains.value = DeviceCenterStrings.folderCount(deviceCenterAccess.deviceData.folderCount)
+            deviceTotalSize.value = deviceCenterAccess.getSizeString(deviceCenterAccess.deviceData.totalSize)
 
         }
     }

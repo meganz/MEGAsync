@@ -34,7 +34,7 @@ Item {
     }// content
 
     Component.onCompleted: {
-        var deviceId = deviceCenterAccess.getThisDeviceId();
+        var deviceId = deviceCenterAccess.getCurrentDeviceId();
         header.deviceId = deviceId;
     }
 } //root
