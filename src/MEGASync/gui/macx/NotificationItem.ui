@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="cursor">
-   <cursorShape>PointingHandCursor</cursorShape>
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
    <string/>
@@ -138,7 +138,7 @@ background-color: rgba(0,0,0,0.1);
       </size>
      </property>
      <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
+      <cursorShape>ArrowCursor</cursorShape>
      </property>
      <layout class="QVBoxLayout" name="vlContainer">
       <property name="spacing">
@@ -563,7 +563,7 @@ background-color: rgba(0,0,0,0.1);
                </size>
               </property>
               <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
+               <cursorShape>ArrowCursor</cursorShape>
               </property>
               <property name="text">
                <string/>

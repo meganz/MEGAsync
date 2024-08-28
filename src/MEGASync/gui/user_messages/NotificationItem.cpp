@@ -248,7 +248,6 @@ void NotificationItem::updateNotificationData(bool downloadImage, bool downloadI
     if (showButton)
     {
         mUi->bCTA->setEnabled(true);
-        this->setCursor(Qt::PointingHandCursor);
         mUi->bCTA->setText(mNotificationData->getActionText());
     }
 
