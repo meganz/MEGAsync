@@ -35,6 +35,7 @@ private:
     void updateProgressBarStateUntilFull(int percentage);
     void refreshProgressBar();
     void checkUpgradeButtonVisibility();
+    void updateUpgradeButtonText();
 };
 
 #endif // TRANSFERS_ACCOUNT_INFO_WIDGET_H

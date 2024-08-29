@@ -21,6 +21,7 @@ TransfersAccountInfoWidget::TransfersAccountInfoWidget(QWidget* parent):
     mUi(new Ui::TransfersAccountInfoWidget)
 {
     mUi->setupUi(this);
+    updateUpgradeButtonText();
 
     updateStorageText();
     updateStorageBar();
@@ -51,6 +52,7 @@ void TransfersAccountInfoWidget::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
+        updateUpgradeButtonText();
         updateStorageElements();
     }
     QWidget::changeEvent(event);
@@ -143,4 +145,9 @@ void TransfersAccountInfoWidget::checkUpgradeButtonVisibility()
 void TransfersAccountInfoWidget::on_bUpgrade_clicked()
 {
     Utilities::upgradeClicked();
+}
+
+void TransfersAccountInfoWidget::updateUpgradeButtonText()
+{
+    mUi->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
 }

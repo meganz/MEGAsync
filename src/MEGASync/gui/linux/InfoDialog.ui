@@ -295,7 +295,7 @@ border: none;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Upgrade</string>
+                  <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_linux.qrc">
@@ -3769,6 +3769,12 @@ border: none;
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>InfoDialogTransfersWidget</class>
    <extends>QWidget</extends>
    <header location="global">InfoDialogTransfersWidget.h</header>
@@ -3784,12 +3790,6 @@ border: none;
    <class>PSAwidget</class>
    <extends>QWidget</extends>
    <header location="global">PSAwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircularUsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

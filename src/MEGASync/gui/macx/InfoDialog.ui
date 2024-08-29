@@ -300,7 +300,7 @@ background-color: #F4F6F8;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Upgrade</string>
+                  <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_macx.qrc">
@@ -3761,6 +3761,12 @@ background-color: #F4F6F8;
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>InfoDialogTransfersWidget</class>
    <extends>QWidget</extends>
    <header location="global">InfoDialogTransfersWidget.h</header>
@@ -3776,12 +3782,6 @@ background-color: #F4F6F8;
    <class>PSAwidget</class>
    <extends>QWidget</extends>
    <header location="global">PSAwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircularUsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

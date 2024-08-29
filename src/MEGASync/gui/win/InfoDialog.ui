@@ -295,7 +295,7 @@ border: none;
                   <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Upgrade</string>
+                  <string/>
                  </property>
                  <property name="icon">
                   <iconset resource="../Resources_win.qrc">
