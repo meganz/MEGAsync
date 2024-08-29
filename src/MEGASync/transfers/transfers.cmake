@@ -114,6 +114,7 @@ target_sources_conditional(MEGAsync
    transfers/gui/linux/TransfersStatusWidget.ui
    transfers/gui/linux/TransfersSummaryWidget.ui
    transfers/gui/linux/SomeIssuesOccurredMessage.ui
+   transfers/gui/linux/TransfersAccountInfoWidget.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
 )

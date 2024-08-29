@@ -373,6 +373,7 @@ target_sources_conditional(MEGAsync
     gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
     gui/linux/NotificationItem.ui
+    gui/linux/AccountTypeWidget.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui
