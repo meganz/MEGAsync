@@ -49,15 +49,21 @@ background-color: #FFFFFF;
    </property>
    <item>
     <widget class="QWidget" name="wContainer" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>400</width>
        <height>121</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>400</width>
        <height>121</height>
       </size>
      </property>
@@ -66,13 +72,13 @@ background-color: #FFFFFF;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="topMargin">
        <number>7</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <property name="bottomMargin">
        <number>7</number>
@@ -84,13 +90,13 @@ background-color: #FFFFFF;
           <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>16</number>
+          <number>2</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>16</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -228,13 +234,13 @@ border-radius: 4px;
           <number>4</number>
          </property>
          <property name="leftMargin">
-          <number>14</number>
+          <number>0</number>
          </property>
          <property name="topMargin">
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>14</number>
+          <number>0</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -392,8 +398,6 @@ color: #333333;
          <string notr="true">#lDesc
 {
 font-family: Lato;
-margin-left: 13px;
-margin-right: 13px;
 font-size: 14px;
 }</string>
         </property>
@@ -419,8 +423,6 @@ font-size: 14px;
 	color: #999999;
 	font-family: Lato;
 	font-size: 12px;
-	margin-left: 12px;
-    margin-right: 12px;
 }</string>
         </property>
         <property name="text">
