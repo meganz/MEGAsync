@@ -94,6 +94,7 @@ target_sources_conditional(MEGAsync
    transfers/gui/macx/TransfersStatusWidget.ui
    transfers/gui/macx/TransfersSummaryWidget.ui
    transfers/gui/macx/SomeIssuesOccurredMessage.ui
+   transfers/gui/macx/TransfersAccountInfoWidget.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )

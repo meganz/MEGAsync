@@ -326,6 +326,7 @@ target_sources_conditional(MEGAsync
    gui/node_selector/gui/macx/NodeSelector.ui
    gui/node_selector/gui/macx/SearchLineEdit.ui
    gui/macx/LockedPopOver.ui
+   gui/macx/AccountTypeWidget.ui
 )
 
 
