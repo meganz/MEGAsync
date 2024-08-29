@@ -19,11 +19,6 @@
 	background-color: #FAFAFA;
 }
 
-#wSeparator
-{
-	background-color: #EEEEEE;
-}
-
 #bUpgrade
 {
 	font-family: Inter;
