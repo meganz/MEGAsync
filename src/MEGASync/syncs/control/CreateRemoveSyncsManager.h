@@ -13,8 +13,8 @@ public:
     CreateRemoveSyncsManager() = default;
     ~CreateRemoveSyncsManager() = default;
 
-    static const CreateRemoveSyncsManager* const addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);
-    static const CreateRemoveSyncsManager* const removeSync(mega::MegaHandle handle, QWidget* parent);
+    static const CreateRemoveSyncsManager* addSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);
+    static const CreateRemoveSyncsManager* removeSync(mega::MegaHandle handle, QWidget* parent);
 
 private:
     void performAddSync(mega::MegaHandle handle = mega::INVALID_HANDLE, bool comesFromSettings = false);

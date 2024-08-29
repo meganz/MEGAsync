@@ -10,6 +10,7 @@ class DolphinFileManager
 
 public:
     static QStringList getShowInFolderParams();
+    static void changeFolderIcon(const QString& folderPath, const QString& iconPath = QString());
 };
 
 #endif

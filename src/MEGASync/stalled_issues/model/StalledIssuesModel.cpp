@@ -232,7 +232,7 @@ void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesRece
                         issue.getData().get(),
                         &StalledIssue::asyncIssueSolvingStarted,
                         this,
-                        [this]()
+                        []()
                         {
                             //In case we want to implement it in the future
                         });
@@ -396,6 +396,19 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+                else if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_COUNTER &&
+                        node->isFolder())
+                {
+                    for (int row = 0; row < rowCount(QModelIndex()); ++row)
+                    {
+                        auto item(getStalledIssueByRow(row));
+
+                        if (item.getData()->containsHandle(node->getHandle()))
+                        {
+                            item.getData()->resetUIUpdated();
                         }
                     }
                 }
@@ -840,7 +853,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
        }
 
        StalledIssuesCreator::IssuesCount count;
-       auto issuesExternallyChanged(0);
+       int issuesExternallyChanged(0);
        auto totalRows(info.indexes.size());
        foreach(auto index, info.indexes)
        {
@@ -899,11 +912,8 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
 
        if(!info.async)
        {
-           bool sendMessage(true);
-
            if(issuesExternallyChanged > 0)
            {
-               sendMessage = false;
                unBlockUi();
                showIssueExternallyChangedMessageBox();
            }
@@ -1446,7 +1456,7 @@ void StalledIssuesModel::fixMoveOrRenameCannotOccur(const QModelIndexList& index
     solveListOfIssues(info);
 }
 
-void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option)
+void StalledIssuesModel::semiAutoSolveNameConflictIssues(const QModelIndexList& list, uint option)
 {
     auto resolveIssue = [this, option](int row) -> bool
     {

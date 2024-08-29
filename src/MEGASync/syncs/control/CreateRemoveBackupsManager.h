@@ -16,9 +16,8 @@ public:
     CreateRemoveBackupsManager() = default;
     ~CreateRemoveBackupsManager() = default;
 
-    static const CreateRemoveBackupsManager* const addBackup(bool comesFromSettings);
-    static const CreateRemoveBackupsManager* const
-        removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
+    static const CreateRemoveBackupsManager*  addBackup(bool comesFromSettings);
+    static const CreateRemoveBackupsManager*  removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent);
 
     bool isBackupsDialogOpen() const;
 

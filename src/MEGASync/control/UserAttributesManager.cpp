@@ -131,7 +131,7 @@ bool AttributeRequest::isAttributeRequestPending(int attribute) const
     {
         return getRequestInfo().mParamInfo.value(attribute)->mIsPending;
     }
-    assert("Malformed map, no attribute found");
+    assert(true && "Malformed map, no attribute found");
     return false;
 }
 
@@ -159,7 +159,7 @@ bool AttributeRequest::attributeRequestNeedsRetry(int attribute) const
         return getRequestInfo().mParamInfo.value(attribute)->mNeedsRetry
                 && !getRequestInfo().mParamInfo.value(attribute)->mIsPending;
     }
-    assert("Malformed map, no attribute found");
+    assert(true && "Malformed map, no attribute found");
     return false;
 }
 

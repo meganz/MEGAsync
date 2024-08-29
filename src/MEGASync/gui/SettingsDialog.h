@@ -143,7 +143,7 @@ private slots:
 protected:
     void changeEvent(QEvent* event) override;
 #ifdef Q_OS_MACOS
-    void closeEvent(QCloseEvent * event);
+    void closeEvent(QCloseEvent * event) override;
 #endif
 
 private slots:

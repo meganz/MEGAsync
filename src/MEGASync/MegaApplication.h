@@ -52,10 +52,8 @@ class TransfersModel;
 class StalledIssuesModel;
 
 #ifdef __APPLE__
-    #include "MegaSystemTrayIcon.h"
     #include <mach/mach.h>
     #include <sys/sysctl.h>
-    #include <errno.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -258,12 +256,11 @@ public slots:
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
     void externalLinkDownload(QString megaLink, QString auth);
-    void externalFileUpload(qlonglong targetFolder);
-    void externalFolderUpload(qlonglong targetFolder);
-    void externalFolderSync(qlonglong targetFolder);
+    void externalFileUpload(mega::MegaHandle targetFolder);
+    void externalFolderUpload(mega::MegaHandle targetFolder);
+    void externalFolderSync(mega::MegaHandle targetFolder);
     void externalAddBackup();
     void externalOpenTransferManager(int tab);
-    void internalDownload(long long handle);
     void onRequestLinksFinished();
     void onUpdateCompleted();
     void onUpdateAvailable(bool requested);
@@ -425,7 +422,7 @@ protected:
     int appliedStorageState;
     bool getUserDataRequestReady;
     long long receivedStorageSum;
-    long long maxMemoryUsage;
+    unsigned long long mMaxMemoryUsage;
     int exportOps;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;

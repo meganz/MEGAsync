@@ -11,7 +11,6 @@
 #include <QMouseEvent>
 
 static const int AVATAR_DIAMETER (60);
-static const int AVATAR_RADIUS (AVATAR_DIAMETER / 2);
 static const int AVATAR_LETTER_SIZE_PT_FULL (60);
 static const int LETTER_PIXMAP_SIZE (150);
 static const int LATO_FONT_ADJUST (-4);

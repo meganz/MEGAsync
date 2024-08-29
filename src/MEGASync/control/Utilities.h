@@ -309,9 +309,8 @@ public:
     static const QString BACKUP_CENTER_URL;
     static const QString SYNC_SUPPORT_URL;
 
-    static QString getSizeString(unsigned long long bytes);
     static QString getSizeString(long long bytes);
-    static QString getSizeStringLocalized(quint64 bytes);
+    static QString getSizeStringLocalized(qint64 bytes);
     static int toNearestUnit(long long bytes);
     static QString getTranslatedSeparatorTemplate();
 
@@ -321,13 +320,12 @@ public:
         QString totalBytes;
         QString units;
     };
-    static ProgressSize getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes);
+    static ProgressSize getProgressSizes(long long transferredBytes, long long totalBytes);
 
     static QString createSimpleUsedString(long long usedData);
     static QString createSimpleUsedStringWithoutReplacement(long long usedData);
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
-    static QString getQuantityString(unsigned long long quantity);
     static QString getAddedTimeString(long long secs);
     static QString extractJSONString(QString json, QString name);
     static QStringList extractJSONStringList(const QString& json, const QString& name);
@@ -391,7 +389,7 @@ private:
 
     static QString cleanedTimeString(const QString& timeString);
 
-    static unsigned long long getNearestUnit(long long bytes);
+    static long long getNearestUnit(long long bytes);
 
 //Platform dependent functions
 public:
@@ -418,7 +416,7 @@ public:
     static void sleepMilliseconds(unsigned int milliseconds);
 
     // Compute the part per <ref> of <part> from <total>. Defaults to %
-    static int partPer(unsigned long long part, unsigned long long total, uint ref = 100);
+    static int partPer(long long part, long long total, uint ref = 100);
 
     static QString getFileHash(const QString& filePath);
 

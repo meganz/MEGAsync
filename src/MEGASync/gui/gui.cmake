@@ -386,13 +386,11 @@ target_sources_conditional(MEGAsync
    PRIVATE
    gui/CocoaHelpButton.mm
    gui/CocoaSwitchButton.mm
-   gui/MegaSystemTrayIcon.mm
    gui/QMacSpinningProgressIndicator.mm
    gui/QSegmentedControl.mm
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
    gui/CocoaSwitchButton.h
-   gui/MegaSystemTrayIcon.h
    gui/QSegmentedControl.h
    gui/images/Images.xcassets
    gui/macx/LockedPopOver.ui

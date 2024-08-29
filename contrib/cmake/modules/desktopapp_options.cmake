@@ -17,7 +17,7 @@ endif()
 
 option(ENABLE_DESKTOP_APP "Enable desktop app build" ON)
 option(ENABLE_DESKTOP_UPDATE_GEN "Enable desktop update generator tool" ON)
-option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" OFF)
+option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" ON)
 
 # MEGAsdk options
 # Configure MEGAsdk specific options for MEGAchat and then load the rest of MEGAsdk configuration

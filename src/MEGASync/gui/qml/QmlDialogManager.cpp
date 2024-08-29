@@ -138,7 +138,7 @@ bool QmlDialogManager::openWhatsNewDialog()
 void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSettings)
 {
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder, this]()
+    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder]()
     {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
