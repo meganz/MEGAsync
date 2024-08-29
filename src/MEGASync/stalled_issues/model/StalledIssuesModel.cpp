@@ -399,6 +399,19 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
                         }
                     }
                 }
+                else if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_COUNTER &&
+                        node->isFolder())
+                {
+                    for (int row = 0; row < rowCount(QModelIndex()); ++row)
+                    {
+                        auto item(getStalledIssueByRow(row));
+
+                        if (item.getData()->containsHandle(node->getHandle()))
+                        {
+                            item.getData()->resetUIUpdated();
+                        }
+                    }
+                }
             }
             delete copiedNodes;
         });

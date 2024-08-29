@@ -19,7 +19,7 @@
 FileFolderAttributes::FileFolderAttributes(QObject* parent)
     : QObject(parent),
     mCancelled(false),
-    mSize(NOT_READY)
+    mValueIsConstant(false)
 {
 }
 
@@ -35,70 +35,16 @@ void FileFolderAttributes::initAllAttributes()
     requestCRC(nullptr, nullptr);
 }
 
-void FileFolderAttributes::requestSize(QObject* caller,std::function<void (qint64)> func)
+void FileFolderAttributes::setValueUpdatesDisable()
 {
-    if(auto context = requestReady(AttributeTypes::Size, caller))
-    {
-        connect(this, &FileFolderAttributes::sizeReady, context, [this, func](qint64 size){
-            if(func)
-            {
-                func(size);
-                if(size >= 0)
-                {
-                    requestFinish(AttributeTypes::Size);
-                }
-            }
-        });
-    }
+    mValueIsConstant = true;
 }
 
-void FileFolderAttributes::requestModifiedTime(QObject* caller, std::function<void (const QDateTime &)> func)
+bool FileFolderAttributes::areValueUpdatesDisabled() const
 {
-    if(auto context = requestReady(AttributeTypes::ModifiedTime, caller))
-    {
-        connect(this, &FileFolderAttributes::modifiedTimeReady, context, [this, func](const QDateTime& time){
-            if(func)
-            {
-                func(time);
-                if(time.isValid())
-                {
-                    requestFinish(AttributeTypes::ModifiedTime);
-                }
-            }
-        });
-    }
+    return mValueIsConstant;
 }
 
-void FileFolderAttributes::requestCreatedTime(QObject* caller, std::function<void (const QDateTime &)> func)
-{
-    if(auto context = requestReady(AttributeTypes::CreatedTime, caller))
-    {
-        connect(this, &FileFolderAttributes::createdTimeReady, context, [this, func](const QDateTime& time){
-            if(func)
-            {
-                func(time);
-                if(time.isValid())
-                {
-                    requestFinish(AttributeTypes::CreatedTime);
-                }
-            }
-        });
-    }
-}
-
-void FileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
-{
-    if(auto context = requestReady(AttributeTypes::CRC, caller))
-    {
-        connect(this, &FileFolderAttributes::CRCReady, context, [this, func](const QString& fp){
-            if(func)
-            {
-                func(fp);
-                requestFinish(AttributeTypes::CRC);
-            }
-        });
-    }
-}
 
 void FileFolderAttributes::cancel()
 {
@@ -107,29 +53,47 @@ void FileFolderAttributes::cancel()
 
 int64_t FileFolderAttributes::size() const
 {
-    return mSize;
+    return mValues.value(AttributeTypes::SIZE, -1).value<qint64>();
 }
 
-int64_t FileFolderAttributes::modifiedTime() const
+int64_t FileFolderAttributes::modifiedTimeInSecs() const
 {
-    return mModifiedTime.toSecsSinceEpoch();
+    return mValues.value(AttributeTypes::MODIFIED_TIME).value<QDateTime>().toSecsSinceEpoch();
 }
 
-int64_t FileFolderAttributes::createdTime() const
+QDateTime FileFolderAttributes::modifiedTime() const
 {
-    return mCreatedTime.toSecsSinceEpoch();
+    return mValues[AttributeTypes::MODIFIED_TIME].value<QDateTime>();
 }
 
-const QString &FileFolderAttributes::fingerprint() const
+int64_t FileFolderAttributes::createdTimeInSecs() const
 {
-    return mFp;
+    return mValues.value(AttributeTypes::CREATED_TIME).value<QDateTime>().toSecsSinceEpoch();
 }
 
-bool FileFolderAttributes::attributeNeedsUpdate(int type)
+QDateTime FileFolderAttributes::createdTime() const
 {
+    return mValues[AttributeTypes::CREATED_TIME].value<QDateTime>();
+}
+
+QString FileFolderAttributes::getCRC() const
+{
+    return mValues.value(AttributeTypes::CRC).toString();
+}
+
+bool FileFolderAttributes::attributeNeedsUpdate(QObject* caller, int type)
+{
+    //For attribute initialization
+    if(!caller)
+    {
+        return true;
+    }
+
+    auto currentValue = mValues.value(type);
     auto currentTime = QDateTime::currentMSecsSinceEpoch();
-    if(!mRequestTimestamps.contains(type)
-            || ((currentTime - mRequestTimestamps.value(type)) > 2000))
+    auto lastTimestamp = mRequestTimestamps.value(type, 0);
+    if ((lastTimestamp == 0 ||
+        (currentTime - lastTimestamp) > 2000) && (!currentValue.isValid() || !areValueUpdatesDisabled()))
     {
         mRequestTimestamps.insert(type, currentTime);
         return true;
@@ -173,104 +137,114 @@ LocalFileFolderAttributes::LocalFileFolderAttributes(const QString &path, QObjec
             this, &LocalFileFolderAttributes::onSizeCalculated);
 
     QDirIterator filesIt(mPath, QDir::Files | QDir::NoDotAndDotDot | QDir::NoSymLinks, QDirIterator::Subdirectories);
-    mIsEmpty = !filesIt.hasNext();
+    mDirectoryIsEmpty = !filesIt.hasNext();
 }
 
-void LocalFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
+void LocalFileFolderAttributes::requestSize(QObject* caller, std::function<void(qint64)> func)
 {
-    FileFolderAttributes::requestSize(caller,func);
+    if (requestValue<qint64>(caller, AttributeTypes::SIZE, func))
+    {
+        initValue<qint64>(AttributeTypes::SIZE, Status::NOT_READY);
 
-    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::Size))
+        QFileInfo fileInfo(mPath);
+        if (fileInfo.exists())
+        {
+            if (fileInfo.isFile())
+            {
+                mValues.insert(AttributeTypes::SIZE, fileInfo.size());
+            }
+            else
+            {
+                auto future = QtConcurrent::run([this]() -> qint64 {
+                    return calculateSize();
+                });
+                mFolderSizeFuture.setFuture(future);
+
+                // We always send the size, even if the request is async...just to show on GUI a
+                // "loading size..." or the most recent size while the new is received
+                emit attributeReady(AttributeTypes::SIZE, true);
+                return;
+            }
+        }
+        else
+        {
+            mValues.insert(AttributeTypes::SIZE, static_cast<qint64>(Status::NOT_READABLE));
+        }
+
+        emit attributeReady(AttributeTypes::SIZE);
+    }
+}
+
+void LocalFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
+{
+    if (requestValue<QDateTime>(caller, AttributeTypes::MODIFIED_TIME, func))
     {
         QFileInfo fileInfo(mPath);
+
         if(fileInfo.exists())
         {
             if(fileInfo.isFile())
             {
-                mSize = fileInfo.size();
+                mValues.insert(AttributeTypes::MODIFIED_TIME, fileInfo.lastModified());
             }
+            //Is local folder
             else
             {
-                if(mSize <= Status::NOT_READY)
+                if (mDirectoryIsEmpty)
                 {
-                    auto future = QtConcurrent::run([this]() -> qint64{
-                        return calculateSize();
+                    requestCreatedTime(caller, func);
+                }
+                else
+                {
+                    auto future = QtConcurrent::run([this]() -> QDateTime {
+                        return calculateModifiedTime();
                     });
-                    mFolderSizeFuture.setFuture(future);
+                    mModifiedTimeWatcher.setFuture(future);
+                    //We always send the time, even if the request is async...just to show on GUI a "loading time..." or the most recent time while the new is received
+                    emit attributeReady(AttributeTypes::MODIFIED_TIME, true);
+                    return;
                 }
             }
         }
         else
         {
-            mSize = Status::NOT_READABLE;
+            mValues.remove(AttributeTypes::MODIFIED_TIME);
         }
+        emit attributeReady(AttributeTypes::MODIFIED_TIME);
     }
-
-    //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
-    emit sizeReady(mSize);
-}
-
-void LocalFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
-{
-    FileFolderAttributes::requestModifiedTime(caller,func);
-
-    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::ModifiedTime))
-    {
-        QFileInfo fileInfo(mPath);
-
-        if(fileInfo.exists())
-        {
-            if(fileInfo.isFile())
-            {
-                mModifiedTime = fileInfo.lastModified();
-            }
-            //Is local folder
-            else
-            {
-                if(mIsEmpty)
-                {
-                    requestCreatedTime(caller,func);
-                }
-                else
-                {
-                    auto future = QtConcurrent::run([this]() -> QDateTime{
-                        return calculateModifiedTime();
-                    });
-                    mModifiedTimeWatcher.setFuture(future);
-                }
-            }
-        }
-    }
-
-     //We always send the time, even if the request is async...just to show on GUI a "loading time..." or the most recent time while the new is received
-    emit modifiedTimeReady(mModifiedTime);
 }
 
 void LocalFileFolderAttributes::onModifiedTimeCalculated()
 {
-    mModifiedTime = mModifiedTimeWatcher.result();
-    if(mModifiedTime.isValid())
-    {
-        emit modifiedTimeReady(mModifiedTime);
-    }
+    auto newModifiedTime(mModifiedTimeWatcher.result());
+    mValues.insert(AttributeTypes::MODIFIED_TIME, newModifiedTime);
+    emit attributeReady(AttributeTypes::MODIFIED_TIME);
 }
 
 void LocalFileFolderAttributes::onSizeCalculated()
 {
-    mSize = mFolderSizeFuture.result();
-    emit sizeReady(mSize);
+    mValues.insert(AttributeTypes::SIZE, mFolderSizeFuture.result());
+    emit attributeReady(AttributeTypes::SIZE);
+}
+
+bool LocalFileFolderAttributes::attributeNeedsUpdate(QObject* caller, int type)
+{
+    if(mPath.isEmpty())
+    {
+        return false;
+    }
+
+    return FileFolderAttributes::attributeNeedsUpdate(caller, type);
 }
 
 void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
-    //Created time not available for LINUX
-    FileFolderAttributes::requestCreatedTime(caller,func);
-
-    if(!mPath.isEmpty() && attributeNeedsUpdate(AttributeTypes::CreatedTime))
+    if (requestValue<QDateTime>(caller, AttributeTypes::CREATED_TIME, func))
     {
         QFileInfo fileInfo(mPath);
-        if(fileInfo.exists())
+        if (fileInfo.exists())
         {
+            QVariant& createdTime = mValues[AttributeTypes::CREATED_TIME];
 #ifdef Q_OS_WINDOWS
             struct stat result;
             const QString sourcePath = mPath;
@@ -278,49 +252,51 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
             sourcePath.toWCharArray(file.data());
             file[sourcePath.length()] = wchar_t{};
             file[sourcePath.length() + 1] = wchar_t{};
-            if(_wstat(file.constData(), &result)==0)
+            if (_wstat(file.constData(), &result) == 0)
             {
-                mCreatedTime = QDateTime::fromSecsSinceEpoch(result.st_ctime);
+                createdTime = QVariant::fromValue<QDateTime>(QDateTime::fromSecsSinceEpoch(result.st_ctime));
             }
 #elif defined(Q_OS_MACOS)
             struct stat the_time;
             stat(mPath.toUtf8(), &the_time);
-            mCreatedTime.setSecsSinceEpoch(the_time.st_birthtimespec.tv_sec);
+            createdTime = QVariant::fromValue<QDateTime>(
+                QDateTime::fromSecsSinceEpoch(the_time.st_birthtimespec.tv_sec));
 #elif defined(Q_OS_LINUX)
-            mCreatedTime = QDateTime::fromSecsSinceEpoch(0);
+            createdTime = QVariant::fromValue<QDateTime>(QDateTime::fromSecsSinceEpoch(0));
 #endif
-            if(!fileInfo.isFile())
+            if (!fileInfo.isFile())
             {
-                if(mIsEmpty)
+                if (mDirectoryIsEmpty)
                 {
-                    mModifiedTime = mCreatedTime;
-                    emit modifiedTimeReady(mModifiedTime);
+                    mValues.insert(AttributeTypes::MODIFIED_TIME, mValues.value(AttributeTypes::CREATED_TIME));
                 }
             }
-            emit createdTimeReady(mCreatedTime);
         }
+
+        emit attributeReady(AttributeTypes::CREATED_TIME);
     }
 }
 
 void LocalFileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
 {
-    FileFolderAttributes::requestCRC(caller,func);
-
-    if(!mPath.isEmpty())
+    if (requestValue<QString>(caller, AttributeTypes::CRC, func))
     {
-        QFileInfo fileInfo(mPath);
-
-        if(fileInfo.exists())
+        if (!mPath.isEmpty())
         {
-            if(fileInfo.isFile())
-            {
-                std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
-                mFp = QString::fromUtf8(crc.get());
-            }
+            QFileInfo fileInfo(mPath);
 
+            if (fileInfo.exists())
+            {
+                if (fileInfo.isFile())
+                {
+                    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(
+                        QDir::toNativeSeparators(fileInfo.filePath()).toUtf8().constData()));
+                    mValues.insert(AttributeTypes::CRC, QString::fromUtf8(crc.get()));
+                }
+            }
         }
 
-        emit CRCReady(mFp);
+        emit attributeReady(AttributeTypes::CRC);
     }
 }
 
@@ -374,10 +350,7 @@ void LocalFileFolderAttributes::setPath(const QString &newPath)
     if(mPath != newPath)
     {
         mPath = newPath;
-        mSize = NOT_READY;
-        //initAllAttributes();
-        mRequestTimestamps.clear();
-        mRequests.clear();
+        mValues.clear();
     }
 }
 
@@ -386,8 +359,6 @@ RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, 
     : FileFolderAttributes(parent),
       mFilePath(filePath),
       mHandle(mega::INVALID_HANDLE),
-      mVersionCount(0),
-      mFileCount(-1),
       mWaitForAttributes(waitForAttributes)
 
 {
@@ -396,8 +367,6 @@ RemoteFileFolderAttributes::RemoteFileFolderAttributes(const QString &filePath, 
 RemoteFileFolderAttributes::RemoteFileFolderAttributes(mega::MegaHandle handle, QObject* parent, bool waitForAttributes)
     : FileFolderAttributes(parent),
       mHandle(handle),
-      mVersionCount(0),
-      mFileCount(-1),
       mWaitForAttributes(waitForAttributes)
 {
 }
@@ -417,16 +386,14 @@ void RemoteFileFolderAttributes::initAllAttributes()
 
 void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(qint64)> func)
 {
-    FileFolderAttributes::requestSize(caller,func);
-
-    if(attributeNeedsUpdate(AttributeTypes::Size))
+    if (requestValue<qint64>(caller, AttributeTypes::SIZE, func))
     {
         std::unique_ptr<mega::MegaNode> node = getNode();
         if(node)
         {
             if(node->isFile())
             {
-                mSize = std::max(static_cast<long long>(node->getSize()), static_cast<long long>(0));
+                mValues.insert(AttributeTypes::SIZE, std::max(static_cast<long long>(node->getSize()), static_cast<long long>(0)));
             }
             else
             {
@@ -439,8 +406,7 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
                             auto folderInfo = request->getMegaFolderInfo();
                             if (folderInfo)
                             {
-                                mSize = std::max(folderInfo->getCurrentSize(), 0LL);
-                                emit sizeReady(mSize);
+                                mValues.insert(AttributeTypes::SIZE, std::max(folderInfo->getCurrentSize(), 0LL));
                             }
                         }
 
@@ -448,20 +414,30 @@ void RemoteFileFolderAttributes::requestSize(QObject* caller,std::function<void(
                         {
                             mEventLoop.quit();
                         }
+                        else
+                        {
+                            emit attributeReady(AttributeTypes::SIZE);
+                        }
                     });
 
                 MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), listener.get());
 
-                if (mWaitForAttributes && mSize < 0 && !mEventLoop.isRunning())
+                if (mWaitForAttributes && size() < 0 && !mEventLoop.isRunning())
                 {
                     mEventLoop.exec();
                 }
+                else
+                {
+                    // We always send the size, even if the request is async...just to show on GUI a
+                    // "loading size..." or the most recent size while the new is received
+                    emit attributeReady(AttributeTypes::SIZE, true);
+                    return;
+                }
             }
         }
-    }
 
-    //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
-    emit sizeReady(mSize);
+        emit attributeReady(AttributeTypes::SIZE);
+    }
 }
 
 void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function<void (int)> func)
@@ -469,11 +445,10 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
     std::unique_ptr<mega::MegaNode> node = getNode();
     if(node && node->isFolder())
     {
-        FileFolderAttributes::requestCustomValue<RemoteFileFolderAttributes, int>(this, caller, func, &RemoteFileFolderAttributes::fileCountReady,
-                                                                                  RemoteFileFolderAttributes::FileCount);
-
-        if(attributeNeedsUpdate(RemoteFileFolderAttributes::FileCount))
+        if (requestValue<int>(caller, RemoteAttributeTypes::FILE_COUNT, func))
         {
+            initValue<int>(RemoteAttributeTypes::FILE_COUNT, Status::NOT_READY);
+
             auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
                 this,
                 [this](mega::MegaRequest* request, mega::MegaError* e) {
@@ -483,7 +458,7 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
                         auto folderInfo = request->getMegaFolderInfo();
                         if(folderInfo)
                         {
-                            mFileCount = std::max(folderInfo->getNumFiles(), 0);
+                            mValues.insert(RemoteAttributeTypes::FILE_COUNT, std::max(folderInfo->getNumFiles(), 0));
                         }
                     }
 
@@ -491,26 +466,32 @@ void RemoteFileFolderAttributes::requestFileCount(QObject *caller, std::function
                     {
                         mEventLoop.quit();
                     }
+                    else
+                    {
+                        emit attributeReady(RemoteAttributeTypes::FILE_COUNT);
+                    }
                 });
 
             MegaSyncApp->getMegaApi()->getFolderInfo(node.get(), listener.get());
 
-            if(mWaitForAttributes && mFileCount < 0 && !mEventLoop.isRunning())
+            if(mWaitForAttributes && mValues.value(RemoteAttributeTypes::FILE_COUNT).toInt() < 0 && !mEventLoop.isRunning())
             {
                 mEventLoop.exec();
             }
-
-            //We always send the size, even if the request is async...just to show on GUI a "loading size..." or the most recent size while the new is received
-            emit fileCountReady(mFileCount);
+            else
+            {
+                //We always send the file count, even if the request is async...just to show on GUI a "loading file count..." or the most recent file count while the new is received
+                emit attributeReady(RemoteAttributeTypes::FILE_COUNT, true);
+                return;
+            }
+            emit attributeReady(RemoteAttributeTypes::FILE_COUNT);
         }
     }
 }
 
 void RemoteFileFolderAttributes::requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
-    FileFolderAttributes::requestModifiedTime(caller,func);
-
-    if(attributeNeedsUpdate(AttributeTypes::ModifiedTime))
+    if (requestValue<QDateTime>(caller, AttributeTypes::MODIFIED_TIME, func))
     {
         std::unique_ptr<mega::MegaNode> node = getNode();
         if(node)
@@ -518,160 +499,157 @@ void RemoteFileFolderAttributes::requestModifiedTime(QObject* caller,std::functi
             int64_t newTime = node->isFile() ? node->getModificationTime()
                                      : node->getCreationTime();
 
-            mModifiedTime = QDateTime::fromSecsSinceEpoch(newTime);
+            mValues.insert(AttributeTypes::MODIFIED_TIME, QDateTime::fromSecsSinceEpoch(newTime));
         }
+        emit attributeReady(AttributeTypes::MODIFIED_TIME);
     }
-
-    emit modifiedTimeReady(mModifiedTime);
 }
 
 void RemoteFileFolderAttributes::requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func)
 {
-    FileFolderAttributes::requestCreatedTime(caller, func);
-
-    if(!mCreatedTime.isValid() && attributeNeedsUpdate(AttributeTypes::CreatedTime))
+    if (requestValue<QDateTime>(caller, AttributeTypes::CREATED_TIME, func))
     {
         std::unique_ptr<mega::MegaNode> node = getNode(Version::First);
         if(node)
         {
-            mCreatedTime = QDateTime::fromSecsSinceEpoch(node->getCreationTime());
+            mValues.insert(AttributeTypes::CREATED_TIME, QDateTime::fromSecsSinceEpoch(node->getCreationTime()));
         }
+        emit attributeReady(AttributeTypes::CREATED_TIME);
     }
-
-    emit createdTimeReady(mCreatedTime);
 }
 
 void RemoteFileFolderAttributes::requestCRC(QObject *caller, std::function<void (const QString &)> func)
 {
-    FileFolderAttributes::requestCRC(caller, func);
-
-    std::unique_ptr<mega::MegaNode> node = getNode();
-    if(node)
-    {
-        if (const char* fp = node->getFingerprint())
-        {
-            std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRCFromFingerprint(fp));
-            mFp = QString::fromUtf8(crc.get());
-        }
-        else
-        {
-            mFp = QString();
-        }
-    }
-
-    emit CRCReady(mFp);
-}
-
-void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString, bool)> func)
-{
-    if(attributeNeedsUpdate(RemoteAttributeTypes::User))
+    if (requestValue<QString>(caller, AttributeTypes::CRC, func))
     {
         std::unique_ptr<mega::MegaNode> node = getNode();
-        if(node)
+        if (node)
         {
-            auto user = node->getOwner();
-
-            if(user != mega::INVALID_HANDLE && user != mOwner)
+            if (const char* fp = node->getFingerprint())
             {
-                if(auto context = requestReady(RemoteAttributeTypes::User, caller))
+                std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRCFromFingerprint(fp));
+                mValues.insert(AttributeTypes::CRC, QString::fromUtf8(crc.get()));
+            }
+            else
+            {
+                mValues.remove(AttributeTypes::CRC);
+            }
+        }
+
+        emit attributeReady(AttributeTypes::CRC);
+    }
+}
+
+bool RemoteFileFolderAttributes::isCurrentUser() const
+{
+    return mIsCurrentUser;
+}
+
+void RemoteFileFolderAttributes::requestUser(QObject *caller, std::function<void (QString)> func)
+{
+    std::unique_ptr<mega::MegaNode> node = getNode();
+    if (node)
+    {
+        if (requestValue<QString>(caller, RemoteAttributeTypes::USER, func))
+        {
+            if (node->getOwner() != MegaSyncApp->getMegaApi()->getMyUserHandleBinary())
+            {
+                mIsCurrentUser = false;
+                mOwner = node->getOwner();
+
+                std::unique_ptr<mega::MegaNode> node = getNode();
+                if (node)
                 {
-                    mOwner = user;
-
-                    auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                        this,
-                        [this, func, context](mega::MegaRequest* request, mega::MegaError* e) {
-                            if (e->getErrorCode() == mega::MegaError::API_OK)
-                            {
-                                auto emailFromRequest = request->getEmail();
-                                if (emailFromRequest)
-                                {
-                                    mUserEmail = QString::fromUtf8(emailFromRequest);
-                                    mUserFullName = UserAttributes::FullName::requestFullName(emailFromRequest);
-
-                                    if(mUserFullName->isAttributeReady())
+                    if (attributeNeedsUpdate(caller, RemoteAttributeTypes::USER))
+                    {
+                        auto listener =
+                            RequestListenerManager::instance().registerAndGetCustomFinishListener(
+                                this,
+                                [this, caller, func](mega::MegaRequest* request,
+                                                     mega::MegaError* e) {
+                                    if (e->getErrorCode() == mega::MegaError::API_OK)
                                     {
-                                        requestFinish(RemoteAttributeTypes::User);
+                                        auto emailFromRequest = request->getEmail();
+                                        if (emailFromRequest)
+                                        {
+                                            mUserEmail = QString::fromUtf8(emailFromRequest);
+                                            mUserFullName =
+                                                UserAttributes::FullName::requestFullName(
+                                                    emailFromRequest);
+                                        }
                                     }
-                                    else if (func)
-                                    {
-                                        this->connect(mUserFullName.get(), &UserAttributes::FullName::fullNameReady, context, [this, func]{
-                                            func(mUserFullName->getFullName(), true);
-                                            requestFinish(RemoteAttributeTypes::User);
-                                        });
-                                    }
-                                }
-                            }
-                        });
 
-                    MegaSyncApp->getMegaApi()->getUserEmail(user, listener.get());
+                                    if (mUserFullName)
+                                    {
+                                        if (mUserFullName->isAttributeReady())
+                                        {
+                                            mValues.insert(RemoteAttributeTypes::USER,
+                                                           mUserFullName->getFullName());
+                                            emit attributeReady(RemoteAttributeTypes::USER);
+                                        }
+                                        else
+                                        {
+                                            this->connect(
+                                                mUserFullName.get(),
+                                                &UserAttributes::FullName::fullNameReady,
+                                                caller,
+                                                [this] {
+                                                    mValues.insert(RemoteAttributeTypes::USER,
+                                                                   mUserFullName->getFullName());
+                                                    emit attributeReady(RemoteAttributeTypes::USER);
+                                                });
+                                        }
+                                    }
+                                });
+
+                        MegaSyncApp->getMegaApi()->getUserEmail(mOwner, listener.get());
+
+                        // We always send the user, even if the request is async...just to show on
+                        // GUI a "loading user..." or the most recent user while the new is received
+                        emit attributeReady(RemoteAttributeTypes::USER, true);
+                        return;
+                    }
                 }
             }
-        }
-    }
-
-    if(func)
-    {
-        if(mUserFullName)
-        {
-            //We always send the name, even if the request is async...just to show on GUI a "loading user..." or the most recent user while the new is received
-            func(mUserFullName->getFullName(), true);
-        }
-        else
-        {
-            func(QString(), true);
+            else
+            {
+                mIsCurrentUser = true;
+                mOwner = mega::INVALID_HANDLE;
+                mUserEmail.clear();
+                mUserFullName = nullptr;
+                mValues.remove(RemoteAttributeTypes::USER);
+            }
+            emit attributeReady(RemoteAttributeTypes::USER);
         }
     }
 }
 
-void RemoteFileFolderAttributes::requestUser(QObject *caller, mega::MegaHandle currentUser, std::function<void (QString, bool)> func)
+void RemoteFileFolderAttributes::requestVersions(QObject* caller, std::function<void (int)> func)
 {
-    std::unique_ptr<mega::MegaNode> node = getNode();
-    if(node)
+    if (requestValue<int>(caller, RemoteAttributeTypes::VERSIONS, func))
     {
-        auto user = node->getOwner();
-
-        if(user != mega::INVALID_HANDLE && user != currentUser)
+        if (attributeNeedsUpdate(caller, RemoteFileFolderAttributes::VERSIONS))
         {
-            requestUser(caller, func);
-        }
-        else
-        {
-            mOwner = mega::INVALID_HANDLE;
-            mUserEmail.clear();
-            mUserFullName = nullptr;
-            if(func)
+            std::unique_ptr<mega::MegaNode> node = getNode();
+            if (node)
             {
-                func(QString(), false);
+                mValues.insert(RemoteAttributeTypes::VERSIONS,
+                               MegaSyncApp->getMegaApi()->getVersions(node.get())->size());
             }
         }
-    }
-}
 
-void RemoteFileFolderAttributes::requestVersions(QObject*, std::function<void (int)> func)
-{
-    if(attributeNeedsUpdate(RemoteFileFolderAttributes::Versions))
-    {
-        std::unique_ptr<mega::MegaNode> node = getNode();
-        if(node)
-        {
-            mVersionCount = MegaSyncApp->getMegaApi()->getVersions(node.get())->size();
-        }
-    }
-
-    if(func)
-    {
-        func(mVersionCount);
+        emit attributeReady(RemoteAttributeTypes::VERSIONS);
     }
 }
 
 int RemoteFileFolderAttributes::versionCount()
 {
-    return mVersionCount;
+    return mValues.value(RemoteAttributeTypes::VERSIONS, 0).toInt();
 }
 
 int RemoteFileFolderAttributes::fileCount()
 {
-    return mFileCount;
+    return mValues.value(RemoteAttributeTypes::FILE_COUNT, 0).toInt();
 }
 
 std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type) const
@@ -709,4 +687,15 @@ std::unique_ptr<mega::MegaNode> RemoteFileFolderAttributes::getNode(Version type
 void RemoteFileFolderAttributes::setHandle(mega::MegaHandle newHandle)
 {
     mHandle = newHandle;
+}
+
+bool RemoteFileFolderAttributes::attributeNeedsUpdate(QObject* caller, int type)
+{
+    if(mHandle == mega::INVALID_HANDLE)
+    {
+        return false;
+    }
+
+    return FileFolderAttributes::attributeNeedsUpdate(caller, type);
+
 }

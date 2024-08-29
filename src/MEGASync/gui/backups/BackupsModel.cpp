@@ -87,6 +87,7 @@ bool BackupFolder::createFileFolderAttributes()
     if(!mFolderAttr)
     {
         mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+        mFolderAttr->setValueUpdatesDisable();
         return true;
     }
     return false;
