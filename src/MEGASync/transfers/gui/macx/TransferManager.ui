@@ -381,6 +381,54 @@ QToolButton
     font-weight: 400;
 }
 
+#wSeparator
+{
+	background-color: #EEEEEE;
+}
+
+/* 
+	TransfersAccountInfoWidget
+*/
+
+#TransferManagerAccountInfo
+{
+	background-color: #FAFAFA;
+}
+
+#bUpgrade
+{
+	font-family: Inter;
+	font-size: 12px;
+	line-height: 16px;
+	border: 1px solid #0000001A;
+	border-radius: 4px;
+	color: #FFFFFF;
+	padding: 0px 8px;
+	background-color:  #00BFA5;
+}
+
+#lStorage
+{
+	font-family: Inter;
+	font-size: 12px;
+	line-height: 18px;
+	color: #303233;
+}
+
+#bUpgrade::hover
+{
+	background-color:  #00A787;
+}
+
+#bUpgrade::pressed
+{
+	background-color: #00D7C2;
+}
+
+#bUpgrade::disabled
+{
+	background-color: #00BFA54D;
+}
 </string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
@@ -478,7 +526,7 @@ QToolButton
        <number>0</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_9">
+       <layout class="QVBoxLayout" name="vlLeftTop">
         <property name="spacing">
          <number>16</number>
         </property>
