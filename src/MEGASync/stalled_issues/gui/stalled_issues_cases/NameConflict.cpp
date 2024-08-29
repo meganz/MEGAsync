@@ -334,9 +334,9 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
             }
         });
 
-        cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
+        cloudAttributes->requestUser(title, [this, cloudAttributes, index](QString user)
         {
-            if(mTitlesByIndex.value(index)->updateUser(user, showAttribute))
+            if(mTitlesByIndex.value(index)->updateUser(user, !cloudAttributes->isCurrentUser()))
             {
                 mDelegateWidget->updateSizeHint();
             }

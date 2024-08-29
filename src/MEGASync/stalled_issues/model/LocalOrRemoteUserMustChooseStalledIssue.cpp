@@ -35,7 +35,7 @@ bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 {
-    if(consultLocalData()->getAttributes()->modifiedTime() >= consultCloudData()->getAttributes()->modifiedTime())
+    if(consultLocalData()->getAttributes()->modifiedTimeInSecs() >= consultCloudData()->getAttributes()->modifiedTimeInSecs())
     {
         return chooseLocalSide();
     }
@@ -128,11 +128,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
     if(isFile())
     {
         //For autosolving
-        getLocalData()->getAttributes()->requestSize(nullptr, nullptr);
-        getCloudData()->getAttributes()->requestSize(nullptr, nullptr);
-
-        getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
-        getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+        getLocalData()->getAttributes()->initAllAttributes();
+        getCloudData()->getAttributes()->initAllAttributes();
 
         getLocalData()->getAttributes()->requestCRC(this, [this](const QString& crc){
             mLocalCRCAtStart = crc;
@@ -248,7 +245,7 @@ LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseS
 {
     if(isFile())
     {
-        return consultLocalData()->getAttributes()->modifiedTime() > consultCloudData()->getAttributes()->modifiedTime()
+        return consultLocalData()->getAttributes()->modifiedTimeInSecs() > consultCloudData()->getAttributes()->modifiedTimeInSecs()
                    ? ChosenSide::LOCAL : ChosenSide::REMOTE;
     }
 

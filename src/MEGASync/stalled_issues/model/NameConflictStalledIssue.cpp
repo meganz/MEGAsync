@@ -63,7 +63,8 @@ void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
                 cloudPath = cloudPath.remove(0,1);
             }
 
-            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(cloudHandle));
             if(node)
             {
                 QFileInfo cloudPathInfo(cloudPath);
@@ -441,7 +442,7 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
 {
     auto sortLogic = [](QList<std::shared_ptr<ConflictedNameInfo>>& names){
         std::sort(names.begin(), names.end(), [](const std::shared_ptr<ConflictedNameInfo>& check1, const std::shared_ptr<ConflictedNameInfo>& check2){
-            return check1->mItemAttributes->modifiedTime() > check2->mItemAttributes->modifiedTime();
+            return check1->mItemAttributes->modifiedTimeInSecs() > check2->mItemAttributes->modifiedTimeInSecs();
         });
     };
 
@@ -467,8 +468,8 @@ bool NameConflictedStalledIssue::renameNodesAutomatically()
         auto lastModifiedCloudName = cloudConflictedNames.first();
         auto lastModifiedLocalName = localConflictedNames.first();
 
-        if(lastModifiedCloudName->mItemAttributes->modifiedTime() >
-            lastModifiedLocalName->mItemAttributes->modifiedTime())
+        if(lastModifiedCloudName->mItemAttributes->modifiedTimeInSecs() >
+            lastModifiedLocalName->mItemAttributes->modifiedTimeInSecs())
         {
             if((result = renameCloudNodesAutomatically(
                    cloudConflictedNames, localConflictedNames, true, itemsBeingRenamed)))
@@ -677,11 +678,11 @@ std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo> NameConflictedSt
             auto sameName(check->getConflictedName().compare(fileIt->getConflictedName(), Qt::CaseSensitive) == 0);
             if(check->mItemAttributes->size() != 0 && (check->mItemAttributes->size() == check->mItemAttributes->size()))
             {
-                auto fp1(check->mItemAttributes->fingerprint());
-                auto fp2(fileIt->mItemAttributes->fingerprint());
-                if(!fp1.isEmpty() && !fp2.isEmpty())
+                auto crc1(check->mItemAttributes->getCRC());
+                auto crc2(fileIt->mItemAttributes->getCRC());
+                if(!crc1.isEmpty() && !crc2.isEmpty())
                 {
-                    sameFingerprint = (fp1.compare(fp2) == 0);
+                    sameFingerprint = (crc1.compare(crc2) == 0);
                 }
             }
 
