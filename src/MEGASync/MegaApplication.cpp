@@ -2232,6 +2232,11 @@ void MegaApplication::cleanAll()
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
+    mStalledIssuesModel->deleteLater();
+    mStalledIssuesModel = nullptr;
+    mTransfersModel->deleteLater();
+    mTransfersModel = nullptr;
+
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
     // their deletion
