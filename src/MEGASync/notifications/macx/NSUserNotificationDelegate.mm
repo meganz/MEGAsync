@@ -1,5 +1,5 @@
 #include "NotificationDelegate.h"
-#include "notificator.h"
+#include "Notificator.h"
 #include <Cocoa/Cocoa.h>
 
 @implementation NSUserNotificationDelegate

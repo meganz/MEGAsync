@@ -7,11 +7,12 @@
 #include <memory>
 
 ViewLoadingSceneBase::ViewLoadingSceneBase() :
-    mDelayTimeToShowInMs(0),
-    mLoadingView(nullptr),
-    mLoadingViewSet(LoadingViewType::NONE),
-    mTopParent(nullptr),
-    ui(new Ui::ViewLoadingSceneUI())
+      mDelayTimeToShowInMs(0)
+    , mLoadingView(nullptr)
+    , ui(new Ui::ViewLoadingSceneUI())
+    , mTopParent(nullptr)
+    , mLoadingViewSet(LoadingViewType::NONE)
+    , mMessageHandler(nullptr)
 {
     mDelayTimerToShow.setSingleShot(true);
     mDelayTimerToHide.setSingleShot(true);
@@ -113,11 +114,11 @@ void ViewLoadingSceneBase::showLoadingScene()
 }
 
 LoadingSceneMessageHandler::LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI *viewBaseUI, QWidget* viewBase)
-    : ui(viewBaseUI),
-    mViewBase(viewBase),
-    mTopParent(nullptr),
-    mFadeOutWidget(nullptr),
-    QObject(viewBase)
+    : QObject(viewBase)
+    , ui(viewBaseUI)
+    , mViewBase(viewBase)
+    , mTopParent(nullptr)
+    , mFadeOutWidget(nullptr)
 {
     qRegisterMetaType<MessageInfo>("MessageInfo");
     qRegisterMetaType<std::shared_ptr<MessageInfo>>("std::shared_ptr<MessageInfo>");

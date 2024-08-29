@@ -201,18 +201,13 @@ public:
     QString getModifiedRule() const override;
 
     double valueInBytes();
-    void setValueInBytes(double value)
-    {
-        mValue = value;
-        mUnit = UnitTypes::B;
-    }
 
-    double value() const;
+    unsigned long long value() const;
     UnitTypes unit() const;
 
     static const QStringList& getUnitsForDisplay();
 
-    void setValue(int newValue);
+    void setValue(unsigned long long newValue);
     void setUnit(int newUnit);
     void computeMaximumUnit();
 

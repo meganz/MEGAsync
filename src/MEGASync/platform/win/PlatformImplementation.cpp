@@ -27,6 +27,10 @@
 #include <QDesktopWidget>
 #include <QHostInfo>
 
+#ifdef _MSC_VER
+#pragma warning(disable: 4996)
+#endif
+
 #if _WIN32_WINNT < 0x0601
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works

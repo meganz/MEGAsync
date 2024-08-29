@@ -100,7 +100,7 @@ void ProxySettings::onProxyTestFinished(bool success)
 
         mPreferences->setProxyProtocol(mUi->cProxyType->currentIndex());
         mPreferences->setProxyServer(mUi->eProxyServer->text().trimmed());
-        mPreferences->setProxyPort(mUi->eProxyPort->text().toInt());
+        mPreferences->setProxyPort(mUi->eProxyPort->text().toUShort());
         mPreferences->setProxyRequiresAuth(mUi->cProxyRequiresPassword->isChecked());
         mPreferences->setProxyUsername(mUi->eProxyUsername->text());
         mPreferences->setProxyPassword(mUi->eProxyPassword->text());

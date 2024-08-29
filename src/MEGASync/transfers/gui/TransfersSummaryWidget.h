@@ -44,10 +44,19 @@ public:
     void setAnimationTimeMS(const qreal &value);
 
     void adjustFontSizeToText(QFont *font, int maxWidth, QString uploadText, int fontsize = 12.0);
-    int adjustSizeToText(QFont *font, int maxWidth, int minWidth, int margins, long long partial, long long total, int &posDotsPartial, int &posDotsTotal, QString &text, int fontsize);
+    int adjustSizeToText(QFont* font,
+        int maxWidth,
+        int minWidth,
+        int margins,
+        uint partial,
+        uint total,
+        int& posDotsPartial,
+        int& posDotsTotal,
+        QString& text,
+        int fontsize);
 
-    void setUploads(long long  completed, long long total);
-    void setDownloads(long long  completed, long long total);
+    void setUploads(uint completed, uint total);
+    void setDownloads(uint completed, uint total);
 
     void initialize();
     void reset();
@@ -159,10 +168,10 @@ private:
 
     qreal speed = 0;
 
-    long long totalUploads;
-    long long currentUpload;
-    long long totalDownloads;
-    long long currentDownload;
+    uint totalUploads;
+    uint currentUpload;
+    uint totalDownloads;
+    uint currentDownload;
 
     QFont fontUploads;
     QFont fontDownloads;
@@ -182,6 +191,9 @@ private:
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+
+private:
+    QString getQuantityString(uint quantity);
 };
 
 

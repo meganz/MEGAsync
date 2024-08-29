@@ -656,6 +656,16 @@
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
         <translation>Wait until the current upload is completed.</translation>
     </message>
+    <message>
+        <source>You must wait 10 minutes before submitting another issue</source>
+        <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>CancelConfirmWidget</name>
@@ -4186,19 +4196,6 @@ Refresh the view.</translation>
         <source>Are you sure you want to remove the local folder %1?</source>
         <translatorcomment>Text of a message box displayed whe the user tries to solve a name conflict stall by removing the  local folder.SNC-2565</translatorcomment>
         <translation>Replace the local folder [B]%1[/B]?</translation>
-    </message>
-</context>
-<context>
-    <name>NameConflictedStalledIssue</name>
-    <message>
-        <source>Unable to rename the file in MEGA</source>
-        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to rename the local file</source>
-        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

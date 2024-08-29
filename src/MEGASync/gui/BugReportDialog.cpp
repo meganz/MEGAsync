@@ -169,7 +169,7 @@ void BugReportDialog::onRequestFinish(MegaRequest* request, MegaError* e)
             }
             else
             {
-                showErrorMessage();
+                showErrorMessage(e);
             }
 
             break;
@@ -179,7 +179,7 @@ void BugReportDialog::onRequestFinish(MegaRequest* request, MegaError* e)
     }
 }
 
-void BugReportDialog::showErrorMessage()
+void BugReportDialog::showErrorMessage(mega::MegaError* error)
 {
     if (errorShown)
     {
@@ -203,21 +203,29 @@ void BugReportDialog::showErrorMessage()
     if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
     {
         msgInfo.informativeText = tr("There is an ongoing report being uploaded.")
-                                  + QString::fromUtf8("<br>") +
-                                  tr("Please wait until the current upload is completed.");
+                + QString::fromUtf8("<br>") +
+                tr("Please wait until the current upload is completed.");
         QMegaMessageBox::information(msgInfo);
+    }
+    else if (error && error->getErrorCode() == MegaError::API_ETOOMANY)
+    {
+        msgInfo.text = tr("You must wait 10 minutes before submitting another issue");
+        msgInfo.informativeText = tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.")
+                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                                      .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
+        QMegaMessageBox::warning(msgInfo);
     }
     else
     {
         msgInfo.informativeText =
-                    tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
-                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                         + QString::fromLatin1("\n");
-
+            tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
+                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+            + QString::fromLatin1("\n");
         QMegaMessageBox::warning(msgInfo);
     }
 }
+
 
 void BugReportDialog::postUpload()
 {

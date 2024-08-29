@@ -13,9 +13,9 @@ using namespace mega;
 SyncController::SyncController(QObject* parent)
     : QObject(parent)
     , mPendingBackups(QMap<QString, QString>())
+    , mActiveOperations(0)
     , mApi(MegaSyncApp->getMegaApi())
     , mSyncInfo(SyncInfo::instance())
-    , mActiveOperations(0)
 {
     // The controller shouldn't ever be instantiated before we have an API and a SyncInfo available
     assert(mApi);

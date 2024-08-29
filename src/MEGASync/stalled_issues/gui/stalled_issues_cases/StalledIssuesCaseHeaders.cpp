@@ -87,7 +87,7 @@ CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader 
     : StalledIssueHeaderCase(header)
 {}
 
-void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint)
 {
     auto fingerprintMissingChecker = [](const std::shared_ptr<const StalledIssue> issue){
         return issue->missingFingerprint();
@@ -475,7 +475,7 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
     }
 }
 
-void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {

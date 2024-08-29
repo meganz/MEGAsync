@@ -251,8 +251,7 @@ class StalledIssue : public QObject
                     object->deleteLater();
                 };
 
-                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
-                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [this](const QString&){
+                auto onChanged = [this](){
                     mIssue->resetUIUpdated();
 #ifdef Q_OS_LINUX
                     auto paths = mIssue->getLocalFiles();
@@ -264,6 +263,15 @@ class StalledIssue : public QObject
                         }
                     }
 #endif
+                };
+
+                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
+                connect(mFileWatcher.get(), &QFileSystemWatcher::directoryChanged, this, [onChanged](const QString&){
+                    onChanged();
+                });
+
+                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [onChanged](const QString&){
+                    onChanged();
                 });
             }
         }

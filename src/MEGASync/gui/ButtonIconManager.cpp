@@ -15,7 +15,7 @@ const char* ButtonIconManager::BUTTON_FULL_TEXT = "button_full_text";
 const char* ButtonIconManager::BUTTON_ELIDE_TEXT = "button_elide_text";
 const char* ButtonIconManager::NOT_CHANGE_TEXT_COLOR = "not_change_text_color";
 
-const QString QRC_PREFIX = QLatin1Literal("qrc");
+const QString QRC_PREFIX = QLatin1String("qrc");
 
 const char* ButtonIconManager::DISABLE_UNCHECK_ON_CLICK = "disable_uncheck_on_click";
 
@@ -280,9 +280,9 @@ void ButtonIconManager::addIconSpacing(QAbstractButton *button)
     if(button->property(ICON_SPACING).isValid())
     {
         QString spaceChar(QLatin1String(" "));
-        uint spacing = button->property(ICON_SPACING).toUInt();
-        uint space_size = button->fontMetrics().horizontalAdvance(spaceChar);
-        uint number_of_spaces = spacing / space_size;
+        auto spacing = button->property(ICON_SPACING).toInt();
+        auto space_size = button->fontMetrics().horizontalAdvance(spaceChar);
+        auto number_of_spaces = spacing / space_size;
         button->setText(spaceChar.repeated(number_of_spaces) + button->text());
     }
 }

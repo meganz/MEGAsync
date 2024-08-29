@@ -32,7 +32,7 @@ void QRWidget::paintEvent(QPaintEvent *event)
     QColor bg(244, 244, 244);
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
-                           | QPainter::HighQualityAntialiasing);
+                           | QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
     painter.setBrush(fg);
 

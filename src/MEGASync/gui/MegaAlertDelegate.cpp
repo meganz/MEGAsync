@@ -17,6 +17,13 @@
 
 using namespace mega;
 
+
+#ifdef _MSC_VER
+#pragma warning(disable : 4068)  // Disable the specific warning
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 MegaAlertDelegate::MegaAlertDelegate(QAlertsModel *model, bool useProxyModel, QObject *parent)
     : QStyledItemDelegate(parent),
       mAlertsModel(model),
@@ -28,7 +35,6 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 {
     if (index.isValid())
     {       
-
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
         MegaUserAlertExt* alert = nullptr;
@@ -50,7 +56,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
         if (!alert)
         {
-            assert(false || "No alert found");
+            assert(true && "No alert found");
             QStyledItemDelegate::paint(painter, option, index);
             return;
         }
@@ -61,18 +67,25 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
             ti = new AlertItem();
             connect(ti, &AlertItem::refreshAlertItem, mAlertsModel, &QAlertsModel::refreshAlertItem);
 
-            mAlertsModel->alertItems.insert(alert->getId(), ti);
-
             ti->setAlertData(alert); //Just set when created and when updated at QAlertsModel
+            if(!mAlertsModel->alertItems.insert(alert->getId(), ti))
+            {
+                ti = nullptr;
+            }
         }
 
-        painter->save();
-        painter->translate(option.rect.topLeft());
+        if (ti)
+        {
+            painter->save();
+            painter->translate(option.rect.topLeft());
 
-        ti->resize(option.rect.width(), option.rect.height());
+            ti->resize(option.rect.width(), option.rect.height());
 
-        ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
-        painter->restore();
+            ti->render(painter,
+                       QPoint(0, 0),
+                       QRegion(0, 0, option.rect.width(), option.rect.height()));
+            painter->restore();
+        }
     }
     else
     {

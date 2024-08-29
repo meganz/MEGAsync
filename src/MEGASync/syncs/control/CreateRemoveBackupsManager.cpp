@@ -3,21 +3,18 @@
 #include "Backups.h"
 #include "BackupsController.h"
 #include "DialogOpener.h"
-#include "QmlDialogManager.h"
 #include "QmlDialogWrapper.h"
 #include "RemoveBackupDialog.h"
 #include "SyncSettings.h"
 
-const CreateRemoveBackupsManager* const
-    CreateRemoveBackupsManager::addBackup(bool comesFromSettings)
+const CreateRemoveBackupsManager *  CreateRemoveBackupsManager::addBackup(bool comesFromSettings)
 {
     auto backupManager(new CreateRemoveBackupsManager());
     backupManager->performAddBackup(comesFromSettings);
     return backupManager;
 }
 
-const CreateRemoveBackupsManager* const
-    CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
+const CreateRemoveBackupsManager *CreateRemoveBackupsManager::removeBackup(std::shared_ptr<SyncSettings> backup, QWidget* parent)
 {
     auto backupManager(new CreateRemoveBackupsManager());
     backupManager->performRemoveBackup(backup, parent);

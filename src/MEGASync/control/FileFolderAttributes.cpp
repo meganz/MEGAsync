@@ -92,8 +92,8 @@ bool FileFolderAttributes::attributeNeedsUpdate(QObject* caller, int type)
     auto currentValue = mValues.value(type);
     auto currentTime = QDateTime::currentMSecsSinceEpoch();
     auto lastTimestamp = mRequestTimestamps.value(type, 0);
-    if (lastTimestamp == 0 ||
-        ((currentTime - lastTimestamp) > 2000) && (!currentValue.isValid() || !areValueUpdatesDisabled()))
+    if ((lastTimestamp == 0 ||
+        (currentTime - lastTimestamp) > 2000) && (!currentValue.isValid() || !areValueUpdatesDisabled()))
     {
         mRequestTimestamps.insert(type, currentTime);
         return true;
@@ -259,9 +259,8 @@ void LocalFileFolderAttributes::requestCreatedTime(QObject* caller,std::function
 #elif defined(Q_OS_MACOS)
             struct stat the_time;
             stat(mPath.toUtf8(), &the_time);
-            QDateTime auxTime;
-            auxTime.setTime_t(the_time.st_birthtimespec.tv_sec);
-            createdTime = QVariant::fromValue<QDateTime>(auxTime);
+            createdTime = QVariant::fromValue<QDateTime>(
+                QDateTime::fromSecsSinceEpoch(the_time.st_birthtimespec.tv_sec));
 #elif defined(Q_OS_LINUX)
             createdTime = QVariant::fromValue<QDateTime>(QDateTime::fromSecsSinceEpoch(0));
 #endif
