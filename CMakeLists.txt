@@ -62,3 +62,6 @@ include(desktopapp_configuration)
 
 # Load the MEGA targets
 add_subdirectory(src)
+
+include(get_clang_format)
+get_clang_format()
