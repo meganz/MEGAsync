@@ -902,6 +902,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
     emit blockUi(true);
+    //It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {
         foreach(auto handle, nodeHandles)
         {
@@ -1007,7 +1008,8 @@ void NodeSelectorModel::moveNode(std::shared_ptr<mega::MegaNode> moveNode,
 
 void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
-    if (request->getType() == mega::MegaRequest::TYPE_MOVE)
+    if (request->getType() == mega::MegaRequest::TYPE_MOVE ||
+        request->getType() == mega::MegaRequest::TYPE_REMOVE)
     {
         auto requestType = mRequestByHandle.take(request->getNodeHandle());
         if (e->getErrorCode() != mega::MegaError::API_OK)
