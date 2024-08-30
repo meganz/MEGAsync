@@ -546,12 +546,6 @@ void NodeSelectorTreeViewWidget::onRenameClicked()
 
 void NodeSelectorTreeViewWidget::onDeleteClicked()
 {
-    QPointer<NodeSelectorTreeViewWidget> currentDialog = this;
-    if (!currentDialog)
-    {
-        return;
-    }
-
     QMegaMessageBox::MessageBoxInfo msgInfo;
     msgInfo.parent = ui->tMegaFolders;
     msgInfo.title = MegaSyncApp->getMEGAString();
