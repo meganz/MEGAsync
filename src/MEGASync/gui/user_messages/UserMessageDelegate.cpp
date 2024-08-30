@@ -19,15 +19,13 @@ namespace
 constexpr int UPDATE_DELAY = 50;
 }
 
-UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel,
-                                         QTreeView* view)
-    : QStyledItemDelegate(view)
-    , mCacheManager(std::make_unique<UserMessageCacheManager>())
-    , mProxyModel(qobject_cast<UserMessageProxyModel*>(proxyModel))
-    , mEditor(std::make_unique<EditorInfo>())
-    , mView(view)
-{
-}
+UserMessageDelegate::UserMessageDelegate(QAbstractItemModel* proxyModel, QTreeView* view):
+    QStyledItemDelegate(view),
+    mCacheManager(std::make_unique<UserMessageCacheManager>()),
+    mEditor(std::make_unique<EditorInfo>()),
+    mProxyModel(qobject_cast<UserMessageProxyModel*>(proxyModel)),
+    mView(view)
+{}
 
 void UserMessageDelegate::paint(QPainter* painter,
                                 const QStyleOptionViewItem& option,
