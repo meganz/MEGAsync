@@ -118,16 +118,16 @@ void MegaApplication::loadDataPath()
     }
 }
 
-MegaApplication::MegaApplication(int &argc, char **argv) :
+MegaApplication::MegaApplication(int& argc, char** argv):
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
     mIsFirstFileTwoWaySynced(false),
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
-    mUserMessageController(nullptr),
     scanStageController(this),
-    mDisableGfx (false)
+    mDisableGfx(false),
+    mUserMessageController(nullptr)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))

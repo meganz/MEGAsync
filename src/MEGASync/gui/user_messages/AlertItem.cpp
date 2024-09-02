@@ -30,6 +30,8 @@ AlertItem::AlertItem(QWidget *parent)
         mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
         updateAlertData();
     });
+
+    mUi->bNotificationIcon->installEventFilter(this);
 }
 
 AlertItem::~AlertItem()
@@ -558,6 +560,72 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
 QString AlertItem::getHeadingString()
 {
     return mNotificationHeading;
+}
+
+bool AlertItem::eventFilter(QObject* obj, QEvent* event)
+{
+    if (obj == mUi->bNotificationIcon && event->type() == QEvent::Resize)
+    {
+        // Set with the same height than in updateAlertType.
+        switch (mAlertData->getType())
+        {
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+            // Fallthrough
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+            // Fallthrough
+            case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+            // Fallthrough
+            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_PAYMENT_FAILED:
+            // Fallthrough
+            case MegaUserAlert::TYPE_PAYMENTREMINDER:
+            // Fallthrough
+            case MegaUserAlert::TYPE_TAKEDOWN:
+            // Fallthrough
+            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+            {
+                break;
+            }
+            case MegaUserAlert::TYPE_NEWSHARE:
+            // Fallthrough
+            case MegaUserAlert::TYPE_DELETEDSHARE:
+            // Fallthrough
+            case MegaUserAlert::TYPE_NEWSHAREDNODES:
+            // Fallthrough
+            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            // Fallthrough
+            case MegaUserAlert::TYPE_UPDATEDSHAREDNODES:
+            {
+                mUi->bNotificationIcon->setFixedHeight(8);
+                break;
+            }
+            default:
+            {
+                mUi->bNotificationIcon->setFixedHeight(16);
+                break;
+            }
+        }
+    }
+    return QWidget::eventFilter(obj, event);
 }
 
 QSize AlertItem::minimumSizeHint() const

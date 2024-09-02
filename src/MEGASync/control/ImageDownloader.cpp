@@ -42,7 +42,7 @@ void ImageDownloader::downloadImage(const QString& imageUrl,
     }
 
     QNetworkRequest request(url);
-    request.setTransferTimeout(mTimeout);
+    request.setTransferTimeout(static_cast<int>(mTimeout));
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
 
     QNetworkReply* reply = mManager->get(request);

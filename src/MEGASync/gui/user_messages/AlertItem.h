@@ -35,6 +35,7 @@ public:
 
     QSize minimumSizeHint() const override;
     QSize sizeHint() const override;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
     void setAlertHeading(UserAlert* alert);
     void setAlertContent(UserAlert* alert);
