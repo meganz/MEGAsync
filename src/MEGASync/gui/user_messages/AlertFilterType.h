@@ -1,6 +1,8 @@
 #ifndef ALERTFILTERTYPE_H
 #define ALERTFILTERTYPE_H
 
+#include "UserMessageTypes.h"
+
 #include <QWidget>
 
 namespace Ui {
@@ -12,19 +14,12 @@ class AlertFilterType : public QWidget
     Q_OBJECT
 
 public:
-
-    enum ALERT_TYPE
-    {
-        ALL_TYPES = 0,
-        TYPE_CONTACTS = 1,
-        TYPE_SHARES = 2,
-        TYPE_PAYMENTS = 3,
-    };
-
-    explicit AlertFilterType(QWidget *parent = 0);
+    explicit AlertFilterType(QWidget* parent = 0);
     ~AlertFilterType();
 
-    void setActualFilter(ALERT_TYPE type);
+    void setActualFilter(MessageType type);
+    bool allFilterHasBeenSelected() const;
+    void resetAllFilterHasBeenSelected();
 
 signals:
     void clicked();
@@ -34,8 +29,10 @@ protected:
     void changeEvent(QEvent *event);
 
 private:
-    Ui::AlertFilterType *ui;
-    ALERT_TYPE mType;
+    Ui::AlertFilterType* ui;
+    MessageType mType;
+    bool mAllFilterHasBeenSelected;
+
 };
 
 #endif // ALERTFILTERTYPE_H

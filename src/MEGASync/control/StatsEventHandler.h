@@ -24,6 +24,10 @@ public:
     Q_INVOKABLE virtual void sendTrackedEvent(AppStatsEvents::EventType type,
                                               bool fromInfoDialog = false) = 0;
 
+    Q_INVOKABLE virtual void sendTrackedEventArg(AppStatsEvents::EventType type,
+                                                 const QStringList& args = QStringList(),
+                                                 bool fromInfoDialog = false) = 0;
+
     virtual void sendTrackedEvent(AppStatsEvents::EventType type,
                                   const QObject* senderObj,
                                   const QObject* expectedObj,
@@ -37,10 +41,10 @@ protected:
     bool mUpdateViewID;
     bool mLastInfoDialogEventSent;
 
-    virtual void sendEvent(AppStatsEvents::EventType type,
-                           const char* message,
-                           bool addJourneyId = false,
-                           const char* viewId = nullptr) = 0;
+    virtual void send(AppStatsEvents::EventType type,
+                      const QString& message,
+                      bool addJourneyId = false,
+                      const char* viewId = nullptr) = 0;
 
     bool eventFilter(QObject* obj, QEvent* event) override;
 
