@@ -20,7 +20,7 @@
         QPointer<MacXLocalSocket> client = new MacXLocalSocket(clientSocketPrivate);
         client->moveToThread(_serverSocketPrivate->localServer->thread());
         emit _serverSocketPrivate->localServer->newConnection(client);
-        [endPoint registerObject:clientSocketPrivate->client];
+        [(id)endPoint registerObject:clientSocketPrivate->client];
     }
 }
 

@@ -9,36 +9,35 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,
                                        const QStringList& args,
                                        bool encode)
 {
-    QString message(QString::fromUtf8(AppStatsEvents::getEventMessage(type)));
-    for (const QString& arg : args)
-    {
-        message = message.arg(arg);
-    }
-
-    sendEvent(type, encode ? encodeMessage(message).constData() : message.toUtf8().constData());
+    QString message = AppStatsEvents::getEventMessage(type, args);
+    send(type, encode ? encodeMessage(message) : message);
 }
 
-void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type, bool fromInfoDialog)
+void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
+                                              bool fromInfoDialog)
 {
     if(!mMegaApi)
     {
         return;
     }
 
-    if(mUpdateViewID)
+    updateTrackInfo(fromInfoDialog);
+    const bool addJourneyId = true;
+    send(type, AppStatsEvents::getEventMessage(type), addJourneyId, mViewID);
+}
+
+void ProxyStatsEventHandler::sendTrackedEventArg(AppStatsEvents::EventType type,
+                                                 const QStringList& args,
+                                                 bool fromInfoDialog)
+{
+    if(!mMegaApi)
     {
-        if(!fromInfoDialog || (fromInfoDialog && mLastInfoDialogEventSent))
-        {
-            mViewID = mMegaApi->generateViewId();
-            mUpdateViewID = false;
-        }
-        else if(fromInfoDialog && !mLastInfoDialogEventSent)
-        {
-            mLastInfoDialogEventSent = true;
-        }
+        return;
     }
 
-    sendEvent(type, AppStatsEvents::getEventMessage(type), true, mViewID);
+    updateTrackInfo(fromInfoDialog);
+    const bool addJourneyId = true;
+    send(type, AppStatsEvents::getEventMessage(type, args), addJourneyId, mViewID);
 }
 
 void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
@@ -52,10 +51,10 @@ void ProxyStatsEventHandler::sendTrackedEvent(AppStatsEvents::EventType type,
     }
 }
 
-void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,
-                                       const char* message,
-                                       bool addJourneyId,
-                                       const char* viewId)
+void ProxyStatsEventHandler::send(AppStatsEvents::EventType type,
+                                  const QString& message,
+                                  bool addJourneyId,
+                                  const char* viewId)
 {
     if(!mMegaApi || !canSend())
     {
@@ -68,14 +67,14 @@ void ProxyStatsEventHandler::sendEvent(AppStatsEvents::EventType type,
         mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
                       "Trying to send an event with not valid type");
     }
-    else if(QString::fromUtf8(message).isEmpty())
+    else if(message.isEmpty())
     {
         mMegaApi->log(mega::MegaApi::LOG_LEVEL_WARNING,
                       "Trying to send an event with not valid message");
     }
     else
     {
-        mMegaApi->sendEvent(eventType, message, addJourneyId, viewId);
+        mMegaApi->sendEvent(eventType, message.toUtf8().constData(), addJourneyId, viewId);
     }
 }
 
@@ -99,7 +98,7 @@ bool ProxyStatsEventHandler::canSend() const
 #endif
 }
 
-QByteArray ProxyStatsEventHandler::encodeMessage(const QString& msg) const
+QString ProxyStatsEventHandler::encodeMessage(const QString& msg) const
 {
     QByteArray base64stats = msg.toUtf8().toBase64();
     base64stats.replace('+', '-');
@@ -108,5 +107,24 @@ QByteArray ProxyStatsEventHandler::encodeMessage(const QString& msg) const
     {
         base64stats.resize(base64stats.size() - 1);
     }
-    return base64stats;
+    return QString::fromUtf8(base64stats);
 }
+
+void ProxyStatsEventHandler::updateTrackInfo(bool fromInfoDialog)
+{
+    if (!mUpdateViewID)
+    {
+        return;
+    }
+
+    if (!fromInfoDialog || mLastInfoDialogEventSent)
+    {
+        mViewID = mMegaApi->generateViewId();
+        mUpdateViewID = false;
+    }
+    else
+    {
+        mLastInfoDialogEventSent = true;
+    }
+}
+

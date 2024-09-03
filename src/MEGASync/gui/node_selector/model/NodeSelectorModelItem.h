@@ -70,7 +70,7 @@ protected:
     QString mOwnerEmail;
     Status mStatus;
     bool mRequestingChildren;
-    long long mChildrenCounter;
+    int mChildrenCounter;
     bool mShowFiles;
     bool mChildrenAreInit;
 

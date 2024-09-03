@@ -118,7 +118,7 @@ void MegaApplication::loadDataPath()
     }
 }
 
-MegaApplication::MegaApplication(int &argc, char **argv) :
+MegaApplication::MegaApplication(int& argc, char** argv):
     QApplication(argc, argv),
     mSyncs2waysMenu(nullptr),
     mBackupsMenu(nullptr),
@@ -126,7 +126,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
     scanStageController(this),
-    mDisableGfx (false)
+    mDisableGfx(false),
+    mUserMessageController(nullptr)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -270,10 +271,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     mStatusController = nullptr;
     mStatsEventHandler = nullptr;
 
-    notificationsModel = nullptr;
-    notificationsProxyModel = nullptr;
-    notificationsDelegate = nullptr;
-
     context = new QObject(this);
 
 #ifdef _WIN32
@@ -340,7 +337,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
     lastTsErrorMessageShown = 0;
-    maxMemoryUsage = 0;
+    mMaxMemoryUsage = 0;
     nodescurrent = false;
     getUserDataRequestReady = false;
     storageState = MegaApi::STORAGE_STATE_UNKNOWN;
@@ -706,8 +703,6 @@ void MegaApplication::initialize()
     connect(mLogoutController, &LogoutController::logout, this, &MegaApplication::onLogout);
     QmlManager::instance()->setRootContextProperty(mLogoutController);
 
-    RequestListenerManager& manager = RequestListenerManager::instance();
-
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
     mSetManager = new SetManager(megaApi, megaApiFolders);
@@ -721,6 +716,8 @@ void MegaApplication::initialize()
     connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
     connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
+
+    createUserMessageController();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -933,11 +930,12 @@ void MegaApplication::updateTrayIcon()
     }
     else if (paused)
     {
-        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
+            //We won´t never have thousand of millions of failed issues...so overflow is not a problem here
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
             icon = icons["someissues"];
         }
         else
@@ -984,11 +982,11 @@ void MegaApplication::updateTrayIcon()
     }
     else
     {
-        long long transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
+        auto transfersFailed(mTransfersModel ? mTransfersModel->failedTransfers() : 0);
 
         if(transfersFailed > 0)
         {
-            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", transfersFailed);
+            tooltipState = QCoreApplication::translate("TransferManager","Issue found", "", static_cast<int>(transfersFailed));
             icon = icons["someissues"];
         }
         else
@@ -1084,13 +1082,6 @@ void MegaApplication::start()
     mTransferQuota->reset();
     transferOverQuotaWaitTimeExpiredReceived = false;
     updateTrayIconMenu();
-
-    if(notificationsModel) notificationsModel->deleteLater();
-    notificationsModel = nullptr;
-    if (notificationsProxyModel) notificationsProxyModel->deleteLater();
-    notificationsProxyModel = nullptr;
-    if (notificationsDelegate) notificationsDelegate->deleteLater();
-    notificationsDelegate = nullptr;
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -1238,53 +1229,6 @@ void MegaApplication::requestUserData()
     megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
-}
-
-void MegaApplication::populateUserAlerts(MegaUserAlertList *theList, bool copyRequired)
-{
-    if (!theList)
-    {
-        return;
-    }
-
-    if (mOsNotifications)
-    {
-        mOsNotifications->addUserAlertList(theList);
-    }
-
-    if (notificationsModel)
-    {
-        notificationsModel->insertAlerts(theList, copyRequired);
-    }
-    else
-    {
-        notificationsModel = new QAlertsModel(theList, copyRequired);
-        notificationsProxyModel = new QFilterAlertsModel();
-        notificationsProxyModel->setSourceModel(notificationsModel);
-        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
-
-        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
-
-        if (infoDialog)
-        {
-            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
-        }
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
-        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
-                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
-                                               notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
-                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-    }
-
-    if (!copyRequired)
-    {
-        theList->clear(); //empty the list otherwise they will be deleted
-        delete theList;
-    }
 }
 
 void MegaApplication::onboardingFinished(bool fastLogin)
@@ -1552,6 +1496,8 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                mUserMessageController.reset();
+                createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
                 start();
@@ -1873,7 +1819,7 @@ void MegaApplication::highLightMenuEntry(QAction *action)
 
 void MegaApplication::pauseTransfers(bool pause)
 {
-    if (appfinished)
+    if (appfinished || !megaApi)
     {
         return;
     }
@@ -1924,12 +1870,12 @@ void MegaApplication::checkNetworkInterfaces()
 
 void MegaApplication::checkMemoryUsage()
 {
-    long long numNodes = megaApi->getNumNodes();
-    long long numLocalNodes = megaApi->getNumLocalNodes();
-    long long totalNodes = numNodes + numLocalNodes;
+    auto numNodes = megaApi->getNumNodes();
+    auto numLocalNodes = static_cast<unsigned long long>(megaApi->getNumLocalNodes());
+    auto totalNodes = numNodes + numLocalNodes;
     auto transferCount = getTransfersModel()->getTransfersCount();
-    long long totalTransfers =  transferCount.pendingUploads + transferCount.pendingDownloads;
-    long long procesUsage = 0;
+    auto totalTransfers =  transferCount.pendingUploads + transferCount.pendingDownloads;
+    unsigned long long procesUsage = 0ULL;
 
     if (!totalNodes)
     {
@@ -1942,7 +1888,7 @@ void MegaApplication::checkMemoryUsage()
     {
         return;
     }
-    procesUsage = pmc.PrivateUsage;
+    procesUsage =  static_cast<unsigned long long>(pmc.PrivateUsage);
 #else
     #ifdef __APPLE__
         struct task_basic_info t_info;
@@ -1952,7 +1898,7 @@ void MegaApplication::checkMemoryUsage()
                                       TASK_BASIC_INFO, (task_info_t)&t_info,
                                       &t_info_count))
         {
-            procesUsage = t_info.resident_size;
+            procesUsage = static_cast<unsigned long long>(t_info.resident_size);
         }
         else
         {
@@ -1968,23 +1914,23 @@ void MegaApplication::checkMemoryUsage()
                  .arg(static_cast<float>(procesUsage) / static_cast<float>(totalNodes))
                  .arg(totalTransfers).toUtf8().constData());
 
-    if (procesUsage > maxMemoryUsage)
+    if (procesUsage > mMaxMemoryUsage)
     {
-        maxMemoryUsage = procesUsage;
+        mMaxMemoryUsage = procesUsage;
     }
 
-    if (maxMemoryUsage > preferences->getMaxMemoryUsage()
-            && maxMemoryUsage > 268435456 //256MB
+    if (mMaxMemoryUsage > preferences->getMaxMemoryUsage()
+            && mMaxMemoryUsage > 268435456 //256MB
             + 2028 * totalNodes // 2KB per node
             + 5120 * totalTransfers) // 5KB per transfer
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch();
         if (currentTime - preferences->getMaxMemoryReportTime() > 86400000)
         {
-            preferences->setMaxMemoryUsage(maxMemoryUsage);
+            preferences->setMaxMemoryUsage(mMaxMemoryUsage);
             preferences->setMaxMemoryReportTime(currentTime);
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::MEM_USAGE,
-                                          { QString::number(maxMemoryUsage),
+                                          { QString::number(mMaxMemoryUsage),
                                             QString::number(numNodes),
                                             QString::number(numLocalNodes) });
         }
@@ -2053,7 +1999,7 @@ void MegaApplication::checkOverStorageStates()
         }
 
         auto transferCount = getTransfersModel()->getTransfersCount();
-        long long pendingTransfers =  transferCount.pendingUploads || transferCount.pendingDownloads;
+        uint pendingTransfers =  transferCount.pendingUploads || transferCount.pendingDownloads;
 
         if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
                               && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
@@ -2238,17 +2184,10 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
-    // Delete notifications stuff
-    delete notificationsModel;
-    notificationsModel = nullptr;
-    delete notificationsProxyModel;
-    notificationsProxyModel = nullptr;
-    delete notificationsDelegate;
-    notificationsDelegate = nullptr;
-
     delete AccountDetailsManager::instance();
     delete EmailRequester::instance();
 
+    mUserMessageController.reset();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -2530,6 +2469,8 @@ void MegaApplication::createInfoDialog()
             this, SLOT(cancelScanningStage()));
     connect(this, &MegaApplication::addBackup,
             infoDialog.data(), &InfoDialog::onAddBackup);
+    connect(mUserMessageController.get(), &UserMessageController::unseenAlertsChanged,
+            infoDialog.data(), &InfoDialog::onUnseenAlertsChanged);
     scanStageController.updateReference(infoDialog);
 }
 
@@ -3065,7 +3006,7 @@ void MegaApplication::processUpgradeSecurityEvent()
     msgInfo.textFormat = Qt::RichText;
     msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
     {
-        if (msg->result() == QMessageBox::Ok)
+        if (msg->result() == QMessageBox::Ok && !appfinished)
         {
             auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
                 this,
@@ -3488,7 +3429,7 @@ void MegaApplication::applyProxySettings()
         proxySettings->setProxyURL(proxyString.toUtf8().constData());
 
         proxy.setHostName(preferences->proxyServer());
-        proxy.setPort(qint16(preferences->proxyPort()));
+        proxy.setPort(preferences->proxyPort());
         if (preferences->proxyRequiresAuth())
         {
             QString username = preferences->getProxyUsername();
@@ -3515,7 +3456,7 @@ void MegaApplication::applyProxySettings()
             {
                 proxy.setType(QNetworkProxy::HttpProxy);
                 proxy.setHostName(arguments[0]);
-                proxy.setPort(qint16(arguments[1].toInt()));
+                proxy.setPort(arguments[1].toUShort());
             }
         }
     }
@@ -4257,14 +4198,6 @@ void MegaApplication::transferManagerActionClicked(int tab)
     DialogOpener::showGeometryRetainerDialog(mTransferManager);
 }
 
-void MegaApplication::applyNotificationFilter(int opt)
-{
-    if (notificationsProxyModel)
-    {
-        notificationsProxyModel->setFilterAlertType(opt);
-    }
-}
-
 void MegaApplication::changeState()
 {
     if (appfinished)
@@ -4535,6 +4468,19 @@ void MegaApplication::sendPeriodicStats() const
     }
 }
 
+void MegaApplication::createUserMessageController()
+{
+    if(!mUserMessageController)
+    {
+        mUserMessageController = std::make_unique<UserMessageController>(nullptr);
+        if(mOsNotifications)
+        {
+            connect(mUserMessageController.get(), &UserMessageController::userAlertsUpdated,
+                    mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
+        }
+    }
+}
+
 void MegaApplication::processSetDownload(const QString& publicLink,
                                          const QList<MegaHandle>& elementHandleList)
 {
@@ -4766,7 +4712,7 @@ void MegaApplication::externalLinkDownload(QString megaLink, QString auth)
     }
 }
 
-void MegaApplication::externalFileUpload(qlonglong targetFolder)
+void MegaApplication::externalFileUpload(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4804,7 +4750,7 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     Platform::getInstance()->fileSelector(info);
 }
 
-void MegaApplication::externalFolderUpload(qlonglong targetFolder)
+void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4850,7 +4796,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     Platform::getInstance()->folderSelector(info);
 }
 
-void MegaApplication::externalFolderSync(qlonglong targetFolder)
+void MegaApplication::externalFolderSync(MegaHandle targetFolder)
 {
     if (appfinished || QmlDialogManager::instance()->openOnboardingDialog())
     {
@@ -4859,7 +4805,7 @@ void MegaApplication::externalFolderSync(qlonglong targetFolder)
 
     if (infoDialog)
     {
-        if (targetFolder == ::mega::INVALID_HANDLE)
+        if (static_cast<MegaHandle>(targetFolder) == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
                          QString::fromUtf8("Invalid Mega handle when trying to add external sync")
@@ -4894,23 +4840,6 @@ void MegaApplication::externalOpenTransferManager(int tab)
     }
 
     transferManagerActionClicked(tab);
-}
-
-void MegaApplication::internalDownload(long long handle)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    MegaNode *node = megaApi->getNodeByHandle(handle);
-    if (!node)
-    {
-        return;
-    }
-
-    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
-    processDownloads();
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -5943,7 +5872,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_SEND_EVENT:
     {
-        switch (AppStatsEvents::getEventType(request->getNumber()))
+        // MegaApi uses an int to define the max number of events, but request->getNumber returns a
+        // unsigned long long
+        switch (AppStatsEvents::getEventType(static_cast<int>(request->getNumber())))
         {
             case AppStatsEvents::EventType::FIRST_START:
                 preferences->setFirstStartDone();
@@ -6082,6 +6013,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             mIsFirstFileBackedUp = true;
             break;
         }
+        default:
+            break;
         }
     }
 }
@@ -6158,22 +6091,6 @@ void MegaApplication::onAccountUpdate(MegaApi *)
                                                        USERSTATS_ACCOUNTUPDATE);
 }
 
-
-bool MegaApplication::notificationsAreFiltered()
-{
-    return notificationsProxyModel && notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
-}
-
-bool MegaApplication::hasNotifications()
-{
-    return notificationsModel && notificationsModel->rowCount(QModelIndex());
-}
-
-bool MegaApplication::hasNotificationsOfType(int type)
-{
-    return notificationsModel && notificationsModel->existsNotifications(type);
-}
-
 MegaSyncLogger& MegaApplication::getLogger() const
 {
     return *logger;
@@ -6182,36 +6099,6 @@ MegaSyncLogger& MegaApplication::getLogger() const
 void MegaApplication::pushToThreadPool(std::function<void()> functor)
 {
     mThreadPool->push(std::move(functor));
-}
-
-void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
-{
-    Q_UNUSED(api)
-
-    if (appfinished)
-    {
-        return;
-    }
-
-    // if we have a list, we don't need to query megaApi for it and block the sdk mutex, we do this
-    // synchronously, since we are not copying the list, and we need to process it before it goes out of scope.
-    bool doSynchronously{list != NULL};
-
-    if (doSynchronously)
-    {
-        populateUserAlerts(list, true);
-    }
-    else
-    {
-        auto funcToThreadPool = [this]()
-        { //thread pool function
-            MegaUserAlertList *theList;
-            theList = megaApi->getUserAlerts();
-            //queued function
-            Utilities::queueFunctionInAppThread([this, theList]() { populateUserAlerts(theList, false); });
-        }; // end of thread pool function
-        mThreadPool->push(funcToThreadPool);
-    }
 }
 
 //Called when contacts have been updated in MEGA
@@ -6311,8 +6198,8 @@ void MegaApplication::onGlobalSyncStateChangedImpl()
         auto transferCount = mTransfersModel->getTransfersCount();
         mTransferring = transferCount.pendingUploads || transferCount.pendingDownloads;
 
-        int pendingUploads = transferCount.pendingUploads;
-        int pendingDownloads = transferCount.pendingDownloads;
+        auto pendingUploads = transferCount.pendingUploads;
+        auto pendingDownloads = transferCount.pendingDownloads;
 
         if (pendingUploads)
         {

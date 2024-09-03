@@ -19,11 +19,11 @@ struct onRequestFinishOnlyListenerCallback
 
 struct ListenerCallbacks
 {
-    QPointer<QObject> callbackClass;
-    std::function<void(mega::MegaRequest *request)> onRequestStart;
-    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestFinish;
-    std::function<void(mega::MegaRequest *request)> onRequestUpdate;
-    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError;
+    QPointer<QObject> callbackClass = nullptr;
+    std::function<void(mega::MegaRequest *request)> onRequestStart = nullptr;
+    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestFinish = nullptr;
+    std::function<void(mega::MegaRequest *request)> onRequestUpdate = nullptr;
+    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError = nullptr;
     bool removeAfterReqFinish = false;
     bool isSynchronousOneShotReq = false;
 };

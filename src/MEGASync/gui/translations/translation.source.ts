@@ -656,6 +656,16 @@
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
         <translation>Wait until the current upload is completed.</translation>
     </message>
+    <message>
+        <source>You must wait 10 minutes before submitting another issue</source>
+        <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>CancelConfirmWidget</name>
@@ -4189,19 +4199,6 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
-    <name>NameConflictedStalledIssue</name>
-    <message>
-        <source>Unable to rename the file in MEGA</source>
-        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to rename the local file</source>
-        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
@@ -4527,6 +4524,55 @@ Enter a different name.</translation>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
         <translation>Searching:</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">LIMITED TIME OFFER</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">PROMO</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expired</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n day</numerusform>
+            <numerusform>Offer expires in %n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n hour</numerusform>
+            <numerusform>Offer expires in %n hours</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes. The placeholder %1 shall be replaced by the number of minutes. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m %2 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 seconds. Placeholder %1 shall be replaced by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

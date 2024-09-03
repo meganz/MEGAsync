@@ -55,13 +55,13 @@ public:
         ConflictedNameInfo(const QFileInfo& fileInfo,
             bool isFile,
             std::shared_ptr<FileFolderAttributes> attributes)
-            : mConflictedName(fileInfo.fileName())
-            , mHandle(mega::INVALID_HANDLE)
+            : mHandle(mega::INVALID_HANDLE)
             , mConflictedPath(fileInfo.filePath())
-            , mDuplicatedGroupId(-1)
             , mDuplicated(false)
+            , mDuplicatedGroupId(-1)
             , mIsFile(isFile)
             , mItemAttributes(attributes)
+            , mConflictedName(fileInfo.fileName())
             , mSolved(SolvedType::UNSOLVED)
         {
         }
@@ -169,13 +169,13 @@ public:
     {
         QString fingerprint;
         int64_t size = -1;
-        int64_t modifiedTime = -1;
+        unsigned long long modifiedTime = 0;
     };
 
     class CloudConflictedNamesByAttributes
     {
     public:
-        CloudConflictedNamesByAttributes(QString ufingerprint, int64_t usize, int64_t umodifiedTime)
+        CloudConflictedNamesByAttributes(QString ufingerprint, int64_t usize, unsigned long long umodifiedTime)
         {
             mAttributes.fingerprint = ufingerprint;
             mAttributes.size = usize;
@@ -189,7 +189,7 @@ public:
 
         bool solved = false;
 
-        QMultiMap<int64_t, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
+        QMultiMap<unsigned long long, std::shared_ptr<ConflictedNameInfo>> conflictedNames;
     };
 
     class CloudConflictedNames
@@ -205,8 +205,8 @@ public:
             mConflictedNames.append(newConflictedName);
         }
 
-        void updateFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t oldcreationtimestamp,
-                                      int64_t newcreationtimestamp,
+        void updateFileConflictedName(unsigned long long modifiedtimestamp, int64_t size, unsigned long long oldcreationtimestamp,
+                                      unsigned long long newcreationtimestamp,
                                       QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             bool isDuplicated(false);
@@ -228,7 +228,7 @@ public:
                     info->mDuplicatedGroupId = index;
                     info->mDuplicated = true;
 
-                    namesByHandle.conflictedNames.insertMulti(newcreationtimestamp, info);
+                    namesByHandle.conflictedNames.insert(newcreationtimestamp, info);
 
                     isDuplicated = true;
                     break;
@@ -248,14 +248,14 @@ public:
                 }
 
                 CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
-                newConflictedName.conflictedNames.insertMulti(newcreationtimestamp,info);
+                newConflictedName.conflictedNames.insert(newcreationtimestamp,info);
                 mConflictedNames.append(newConflictedName);
 
                 info->mDuplicated = false;
             }
         }
 
-        void addFileConflictedName(int64_t modifiedtimestamp, int64_t size, int64_t creationtimestamp,
+        void addFileConflictedName(unsigned long long modifiedtimestamp, int64_t size, unsigned long long creationtimestamp,
                                    QString fingerprint, std::shared_ptr<ConflictedNameInfo> info)
         {
             for(int index = 0; index < mConflictedNames.size(); ++index)
@@ -280,13 +280,13 @@ public:
                         info->mDuplicated = true;
                     }
 
-                    namesByHandle.conflictedNames.insertMulti(creationtimestamp, info);
+                    namesByHandle.conflictedNames.insert(creationtimestamp, info);
                     return;
                 }
             }
 
             CloudConflictedNamesByAttributes newConflictedName(fingerprint, size, modifiedtimestamp);
-            newConflictedName.conflictedNames.insertMulti(creationtimestamp,info);
+            newConflictedName.conflictedNames.insert(creationtimestamp,info);
             mConflictedNames.append(newConflictedName);
         }
 

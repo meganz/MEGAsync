@@ -138,7 +138,7 @@ int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
     return count;
 }
 
-void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
+void DesktopNotifications::onUserAlertsUpdated(mega::MegaUserAlertList* alertList)
 {
     if(mPreferences->isAnyNotificationEnabled())
     {
@@ -910,6 +910,8 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(D
 
                     break;
                 }
+                default:
+                    break;
             }
         }
     }
@@ -972,6 +974,8 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Des
                 }
                 break;
             }
+            default:
+                break;
             }
         }
     }

@@ -119,7 +119,7 @@ CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader 
     : StalledIssueHeaderCase(header)
 {}
 
-void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int)
+void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint)
 {
     auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
         return issue->missingFingerprint();
@@ -361,7 +361,7 @@ void FolderMatchedAgainstFileHeader::refreshCaseActions(StalledIssueHeader* head
 }
 
 void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
-    StalledIssueHeader* header, int)
+    StalledIssueHeader* header, uint)
 {
     auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
         return issue->getReason() == mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile;
@@ -522,7 +522,7 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
     }
 }
 
-void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {

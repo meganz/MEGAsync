@@ -8,7 +8,7 @@
 @public
     QPointer<QSegmentedControl> pimpl;
 }
--(void)clicked;
+-(void)clicked : (id)sender;
 @end
 
 @implementation QSegmentedControlTarget
@@ -43,8 +43,6 @@ void QSegmentedControl::configureTableSegment()
         [segControl setWidth:31 forSegment:0];
         [segControl setWidth:31 forSegment:1];
 
-        //Remaining space witouth + and - buttons and borders
-        CGFloat remainingSpace = [segControl widthForSegment:0] * 2 + 4;
         QSegmentedControlTarget *proxy = [[QSegmentedControlTarget alloc] init];
         proxy->pimpl = this;
 
@@ -87,7 +85,7 @@ void QSegmentedControl::configureTabSegment(QStringList options)
     }
 }
 
-void QSegmentedControl::clicked(int segment)
+void QSegmentedControl::clicked(long segment)
 {
     switch (segmentType)
     {
@@ -106,7 +104,7 @@ void QSegmentedControl::clicked(int segment)
             {
                 return;
             }
-            emit segmentClicked(segment);
+            emit segmentClicked(static_cast<int>(segment));
             break;
         default:
             break;

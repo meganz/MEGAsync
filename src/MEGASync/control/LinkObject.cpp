@@ -108,7 +108,6 @@ void LinkNode::updateNodeDetails()
 
 LinkSet::LinkSet(mega::MegaApi* megaApi, const AlbumCollection& set)
     : LinkObject(megaApi, nullptr, set.link)
-    , mNrElements(set.elementHandleList.size())
 {
     mName = set.name;
     mLinkType = linkType::SET;

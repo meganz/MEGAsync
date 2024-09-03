@@ -44,7 +44,7 @@ bool UploadToMegaDialog::isDefaultFolder()
     return ui->cDefaultPath->isChecked();
 }
 
-void UploadToMegaDialog::setDefaultFolder(long long handle)
+void UploadToMegaDialog::setDefaultFolder(mega::MegaHandle handle)
 {
     std::unique_ptr<mega::MegaNode> node(megaApi->getNodeByHandle(handle));
     if(node && node->isNodeKeyDecrypted())
@@ -127,7 +127,7 @@ std::unique_ptr<MegaNode> UploadToMegaDialog::getUploadFolder()
         }
     }
 
-    return std::move(node);
+    return node;
 }
 
 void UploadToMegaDialog::showNodeSelector()

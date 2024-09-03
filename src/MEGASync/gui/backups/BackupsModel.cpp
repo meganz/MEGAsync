@@ -22,15 +22,15 @@ BackupFolder::BackupFolder(const QString& folder,
     , mDone(false)
     , mFolderSizeReady(false)
     , mError(0)
-    , mFolderAttr(nullptr)
-    , mFolder(folder)
     , mFolderSize(FileFolderAttributes::NOT_READY)
     , mSdkError(-1)
     , mSyncError(-1)
+    , mFolderAttr(nullptr)
+    , mFolder(folder)
 {
 }
 
-void BackupFolder::setSize(qint64 size)
+void BackupFolder::setSize(long long size)
 {
     QVector<int> changedRoles;
     changedRoles.append(BackupsModel::SIZE_READY_ROLE);
@@ -39,7 +39,7 @@ void BackupFolder::setSize(qint64 size)
 
     if(size > FileFolderAttributes::NOT_READY)
     {
-        mFolderSize = static_cast<quint64>(size);
+        mFolderSize = size;
         mSize = Utilities::getSizeStringLocalized(mFolderSize);
         changedRoles.append(BackupsModel::SIZE_ROLE);
     }
@@ -59,7 +59,7 @@ void BackupFolder::setFolder(const QString &folder)
     {
         mFolderAttr->setPath(mFolder);
     }
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -76,7 +76,7 @@ void BackupFolder::setError(int error)
 void BackupFolder::calculateFolderSize()
 {
     createFileFolderAttributes();
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -87,6 +87,7 @@ bool BackupFolder::createFileFolderAttributes()
     if(!mFolderAttr)
     {
         mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+        mFolderAttr->setValueUpdatesDisable();
         return true;
     }
     return false;
@@ -428,7 +429,7 @@ void BackupsModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
     auto lastTotalSize = mBackupsTotalSize;
-    unsigned long long totalSize = 0;
+    long long totalSize = 0;
 
     int selectedAndSizeReadyFolders = 0;
 
@@ -821,10 +822,14 @@ void BackupsModel::remove(const QString& folder)
         if((found = (*item)->getFolder() == folder))
         {
             name = (*item)->mName;
-            const auto row = std::distance(mBackupFolderList.begin(), item);
-            beginRemoveRows(QModelIndex(), row, row);
-            item = mBackupFolderList.erase(item);
-            endRemoveRows();
+            //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+            const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+            if(row >= 0)
+            {
+                beginRemoveRows(QModelIndex(), row, row);
+                item = mBackupFolderList.erase(item);
+                endRemoveRows();
+            }
         }
         else
         {
@@ -901,10 +906,14 @@ void BackupsModel::clean(bool resetErrors)
         {
             if((*item)->mDone)
             {
-                const auto row = std::distance(mBackupFolderList.begin(), item);
-                beginRemoveRows(QModelIndex(), row, row);
-                item = mBackupFolderList.erase(item);
-                endRemoveRows();
+                //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+                const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+                if(row >= 0)
+                {
+                    beginRemoveRows(QModelIndex(), row, row);
+                    item = mBackupFolderList.erase(item);
+                    endRemoveRows();
+                }
             }
             else
             {

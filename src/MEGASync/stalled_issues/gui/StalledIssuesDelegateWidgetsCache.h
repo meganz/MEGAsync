@@ -37,7 +37,7 @@ public:
 
 private:
     mutable QMap<int,QPointer<StalledIssueHeader>> mStalledIssueHeaderWidgets;
-    mutable QMap<int, QMap<int, QPointer<StalledIssueBaseDelegateWidget>>> mStalledIssueWidgets;
+    mutable QMap<unsigned int, QMap<int, QPointer<StalledIssueBaseDelegateWidget>>> mStalledIssueWidgets;
 
     int getMaxCacheRow(int row) const;
 

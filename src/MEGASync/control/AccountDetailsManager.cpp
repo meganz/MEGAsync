@@ -311,9 +311,9 @@ void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::Mega
 
 mega::MegaHandle AccountDetailsManager::processNode(const std::shared_ptr<mega::MegaNode>& node,
                                                     const std::shared_ptr<mega::MegaAccountDetails>& details,
-                                                    std::function<void (mega::MegaHandle)> setStorageUsed,
-                                                    std::function<void (mega::MegaHandle)> setNumFiles,
-                                                    std::function<void (mega::MegaHandle)> setNumFolders)
+                                                    std::function<void (long long)> setStorageUsed,
+                                                    std::function<void (long long)> setNumFiles,
+                                                    std::function<void (long long)> setNumFolders)
 {
     mega::MegaHandle handle = node ? node->getHandle() : mega::INVALID_HANDLE;
     setStorageUsed(details->getStorageUsed(handle));
@@ -324,6 +324,12 @@ mega::MegaHandle AccountDetailsManager::processNode(const std::shared_ptr<mega::
 
 void AccountDetailsManager::processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details)
 {
+    if (!MegaSyncApp->getRootNode() || !MegaSyncApp->getVaultNode() ||
+        !MegaSyncApp->getRubbishNode())
+    {
+        return;
+    }
+
     // Cloud Drive
     auto cloudDriveHandle = processNode(MegaSyncApp->getRootNode(),
                                         details,
@@ -416,14 +422,8 @@ bool AccountDetailsManager::canContinue(mega::MegaError* error) const
 {
     // We need to be both logged AND have fetched the nodes to continue
     // Do not continue if there was an error
-    // TODO: investigate getRootNode, getVaultNode and getRubbishNode conditions.
-    //       Is this case possible and what should we do? Restart the app?
-    if (mPreferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK
-        || !mPreferences->logged()
-        || error->getErrorCode() != mega::MegaError::API_OK
-        || !MegaSyncApp->getRootNode()
-        || !MegaSyncApp->getVaultNode()
-        || !MegaSyncApp->getRubbishNode())
+    if (mPreferences->accountStateInGeneral() != Preferences::STATE_FETCHNODES_OK ||
+        !mPreferences->logged() || error->getErrorCode() != mega::MegaError::API_OK)
     {
         return false;
     }

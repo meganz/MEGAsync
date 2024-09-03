@@ -9,11 +9,11 @@
 
 struct SyncData
 {
-    SyncData(QString name, QString localFolder, long long megaHandle, QString megaFolder,
+    SyncData(QString name, QString localFolder, mega::MegaHandle megaHandle, QString megaFolder,
                 long long localfp, bool enabled, bool tempDisabled, int pos, QString syncID);
     QString mName;
     QString mLocalFolder;
-    long long mMegaHandle;
+    mega::MegaHandle mMegaHandle;
     QString mMegaFolder;
     long long mLocalfp;
     bool mEnabled;

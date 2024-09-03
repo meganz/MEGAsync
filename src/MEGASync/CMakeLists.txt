@@ -135,6 +135,26 @@ target_link_libraries(MEGAsync
     MEGA::google_breakpad
 )
 
+## Adjust compilation flags for warnings and errors ##
+target_platform_compile_options(
+    TARGET MEGAsync
+    WINDOWS /W4
+            /wd4201 # nameless struct/union (nonstandard)
+            /wd4458 # identifier hides class member
+            /wd4100 # unreferenced formal parameter
+            /wd4456 # declaration hides previous local declaration
+    UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
+)
+
+if (ENABLE_DESKTOP_APP_WERROR)
+    target_platform_compile_options(
+        TARGET MEGAsync
+        WINDOWS /WX
+        UNIX  $<$<CONFIG:Debug>: -Werror
+                                 -Wno-error=deprecated-declarations> # Kept as a warning, do not promote to error.
+    )
+endif()
+
 # Install MEGAsync binary, dynamic libraries and, if needed, deploy Qt dependencies.
 if (UNIX AND NOT APPLE)
 

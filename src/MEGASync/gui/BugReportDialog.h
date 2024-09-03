@@ -52,7 +52,7 @@ protected:
     mega::MegaApi *megaApi;
     mega::QTMegaTransferListener *delegateTransferListener;
 
-    void showErrorMessage();
+    void showErrorMessage(mega::MegaError* error = nullptr);
     void postUpload();
     void createSupportTicket();
 

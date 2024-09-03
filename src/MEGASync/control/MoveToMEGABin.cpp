@@ -31,7 +31,7 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle,
                     MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
                 },
                 MegaSyncApp->getMegaApi(),
-                [nodeToMove, handle, &error](mega::MegaRequest*, mega::MegaError* e)
+                [nodeToMove, &error](mega::MegaRequest*, mega::MegaError* e)
                 {
                     if (e->getErrorCode() != mega::MegaError::API_OK)
                     {
