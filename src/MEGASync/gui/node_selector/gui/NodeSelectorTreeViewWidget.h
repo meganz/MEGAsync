@@ -41,7 +41,6 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaListener
     };
 
 public:
-
     static const int LOADING_VIEW_THRESSHOLD;
     static const int LABEL_ELIDE_MARGIN;
     static const char* FULL_NAME_PROPERTY;
@@ -65,7 +64,6 @@ public:
     NodeSelectorProxyModel* getProxyModel();
 
 public slots:
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     void onRowsInserted();
     void onRowsRemoved();
@@ -161,8 +159,6 @@ private:
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
-    QMap<mega::MegaHandle, QPersistentModelIndex> mDeletedHandles;
-    QPersistentModelIndex mLastValidDeletedParent;
 
     friend class DownloadType;
     friend class SyncType;

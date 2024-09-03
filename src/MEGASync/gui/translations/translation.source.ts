@@ -4428,6 +4428,56 @@ Enter a different name.</translation>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sort by name</translation>
     </message>
+    <message>
+        <source>Error removing items</source>
+        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing files</source>
+        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4490,6 +4540,11 @@ Enter a different name.</translation>
         <translation>OK</translation>
     </message>
     <message>
+        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Move</source>
         <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4502,11 +4557,6 @@ Enter a different name.</translation>
     <message>
         <source>Move &quot;%1&quot; to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a single node to the rubbish bigint. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
-        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
