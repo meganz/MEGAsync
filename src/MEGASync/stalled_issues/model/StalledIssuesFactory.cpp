@@ -6,6 +6,7 @@
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 #include <IgnoredStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
+#include <FolderMatchedAgainstFileIssue.h>
 #include <StatsEventHandler.h>
 
 #include <mega/types.h>
@@ -76,6 +77,11 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 else if(StalledIssue::isCloudNodeBlocked(stall))
                 {
                     d = std::make_shared<CloudNodeIsBlockedIssue>(stall);
+                }
+                else if (stall->reason() ==
+                         mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile)
+                {
+                    d = std::make_shared<FolderMatchedAgainstFileIssue>(stall);
                 }
                 else if(stall->reason() ==
                             mega::MegaSyncStall::SyncStallReason::

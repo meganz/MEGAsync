@@ -6,6 +6,7 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 #include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include "FolderMatchedAgainstFileIssue.h"
 #include <QMegaMessageBox.h>
 #include <DialogOpener.h>
 #include <StalledIssuesDialog.h>
@@ -1096,9 +1097,7 @@ void StalledIssuesModel::chooseSideManually(bool remote, const QModelIndexList& 
 
 void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
 {
-    std::shared_ptr<QStringList> namesUsed(new QStringList());
-
-    auto resolveIssue = [this, namesUsed](int row) -> bool
+    auto resolveIssue = [this](int row) -> bool
     {
         auto result(false);
         auto item(getStalledIssueByRow(row));
@@ -1107,7 +1106,7 @@ void StalledIssuesModel::chooseBothSides(const QModelIndexList& list)
         {
             if(auto issue = item.convert<LocalOrRemoteUserMustChooseStalledIssue>())
             {
-                result = issue->chooseBothSides(namesUsed.get());
+                result = issue->chooseBothSides();
             }
 
             if(result)
@@ -1427,6 +1426,23 @@ void StalledIssuesModel::fixFingerprint(const QModelIndexList& list)
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
+    solveListOfIssues(info);
+}
+
+void StalledIssuesModel::fixFolderMatchedAgainstFile(const QModelIndexList& list)
+{
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto item(getStalledIssueByRow(row));
+
+        if(auto folderAgainstFile = std::dynamic_pointer_cast<FolderMatchedAgainstFileIssue>(item.getData()))
+        {
+            return folderAgainstFile->solveIssue();
+        }
+        return false;
+    };
+
+    SolveListInfo info(list, resolveIssue);
     solveListOfIssues(info);
 }
 

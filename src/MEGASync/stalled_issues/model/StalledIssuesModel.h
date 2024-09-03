@@ -212,6 +212,9 @@ public:
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
 
+    //FolderMatchedAgainstFile
+    void fixFolderMatchedAgainstFile(const QModelIndexList& list);
+
     //MoveOrRename issue
     void fixMoveOrRenameCannotOccur(const QModelIndexList& indexes, MoveOrRenameIssueChosenSide side);
 

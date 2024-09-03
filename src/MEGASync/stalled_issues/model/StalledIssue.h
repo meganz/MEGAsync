@@ -86,6 +86,7 @@ protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
     friend class MoveOrRenameCannotOccurIssue;
+    friend class FolderMatchedAgainstFileIssue;
 
     Path mMovePath;
     Path mPath;

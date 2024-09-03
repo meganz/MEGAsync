@@ -13,6 +13,7 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     stalled_issues/gui/StalledIssuesDialog.h
     stalled_issues/gui/StalledIssueHeader.h
     stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.h
+    stalled_issues/gui/stalled_issues_cases/FolderMatchedAgainstFileWidget.h
     stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.h
     stalled_issues/gui/stalled_issues_cases/NameConflict.h
     stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.h
@@ -24,6 +25,7 @@ set(DESKTOP_APP_STALLED_ISSUES_HEADERS
     stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.h
     stalled_issues/model/MoveOrRenameCannotOccurIssue.h
     stalled_issues/model/NameConflictStalledIssue.h
+    stalled_issues/model/FolderMatchedAgainstFileIssue.h
     stalled_issues/model/StalledIssuesUtilities.h
     stalled_issues/model/StalledIssuesModel.h
     stalled_issues/model/StalledIssue.h
@@ -42,10 +44,11 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/gui/StalledIssueDelegate.cpp
     stalled_issues/gui/StalledIssueFilePath.cpp
     stalled_issues/gui/StalledIssuesView.cpp
-    stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
     stalled_issues/gui/StalledIssuesDelegateWidgetsCache.cpp
     stalled_issues/gui/StalledIssuesDialog.cpp
     stalled_issues/gui/StalledIssueHeader.cpp
+    stalled_issues/gui/stalled_issues_cases/LocalAndRemoteDifferentWidget.cpp
+    stalled_issues/gui/stalled_issues_cases/FolderMatchedAgainstFileWidget.cpp
     stalled_issues/gui/stalled_issues_cases/LocalAndRemoteNameConflicts.cpp
     stalled_issues/gui/stalled_issues_cases/NameConflict.cpp
     stalled_issues/gui/stalled_issues_cases/OtherSideMissingOrBlocked.cpp
@@ -57,6 +60,7 @@ set(DESKTOP_APP_STALLED_ISSUES_SOURCES
     stalled_issues/model/LocalOrRemoteUserMustChooseStalledIssue.cpp
     stalled_issues/model/MoveOrRenameCannotOccurIssue.cpp
     stalled_issues/model/NameConflictStalledIssue.cpp
+    stalled_issues/model/FolderMatchedAgainstFileIssue.cpp
     stalled_issues/model/StalledIssuesUtilities.cpp
     stalled_issues/model/StalledIssue.cpp
     stalled_issues/model/StalledIssuesModel.cpp
@@ -77,6 +81,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/win/StalledIssueLoadingItem.ui
    stalled_issues/gui/win/StalledIssueActionTitle.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/win/FolderMatchedAgainstFileWidget.ui
    stalled_issues/gui/stalled_issues_cases/win/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/win/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/win/LocalAndRemoteNameConflicts.ui
@@ -95,6 +100,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/macx/StalledIssueLoadingItem.ui
    stalled_issues/gui/macx/StalledIssueActionTitle.ui
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/macx/FolderMatchedAgainstFileWidget.ui
    stalled_issues/gui/stalled_issues_cases/macx/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/macx/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/macx/LocalAndRemoteNameConflicts.ui
@@ -113,6 +119,7 @@ target_sources_conditional(MEGAsync
    stalled_issues/gui/linux/StalledIssueLoadingItem.ui
    stalled_issues/gui/linux/StalledIssueActionTitle.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteDifferentWidget.ui
+   stalled_issues/gui/stalled_issues_cases/linux/FolderMatchedAgainstFileWidget.ui
    stalled_issues/gui/stalled_issues_cases/linux/OtherSideMissingOrBlocked.ui
    stalled_issues/gui/stalled_issues_cases/linux/NameConflict.ui
    stalled_issues/gui/stalled_issues_cases/linux/LocalAndRemoteNameConflicts.ui
