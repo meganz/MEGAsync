@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Chính Sách Riêng Tư</translation>
+        <translation>Chính Sách Dữ Liệu và Riêng Tư</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -1726,7 +1726,7 @@ Trong một số trường hợp, log có thể chứa thông tin chi tiết v�
     <message>
         <source>file name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.SAT-449</translatorcomment>
-        <translation>Tên Tệp Tin</translation>
+        <translation>Tên tệp tin</translation>
     </message>
     <message>
         <source>folder name</source>
@@ -2797,7 +2797,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>Local</source>
         <translatorcomment>Title in the choosing widget used to offer the user the option to choose local version when conflicts occur. SAT-973</translatorcomment>
-        <translation>Nội Bộ</translation>
+        <translation>Cục bộ</translation>
     </message>
 </context>
 <context>
@@ -2897,7 +2897,7 @@ Hãy chờ cho phiên tải lên được hoàn tất.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Bạn bị đăng xuất ra khỏi máy tính này vì đã đăng nhập vào một nơi khác.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3521,13 +3521,12 @@ Kiểm tra hộp thư email của quý vị để biết thêm thông tin v�
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Tài khoản của bạn đã bị chấm dứt do vi phạm Điều Khoản Dịch Vụ của MEGA.
-Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã được lưu trữ của mình hoặc được phép đăng ký tài khoản MEGA mới.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Vi phạm Điều Khoản Dịch Vụ.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3804,12 +3803,12 @@ Bạn sẽ không thể lấy lại quyền truy cập vào dữ liệu đã �
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Có sự cố khi đồng bộ hoặc sao lưu thư mục này. Hãy thử dừng đồng bộ hoặc sao lưu và thử thiết lập lại trong Thiết Đặt, hoặc liên hệ với bộ phận Trợ Giúp.</translation>
+        <translation>Có sự cố khi đồng bộ hoặc sao lưu thư mục này vì có thay đổi diễn ra với thư mục cục bộ. Hãy thử dừng đồng bộ hoặc sao lưu và thử thiết lập lại trong Thiết Đặt, hoặc liên hệ với bộ phận Trợ Giúp.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Có sự cố khi đồng bộ hoặc sao lưu thư mục này. Hãy thử dừng đồng bộ hoặc sao lưu và thử thiết lập lại trong Thiết Đặt, hoặc liên hệ với bộ phận Trợ Giúp.</translation>
+        <translation>Đồng bộ hóa các hệ thống tệp dạng exFAT, FAT32, FUSE và LIFS không được MEGA hỗ trợ với macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4665,7 +4664,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Tài khoản đã được tạo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4755,7 +4754,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Đồng bộ hóa toàn bộ tài khoản MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+        <translation>Đồng bộ hóa toàn bộ Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4765,7 +4764,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Đồng bộ hóa toàn bộ Ổ Mây MEGA của bạn với một thiết bị cục bộ.</translation>
+        <translation>Đồng bộ hóa toàn bộ Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4880,12 +4879,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Đồng bộ hóa các thư mục đã chọn trong tài khoản MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+        <translation>Đồng bộ hóa các thư mục đã chọn ra trong Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Đồng bộ hóa các thư mục đã chọn ra cụ thể trong Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+        <translation>Đồng bộ hóa các thư mục đã chọn ra trong Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4905,7 +4904,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Tạo [B]tài khoản MEGA[/B] của bạn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6637,7 +6636,7 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Đi tới Trung tâm sao lưu dự phòng</translation>
+        <translation>Đi đến Trung tâm thiết bị</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -9018,7 +9017,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Business</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
-        <translation>Doanh nghiệp</translation>
+        <translation>Doanh Nghiệp</translation>
     </message>
     <message>
         <source>Pro Flexi</source>

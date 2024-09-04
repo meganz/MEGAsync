@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>隐私政策</translation>
+        <translation>隐私和数据政策</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>您已从其它位置登出了此计算机</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3521,13 +3521,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>由于违反MEGA的服务条款，您的帐户已被终止。
-您将无法重新获得您对存储数据的访问权限，也无法获得注册新的MEGA帐户的授权。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>已违反服务条款。</translation>
+        <translation>侵犯版权</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3804,12 +3803,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
+        <translation>由于本地文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
+        <translation>macOS上的MEGA不支持exFAT、FAT32、FUSE和LIFS文件系统的同步。</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4034,7 +4033,7 @@ Your selected incomplete sync transfers won&apos;t be cancelled.</source>
     <message>
         <source>The local and remote locations have changed at the same time</source>
         <translatorcomment>Subtitle description for the header widget in a move or rename conflict sync stall. SAT-973</translatorcomment>
-        <translation>本地和MEGA储存位置同时发生了变化</translation>
+        <translation>本地和MEGA文件夹同时发生了变化</translation>
     </message>
     <message>
         <source>Can’t move or rename some items in [B]%1[/B]</source>
@@ -4666,7 +4665,7 @@ Enter a different name</source>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>帐户已创建</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4756,7 +4755,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>将您的整个MEGA帐户与您的本地设备同步。</translation>
+        <translation>将您的整个MEGA云盘与本地设备同步。</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4881,12 +4880,12 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>将您的MEGA帐户中的选定文件夹与本地设备同步。</translation>
+        <translation>将您MEGA云盘中的选定文件夹与您的本地设备同步。</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>将您MEGA云盘中的特定文件夹与您的本地设备同步。</translation>
+        <translation>将您MEGA云盘中的选定文件夹与您的本地设备同步。</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4906,7 +4905,7 @@ Enter a different name</source>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>创建您的[B]MEGA帐户[/B]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6638,7 +6637,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>前往备份中心</translation>
+        <translation>前往设备中心</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>

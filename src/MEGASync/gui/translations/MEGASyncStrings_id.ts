@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Kebijakan Privasi</translation>
+        <translation>Kebijakan Privasi dan Data</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Tunggu hingga unggahan selesai.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Anda telah keluar dari komputer ini dari lokasi lain</translation>
+        <translation>Anda telah keluar dari perangkat ini dari lokasi lain</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3522,12 +3522,12 @@ Periksa kotak masuk email anda untuk informasi lebih lanjut tentang cara mengaju
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>Akun anda dihentikan karena pelanggaran Ketentuan Layanan MEGA.
-Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftarkan akun MEGA baru.</translation>
+Anda tidak akan dapat memperoleh kembali akses ke data yang disimpan atau diberi wewenang untuk mendaftar akun MEGA baru.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Persyaratan Layanan yang Dilanggar.</translation>
+        <translation>Pelanggaran hak cipta</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3804,12 +3804,12 @@ Anda tidak akan bisa mendapatkan kembali akses ke data yang disimpan atau diberi
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Masalah saat menyinkronkan atau membuat cadangan folder ini. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di Pengaturan, atau hubungi Bantuan.</translation>
+        <translation>Masalah menyinkronkan atau membuat cadangan folder ini karena perubahan pada folder lokal. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di Pengaturan, atau hubungi Dukungan.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Masalah saat menyinkronkan atau membuat cadangan folder ini. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di Pengaturan, atau hubungi Bantuan.</translation>
+        <translation>Sinkronisasi sistem file exFAT, FAT32, FUSE dan LIFS tidak didukung oleh MEGA di macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4666,7 +4666,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Akun dibuat</translation>
+        <translation>Lengkapi pendaftaran</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4756,7 +4756,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sinkronkan seluruh akun MEGA anda dengan perangkat lokal anda.</translation>
+        <translation>Sinkronkan seluruh drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4766,7 +4766,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sinkronkan seluruh drive MEGA Cloud anda dengan perangkat lokal.</translation>
+        <translation>Sinkronkan seluruh drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4881,12 +4881,12 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sinkronkan folder yang dipilih di akun MEGA anda dengan perangkat lokal anda.</translation>
+        <translation>Sinkronkan folder yang dipilih di drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sinkronkan folder tertentu di drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
+        <translation>Sinkronkan folder yang dipilih di drive MEGA Cloud anda dengan perangkat lokal anda.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4906,7 +4906,7 @@ Masukkan nama yang berbeda.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Buat [B]akun MEGA[/B] milik anda</translation>
+        <translation>Daftar [B]akun MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6638,7 +6638,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Pergi ke Pusat pencadangan</translation>
+        <translation>Pergi ke pusat Perangkat</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -7025,7 +7025,7 @@ Apakah anda tetap ingin menghapusnya?</translation>
     <message>
         <source>Auto-solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been solved automatically using the smart mode. SAT-1140</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Otomatis selesai</translation>
     </message>
     <message>
         <source>Auto-failed</source>

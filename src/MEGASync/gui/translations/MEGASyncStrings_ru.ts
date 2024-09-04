@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Политика конфиденциальности</translation>
+        <translation>Политика конфиденциальности и данных</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -1390,7 +1390,7 @@
     <message>
         <source>A folder named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a folder with the same name has been found on the cloud. [A] folder name</translatorcomment>
-        <translation>В этом расположении уже существует папка «[A]»</translation>
+        <translation>В этом расположении уже существует папка «[A]».</translation>
     </message>
     <message>
         <source>The new folder will be merged with the folder at this destination.</source>
@@ -1405,7 +1405,7 @@
     <message>
         <source>A file named [A] already exists at this destination</source>
         <translatorcomment>Dialog text shown when a file with the same name has been found on the cloud. [A] file name</translatorcomment>
-        <translation>В этом расположении уже существует файл «[A]»</translation>
+        <translation>В этом расположении уже существует файл «[A]».</translation>
     </message>
     <message>
         <source>The file at this destination will be replaced with the new file.</source>
@@ -2897,7 +2897,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Вы вышли вышли из системы на этом компьютере из другого места</translation>
+        <translation>Вы вышли из этого устройства из другого места</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3530,7 +3530,7 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Нарушены условия использования.</translation>
+        <translation>Нарушение авторских прав</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3807,12 +3807,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Проблема с синхронизацией или резервным копированием этой папки. Остановите синхронизацию или резервное копирование и попробуйте настроить их снова в настройках или обратитесь в поддержку.</translation>
+        <translation>Проблема с синхронизацией или резервным копированием этой папки из-за изменений в локальной папке. Остановите синхронизацию или резервное копирование и попробуйте настроить их снова в настройках или обратитесь в поддержку.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Проблема с синхронизацией или резервным копированием этой папки. Остановите синхронизацию или резервное копирование и попробуйте настроить их снова в настройках или обратитесь в поддержку.</translation>
+        <translation>Синхронизация файловых систем exFAT, FAT32, FUSE и LIFS не поддерживается MEGA на macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4669,7 +4669,7 @@ Enter a different name</source>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Аккаунт создан</translation>
+        <translation>Завершите регистрацию</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4759,7 +4759,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Синхронизируйте весь аккаунт MEGA с локальным устройством.</translation>
+        <translation>Синхронизируйте весь свой Облачный диск MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4769,7 +4769,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Синхронизируйте весь свой облачный диск MEGA с локальным устройством.</translation>
+        <translation>Синхронизируйте весь свой Облачный диск MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4884,12 +4884,12 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Синхронизируйте отдельные папки в аккаунте MEGA с локальным устройством.</translation>
+        <translation>Синхронизируйте выбранные папки Облачного диска MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Синхронизируйте определённые папки облачного диска MEGA со своим локальным устройством.</translation>
+        <translation>Синхронизируйте выбранные папки Облачного диска MEGA с локальным устройством.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4909,7 +4909,7 @@ Enter a different name</source>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Создайте [B]аккаунт MEGA[/B]</translation>
+        <translation>Зарегистрируйте [B]аккаунт MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6641,7 +6641,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Перейти в Центр резервного копирования</translation>
+        <translation>Центр устройств</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -7309,7 +7309,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Stream error: transfer overquota</source>
         <translatorcomment>Informative label to indicate the user that there is a stream error because of transfer overquota situation.</translatorcomment>
-        <translation>Ошибка трансляции: превышен лимит передачи данных</translation>
+        <translation>Ошибка трансляции: превышен лимит передачи данных.</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -8195,7 +8195,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Ваш MEGA-аккаунт заполнен.</translation>
+        <translation>Ваш MEGA-аккаунт заполнен</translation>
     </message>
     <message>
         <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.

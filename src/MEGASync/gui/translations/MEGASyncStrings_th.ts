@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>นโยบายสิทธิส่วนบุคคล</translation>
+        <translation>นโยบายความเป็นส่วนตัวและข้อมูล</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2575,7 +2575,7 @@ Please wait for the upload to complete.</source>
     <message numerus="yes">
         <source>[B]Please, resume your transfers to fix the issue[/B]</source>
         <translatorcomment>Text in message box shown when the user chooses to keep the local version of a local and remote changed stall and the user is pausing all transfers, [B] is for bold.SNC-2565</translatorcomment>
-        <translation><numerusform>เริ่มการถ่ายโอนอีกครั้งเพื่อแก้ไขปัญหา</numerusform></translation>
+        <translation><numerusform>ดำเนินการถ่ายโอนต่อเพื่อแก้ไขปัญหา</numerusform></translation>
     </message>
     <message>
         <source>Are you sure you want to keep the [B]remote file[/B] %1?</source>
@@ -2896,7 +2896,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>คุณถูกออกจากระบบบนคอมพิวเตอร์เครื่องนี้จากอีกที่หนึ่ง</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3520,13 +3520,13 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>บัญชีของคุณถูกยุติการใช้งานเนื่องจากละเมิดเงื่อนไขการให้บริการของ MEGA
-คุณจะไม่สามารถกลับไปใช้ข้อมูลที่เก็บไว้หรือลงทะเบียนบัญชี MEGA ใหม่ได้อีกต่อไป</translation>
+        <translation>บัญชีของคุณถูกยกเลิก เนื่องจากมีการกระทำที่ขัดต่อเงื่อนไขการให้บริการของ MEGA
+คุณจะไม่สามารถเข้าถึงข้อมูลที่เก็บไว้ หรือสมัครใช้บัญชี MEGA ใหม่ได้อีก</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>ละเมิดเงื่อนไขการให้บริการ</translation>
+        <translation>ละเมิดลิขสิทธิ์</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3803,12 +3803,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในเมนูการตั้งค่าหรือติดต่อฝ่ายสนับสนุน</translation>
+        <translation>มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์บนเครื่อง คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในเมนูการตั้งค่าก่อนหรือติดต่อฝ่ายสนับสนุน</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในเมนูการตั้งค่าหรือติดต่อฝ่ายสนับสนุน</translation>
+        <translation>MEGA บน macOS ไม่รองรับการซิงค์ในระบบไฟล์ที่เป็น exFAT, FAT32, FUSE และ LIFS</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4663,7 +4663,7 @@ Enter a different name</source>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>สร้างบัญชีแล้ว</translation>
+        <translation>ลงทะเบียนเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4753,7 +4753,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>ซิงค์ไฟล์ทั้งหมดในบัญชี MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
+        <translation>ซิงค์ไฟล์ทั้งหมดใน MEGA คลาวด์ของคุณกับอุปกรณ์ของคุณ</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4878,12 +4878,12 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>ซิงค์โฟลเดอร์ที่เลือกในบัญชี MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
+        <translation>ซิงค์โฟลเดอร์ที่เลือกไว้ในคลาวด์ MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>ซิงค์โฟลเดอร์เฉพาะในคลาวด์ MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
+        <translation>ซิงค์โฟลเดอร์ที่เลือกไว้ในคลาวด์ MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4903,7 +4903,7 @@ Enter a different name</source>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>สร้าง[B]บัญชี MEGA[/B] ของคุณ</translation>
+        <translation>ลงทะเบียน[B]บัญชี MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -5322,7 +5322,7 @@ Enter a different name</source>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>ไฟล์และโฟลเดอร์มีเจ้าของและกลุ่มผู้ใช้ที่สามารถเข้าถึงได้ กล่องโต้ตอบนี้ช่วยให้คุณตั้งค่าสิทธิ์การเข้าถึงไฟล์และโฟลเดอร์ใหม่ที่สร้างโดยแอปพลิเคชันบนเดสก์ท็อป แยกตามผู้ใช้ในกลุ่มเดียวกัน และผู้ใช้คนอื่นบนคอมพิวเตอร์ โดยปกติไม่จำเป็นต้องเปลี่ยนการตั้งค่าเหล่านี้</translation>
+        <translation>ไฟล์และโฟลเดอร์แต่ละรายการจะมีเจ้าของและอยู่ในกลุ่มของผู้ใช้หนึ่งกลุ่ม การใช้กล่องโต้ตอบนี้ คุณสามารถกำหนดสิทธิ์การเข้าถึงที่แตกต่างกันสำหรับไฟล์และโฟลเดอร์ใหม่ที่สร้างขึ้นโดยโปรแกรมบนคอมพิวเตอร์ของคุณได้ โดยแบ่งสิทธิ์ให้กับผู้ที่อยู่ในกลุ่มเดียวกันกับคุณและผู้ใช้อื่น ๆ ในคอมพิวเตอร์เครื่องเดียวกัน หากคุณไม่ต้องการเปลี่ยนแปลงสิทธิ์เหล่านี้ แนะนำให้ปล่อยไว้ตามค่าเริ่มต้นเพื่อความปลอดภัย</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -6635,7 +6635,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>ไปที่ศูนย์สำรองข้อมูล</translation>
+        <translation>ไปที่ศูนย์อุปกรณ์</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
