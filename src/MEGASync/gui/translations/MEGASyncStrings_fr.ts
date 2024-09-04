@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Politique de protection des renseignements personnels</translation>
+        <translation>Politique de protection des renseignements personnels et des données</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Attendez la fin du téléversement.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Vous avez été déconnecté de cet ordinateur d’un autre endroit</translation>
+        <translation>Vous avez été déconnecté de cet appareil depuis un autre endroit</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3523,13 +3523,12 @@ Pour de plus amples renseignements sur la manière de déposer un contre-avis, v
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>Votre compte a été résilié en raison du non-respect des Conditions générales d’utilisation de MEGA.
-
 Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autorisé à créer un nouveau compte MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Non-respect des Conditions générales d’utilisation.</translation>
+        <translation>Violation du droit d’auteur</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3751,7 +3750,7 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Backup externally modified</source>
         <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
-        <translation>Problème de synchronisation ou de sauvegarde de ce dossier en raison de modification du dossier MEGA. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la redéfinir dans les Paramètres ou contactez l’assistance.</translation>
+        <translation>Problème de synchronisation ou de sauvegarde de ce dossier en raison de modifications du dossier MEGA. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la redéfinir dans les Paramètres ou contactez l’assistance.</translation>
     </message>
     <message>
         <source>Unable to create initial ignore file.</source>
@@ -3806,12 +3805,12 @@ Vous ne pourrez pas accéder à vos données stockées de nouveau ni être autor
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Problème de synchronisation ou de sauvegarde de ce dossier. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la redéfinir dans les Paramètres ou contactez l’assistance.</translation>
+        <translation>Problème de synchronisation ou de sauvegarde de ce dossier en raison de modifications du dossier local. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la redéfinir dans les Paramètres ou contactez l’assistance.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Problème de synchronisation ou de sauvegarde de ce dossier. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la définir de nouveau dans les Paramètres ou contactez l’assistance.</translation>
+        <translation>La synchronisation des systèmes de fichiers exFAT, FAT32, FUSE et LIFS n’est pas prise en charge par MEGA sur macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4669,7 +4668,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Le compte a été créé</translation>
+        <translation>Inscription complète</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4759,7 +4758,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Synchronisez l’intégralité de votre compte MEGA avec votre appareil local</translation>
+        <translation>Synchronisez l’intégralité de votre disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4769,7 +4768,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Synchronisez l’intégralité de votre compte MEGA avec votre appareil local</translation>
+        <translation>Synchronisez l’intégralité de votre disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4884,12 +4883,12 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchronisez des dossiers sélectionnés de votre compte MEGA avec votre appareil local.</translation>
+        <translation>Synchronisez certains dossiers de votre Disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Synchroniser des dossiers particuliers de votre Disque nuagique MEGA avec votre appareil local.</translation>
+        <translation>Synchronisez certains dossiers de votre Disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4909,7 +4908,7 @@ Saisissez un nom différent.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Créer votre [B]compte MEGA[/B]</translation>
+        <translation>Inscrivez-vous pour [B]compte MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6371,7 +6370,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Check for Updates</source>
         <translatorcomment>Label for button to check for application updates. Keep as short as possible.</translatorcomment>
-        <translation>Vérifier les mises à jour</translation>
+        <translation>Vérifier la présence d’une mise à jour</translation>
     </message>
     <message>
         <source>%1 (local cache)</source>
@@ -6641,7 +6640,7 @@ Voulez-vous le supprimer quand même ?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Accéder au Centre de sauvegarde</translation>
+        <translation>Accéder au Centre des appareils</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -7229,7 +7228,7 @@ Vérifiez les autorisations du fichier .megaignore dans les emplacements locaux 
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation>D’où sélectionner le fichier multimédia…</translation>
+        <translation>Provenance de fichier multimédia…</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -9112,7 +9111,7 @@ Vous trouverez dans votre boîte de réception des courriels des instructions po
     <message>
         <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Nous offrons désormais l’entière visibilité sur les problèmes de synchronisation et vous donnons un contrôle total sur la résolution des conflits.</translation>
+        <translation>Avec une visibilité complète des problèmes de synchronisation, nous vous donnons un contrôle total sur la résolution des conflits.</translation>
     </message>
     <message>
         <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>

@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Política de privacidade</translation>
+        <translation>Política de privacidade e de dados</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Espere que o upload seja finalizado.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Você foi desconectado deste computador a partir de outra localização</translation>
+        <translation>Você foi desconectado deste dispositivo a partir de outro local</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3528,7 +3528,7 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Termos de serviço infringidos.</translation>
+        <translation>Infração de direitos autorais</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3805,12 +3805,12 @@ Você não poderá recuperar o acesso aos seus dados armazenados, nem estará au
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Não foi possível sincronizar ou fazer o backup desta pasta. Cancele a sincronização ou o backup e tente configurá-lo novamente nas Configurações, ou entre em contato com a nossa equipe de Suporte.</translation>
+        <translation>Não é possível sincronizar ou fazer o backup desta pasta devido a alterações na pasta local. Cancele a sincronização ou o backup e tente configurá-lo novamente nas Configurações, ou entre em contato com a nossa equipe de Suporte.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Não foi possível sincronizar ou fazer o backup desta pasta. Cancele a sincronização ou o backup e tente configurá-lo novamente nas Configurações, ou entre em contato com a nossa equipe de Suporte.</translation>
+        <translation>A sincronização dos sistemas de arquivos exFAT, FAT32, FUSE e LIFS não é compatível com o MEGA no macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4668,7 +4668,7 @@ Digite um nome diferente.
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Conta criada</translation>
+        <translation>Finalize o cadastro</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4758,7 +4758,7 @@ Digite um nome diferente.
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sincronize toda a sua conta no MEGA com seu dispositivo local.</translation>
+        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4768,7 +4768,7 @@ Digite um nome diferente.
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com um dispositivo local.</translation>
+        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4883,12 +4883,12 @@ Digite um nome diferente.
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sincronize as pastas selecionadas em sua conta no MEGA com seu dispositivo local.</translation>
+        <translation>Sincronize pastas específicas na sua Nuvem de arquivos no MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sincronize pastas específicas em sua Nuvem de arquivos no MEGA com seu dispositivo local.</translation>
+        <translation>Sincronize pastas específicas na sua Nuvem de arquivos no MEGA com o seu dispositivo local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4908,7 +4908,7 @@ Digite um nome diferente.
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Crie sua [B]conta no MEGA[/B]</translation>
+        <translation>Cadastre uma [B]conta no MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6640,7 +6640,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Acessar a Central de backups</translation>
+        <translation>Acessar a Central de dispositivos</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>

@@ -750,7 +750,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacybeleid</translation>
+        <translation>Privacy- en gegevensbeleid</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2898,7 +2898,7 @@ Wacht tot het uploaden is voltooid.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>U bent vanaf een andere locatie op deze computer uitgelogd</translation>
+        <translation>U bent vanaf een andere lokatie uitgelogd op dit apparaat</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3524,12 +3524,12 @@ Kijk in uw e-mailinbox voor meer informatie over hoe u een tegenmelding kunt ind
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
         <translation>Uw account is beëindigd vanwege een schending van de Algemene Voorwaarden van MEGA.
-U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijgen om een ​​nieuw MEGA-account te registreren. </translation>
+U zult niet opnieuw toegang krijgen tot uw opgeslagen gegevens en u kunt zich niet aanmelden voor een nieuw MEGA-account.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Algemene Voorwaarden geschonden.</translation>
+        <translation>Schending van het auteursrecht</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3806,12 +3806,12 @@ U zult geen toegang meer krijgen tot uw opgeslagen gegevens of toestemming krijg
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map vanwege wijzigingen in de lokale map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Klantenservice.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Probleem bij het synchroniseren of maken van een reservekopie van deze map. Stop de synchronisatie of de backup en probeer het opnieuw in te stellen in Instellingen, of neem contact op met de Ondersteuning.</translation>
+        <translation>Het synchroniseren van exFAT-, FAT32-, FUSE- en LIFS-bestandssystemen wordt niet ondersteund door MEGA op macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4668,7 +4668,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Account gecreëerd</translation>
+        <translation>Aanmelding voltooien</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4758,7 +4758,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Synchroniseer uw gehele MEGA account met uw lokale apparaat.</translation>
+        <translation>Synchroniseer uw volledige MEGA Cloud-schijf met uw lokale apparaat.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4768,7 +4768,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Synchroniseer uw gehele MEGA Cloud schijf met een lokaal apparaat.</translation>
+        <translation>Synchroniseer uw volledige MEGA Cloud-schijf met uw lokale apparaat.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4883,12 +4883,12 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchroniseer geselecteerde mappen in uw MEGA-account met uw lokale apparaat.</translation>
+        <translation>Synchroniseer geselecteerde mappen op uw MEGA Cloud-schijf met uw lokale apparaat.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Synchroniseer specifieke mappen op uw MEGA Cloud-schijf met uw lokale apparaat.</translation>
+        <translation>Synchroniseer geselecteerde mappen op uw MEGA Cloud-schijf met uw lokale apparaat.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4908,7 +4908,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Creëer uw [B]MEGA account[/B]</translation>
+        <translation>Meld u aan voor een [B]MEGA account[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6640,7 +6640,7 @@ Wilt u deze toch verwijderen?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Ga naar Back-up centrum</translation>
+        <translation>Ga naar het Apparaatcentrum</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>

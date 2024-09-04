@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Datenschutzerklärung</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -1561,7 +1561,7 @@
     <message>
         <source>Extensions</source>
         <translatorcomment>Drop down entry for specifying file extension as the exclusion rule target.SAT-449</translatorcomment>
-        <translation>Browsererweiterungen</translation>
+        <translation>Erweiterungen</translation>
     </message>
     <message>
         <source>Beginning with</source>
@@ -2897,7 +2897,7 @@ Warten Sie, bis der Upload abgeschlossen ist.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Sie wurden von einem anderen Computer aus ausgeloggt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3522,13 +3522,12 @@ In Ihrem E-Mail-Posteingang finden Sie weitere Informationen darüber, wie Sie e
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Ihr Account wurde aufgrund eines Verstoßes gegen die Nutzungsbedingungen von MEGA gekündigt.
-Sie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht berechtigt, einen neuen MEGA-Account zu registrieren.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Verstoß gegen die Nutzungsbedingungen.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3805,12 +3804,12 @@ Sie können nicht mehr auf Ihre gespeicherten Daten zugreifen und sind nicht ber
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Problem bei der Synchronisierung oder Sicherung dieses Ordners. Beenden Sie die Synchronisierung bzw. das Backup und richten Sie sie in den Einstellungen erneut ein oder wenden Sie sich an den Support.</translation>
+        <translation>Problem bei der Synchronisierung oder Sicherung dieses Ordners aufgrund von Änderungen am lokalen Ordner. Beenden Sie die Synchronisierung bzw. das Backup und richten Sie sie in den Einstellungen erneut ein oder wenden Sie sich an den Support.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Problem bei der Synchronisierung oder Sicherung dieses Ordners. Beenden Sie die Synchronisierung bzw. das Backup und richten Sie sie in den Einstellungen erneut ein oder wenden Sie sich an den Support.</translation>
+        <translation>Die Synchronisierung der Dateisysteme exFAT, FAT32, FUSE und LIFS wird von MEGA unter macOS nicht unterstützt.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4667,7 +4666,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Account erstellt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4757,7 +4756,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Synchronisieren Sie Ihren gesamten MEGA-Account mit Ihrem lokalen Gerät.</translation>
+        <translation>Synchronisieren Sie Ihr gesamtes MEGA Cloud Drive mit Ihrem lokalen Gerät.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4767,7 +4766,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Synchronisieren Sie Ihr gesamtes MEGA Cloud Drive mit einem lokalen Gerät.</translation>
+        <translation>Synchronisieren Sie Ihr gesamtes MEGA Cloud Drive mit Ihrem lokalen Gerät.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4882,12 +4881,12 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchronisieren Sie ausgewählte Ordner aus Ihrem MEGA-Account mit Ihrem lokalen Gerät.</translation>
+        <translation>Synchronisieren Sie ausgewählte Ordner in Ihrem MEGA Cloud Drive mit Ihrem lokalen Gerät.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Synchronisieren Sie bestimmte Ordner in Ihrem MEGA Cloud Drive mit Ihrem lokalen Gerät.</translation>
+        <translation>Synchronisieren Sie ausgewählte Ordner in Ihrem MEGA Cloud Drive mit Ihrem lokalen Gerät.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4907,7 +4906,7 @@ Bitte geben Sie einen anderen Namen ein.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Erstellen Sie Ihren [B]MEGA-Account[/B]</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6639,7 +6638,7 @@ Trotzdem löschen?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Zum Backup-Center</translation>
+        <translation>Zum Gerätecenter</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
