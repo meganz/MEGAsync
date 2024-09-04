@@ -576,7 +576,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
     }
     else
     {
-        msgInfo.text = tr("Move %n items to Rubbish bin?", "", selectedRows.size());
+        msgInfo.text = tr("Move %n item to Rubbish bin?", "", selectedRows.size());
     }
 
     msgInfo.finishFunc = [this, selectedRows](QPointer<QMessageBox> msg) {
