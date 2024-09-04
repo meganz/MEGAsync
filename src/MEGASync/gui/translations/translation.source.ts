@@ -815,21 +815,6 @@
 </context>
 <context>
     <name>CloudFingerprintMissingHeader</name>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
-    </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
@@ -868,6 +853,21 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Resolve</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Cancel button to discard fixing the stalled issue.FM-1615</translatorcomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
+        <translation>Apply</translation>
+    </message>
+    <message>
+        <source>Apply to all</source>
+        <translatorcomment>Check box to allow user to apply a fix to all similar stall issues.FM-1615</translatorcomment>
+        <translation>Apply to all</translation>
     </message>
 </context>
 <context>
@@ -4247,21 +4247,6 @@ This may be due to syncing to case insensitive local filesystems, or the effects
         <translation>There are multiple items with the same name on one side of your sync that would all become the same single item on the other side of your sync</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
-    </message>
-    <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
         <translation>Resolve this issue?</translation>
@@ -4423,6 +4408,56 @@ Enter a different name.</translation>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Sort by name</translation>
     </message>
+    <message>
+        <source>Error removing items</source>
+        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The items couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing files</source>
+        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn´t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4485,6 +4520,11 @@ Enter a different name.</translation>
         <translation>OK</translation>
     </message>
     <message>
+        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Move</source>
         <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
@@ -4497,11 +4537,6 @@ Enter a different name.</translation>
     <message>
         <source>Move &quot;%1&quot; to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a single node to the rubbish bigint. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
-        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -4519,6 +4554,55 @@ Enter a different name.</translation>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
         <translation>Searching:</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">LIMITED TIME OFFER</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation type="unfinished">PROMO</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation type="unfinished">Offer expired</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n day</numerusform>
+            <numerusform>Offer expires in %n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Offer expires in %n hour</numerusform>
+            <numerusform>Offer expires in %n hours</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes. The placeholder %1 shall be replaced by the number of minutes. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m %2 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 seconds. Placeholder %1 shall be replaced by the number of seconds. CON-868</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

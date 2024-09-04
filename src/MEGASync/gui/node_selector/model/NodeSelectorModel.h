@@ -3,14 +3,14 @@
 
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
+
 #include <megaapi.h>
-
-#include <QAbstractItemModel>
-#include <QList>
-#include <QIcon>
-#include <QPointer>
-
 #include <memory>
+#include <QAbstractItemModel>
+#include <QIcon>
+#include <QList>
+#include <QMegaMessageBox.h>
+#include <QPointer>
 
 namespace UserAttributes{
 class CameraUploadFolder;
@@ -134,6 +134,15 @@ public:
       last
     };
 
+    enum class MovedItemsType
+    {
+        NONE = 0x0,
+        FILES = 0x1,
+        FOLDERS = 0x2,
+        BOTH = FILES | FOLDERS
+    };
+    Q_DECLARE_FLAGS(MovedItemsTypes, MovedItemsType)
+
     struct IndexesActionInfo
     {
         bool needsToBeSelected = false;
@@ -158,8 +167,19 @@ public:
 
     void setDisableFolders(bool option);
     void setSyncSetupMode(bool value);
+
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
-    void removeNode(const QModelIndex &index);
+    void removeNodeFromModel(const QModelIndex& index);
+
+    int getNodeAccess(mega::MegaNode* node);
+
+    std::shared_ptr<mega::MegaNode> getNodeToRemove(mega::MegaHandle handle);
+    void removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently);
+    bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
+
+    void moveNode(std::shared_ptr<mega::MegaNode> moveNode,
+                  std::shared_ptr<mega::MegaNode> targetParentFolder);
+
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
 
@@ -194,6 +214,8 @@ public:
     bool isBeingModified() const {return mIsBeingModified;}
     void setIsModelBeingModified(bool state) {mIsBeingModified = state;}
 
+    void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
+
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
@@ -204,6 +226,7 @@ signals:
     void deleteWorker();
     void blockUi(bool state);
     void forceFilter();
+    void showMessageBox(QMegaMessageBox::MessageBoxInfo info);
 
 protected:
     void fetchItemChildren(const QModelIndex& parent);
@@ -239,8 +262,14 @@ private:
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
+    std::shared_ptr<mega::MegaRequestListener> mListener;
+
     QThread* mNodeRequesterThread;
     bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
+    // Variables related to move (including moving to rubbish bin or remove)
+    QMap<mega::MegaHandle, int> mRequestByHandle;
+    QMap<mega::MegaHandle, int> mRequestFailedByHandle;
+    MovedItemsTypes mMovedItemsType;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)

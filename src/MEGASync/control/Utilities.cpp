@@ -30,8 +30,16 @@ using namespace mega;
 
 namespace
 {
-    constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+constexpr int MSEC_IN_1_SEC = 1000;
+constexpr int HOURS_IN_1_DAY = 24;
+constexpr int SECS_IN_1_MIN = 60;
+constexpr int SECS_IN_1_HOUR = 3600;
+constexpr int SECS_IN_1_DAY = 86400;
+constexpr int SECS_IN_1_MONTH = 2592000;
+constexpr int SECS_IN_1_YEAR = 31536000;
 }
+
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
@@ -619,24 +627,18 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision, bool colo
 
 QString Utilities::getAddedTimeString(long long secs)
 {
-    const int SECS_IN_1_MINUTE = 60;
-    const int SECS_IN_1_HOUR = 3600;
-    const int SECS_IN_1_DAY = 86400;
-    const int SECS_IN_1_MONTH = 2592000;
-    const int SECS_IN_1_YEAR = 31536000;
-
     if (secs < 2)
     {
         return QCoreApplication::translate("Utilities", "Added just now");
     }
-    else if (secs < SECS_IN_1_MINUTE)
+    else if (secs < SECS_IN_1_MIN)
     {
         const int secsAsInt = static_cast<int>(secs);
         return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
     else if (secs < SECS_IN_1_HOUR)
     {
-        const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
+        const int minutes = static_cast<int>(secs/SECS_IN_1_MIN);
         return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
     else if (secs < SECS_IN_1_DAY)
@@ -946,7 +948,7 @@ void Utilities::getPROurlWithParameters(QString &url)
     {
         char *base64aff = MegaApi::handleToBase64(aff);
         url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
-                                                                       .arg(timestamp / 1000)
+                                                                       .arg(timestamp / MSEC_IN_1_SEC)
                                                                        .arg(affType));
         delete [] base64aff;
     }
@@ -1221,11 +1223,11 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     }
 
     // Get seconcs diff between now and secsTimestamps
-    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / MSEC_IN_1_SEC;
 
     // Compute in hours, then in days
-    remainHours = tDiff / 3600;
-    remainDays  = remainHours / 24;
+    remainHours = tDiff / SECS_IN_1_HOUR;
+    remainDays  = remainHours / HOURS_IN_1_DAY;
 }
 
 QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
@@ -1569,9 +1571,9 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
     unsigned int usecs(std::numeric_limits<unsigned int>::max());
 
     // Avoid overflow. If no overflow, use passed value.
-    if (milliseconds < (usecs/1000))
+    if (milliseconds < (usecs/MSEC_IN_1_SEC))
     {
-        usecs = milliseconds * 1000;
+        usecs = milliseconds * MSEC_IN_1_SEC;
     }
 
     // Call safely
@@ -1673,8 +1675,18 @@ WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)
     : useSecondPrecision(secondPrecision)
 {
-    days = static_cast<int>(secs / (60 * 60 * 24));
-    hours   = static_cast<int>(secs / (60 * 60)) % 24;
-    minutes = static_cast<int>((secs / 60) % 60);
-    seconds = static_cast<int>(secs % 60);
+    days = static_cast<int>(secs / SECS_IN_1_DAY);
+    hours = static_cast<int>(secs / SECS_IN_1_HOUR) % HOURS_IN_1_DAY;
+    minutes = static_cast<int>((secs / SECS_IN_1_MIN) % SECS_IN_1_MIN);
+    seconds = static_cast<int>(secs % SECS_IN_1_MIN);
+}
+
+TimeInterval& TimeInterval::operator=(const TimeInterval& other)
+{
+    days = other.days;
+    hours = other.hours;
+    minutes = other.minutes;
+    seconds = other.seconds;
+    useSecondPrecision = other.useSecondPrecision;
+    return *this;
 }

@@ -21,6 +21,7 @@
 #include "TransferQuota.h"
 #include "StatusInfo.h"
 #include "SyncsMenu.h"
+#include "MegaDelegateHoverManager.h"
 
 #include <memory>
 #ifdef _WIN32
@@ -33,6 +34,7 @@ class InfoDialog;
 
 class MegaApplication;
 class TransferManager;
+
 class InfoDialog : public QDialog
 {
     Q_OBJECT
@@ -73,7 +75,6 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
-    void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
     void reset();
 
@@ -89,9 +90,6 @@ public:
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
 
-    void setUnseenNotifications(long long value);
-    void setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment);
-    long long getUnseenNotifications() const;
     int getLoggedInMode() const;
     void showNotifications();
 
@@ -128,6 +126,8 @@ public slots:
     void setBandwidthOverquotaState(QuotaState state);
     void updateUsageAndAccountType();
 
+   void onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts);
+
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
@@ -143,7 +143,7 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
     void onActualFilterClicked();
-    void applyFilterOption(int opt);
+    void applyFilterOption(MessageType opt);
     void on_bNotificationsSettings_clicked();
 
     void on_bDiscard_clicked();
@@ -184,7 +184,7 @@ private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 
-    FilterAlertWidget *filterMenu;
+    FilterAlertWidget* filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *sharesItem;
@@ -196,7 +196,7 @@ private:
     bool circlesShowAllActiveTransfersProgress;
     void showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type);
     SyncsMenu* initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled);
-
+    void setUnseenNotifications(long long value);
 
     bool mIndexing; //scanning
     bool mWaiting;
@@ -212,7 +212,6 @@ private:
     int loggedInMode = STATE_NONE;
     bool notificationsReady = false;
     bool isShown = false;
-    long long unseenNotifications = 0;
 
     QPointer<TransferManager> mTransferManager;
 
@@ -230,6 +229,7 @@ private:
     void hideSomeIssues();
     void showSomeIssues();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
+    MegaDelegateHoverManager mNotificationsViewHoverManager;
 
 protected:
     void updateBlockedState();
@@ -258,6 +258,7 @@ protected:
                            bool animate = true);
     void fixMultiscreenResizeBug(int& posX, int& posY);
     void repositionInfoDialog();
+    void initNotificationArea();
 
     TransferScanCancelUi* mTransferScanCancelUi = nullptr;
     QtPositioningBugFixer qtBugFixer;
