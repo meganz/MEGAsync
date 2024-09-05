@@ -5627,7 +5627,8 @@ Enter a different name.</translation>
 - Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
 - An installation issue which caused some Windows .dll files to be deleted has been resolved.
 - Third-party libraries have been updated.
-- Other bugs have been fixed and numerous improvements made.n</source>
+- Other bugs have been fixed and numerous improvements made.
+</source>
         <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
         <translation type="unfinished"></translation>
     </message>

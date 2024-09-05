@@ -36,6 +36,6 @@ QT_TRANSLATE_NOOP("Preferences", \
                   "- An installation issue which caused some Windows .dll files to be deleted " \
                   "has been resolved.\n" \
                   "- Third-party libraries have been updated.\n" \
-                  "- Other bugs have been fixed and numerous improvements made.n")
+                  "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H
