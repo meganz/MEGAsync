@@ -28,12 +28,14 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-QT_TRANSLATE_NOOP( \
-    "Preferences", \
-    "- Allow multiple selection for removal on cloud drive selector.\n" \
-    "- Revamp UI flow during creation of synchronizations from settings dialog.\n" \
-    "- Fix deletion issues of Windows redistributable dlls during installation of the program.\n" \
-    "- Update third party libs.\n" \
-    "- Bug fixes and other improvements. n")
+QT_TRANSLATE_NOOP("Preferences", \
+                  "- You can now select multiple files and folders to remove from the Cloud " \
+                  "drive when using the Download option.\n" \
+                  "- Creating syncs and backups from the Settings menu is easier than ever with " \
+                  "our revamped interface.\n" \
+                  "- An installation issue which caused some Windows .dll files to be deleted " \
+                  "has been resolved.\n" \
+                  "- Third-party libraries have been updated.\n" \
+                  "- Other bugs have been fixed and numerous improvements made.n")
 
 #endif // VERSION_H
