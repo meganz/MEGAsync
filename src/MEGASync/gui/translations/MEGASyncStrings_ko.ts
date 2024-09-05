@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>개인정보 보호정책</translation>
+        <translation>개인정보 및 데이터 처리 방침</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>다른 위치에서 이 컴퓨터를 로그아웃 하였습니다</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3521,13 +3521,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>당신의 계정이 MEGA의 이용 약관 위반으로 삭제되었습니다.
-저장된 데이터에 대한 접근 또는 새 MEGA 계정을 등록하는 것이 금지됩니다.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>이용 약관 위반.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3804,12 +3803,12 @@ Transfer will automatically resume when you re-open the app.</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
+        <translation>이 폴더를 동기화 또는 백업하던 중 로컬 폴더의 변경으로 인해 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>이 폴더를 동기화 또는 백업하던 중 문제가 발생했습니다. 동기화 또는 백업을 멈추고 설정에서 다시 설정하세요, 또는 지원에 연락주세요.</translation>
+        <translation>macOS용 MEGA에서는 exFAT, FAT32, FUSE 그리고 LIFS 파일 시스템의 동기화를 지원하지 않습니다.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4668,7 +4667,7 @@ Enter a different name</source>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>계정이 생성되었습니다</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4758,7 +4757,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>전체 MEGA 계정을 로컬 장치와 동기화</translation>
+        <translation>MEGA 클라우드 드라이브 전체를 로컬 장치와 동기화</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4768,7 +4767,7 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>전체 MEGA 클라우드 드라이브를 로컬 장치와 동기화</translation>
+        <translation>MEGA 클라우드 드라이브 전체를 로컬 장치와 동기화</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4883,12 +4882,12 @@ Enter a different name</source>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>MEGA 계정의 선택된 폴더를 로컬 장치와 동기화합니다.</translation>
+        <translation>MEGA 클라우드 드라이브의 선택한 폴더를 로컬 장치와 동기화</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>MEGA 클라우드 드라이브의 특정 폴더를 로컬 장치와 동기화합니다.</translation>
+        <translation>MEGA 클라우드 드라이브의 선택한 폴더를 로컬 장치와 동기화</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4908,7 +4907,7 @@ Enter a different name</source>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>[B]MEGA 계정[/B] 만들기</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6640,7 +6639,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>백업 센터로 가기</translation>
+        <translation>장치 센터로 가기</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>

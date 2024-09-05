@@ -627,7 +627,7 @@
     <message>
         <source>Optional</source>
         <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
-        <translation>Opțional</translation>
+        <translation>Facultativ</translation>
     </message>
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Politica de confidențialitate</translation>
+        <translation>Politica privind confidențialitatea și datele</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -1483,7 +1483,7 @@
     <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article</translatorcomment>
-        <translation>Află mai multe</translation>
+        <translation>Aflați mai multe</translation>
     </message>
     <message>
         <source>loading time…</source>
@@ -1987,7 +1987,7 @@
     <message>
         <source>Log out</source>
         <translatorcomment>Button text to logout CON-465</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Setting up your account…</source>
@@ -2897,7 +2897,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Ați fost deconectat de pe acest calculator dintr-o altă locație</translation>
+        <translation>Ați fost deconectat de la acest aparat dintr-o altă locație</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -2953,7 +2953,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Se autentifică</translation>
+        <translation>Conexiune</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -3523,13 +3523,13 @@ Verificați căsuța de e-mail pentru mai multe informații despre cum să depun
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Contul dvs. a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA.
-Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autorizat să înregistrați un nou cont MEGA.</translation>
+        <translation>Contul dvs. a fost desființat din cauza unei încălcări a Termenii de utilizare a serviciului MEGA.
+Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autorizat să înscrieți pentru un nou cont MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Nerespectarea Termenii de utilizare a serviciului.</translation>
+        <translation>Încălcarea drepturilor de autor</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3806,12 +3806,12 @@ Nu veți putea redobândi accesul la datele stocate sau nu veți putea fi autori
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Problemă la sincronizarea sau backup a acestui folder. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în Setări sau contactați Asistența.</translation>
+        <translation>Problemă la sincronizarea sau backup a acestui folder din cauza modificărilor aduse folderului local. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în Setări sau contactați Asistența.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Problemă la sincronizarea sau backup a acestui folder. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în Setări sau contactați Asistența.</translation>
+        <translation>Sincronizarea sistemelor de fișiere exFAT, FAT32, FUSE și LIFS nu este acceptată de MEGA pe macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4668,7 +4668,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Contul a fost creat</translation>
+        <translation>Finaliza înregistrarea</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4758,7 +4758,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Sincronizați întregul cont MEGA cu dispozitivul local.</translation>
+        <translation>Sincronizați întreaga unitate MEGA Cloud cu dispozitivul dvs. local.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4768,7 +4768,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Sincronizați întreaga unitate Cloud MEGA cu un dispozitiv local.</translation>
+        <translation>Sincronizați întreaga unitate MEGA Cloud cu dispozitivul dvs. local.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4813,7 +4813,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Log in</source>
         <translatorcomment>Log in button text CON-465</translatorcomment>
-        <translation>Autentifică-te</translation>
+        <translation>Conectați-vă</translation>
     </message>
     <message>
         <source>Log in to your [B]MEGA account[/B]</source>
@@ -4883,12 +4883,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Sincronizați folderele selectate din contul MEGA cu dispozitivul local.</translation>
+        <translation>Sincronizați folderele selectate din unitatea MEGA Cloud cu dispozitivul dvs. local.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Sincronizați anumite foldere din Unitatea cloud MEGA cu dispozitivul local.</translation>
+        <translation>Sincronizați folderele selectate din unitatea MEGA Cloud cu dispozitivul dvs. local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4908,7 +4908,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Creează-ți [B]Cont MEGA[/B]</translation>
+        <translation>Înscrieți-vă pentru un [B]cont MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -6225,7 +6225,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out of the application. String as short as possible.</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -6640,7 +6640,7 @@ Vrei să îl ștergi oricum?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Mergi la Centrul de backupuri</translation>
+        <translation>Accesați Centrul de dispozitive</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -7864,7 +7864,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
-        <translation>Află mai multe</translation>
+        <translation>Aflați mai multe</translation>
     </message>
 </context>
 <context>
@@ -9039,7 +9039,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Button label to log out the current account</translatorcomment>
-        <translation>Deconectează-te</translation>
+        <translation>Deconectați-vă</translation>
     </message>
     <message>
         <source>Verify your email</source>

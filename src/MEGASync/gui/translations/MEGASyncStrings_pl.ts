@@ -749,7 +749,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Polityka Prywatności</translation>
+        <translation>Polityka prywatności i danych</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -2897,7 +2897,7 @@ Poczekaj na zakończenie przesyłania.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>Zostałeś wylogowany na tym komputerze z innej lokalizacji</translation>
+        <translation>Zostałeś wylogowany z tego urządzenia z innej lokalizacji</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3524,13 +3524,13 @@ Sprawdź swoją skrzynkę email, aby uzyskać więcej informacji o tym, jak zło
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation>Twoje konto zostało zamknięte z powodu naruszenia Warunków świadczenia usług MEGA.
-Użytkownik nie będzie mógł odzyskać dostępu do przechowywanych danych ani uzyskać autoryzacji do rejestracji nowego konta MEGA.</translation>
+        <translation>Twoje konto zostało zamknięte z powodu naruszenia Warunków korzystania z usługi MEGA.
+Nie będziesz w stanie odzyskać dostępu do przechowywanych danych ani uzyskać uprawnienia do założenia nowego konto MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Naruszenie warunków korzystania z usługi.</translation>
+        <translation>Naruszenie praw autorskich</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3807,12 +3807,12 @@ Użytkownik nie będzie mógł odzyskać dostępu do przechowywanych danych ani 
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Problem z synchronizacją lub tworzeniem kopii zapasowej tego katalogu. Zatrzymaj synchronizację lub kopię zapasową i spróbuj ponownie skonfigurować w Ustawieniach lub kontakt techniczną.</translation>
+        <translation>Problem z synchronizacją lub tworzeniem kopii zapasowej tego katalogu z powodu zmian w katalogu lokalnym. Zatrzymaj synchronizację lub kopię zapasową i spróbuj ponownie skonfigurować w Ustawieniach lub skontaktuj się z nami.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Problem z synchronizacją lub tworzeniem kopii zapasowej tego katalogu. Zatrzymaj synchronizację lub kopię zapasową i spróbuj ponownie skonfigurować w Ustawieniach lub kontakt techniczną.</translation>
+        <translation>Synchronizacja systemów plik exFAT, FAT32, FUSE i LIFS nie jest obsługiwana przez MEGA w systemie macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4669,7 +4669,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Utworzono konto</translation>
+        <translation>Ukończ rejestrację</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4759,7 +4759,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Sync your entire MEGA account with your local device.</source>
         <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Synchronizacja całego konta MEGA z urządzeniem lokalnym.</translation>
+        <translation>Synchronizuj cały dysk MEGA Cloud z urządzeniem lokalnym.</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -4769,7 +4769,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with a local device.</source>
         <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Synchronizacja całego dysku MEGA Cloud z urządzeniem lokalnym.</translation>
+        <translation>Synchronizuj cały dysk MEGA Cloud z urządzeniem lokalnym.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4884,12 +4884,12 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Sync selected folders in your MEGA account with your local device.</source>
         <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchronizacja wybranych katalogów na koncie MEGA z urządzeniem lokalnym.</translation>
+        <translation>Synchronizuj wybrane katalog na dysku MEGA Cloud z urządzeniem lokalnym.</translation>
     </message>
     <message>
         <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
         <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Synchronizacja określonych katalogów na dysku MEGA Cloud z urządzeniem lokalnym.</translation>
+        <translation>Synchronizuj wybrane katalog na dysku MEGA Cloud z urządzeniem lokalnym.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -4909,7 +4909,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Utwórz konto [B]MEGA[/B]</translation>
+        <translation>Utwórz [B]konto MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -5328,7 +5328,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Korzystając z tego okna dialogowego, możesz przyznać różne uprawnienia dostępu do nowych plików i katalogi utworzonych przez aplikacja desktopowa komputerową użytkownikom należącym do tej samej grupy oraz reszcie użytkowników komputera. Jeśli nie musisz ich zmieniać, pozostaw je w ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
+        <translation>Pliki i katalogi mają właściciela i należą do grupy użytkowników. Korzystając z tego okna dialogowego, możesz przyznać różne uprawnienia dostępu do nowych plików i katalogów utworzonych przez aplikację desktopową użytkownikom należącym do tej samej grupy oraz reszcie użytkowników. Jeśli nie musisz ich zmieniać, pozostaw je w ustawieniach domyślnych ze względów bezpieczeństwa.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -6641,7 +6641,7 @@ Czy mimo to chcesz je usunąć?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Przejdź do Centrum kopii zapasowych</translation>
+        <translation>Przejdź do Centrum urządzeń</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
