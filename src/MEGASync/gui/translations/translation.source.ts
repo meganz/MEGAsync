@@ -4556,15 +4556,15 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Move &quot;%1&quot; to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bigint. %1 is the file/folder name. CON-334</translatorcomment>
+        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>Move %n items to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bigint. %n is the number of nodes CON-334</translatorcomment>
+        <source>Move %n item to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>Move %n item to Rubbish bin?</numerusform>
+            <numerusform>Move %n items to Rubbish bin?</numerusform>
         </translation>
     </message>
 </context>
