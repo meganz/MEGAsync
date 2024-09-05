@@ -40,11 +40,11 @@ build-stamp:
 	echo "fs.inotify.max_user_watches = 524288" > 99-megasync-inotify-limit.conf
 	echo "SUBSYSTEM==\"block\", ATTRS{idDevtype}==\"partition\"" > 99-megasync-udev.rules
 	
-	sed -i "s/@DISTRO@/$(DISTRO)/g" debian/postinst
+	sed -i "s#@DISTRO@#$(DISTRO)#g" debian/postinst
 	if [ -n "$(DEB_TESTING)" ]; then   							\
-		sed -i "s/@VERSION@/$(DEB_TESTING)/g" debian/postinst;	\
+		sed -i "s#@VERSION@#$(DEB_TESTING)#g" debian/postinst;	\
 	else                               							\
-		sed -i "s/@VERSION@/$(VER)/g" debian/postinst;        	\
+		sed -i "s#@VERSION@#$(VER)#g" debian/postinst;        	\
 	fi
 	touch build-stamp
 
