@@ -175,7 +175,9 @@ CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
 
 void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA's Terms of Service[/A].").arg(header->displayFileName());
+    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in "
+                         "breach of [A]MEGA’s Terms of Service[/A].")
+                          .arg(header->displayFileName());
     QStringList links;
     links << QLatin1String("https://mega.io/terms");
     StalledIssuesLinkTextDecorator::process(links, headerText);
