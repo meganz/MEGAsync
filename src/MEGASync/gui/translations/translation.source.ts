@@ -893,7 +893,7 @@
 <context>
     <name>CloudNodeIsBlockedHeader</name>
     <message>
-        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -4434,18 +4434,8 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The items couldn´t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The files couldn´t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4454,18 +4444,8 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folders couldn´t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file %1 couldn´t be removed. Try again later</source>
-        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4474,7 +4454,27 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The folder %1 couldn´t be removed. Try again later</source>
+        <source>The items couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The files couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
@@ -4549,16 +4549,6 @@ Enter a different name.</translation>
         <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Don´t move</source>
-        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move &quot;%1&quot; to Rubbish bin?</source>
-        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>Move %n item to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
@@ -4566,6 +4556,16 @@ Enter a different name.</translation>
             <numerusform>Move %n item to Rubbish bin?</numerusform>
             <numerusform>Move %n items to Rubbish bin?</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Don’t move</source>
+        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move “%1” to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4607,17 +4607,17 @@ Enter a different name.</translation>
     <message>
         <source>Offer expires in %1 m</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes. The placeholder %1 shall be replaced by the number of minutes. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offer expires in %1&#xa0;m</translation>
     </message>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offer expires in %1&#xa0;m %2&#xa0;s</translation>
     </message>
     <message>
         <source>Offer expires in %1 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 seconds. Placeholder %1 shall be replaced by the number of seconds. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Offer expires in %1&#xa0;s</translation>
     </message>
     <message>
         <source>Offer expired</source>
