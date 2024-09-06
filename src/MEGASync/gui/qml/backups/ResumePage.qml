@@ -7,7 +7,7 @@ ResumePageForm {
 
     footerButtons {
         rightSecondary.onClicked: {
-            backupsAccess.openDeviceCentre();
+            backupsComponentAccess.openDeviceCentre();
             window.accept();
         }
 

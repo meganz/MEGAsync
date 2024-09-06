@@ -3,6 +3,8 @@
 
 #include "QmlDialogWrapper.h"
 
+class BackupsComponent;
+
 class Onboarding: public QMLComponent
 {
     Q_OBJECT
@@ -21,6 +23,9 @@ public:
 signals:
     void accountBlocked(int errorCode);
     void logout();
+
+private:
+    QPointer<BackupsComponent> mBackupComponents;
 };
 
 #endif // ONBOARDING_H

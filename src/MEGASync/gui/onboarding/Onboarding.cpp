@@ -1,21 +1,20 @@
 #include "Onboarding.h"
 
-#include "PasswordStrengthChecker.h"
 #include "AccountStatusController.h"
-#include "OnboardingQmlDialog.h"
-
-#include "Backups.h"
-#include "SyncsComponent.h"
-
-#include "SettingsDialog.h"
+#include "BackupsComponent.h"
 #include "MegaApplication.h"
+#include "OnboardingQmlDialog.h"
+#include "PasswordStrengthChecker.h"
+#include "SettingsDialog.h"
+#include "SyncsComponent.h"
 
 #include <QQmlEngine>
 
 using namespace mega;
 
 Onboarding::Onboarding(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mBackupComponents(new BackupsComponent(this))
 {
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
@@ -24,7 +23,6 @@ Onboarding::Onboarding(QObject* parent):
     qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
                                                QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
-    Backups::registerQmlModules();
     SyncsComponent::registerQmlModules();
 
     // Makes the Guest window transparent (macOS)

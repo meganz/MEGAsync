@@ -5,7 +5,7 @@ import backups 1.0
 import onboard 1.0
 import onboard.syncs_types 1.0
 
-import BackupsModel 1.0
+import BackupCandidates 1.0
 
 BackupsFlow {
     id: root
@@ -17,8 +17,6 @@ BackupsFlow {
 
         SelectFoldersPage {
             id: selectFoldersPageItem
-
-            backupsProxyModelRef: root.backupsProxyModel
         }
     }
 
@@ -27,8 +25,6 @@ BackupsFlow {
 
         ConfirmFoldersPage {
             id: confirmFoldersPageItem
-
-            backupsProxyModelRef: root.backupsProxyModel
         }
     }
 
@@ -53,8 +49,8 @@ BackupsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: {
-                        if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
-                            if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
+                        if(backupCandidatesAccess.globalError !== BackupCandidates.NONE) {
+                            if(backupCandidatesAccess.globalError === BackupCandidates.SDK_CREATION) {
                                 return root.stepPanelRef.step4Error;
                             }
                             else {
