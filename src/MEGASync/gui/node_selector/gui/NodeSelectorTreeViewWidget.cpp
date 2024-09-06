@@ -556,7 +556,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
     msgInfo.defaultButton = QMessageBox::Yes;
     msgInfo.buttonsText.insert(QMessageBox::Yes, tr("Move"));
-    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don´t move"));
+    msgInfo.buttonsText.insert(QMessageBox::No, tr("Don’t move"));
 
     auto selectedRows = ui->tMegaFolders->selectionModel()->selectedRows();
 
@@ -570,7 +570,7 @@ void NodeSelectorTreeViewWidget::onDeleteClicked()
             if(node)
             {
                 msgInfo.text =
-                    tr("Move \"%1\" to Rubbish bin?").arg(QString::fromUtf8(node->getName()));
+                    tr("Move “%1” to Rubbish bin?").arg(QString::fromUtf8(node->getName()));
             }
         }
     }
