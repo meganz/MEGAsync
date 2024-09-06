@@ -55,7 +55,7 @@ Item {
                 bottomMargin: 12;
             }
 
-            source: getOSIcon(deviceCenterAccess.getCurrentOS())
+            source: getOSIcon(deviceCentreAccess.getCurrentOS())
             sourceSize: Qt.size(96, 96)
         }
 
@@ -102,63 +102,63 @@ Item {
                 DeviceWidgetProperty {
                     id: deviceStatus
 
-                    name: DeviceCenterStrings.statusLabel
-                    value: DeviceCenterStrings.statusUpToDate
+                    name: DeviceCentreStrings.statusLabel
+                    value: DeviceCentreStrings.statusUpToDate
                     icon: Images.statusUpToDate
                 }
 
                 DeviceWidgetProperty {
                     id: deviceContains
 
-                    name: DeviceCenterStrings.contains
-                    value: DeviceCenterStrings.folderCount(0)
+                    name: DeviceCentreStrings.contains
+                    value: DeviceCentreStrings.folderCount(0)
                 }
 
                 DeviceWidgetProperty {
                     id: deviceTotalSize
 
-                    name: DeviceCenterStrings.totalSize
-                    value: deviceCenterAccess.getSizeString(0)
+                    name: DeviceCentreStrings.totalSize
+                    value: deviceCentreAccess.getSizeString(0)
                 }
             }
         }
     }
 
     onDeviceIdChanged: {
-        deviceCenterAccess.retrieveDeviceData(deviceId);
+        deviceCentreAccess.retrieveDeviceData(deviceId);
     }
 
     Connections {
-        id: deviceCenterConnection
+        id: deviceCentreConnection
 
-        target: deviceCenterAccess
+        target: deviceCentreAccess
 
         function onDeviceNameReceived(deviceName) {
             deviceTitle.text = deviceName;
         }
 
         function onDeviceDataUpdated() {
-            deviceTitle.text = deviceCenterAccess.deviceData.name;
-            deviceImage.source = getOSIcon(deviceCenterAccess.deviceData.os);
+            deviceTitle.text = deviceCentreAccess.deviceData.name;
+            deviceImage.source = getOSIcon(deviceCentreAccess.deviceData.os);
 
-            if (deviceCenterAccess.deviceData.folderCount > 0)
+            if (deviceCentreAccess.deviceData.folderCount > 0)
             {
                 deviceStatus.visible = true
-                if (deviceCenterAccess.deviceData.status === SyncStatus.UP_TO_DATE) {
+                if (deviceCentreAccess.deviceData.status === SyncStatus.UP_TO_DATE) {
                     deviceStatus.icon = Images.statusUpToDate
-                    deviceStatus.value = DeviceCenterStrings.statusUpToDate
+                    deviceStatus.value = DeviceCentreStrings.statusUpToDate
                 }
-                else if (deviceCenterAccess.deviceData.status === SyncStatus.UPDATING) {
+                else if (deviceCentreAccess.deviceData.status === SyncStatus.UPDATING) {
                     deviceStatus.icon = Images.statusUpdating
-                    deviceStatus.value = DeviceCenterStrings.statusUpdating
+                    deviceStatus.value = DeviceCentreStrings.statusUpdating
                 }
-                else if (deviceCenterAccess.deviceData.status === SyncStatus.PAUSED) {
+                else if (deviceCentreAccess.deviceData.status === SyncStatus.PAUSED) {
                     deviceStatus.icon = Images.statusPaused
-                    deviceStatus.value = DeviceCenterStrings.statusPaused
+                    deviceStatus.value = DeviceCentreStrings.statusPaused
                 }
                 else {
                     deviceStatus.icon = Images.statusStopped
-                    deviceStatus.value = DeviceCenterStrings.statusStopped
+                    deviceStatus.value = DeviceCentreStrings.statusStopped
                 }
             }
             else
@@ -166,8 +166,8 @@ Item {
                 deviceStatus.visible = false
             }
 
-            deviceContains.value = DeviceCenterStrings.folderCount(deviceCenterAccess.deviceData.folderCount)
-            deviceTotalSize.value = deviceCenterAccess.getSizeString(deviceCenterAccess.deviceData.totalSize)
+            deviceContains.value = DeviceCentreStrings.folderCount(deviceCentreAccess.deviceData.folderCount)
+            deviceTotalSize.value = deviceCentreAccess.getSizeString(deviceCentreAccess.deviceData.totalSize)
 
         }
     }

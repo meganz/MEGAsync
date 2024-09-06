@@ -26,7 +26,7 @@ QtObject {
     readonly property string statusUpdating: /*qsTr*/("Updating...")
     readonly property string statusPaused: /*qsTr*/("Paused")
     readonly property string statusStopped: /*qsTr*/("Stopped")
-    readonly property string deviceCenterWindowTitle: /*qsTr*/("Device Centre")
+    readonly property string deviceCentreWindowTitle: /*qsTr*/("Device Centre")
     readonly property string actionOpenInMega: /*qsTr*/("Open in MEGA")
     readonly property string actionShowFinder: /*qsTr*/("Show in Finder")
     readonly property string actionResume: /*qsTr*/("Resume")

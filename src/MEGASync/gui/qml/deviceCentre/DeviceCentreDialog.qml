@@ -9,7 +9,7 @@ import QmlDialog 1.0
 QmlDialog {
     id: window
 
-    title: DeviceCenterStrings.deviceCenterWindowTitle
+    title: DeviceCentreStrings.deviceCentreWindowTitle
     visible: true
     modality: Qt.NonModal
     width: 1024

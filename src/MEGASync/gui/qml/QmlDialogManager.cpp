@@ -2,7 +2,7 @@
 
 #include "AccountStatusController.h"
 #include "Backups.h"
-#include "DeviceCenter.h"
+#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "GuestContent.h"
 #include "GuestQmlDialog.h"
@@ -142,17 +142,16 @@ bool QmlDialogManager::openWhatsNewDialog()
     return true;
 }
 
-void QmlDialogManager::openDeviceCenterDialog()
+void QmlDialogManager::openDeviceCentreDialog()
 {
-    DeviceCenter::registerQmlModules();
-    QPointer<QmlDialogWrapper<DeviceCenter>> deviceCenterDialog;
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<DeviceCenter>>())
+    QPointer<QmlDialogWrapper<DeviceCentre>> deviceCentreDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<DeviceCentre>>())
     {
-        deviceCenterDialog = dialog->getDialog();
+        deviceCentreDialog = dialog->getDialog();
     }
     else
     {
-        deviceCenterDialog = new QmlDialogWrapper<DeviceCenter>();
+        deviceCentreDialog = new QmlDialogWrapper<DeviceCentre>();
     }
-    DialogOpener::showDialog(deviceCenterDialog);
+    DialogOpener::showDialog(deviceCentreDialog);
 }

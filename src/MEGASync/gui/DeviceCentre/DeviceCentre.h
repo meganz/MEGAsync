@@ -9,14 +9,14 @@
 
 #include <QTimer>
 
-class DeviceCenter: public QMLComponent, public mega::MegaListener
+class DeviceCentre: public QMLComponent, public mega::MegaListener
 {
     Q_OBJECT
     Q_PROPERTY(DeviceData deviceData MEMBER mCachedDeviceData CONSTANT)
 
 public:
-    explicit DeviceCenter(QObject* parent = 0);
-    virtual ~DeviceCenter();
+    explicit DeviceCentre(QObject* parent = 0);
+    virtual ~DeviceCentre();
 
     void onRequestFinish(mega::MegaApi* api,
                          mega::MegaRequest* request,

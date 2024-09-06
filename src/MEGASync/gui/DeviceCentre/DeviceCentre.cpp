@@ -1,4 +1,4 @@
-#include "DeviceCenter.h"
+#include "DeviceCentre.h"
 
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
@@ -10,7 +10,7 @@ const uint DELAY_TO_NEXT_CALL_IN_MS = 1000u;
 static bool qmlRegistrationDone = false;
 }
 
-DeviceCenter::DeviceCenter(QObject* parent):
+DeviceCentre::DeviceCentre(QObject* parent):
     QMLComponent(parent),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mSyncModel(new SyncModel(this)),
@@ -28,16 +28,21 @@ DeviceCenter::DeviceCenter(QObject* parent):
     });
 }
 
-DeviceCenter::~DeviceCenter()
+DeviceCentre::~DeviceCentre()
 {
     mMegaApi->removeListener(mDelegateListener);
     mSizeInfoTimer.stop();
 }
 
-void DeviceCenter::onRequestFinish(mega::MegaApi* api,
+void DeviceCentre::onRequestFinish(mega::MegaApi* api,
                                    mega::MegaRequest* request,
                                    mega::MegaError* e)
 {
+    const bool isHandledHere = request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES ||
+                               request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO ||
+                               request->getType() == mega::MegaRequest::TYPE_ADD_SYNC ||
+                               request->getType() == mega::MegaRequest::TYPE_REMOVE_SYNC;
+
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
         if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
@@ -72,44 +77,43 @@ void DeviceCenter::onRequestFinish(mega::MegaApi* api,
             emit deviceDataUpdated();
         }
     }
-    else
+    else if (isHandledHere)
     {
         const QString errorMsg = QString::fromUtf8(e->getErrorString());
         const QString requestString = QString::fromUtf8(request->getRequestString());
         QString logMsg(QString::fromUtf8("Error performing device center %1 request: \"%2\"")
-                           .arg(requestString)
-                           .arg(errorMsg));
+                           .arg(requestString, errorMsg));
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
     }
 }
 
-void DeviceCenter::onSyncStateChanged(mega::MegaApi*, mega::MegaSync* sync)
+void DeviceCentre::onSyncStateChanged(mega::MegaApi*, mega::MegaSync* sync)
 {
     const QmlSyncData syncObject(sync);
     updateLocalData(syncObject);
 }
 
-void DeviceCenter::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats* syncStats)
+void DeviceCentre::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats* syncStats)
 {
     const QmlSyncData syncObject(syncStats);
     updateLocalData(syncObject);
 }
 
-QUrl DeviceCenter::getQmlUrl()
+QUrl DeviceCentre::getQmlUrl()
 {
-    return QUrl(QString::fromUtf8("qrc:/deviceCenter/DeviceCenterDialog.qml"));
+    return QUrl(QString::fromUtf8("qrc:/deviceCentre/DeviceCentreDialog.qml"));
 }
 
-QString DeviceCenter::contextName()
+QString DeviceCentre::contextName()
 {
-    return QString::fromUtf8("deviceCenterAccess");
+    return QString::fromUtf8("deviceCentreAccess");
 }
 
-void DeviceCenter::registerQmlModules()
+void DeviceCentre::registerQmlModules()
 {
     if (!qmlRegistrationDone)
     {
-        qmlRegisterModule("DeviceCenter", 1, 0);
+        qmlRegisterModule("DeviceCentre", 1, 0);
         qmlRegisterType<SyncModel>("SyncModel", 1, 0, "SyncModel");
         qmlRegisterType<DeviceModel>("DeviceModel", 1, 0, "DeviceModel");
         qmlRegisterUncreatableMetaObject(
@@ -137,31 +141,31 @@ void DeviceCenter::registerQmlModules()
     }
 }
 
-void DeviceCenter::openAddBackupDialog()
+void DeviceCentre::openAddBackupDialog()
 {
     const bool comesFromSettings = true;
     CreateRemoveBackupsManager::addBackup(comesFromSettings);
 }
 
-QString DeviceCenter::getCurrentDeviceId()
+QString DeviceCentre::getCurrentDeviceId()
 {
     std::unique_ptr<const char> rawDeviceId{mMegaApi->getDeviceId()};
     return QString::fromLatin1(rawDeviceId.get());
 }
 
-void DeviceCenter::retrieveDeviceData(const QString& deviceId)
+void DeviceCentre::retrieveDeviceData(const QString& deviceId)
 {
     mDeviceIdFromLastRequest = deviceId;
     mMegaApi->getDeviceName(deviceId.toLatin1().constData());
     mMegaApi->getBackupInfo();
 }
 
-QString DeviceCenter::getSizeString(long long bytes) const
+QString DeviceCentre::getSizeString(long long bytes) const
 {
     return Utilities::getSizeString(bytes);
 }
 
-void DeviceCenter::updateLocalData(const mega::MegaBackupInfoList& backupList)
+void DeviceCentre::updateLocalData(const mega::MegaBackupInfoList& backupList)
 {
     // TODO Keep a local model with all the data, including other devices.
     // We will need other devices data in the future.
@@ -177,21 +181,21 @@ void DeviceCenter::updateLocalData(const mega::MegaBackupInfoList& backupList)
     updateDeviceData();
 }
 
-void DeviceCenter::updateLocalData(const QmlSyncData& syncObj)
+void DeviceCentre::updateLocalData(const QmlSyncData& syncObj)
 {
     mSyncModel->addOrUpdate(syncObj);
     updateDeviceData();
     emit deviceDataUpdated();
 }
 
-void DeviceCenter::updateDeviceData()
+void DeviceCentre::updateDeviceData()
 {
     mCachedDeviceData.folderCount = mSyncModel->rowCount();
     mCachedDeviceData.status = mSyncModel->computeDeviceStatus();
     mCachedDeviceData.totalSize = mSyncModel->computeTotalSize();
 }
 
-DeviceCenter::BackupList DeviceCenter::filterBackupList(const char* deviceId,
+DeviceCentre::BackupList DeviceCentre::filterBackupList(const char* deviceId,
                                                         const mega::MegaBackupInfoList& backupList)
 {
     BackupList filteredList;
@@ -207,23 +211,23 @@ DeviceCenter::BackupList DeviceCenter::filterBackupList(const char* deviceId,
     return filteredList;
 }
 
-DeviceOs::Os DeviceCenter::getCurrentOS()
+DeviceOs::Os DeviceCentre::getCurrentOS()
 {
-    return DeviceOs::getCurrentOS();
+    return mCachedDeviceData.os;
 }
 
-void DeviceCenter::openAddSyncDialog()
+void DeviceCentre::openAddSyncDialog()
 {
     const bool comesFromSettings = true;
     CreateRemoveSyncsManager::addSync(mega::INVALID_HANDLE, comesFromSettings);
 }
 
-DeviceModel* DeviceCenter::getDeviceModel() const
+DeviceModel* DeviceCentre::getDeviceModel() const
 {
     return mDeviceModel;
 }
 
-SyncModel* DeviceCenter::getSyncModel() const
+SyncModel* DeviceCentre::getSyncModel() const
 {
     return mSyncModel;
 }

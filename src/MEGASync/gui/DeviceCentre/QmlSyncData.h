@@ -21,11 +21,14 @@ struct QmlSyncData
     QmlSyncType::Type type = QmlSyncType::UNDEFINED;
     QString name;
     qint64 size = -1;
-    QDateTime dateAdded;
     QDateTime dateModified;
+    QDateTime dateAdded;
     SyncStatus::Value status = SyncStatus::UP_TO_DATE;
 
 private:
+    static QmlSyncType::Type convertSyncType(const mega::MegaSync* sync);
+    static QmlSyncType::Type convertSyncType(const mega::MegaBackupInfo* backupInfo);
+    static SyncStatus::Value convertStatus(const mega::MegaSync* sync);
     static SyncStatus::Value convertStatus(const mega::MegaBackupInfo* backupInfo);
 };
 

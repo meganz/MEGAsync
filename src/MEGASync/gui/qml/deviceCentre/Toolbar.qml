@@ -26,23 +26,23 @@ Item {
             ToolbarButton {
                 id: addBackup
 
-                text: DeviceCenterStrings.addBackupLabel
+                text: DeviceCentreStrings.addBackupLabel
                 icons.source: Images.addBackup
 
                 onClicked: {
                     let fromSettings = true;
-                    deviceCenterAccess.openAddBackupDialog(fromSettings);
+                    deviceCentreAccess.openAddBackupDialog(fromSettings);
                 }
             }
 
             ToolbarButton {
                 id: addSync
 
-                text: DeviceCenterStrings.addSyncLabel
+                text: DeviceCentreStrings.addSyncLabel
                 icons.source: Images.addSync
 
                 onClicked: {
-                    deviceCenterAccess.openAddSyncDialog();
+                    deviceCentreAccess.openAddSyncDialog();
                 }
             }
         }

@@ -21,7 +21,7 @@ public:
     void openGuestDialog();
     bool openOnboardingDialog();
     bool openWhatsNewDialog();
-    void openDeviceCenterDialog();
+    void openDeviceCentreDialog();
 
     bool raiseGuestDialog();
     void raiseOnboardingDialog();

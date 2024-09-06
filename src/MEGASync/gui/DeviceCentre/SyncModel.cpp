@@ -32,28 +32,30 @@ void SyncModel::add(const QmlSyncData& newSync)
 
 void SyncModel::addOrUpdate(const QmlSyncData& newSync)
 {
-    auto index = findRowByHandle(newSync.handle);
-    if (!index.has_value())
+    auto row = findRowByHandle(newSync.handle);
+    if (!row.has_value())
     {
         add(newSync);
     }
     else
     {
-        mSyncObjects[index.value()].updateFields(newSync);
-        const QModelIndex modelIndex = QAbstractListModel::index(index.value());
+        mSyncObjects[row.value()].updateFields(newSync);
+        const QModelIndex modelIndex = QAbstractListModel::index(row.value());
         emit dataChanged(modelIndex, modelIndex);
     }
 }
 
 void SyncModel::remove(mega::MegaHandle handle)
 {
-    auto index = findRowByHandle(handle);
+    auto row = findRowByHandle(handle);
+    if (!row.has_value())
+        return;
 
     auto remover = [handle](const QmlSyncData& obj) {
         return obj.handle == handle;
     };
 
-    beginRemoveRows(QModelIndex(), index.value(), index.value());
+    beginRemoveRows(QModelIndex(), row.value(), row.value());
     std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
     endRemoveRows();
 }

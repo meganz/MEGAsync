@@ -1,6 +1,6 @@
-module deviceCenter
-singleton DeviceCenterStrings 1.0 DeviceCenterStrings.qml
-DeviceCenterDialog 1.0 DeviceCenterDialog.qml
+module deviceCentre
+singleton DeviceCentreStrings 1.0 DeviceCentreStrings.qml
+DeviceCentreDialog 1.0 DeviceCentreDialog.qml
 LeftSidebar 1.0 LeftSidebar.qml
 Toolbar 1.0 Toolbar.qml
 ToolbarButton 1.0 ToolbarButton.qml

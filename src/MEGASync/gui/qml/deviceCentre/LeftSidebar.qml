@@ -19,7 +19,7 @@ Item {
         anchors.fill: parent
     }
     Texts.RichText {
-        id: deviceCenterTitle
+        id: deviceCentreTitle
 
         height: 30
 
@@ -30,7 +30,7 @@ Item {
             leftMargin: titleMargins
         }
         wrapMode: Text.NoWrap
-        text: DeviceCenterStrings.deviceCenterWindowTitle
+        text: DeviceCentreStrings.deviceCentreWindowTitle
         font {
             pixelSize: Texts.Text.Size.LARGE
             weight: Font.Bold
@@ -44,7 +44,7 @@ Item {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            top: deviceCenterTitle.bottom
+            top: deviceCentreTitle.bottom
             topMargin: 42
             leftMargin: titleMargins/2
             rightMargin: titleMargins/2
@@ -52,7 +52,7 @@ Item {
 
         spacing: 8
 
-        model: deviceCenterAccess.getDeviceModel()
+        model: deviceCentreAccess.getDeviceModel()
         delegate: deviceListDelegate
     }
 

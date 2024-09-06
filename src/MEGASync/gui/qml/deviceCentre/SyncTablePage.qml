@@ -34,16 +34,16 @@ Item {
         var result = "";
         switch(currentStatus) {
         case SyncStatus.PAUSED:
-            result = DeviceCenterStrings.statusPaused;
+            result = DeviceCentreStrings.statusPaused;
             break;
         case SyncStatus.STOPPED:
-            result = DeviceCenterStrings.statusStopped;
+            result = DeviceCentreStrings.statusStopped;
             break;
         case SyncStatus.UPDATING:
-            result = DeviceCenterStrings.statusUpdating;
+            result = DeviceCentreStrings.statusUpdating;
             break;
         case SyncStatus.UP_TO_DATE:
-            result = DeviceCenterStrings.statusUpToDate;
+            result = DeviceCentreStrings.statusUpToDate;
             break;
         }
         return result;
@@ -74,7 +74,7 @@ Item {
 
         anchors.fill: parent
         anchors.bottomMargin: 20
-        model: deviceCenterAccess.getSyncModel()
+        model: deviceCentreAccess.getSyncModel()
 
         style: TableViewStyle {
 
@@ -109,7 +109,7 @@ Item {
             id: nameColumn
 
             role: "name"
-            title: DeviceCenterStrings.name
+            title: DeviceCentreStrings.name
             width: 282
             movable: false
             resizable:false
@@ -193,7 +193,7 @@ Item {
             id: typeColumn
 
             role: "type"
-            title: DeviceCenterStrings.type
+            title: DeviceCentreStrings.type
             width: defaultColumnWidth
             movable: false
             resizable: false
@@ -210,7 +210,7 @@ Item {
                 lineHeight: 18
                 text: {
                     if(model) {
-                        return model.type === QmlSyncType.BACKUP?  DeviceCenterStrings.backup : DeviceCenterStrings.sync
+                        return model.type === QmlSyncType.BACKUP?  DeviceCentreStrings.backup : DeviceCentreStrings.sync
                     }
                     return "";
                 }
@@ -221,7 +221,7 @@ Item {
             id: sizeColumn
 
             role: "size"
-            title: DeviceCenterStrings.size
+            title: DeviceCentreStrings.size
             width: defaultColumnWidth
             movable: false
             resizable: false
@@ -243,7 +243,7 @@ Item {
             id: dateAddedColumn
 
             role: "dateAdded"
-            title: DeviceCenterStrings.dateAdded
+            title: DeviceCentreStrings.dateAdded
             width: defaultColumnWidth
             movable: false
             resizable: false
@@ -268,7 +268,7 @@ Item {
             id: dateModified
 
             role: "dateModified"
-            title: DeviceCenterStrings.lastUpdated
+            title: DeviceCentreStrings.lastUpdated
             width: defaultColumnWidth
             movable: false
             resizable: false
@@ -319,7 +319,7 @@ Item {
                     ContextMenuItem {
                         id: aboutMenuItem
 
-                        text: DeviceCenterStrings.actionOpenInMega
+                        text: DeviceCentreStrings.actionOpenInMega
                         icon.source: Images.megaOutline
                         onTriggered: {
                         }
@@ -339,7 +339,7 @@ Item {
                     ContextMenuItem {
                         id: preferencesItem
 
-                        text: DeviceCenterStrings.actionShowFinder
+                        text: DeviceCentreStrings.actionShowFinder
                         icon.source: Images.settings
                         onTriggered: {
 

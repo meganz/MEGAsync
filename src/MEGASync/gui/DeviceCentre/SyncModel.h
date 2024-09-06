@@ -39,7 +39,7 @@ public:
     void setStatus(mega::MegaHandle handle, const SyncStatus::Value status);
     bool hasUpdatingStatus() const;
 
-public:
+private:
     QString getName(int row) const;
     QString getSize(int row) const;
     QmlSyncType::Type getType(int row) const;

@@ -15,7 +15,7 @@ QtObject {
     readonly property url imagesSyncsPath: Qt.resolvedUrl(imagesQmlPath + "syncs/")
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
-    readonly property url imagesDeviceCenterPath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
+    readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -89,19 +89,19 @@ QtObject {
     readonly property url syncTypeSelective: imagesSyncsPath + "selective_sync.svg"
     readonly property url syncTypeFull: imagesSyncsPath + "full_sync.svg"
 
-    readonly property url addBackup: imagesDeviceCenterPath + "addbackup.svg"
-    readonly property url addSync: imagesDeviceCenterPath + "addsync.svg"
-    readonly property url syncFolder: imagesDeviceCenterPath + "sync_folder.svg"
-    readonly property url backupFolder: imagesDeviceCenterPath + "backup_folder.svg"
+    readonly property url addBackup: imagesDeviceCentrePath + "addbackup.svg"
+    readonly property url addSync: imagesDeviceCentrePath + "addsync.svg"
+    readonly property url syncFolder: imagesDeviceCentrePath + "sync_folder.svg"
+    readonly property url backupFolder: imagesDeviceCentrePath + "backup_folder.svg"
 
-    readonly property url pcWindows: imagesDeviceCenterPath + "pc-windows.svg"
-    readonly property url pcMac: imagesDeviceCenterPath + "pc-mac.svg"
-    readonly property url pcLinux: imagesDeviceCenterPath + "pc-linux.svg"
-    readonly property url statusPaused: imagesDeviceCenterPath + "status-paused.svg"
-    readonly property url statusStopped: imagesDeviceCenterPath + "status-stopped.svg"
-    readonly property url statusUpdating: imagesDeviceCenterPath + "status-updating.svg"
-    readonly property url statusUpToDate: imagesDeviceCenterPath + "status-uptodate.svg"
-    readonly property url devices: imagesDeviceCenterPath + "devices.svg"
+    readonly property url pcWindows: imagesDeviceCentrePath + "pc-windows.svg"
+    readonly property url pcMac: imagesDeviceCentrePath + "pc-mac.svg"
+    readonly property url pcLinux: imagesDeviceCentrePath + "pc-linux.svg"
+    readonly property url statusPaused: imagesDeviceCentrePath + "status-paused.svg"
+    readonly property url statusStopped: imagesDeviceCentrePath + "status-stopped.svg"
+    readonly property url statusUpdating: imagesDeviceCentrePath + "status-updating.svg"
+    readonly property url statusUpToDate: imagesDeviceCentrePath + "status-uptodate.svg"
+    readonly property url devices: imagesDeviceCentrePath + "devices.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
