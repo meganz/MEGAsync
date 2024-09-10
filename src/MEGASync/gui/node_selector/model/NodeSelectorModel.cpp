@@ -1039,23 +1039,23 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                 {
                     if (multipleRequest)
                     {
-                        if (mMovedItemsType & MovedItemsType::BOTH)
+                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
                             msgInfo.text = tr("Error removing items");
                             msgInfo.informativeText =
-                                tr("The items couldn´t be removed. Try again later");
+                                tr("The items couldn’t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FILES)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
                             msgInfo.text = tr("Error removing files");
                             msgInfo.informativeText =
-                                tr("The files couldn´t be removed. Try again later");
+                                tr("The files couldn’t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FOLDERS)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
                             msgInfo.text = tr("Error removing folders");
                             msgInfo.informativeText =
-                                tr("The folders couldn´t be removed. Try again later");
+                                tr("The folders couldn’t be removed. Try again later");
                         }
                     }
                     else
@@ -1068,18 +1068,22 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                         {
                             msgInfo.text = tr("Error removing file");
                             msgInfo.informativeText =
-                                tr("The file %1 couldn´t be removed. Try again later")
+                                tr("The file %1 couldn’t be removed. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
                             msgInfo.text = tr("Error removing folder");
                             msgInfo.informativeText =
-                                tr("The folder %1 couldn´t be removed. Try again later")
+                                tr("The folder %1 couldn’t be removed. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                     }
                 }
+
+                //Reset value
+                mMovedItemsType = MovedItemsType::NONE;
+
                 emit showMessageBox(msgInfo);
             }
 
