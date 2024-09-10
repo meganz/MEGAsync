@@ -2,7 +2,7 @@
 
 #include "ThemeManager.h"
 #include "IconTokenizer.h"
-#include "MegaApplication.h"
+//#include "MegaApplication.h"
 #include "DialogOpener.h"
 
 #include <QDir>
@@ -49,7 +49,7 @@ TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
     : QObject{parent}
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &TokenParserWidgetManager::onThemeChanged);
-    connect(MegaSyncApp, &MegaApplication::updateUserInterface, this, &TokenParserWidgetManager::onUpdateRequested, Qt::QueuedConnection);
+    //connect(MegaSyncApp, &MegaApplication::updateUserInterface, this, &TokenParserWidgetManager::onUpdateRequested, Qt::QueuedConnection);
 
     COLOR_TOKEN_REGULAR_EXPRESSION.optimize();
     ICON_COLOR_TOKEN_REGULAR_EXPRESSION.optimize();

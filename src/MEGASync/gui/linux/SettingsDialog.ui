@@ -17,138 +17,38 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#switch
+   <string notr="true">QWidget
 {
-border-style: none;
-background-color: transparent;
+font-size: 12px;
 }
 
-#switch::indicator
+QPushButton
 {
-border-style: none;
-background-color: transparent;
-width: 40px;
-height: 19px;
+padding-left: 10px;
+padding-right: 10px;
+height: 22px;
 }
 
-#switch::indicator:checked
+QComboBox
 {
-image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
+height: 18px;
 }
 
-#switch::indicator:checked:hover
+QSpinBox
 {
-image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
+height: 20px;
 }
 
-#switch::indicator:checked:pressed
+QLineEdit
 {
-image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
+height: 20px;
 }
 
-#switch::indicator:unchecked
+QCheckBox::indicator
 {
-image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
+height: 16px;
+width: 16px;
 }
-
-#switch::indicator:unchecked:hover
-{
-image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:unchecked:pressed
-{
-image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
-}
-
-#SmartDescription, #AdvanceDescription
-{
-color: #616366; /*colorToken.text-secondary*/
-}
-
-#LearnMoreContainer, #SelectorsContainer, #ButtonContainer, #widget_21, #widget_6, #AdvanceSelector, #SmartSelector
-{
-background-color: transparent;
-}
-
-#bAdd
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#bHelp
-{
-border: none;
-color: #2C5BEB; /*colorToken.link-primary*/
-background-color: transparent;
-font-weight: bold;
-}
-
-#wControlButtons
-{
-background-color: #fafafa; /*colorToken.surface-1*/
-}
-
-#wDetails
-{
-background-color: #fafafa; /*colorToken.surface-1*/
-}
-
-#wUpdateSection
-{
-background-color: transparent;
-}
-
-#bClearCache, #bClearRemoteCache, #bClearFileVersions
-{
-background-color:  #F3F4F4; /*colorToken.button-secondary*/
-color: #616366; /*colorToken.text-secondary*/
-border-color:  #F3F4F4; /*colorToken.button-secondary*/
-border-width: 0px;
-border-style: solid;
-border-radius: 5px;
-padding: 3px 10px 3px 10px;
-}
-
-#sCacheSchedulerDays
-{
-border-style: solid;
-border-color: #D8D9DB; /*colorToken.border-strong*/
-border-width: 1px;
-border-radius: 5px;
-background-color: #FFFFFF; /* colorToken.page-background*/
-padding: 6px;
-}
-
-/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bGeneral;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bGeneral;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNetwork;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNetwork;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bNotifications;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bNotifications;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
-/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
-
-/*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
-
-/*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
 
 #wTabHeader
 {
@@ -163,14 +63,15 @@ padding: 12px 13px 10px 13px;
 border-left: 0px;
 border-top: 0px;
 border-right: 0px;
-border-bottom: 3px solid #f1f1f1; /* colorToken.border-strong*/
+border-bottom: 3px solid #f1f1f1;
 background-color: transparent;
-color: #333333; /*colorToken.text-primary*/
+color: #333333;
 }
 
 #wTabHeader QToolButton:checked
 {
-border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
+background-color: #FFFFFF;
+border-bottom: 3px solid #0078D7;
 }
 
 #bChangePasswordPic, #bRecoveryKeyPic
@@ -205,7 +106,6 @@ border: none;
 #lAccountType, #lName
 {
 font-size: 13px;
-background-color: #fafafa; /*colorToken.surface-1*/
 }
 
 #lAccountType
@@ -268,9 +168,6 @@ margin-top: 4px;
        <height>80</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -305,7 +202,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -315,7 +214,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-general.svg</normaloff>:/images/settings-general.svg</iconset>
+          <normaloff>:/images/settings-general.png</normaloff>:/images/settings-general.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -352,7 +251,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -362,7 +263,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
+          <normaloff>:/images/settings-account.png</normaloff>:/images/settings-account.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -396,7 +297,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -406,7 +309,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
+          <normaloff>:/images/settings-syncs.png</normaloff>:/images/settings-syncs.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -440,7 +343,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -450,7 +355,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
+          <normaloff>:/images/settings-backup.png</normaloff>:/images/settings-backup.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -484,7 +389,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -494,7 +401,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-shield.svg</normaloff>:/images/settings-shield.svg</iconset>
+          <normaloff>:/images/settings-security.png</normaloff>:/images/settings-security.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -528,7 +435,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -538,7 +447,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-folders.svg</normaloff>:/images/settings-folders.svg</iconset>
+          <normaloff>:/images/settings-folders.png</normaloff>:/images/settings-folders.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -572,7 +481,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -582,7 +493,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-network.svg</normaloff>:/images/settings-network.svg</iconset>
+          <normaloff>:/images/Icon_Win_Network.png</normaloff>:/images/Icon_Win_Network.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -616,7 +527,9 @@ margin-top: 4px;
          </size>
         </property>
         <property name="font">
-         <font/>
+         <font>
+          <pointsize>-1</pointsize>
+         </font>
         </property>
         <property name="focusPolicy">
          <enum>Qt::StrongFocus</enum>
@@ -626,7 +539,7 @@ margin-top: 4px;
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/settings-notifications.svg</normaloff>:/images/settings-notifications.svg</iconset>
+          <normaloff>:/images/Icon_Win_Notifications.png</normaloff>:/images/Icon_Win_Notifications.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -666,11 +579,8 @@ margin-top: 4px;
    </item>
    <item>
     <widget class="QStackedWidget" name="wStack">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pGeneral">
       <layout class="QVBoxLayout" name="pGeneralLayout">
@@ -812,37 +722,6 @@ margin-top: 4px;
               <string notr="true">English</string>
              </property>
             </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="gThemeSelector">
-         <property name="title">
-          <string>Theme</string>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_21">
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QComboBox" name="cbTheme">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
            </widget>
           </item>
          </layout>
@@ -1245,103 +1124,132 @@ margin-top: 4px;
         <widget class="QGroupBox" name="gAccountDetails">
          <property name="font">
           <font>
-           <bold>true</bold>
+           <pointsize>-1</pointsize>
           </font>
          </property>
          <property name="title">
           <string>Account</string>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QHBoxLayout" name="gAccountDetailsLayout">
+          <property name="spacing">
+           <number>12</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item alignment="Qt::AlignTop">
+           <widget class="AvatarWidget" name="wAvatar" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>36</width>
+              <height>36</height>
+             </size>
+            </property>
+           </widget>
+          </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_4">
-            <item>
-             <widget class="AvatarWidget" name="wAvatar" native="true">
-              <property name="minimumSize">
-               <size>
-                <width>36</width>
-                <height>36</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>36</width>
-                <height>36</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout">
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_3">
-                <item>
-                 <widget class="QLabel" name="lName">
-                  <property name="textFormat">
-                   <enum>Qt::PlainText</enum>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QPushButton" name="lAccountType">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
-                    <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
-                  </property>
-                  <property name="iconSize">
-                   <size>
-                    <width>12</width>
-                    <height>12</height>
-                   </size>
-                  </property>
-                  <property name="autoDefault">
-                   <bool>false</bool>
-                  </property>
-                  <property name="flat">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </item>
-              <item>
-               <widget class="QLabel" name="lEmail"/>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-               <widget class="QPushButton" name="bUpgrade">
-                <property name="focusPolicy">
-                 <enum>Qt::StrongFocus</enum>
-                </property>
-                <property name="text">
-                 <string>Upgrade</string>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="bMyAccount">
-                <property name="text">
-                 <string>My Account</string>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
+           <widget class="QWidget" name="wDetails" native="true">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QGridLayout" name="wDetailsLayout">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>10</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>2</number>
+             </property>
+             <item row="2" column="1">
+              <widget class="QPushButton" name="bUpgrade">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="text">
+                <string>Upgrade</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QPushButton" name="lAccountType">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_macx.qrc">
+                 <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>12</width>
+                 <height>12</height>
+                </size>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="2">
+              <widget class="QPushButton" name="bMyAccount">
+               <property name="text">
+                <string>My Account</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0" colspan="3">
+              <widget class="QLabel" name="lEmail"/>
+             </item>
+             <item row="0" column="0" colspan="3">
+              <widget class="QLabel" name="lName">
+               <property name="textFormat">
+                <enum>Qt::PlainText</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1858,7 +1766,9 @@ min-height: 72px;
           <item row="2" column="0" colspan="2">
            <widget class="QLabel" name="lDownloadFolder">
             <property name="font">
-             <font/>
+             <font>
+              <pointsize>-1</pointsize>
+             </font>
             </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -2155,9 +2065,6 @@ min-height: 72px;
    </item>
    <item alignment="Qt::AlignBottom">
     <widget class="QWidget" name="wBottom" native="true">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">
        <number>8</number>
@@ -2174,19 +2081,26 @@ min-height: 72px;
       <item alignment="Qt::AlignLeft">
        <widget class="QPushButton" name="bHelp">
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">QPushButton {
+border: none;
+color: #0078D7;
+}
+
+QPushButton::!enabled {
+color: grey;
+}</string>
         </property>
         <property name="text">
          <string>Help</string>
         </property>
         <property name="icon">
          <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/help-icon.svg</normaloff>:/images/help-icon.svg</iconset>
+          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
          <size>
-          <width>16</width>
-          <height>16</height>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
         <property name="flat">
@@ -2423,6 +2337,15 @@ min-height: 72px;
   </customwidget>
  </customwidgets>
  <resources>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>

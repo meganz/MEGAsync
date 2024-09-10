@@ -20,21 +20,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wCircularQuota, #wCircularStorage
-{
-qproperty-outerCircleBackgroundColor: #f3f4f4; /*colorToken.surface-2*/
-qproperty-innerCircleBackgroundColor: #ffffff; /*colorToken.page-background*/
-
-qproperty-lightOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
-qproperty-darkOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
-qproperty-lightWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
-qproperty-darkWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
-qproperty-lightFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
-qproperty-darkFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
-
-qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
-}
-
+   <string notr="true">
 #wInfoDialogIn
 {
  border-radius: 16px;

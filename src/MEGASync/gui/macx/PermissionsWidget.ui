@@ -6,24 +6,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>412</width>
-    <height>35</height>
+    <width>340</width>
+    <height>31</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>254</width>
+    <height>31</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget
+{
+font-size: 11px;
+font-family: &quot;Lato&quot;;
+}
+</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>20</number>
+    <number>15</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>20</number>
-   </property>
-   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>

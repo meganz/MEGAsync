@@ -13,7 +13,6 @@
 
 #include <chrono>
 #include <type_traits>
-#include <memory>
 
 Q_DECLARE_METATYPE(QList<long long>)
 

@@ -1,21 +1,20 @@
 #include "CircularUsageProgressBar.h"
 
+const int CircularUsageProgressBar::MINVALUE;
+const int CircularUsageProgressBar::MAXVALUE;
+
 static const QColor DEFAULT_OK_LIGHT       ("#00BEA4");
 static const QColor DEFAULT_OK_DARK        ("#009985");
-static const QColor DEFAULT_WARN_LIGHT     ("#FFAF00");
-static const QColor DEFAULT_WARN_DARK      ("#F06F01");
+static const QColor DEFAULT_BAR_BACKGROUND ("#E5E5E5");
 static const QColor DEFAULT_FULL_LIGHT     ("#EE7272");
 static const QColor DEFAULT_FULL_DARK      ("#DB080F");
-
-static const QColor DEFAULT_BAR_BACKGROUND ("#E5E5E5");
+static const QColor DEFAULT_WARN_LIGHT     ("#FFAF00");
+static const QColor DEFAULT_WARN_DARK      ("#F06F01");
 static const QColor DEFAULT_TEXT_COLOR     ("#000000");
 
-static constexpr int MAXVALUE = 100;
-static constexpr int MINVALUE = 0;
-
-static constexpr qreal LIGHT_ANGLE    (1.);
-static constexpr qreal DARK_ANGLE     (0.);
-static constexpr qreal GRADIENT_ANGLE (90.);
+constexpr qreal LIGHT_ANGLE    (1.);
+constexpr qreal DARK_ANGLE     (0.);
+constexpr qreal GRADIENT_ANGLE (90.);
 
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     QWidget       (parent),
@@ -24,8 +23,6 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     mOuterRadius  (0.),
     mState        (STATE_OK),
     mPbBgColor    (DEFAULT_BAR_BACKGROUND),
-    mBgColor      (Qt::transparent),
-    mOkStateTextColor (DEFAULT_TEXT_COLOR),
     mPbGradient   (&mOkPbGradient),
     mMarkWarning  (QStringLiteral(":/images/icon_warning_24.png")),
     mMarkFull     (QStringLiteral(":/images/icon_error_24.png")),
@@ -55,20 +52,23 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     constexpr int padingPixels (4);
     const double updatedOuterRadius (std::min(width(), height()) - padingPixels);
 
-    mOuterRadius = updatedOuterRadius;
-    mPenWidth    = mOuterRadius / 352. * 22.;
+    if (updatedOuterRadius != mOuterRadius)
+    {
+        mOuterRadius = updatedOuterRadius;
+        mPenWidth    = mOuterRadius / 352. * 37.;
 
-    // Update baseRect dimensions
-    mBaseRect.setX(mPenWidth / 2.);
-    mBaseRect.setY((mPenWidth / 2.) + (padingPixels / 2.));
-    mBaseRect.setWidth(mOuterRadius - mPenWidth);
-    mBaseRect.setHeight(mBaseRect.width());
+        // Update baseRect dimensions
+        mBaseRect.setX(mPenWidth / 2.);
+        mBaseRect.setY((mPenWidth / 2.) + (padingPixels / 2.));
+        mBaseRect.setWidth(mOuterRadius - mPenWidth);
+        mBaseRect.setHeight(mBaseRect.width());
 
-    setPenColor(mBgPen, mPbBgColor, false);
-    mBgPen.setWidth(static_cast<int>(mPenWidth));
+        setPenColor(mBgPen, mPbBgColor, false);
+        mBgPen.setWidth(static_cast<int>(mPenWidth));
 
-    setPenGradient(mFgPen, *mPbGradient, false);
-    mFgPen.setWidth(static_cast<int>(mPenWidth));
+        setPenGradient(mFgPen, *mPbGradient, false);
+        mFgPen.setWidth(static_cast<int>(mPenWidth));
+    }
 
     QPainter painter(this);
     painter.setRenderHints(QPainter::Antialiasing
@@ -78,12 +78,12 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
     painter.fillRect(mBaseRect, Qt::NoBrush);
 
     // Draw white disc background
-    painter.setBrush(mBgColor);
+    painter.setBrush(Qt::white);
     painter.drawEllipse(mBaseRect);
 
     // Draw background progress bar
     painter.setPen(mBgPen);
-    painter.drawArc(mBaseRect, 90 * 16, -(MAXVALUE * 360 * 16) / 100);
+    painter.drawArc(mBaseRect, 90 * 16, -(CircularUsageProgressBar::MAXVALUE * 360 * 16) / 100);
 
     // Draw value arc
     painter.setPen(mFgPen);
@@ -155,7 +155,7 @@ void CircularUsageProgressBar::drawText(QPainter& p, const QRectF& innerRect, do
 
     p.setFont(f);
 
-    const auto penColor(mState == STATE_OK ? mOkStateTextColor
+    const auto penColor(mState == STATE_OK ? DEFAULT_TEXT_COLOR
                                            : mPbGradient->stops().begin()->second);
     p.setPen(penColor);
 
@@ -190,7 +190,7 @@ void CircularUsageProgressBar::setValue(int value)
 {
     if ( value != mPbValue || mNoTotalValue)
     {
-        mPbValue = std::max(MINVALUE, value);
+        mPbValue = std::max(CircularUsageProgressBar::MINVALUE, value);
 
         mNoTotalValue = false;
         mTextValue = tr("[A]%").replace(QStringLiteral("[A]"), QString::number(mPbValue));
@@ -241,81 +241,13 @@ void CircularUsageProgressBar::setTotalValueUnknown(bool isEmptyBar)
     }
     else
     {
-        setBarTotalValueUnkown(MAXVALUE, &mFullPbGradient);
+        setBarTotalValueUnkown(CircularUsageProgressBar::MAXVALUE, &mFullPbGradient);
     }
 }
 
-void CircularUsageProgressBar::setLightOkProgressBarColor(const QString& color)
+void CircularUsageProgressBar::setProgressBarGradient(QColor light, QColor dark)
 {
-    setProgressBarColors(color, STATE_OK, true);
-}
-
-void CircularUsageProgressBar::setDarkOkProgressBarColor(const QString& color)
-{
-    setProgressBarColors(color, STATE_OK, false);
-}
-
-void CircularUsageProgressBar::setLightWarnProgressBarColor(const QString& color)
-{
-    setProgressBarColors(color, STATE_WARNING, true);
-}
-
-void CircularUsageProgressBar::setDarkWarnProgressBarColor(const QString& color)
-{
-    setProgressBarColors(color, STATE_WARNING, false);
-}
-
-void CircularUsageProgressBar::setLightFullProgressBarColor(const QString& color)
-{
-    setProgressBarColors(color, STATE_OVER, true);
-}
-
-void CircularUsageProgressBar::setDarkFullProgressBarColor(const QString& color)
-{
-    setProgressBarColors(color, STATE_OVER, false);
-}
-
-void CircularUsageProgressBar::setProgressBarColors(const QString& color, STATE state, bool light)
-{
-    switch (state)
-    {
-        case STATE_OK:
-        {
-            mOkPbGradient.setColorAt(light ? LIGHT_ANGLE : DARK_ANGLE, color);
-            break;
-        }
-        case STATE_WARNING:
-        {
-            mWarnPbGradient.setColorAt(light ? LIGHT_ANGLE : DARK_ANGLE, color);
-            break;
-        }
-        case STATE_OVER:
-        {
-            mFullPbGradient.setColorAt(light ? LIGHT_ANGLE : DARK_ANGLE, color);
-            break;
-        }
-    }
-
-    emit colorChanged();
-}
-
-void CircularUsageProgressBar::setOuterCircleBackgroundColor(const QString& color)
-{
-    mPbBgColor = color;
-
-    emit colorChanged();
-}
-
-void CircularUsageProgressBar::setInnerCircleBackgroundColor(const QString& color)
-{
-    mBgColor = color;
-
-    emit colorChanged();
-}
-
-void CircularUsageProgressBar::setOkStateTextColor(const QString& color)
-{
-    mOkStateTextColor = color;
-
-    emit colorChanged();
+    mOkPbGradient.stops().clear();
+    mOkPbGradient.setColorAt(DARK_ANGLE, dark);
+    mOkPbGradient.setColorAt(LIGHT_ANGLE, light);
 }

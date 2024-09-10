@@ -1214,6 +1214,18 @@
         <file>images/StalledIssues/tree_double_link_default.png</file>
         <file>images/StalledIssues/tree_double_link_default@2x.png</file>
         <file>images/StalledIssues/tree_double_link_default@3x.png</file>
+        <file>images/account_details/versions@3x.png</file>
+        <file>images/account_details/versions@2x.png</file>
+        <file>images/account_details/versions.png</file>
+        <file>images/account_details/available_storage@3x.png</file>
+        <file>images/account_details/available_storage@2x.png</file>
+        <file>images/account_details/available_storage.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico@3x.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico@2x.png</file>
+        <file>images/account_details/Cloud_Drive_24_ico.png</file>
+        <file>images/account_details/Bin_24_ico@3x.png</file>
+        <file>images/account_details/Bin_24_ico@2x.png</file>
+        <file>images/account_details/Bin_24_ico.png</file>
         <file>images/settings-backups-warn@3x.png</file>
         <file>images/settings-backups-warn@2x.png</file>
         <file>images/settings-backups-warn.png</file>
@@ -1449,45 +1461,12 @@
         <file>images/copy@3x.png</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
-        <file>images/settings-account.svg</file>
-        <file>images/settings-backup.svg</file>
-        <file>images/settings-folders.svg</file>
-        <file>images/settings-general.svg</file>
-        <file>images/settings-network.svg</file>
-        <file>images/settings-notifications.svg</file>
-        <file>images/settings-shield.svg</file>
-        <file>images/settings-sync.svg</file>
-        <file>images/settings-sync-warn.svg</file>
-        <file>images/settings-backup-warn.svg</file>
-        <file>images/themed/dark/checkbox_checked.svg</file>
-        <file>images/themed/light/checkbox_checked.svg</file>
-        <file>images/themed/light/combobox_down_arrow.svg</file>
-        <file>images/themed/dark/combobox_down_arrow.svg</file>
-        <file>images/help-icon.svg</file>
-        <file>images/plus.svg</file>
-        <file>images/minus.svg</file>
-        <file>images/themed/light/radio_unchecked.svg</file>
-        <file>images/themed/light/radio_checked.svg</file>
-        <file>images/themed/dark/radio_unchecked.svg</file>
-        <file>images/themed/dark/radio_checked.svg</file>
-        <file>images/icons/folder/synced-folder.png</file>
-        <file>images/icons/folder/synced-folder@2x.png</file>
-        <file>images/icons/folder/synced-folder@3x.png</file>
-        <file>images/themed/light/switch_on_hover.svg</file>
-        <file>images/themed/light/switch_off_pressed.svg</file>
-        <file>images/themed/light/switch_off_hover.svg</file>
-        <file>images/themed/light/switch_on_pressed.svg</file>
-        <file>images/themed/light/switch_off.svg</file>
-        <file>images/themed/light/switch_on.svg</file>
-        <file>images/themed/dark/switch_on.svg</file>
-        <file>images/themed/dark/switch_off.svg</file>
-        <file>images/themed/dark/switch_on_pressed.svg</file>
-        <file>images/themed/dark/switch_on_hover.svg</file>
-        <file>images/themed/dark/switch_off_pressed.svg</file>
-        <file>images/themed/dark/switch_off_hover.svg</file>
         <file>images/StalledIssues/rotate-ccw.png</file>
         <file>images/StalledIssues/rotate-ccw@2x.png</file>
         <file>images/StalledIssues/rotate-ccw@3x.png</file>
+        <file>images/icons/folder/synced-folder.png</file>
+        <file>images/icons/folder/synced-folder@2x.png</file>
+        <file>images/icons/folder/synced-folder@3x.png</file>
         <file>images/StalledIssues/solved-issues-outline.png</file>
         <file>images/StalledIssues/solved-issues-outline@2x.png</file>
         <file>images/StalledIssues/solved-issues-outline@3x.png</file>
@@ -1509,7 +1488,5 @@
         <file>images/StalledIssues/x-circle-solid.png</file>
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
-        <file>images/themed/dark/checkbox_unchecked.svg</file>
-        <file>images/themed/light/checkbox_unchecked.svg</file>
     </qresource>
 </RCC>

@@ -16,11 +16,14 @@
   <property name="styleSheet">
    <string notr="true">#SmartSelector, #AdvanceSelector
 {
+color: #3D3D3D;
 font-size: 13px;
 }
 
+
 #SmartDescription, #AdvanceDescription
 {
+color: #7B7876;
 font-size: 12px;
 }</string>
   </property>
@@ -41,7 +44,7 @@ font-size: 12px;
     <number>0</number>
    </property>
    <item>
-    <widget class="QGroupBox" name="findGroup">
+    <widget class="QGroupBox" name="groupBox">
      <property name="styleSheet">
       <string notr="true">#SmartSelector, #AdvanceSelector
 {

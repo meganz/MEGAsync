@@ -25,8 +25,6 @@ private:
 
 private slots:
     void permissionsChanged();
-    void on_bUpdate_clicked();
-    void on_bCancel_clicked();
 };
 
 #endif // PERMISSIONSDIALOG_H

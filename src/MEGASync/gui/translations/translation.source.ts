@@ -529,6 +529,26 @@
         <translation>Apply</translation>
     </message>
     <message>
+        <source>Upload rate limit:</source>
+        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
+        <translation>Upload rate limit:</translation>
+    </message>
+    <message>
+        <source>Download rate limit:</source>
+        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
+        <translation>Download rate limit:</translation>
+    </message>
+    <message>
+        <source>Number of connections per transfer:</source>
+        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
+        <translation>Number of connections per transfer:</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
+        <translation>Update</translation>
+    </message>
+    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>Use HTTPS for transfers that don’t start</translation>
@@ -5462,18 +5482,6 @@ Enter a different name.</translation>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Owner permissions:</translation>
     </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translation type="unfinished">Permissions</translation>
-    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -5685,6 +5693,16 @@ Enter a different name.</translation>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.(Linux and Windows)</translatorcomment>
         <translation>Apply</translation>
+    </message>
+    <message>
+        <source>Auto-detect</source>
+        <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
+        <translation>Auto-detect</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
+        <translation>Update</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6184,13 +6202,14 @@ Do you want to delete it anyway?</translation>
         <translation>Folder will be deleted from MEGA. It won’t be deleted from your computer. This action can’t be undone.</translation>
     </message>
     <message>
+        <source>Confirm</source>
+        <translatorcomment>Button text that accepts</translatorcomment>
+        <translation>Confirm</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Stop Backup</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6809,14 +6828,6 @@ Do you want to delete it anyway?</translation>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
         <translation>Disabling sync status icons</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Theme:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

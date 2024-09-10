@@ -16,7 +16,7 @@ public:
     ~RemoveSyncConfirmationDialog();
 
 private slots:
-    void on_bRemove_clicked();
+    void on_bOK_clicked();
 
 private:
     Ui::RemoveSyncConfirmationDialog* ui;

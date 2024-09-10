@@ -17,7 +17,6 @@
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
-#include "ThemeManager.h"
 #include "StatsEventHandler.h"
 #include "AccountDetailsDialog.h"
 #include "ChangePassword.h"
@@ -536,10 +535,6 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->addItems(languages);
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
-    mUi->cbTheme->clear();
-    mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-    mUi->cbTheme->setCurrentIndex(static_cast<int>(mPreferences->getThemeType()));
-
     //Account
     mUi->lEmail->setText(mPreferences->email());
     auto fullName ((mPreferences->firstName() + QStringLiteral(" ")
@@ -1039,16 +1034,6 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     Platform::getInstance()->notifyRestartSyncFolders();
 #endif
     mApp->notifyChangeToAllFolders();
-}
-
-void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
-{
-    if (mLoadingSettings)
-    {
-        return;
-    }
-
-    ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
 }
 
 #ifdef Q_OS_WINDOWS
