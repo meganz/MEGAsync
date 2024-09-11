@@ -55,6 +55,7 @@ void QMLColorThemeManagerTarget::deploy(const DesignAssets& designAssets) const
         }
 
         stream << colorThemeManagerFooter;
+        data.close();
     }
 }
 
