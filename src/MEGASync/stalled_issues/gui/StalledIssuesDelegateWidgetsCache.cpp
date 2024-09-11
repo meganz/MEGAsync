@@ -233,19 +233,21 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
         {
             if(auto ignoredIssue = issue.convert<const IgnoredStalledIssue>())
             {
-                if(ignoredIssue->isSymLink())
+                if (ignoredIssue->isSymLink())
                 {
                     headerCase = new SymLinkHeader(header);
                 }
-                else
+                else if (ignoredIssue->isHardLink() || ignoredIssue->isSpecialLink())
                 {
                     headerCase = new HardSpecialLinkHeader(header);
                 }
             }
-            else
+
+            if (!headerCase)
             {
                 headerCase = new FileIssueHeader(header);
             }
+
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:
