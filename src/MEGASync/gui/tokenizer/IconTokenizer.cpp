@@ -52,9 +52,9 @@ void IconTokenizer::process(QWidget* widget, const QString& mode, const QString&
             return;
         }
 
-        for (auto widget : widgets)
+        for (auto childWidget : widgets)
         {
-            auto button = dynamic_cast<QAbstractButton*>(widget);
+            auto button = dynamic_cast<QAbstractButton*>(childWidget);
             if (button == nullptr)
             {
                 qWarning() << __func__ << " Error dynamic cast failed for Widget* to QAbstractButton* : " << targetElementId;
