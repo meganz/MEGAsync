@@ -9,9 +9,12 @@ void DesignTokensImporter::run()
 {
     // parse mega design assets repository.
     DesignAssetsRepoManager tokenManager;
-    DesignAssets designAssets = tokenManager.getDesignAssets();
+    auto designAssets = tokenManager.getDesignAssets();
 
     // design generator entry point.
-    DesignGenerator designGenerator;
-    designGenerator.deploy(designAssets);
+    if (designAssets.has_value())
+    {
+        DesignGenerator designGenerator;
+        designGenerator.deploy(designAssets.value());
+    }
 }

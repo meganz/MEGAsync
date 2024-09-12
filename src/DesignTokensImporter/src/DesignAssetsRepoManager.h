@@ -9,18 +9,20 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#include <optional>
+
 namespace DTI
 {
     class DesignAssetsRepoManager
     {
     public:
         DesignAssetsRepoManager() = default;
-        DesignAssets getDesignAssets();
+        std::optional<DesignAssets> getDesignAssets();
 
     private:
         using CoreData = QMap<QString, QString>;
 
-        ThemedColorData getColorData();
+        std::optional<ThemedColorData> getColorData();
         ThemedColorData parseTheme(QFile& designTokensFile, const ColorData& coreData);
         DesignAssetsRepoManager::CoreData parseCore(QFile& designTokensFile);
         void recurseCore(QString category, const QJsonObject& coreColors, DesignAssetsRepoManager::CoreData& coreData);

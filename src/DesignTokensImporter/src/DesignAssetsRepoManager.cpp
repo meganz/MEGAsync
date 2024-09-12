@@ -20,33 +20,40 @@ static const QString RepoAttributeValue = QString::fromLatin1("value");
 static const QString RepoAttributeType = QString::fromLatin1("type");
 static const QString RepoAttributeColorId = QString::fromLatin1("color");
 
-DesignAssets DesignAssetsRepoManager::getDesignAssets()
+std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 {
-    DesignAssets returnValue;
-
-    returnValue.colorTokens = getColorData();
-
-    return returnValue;
+    auto colorTokens = getColorData();
+    if (colorTokens.has_value())
+    {
+        DesignAssets returnValue;
+        returnValue.colorTokens = colorTokens.value();
+        return returnValue;
+    }
+    else
+    {
+        return std::nullopt;
+    }
 }
 
-ThemedColorData DesignAssetsRepoManager::getColorData()
+std::optional<ThemedColorData> DesignAssetsRepoManager::getColorData()
 {
-    ThemedColorData returnValue;
-
     // look for tokens.json file
     QString pathToDesignTokensFile = Utilities::resolvePath(QDir::currentPath(), PathProvider::RELATIVE_DESIGN_TOKENS_FILE_PATH);
     QFile designTokensFile(pathToDesignTokensFile);
     if (!designTokensFile.exists())
     {
         qCritical() << __func__ << " Error : No tokens.json file found in " << pathToDesignTokensFile;
-        return returnValue;
+        qCritical() << __func__ << " Did you forget to clone megadesignassets repository?";
+        return std::nullopt;
     }
 
     if (!designTokensFile.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         qWarning() << __func__ << " Error : opening tokens.json file " << pathToDesignTokensFile;
-        return returnValue;
+        return std::nullopt;
     }
+
+    ThemedColorData returnValue;
 
     // load core data
     const CoreData& coreData = parseCore(designTokensFile);
@@ -148,7 +155,7 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, con
 
     if (!themedColorData.empty())
     {
-        Utilities::logInfoMessage("DesignAssetsRepoManager has succesfully parsed Themes.");
+        Utilities::logInfoMessage("DesignAssetsRepoManager has succesfully parsed color themes.");
     }
 
     return themedColorData;

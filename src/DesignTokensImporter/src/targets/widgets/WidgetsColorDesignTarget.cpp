@@ -38,15 +38,18 @@ void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
         jsonThemes[themeName] = jsonTheme;
     }
 
-    const QString directoryThemePath = QDir::currentPath() % PathProvider::RELATIVE_COLOR_DIR_PATH;
-
-    if (Utilities::createDirectory(directoryThemePath))
+    if (!jsonThemes.isEmpty())
     {
-        const QString widgetsColorFilePath = directoryThemePath % "/" % PathProvider::COLOR_THEMED_TOKENS_FILE_NAME;
+        const QString directoryThemePath = QDir::currentPath() % PathProvider::RELATIVE_COLOR_DIR_PATH;
 
-        if (Utilities::writeJSONToFile(QJsonDocument(jsonThemes), widgetsColorFilePath))
+        if (Utilities::createDirectory(directoryThemePath))
         {
-             Utilities::logInfoMessage(QString::fromUtf8("The target widgetsColor has successfully generated the file : %0").arg(widgetsColorFilePath));
+            const QString widgetsColorFilePath = directoryThemePath % "/" % PathProvider::COLOR_THEMED_TOKENS_FILE_NAME;
+
+            if (Utilities::writeJSONToFile(QJsonDocument(jsonThemes), widgetsColorFilePath))
+            {
+                 Utilities::logInfoMessage(QString::fromUtf8("The target widgetsColor has successfully generated the file : %0").arg(widgetsColorFilePath));
+            }
         }
     }
 }
