@@ -1,4 +1,5 @@
 #include "DesignAssetsRepoManager.h"
+
 #include "Utilities.h"
 #include "PathProvider.h"
 
@@ -97,6 +98,11 @@ DesignAssetsRepoManager::CoreData DesignAssetsRepoManager::parseCore(QFile& desi
     QJsonObject coreColors = jsonObject.value(CoreColors).toObject();
     recurseCore(CoreColors, coreColors, coreData);
 
+    if (!coreData.empty())
+    {
+        Utilities::logInfoMessage("DesignAssetsRepoManager has succesfully parsed core colors.");
+    }
+
     return coreData;
 }
 
@@ -139,6 +145,11 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, con
             themedColorData.insert(theme, colorData);
         }
     });
+
+    if (!themedColorData.empty())
+    {
+        Utilities::logInfoMessage("DesignAssetsRepoManager has succesfully parsed Themes.");
+    }
 
     return themedColorData;
 }

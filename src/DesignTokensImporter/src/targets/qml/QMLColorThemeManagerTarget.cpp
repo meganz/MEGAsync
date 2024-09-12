@@ -1,5 +1,6 @@
 #include "QMLColorThemeManagerTarget.h"
 
+#include "Utilities.h"
 #include "QMLTargetUtils.h"
 #include "DesignTargetFactory.h"
 
@@ -55,8 +56,14 @@ void QMLColorThemeManagerTarget::deploy(const DesignAssets& designAssets) const
         }
 
         stream << colorThemeManagerFooter;
-        data.close();
+        Utilities::logInfoMessage(QString::fromUtf8("The target qmlColorThemeManager has successfully generated the file : %0").arg(data.fileName()));
     }
+    else
+    {
+        qWarning() << __func__ << " Error : couldn't open file " << data.fileName();
+    }
+
+    data.close();
 }
 
 //!

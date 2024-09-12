@@ -34,6 +34,7 @@ namespace DTI
         static QString themeToString(Utilities::Theme theme);
         static QString resolvePath(const QString& basePath, const QString& relativePath);
         static QString normalizeHexColoursForQtFormat(QString colour);
+        static void logInfoMessage(const QString& message);
     };
 }
 

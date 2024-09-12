@@ -12,7 +12,7 @@
 
 using namespace DTI;
 
-bool WidgetsColorDesignTarget::registered = ConcreteDesignTargetFactory<WidgetsColorDesignTarget>::Register("widgetsColorTarget");
+bool WidgetsColorDesignTarget::registered = ConcreteDesignTargetFactory<WidgetsColorDesignTarget>::Register("widgetsColor");
 
 void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
 {
@@ -42,7 +42,12 @@ void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
 
     if (Utilities::createDirectory(directoryThemePath))
     {
-        Utilities::writeJSONToFile(QJsonDocument(jsonThemes), directoryThemePath % "/" + PathProvider::COLOR_THEMED_TOKENS_FILE_NAME);
+        const QString widgetsColorFilePath = directoryThemePath % "/" % PathProvider::COLOR_THEMED_TOKENS_FILE_NAME;
+
+        if (Utilities::writeJSONToFile(QJsonDocument(jsonThemes), widgetsColorFilePath))
+        {
+             Utilities::logInfoMessage(QString::fromUtf8("The target widgetsColor has successfully generated the file : %0").arg(widgetsColorFilePath));
+        }
     }
 }
 

@@ -344,3 +344,8 @@ QString Utilities::normalizeHexColoursForQtFormat(QString colour)
 
     return colour;
 }
+
+void Utilities::logInfoMessage(const QString& message)
+{
+    qInfo() << "Information : " << message;
+}
