@@ -18,11 +18,11 @@ QmlDialog {
     visible: true
     modality: Qt.NonModal
     width: contentItem.width + 2 * window.contentMargin
-    height: contentItem.height + 2 * window.contentMargin - Constants.focusBorderWidth
+    height: contentItem.height + 2 * window.contentMargin
     maximumWidth: contentItem.width + 2 * window.contentMargin
-    maximumHeight: contentItem.height + 2 * window.contentMargin - Constants.focusBorderWidth
+    maximumHeight: contentItem.height + 2 * window.contentMargin
     minimumWidth: contentItem.width + 2 * window.contentMargin
-    minimumHeight: contentItem.height + 2 * window.contentMargin - Constants.focusBorderWidth
+    minimumHeight: contentItem.height + 2 * window.contentMargin
 
     Column {
         id: contentItem
@@ -44,7 +44,7 @@ QmlDialog {
 
             width: parent.width
             height: 168
-            color: colorStyle.surface2
+            color: ColorTheme.surface2
             radius: 6
 
             Row {
@@ -132,7 +132,7 @@ QmlDialog {
                 width: saveUpText.width + 8
                 height: saveUpText.height + 4
                 radius: 4
-                color: colorStyle.selectionControl
+                color: ColorTheme.selectionControl
 
                 Text {
                     id: saveUpText
@@ -152,7 +152,7 @@ QmlDialog {
                     }
                     lineHeight: 16
                     lineHeightMode: Text.FixedHeight
-                    color: colorStyle.textInverseAccent
+                    color: ColorTheme.textInverseAccent
                     text: "Save up to 16%"
                 }
             }
@@ -162,38 +162,26 @@ QmlDialog {
         Row {
             id: plansRow
 
-            spacing: 8
+            anchors {
+                left: parent.left
+                leftMargin: Constants.focusAdjustment
+            }
+            spacing: 0
 
-            Rectangle {
+            PlanCard {
                 id: proLitePlan
-
-                width: 160
-                height: 215
-                color: "blue"
             }
 
-            Rectangle {
+            PlanCard {
                 id: proIPlan
-
-                width: 160
-                height: 215
-                color: "red"
             }
 
-            Rectangle {
+            PlanCard {
                 id: proIIPlan
-
-                width: 160
-                height: 215
-                color: "green"
             }
 
-            Rectangle {
+            PlanCard {
                 id: proIIIPlan
-
-                width: 160
-                height: 215
-                color: "pink"
             }
         }
 
