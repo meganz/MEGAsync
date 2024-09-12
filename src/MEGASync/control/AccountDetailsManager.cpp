@@ -360,21 +360,27 @@ void AccountDetailsManager::processNodesAndVersionsStorage(const std::shared_ptr
                                         + details->getVersionStorageUsed(rubbishHandle));
 }
 
-void AccountDetailsManager::processInShares(const std::shared_ptr<mega::MegaAccountDetails>& details,
-                                            const std::shared_ptr<mega::MegaNodeList>& inShares)
+void AccountDetailsManager::processInShares(
+    const std::shared_ptr<mega::MegaAccountDetails>& details,
+    const std::shared_ptr<mega::MegaNodeList>& inShares)
 {
     long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
-    for (int i = 0; i < inShares->size(); i++)
+
+    if (inShares)
     {
-        mega::MegaNode* node = inShares->get(i);
-        if (node)
+        for (int i = 0; i < inShares->size(); i++)
         {
-            mega::MegaHandle handle = node->getHandle();
-            inShareSize += details->getStorageUsed(handle);
-            inShareFiles += details->getNumFiles(handle);
-            inShareFolders += details->getNumFolders(handle);
+            mega::MegaNode* node = inShares->get(i);
+            if (node)
+            {
+                mega::MegaHandle handle = node->getHandle();
+                inShareSize += details->getStorageUsed(handle);
+                inShareFiles += details->getNumFiles(handle);
+                inShareFolders += details->getNumFolders(handle);
+            }
         }
     }
+
     mPreferences->setInShareStorage(inShareSize);
     mPreferences->setInShareFiles(inShareFiles);
     mPreferences->setInShareFolders(inShareFolders);
