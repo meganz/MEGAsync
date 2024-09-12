@@ -160,6 +160,9 @@
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
+        <file>upsell/qmldir</file>
+        <file>upsell/UpsellDialog.qml</file>
+        <file>upsell/UpsellStrings.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>

@@ -112,6 +112,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsComponent.h
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
+    gui/upsell/UpsellComponent.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
     gui/user_messages/AlertItem.h
@@ -242,6 +243,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsComponent.cpp
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
+    gui/upsell/UpsellComponent.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp
@@ -520,6 +522,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/onboarding
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
+    ${CMAKE_CURRENT_LIST_DIR}/upsell
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
