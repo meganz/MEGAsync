@@ -1,6 +1,7 @@
 #include "DesignTokensImporter.h"
 
 #include "PathProvider.h"
+#include "Utilities.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -16,6 +17,8 @@ int main(int argc, char* argv[])
     QDir::setCurrent(PathProvider::RELATIVE_MEGASYNC_PATH);
 
     DesignTokensImporter::run();
+
+    Utilities::logInfoMessage("DesignTokensImporter has finished.");
 
     // Stop the event loop and exit the application
     QCoreApplication::quit();
