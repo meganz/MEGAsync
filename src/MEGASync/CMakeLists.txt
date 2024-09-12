@@ -143,6 +143,7 @@ target_platform_compile_options(
             /wd4458 # identifier hides class member
             /wd4100 # unreferenced formal parameter
             /wd4456 # declaration hides previous local declaration
+            /we4800 # Implicit conversion from 'type' to bool. Possible information loss
     UNIX $<$<CONFIG:Debug>:-ggdb3> -Wall -Wextra -Wconversion -Wno-unused-parameter
 )
 

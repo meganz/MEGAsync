@@ -107,6 +107,12 @@ protected:
             }
             return true;
         }
+        else if (func)
+        {
+            // send the current value as we don´t need to update it (it was updated at most 2
+            // seconds ago)
+            func(mValues.value(type).value<ValueType>());
+        }
 
         return false;
     }
