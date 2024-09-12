@@ -6095,17 +6095,6 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
-    <name>QObject</name>
-    <message>
-        <source>Light</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Dark</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>QPlatformTheme</name>
     <message>
         <source>&amp;Yes</source>

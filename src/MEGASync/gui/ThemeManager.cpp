@@ -2,8 +2,8 @@
 #include "Preferences/Preferences.h"
 
 const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {
-    {Preferences::ThemeType::LIGHT_THEME,  QObject::tr("Light")},
-    {Preferences::ThemeType::DARK_THEME,  QObject::tr("Dark")}
+    {Preferences::ThemeType::LIGHT_THEME,  QLatin1String("Light")},
+    {Preferences::ThemeType::DARK_THEME,  QLatin1String("Dark")}
 };
 
 ThemeManager::ThemeManager()
