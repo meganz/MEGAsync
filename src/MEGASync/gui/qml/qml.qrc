@@ -32,6 +32,9 @@
         <file>components/buttons/LargeSizes.qml</file>
         <file>components/buttons/LinkButton.qml</file>
         <file>components/buttons/TextButton.qml</file>
+        <file>components/buttons/RadioButton.qml</file>
+        <file>components/buttons/RadioButtonSizes.qml</file>
+        <file>components/buttons/RadioButtonColors.qml</file>
         <file>components/checkBoxes/qmldir</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>

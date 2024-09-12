@@ -15,3 +15,6 @@ SmallSizes 1.0 SmallSizes.qml
 LargeSizes 1.0 LargeSizes.qml
 LinkButton 1.0 LinkButton.qml
 TextButton 1.0 TextButton.qml
+RadioButton 1.0 RadioButton.qml
+RadioButtonSizes 1.0 RadioButtonSizes.qml
+RadioButtonColors 1.0 RadioButtonColors.qml
