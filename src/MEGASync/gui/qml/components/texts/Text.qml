@@ -5,8 +5,6 @@ import common 1.0
 Qml.Text {
     id: root
 
-    property alias textMouseArea: mouseArea
-    property bool handlePress: false
     enum Size {
         SMALL = 10,
         NORMAL = 12,
@@ -17,17 +15,23 @@ Qml.Text {
         HUGE = 48
     }
 
-    color: enabled ? ColorTheme.textPrimary : ColorTheme.textDisabled
-    wrapMode: Text.WordWrap
+    property alias textMouseArea: mouseArea
+
+    property bool handlePress: false
+
     font {
         family: FontStyles.fontFamily
         styleName: FontStyles.fontStyleName
         pixelSize: Text.Size.NORMAL
     }
-    Qml.MouseArea
-    {
+    color: enabled ? ColorTheme.textPrimary : ColorTheme.textDisabled
+    wrapMode: Text.WordWrap
+
+    Qml.MouseArea {
         id: mouseArea
+
         anchors.fill: parent
-        onPressed: mouse.accepted = handlePress
+        onPressed: { mouse.accepted = handlePress; }
     }
+
 }
