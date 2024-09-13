@@ -1,15 +1,17 @@
 #ifndef REQUEST_LISTENER_MANAGER_H
 #define REQUEST_LISTENER_MANAGER_H
 
-#include <QObject>
-#include <QList>
-#include <QMutex>
-#include <QPointer>
+#include "megaapi.h"
+#include "QTMegaListener.h"
+#include "QTMegaRequestListener.h"
+
 #include <functional>
 #include <memory>
-#include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include <mutex>
+#include <QList>
+#include <QMutex>
+#include <QObject>
+#include <QPointer>
 
 struct onRequestFinishOnlyListenerCallback
 {
@@ -72,6 +74,8 @@ public:
 
     RequestListenerManager(const RequestListenerManager&) = delete;
     RequestListenerManager& operator=(const RequestListenerManager&) = delete;
+
+    ~RequestListenerManager() {}
 
     std::shared_ptr<mega::QTMegaRequestListener> registerAndGetListener(const ListenerCallbacks& callbacks);
 

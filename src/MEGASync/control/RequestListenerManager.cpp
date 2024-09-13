@@ -68,9 +68,7 @@ void ObserverRequestListener::onRequestTemporaryError(MegaApi*,
 
 // ----------------------------------------------------------------------------
 
-RequestListenerManager::RequestListenerManager()
-{
-}
+RequestListenerManager::RequestListenerManager() {}
 
 std::shared_ptr<QTMegaRequestListener> RequestListenerManager::registerAndGetListener(const ListenerCallbacks& callbacks)
 {

@@ -376,7 +376,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     QThread* mTransferEventThread;
     TransferThread* mTransferEventWorker;
-    mega::QTMegaTransferListener *mDelegateListener;
+    std::unique_ptr<mega::QTMegaTransferListener> mDelegateListener;
     QTimer mProcessTransfersTimer;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;

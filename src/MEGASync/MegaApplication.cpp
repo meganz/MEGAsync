@@ -1,61 +1,60 @@
 #include "MegaApplication.h"
-#include "CrashReportDialog.h"
-#include "MegaProxyStyle.h"
-#include "QMegaMessageBox.h"
-#include "AppStatsEvents.h"
-#include "Utilities.h"
-#include "CrashHandler.h"
-#include "ExportProcessor.h"
-#include "LoginController.h"
+
+#include "AccountDetailsManager.h"
 #include "AccountStatusController.h"
-#include "EphemeralCredentials.h"
-#include "IntervalExecutioner.h"
-#include "CommonMessages.h"
-#include "EventUpdater.h"
-#include "GuiUtilities.h"
-#include "Platform.h"
-#include "OverQuotaDialog.h"
-#include "StalledIssuesModel.h"
-#include "TransferMetaData.h"
-#include "DuplicatedNodeDialog.h"
-#include "NodeSelectorSpecializations.h"
-#include "PlatformStrings.h"
-#include "ProxyStatsEventHandler.h"
-
-#include "UserAttributesManager.h"
-#include "FullName.h"
+#include "AppStatsEvents.h"
 #include "Avatar.h"
-#include "MyBackupsHandle.h"
-#include "SyncsMenu.h"
-#include "UploadToMegaDialog.h"
-#include "EmailRequester.h"
-#include "StatsEventHandler.h"
-
-#include "DialogOpener.h"
-#include "PowerOptions.h"
+#include "CommonMessages.h"
+#include "CrashHandler.h"
+#include "CrashReportDialog.h"
 #include "DateTimeFormatter.h"
-#include <StalledIssuesDialog.h>
-#include <DialogOpener.h>
-#include "QmlDialogWrapper.h"
-#include "Onboarding.h"
-
+#include "DialogOpener.h"
+#include "DuplicatedNodeDialog.h"
+#include "EmailRequester.h"
+#include "EphemeralCredentials.h"
+#include "EventUpdater.h"
+#include "ExportProcessor.h"
+#include "FullName.h"
+#include "GuiUtilities.h"
+#include "IntervalExecutioner.h"
+#include "LoginController.h"
 #include "mega/types.h"
+#include "MegaProxyStyle.h"
+#include "MyBackupsHandle.h"
+#include "NodeSelectorSpecializations.h"
+#include "Onboarding.h"
+#include "OverQuotaDialog.h"
+#include "Platform.h"
+#include "PlatformStrings.h"
+#include "PowerOptions.h"
+#include "ProxyStatsEventHandler.h"
+#include "QMegaMessageBox.h"
+#include "QmlDialogWrapper.h"
+#include "QTMegaApiManager.h"
+#include "RequestListenerManager.h"
+#include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
+#include "SyncsMenu.h"
+#include "TransferMetaData.h"
+#include "UploadToMegaDialog.h"
+#include "UserAttributesManager.h"
+#include "Utilities.h"
 
-#include <QTranslator>
+#include <QtConcurrent/QtConcurrent>
+
+#include <assert.h>
+#include <DialogOpener.h>
+#include <QCheckBox>
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QFontDatabase>
+#include <QFuture>
 #include <QNetworkProxy>
 #include <QScreen>
 #include <QSettings>
 #include <QToolTip>
-#include <QFuture>
-#include <QCheckBox>
-#include <QtConcurrent/QtConcurrent>
-#include "RequestListenerManager.h"
-#include "AccountDetailsManager.h"
-
-#include <assert.h>
+#include <QTranslator>
+#include <StalledIssuesDialog.h>
 
 #ifdef Q_OS_LINUX
     #include <signal.h>
@@ -479,16 +478,23 @@ void MegaApplication::initialize()
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
-    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
+
+    QTMegaApiManager::createMegaApi(megaApi,
+                                    Preferences::CLIENT_KEY,
+                                    basePath.toUtf8().constData(),
+                                    Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
+
+    QTMegaApiManager::createMegaApi(megaApiFolders,
+                                    Preferences::CLIENT_KEY,
+                                    basePath.toUtf8().constData(),
+                                    Preferences::USER_AGENT.toUtf8().constData());
+    megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
-
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
                  .arg(mDisableGfx ? QLatin1String("disabled")
@@ -2184,9 +2190,6 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
-    delete AccountDetailsManager::instance();
-    delete EmailRequester::instance();
-
     mUserMessageController.reset();
     infoDialog->deleteLater();
 
@@ -2208,11 +2211,7 @@ void MegaApplication::cleanAll()
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
 
-    delete megaApi;
-    megaApi = nullptr;
-
-    delete megaApiFolders;
-    megaApiFolders = nullptr;
+    QTMegaApiManager::removeMegaApis();
 
     trayIcon->deleteLater();
     trayIcon = nullptr;

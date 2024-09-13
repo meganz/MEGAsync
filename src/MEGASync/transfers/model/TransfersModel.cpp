@@ -837,9 +837,9 @@ TransfersModel::TransfersModel(QObject *parent) :
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
+    mDelegateListener = std::make_unique<QTMegaTransferListener>(mMegaApi, mTransferEventWorker);
     mDelegateListener->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(mDelegateListener);
+    mMegaApi->addTransferListener(mDelegateListener.get());
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -872,8 +872,6 @@ TransfersModel::~TransfersModel()
     // Cleanup
     mTransfers.clear();
     mTransferEventThread->quit();
-
-    mMegaApi->removeTransferListener(mDelegateListener);
 }
 
 void TransfersModel::pauseModelProcessing(bool value)
