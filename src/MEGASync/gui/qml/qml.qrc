@@ -140,6 +140,9 @@
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
         <file>guest/MenuItem.qml</file>
+        <file>common/themes/light/Colors.qml</file>
+        <file>common/themes/dark/Colors.qml</file>
+        <file>common/ColorTheme.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>

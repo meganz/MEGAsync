@@ -53,6 +53,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/ThemeManager.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -68,12 +69,12 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     gui/node_selector/gui/SearchLineEdit.h
     gui/node_selector/gui/NodeSelectorSpecializations.h
-    gui/qml/ColorTheme.h
     gui/qml/QmlClipboard.h
     gui/qml/QmlDialog.h
     gui/qml/QmlDialogWrapper.h
     gui/qml/QmlDialogManager.h
     gui/qml/QmlManager.h
+    gui/qml/QmlTheme.h
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
     gui/qml/ChooseFolder.h
@@ -89,6 +90,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/ExclusionRulesModel.h
     gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
+    gui/tokenizer/TokenParserWidgetManager.h
+    gui/tokenizer/IconTokenizer.h
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
@@ -164,6 +167,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/ThemeManager.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -179,12 +183,12 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
     gui/node_selector/gui/SearchLineEdit.cpp
     gui/node_selector/gui/NodeSelectorSpecializations.cpp
-    gui/qml/ColorTheme.cpp
     gui/qml/QmlClipboard.cpp
     gui/qml/QmlDialog.cpp
     gui/qml/QmlDialogWrapper.cpp
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp
+    gui/qml/QmlTheme.cpp
     gui/qml/StandardIconProvider.cpp
     gui/qml/ChooseFolder.cpp
     gui/qml/ChooseFile.cpp
@@ -199,6 +203,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/ExclusionRulesModel.cpp
     gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
+    gui/tokenizer/TokenParserWidgetManager.cpp
+    gui/tokenizer/IconTokenizer.cpp
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
@@ -369,7 +375,6 @@ target_sources_conditional(MEGAsync
     gui/node_selector/gui/linux/NodeSelector.ui
     gui/node_selector/gui/linux/SearchLineEdit.ui
 )
-
 
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync

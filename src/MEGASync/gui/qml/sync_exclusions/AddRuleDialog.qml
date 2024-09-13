@@ -84,7 +84,7 @@ QmlDialog{
     maximumHeight: root.dialogHeight
     modality: Qt.WindowModal
     flags: Qt.Dialog
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     title: ExclusionsStrings.addExclusion
 
     Item {
@@ -240,7 +240,7 @@ QmlDialog{
                     topMargin: 18
                 }
                 height: 1
-                color: colorStyle.borderDisabled
+                color: ColorTheme.borderDisabled
             }
         } // Item: content
         RowLayout {

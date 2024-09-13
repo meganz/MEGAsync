@@ -17,10 +17,10 @@ Qml.ComboBox {
 
     function getBackgroundColor(){
         if(itemDelegate.pressed) {
-            return colorStyle.surface2;
+            return ColorTheme.surface2;
         }
         else if(itemRect.hovered) {
-            return colorStyle.textInverse;
+            return ColorTheme.textInverse;
         }
 
         return "transparent";
@@ -37,7 +37,7 @@ Qml.ComboBox {
         color:"transparent"
         radius: sizes.focusBorderRadius
         border {
-            color: root.activeFocus && !popup.visible ? colorStyle.focus : "transparent"
+            color: root.activeFocus && !popup.visible ? ColorTheme.focus : "transparent"
             width: sizes.focusBorderWidth
         }
         Rectangle{
@@ -48,7 +48,7 @@ Qml.ComboBox {
                 margins: sizes.focusBorderWidth
             }
             border.width: sizes.borderWidth
-            border.color: enabled === true? colorStyle.buttonOutline : colorStyle.buttonDisabled
+            border.color: enabled === true? ColorTheme.buttonOutline : ColorTheme.buttonDisabled
             radius: sizes.borderRadius
         }
     }
@@ -65,10 +65,10 @@ Qml.ComboBox {
 
             color: {
                 if(itemDelegate.pressed) {
-                    return colorStyle.surface2;
+                    return ColorTheme.surface2;
                 }
                 else if(itemDelegate.hovered) {
-                    return colorStyle.surface1;
+                    return ColorTheme.surface1;
                 }
 
                 return "transparent";
@@ -78,7 +78,7 @@ Qml.ComboBox {
                 left: parent.left
             }
             border.width: sizes.itemBorderWidth
-            border.color: itemDelegate.activeFocus ? colorStyle.focus : "transparent"
+            border.color: itemDelegate.activeFocus ? ColorTheme.focus : "transparent"
             SvgImage {
                 id: leftIcon
 
@@ -89,7 +89,7 @@ Qml.ComboBox {
                 }
                 visible: root.currentIndex === index
                 source: Images.check
-                color: colorStyle.supportSuccess
+                color: ColorTheme.supportSuccess
                 sourceSize: Qt.size(16, 16)
             }
 
@@ -102,7 +102,7 @@ Qml.ComboBox {
                     verticalCenter: parent.verticalCenter
                 }
                 text: modelData
-                color: colorStyle.textPrimary
+                color: ColorTheme.textPrimary
                 verticalAlignment: Text.AlignVCenter
                 font.bold:  root.currentIndex === index
                 lineHeight: 20
@@ -153,10 +153,10 @@ Qml.ComboBox {
 
         background: Rectangle {
             radius: sizes.popupBorderRadius
-            color: colorStyle.pageBackground
+            color: ColorTheme.pageBackground
             border{
                 width: sizes.popupBorderWidth
-                color: colorStyle.buttonOutline
+                color: ColorTheme.buttonOutline
             }
         }
     }

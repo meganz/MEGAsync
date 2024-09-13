@@ -5,12 +5,12 @@
 #include "AppStatsEvents.h"
 #include "ChooseFile.h"
 #include "ChooseFolder.h"
-#include "ColorTheme.h"
 #include "LoginController.h"
 #include "QmlClipboard.h"
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
 #include "SyncInfo.h"
+#include "QmlTheme.h"
 
 #include <QDataStream>
 #include <QQmlContext>
@@ -72,7 +72,7 @@ void QmlManager::registerCommonQmlElements()
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
-    setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
+    setRootContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(mEngine));
 }
 
 void QmlManager::setRootContextProperty(QObject* value)

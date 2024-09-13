@@ -98,7 +98,7 @@ Item {
                 }
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                color: colorStyle.textSecondary
+                color: ColorTheme.textSecondary
                 manageMouse: true
                 font.pixelSize: Texts.Text.Size.SMALL
                 lineHeight: 16

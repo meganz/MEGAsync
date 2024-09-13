@@ -145,16 +145,16 @@ Column {
                     var hintVisible = true;
                     if(textField.text.length < 8) {
                         hint.text = OnboardingStrings.minimum8Chars;
-                        hint.textColor = colorStyle.textError;
+                        hint.textColor = ColorTheme.textError;
                     }
                     else {
                         if(!passwordInfoPopup.validPassword) {
                             hint.text = OnboardingStrings.passwordEasilyGuessedError;
-                            hint.textColor = colorStyle.textError;
+                            hint.textColor = ColorTheme.textError;
                         }
                         else if(!passwordInfoPopup.allChecked) {
                             hint.text = OnboardingStrings.passwordEasilyGuessed;
-                            hint.textColor = colorStyle.textWarning;
+                            hint.textColor = ColorTheme.textWarning;
                         }
                         else {
                             hintVisible = false;

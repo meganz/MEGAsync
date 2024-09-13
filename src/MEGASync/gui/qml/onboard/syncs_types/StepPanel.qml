@@ -30,14 +30,14 @@ Rectangle {
     property alias step4Text: step4_content.text
 
     height: parent.height
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
 
     state: root.step1DeviceName
     states: [
         State {
             name: root.step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButtonDisabled; }
+            PropertyChanges { target: step2_line; color: ColorTheme.buttonDisabled; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.DISABLED; }
             PropertyChanges { target: step3_line; visible: false; }
             PropertyChanges { target: step3_content; visible: false; }
@@ -48,23 +48,24 @@ Rectangle {
             name: root.step2InstallationType
             extend: root.step1DeviceName
             PropertyChanges { target: step1_deviceName; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: step2_line; color: colorStyle.iconButton; }
+            PropertyChanges { target: step2_line; color: ColorTheme.buttonPrimary; }
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT; }
         },
         State {
+
             name: root.step3
             extend: root.step2InstallationType
             PropertyChanges { target: step2_installationType; toState: Step.ToStates.CURRENT_SUBSTEP; }
-            PropertyChanges { target: step3_line; color: colorStyle.iconButton; visible: true; }
+            PropertyChanges { target: step3_line; color: ColorTheme.buttonPrimary; visible: true; }
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.CURRENT; visible: true; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButtonDisabled; visible: true; }
+            PropertyChanges { target: step4_line; color: ColorTheme.buttonDisabled; visible: true; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.DISABLED; visible: true; }
         },
         State {
             name: root.step4
             extend: root.step3
             PropertyChanges { target: step3_content; toState: SubStep.ToStates.DONE; }
-            PropertyChanges { target: step4_line; color: colorStyle.iconButton; }
+            PropertyChanges { target: step4_line; color: ColorTheme.buttonPrimary; }
             PropertyChanges { target: step4_content; toState: SubStep.ToStates.CURRENT; }
         },
         State {
@@ -111,7 +112,7 @@ Rectangle {
             Layout.preferredHeight: root.lineMainStepHeight
             Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
-            color: colorStyle.buttonSecondaryPressed
+            color: ColorTheme.buttonSecondaryPressed
             radius: root.lineRadius
         }
 
@@ -131,7 +132,7 @@ Rectangle {
             Layout.preferredHeight: root.lineSubStepHeight
             Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
-            color: colorStyle.buttonSecondaryPressed
+            color: ColorTheme.buttonSecondaryPressed
             radius: root.lineRadius
         }
 
@@ -150,7 +151,7 @@ Rectangle {
             Layout.preferredHeight: root.lineSubStepHeight
             Layout.leftMargin: root.lineLeftMargin
             Layout.alignment: Qt.AlignTop
-            color: colorStyle.buttonSecondaryPressed
+            color: ColorTheme.buttonSecondaryPressed
             radius: root.lineRadius
         }
 

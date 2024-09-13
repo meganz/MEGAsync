@@ -29,7 +29,7 @@ ExclusionsQmlDialog {
     title: ExclusionsStrings.addExclusions
     visible: false
     modality: Qt.NonModal
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
 
     Component.onCompleted: {
         x = Screen.width / 2 - width / 2;
@@ -109,7 +109,7 @@ ExclusionsQmlDialog {
                 topMargin: 12
             }
             height: 1
-            color: colorStyle.borderDisabled
+            color: ColorTheme.borderDisabled
         }
 
         Texts.RichText {
@@ -236,7 +236,7 @@ ExclusionsQmlDialog {
                 text:  Utilities.formatNumber(syncExclusionsAccess.minimumAllowedSize, 2)
                 enabled: sizeRuleCheckbox.checked
                 implicitWidth: 48
-                colors.border: colorStyle.borderStrongSelected
+                colors.border: ColorTheme.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 // RegExpValidator to validate numbers from 1 to 999 with up to two decimal places
                 validator: RegExpValidator {
@@ -307,7 +307,7 @@ ExclusionsQmlDialog {
                 }
                 implicitWidth: 48
                 text: Utilities.formatNumber(syncExclusionsAccess.maximumAllowedSize, 2)
-                colors.border: colorStyle.borderStrongSelected
+                colors.border: ColorTheme.borderStrongSelected
                 horizontalAlignment: TextInput.AlignRight
                 enabled: sizeRuleCheckbox.checked && (sizeLimitComboBox.currentText === ExclusionsStrings.outsideOf)
                 validator: RegExpValidator {
@@ -443,7 +443,7 @@ ExclusionsQmlDialog {
                 }
                 font.bold: Font.DemiBold
                 iconSource: Images.refresh
-                backgroundColor: colorStyle.indicatorBackground
+                backgroundColor: ColorTheme.surface2
                 text: syncExclusionsAccess.folderName
             }
         } //nameRulesDescriptionItem
@@ -464,6 +464,7 @@ ExclusionsQmlDialog {
                 addExlcusionRule.targetEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.valueTypeEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
                 addExlcusionRule.visible = true;
+
                 if(rulesTable.editIndex === -1) {
                     addExlcusionRule.title = ExclusionsStrings.addExclusion;
                     addExlcusionRule.headTitle = ExclusionsStrings.addExclusion;

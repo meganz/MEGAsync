@@ -39,7 +39,7 @@ FooterButtonsPage {
             description: OnboardingStrings.chooseInstallation
             spacing: 36
             descriptionWeight: Font.DemiBold
-            descriptionColor: colorStyle.textPrimary
+            descriptionColor: ColorTheme.textPrimary
         }
 
         ButtonGroup {

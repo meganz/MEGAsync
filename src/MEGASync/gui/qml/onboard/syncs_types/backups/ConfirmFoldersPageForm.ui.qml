@@ -47,6 +47,7 @@ FooterButtonsPage {
             id: contentItem
 
             Layout.preferredWidth: parent.width
+
             backupsProxyModelRef: root.backupsProxyModelRef
         }
     }

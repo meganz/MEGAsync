@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>colors/ColorThemedTokens.json</file>
+        <file>style/WidgetsComponentsStyleSheets.css</file>
+        <file>images/account_details/versions.svg</file>
+        <file>images/account_details/trash.svg</file>
+        <file>images/account_details/pie.svg</file>
+        <file>images/account_details/database.svg</file>
+        <file>images/account_details/cloud.svg</file>
+        <file>images/minus-circle.svg</file>
+        <file>images/x.svg</file>
+        <file>images/themed/light/spinbox_up_arrow.svg</file>
+        <file>images/themed/light/spinbox_down_arrow.svg</file>
+        <file>images/themed/dark/spinbox_up_arrow.svg</file>
+        <file>images/themed/dark/spinbox_down_arrow.svg</file>
+    </qresource>
+</RCC>

@@ -42,7 +42,7 @@ Item{
             weight: Font.Bold
             pixelSize: Texts.Text.Size.MEDIUM_LARGE
         }
-        color: colorStyle.textPrimary
+        color: ColorTheme.textPrimary
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         lineHeightMode: Text.FixedHeight
@@ -64,7 +64,7 @@ Item{
         }
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        color: colorStyle.textSecondary
+        color: ColorTheme.textSecondary
         lineHeightMode: Text.FixedHeight
         lineHeight: 12
     }

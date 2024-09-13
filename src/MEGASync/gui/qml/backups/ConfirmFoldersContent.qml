@@ -50,7 +50,7 @@ Column {
             leftMargin: Constants.focusAdjustment
             rightMargin: Constants.focusAdjustment
         }
-        colors.text: colorStyle.textPlaceholder
+        colors.text: ColorTheme.textPlaceholder
         title: BackupsStrings.backupTo
         leftIconSource: Images.database
         textField.readOnly: true

@@ -32,3 +32,7 @@ if(ENABLE_LINUX_EXT)
     # add_subdirectory(MEGAShellExtThunar)
     # add_subdirectory(MEGAShellExtNemo)
 endif()
+
+if (ENABLE_DESIGN_TOKENS_IMPORTER)
+    add_subdirectory(DesignTokensImporter)
+endif()
