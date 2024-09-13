@@ -69,15 +69,15 @@ void UpgradeDialog::updatePlans()
     if (mPricing && mCurrency)
     {
         clearPlans();
-        bool isBillingCurrency (false);
+        bool isBillingCurrency(false);
         QVector<PlanWidget*> cards;
-        int minPriceFontSize (std::numeric_limits<int>::max());
-        QByteArray bSym (QByteArray::fromBase64(mCurrency->getCurrencySymbol()));
-        QString billingCurrencySymbol (QString::fromUtf8(bSym.data()));
-        QString billingCurrencyName (QString::fromUtf8(mCurrency->getCurrencyName()));
+        int minPriceFontSize(std::numeric_limits<int>::max());
+        QByteArray bSym(QByteArray::fromBase64(mCurrency->getCurrencySymbol()));
+        QString billingCurrencySymbol(QString::fromUtf8(bSym.data()));
+        QString billingCurrencyName(QString::fromUtf8(mCurrency->getCurrencyName()));
         QString localCurrencyName;
         QString localCurrencySymbol;
-        QByteArray lSym (QByteArray::fromBase64(mCurrency->getLocalCurrencySymbol()));
+        QByteArray lSym(QByteArray::fromBase64(mCurrency->getLocalCurrencySymbol()));
         if (lSym.isEmpty())
         {
             localCurrencySymbol = billingCurrencySymbol;
@@ -90,45 +90,51 @@ void UpgradeDialog::updatePlans()
             localCurrencyName = QString::fromUtf8(mCurrency->getLocalCurrencyName());
         }
 
-        QString userAgent (QString::fromUtf8(mMegaApi->getUserAgent()));
-        int products (mPricing->getNumProducts());
+        QString userAgent(QString::fromUtf8(mMegaApi->getUserAgent()));
+        int products(mPricing->getNumProducts());
         for (int it = 0; it < products; it++)
         {
-            // Skip showing Pro card for flexi pro in UpgradeDialog
-            if (mPricing->getProLevel(it) == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI)
+            // Skip showing pro flexi and feature plans in the dialog.
+            if (mPricing->getProLevel(it) == mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI ||
+                mPricing->getProLevel(it) == mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE)
             {
                 continue;
             }
 
             if (mPricing->getMonths(it) == 1)
             {
-                PlanInfo data {
-                    0, 0, 0,
-                    mPricing->getProLevel(it),
-                    mPricing->getGBPerStorage(it),
-                    mPricing->getGBPerTransfer(it),
-                    0, 0, 0, 0, 0, 0,
-                    billingCurrencySymbol,
-                    billingCurrencyName,
-                    localCurrencySymbol,
-                    localCurrencyName
-                };
+                PlanInfo data{0,
+                              0,
+                              0,
+                              mPricing->getProLevel(it),
+                              mPricing->getGBPerStorage(it),
+                              mPricing->getGBPerTransfer(it),
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              0,
+                              billingCurrencySymbol,
+                              billingCurrencyName,
+                              localCurrencySymbol,
+                              localCurrencyName};
 
                 if (!mPricing->isBusinessType(it))
                 {
                     data.minUsers = 1;
                     data.gbStorage = mPricing->getGBStorage(it);
-                    data.gbTransfer =  mPricing->getGBTransfer(it);
+                    data.gbTransfer = mPricing->getGBTransfer(it);
                     data.pricePerUserBilling = static_cast<unsigned int>(mPricing->getAmount(it));
-                    data.pricePerUserLocal = isBillingCurrency ?
-                                                 data.pricePerUserBilling
-                                               : static_cast<unsigned int>(mPricing->getLocalPrice(it));
+                    data.pricePerUserLocal =
+                        isBillingCurrency ? data.pricePerUserBilling :
+                                            static_cast<unsigned int>(mPricing->getLocalPrice(it));
                 }
                 else
                 {
                     data.minUsers = mPricing->getMinUsers(it);
                     data.gbStorage = mPricing->getGBStoragePerUser(it);
-                    data.gbTransfer =  mPricing->getGBTransferPerUser(it);
+                    data.gbTransfer = mPricing->getGBTransferPerUser(it);
                     data.pricePerUserBilling = mPricing->getPricePerUser(it);
                     data.pricePerStorageBilling = mPricing->getPricePerStorage(it);
                     data.pricePerTransferBilling = mPricing->getPricePerTransfer(it);
@@ -146,7 +152,7 @@ void UpgradeDialog::updatePlans()
                     }
                 }
 
-                PlanWidget* card (new PlanWidget(data, userAgent, this));
+                PlanWidget* card(new PlanWidget(data, userAgent, this));
                 mUi->wPlansLayout->addWidget(card);
                 mUi->lPriceEstimation->setVisible(!isBillingCurrency);
                 cards.append(card);
@@ -154,9 +160,8 @@ void UpgradeDialog::updatePlans()
             }
         }
 
-
         // Set the price font soze to the minimum found
-        for (auto card : cards)
+        for (auto card: cards)
         {
             card->setPriceFontSizePx(minPriceFontSize);
         }
