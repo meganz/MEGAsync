@@ -64,7 +64,7 @@
 
 #pbStorage::chunk[state=&quot;default&quot;]
 {
-	background-color: #477EF7; /*colorToken.indicator-indigo*/
+	background-color: #09BF5B; /*colorToken.indicator-green*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 0px;

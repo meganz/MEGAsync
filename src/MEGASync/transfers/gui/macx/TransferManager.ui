@@ -373,7 +373,6 @@ QToolButton
   color: #FFFFFF;
 }
 
-
 #wNoDownloads QLabel, #wNoUploads QLabel,  #wNoTransfers QLabel, #wNoFinished QLabel, #wNoResults QLabel
 {
     color: #333333;
@@ -381,23 +380,18 @@ QToolButton
     font-weight: 400;
 }
 
-#wSeparator
-{
-	background-color: #EEEEEE;
-}
-
 /* 
 * TransfersAccountInfoWidget
 */
 
-#TransferManagerAccountInfo
-{
-	background-color: #FAFAFA;
-}
-
 #wSeparator
 {
 	background-color: #EEEEEE;
+}
+
+#TransferManagerAccountInfo
+{
+	background-color: #FAFAFA;
 }
 
 #bUpgrade
@@ -445,7 +439,7 @@ QToolButton
 
 #pbStorage::chunk[state=&quot;default&quot;]
 {
-	background-color: #477EF7; /*colorToken.indicator-indigo*/
+	background-color: #09BF5B; /*colorToken.indicator-green*/
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-top-right-radius: 0px;
@@ -479,7 +473,12 @@ QToolButton
 	border-bottom-right-radius: 4px;
 }
 
-/*
+#TransferManagerAccountInfo
+{
+	background-color: #FAFAFA;
+}
+
+/* 
 * AccountTypeWidget
 */
 
@@ -504,7 +503,6 @@ QToolButton
 	background-color: #FFE4E8; /*colorToken.notification-error*/
     color: #E31B57; /*colorToken.text-error*/
 }
-
 </string>
   </property>
   <layout class="QHBoxLayout" name="TransferManagerLayout">
