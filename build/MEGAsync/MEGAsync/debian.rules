@@ -1,8 +1,8 @@
 #!/usr/bin/make -f
 NJOBS := $(shell echo ${DEB_BUILD_OPTIONS} | sed -rn 's/.*parallel=([0-9]*).*/\1/p')
 VCPKG_ROOT := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "-DVCPKG_ROOT=vcpkg" || echo "")
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
-EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23.04\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+EXTRADEFINES := $(shell cat /etc/issue | grep "Ubuntu 1[23456789]\|Ubuntu 20.10\|Ubuntu 21\|Ubuntu 22.10\|Ubuntu 23\|Debian.* [789]" >/dev/null && echo "-DMEGASYNC_DEPRECATED_OS" || echo "")
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 14.04\|Ubuntu 16.04\|Ubuntu 18.04\|Ubuntu 20.04\|Debian.* 9\|Debian.* 10" >/dev/null && echo "-DDEPLOY_QT_LIBRARIES=ON -DCMAKE_PREFIX_PATH=/opt/mega" || echo "")
 QTDEFINES := $(shell [ -f /opt/mega/bin/qmake ] && echo "${QTINSTALL}" || echo "" )
 DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/apt/sources.list.d/debian.sources | grep -v "^\#" | grep testing > /dev/null && echo "testing")
