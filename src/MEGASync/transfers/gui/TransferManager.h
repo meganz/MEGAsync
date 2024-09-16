@@ -135,7 +135,6 @@ private slots:
     void on_tAllTransfers_clicked();
     void on_tFailed_clicked();
     void on_tActionButton_clicked();
-    void on_tSeePlans_clicked();
     void on_bSearch_clicked();
     void on_leSearchField_editingFinished();
     void on_tSearchIcon_clicked();

@@ -733,28 +733,28 @@ void TransferManager::onStorageStateChanged(int storageState)
     switch (mStorageQuotaState)
     {
         case MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
         case MegaApi::STORAGE_STATE_RED:
         {
-            mUi->tSeePlans->show();
             mUi->lStorageOverQuota->show();
             break;
         }
         case MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
         case MegaApi::STORAGE_STATE_ORANGE:
+        // Fallthrough
         case MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
         default:
         {
             mUi->lStorageOverQuota->hide();
-            QuotaState tQuotaState (MegaSyncApp->getTransferQuotaState());
-            mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
-
             break;
         }
     }
 
-    //TransferQuota is not visible when storage state error is set
-    //This is why we need to check the current transfer quota state
-    //in case we need to show the transferquota errors again
+    // TransferQuota is not visible when storage state error is set
+    // This is why we need to check the current transfer quota state
+    // in case we need to show the transferquota errors again
     onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
@@ -796,7 +796,6 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::FULL:
         case QuotaState::OVERQUOTA:
         {
-            mUi->tSeePlans->show();
             showTransferQuotaBanner(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
                                                 && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
@@ -930,11 +929,6 @@ void TransferManager::on_tActionButton_clicked()
         emit retryAllTransfers();
         checkActionAndMediaVisibility();
     }
-}
-
-void TransferManager::on_tSeePlans_clicked()
-{
-    Utilities::upgradeClicked();
 }
 
 void TransferManager::on_bPause_toggled()

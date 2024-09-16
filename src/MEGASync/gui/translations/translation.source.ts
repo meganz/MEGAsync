@@ -8321,11 +8321,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         </translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade now</translation>
-    </message>
-    <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>Transfer quota exceeded</translation>

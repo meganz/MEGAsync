@@ -2555,31 +2555,6 @@ QToolButton
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QToolButton" name="tSeePlans">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>32</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="toolTip">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>Upgrade now</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="0">
               <widget class="QLabel" name="lCurrentContent">
                <property name="minimumSize">
@@ -2599,7 +2574,7 @@ QToolButton
                </property>
               </widget>
              </item>
-             <item row="0" column="3">
+             <item row="0" column="2">
               <spacer name="horizontalSpacer_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -3529,7 +3504,6 @@ QToolButton
   <tabstop>wUlResults</tabstop>
   <tabstop>tNoUploads</tabstop>
   <tabstop>tActionButton</tabstop>
-  <tabstop>tSeePlans</tabstop>
   <tabstop>bSearchString</tabstop>
   <tabstop>tClearSearchResult</tabstop>
   <tabstop>bScanning</tabstop>
