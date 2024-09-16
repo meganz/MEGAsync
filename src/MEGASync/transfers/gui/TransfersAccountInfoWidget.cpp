@@ -25,6 +25,7 @@ TransfersAccountInfoWidget::TransfersAccountInfoWidget(QWidget* parent):
 
     updateStorageText();
     updateStorageBar();
+    checkUpgradeButtonVisibility();
     AccountDetailsManager::instance()->attachStorageObserver(*this);
     AccountDetailsManager::instance()->attachAccountObserver(*this);
 }
