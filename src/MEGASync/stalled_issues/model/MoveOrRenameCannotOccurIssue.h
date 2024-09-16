@@ -34,7 +34,7 @@ public:
     void setIsSolved(SolveType type) override;
     bool isAutoSolvable() const override;
     void solveIssue(MoveOrRenameIssueChosenSide side);
-    bool autoSolveIssue() override;
+    StalledIssue::AutoSolveIssueResult autoSolveIssue() override;
 
     bool checkForExternalChanges() override;
 

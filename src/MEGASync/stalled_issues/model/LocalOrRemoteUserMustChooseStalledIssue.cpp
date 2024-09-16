@@ -20,17 +20,17 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
     mUploader->deleteLater();
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
+StalledIssue::AutoSolveIssueResult LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
     if(chooseLastMTimeSide())
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(
             AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
-        return true;
+        return StalledIssue::AutoSolveIssueResult::SOLVED;
     }
 
-    return false;
+    return StalledIssue::AutoSolveIssueResult::FAILED;
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()

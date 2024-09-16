@@ -229,16 +229,16 @@ void MoveOrRenameCannotOccurIssue::onRequestFinish(
     }
 }
 
-bool MoveOrRenameCannotOccurIssue::autoSolveIssue()
+StalledIssue::AutoSolveIssueResult MoveOrRenameCannotOccurIssue::autoSolveIssue()
 {
     auto chosenSide(getSyncIdChosenSide());
     if(isAutoSolvable() && !(chosenSide == MoveOrRenameIssueChosenSide::NONE))
     {
         solveIssue(chosenSide);
-        return true;
+        return StalledIssue::AutoSolveIssueResult::ASYNC_SOLVED;
     }
 
-    return false;
+    return StalledIssue::AutoSolveIssueResult::FAILED;
 }
 
 bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
