@@ -1,37 +1,11 @@
 #ifndef DEVICEDATA_H
 #define DEVICEDATA_H
 
+#include "control/Utilities.h"
 #include "SyncStatus.h"
 
 #include <QObject>
 #include <QQmlComponent>
-
-namespace DeviceOs
-{
-Q_NAMESPACE
-
-enum Os
-{
-    UNDEFINED,
-    LINUX,
-    MAC,
-    WINDOWS
-};
-Q_ENUM_NS(Os)
-
-inline DeviceOs::Os getCurrentOS()
-{
-#ifdef Q_OS_WINDOWS
-    return DeviceOs::WINDOWS;
-#endif
-#ifdef Q_OS_MACOS
-    return DeviceOs::MAC;
-#endif
-#ifdef Q_OS_LINUX
-    return DeviceOs::LINUX;
-#endif
-}
-}
 
 class DeviceData
 {
