@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>common/qmldir</file>
+        <file>common/ColorTheme.qml</file>
         <file>common/Constants.qml</file>
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>

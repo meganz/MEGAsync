@@ -19,7 +19,6 @@
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
-#include "MegaProxyStyle.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"

@@ -167,6 +167,7 @@ public:
                 QString message = QString::fromUtf8("QML import path: ") + path;
                 ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
             }
+            // qrc:/whatsNew/WhatsNewDialog.qml:40 Type Texts.Text unavailable
         }
     }
 
