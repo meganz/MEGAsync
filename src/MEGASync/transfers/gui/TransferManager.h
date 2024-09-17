@@ -128,6 +128,9 @@ private:
 
     void filterByTab(TransfersWidget::TM_TAB tab);
 
+    void setStorageTextState(const QVariant& stateValue, const QString& text);
+    void updateStorageOQText();
+
 private slots:
     void on_tCompleted_clicked();
     void on_tDownloads_clicked();

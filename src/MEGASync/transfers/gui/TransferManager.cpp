@@ -39,6 +39,13 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
+namespace
+{
+constexpr const char* STATE_PROPERTY_NAME{"state"};
+const QLatin1String STATE_ALMOST_FULL{"almostfull"};
+const QLatin1String STATE_FULL{"full"};
+}
+
 TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
@@ -412,6 +419,48 @@ void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
     }
 }
 
+void TransferManager::setStorageTextState(const QVariant& stateValue, const QString& text)
+{
+    mUi->lStorageOverQuota->setProperty(STATE_PROPERTY_NAME, stateValue);
+    mUi->lStorageOverQuota->setText(text);
+    mUi->lStorageOverQuota->show();
+    mUi->lStorageOverQuota->style()->unpolish(mUi->lStorageOverQuota);
+    mUi->lStorageOverQuota->style()->polish(mUi->lStorageOverQuota);
+    mUi->lStorageOverQuota->update();
+}
+
+void TransferManager::updateStorageOQText()
+{
+    switch (mStorageQuotaState)
+    {
+        case MegaApi::STORAGE_STATE_ORANGE:
+        {
+            setStorageTextState(STATE_ALMOST_FULL,
+                                tr("Storage almost full. Upgrade now before your storage becomes "
+                                   "full and your uploads, syncs and backups stop."));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_RED:
+        {
+            setStorageTextState(
+                STATE_FULL,
+                tr("Storage full. Uploads are disabled and sync and backups are paused."));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
+        default:
+        {
+            mUi->lStorageOverQuota->hide();
+            break;
+        }
+    }
+}
+
 void TransferManager::on_tCompleted_clicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB)
@@ -730,27 +779,7 @@ void TransferManager::onStorageStateChanged(int storageState)
 {
     mStorageQuotaState = storageState;
 
-    switch (mStorageQuotaState)
-    {
-        case MegaApi::STORAGE_STATE_PAYWALL:
-        // Fallthrough
-        case MegaApi::STORAGE_STATE_RED:
-        {
-            mUi->lStorageOverQuota->show();
-            break;
-        }
-        case MegaApi::STORAGE_STATE_GREEN:
-        // Fallthrough
-        case MegaApi::STORAGE_STATE_ORANGE:
-        // Fallthrough
-        case MegaApi::STORAGE_STATE_UNKNOWN:
-        // Fallthrough
-        default:
-        {
-            mUi->lStorageOverQuota->hide();
-            break;
-        }
-    }
+    updateStorageOQText();
 
     // TransferQuota is not visible when storage state error is set
     // This is why we need to check the current transfer quota state
@@ -1427,6 +1456,7 @@ void TransferManager::changeEvent(QEvent *event)
         updateCurrentSearchText();
         updateCurrentOverQuotaLink();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
+        updateStorageOQText();
     }
     QDialog::changeEvent(event);
 }

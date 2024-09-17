@@ -298,14 +298,6 @@ QGroupBox::title
   padding-left: 2px;
 }
 
-#lStorageOverQuota
-{
-  color: #F46265;
-  font-size: 12px;
-  font-weight: bold;
-  padding-left: 14px;
-}
-
 #sTransfers QToolButton
 {
   qProperty-iconSize: 240px;
@@ -353,6 +345,31 @@ QGroupBox::title
     color: #333333;
     font-size: 24px;
     font-weight: 400;
+}
+
+/* 
+* Storage OQ text
+*/
+
+#lStorageOverQuota
+{
+	font-size: 10px;
+	font-weight: 600;
+	margin-left: 16px;
+	border-radius: 4px;
+	padding: 4px 8px;
+}
+
+#lStorageOverQuota[state=&quot;almostfull&quot;]
+{
+	background-color: #FEF4C6; /*colorToken.notification-warning*/
+	color: #B55407; /*colorToken.text-warning*/
+}
+
+#lStorageOverQuota[state=&quot;full&quot;]
+{
+	background-color: #FFE4E8; /*colorToken.notification-error*/
+	color: #E31B57; /*colorToken.text-error*/
 }
 
 /* 
@@ -2852,7 +2869,7 @@ QGroupBox::title
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Your MEGA account is full</string>
+                <string/>
                </property>
               </widget>
              </item>
