@@ -140,6 +140,7 @@ void TransfersAccountInfoWidget::refreshProgressBar()
 
 void TransfersAccountInfoWidget::checkUpgradeButtonVisibility()
 {
+    mUi->pbStorage->setVisible(!Utilities::isBusinessAccount());
     mUi->bUpgrade->setVisible(!Utilities::isBusinessAccount());
 }
 
