@@ -56,7 +56,7 @@ void SyncModel::remove(mega::MegaHandle handle)
     };
 
     beginRemoveRows(QModelIndex(), row.value(), row.value());
-    std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
+    std::ignore = std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
     endRemoveRows();
 }
 
