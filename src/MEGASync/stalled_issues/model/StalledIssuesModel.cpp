@@ -125,9 +125,6 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent):
 
 StalledIssuesModel::~StalledIssuesModel()
 {
-    delete mRequestListener;
-    delete mGlobalListener;
-
     mThreadFinished = true;
 
     mStalledIssuesThread->quit();
