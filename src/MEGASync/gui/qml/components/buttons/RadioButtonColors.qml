@@ -1,5 +1,7 @@
 import QtQuick 2.15
 
+import common 1.0
+
 QtObject {
     id: root
 
@@ -7,7 +9,7 @@ QtObject {
     property color hover: ColorTheme.buttonPrimaryHover
     property color diabled: ColorTheme.buttonDisabled
     property color enabled: ColorTheme.buttonPrimary
-    property color focus: ColorTheme.focus
+    property color focus: ColorTheme.focusColor
 
 }
 

@@ -153,7 +153,7 @@ RoundButton {
 
         border {
             width: Constants.focusBorderWidth
-            color: root.focus ? ColorTheme.focus : "transparent"
+            color: root.focus ? ColorTheme.focusColor : "transparent"
         }
         radius: 12
 

@@ -47,7 +47,7 @@ Qml.RadioButton {
         radius: implicitWidth / 2
         border {
             width: sizes.focusBorderWidth
-            color: root.focus ? ColorTheme.focus : "transparent"
+            color: root.focus ? colors.focus : "transparent"
         }
 
         Rectangle {

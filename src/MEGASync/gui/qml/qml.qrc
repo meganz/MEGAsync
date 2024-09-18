@@ -164,6 +164,8 @@
         <file>upsell/UpsellDialog.qml</file>
         <file>upsell/UpsellStrings.qml</file>
         <file>upsell/PlanCard.qml</file>
+        <file>upsell/ContentItem.qml</file>
+        <file>upsell/HeaderItem.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>
