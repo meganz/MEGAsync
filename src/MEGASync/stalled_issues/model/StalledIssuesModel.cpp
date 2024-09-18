@@ -65,6 +65,7 @@ const int EVENT_REQUEST_DELAY = 600000; /*10 minutes*/
 const int UPDATE_ISSUES_INTERVAL = 5000; /*5 seconds*/
 const int UPDATE_ISSUES_MAX_INTERVAL = 300000; /*5 minutes*/
 const int UPDATE_ISSUES_INTERVAL_DELAY_CONSTANT = 2;
+const int MAX_EMPTY_STALLED_LIST_ALLOWED = 5;
 
 StalledIssuesModel::StalledIssuesModel(QObject* parent):
     QAbstractItemModel(parent),
@@ -342,7 +343,7 @@ void StalledIssuesModel::onProcessStalledIssues(ReceivedStalledIssues issuesRece
         {
             mReceivedEmptyStalledIssuesCounter++;
 
-            if (mReceivedEmptyStalledIssuesCounter == 5)
+            if (mReceivedEmptyStalledIssuesCounter == MAX_EMPTY_STALLED_LIST_ALLOWED)
             {
                 mIsStalled = false;
                 mIsStalledChanged = false;
@@ -384,12 +385,16 @@ void StalledIssuesModel::checkIssues(StalledIssuesVariantList& list,
     foreach(auto& issueToAppend, list)
     {
         long long unsigned hash = issueToAppend.consultData()->getOriginalStall()->getHash();
-        auto issue(mStalledIssueRowByHash.value(hash, nullptr));
-        if (issue)
+        auto issues(mStalledIssueRowByHash.values(hash));
+        if (!issues.isEmpty())
         {
-            if (issue->isValid() && func(issue))
+            foreach(auto& issue, issues)
             {
-                list.removeOne(issueToAppend);
+                if (issue->isValid() && func(issue))
+                {
+                    list.removeOne(issueToAppend);
+                    break;
+                }
             }
         }
         else
@@ -1062,12 +1067,12 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                         StalledIssueFilterCriterion::FAILED_CONFLICTS)]--;
                 }
 
-                // if(issue.getData()->checkForExternalChanges())
-                // {
-                //     issuesExternallyChanged++;
-                //     count.issuesFailed++;
-                // }
-                // else
+                if (issue.getData()->checkForExternalChanges())
+                {
+                    issuesExternallyChanged++;
+                    count.issuesFailed++;
+                }
+                else
                 {
                     if (info.solveFunc)
                     {

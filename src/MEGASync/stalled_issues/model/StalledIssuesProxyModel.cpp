@@ -100,7 +100,7 @@ bool StalledIssuesProxyModel::filterAcceptsRow(int source_row, const QModelIndex
     {
         const auto d (qvariant_cast<StalledIssueVariant>(index.data()));
 
-        if (d.consultData() && (!d.consultData()->isUnsolved() || d.consultData()->isFailed()))
+        if (d.consultData() && (!d.consultData()->isUnsolved()))
         {
             if(d.consultData()->isSolved() &&
                 !d.consultData()->isPotentiallySolved())
