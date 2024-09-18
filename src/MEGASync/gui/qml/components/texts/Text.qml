@@ -10,6 +10,7 @@ Qml.Text {
         NORMAL = 12,
         MEDIUM = 14,
         MEDIUM_LARGE = 16,
+        LARGE_SMALL = 18,
         LARGE = 20,
         EXTRA_LARGE = 24,
         HUGE = 48
