@@ -18,8 +18,7 @@ StalledIssuesFactory::StalledIssuesFactory()
 
 //////////////////////////////////
 StalledIssuesCreator::StalledIssuesCreator():
-    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>()),
-    mLastStalledIssuesListReceivedHash(0)
+    mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
 {
     qRegisterMetaType<IssuesCount>("IssuesCount");
     qRegisterMetaType<UpdateType>("UpdateType");
