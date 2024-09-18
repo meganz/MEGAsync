@@ -112,7 +112,7 @@ public slots:
     void onUpdateStalledISsues(UpdateType type);
 
 signals:
-    void stalledIssuesReady(ReceivedStalledIssues);
+    void stalledIssuesReady(ReceivedStalledIssues, UpdateType);
     void solvingIssues(StalledIssuesCreator::IssuesCount count);
     void solvingIssuesFinished(StalledIssuesCreator::IssuesCount count);
 
@@ -155,7 +155,9 @@ public:
     int getCountByFilterCriterion(StalledIssueFilterCriterion criterion);
 
     void finishStalledIssues(const QModelIndexList& indexes);
-    void updateStalledIssues();
+
+    void updateActiveStalledIssues();
+    void updateStalledIssuesForAutoSolve();
 
     void blockUi();
     void unBlockUi();
@@ -178,9 +180,6 @@ public:
 
     //SOLVE PROBLEMS
     void stopSolvingIssues(MessageInfo::ButtonType buttonType);
-
-    //Solve all issues
-    void solveAllIssues();
 
     bool checkForExternalChanges(const QModelIndex& index);
 
@@ -248,13 +247,24 @@ protected slots:
 private slots:
     void onStalledIssueUpdated(StalledIssue* issue);
     void onAsyncIssueSolvingFinished(StalledIssue* issue);
-    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived);
+    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived, UpdateType updateType);
     void onSendEvent();
 
 private:
     void showIssueExternallyChangedMessageBox();
 
-    void appendCachedIssuesToModel(const StalledIssuesVariantList& list, StalledIssueFilterCriterion type);
+    void appendCachedIssuesToModel(
+        const StalledIssuesVariantList& list,
+        StalledIssueFilterCriterion type = StalledIssueFilterCriterion::OTHER_CONFLICTS);
+
+    void checkIssues(StalledIssuesVariantList& receivedIssues,
+                     std::function<bool(const StalledIssue* issue)> func);
+    void checkActiveIssues(StalledIssuesVariantList& receivedIssues);
+    void checkAutoSolvedIssues(StalledIssuesVariantList& receivedIssues);
+    void checkFailedAutoSolvedIssues(StalledIssuesVariantList& receivedIssues);
+
+    void needsUpdate();
+    void setIssuesRequested(bool state);
 
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
@@ -309,6 +319,7 @@ private:
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
     bool mIsStalledChanged;
+    uint mReceivedEmptyStalledIssuesCounter;
     StalledIssuesCreator::IssuesCount mReceivedIssuesStats;
 
     mutable QReadWriteLock mModelMutex;
@@ -317,10 +328,16 @@ private:
     mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable StalledIssuesVariantList mFailedStalledIssues;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
+    mutable QMultiHash<unsigned long long, const StalledIssue*> mStalledIssueRowByHash;
 
     QHash<int, int> mCountByFilterCriterion;
 
     QTimer mEventTimer;
+    QTimer mUpdateIssuesTimer;
+    void startUpdateIssuesTimer(int interval);
+    void stopUpdateIssuesTimer();
+    QTimer mStopUpdateIssuesTimer;
+
     bool mRawInfoVisible;
 
     std::atomic_bool mSolvingIssues {false};

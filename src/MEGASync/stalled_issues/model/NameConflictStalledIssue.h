@@ -534,7 +534,7 @@ public:
     bool renameNodesAutomatically();
 
     bool semiAutoSolveIssue(ActionsSelected option);
-    bool autoSolveIssue() override;
+    AutoSolveIssueResult autoSolveIssue() override;
     bool isAutoSolvable() const override;
 
     bool hasDuplicatedNodes() const;

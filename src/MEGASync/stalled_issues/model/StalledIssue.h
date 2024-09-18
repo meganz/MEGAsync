@@ -331,7 +331,17 @@ public:
     SolveType getIsSolved() const {return mIsSolved;}
     virtual void setIsSolved(SolveType type);
 
-    virtual bool autoSolveIssue() {return false;}
+    enum class AutoSolveIssueResult
+    {
+        SOLVED,
+        ASYNC_SOLVED,
+        FAILED,
+    };
+
+    virtual AutoSolveIssueResult autoSolveIssue()
+    {
+        return AutoSolveIssueResult::FAILED;
+    }
     virtual bool isAutoSolvable() const;
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
