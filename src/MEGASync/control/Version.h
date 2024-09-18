@@ -7,7 +7,7 @@
 // Update scripts relying on this value if you move it
 #define VER_PRODUCTVERSION_STR "5.5.0.0\0"
 
-#define VER_BUILD_ID                0
+#define VER_BUILD_ID                1
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -17,7 +17,7 @@
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
-#define VER_SDK_ID "09e5ff3"
+#define VER_SDK_ID "eb86660"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
