@@ -80,7 +80,7 @@ void SyncSettingsElements::onSmartModeSelected(bool checked)
     {
         Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Smart);
         //Update the model to fix automatically the issues
-        MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        MegaSyncApp->getStalledIssuesModel()->updateActiveStalledIssues();
     }
 }
 
