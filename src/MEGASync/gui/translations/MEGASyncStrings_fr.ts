@@ -545,49 +545,6 @@
     </message>
 </context>
 <context>
-    <name>BindFolderDialog</name>
-    <message>
-        <source>Please select a local folder and a MEGA folder</source>
-        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>Sélectionnez un dossier local et un dossier sur MEGA</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Add folder</source>
-        <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation>Ajouter un dossier</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder</source>
-        <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation>Ajouter un dossier synchronisé</translation>
-    </message>
-    <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
-        <translation>Ajouter des exclusions</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
-        <translation>Ajouter</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder:</source>
-        <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation>Ajouter un dossier synchronisé :</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>Voulez-vous poursuivre ?</translation>
-    </message>
-</context>
-<context>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
@@ -683,6 +640,16 @@
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
         <translation>Attendez la fin du téléversement en cours.</translation>
+    </message>
+    <message>
+        <source>You must wait 10 minutes before submitting another issue</source>
+        <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation>Vous devez attendre 10 minutes avant de soumettre un autre problème</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -897,6 +864,14 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Résoudre</translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
+        <translation>Le dossier %1 n&apos;est pas disponible car il a été signalé qu&apos;il contenait du contenu contraire à [A]Conditions générales d&apos;utilisation de MEGA[/A].</translation>
     </message>
 </context>
 <context>
@@ -1897,39 +1872,6 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
     </message>
 </context>
 <context>
-    <name>FolderBinder</name>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Dossier local :</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>Dossier sur MEGA :</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>Sélectionner un dossier local</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
-        <translation>Choisir</translation>
-    </message>
-    <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>Vous ne pouvez pas synchroniser un dossier partagé sans avoir le droit d’accès total</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
-        <translation>Sélectionner</translation>
-    </message>
-</context>
-<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
@@ -2024,6 +1966,19 @@ Dans certains cas, ils pourraient comprendre des détails sur vos données, tels
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>Votre téléchargement a démarré</translation>
+    </message>
+</context>
+<context>
+    <name>HardSpecialLinkHeader</name>
+    <message>
+        <source>Detected special link: [B]%1[/B]</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
+        <translation>Lien spécial détecté : [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Detected hard link: [B]%1[/B]</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
+        <translation>Lien physique détecté : [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -4214,21 +4169,6 @@ This may be due to syncing to case insensitive local filesystems, or the effects
         <translation>Plusieurs éléments du même nom d’un côté de votre synchronisation deviendraient tous le même élément de l’autre côté de votre synchronisation.</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
-        <translation>Appliquer pour tous les cas</translation>
-    </message>
-    <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
         <translation>Résoudre ce problème ?</translation>
@@ -4390,6 +4330,56 @@ Saisissez un nom différent.</translation>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>Trier par nom</translation>
     </message>
+    <message>
+        <source>Error removing items</source>
+        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation>Erreur lors de la suppression des éléments</translation>
+    </message>
+    <message>
+        <source>Error removing files</source>
+        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation>Erreur lors de la suppression de fichiers</translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation>Erreur lors de la suppression de dossiers</translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <translation>Erreur lors de la suppression du fichier</translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <translation>Erreur lors de la suppression du dossier</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation>L&apos;élément n&apos;a pas pu être supprimé. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation>Les fichiers n&apos;ont pas pu être supprimés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation>Les dossiers n&apos;ont pas pu être supprimés. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation>Le fichier %1 n&apos;a pas pu être supprimé. Réessayez plus tard.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <translation>Le dossier %1 n&apos;a pas pu être supprimé. Réessayez plus tard.</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4427,16 +4417,6 @@ Saisissez un nom différent.</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
-        <translation>Voulez-vous vraiment supprimer « %1 » ?</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
-        <translation>Erreur :</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
         <translation>Disque nuagique</translation>
@@ -4461,6 +4441,31 @@ Saisissez un nom différent.</translation>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>Valider</translation>
     </message>
+    <message>
+        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
+        <translation>Les fichiers ou dossiers partagés ne seront plus accessibles aux personnes avec lesquelles vous les avez partagés. Vous pouvez toujours accéder à ces éléments dans la Corbeille, les restaurer et les partager.</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>Déplacer</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n item to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
+        <translation><numerusform>Déplacer %n un élément à la Corbeille ?</numerusform><numerusform>Déplacer %n des éléments à la Corbeille ?</numerusform></translation>
+    </message>
+    <message>
+        <source>Don’t move</source>
+        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>Ne pas déplacer</translation>
+    </message>
+    <message>
+        <source>Move “%1” to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
+        <translation>Déplacer »%1» vers la Corbeille ?</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetSearch</name>
@@ -4468,6 +4473,49 @@ Saisissez un nom différent.</translation>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
         <translation>Recherche de :</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>OFFRE D&apos;UNE DURÉE LIMITÉE</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>PROMO</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation><numerusform>L&apos;offre expire dans %n jour</numerusform><numerusform>L&apos;offre expire dans %n jours</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation><numerusform>L&apos;offre expire dans %n heure</numerusform><numerusform>L&apos;offre expire dans %n heures</numerusform></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m %2 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation>L’offre expire dans %1 min %2 s</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation>L’offre est expirée</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n second</source>
+        <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
+        <translation><numerusform>L&apos;offre expire dans %n seconde</numerusform><numerusform>L&apos;offre expire dans %n secondes</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n minute</source>
+        <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
+        <translation><numerusform>L&apos;offre expire dans %n minute</numerusform><numerusform>L&apos;offre expire dans %n minutes</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4756,19 +4804,9 @@ Saisissez un nom différent.</translation>
         <translation>Prénom</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>Synchronisez l’intégralité de votre disque nuagique MEGA avec votre appareil local.</translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation>Synchronisation intégrale</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>Synchronisez l’intégralité de votre disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4879,16 +4917,6 @@ Saisissez un nom différent.</translation>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>Sélectionner un dossier sur MEGA</translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>Synchronisez certains dossiers de votre Disque nuagique MEGA avec votre appareil local.</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>Synchronisez certains dossiers de votre Disque nuagique MEGA avec votre appareil local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5114,6 +5142,16 @@ Saisissez un nom différent.</translation>
         <source>Set Exclusions</source>
         <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
         <translation>Définir des exclusions</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation>Synchronisez l’intégralité de votre disque nuagique MEGA avec votre appareil local.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
+        <translation>Synchronisez certains dossiers de votre Disque nuagique MEGA avec votre appareil local.</translation>
     </message>
 </context>
 <context>
@@ -5472,20 +5510,18 @@ Saisissez un nom différent.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Improved handling of sync conflicts.
-- Improved management of failures within issue resolution.
-- Improved issue resolution dialogs.
-- Added default automatic issue resolution.
-- Added new UI improvements.
-- Fixed other bugs and made assorted other improvements.
+        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.4.0.CON-806</translatorcomment>
-        <translation>– Gestion améliorée des conflits de synchronisation.
-– Gestion améliorée des échecs de résolution des problèmes.
-– Amélioration des boîtes de dialogue de résolution des problèmes.
-– Résolution automatique par défaut des problèmes.
-– Amélioration de l’interface utilisateur.
-– Nous avons corrigé des bogues et apporté d’autres améliorations.</translation>
+        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
+        <translation>- Vous pouvez désormais sélectionner plusieurs fichiers et dossiers à supprimer du Disque nuagique lorsque vous utilisez l&apos;option Télécharger.
+- La création de synchronisations et de sauvegardes à partir du menu Paramètres est plus facile que jamais grâce à notre interface remaniée.
+- Un problème d&apos;installation à l&apos;origine de la suppression de certains fichiers .dll de Windows a été résolu.
+- Les bibliothèques tierces ont été mises à jour.
+- D&apos;autres bugs ont été corrigés et de nombreuses améliorations ont été apportées.</translation>
     </message>
 </context>
 <context>
@@ -7030,11 +7066,6 @@ Voulez-vous le supprimer quand même ?</translation>
         <translation>Résolu automatiquement</translation>
     </message>
     <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>Échec</translation>
-    </message>
-    <message>
         <source>Failed</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue was manually solved but it has failed. SAT-1140</translatorcomment>
         <translation>Échec</translation>
@@ -7337,64 +7368,9 @@ Vérifiez les autorisations du fichier .megaignore dans les emplacements locaux 
 <context>
     <name>SymLinkHeader</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.SNC-2565</translatorcomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
-        <translation>Valider</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
-        <translation>Appliquer</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>Appliquer pour tous les cas</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to ignore all symlinks in all syncs?</source>
-        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation>Ignorer les liens symboliques de toutes les synchronisations ?</translation>
-    </message>
-    <message>
-        <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
-        <translation>Cette action ignorera tous les liens symboliques présents et futurs de toutes vos synchronisations.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to ignore this symlink?</source>
-        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation>Ignorer ce lien symbolique ?</translation>
-    </message>
-    <message>
-        <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
-        <translation>Cette action ignorera ce lien symbolique qui ne sera pas synchronisé.</translation>
-    </message>
-    <message>
         <source>Detected sym link: [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Un lien symbolique a été détecté : [B]%1[/B]</translation>
-    </message>
-    <message>
-        <source>Ignore symlink</source>
-        <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation>Ignorer le lien symbolique</translation>
-    </message>
-    <message>
-        <source>Ignore all symlinks in all syncs</source>
-        <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation>Ignorer les liens symboliques de toutes les synchronisations</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translatorcomment>Title for solve actions for a sync stall.SNC-2565</translatorcomment>
-        <translation>Ignorer</translation>
     </message>
 </context>
 <context>
@@ -7921,11 +7897,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Sélectionnez un dossier local à synchroniser</translation>
     </message>
     <message>
-        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
-        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
-        <translation>Le dossier ne pas être synchronisé, car vous n’avez pas le droit d’écriture</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>Sélectionnez un dossier sur MEGA à synchroniser</translation>
@@ -7939,6 +7910,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
         <translation>Le dossier « %1 » n’existe pas</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsStrings</name>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
+        <translation>Ajouter une synchronisation</translation>
     </message>
 </context>
 <context>
@@ -8337,6 +8316,16 @@ Pour en obtenir davantage, passez à un compte Pro ou attendez [A] pour qu’un 
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation><numerusform>%n élément n’existe plus.</numerusform><numerusform>%n éléments n’existent plus.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Upload stopped</source>
+        <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation><numerusform>Le téléverser a été arrêté</numerusform><numerusform>Les téléversements ont été arrêtés</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
+        <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation><numerusform>Vous vous êtes déconnecté de MEGA et votre téléverser a donc été arrêté. Vous pouvez reprendre le téléversement après vous être reconnecté.</numerusform><numerusform>Vous vous êtes déconnecté de MEGA et vos téléversements ont donc été interrompus. Vous pouvez reprendre les téléversements après vous être reconnecté.</numerusform></translation>
     </message>
 </context>
 <context>

@@ -545,49 +545,6 @@
     </message>
 </context>
 <context>
-    <name>BindFolderDialog</name>
-    <message>
-        <source>Please select a local folder and a MEGA folder</source>
-        <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
-        <translation>حدد مجلدًا محليًا ومجلد ميغا MEGA</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
-    </message>
-    <message>
-        <source>Add folder</source>
-        <translatorcomment>Title for dialog when adding new folders for a sync (Windows and Linux)</translatorcomment>
-        <translation>أضف مجلد</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder</source>
-        <translatorcomment>Section title for add synchronised folder details.</translatorcomment>
-        <translation>أضف مجلد متزامن</translation>
-    </message>
-    <message>
-        <source>Add exclusions</source>
-        <translatorcomment>Button to allow users to add exclusion rules for new syncs.SNC-2565</translatorcomment>
-        <translation>أضف الاستبعادات</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translatorcomment>Button label to confirm and add the selected folders for a sync</translatorcomment>
-        <translation>إضافة</translation>
-    </message>
-    <message>
-        <source>Add synchronised folder:</source>
-        <translatorcomment>Label to indicate the user to add synchronised folder (macOS)</translatorcomment>
-        <translation>أضف مجلد متزامن:</translation>
-    </message>
-    <message>
-        <source>Do you want to continue?</source>
-        <translatorcomment>Warning dialog body text that show up a warning message but allows you to continue.</translatorcomment>
-        <translation>هل تريد المتابعة؟</translation>
-    </message>
-</context>
-<context>
     <name>BugReportDialog</name>
     <message>
         <source>Bug report</source>
@@ -683,6 +640,16 @@
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
         <translation>انتظر حتى اكتمال الترفيع الحالي.</translation>
+    </message>
+    <message>
+        <source>You must wait 10 minutes before submitting another issue</source>
+        <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation>يجب الانتظار لمدة 10 دقائق قبل إرسال مشكلة أخرى</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -897,6 +864,14 @@
         <source>Solve</source>
         <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>حل</translation>
+    </message>
+</context>
+<context>
+    <name>CloudNodeIsBlockedHeader</name>
+    <message>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
+        <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
+        <translation>الملف %1 غير متاح لأنه تم الإبلاغ عن احتوائه على محتوى ينتهك [A]شروط خدمة ميغا MEGA[/A].</translation>
     </message>
 </context>
 <context>
@@ -1897,39 +1872,6 @@
     </message>
 </context>
 <context>
-    <name>FolderBinder</name>
-    <message>
-        <source>Local folder:</source>
-        <translatorcomment>Label to indicate the user the local folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>المجلد المحلي:</translation>
-    </message>
-    <message>
-        <source>MEGA folder:</source>
-        <translatorcomment>Label to indicate the user the MEGA folder for a synchronization (String short as possible)</translatorcomment>
-        <translation>مجلد ميغا MEGA:</translation>
-    </message>
-    <message>
-        <source>Select local folder</source>
-        <translatorcomment>Title of the dialog in which the user select the local default folder.for a synchronization.</translatorcomment>
-        <translation>اختر المجلد المحلي</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (macOS)</translatorcomment>
-        <translation>اختر</translation>
-    </message>
-    <message>
-        <source>You can not sync a shared folder without Full Access permissions</source>
-        <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation>لا يمكنك مزامنة مجلد مشارك بدون أذونات الوصول الكامل</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible) (Win and Linux)</translatorcomment>
-        <translation>تحديد</translation>
-    </message>
-</context>
-<context>
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
@@ -2024,6 +1966,19 @@
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation>بدأ التنزيل الخاص بك</translation>
+    </message>
+</context>
+<context>
+    <name>HardSpecialLinkHeader</name>
+    <message>
+        <source>Detected special link: [B]%1[/B]</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
+        <translation>تم اكتشاف الرابط الخاص: [B]%1[/B]</translation>
+    </message>
+    <message>
+        <source>Detected hard link: [B]%1[/B]</source>
+        <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
+        <translation>تم اكتشاف الرابط الثابت: [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -4217,21 +4172,6 @@ This may be due to syncing to case insensitive local filesystems, or the effects
         <translation>هناك العديد من العناصر التي تحمل الاسم نفسه على جانب واحد من المزامنة الخاصة بك والتي ستصبح جميعها نفس العنصر الفردي على الجانب الآخر من المزامنة الخاصة بك</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
-        <translation>إلغاء</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>تطبيق</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
-        <translation>قم بالتطبيق على الكل</translation>
-    </message>
-    <message>
         <source>Are you sure you want to solve the issue?</source>
         <translatorcomment>Confirmation message for solving the sync stall.SNC-2565</translatorcomment>
         <translation>حل هذه المشكلة؟</translation>
@@ -4393,6 +4333,56 @@ Enter a different name</source>
         <translatorcomment>Node name column title tooltip. Sorts the order of the column by date.</translatorcomment>
         <translation>فرز حسب الاسم</translation>
     </message>
+    <message>
+        <source>Error removing items</source>
+        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation> حدث خطأ أثناء إزالة العناصر</translation>
+    </message>
+    <message>
+        <source>Error removing files</source>
+        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation>حدث خطأ أثناء إزالة الملفات</translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation>حدث خطأ أثناء إزالة المجلدات</translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <translation>حدث خطأ أثناء إزالة الملف</translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <translation>حدث خطأ أثناء إزالة المجلد</translation>
+    </message>
+    <message>
+        <source>The items couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation>لا يمكن إزالة العناصر. حاول مرة أخرى لاحقًا.</translation>
+    </message>
+    <message>
+        <source>The files couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation>لا يمكن إزالة الملفات. حاول مرة أخرى لاحقًا.</translation>
+    </message>
+    <message>
+        <source>The folders couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation>لا يمكن إزالة المجلدات. حاول مرة أخرى لاحقًا.</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation>لا يمكن إزالة الملف %1. حاول مرة أخرى لاحقًا.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <translation>لا يمكن إزالة المجلد %1. حاول مرة أخرى لاحقًا.</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeView</name>
@@ -4430,16 +4420,6 @@ Enter a different name</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translatorcomment>MessageBox to confirm that the user wants to remove the node. %1 is the node name</translatorcomment>
-        <translation>هل تريد بالتأكيد حذف ”%1“؟</translation>
-    </message>
-    <message>
-        <source>Error:</source>
-        <translatorcomment>MessageBox to inform about an error when trying to move or remove a node</translatorcomment>
-        <translation>خطأ:</translation>
-    </message>
-    <message>
         <source>Cloud drive</source>
         <translatorcomment>Button to filter search results from cloud drive</translatorcomment>
         <translation>السواقة السحابية</translation>
@@ -4464,6 +4444,31 @@ Enter a different name</source>
         <translatorcomment>Button text to accept and close the dialog</translatorcomment>
         <translation>موافق</translation>
     </message>
+    <message>
+        <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
+        <translation>لن يتمكن الأشخاص الذين شاركتها معهم من الوصول إلى أي ملفات أو مجلدات مشاركة. لا يزال بإمكانك الوصول إلى هذه العناصر في سلة المحذوفات واستعادتها ومشاركتها.</translation>
+    </message>
+    <message>
+        <source>Move</source>
+        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>نقل</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move %n item to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
+        <translation><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصرين إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عناصر إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصراً إلى سلة المحذوفات؟</numerusform><numerusform>نقل %n عنصر إلى سلة المحذوفات؟</numerusform></translation>
+    </message>
+    <message>
+        <source>Don’t move</source>
+        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>لا تقم بالنقل</translation>
+    </message>
+    <message>
+        <source>Move “%1” to Rubbish bin?</source>
+        <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
+        <translation>نقل »%1» إلى سلة المحذوفات؟</translation>
+    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidgetSearch</name>
@@ -4471,6 +4476,49 @@ Enter a different name</source>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
         <translation>جاري البحث</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>عرض لفترة محدودة</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>ترويجي</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يومين</numerusform><numerusform>ينتهي العرض في %n أيام</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform><numerusform>ينتهي العرض في %n يوم</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعتين</numerusform><numerusform>ينتهي العرض في %n ساعات</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform><numerusform>ينتهي العرض في %n ساعة</numerusform></translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m %2 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation>ينتهي العرض في %1 م %2 ث</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation>انتهت صلاحية العرض</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n second</source>
+        <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
+        <translation><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانيتين</numerusform><numerusform>ينتهي العرض في %n ثواني</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform><numerusform>ينتهي العرض في %n ثانية</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n minute</source>
+        <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
+        <translation><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقتين</numerusform><numerusform>ينتهي العرض في %n دقائق</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform><numerusform>ينتهي العرض في %n دقيقة</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4759,19 +4807,9 @@ Enter a different name</source>
         <translation>الاسم الأول</translation>
     </message>
     <message>
-        <source>Sync your entire MEGA account with your local device.</source>
-        <translatorcomment>Full sync button description CON-467</translatorcomment>
-        <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل مع جهازك المحلي.</translation>
-    </message>
-    <message>
         <source>Full sync</source>
         <translatorcomment>Full sync button title CON-467</translatorcomment>
         <translation>مزامنة كاملة</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Full sync page title CON-467</translatorcomment>
-        <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل مع جهازك المحلي.</translation>
     </message>
     <message>
         <source>Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.</source>
@@ -4882,16 +4920,6 @@ Enter a different name</source>
         <source>Select a MEGA folder</source>
         <translatorcomment>Text that indicates to the user that he should select a MEGA folder CON-467</translatorcomment>
         <translation>حدد مجلد ميغا MEGA</translation>
-    </message>
-    <message>
-        <source>Sync selected folders in your MEGA account with your local device.</source>
-        <translatorcomment>Selective sync button text description CON-467</translatorcomment>
-        <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاص بك مع جهازك المحلي.</translation>
-    </message>
-    <message>
-        <source>Sync specific folders in your MEGA Cloud drive with a local device.</source>
-        <translatorcomment>Selective sync window title text CON-467</translatorcomment>
-        <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاص بك مع جهازك المحلي.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5117,6 +5145,16 @@ Enter a different name</source>
         <source>Set Exclusions</source>
         <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
         <translation>إعداد الاستبعادات</translation>
+    </message>
+    <message>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل مع جهازك المحلي.</translation>
+    </message>
+    <message>
+        <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
+        <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاص بك مع جهازك المحلي.</translation>
     </message>
 </context>
 <context>
@@ -5475,20 +5513,18 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Improved handling of sync conflicts.
-- Improved management of failures within issue resolution.
-- Improved issue resolution dialogs.
-- Added default automatic issue resolution.
-- Added new UI improvements.
-- Fixed other bugs and made assorted other improvements.
+        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.4.0.CON-806</translatorcomment>
-        <translation>- تحسين معالجة تعارضات المزامنة.
-- تحسين إدارة حالات الفشل في حل المشكلة.
-- مربعات حوار محسّنة لحل المشكلات.
-- تمت إضافة حل المشكلة التلقائي الافتراضي.
-- تمت إضافة تحسينات جديدة لواجهة المستخدم.
-- إصلاح أخطاء أخرى وإجراء تحسينات أخرى متنوعة.</translation>
+        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
+        <translation>- يمكنك الآن تحديد ملفات ومجلدات متعددة لإزالتها من السواقة السحابية عند استخدام خيار التنزيل.
+- أصبح إنشاء عمليات المزامنة والنسخ الاحتياطية من قائمة الإعدادات أسهل من أي وقت مضى من خلال واجهتنا المجددة.
+- تم حل مشكلة التثبيت التي تسببت في حذف بعض ملفات Windows.dll.
+- تم تحديث مكتبات الطرف الثالث.
+- تم إصلاح أخطاء أخرى وإجراء العديد من التحسينات.</translation>
     </message>
 </context>
 <context>
@@ -7033,11 +7069,6 @@ Do you want to delete it anyway?</source>
         <translation>تم حلها تلقائيًا</translation>
     </message>
     <message>
-        <source>Auto-failed</source>
-        <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue has been auto-solved but it failed. SAT-1140</translatorcomment>
-        <translation>فشل</translation>
-    </message>
-    <message>
         <source>Failed</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. The issue was manually solved but it has failed. SAT-1140</translatorcomment>
         <translation>فشل</translation>
@@ -7340,64 +7371,9 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
 <context>
     <name>SymLinkHeader</name>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button in message box shown when the user chooses  stalled issue solution.SNC-2565</translatorcomment>
-        <translation>إلغاء</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Button to confirm ignoring symlinks in all syncs.FM-1615</translatorcomment>
-        <translation>موافق</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Confirmation button in message box shown when the user chooses to apply a stalled issue solution to current stall issue or all similar stalled issues.FM-1615</translatorcomment>
-        <translation>تطبيق</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Check box  in message box shown when the user chooses to apply a stalled issue solution, to allow applying this solution for all similar issues.FM-1615</translatorcomment>
-        <translation>قم بالتطبيق على الكل</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to ignore all symlinks in all syncs?</source>
-        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation>تجاهل الروابط الرمزية في جميع عمليات المزامنة؟</translation>
-    </message>
-    <message>
-        <source>This action will ignore all present and future symlinks in all your syncs.</source>
-        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
-        <translation>سيتجاهل هذا الإجراء جميع الروابط الرمزية الحالية والمستقبلية في جميع عمليات المزامنة الخاصة بك.</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to ignore this symlink?</source>
-        <translatorcomment>Message box text to confirm users choice in solving a stalled issue.SNC-2565</translatorcomment>
-        <translation>تجاهل هذا الرابط الرمزي؟</translation>
-    </message>
-    <message>
-        <source>This action will ignore this symlink and it will not be synced.</source>
-        <translatorcomment>Confirmation message box explaining the user's choice.SNC-2565</translatorcomment>
-        <translation>سيتجاهل هذا الإجراء هذا الرابط الرمزي ولن تتم مزامنته.</translation>
-    </message>
-    <message>
         <source>Detected sym link: [B]%1[/B]</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file being synced is a sym link.[B] is for bold.SNC-2565</translatorcomment>
         <translation>رابط رمزي تم اكتشافه: [B]%1[/B]</translation>
-    </message>
-    <message>
-        <source>Ignore symlink</source>
-        <translatorcomment>Button text to ignore the sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation>تجاهل الرابط الرمزي</translation>
-    </message>
-    <message>
-        <source>Ignore all symlinks in all syncs</source>
-        <translatorcomment>Button text to ignore all sym link causing sync stall.SNC-2565</translatorcomment>
-        <translation>تجاهل الروابط الرمزية في جميع عمليات المزامنة</translation>
-    </message>
-    <message>
-        <source>Ignore</source>
-        <translatorcomment>Title for solve actions for a sync stall.SNC-2565</translatorcomment>
-        <translation>تجاهل</translation>
     </message>
 </context>
 <context>
@@ -7924,11 +7900,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>حدد مجلدًا محليًا للمزامنة</translation>
     </message>
     <message>
-        <source>Folder can&apos;t be synced as you don&apos;t have write permissions.</source>
-        <translatorcomment>Error message indicating the selected local folder is not available. CON-467</translatorcomment>
-        <translation>لا يمكن مزامنة المجلد لأنه ليس لديك أذونات الكتابة</translation>
-    </message>
-    <message>
         <source>Select a MEGA folder to sync.</source>
         <translatorcomment>Error message indicating that the user should choose a remote folder (cloud/mega) in order to create a sync. CON-467</translatorcomment>
         <translation>حدد مجلد ميغا MEGA للمزامنة</translation>
@@ -7942,6 +7913,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>%1 folder doesn&apos;t exist</source>
         <translatorcomment>Error message indicating that the selected folder doesn´t exist anymore. CON-467</translatorcomment>
         <translation>المجلد ”%1“ غير موجود.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncsStrings</name>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
+        <translation>أضف مزامنة</translation>
     </message>
 </context>
 <context>
@@ -8340,6 +8319,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>%n item no longer exist.</source>
         <translatorcomment>Body text of a system notification shown when %n items no longer exist or were renamed during a download operation. %n will be replaced with the number of items. Singular version will not be used, but we include it as a reference. CON-223</translatorcomment>
         <translation><numerusform>%n عنصر لم يعد موجوداً.</numerusform><numerusform>%n عنصر لم يعد موجوداً.</numerusform><numerusform>%n عنصرين لم يعودا موجودين.</numerusform><numerusform>%n عناصر لم يعدوا موجودين.</numerusform><numerusform>%n عنصراً لم يعدوا موجودين.</numerusform><numerusform>%n عنصر لم يعدوا موجودين.</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Upload stopped</source>
+        <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation><numerusform>تم إيقاف الترفيع</numerusform><numerusform>تم إيقاف الترفيع</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform><numerusform>تم إيقاف الترفيعات</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
+        <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
+        <translation><numerusform>لقد قمت بتسجيل الخروج من MEGA حتى تتوقف التحميلات الخاصة بك. يمكنك استئناف التحميلات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقف الترفيع الخاص بك. يمكنك استئناف الترفيع بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform><numerusform>لقد قمت بتسجيل الخروج من ميغا MEGA لذلك توقفت الترفيعات الخاصة بك. يمكنك استئناف الترفيعات بعد تسجيل الدخول مرة أخرى.</numerusform></translation>
     </message>
 </context>
 <context>
