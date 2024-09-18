@@ -13,7 +13,9 @@ Text {
     property bool hovered: false
     property bool manageHover: false
     property bool visited: false
+    property bool undelineLink: false
     property color urlColor: ColorTheme.linkPrimary
+    property color urlVisitedColor: ColorTheme.linkVisited
     property string rawText: ""
 
     function updateLinkColor() {
@@ -22,7 +24,7 @@ Text {
             color = ColorTheme.notificationInfo;
         }
         else if(visited) {
-            color = ColorTheme.linkVisited;
+            color = root.urlVisitedColor;
         }
         root.text = root.text.replace("color:" + urlColor, "color:" + color);
         urlColor = color;
@@ -130,10 +132,11 @@ Text {
     // refreshed internally. We cannot assign other variable and change it here at the
     // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
+        var decoration = root.undelineLink ? "underline" : "none";
         var copyText = rawText;
         copyText = copyText.replace("[B]","<b>");
         copyText = copyText.replace("[/B]","</b>");
-        copyText = copyText.replace("[A]", "<a style=\"text-decoration:none\"
+        copyText = copyText.replace("[A]", "<a style=\"text-decoration:" + decoration + "\"
                                             style=\"color:" + urlColor + ";\" href=\"" + url + "\">");
         copyText = copyText.replace("[/A]","</a>");
         root.text = copyText;
