@@ -1,18 +1,21 @@
 #include "AccountStatusController.h"
-#include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+
 #include "DialogOpener.h"
 #include "GuestContent.h"
+#include "MegaApplication.h"
+#include "QMegaMessageBox.h"
+#include "VerifyLockMessage.h"
+
 #include <QDebug>
 
-AccountStatusController::AccountStatusController(QObject* parent)
-    : QObject(parent)
-    , mMegaApi(MegaSyncApp->getMegaApi())
-    , mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this))
-    , mPreferences(Preferences::instance())
-    , mQueringWhyAmIBlocked(false)
-    , mBlockedState(mega::MegaApi::ACCOUNT_NOT_BLOCKED)
-    , mBlockedStateSet(false)
+AccountStatusController::AccountStatusController(QObject* parent):
+    QObject(parent),
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mDelegateListener(new mega::QTMegaListener(MegaSyncApp->getMegaApi(), this)),
+    mPreferences(Preferences::instance()),
+    mQueringWhyAmIBlocked(false),
+    mBlockedState(mega::MegaApi::ACCOUNT_NOT_BLOCKED),
+    mBlockedStateSet(false)
 {
     mMegaApi->addListener(mDelegateListener);
 }

@@ -4,6 +4,7 @@
 #include "AccountStatusController.h"
 #include "AppStatsEvents.h"
 #include "Avatar.h"
+#include "ChangeLogDialog.h"
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
@@ -16,10 +17,10 @@
 #include "ExportProcessor.h"
 #include "FullName.h"
 #include "GuiUtilities.h"
+#include "ImportMegaLinksDialog.h"
 #include "IntervalExecutioner.h"
 #include "LoginController.h"
 #include "mega/types.h"
-#include "MegaProxyStyle.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "Onboarding.h"
@@ -29,15 +30,18 @@
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
 #include "QMegaMessageBox.h"
+#include "QmlDialogManager.h"
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
+#include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
+#include "UserMessageController.h"
 #include "Utilities.h"
 
 #include <QtConcurrent/QtConcurrent>
@@ -57,13 +61,13 @@
 #include <StalledIssuesDialog.h>
 
 #ifdef Q_OS_LINUX
-    #include <signal.h>
-    #include <condition_variable>
-    #include <QSvgRenderer>
+#include <condition_variable>
+#include <QSvgRenderer>
+#include <signal.h>
 #endif
 
 #ifdef Q_OS_MACX
-    #include "platform/macx/PlatformImplementation.h"
+#include "platform/macx/PlatformImplementation.h"
 #endif
 
 #ifndef WIN32
@@ -125,6 +129,11 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
     scanStageController(this),
+#if defined(Q_OS_LINUX)
+    mScaleFactorManager(OsType::LINUX, screens()),
+#elif defined(WIN32)
+    mScaleFactorManager(OsType::WIN, screens()),
+#endif
     mDisableGfx(false),
     mUserMessageController(nullptr)
 {
@@ -361,6 +370,26 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
     mIntervalExecutioner = std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
+
+#ifndef Q_OS_MACX
+    const QVector<QString> scaleFactorLogMessages = mScaleFactorManager.getLogMessages();
+    for (const QString& message: scaleFactorLogMessages)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+    }
+
+    try
+    {
+        mScaleFactorManager.setScaleFactorEnvironmentVariable();
+    }
+    catch (const std::exception& exception)
+    {
+        const QString errorMessage(
+            QString::fromUtf8("Error while setting scale factor environment variable: %1")
+                .arg(QString::fromUtf8(exception.what())));
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, errorMessage.toUtf8().constData());
+    }
+#endif
 }
 
 MegaApplication::~MegaApplication()

@@ -1,18 +1,19 @@
 #include "StalledIssueActionTitle.h"
+
 #include "ui_StalledIssueActionTitle.h"
 
-#include <Utilities.h>
 #include <MegaApplication.h>
-#include <StalledIssuesUtilities.h>
-#include <StalledIssuesModel.h>
-
-#include <QPushButton>
+#include <QFileInfo>
+#include <QGraphicsOpacityEffect>
+#include <QHBoxLayout>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
-#include <QFileInfo>
-#include <QHBoxLayout>
+#include <QPushButton>
 #include <QSpacerItem>
-#include <QGraphicsOpacityEffect>
+#include <StalledIssuesModel.h>
+#include <StalledIssuesUtilities.h>
+#include <Utilities.h>
 
 const char* BUTTON_ID = "button_id";
 const char* ONLY_ICON = "onlyIcon";

@@ -1,38 +1,39 @@
-#include <QDesktopServices>
-#include <QDesktopWidget>
-#include <QUrl>
-#include <QRect>
-#include <QTimer>
-#include <QHelpEvent>
-#include <QToolTip>
-#include <QSignalMapper>
-#include <QVBoxLayout>
-#include <QFileInfo>
-#include <QEvent>
-#include <QScrollBar>
-
 #include "InfoDialog.h"
+
 #include "AccountDetailsDialog.h"
-#include "ui_InfoDialog.h"
+#include "AccountDetailsManager.h"
+#include "assert.h"
+#include "CreateRemoveBackupsManager.h"
+#include "CreateRemoveSyncsManager.h"
+#include "DialogOpener.h"
 #include "GuiUtilities.h"
 #include "MegaApplication.h"
-#include "TransferManager.h"
 #include "MenuItemAction.h"
-#include "StalledIssuesModel.h"
-#include "assert.h"
-#include "QMegaMessageBox.h"
-#include "TextDecorator.h"
-#include "DialogOpener.h"
-#include "StatsEventHandler.h"
-#include "CreateRemoveSyncsManager.h"
-#include "CreateRemoveBackupsManager.h"
-#include "UserMessageDelegate.h"
-
-#include "Utilities.h"
 #include "Platform.h"
+#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
+#include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
 #include "SyncsComponent.h"
-#include "AccountDetailsManager.h"
+#include "TextDecorator.h"
+#include "TransferManager.h"
+#include "ui_InfoDialog.h"
+#include "UserMessageController.h"
+#include "UserMessageDelegate.h"
+#include "Utilities.h"
+
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QEvent>
+#include <QFileInfo>
+#include <QHelpEvent>
+#include <QRect>
+#include <QScrollBar>
+#include <QSignalMapper>
+#include <QTimer>
+#include <QToolTip>
+#include <QUrl>
+#include <QVBoxLayout>
 
 #ifdef _WIN32
 #include <chrono>
