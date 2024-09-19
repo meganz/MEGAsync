@@ -124,7 +124,7 @@ if [ ${build_cmake} -eq 1 ]; then
         CMAKE_EXTRA="-DCMAKE_OSX_ARCHITECTURES=${target_arch}"
     fi
 
-    cmake -DVCPKG_ROOT=${VCPKGPATH} -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../
+    cmake -DVCPKG_ROOT=${VCPKGPATH} -DENABLE_DESIGN_TOKENS_IMPORTER=OFF -DCMAKE_PREFIX_PATH=${MEGAQTPATH} -DCMAKE_BUILD_TYPE=RelWithDebInfo ${CMAKE_EXTRA} -S ../
     cmake --build ./ --target MEGAsync -j`sysctl -n hw.ncpu`
     cmake --build ./ --target MEGAupdater -j`sysctl -n hw.ncpu`
 
