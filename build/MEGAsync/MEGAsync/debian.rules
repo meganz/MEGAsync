@@ -33,7 +33,7 @@ build-stamp:
 	fi
 
 	cmake --version
-	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
 	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
 	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
 
