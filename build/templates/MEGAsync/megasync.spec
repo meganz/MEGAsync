@@ -54,7 +54,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
         BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
-        Requires: libQt5Core5
+        Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
     %else
         BuildRequires: libqt4-devel, qt-devel
     %endif
