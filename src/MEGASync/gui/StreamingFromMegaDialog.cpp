@@ -13,6 +13,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <QCloseEvent>
+#include <QFileDialog>
 #include <QInputDialog>
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB

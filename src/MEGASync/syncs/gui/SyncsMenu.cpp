@@ -1,11 +1,13 @@
 #include "SyncsMenu.h"
-#include "Utilities.h"
-#include "Preferences.h"
-#include "SyncInfo.h"
-#include "Platform.h"
+
 #include "DeviceName.h"
 #include "MyBackupsHandle.h"
+#include "Platform.h"
+#include "Preferences.h"
+#include "SyncController.h"
+#include "SyncInfo.h"
 #include "SyncTooltipCreator.h"
+#include "Utilities.h"
 
 #ifdef Q_OS_WINDOWS
 const QLatin1String DEVICE_ICON ("://images/icons/pc/pc-win_24.png");

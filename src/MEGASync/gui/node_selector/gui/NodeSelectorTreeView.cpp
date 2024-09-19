@@ -1,13 +1,14 @@
 #include "NodeSelectorTreeView.h"
 
-#include "NodeSelectorModelItem.h"
 #include "MegaApplication.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorModelItem.h"
 #include "NodeSelectorProxyModel.h"
 #include "Platform.h"
-#include "NodeSelectorModel.h"
 
-#include <QPainter>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QPainter>
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
     LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
