@@ -26,6 +26,8 @@ RoundButton {
     property alias name: titleText.text
     property alias price: priceText.text
 
+    property bool recommended: false
+
     width: root.totalWidth
     height: root.totalHeight
 
@@ -71,6 +73,8 @@ RoundButton {
 
                 sizes: SmallSizes {}
                 text: UpsellStrings.recommended
+                visible: true
+                opacity: root.recommended ? 1.0 : 0.0
             }
 
             Column {
