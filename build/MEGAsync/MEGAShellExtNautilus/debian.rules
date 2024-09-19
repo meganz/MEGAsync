@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
+DPKGXZ := $(shell cat /etc/issue | grep "Ubuntu 24\|Oracular Oriole\|Noble Numbat\|Ubuntu 23\|Mantic Minotaur\|Lunar Lobster\|Ubuntu 22\|Jammy Jellyfish\|Ubuntu 21.10" >/dev/null && echo "-- -Zxz" || echo "")
 
 export DH_VERBOSE=1
 
