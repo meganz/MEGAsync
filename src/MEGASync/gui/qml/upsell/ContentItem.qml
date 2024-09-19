@@ -9,8 +9,7 @@ import components.buttons 1.0
 FocusScope {
     id: root
 
-    height: columnItem.height
-
+    readonly property real minimumWidth: 664
     readonly property real itemsSpacing: 12
     readonly property real radioButtonsSpacing: 28
     readonly property real billedRectHorizontalPadding: 8
@@ -18,10 +17,15 @@ FocusScope {
     readonly property real billedRectRadius: 4
     readonly property real billedTextLineHeight: 16
     readonly property real buttonsSpacing: 4
+    readonly property real plansRowSpacing: 0
+
+    height: columnItem.height
+    width: columnItem.width
 
     Column {
         id: columnItem
 
+        width: Math.max(root.minimumWidth, plansRow.width - 2 * Constants.focusBorderWidth)
         spacing: root.itemsSpacing
 
         Row {
@@ -64,14 +68,7 @@ FocusScope {
                 Text {
                     id: saveUpText
 
-                    anchors {
-                        left: parent.left
-                        top: parent.top
-                        leftMargin: root.billedRectHorizontalPadding / 2
-                        rightMargin: root.billedRectHorizontalPadding / 2
-                        topMargin: root.billedRectVerticalPadding / 2
-                        bottomMargin: root.billedRectVerticalPadding / 2
-                    }
+                    anchors.centerIn: parent
                     verticalAlignment: Text.AlignVCenter
                     font {
                         pixelSize: Text.Size.SMALL
@@ -91,25 +88,58 @@ FocusScope {
 
             anchors {
                 topMargin: Constants.focusAdjustment
-                left: parent.left
                 leftMargin: Constants.focusAdjustment
+                horizontalCenter: parent.horizontalCenter
             }
-            spacing: 0
+            spacing: root.plansRowSpacing
+
+            /*
+            TODO: Replace by real model using repeater
+
+            Repeater {
+                id: plansRepeater
+
+                model: PlanModel {
+                    id: plans
+                }
+
+                PlanCard {
+                    id: card
+
+                    name: model.name
+                    price: model.price
+                }
+
+            }
+            */
 
             PlanCard {
-                id: proLitePlan
+                id: card1
+
+                name: "Pro Flexi"
+                price: "€X.XX*"
+                recommended: true
             }
 
             PlanCard {
-                id: proIPlan
+                id: card2
+
+                name: "Pro I"
+                price: "€X.XX*"
             }
 
             PlanCard {
-                id: proIIPlan
+                id: card3
+
+                name: "Pro II"
+                price: "€X.XX*"
             }
 
             PlanCard {
-                id: proIIIPlan
+                id: card4
+
+                name: "Pro III"
+                price: "€X.XX*"
             }
 
         } // Row: plansRow

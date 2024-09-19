@@ -8,12 +8,25 @@ import components.texts 1.0
 RoundButton {
     id: root
 
+    readonly property real contentMargin: 2 * Constants.focusBorderWidth + root.borderWidth + 12
+    readonly property real contentBottomMargin: root.contentMargin + 4
+    readonly property real totalWidth: 168
+    readonly property real totalHeight: 223
+    readonly property real contentSpacing: 20
+    readonly property real topSpacing: 12
+    readonly property real titleLineHeight: 30
+    readonly property real priceSpacing: 0
+    readonly property real priceLineHeight: 30
+    readonly property real bottomSpacing: 12
+    readonly property real backgroundFocusRadius: 12
+    readonly property real backgroundRadius: 8
     readonly property int borderWidth: 1
-    readonly property int contentMargin: 2 * Constants.focusBorderWidth + root.borderWidth + 12
-    readonly property int contentBottomMargin: root.contentMargin + 4
 
-    width: 168
-    height: 223
+    property alias name: titleText.text
+    property alias price: priceText.text
+
+    width: root.totalWidth
+    height: root.totalHeight
 
     contentItem: Column {
         id: contentColumn
@@ -25,7 +38,7 @@ RoundButton {
             rightMargin: root.contentMargin
             bottomMargin: root.contentBottomMargin
         }
-        spacing: 20
+        spacing: root.contentSpacing
 
         Column {
             id: topColumn
@@ -34,7 +47,7 @@ RoundButton {
                 left: parent.left
                 right: parent.right
             }
-            spacing: 12
+            spacing: root.topSpacing
 
             Text {
                 id: titleText
@@ -48,9 +61,8 @@ RoundButton {
                     pixelSize: Text.Size.LARGE
                     weight: Font.DemiBold
                 }
-                lineHeight: 30
+                lineHeight: root.titleLineHeight
                 lineHeightMode: Text.FixedHeight
-                text: "Pro I"
             }
 
             Rectangle {
@@ -66,19 +78,20 @@ RoundButton {
                     id: recommnededText
 
                     anchors.centerIn: parent
+                    verticalAlignment: Text.AlignVCenter
                     font {
                         pixelSize: Text.Size.SMALL
                         weight: Font.DemiBold
                     }
                     color: ColorTheme.textInverseAccent
-                    text: "Recommended"
+                    text: UpsellStrings.recommended
                 }
             }
 
             Column {
                 id: priceColumn
 
-                spacing: 0
+                spacing: root.priceSpacing
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -96,9 +109,9 @@ RoundButton {
                         pixelSize: Text.Size.EXTRA_LARGE
                         weight: Font.Bold
                     }
-                    lineHeight: 30
+                    lineHeight: root.priceLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: "€X.XX*"
+                    text: UpsellStrings.priceEuro // TODO: replace depending on the currency
                 }
 
                 SecondaryText {
@@ -108,7 +121,7 @@ RoundButton {
                         left: parent.left
                         right: parent.right
                     }
-                    text: "NZD per year"
+                    text: UpsellStrings.perMonth // TODO: replace depending on the currency
                 }
             }
 
@@ -117,7 +130,7 @@ RoundButton {
         Column {
             id: bottomColumn
 
-            spacing: 10
+            spacing: root.bottomSpacing
             anchors {
                 left: parent.left
                 right: parent.right
@@ -131,7 +144,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: "2 TB storage"
+                text: UpsellStrings.storage // TODO: replace depending on the plan
             }
 
             Text {
@@ -142,7 +155,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: "24 TB transfer"
+                text: UpsellStrings.transfer // TODO: replace depending on the plan
             }
         }
 
@@ -155,7 +168,7 @@ RoundButton {
             width: Constants.focusBorderWidth
             color: root.focus ? ColorTheme.focusColor : "transparent"
         }
-        radius: 12
+        radius: root.backgroundFocusRadius
 
         Rectangle {
             id: contentRect
@@ -168,7 +181,7 @@ RoundButton {
                 width: root.borderWidth
                 color: ColorTheme.borderStrongSelected
             }
-            radius: 8
+            radius: root.backgroundRadius
         }
     }
 

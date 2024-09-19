@@ -36,7 +36,7 @@ QmlDialog {
             rightMargin: window.contentMargin
             bottomMargin: window.contentMargin - Constants.focusBorderWidth
         }
-        width: 664
+        width: content.width
         height: header.height + content.height + columnItem.spacing
         spacing: columnItem.columnSpacing
 
@@ -48,8 +48,6 @@ QmlDialog {
 
         ContentItem {
             id: content
-
-            width: parent.width
         }
     }
 
