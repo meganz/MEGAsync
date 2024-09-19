@@ -5,6 +5,7 @@ import common 1.0
 
 import components.texts 1.0
 import components.buttons 1.0
+import components.chips 1.0 as Chips
 
 FocusScope {
     id: root
@@ -56,29 +57,12 @@ FocusScope {
                 }
             }
 
-            Rectangle {
-                id: billedRect
+            Chips.Chip {
+                id: billedChip
 
                 anchors.verticalCenter: parent.verticalCenter
-                width: saveUpText.width + root.billedRectHorizontalPadding
-                height: saveUpText.height + root.billedRectVerticalPadding
-                radius: root.billedRectRadius
-                color: ColorTheme.selectionControl
-
-                Text {
-                    id: saveUpText
-
-                    anchors.centerIn: parent
-                    verticalAlignment: Text.AlignVCenter
-                    font {
-                        pixelSize: Text.Size.SMALL
-                        weight: Font.DemiBold
-                    }
-                    lineHeight: root.billedTextLineHeight
-                    lineHeightMode: Text.FixedHeight
-                    color: ColorTheme.textInverseAccent
-                    text: UpsellStrings.billedSaveUpText
-                }
+                sizes: Chips.SmallSizes {}
+                text: UpsellStrings.billedSaveUpText
             }
 
         } // Row: billedRow

@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import common 1.0
 
 import components.texts 1.0
+import components.chips 1.0
 
 RoundButton {
     id: root
@@ -65,27 +66,11 @@ RoundButton {
                 lineHeightMode: Text.FixedHeight
             }
 
-            Rectangle {
-                id: recommendedLabel
+            Chip {
+                id: recommendedChip
 
-                anchors.left: parent.left
-                width: recommnededText.width + 8
-                height: recommnededText.height + 4
-                radius: 4
-                color: ColorTheme.selectionControl
-
-                Text {
-                    id: recommnededText
-
-                    anchors.centerIn: parent
-                    verticalAlignment: Text.AlignVCenter
-                    font {
-                        pixelSize: Text.Size.SMALL
-                        weight: Font.DemiBold
-                    }
-                    color: ColorTheme.textInverseAccent
-                    text: UpsellStrings.recommended
-                }
+                sizes: SmallSizes {}
+                text: UpsellStrings.recommended
             }
 
             Column {
