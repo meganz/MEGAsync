@@ -113,6 +113,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/upsell/UpsellComponent.h
+    gui/upsell/UpsellController.h
+    gui/upsell/UpsellModel.h
+    gui/upsell/UpsellPlans.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
     gui/user_messages/AlertItem.h
@@ -244,6 +247,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/upsell/UpsellComponent.cpp
+    gui/upsell/UpsellController.cpp
+    gui/upsell/UpsellModel.cpp
+    gui/upsell/UpsellPlans.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp

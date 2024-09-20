@@ -3,6 +3,11 @@
 
 #include "qml/QmlDialogWrapper.h"
 
+#include <memory>
+
+class UpsellController;
+class UpsellModel;
+
 class UpsellComponent: public QMLComponent
 {
     Q_OBJECT
@@ -14,6 +19,10 @@ public:
     QString contextName() override;
 
     static void registerQmlModules();
+
+private:
+    std::shared_ptr<UpsellController> mController;
+    std::shared_ptr<UpsellModel> mModel;
 };
 
 #endif // UPSELL_COMPONENT_H

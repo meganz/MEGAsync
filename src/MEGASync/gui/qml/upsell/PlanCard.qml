@@ -24,9 +24,12 @@ RoundButton {
     readonly property int borderWidth: 1
 
     property alias name: titleText.text
-    property alias price: priceText.text
+    //property alias price: priceText.text
 
     property bool recommended: false
+    property string gbStorage: ""
+    property string gbTransfer: ""
+    property double price: 0
 
     width: root.totalWidth
     height: root.totalHeight
@@ -100,7 +103,7 @@ RoundButton {
                     }
                     lineHeight: root.priceLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: UpsellStrings.priceEuro // TODO: replace depending on the currency
+                    text: UpsellStrings.price.arg(upsellPlansAccess.currencySymbol).arg(price)
                 }
 
                 SecondaryText {
@@ -133,7 +136,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: UpsellStrings.storage // TODO: replace depending on the plan
+                text: UpsellStrings.storage.arg(gbStorage)
             }
 
             Text {
@@ -144,7 +147,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: UpsellStrings.transfer // TODO: replace depending on the plan
+                text: UpsellStrings.transfer.arg(gbTransfer)
             }
         }
 

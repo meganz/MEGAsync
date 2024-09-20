@@ -1,11 +1,17 @@
 #include "UpsellComponent.h"
 
+#include "UpsellController.h"
+#include "UpsellModel.h"
+
 static bool qmlRegistrationDone = false;
 
 UpsellComponent::UpsellComponent(QObject* parent):
-    QMLComponent(parent)
+    QMLComponent(parent),
+    mController(std::make_shared<UpsellController>()),
+    mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
+    mController->init();
 }
 
 QUrl UpsellComponent::getQmlUrl()

@@ -44,16 +44,29 @@ FocusScope {
                 RadioButton {
                     id: billedMonthlyRadioButton
 
-                    checked: true
+                    checked: upsellPlansAccess.monthly
                     text: UpsellStrings.billedMonthly
                     ButtonGroup.group: buttonGroupItem
+
+                    onCheckedChanged: {
+                        if (checked && !upsellPlansAccess.monthly) {
+                            upsellPlansAccess.monthly = true;
+                        }
+                    }
                 }
 
                 RadioButton {
                     id: billedYearlyRadioButton
 
+                    checked: !upsellPlansAccess.monthly
                     text: UpsellStrings.billedYearly
                     ButtonGroup.group: buttonGroupItem
+
+                    onCheckedChanged: {
+                        if (checked && upsellPlansAccess.monthly) {
+                            upsellPlansAccess.monthly = false;
+                        }
+                    }
                 }
             }
 
@@ -77,26 +90,23 @@ FocusScope {
             }
             spacing: root.plansRowSpacing
 
-            /*
-            TODO: Replace by real model using repeater
-
             Repeater {
                 id: plansRepeater
 
-                model: PlanModel {
-                    id: plans
-                }
+                model: upsellModelAccess
 
                 PlanCard {
                     id: card
 
                     name: model.name
+                    recommended: model.recommended
+                    gbStorage: model.gbStorage
+                    gbTransfer: model.gbTransfer
                     price: model.price
                 }
-
             }
-            */
 
+            /*
             PlanCard {
                 id: card1
 
@@ -125,6 +135,7 @@ FocusScope {
                 name: "Pro III"
                 price: "€X.XX*"
             }
+            */
 
         } // Row: plansRow
 
