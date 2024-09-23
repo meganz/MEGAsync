@@ -20,6 +20,9 @@ public:
 
     static void registerQmlModules();
 
+public slots:
+    void buyButtonClicked(int index);
+
 private:
     std::shared_ptr<UpsellController> mController;
     std::shared_ptr<UpsellModel> mModel;

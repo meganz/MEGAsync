@@ -46,7 +46,7 @@ FocusScope {
 
                     checked: upsellPlansAccess.monthly
                     text: UpsellStrings.billedMonthly
-                    ButtonGroup.group: buttonGroupItem
+                    ButtonGroup.group: billedPeriodButtonGroupItem
 
                     onCheckedChanged: {
                         if (checked && !upsellPlansAccess.monthly) {
@@ -60,7 +60,7 @@ FocusScope {
 
                     checked: !upsellPlansAccess.monthly
                     text: UpsellStrings.billedYearly
-                    ButtonGroup.group: buttonGroupItem
+                    ButtonGroup.group: billedPeriodButtonGroupItem
 
                     onCheckedChanged: {
                         if (checked && upsellPlansAccess.monthly) {
@@ -93,6 +93,8 @@ FocusScope {
             Repeater {
                 id: plansRepeater
 
+                property int currentPlanSelectedIndex: 0
+
                 model: upsellModelAccess
 
                 PlanCard {
@@ -103,39 +105,13 @@ FocusScope {
                     gbStorage: model.gbStorage
                     gbTransfer: model.gbTransfer
                     price: model.price
+                    ButtonGroup.group: planButtonGroupItem
+
+                    onClicked: {
+                        plansRepeater.currentPlanSelectedIndex = index;
+                    }
                 }
             }
-
-            /*
-            PlanCard {
-                id: card1
-
-                name: "Pro Flexi"
-                price: "€X.XX*"
-                recommended: true
-            }
-
-            PlanCard {
-                id: card2
-
-                name: "Pro I"
-                price: "€X.XX*"
-            }
-
-            PlanCard {
-                id: card3
-
-                name: "Pro II"
-                price: "€X.XX*"
-            }
-
-            PlanCard {
-                id: card4
-
-                name: "Pro III"
-                price: "€X.XX*"
-            }
-            */
 
         } // Row: plansRow
 
@@ -157,19 +133,29 @@ FocusScope {
                 id: leftButton
 
                 text: UpsellStrings.notNow
+                onClicked: {
+                    window.close();
+                }
             }
 
             PrimaryButton {
                 id: rightButton
 
                 text: UpsellStrings.buyPro
+                onClicked: {
+                    upsellComponentAccess.buyButtonClicked(plansRepeater.currentPlanSelectedIndex);
+                }
             }
         }
 
     } // Column: columnItem
 
     ButtonGroup {
-        id: buttonGroupItem
+        id: billedPeriodButtonGroupItem
+    }
+
+    ButtonGroup {
+        id: planButtonGroupItem
     }
 
 }

@@ -18,14 +18,35 @@ UpsellPlans::UpsellPlans(QObject* parent):
     QmlManager::instance()->setRootContextProperty(this);
 }
 
-void UpsellPlans::addPlan(std::shared_ptr<Data> plan)
+bool UpsellPlans::addPlan(std::shared_ptr<Data> plan)
 {
+    if (!plan || std::any_of(mPlans.begin(),
+                             mPlans.end(),
+                             [&plan](const std::shared_ptr<Data>& existingPlan)
+                             {
+                                 return existingPlan->proLevel() == plan->proLevel();
+                             }))
+    {
+        return false;
+    }
     mPlans.append(plan);
+    return true;
 }
 
 std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlan(int index) const
 {
     return mPlans.at(index);
+}
+
+std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlanByProLevel(int proLevel) const
+{
+    auto it = std::find_if(mPlans.begin(),
+                           mPlans.end(),
+                           [proLevel](const std::shared_ptr<Data>& plan)
+                           {
+                               return plan->proLevel() == proLevel;
+                           });
+    return it != mPlans.end() ? *it : nullptr;
 }
 
 int UpsellPlans::size() const
@@ -65,14 +86,9 @@ void UpsellPlans::setMonthly(bool monthly)
 // * UpsellPlans::Data
 // ************************************************************************************************
 
-UpsellPlans::Data::Data(int proLevel,
-                        bool recommended,
-                        const AccountBillingPlanData& monthlyData,
-                        const AccountBillingPlanData& yearlyData):
+UpsellPlans::Data::Data(int proLevel, bool recommended):
     mProLevel(proLevel),
-    mRecommended(recommended),
-    mMonthlyData(monthlyData),
-    mYearlyData(yearlyData)
+    mRecommended(recommended)
 {}
 
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
@@ -108,9 +124,25 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
     return mYearlyData;
 }
 
+void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)
+{
+    mYearlyData = newYearlyData;
+}
+
+void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyData)
+{
+    mMonthlyData = newMonthlyData;
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data::AccountBillingPlanData
 // ************************************************************************************************
+
+UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
+    mGBStorage(-1),
+    mGBTransfer(-1),
+    mPrice(-1.0f)
+{}
 
 UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int gbStorage,
                                                                   int gbTransfer,

@@ -11,7 +11,6 @@ UpsellComponent::UpsellComponent(QObject* parent):
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
-    mController->init();
 }
 
 QUrl UpsellComponent::getQmlUrl()
@@ -31,4 +30,9 @@ void UpsellComponent::registerQmlModules()
         qmlRegisterModule("Upsell", 1, 0);
         qmlRegistrationDone = true;
     }
+}
+
+void UpsellComponent::buyButtonClicked(int index)
+{
+    mController->openPlan(index);
 }

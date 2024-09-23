@@ -33,6 +33,7 @@ public:
         class AccountBillingPlanData
         {
         public:
+            AccountBillingPlanData();
             AccountBillingPlanData(int gbStorage, int gbTransfer, int price);
             ~AccountBillingPlanData() = default;
 
@@ -46,10 +47,7 @@ public:
             float mPrice;
         };
 
-        Data(int proLevel,
-             bool recommended,
-             const AccountBillingPlanData& monthlyData,
-             const AccountBillingPlanData& yearlyData);
+        Data(int proLevel, bool recommended);
 
         static QHash<int, QByteArray> roleNames();
 
@@ -58,6 +56,9 @@ public:
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
 
+        void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
+        void setYearlyData(const AccountBillingPlanData& newYearlyData);
+
     private:
         int mProLevel;
         bool mRecommended;
@@ -65,8 +66,9 @@ public:
         AccountBillingPlanData mYearlyData;
     };
 
-    void addPlan(std::shared_ptr<Data> plan);
+    bool addPlan(std::shared_ptr<Data> plan);
     std::shared_ptr<UpsellPlans::Data> getPlan(int index) const;
+    std::shared_ptr<UpsellPlans::Data> getPlanByProLevel(int proLevel) const;
     int size() const;
 
     QString getCurrencySymbol() const;
