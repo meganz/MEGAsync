@@ -649,7 +649,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Per favore, riprova più tardi o contatta il nostro team di supporto su [A]support@mega.nz[/A] sse il problema persiste.</translation>
     </message>
 </context>
 <context>
@@ -716,7 +716,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Politica sulla Privacy e sui Dati</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -871,7 +871,7 @@
     <message>
         <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il file %1 non è disponibile perché è stato segnalato che contiene contenuti che violano [A]Termini di servizio di MEGA[/A].</translation>
     </message>
 </context>
 <context>
@@ -1972,12 +1972,12 @@ In alcuni casi potrebbero contenere dettagli riguardo i tuoi dati, come ad esemp
     <message>
         <source>Detected special link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Link speciale rilevato: [B]%1[/B]</translation>
     </message>
     <message>
         <source>Detected hard link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Hard link rilevato: [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -2851,7 +2851,7 @@ Attendi il completamento dei caricamenti.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sei stato disconnesso su questo dispositivo da un’altra posizione</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3476,12 +3476,13 @@ Controlla la tua casella di posta elettronica per ulteriori informazioni su come
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo account è stato chiuso a causa di una violazione dei Termini di servizio di MEGA.
+Non puoi riottenere accesso ai tuoi dati archiviati o registrare un nuovo account MEGA.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Violazione del copyright</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -4329,52 +4330,52 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Error removing items</source>
         <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante la rimozione degli oggetti</translation>
     </message>
     <message>
         <source>Error removing files</source>
         <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante la rimozione dei file</translation>
     </message>
     <message>
         <source>Error removing folders</source>
         <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante la rimozione delle cartelle</translation>
     </message>
     <message>
         <source>Error removing file</source>
         <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante la rimozione del file</translation>
     </message>
     <message>
         <source>Error removing folder</source>
         <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante la rimozione della cartella</translation>
     </message>
     <message>
         <source>The items couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files and folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Gli oggetti non possono essere rimossi. Riprova più tardi.</translation>
     </message>
     <message>
         <source>The files couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple files has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I file non possono essere rimossi. Riprova più tardi.</translation>
     </message>
     <message>
         <source>The folders couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing multiple folders has failed. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Le cartelle non può essere rimossa. Riprova più tardi.</translation>
     </message>
     <message>
         <source>The file %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Il fascicolo %1 non poteva essere rimosso. Riprova più tardi.</translation>
     </message>
     <message>
         <source>The folder %1 couldn’t be removed. Try again later</source>
         <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>La cartella %1 non poteva essere rimosso. Riprova più tardi.</translation>
     </message>
 </context>
 <context>
@@ -4440,7 +4441,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
         <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Qualsiasi file o cartella condivisa non sarà più accessibile alle persone con cui li hai condivisi. Puoi comunque accedere a questi oggetti nel Cestino, ripristinarli e condividerli.</translation>
     </message>
     <message>
         <source>Move</source>
@@ -4450,7 +4451,7 @@ Inserisci un nome differente.</translation>
     <message numerus="yes">
         <source>Move %n item to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a multiple nodes to the rubbish bin. %n is the number of nodes CON-334</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Sposta %n oggetto nel Cestino?</numerusform><numerusform>Sposta %n oggetti nel Cestino?</numerusform></translation>
     </message>
     <message>
         <source>Don’t move</source>
@@ -4460,7 +4461,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Move “%1” to Rubbish bin?</source>
         <translatorcomment>Title of the messagebox when moving a single node to the rubbish bin. %1 is the file/folder name. CON-334</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Sposta »%1» nel Cestino?</translation>
     </message>
 </context>
 <context>
@@ -4476,42 +4477,42 @@ Inserisci un nome differente.</translation>
     <message>
         <source>LIMITED TIME OFFER</source>
         <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>OFFERTA LIMITATA NEL TEMPO</translation>
     </message>
     <message>
         <source>PROMO</source>
         <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>PROMOZIONE</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n day</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L&apos;offerta scade il %n giorno</numerusform><numerusform>L&apos;offerta scade il %n giorni</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n hour</source>
         <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L&apos;offerta scade il %n ora</numerusform><numerusform>L&apos;offerta scade il %n ore</numerusform></translation>
     </message>
     <message>
         <source>Offer expires in %1 m %2 s</source>
         <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;offerta scade il %1 m %2 s</translation>
     </message>
     <message>
         <source>Offer expired</source>
         <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Offerta scaduta</translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n second</source>
         <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L&apos;offerta scade il %n secondo</numerusform><numerusform>L&apos;offerta scade il %n secondi</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Offer expires in %n minute</source>
         <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>L&apos;offerta scade il %n minuto</numerusform><numerusform>L&apos;offerta scade il %n verbale</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4712,7 +4713,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Completa la registrazione</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -4932,7 +4933,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrati per un [B]conto MEGA[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -5361,7 +5362,7 @@ Inserisci un nome differente.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>I file e le cartelle hanno un proprietario ed appartengono ad un gruppo di utenti. Utilizzando questa finestra, puoi dare diversi permessi di accesso ai nuovi file e alle nuove cartelle create tramite l&apos;app per desktop agli utenti che appartengono allo stesso gruppo e al resto degli utenti del computer. Se non hai bisogno di cambiarli, lascia le impostazioni predefinite per motivi di sicurezza.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5513,7 +5514,11 @@ Inserisci un nome differente.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Ora puoi selezionare più file e cartelle da rimuovere dall&apos;unità Cloud quando usi l&apos;opzione Download.
+- La creazione di sincronizzazioni e backup dal menu Impostazioni è più semplice che mai con la nostra interfaccia rinnovata.
+- È stato risolto un problema di installazione che causava l&apos;eliminazione di alcuni file .dll di Windows.
+- Le librerie di terze parti sono state aggiornate.
+- Altri bug sono stati corretti e sono stati apportati numerosi miglioramenti.</translation>
     </message>
 </context>
 <context>
@@ -8312,12 +8317,12 @@ Per ottenere altra banda di trasferimento, effettua l&apos;upgrade ad un account
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Caricamento interrotto</numerusform><numerusform>Caricamenti interrotti</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Ti sei disconnesso da MEGA, quindi il caricamento è stato interrotto. Puoi riprendere il caricamento dopo aver effettuato nuovamente l&apos;accesso.</numerusform><numerusform>Ti sei disconnesso da MEGA, quindi i tuoi caricamenti sono stati interrotti. Puoi riprendere i caricamenti dopo aver effettuato nuovamente l&apos;accesso.</numerusform></translation>
     </message>
 </context>
 <context>

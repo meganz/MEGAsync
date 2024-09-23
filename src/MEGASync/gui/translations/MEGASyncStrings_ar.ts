@@ -649,7 +649,7 @@
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>يرجى المحاولة مرة أخرى لاحقًا أو التواصل مع فريق الدعم عبر [A]support@mega.nz[/A] إذا استمرت المشكلة.</translation>
     </message>
 </context>
 <context>

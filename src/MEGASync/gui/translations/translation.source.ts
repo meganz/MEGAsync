@@ -5629,13 +5629,18 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Allow multiple selection for removal on cloud drive selector.
-- Revamp UI flow during creation of synchronizations from settings dialog.
-- Fix deletion issues of Windows redistributable dlls during installation of the program.
-- Update third party libs.
-- Bug fixes and other improvements. n</source>
+        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.
+</source>
         <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.</translation>
     </message>
 </context>
 <context>
