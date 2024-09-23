@@ -91,6 +91,33 @@ struct PSA_info
     }
 };
 
+namespace DeviceOs
+{
+Q_NAMESPACE
+
+enum Os
+{
+    UNDEFINED,
+    LINUX,
+    MAC,
+    WINDOWS
+};
+Q_ENUM_NS(Os)
+
+inline DeviceOs::Os getCurrentOS()
+{
+#ifdef Q_OS_WINDOWS
+    return DeviceOs::WINDOWS;
+#endif
+#ifdef Q_OS_MACOS
+    return DeviceOs::MAC;
+#endif
+#ifdef Q_OS_LINUX
+    return DeviceOs::LINUX;
+#endif
+}
+}
+
 class IStorageObserver
 {
 public:

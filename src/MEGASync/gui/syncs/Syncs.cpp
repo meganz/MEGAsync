@@ -117,7 +117,6 @@ void Syncs::helperCheckLocalSync(const QString& path)
     }
 
     mLocalError.swap(localError);
-
     emit localErrorChanged();
 }
 

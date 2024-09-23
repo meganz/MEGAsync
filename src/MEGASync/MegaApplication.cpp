@@ -324,6 +324,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     downloadAction = nullptr;
     streamAction = nullptr;
     myCloudAction = nullptr;
+    deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
     mSyncing = false;
@@ -1237,7 +1238,6 @@ void MegaApplication::start()
     // The same name is used for fast login
     QmlManager::instance()->setRootContextProperty(QString::fromUtf8("loginControllerAccess"),
                                                    mLoginController);
-
     if (preferences->getSession().isEmpty())
     {
         QmlDialogManager::instance()->openOnboardingDialog();
@@ -3976,6 +3976,23 @@ void MegaApplication::goToMyCloud()
                                          sender(), myCloudAction, true);
 }
 
+void MegaApplication::openDeviceCentre()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+#ifdef Q_OS_MACOS
+    if (infoDialog)
+    {
+        infoDialog->hide();
+    }
+#endif
+
+    QmlDialogManager::instance()->openDeviceCentreDialog();
+}
+
 void MegaApplication::importLinks()
 {
     if (appfinished)
@@ -5389,6 +5406,12 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
+    recreateMenuAction(&deviceCentreAction,
+                       infoDialogMenu,
+                       QString::fromLatin1("Device Center"),
+                       "://images/ico-cloud-drive.png",
+                       &MegaApplication::openDeviceCentre);
+
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
@@ -5441,11 +5464,13 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->addAction(aboutAction);
     }
 
-
     infoDialogMenu->addAction(myCloudAction);
+    // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
-    if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-    if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());
+    if (mSyncs2waysMenu)
+        infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    if (mBackupsMenu)
+        infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

@@ -1,0 +1,6 @@
+module components.menus
+MenuItem 1.0 MenuItem.qml
+ContextMenuItem 1.0 ContextMenuItem.qml
+ContextMenu 1.0 ContextMenu.qml
+Colors 1.0 Colors.qml
+Sizes 1.0 Sizes.qml

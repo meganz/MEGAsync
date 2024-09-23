@@ -36,6 +36,15 @@
         <file>images/qml/onboarding/shield_account_proIII.svg</file>
         <file>images/qml/onboarding/twofa.png</file>
         <file>images/qml/onboarding/mail.svg</file>
+        <file>images/qml/device_center/addbackup.svg</file>
+        <file>images/qml/device_center/addsync.svg</file>
+        <file>images/qml/device_center/pc-windows.svg</file>
+        <file>images/qml/device_center/pc-mac.svg</file>
+        <file>images/qml/device_center/pc-linux.svg</file>
+        <file>images/qml/device_center/status-paused.svg</file>
+        <file>images/qml/device_center/status-stopped.svg</file>
+        <file>images/qml/device_center/status-updating.svg</file>
+        <file>images/qml/device_center/status-uptodate.svg</file>
         <file>images/qml/ok.png</file>
         <file>images/qml/ok@2x.png</file>
         <file>images/qml/ok@3x.png</file>
@@ -89,5 +98,9 @@
         <file>images/qml/check_circle_filled.svg</file>
         <file>images/qml/syncs/selective_sync.svg</file>
         <file>images/qml/syncs/full_sync.svg</file>
+        <file>images/qml/device_center/backup_folder.svg</file>
+        <file>images/qml/device_center/sync_folder.svg</file>
+        <file>images/qml/three_dots.svg</file>
+        <file>images/qml/device_center/devices.svg</file>
     </qresource>
 </RCC>

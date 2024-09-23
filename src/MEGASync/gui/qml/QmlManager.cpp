@@ -9,8 +9,9 @@
 #include "QmlClipboard.h"
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
-#include "SyncInfo.h"
+#include "QmlDialogManager.h"
 #include "QmlTheme.h"
+#include "SyncInfo.h"
 
 #include <QDataStream>
 #include <QQmlContext>
@@ -66,6 +67,11 @@ void QmlManager::registerCommonQmlElements()
 
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
     qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
+    qmlRegisterSingletonType<QmlDialogManager>("QmlDialogManager",
+                                               1,
+                                               0,
+                                               "QmlDialogManager",
+                                               QmlDialogManager::getQmlInstance);
 
     qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");

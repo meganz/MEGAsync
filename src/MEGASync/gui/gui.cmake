@@ -88,7 +88,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
     gui/SyncExclusions/ExclusionRulesModel.h
-    gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
     gui/tokenizer/TokenParserWidgetManager.h
     gui/tokenizer/IconTokenizer.h
@@ -113,6 +112,12 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/user_messages/UserNotification.h
     gui/user_messages/UserMessageWidget.h
     gui/user_messages/NotificationExpirationTimer.h
+    gui/DeviceCentre/DeviceCentre.h
+    gui/DeviceCentre/DeviceModel.h
+    gui/DeviceCentre/DeviceData.h
+    gui/DeviceCentre/SyncModel.h
+    gui/DeviceCentre/QmlSyncData.h
+    gui/DeviceCentre/SyncStatus.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -125,9 +130,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/NotificationsSettings.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
+    gui/NotificationsSettings.cpp
     gui/QtPositioningBugFixer.cpp
     gui/PasswordLineEdit.cpp
     gui/UploadToMegaDialog.cpp
@@ -201,7 +206,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
     gui/SyncExclusions/ExclusionRulesModel.cpp
-    gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
     gui/tokenizer/TokenParserWidgetManager.cpp
     gui/tokenizer/IconTokenizer.cpp
@@ -224,6 +228,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/user_messages/UserMessageProxyModel.cpp
     gui/user_messages/UserNotification.cpp
     gui/user_messages/NotificationExpirationTimer.cpp
+    gui/DeviceCentre/DeviceCentre.cpp
+    gui/DeviceCentre/DeviceModel.cpp
+    gui/DeviceCentre/SyncModel.cpp
+    gui/DeviceCentre/QmlSyncData.cpp
 )
 
 # UI files additions
@@ -498,6 +506,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

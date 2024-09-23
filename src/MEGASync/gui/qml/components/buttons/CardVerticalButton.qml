@@ -16,7 +16,7 @@ CardButton {
     property bool useMaxSiblingHeight: false
     property int textHorizontalExtraMargin: 0
     property int contentMargin: 13
-    property int contentSpacing: 24
+    property int contentSpacing: Constants.defaultComponentSpacing
     property int calculatedHeight: imageButton.height + titleText.height + descriptionText.height
                                         + textSpacing + contentSpacing + contentMargin * 2;
 

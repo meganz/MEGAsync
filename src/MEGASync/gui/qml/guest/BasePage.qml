@@ -23,7 +23,7 @@ Item {
 
     property double imageTopMargin: 72
     property double progressValue: 15.0
-    property int spacing: 24
+    property int spacing: Constants.defaultComponentSpacing
     property int bottomMargin: 48
     property int horizontalMargin: 24
 
