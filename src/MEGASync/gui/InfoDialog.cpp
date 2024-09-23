@@ -861,13 +861,17 @@ void InfoDialog::updateDialogState()
 
         long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() + mPreferences->rubbishFiles()};
         QString contactMessage = tr("We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].", "", static_cast<int>(numFiles));
+        /*
+        // TODO: REVIEW THIS
         QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + contactMessage
                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
                 .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(mPreferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), mPreferences->usedStorage()))
+                .replace(QString::fromUtf8("[D]"),
+        Utilities::getSizeString(mPreferences->usedStorage())) .replace(QString::fromUtf8("[E]"),
+        Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), mPreferences->usedStorage()))
                 + QString::fromUtf8("</p>");
         ui->lOverDiskQuotaLabel->setText(overDiskText);
+        */
 
         int64_t remainDaysOut(0);
         int64_t remainHoursOut(0);

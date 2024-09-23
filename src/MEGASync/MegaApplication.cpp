@@ -311,8 +311,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     updateBlocked = false;
     updateThread = nullptr;
     updateTask = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
     mStorageOverquotaDialog = nullptr;
     mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
@@ -1256,7 +1254,8 @@ void MegaApplication::requestUserData()
     UserAttributes::FullName::requestFullName();
     UserAttributes::Avatar::requestAvatar();
 
-    megaApi->getPricing();
+    // TODO: REVIEW THIS
+    // megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 }
@@ -1975,10 +1974,13 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
+            /*
+            // TODO: REVIEW THIS
             if (!mStorageOverquotaDialog)
             {
                 mStorageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
             }
+            */
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2205,8 +2207,6 @@ void MegaApplication::cleanAll()
     downloader = nullptr;
     delete delegateListener;
     delegateListener = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
 
     mGfxProvider.reset();
     mUserMessageController.reset();
@@ -2555,11 +2555,6 @@ int MegaApplication::getAppliedStorageState() const
 bool MegaApplication::isAppliedStorageOverquota() const
 {
     return appliedStorageState == MegaApi::STORAGE_STATE_RED || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
-}
-
-std::shared_ptr<MegaPricing> MegaApplication::getPricing() const
-{
-    return mPricing;
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -5121,6 +5116,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOnboardingDialog();
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
+        // TODO: REVIEW THIS
+        QmlDialogManager::instance()->openUpsellDialog();
     }
 #ifdef Q_OS_WINDOWS
     else if (reason == QSystemTrayIcon::DoubleClick)
@@ -5797,28 +5794,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
-    case MegaRequest::TYPE_GET_PRICING:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaPricing* pricing (request->getPricing());
-            MegaCurrency* currency (request->getCurrency());
-
-            if (pricing && currency)
-            {
-                mPricing.reset(pricing);
-                mCurrency.reset(currency);
-
-                mTransferQuota->setOverQuotaDialogPricing(mPricing, mCurrency);
-
-                if (mStorageOverquotaDialog)
-                {
-                    mStorageOverquotaDialog->setPricing(mPricing, mCurrency);
-                }
-            }
-        }
-        break;
-    }
     case MegaRequest::TYPE_SET_ATTR_USER:
     {
         if (!preferences->logged())
@@ -6189,8 +6164,10 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         {
             const auto waitTime = std::chrono::seconds(e->getValue());
             preferences->clearTemporalBandwidth();
-            megaApi->getPricing();
-            // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry).
+            // TODO: REVIEW THIS
+            // megaApi->getPricing();
+            // get udpated transfer quota (also pro status in case out of quota is due to account
+            // paid period expiry).
             AccountDetailsManager::instance()->updateUserStats(
                 AccountDetailsManager::Flag::TRANSFER_PRO,
                 true,

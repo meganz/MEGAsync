@@ -184,8 +184,6 @@ public:
 
     void updateTrayIconMenu();
 
-    std::shared_ptr<mega::MegaPricing> getPricing() const;
-
     QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
 
@@ -420,8 +418,6 @@ protected:
     long long receivedStorageSum;
     unsigned long long mMaxMemoryUsage;
     int exportOps;
-    std::shared_ptr<mega::MegaPricing> mPricing;
-    std::shared_ptr<mega::MegaCurrency> mCurrency;
     QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
