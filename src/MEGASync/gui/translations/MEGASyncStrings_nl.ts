@@ -650,7 +650,7 @@ Map namen worden niet gewijzigd op uw computer.</numerusform></translation>
     <message>
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Probeer het later opnieuw of neem contact op met ons ondersteunde team via [A]support@mega.nz[/A] als het probleem zich blijft voordoen.</translation>
     </message>
 </context>
 <context>
