@@ -18,8 +18,8 @@ DeviceCentre::DeviceCentre(QObject* parent):
 {
     registerQmlModules();
 
-    mDelegateListener = new mega::QTMegaListener(mMegaApi, this);
-    mMegaApi->addListener(mDelegateListener);
+    mDelegateListener = std::make_unique<mega::QTMegaListener>(mMegaApi, this);
+    mMegaApi->addListener(mDelegateListener.get());
 
     mSizeInfoTimer.setInterval(DELAY_TO_NEXT_CALL_IN_MS);
     mSizeInfoTimer.setSingleShot(true);
@@ -30,7 +30,7 @@ DeviceCentre::DeviceCentre(QObject* parent):
 
 DeviceCentre::~DeviceCentre()
 {
-    mMegaApi->removeListener(mDelegateListener);
+    mMegaApi->removeListener(mDelegateListener.get());
     mSizeInfoTimer.stop();
 }
 

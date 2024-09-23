@@ -51,7 +51,7 @@ private:
 
     mega::MegaApi* mMegaApi;
     SyncModel* mSyncModel;
-    QPointer<mega::QTMegaListener> mDelegateListener;
+    std::unique_ptr<mega::QTMegaListener> mDelegateListener;
     QString mDeviceIdFromLastRequest;
     QTimer mSizeInfoTimer;
 
