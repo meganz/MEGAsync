@@ -75,7 +75,7 @@ FocusScope {
                     lineHeightMode: Text.FixedHeight
                     urlColor: ColorTheme.textSecondary
                     urlVisitedColor: ColorTheme.textSecondary
-                    undelineLink: true
+                    underlineLink: true
                     url: Links.contact // TODO: Add link to rubish bin
                     rawText: UpsellStrings.storageAlmostFullText // TODO: Replace by the text for each case (almost/full storage, transfer)
                 }

@@ -15,23 +15,23 @@ Qml.RadioButton {
     width: indicator.implicitWidth + contentItem.implicitWidth + 2 * sizes.focusBorderWidth
 
     function getColor() {
-        if(root.pressed) {
+        if (root.pressed) {
             return colors.pressed;
         }
-        else if(root.hovered) {
+        else if (root.hovered) {
             return colors.hover;
         }
-        else if(!root.enabled) {
+        else if (!root.enabled) {
             return colors.disabled;
         }
         return colors.enabled;
     }
 
     function getSize() {
-        if(root.pressed) {
+        if (root.pressed) {
             return sizes.internalCircleWidthPressed;
         }
-        else if(root.hovered) {
+        else if (root.hovered) {
             return sizes.internalCircleWidthHover;
         }
         else {

@@ -13,7 +13,7 @@ Text {
     property bool hovered: false
     property bool manageHover: false
     property bool visited: false
-    property bool undelineLink: false
+    property bool underlineLink: false
     property color urlColor: ColorTheme.linkPrimary
     property color urlVisitedColor: ColorTheme.linkVisited
     property string rawText: ""
@@ -132,7 +132,7 @@ Text {
     // refreshed internally. We cannot assign other variable and change it here at the
     // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
-        var decoration = root.undelineLink ? "underline" : "none";
+        var decoration = root.underlineLink ? "underline" : "none";
         var copyText = rawText;
         copyText = copyText.replace("[B]","<b>");
         copyText = copyText.replace("[/B]","</b>");

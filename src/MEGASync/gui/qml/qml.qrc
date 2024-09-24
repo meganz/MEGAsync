@@ -43,7 +43,7 @@
         <file>components/checkBoxes/Sizes.qml</file>
         <file>components/chips/qmldir</file>
         <file>components/chips/Colors.qml</file>
-        <file>components/chips/Sizes.qml</file>
+        <file>components/chips/MediumSizes.qml</file>
         <file>components/chips/LargeSizes.qml</file>
         <file>components/chips/SmallSizes.qml</file>
         <file>components/chips/Chip.qml</file>

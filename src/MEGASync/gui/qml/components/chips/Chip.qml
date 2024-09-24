@@ -12,7 +12,7 @@ Item {
     property alias source: iconItem.source
 
     property Colors colors: Colors {}
-    property Sizes sizes: Sizes {}
+    property MediumSizes sizes: MediumSizes {}
 
     width: container.width
     height: container.height
