@@ -79,6 +79,10 @@ private:
     bool existOtherRelatedFolder(const int currentRow);
     bool existsFolder(const QString& inputPath);
 
+    void createConflictsNotificationText(BackupCandidates::BackupErrorCode error);
+    QString getSdkErrorString() const;
+    QString getSyncErrorString() const;
+
     std::shared_ptr<BackupCandidates::Data> createData(const QString& folder,
                                                        const QString& displayName,
                                                        bool selected = true);

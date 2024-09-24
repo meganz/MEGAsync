@@ -57,8 +57,6 @@ void BackupCandidatesController::init()
         QStandardPaths::MusicLocation,
         QStandardPaths::PicturesLocation};
 
-    emit beginInsertRows(0, defaultPaths.size() - 1);
-
     // Iterate defaultPaths to add to mBackupFolderList if the path is not empty
     for (auto type: qAsConst(defaultPaths))
     {
@@ -69,7 +67,9 @@ void BackupCandidatesController::init()
         {
             auto data =
                 createData(path, BackupsController::instance().getSyncNameFromPath(path), false);
+            emit beginInsertRows(mBackupCandidates->size(), mBackupCandidates->size());
             mBackupCandidates->addBackupCandidate(data);
+            emit endInsertRows();
         }
         else
         {
@@ -78,8 +78,6 @@ void BackupCandidatesController::init()
                 QString::fromUtf8("Default path %1 is not valid.").arg(path).toUtf8().constData());
         }
     }
-
-    emit endInsertRows();
 }
 
 void BackupCandidatesController::setCheckAllState(Qt::CheckState state, bool fromModel)
@@ -135,7 +133,7 @@ int BackupCandidatesController::insert(const QString& folder)
 
     checkSelectedAll();
 
-    return mBackupCandidates->size();
+    return (mBackupCandidates->size() - 1);
 }
 
 void BackupCandidatesController::setAllSelected(bool selected)
@@ -319,41 +317,38 @@ void BackupCandidatesController::reviewConflicts()
         }
     }
 
-    auto conflictsSize = duplicatedCount + remoteConflictCount + syncConflictCount +
-                         pathRelationCount + unavailableCount;
-
     mBackupCandidates->setSDKConflictCount(SDKConflictCount);
     mBackupCandidates->setRemoteConflictCount(remoteConflictCount);
-    mBackupCandidates->setConflictsSize(conflictsSize);
+
+    BackupCandidates::BackupErrorCode error(BackupCandidates::BackupErrorCode::NONE);
 
     if (SDKConflictCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::SDK_CREATION);
+        error = BackupCandidates::BackupErrorCode::SDK_CREATION;
     }
     else if (syncConflictCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::SYNC_CONFLICT);
+        error = BackupCandidates::BackupErrorCode::SYNC_CONFLICT;
     }
     else if (duplicatedCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::DUPLICATED_NAME);
+        error = BackupCandidates::BackupErrorCode::DUPLICATED_NAME;
     }
     else if (remoteConflictCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::EXISTS_REMOTE);
+        error = BackupCandidates::BackupErrorCode::EXISTS_REMOTE;
     }
     else if (pathRelationCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::PATH_RELATION);
+        error = BackupCandidates::BackupErrorCode::PATH_RELATION;
     }
     else if (unavailableCount > 0)
     {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR);
+        error = BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR;
     }
-    else
-    {
-        mBackupCandidates->setGlobalError(BackupCandidates::BackupErrorCode::NONE);
-    }
+
+    createConflictsNotificationText(error);
+    mBackupCandidates->setGlobalError(error);
 }
 
 void BackupCandidatesController::checkDuplicatedBackups(const QStringList& candidateList)
@@ -392,7 +387,7 @@ void BackupCandidatesController::checkDuplicatedBackups(const QStringList& candi
         {
             foreach(auto foldIt, getRepeatedNameItList(name))
             {
-                (*foldIt)->setError(error);
+                setData((*foldIt), error, BackupCandidates::ERROR_ROLE);
             }
         }
     }
@@ -484,22 +479,6 @@ void BackupCandidatesController::check()
     checkDuplicatedBackups(candidateList);
 
     reviewConflicts();
-
-    // // Change final errors
-    // for (int index = 0; index < mBackupCandidates->size(); index++)
-    // {
-    //     auto backupCandidate = mBackupCandidates->getBackupCandidate(index);
-
-    // if (backupCandidate->mSelected)
-    // {
-    //     emit dataChanged(index(row, 0), index(row, 0), { ERROR_ROLE } );
-    // }
-    // }
-
-    // if(mGlobalError == BackupErrorCode::NONE)
-    // {
-    //     emit globalErrorChanged();
-    // }
 }
 
 bool BackupCandidatesController::setData(int row, const QVariant& value, int role)
@@ -916,4 +895,106 @@ bool BackupCandidatesController::checkDirectories()
     }
 
     return success;
+}
+
+QString BackupCandidatesController::getSdkErrorString() const
+{
+    QString message = BackupCandidates::tr("Folder wasn't backed up. Try again.",
+                                           "",
+                                           mBackupCandidates->SDKConflictCount());
+    auto candidateList(mBackupCandidates->getBackupCandidates());
+    auto itFound = std::find_if(candidateList.cbegin(),
+                                candidateList.cend(),
+                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
+                                {
+                                    return (backupFolder->mSelected &&
+                                            backupFolder->mError ==
+                                                BackupCandidates::BackupErrorCode::SDK_CREATION);
+                                });
+
+    if (itFound != candidateList.cend())
+    {
+        message = BackupsController::instance().getErrorString((*itFound)->mSdkError,
+                                                               (*itFound)->mSyncError);
+    }
+
+    return message;
+}
+
+QString BackupCandidatesController::getSyncErrorString() const
+{
+    QString message;
+    auto candidateList(mBackupCandidates->getBackupCandidates());
+    auto itFound = std::find_if(candidateList.cbegin(),
+                                candidateList.cend(),
+                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
+                                {
+                                    return (backupFolder->mSelected &&
+                                            backupFolder->mError ==
+                                                BackupCandidates::BackupErrorCode::SYNC_CONFLICT);
+                                });
+
+    if (itFound != candidateList.cend())
+    {
+        BackupsController::instance().isLocalFolderSyncable((*itFound)->getFolder(),
+                                                            mega::MegaSync::TYPE_BACKUP,
+                                                            message);
+    }
+
+    return message;
+}
+
+void BackupCandidatesController::createConflictsNotificationText(
+    BackupCandidates::BackupErrorCode error)
+{
+    QString errorMessage;
+
+    switch (error)
+    {
+        case BackupCandidates::BackupErrorCode::DUPLICATED_NAME:
+        {
+            errorMessage = BackupCandidates::tr("You can't back up folders with the same name. "
+                                                "Rename them to continue with the backup. "
+                                                "Folder names won't change on your computer.");
+            break;
+        }
+        case BackupCandidates::BackupErrorCode::EXISTS_REMOTE:
+        {
+            errorMessage =
+                BackupCandidates::tr("A folder with the same name already exists in your Backups. "
+                                     "Rename the new folder to continue with the backup. "
+                                     "Folder name will not change on your computer.",
+                                     "",
+                                     mBackupCandidates->remoteConflictCount());
+            break;
+        }
+        case BackupCandidates::BackupErrorCode::SYNC_CONFLICT:
+        {
+            errorMessage = getSyncErrorString();
+            break;
+        }
+        case BackupCandidates::BackupErrorCode::PATH_RELATION:
+        {
+            errorMessage = BackupCandidates::tr(
+                "Backup folders can't contain or be contained by other backup folder");
+            break;
+        }
+        case BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR:
+        {
+            errorMessage = BackupCandidates::tr(
+                "Folder can't be backed up as it can't be located. "
+                "It may have been moved or deleted, or you might not have access.");
+            break;
+        }
+        case BackupCandidates::BackupErrorCode::SDK_CREATION:
+        {
+            errorMessage = getSdkErrorString();
+            break;
+        }
+        default:
+        {
+        }
+    }
+
+    mBackupCandidates->setConflictsNotificationText(errorMessage);
 }

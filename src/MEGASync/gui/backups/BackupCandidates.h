@@ -94,8 +94,6 @@ public:
     Qt::CheckState getCheckAllState() const;
     void setCheckAllState(Qt::CheckState state);
 
-    bool getExistConflicts() const;
-
     void setGlobalError(BackupCandidates::BackupErrorCode error);
     int getGlobalError() const;
 
@@ -110,9 +108,6 @@ public:
     void removeBackupCandidate(int index);
     bool removeBackupCandidate(const QString& folder);
 
-    int conflictsSize() const;
-    void setConflictsSize(int newConflictsSize);
-
     int SDKConflictCount() const;
     void setSDKConflictCount(int newSdkConflictCount);
 
@@ -125,9 +120,8 @@ public:
     long long backupsTotalSize() const;
     void setBackupsTotalSize(long long newBackupsTotalSize);
 
-    QString getConflictsNotificationText() const;
-    QString getSdkErrorString() const;
-    QString getSyncErrorString() const;
+    const QString& getConflictsNotificationText() const;
+    void setConflictsNotificationText(const QString& text);
 
 signals:
     void totalSizeChanged();
@@ -147,6 +141,7 @@ private:
     int mConflictsSize;
     int mSDKConflictCount;
     int mRemoteConflictCount;
+    QString mConflictsNotificationText;
 };
 
 #endif // BACKUPCANDIDATES_H

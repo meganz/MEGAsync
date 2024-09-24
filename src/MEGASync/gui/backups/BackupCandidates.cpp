@@ -134,11 +134,6 @@ void BackupCandidates::setCheckAllState(Qt::CheckState state)
     }
 }
 
-bool BackupCandidates::getExistConflicts() const
-{
-    return mConflictsSize > 0;
-}
-
 void BackupCandidates::setGlobalError(BackupErrorCode error)
 {
     if (mGlobalError != error)
@@ -222,16 +217,6 @@ bool BackupCandidates::removeBackupCandidate(const QString& folder)
     return false;
 }
 
-int BackupCandidates::conflictsSize() const
-{
-    return mConflictsSize;
-}
-
-void BackupCandidates::setConflictsSize(int newConflictsSize)
-{
-    mConflictsSize = newConflictsSize;
-}
-
 int BackupCandidates::SDKConflictCount() const
 {
     return mSDKConflictCount;
@@ -281,75 +266,15 @@ void BackupCandidates::setBackupsTotalSize(long long newBackupsTotalSize)
     }
 }
 
-QString BackupCandidates::getSdkErrorString() const
+const QString& BackupCandidates::getConflictsNotificationText() const
 {
-    QString message = tr("Folder wasn't backed up. Try again.", "", SDKConflictCount());
-    auto candidateList(getBackupCandidates());
-    auto itFound = std::find_if(candidateList.cbegin(),
-                                candidateList.cend(),
-                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
-                                {
-                                    return (backupFolder->mSelected &&
-                                            backupFolder->mError ==
-                                                BackupCandidates::BackupErrorCode::SDK_CREATION);
-                                });
-
-    if (itFound != candidateList.cend())
-    {
-        message = BackupsController::instance().getErrorString((*itFound)->mSdkError,
-                                                               (*itFound)->mSyncError);
-    }
-
-    return message;
+    return mConflictsNotificationText;
 }
 
-QString BackupCandidates::getSyncErrorString() const
+void BackupCandidates::setConflictsNotificationText(const QString& text)
 {
-    QString message;
-    auto candidateList(getBackupCandidates());
-    auto itFound = std::find_if(candidateList.cbegin(),
-                                candidateList.cend(),
-                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
-                                {
-                                    return (backupFolder->mSelected &&
-                                            backupFolder->mError ==
-                                                BackupCandidates::BackupErrorCode::SYNC_CONFLICT);
-                                });
-
-    if (itFound != candidateList.cend())
+    if (mConflictsNotificationText != text)
     {
-        BackupsController::instance().isLocalFolderSyncable((*itFound)->getFolder(),
-                                                            mega::MegaSync::TYPE_BACKUP,
-                                                            message);
-    }
-
-    return message;
-}
-
-QString BackupCandidates::getConflictsNotificationText() const
-{
-    switch (getGlobalError())
-    {
-        case BackupCandidates::BackupErrorCode::DUPLICATED_NAME:
-            return tr("You can't back up folders with the same name. "
-                      "Rename them to continue with the backup. "
-                      "Folder names won't change on your computer.");
-        case BackupCandidates::BackupErrorCode::EXISTS_REMOTE:
-            return tr("A folder with the same name already exists in your Backups. "
-                      "Rename the new folder to continue with the backup. "
-                      "Folder name will not change on your computer.",
-                      "",
-                      remoteConflictCount());
-        case BackupCandidates::BackupErrorCode::SYNC_CONFLICT:
-            return getSyncErrorString();
-        case BackupCandidates::BackupErrorCode::PATH_RELATION:
-            return tr("Backup folders can't contain or be contained by other backup folder");
-        case BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR:
-            return tr("Folder can't be backed up as it can't be located. "
-                      "It may have been moved or deleted, or you might not have access.");
-        case BackupCandidates::BackupErrorCode::SDK_CREATION:
-            return getSdkErrorString();
-        default:
-            return QString::fromUtf8("");
+        mConflictsNotificationText = text;
     }
 }
