@@ -32,7 +32,7 @@ void UpsellComponent::registerQmlModules()
     }
 }
 
-void UpsellComponent::buyButtonClicked(int index)
+void UpsellComponent::buyButtonClicked()
 {
-    mController->openPlan(index);
+    mController->openSelectedPlan();
 }

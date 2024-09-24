@@ -34,7 +34,7 @@ public:
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
     std::shared_ptr<UpsellPlans> getPlans() const;
-    void openPlan(int row);
+    void openSelectedPlan();
 
 public slots:
     void onBilledPeriodChanged();

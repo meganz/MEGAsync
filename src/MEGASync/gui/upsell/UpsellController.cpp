@@ -65,7 +65,53 @@ bool UpsellController::setData(int row, const QVariant& value, int role)
 
 bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role)
 {
-    return true;
+    auto result(true);
+
+    switch (role)
+    {
+        case UpsellPlans::NAME_ROLE:
+        {
+            break;
+        }
+        case UpsellPlans::RECOMMENDED_ROLE:
+        {
+            break;
+        }
+        case UpsellPlans::STORAGE_ROLE:
+        {
+            break;
+        }
+        case UpsellPlans::TRANSFER_ROLE:
+        {
+            break;
+        }
+        case UpsellPlans::PRICE_ROLE:
+        {
+            break;
+        }
+        case UpsellPlans::SELECTED_ROLE:
+        {
+            data->setSelected(value.toBool());
+            auto row = mPlans->plans().indexOf(data);
+            emit dataChanged(row, row, QVector<int>() << role);
+
+            if (value.toBool())
+            {
+                auto currentSelected(mPlans->currentPlanSelected());
+                mPlans->deselectCurrentPlanSelected();
+                emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
+                mPlans->setCurrentPlanSelected(row);
+            }
+            break;
+        }
+        default:
+        {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
 }
 
 QVariant UpsellController::data(int row, int role) const
@@ -111,6 +157,11 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                     mPlans->isMonthly() ? data->monthlyData().price() : data->yearlyData().price();
                 break;
             }
+            case UpsellPlans::SELECTED_ROLE:
+            {
+                field = data->selected();
+                break;
+            }
             default:
             {
                 break;
@@ -126,8 +177,9 @@ std::shared_ptr<UpsellPlans> UpsellController::getPlans() const
     return mPlans;
 }
 
-void UpsellController::openPlan(int row)
+void UpsellController::openSelectedPlan()
 {
+    auto row = mPlans->currentPlanSelected();
     Utilities::openUrl(getUpsellPlanUrl(mPlans->getPlan(row)->proLevel()));
 }
 
@@ -180,6 +232,10 @@ void UpsellController::process(mega::MegaPricing* pricing)
                                                           pricing->getAmount(i)));
         }
     }
+
+    // Fist time, select the first plan and set it as current selected.
+    mPlans->plans().first()->setSelected(true);
+    mPlans->setCurrentPlanSelected(0);
 
     emit endInsertRows();
 }

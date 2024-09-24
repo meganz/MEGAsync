@@ -5,7 +5,7 @@ QtObject {
     id: root
 
     readonly property string billedMonthly: qsTr("Billed monthly")
-    readonly property string billedSaveUpText: qsTr("Save up to %%1%")
+    readonly property string billedSaveUpText: qsTr("Save up to %1% with yearly billing")
     readonly property string billedYearly: qsTr("Billed yearly")
     readonly property string buyPro: qsTr("Buy Pro")
     readonly property string estimatedPrice: qsTr("* Estimated price in your local currency. Your account will be billed in Euros for all transactions.")

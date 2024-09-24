@@ -6,6 +6,8 @@ namespace
 {
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 constexpr float CENTS_IN_1_UNIT(100.0f);
+constexpr float NUM_MONTHS_PER_PLAN(12.0f);
+constexpr float PERCENTAGE(100.0f);
 }
 
 // ************************************************************************************************
@@ -13,7 +15,9 @@ constexpr float CENTS_IN_1_UNIT(100.0f);
 // ************************************************************************************************
 
 UpsellPlans::UpsellPlans(QObject* parent):
-    QObject(parent)
+    QObject(parent),
+    mMonthly(true),
+    mCurrentPlanSelected(-1)
 {
     QmlManager::instance()->setRootContextProperty(this);
 }
@@ -82,13 +86,45 @@ void UpsellPlans::setMonthly(bool monthly)
     }
 }
 
+int UpsellPlans::getCurrentDiscount() const
+{
+    return mCurrentPlanSelected > mPlans.size() - 1 || mCurrentPlanSelected < 0 ?
+               0 :
+               mPlans.at(mCurrentPlanSelected)->discount();
+}
+
+void UpsellPlans::setCurrentPlanSelected(int row)
+{
+    if (mCurrentPlanSelected != row)
+    {
+        mCurrentPlanSelected = row;
+        emit currentDiscountChanged();
+    }
+}
+
+void UpsellPlans::deselectCurrentPlanSelected()
+{
+    mPlans.at(mCurrentPlanSelected)->setSelected(false);
+}
+
+int UpsellPlans::currentPlanSelected() const
+{
+    return mCurrentPlanSelected;
+}
+
+QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
+{
+    return mPlans;
+}
+
 // ************************************************************************************************
 // * UpsellPlans::Data
 // ************************************************************************************************
 
 UpsellPlans::Data::Data(int proLevel, bool recommended):
     mProLevel(proLevel),
-    mRecommended(recommended)
+    mRecommended(recommended),
+    mSelected(false)
 {}
 
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
@@ -98,7 +134,8 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
         {UpsellPlans::RECOMMENDED_ROLE, "recommended"},
         {UpsellPlans::STORAGE_ROLE,     "gbStorage"  },
         {UpsellPlans::TRANSFER_ROLE,    "gbTransfer" },
-        {UpsellPlans::PRICE_ROLE,       "price"      }
+        {UpsellPlans::PRICE_ROLE,       "price"      },
+        {UpsellPlans::SELECTED_ROLE,    "selected"   }
     };
 
     return roles;
@@ -124,9 +161,25 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
     return mYearlyData;
 }
 
+int UpsellPlans::Data::discount() const
+{
+    return static_cast<int>(PERCENTAGE - (mYearlyData.price() * PERCENTAGE) /
+                                             (mMonthlyData.price() * NUM_MONTHS_PER_PLAN));
+}
+
 void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)
 {
     mYearlyData = newYearlyData;
+}
+
+bool UpsellPlans::Data::selected() const
+{
+    return mSelected;
+}
+
+void UpsellPlans::Data::setSelected(bool newChecked)
+{
+    mSelected = newChecked;
 }
 
 void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyData)

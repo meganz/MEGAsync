@@ -75,7 +75,7 @@ FocusScope {
 
                 anchors.verticalCenter: parent.verticalCenter
                 sizes: Chips.SmallSizes {}
-                text: UpsellStrings.billedSaveUpText
+                text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
             }
 
         } // Row: billedRow
@@ -93,8 +93,6 @@ FocusScope {
             Repeater {
                 id: plansRepeater
 
-                property int currentPlanSelectedIndex: 0
-
                 model: upsellModelAccess
 
                 PlanCard {
@@ -105,10 +103,12 @@ FocusScope {
                     gbStorage: model.gbStorage
                     gbTransfer: model.gbTransfer
                     price: model.price
+                    selected: model.selected
+
                     ButtonGroup.group: planButtonGroupItem
 
                     onClicked: {
-                        plansRepeater.currentPlanSelectedIndex = index;
+                        model.selected = true;
                     }
                 }
             }
@@ -143,7 +143,7 @@ FocusScope {
 
                 text: UpsellStrings.buyPro
                 onClicked: {
-                    upsellComponentAccess.buyButtonClicked(plansRepeater.currentPlanSelectedIndex);
+                    upsellComponentAccess.buyButtonClicked();
                 }
             }
         }

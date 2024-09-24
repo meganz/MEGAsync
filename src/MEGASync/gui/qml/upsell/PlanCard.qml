@@ -26,6 +26,7 @@ RoundButton {
     property alias name: titleText.text
     //property alias price: priceText.text
 
+    property bool selected: false
     property bool recommended: false
     property string gbStorage: ""
     property string gbTransfer: ""
@@ -171,9 +172,18 @@ RoundButton {
             }
             border {
                 width: root.borderWidth
-                color: ColorTheme.borderStrongSelected
+                color: root.selected
+                       ? ColorTheme.borderStrongSelected
+                       : ColorTheme.borderStrong
             }
             radius: root.backgroundRadius
+        }
+    }
+
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+            root.clicked();
+            event.accepted = true;
         }
     }
 

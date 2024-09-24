@@ -13,6 +13,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(QString currencySymbol READ getCurrencySymbol WRITE setCurrencySymbol NOTIFY
                    currencySymbolChanged)
     Q_PROPERTY(bool monthly READ isMonthly WRITE setMonthly NOTIFY monthlyChanged)
+    Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
 
 public:
     enum BackupFolderRoles
@@ -21,7 +22,8 @@ public:
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
-        PRICE_ROLE
+        PRICE_ROLE,
+        SELECTED_ROLE
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -55,35 +57,48 @@ public:
         bool recommended() const;
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
+        bool selected() const;
+        int discount() const;
 
+        void setSelected(bool newChecked);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
 
     private:
         int mProLevel;
         bool mRecommended;
+        bool mSelected;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
     };
 
     bool addPlan(std::shared_ptr<Data> plan);
+
+    QList<std::shared_ptr<Data>> plans() const;
     std::shared_ptr<UpsellPlans::Data> getPlan(int index) const;
     std::shared_ptr<UpsellPlans::Data> getPlanByProLevel(int proLevel) const;
     int size() const;
-
     QString getCurrencySymbol() const;
-    void setCurrencySymbol(const QString& symbol);
     bool isMonthly() const;
+    int getCurrentDiscount() const;
+
+    void setCurrencySymbol(const QString& symbol);
     void setMonthly(bool monthly);
+    void setCurrentPlanSelected(int row);
+    void deselectCurrentPlanSelected();
+
+    int currentPlanSelected() const;
 
 signals:
     void currencySymbolChanged();
     void monthlyChanged();
+    void currentDiscountChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
     QString mCurrencySymbol;
     bool mMonthly;
+    int mCurrentPlanSelected;
 };
 
 #endif // UPSELL_PLANS_H

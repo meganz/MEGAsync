@@ -21,7 +21,7 @@ public:
     static void registerQmlModules();
 
 public slots:
-    void buyButtonClicked(int index);
+    void buyButtonClicked();
 
 private:
     std::shared_ptr<UpsellController> mController;
