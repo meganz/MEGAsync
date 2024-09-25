@@ -36,3 +36,8 @@ void UpsellComponent::buyButtonClicked()
 {
     mController->openSelectedPlan();
 }
+
+void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
+{
+    mController->setBilledPeriod(isMonthly);
+}

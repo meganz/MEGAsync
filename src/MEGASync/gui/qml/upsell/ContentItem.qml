@@ -49,9 +49,7 @@ FocusScope {
                     ButtonGroup.group: billedPeriodButtonGroupItem
 
                     onCheckedChanged: {
-                        if (checked && !upsellPlansAccess.monthly) {
-                            upsellPlansAccess.monthly = true;
-                        }
+                        upsellComponentAccess.billedRadioButtonClicked(true);
                     }
                 }
 
@@ -63,9 +61,7 @@ FocusScope {
                     ButtonGroup.group: billedPeriodButtonGroupItem
 
                     onCheckedChanged: {
-                        if (checked && upsellPlansAccess.monthly) {
-                            upsellPlansAccess.monthly = false;
-                        }
+                        upsellComponentAccess.billedRadioButtonClicked(false);
                     }
                 }
             }

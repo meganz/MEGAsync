@@ -35,6 +35,7 @@ public:
 
     std::shared_ptr<UpsellPlans> getPlans() const;
     void openSelectedPlan();
+    void setBilledPeriod(bool isMonthly);
 
 public slots:
     void onBilledPeriodChanged();

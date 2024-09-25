@@ -202,6 +202,14 @@ void UpsellController::openSelectedPlan()
     Utilities::openUrl(getUpsellPlanUrl(mPlans->getPlan(row)->proLevel()));
 }
 
+void UpsellController::setBilledPeriod(bool isMonthly)
+{
+    if (mPlans->isMonthly() != isMonthly)
+    {
+        mPlans->setMonthly(isMonthly);
+    }
+}
+
 void UpsellController::onBilledPeriodChanged()
 {
     emit dataChanged(0,
@@ -297,7 +305,7 @@ bool UpsellController::isProLevelValid(int proLevel) const
 QUrl UpsellController::getUpsellPlanUrl(int proLevel)
 {
     const char* planUrlChar;
-    auto it = PRO_LEVEL_TO_URL.find(proLevel);
+    auto it(PRO_LEVEL_TO_URL.find(proLevel));
     if (it != PRO_LEVEL_TO_URL.end())
     {
         planUrlChar = it->second;
@@ -363,11 +371,11 @@ void UpsellController::setPlanDataForRecommended()
 {
     int row(0);
     int current(Preferences::instance()->accountType());
-    auto itCurrent =
-        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), current);
+    auto itCurrent(
+        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), current));
     for (const auto& plan: mPlans->plans())
     {
-        auto itNext = std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel());
+        auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
         if (itNext != ACCOUNT_TYPES_IN_ORDER.cend())
         {
             row = mPlans->plans().indexOf(plan);
@@ -375,7 +383,7 @@ void UpsellController::setPlanDataForRecommended()
         }
     }
 
-    auto plan = mPlans->getPlan(row);
+    auto plan(mPlans->getPlan(row));
     plan->setSelected(true);
     plan->setRecommended(true);
     mPlans->setCurrentPlanSelected(row);

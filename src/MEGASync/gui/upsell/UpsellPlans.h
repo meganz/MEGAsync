@@ -10,7 +10,7 @@ class UpsellPlans: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool monthly READ isMonthly WRITE setMonthly NOTIFY monthlyChanged)
+    Q_PROPERTY(bool monthly READ isMonthly NOTIFY monthlyChanged)
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencySymbol READ getCurrencySymbol NOTIFY currencySymbolChanged)
