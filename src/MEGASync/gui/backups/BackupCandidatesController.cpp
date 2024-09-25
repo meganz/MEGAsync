@@ -11,6 +11,7 @@
 int BackupCandidatesController::CHECK_DIRS_TIME = 1000;
 
 BackupCandidatesController::BackupCandidatesController():
+    DataController(),
     mBackupCandidates(std::make_shared<BackupCandidates>())
 {
     connect(SyncInfo::instance(),
@@ -576,6 +577,11 @@ QVariant BackupCandidatesController::data(std::shared_ptr<BackupCandidates::Data
     return field;
 }
 
+int BackupCandidatesController::size() const
+{
+    return getBackupCandidates()->size();
+}
+
 void BackupCandidatesController::calculateFolderSizes()
 {
     for (auto& backupFolder: mBackupCandidates->getBackupCandidates())
@@ -758,7 +764,7 @@ void BackupCandidatesController::updateModel(
 {
     auto row = mBackupCandidates->getBackupCandidates().indexOf(backupCandidate);
     updateSelectedAndTotalSize();
-    emit dataChanged(row, roles);
+    DataController::updateModel(row, roles);
 }
 
 void BackupCandidatesController::updateModel(

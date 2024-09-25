@@ -1,15 +1,15 @@
 #ifndef BACKUPSMODEL_H
 #define BACKUPSMODEL_H
 
+#include "DataModel.h"
 #include "SyncController.h"
 
-#include <QAbstractListModel>
 #include <QSortFilterProxyModel>
 #include <QTimer>
 
 class BackupCandidatesController;
 
-class BackupCandidatesModel: public QAbstractListModel
+class BackupCandidatesModel: public DataModel<BackupCandidatesController>
 {
     Q_OBJECT
 
@@ -19,14 +19,7 @@ public:
     ~BackupCandidatesModel();
 
     QHash<int, QByteArray> roleNames() const override;
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
-    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
-    QVariant data(const QModelIndex& index, int role) const override;
     void reset();
-
-private:
-    friend class BackupCandidatesController;
-    std::shared_ptr<BackupCandidatesController> mBackupCandidatesController;
 };
 
 class BackupCandidatesProxyModel: public QSortFilterProxyModel

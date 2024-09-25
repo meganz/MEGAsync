@@ -2,14 +2,14 @@
 #define BACKUPCANDIDATESCONTROLLER_H
 
 #include "BackupCandidates.h"
+#include "DataController.h"
 #include "SyncInfo.h"
 
-#include <QObject>
 #include <QTimer>
 
 class SyncSettings;
 
-class BackupCandidatesController: public QObject
+class BackupCandidatesController: public DataController
 {
     Q_OBJECT
 
@@ -29,10 +29,12 @@ public:
 
     void createBackups(int syncOrigin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
 
-    bool setData(int row, const QVariant& value, int role);
+    bool setData(int row, const QVariant& value, int role) override;
     bool setData(std::shared_ptr<BackupCandidates::Data> candidate, QVariant value, int role);
-    QVariant data(int row, int role) const;
+    QVariant data(int row, int role) const override;
     QVariant data(std::shared_ptr<BackupCandidates::Data> candidate, int role) const;
+
+    int size() const override;
 
 public slots:
     int insert(const QString& folder);
@@ -45,17 +47,6 @@ public slots:
 
 signals:
     void backupsCreationFinished(bool succes);
-
-    // Add row
-    void beginInsertRows(int first, int last);
-    void endInsertRows();
-
-    // Remove row
-    void beginRemoveRows(int first, int last);
-    void endRemoveRows();
-
-    // Update row
-    void dataChanged(int row, QVector<int> rol);
 
 private:
     std::shared_ptr<BackupCandidates> mBackupCandidates;
@@ -87,7 +78,7 @@ private:
                                                        const QString& displayName,
                                                        bool selected = true);
 
-    bool eventFilter(QObject* watched, QEvent* event);
+    bool eventFilter(QObject* watched, QEvent* event) override;
 
     QTimer mCheckDirsTimer;
 

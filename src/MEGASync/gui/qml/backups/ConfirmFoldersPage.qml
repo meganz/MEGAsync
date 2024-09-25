@@ -5,6 +5,7 @@ import common 1.0
 ConfirmFoldersPageForm {
     id: root
 
+    signal openExclusionsDialog
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
     signal createBackups(int origin)

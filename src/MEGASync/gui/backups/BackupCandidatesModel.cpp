@@ -12,50 +12,8 @@
 
 BackupCandidatesModel::BackupCandidatesModel(std::shared_ptr<BackupCandidatesController> controller,
                                              QObject* parent):
-    QAbstractListModel(parent),
-    mBackupCandidatesController(controller)
-{
-    connect(controller.get(),
-            &BackupCandidatesController::beginInsertRows,
-            this,
-            [this](int first, int last)
-            {
-                beginInsertRows(QModelIndex(), first, last);
-            });
-
-    connect(controller.get(),
-            &BackupCandidatesController::endInsertRows,
-            this,
-            [this]()
-            {
-                endInsertRows();
-            });
-
-    connect(controller.get(),
-            &BackupCandidatesController::beginRemoveRows,
-            this,
-            [this](int first, int last)
-            {
-                beginRemoveRows(QModelIndex(), first, last);
-            });
-
-    connect(controller.get(),
-            &BackupCandidatesController::endRemoveRows,
-            this,
-            [this]()
-            {
-                endRemoveRows();
-            });
-
-    connect(controller.get(),
-            &BackupCandidatesController::dataChanged,
-            this,
-            [this](int row, QVector<int> roles)
-            {
-                QModelIndex updateIndex(index(row, 0));
-                emit dataChanged(updateIndex, updateIndex, roles);
-            });
-}
+    DataModel<BackupCandidatesController>(controller, parent)
+{}
 
 BackupCandidatesModel::~BackupCandidatesModel()
 {
@@ -65,22 +23,6 @@ BackupCandidatesModel::~BackupCandidatesModel()
 QHash<int, QByteArray> BackupCandidatesModel::roleNames() const
 {
     return BackupCandidates::Data::roleNames();
-}
-
-int BackupCandidatesModel::rowCount(const QModelIndex& parent) const
-{
-    // When implementing a table based model, rowCount() should return 0 when the parent is valid.
-    return parent.isValid() ? 0 : mBackupCandidatesController->getBackupCandidates()->size();
-}
-
-bool BackupCandidatesModel::setData(const QModelIndex& index, const QVariant& value, int role)
-{
-    return mBackupCandidatesController->setData(index.row(), value, role);
-}
-
-QVariant BackupCandidatesModel::data(const QModelIndex& index, int role) const
-{
-    return mBackupCandidatesController->data(index.row(), role);
 }
 
 // ************************************************************************************************
