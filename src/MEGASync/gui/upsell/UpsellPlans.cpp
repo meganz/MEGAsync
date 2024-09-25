@@ -2,22 +2,16 @@
 
 #include "QmlManager.h"
 
-namespace
-{
-constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
-constexpr float CENTS_IN_1_UNIT(100.0f);
-constexpr float NUM_MONTHS_PER_PLAN(12.0f);
-constexpr float PERCENTAGE(100.0f);
-}
-
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
 
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
+    mIsBillingCurrency(true),
     mMonthly(true),
-    mCurrentPlanSelected(-1)
+    mCurrentPlanSelected(-1),
+    mCurrentDiscount(-1)
 {
     QmlManager::instance()->setRootContextProperty(this);
 }
@@ -86,18 +80,28 @@ void UpsellPlans::setMonthly(bool monthly)
     }
 }
 
-int UpsellPlans::getCurrentDiscount() const
-{
-    return mCurrentPlanSelected > mPlans.size() - 1 || mCurrentPlanSelected < 0 ?
-               0 :
-               mPlans.at(mCurrentPlanSelected)->discount();
-}
-
 void UpsellPlans::setCurrentPlanSelected(int row)
 {
     if (mCurrentPlanSelected != row)
     {
         mCurrentPlanSelected = row;
+    }
+}
+
+void UpsellPlans::setBillingCurrency(bool isCurrencyBilling)
+{
+    if (mIsBillingCurrency != isCurrencyBilling)
+    {
+        mIsBillingCurrency = isCurrencyBilling;
+        emit isCurrencyBillingChanged();
+    }
+}
+
+void UpsellPlans::setCurrentDiscount(int discount)
+{
+    if (mCurrentDiscount != discount)
+    {
+        mCurrentDiscount = discount;
         emit currentDiscountChanged();
     }
 }
@@ -112,6 +116,16 @@ int UpsellPlans::currentPlanSelected() const
     return mCurrentPlanSelected;
 }
 
+bool UpsellPlans::isBillingCurrency() const
+{
+    return mIsBillingCurrency;
+}
+
+int UpsellPlans::getCurrentDiscount() const
+{
+    return mCurrentDiscount;
+}
+
 QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
 {
     return mPlans;
@@ -121,9 +135,9 @@ QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
 // * UpsellPlans::Data
 // ************************************************************************************************
 
-UpsellPlans::Data::Data(int proLevel, bool recommended):
+UpsellPlans::Data::Data(int proLevel):
     mProLevel(proLevel),
-    mRecommended(recommended),
+    mRecommended(false),
     mSelected(false)
 {}
 
@@ -146,7 +160,7 @@ int UpsellPlans::Data::proLevel() const
     return mProLevel;
 }
 
-bool UpsellPlans::Data::recommended() const
+bool UpsellPlans::Data::isRecommended() const
 {
     return mRecommended;
 }
@@ -159,12 +173,6 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData(
 const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData() const
 {
     return mYearlyData;
-}
-
-int UpsellPlans::Data::discount() const
-{
-    return static_cast<int>(PERCENTAGE - (mYearlyData.price() * PERCENTAGE) /
-                                             (mMonthlyData.price() * NUM_MONTHS_PER_PLAN));
 }
 
 void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)
@@ -182,6 +190,11 @@ void UpsellPlans::Data::setSelected(bool newChecked)
     mSelected = newChecked;
 }
 
+void UpsellPlans::Data::setRecommended(bool newRecommended)
+{
+    mRecommended = newRecommended;
+}
+
 void UpsellPlans::Data::setMonthlyData(const AccountBillingPlanData& newMonthlyData)
 {
     mMonthlyData = newMonthlyData;
@@ -197,12 +210,12 @@ UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData():
     mPrice(-1.0f)
 {}
 
-UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int gbStorage,
-                                                                  int gbTransfer,
-                                                                  int price):
-    mGBStorage(static_cast<int64_t>(gbStorage) * NB_B_IN_1GB),
-    mGBTransfer(static_cast<int64_t>(gbTransfer) * NB_B_IN_1GB),
-    mPrice(static_cast<float>(price) / CENTS_IN_1_UNIT)
+UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStorage,
+                                                                  int64_t gbTransfer,
+                                                                  float price):
+    mGBStorage(gbStorage),
+    mGBTransfer(gbTransfer),
+    mPrice(price)
 {}
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const

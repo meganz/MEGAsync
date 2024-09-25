@@ -10,10 +10,10 @@ class UpsellPlans: public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString currencySymbol READ getCurrencySymbol WRITE setCurrencySymbol NOTIFY
-                   currencySymbolChanged)
     Q_PROPERTY(bool monthly READ isMonthly WRITE setMonthly NOTIFY monthlyChanged)
+    Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
+    Q_PROPERTY(QString currencySymbol READ getCurrencySymbol NOTIFY currencySymbolChanged)
 
 public:
     enum BackupFolderRoles
@@ -36,7 +36,7 @@ public:
         {
         public:
             AccountBillingPlanData();
-            AccountBillingPlanData(int gbStorage, int gbTransfer, int price);
+            AccountBillingPlanData(int64_t gbStorage, int64_t gbTransfer, float price);
             ~AccountBillingPlanData() = default;
 
             int64_t gBStorage() const;
@@ -49,18 +49,18 @@ public:
             float mPrice;
         };
 
-        Data(int proLevel, bool recommended);
+        Data(int proLevel);
 
         static QHash<int, QByteArray> roleNames();
 
         int proLevel() const;
-        bool recommended() const;
+        bool isRecommended() const;
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
         bool selected() const;
-        int discount() const;
 
         void setSelected(bool newChecked);
+        void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
 
@@ -80,25 +80,31 @@ public:
     int size() const;
     QString getCurrencySymbol() const;
     bool isMonthly() const;
+    int currentPlanSelected() const;
+    bool isBillingCurrency() const;
     int getCurrentDiscount() const;
 
     void setCurrencySymbol(const QString& symbol);
     void setMonthly(bool monthly);
     void setCurrentPlanSelected(int row);
-    void deselectCurrentPlanSelected();
+    void setBillingCurrency(bool isCurrencyBilling);
+    void setCurrentDiscount(int discount);
 
-    int currentPlanSelected() const;
+    void deselectCurrentPlanSelected();
 
 signals:
     void currencySymbolChanged();
     void monthlyChanged();
     void currentDiscountChanged();
+    void isCurrencyBillingChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
     QString mCurrencySymbol;
+    bool mIsBillingCurrency;
     bool mMonthly;
     int mCurrentPlanSelected;
+    int mCurrentDiscount;
 };
 
 #endif // UPSELL_PLANS_H

@@ -13,17 +13,34 @@ namespace
 {
 constexpr int MONTH_PERIOD(1);
 constexpr int YEAR_PERIOD(12);
-const std::map<int, QString> proLevelToUrl = {
-    {Preferences::AccountType::ACCOUNT_TYPE_PROI,      QString::fromUtf8("mega://#propay_1") },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROII,     QString::fromUtf8("mega://#propay_2") },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROIII,    QString::fromUtf8("mega://#propay_3") },
-    {Preferences::AccountType::ACCOUNT_TYPE_LITE,      QString::fromUtf8("mega://#propay_4") },
-    {Preferences::AccountType::ACCOUNT_TYPE_STARTER,   QString::fromUtf8("mega://#propay_11")},
-    {Preferences::AccountType::ACCOUNT_TYPE_BASIC,     QString::fromUtf8("mega://#propay_12")},
-    {Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL, QString::fromUtf8("mega://#propay_13")}
+constexpr int PRECISION_FOR_DECIMALS(2);
+constexpr int NO_DECIMALS(0);
+constexpr float CENTS_IN_1_UNIT(100.0f);
+constexpr float NUM_MONTHS_PER_PLAN(12.0f);
+constexpr float PERCENTAGE(100.0f);
+constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
+constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
+constexpr const char* DEFAULT_PRO_URL("mega://#pro");
+const std::map<int, const char*> PRO_LEVEL_TO_URL = {
+    {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1" },
+    {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2" },
+    {Preferences::AccountType::ACCOUNT_TYPE_PROIII,    "mega://#propay_3" },
+    {Preferences::AccountType::ACCOUNT_TYPE_LITE,      "mega://#propay_4" },
+    {Preferences::AccountType::ACCOUNT_TYPE_STARTER,   "mega://#propay_11"},
+    {Preferences::AccountType::ACCOUNT_TYPE_BASIC,     "mega://#propay_12"},
+    {Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL, "mega://#propay_13"}
   // BUSINESS and PRO_FLEXI are not supported
 };
-const QString defaultUrl = QString::fromUtf8("mega://#pro");
+const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_STARTER,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_BASIC,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_LITE,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_PROI,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_PROII,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_PROIII,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_BUSINESS,
+                                                 Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI};
 }
 
 UpsellController::UpsellController(QObject* parent):
@@ -101,6 +118,8 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
                 mPlans->deselectCurrentPlanSelected();
                 emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
                 mPlans->setCurrentPlanSelected(row);
+                mPlans->setCurrentDiscount(
+                    calculateDiscount(data->monthlyData().price(), data->yearlyData().price()));
             }
             break;
         }
@@ -134,7 +153,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::RECOMMENDED_ROLE:
             {
-                field = data->recommended();
+                field = data->isRecommended();
                 break;
             }
             case UpsellPlans::STORAGE_ROLE:
@@ -153,8 +172,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::PRICE_ROLE:
             {
-                field =
-                    mPlans->isMonthly() ? data->monthlyData().price() : data->yearlyData().price();
+                field = getLocalePriceString(mPlans->isMonthly() ? data->monthlyData().price() :
+                                                                   data->yearlyData().price());
                 break;
             }
             case UpsellPlans::SELECTED_ROLE:
@@ -185,9 +204,10 @@ void UpsellController::openSelectedPlan()
 
 void UpsellController::onBilledPeriodChanged()
 {
-    QVector<int> roles;
-    roles << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE << UpsellPlans::PRICE_ROLE;
-    emit dataChanged(0, mPlans->size() - 1, roles);
+    emit dataChanged(0,
+                     mPlans->size() - 1,
+                     QVector<int>() << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
+                                    << UpsellPlans::PRICE_ROLE);
 }
 
 void UpsellController::processGetPricingRequest(mega::MegaPricing* pricing,
@@ -210,32 +230,18 @@ void UpsellController::process(mega::MegaPricing* pricing)
 
     for (int i = 0; i < pricing->getNumProducts(); ++i)
     {
-        auto proLevel(pricing->getProLevel(i));
-        if (!isProLevelValid(proLevel))
+        if (!isProLevelValid(pricing->getProLevel(i)))
         {
             continue;
         }
 
-        if (mPlans->addPlan(std::make_shared<UpsellPlans::Data>(proLevel, true)) &&
-            pricing->getMonths(i) == MONTH_PERIOD)
-        {
-            mPlans->getPlanByProLevel(proLevel)->setMonthlyData(
-                UpsellPlans::Data::AccountBillingPlanData(pricing->getGBStorage(i),
-                                                          pricing->getGBTransfer(i),
-                                                          pricing->getAmount(i)));
-        }
-        else if (pricing->getMonths(i) == YEAR_PERIOD)
-        {
-            mPlans->getPlanByProLevel(proLevel)->setYearlyData(
-                UpsellPlans::Data::AccountBillingPlanData(pricing->getGBStorage(i),
-                                                          pricing->getGBTransfer(i),
-                                                          pricing->getAmount(i)));
-        }
+        addPlan(pricing, i);
     }
 
-    // Fist time, select the first plan and set it as current selected.
-    mPlans->plans().first()->setSelected(true);
-    mPlans->setCurrentPlanSelected(0);
+    if (!mPlans->plans().isEmpty())
+    {
+        setPlanDataForRecommended();
+    }
 
     emit endInsertRows();
 }
@@ -255,6 +261,7 @@ void UpsellController::process(mega::MegaCurrency* currency)
     }
 
     mPlans->setCurrencySymbol(localCurrencySymbol);
+    mPlans->setBillingCurrency(localByteSymbol.isEmpty());
 }
 
 int UpsellController::countNumPlans(mega::MegaPricing* pricing) const
@@ -289,18 +296,89 @@ bool UpsellController::isProLevelValid(int proLevel) const
 
 QUrl UpsellController::getUpsellPlanUrl(int proLevel)
 {
-    QString planUrlString;
-    auto it = proLevelToUrl.find(proLevel);
-    if (it != proLevelToUrl.end())
+    const char* planUrlChar;
+    auto it = PRO_LEVEL_TO_URL.find(proLevel);
+    if (it != PRO_LEVEL_TO_URL.end())
     {
-        planUrlString = it->second;
+        planUrlChar = it->second;
     }
     else
     {
-        planUrlString = defaultUrl;
+        planUrlChar = DEFAULT_PRO_URL;
     }
 
+    QString planUrlString(QString::fromLatin1(planUrlChar));
     Utilities::getPROurlWithParameters(planUrlString);
 
     return QUrl(planUrlString);
+}
+
+QString UpsellController::getLocalePriceString(float price) const
+{
+    static const QLocale locale(QLocale().language(), QLocale().country());
+    int precision(std::fmod(price, 1.) > 0. ? PRECISION_FOR_DECIMALS : NO_DECIMALS);
+    QString priceStr(locale.toCurrencyString(price, mPlans->getCurrencySymbol(), precision));
+    if (!mPlans->isBillingCurrency())
+    {
+        priceStr += BILLING_CURRENCY_REMARK;
+    }
+    return priceStr;
+}
+
+UpsellPlans::Data::AccountBillingPlanData
+    UpsellController::createAccountBillingPlanData(int storage, int transfer, int price) const
+{
+    UpsellPlans::Data::AccountBillingPlanData planData(static_cast<int64_t>(storage) * NB_B_IN_1GB,
+                                                       static_cast<int64_t>(transfer) * NB_B_IN_1GB,
+                                                       static_cast<float>(price) / CENTS_IN_1_UNIT);
+    return planData;
+}
+
+int UpsellController::calculateDiscount(float monthlyPrice, float yearlyPrice) const
+{
+    return static_cast<int>(PERCENTAGE -
+                            (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
+}
+
+void UpsellController::addPlan(mega::MegaPricing* pricing, int index)
+{
+    auto proLevel(pricing->getProLevel(index));
+    int price(mPlans->isBillingCurrency() ? pricing->getAmount(index) :
+                                            pricing->getLocalPrice(index));
+    auto planData(createAccountBillingPlanData(pricing->getGBStorage(index),
+                                               pricing->getGBTransfer(index),
+                                               price));
+    if (mPlans->addPlan(std::make_shared<UpsellPlans::Data>(proLevel)) &&
+        pricing->getMonths(index) == MONTH_PERIOD)
+    {
+        mPlans->getPlanByProLevel(proLevel)->setMonthlyData(planData);
+    }
+    else if (pricing->getMonths(index) == YEAR_PERIOD)
+    {
+        mPlans->getPlanByProLevel(proLevel)->setYearlyData(planData);
+    }
+}
+
+void UpsellController::setPlanDataForRecommended()
+{
+    int row(0);
+    int current(Preferences::instance()->accountType());
+    auto itCurrent =
+        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), current);
+    for (const auto& plan: mPlans->plans())
+    {
+        auto itNext = std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel());
+        if (itNext != ACCOUNT_TYPES_IN_ORDER.cend())
+        {
+            row = mPlans->plans().indexOf(plan);
+            break;
+        }
+    }
+
+    auto plan = mPlans->getPlan(row);
+    plan->setSelected(true);
+    plan->setRecommended(true);
+    mPlans->setCurrentPlanSelected(row);
+    mPlans->setCurrentDiscount(
+        calculateDiscount(plan->monthlyData().price(), plan->yearlyData().price()));
 }

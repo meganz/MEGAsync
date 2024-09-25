@@ -56,6 +56,13 @@ private:
     int countNumPlans(mega::MegaPricing* pricin) const;
     bool isProLevelValid(int proLevel) const;
     QUrl getUpsellPlanUrl(int proLevel);
+    QString getLocalePriceString(float price) const;
+    UpsellPlans::Data::AccountBillingPlanData createAccountBillingPlanData(int storage,
+                                                                           int transfer,
+                                                                           int price) const;
+    int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
+    void addPlan(mega::MegaPricing* pricing, int index);
+    void setPlanDataForRecommended();
 };
 
 #endif // UPSELL_CONTROLLER_H

@@ -30,7 +30,7 @@ RoundButton {
     property bool recommended: false
     property string gbStorage: ""
     property string gbTransfer: ""
-    property double price: 0
+    property string price: ""
 
     width: root.totalWidth
     height: root.totalHeight
@@ -104,7 +104,7 @@ RoundButton {
                     }
                     lineHeight: root.priceLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: UpsellStrings.price.arg(upsellPlansAccess.currencySymbol).arg(price)
+                    text: price
                 }
 
                 SecondaryText {
@@ -114,7 +114,18 @@ RoundButton {
                         left: parent.left
                         right: parent.right
                     }
-                    text: UpsellStrings.perMonth // TODO: replace depending on the currency
+                    text: {
+                        if (upsellPlansAccess.billingCurrency) {
+                            return upsellPlansAccess.monthly
+                                    ? UpsellStrings.perMonth
+                                    : UpsellStrings.perYear;
+                        }
+                        else {
+                            return upsellPlansAccess.monthly
+                                    ? UpsellStrings.perMonthWithBillingCurrency.arg(upsellPlansAccess.currencySymbol)
+                                    : UpsellStrings.perYearWithBillingCurrency.arg(upsellPlansAccess.currencySymbol);
+                        }
+                    }
                 }
             }
 

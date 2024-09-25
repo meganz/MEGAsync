@@ -121,6 +121,7 @@ FocusScope {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: UpsellStrings.estimatedPrice
+            visible: !upsellPlansAccess.billingCurrency
         }
 
         Row {
