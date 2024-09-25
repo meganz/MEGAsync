@@ -2232,6 +2232,9 @@ void MegaApplication::cleanAll()
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
+    // Remove models using deleteLater to be sure that they are removed after removing Transfer and
+    // Stalled issues dialogs. Otherwise we need to set to null the view models as the views will
+    // contain dangling pointers
     mStalledIssuesModel->deleteLater();
     mStalledIssuesModel = nullptr;
     mTransfersModel->deleteLater();
@@ -2244,13 +2247,6 @@ void MegaApplication::cleanAll()
     QApplication::processEvents();
 
     QTMegaApiManager::removeMegaApis();
-
-    // Remove models after removing Transfer and Stalled issues dialogs
-    // Otherwise we need to set to null the view models as the views will contain dangling pointers
-    delete mStalledIssuesModel;
-    mStalledIssuesModel = nullptr;
-    delete mTransfersModel;
-    mTransfersModel = nullptr;
 
     trayIcon->deleteLater();
     trayIcon = nullptr;
