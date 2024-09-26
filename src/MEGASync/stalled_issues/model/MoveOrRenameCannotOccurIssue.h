@@ -68,11 +68,13 @@ private:
 
     bool solveIssueByPathProblem(StalledIssueSPtr issue);
     bool solveSourceWasMovedToElsewhere(StalledIssueSPtr issue);
+    bool solveParentFolderDoesNotExist(StalledIssueSPtr issue);
     bool solveDestinationPathInUnresolvedArea(StalledIssueSPtr issue);
-    void solveRemoteGenericIssues(StalledIssueSPtr issue);
-    void solveLocalGenericIssues(StalledIssueSPtr issue);
+    bool solveRemoteGenericIssues(StalledIssueSPtr issue);
+    bool solveLocalGenericIssues(StalledIssueSPtr issue);
 
     bool isSourceWasDeleted(StalledIssueSPtr issue);
+    bool areInTheSameDirectory(StalledIssueSPtr issue);
 
     ChoosableSides calculateChoosableSidesByPathProblem(StalledIssueSPtr issue);
 
