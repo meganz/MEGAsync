@@ -37,6 +37,8 @@ public:
     void openSelectedPlan();
     void setBilledPeriod(bool isMonthly);
 
+    QString getMinProPlanNeeded(long long usedStorage) const;
+
 public slots:
     void onBilledPeriodChanged();
 

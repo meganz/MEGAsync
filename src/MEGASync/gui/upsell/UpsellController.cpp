@@ -210,6 +210,31 @@ void UpsellController::setBilledPeriod(bool isMonthly)
     }
 }
 
+QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
+{
+    if (!mPlans)
+    {
+        return QString::fromLatin1("Pro");
+    }
+
+    int proLevel(-1);
+    float amountPlanNeeded(0.0f);
+    for (const auto& plan: mPlans->plans())
+    {
+        if (usedStorage < plan->monthlyData().gBStorage())
+        {
+            float currentAmountMonth(plan->monthlyData().price());
+            if (proLevel == -1 || currentAmountMonth < amountPlanNeeded)
+            {
+                proLevel = plan->proLevel();
+                amountPlanNeeded = currentAmountMonth;
+            }
+        }
+    }
+
+    return Utilities::getReadablePlanFromId(proLevel);
+}
+
 void UpsellController::onBilledPeriodChanged()
 {
     emit dataChanged(0,

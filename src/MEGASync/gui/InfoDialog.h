@@ -34,6 +34,7 @@ class InfoDialog;
 
 class MegaApplication;
 class TransferManager;
+class UpsellController;
 
 class InfoDialog : public QDialog
 {
@@ -75,6 +76,7 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
+    void createUpsellController();
 
     void reset();
 
@@ -214,6 +216,7 @@ private:
     bool isShown = false;
 
     QPointer<TransferManager> mTransferManager;
+    QPointer<UpsellController> mUpsellController;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
