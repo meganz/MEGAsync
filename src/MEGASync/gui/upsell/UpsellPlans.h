@@ -10,6 +10,7 @@ class UpsellPlans: public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(ViewMode viewMode READ getViewMode NOTIFY viewModeChanged)
     Q_PROPERTY(bool monthly READ isMonthly NOTIFY monthlyChanged)
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
@@ -17,6 +18,15 @@ class UpsellPlans: public QObject
     Q_PROPERTY(QString currentPlanName READ getCurrentPlanName NOTIFY currentPlanNameChanged)
 
 public:
+    enum class ViewMode
+    {
+        NONE = 0,
+        STORAGE_ALMOST_FULL = 1,
+        STORAGE_FULL = 2,
+        TRANSFER_EXCEEDED = 3
+    };
+    Q_ENUM(ViewMode)
+
     enum BackupFolderRoles
     {
         NAME_ROLE = Qt::UserRole + 1,
@@ -97,24 +107,25 @@ public:
     std::shared_ptr<UpsellPlans::Data> getPlanByProLevel(int proLevel) const;
     int size() const;
 
+    ViewMode getViewMode() const;
     bool isMonthly() const;
     bool isBillingCurrency() const;
     int getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
     QString getCurrentPlanName() const;
+    int currentPlanSelected() const;
 
-    void setCurrency(const QString& symbol, const QString& name);
+    void setViewMode(ViewMode viewMode);
     void setMonthly(bool monthly);
-    void setCurrentPlanSelected(int row);
     void setBillingCurrency(bool isCurrencyBilling);
     void setCurrentDiscount(int discount);
     void setCurrentPlanName(const QString& name);
-
-    int currentPlanSelected() const;
-    void deselectCurrentPlan();
+    void setCurrentPlanSelected(int row);
+    void setCurrency(const QString& symbol, const QString& name);
 
 signals:
+    void viewModeChanged();
     void currencyChanged();
     void monthlyChanged();
     void currentDiscountChanged();
@@ -124,8 +135,9 @@ signals:
 private:
     QList<std::shared_ptr<Data>> mPlans;
     CurrencyData mCurrency;
+    ViewMode mViewMode;
+    bool mIsMonthly;
     bool mIsBillingCurrency;
-    bool mMonthly;
     int mCurrentPlanSelected;
     int mCurrentDiscount;
     QString mCurrentPlanName;

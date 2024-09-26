@@ -9,6 +9,7 @@ QtObject {
     readonly property string billedYearly: qsTr("Billed yearly")
     readonly property string buyPlan: qsTr("Buy %1")
     readonly property string estimatedPrice: qsTr("* Estimated price in your local currency. Your account will be billed in Euros for all transactions.")
+    readonly property string iWillWait: qsTr("I will wait")
     readonly property string notNow: qsTr("Not now")
     readonly property string perMonthWithBillingCurrency: qsTr("%1 per month")
     readonly property string perYearWithBillingCurrency: qsTr("%1 per year")
@@ -17,10 +18,8 @@ QtObject {
     readonly property string recommended: qsTr("Recommended")
     readonly property string storage: qsTr("%1 storage")
     readonly property string storageAlmostFullTitle: qsTr("Your MEGA cloud storage is almost full")
-    readonly property string storageAlmostFullText: qsTr("Upgrade your account to get more storage quota.
-Or delete some files and [A]empty your rubbish bin[/A] to free up storage space.")
     readonly property string storageFullTitle: qsTr("Your MEGA cloud storage is full")
-    readonly property string storageFullText: qsTr("Upgrade your account to get more storage quota.
+    readonly property string storageText: qsTr("Upgrade your account to get more storage quota.
 Or delete some files and [A]empty your rubbish bin[/A] to free up storage space.")
     readonly property string transfer: qsTr("%1 transfer")
     readonly property string transferQuotaExceededTitle: qsTr("Transfer quota exceeded")

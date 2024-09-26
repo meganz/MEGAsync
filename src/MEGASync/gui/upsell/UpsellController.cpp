@@ -115,7 +115,7 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
             if (value.toBool())
             {
                 auto currentSelected(mPlans->currentPlanSelected());
-                mPlans->deselectCurrentPlan();
+                mPlans->getPlan(currentSelected)->setSelected(false);
                 emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
                 updatePlansAt(data, row);
             }
@@ -206,6 +206,11 @@ void UpsellController::setBilledPeriod(bool isMonthly)
     {
         mPlans->setMonthly(isMonthly);
     }
+}
+
+void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
+{
+    mPlans->setViewMode(mode);
 }
 
 QString UpsellController::getMinProPlanNeeded(long long usedStorage) const

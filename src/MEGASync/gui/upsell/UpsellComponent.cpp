@@ -11,6 +11,7 @@ UpsellComponent::UpsellComponent(QObject* parent):
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
+    mController->setViewMode(UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
 }
 
 QUrl UpsellComponent::getQmlUrl()
@@ -27,7 +28,12 @@ void UpsellComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)
     {
-        qmlRegisterModule("Upsell", 1, 0);
+        qmlRegisterUncreatableType<UpsellPlans>(
+            "UpsellPlans",
+            1,
+            0,
+            "UpsellPlans",
+            QString::fromLatin1("UpsellPlans can only be used for the enum values"));
         qmlRegistrationDone = true;
     }
 }

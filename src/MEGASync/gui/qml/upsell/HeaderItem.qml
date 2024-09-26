@@ -5,6 +5,8 @@ import common 1.0
 import components.images 1.0
 import components.texts 1.0
 
+import UpsellPlans 1.0
+
 FocusScope {
     id: root
 
@@ -64,7 +66,18 @@ FocusScope {
                     }
                     lineHeight: root.titleLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: UpsellStrings.storageAlmostFullTitle // TODO: Replace by the text for each case (almost/full storage, transfer)
+                    text: {
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                                return UpsellStrings.storageAlmostFullTitle;
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                return UpsellStrings.storageFullTitle;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                return UpsellStrings.transferQuotaExceededTitle;
+                            default:
+                                return "";
+                        }
+                    }
                 }
 
                 SecondaryText {
@@ -77,7 +90,17 @@ FocusScope {
                     urlVisitedColor: ColorTheme.textSecondary
                     underlineLink: true
                     url: Links.contact // TODO: Add link to rubish bin
-                    rawText: UpsellStrings.storageAlmostFullText // TODO: Replace by the text for each case (almost/full storage, transfer)
+                    rawText: {
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                return UpsellStrings.storageText;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                return UpsellStrings.transferQuotaExceededText;
+                            default:
+                                return "";
+                        }
+                    }
                 }
             }
 

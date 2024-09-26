@@ -7,6 +7,8 @@ import components.texts 1.0
 import components.buttons 1.0
 import components.chips 1.0 as Chips
 
+import UpsellPlans 1.0
+
 FocusScope {
     id: root
 
@@ -131,7 +133,17 @@ FocusScope {
             SecondaryButton {
                 id: leftButton
 
-                text: UpsellStrings.notNow
+                text: {
+                    switch (upsellPlansAccess.viewMode) {
+                        case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                        case UpsellPlans.ViewMode.STORAGE_FULL:
+                            return UpsellStrings.notNow;
+                        case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                            return UpsellStrings.iWillWait;
+                        default:
+                            return "";
+                    }
+                }
                 onClicked: {
                     window.close();
                 }

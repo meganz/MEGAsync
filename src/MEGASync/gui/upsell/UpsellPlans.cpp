@@ -8,8 +8,9 @@
 
 UpsellPlans::UpsellPlans(QObject* parent):
     QObject(parent),
+    mViewMode(ViewMode::NONE),
+    mIsMonthly(true),
     mIsBillingCurrency(true),
-    mMonthly(true),
     mCurrentPlanSelected(-1),
     mCurrentDiscount(-1)
 {
@@ -52,6 +53,11 @@ int UpsellPlans::size() const
     return mPlans.size();
 }
 
+UpsellPlans::ViewMode UpsellPlans::getViewMode() const
+{
+    return mViewMode;
+}
+
 QString UpsellPlans::getCurrencySymbol() const
 {
     return mCurrency.currencySymbol();
@@ -76,14 +82,14 @@ void UpsellPlans::setCurrency(const QString& symbol, const QString& name)
 
 bool UpsellPlans::isMonthly() const
 {
-    return mMonthly;
+    return mIsMonthly;
 }
 
 void UpsellPlans::setMonthly(bool monthly)
 {
-    if (mMonthly != monthly)
+    if (mIsMonthly != monthly)
     {
-        mMonthly = monthly;
+        mIsMonthly = monthly;
         emit monthlyChanged();
     }
 }
@@ -123,14 +129,18 @@ void UpsellPlans::setCurrentPlanName(const QString& name)
     }
 }
 
-void UpsellPlans::deselectCurrentPlan()
-{
-    mPlans.at(mCurrentPlanSelected)->setSelected(false);
-}
-
 int UpsellPlans::currentPlanSelected() const
 {
     return mCurrentPlanSelected;
+}
+
+void UpsellPlans::setViewMode(ViewMode viewMode)
+{
+    if (mViewMode != viewMode)
+    {
+        mViewMode = viewMode;
+        emit viewModeChanged();
+    }
 }
 
 bool UpsellPlans::isBillingCurrency() const

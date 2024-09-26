@@ -36,6 +36,7 @@ public:
     std::shared_ptr<UpsellPlans> getPlans() const;
     void openSelectedPlan();
     void setBilledPeriod(bool isMonthly);
+    void setViewMode(UpsellPlans::ViewMode mode);
 
     QString getMinProPlanNeeded(long long usedStorage) const;
 
