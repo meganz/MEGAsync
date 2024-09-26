@@ -115,7 +115,7 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
             if (value.toBool())
             {
                 auto currentSelected(mPlans->currentPlanSelected());
-                mPlans->deselectCurrentPlanSelected();
+                mPlans->deselectCurrentPlan();
                 emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
                 mPlans->setCurrentPlanSelected(row);
                 mPlans->setCurrentDiscount(
@@ -282,18 +282,21 @@ void UpsellController::process(mega::MegaPricing* pricing)
 void UpsellController::process(mega::MegaCurrency* currency)
 {
     QString localCurrencySymbol;
+    QString localCurrencyName;
     QByteArray localByteSymbol(QByteArray::fromBase64(currency->getLocalCurrencySymbol()));
     if (localByteSymbol.isEmpty())
     {
         QByteArray byteSymbol(QByteArray::fromBase64(currency->getCurrencySymbol()));
         localCurrencySymbol = QString::fromUtf8(byteSymbol.data());
+        localCurrencyName = QString::fromUtf8(currency->getCurrencyName());
     }
     else
     {
         localCurrencySymbol = QString::fromUtf8(localByteSymbol.data());
+        localCurrencyName = QString::fromUtf8(currency->getLocalCurrencyName());
     }
 
-    mPlans->setCurrencySymbol(localCurrencySymbol);
+    mPlans->setCurrency(localCurrencySymbol, localCurrencyName);
     mPlans->setBillingCurrency(localByteSymbol.isEmpty());
 }
 

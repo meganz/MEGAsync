@@ -24,7 +24,6 @@ RoundButton {
     readonly property int borderWidth: 1
 
     property alias name: titleText.text
-    //property alias price: priceText.text
 
     property bool selected: false
     property bool recommended: false
@@ -122,8 +121,8 @@ RoundButton {
                         }
                         else {
                             return upsellPlansAccess.monthly
-                                    ? UpsellStrings.perMonthWithBillingCurrency.arg(upsellPlansAccess.currencySymbol)
-                                    : UpsellStrings.perYearWithBillingCurrency.arg(upsellPlansAccess.currencySymbol);
+                                    ? UpsellStrings.perMonthWithBillingCurrency.arg(upsellPlansAccess.currencyName)
+                                    : UpsellStrings.perYearWithBillingCurrency.arg(upsellPlansAccess.currencyName);
                         }
                     }
                 }

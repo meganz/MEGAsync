@@ -54,16 +54,19 @@ int UpsellPlans::size() const
 
 QString UpsellPlans::getCurrencySymbol() const
 {
-    return mCurrencySymbol;
+    return mCurrency.currencySymbol();
 }
 
-void UpsellPlans::setCurrencySymbol(const QString& symbol)
+QString UpsellPlans::getCurrencyName() const
 {
-    if (mCurrencySymbol != symbol)
-    {
-        mCurrencySymbol = symbol;
-        emit currencySymbolChanged();
-    }
+    return mCurrency.currencyName();
+}
+
+void UpsellPlans::setCurrency(const QString& symbol, const QString& name)
+{
+    mCurrency.setCurrencySymbol(symbol);
+    mCurrency.setCurrencyName(name);
+    emit currencyChanged();
 }
 
 bool UpsellPlans::isMonthly() const
@@ -106,7 +109,7 @@ void UpsellPlans::setCurrentDiscount(int discount)
     }
 }
 
-void UpsellPlans::deselectCurrentPlanSelected()
+void UpsellPlans::deselectCurrentPlan()
 {
     mPlans.at(mCurrentPlanSelected)->setSelected(false);
 }
@@ -231,4 +234,28 @@ int64_t UpsellPlans::Data::AccountBillingPlanData::gBTransfer() const
 float UpsellPlans::Data::AccountBillingPlanData::price() const
 {
     return mPrice;
+}
+
+// ************************************************************************************************
+// * UpsellPlans::CurrencyData
+// ************************************************************************************************
+
+QString UpsellPlans::CurrencyData::currencySymbol() const
+{
+    return mCurrencySymbol;
+}
+
+QString UpsellPlans::CurrencyData::currencyName() const
+{
+    return mCurrencyName;
+}
+
+void UpsellPlans::CurrencyData::setCurrencyName(const QString& newCurrencyName)
+{
+    mCurrencyName = newCurrencyName;
+}
+
+void UpsellPlans::CurrencyData::setCurrencySymbol(const QString& newCurrencySymbol)
+{
+    mCurrencySymbol = newCurrencySymbol;
 }

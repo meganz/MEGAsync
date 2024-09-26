@@ -13,7 +13,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(bool monthly READ isMonthly NOTIFY monthlyChanged)
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
-    Q_PROPERTY(QString currencySymbol READ getCurrencySymbol NOTIFY currencySymbolChanged)
+    Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
 
 public:
     enum BackupFolderRoles
@@ -72,35 +72,52 @@ public:
         AccountBillingPlanData mYearlyData;
     };
 
+    class CurrencyData
+    {
+    public:
+        explicit CurrencyData() = default;
+
+        QString currencySymbol() const;
+        QString currencyName() const;
+        void setCurrencySymbol(const QString& newCurrencySymbol);
+        void setCurrencyName(const QString& newCurrencyName);
+
+    private:
+        QString mCurrencySymbol;
+        QString mCurrencyName;
+    };
+
     bool addPlan(std::shared_ptr<Data> plan);
 
     QList<std::shared_ptr<Data>> plans() const;
     std::shared_ptr<UpsellPlans::Data> getPlan(int index) const;
     std::shared_ptr<UpsellPlans::Data> getPlanByProLevel(int proLevel) const;
     int size() const;
-    QString getCurrencySymbol() const;
+
     bool isMonthly() const;
-    int currentPlanSelected() const;
     bool isBillingCurrency() const;
     int getCurrentDiscount() const;
+    QString getCurrencySymbol() const;
+    QString getCurrencyName() const;
 
-    void setCurrencySymbol(const QString& symbol);
+    void setCurrency(const QString& symbol, const QString& name);
     void setMonthly(bool monthly);
     void setCurrentPlanSelected(int row);
     void setBillingCurrency(bool isCurrencyBilling);
     void setCurrentDiscount(int discount);
 
-    void deselectCurrentPlanSelected();
+    int currentPlanSelected() const;
+    void deselectCurrentPlan();
 
 signals:
-    void currencySymbolChanged();
+    void currencyChanged();
     void monthlyChanged();
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
-    QString mCurrencySymbol;
+    CurrencyData mCurrency;
     bool mIsBillingCurrency;
     bool mMonthly;
     int mCurrentPlanSelected;
