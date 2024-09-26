@@ -50,6 +50,8 @@ public:
     void setViewMode(UpsellPlans::ViewMode mode);
     void setTransferFinishTime(long long finishTime);
 
+    QString getMinProPlanNeeded(long long usedStorage) const;
+
 public slots:
     void onBilledPeriodChanged();
 
