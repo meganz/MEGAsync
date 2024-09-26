@@ -104,7 +104,9 @@ FocusScope {
                     ButtonGroup.group: planButtonGroupItem
 
                     onClicked: {
-                        model.selected = true;
+                        if (!model.selected) {
+                            model.selected = true;
+                        }
                     }
                 }
             }
@@ -138,7 +140,7 @@ FocusScope {
             PrimaryButton {
                 id: rightButton
 
-                text: UpsellStrings.buyPro
+                text: UpsellStrings.buyPlan.arg(upsellPlansAccess.currentPlanName)
                 onClicked: {
                     upsellComponentAccess.buyButtonClicked();
                 }

@@ -62,6 +62,11 @@ QString UpsellPlans::getCurrencyName() const
     return mCurrency.currencyName();
 }
 
+QString UpsellPlans::getCurrentPlanName() const
+{
+    return mCurrentPlanName;
+}
+
 void UpsellPlans::setCurrency(const QString& symbol, const QString& name)
 {
     mCurrency.setCurrencySymbol(symbol);
@@ -109,6 +114,15 @@ void UpsellPlans::setCurrentDiscount(int discount)
     }
 }
 
+void UpsellPlans::setCurrentPlanName(const QString& name)
+{
+    if (mCurrentPlanName != name)
+    {
+        mCurrentPlanName = name;
+        emit currentPlanNameChanged();
+    }
+}
+
 void UpsellPlans::deselectCurrentPlan()
 {
     mPlans.at(mCurrentPlanSelected)->setSelected(false);
@@ -138,10 +152,11 @@ QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
 // * UpsellPlans::Data
 // ************************************************************************************************
 
-UpsellPlans::Data::Data(int proLevel):
+UpsellPlans::Data::Data(int proLevel, const QString& name):
     mProLevel(proLevel),
     mRecommended(false),
-    mSelected(false)
+    mSelected(false),
+    mName(name)
 {}
 
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
@@ -166,6 +181,11 @@ int UpsellPlans::Data::proLevel() const
 bool UpsellPlans::Data::isRecommended() const
 {
     return mRecommended;
+}
+
+const QString& UpsellPlans::Data::name() const
+{
+    return mName;
 }
 
 const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData() const

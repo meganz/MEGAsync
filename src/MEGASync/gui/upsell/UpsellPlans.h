@@ -14,6 +14,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
+    Q_PROPERTY(QString currentPlanName READ getCurrentPlanName NOTIFY currentPlanNameChanged)
 
 public:
     enum BackupFolderRoles
@@ -49,15 +50,16 @@ public:
             float mPrice;
         };
 
-        Data(int proLevel);
+        Data(int proLevel, const QString& name);
 
         static QHash<int, QByteArray> roleNames();
 
         int proLevel() const;
+        bool selected() const;
         bool isRecommended() const;
+        const QString& name() const;
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
-        bool selected() const;
 
         void setSelected(bool newChecked);
         void setRecommended(bool newRecommended);
@@ -68,6 +70,7 @@ public:
         int mProLevel;
         bool mRecommended;
         bool mSelected;
+        QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
     };
@@ -99,12 +102,14 @@ public:
     int getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
+    QString getCurrentPlanName() const;
 
     void setCurrency(const QString& symbol, const QString& name);
     void setMonthly(bool monthly);
     void setCurrentPlanSelected(int row);
     void setBillingCurrency(bool isCurrencyBilling);
     void setCurrentDiscount(int discount);
+    void setCurrentPlanName(const QString& name);
 
     int currentPlanSelected() const;
     void deselectCurrentPlan();
@@ -114,6 +119,7 @@ signals:
     void monthlyChanged();
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
+    void currentPlanNameChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
@@ -122,6 +128,7 @@ private:
     bool mMonthly;
     int mCurrentPlanSelected;
     int mCurrentDiscount;
+    QString mCurrentPlanName;
 };
 
 #endif // UPSELL_PLANS_H

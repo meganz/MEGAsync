@@ -14,6 +14,7 @@ class UpsellComponent: public QMLComponent
 
 public:
     explicit UpsellComponent(QObject* parent = 0);
+    virtual ~UpsellComponent() = default;
 
     QUrl getQmlUrl() override;
     QString contextName() override;

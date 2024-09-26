@@ -117,9 +117,7 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
                 auto currentSelected(mPlans->currentPlanSelected());
                 mPlans->deselectCurrentPlan();
                 emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
-                mPlans->setCurrentPlanSelected(row);
-                mPlans->setCurrentDiscount(
-                    calculateDiscount(data->monthlyData().price(), data->yearlyData().price()));
+                updatePlansAt(data, row);
             }
             break;
         }
@@ -148,7 +146,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
         {
             case UpsellPlans::NAME_ROLE:
             {
-                field = Utilities::getReadablePlanFromId(data->proLevel(), true);
+                field = data->name();
                 break;
             }
             case UpsellPlans::RECOMMENDED_ROLE:
@@ -379,12 +377,13 @@ int UpsellController::calculateDiscount(float monthlyPrice, float yearlyPrice) c
 void UpsellController::addPlan(mega::MegaPricing* pricing, int index)
 {
     auto proLevel(pricing->getProLevel(index));
+    QString name(Utilities::getReadablePlanFromId(proLevel, true));
     int price(mPlans->isBillingCurrency() ? pricing->getAmount(index) :
                                             pricing->getLocalPrice(index));
     auto planData(createAccountBillingPlanData(pricing->getGBStorage(index),
                                                pricing->getGBTransfer(index),
                                                price));
-    if (mPlans->addPlan(std::make_shared<UpsellPlans::Data>(proLevel)) &&
+    if (mPlans->addPlan(std::make_shared<UpsellPlans::Data>(proLevel, name)) &&
         pricing->getMonths(index) == MONTH_PERIOD)
     {
         mPlans->getPlanByProLevel(proLevel)->setMonthlyData(planData);
@@ -414,7 +413,13 @@ void UpsellController::setPlanDataForRecommended()
     auto plan(mPlans->getPlan(row));
     plan->setSelected(true);
     plan->setRecommended(true);
+    updatePlansAt(plan, row);
+}
+
+void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row)
+{
     mPlans->setCurrentPlanSelected(row);
     mPlans->setCurrentDiscount(
-        calculateDiscount(plan->monthlyData().price(), plan->yearlyData().price()));
+        calculateDiscount(data->monthlyData().price(), data->yearlyData().price()));
+    mPlans->setCurrentPlanName(data->name());
 }
