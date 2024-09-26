@@ -31,6 +31,24 @@ RoundButton {
     property string gbTransfer: ""
     property string price: ""
 
+    function getBackgroundColor() {
+        if(root.hovered) {
+            return ColorTheme.buttonOutlineBackgroundHover;
+        }
+        else {
+            return ColorTheme.pageBackground;
+        }
+    }
+
+    function getBorderColor() {
+        if(root.pressed || root.selected) {
+            return ColorTheme.borderStrongSelected;
+        }
+        else {
+            return ColorTheme.borderStrong;
+        }
+    }
+
     width: root.totalWidth
     height: root.totalHeight
 
@@ -121,8 +139,10 @@ RoundButton {
                         }
                         else {
                             return upsellPlansAccess.monthly
-                                    ? UpsellStrings.perMonthWithBillingCurrency.arg(upsellPlansAccess.currencyName)
-                                    : UpsellStrings.perYearWithBillingCurrency.arg(upsellPlansAccess.currencyName);
+                                    ? UpsellStrings.perMonthWithBillingCurrency
+                                        .arg(upsellPlansAccess.currencyName)
+                                    : UpsellStrings.perYearWithBillingCurrency
+                                        .arg(upsellPlansAccess.currencyName);
                         }
                     }
                 }
@@ -182,16 +202,17 @@ RoundButton {
             }
             border {
                 width: root.borderWidth
-                color: root.selected
-                       ? ColorTheme.borderStrongSelected
-                       : ColorTheme.borderStrong
+                color: getBorderColor()
             }
             radius: root.backgroundRadius
+            color: getBackgroundColor()
         }
     }
 
     Keys.onPressed: {
-        if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter || event.key === Qt.Key_Space) {
+        if (event.key === Qt.Key_Return
+                || event.key === Qt.Key_Enter
+                || event.key === Qt.Key_Space) {
             root.clicked();
             event.accepted = true;
         }
