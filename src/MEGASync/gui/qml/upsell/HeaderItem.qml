@@ -96,7 +96,8 @@ FocusScope {
                             case UpsellPlans.ViewMode.STORAGE_FULL:
                                 return UpsellStrings.storageText;
                             case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
-                                return UpsellStrings.transferQuotaExceededText;
+                                return UpsellStrings.transferQuotaExceededText
+                                            .arg(upsellPlansAccess.transferRemainingTime);
                             default:
                                 return "";
                         }

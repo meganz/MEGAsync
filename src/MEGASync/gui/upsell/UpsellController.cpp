@@ -18,6 +18,7 @@ constexpr int NO_DECIMALS(0);
 constexpr float CENTS_IN_1_UNIT(100.0f);
 constexpr float NUM_MONTHS_PER_PLAN(12.0f);
 constexpr float PERCENTAGE(100.0f);
+constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
 constexpr const char* DEFAULT_PRO_URL("mega://#pro");
@@ -114,7 +115,7 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
 
             if (value.toBool())
             {
-                auto currentSelected(mPlans->currentPlanSelected());
+                auto currentSelected(mPlans->getCurrentPlanSelected());
                 mPlans->getPlan(currentSelected)->setSelected(false);
                 emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
                 updatePlansAt(data, row);
@@ -194,9 +195,9 @@ std::shared_ptr<UpsellPlans> UpsellController::getPlans() const
     return mPlans;
 }
 
-void UpsellController::openSelectedPlan()
+void UpsellController::openSelectedPlanUrl()
 {
-    auto row = mPlans->currentPlanSelected();
+    auto row = mPlans->getCurrentPlanSelected();
     Utilities::openUrl(getUpsellPlanUrl(mPlans->getPlan(row)->proLevel()));
 }
 
@@ -211,6 +212,28 @@ void UpsellController::setBilledPeriod(bool isMonthly)
 void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
 {
     mPlans->setViewMode(mode);
+    if (mode == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
+    {
+        if (!mTransferFinishTimer)
+        {
+            mTransferFinishTimer = new QTimer(this);
+            mTransferFinishTimer->setSingleShot(false);
+            connect(mTransferFinishTimer,
+                    &QTimer::timeout,
+                    this,
+                    &UpsellController::onTransferRemainingTimeElapsed);
+        }
+    }
+}
+
+void UpsellController::setTransferFinishTime(long long finishTime)
+{
+    mPlans->setTransferFinishTime(finishTime);
+    onTransferRemainingTimeElapsed();
+    if (mTransferFinishTimer && !mTransferFinishTimer->isActive())
+    {
+        mTransferFinishTimer->start(TRANSFER_REMAINING_TIME_INTERVAL_MS);
+    }
 }
 
 QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
@@ -244,6 +267,18 @@ void UpsellController::onBilledPeriodChanged()
                      mPlans->size() - 1,
                      QVector<int>() << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
                                     << UpsellPlans::PRICE_ROLE);
+}
+
+void UpsellController::onTransferRemainingTimeElapsed()
+{
+    long long remainingTime(mPlans->getTransferFinishTime() -
+                            QDateTime::currentMSecsSinceEpoch() /
+                                TRANSFER_REMAINING_TIME_INTERVAL_MS);
+    if (remainingTime < 0)
+    {
+        remainingTime = 0;
+    }
+    mPlans->setTransferRemainingTime(Utilities::getTimeString(remainingTime, true, false));
 }
 
 void UpsellController::processGetPricingRequest(mega::MegaPricing* pricing,

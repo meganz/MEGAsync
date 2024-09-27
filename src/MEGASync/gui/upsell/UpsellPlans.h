@@ -16,6 +16,8 @@ class UpsellPlans: public QObject
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
     Q_PROPERTY(QString currentPlanName READ getCurrentPlanName NOTIFY currentPlanNameChanged)
+    Q_PROPERTY(
+        QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
 
 public:
     enum class ViewMode
@@ -71,11 +73,6 @@ public:
         const AccountBillingPlanData& monthlyData() const;
         const AccountBillingPlanData& yearlyData() const;
 
-        void setSelected(bool newChecked);
-        void setRecommended(bool newRecommended);
-        void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
-        void setYearlyData(const AccountBillingPlanData& newYearlyData);
-
     private:
         int mProLevel;
         bool mRecommended;
@@ -83,6 +80,14 @@ public:
         QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
+
+        friend class UpsellPlans;
+        friend class UpsellController;
+
+        void setSelected(bool newChecked);
+        void setRecommended(bool newRecommended);
+        void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
+        void setYearlyData(const AccountBillingPlanData& newYearlyData);
     };
 
     class CurrencyData
@@ -92,12 +97,15 @@ public:
 
         QString currencySymbol() const;
         QString currencyName() const;
-        void setCurrencySymbol(const QString& newCurrencySymbol);
-        void setCurrencyName(const QString& newCurrencyName);
 
     private:
         QString mCurrencySymbol;
         QString mCurrencyName;
+
+        friend class UpsellPlans;
+
+        void setCurrencySymbol(const QString& newCurrencySymbol);
+        void setCurrencyName(const QString& newCurrencyName);
     };
 
     bool addPlan(std::shared_ptr<Data> plan);
@@ -114,15 +122,9 @@ public:
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
     QString getCurrentPlanName() const;
-    int currentPlanSelected() const;
-
-    void setViewMode(ViewMode viewMode);
-    void setMonthly(bool monthly);
-    void setBillingCurrency(bool isCurrencyBilling);
-    void setCurrentDiscount(int discount);
-    void setCurrentPlanName(const QString& name);
-    void setCurrentPlanSelected(int row);
-    void setCurrency(const QString& symbol, const QString& name);
+    QString getTransferRemainingTime() const;
+    int getCurrentPlanSelected() const;
+    long long getTransferFinishTime() const;
 
 signals:
     void viewModeChanged();
@@ -131,6 +133,7 @@ signals:
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
     void currentPlanNameChanged();
+    void remainingTimeChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
@@ -141,6 +144,20 @@ private:
     int mCurrentPlanSelected;
     int mCurrentDiscount;
     QString mCurrentPlanName;
+    QString mTransferRemainingTime;
+    long long mTransferFinishTime; // Seconds since epoch.
+
+    friend class UpsellController;
+
+    void setViewMode(ViewMode viewMode);
+    void setMonthly(bool monthly);
+    void setBillingCurrency(bool isCurrencyBilling);
+    void setCurrentDiscount(int discount);
+    void setCurrentPlanName(const QString& name);
+    void setTransferRemainingTime(const QString& time);
+    void setCurrentPlanSelected(int row);
+    void setCurrency(const QString& symbol, const QString& name);
+    void setTransferFinishTime(long long newTime);
 };
 
 #endif // UPSELL_PLANS_H

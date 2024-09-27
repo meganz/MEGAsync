@@ -5,13 +5,13 @@
 
 static bool qmlRegistrationDone = false;
 
-UpsellComponent::UpsellComponent(QObject* parent):
+UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     QMLComponent(parent),
     mController(std::make_shared<UpsellController>()),
     mModel(std::make_shared<UpsellModel>(mController))
 {
     registerQmlModules();
-    mController->setViewMode(UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
+    mController->setViewMode(mode);
 }
 
 QUrl UpsellComponent::getQmlUrl()
@@ -38,9 +38,15 @@ void UpsellComponent::registerQmlModules()
     }
 }
 
+void UpsellComponent::setTransferFinishTime(long long time)
+{
+    // Seconds since epoch.
+    mController->setTransferFinishTime(time);
+}
+
 void UpsellComponent::buyButtonClicked()
 {
-    mController->openSelectedPlan();
+    mController->openSelectedPlanUrl();
 }
 
 void UpsellComponent::billedRadioButtonClicked(bool isMonthly)

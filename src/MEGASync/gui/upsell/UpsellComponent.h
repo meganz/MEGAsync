@@ -2,6 +2,7 @@
 #define UPSELL_COMPONENT_H
 
 #include "qml/QmlDialogWrapper.h"
+#include "UpsellPlans.h"
 
 #include <memory>
 
@@ -13,13 +14,15 @@ class UpsellComponent: public QMLComponent
     Q_OBJECT
 
 public:
-    explicit UpsellComponent(QObject* parent = 0);
+    explicit UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode);
     virtual ~UpsellComponent() = default;
 
     QUrl getQmlUrl() override;
     QString contextName() override;
 
     static void registerQmlModules();
+
+    void setTransferFinishTime(long long time);
 
 public slots:
     void buyButtonClicked();

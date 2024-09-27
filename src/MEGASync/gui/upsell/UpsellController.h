@@ -4,6 +4,7 @@
 #include "UpsellPlans.h"
 
 #include <QObject>
+#include <QTimer>
 #include <QVariant>
 #include <QVector>
 
@@ -33,12 +34,14 @@ public:
     QVariant data(int row, int role) const;
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
+    void openSelectedPlanUrl();
+
     std::shared_ptr<UpsellPlans> getPlans() const;
-    void openSelectedPlan();
+    QString getMinProPlanNeeded(long long usedStorage) const;
+
     void setBilledPeriod(bool isMonthly);
     void setViewMode(UpsellPlans::ViewMode mode);
-
-    QString getMinProPlanNeeded(long long usedStorage) const;
+    void setTransferFinishTime(long long finishTime);
 
 public slots:
     void onBilledPeriodChanged();
@@ -50,9 +53,13 @@ signals:
     void endRemoveRows();
     void dataChanged(int rowStart, int rowFinal, QVector<int> roles);
 
+private slots:
+    void onTransferRemainingTimeElapsed();
+
 private:
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<UpsellPlans> mPlans;
+    QTimer* mTransferFinishTimer;
 
     void processGetPricingRequest(mega::MegaPricing* pricing, mega::MegaCurrency* currency);
     void process(mega::MegaPricing* pricing);

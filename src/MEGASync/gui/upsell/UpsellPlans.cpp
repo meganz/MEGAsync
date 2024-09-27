@@ -12,7 +12,8 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mIsMonthly(true),
     mIsBillingCurrency(true),
     mCurrentPlanSelected(-1),
-    mCurrentDiscount(-1)
+    mCurrentDiscount(-1),
+    mTransferFinishTime(0ll)
 {
     QmlManager::instance()->setRootContextProperty(this);
 }
@@ -73,11 +74,26 @@ QString UpsellPlans::getCurrentPlanName() const
     return mCurrentPlanName;
 }
 
+QString UpsellPlans::getTransferRemainingTime() const
+{
+    return mTransferRemainingTime;
+}
+
 void UpsellPlans::setCurrency(const QString& symbol, const QString& name)
 {
     mCurrency.setCurrencySymbol(symbol);
     mCurrency.setCurrencyName(name);
     emit currencyChanged();
+}
+
+void UpsellPlans::setTransferFinishTime(long long newTime)
+{
+    mTransferFinishTime = newTime;
+}
+
+long long UpsellPlans::getTransferFinishTime() const
+{
+    return mTransferFinishTime;
 }
 
 bool UpsellPlans::isMonthly() const
@@ -129,7 +145,16 @@ void UpsellPlans::setCurrentPlanName(const QString& name)
     }
 }
 
-int UpsellPlans::currentPlanSelected() const
+void UpsellPlans::setTransferRemainingTime(const QString& time)
+{
+    if (mTransferRemainingTime != time)
+    {
+        mTransferRemainingTime = time;
+        emit remainingTimeChanged();
+    }
+}
+
+int UpsellPlans::getCurrentPlanSelected() const
 {
     return mCurrentPlanSelected;
 }
