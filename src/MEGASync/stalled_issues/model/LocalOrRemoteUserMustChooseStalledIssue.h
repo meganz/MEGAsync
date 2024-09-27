@@ -10,7 +10,7 @@ class LocalOrRemoteUserMustChooseStalledIssue : public StalledIssue
 {
 public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
-    ~LocalOrRemoteUserMustChooseStalledIssue();
+    ~LocalOrRemoteUserMustChooseStalledIssue() = default;
 
     StalledIssue::AutoSolveIssueResult autoSolveIssue() override;
     bool isAutoSolvable() const override;

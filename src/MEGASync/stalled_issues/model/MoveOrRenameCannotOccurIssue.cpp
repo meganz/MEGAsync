@@ -102,9 +102,8 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings> syncSettings)
 {
     // If we select KEEP REMOTE, we undo the local changes, so we take the local issues to fix
-    StalledIssuesList issuesToFix = getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE ?
-                                        mDetectedLocalSideIssuesToFix :
-                                        mDetectedCloudSideIssuesToFix;
+    StalledIssuesList issuesToFix =
+        remoteSideWasChosen() ? mDetectedLocalSideIssuesToFix : mDetectedCloudSideIssuesToFix;
 
     if (!mSolvingStarted)
     {
@@ -127,24 +126,12 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
         {
             bool stopSolvingIssue(false);
 
-            // We perform the undo in the opposite side
-            if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE)
-            {
-                stopSolvingIssue = solveIssueByPathProblem(issueToFix);
+            stopSolvingIssue = solveIssueByPathProblem(issueToFix);
 
-                if (!stopSolvingIssue)
-                {
-                    solveRemoteGenericIssues(issueToFix);
-                }
-            }
-            else if (getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL && consultCloudData())
+            if (!stopSolvingIssue)
             {
-                stopSolvingIssue = solveIssueByPathProblem(issueToFix);
-
-                if (!stopSolvingIssue)
-                {
-                    solveLocalGenericIssues(issueToFix);
-                }
+                remoteSideWasChosen() ? solveRemoteGenericIssues(issueToFix) :
+                                        solveLocalGenericIssues(issueToFix);
             }
 
             MegaSyncApp->getMegaApi()->clearStalledPath(issueToFix->getOriginalStall().get());
@@ -192,7 +179,7 @@ bool MoveOrRenameCannotOccurIssue::solveIssueByPathProblem(StalledIssueSPtr issu
         // The solve logic for SourceWasMovedElsewhere is the same as a normal issue
         case mega::MegaSyncStall::SyncPathProblem::SourceWasMovedElsewhere:
         {
-            if (isSourceWasDeleted(issue))
+            if (wasSourceDeleted(issue))
             {
                 solveSourceWasMovedToElsewhere(issue);
             }
@@ -212,7 +199,7 @@ bool MoveOrRenameCannotOccurIssue::solveSourceWasMovedToElsewhere(StalledIssueSP
 {
     auto issueIsSolved(false);
 
-    if (getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL)
+    if (localSideWasChosen())
     {
         std::unique_ptr<mega::MegaNode> node(
             MegaSyncApp->getMegaApi()->getNodeByHandle(issue->getCloudData()->getPathHandle()));
@@ -235,8 +222,8 @@ bool MoveOrRenameCannotOccurIssue::solveSourceWasMovedToElsewhere(StalledIssueSP
     }
     else
     {
-        QFileInfo localFile(issue->getLocalData()->getMoveFilePath());
-        if (StalledIssuesUtilities::removeLocalFile(localFile.filePath(), firstSyncId()))
+        if (StalledIssuesUtilities::removeLocalFile(issue->getLocalData()->getMoveFilePath(),
+                                                    firstSyncId()))
         {
             mUndoSuccessful--;
         }
@@ -251,7 +238,7 @@ bool MoveOrRenameCannotOccurIssue::solveDestinationPathInUnresolvedArea(StalledI
 {
     auto issueIsSolved(false);
 
-    if (getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL)
+    if (localSideWasChosen())
     {
         auto cloudData(issue->consultCloudData());
         auto localData(issue->consultLocalData());
@@ -294,7 +281,7 @@ bool MoveOrRenameCannotOccurIssue::solveParentFolderDoesNotExist(StalledIssueSPt
 {
     auto issueIsSolved(false);
 
-    if (getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE)
+    if (remoteSideWasChosen())
     {
         if (!issue->detectedCloudSide())
         {
@@ -434,7 +421,7 @@ bool MoveOrRenameCannotOccurIssue::solveLocalGenericIssues(StalledIssueSPtr issu
     return currentUndoSucessful != mUndoSuccessful;
 }
 
-bool MoveOrRenameCannotOccurIssue::isSourceWasDeleted(StalledIssueSPtr issue)
+bool MoveOrRenameCannotOccurIssue::wasSourceDeleted(StalledIssueSPtr issue) const
 {
     auto node(issue->consultCloudData()->getNode());
     return (!node || node->getParentHandle() == MegaSyncApp->getRubbishNode()->getHandle());
@@ -456,6 +443,16 @@ bool MoveOrRenameCannotOccurIssue::areInTheSameDirectory(StalledIssueSPtr issue)
 
         return sourcePath.absolutePath() == targetPath.absolutePath();
     }
+}
+
+bool MoveOrRenameCannotOccurIssue::remoteSideWasChosen() const
+{
+    return getChosenSide() == MoveOrRenameIssueChosenSide::REMOTE;
+}
+
+bool MoveOrRenameCannotOccurIssue::localSideWasChosen() const
+{
+    return getChosenSide() == MoveOrRenameIssueChosenSide::LOCAL;
 }
 
 ChoosableSides
@@ -482,7 +479,7 @@ ChoosableSides
         }
         case mega::MegaSyncStall::SyncPathProblem::SourceWasMovedElsewhere:
         {
-            if (isSourceWasDeleted(issue))
+            if (wasSourceDeleted(issue))
             {
                 return MoveOrRenameIssueChosenSide::REMOTE | MoveOrRenameIssueChosenSide::LOCAL;
             }

@@ -73,8 +73,11 @@ private:
     bool solveRemoteGenericIssues(StalledIssueSPtr issue);
     bool solveLocalGenericIssues(StalledIssueSPtr issue);
 
-    bool isSourceWasDeleted(StalledIssueSPtr issue);
+    bool wasSourceDeleted(StalledIssueSPtr issue) const;
     bool areInTheSameDirectory(StalledIssueSPtr issue);
+
+    bool remoteSideWasChosen() const;
+    bool localSideWasChosen() const;
 
     ChoosableSides calculateChoosableSidesByPathProblem(StalledIssueSPtr issue);
 

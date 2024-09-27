@@ -1543,48 +1543,45 @@ bool Utilities::restoreNode(MegaNode* node,
                             bool async,
                             std::function<void(MegaRequest*, MegaError*)> finishFunc)
 {
-    if (node)
+    if (!node)
     {
-        auto newParent =
-            std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(node->getRestoreHandle()));
-
-        if (newParent)
-        {
-            if (async)
-            {
-                auto listener =
-                    RequestListenerManager::instance().registerAndGetSynchronousFinishListener(
-                        [finishFunc](MegaRequest* request, MegaError* e) {
-                            if (finishFunc)
-                            {
-                                finishFunc(request, e);
-                            }
-                        });
-
-                megaApi->moveNode(node, newParent.get(), listener.get());
-            }
-            else
-            {
-                MegaApiSynchronizedRequest::runRequestLambdaWithResult(
-                    [](MegaNode* node, MegaNode* targetNode, MegaRequestListener* listener) {
-                        MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
-                    },
-                    megaApi,
-                    [finishFunc](MegaRequest* request, MegaError* e) {
-                        if (finishFunc)
-                        {
-                            finishFunc(request, e);
-                        }
-                    },
-                    node,
-                    newParent.get());
-            }
-
-            return true;
-        }
+        return false;
     }
 
-    return false;
+    auto newParent = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(node->getRestoreHandle()));
+
+    if (!newParent)
+    {
+        return false;
+    }
+
+    auto moveAnswer = [finishFunc](MegaRequest* request, MegaError* e) {
+        if (finishFunc)
+        {
+            finishFunc(request, e);
+        }
+    };
+
+    if (async)
+    {
+        auto listener =
+            RequestListenerManager::instance().registerAndGetSynchronousFinishListener(moveAnswer);
+
+        megaApi->moveNode(node, newParent.get(), listener.get());
+    }
+    else
+    {
+        MegaApiSynchronizedRequest::runRequestLambdaWithResult(
+            [moveAnswer](MegaNode* node, MegaNode* targetNode, MegaRequestListener* listener) {
+                MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+            },
+            megaApi,
+            moveAnswer,
+            node,
+            newParent.get());
+    }
+
+    return true;
 }
 
 long long Utilities::getSystemsAvailableMemory()
