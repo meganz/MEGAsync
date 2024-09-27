@@ -132,7 +132,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx(false),
-    mUserMessageController(nullptr)
+    mUserMessageController(nullptr),
+    mGfxProvider(nullptr)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -487,14 +488,18 @@ void MegaApplication::initialize()
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
 
+    createGfxProvider();
+
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
+                                    mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
+                                    mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
     megaApiFolders->disableGfxFeatures(mDisableGfx);
@@ -1511,6 +1516,7 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                mGfxProvider.reset();
                 mUserMessageController.reset();
                 createUserMessageController();
                 infoDialog->deleteLater();
@@ -2197,6 +2203,7 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
+    mGfxProvider.reset();
     mUserMessageController.reset();
     infoDialog->deleteLater();
 
@@ -4513,6 +4520,18 @@ void MegaApplication::createUserMessageController()
                     mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
         }
     }
+}
+
+void MegaApplication::createGfxProvider()
+{
+    MegaGfxProvider* provider = nullptr;
+
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
+    provider = MegaGfxProvider::createIsolatedInstance("megasync-gfx", path.toUtf8().constData());
+#endif
+
+    mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,

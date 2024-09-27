@@ -186,3 +186,13 @@ if (MSVC)
         COMMENT "Adding display aware manifest..."
     )
 endif()
+
+# Copy GFX worker if needed
+if(TARGET gfxworker)
+    set_target_properties(gfxworker PROPERTIES OUTPUT_NAME "megasync-gfxworker")
+    add_custom_command(
+        TARGET MEGAsync POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:gfxworker> $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying gfxworker for MEGAsync."
+    )
+endif()

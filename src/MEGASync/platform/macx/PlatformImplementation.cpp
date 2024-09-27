@@ -370,6 +370,13 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString&)
     return data;
 }
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+QString PlatformImplementation::getGfxProviderPath()
+{
+    return QCoreApplication::applicationDirPath() + QLatin1String("/megasync-gfxworker");
+}
+#endif
+
 void PlatformImplementation::disableSignalHandler()
 {
     signal(SIGSEGV, SIG_DFL);
