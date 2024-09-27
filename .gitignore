@@ -8,6 +8,7 @@ Release_arm64
 installer_mac.sh
 MEGA.pro.user
 DesignTokensImporter
+.clang-format
 
 # executable on Linux
 src/MEGASync/megasync
