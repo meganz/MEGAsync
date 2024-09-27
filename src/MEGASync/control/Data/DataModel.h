@@ -1,14 +1,14 @@
 #ifndef DATAMODEL_H
 #define DATAMODEL_H
 
-#include <QAbstractListModel>
+#include <QAbstractItemModel>
 
 template<class ControllerType>
-class DataModel: public QAbstractListModel
+class DataModel: public QAbstractItemModel
 {
 public:
     DataModel(std::shared_ptr<ControllerType> controller, QObject* parent):
-        QAbstractListModel(parent),
+        QAbstractItemModel(parent),
         mController(controller)
     {
         connect(controller.get(),
@@ -55,21 +55,37 @@ public:
 
     virtual QHash<int, QByteArray> roleNames() const override = 0;
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const override
-    {
-        // When implementing a table based model, rowCount() should return 0 when the parent is
-        // valid.
-        return parent.isValid() ? 0 : mController->size();
-    }
-
-    bool setData(const QModelIndex& index, const QVariant& value, int role) override
+    virtual bool setData(const QModelIndex& index, const QVariant& value, int role) override
     {
         return mController->setData(index.row(), value, role);
     }
 
-    QVariant data(const QModelIndex& index, int role) const override
+    virtual QVariant data(const QModelIndex& index, int role) const override
     {
         return mController->data(index.row(), role);
+    }
+
+    /////////DEFAULT BEHAVIOUR: LIST MODEL. OVERRIDE IT TO CREATE MORE COMPLEX MODELS/////////77
+    virtual QModelIndex index(int row,
+                              int column,
+                              const QModelIndex& = QModelIndex()) const override
+    {
+        return (row < rowCount(QModelIndex())) ? createIndex(row, column) : QModelIndex();
+    }
+
+    virtual QModelIndex parent(const QModelIndex&) const override
+    {
+        return QModelIndex();
+    }
+
+    virtual int columnCount(const QModelIndex& parent) const override
+    {
+        return 1;
+    }
+
+    virtual int rowCount(const QModelIndex& parent = QModelIndex()) const override
+    {
+        return parent.isValid() ? 0 : mController->size();
     }
 
 private:
