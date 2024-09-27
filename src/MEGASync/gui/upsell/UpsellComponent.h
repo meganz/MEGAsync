@@ -18,7 +18,6 @@ public:
     virtual ~UpsellComponent() = default;
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
 
     static void registerQmlModules();
 

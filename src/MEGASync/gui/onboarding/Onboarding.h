@@ -13,8 +13,6 @@ public:
 
     QUrl getQmlUrl() override;
 
-    QString contextName() override;
-
     Q_INVOKABLE void openPreferences(int tabIndex) const;
     Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
 

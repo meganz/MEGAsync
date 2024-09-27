@@ -1,5 +1,5 @@
-#ifndef QMLMANAGER_H
-#define QMLMANAGER_H
+#ifndef QML_MANAGER_H
+#define QML_MANAGER_H
 
 #include <QQmlEngine>
 
@@ -36,4 +36,4 @@ private:
     QString getObjectRootContextName(QObject* value);
 };
 
-#endif // QMLMANAGER_H
+#endif // QML_MANAGER_H

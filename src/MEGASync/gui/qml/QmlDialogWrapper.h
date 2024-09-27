@@ -1,5 +1,5 @@
-#ifndef QMLCOMPONENTWRAPPER_H
-#define QMLCOMPONENTWRAPPER_H
+#ifndef QML_COMPONENT_WRAPPER_H
+#define QML_COMPONENT_WRAPPER_H
 
 #include "DialogOpener.h"
 #include "megaapi.h"
@@ -22,27 +22,26 @@
 template<class Type>
 class QmlDialogWrapper;
 
-class QMLComponent : public QObject
+class QMLComponent: public QObject
 {
 public:
-    QMLComponent(QObject* parent = 0);
-    ~QMLComponent();
-
-    virtual QUrl getQmlUrl() = 0;
-
-    virtual QString contextName()
-    {
-        return QString();
-    }
-
     struct OpenDialogInfo
     {
-        bool ignoreCloseAllAction;
-
         OpenDialogInfo():
             ignoreCloseAllAction(false)
         {}
+
+        bool ignoreCloseAllAction;
     };
+
+    using QObject::QObject;
+    virtual ~QMLComponent() = default;
+
+    virtual QUrl getQmlUrl() = 0;
+
+    virtual QList<QObject*> getInstancesFromContext();
+
+    QString contextName() const;
 
     template<typename DialogType, typename... A>
     static QPointer<QmlDialogWrapper<DialogType>> openDialog(OpenDialogInfo info = OpenDialogInfo(),
@@ -65,9 +64,10 @@ public:
         return dialogInfo->getDialog();
     }
 
-    virtual QList<QObject*> getInstancesFromContext()
+    template<typename DialogType, typename... A>
+    static QPointer<QmlDialogWrapper<DialogType>> openDialog(A&&... args)
     {
-        return QList<QObject*>();
+        return openDialog<DialogType>(OpenDialogInfo(), std::forward<A>(args)...);
     }
 };
 
@@ -227,4 +227,4 @@ private:
     QPointer<Type> mWrapper;
 };
 
-#endif // QMLCOMPONENTWRAPPER_H
+#endif // QML_COMPONENT_WRAPPER_H

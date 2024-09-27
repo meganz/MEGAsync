@@ -12,8 +12,6 @@ public:
 
     QUrl getQmlUrl() override;
 
-    QString contextName() override;
-
     Q_INVOKABLE void onAboutMEGAClicked();
     Q_INVOKABLE void onPreferencesClicked();
     Q_INVOKABLE void onExitClicked();

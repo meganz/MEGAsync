@@ -93,19 +93,14 @@ QString QmlManager::getObjectRootContextName(QObject* value)
         return QString();
     }
 
+    if (!name.isEmpty())
+    {
+        name.replace(0, 1, name.at(0).toLower());
+    }
+
     // Example: "LoginController" -> "loginControllerAccess"
-    name.replace(0, 1, name.at(0).toLower()).append(DEFAULT_QML_INSTANCES_SUFFIX);
-    return name;
-}
-
-void QmlManager::setRootContextProperty(QObject* value)
-{
-    mEngine->rootContext()->setContextProperty(getObjectRootContextName(value), value);
-}
-
-bool QmlManager::isRootContextPropertySet(QObject* value)
-{
-    return mEngine->rootContext()->contextProperty(getObjectRootContextName(value)).isValid();
+    name.append(DEFAULT_QML_INSTANCES_SUFFIX);
+    mEngine->rootContext()->setContextProperty(name, value);
 }
 
 void QmlManager::setRootContextProperty(const QString& name, QObject* value)

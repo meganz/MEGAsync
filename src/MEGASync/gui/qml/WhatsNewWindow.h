@@ -13,7 +13,6 @@ public:
     explicit WhatsNewWindow(QObject* parent = 0);
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
 
     Q_INVOKABLE QString acceptButtonText();
     Q_INVOKABLE void acceptButtonClicked();

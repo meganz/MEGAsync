@@ -34,11 +34,6 @@ QUrl Onboarding::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/onboard/OnboardingDialog.qml"));
 }
 
-QString Onboarding::contextName()
-{
-    return QString::fromUtf8("onboardingAccess");
-}
-
 void Onboarding::openPreferences(int tabIndex) const
 {
     MegaSyncApp->openSettings(tabIndex);
