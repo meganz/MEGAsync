@@ -301,6 +301,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
             &AccountDetailsManager::accountDetailsUpdated,
             this,
             &InfoDialog::updateUsageAndAccountType);
+
+    updateUpgradeButtonText();
 }
 
 InfoDialog::~InfoDialog()
@@ -1213,18 +1215,18 @@ void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent 
     mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
-void InfoDialog::changeEvent(QEvent *event)
+void InfoDialog::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-
-//        if (mPreferences->logged())
-//        {
-//            setUsage();
-//            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-//            updateDialogState();
-//        }
+        updateUpgradeButtonText();
+        // if (mPreferences->logged())
+        // {
+        //     setUsage();
+        //     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
+        //     updateDialogState();
+        // }
     }
     QDialog::changeEvent(event);
 }
@@ -1545,6 +1547,11 @@ void InfoDialog::showSomeIssues()
     ui->wSomeIssuesOccurred->show();
     animationGroupSomeIssues.start();
     mShownSomeIssuesOccurred = true;
+}
+
+void InfoDialog::updateUpgradeButtonText()
+{
+    ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
 }
 
 void InfoDialog::on_bDismissSyncSettings_clicked()

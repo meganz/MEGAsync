@@ -793,6 +793,12 @@ QString Utilities::createSimpleUsedString(long long usedData)
     return createSimpleUsedStringWithoutReplacement(usedData).arg(getSizeString(usedData));
 }
 
+QString Utilities::createSimpleUsedOfString(long long usedData, long long totalData)
+{
+    return QCoreApplication::translate("Utilities", "%1 of %2", "", toNearestUnit(usedData))
+        .arg(getSizeString(usedData), getSizeString(totalData));
+}
+
 QString Utilities::createSimpleUsedStringWithoutReplacement(long long usedData)
 {
     return QCoreApplication::translate("Utilities", "%1 used", "", toNearestUnit(usedData));

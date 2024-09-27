@@ -128,6 +128,9 @@ private:
 
     void filterByTab(TransfersWidget::TM_TAB tab);
 
+    void setStorageTextState(const QVariant& stateValue, const QString& text);
+    void updateStorageOQText();
+
 private slots:
     void on_tCompleted_clicked();
     void on_tDownloads_clicked();
@@ -135,7 +138,6 @@ private slots:
     void on_tAllTransfers_clicked();
     void on_tFailed_clicked();
     void on_tActionButton_clicked();
-    void on_tSeePlans_clicked();
     void on_bSearch_clicked();
     void on_leSearchField_editingFinished();
     void on_tSearchIcon_clicked();

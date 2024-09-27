@@ -54,6 +54,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
+    gui/AccountTypeWidget.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -173,6 +174,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
+    gui/AccountTypeWidget.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -277,6 +279,7 @@ target_sources_conditional(MEGAsync
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
     gui/win/NotificationItem.ui
+    gui/win/AccountTypeWidget.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/win/NodeSelector.ui
@@ -331,6 +334,7 @@ target_sources_conditional(MEGAsync
    gui/node_selector/gui/macx/NodeSelector.ui
    gui/node_selector/gui/macx/SearchLineEdit.ui
    gui/macx/LockedPopOver.ui
+   gui/macx/AccountTypeWidget.ui
 )
 
 
@@ -378,6 +382,7 @@ target_sources_conditional(MEGAsync
     gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
     gui/linux/NotificationItem.ui
+    gui/linux/AccountTypeWidget.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui

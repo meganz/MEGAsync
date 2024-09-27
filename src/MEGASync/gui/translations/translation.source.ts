@@ -2138,11 +2138,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Settings</translation>
     </message>
     <message>
-        <source>Upgrade to PRO</source>
-        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Upgrade account</translation>
-    </message>
-    <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
         <translation>Open transfer manager</translation>
@@ -8331,19 +8326,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         </translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade now</translation>
-    </message>
-    <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Your MEGA account is full</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -8364,6 +8349,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform>Issue detected</numerusform>
             <numerusform>Issues detected</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9252,6 +9247,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 and %2 substitution placeholders because they will be filled with the required amounts of storage space dynamically. CON-944</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 of %2</numerusform>
+            <numerusform>%1 of %2</numerusform>
+        </translation>
     </message>
 </context>
 <context>

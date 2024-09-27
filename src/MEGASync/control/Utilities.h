@@ -350,6 +350,7 @@ public:
     static ProgressSize getProgressSizes(long long transferredBytes, long long totalBytes);
 
     static QString createSimpleUsedString(long long usedData);
+    static QString createSimpleUsedOfString(long long usedData, long long totalData);
     static QString createSimpleUsedStringWithoutReplacement(long long usedData);
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
