@@ -79,12 +79,16 @@ public:
 
     static KeepBothSidesState KeepBothSides(std::shared_ptr<mega::MegaNode> node,
                                             const QString& localFilePath);
+    static MegaDownloader* getMegaDownloader();
+    static MegaUploader* getMegaUploader();
 
 signals:
     void actionFinished();
 
 private:
     mutable QReadWriteLock  mIgnoreMutex;
+    static std::unique_ptr<MegaDownloader> mDownloader;
+    static std::unique_ptr<MegaUploader> mUploader;
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -114,9 +118,6 @@ public:
     FingerprintMissingSolver();
 
     void solveIssues(const QList<StalledIssueVariant>& pathsToSolve);
-
-private:
-    std::unique_ptr<MegaDownloader> mDownloader;
 };
 
 #endif // STALLEDISSUESUTILITIES_H

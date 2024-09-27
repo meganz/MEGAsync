@@ -49,7 +49,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
 
             StalledIssueVariant variant;
-            std::shared_ptr<StalledIssue> d;
+            StalledIssueSPtr d;
 
             if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {

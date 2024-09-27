@@ -70,7 +70,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     }
     else
     {
-        if(issue->consultCloudData())
+        if (issue->isKeepSideAvailable(MoveOrRenameIssueChosenSide::LOCAL))
         {
             addDefaultButton();
         }
@@ -108,7 +108,7 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     }
     else
     {
-        if(issue->consultLocalData())
+        if (issue->isKeepSideAvailable(MoveOrRenameIssueChosenSide::REMOTE))
         {
             addDefaultButton();
         }
