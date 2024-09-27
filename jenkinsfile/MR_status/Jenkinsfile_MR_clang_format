@@ -7,6 +7,9 @@ pipeline {
         gitLabConnection('GitLabConnectionJenkins')
         ansiColor('xterm')
     }
+    environment {
+        SDK_BRANCH = 'master'
+    }
     stages {
         stage('Update Gitlab commit status') {
             agent any
@@ -17,7 +20,7 @@ pipeline {
         stage('Build'){
             agent { label 'docker' }
             stages {
-                stage('Checkout'){
+                stage('Checkout desktop'){
                     steps {
                         checkout([
                             $class: 'GitSCM',
@@ -28,6 +31,23 @@ pipeline {
                                 [$class: 'PreBuildMerge', options: [fastForwardMode: 'FF', mergeRemote: "origin", mergeStrategy: 'DEFAULT', mergeTarget: "${env.gitlabTargetBranch}"]]
                                 ]
                         ])
+                    }
+                }
+                stage('Checkout SDK'){
+                    steps {
+                        dir('src/MEGASync/mega'){
+                            checkout([
+                                $class: 'GitSCM',
+                                branches: [[name: "origin/${SDK_BRANCH}"]],
+                                userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                            ])
+                        }
+                        script{
+                            desktop_sources_workspace = WORKSPACE
+                            sdk_sources_workspace = "${desktop_sources_workspace}/src/MEGASync/mega"
+                            // Get .clang-format file from SDK repo
+                            sh "cp -v ${sdk_sources_workspace}/.clang-format ${desktop_sources_workspace}"
+                        }
                     }
                 }
                 stage('Get parameters'){
