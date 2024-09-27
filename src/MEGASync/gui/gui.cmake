@@ -102,7 +102,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupsComponent.h
     gui/backups/BackupsController.h
     gui/backups/BackupCandidatesModel.h
-    gui/backups/BackupsQmlDialog.h
     gui/backups/BackupCandidatesController.h
     gui/backups/BackupCandidates.h
     gui/SyncExclusions/AddExclusionRule.h
@@ -228,7 +227,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupsComponent.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupCandidatesModel.cpp
-    gui/backups/BackupsQmlDialog.cpp
     gui/backups/BackupCandidatesController.cpp
     gui/backups/BackupCandidates.cpp
     gui/SyncExclusions/AddExclusionRule.cpp

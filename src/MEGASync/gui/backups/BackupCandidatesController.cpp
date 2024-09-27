@@ -33,6 +33,7 @@ BackupCandidatesController::BackupCandidatesController():
 
     QmlManager::instance()->addImageProvider(QLatin1String("standardicons"),
                                              new StandardIconProvider);
+    QmlManager::instance()->setRootContextProperty(mBackupCandidates.get());
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
     mCheckDirsTimer.start();
@@ -146,7 +147,7 @@ void BackupCandidatesController::setAllSelected(bool selected)
     {
         auto backupFolder = it.next();
         if (backupFolder->mSelected != selected &&
-            (!selected || checkPermissions(backupFolder->getFolder())))
+            (!selected || checkPermissions(backupFolder->mFolder)))
         {
             setData(backupFolder, selected, BackupCandidates::SELECTED_ROLE);
         }
@@ -404,13 +405,13 @@ bool BackupCandidatesController::existOtherRelatedFolder(const int currentRow)
     bool found = false;
 
     auto backupCandidate = mBackupCandidates->getBackupCandidate(currentRow);
-    QString folder(backupCandidate->getFolder());
+    QString folder(backupCandidate->mFolder);
     int conflictRow = 1;
     while (!found && conflictRow < mBackupCandidates->size())
     {
         auto conflictBackupCandidate(mBackupCandidates->getBackupCandidate(conflictRow));
         if ((found = conflictBackupCandidate->mSelected && conflictRow != currentRow &&
-                     isRelatedFolder(folder, conflictBackupCandidate->getFolder())))
+                     isRelatedFolder(folder, conflictBackupCandidate->mFolder)))
         {
             setData(backupCandidate,
                     BackupCandidates::BackupErrorCode::PATH_RELATION,
@@ -451,12 +452,12 @@ void BackupCandidatesController::check()
             candidateList.append(backupCandidate->mName);
             if (backupCandidate->mError == BackupCandidates::BackupErrorCode::NONE &&
                 !existOtherRelatedFolder(index) &&
-                BackupsController::instance().isLocalFolderSyncable(backupCandidate->getFolder(),
+                BackupsController::instance().isLocalFolderSyncable(backupCandidate->mFolder,
                                                                     mega::MegaSync::TYPE_BACKUP,
                                                                     message) !=
                     SyncController::CAN_SYNC)
             {
-                QDir dir(backupCandidate->getFolder());
+                QDir dir(backupCandidate->mFolder);
                 if (dir.exists())
                 {
                     setData(backupCandidate,
@@ -484,7 +485,7 @@ void BackupCandidatesController::check()
 
 bool BackupCandidatesController::setData(int row, const QVariant& value, int role)
 {
-    return setData(getBackupCandidates()->getBackupCandidate(row), value, role);
+    return setData(mBackupCandidates->getBackupCandidate(row), value, role);
 }
 
 bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data> candidate,
@@ -500,9 +501,6 @@ bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data>
             break;
         case BackupCandidates::FOLDER_ROLE:
             candidate->setFolder(value.toString());
-            break;
-        case BackupCandidates::SIZE_ROLE:
-            candidate->mSize = value.toInt();
             break;
         case BackupCandidates::SELECTED_ROLE:
         {
@@ -534,7 +532,7 @@ bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data>
 
 QVariant BackupCandidatesController::data(int row, int role) const
 {
-    std::shared_ptr<BackupCandidates::Data> item = getBackupCandidates()->getBackupCandidate(row);
+    std::shared_ptr<BackupCandidates::Data> item = mBackupCandidates->getBackupCandidate(row);
 
     return data(item, role);
 }
@@ -552,10 +550,10 @@ QVariant BackupCandidatesController::data(std::shared_ptr<BackupCandidates::Data
                 field = candidate->mName;
                 break;
             case BackupCandidates::FOLDER_ROLE:
-                field = candidate->getFolder();
+                field = candidate->mFolder;
                 break;
             case BackupCandidates::SIZE_ROLE:
-                field = candidate->mSize;
+                field = Utilities::getSizeStringLocalized(candidate->mFolderSize);
                 break;
             case BackupCandidates::SIZE_READY_ROLE:
                 field = candidate->mFolderSizeReady;
@@ -579,7 +577,7 @@ QVariant BackupCandidatesController::data(std::shared_ptr<BackupCandidates::Data
 
 int BackupCandidatesController::size() const
 {
-    return getBackupCandidates()->size();
+    return mBackupCandidates->size();
 }
 
 void BackupCandidatesController::calculateFolderSizes()
@@ -774,11 +772,6 @@ void BackupCandidatesController::updateModel(
     updateModel(QVector<int>() << role, backupCandidate);
 }
 
-std::shared_ptr<BackupCandidates> BackupCandidatesController::getBackupCandidates() const
-{
-    return mBackupCandidates;
-}
-
 QStringList BackupCandidatesController::getSelectedCandidates() const
 {
     QStringList selectedCandidates;
@@ -869,7 +862,7 @@ bool BackupCandidatesController::checkDirectories()
         if (backupCandidate->mSelected && !backupCandidate->mDone &&
             backupCandidate->mError != BackupCandidates::BackupErrorCode::SDK_CREATION)
         {
-            if (!QDir(backupCandidate->getFolder()).exists())
+            if (!QDir(backupCandidate->mFolder).exists())
             {
                 setData(backupCandidate,
                         BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR,
@@ -942,7 +935,7 @@ QString BackupCandidatesController::getSyncErrorString() const
 
     if (itFound != candidateList.cend())
     {
-        BackupsController::instance().isLocalFolderSyncable((*itFound)->getFolder(),
+        BackupsController::instance().isLocalFolderSyncable((*itFound)->mFolder,
                                                             mega::MegaSync::TYPE_BACKUP,
                                                             message);
     }

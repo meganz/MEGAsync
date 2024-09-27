@@ -24,7 +24,6 @@ public:
     void updateSelectedAndTotalSize();
     void setCheckAllState(Qt::CheckState state, bool fromModel = false);
     void setCheckState(int row, bool state);
-    std::shared_ptr<BackupCandidates> getBackupCandidates() const;
     QStringList getSelectedCandidates() const;
 
     void createBackups(int syncOrigin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);

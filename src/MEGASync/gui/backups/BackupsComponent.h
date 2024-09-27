@@ -13,7 +13,6 @@ class BackupsComponent: public QMLComponent
     Q_OBJECT
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
-    Q_PROPERTY(std::shared_ptr<BackupCandidates> backupCandidates READ getBackupCandidates CONSTANT)
 
 public:
     explicit BackupsComponent(QObject* parent = 0);
@@ -24,7 +23,6 @@ public:
     static void registerQmlModules();
 
     Q_INVOKABLE void openDeviceCentre() const;
-    Q_INVOKABLE void openBackupsTabInPreferences() const;
     Q_INVOKABLE void openExclusionsDialog() const;
 
     Q_INVOKABLE void confirmFoldersMoveToSelect();
@@ -42,9 +40,6 @@ public:
 
     void setComesFromSettings(bool value = false);
     bool getComesFromSettings() const;
-
-    std::shared_ptr<BackupCandidates> getBackupCandidates() const;
-    int getGlobalError() const;
 
 public slots:
     void onBackupsCreationFinished(bool success);

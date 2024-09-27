@@ -8,7 +8,6 @@ const char* BackupCandidates::Data::SIZE_READY = "size_ready";
 BackupCandidates::Data::Data(const QString& folder, const QString& displayName, bool selected):
     mFolder(folder),
     mName(displayName),
-    mSize(),
     mSelected(selected),
     mDone(false),
     mFolderSizeReady(false),
@@ -34,7 +33,6 @@ void BackupCandidates::Data::setSize(long long size)
         if (size > FileFolderAttributes::NOT_READY)
         {
             mFolderSize = size;
-            mSize = Utilities::getSizeStringLocalized(mFolderSize);
             // Swap the value to emit "dynamic_property" change signal
             mFolderAttrContext->setProperty(SIZE_READY, mFolder);
         }
@@ -48,30 +46,34 @@ void BackupCandidates::Data::setSize(long long size)
 void BackupCandidates::Data::setFolder(const QString& folder)
 {
     mFolder = folder;
+
+    calculateFolderSize();
+}
+
+void BackupCandidates::Data::calculateFolderSize()
+{
     if (!createFileFolderAttributes())
     {
         mFolderAttr->setPath(mFolder);
     }
 
-    calculateFolderSize();
-}
-
-void BackupCandidates::Data::setError(int error)
-{
-    if (mSelected && !mDone && mError == BackupErrorCode::NONE)
-    {
-        mError = error;
-    }
-}
-
-void BackupCandidates::Data::calculateFolderSize()
-{
-    createFileFolderAttributes();
     mFolderAttr->requestSize(mFolderAttrContext,
                              [&](long long size)
                              {
                                  setSize(size);
                              });
+}
+
+bool BackupCandidates::Data::createFileFolderAttributes()
+{
+    if (!mFolderAttr)
+    {
+        mFolderAttr = new LocalFileFolderAttributes(mFolder, mFolderAttrContext);
+        mFolderAttr->setValueUpdatesDisable();
+        return true;
+    }
+
+    return false;
 }
 
 QHash<int, QByteArray> BackupCandidates::Data::roleNames()
@@ -87,17 +89,6 @@ QHash<int, QByteArray> BackupCandidates::Data::roleNames()
     };
 
     return roles;
-}
-
-bool BackupCandidates::Data::createFileFolderAttributes()
-{
-    if (!mFolderAttr)
-    {
-        mFolderAttr = new LocalFileFolderAttributes(mFolder, mFolderAttrContext);
-        mFolderAttr->setValueUpdatesDisable();
-        return true;
-    }
-    return false;
 }
 
 //////////////////////////////////////////////////////////////////

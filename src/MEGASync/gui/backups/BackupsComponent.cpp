@@ -3,7 +3,6 @@
 #include "AddExclusionRule.h"
 #include "BackupCandidatesController.h"
 #include "BackupCandidatesModel.h"
-#include "BackupsQmlDialog.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 
@@ -18,8 +17,6 @@ BackupsComponent::BackupsComponent(QObject* parent):
     registerQmlModules();
 
     mBackupCandidatesController->init();
-    QmlManager::instance()->setRootContextProperty(
-        mBackupCandidatesController->getBackupCandidates().get());
     // Just in case it is used from the Onboarding Dialog
     QmlManager::instance()->setRootContextProperty(this);
 
@@ -44,7 +41,6 @@ void BackupsComponent::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("BackupsComponent", 1, 0);
-        qmlRegisterType<BackupsQmlDialog>("BackupsQmlDialog", 1, 0, "BackupsQmlDialog");
         qmlRegisterType<BackupCandidatesProxyModel>("BackupCandidatesProxyModel",
                                                     1,
                                                     0,
@@ -53,24 +49,14 @@ void BackupsComponent::registerQmlModules()
     }
 }
 
-void BackupsComponent::openBackupsTabInPreferences() const
+void BackupsComponent::openDeviceCentre() const
 {
-    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    MegaSyncApp->openDeviceCentre();
 }
 
 bool BackupsComponent::getComesFromSettings() const
 {
     return mComesFromSettings;
-}
-
-std::shared_ptr<BackupCandidates> BackupsComponent::getBackupCandidates() const
-{
-    return mBackupCandidatesController->getBackupCandidates();
-}
-
-int BackupsComponent::getGlobalError() const
-{
-    return mBackupCandidatesController->getBackupCandidates()->getGlobalError();
 }
 
 void BackupsComponent::onBackupsCreationFinished(bool success)
