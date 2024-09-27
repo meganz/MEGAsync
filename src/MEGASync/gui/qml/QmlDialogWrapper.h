@@ -34,6 +34,8 @@ public:
 
     virtual QList<QObject*> getInstancesFromContext();
 
+    QString contextName() const;
+
     template<typename DialogType, typename... A>
     static auto showDialog(A&&... args)
     {
