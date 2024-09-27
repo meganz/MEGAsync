@@ -689,53 +689,56 @@ StalledIssueSPtr MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolve
                                                              const mega::MegaSyncStall* stall)
 {
     auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
-    if (!syncIds.isEmpty())
+    if (syncIds.isEmpty())
     {
-        auto syncId(*syncIds.begin());
-        auto syncSetting(SyncInfo::instance()->getSyncSettingByTag(syncId));
-        if (syncSetting)
+        return nullptr;
+    }
+
+    auto syncId(*syncIds.begin());
+    auto syncSetting(SyncInfo::instance()->getSyncSettingByTag(syncId));
+    if (!syncSetting)
+    {
+        return nullptr;
+    }
+
+    if (syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
+    {
+        if (mIssueBySyncId.contains(syncId))
         {
-            if (syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
+            auto previousIssue(mIssueBySyncId.value(syncId));
+            previousIssue->fillIssue(stall);
+        }
+        else
+        {
+            std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
+
+            if (solver)
             {
-                if (mIssueBySyncId.contains(syncId))
+                auto moveOrRenameSolver(dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
+                if (moveOrRenameSolver)
                 {
-                    auto previousIssue(mIssueBySyncId.value(syncId));
-                    previousIssue->fillIssue(stall);
-                }
-                else
-                {
-                    std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
-
-                    if (solver)
-                    {
-                        auto moveOrRenameSolver(
-                            dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
-                        if (moveOrRenameSolver)
-                        {
-                            moveIssue = moveOrRenameSolver->getIssue();
-                            moveIssue->increaseCombinedNumberOfIssues();
-                        }
-                    }
-                    else if (syncId != mega::INVALID_HANDLE)
-                    {
-                        moveIssue = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
-                    }
-
-                    if (moveIssue)
-                    {
-                        mIssueBySyncId.insert(syncId, moveIssue);
-                        return moveIssue;
-                    }
+                    moveIssue = moveOrRenameSolver->getIssue();
+                    moveIssue->increaseCombinedNumberOfIssues();
                 }
             }
-            else
+            else if (syncId != mega::INVALID_HANDLE)
             {
-                mBackupSyncsDetected.insert(syncId);
+                moveIssue = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
+            }
+
+            if (moveIssue)
+            {
+                mIssueBySyncId.insert(syncId, moveIssue);
+                return moveIssue;
             }
         }
     }
+    else
+    {
+        mBackupSyncsDetected.insert(syncId);
+    }
 
-    //We don´t want to add it to the model, just update it
+    // We don´t want to add it to the model, just update it
     return nullptr;
 }
 
@@ -754,8 +757,7 @@ void MoveOrRenameCannotOccurFactory::finish()
         {
             SyncController::instance().resetSync(
                 backupSettings,
-                mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED,
-                false);
+                mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED);
         }
     }
 

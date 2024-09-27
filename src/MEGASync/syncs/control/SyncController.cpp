@@ -378,8 +378,7 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
 }
 
 void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
-                               MegaSync::SyncRunningState initialState,
-                               bool async)
+                               MegaSync::SyncRunningState initialState)
 {
     if (!syncSetting)
     {
@@ -406,7 +405,7 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
                 emit signalSyncOperationError(syncSetting);
                 auto syncErrorCode(static_cast<MegaSync::Error>(error->getSyncError()));
 
-                if (syncErrorCode != MegaSync::NO_SYNC_ERROR)
+                if (syncSetting && syncErrorCode != MegaSync::NO_SYNC_ERROR)
                 {
                     QString logMsg =
                         QString::fromUtf8(
@@ -441,75 +440,33 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
 
     syncOperationBegins();
 
-    if (async)
-    {
-        auto listenerDisabled =
-            RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                this,
-                [this, processResult, &error, &syncSetting](MegaRequest*, MegaError* e) {
-                    error.reset(e->copy());
-
-                    if (e->getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        auto listenerEnabled =
-                            RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                                this,
-                                [processResult, &error](MegaRequest*, MegaError* e) {
-                                    if (e->getErrorCode() != mega::MegaError::API_OK)
-                                    {
-                                        error.reset(e->copy());
-                                    }
-                                    processResult();
-                                });
-
-                        // Better to access the megaapi from MegaApplication in case it has been
-                        // removed
-                        if (MegaSyncApp->getMegaApi())
+    MegaApiSynchronizedRequest::runRequestWithResult(
+        &mega::MegaApi::setSyncRunState,
+        MegaSyncApp->getMegaApi(),
+        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e) {
+            if (e->getErrorCode() == mega::MegaError::API_OK)
+            {
+                MegaApiSynchronizedRequest::runRequestWithResult(
+                    &mega::MegaApi::setSyncRunState,
+                    MegaSyncApp->getMegaApi(),
+                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e) {
+                        if (e->getErrorCode() != mega::MegaError::API_OK)
                         {
-                            MegaSyncApp->getMegaApi()->setSyncRunState(syncSetting->backupId(),
-                                                                       MegaSync::RUNSTATE_RUNNING,
-                                                                       listenerEnabled.get());
+                            error.reset(e->copy());
                         }
-                    }
-                    else
-                    {
-                        error.reset(e->copy());
                         processResult();
-                    }
-                });
-
-        mApi->setSyncRunState(syncSetting->backupId(), initialState, listenerDisabled.get());
-    }
-    else
-    {
-        MegaApiSynchronizedRequest::runRequestWithResult(
-            &mega::MegaApi::setSyncRunState,
-            MegaSyncApp->getMegaApi(),
-            [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e) {
-                if (e->getErrorCode() == mega::MegaError::API_OK)
-                {
-                    MegaApiSynchronizedRequest::runRequestWithResult(
-                        &mega::MegaApi::setSyncRunState,
-                        MegaSyncApp->getMegaApi(),
-                        [&error, processResult](mega::MegaRequest*, mega::MegaError* e) {
-                            if (e->getErrorCode() != mega::MegaError::API_OK)
-                            {
-                                error.reset(e->copy());
-                            }
-                            processResult();
-                        },
-                        syncSetting->backupId(),
-                        MegaSync::RUNSTATE_RUNNING);
-                }
-                else
-                {
-                    error.reset(e->copy());
-                    processResult();
-                }
-            },
-            syncSetting->backupId(),
-            initialState);
-    }
+                    },
+                    syncSetting->backupId(),
+                    MegaSync::RUNSTATE_RUNNING);
+            }
+            else
+            {
+                error.reset(e->copy());
+                processResult();
+            }
+        },
+        syncSetting->backupId(),
+        initialState);
 }
 
 void SyncController::updateSyncSettings(const MegaError& e, std::shared_ptr<SyncSettings> syncSetting)
