@@ -80,7 +80,7 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
     separator.append(QString::fromLatin1("https://mega.co.nz/").append(QString::fromUtf8("|")));
     separator.append(QString::fromLatin1("https://mega.nz/").append(QString::fromUtf8("|")));
     separator.append(QString::fromLatin1("http://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("http//mega.nz/"));
+    separator.append(QString::fromLatin1("http://mega.nz/"));
 
     QStringList tempLinks = text.split(QRegExp(separator));
     tempLinks.removeAt(0);
