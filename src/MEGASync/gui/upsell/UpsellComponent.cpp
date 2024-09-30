@@ -40,6 +40,11 @@ void UpsellComponent::setTransferFinishTime(long long time)
     mController->setTransferFinishTime(time);
 }
 
+UpsellPlans::ViewMode UpsellComponent::viewMode() const
+{
+    return mController->viewMode();
+}
+
 void UpsellComponent::buyButtonClicked()
 {
     mController->openSelectedPlanUrl();

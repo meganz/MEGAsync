@@ -264,6 +264,11 @@ QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
     return Utilities::getReadablePlanFromId(proLevel);
 }
 
+UpsellPlans::ViewMode UpsellController::viewMode() const
+{
+    return mPlans->getViewMode();
+}
+
 void UpsellController::onBilledPeriodChanged()
 {
     updatePlans();

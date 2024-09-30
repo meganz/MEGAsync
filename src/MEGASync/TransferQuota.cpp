@@ -1,20 +1,20 @@
 #include "TransferQuota.h"
 
 #include "DialogOpener.h"
+#include "mega/types.h"
 #include "OverQuotaDialog.h"
 #include "Platform.h"
 #include "StatsEventHandler.h"
+#include "UpsellComponent.h"
 
-TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)
-    : mMegaApi(MegaSyncApp->getMegaApi()),
-      mPricing(nullptr),
-      mPreferences(Preferences::instance()),
-      mOsNotifications{std::move(desktopNotifications)},
-      mUpgradeDialog{nullptr},
-      mQuotaState{QuotaState::OK},
-      mWaitTimeUntil{std::chrono::system_clock::time_point()},
-      overQuotaAlertVisible{false},
-      almostQuotaAlertVisible{false}
+TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications):
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mPreferences(Preferences::instance()),
+    mOsNotifications{std::move(desktopNotifications)},
+    mQuotaState{QuotaState::OK},
+    mWaitTimeUntil{std::chrono::system_clock::time_point()},
+    overQuotaAlertVisible{false},
+    almostQuotaAlertVisible{false}
 {
     updateQuotaState();
 }
@@ -95,10 +95,7 @@ void TransferQuota::updateQuotaState()
             emit sendState(mQuotaState);
             if (newState == QuotaState::OK)
             {
-                if (mUpgradeDialog)
-                {
-                    mUpgradeDialog->close();
-                }
+                closeUpsellTransferDialog();
             }
             else
             {
@@ -110,26 +107,21 @@ void TransferQuota::updateQuotaState()
 
 void TransferQuota::checkExecuteDialog()
 {
-    const auto disabledUntil = mPreferences->getTransferOverQuotaDialogLastExecution()+Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION;
-    const bool dialogExecutionEnabled{std::chrono::system_clock::now() >= disabledUntil};
-    if(dialogExecutionEnabled)
+    const auto disabledUntil(mPreferences->getTransferOverQuotaDialogLastExecution() +
+                             Preferences::OVER_QUOTA_DIALOG_DISABLE_DURATION);
+    const bool dialogExecutionEnabled(std::chrono::system_clock::now() >= disabledUntil);
+    if (dialogExecutionEnabled)
     {
         mPreferences->setTransferOverQuotaDialogLastExecution(std::chrono::system_clock::now());
-        MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::TRSF_OVER_QUOTA_DIAL);
-        if (!mUpgradeDialog)
-        {
-            mUpgradeDialog = new UpgradeDialog(mMegaApi, mPricing, mCurrency);
-            DialogOpener::showDialog(mUpgradeDialog);
-        }
-        else if (!mUpgradeDialog->isVisible())
-        {
-            mUpgradeDialog->activateWindow();
-            mUpgradeDialog->raise();
-        }
+        MegaSyncApp->getStatsEventHandler()->sendEvent(
+            AppStatsEvents::EventType::TRSF_OVER_QUOTA_DIAL);
 
-        const auto endWaitTimeSinceEpoch = mWaitTimeUntil.time_since_epoch();
-        const auto endWaitTimeSinceEpochSeconds = std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count();
-        mUpgradeDialog->setTimestamp(endWaitTimeSinceEpochSeconds);
+        const auto endWaitTimeSinceEpoch(mWaitTimeUntil.time_since_epoch());
+        const auto endWaitTimeSinceEpochSeconds(
+            std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count());
+        QMLComponent::openDialog<UpsellComponent>(nullptr, UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
+            ->wrapper()
+            ->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
     }
 }
 
@@ -190,41 +182,23 @@ void TransferQuota::checkExecuteWarningUiMessage()
 void TransferQuota::checkExecuteAlerts()
 {
     const MegaApplication* megaApp{static_cast<MegaApplication*>(qApp)};
-    const bool allowAlerts{megaApp->isInfoDialogVisible() || mUpgradeDialog || Platform::getInstance()->isUserActive()};
+    const bool allowAlerts{megaApp->isInfoDialogVisible() ||
+                           Platform::getInstance()->isUserActive()};
     const bool userLogged{mPreferences && mPreferences->logged()};
     const bool bandwidthAlertsEnabled{!megaApp->finished() && userLogged && allowAlerts};
     if (bandwidthAlertsEnabled)
     {
-        if(isOverQuota())
+        if (isOverQuota())
         {
             checkExecuteDialog();
             checkExecuteNotification();
             checkExecuteUiMessage();
         }
-        else if(isQuotaWarning())
+        else if (isQuotaWarning())
         {
             checkExecuteWarningOsNotification();
             checkExecuteWarningUiMessage();
         }
-    }
-}
-
-void TransferQuota::setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency)
-{
-    mPricing = pricing;
-    mCurrency = currency;
-
-    if(mUpgradeDialog)
-    {
-        mUpgradeDialog->setPricing(pricing, currency);
-    }
-}
-
-void TransferQuota::closeDialog()
-{
-    if(mUpgradeDialog)
-    {
-        mUpgradeDialog->close();
     }
 }
 
@@ -266,6 +240,18 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
     }
 
     func(QDialog::Rejected);
+}
+
+void TransferQuota::closeUpsellTransferDialog()
+{
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
+    {
+        auto viewMode(dialog->getDialog()->wrapper()->viewMode());
+        if (viewMode == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
+        {
+            dialog->close();
+        }
+    }
 }
 
 QTime TransferQuota::getRemainingTransferQuotaTime()

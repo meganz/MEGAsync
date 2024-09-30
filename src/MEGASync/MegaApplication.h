@@ -23,7 +23,6 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
-#include "UpgradeOverStorage.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -418,7 +417,6 @@ protected:
     long long receivedStorageSum;
     unsigned long long mMaxMemoryUsage;
     int exportOps;
-    QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -601,6 +599,7 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+    void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
 

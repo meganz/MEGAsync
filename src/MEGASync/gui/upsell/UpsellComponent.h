@@ -23,6 +23,8 @@ public:
 
     void setTransferFinishTime(long long time);
 
+    UpsellPlans::ViewMode viewMode() const;
+
 public slots:
     void buyButtonClicked();
     void billedRadioButtonClicked(bool isMonthly);
