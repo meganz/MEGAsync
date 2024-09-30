@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string/>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#wControlButtons
+{
+background-color: transparent;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>0</number>
@@ -33,6 +39,9 @@
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string notr="true"/>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
      <layout class="QVBoxLayout" name="tableLayout">
       <property name="spacing">
@@ -56,22 +65,22 @@
          <string notr="true"/>
         </property>
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::Shape::NoFrame</enum>
         </property>
         <property name="editTriggers">
-         <set>QAbstractItemView::AllEditTriggers</set>
+         <set>QAbstractItemView::EditTrigger::AllEditTriggers</set>
         </property>
         <property name="alternatingRowColors">
          <bool>false</bool>
         </property>
         <property name="selectionMode">
-         <enum>QAbstractItemView::SingleSelection</enum>
+         <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
         </property>
         <property name="selectionBehavior">
-         <enum>QAbstractItemView::SelectRows</enum>
+         <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
         </property>
         <property name="textElideMode">
-         <enum>Qt::ElideMiddle</enum>
+         <enum>Qt::TextElideMode::ElideMiddle</enum>
         </property>
         <property name="showGrid">
          <bool>false</bool>
@@ -116,6 +125,18 @@
          </property>
          <item>
           <widget class="QPushButton" name="bPermissions">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>26</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -125,12 +146,18 @@
            <property name="autoDefault">
             <bool>false</bool>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">outline</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
+           </property>
           </widget>
          </item>
          <item>
           <spacer name="hSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -142,41 +169,77 @@
          </item>
          <item>
           <widget class="QPushButton" name="bAdd">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>26</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
+            <enum>Qt::FocusPolicy::StrongFocus</enum>
            </property>
            <property name="text">
             <string>Add</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/plus.svg</normaloff>:/images/plus.svg</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
            </property>
+           <property name="type" stdset="0">
+            <string notr="true">primary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="bDelete">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>26</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>26</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
+            <enum>Qt::FocusPolicy::StrongFocus</enum>
            </property>
            <property name="text">
             <string>Delete</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/minus.svg</normaloff>:/images/minus.svg</iconset>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">outline</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
            </property>
           </widget>
          </item>
@@ -189,7 +252,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

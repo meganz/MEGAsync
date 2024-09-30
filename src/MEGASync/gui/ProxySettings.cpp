@@ -24,6 +24,7 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 #ifndef Q_OS_LINUX
     mProxyAuto = new QRadioButton(this);
     mProxyAuto->setText(tr("Auto-detect"));
+    mProxyAuto->setCursor(Qt::PointingHandCursor);
     mUi->verticalLayout->addWidget(mProxyAuto);
 #endif
 

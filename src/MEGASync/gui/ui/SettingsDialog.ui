@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>675</width>
-    <height>684</height>
+    <width>640</width>
+    <height>765</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>765</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="contextMenuPolicy">
    <enum>Qt::ContextMenuPolicy::DefaultContextMenu</enum>
@@ -17,111 +29,7 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#switch
-{
-border-style: none;
-background-color: transparent;
-}
-
-#switch::indicator
-{
-border-style: none;
-background-color: transparent;
-width: 40px;
-height: 19px;
-}
-
-#switch::indicator:checked
-{
-image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:checked:hover
-{
-image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:checked:pressed
-{
-image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:unchecked
-{
-image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:unchecked:hover
-{
-image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
-}
-
-#switch::indicator:unchecked:pressed
-{
-image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
-}
-
-#SmartDescription, #AdvanceDescription
-{
-color: #616366; /*colorToken.text-secondary*/
-}
-
-#LearnMoreContainer, #SelectorsContainer, #ButtonContainer, #widget_21, #widget_6, #AdvanceSelector, #SmartSelector
-{
-background-color: transparent;
-}
-
-#bAdd
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#bHelp
-{
-border: none;
-color: #2C5BEB; /*colorToken.link-primary*/
-background-color: transparent;
-font-weight: bold;
-}
-
-#wControlButtons
-{
-background-color: #fafafa; /*colorToken.surface-1*/
-}
-
-#wDetails
-{
-background-color: #fafafa; /*colorToken.surface-1*/
-}
-
-#wUpdateSection
-{
-background-color: transparent;
-}
-
-#bClearCache, #bClearRemoteCache, #bClearFileVersions
-{
-background-color:  #F3F4F4; /*colorToken.button-secondary*/
-color: #616366; /*colorToken.text-secondary*/
-border-color:  #F3F4F4; /*colorToken.button-secondary*/
-border-width: 0px;
-border-style: solid;
-border-radius: 5px;
-padding: 3px 10px 3px 10px;
-}
-
-#sCacheSchedulerDays
-{
-border-style: solid;
-border-color: #D8D9DB; /*colorToken.border-strong*/
-border-width: 1px;
-border-radius: 5px;
-background-color: #FFFFFF; /* colorToken.page-background*/
-padding: 6px;
-}
-
-/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
+   <string notr="true">/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
 /*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
 
 /*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
@@ -150,27 +58,36 @@ padding: 6px;
 /*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
 /*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
 
-#wTabHeader
+#wTabHeader &gt; QToolButton:checked
 {
-margin-left: 12px;
-margin-right: 12px;
-border-bottom: 1px solid rgba(0,0,0,0.1);;
+border-color: #ffdd1405; /*colorToken.button-brand*/
+font-weight: 600;
 }
 
-#wTabHeader QToolButton
+#wTabHeader &gt; QToolButton
 {
-padding: 12px 13px 10px 13px;
-border-left: 0px;
+padding: 5px 8px 5px 8px;
 border-top: 0px;
+border-left: 0px;
 border-right: 0px;
-border-bottom: 3px solid #f1f1f1; /* colorToken.border-strong*/
+border-bottom: 3px solid transparent;
 background-color: transparent;
-color: #333333; /*colorToken.text-primary*/
+color: #ff333333; /*colorToken.text-primary*/
+font-size: 10px;
+font-weight: 400;
 }
 
-#wTabHeader QToolButton:checked
+#bHelp
 {
-border-bottom: 3px solid #0078D7; /*colorToken.button-brand*/
+border: none;
+color: #ff2C5BEB; /*colorToken.link-primary*/
+background-color: transparent;
+font-weight: bold;
+}
+
+#LearnMoreContainer, #SelectorsContainer, #ButtonContainer,#widget_6, #widget_21
+{
+background-color: transparent;
 }
 
 #bChangePasswordPic, #bRecoveryKeyPic
@@ -205,7 +122,7 @@ border: none;
 #lAccountType, #lName
 {
 font-size: 13px;
-background-color: #fafafa; /*colorToken.surface-1*/
+background-color: transparent;
 }
 
 #lAccountType
@@ -276,25 +193,23 @@ margin-bottom: 3px;
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0,0,0,0,1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0,0,0,0,0,0,0,1">
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="sizeConstraint">
-       <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
-      </property>
-      <property name="leftMargin">
-       <number>12</number>
-      </property>
-      <property name="topMargin">
-       <number>9</number>
-      </property>
-      <property name="rightMargin">
-       <number>12</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
+      <item>
+       <spacer name="horizontalSpacer_9">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
       <item>
        <widget class="QToolButton" name="bGeneral">
         <property name="minimumSize">
@@ -311,6 +226,9 @@ margin-bottom: 3px;
         </property>
         <property name="font">
          <font/>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
@@ -359,6 +277,9 @@ margin-bottom: 3px;
         <property name="font">
          <font/>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
         </property>
@@ -402,6 +323,9 @@ margin-bottom: 3px;
         </property>
         <property name="font">
          <font/>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
@@ -447,6 +371,9 @@ margin-bottom: 3px;
         <property name="font">
          <font/>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
         </property>
@@ -490,6 +417,9 @@ margin-bottom: 3px;
         </property>
         <property name="font">
          <font/>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
@@ -535,6 +465,9 @@ margin-bottom: 3px;
         <property name="font">
          <font/>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
         </property>
@@ -579,6 +512,9 @@ margin-bottom: 3px;
         <property name="font">
          <font/>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
         </property>
@@ -622,6 +558,9 @@ margin-bottom: 3px;
         </property>
         <property name="font">
          <font/>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="focusPolicy">
          <enum>Qt::FocusPolicy::StrongFocus</enum>
@@ -675,10 +614,10 @@ margin-bottom: 3px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pGeneral">
-      <layout class="QVBoxLayout" name="pGeneralLayout">
+      <layout class="QVBoxLayout" name="pGeneralLayout" stretch="0,0,0,0,0,0,0,0,1">
        <property name="spacing">
         <number>5</number>
        </property>
@@ -696,6 +635,9 @@ margin-bottom: 3px;
        </property>
        <item>
         <widget class="QGroupBox" name="gGeneral">
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_11">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -704,15 +646,27 @@ margin-bottom: 3px;
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Launch at login</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">mega</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="cOverlayIcons">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Enable sync status icons</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">mega</string>
               </property>
              </widget>
             </item>
@@ -721,8 +675,14 @@ margin-bottom: 3px;
               <property name="enabled">
                <bool>true</bool>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Update automatically</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">mega</string>
               </property>
              </widget>
             </item>
@@ -782,6 +742,9 @@ margin-bottom: 3px;
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="focusPolicy">
                  <enum>Qt::FocusPolicy::StrongFocus</enum>
                 </property>
@@ -790,6 +753,12 @@ margin-bottom: 3px;
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">outline</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
                 </property>
                </widget>
               </item>
@@ -804,6 +773,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gLanguage">
          <property name="title">
           <string>Language</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_17">
           <property name="leftMargin">
@@ -826,6 +798,15 @@ margin-bottom: 3px;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="frame">
+             <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
+            </property>
             <item>
              <property name="text">
               <string notr="true">English</string>
@@ -840,6 +821,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gThemeSelector">
          <property name="title">
           <string>Theme</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_21">
           <property name="leftMargin">
@@ -862,6 +846,12 @@ margin-bottom: 3px;
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -871,6 +861,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gCache">
          <property name="title">
           <string>%1 (local cache)</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
           <item>
@@ -898,11 +891,32 @@ margin-bottom: 3px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearCache">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Clear</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -929,8 +943,14 @@ margin-bottom: 3px;
             </property>
             <item>
              <widget class="QCheckBox" name="cCacheSchedulerEnabled">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Remove files older than</string>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">mega</string>
               </property>
              </widget>
             </item>
@@ -952,8 +972,11 @@ margin-bottom: 3px;
             </item>
             <item>
              <widget class="QSpinBox" name="sCacheSchedulerDays">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="buttonSymbols">
-               <enum>QAbstractSpinBox::ButtonSymbols::NoButtons</enum>
+               <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
               </property>
               <property name="minimum">
                <number>1</number>
@@ -1002,6 +1025,9 @@ margin-bottom: 3px;
          <property name="title">
           <string>SyncDebris (remote cache)</string>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_21">
           <property name="leftMargin">
            <number>10</number>
@@ -1043,11 +1069,32 @@ margin-bottom: 3px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearRemoteCache">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Clear</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -1071,6 +1118,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gFileVersions">
          <property name="title">
           <string>File versions</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <property name="leftMargin">
@@ -1107,11 +1157,32 @@ margin-bottom: 3px;
           </item>
           <item>
            <widget class="QPushButton" name="bClearFileVersions">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Clear</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -1133,8 +1204,14 @@ margin-bottom: 3px;
           </item>
           <item>
            <widget class="QCheckBox" name="cFileVersioning">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Enable file versioning</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
             </property>
            </widget>
           </item>
@@ -1159,14 +1236,23 @@ margin-bottom: 3px;
          <property name="title">
           <string>Sleep settings</string>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cbSleepMode">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
             </property>
            </widget>
           </item>
@@ -1177,6 +1263,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gBugReport">
          <property name="title">
           <string>Issue report</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="leftMargin">
@@ -1209,11 +1298,20 @@ margin-bottom: 3px;
           </item>
           <item alignment="Qt::AlignmentFlag::AlignRight">
            <widget class="QPushButton" name="bSendBug">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Report Issue</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -1224,6 +1322,9 @@ margin-bottom: 3px;
         <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Orientation::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Policy::Maximum</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1274,6 +1375,9 @@ margin-bottom: 3px;
          <property name="title">
           <string>Account</string>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1313,7 +1417,7 @@ margin-bottom: 3px;
                    </sizepolicy>
                   </property>
                   <property name="icon">
-                   <iconset>
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/Small_Free.png</normaloff>:/images/Small_Free.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1341,6 +1445,21 @@ margin-bottom: 3px;
              <layout class="QHBoxLayout" name="horizontalLayout">
               <item>
                <widget class="QPushButton" name="bUpgrade">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="focusPolicy">
                  <enum>Qt::FocusPolicy::StrongFocus</enum>
                 </property>
@@ -1350,15 +1469,42 @@ margin-bottom: 3px;
                 <property name="autoDefault">
                  <bool>false</bool>
                 </property>
+                <property name="type" stdset="0">
+                 <string notr="true">outline</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
+                </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="bMyAccount">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>26</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>My Account</string>
                 </property>
                 <property name="autoDefault">
                  <bool>false</bool>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">outline</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
                 </property>
                </widget>
               </item>
@@ -1379,6 +1525,9 @@ margin-bottom: 3px;
          </property>
          <property name="title">
           <string>Storage Space</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QVBoxLayout" name="gStorageSpaceLayout">
           <property name="spacing">
@@ -1439,11 +1588,32 @@ margin-bottom: 3px;
             </item>
             <item>
              <widget class="QPushButton" name="bStorageDetails">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Details</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">outline</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -1456,6 +1626,9 @@ margin-bottom: 3px;
         <widget class="QGroupBox" name="gBandwidthQuota">
          <property name="title">
           <string>Transfer Quota</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QVBoxLayout" name="gBandwidthQuotaLayout">
           <property name="leftMargin">
@@ -1590,6 +1763,9 @@ margin-bottom: 3px;
          <property name="title">
           <string>Recovery Key</string>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
          <layout class="QHBoxLayout" name="gRecoveryKeyLayout">
           <property name="spacing">
            <number>32</number>
@@ -1659,6 +1835,21 @@ min-height: 72px;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Export Key</string>
               </property>
@@ -1667,6 +1858,12 @@ min-height: 72px;
               </property>
               <property name="flat">
                <bool>false</bool>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">outline</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -1685,6 +1882,9 @@ min-height: 72px;
          </property>
          <property name="flat">
           <bool>false</bool>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <property name="spacing">
@@ -1755,11 +1955,32 @@ min-height: 72px;
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>26</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Change Password</string>
               </property>
               <property name="autoDefault">
                <bool>false</bool>
+              </property>
+              <property name="type" stdset="0">
+               <string notr="true">outline</string>
+              </property>
+              <property name="dimension" stdset="0">
+               <string notr="true">small</string>
               </property>
              </widget>
             </item>
@@ -1807,6 +2028,9 @@ min-height: 72px;
          </property>
          <property name="flat">
           <bool>false</bool>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QFormLayout" name="gDefaultFoldersLayout">
           <property name="horizontalSpacing">
@@ -1869,22 +2093,46 @@ min-height: 72px;
                <property name="readOnly">
                 <bool>true</bool>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">mega</string>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bUploadFolder">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="text">
                 <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">outline</string>
+               </property>
+               <property name="dimension" stdset="0">
+                <string notr="true">small</string>
+               </property>
               </widget>
              </item>
             </layout>
            </widget>
           </item>
-          <item row="2" column="0" colspan="2">
+          <item row="3" column="0" colspan="2">
            <widget class="QLabel" name="lDownloadFolder">
             <property name="font">
              <font/>
@@ -1897,7 +2145,7 @@ min-height: 72px;
             </property>
            </widget>
           </item>
-          <item row="3" column="0" colspan="2">
+          <item row="4" column="0" colspan="2">
            <widget class="QWidget" name="widget_21" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -1929,20 +2177,60 @@ min-height: 72px;
                <property name="readOnly">
                 <bool>true</bool>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">mega</string>
+               </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bDownloadFolder">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>26</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="text">
                 <string>Move…</string>
                </property>
                <property name="autoDefault">
                 <bool>false</bool>
                </property>
+               <property name="type" stdset="0">
+                <string notr="true">outline</string>
+               </property>
+               <property name="dimension" stdset="0">
+                <string notr="true">small</string>
+               </property>
               </widget>
              </item>
             </layout>
            </widget>
+          </item>
+          <item row="2" column="0">
+           <spacer name="verticalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Orientation::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Policy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </widget>
@@ -1992,6 +2280,9 @@ min-height: 72px;
          </property>
          <property name="title">
           <string>Bandwidth</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QHBoxLayout" name="gBandwidthSettingsLayout">
           <property name="leftMargin">
@@ -2070,11 +2361,32 @@ min-height: 72px;
           </item>
           <item>
            <widget class="QPushButton" name="bOpenBandwidthSettings">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -2091,6 +2403,9 @@ min-height: 72px;
          </property>
          <property name="title">
           <string>Proxies</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
          </property>
          <layout class="QHBoxLayout" name="gProxySettingsLayout">
           <property name="leftMargin">
@@ -2153,11 +2468,32 @@ min-height: 72px;
           </item>
           <item>
            <widget class="QPushButton" name="bOpenProxySettings">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>26</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Change Settings…</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -2202,6 +2538,9 @@ min-height: 72px;
       </property>
       <item alignment="Qt::AlignmentFlag::AlignLeft">
        <widget class="QPushButton" name="bHelp">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -2320,11 +2659,32 @@ min-height: 72px;
           </property>
           <item>
            <widget class="QPushButton" name="bLogout">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Log out</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -2346,11 +2706,32 @@ min-height: 72px;
           </property>
           <item>
            <widget class="QPushButton" name="bFullCheck">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Force a Full Scan</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -2372,8 +2753,29 @@ min-height: 72px;
           </property>
           <item>
            <widget class="QPushButton" name="bBackupCenter">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Go to backup centre</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>
@@ -2398,11 +2800,32 @@ min-height: 72px;
           </property>
           <item>
            <widget class="QPushButton" name="bSessionHistory">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
             <property name="text">
              <string>Session history</string>
             </property>
             <property name="autoDefault">
              <bool>false</bool>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">outline</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
             </property>
            </widget>
           </item>

@@ -37,52 +37,7 @@ border-image: url(&quot;:/images/icons/folder/synced-folder.png&quot;);
 max-width: 96px;
 max-height: 96px;
 }
-
-#bRemove
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#labelHeader
-{
-	/* Layout */
-	align-self: stretch;
-
-    /* Label 2/Semibold */
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
-    max-width: 432px;
-}
-
-#labelMessage
-{
-	/* Layout */
-    max-width: 432px;
-    height: 36px;
-    align-self: stretch;
-
-	/* Typography */
-    font-family: Inter;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 18px;
-	word-wrap: break-word; /* Enable word wrap */
-    white-space: pre-wrap;
-}
-
-QPushButton
-{
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 20px;
-}</string>
+</string>
   </property>
   <widget class="QLabel" name="labelFolderIcon">
    <property name="geometry">
@@ -111,6 +66,9 @@ QPushButton
    </property>
    <property name="text">
     <string>Remove this sync?</string>
+   </property>
+   <property name="type" stdset="0">
+    <string notr="true">title</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelMessage">
@@ -168,6 +126,12 @@ QPushButton
    <property name="flat">
     <bool>false</bool>
    </property>
+   <property name="type" stdset="0">
+    <string notr="true">outline</string>
+   </property>
+   <property name="dimension" stdset="0">
+    <string notr="true">medium</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="bRemove">
    <property name="geometry">
@@ -205,6 +169,12 @@ QPushButton
    <property name="icon">
     <iconset resource="../Resources.qrc">
      <normaloff>:/images/x.svg</normaloff>:/images/x.svg</iconset>
+   </property>
+   <property name="type" stdset="0">
+    <string notr="true">primary</string>
+   </property>
+   <property name="dimension" stdset="0">
+    <string notr="true">medium</string>
    </property>
   </widget>
  </widget>

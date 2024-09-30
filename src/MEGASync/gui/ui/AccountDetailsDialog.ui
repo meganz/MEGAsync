@@ -10,13 +10,25 @@
     <x>0</x>
     <y>0</y>
     <width>496</width>
-    <height>419</height>
+    <height>397</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
     <width>496</width>
-    <height>419</height>
+    <height>397</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>496</width>
+    <height>397</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -39,37 +51,37 @@
 
 #wCircularStorage, #wCircularTransfer
 {
-qproperty-outerCircleBackgroundColor: #f3f4f4; /*colorToken.surface-2*/
-qproperty-innerCircleBackgroundColor: #ffffff; /*colorToken.page-background*/
+qproperty-outerCircleBackgroundColor: #fff3f4f4; /*colorToken.surface-2*/
+qproperty-innerCircleBackgroundColor: #ffffffff; /*colorToken.page-background*/
 
-qproperty-lightOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
-qproperty-darkOkProgressBarColors: #477ef7; /*colorToken.indicator-indigo*/
-qproperty-lightWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
-qproperty-darkWarnProgressBarColors: #fb6514; /*colorToken.indicator-orange*/
-qproperty-lightFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
-qproperty-darkFullProgressBarColors: #F63D6B; /*colorToken.indicator-pink*/
+qproperty-lightOkProgressBarColors: #ff477ef7; /*colorToken.indicator-indigo*/
+qproperty-darkOkProgressBarColors: #ff477ef7; /*colorToken.indicator-indigo*/
+qproperty-lightWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-darkWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-lightFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
+qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 
-qproperty-okStateTextColor: #303233; /*colorToken.text-primary*/
+qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
 }
 
 #AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
 {
-color: #fb6514; /*colorToken.indicator-orange*/
+color: #fffb6514; /*colorToken.indicator-orange*/
 }
 
 #AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
 {
-color: #f63d6b; /*colorToken.indicator-pink*/
+color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
 #AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
 {
-color: #fb6514; /*colorToken.indicator-orange*/
+color: #fffb6514; /*colorToken.indicator-orange*/
 }
 
 #AccountDetailsDialog[transferState=&quot;full&quot;] #headerBox #lUsedTransfer
 {
-color: #f63d6b; /*colorToken.indicator-pink*/
+color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
@@ -88,7 +100,7 @@ border-radius: 15px;
 
 #line
 {
-background-color: #f3f4f4; /*colorToken.surface-2*/
+background-color: #fff3f4f4; /*colorToken.surface-2*/
 border-style: none;
 }
 
@@ -96,7 +108,7 @@ border-style: none;
 {
 border-style:none;
 border-radius:20px;
-background-color: #fafafa; /*colorToken.surface-1*/
+background-color: #fffafafa; /*colorToken.surface-1*/
 }
 
 QProgressBar
@@ -106,13 +118,13 @@ min-height: 4px;
 max-height: 4px;
 border:0px;
 border-radius: 2px;
-background-color: #f3f4f4; /*colorToken.surface-2*/
+background-color: #fff3f4f4; /*colorToken.surface-2*/
 margin-bottom: 4px;
 }
 
 QProgressBar::chunk
 {
-background-color: #477EF7; /*colorToken.indicator-indigo*/
+background-color: #ff477EF7; /*colorToken.indicator-indigo*/
 border-radius: 2px;
 border:0px;
 }
@@ -137,7 +149,7 @@ QLabel
 {
 font-family: &quot;Lato&quot;;
 background-color: transparent;
-color: #303233; /*colorToken.text-primary*/
+color: #ff303233; /*colorToken.text-primary*/
 font-size: 13px;
 }
 
@@ -226,7 +238,7 @@ font-size: 13px;
     max-width:440px;
     min-width:10px;
     font-size: 14px;
-    color: #303233; /*colorToken.text-primary*/
+    color: #ff303233; /*colorToken.text-primary*/
     padding-left:24px;
     padding-right:24px;
     qproperty-alignment: 'AlignVCenter | AlignHCenter';
@@ -321,7 +333,7 @@ min-width:219px;
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,1">
    <item>
     <widget class="QGroupBox" name="headerBox">
      <property name="title">
@@ -703,7 +715,7 @@ min-width:219px;
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>20</number>
+       <number>10</number>
       </property>
       <item>
        <widget class="QWidget" name="wCloudDrive" native="true">

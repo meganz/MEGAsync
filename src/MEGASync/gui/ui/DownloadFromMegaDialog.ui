@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -32,61 +32,13 @@
    <string>Download from MEGA</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bOK
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#eFolderPath
-{
-border-radius: 8px;
-border-color: #D8D9DB; /*colorToken.border-strong*/
-border-style: solid;
-border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
-height: 30px;
-padding-left: 10px;
-}
-
-QLabel
-{
-color: #303233; /*colorToken.text-primary*/
-font-size: 12px;
-font-weight: 400;
-}
-
-#label_2
+   <string notr="true">#label_2
 {
 font-weight: 600;
-}
-
-#bChange
-{
-background-color:  #F3F4F4; /*colorToken.button-secondary*/
-color: #616366; /*colorToken.text-secondary*/
-border-color:  #F3F4F4; /*colorToken.button-secondary*/
-border-width: 0px;
-border-style: solid;
-border-radius: 5px;
-padding: 3px 10px 3px 10px;
-}
-</string>
+}</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>10</number>
-   </property>
-   <property name="leftMargin">
-    <number>24</number>
-   </property>
-   <property name="topMargin">
-    <number>15</number>
-   </property>
-   <property name="rightMargin">
-    <number>24</number>
-   </property>
-   <property name="bottomMargin">
     <number>15</number>
    </property>
    <item>
@@ -112,13 +64,7 @@ padding: 3px 10px 3px 10px;
     </widget>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <property name="spacing">
-      <number>5</number>
-     </property>
-     <property name="bottomMargin">
-      <number>7</number>
-     </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="label_2">
        <property name="sizePolicy">
@@ -134,9 +80,6 @@ padding: 3px 10px 3px 10px;
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>6</number>
-       </property>
        <item>
         <widget class="QLineEdit" name="eFolderPath">
          <property name="enabled">
@@ -151,27 +94,39 @@ padding: 3px 10px 3px 10px;
          <property name="readOnly">
           <bool>true</bool>
          </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="bChange">
          <property name="minimumSize">
           <size>
-           <width>85</width>
+           <width>90</width>
            <height>36</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>85</width>
+           <width>90</width>
            <height>36</height>
           </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="text">
           <string>Choose</string>
          </property>
          <property name="flat">
           <bool>false</bool>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">secondary</string>
+         </property>
+         <property name="dimension" stdset="0">
+          <string notr="true">medium</string>
          </property>
         </widget>
        </item>
@@ -184,6 +139,9 @@ padding: 3px 10px 3px 10px;
      <property name="enabled">
       <bool>true</bool>
      </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
@@ -193,6 +151,9 @@ padding: 3px 10px 3px 10px;
      <property name="checked">
       <bool>false</bool>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -200,20 +161,11 @@ padding: 3px 10px 3px 10px;
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>40</height>
+       <height>16777215</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>6</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
       <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
        <number>0</number>
       </property>
       <property name="bottomMargin">
@@ -242,18 +194,27 @@ padding: 3px 10px 3px 10px;
         </property>
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>90</width>
           <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>80</width>
+          <width>90</width>
           <height>36</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Cancel</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">outline</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>
@@ -277,8 +238,17 @@ padding: 3px 10px 3px 10px;
           <height>36</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>OK</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">medium</string>
         </property>
        </widget>
       </item>

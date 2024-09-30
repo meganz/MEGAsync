@@ -35,22 +35,7 @@
    <string>Bandwidth</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bUpdate
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#eUploadLimit, #eDownloadLimit
-{
-border-radius: 8px;
-border-color: #04101E; /*colorToken.border-strong-selected*/
-border-style: solid;
-border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
-padding-right: 5px;
-}
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="BandwidthSettingsLayout">
    <property name="spacing">
@@ -88,9 +73,18 @@ padding-right: 5px;
      <property name="title">
       <string>Upload rate limit</string>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
        <widget class="QRadioButton" name="rUploadAutoLimit">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -131,6 +125,9 @@ padding-right: 5px;
       </item>
       <item row="2" column="0">
        <widget class="QRadioButton" name="rUploadNoLimit">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -142,6 +139,9 @@ padding-right: 5px;
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>No limit</string>
@@ -170,6 +170,9 @@ padding-right: 5px;
           <width>90</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Limit to:</string>
@@ -212,6 +215,9 @@ padding-right: 5px;
           <height>25</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>IBeamCursor</cursorShape>
+        </property>
         <property name="layoutDirection">
          <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
@@ -220,6 +226,9 @@ padding-right: 5px;
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
         </property>
        </widget>
       </item>
@@ -275,9 +284,15 @@ padding-right: 5px;
      <property name="title">
       <string>Download rate limit</string>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
        <widget class="QRadioButton" name="rDownloadNoLimit">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>No limit</string>
         </property>
@@ -299,6 +314,9 @@ padding-right: 5px;
           <width>90</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Limit to:</string>
@@ -349,6 +367,9 @@ padding-right: 5px;
         </property>
         <property name="alignment">
          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
         </property>
        </widget>
       </item>
@@ -404,6 +425,9 @@ padding-right: 5px;
      <property name="title">
       <string>Number of connections per transfer</string>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="rightMargin">
        <number>100</number>
@@ -439,6 +463,9 @@ padding-right: 5px;
             <width>48</width>
             <height>25</height>
            </size>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -504,6 +531,9 @@ padding-right: 5px;
             <height>25</height>
            </size>
           </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="frame">
            <bool>true</bool>
           </property>
@@ -546,14 +576,26 @@ padding-right: 5px;
        <height>104</height>
       </size>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="topMargin">
        <number>5</number>
       </property>
       <item>
        <widget class="QCheckBox" name="cbUseHttps">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Use HTTPS for transfers that don't start</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
         </property>
        </widget>
       </item>
@@ -635,18 +677,60 @@ padding-right: 5px;
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Cancel</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">outline</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bUpdate">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>

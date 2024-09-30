@@ -32,33 +32,7 @@
    <string>Permissions</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bUpdate
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}
-
-#lPermissionsDesc
-{
-font-size: 12px;
-font-weight: 400;
-}
-
-#lPermissionsTitle
-{
-font-size: 14px;
-font-weight: 600;
-}
-
-#lFilePermissions, #lFolderPermissions
-{
-border-radius: 8px;
-border-color: transparent;
-border-style: solid;
-border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
-padding-left: 5px;
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -92,6 +66,9 @@ padding-left: 5px;
      </property>
      <property name="text">
       <string>Permissions for new folders and files</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">title</string>
      </property>
     </widget>
    </item>
@@ -127,6 +104,9 @@ padding-left: 5px;
      </property>
      <property name="title">
       <string>Folders</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
@@ -185,15 +165,18 @@ padding-left: 5px;
          <widget class="QLineEdit" name="lFolderPermissions">
           <property name="minimumSize">
            <size>
-            <width>35</width>
+            <width>36</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>35</width>
+            <width>36</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="type" stdset="0">
+           <string notr="true">mega</string>
           </property>
          </widget>
         </item>
@@ -219,6 +202,9 @@ padding-left: 5px;
     <widget class="QGroupBox" name="wFilePermissions">
      <property name="title">
       <string>Files</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
       <item row="0" column="0">
@@ -283,15 +269,18 @@ padding-left: 5px;
          <widget class="QLineEdit" name="lFilePermissions">
           <property name="minimumSize">
            <size>
-            <width>35</width>
+            <width>36</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>35</width>
+            <width>36</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="type" stdset="0">
+           <string notr="true">mega</string>
           </property>
          </widget>
         </item>
@@ -337,18 +326,60 @@ padding-left: 5px;
      </item>
      <item>
       <widget class="QPushButton" name="bCancel">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Cancel</string>
+       </property>
+       <property name="type" stdset="0">
+        <string notr="true">outline</string>
+       </property>
+       <property name="dimension" stdset="0">
+        <string notr="true">small</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="bUpdate">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
        <property name="text">
         <string>Apply</string>
        </property>
        <property name="default">
         <bool>true</bool>
+       </property>
+       <property name="type" stdset="0">
+        <string notr="true">primary</string>
+       </property>
+       <property name="dimension" stdset="0">
+        <string notr="true">small</string>
        </property>
       </widget>
      </item>

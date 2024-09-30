@@ -373,12 +373,10 @@ target_sources_conditional(MEGAsync
    QT_AWARE
    PRIVATE
    gui/CocoaHelpButton.mm
-   gui/CocoaSwitchButton.mm
    gui/QMacSpinningProgressIndicator.mm
    gui/QSegmentedControl.mm
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
-   gui/CocoaSwitchButton.h
    gui/QSegmentedControl.h
    gui/images/Images.xcassets
    gui/macx/LockedPopOver.ui
@@ -475,6 +473,11 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
+)
+
+set (DESKTOP_APP_GUI_UI_FILES_ROOT
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
 )
 
 configure_file(${CMAKE_CURRENT_LIST_DIR}/tokenizer/WidgetTokenConfig.h.in ${CMAKE_CURRENT_LIST_DIR}/tokenizer/WidgetTokenConfig.h @ONLY)

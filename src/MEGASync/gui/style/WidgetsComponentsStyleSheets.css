@@ -1,17 +1,21 @@
 QWidget
 {
 font-size: 12px;
-background-color: #FFFFFF; /* colorToken.page-background*/
-color: #303233; /*colorToken.text-primary*/
+font-family: Inter;
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
+/*
+    QTableView
+*/
 QTableView
 {
-background: #18191A; /* colorToken.page-background*/
+background: #ff18191A; /*colorToken.page-background*/
 outline: 0;
-border: 1px solid #18191A; /* colorToken.page-background*/
+border: 1px solid #ff18191A; /*colorToken.page-background*/
 border-radius: 5px;
-selection-color: #F3F4F4; /* colorToken.text-primary*/
+selection-color: #ffF3F4F4; /*colorToken.text-primary*/
 }
 
 QTableView::item
@@ -23,7 +27,7 @@ padding-left:4px;
 QTableView::item::selected
 {
 background-color: rgba(0,120,215,0.8); /* TODO: replace harcoded color with token!*/
-color: #F3F4F4; /* colorToken.text-primary*/
+color: #FFF3F4F4; /* colorToken.text-primary*/
 }
 
 QTableView::indicator
@@ -36,34 +40,76 @@ QTableView::indicator:checked
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E; /*colorToken.button-primary*/
+border-color: #FF04101E; /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
-background-color: #04101E; /*colorToken.button-primary*/
+background-color: #FF04101E; /*colorToken.button-primary*/
 image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:hover
+{
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QTableView::indicator:checked:pressed
+{
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QTableView::indicator:checked:disabled
+{
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+background-color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 QTableView::indicator:unchecked
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E;  /*colorToken.button-primary*/
+border-color: #FF04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
-background-color: #f3f4f4;
+background-color: #FFf3f4f4; /*colorToken.surface-2*/
 image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
+QTableView::indicator:unchecked:hover
+{
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+image: none;
+}
+
+QTableView::indicator:unchecked:pressed
+{
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+image: none;
+}
+
+QTableView::indicator:unchecked:disabled
+{
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+image: none;
+}
+
+/*
+    QHeaderView
+*/
 QHeaderView
 {
-background: #18191A; /* colorToken.page-background*/
+background: #FF18191A; /*colorToken.page-background*/
 padding-top: 2px;
 }
 
 QHeaderView::section
 {
-background: #18191A; /* colorToken.page-background*/
-color: #F3F4F4; /* colorToken.text-primary*/
+background: #FF18191A; /*colorToken.page-background*/
+color: #FFF3F4F4; /*colorToken.text-primary*/
 padding-left: 6px;
 border-top: 0px;
 border-bottom: 0px;
@@ -76,29 +122,38 @@ QHeaderView::section:last
 border-right: 0px;
 }
 
-QComboBox
+/*
+    QComboBox
+*/
+QComboBox[type="mega"]
 {
 height: 18px;
-background-color:  #fafafa; /* colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
+background-color:  #fffafafa; /*colorToken.surface-1*/
+color: #ff333333; /*colorToken.text-primary*/
+border-color: #ff04101E; /*colorToken.button-outline*/
 border-width: 1px;
 border-style: solid;
 border-radius: 5px;
 padding: 1px 1px 1px 5px;
 }
 
-QComboBox::on
+QComboBox:disabled[type="mega"]
+{
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QComboBox::on[type="mega"]
 {
 padding: 1px 1px 1px 5px;
 }
 
-QComboBox::down-arrow
+QComboBox::down-arrow[type="mega"]
 {
 image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
 }
 
-QComboBox::drop-down
+QComboBox::drop-down[type="mega"]
 {
 subcontrol-origin: padding;
 subcontrol-position: top right;
@@ -107,18 +162,26 @@ border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
 }
 
-QComboBox QAbstractItemView
+QComboBox[type="mega"] QAbstractItemView
 {
-border: 2px solid #04101E; /*colorToken.button-outline*/
+border: 2px solid #ff04101E; /*colorToken.button-outline*/
 border-radius: 4px;
-background-color:  #fafafa; /* colorToken.surface-1*/
+background-color:  #fffafafa; /*colorToken.surface-1*/
 }
 
+/*
+    QRadioButton
+*/
 QRadioButton
 {
-color: #303233; /*colorToken.text-primary*/
+color: #ff303233; /*colorToken.text-primary*/
 background-color: transparent;
 spacing: 0;
+}
+
+QRadioButton:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 QRadioButton::indicator
@@ -131,115 +194,432 @@ QRadioButton::indicator::unchecked
 image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
 }
 
+QRadioButton::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/radio_unchecked_hover.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/radio_unchecked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:disabled
+{
+image: url(:/images/themed/light/radio_unchecked_disabled.svg); /*replaceThemeToken*/
+}
+
 QRadioButton::indicator::checked
 {
 image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
 }
 
-QGroupBox
+QRadioButton::indicator:checked:hover
+{
+image: url(:/images/themed/light/radio_checked_hover.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:pressed
+{
+image: url(:/images/themed/light/radio_checked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:disabled
+{
+image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QGroupBox
+*/
+QGroupBox[type="mega"]
 {
 font-weight: bold;
 margin-top: 25px;
-background-color: #fafafa; /*colorToken.surface-1*/
-border: 0px solid gray;
+background-color: #fffafafa; /*colorToken.surface-1*/
+border-width: 0px;
+border-style: solid;
 border-radius: 10px;
 }
 
-QGroupBox::title
+QGroupBox::title[type="mega"]
 {
-color: #04101E; /*colorToken.text-accent*/
+color: #ff04101E; /*colorToken.text-accent*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
 padding: 7 0 0 5px;
 }
 
-/* TODO: surface-2 should be replaced by --color-indicator-background */
+QGroupBox::title:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+/*
+    QProgressBar
+*/
 QProgressBar
 {
+/* TODO: surface-2 should be replaced by --color-indicator-background */
 border-style: none;
 border-radius: 4px;
-background-color: #f3f4f4; /*colorToken.surface-2*/
+background-color: #fff3f4f4; /*colorToken.surface-2*/
 max-height: 8px;
 }
 
 QProgressBar::chunk
 {
-background-color: #477EF7; /*colorToken.indicator-indigo*/
+background-color: #ff477EF7; /*colorToken.indicator-indigo*/
 border-radius: 4px;
 }
 
-QCheckBox
+/*
+    QCheckBox
+*/
+QCheckBox[type="mega"]
 {
 background-color: transparent;
 spacing: 8;
 }
 
-QCheckBox::indicator
+QCheckBox:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QCheckBox::indicator[type="mega"]
 {
 height: 8px;
 width: 8px;
 }
 
-QCheckBox::indicator:checked
+QCheckBox::indicator:checked[type="mega"]
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E; /*colorToken.button-primary*/
+border-color: #ff04101E; /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
-background-color: #04101E; /*colorToken.button-primary*/
+background-color: #ff04101E; /*colorToken.button-primary*/
 image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
 }
 
-QCheckBox::indicator:unchecked
+QCheckBox::indicator:checked:hover[type="mega"]
+{
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QCheckBox::indicator:checked:pressed[type="mega"]
+{
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QCheckBox::indicator:checked:disabled[type="mega"]
+{
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QCheckBox::indicator:unchecked[type="mega"]
 {
 padding: 2px;
 border-style: solid;
-border-color: #04101E;  /*colorToken.button-primary*/
+border-color: #ff04101E;  /*colorToken.button-primary*/
 border-width: 2px;
 border-radius: 4px;
-background-color: #f3f4f4;
+background-color: #fff3f4f4;
 image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
 }
 
+QCheckBox::indicator:unchecked:hover[type="mega"]
+{
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+image: none;
+}
+
+QCheckBox::indicator:unchecked:pressed[type="mega"]
+{
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+image: none;
+}
+
+QCheckBox::indicator:unchecked:disabled[type="mega"]
+{
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+image: none;
+}
+
+/*
+    QLabel
+*/
 QLabel
 {
+font-family: Inter;
+font-size: 12px;
+font-weight: 400;
 background-color: transparent;
-color: #303233; /*colorToken.text-primary*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
-QPushButton
+QLabel[type="title"]
 {
-padding-left: 10px;
-padding-right: 10px;
-height: 22px;
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #04101E; /*colorToken.button-outline*/
+font-size: 16px;
+font-weight: 600;
+}
+
+QLabel:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+/*
+    Outline button.
+*/
+QPushButton[type="outline"]
+{
 border-width: 2px;
 border-style: solid;
-border-radius: 5px;
-font-weight: bold;
+font-family: Inter;
+font-weight: 600;
+
+background-color: transparent;
+color: #ff04101E; /*colorToken.button-outline*/
+border-color: #ff04101E; /*colorToken.button-outline*/
 }
 
-QLineEdit
+QPushButton[type="outline"][dimension=small]
 {
-height: 20px;
-background-color: #fafafa; /*colorToken.surface-1*/
-border: none;
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
 }
 
+QPushButton[type="outline"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="outline"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="outline"]
+{
+color: #ff39424E; /*colorToken.button-outline-hover*/
+border-color: #ff39424E; /*colorToken.button-outline-hover*/
+}
+
+QPushButton:pressed[type="outline"]
+{
+color: #ff535B65; /*colorToken.button-outline-pressed*/
+border-color: #ff535B65; /*colorToken.button-outline-pressed*/
+}
+
+QPushButton:disabled[type="outline"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+
+/*
+    Primary button.
+*/
+QPushButton[type="primary"]
+{
+border-width: 2px;
+border-style: solid;
+font-family: Inter;
+font-weight: 600;
+
+background-color: #ff04101E; /*colorToken.button-primary*/
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+border-color: #ff04101E; /*colorToken.button-primary*/
+}
+
+QPushButton[type="primary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="primary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="primary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QPushButton:pressed[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QPushButton:disabled[type="primary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: transparent;
+}
+
+/*
+    Secondary button.
+*/
+QPushButton[type="secondary"]
+{
+border-width: 2px;
+border-style: solid;
+font-family: Inter;
+font-weight: 600;
+
+background-color: #ff04101E; /*colorToken.button-secondary*/
+color: #ffFAFAFB; /*colorToken.text-secondary*/
+border-color: #ff04101E; /*colorToken.button-secondary*/
+}
+
+QPushButton[type="secondary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="secondary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="secondary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="secondary"]
+{
+background-color: #ff39424E; /*colorToken.button-secondary-hover*/
+border-color: #ff39424E; /*colorToken.button-secondary-hover*/
+}
+
+QPushButton:pressed[type="secondary"]
+{
+background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+border-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+}
+
+QPushButton:disabled[type="secondary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: transparent;
+}
+
+/*
+    QLineEdit
+*/
+QLineEdit[type="mega"], QTextEdit[type="mega"]
+{
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+padding-right: 5px;
+padding-left: 5px;
+border-radius: 8px;
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+border-style: solid;
+border-width: 1px;
+height: 28px;
+}
+
+QLineEdit:focus[type="mega"], QTextEdit:focus[type="mega"]
+{
+border-color: #ffBDD9FF; /*colorToken.focus*/
+}
+
+QLineEdit:disabled[type="mega"], QTextEdit:disabled[type="mega"]
+{
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+border-color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+/*
+    QSpinBox
+*/
 QSpinBox
 {
 border-radius: 8px;
-border-color: #04101E; /*colorToken.border-strong-selected*/
+border-color: #ff04101E; /*colorToken.border-strong-selected*/
 border-style: solid;
 border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
+background-color: #ffFFFFFF; /*colorToken.page-background*/
 height: 25px;
-
 padding-right: 5px;
 padding-left: 5px;
+}
+
+QSpinBox:focus
+{
+border-color: #ffBDD9FF; /*colorToken.focus*/
+}
+
+QSpinBox:disabled
+{
+background-color: #ff797c80; /*colorToken.icon-disabled*/
+border-color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
 QSpinBox::up-arrow
@@ -260,4 +640,52 @@ background-color: transparent;
 QSpinBox::up-button
 {
 background-color: transparent;
+}
+
+/*
+    SwitchButton
+    In the constructor of the class we assign the object name switch
+*/
+#switch
+{
+border-style: none;
+background-color: transparent;
+}
+
+#switch::indicator
+{
+border-style: none;
+background-color: transparent;
+width: 40px;
+height: 19px;
+}
+
+#switch::indicator:checked
+{
+image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:hover
+{
+image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:pressed
+{
+image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked
+{
+image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
 }

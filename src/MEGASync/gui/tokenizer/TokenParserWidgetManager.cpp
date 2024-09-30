@@ -149,6 +149,16 @@ bool TokenParserWidgetManager::isTokenized(QWidget* widget)
     return !tokenizedUiFiles.filter(uiFileName).empty();
 }
 
+bool TokenParserWidgetManager::isRoot(QWidget* widget)
+{
+    static QStringList tokenizedRootUiFiles =
+        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES_ROOT).split(QLatin1Char(';'));
+
+    QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
+
+    return !tokenizedRootUiFiles.filter(uiFileName).empty();
+}
+
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme()
 {
@@ -181,6 +191,17 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 
     auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
+    QString localWidgetStyleSheet;
+    if (mWidgetsStyleSheets.contains(widget->objectName()))
+    {
+        localWidgetStyleSheet = mWidgetsStyleSheets[widget->objectName()];
+    }
+    else
+    {
+        localWidgetStyleSheet = widget->styleSheet();
+        mWidgetsStyleSheets[widget->objectName()] = localWidgetStyleSheet;
+    }
+
     if (!mColorThemedTokens.contains(currentTheme))
     {
         qWarning() << __func__ << " Error theme not found : " << currentTheme;
@@ -189,20 +210,16 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
-    QString styleSheet = mStandardComponentsStyleSheet % widget->styleSheet();
+    QString styleSheet =
+        (isRoot(widget) ? mStandardComponentsStyleSheet : QLatin1String()) % localWidgetStyleSheet;
 
-    bool updatedStyleSheet = false;
-
-    updatedStyleSheet |= replaceColorTokens(styleSheet, colorTokens);
-    updatedStyleSheet |= replaceIconColorTokens(widget, styleSheet, colorTokens);
-    updatedStyleSheet |= replaceThemeTokens(styleSheet, currentTheme);
+    replaceColorTokens(styleSheet, colorTokens);
+    replaceIconColorTokens(widget, styleSheet, colorTokens);
+    replaceThemeTokens(styleSheet, currentTheme);
 
     removeFrameOnDialogCombos(widget);
 
-    if (updatedStyleSheet)
-    {
-        widget->setStyleSheet(styleSheet);
-    }
+    widget->setStyleSheet(styleSheet);
 }
 
 void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
@@ -226,10 +243,9 @@ void TokenParserWidgetManager::removeFrameOnDialogCombos(QWidget* widget)
     }
 }
 
-bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens)
+void TokenParserWidgetManager::replaceColorTokens(QString& styleSheet,
+                                                  const ColorTokens& colorTokens)
 {
-    bool updated = false;
-
     QRegularExpressionMatchIterator matchIterator = COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
@@ -241,18 +257,15 @@ bool TokenParserWidgetManager::replaceColorTokens(QString& styleSheet, const Col
 
             auto startIndex = match.capturedStart(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
             auto endIndex = match.capturedEnd(COLOR_TOKEN_CAPTURE_INDEX::COLOR_HEX_COLOR_VALUE);
-            styleSheet.replace(startIndex, endIndex-startIndex, tokenValue);
-            updated = true;
+            styleSheet.replace(startIndex, endIndex - startIndex, tokenValue);
         }
     }
-
-    return updated;
 }
 
-bool TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget, QString& styleSheet, const ColorTokens& colorTokens)
+void TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget,
+                                                      QString& styleSheet,
+                                                      const ColorTokens& colorTokens)
 {
-    bool updated = false;
-
     QRegularExpressionMatchIterator matchIterator = ICON_COLOR_TOKEN_REGULAR_EXPRESSION.globalMatch(styleSheet);
     while (matchIterator.hasNext())
     {
@@ -269,14 +282,10 @@ bool TokenParserWidgetManager::replaceIconColorTokens(QWidget* widget, QString& 
             IconTokenizer::process(widget, mode, state, colorTokens, targetElementId, targetElementProperty, tokenId);
         }
     }
-
-    return updated;
 }
 
-bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QString& currentTheme)
+void TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QString& currentTheme)
 {
-    bool updated = false;
-
     int adjustIndexOffset = 0;
     auto toReplaceTheme = currentTheme.toLower();
     auto toReplaceThemeLenght = toReplaceTheme.length();
@@ -314,11 +323,8 @@ bool TokenParserWidgetManager::replaceThemeTokens(QString& styleSheet, const QSt
             }
 
             styleSheet.replace(startIndex, toReplaceThemeLenght, toReplaceTheme);
-            updated = true;
         }
     }
-
-    return updated;
 }
 
 std::shared_ptr<TokenParserWidgetManager> TokenParserWidgetManager::instance()

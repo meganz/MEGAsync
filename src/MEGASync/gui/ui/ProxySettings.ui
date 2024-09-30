@@ -35,27 +35,7 @@
    <string>Proxies</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lProxySettings2
-{
-	margin-top: 1px;
-}
-
-#eProxyPort, #eProxyServer, #eProxyPassword, #eProxyUsername
-{
-border-radius: 8px;
-border-color: #04101E; /*colorToken.border-strong-selected*/
-border-style: solid;
-border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
-padding-right: 5px;
-padding-left: 5px;
-}
-
-#bUpdate
-{
-color: #04101E; /*colorToken.text-inverse-accent*/
-background-color:  #F4F4F5; /*colorToken.button-primary*/
-}</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="topMargin">
@@ -77,6 +57,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
      </property>
      <property name="flat">
       <bool>false</bool>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
      <layout class="QGridLayout" name="gProxyLayout">
       <property name="sizeConstraint">
@@ -145,6 +128,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
         <property name="echoMode">
          <enum>QLineEdit::EchoMode::Password</enum>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
+        </property>
        </widget>
       </item>
       <item row="9" column="1">
@@ -169,6 +155,12 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
           <width>95</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
         </property>
         <item>
          <property name="text">
@@ -225,6 +217,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
         </property>
         <item>
          <widget class="QRadioButton" name="rNoProxy">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::FocusPolicy::StrongFocus</enum>
           </property>
@@ -235,6 +230,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
         </item>
         <item>
          <widget class="QRadioButton" name="rProxyManual">
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
           <property name="focusPolicy">
            <enum>Qt::FocusPolicy::StrongFocus</enum>
           </property>
@@ -281,6 +279,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
         <property name="text">
          <string notr="true"/>
         </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
+        </property>
        </widget>
       </item>
       <item row="11" column="1">
@@ -288,8 +289,14 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Proxy server requires a password</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">mega</string>
         </property>
        </widget>
       </item>
@@ -320,6 +327,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
           </property>
           <property name="text">
            <string notr="true"/>
+          </property>
+          <property name="type" stdset="0">
+           <string notr="true">mega</string>
           </property>
          </widget>
         </item>
@@ -364,6 +374,9 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
           </property>
           <property name="alignment">
            <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+          </property>
+          <property name="type" stdset="0">
+           <string notr="true">mega</string>
           </property>
          </widget>
         </item>
@@ -411,18 +424,60 @@ background-color:  #F4F4F5; /*colorToken.button-primary*/
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Cancel</string>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">outline</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bUpdate">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>26</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Apply</string>
         </property>
         <property name="default">
          <bool>true</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">primary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>

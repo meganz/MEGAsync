@@ -28,22 +28,40 @@
    </property>
    <item>
     <widget class="QCheckBox" name="cbRead">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Read</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="cbWrite">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Write</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QCheckBox" name="cbExecution">
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
      <property name="text">
       <string>Execution</string>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
     </widget>
    </item>

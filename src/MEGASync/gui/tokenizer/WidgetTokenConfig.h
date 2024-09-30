@@ -17,3 +17,6 @@
     "desktop/src/MEGASync/gui/ui/NotificationsSettings.ui;C:/mega/dev/desktop/src/MEGASync/gui/" \
     "ui/" \
     "OpenBackupsFolder.ui"
+#define DESKTOP_APP_GUI_UI_FILES_ROOT \
+"C:/mega/dev/desktop/src/MEGASync/gui/ui/SettingsDialog.ui;C:/mega/dev/desktop/src/MEGASync/gui/" \
+    "ui/AccountDetailsDialog.ui"

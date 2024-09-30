@@ -55,5 +55,17 @@
         <file>images/lock_big@2x.png</file>
         <file>images/lock_big@3x.png</file>
         <file>images/help-icon.svg</file>
+        <file>images/themed/light/radio_checked_pressed.svg</file>
+        <file>images/themed/light/radio_checked_hover.svg</file>
+        <file>images/themed/light/radio_checked_disabled.svg</file>
+        <file>images/themed/light/radio_unchecked_pressed.svg</file>
+        <file>images/themed/light/radio_unchecked_hover.svg</file>
+        <file>images/themed/light/radio_unchecked_disabled.svg</file>
+        <file>images/themed/dark/radio_unchecked_pressed.svg</file>
+        <file>images/themed/dark/radio_unchecked_hover.svg</file>
+        <file>images/themed/dark/radio_unchecked_disabled.svg</file>
+        <file>images/themed/dark/radio_checked_pressed.svg</file>
+        <file>images/themed/dark/radio_checked_hover.svg</file>
+        <file>images/themed/dark/radio_checked_disabled.svg</file>
     </qresource>
 </RCC>
