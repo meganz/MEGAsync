@@ -689,11 +689,21 @@ StalledIssueSPtr MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolve
                                                              const mega::MegaSyncStall* stall)
 {
     auto syncIds(StalledIssuesBySyncFilter::getSyncIdsByStall(stall));
-    if(!syncIds.isEmpty())
+    if (syncIds.isEmpty())
     {
-        auto syncId(*syncIds.begin());
+        return nullptr;
+    }
 
-        if(mIssueBySyncId.contains(syncId))
+    auto syncId(*syncIds.begin());
+    auto syncSetting(SyncInfo::instance()->getSyncSettingByTag(syncId));
+    if (!syncSetting)
+    {
+        return nullptr;
+    }
+
+    if (syncSetting->getType() == mega::MegaSync::SyncType::TYPE_TWOWAY)
+    {
+        if (mIssueBySyncId.contains(syncId))
         {
             auto previousIssue(mIssueBySyncId.value(syncId));
             previousIssue->fillIssue(stall);
@@ -702,33 +712,59 @@ StalledIssueSPtr MoveOrRenameCannotOccurFactory::createIssue(MultiStepIssueSolve
         {
             std::shared_ptr<MoveOrRenameCannotOccurIssue> moveIssue(nullptr);
 
-            if(solver)
+            if (solver)
             {
                 auto moveOrRenameSolver(dynamic_cast<MoveOrRenameMultiStepIssueSolver*>(solver));
-                if(moveOrRenameSolver)
+                if (moveOrRenameSolver)
                 {
                     moveIssue = moveOrRenameSolver->getIssue();
                     moveIssue->increaseCombinedNumberOfIssues();
                 }
             }
-            else if(syncId != mega::INVALID_HANDLE)
+            else if (syncId != mega::INVALID_HANDLE)
             {
                 moveIssue = std::make_shared<MoveOrRenameCannotOccurIssue>(stall);
             }
 
-            if(moveIssue)
+            if (moveIssue)
             {
                 mIssueBySyncId.insert(syncId, moveIssue);
                 return moveIssue;
             }
         }
     }
+    else
+    {
+        mBackupSyncsDetected.insert(syncId);
+    }
 
-    //We don´t want to add it to the model, just update it
+    // We don´t want to add it to the model, just update it
     return nullptr;
 }
 
 void MoveOrRenameCannotOccurFactory::clear()
 {
     mIssueBySyncId.clear();
+}
+
+void MoveOrRenameCannotOccurFactory::finish()
+{
+    // If backups are detected, disabled and enabled backups
+    foreach(auto& backupId, mBackupSyncsDetected)
+    {
+        auto backupSettings = SyncInfo::instance()->getSyncSettingByTag(backupId);
+        if (backupSettings)
+        {
+            SyncController::instance().resetSync(
+                backupSettings,
+                mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED);
+        }
+    }
+
+    mBackupSyncsDetected.clear();
+}
+
+QSet<mega::MegaHandle> MoveOrRenameCannotOccurFactory::backupSyncsDetected() const
+{
+    return mBackupSyncsDetected;
 }

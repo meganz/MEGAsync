@@ -105,9 +105,13 @@ public:
     StalledIssueSPtr createIssue(MultiStepIssueSolverBase* solver,
                                  const mega::MegaSyncStall* stall) override;
     void clear() override;
+    void finish() override;
+
+    QSet<mega::MegaHandle> backupSyncsDetected() const;
 
 private:
     QHash<mega::MegaHandle, std::shared_ptr<MoveOrRenameCannotOccurIssue>> mIssueBySyncId;
+    QSet<mega::MegaHandle> mBackupSyncsDetected;
 };
 
 class MoveOrRenameMultiStepIssueSolver : public MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>
