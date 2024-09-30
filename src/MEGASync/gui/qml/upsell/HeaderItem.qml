@@ -87,9 +87,8 @@ FocusScope {
                     lineHeight: root.textLineHeight
                     lineHeightMode: Text.FixedHeight
                     urlColor: ColorTheme.textSecondary
-                    urlVisitedColor: ColorTheme.textSecondary
                     underlineLink: true
-                    url: Links.contact // TODO: Add link to rubish bin
+                    manageClick: true
                     rawText: {
                         switch (upsellPlansAccess.viewMode) {
                             case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
@@ -100,6 +99,19 @@ FocusScope {
                                             .arg(upsellPlansAccess.transferRemainingTime);
                             default:
                                 return "";
+                        }
+                    }
+                    onLinkClicked: {
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                upsellComponentAccess.rubbishLinkClicked();
+                                break;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                Qt.openUrlExternally(Links.aboutTransferQuota);
+                                break;
+                            default:
+                                break;
                         }
                     }
                 }

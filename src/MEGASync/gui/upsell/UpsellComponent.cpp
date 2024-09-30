@@ -49,3 +49,8 @@ void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
 {
     mController->setBilledPeriod(isMonthly);
 }
+
+void UpsellComponent::rubbishLinkClicked()
+{
+    Utilities::openUrl(QUrl(QString::fromLatin1("mega://#fm/rubbish")));
+}

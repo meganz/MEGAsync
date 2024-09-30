@@ -10,7 +10,13 @@ QtObject {
     readonly property url contact: megaIO + "contact"
 
     readonly property url helpMegaIO: "https://help.mega.io/"
+
     readonly property url installAppsDesktop: helpMegaIO + "installs-apps/desktop/"
     readonly property url createBackup: installAppsDesktop + "create-backup"
     readonly property url setUpSyncs: installAppsDesktop + "set-up-syncs"
+
+    readonly property url plansStorage: helpMegaIO + "plans-storage/"
+    readonly property url spaceStorage: plansStorage + "space-storage/"
+    readonly property url aboutTransferQuota: spaceStorage + "transfer-quota"
+
 }
