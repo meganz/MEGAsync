@@ -54,7 +54,7 @@ BuildRequires: hicolor-icon-theme, zip, unzip, nasm, cmake, perl
 
     %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
         BuildRequires: libqt5-qtbase-devel, libqt5-linguist-devel, libqt5-qtsvg-devel, libqt5-qtx11extras-devel, libqt5-qtdeclarative-devel
-        Requires: libQt5Core5
+        Requires: libQt5Core5 libqt5-qtquickcontrols libqt5-qtquickcontrols2
     %else
         BuildRequires: libqt4-devel, qt-devel
     %endif
@@ -489,7 +489,15 @@ sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 
 %preun
-[ "$1" == "1" ] && killall -s SIGUSR1 megasync 2> /dev/null || true
+if [ "$1" == "1" ]; then
+    killall -s SIGUSR1 megasync 2> /dev/null || true
+else
+    killall megasync 2> /dev/null || true
+    username=$SUDO_USER 2> /dev/null || true
+    # Check if the variable is empty (e.g. if the script is not executed with sudo)
+    [ -z "$username" ] && username=$(whoami) 2> /dev/null || true
+    su -c 'timeout 1 megasync --send-uninstall-event' $username 2> /dev/null || true
+fi
 sleep 2
 
 
@@ -504,9 +512,6 @@ sleep 2
         /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
     fi
 %endif
-
-# kill running MEGAsync instance when uninstall (!upgrade)
-[ "$1" == "0" ] && killall megasync 2> /dev/null || true
 
 
 %posttrans

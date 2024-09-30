@@ -9,6 +9,13 @@ DeviceNamePageForm {
 
     signal deviceNameMoveToSyncType
 
+    footerButtons.leftPrimary {
+        text: Strings.skip
+        onClicked: {
+            window.close();
+        }
+    }
+
     footerButtons.rightPrimary.onClicked: {
         var emptyText = deviceNameTextField.text.length === 0;
         if(emptyText) {

@@ -69,7 +69,7 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
                 auto newName = Utilities::getNonDuplicatedNodeName(
                     node, mFolderTarget, nodeName, true, itemsBeingRenamed);
 
-                error = MegaApiSynchronizedRequest::runRequestLambda([this](mega::MegaNode* node,
+                error = MegaApiSynchronizedRequest::runRequestLambda([](mega::MegaNode* node,
                                                            mega::MegaNode* targetNode,
                                                            const char* newName,
                                                            mega::MegaRequestListener* listener)
@@ -77,7 +77,7 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
                        MegaSyncApp->getMegaApi(),
                        node,
                        mFolderTarget,
-                    newName.toStdString().c_str());
+                    newName.toUtf8().constData());
 
                 if(error)
                 {
@@ -87,7 +87,7 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
         }
         else
         {
-            error = MegaApiSynchronizedRequest::runRequestLambda([this](mega::MegaNode* node,
+            error = MegaApiSynchronizedRequest::runRequestLambda([](mega::MegaNode* node,
                                                        mega::MegaNode* targetNode,
                                                        mega::MegaRequestListener* listener)
                    { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },

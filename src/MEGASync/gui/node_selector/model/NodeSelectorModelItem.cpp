@@ -1,9 +1,9 @@
 #include "NodeSelectorModelItem.h"
 #include "QMegaMessageBox.h"
 #include "MegaApplication.h"
-#include "syncs/control/SyncInfo.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/Avatar.h"
+#include "SyncInfo.h"
+#include "FullName.h"
+#include "Avatar.h"
 
 #include "mega/utils.h"
 
@@ -52,7 +52,7 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
         for(int i = 0; i < nodeList->size(); i++)
         {
             auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
-            mChildItems.append(createModelItem(move(node), mShowFiles, this));
+            mChildItems.append(createModelItem(std::move(node), mShowFiles, this));
         }
 
         mRequestingChildren = false;
@@ -327,12 +327,6 @@ void NodeSelectorModelItem::calculateSyncStatus()
         break;
     }
     }
-    auto syncedFolders = SyncInfo::instance()->getMegaFolderHandles(SyncInfo::AllHandledSyncTypes);
-    if(syncedFolders.contains(mNode->getHandle()))
-    {
-        mStatus = Status::SYNC;
-        return;
-    }
 }
 
 bool NodeSelectorModelItem::isCloudDrive() const
@@ -352,7 +346,7 @@ NodeSelectorModelItemSearch::NodeSelectorModelItemSearch(std::unique_ptr<mega::M
     if(mType & NodeSelectorModelItemSearch::Type::INCOMING_SHARE)
     {
         auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get(), true));
-        setOwner(move(user));
+        setOwner(std::move(user));
     }
 
     calculateSyncStatus();
@@ -380,8 +374,8 @@ NodeSelectorModelItemIncomingShare::NodeSelectorModelItemIncomingShare(std::uniq
 {
     if(!parentItem)
     {
-        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(node.get()));
-        setOwner(move(user));
+        auto user = std::unique_ptr<mega::MegaUser>(MegaSyncApp->getMegaApi()->getUserFromInShare(mNode.get()));
+        setOwner(std::move(user));
     }
     calculateSyncStatus();
 }
@@ -393,7 +387,7 @@ NodeSelectorModelItemIncomingShare::~NodeSelectorModelItemIncomingShare()
 
 NodeSelectorModelItem *NodeSelectorModelItemIncomingShare::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
-    return new NodeSelectorModelItemIncomingShare(move(node), showFiles, parentItem);
+    return new NodeSelectorModelItemIncomingShare(std::move(node), showFiles, parentItem);
 }
 
 NodeSelectorModelItemBackup::NodeSelectorModelItemBackup(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
@@ -420,7 +414,7 @@ bool NodeSelectorModelItemBackup::isVault()
 
 NodeSelectorModelItem *NodeSelectorModelItemBackup::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
-    return new NodeSelectorModelItemBackup(move(node), showFiles, parentItem);
+    return new NodeSelectorModelItemBackup(std::move(node), showFiles, parentItem);
 }
 
 NodeSelectorModelItemCloudDrive::NodeSelectorModelItemCloudDrive(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
@@ -436,5 +430,5 @@ NodeSelectorModelItemCloudDrive::~NodeSelectorModelItemCloudDrive()
 
 NodeSelectorModelItem *NodeSelectorModelItemCloudDrive::createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem)
 {
-    return new NodeSelectorModelItemCloudDrive(move(node), showFiles, parentItem);
+    return new NodeSelectorModelItemCloudDrive(std::move(node), showFiles, parentItem);
 }

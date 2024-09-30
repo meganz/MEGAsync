@@ -6,7 +6,6 @@
 #include "TransferBatch.h"
 #include "FolderTransferListener.h"
 #include "TransferMetaData.h"
-#include <QTMegaRequestListener.h>
 #include "QTMegaTransferListener.h"
 
 #include "megaapi.h"

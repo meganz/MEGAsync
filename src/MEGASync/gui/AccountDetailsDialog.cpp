@@ -4,6 +4,7 @@
 #include "Utilities.h"
 #include "MegaApplication.h"
 #include "TransferQuota.h"
+#include "AccountDetailsManager.h"
 
 #include <QStyle>
 
@@ -43,13 +44,15 @@ AccountDetailsDialog::AccountDetailsDialog(QWidget *parent) :
     }
 
     // Subscribe to data updates (but detach after 1 callback)
-    MegaSyncApp->attachStorageObserver(*this);
-    MegaSyncApp->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->updateUserStats(AccountDetailsManager::Flag::ALL,
+                                                       true,
+                                                       USERSTATS_STORAGECLICKED);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
 {
-    MegaSyncApp->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
     delete mUi;
 }
 
@@ -355,7 +358,7 @@ void AccountDetailsDialog::refresh()
 void AccountDetailsDialog::updateStorageElements()
 {
     // Prevent other updates of these fields (due to events) after the first one
-    MegaSyncApp->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
 
     refresh();
 }

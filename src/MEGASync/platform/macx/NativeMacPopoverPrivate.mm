@@ -15,13 +15,16 @@
     m_popover = [[NSPopover alloc] init];
     m_nativeView = [[NSView alloc] init];
 
+    NSView *popoverView = [[[m_popover contentViewController] view] superview];
+    [popoverView setWantsLayer:YES];
+
     if (selectedColor == NativeMacPopover::PopOverColor::WHITE)
     {
-      [m_popover setBackgroundColor:[NSColor whiteColor]];
+      [[popoverView layer] setBackgroundColor:[[NSColor colorWithWhite:0.9 alpha:1.0] CGColor]];
     }
     else
     {
-      [m_popover setBackgroundColor:[NSColor clearColor]];
+      [[popoverView layer] setBackgroundColor:[[NSColor clearColor] CGColor]];
     }
 
     [m_popover setContentSize: size];

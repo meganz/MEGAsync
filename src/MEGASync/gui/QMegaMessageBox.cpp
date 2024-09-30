@@ -60,6 +60,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         msgBox->setTextInteractionFlags(Qt::NoTextInteraction | Qt::LinksAccessibleByMouse);
         if(info.checkBox)
         {
+#ifdef Q_OS_MACOS
+            //This little hack is done in order to have the same font as the Informative text on macOS (the only one with different font)
+            info.checkBox->setFont(qApp->font("QTipLabel"));
+#endif
             msgBox->setCheckBox(info.checkBox);
         }
         QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();
@@ -68,7 +72,7 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         uint mask = FirstButton;
         while(mask <= LastButton)
         {
-            uint sb = info.buttons & mask;
+            int sb = info.buttons & mask;
             mask <<= 1;
             if(!sb)
                 continue;
@@ -90,7 +94,7 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
             if((info.defaultButton == NoButton && buttonBox &&
                    buttonBox->buttonRole((QAbstractButton*) button) ==
                        QDialogButtonBox::AcceptRole) ||
-                (info.defaultButton != NoButton && sb == uint(info.defaultButton)))
+                (info.defaultButton != NoButton && sb == static_cast<int>((info.defaultButton))))
             {
                 msgBox->setDefaultButton(button);
             }

@@ -3,28 +3,43 @@
 #include "MegaApplication.h"
 #include "CommonMessages.h"
 #include <QDir>
+#include "RequestListenerManager.h"
 
 using namespace mega;
+
+LinkProcessor::LinkProcessor(MegaApi* megaApi, MegaApi* megaApiFolders)
+    : LinkProcessor(QStringList(), megaApi, megaApiFolders) // Delegate to the second constructor with an empty QStringList
+{
+}
 
 LinkProcessor::LinkProcessor(const QStringList& linkList, MegaApi* megaApi, MegaApi* megaApiFolders)
     : mMegaApi(megaApi)
     , mMegaApiFolders(megaApiFolders)
     , mLinkList(linkList)
     , mImportParentFolder(mega::INVALID_HANDLE)
-    , mDelegateListener(std::make_shared<QTMegaRequestListener>(megaApi, this))
     , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
-    , mParentHandler(nullptr)
-    , mRequestCounter(0)
     , mCurrentIndex(0)
 {
-    for (int i = 0; i < linkList.size(); i++)
-    {
-        mLinkObjects.append(std::make_shared<LinkInvalid>());
-    }
+    resetAndSetLinkList(linkList);
+
+    // Register for SDK Request callbacks
+    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
 }
 
 LinkProcessor::~LinkProcessor()
 {
+}
+
+void LinkProcessor::resetAndSetLinkList(const QStringList& linkList)
+{
+    mLinkObjects.clear();
+    mCurrentIndex = 0;
+    mLinkList = linkList;
+
+    for (int i = 0; i < linkList.size(); i++)
+    {
+        mLinkObjects.append(std::make_shared<LinkInvalid>());
+    }
 }
 
 QString LinkProcessor::getLink(int index) const
@@ -93,7 +108,7 @@ void LinkProcessor::createInvalidLinkObject(int index, int error)
                                            linkStatus::FAILED);
 }
 
-void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e)
+void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
 {
     const int error = e->getErrorCode();
 
@@ -156,8 +171,7 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
 
         if (error == MegaError::API_OK)
         {
-            mRequestCounter++;
-            mMegaApiFolders->fetchNodes(this);
+            mMegaApiFolders->fetchNodes(mDelegateListener.get());
         }
         else
         {
@@ -231,9 +245,6 @@ void LinkProcessor::onRequestFinish(MegaApi*, MegaRequest* request, MegaError* e
     default:
         break;
     }
-
-    mRequestCounter--;
-    markForDeletionIfNoMoreRequests();
 }
 
 void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transferType)
@@ -255,16 +266,6 @@ void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transfe
     }
 }
 
-void LinkProcessor::markForDeletionIfNoMoreRequests()
-{
-    // If this instance of LinkProcessor does not need to wait for
-    // responses to outstanding requests, then it can be destroyed
-    if (!mParentHandler && mRequestCounter == 0)
-    {
-        deleteLater();
-    }
-}
-
 void LinkProcessor::requestLinkInfo()
 {
     if (!isValidIndex(mLinkList, mCurrentIndex)) { return; }
@@ -279,17 +280,14 @@ void LinkProcessor::requestLinkInfo()
             mMegaApiFolders->setAccountAuth(authToken.get());
         }
 
-        mRequestCounter++;
         mMegaApiFolders->loginToFolder(link.toUtf8().constData(), mDelegateListener.get());
     }
     else if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/collection/")))
     {
-        mRequestCounter++;
         emit requestFetchSetFromLink(link);
     }
     else
     {
-        mRequestCounter++;
         mMegaApi->getPublicNode(link.toUtf8().constData(), mDelegateListener.get());
     }
 }
@@ -301,9 +299,6 @@ void LinkProcessor::requestLinkInfo()
 // ----------------------------------------------------------------------------
 void LinkProcessor::onFetchSetFromLink(const AlbumCollection& collection)
 {
-    // We received a response to a request
-    mRequestCounter--;
-
     if (mCurrentIndex >= mLinkObjects.size()) { return; }
 
     mLinkObjects[mCurrentIndex] = std::make_shared<LinkSet>(mMegaApi, collection);
@@ -311,7 +306,6 @@ void LinkProcessor::onFetchSetFromLink(const AlbumCollection& collection)
 
     sendLinkInfoAvailableSignal(mCurrentIndex - 1);
     continueOrFinishLinkInfoReq();
-    markForDeletionIfNoMoreRequests();
 }
 
 void LinkProcessor::onSetDownloadFinished(const QString& setName,
@@ -324,12 +318,8 @@ void LinkProcessor::onSetDownloadFinished(const QString& setName,
     (void) failedDownloadedElements;
     (void) destinationPath;
 
-    // We received a response to a request
-    mRequestCounter--;
-
     // A public link (to a Set) has been downloaded, proceed to the next one
     processNextTransfer();
-    markForDeletionIfNoMoreRequests();
 }
 
 void LinkProcessor::onSetImportFinished(const QString& setName,
@@ -344,12 +334,8 @@ void LinkProcessor::onSetImportFinished(const QString& setName,
     (void) alreadyExistingImportElements;
     (void) sip;
 
-    // We received a response to a request
-    mRequestCounter--;
-
     // A public link (to a Set) has been imported, proceed to the next one
     processNextTransfer();
-    markForDeletionIfNoMoreRequests();
 }
 
 // ----------------------------------------------------------------------------
@@ -387,7 +373,6 @@ void LinkProcessor::importLinks(const QString& megaPath)
             return;
         }
 
-        mRequestCounter++;
         mMegaApi->createFolder(CommonMessages::getDefaultImportFolderName().toUtf8().constData(),
                                rootNode.get(), mDelegateListener.get());
     }
@@ -449,7 +434,6 @@ bool LinkProcessor::copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNod
 
     if (!alreadyExists(linkNode, importParentNode))
     {
-        mRequestCounter++;
         mMegaApi->copyNode(linkNode.get(), importParentNode.get(), mDelegateListener.get());
         return true;
     }
@@ -519,7 +503,6 @@ void LinkProcessor::processNextTransfer()
 {
     if (mTransferQueue.isEmpty())
     {
-        markForDeletionIfNoMoreRequests();
         return;
     }
 
@@ -555,7 +538,6 @@ void LinkProcessor::processNextTransfer()
             if (firstItem.transferType == LinkTransferType::DOWNLOAD)
             {
                 // Request to put this set in preview and download all its elements
-                mRequestCounter++;
                 emit requestDownloadSet(set->getSet(),
                                         set->getDownloadPath(),
                                         QList<mega::MegaHandle>()); // Empty list, request all Elements
@@ -564,7 +546,6 @@ void LinkProcessor::processNextTransfer()
             else if (firstItem.transferType == LinkTransferType::IMPORT)
             {
                 // Request to put this set in preview and import all its elements
-                mRequestCounter++;
                 emit requestImportSet(set->getSet(),
                                       {set->getImportNode()},
                                       QList<mega::MegaHandle>());
@@ -599,7 +580,6 @@ void LinkProcessor::startDownload(MegaNodeSPtr linkNode, const QString &localPat
     MegaCancelToken* cancelToken = nullptr; // No cancellation possible
     const bool undelete = false;
 
-    mRequestCounter++;
     mMegaApi->startDownload(linkNode.get(), path.constData(), name, appData, startFirst, cancelToken,
                             MegaTransfer::COLLISION_CHECK_FINGERPRINT,
                             MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
@@ -617,11 +597,7 @@ void LinkProcessor::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaE
     (void) transfer;
     (void) error;
 
-    // We received a response to a request
-    mRequestCounter--;
-
     processNextTransfer();
-    markForDeletionIfNoMoreRequests();
 }
 
 // ----------------------------------------------------------------------------
@@ -639,18 +615,6 @@ void LinkProcessor::onLinkSelected(int index, bool selected)
     {
         mLinkObjects[index]->setSelected(selected);
     }
-}
-
-void LinkProcessor::setParentHandler(QObject *parent)
-{
-    connect(parent, &QObject::destroyed, this, [this](){
-        if(mRequestCounter == 0)
-        {
-            deleteLater();
-        }
-    });
-
-    mParentHandler = parent;
 }
 
 //!

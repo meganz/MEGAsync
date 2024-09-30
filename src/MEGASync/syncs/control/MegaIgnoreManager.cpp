@@ -109,6 +109,10 @@ void MegaIgnoreManager::parseIgnoresFile()
                         if (line.compare(QLatin1String(MegaIgnoreRule::IGNORE_SYM_LINK)) == 0)
                         {
                             mIgnoreSymLinkRule = rule;
+
+                            // The ignored symlink rule is a hidden rule: we read and set it, but it
+                            // is invisible for the ignoremanager
+                            continue;
                         }
 
                         addRule(rule);
@@ -122,7 +126,7 @@ void MegaIgnoreManager::parseIgnoresFile()
             }
             ignore.close();
         }
-        std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+        std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toUtf8().constData()));
         mIgnoreCRC = QString::fromUtf8(crc.get());
     }
 
@@ -271,11 +275,22 @@ MegaIgnoreManager::ApplyChangesError MegaIgnoreManager::applyChanges(bool update
             result = ApplyChangesError::OK;
         }
     }
+
+    if (mIgnoreSymLinkRule)
+    {
+        auto ruleAsText(mIgnoreSymLinkRule->getModifiedRule());
+        if (!ruleAsText.isEmpty())
+        {
+            rules.append(ruleAsText);
+            result = ApplyChangesError::OK;
+        }
+    }
+
     if (updateExtensionRules)
     {
         result = ApplyChangesError::OK;
 
-        for (const auto extension : updatedExtensions)
+        for (const auto& extension : updatedExtensions)
         {
             auto trimmedExtension = extension.trimmed();
 
@@ -320,8 +335,10 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinksRule()
 {
     if (!mIgnoreSymLinkRule)
     {
-        mIgnoreSymLinkRule = std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"), MegaIgnoreNameRule::Class::EXCLUDE, MegaIgnoreNameRule::Target::s);
-        addRule(mIgnoreSymLinkRule);
+        mIgnoreSymLinkRule =
+            std::make_shared<MegaIgnoreNameRule>(QLatin1String("*"),
+                                                 MegaIgnoreNameRule::Class::EXCLUDE,
+                                                 MegaIgnoreNameRule::Target::s);
     }
     else if (mIgnoreSymLinkRule->isCommented())
     {
@@ -372,7 +389,7 @@ void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool create
 
 bool MegaIgnoreManager::hasChanged() const
 {
-    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toStdString().c_str()));
+    std::unique_ptr<char[]> crc(MegaSyncApp->getMegaApi()->getCRC(mMegaIgnoreFile.toUtf8().constData()));
     auto IgnoreCRC = QString::fromUtf8(crc.get());
     return mIgnoreCRC.compare(IgnoreCRC) != 0;
 }

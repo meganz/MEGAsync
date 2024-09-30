@@ -1,6 +1,6 @@
 #pragma once
 
-#include "syncs/control/SyncSettings.h"
+#include "SyncSettings.h"
 #include "QTMegaListener.h"
 
 #include "megaapi.h"
@@ -35,7 +35,6 @@ class Preferences;
 class SyncInfo : public QObject, public mega::MegaListener
 {
     Q_OBJECT
-    using SyncType = mega::MegaSync::SyncType;
 
 signals:
     void syncStateChanged(std::shared_ptr<SyncSettings> syncSettings);
@@ -58,13 +57,16 @@ private:
     int mLastError = mega::MegaSync::NO_SYNC_ERROR;
 
 public:
+    using SyncType = mega::MegaSync::SyncType;
+
     // Data for display in Settings dialog Syncs/Backups.
     // Model data that needs to be kept even before the window is shown
     std::map<::mega::MegaHandle, std::shared_ptr<::mega::MegaSyncStats>> mSyncStatsMap;
 
-    enum SyncOrigin{
+    enum SyncOrigin
+    {
         NONE = 0,
-        ONBOARDING_ORIGIN ,
+        ONBOARDING_ORIGIN,
         MAIN_APP_ORIGIN
     };
     Q_ENUM(SyncOrigin)
@@ -117,11 +119,14 @@ public:
     QList<std::shared_ptr<SyncSettings>> getAllSyncSettings()
         {return getSyncSettingsByType(AllHandledSyncTypes);}
 
-    bool hasSyncs();
+        bool hasSyncs();
 
-    int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
-    int getNumSyncedFolders(SyncType type)
-        {return getNumSyncedFolders(QVector<SyncType>({type}));}
+        int getNumSyncedFolders(const QVector<mega::MegaSync::SyncType>& types);
+
+        int getNumSyncedFolders(SyncType type)
+        {
+            return getNumSyncedFolders(QVector<SyncType>({type}));
+        }
 
     bool syncWithErrorExist(const QVector<SyncType>& types);
     bool syncWithErrorExist(SyncType type)
@@ -163,11 +168,10 @@ public:
     void setSyncToCreateOrigin(SyncOrigin newSyncToCreate);
 
 protected:
-
     void onEvent(mega::MegaApi* api, mega::MegaEvent* event) override;
     void onSyncStateChanged(mega::MegaApi *, mega::MegaSync *sync) override;
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
-    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats);
+    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats) override;
 };

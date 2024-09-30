@@ -3,7 +3,7 @@
 
 #include <megaapi.h>
 #include "EncryptedSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include "EphemeralCredentials.h"
 
 #include <QLocale>
@@ -11,8 +11,6 @@
 #include <QMutex>
 #include <QDataStream>
 
-#include <iostream>
-#include <assert.h>
 #include <chrono>
 #include <type_traits>
 
@@ -218,10 +216,8 @@ public:
     void setUpdateAutomatically(bool value);
     bool hasDefaultUploadFolder();
     bool hasDefaultDownloadFolder();
-    bool hasDefaultImportFolder();
     void setHasDefaultUploadFolder(bool value);
     void setHasDefaultDownloadFolder(bool value);
-    void setHasDefaultImportFolder(bool value);
     bool canUpdate(QString filePath);
     int uploadLimitKB();
     int downloadLimitKB();
@@ -231,10 +227,10 @@ public:
     int parallelDownloadConnections();
     void setParallelUploadConnections(int value);
     void setParallelDownloadConnections(int value);
-    long long upperSizeLimitValue();
-    void setUpperSizeLimitValue(long long value);
-    long long lowerSizeLimitValue();
-    void setLowerSizeLimitValue(long long value);
+    unsigned long long upperSizeLimitValue();
+    void setUpperSizeLimitValue(unsigned long long value);
+    unsigned long long lowerSizeLimitValue();
+    void setLowerSizeLimitValue(unsigned long long value);
     bool upperSizeLimit();
     void setUpperSizeLimit(bool value);
     bool lowerSizeLimit();
@@ -257,8 +253,8 @@ public:
     void setProxyProtocol(int value);
     QString proxyServer();
     void setProxyServer(const QString &value);
-    int proxyPort();
-    void setProxyPort(int value);
+    unsigned short proxyPort();
+    void setProxyPort(unsigned short value);
     bool proxyRequiresAuth();
     void setProxyRequiresAuth(bool value);
     QString getProxyUsername();
@@ -290,8 +286,8 @@ public:
     void setFatWarningShown(bool value = true);
     QString lastCustomStreamingApp();
     void setLastCustomStreamingApp(const QString &value);
-    long long getMaxMemoryUsage();
-    void setMaxMemoryUsage(long long value);
+    unsigned long long getMaxMemoryUsage();
+    void setMaxMemoryUsage(unsigned long long value);
     long long getMaxMemoryReportTime();
     void setMaxMemoryReportTime(long long timestamp);
     long long lastDailyStatTime();
@@ -304,10 +300,10 @@ public:
 
     QString downloadFolder();
     void setDownloadFolder(QString value);
-    long long uploadFolder();
-    void setUploadFolder(long long value);
-    long long importFolder();
-    void setImportFolder(long long value);
+    mega::MegaHandle uploadFolder();
+    void setUploadFolder(mega::MegaHandle value);
+    mega::MegaHandle importFolder();
+    void setImportFolder(mega::MegaHandle value);
 
     bool getImportMegaLinksEnabled();
     void setImportMegaLinksEnabled(const bool value);
@@ -491,16 +487,16 @@ public:
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
 
     static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
-    static unsigned int UPDATE_INITIAL_DELAY_SECS;
-    static unsigned int UPDATE_RETRY_INTERVAL_SECS;
-    static unsigned int UPDATE_TIMEOUT_SECS;
-    static unsigned int MAX_LOGIN_TIME_MS;
+    static int UPDATE_INITIAL_DELAY_SECS;
+    static int UPDATE_RETRY_INTERVAL_SECS;
+    static int UPDATE_TIMEOUT_SECS;
+    static int MAX_LOGIN_TIME_MS;
 
     static long long MIN_REBOOT_INTERVAL_MS;
     static long long MIN_EXTERNAL_NODES_WARNING_MS;
     static long long MIN_TRANSFER_NOTIFICATION_INTERVAL_MS;
 
-    static unsigned int PROXY_TEST_TIMEOUT_MS;
+    static int PROXY_TEST_TIMEOUT_MS;
     static unsigned int MAX_IDLE_TIME_MS;
     static unsigned int MAX_COMPLETED_ITEMS;
 
@@ -525,7 +521,7 @@ public:
     static const QString CHANGELOG;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
-    static const qint16 HTTP_PORT;
+    static const unsigned short HTTP_PORT;
 
     static const QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
@@ -569,10 +565,9 @@ protected:
     template<typename T>
     T getValueConcurrent(const QString &key, const T &defaultValue);
     void setAndCachedValue(const QString &key, const QVariant &value);
-    //For these two methods, use notifyChange = true if someone needs to detect when it changes
+    //For this method, use notifyChange = true if someone needs to detect when it changes
     //Not all prefeerences need this, that´s why by default it is set to false
-    void setValueAndSyncConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
-    void setValueConcurrent(const QString &key, const QVariant &value, bool notifyChange = false);
+    void setValueConcurrently(const QString &key, const QVariant &value, bool notifyChange = false);
 
     std::unique_ptr<EncryptedSettings> mSettings;
 
@@ -690,7 +685,6 @@ protected:
     static const QString uploadFolderKey;
     static const QString hasDefaultUploadFolderKey;
     static const QString hasDefaultDownloadFolderKey;
-    static const QString hasDefaultImportFolderKey;
     static const QString importFolderKey;
     static const QString localFingerprintKey;
     static const QString lastExecutionTimeKey;
@@ -772,14 +766,14 @@ protected:
     static const int  defaultProxyProtocol;
     static const long long defaultTimeStamp;
     static const QString  defaultProxyServer;
-    static const int defaultProxyPort;
+    static const unsigned short defaultProxyPort;
     static const bool defaultProxyRequiresAuth;
     static const QString defaultProxyUsername;
     static const QString defaultProxyPassword;
     static const bool defaultUpperSizeLimit;
     static const bool defaultLowerSizeLimit;
-    static const long long defaultUpperSizeLimitValue;
-    static const long long defaultLowerSizeLimitValue;
+    static const unsigned long long defaultUpperSizeLimitValue;
+    static const unsigned long long defaultLowerSizeLimitValue;
     static const int defaultUpperSizeLimitUnit;
     static const int defaultLowerSizeLimitUnit;
     static const bool defaultCleanerDaysLimit;

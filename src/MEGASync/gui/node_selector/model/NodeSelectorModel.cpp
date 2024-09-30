@@ -1,10 +1,12 @@
-#include "node_selector/model/NodeSelectorModel.h"
-#include "node_selector/model/NodeSelectorModelSpecialised.h"
+#include "NodeSelectorModel.h"
+
+#include "CameraUploadFolder.h"
 #include "MegaApplication.h"
-#include "Utilities.h"
-#include "UserAttributesRequests/CameraUploadFolder.h"
-#include "UserAttributesRequests/MyChatFilesFolder.h"
 #include "MegaNodeNames.h"
+#include "MyChatFilesFolder.h"
+#include "NodeSelectorModelSpecialised.h"
+#include "RequestListenerManager.h"
+#include "Utilities.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -504,6 +506,8 @@ NodeSelectorModel::NodeSelectorModel(QObject *parent) :
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 
     protectModelWhenPerformingActions();
+
+    mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
 }
 
 NodeSelectorModel::~NodeSelectorModel()
@@ -880,7 +884,69 @@ bool NodeSelectorModel::addToLoadingList(const std::shared_ptr<mega::MegaNode> n
     return node != nullptr;
 }
 
-void NodeSelectorModel::removeNode(const QModelIndex &index)
+std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHandle handle)
+{
+    auto node = std::shared_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
+
+    // This is for an extra protection as we don´t show the delete action if one of this
+    // conditions are not met
+    if (!node || access < mega::MegaShare::ACCESS_FULL || !node->isNodeKeyDecrypted())
+    {
+        return nullptr;
+    }
+
+    return node;
+}
+
+void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
+{
+    emit blockUi(true);
+    //It will be unblocked when all requestFinish calls are received (check onRequestFinish)
+    QtConcurrent::run([this, nodeHandles, permanently]() {
+        foreach(auto handle, nodeHandles)
+        {
+            std::shared_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+            if (node)
+            {
+                int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
+
+                mRequestByHandle.insert(handle, mega::MegaRequest::TYPE_REMOVE);
+
+                // Double protection in case the node properties changed while the node is deleted
+                if (permanently ||
+                    (access == mega::MegaShare::ACCESS_FULL && node->isNodeKeyDecrypted()))
+                {
+                    MegaSyncApp->getMegaApi()->remove(node.get(), mListener.get());
+                }
+                else
+                {
+                    auto rubbish = MegaSyncApp->getRubbishNode();
+                    moveNode(node, rubbish);
+                }
+            }
+        }
+    });
+}
+
+bool NodeSelectorModel::areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles)
+{
+    foreach(auto&& handle, handles)
+    {
+        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        if (!node || !node->isNodeKeyDecrypted() ||
+            getNodeAccess(node.get()) < mega::MegaShare::ACCESS_FULL)
+        {
+            return false;
+        }
+    }
+
+    // Return false if there are no handles (disabled rows...)
+    return !handles.isEmpty();
+}
+
+void NodeSelectorModel::removeNodeFromModel(const QModelIndex& index)
 {
     if(!index.isValid())
     {
@@ -910,6 +976,117 @@ void NodeSelectorModel::removeNode(const QModelIndex &index)
                 emit removeRootItem(item);
                 endRemoveRows();
             }
+        }
+    }
+}
+
+int NodeSelectorModel::getNodeAccess(mega::MegaNode* node)
+{
+    auto parent = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getParentNode(node));
+    if (parent && node)
+    {
+        auto access(MegaSyncApp->getMegaApi()->getAccess(node));
+
+        if (access >= mega::MegaShare::ACCESS_FULL && (!node->isNodeKeyDecrypted()))
+        {
+            return mega::MegaShare::ACCESS_UNKNOWN;
+        }
+
+        return access;
+    }
+    else
+    {
+        return mega::MegaShare::ACCESS_UNKNOWN;
+    }
+}
+
+void NodeSelectorModel::moveNode(std::shared_ptr<mega::MegaNode> moveNode,
+                                 std::shared_ptr<mega::MegaNode> targetParentFolder)
+{
+    MegaSyncApp->getMegaApi()->moveNode(moveNode.get(), targetParentFolder.get(), mListener.get());
+}
+
+void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
+{
+    if (request->getType() == mega::MegaRequest::TYPE_MOVE ||
+        request->getType() == mega::MegaRequest::TYPE_REMOVE)
+    {
+        auto requestType = mRequestByHandle.take(request->getNodeHandle());
+        if (e->getErrorCode() != mega::MegaError::API_OK)
+        {
+            mRequestFailedByHandle.insert(request->getNodeHandle(), requestType);
+
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
+            if (node)
+            {
+                MovedItemsType itemType =
+                    node->isFile() ? MovedItemsType::FILES : MovedItemsType::FOLDERS;
+                mMovedItemsType |= itemType;
+            }
+        }
+
+        auto multipleRequest(mRequestFailedByHandle.size() > 1);
+
+        if (mRequestByHandle.isEmpty())
+        {
+            if (!mRequestFailedByHandle.isEmpty())
+            {
+                QMegaMessageBox::MessageBoxInfo msgInfo;
+                msgInfo.title = MegaSyncApp->getMEGAString();
+
+                if (requestType == mega::MegaRequest::TYPE_REMOVE)
+                {
+                    if (multipleRequest)
+                    {
+                        if (mMovedItemsType & MovedItemsType::BOTH)
+                        {
+                            msgInfo.text = tr("Error removing items");
+                            msgInfo.informativeText =
+                                tr("The items couldn’t be removed. Try again later");
+                        }
+                        else if (mMovedItemsType & MovedItemsType::FILES)
+                        {
+                            msgInfo.text = tr("Error removing files");
+                            msgInfo.informativeText =
+                                tr("The files couldn’t be removed. Try again later");
+                        }
+                        else if (mMovedItemsType & MovedItemsType::FOLDERS)
+                        {
+                            msgInfo.text = tr("Error removing folders");
+                            msgInfo.informativeText =
+                                tr("The folders couldn’t be removed. Try again later");
+                        }
+                    }
+                    else
+                    {
+                        std::unique_ptr<mega::MegaNode> node(
+                            MegaSyncApp->getMegaApi()->getNodeByHandle(
+                                mRequestFailedByHandle.firstKey()));
+
+                        if (node->isFile())
+                        {
+                            msgInfo.text = tr("Error removing file");
+                            msgInfo.informativeText =
+                                tr("The file %1 couldn’t be removed. Try again later")
+                                    .arg(MegaNodeNames::getNodeName(node.get()));
+                        }
+                        else
+                        {
+                            msgInfo.text = tr("Error removing folder");
+                            msgInfo.informativeText =
+                                tr("The folder %1 couldn’t be removed. Try again later")
+                                    .arg(MegaNodeNames::getNodeName(node.get()));
+                        }
+                    }
+                }
+                emit showMessageBox(msgInfo);
+            }
+
+            mRequestFailedByHandle.clear();
+            mRequestByHandle.clear();
+
+            emit blockUi(false);
         }
     }
 }

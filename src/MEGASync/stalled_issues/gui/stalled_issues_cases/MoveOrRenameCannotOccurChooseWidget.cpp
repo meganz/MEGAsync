@@ -1,14 +1,12 @@
 #include "MoveOrRenameCannotOccurChooseWidget.h"
 
 #include "ui_StalledIssueChooseWidget.h"
-#include "syncs/control/SyncController.h"
 
 //BASE CLASS
-MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget *parent) :
-    mChosenSide(MoveOrRenameIssueChosenSide::NONE),
-    StalledIssueChooseWidget(parent)
-{
-}
+MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget* parent):
+    StalledIssueChooseWidget(parent),
+    mChosenSide(MoveOrRenameIssueChosenSide::NONE)
+{}
 
 void MoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)

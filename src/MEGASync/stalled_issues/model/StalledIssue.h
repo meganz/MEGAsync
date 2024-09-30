@@ -86,6 +86,7 @@ protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
     friend class MoveOrRenameCannotOccurIssue;
+    friend class FolderMatchedAgainstFileIssue;
 
     Path mMovePath;
     Path mPath;
@@ -251,8 +252,7 @@ class StalledIssue : public QObject
                     object->deleteLater();
                 };
 
-                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
-                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [this](const QString&){
+                auto onChanged = [this](){
                     mIssue->resetUIUpdated();
 #ifdef Q_OS_LINUX
                     auto paths = mIssue->getLocalFiles();
@@ -264,6 +264,15 @@ class StalledIssue : public QObject
                         }
                     }
 #endif
+                };
+
+                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
+                connect(mFileWatcher.get(), &QFileSystemWatcher::directoryChanged, this, [onChanged](const QString&){
+                    onChanged();
+                });
+
+                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [onChanged](const QString&){
+                    onChanged();
                 });
             }
         }
@@ -322,7 +331,17 @@ public:
     SolveType getIsSolved() const {return mIsSolved;}
     virtual void setIsSolved(SolveType type);
 
-    virtual bool autoSolveIssue() {return false;}
+    enum class AutoSolveIssueResult
+    {
+        SOLVED,
+        ASYNC_SOLVED,
+        FAILED,
+    };
+
+    virtual AutoSolveIssueResult autoSolveIssue()
+    {
+        return AutoSolveIssueResult::FAILED;
+    }
     virtual bool isAutoSolvable() const;
     bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
@@ -330,8 +349,6 @@ public:
     virtual void finishAsyncIssueSolving(){}
     virtual void startAsyncIssueSolving();
 
-    virtual bool isSymLink() const {return false;}
-    virtual bool isSpecialLink() const {return false;}
     bool missingFingerprint() const;
     static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
     virtual QStringList getLocalFiles();
@@ -409,6 +426,7 @@ protected:
     mutable SolveType mIsSolved = SolveType::UNSOLVED;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
+
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);

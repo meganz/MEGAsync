@@ -87,7 +87,7 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
     return data->size();
 }
 
-bool MacXLocalSocket::writeData(const char *data, qint64 len)
+bool MacXLocalSocket::writeData(const char *data, int len)
 {
     if (!len)
     {
@@ -99,7 +99,8 @@ bool MacXLocalSocket::writeData(const char *data, qint64 len)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sending data to shell ext: %1")
                      .arg(QString::fromUtf8(data, len)).toUtf8().constData());
-        [socketPrivate->extClient send:[NSData dataWithBytes:(const void *)data length:sizeof(unsigned char)*len]];
+        NSUInteger lengthSize = sizeof(unsigned char)*static_cast<unsigned long>(len);
+        [socketPrivate->extClient send:[NSData dataWithBytes:(const void *)data length: lengthSize]];
         return true;
     }
     @catch(NSException *e)

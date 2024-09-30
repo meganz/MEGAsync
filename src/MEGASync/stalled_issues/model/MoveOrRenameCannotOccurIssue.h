@@ -7,7 +7,6 @@
 
 #include <QTMegaRequestListener.h>
 
-class SyncController;
 class SyncSettings;
 
 enum class MoveOrRenameIssueChosenSide
@@ -35,7 +34,7 @@ public:
     void setIsSolved(SolveType type) override;
     bool isAutoSolvable() const override;
     void solveIssue(MoveOrRenameIssueChosenSide side);
-    bool autoSolveIssue() override;
+    StalledIssue::AutoSolveIssueResult autoSolveIssue() override;
 
     bool checkForExternalChanges() override;
 
@@ -68,7 +67,6 @@ private:
     bool mSolvingStarted;
     bool mUndoSuccessful;
 
-    std::shared_ptr<SyncController> mSyncController;
     static QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> mChosenSideBySyncId;
     MoveOrRenameIssueChosenSide mChosenSide;
     int mCombinedNumberOfIssues;

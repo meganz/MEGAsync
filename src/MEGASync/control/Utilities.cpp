@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "MegaApplication.h"
 #include "gzjoin.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include <QApplication>
 #include <QImageReader>
@@ -30,8 +30,16 @@ using namespace mega;
 
 namespace
 {
-    constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+constexpr char AVATARS_EXTENSION_FILTER[] = "*.jpg";
+constexpr int MSEC_IN_1_SEC = 1000;
+constexpr int HOURS_IN_1_DAY = 24;
+constexpr int SECS_IN_1_MIN = 60;
+constexpr int SECS_IN_1_HOUR = 3600;
+constexpr int SECS_IN_1_DAY = 86400;
+constexpr int SECS_IN_1_MONTH = 2592000;
+constexpr int SECS_IN_1_YEAR = 31536000;
 }
+
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, Utilities::FileType> Utilities::fileTypes;
 QHash<QString, QString> Utilities::languageNames;
@@ -42,10 +50,10 @@ const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contac
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
 const QString Utilities::SYNC_SUPPORT_URL = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing/sync-v2");
 
-const unsigned long long KB = 1024;
-const unsigned long long MB = 1024 * KB;
-const unsigned long long GB = 1024 * MB;
-const unsigned long long TB = 1024 * GB;
+const long long KB = 1024;
+const long long MB = 1024 * KB;
+const long long GB = 1024 * MB;
+const long long TB = 1024 * GB;
 
 // Human-friendly list of forbidden chars for New Remote Folder
 const QLatin1String Utilities::FORBIDDEN_CHARS("\\ / : \" * < > \? |");
@@ -185,57 +193,57 @@ void Utilities::initializeExtensions()
 
 void Utilities::initializeFileTypes()
 {
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.wav"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.wav"), QString())]
             = FileType::TYPE_AUDIO;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.mkv"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.mkv"), QString())]
             = FileType::TYPE_VIDEO;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.tar"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.tar"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.torrent"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.torrent"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.dmg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.dmg"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xd"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xd"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.sketch"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.sketch"), QString())]
             = FileType::TYPE_ARCHIVE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.txt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.txt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pdf"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pdf"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.doc"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.doc"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ods"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ods"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.odt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.odt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ppt"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ppt"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.pages"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.pages"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.numbers"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.numbers"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.key"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.key"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xml"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xml"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.xls"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.xls"), QString())]
             = FileType::TYPE_DOCUMENT;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.png"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.png"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.jpg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.jpg"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.ai"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.ai"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.abr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.abr"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.3fr"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.3fr"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.svg"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.svg"), QString())]
             = FileType::TYPE_IMAGE;
-    fileTypes[getExtensionPixmapName(QLatin1Literal("a.bin"), QString())]
+    fileTypes[getExtensionPixmapName(QLatin1String("a.bin"), QString())]
             = FileType::TYPE_OTHER;
 }
 
@@ -484,22 +492,21 @@ QString Utilities::cleanedTimeString(const QString &timeString)
     return cleanedStr;
 }
 
-unsigned long long Utilities::getNearestUnit(long long bytes)
+long long Utilities::getNearestUnit(long long bytes)
 {
-    unsigned long long unsignedBytes = static_cast<unsigned long long>(bytes);
-    if (unsignedBytes >= TB)
+    if (bytes >= TB)
     {
         return TB;
     }
-    else if (unsignedBytes >= GB)
+    else if (bytes >= GB)
     {
         return GB;
     }
-    else if (unsignedBytes >= MB)
+    else if (bytes >= MB)
     {
         return MB;
     }
-    else if (unsignedBytes >= KB)
+    else if (bytes >= KB)
     {
         return KB;
     }
@@ -618,60 +625,20 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision, bool colo
     return filledTimeString(getTimeFormat(interval), interval, color);
 }
 
-struct Postfix
-{
-    double value;
-    std::string letter;
-};
-
-const std::vector<Postfix> postfixes = {{1e12, "T"},
-                                     {1e9,  "G"},
-                                     {1e6,  "M"},
-                                     {1e3,  "K"}};
-
-constexpr auto maxStringSize = 4;
-
-QString Utilities::getQuantityString(unsigned long long quantity)
-{
-    for (const auto& postfix : postfixes)
-    {
-        if(static_cast<double>(quantity) >= postfix.value)
-        {
-            const double value{static_cast<double>(quantity) / postfix.value};
-            // QString::number(value, 'G', 3) is another way to do it but it rounds the result
-
-            QString valueString{QString::number(value).left(maxStringSize)};
-            if(valueString.contains(QStringLiteral(".")))
-            {
-                valueString.remove(QRegExp(QStringLiteral("0+$"))); // Remove any number of trailing 0's
-                valueString.remove(QRegExp(QStringLiteral("\\.$"))); // If the last character is just a '.' then remove it
-            }
-            return valueString + QString::fromStdString(postfix.letter);
-        }
-    }
-    return QString::number(quantity);
-}
-
 QString Utilities::getAddedTimeString(long long secs)
 {
-    const int SECS_IN_1_MINUTE = 60;
-    const int SECS_IN_1_HOUR = 3600;
-    const int SECS_IN_1_DAY = 86400;
-    const int SECS_IN_1_MONTH = 2592000;
-    const int SECS_IN_1_YEAR = 31536000;
-
     if (secs < 2)
     {
         return QCoreApplication::translate("Utilities", "Added just now");
     }
-    else if (secs < SECS_IN_1_MINUTE)
+    else if (secs < SECS_IN_1_MIN)
     {
         const int secsAsInt = static_cast<int>(secs);
         return QCoreApplication::translate("Utilities", "Added %n second ago", "", secsAsInt);
     }
     else if (secs < SECS_IN_1_HOUR)
     {
-        const int minutes = static_cast<int>(secs/SECS_IN_1_MINUTE);
+        const int minutes = static_cast<int>(secs/SECS_IN_1_MIN);
         return QCoreApplication::translate("Utilities", "Added %n minute ago", "", minutes);
     }
     else if (secs < SECS_IN_1_DAY)
@@ -697,7 +664,7 @@ QString Utilities::getAddedTimeString(long long secs)
     }
 }
 
-QString Utilities::getSizeString(unsigned long long bytes)
+QString Utilities::getSizeString(long long bytes)
 {
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
@@ -730,19 +697,19 @@ QString Utilities::getSizeString(unsigned long long bytes)
                     + QCoreApplication::translate("Utilities", "Bytes");
 }
 
-QString Utilities::getSizeStringLocalized(quint64 bytes)
+QString Utilities::getSizeStringLocalized(qint64 bytes)
 {
     auto baseUnitSize = Platform::getInstance()->getBaseUnitsSize();
 
-    static const QVector<QPair<QString, quint64>> unitsSize{
-        {QLatin1String("TB"), static_cast<quint64>(std::pow(baseUnitSize, 4))},
-        {QLatin1String("GB"), static_cast<quint64>(std::pow(baseUnitSize, 3))},
-        {QLatin1String("MB"), static_cast<quint64>(std::pow(baseUnitSize, 2))},
+    static const QVector<QPair<QString, qint64>> unitsSize{
+        {QLatin1String("TB"), static_cast<qint64>(std::pow(baseUnitSize, 4))},
+        {QLatin1String("GB"), static_cast<qint64>(std::pow(baseUnitSize, 3))},
+        {QLatin1String("MB"), static_cast<qint64>(std::pow(baseUnitSize, 2))},
         {QLatin1String("KB"), baseUnitSize},
         {QLatin1String("Bytes"), 1}
     };
 
-    auto foundIt = std::find_if(unitsSize.constBegin(), unitsSize.constEnd(), [&bytes](const QPair<QString, quint64>& pair){
+    auto foundIt = std::find_if(unitsSize.constBegin(), unitsSize.constEnd(), [&bytes](const QPair<QString, qint64>& pair){
         return bytes >= pair.second;
     });
 
@@ -752,25 +719,13 @@ QString Utilities::getSizeStringLocalized(quint64 bytes)
     if (foundIt != unitsSize.constEnd())
     {
         return locale.toString(toDoubleInUnit(bytes, foundIt->second)) + QString::fromLatin1(" ")
-                + QCoreApplication::translate("Utilities", foundIt->first.toStdString().c_str());
+                + QCoreApplication::translate("Utilities", foundIt->first.toUtf8().constData());
     }
     else
     {
         return locale.toString(toDoubleInUnit(bytes, 1)) + QString::fromLatin1(" ")
                 + QCoreApplication::translate("Utilities", "Bytes");
     }
-}
-
-QString Utilities::getSizeString(long long bytes)
-{
-    if (bytes >= 0)
-    {
-        return getSizeString(static_cast<unsigned long long>(bytes));
-    }
-    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
-    QLocale locale(language);
-    return locale.toString(bytes) + QStringLiteral(" ")
-            + QCoreApplication::translate("Utilities", "Bytes");
 }
 
 int Utilities::toNearestUnit(long long bytes)
@@ -785,7 +740,7 @@ QString Utilities::getTranslatedSeparatorTemplate()
     return QCoreApplication::translate("Utilities", "%1/%2");
 }
 
-Utilities::ProgressSize Utilities::getProgressSizes(unsigned long long transferredBytes, unsigned long long totalBytes)
+Utilities::ProgressSize Utilities::getProgressSizes(long long transferredBytes, long long totalBytes)
 {
     ProgressSize sizes;
     Q_ASSERT(totalBytes >= transferredBytes);
@@ -993,7 +948,7 @@ void Utilities::getPROurlWithParameters(QString &url)
     {
         char *base64aff = MegaApi::handleToBase64(aff);
         url.append(QString::fromUtf8("/aff=%1/aff_time=%2/aff_type=%3").arg(QString::fromUtf8(base64aff))
-                                                                       .arg(timestamp / 1000)
+                                                                       .arg(timestamp / MSEC_IN_1_SEC)
                                                                        .arg(affType));
         delete [] base64aff;
     }
@@ -1268,11 +1223,11 @@ void Utilities::getDaysAndHoursToTimestamp(int64_t secsTimestamps, int64_t &rema
     }
 
     // Get seconcs diff between now and secsTimestamps
-    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / 1000;
+    int64_t tDiff = secsTimestamps - QDateTime::currentDateTimeUtc().toMSecsSinceEpoch() / MSEC_IN_1_SEC;
 
     // Compute in hours, then in days
-    remainHours = tDiff / 3600;
-    remainDays  = remainHours / 24;
+    remainHours = tDiff / SECS_IN_1_HOUR;
+    remainDays  = remainHours / HOURS_IN_1_DAY;
 }
 
 QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode, const QString &currentName, bool unescapeName, const QStringList& itemsBeingRenamed)
@@ -1310,7 +1265,7 @@ QString Utilities::getNonDuplicatedNodeName(MegaNode *node, MegaNode *parentNode
     while(newName.isEmpty())
     {
         bool nameFound = false;
-        QString suggestedName = nodeName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        QString suggestedName = nodeName + QString(QLatin1String("(%1)")).arg(QString::number(counter));
         if(node)
         {
             if(node->isFile() && !suffix.isEmpty())
@@ -1368,10 +1323,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
         notFound = true;
         counter++;
 
-        QString suggestedName = fileName + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+        QString suggestedName = fileName + QString(QLatin1String("(%1)")).arg(QString::number(counter));
         if(!suffix.isEmpty())
         {
-            suggestedName += QString(QLatin1Literal(".%1")).arg(suffix);
+            suggestedName += QString(QLatin1String(".%1")).arg(suffix);
         }
 
         if(!itemsBeingRenamed.contains(suggestedName))
@@ -1401,10 +1356,10 @@ QString Utilities::getNonDuplicatedLocalName(const QFileInfo &currentFile, bool 
 
     } while(!notFound);
 
-    repeatedName = currentFile.baseName() + QString(QLatin1Literal("(%1)")).arg(QString::number(counter));
+    repeatedName = currentFile.baseName() + QString(QLatin1String("(%1)")).arg(QString::number(counter));
     if(!suffix.isEmpty())
     {
-        repeatedName += QString(QLatin1Literal(".%1")).arg(suffix);
+        repeatedName += QString(QLatin1String(".%1")).arg(suffix);
     }
 
     return repeatedName;
@@ -1616,9 +1571,9 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
     unsigned int usecs(std::numeric_limits<unsigned int>::max());
 
     // Avoid overflow. If no overflow, use passed value.
-    if (milliseconds < (usecs/1000))
+    if (milliseconds < (usecs/MSEC_IN_1_SEC))
     {
-        usecs = milliseconds * 1000;
+        usecs = milliseconds * MSEC_IN_1_SEC;
     }
 
     // Call safely
@@ -1626,7 +1581,7 @@ void Utilities::sleepMilliseconds(unsigned int milliseconds)
 #endif
 }
 
-int Utilities::partPer(unsigned long long  part, unsigned long long total, uint ref)
+int Utilities::partPer(long long part, long long total, uint ref)
 {
     // Use maximum precision
     long double partd(part);
@@ -1720,8 +1675,18 @@ WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)
     : useSecondPrecision(secondPrecision)
 {
-    days = static_cast<int>(secs / (60 * 60 * 24));
-    hours   = static_cast<int>(secs / (60 * 60)) % 24;
-    minutes = static_cast<int>((secs / 60) % 60);
-    seconds = static_cast<int>(secs % 60);
+    days = static_cast<int>(secs / SECS_IN_1_DAY);
+    hours = static_cast<int>(secs / SECS_IN_1_HOUR) % HOURS_IN_1_DAY;
+    minutes = static_cast<int>((secs / SECS_IN_1_MIN) % SECS_IN_1_MIN);
+    seconds = static_cast<int>(secs % SECS_IN_1_MIN);
+}
+
+TimeInterval& TimeInterval::operator=(const TimeInterval& other)
+{
+    days = other.days;
+    hours = other.hours;
+    minutes = other.minutes;
+    seconds = other.seconds;
+    useSecondPrecision = other.useSecondPrecision;
+    return *this;
 }

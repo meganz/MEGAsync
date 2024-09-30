@@ -270,17 +270,12 @@ void TransferMetaData::increaseFinishedTopLevelTransfers(mega::MegaTransfer *tra
 
 bool TransferMetaData::isSingleTransfer() const
 {
-    if(isNonExistData())
-    {
-        return mFiles.nonExistFailedTransfers.size() == 1;
-    }
-
-    return (mFiles.completedTransfers.size() + mFiles.failedTransfers.size() + getTotalEmptyFolders()) == 1;
+    return getTransfersCount() == 1;
 }
 
 int TransferMetaData::getTotalFiles() const
 {
-    return mFiles.size();
+    return static_cast<int>(mFiles.size());
 }
 
 int TransferMetaData::getPendingFiles() const
@@ -454,10 +449,10 @@ void TransferMetaData::addFileFromFolder(int folderTag, int fileTag)
     folderItem->files.pendingTransfers.insert(fileId, fileItem);
 }
 
-void TransferMetaData::topLevelFolderScanningFinished(int filecount)
+void TransferMetaData::topLevelFolderScanningFinished(unsigned int filecount)
 {
     mTotalFileCount += filecount;
-    QString message = QString::fromUtf8("Folder Controller: Folder scanning finished. Containing %1 files").arg(filecount);
+    QString message = QString::fromUtf8("Folder Controller: Folder scanning finished. Containing %1 files").arg(static_cast<int>(filecount));
     mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
     mStartedTopLevelTransfers++;
     checkScanningState();
@@ -582,6 +577,16 @@ bool TransferMetaData::isEmpty() const
     return mFiles.size() == 0 && mEmptyFolders.size() == 0;
 }
 
+int TransferMetaData::getTransfersCount() const
+{
+    if(isNonExistData())
+    {
+        return mFiles.nonExistFailedTransfers.size();
+    }
+
+    return (mFiles.completedTransfers.size() + mFiles.failedTransfers.size() + getTotalEmptyFolders());
+}
+
 unsigned long long TransferMetaData::getAppId() const
 {
     return mAppId;
@@ -647,7 +652,7 @@ void TransferMetaData::start(mega::MegaTransfer *transfer)
     }
 }
 
-void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag, int nodeHandle)
+void TransferMetaData::retryFileFromFolderFailingItem(int fileTag, int folderTag, mega::MegaHandle nodeHandle)
 {
     TransferMetaDataItemId fileId(fileTag, nodeHandle);
 
@@ -759,8 +764,8 @@ QStringList DownloadTransferMetaData::getLocalPaths() const
         QFileInfo fileInfo(id.path);
         QString localPath(fileInfo.path());
 
-        char *escapedName = MegaSyncApp->getMegaApi()->escapeFsIncompatible(id.name.toStdString().c_str(),
-                                                                            localPath.toStdString().c_str());
+        char *escapedName = MegaSyncApp->getMegaApi()->escapeFsIncompatible(id.name.toUtf8().constData(),
+                                                                            localPath.toUtf8().constData());
         QString nodeName = QString::fromUtf8(escapedName);
         delete [] escapedName;
 

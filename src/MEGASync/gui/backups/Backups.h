@@ -1,7 +1,7 @@
 #ifndef BACKUPS_H
 #define BACKUPS_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class Backups : public QMLComponent
 {

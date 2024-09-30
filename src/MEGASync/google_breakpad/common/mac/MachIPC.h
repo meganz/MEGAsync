@@ -41,6 +41,8 @@
 
 #import <CoreServices/CoreServices.h>
 
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+
 //==============================================================================
 // DISCUSSION:
 //

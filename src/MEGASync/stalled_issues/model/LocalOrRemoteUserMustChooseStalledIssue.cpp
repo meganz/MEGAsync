@@ -20,22 +20,22 @@ LocalOrRemoteUserMustChooseStalledIssue::~LocalOrRemoteUserMustChooseStalledIssu
     mUploader->deleteLater();
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
+StalledIssue::AutoSolveIssueResult LocalOrRemoteUserMustChooseStalledIssue::autoSolveIssue()
 {
     setAutoResolutionApplied(true);
     if(chooseLastMTimeSide())
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(
             AppStatsEvents::EventType::SI_LOCALREMOTE_SOLVED_AUTOMATICALLY);
-        return true;
+        return StalledIssue::AutoSolveIssueResult::SOLVED;
     }
 
-    return false;
+    return StalledIssue::AutoSolveIssueResult::FAILED;
 }
 
 bool LocalOrRemoteUserMustChooseStalledIssue::chooseLastMTimeSide()
 {
-    if(consultLocalData()->getAttributes()->modifiedTime() >= consultCloudData()->getAttributes()->modifiedTime())
+    if(consultLocalData()->getAttributes()->modifiedTimeInSecs() >= consultCloudData()->getAttributes()->modifiedTimeInSecs())
     {
         return chooseLocalSide();
     }
@@ -128,11 +128,8 @@ void LocalOrRemoteUserMustChooseStalledIssue::endFillingIssue()
     if(isFile())
     {
         //For autosolving
-        getLocalData()->getAttributes()->requestSize(nullptr, nullptr);
-        getCloudData()->getAttributes()->requestSize(nullptr, nullptr);
-
-        getLocalData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
-        getCloudData()->getAttributes()->requestModifiedTime(nullptr, nullptr);
+        getLocalData()->getAttributes()->initAllAttributes();
+        getCloudData()->getAttributes()->initAllAttributes();
 
         getLocalData()->getAttributes()->requestCRC(this, [this](const QString& crc){
             mLocalCRCAtStart = crc;
@@ -194,61 +191,27 @@ bool LocalOrRemoteUserMustChooseStalledIssue::chooseRemoteSide()
     return utilities.removeLocalFile(consultLocalData()->getNativeFilePath(), syncId);
 }
 
-bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides(QStringList* namesUsed)
+bool LocalOrRemoteUserMustChooseStalledIssue::chooseBothSides()
 {
-    auto result(false);
-    auto node(getCloudData()->getNode());
-    if(node)
+    mChosenSide = ChosenSide::BOTH;
+    auto result = StalledIssuesUtilities::KeepBothSides(getCloudData()->getNode(), getLocalData()->getNativeFilePath());
+    if(result.sideRenamed == StalledIssuesUtilities::KeepBothSidesState::Side::LOCAL)
     {
-        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
-        if(parentNode)
-        {
-            mNewName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, (*namesUsed));
-            namesUsed->append(mNewName);
-
-            auto error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::renameNode,
-                              MegaSyncApp->getMegaApi(),
-                              node.get(),
-                              mNewName.toUtf8().constData());
-
-            if(error)
-            {
-                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
-                                                                       .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(error.get()))
-                                                                       .toUtf8().constData());
-
-                QFileInfo currentFile(getLocalData()->getNativeFilePath());
-                QFile file(currentFile.filePath());
-                if(file.exists())
-                {
-                    mNewName = Utilities::getNonDuplicatedLocalName(currentFile, true, (*namesUsed));
-                    currentFile.setFile(currentFile.path(), mNewName);
-                    if(file.rename(QDir::toNativeSeparators(currentFile.filePath())))
-                    {
-                        getLocalData()->setRenamedFileName(mNewName);
-                        result = true;
-                    }
-                }
-            }
-            else
-            {
-                getLocalData()->setRenamedFileName(mNewName);
-                result = true;
-            }
-
-            mChosenSide = ChosenSide::BOTH;
-            return result;
-        }
+        getLocalData()->setRenamedFileName(result.newName);
+    }
+    else if(result.sideRenamed == StalledIssuesUtilities::KeepBothSidesState::Side::REMOTE)
+    {
+        getCloudData()->setRenamedFileName(result.newName);
     }
 
-    return result;
+    return result.error == nullptr;
 }
 
 LocalOrRemoteUserMustChooseStalledIssue::ChosenSide LocalOrRemoteUserMustChooseStalledIssue::lastModifiedSide() const
 {
     if(isFile())
     {
-        return consultLocalData()->getAttributes()->modifiedTime() > consultCloudData()->getAttributes()->modifiedTime()
+        return consultLocalData()->getAttributes()->modifiedTimeInSecs() > consultCloudData()->getAttributes()->modifiedTimeInSecs()
                    ? ChosenSide::LOCAL : ChosenSide::REMOTE;
     }
 

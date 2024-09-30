@@ -1,7 +1,7 @@
 #ifndef TRANSFERNOTIFICATIONBUILDER_H
 #define TRANSFERNOTIFICATIONBUILDER_H
 
-#include "model/TransferMetaData.h"
+#include "TransferMetaData.h"
 #include "DesktopNotifications.h"
 
 #include <megaapi.h>
@@ -15,7 +15,7 @@ public:
     TransferNotificationBuilder(const std::shared_ptr<TransferMetaData>& data);
     ~TransferNotificationBuilder() = default;
 
-    DesktopNotifications::NotificationInfo buildNotification();
+    DesktopNotifications::NotificationInfo buildNotification(const bool isLogged);
 
     static QString getDownloadFailedTitle();
     static QString getDownloadSomeFailedTitle();

@@ -217,8 +217,8 @@ void CloudStalledIssueChooseWidget::updateExtraInfo(CloudStalledIssueDataPtr clo
             ui->name->updateVersionsCount(versions);
         });
 
-        cloudData->getFileFolderAttributes()->requestUser(this, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this](QString user, bool show){
-            ui->name->updateUser(user, show);
+        cloudData->getFileFolderAttributes()->requestUser(this, [this, cloudData](QString user){
+            ui->name->updateUser(user, !cloudData->getFileFolderAttributes()->isCurrentUser());
         });
     }
 }

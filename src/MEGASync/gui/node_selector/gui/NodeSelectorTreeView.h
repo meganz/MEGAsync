@@ -9,7 +9,7 @@
 #include <QHeaderView>
 
 class NodeSelectorProxyModel;
-
+class NodeSelectorModel;
 
 using namespace  mega;
 class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>
@@ -19,6 +19,7 @@ class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate
 public:
     explicit NodeSelectorTreeView(QWidget *parent = nullptr);
     MegaHandle getSelectedNodeHandle();
+    QList<MegaHandle> getMultiSelectionNodeHandle() const;
     void setModel(QAbstractItemModel *model) override;
 
 protected:
@@ -49,6 +50,8 @@ private:
     bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
     NodeSelectorProxyModel* proxyModel() const;
+
+    NodeSelectorModel* getSourceModel() const;
 
     MegaApi* mMegaApi;
 };

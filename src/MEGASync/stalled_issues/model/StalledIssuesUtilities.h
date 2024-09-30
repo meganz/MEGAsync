@@ -6,7 +6,7 @@
 #include <megaapi.h>
 #include <MegaApplication.h>
 #include <Utilities.h>
-#include <syncs/control/SyncInfo.h>
+#include "SyncInfo.h"
 #include <TextDecorator.h>
 
 #include <QObject>
@@ -62,6 +62,23 @@ public:
 
     static void openLink(bool isCloud, const QString& path);
     static QString getLink(bool isCloud, const QString& path);
+
+    struct KeepBothSidesState
+    {
+        enum Side
+        {
+            NONE,
+            LOCAL,
+            REMOTE
+        };
+
+        Side sideRenamed = Side::NONE;
+        QString newName;
+        std::shared_ptr<mega::MegaError> error;
+    };
+
+    static KeepBothSidesState KeepBothSides(std::shared_ptr<mega::MegaNode> node,
+                                            const QString& localFilePath);
 
 signals:
     void actionFinished();

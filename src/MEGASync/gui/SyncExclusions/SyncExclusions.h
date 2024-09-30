@@ -1,8 +1,8 @@
 #ifndef SYNCEXCLUSIONS_H
 #define SYNCEXCLUSIONS_H
 
-#include "qml/QmlDialogWrapper.h"
-#include "gui/SyncExclusions/ExclusionRulesModel.h"
+#include "QmlDialogWrapper.h"
+#include "ExclusionRulesModel.h"
 #include <QScreen>
 
 class SyncExclusions : public QMLComponent
@@ -34,7 +34,7 @@ public:
     void setMinimumAllowedSize(double minimumSize);
     double getMaximumAllowedSize()  const {return mMaximumAllowedSize;}
     void setMaximumAllowedSize(double maximumSize);
-    double getMinimumAllowedUnit() const {return mMinimumAllowedUnit;}
+    int getMinimumAllowedUnit() const {return mMinimumAllowedUnit;}
     void setMinimumAllowedUnit(int minimumUnit);
     int getMaximumAllowedUnit()  const {return mMaximumAllowedUnit;}
     void setMaximumAllowedUnit(int maximumUnit);
@@ -47,8 +47,8 @@ public:
     bool isAskOnExclusionRemove()  const;
     void setAskOnExclusionRemove(bool);
 
-    std::pair<int, int> fromDisplay(double value , int unit) const;
-    std::pair<double, int> toDisplay(int value , int unit) const;
+    std::pair<unsigned long long, int> fromDisplay(double value , int unit) const;
+    std::pair<double, int> toDisplay(unsigned long long value , int unit) const;
 
     QUrl getQmlUrl() override;
 

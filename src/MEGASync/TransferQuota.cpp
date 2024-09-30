@@ -1,6 +1,6 @@
 #include "mega/types.h"
 #include "TransferQuota.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "OverQuotaDialog.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
@@ -256,7 +256,7 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
         auto dialog = OverQuotaDialog::showDialog(type);
         if(dialog)
         {
-            DialogOpener::showDialog(dialog, [dialog, func, this]()
+            DialogOpener::showDialog(dialog, [dialog, func]()
             {
                func(dialog->result());
             });
@@ -273,8 +273,9 @@ QTime TransferQuota::getTransferQuotaDeadline()
     auto seconds = std::chrono::duration_cast<std::chrono::seconds>(mWaitTimeUntil.time_since_epoch()).count();
     auto now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
     auto timeToWait(seconds-now);
-    QTime time(0,0,0);
-    return time.addSecs(timeToWait);
+    QDateTime dateTime;
+    dateTime = dateTime.addSecs(timeToWait);
+    return dateTime.time();
 }
 
 void TransferQuota::reset()

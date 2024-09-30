@@ -3,7 +3,6 @@ import QtQuick 2.15
 import common 1.0
 
 import BackupsModel 1.0
-import SyncInfo 1.0
 
 ConfirmFoldersPageForm {
     id: root
@@ -12,6 +11,11 @@ ConfirmFoldersPageForm {
     signal confirmFoldersMoveToFinal(bool success)
 
     footerButtons {
+        leftPrimary.text: Strings.skip
+        leftPrimary.onClicked: {
+            window.close();
+        }
+
         rightSecondary.onClicked: {
             backupsModelAccess.clean(true);
             root.confirmFoldersMoveToSelect();
@@ -21,7 +25,7 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups(SyncInfo.ONBOARDING_ORIGIN);
+            backupsProxyModelRef.createBackups(window.syncOrigin);
         }
     }
 

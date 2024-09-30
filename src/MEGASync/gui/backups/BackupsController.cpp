@@ -5,12 +5,11 @@
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 
-BackupsController::BackupsController(QObject *parent)
-    : QObject(parent)
-    , mBackupController(new SyncController())
-    , mBackupsOrigin(SyncInfo::SyncOrigin::NONE)
+BackupsController::BackupsController(QObject* parent):
+    SyncController(parent),
+    mBackupsOrigin(SyncInfo::SyncOrigin::NONE)
 {
-    connect(mBackupController, &SyncController::syncAddStatus,
+    connect(this, &SyncController::syncAddStatus,
             this, &BackupsController::onBackupAddRequestStatus);
 }
 
@@ -19,7 +18,8 @@ QSet<QString> BackupsController::getRemoteFolders() const
     return SyncInfo::getRemoteBackupFolderNames();
 }
 
-void BackupsController::addBackups(const BackupInfoList& backupsInfoList, SyncInfo::SyncOrigin origin)
+void BackupsController::addBackups(const BackupInfoList& backupsInfoList,
+                                   SyncInfo::SyncOrigin origin)
 {
     if(backupsInfoList.empty())
     {
@@ -30,9 +30,8 @@ void BackupsController::addBackups(const BackupInfoList& backupsInfoList, SyncIn
     mBackupsProcessedWithError = 0;
     mBackupsToDoSize = backupsInfoList.size();
     mBackupsToDoList = backupsInfoList;
-    mBackupController->addBackup(mBackupsToDoList.first().first,
-                                 mBackupsToDoList.first().second,
-                                 mBackupsOrigin);
+    const auto&[fullPath, backupName] = mBackupsToDoList.first();
+    addBackup(fullPath, backupName, mBackupsOrigin);
 }
 
 bool BackupsController::existsName(const QString& name) const
@@ -63,9 +62,8 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     mBackupsToDoList.removeFirst();
     if(mBackupsToDoList.size() > 0)
     {
-        mBackupController->addBackup(mBackupsToDoList.first().first,
-                                     mBackupsToDoList.first().second,
-                                     mBackupsOrigin);
+        const auto&[fullPath, backupName] = mBackupsToDoList.first();
+        addBackup(fullPath, backupName, mBackupsOrigin);
     }
     else if(mBackupsToDoList.size() == 0)
     {
@@ -74,7 +72,7 @@ void BackupsController::onBackupAddRequestStatus(int errorCode, int syncErrorCod
     }
 }
 
-QString BackupsController::getErrorString(int errorCode, int syncErrorCode)
+QString BackupsController::getErrorString(int errorCode, int syncErrorCode) const
 {
     QString errorMsg;
     if(errorCode != mega::MegaError::API_OK)

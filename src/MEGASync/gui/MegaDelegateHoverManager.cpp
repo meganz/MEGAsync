@@ -21,40 +21,47 @@ void MegaDelegateHoverManager::setView(QAbstractItemView *view)
 
 bool MegaDelegateHoverManager::eventFilter(QObject *watched, QEvent *event)
 {
-    if(auto mouseEvent = dynamic_cast<QMouseEvent*>(event))
-    {
-        auto index = mView->indexAt(mouseEvent->pos());
 
-        if(mCurrentIndex.row() != index.row()
-                || mCurrentIndex.parent() != index.parent())
+    if (event)
+    {
+        if(auto mouseEvent = dynamic_cast<QMouseEvent*>(event))
         {
-            sendEvent(QEvent::Leave);
-            mCurrentIndex = index;
-            sendEvent(QEvent::Enter);
-        }
+            auto index = mView->indexAt(mouseEvent->pos());
 
-        sendEvent(QEvent::MouseMove, mouseEvent->pos());
-    }
-    else if(event->type() == QEvent::Enter)
-    {
-        if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
-        {
-            mCurrentIndex = mView->indexAt(enterEvent->pos());
-            sendEvent(QEvent::Enter);
-        }
-    }
-    else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
-    {
-        sendEvent(QEvent::Leave);
-        mCurrentIndex = QModelIndex();
-    }
-    else if(event->type() == QEvent::ChildAdded)
-    {
-        if(auto childEvent = dynamic_cast<QChildEvent*>(event))
-        {
-            if(auto editor = dynamic_cast<QWidget*>(childEvent->child()))
+            if(mCurrentIndex.row() != index.row()
+                    || mCurrentIndex.parent() != index.parent())
             {
-                editor->setMouseTracking(true);
+                sendEvent(QEvent::Leave);
+                mCurrentIndex = index;
+                sendEvent(QEvent::Enter);
+            }
+
+            sendEvent(QEvent::MouseMove, mouseEvent->pos());
+        }
+        else
+        {
+            if(event->type() == QEvent::Enter)
+            {
+                if(auto enterEvent = dynamic_cast<QEnterEvent*>(event))
+                {
+                    mCurrentIndex = mView->indexAt(enterEvent->pos());
+                    sendEvent(QEvent::Enter);
+                }
+            }
+            else if(event->type() == QEvent::Leave || event->type() == QEvent::Wheel)
+            {
+                sendEvent(QEvent::Leave);
+                mCurrentIndex = QModelIndex();
+            }
+            else if(event->type() == QEvent::ChildAdded)
+            {
+                if(auto childEvent = dynamic_cast<QChildEvent*>(event))
+                {
+                    if(auto editor = dynamic_cast<QWidget*>(childEvent->child()))
+                    {
+                        editor->setMouseTracking(true);
+                    }
+                }
             }
         }
     }

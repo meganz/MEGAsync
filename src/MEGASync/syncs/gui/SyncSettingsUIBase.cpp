@@ -2,20 +2,16 @@
 
 #include <QDateTime>
 
-#include <DialogOpener.h>
+#include "DialogOpener.h"
+#include "SyncTableView.h"
+#include "SyncItemModel.h"
+#include "SyncExclusions.h"
 
-#include <syncs/gui/Twoways/SyncTableView.h>
-#include <syncs/gui/Twoways/BindFolderDialog.h>
-#include <syncs/gui/Twoways/RemoveSyncConfirmationDialog.h>
-#include <syncs/model/SyncItemModel.h>
-#include "SyncExclusions/SyncExclusions.h"
 #ifndef Q_OS_WIN
 #include <MegaApplication.h>
-#include <DialogOpener.h>
 #include <QScreen>
 #include <PermissionsDialog.h>
 #endif
-
 
 #include "ui_SyncSettingsUIBase.h"
 
@@ -25,7 +21,6 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
     QWidget(parent),
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
-    mSyncController(new SyncController(this)),
     mParentDialog(nullptr),
     mSyncInfo(SyncInfo::instance()),
     mToolBarItem(nullptr)
@@ -148,40 +143,17 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 void SyncSettingsUIBase::setToolBarItem(QMacToolBarItem *item)
 {
     mToolBarItem = item;
-
-    syncsStateInformation(SAVING_FINISHED);
 }
 #else
 void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
 {
     mToolBarItem = item;
-
-    syncsStateInformation(SAVING_FINISHED);
 }
 #endif
 
 void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
 {
     ui->gSyncs->setAddButtonEnabled(enabled);
-}
-
-void SyncSettingsUIBase::addButtonClicked(mega::MegaHandle megaFolderHandle)
-{
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, [megaFolderHandle, overQuotaDialog, this]()
-        {
-            if(overQuotaDialog->result() == QDialog::Rejected)
-            {
-                addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-            }
-        });
-    }
-    else
-    {
-        addSyncFolderAfterOverQuotaCheck(megaFolderHandle);
-    }
 }
 
 #ifndef Q_OS_WIN
@@ -212,32 +184,6 @@ void SyncSettingsUIBase::onPermissionsClicked()
 }
 #endif
 
-void SyncSettingsUIBase::addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle)
-{
-    QPointer<BindFolderDialog> dialog = new BindFolderDialog(MegaSyncApp, this);
-
-    if (megaFolderHandle != mega::INVALID_HANDLE)
-    {
-        dialog->setMegaFolder(megaFolderHandle);
-    }
-
-    DialogOpener::showDialog<BindFolderDialog>(dialog, [dialog, this]()
-    {
-        QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder())
-                                                           .canonicalPath());
-
-    if (localFolderPath.isEmpty() || dialog->getMegaPath().isEmpty()
-        || dialog->getSyncName().isEmpty() || !dialog->getMegaFolder())
-    {
-        return;
-    }
-
-    syncsStateInformation(SyncStateInformation::SAVING);
-    mSyncController->addSync(localFolderPath, dialog->getMegaFolder(), dialog->getSyncName(), mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
-    });
-
-}
-
 void SyncSettingsUIBase::setDisabledSyncsText()
 {
     ui->lDisabledSyncs->setText(disableString());
@@ -248,51 +194,8 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
     if (mTable->selectionModel()->hasSelection())
     {
         QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        reqRemoveSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
+        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
     }
-}
-
-void SyncSettingsUIBase::reqRemoveSync(std::shared_ptr<SyncSettings> sync)
-{
-    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(this);
-
-    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(dialog, [dialog, this, sync]()
-    {
-        if (dialog->result() == QDialog::Accepted)
-        {
-            removeSync(sync);
-        }
-    });
-}
-
-void SyncSettingsUIBase::removeSync(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->removeSync(sync);
-}
-
-void SyncSettingsUIBase::setSyncToRun(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToRun(sync);
-}
-
-void SyncSettingsUIBase::setSyncToPause(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToPause(sync);
-}
-
-void SyncSettingsUIBase::setSyncToSuspend(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToSuspend(sync);
-}
-
-void SyncSettingsUIBase::setSyncToDisabled(std::shared_ptr<SyncSettings> sync)
-{
-    syncsStateInformation(SAVING);
-    mSyncController->setSyncToDisabled(sync);
 }
 
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)

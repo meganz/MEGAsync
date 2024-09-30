@@ -3,11 +3,15 @@ import QtQuick 2.0
 import common 1.0
 
 import components.views 1.0
+import components.steps 1.0
 
 import BackupsQmlDialog 1.0
+import SyncInfo 1.0
 
 BackupsQmlDialog {
     id: window
+
+    readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN
 
     title: BackupsStrings.backupsWindowTitle
     visible: true
@@ -28,6 +32,9 @@ BackupsQmlDialog {
             id: stepPanelItem
 
             width: parent.width
+            step1String: BackupsStrings.selectFolders;
+            step2String: BackupsStrings.confirmFolders;
+            helpUrl: Links.createBackup
         }
 
         Rectangle {

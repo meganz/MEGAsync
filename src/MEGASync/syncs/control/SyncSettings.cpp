@@ -1,6 +1,6 @@
 
 #include "SyncSettings.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 
 #include <assert.h>
 
@@ -125,7 +125,7 @@ void SyncSettings::setSync(MegaSync *sync)
     }
     else
     {
-        assert("SyncSettings constructor with null sync");
+        assert(true && "SyncSettings constructor with null sync");
         mSync.reset(new MegaSync()); // MegaSync getter return fair enough defaults
     }
 }

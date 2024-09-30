@@ -73,9 +73,10 @@ void UpdateTask::startUpdateThread()
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
     string updatePublicKey = Preferences::UPDATE_PUBLIC_KEY;
-    if (getenv("MEGA_UPDATE_PUBLIC_KEY"))
+    QString updatePubKeyEnv = qEnvironmentVariable("MEGA_UPDATE_PUBLIC_KEY");
+    if (!updatePubKeyEnv.isEmpty())
     {
-        updatePublicKey = getenv("MEGA_UPDATE_PUBLIC_KEY");
+        updatePublicKey = updatePubKeyEnv.toUtf8().constData();
     }
 
     signatureChecker = new MegaHashSignature(updatePublicKey.c_str());
@@ -102,9 +103,10 @@ void UpdateTask::tryUpdate()
     }
 
     QString updateURL = Preferences::UPDATE_CHECK_URL;
-    if (getenv("MEGA_UPDATE_CHECK_URL"))
+    QString updateURLEnv = qEnvironmentVariable("MEGA_UPDATE_CHECK_URL");
+    if (!updateURLEnv.isEmpty())
     {
-        updateURL = QString::fromUtf8(getenv("MEGA_UPDATE_CHECK_URL"));
+        updateURL = updateURLEnv;
 
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Using environment variable MEGA_UPDATE_CHECK_URL to fetch update file");
     }
@@ -232,9 +234,10 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
 
     updateVersion = version.toInt();
     int currentVersion = QApplication::applicationVersion().toInt();
-    if (getenv("MEGA_UPDATE_CHECK_VERSION"))
+    QString updateCheckVersionEnv = qEnvironmentVariable("MEGA_UPDATE_CHECK_VERSION");
+    if (!updateCheckVersionEnv.isEmpty())
     {
-        currentVersion = std::atoi(getenv("MEGA_UPDATE_CHECK_VERSION"));
+        currentVersion = updateCheckVersionEnv.toInt();
 
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING,"Comparing version against environment variable MEGA_UPDATE_CHECK_VERSION");
     }
@@ -460,7 +463,7 @@ void UpdateTask::addToSignature(QString value)
 
 void UpdateTask::addToSignature(QByteArray bytes)
 {
-    signatureChecker->add(bytes.constData(), bytes.length());
+    signatureChecker->add(bytes.constData(), static_cast<unsigned>(bytes.length()));
 }
 
 void UpdateTask::initSignature()
@@ -499,7 +502,7 @@ bool UpdateTask::alreadyExists(QString absolutePath, QString fileSignature)
     }
 
     QByteArray bytes = file.readAll();
-    tmpHash.add(bytes.constData(), bytes.size());
+    tmpHash.add(bytes.constData(), static_cast<unsigned>(bytes.size()));
     file.close();
 
     return tmpHash.checkSignature(fileSignature.toLatin1().constData());

@@ -1,11 +1,13 @@
 #ifndef SYNCTABLEVIEW_H
 #define SYNCTABLEVIEW_H
 
-#include "syncs/control/SyncController.h"
-
 #include <QObject>
 #include <QTableView>
 #include <QStyledItemDelegate>
+
+#include <megaapi.h>
+
+class SyncSettings;
 
 class SyncTableView : public QTableView
 {
@@ -45,7 +47,6 @@ private slots:
     virtual void onCellClicked(const QModelIndex &index);
 
 private:
-    SyncController mSyncController;
     bool mIsFirstTime;
 };
 
@@ -79,7 +80,7 @@ public:
                const QModelIndex& index) const override;
     void initStyleOption(QStyleOptionViewItem *option,
                                 const QModelIndex &index) const override;
-    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index);
+    bool helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index) override;
 };
 
 class ElideMiddleDelegate : public BackgroundColorDelegate

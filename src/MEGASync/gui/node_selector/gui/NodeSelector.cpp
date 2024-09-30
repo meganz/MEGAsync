@@ -4,16 +4,17 @@
 #include "QMegaMessageBox.h"
 #include "Utilities.h"
 #include "megaapi.h"
-#include "../model/NodeSelectorProxyModel.h"
-#include "../model/NodeSelectorModel.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorModel.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "NodeSelectorSpecializations.h"
 
 #include "MegaNodeNames.h"
 
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
+
+#include <optional>
 
 using namespace mega;
 
@@ -26,7 +27,7 @@ NodeSelector::NodeSelector(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked);
+    connect(ui->bShowIncomingShares, &QPushButton::clicked, this, &NodeSelector::onbShowIncomingSharesClicked, Qt::QueuedConnection);
     connect(ui->bShowCloudDrive, &QPushButton::clicked, this, &NodeSelector::onbShowCloudDriveClicked);
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
@@ -324,6 +325,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
     connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
     ui->stackedWidget->addWidget(mSearchWidget);
+    NodeSelectorModel* model(nullptr);
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
@@ -333,25 +335,47 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
+            if (!model)
+            {
+                model = viewContainer->getProxyModel()->getMegaModel();
+                connect(model,
+                        &NodeSelectorModel::showMessageBox,
+                        this,
+                        [this](QMegaMessageBox::MessageBoxInfo info) {
+                            info.parent = this;
+                            QMegaMessageBox::warning(info);
+                        });
+            }
         }
     }
 }
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
 {
-    if(node)
+    if (node)
     {
-        TabItem option = SHARES;
-        if(mMegaApi->isInCloud(node.get()))
+        std::optional<TabItem> option;
+
+        if (mMegaApi->isInCloud(node.get()))
         {
             option = CLOUD_DRIVE;
         }
-        else if(mMegaApi->isInVault(node.get()))
+        else if (mMegaApi->isInVault(node.get()))
         {
             option = BACKUPS;
         }
-        onOptionSelected(option);
-        auto tree_view_widget = static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
-        tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+        else if (mMegaApi->isInShare(node.get()))
+        {
+            option = SHARES;
+        }
+
+        if (option.has_value())
+        {
+            onOptionSelected(option.value());
+
+            auto tree_view_widget =
+                static_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->currentWidget());
+            tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
+        }
     }
 }

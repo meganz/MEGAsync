@@ -1,7 +1,7 @@
 #include "StalledIssue.h"
 
 #include "MegaApplication.h"
-#include "UserAttributesRequests/FullName.h"
+#include "FullName.h"
 #include "StalledIssuesUtilities.h"
 #include "TransfersModel.h"
 #include "MultiStepIssueSolver.h"
@@ -596,7 +596,8 @@ void StalledIssue::setIsFile(const QString& path, bool isLocal)
     }
     else
     {
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
         if(node)
         {
             node->isFile()  ? mFiles++ : mFolders++;

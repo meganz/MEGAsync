@@ -11,6 +11,14 @@ QtObject {
         INFO
     }
 
+    enum SyncType {
+        NONE = 0,
+        SYNC,
+        SELECTIVE_SYNC,
+        FULL_SYNC,
+        BACKUP
+    }
+
     readonly property string mega: "MEGA"
 
     readonly property int defaultWindowMargin: 36

@@ -1,7 +1,7 @@
 #include "Utilities.h"
-#include "syncs/model/BackupItemModel.h"
-#include "syncs/control/SyncController.h"
-#include "syncs/gui/SyncTooltipCreator.h"
+#include "BackupItemModel.h"
+#include "SyncController.h"
+#include "SyncTooltipCreator.h"
 
 #include <QCoreApplication>
 #include <QIcon>
@@ -88,7 +88,7 @@ QVariant BackupItemModel::data(const QModelIndex& index, int role) const
         }
         else if(role == Qt::DisplayRole)
         {
-            return SyncController::getSyncNameFromPath(sync->getLocalFolder(true));
+            return SyncController::instance().getSyncNameFromPath(sync->getLocalFolder(true));
         }
         else if(role == Qt::ToolTipRole)
         {

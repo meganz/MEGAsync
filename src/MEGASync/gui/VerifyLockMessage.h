@@ -5,7 +5,6 @@
 #include <QMouseEvent>
 #include <memory>
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
 
 #ifdef __APPLE__
     #include "platform/macx/NativeMacPopover.h"
@@ -18,7 +17,7 @@ namespace Ui {
 class VerifyLockMessage;
 }
 
-class VerifyLockMessage : public QDialog, public mega::MegaRequestListener
+class VerifyLockMessage : public QDialog
 {
     Q_OBJECT
 
@@ -29,7 +28,7 @@ public:
 
     void regenerateUI(int newStatus, bool force = false);
 
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
 
 signals:
     void logout();
@@ -41,11 +40,10 @@ private slots:
 
 protected:
     mega::MegaApi *megaApi;
-    mega::QTMegaRequestListener *delegateListener;
     bool eventFilter(QObject* obj, QEvent* event) override;
 
-    void mousePressEvent(QMouseEvent *event);
-    void changeEvent(QEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
 private:
     Ui::VerifyLockMessage *m_ui;

@@ -1,6 +1,5 @@
 #include "BandwidthSettings.h"
 #include "ui_BandwidthSettings.h"
-#include "mega/megaclient.h"
 
 #include <QButtonGroup>
 
@@ -15,18 +14,18 @@ BandwidthSettings::BandwidthSettings(MegaApplication *app, QWidget *parent) :
     mUi->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     mUi->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
 #ifdef Q_OS_MACOS
-    mUi->eMaxDownloadConnections->setMaxCount(mega::MegaClient::MAX_NUM_CONNECTIONS);
-    mUi->eMaxUploadConnections->setMaxCount(mega::MegaClient::MAX_NUM_CONNECTIONS);
+    mUi->eMaxDownloadConnections->setMaxCount(BandwidthSettings::MAX_NUM_CONNECTIONS);
+    mUi->eMaxUploadConnections->setMaxCount(BandwidthSettings::MAX_NUM_CONNECTIONS);
 
-    for(unsigned i = 1; i <= mega::MegaClient::MAX_NUM_CONNECTIONS; i++)
+    for(unsigned i = 1; i <= BandwidthSettings::MAX_NUM_CONNECTIONS; i++)
     {
         mUi->eMaxDownloadConnections->addItem(QString::number(i), i);
         mUi->eMaxUploadConnections->addItem(QString::number(i), i);
     }
 
 #else
-    mUi->eMaxDownloadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
-    mUi->eMaxUploadConnections->setRange(1, mega::MegaClient::MAX_NUM_CONNECTIONS);
+    mUi->eMaxDownloadConnections->setRange(1, BandwidthSettings::MAX_NUM_CONNECTIONS);
+    mUi->eMaxUploadConnections->setRange(1, BandwidthSettings::MAX_NUM_CONNECTIONS);
 #endif
 
     QButtonGroup* downloadButtonGroup = new QButtonGroup(this);

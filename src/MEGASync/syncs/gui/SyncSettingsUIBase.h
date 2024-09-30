@@ -15,6 +15,7 @@
 #include <Utilities.h>
 #include <GuiUtilities.h>
 #include <MegaApplication.h>
+#include <SyncController.h>
 
 namespace Ui {
 class SyncSettingsUIBase;
@@ -22,7 +23,6 @@ class SyncSettingsUIBase;
 
 class SyncItemModel;
 class SyncItemSortModel;
-class SyncController;
 class SyncTableView;
 
 class SyncSettingsUIBase : public QWidget
@@ -49,16 +49,24 @@ public:
 
     void setAddButtonEnabled(bool enabled);
 
-    template <class TableType, class ModelType, class SortModelType = SyncItemSortModel>
+    template <class TableType, class ModelType, class Controller, class SortModelType = SyncItemSortModel>
     void setTable()
     {
+        syncsStateInformation(SAVING);
+
         auto table = new TableType();
         mTable = table;
         initTable();
 
-        connect(table, &TableType::signalRunSync, this, &SyncSettingsUIBase::setSyncToRun);
-        connect(table, &TableType::signalSuspendSync, this, &SyncSettingsUIBase::setSyncToSuspend);
-        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::reqRemoveSync);
+        connect(table, &TableType::signalRunSync, this, [](std::shared_ptr<SyncSettings> sync){
+            Controller::instance().setSyncToRun(sync);
+        });
+
+        connect(table, &TableType::signalSuspendSync,this,[](std::shared_ptr<SyncSettings> sync){
+            Controller::instance().setSyncToSuspend(sync);
+        });
+
+        connect(table, &TableType::signalRemoveSync, this, &SyncSettingsUIBase::removeSync);
         connect(table, &TableType::signaladdExclusions, this, &SyncSettingsUIBase::openExclusionsDialog);
         connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
         connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
@@ -69,12 +77,11 @@ public:
         {
             model = new ModelType(mTable);
             model->fillData();
-            connect(model.data(), &ModelType::signalSyncCheckboxOn, this, &SyncSettingsUIBase::setSyncToRun);
-            connect(model.data(), &ModelType::signalSyncCheckboxOff, this, &SyncSettingsUIBase::setSyncToSuspend);
-
-            connect(model.data(), &ModelType::syncUpdateFinished, this, [this](std::shared_ptr<SyncSettings> syncSetting)
-            {
-                onSavingSyncsCompleted(SAVING_FINISHED);
+            connect(model.data(), &ModelType::signalSyncCheckboxOn, this,[](std::shared_ptr<SyncSettings> sync){
+                Controller::instance().setSyncToRun(sync);
+            });
+            connect(model.data(), &ModelType::signalSyncCheckboxOff, this,[](std::shared_ptr<SyncSettings> sync){
+                Controller::instance().setSyncToSuspend(sync);
             });
         }
 
@@ -82,17 +89,17 @@ public:
         sortModel->setSourceModel(model);
         table->setModel(sortModel);
 
-        connect(mSyncController, &SyncController::signalSyncOperationBegins, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&Controller::instance(), &Controller::signalSyncOperationBegins, this, [this]()
         {
             syncsStateInformation(SyncStateInformation::SAVING);
         });
 
-        connect(mSyncController, &SyncController::signalSyncOperationEnds, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&Controller::instance(), &Controller::signalSyncOperationEnds, this, [this]()
         {
             onSavingSyncsCompleted(SyncStateInformation::SAVING_FINISHED);
         });
 
-        connect(mSyncController, &SyncController::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
+        connect(&Controller::instance(), &Controller::signalSyncOperationError, this, [this](std::shared_ptr<SyncSettings> sync)
         {
             QString messageBoxTitle(getOperationFailTitle());
             auto it = messageBoxTitle.begin();
@@ -105,7 +112,7 @@ public:
             QMegaMessageBox::critical(msgInfo);
         });
 
-        connect(mSyncController, &SyncController::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString localPath)
+        connect(&Controller::instance(), &Controller::syncAddStatus, this, [this](int errorCode, int syncErrorCode, const QString localPath)
         {
             const QString title = getErrorAddingTitle();
 
@@ -115,23 +122,18 @@ public:
                 Text::Bold bold;
                 Text::Decorator dec(&bold);
 
-
                 QString message = tr("%1 can't be added as your Pro Flexi account has been deactivated due to payment failure "
                              "or you've cancelled your subscription. To continue, make a payment and reactivate your subscription.").arg(localPath);
                 dec.process(message);
                 GuiUtilities::showPayReactivateOrDismiss(title, message);
-
-                onSavingSyncsCompleted(SAVING_FINISHED);
             }
             else
             {
                 if (errorCode != mega::MegaError::API_OK)
                 {
-                    onSavingSyncsCompleted(SAVING_FINISHED);
-
                     Text::Link link(QString::fromUtf8("https://mega.nz/contact"));
                     Text::Decorator dec(&link);
-                    QString msg = SyncController::getErrorString(errorCode, syncErrorCode);
+                    QString msg = Controller::instance().getErrorString(errorCode, syncErrorCode);
                     dec.process(msg);
 
                     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -144,10 +146,8 @@ public:
             }
         });
 
-        connect(mSyncController, &SyncController::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
+        connect(&Controller::instance(), &Controller::syncRemoveError, this, [this](std::shared_ptr<mega::MegaError> err)
         {
-            onSavingSyncsCompleted(SAVING_FINISHED);
-
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.parent = this;
             msgInfo.title = getErrorRemovingTitle();
@@ -174,7 +174,7 @@ public:
     }
 
 public slots:
-    virtual void addButtonClicked(mega::MegaHandle megaFolderHandle = mega::INVALID_HANDLE);
+    virtual void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) = 0;
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
@@ -185,7 +185,6 @@ signals:
 protected:
     Ui::SyncSettingsUIBase* ui;
     SyncTableView* mTable;
-    SyncController* mSyncController;
     QDialog* mParentDialog;
 
     virtual QString getFinishWarningIconString() const = 0;
@@ -205,12 +204,7 @@ protected:
 
 protected slots:
     virtual void removeSyncButtonClicked();
-    virtual void reqRemoveSync(std::shared_ptr<SyncSettings> sync);
-    virtual void removeSync(std::shared_ptr<SyncSettings> sync);
-    void setSyncToRun(std::shared_ptr<SyncSettings> sync);
-    void setSyncToPause(std::shared_ptr<SyncSettings> sync);
-    void setSyncToSuspend(std::shared_ptr<SyncSettings> sync);
-    void setSyncToDisabled(std::shared_ptr<SyncSettings> sync);
+    virtual void removeSync(std::shared_ptr<SyncSettings> sync) = 0;
 
     void rescanQuick(std::shared_ptr<SyncSettings>);
     void rescanDeep(std::shared_ptr<SyncSettings>);
@@ -222,7 +216,6 @@ protected slots:
 
 private:
     void initTable();
-    void addSyncFolderAfterOverQuotaCheck(mega::MegaHandle megaFolderHandle);
     void setDisabledSyncsText();
 
     SyncInfo* mSyncInfo;

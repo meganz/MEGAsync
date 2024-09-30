@@ -1,13 +1,12 @@
 #include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
 #include "ui_StreamingFromMegaDialog.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "NodeSelectorSpecializations.h"
 #include "DialogOpener.h"
 
 #include "QMegaMessageBox.h"
-#include "platform/Platform.h"
-#include "Utilities.h"
 #include "Platform.h"
+#include "Utilities.h"
 #include <MegaNodeNames.h>
 
 #include <QCloseEvent>
@@ -24,7 +23,7 @@ using namespace mega;
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::MegaApi* megaApiFolders, QWidget *parent)
     : QDialog(parent)
     , ui(std::make_unique<Ui::StreamingFromMegaDialog>())
-    , mLinkProcessor(nullptr)
+    , mLinkProcessor(std::make_unique<LinkProcessor>(megaApi, megaApiFolders)) // Use make_unique here
     , lastStreamSelection{LastStreamingSelection::NOT_SELECTED}
 {
     ui->setupUi(this);
@@ -50,6 +49,8 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
     delegateTransferListener = std::make_unique<QTMegaTransferListener>(this->megaApi, this);
     megaApi->addTransferListener(delegateTransferListener.get());
     hideStreamingError();
+
+    connect(mLinkProcessor.get(), &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
 }
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()
@@ -136,9 +137,7 @@ void StreamingFromMegaDialog::requestNodeToLinkProcessor()
         return;
     }
 
-    mLinkProcessor = new LinkProcessor(QStringList() << mPublicLink, megaApi, mMegaApiFolders);
-    mLinkProcessor->setParentHandler(this);
-    connect(mLinkProcessor, &LinkProcessor::onLinkInfoRequestFinish, this, &StreamingFromMegaDialog::onLinkInfoAvailable);
+    mLinkProcessor->resetAndSetLinkList(QStringList() << mPublicLink);
 
     updateFileInfo(QString(),LinkStatus::LOADING);
 
@@ -384,7 +383,7 @@ void StreamingFromMegaDialog::updateFileInfo(QString fileName, LinkStatus status
     {
         ui->lFileName->ensurePolished();
         ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName,Qt::ElideMiddle,ui->lFileName->maximumWidth()));
-        ui->lFileSize->setText(Utilities::getSizeString(static_cast<unsigned long long>(mSelectedMegaNode->getSize())));
+        ui->lFileSize->setText(Utilities::getSizeString(mSelectedMegaNode->getSize()));
 
         QIcon typeIcon = Utilities::getExtensionPixmapMedium(fileName);
 

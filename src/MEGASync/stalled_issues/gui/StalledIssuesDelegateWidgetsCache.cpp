@@ -1,12 +1,13 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
-#include "stalled_issues_cases/LocalAndRemoteDifferentWidget.h"
-#include "stalled_issues_cases/LocalAndRemoteNameConflicts.h"
-#include "stalled_issues_cases/OtherSideMissingOrBlocked.h"
-#include "stalled_issues_cases/StalledIssuesCaseHeaders.h"
-#include "stalled_issues_cases/MoveOrRenameCannotOccur.h"
+#include "LocalAndRemoteDifferentWidget.h"
+#include "FolderMatchedAgainstFileWidget.h"
+#include "LocalAndRemoteNameConflicts.h"
+#include "OtherSideMissingOrBlocked.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
-#include "StalledIssueFilePath.h"
+#include "IgnoredStalledIssue.h"
 
 #include "Utilities.h"
 
@@ -164,6 +165,11 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
             item = new LocalAndRemoteDifferentWidget(issue.consultData()->getOriginalStall(), parent);
             break;
         }
+        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
+        {
+            item = new FolderMatchedAgainstFileWidget(parent);
+            break;
+        }
         case mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced:
         {
             item = new LocalAndRemoteNameConflicts(parent);
@@ -181,7 +187,6 @@ StalledIssueBaseDelegateWidget *StalledIssuesDelegateWidgetsCache::createBodyWid
         case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
         case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:
         case mega::MegaSyncStall::SyncStallReason::CannotPerformDeletion:
-        case mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile:
         case mega::MegaSyncStall::SyncStallReason::SyncItemExceedsSupportedTreeDepth:
         default:
         {
@@ -226,14 +231,23 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
     {
         case mega::MegaSyncStall::SyncStallReason::FileIssue:
         {
-            if(issue.consultData()->isSymLink())
+            if(auto ignoredIssue = issue.convert<const IgnoredStalledIssue>())
             {
-                headerCase = new SymLinkHeader(header);
+                if (ignoredIssue->isSymLink())
+                {
+                    headerCase = new SymLinkHeader(header);
+                }
+                else if (ignoredIssue->isHardLink() || ignoredIssue->isSpecialLink())
+                {
+                    headerCase = new HardSpecialLinkHeader(header);
+                }
             }
-            else
+
+            if (!headerCase)
             {
                 headerCase = new FileIssueHeader(header);
             }
+
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur:

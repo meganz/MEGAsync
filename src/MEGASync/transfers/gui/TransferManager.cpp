@@ -3,14 +3,13 @@
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
 #include "MegaApplication.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "MegaTransferDelegate.h"
 #include "MegaTransferView.h"
 #include "OverQuotaDialog.h"
 #include "DialogOpener.h"
 #include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
-#include "Platform.h"
 
 #include <QMouseEvent>
 #include <QScrollBar>
@@ -532,7 +531,7 @@ void TransferManager::refreshStateStats()
 {
     QLabel* countLabel (nullptr);
     QString countLabelText;
-    long long processedNumber (0LL);
+    uint processedNumber (0);
 
     // First check Finished states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB];
@@ -559,7 +558,7 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::FAILED_TAB];
 
-    long long failedNumber(mTransfersCount.totalFailedTransfers());
+    auto failedNumber(mTransfersCount.totalFailedTransfers());
     countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
@@ -621,7 +620,7 @@ void TransferManager::refreshStateStats()
         else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
         {
             leftFooterWidget = mUi->pSomeIssues;
-            mUi->bSomeIssues->setText(tr("Issue found", "", failedNumber));
+            mUi->bSomeIssues->setText(tr("Issue found", "", static_cast<int>(failedNumber)));
         }
         else if(processedNumber != 0)
         {
@@ -858,15 +857,15 @@ void TransferManager::refreshSpeed()
     mUi->wUpSpeed->setVisible(mTransfersCount.pendingUploads);
     if(mTransfersCount.pendingUploads)
     {
-        auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+        auto upSpeed (mMegaApi->getCurrentUploadSpeed());
+        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1String("/s"));
     }
 
     mUi->wDownSpeed->setVisible(mTransfersCount.pendingDownloads);
     if(mTransfersCount.pendingDownloads)
     {
-        auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+        auto dlSpeed (mMegaApi->getCurrentDownloadSpeed());
+        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1String("/s"));
     }
 }
 
@@ -1206,7 +1205,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 || previousTab == TransfersWidget::FAILED_TAB
                 || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
-            long long transfers(0);
+            uint transfers(0);
 
             if(previousTab == TransfersWidget::COMPLETED_TAB)
             {
@@ -1302,9 +1301,8 @@ void TransferManager::checkActionAndMediaVisibility()
     }
 
     // Hide Media groupbox if no transfers (active or finished)
-    if (mUi->wTransfers->getCurrentTab() >= TransfersWidget::TYPES_TAB_BASE
-            || ((allTransfers +
-                completedTransfers + failedTransfers) > 0))
+    if (mUi->wTransfers->getCurrentTab() >= TransfersWidget::TYPES_TAB_BASE ||
+        ((allTransfers + completedTransfers + failedTransfers) > 0))
     {
         mUi->wMediaType->show();
     }
@@ -1388,7 +1386,7 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             {
                 QPainter painter(widget);
                 QStyleOptionFocusRect option;
-                if(option.state |= QStyle::State_KeyboardFocusChange)
+                if((option.state |= QStyle::State_KeyboardFocusChange))
                 {
                     option.init(widget);
                     option.backgroundColor = palette().color(QPalette::Window);

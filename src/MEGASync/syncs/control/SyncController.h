@@ -1,7 +1,7 @@
 #pragma once
 
-#include "syncs/control/SyncSettings.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncSettings.h"
+#include "SyncInfo.h"
 
 #include "megaapi.h"
 
@@ -15,6 +15,7 @@
  * Uses SyncInfo.h class as the data model.
  *
  */
+
 class SyncController: public QObject
 {
     Q_OBJECT
@@ -28,12 +29,29 @@ public:
        CANT_SYNC,
     };
 
-    SyncController(QObject* parent = nullptr);
+    struct SyncConfig
+    {
+        QString localFolder;
+        mega::MegaHandle remoteHandle = mega::INVALID_HANDLE;
+        QString syncName;
+        mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY;
+        SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN;
+    };
+
+    static SyncController& instance()
+    {
+        static SyncController instance;
+        return instance;
+    }
+
+    SyncController(const SyncController&) = delete;
+    SyncController& operator=(const SyncController&) = delete;
     ~SyncController(){}
 
-    void addBackup(const QString& localFolder, const QString& syncName, SyncInfo::SyncOrigin origin);
-    void addSync(const QString &localFolder, const mega::MegaHandle &remoteHandle,
-                 const QString& syncName = QString(), mega::MegaSync::SyncType type = mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin origin = SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
+    void addBackup(const QString& localFolder,
+                   const QString& syncName,
+                   SyncInfo::SyncOrigin origin);
+    void addSync(SyncConfig& sync);
     void removeSync(std::shared_ptr<SyncSettings> syncSetting, const mega::MegaHandle& remoteHandle = mega::INVALID_HANDLE);
 
     void setSyncToRun(std::shared_ptr<SyncSettings> syncSetting);
@@ -42,29 +60,34 @@ public:
     void setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting);
 
     // Local folder checks
-    static QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
-    static Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
-    static QString getIsLocalFolderAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
-    static Syncability isLocalFolderAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
-    static Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    Syncability isLocalFolderAlreadySynced(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    QString getIsLocalFolderAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
+    Syncability isLocalFolderAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
 
     // Remote folder check
-    static Syncability isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message);
+    Syncability isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message);
 
-    static QString getSyncNameFromPath(const QString& path);
+    QString getSyncNameFromPath(const QString& path);
 
     //Error strings
-    static QString getErrStrCurrentBackupOverExistingBackup();
-    static QString getErrStrCurrentBackupInsideExistingBackup();
-    static QString getErrorString(int errorCode, int syncErrorCode);
+    QString getErrStrCurrentBackupOverExistingBackup();
+    QString getErrStrCurrentBackupInsideExistingBackup();
+    QString getErrorString(int errorCode, int syncErrorCode) const;
+    QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
+    void syncRemoveStatus(int errorCode);
     void syncRemoveError(std::shared_ptr<mega::MegaError> err);
-    void signalSyncOperationBegins(std::shared_ptr<SyncSettings> sync);
-    void signalSyncOperationEnds(std::shared_ptr<SyncSettings> sync);
+    void signalSyncOperationBegins();
+    void signalSyncOperationEnds();
     void signalSyncOperationError(std::shared_ptr<SyncSettings> sync);
     void backupMoveOrRemoveRemoteFolderError(std::shared_ptr<mega::MegaError> err);
+
+protected:
+    SyncController(QObject* parent = nullptr);
 
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
@@ -72,6 +95,11 @@ private:
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
     QMap<QString, QString> mPendingBackups;
+
+    //Sync/Backup operation signals
+    void syncOperationBegins();
+    void syncOperationEnds();
+    uint mActiveOperations;
 
     mega::MegaApi* mApi;
 

@@ -99,9 +99,9 @@ class HTTPServer: public QTcpServer
         void onLinkReceived(QString link, QString auth);
         void onExternalDownloadRequested(QQueue<WrappedNode *> files);
         void onExternalDownloadRequestFinished();
-        void onExternalFileUploadRequested(qulonglong targetHandle);
-        void onExternalFolderUploadRequested(qulonglong targetHandle);
-        void onExternalFolderSyncRequested(qulonglong targetHandle);
+        void onExternalFileUploadRequested(mega::MegaHandle targetHandle);
+        void onExternalFolderUploadRequested(mega::MegaHandle targetHandle);
+        void onExternalFolderSyncRequested(mega::MegaHandle targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
         void onExternalShowInFolderRequested(QString path);
         void onExternalAddBackup();

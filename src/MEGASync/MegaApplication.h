@@ -15,16 +15,16 @@
 
 #include <memory>
 
-#include "gui/TransferManager.h"
-#include "gui/InfoDialog.h"
-#include "gui/UpgradeOverStorage.h"
-#include "gui/SettingsDialog.h"
-#include "gui/DownloadFromMegaDialog.h"
-#include "gui/StreamingFromMegaDialog.h"
-#include "gui/ImportMegaLinksDialog.h"
-#include "gui/MultiQFileDialog.h"
-#include "gui/PasteMegaLinksDialog.h"
-#include "gui/ChangeLogDialog.h"
+#include "TransferManager.h"
+#include "InfoDialog.h"
+#include "UpgradeOverStorage.h"
+#include "SettingsDialog.h"
+#include "DownloadFromMegaDialog.h"
+#include "StreamingFromMegaDialog.h"
+#include "ImportMegaLinksDialog.h"
+#include "MultiQFileDialog.h"
+#include "PasteMegaLinksDialog.h"
+#include "ChangeLogDialog.h"
 #include "Preferences.h"
 #include "HTTPServer.h"
 #include "MegaUploader.h"
@@ -34,29 +34,26 @@
 #include "ThreadPool.h"
 #include "Utilities.h"
 #include "SetManager.h"
-#include "syncs/control/SyncInfo.h"
-#include "syncs/control/SyncController.h"
+#include "SyncInfo.h"
+#include "SyncController.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#include "gui/QFilterAlertsModel.h"
-#include "gui/MegaAlertDelegate.h"
-#include "gui/VerifyLockMessage.h"
+#include "VerifyLockMessage.h"
 #include "notifications/DesktopNotifications.h"
 #include "ScanStageController.h"
 #include "TransferQuota.h"
 #include "BlockingStageProgressController.h"
-#include "qml/QmlManager.h"
-#include "qml/QmlDialogManager.h"
+#include "QmlManager.h"
+#include "QmlDialogManager.h"
+#include "UserMessageController.h"
 
 class IntervalExecutioner;
 class TransfersModel;
 class StalledIssuesModel;
 
 #ifdef __APPLE__
-    #include "gui/MegaSystemTrayIcon.h"
     #include <mach/mach.h>
     #include <sys/sysctl.h>
-    #include <errno.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -67,6 +64,7 @@ class DuplicatedNodeDialog;
 class LoginController;
 class AccountStatusController;
 class StatsEventHandler;
+class UserMessageController;
 
 enum GetUserStatsReason {
     USERSTATS_LOGGEDIN,
@@ -85,7 +83,7 @@ enum GetUserStatsReason {
     USERSTATS_REMOVEVERSIONS,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved, public BandwidthDetailsObserved, public AccountDetailsObserved
+class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
@@ -116,7 +114,6 @@ public:
     void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer) override;
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
     void onAccountUpdate(mega::MegaApi *api) override;
-    void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list) override;
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
     void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
     void onReloadNeeded(mega::MegaApi* api) override;
@@ -153,7 +150,6 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void checkForUpdates();
     // Actually show InfoDialog view, not tray menu.
     void showTrayMenu(QPoint *point = NULL);
@@ -165,9 +161,6 @@ public:
     void createInfoDialogMenus();
     void toggleLogging();
 
-    bool notificationsAreFiltered();
-    bool hasNotifications();
-    bool hasNotificationsOfType(int type);
     std::shared_ptr<mega::MegaNode> getRootNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getVaultNode(bool forceReset = false);
     std::shared_ptr<mega::MegaNode> getRubbishNode(bool forceReset = false);
@@ -185,6 +178,7 @@ public:
 
     TransfersModel* getTransfersModel(){return mTransfersModel;}
     StalledIssuesModel* getStalledIssuesModel(){return mStalledIssuesModel;}
+    UserMessageController* getNotificationController() { return mUserMessageController.get(); }
 
     /**
      * @brief migrates sync configuration and fetches nodes
@@ -214,6 +208,8 @@ public:
     QSystemTrayIcon* getTrayIcon();
     LoginController* getLoginController();
     AccountStatusController* getAccountStatusController();
+
+    void updateUsedStorage(const bool sendEvent = false);
 
 signals:
     void startUpdaterThread();
@@ -260,12 +256,11 @@ public slots:
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
     void externalLinkDownload(QString megaLink, QString auth);
-    void externalFileUpload(qlonglong targetFolder);
-    void externalFolderUpload(qlonglong targetFolder);
-    void externalFolderSync(qlonglong targetFolder);
+    void externalFileUpload(mega::MegaHandle targetFolder);
+    void externalFolderUpload(mega::MegaHandle targetFolder);
+    void externalFolderSync(mega::MegaHandle targetFolder);
     void externalAddBackup();
     void externalOpenTransferManager(int tab);
-    void internalDownload(long long handle);
     void onRequestLinksFinished();
     void onUpdateCompleted();
     void onUpdateAvailable(bool requested);
@@ -289,8 +284,6 @@ public slots:
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void clearDownloadAndPendingLinks();
-    void proExpirityTimedOut();
-    void applyNotificationFilter(int opt);
     void changeState();
 
 #ifdef _WIN32
@@ -349,7 +342,6 @@ protected:
     void startHttpsServer();
     void refreshStorageUIs();
     void manageBusinessStatus(int64_t event);
-    void populateUserAlerts(mega::MegaUserAlertList *list, bool copyRequired);
 
     bool eventFilter(QObject *obj, QEvent *e) override;
     void createInfoDialog();
@@ -400,7 +392,6 @@ protected:
 #endif
 
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
-    QTimer proExpirityTimer;
     int scanningAnimationIndex;
     QPointer<SettingsDialog> mSettingsDialog;
     QPointer<InfoDialog> infoDialog;
@@ -408,9 +399,6 @@ protected:
     SyncInfo *model;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
-    QFilterAlertsModel *notificationsProxyModel;
-    QAlertsModel *notificationsModel;
-    MegaAlertDelegate *notificationsDelegate;
     QObject *context;
     QString crashReportFilePath;
 
@@ -426,10 +414,6 @@ protected:
     std::shared_ptr<mega::MegaNode> mRootNode;
     std::shared_ptr<mega::MegaNode> mVaultNode;
     std::shared_ptr<mega::MegaNode> mRubbishNode;
-    bool queuedUserStats[3];
-    int queuedStorageUserStatsReason;
-    long long userStatsLastRequest[3];
-    bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
@@ -438,7 +422,7 @@ protected:
     int appliedStorageState;
     bool getUserDataRequestReady;
     long long receivedStorageSum;
-    long long maxMemoryUsage;
+    unsigned long long mMaxMemoryUsage;
     int exportOps;
     std::shared_ptr<mega::MegaPricing> mPricing;
     std::shared_ptr<mega::MegaCurrency> mCurrency;
@@ -501,7 +485,6 @@ protected:
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
     // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
-    std::unique_ptr<SyncController> mSyncController;
     LogoutController* mLogoutController;
 
     QPointer<TransfersModel> mTransfersModel;
@@ -511,12 +494,16 @@ protected:
 
     bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
-    StatsEventHandler* mStatsEventHandler;
+    std::unique_ptr<StatsEventHandler> mStatsEventHandler;
 
     SetManager* mSetManager;
+    LinkProcessor* mLinkProcessor;
+
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
+
+    std::unique_ptr<UserMessageController> mUserMessageController;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -616,6 +603,8 @@ private:
     void showInfoDialogIfHTTPServerSender();
 
     void sendPeriodicStats() const;
+
+    void createUserMessageController();
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

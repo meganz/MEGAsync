@@ -1,18 +1,19 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
+#include <QPointer>
+#include <QDialog>
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
-#include "MegaApplication.h"
+#include "MegaSyncLogger.h"
 
-#include <QDialog>
-#include <QProgressDialog>
+class QProgressDialog;
 
 namespace Ui {
 class BugReportDialog;
 }
 
-class BugReportDialog : public QDialog, public mega::MegaTransferListener, public mega::MegaRequestListener
+class BugReportDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
 
@@ -25,7 +26,7 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
 
 private:
     MegaSyncLogger& logger;
@@ -50,9 +51,8 @@ private:
 protected:
     mega::MegaApi *megaApi;
     mega::QTMegaTransferListener *delegateTransferListener;
-    mega::QTMegaRequestListener *delegateRequestListener;
 
-    void showErrorMessage();
+    void showErrorMessage(mega::MegaError* error = nullptr);
     void postUpload();
     void createSupportTicket();
 

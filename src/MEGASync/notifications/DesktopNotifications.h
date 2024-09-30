@@ -41,7 +41,6 @@ public:
 
     DesktopNotifications(const QString& appName, QSystemTrayIcon* trayIcon);
 
-    void addUserAlertList(mega::MegaUserAlertList *alertList);
     void sendAlert(mega::MegaUserAlert* alert);
     void requestFullName(mega::MegaUserAlert* alert, QString email);
     void requestEmail(mega::MegaUserAlert* alert);
@@ -59,7 +58,7 @@ public:
     void sendErrorNotification(const QString& title, const QString& message) const;
 
 public slots:
-    void replyIncomingPendingRequest(DesktopAppNotification::Action action) const;
+    void replyIncomingPendingRequest(DesktopAppNotification::Action action);
     void viewContactOnWebClient(DesktopAppNotification::Action activationButton) const;
     void redirectToUpgrade(DesktopAppNotification::Action activationButton) const;
     void redirectToPayBusiness(DesktopAppNotification::Action activationButton) const;
@@ -72,6 +71,7 @@ public slots:
     void receiveClusteredAlert(mega::MegaUserAlert* alert, const QString &message) const;
     void replyNewShareReceived(DesktopAppNotification::Action action) const;
     void viewOnInfoDialogNotifications(DesktopAppNotification::Action action) const;
+    void onUserAlertsUpdated(mega::MegaUserAlertList* list);
 
 private slots:
     void OnUserAttributesReady();

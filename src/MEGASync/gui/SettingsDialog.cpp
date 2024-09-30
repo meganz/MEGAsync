@@ -3,22 +3,24 @@
 #include "QMegaMessageBox.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
 #include "ProxySettings.h"
-#include "UserAttributesRequests/FullName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
-#include "gui/node_selector/gui/NodeSelectorSpecializations.h"
+#include "FullName.h"
+#include "MyBackupsHandle.h"
+#include "NodeSelectorSpecializations.h"
 #include "PowerOptions.h"
-#include "syncs/gui/Backups/RemoveBackupDialog.h"
+#include "RemoveBackupDialog.h"
 #include "TextDecorator.h"
 #include "DialogOpener.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
 #include "mega/types.h"
 #include "GuiUtilities.h"
 #include "CommonMessages.h"
 #include "StatsEventHandler.h"
+#include "AccountDetailsDialog.h"
+#include "ChangePassword.h"
+#include "AccountDetailsManager.h"
 
 #include <QApplication>
 #include <QDesktopServices>
@@ -35,13 +37,13 @@
 #include <memory>
 
 #ifdef Q_OS_MACOS
-    #include "gui/CocoaHelpButton.h"
+    #include "CocoaHelpButton.h"
 #endif
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #else
-#include "gui/PermissionsDialog.h"
+#include "PermissionsDialog.h"
 #endif
 
 using namespace mega;
@@ -62,7 +64,6 @@ constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
 static constexpr int NUMBER_OF_CLICKS_TO_DEBUG {5};
-static constexpr int NETWORK_LIMITS_MAX {9999};
 
 long long calculateCacheSize()
 {
@@ -206,9 +207,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     macOSretainSizeWhenHidden();
 #endif
 
-    mApp->attachStorageObserver(*this);
-    mApp->attachBandwidthObserver(*this);
-    mApp->attachAccountObserver(*this);
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->attachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->attachAccountObserver(*this);
 
     connect(mApp, &MegaApplication::shellNotificationsProcessed,
             this, &SettingsDialog::onShellNotificationsProcessed);
@@ -218,9 +219,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 
 SettingsDialog::~SettingsDialog()
 {
-    mApp->dettachStorageObserver(*this);
-    mApp->dettachBandwidthObserver(*this);
-    mApp->dettachAccountObserver(*this);
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
+    AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
+    AccountDetailsManager::instance()->dettachAccountObserver(*this);
 
 #ifdef Q_OS_MACOS
     mToolBar->deleteLater();
@@ -550,9 +551,9 @@ void SettingsDialog::loadSettings()
     mUi->wAvatar->setUserEmail();
 
     // account type and details
-    updateAccountElements();
-    updateStorageElements();
-    updateBandwidthElements();
+    SettingsDialog::updateAccountElements();
+    SettingsDialog::updateStorageElements();
+    SettingsDialog::updateBandwidthElements();
 
     updateUploadFolder();
     updateDownloadFolder();
@@ -869,7 +870,10 @@ void SettingsDialog::on_bClearFileVersions_clicked()
                 Q_UNUSED(request)
                 if (e->getErrorCode() == MegaError::API_OK)
                 {
-                    MegaSyncApp->updateUserStats(true, false, false, true, USERSTATS_REMOVEVERSIONS);
+                    AccountDetailsManager::instance()->updateUserStats(
+                        AccountDetailsManager::Flag::STORAGE,
+                        true,
+                        USERSTATS_REMOVEVERSIONS);
                 }
             }));
         }
@@ -1335,7 +1339,7 @@ void SettingsDialog::on_bLogout_clicked()
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::Yes;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this,unlink](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [unlink](QPointer<QMessageBox> msg)
         {
             if(msg->result() == QMessageBox::Yes)
             {
@@ -1348,9 +1352,9 @@ void SettingsDialog::on_bLogout_clicked()
 }
 
 // Syncs -------------------------------------------------------------------------------------------
-void SettingsDialog::addSyncFolder(MegaHandle megaFolderHandle)
+void SettingsDialog::addSyncFolder(mega::MegaHandle remoteHandle) const
 {
-    mUi->syncSettings->addButtonClicked(megaFolderHandle);
+    mUi->syncSettings->addButtonClicked(remoteHandle);
 }
 
 void SettingsDialog::setEnabledAllControls(const bool enabled)
@@ -1367,11 +1371,30 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
-void SettingsDialog::setBackupsAddButtonEnabled(bool enabled)
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled,
+                                             SettingsDialog::Tabs tab)
 {
-    if(mUi->backupSettings)
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
     {
-        mUi->backupSettings->setAddButtonEnabled(enabled);
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
     }
 }
 
@@ -1656,7 +1679,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
                     mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
                     mUi->eUploadFolder->setText(QString::fromUtf8(nPath.get()));
                     mPreferences->setHasDefaultUploadFolder(mHasDefaultUploadOption);
-                    mPreferences->setUploadFolder(static_cast<long long>(node->getHandle()));
+                    mPreferences->setUploadFolder(node->getHandle());
                 }
             }
         }

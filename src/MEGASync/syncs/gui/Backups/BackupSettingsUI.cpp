@@ -1,17 +1,16 @@
 #include "BackupSettingsUI.h"
 
-#include "syncs/gui/Backups/BackupTableView.h"
-#include "syncs/model/BackupItemModel.h"
+#include "BackupTableView.h"
+#include "BackupItemModel.h"
+#include "BackupsController.h"
 
-#include "qml/QmlDialogWrapper.h"
-#include "qml/QmlDialogManager.h"
-#include "backups/Backups.h"
-#include "onboarding/Onboarding.h"
+#include "QmlDialogWrapper.h"
+#include "Backups.h"
+#include "Onboarding.h"
 
-#include "Utilities.h"
-#include "DialogOpener.h"
-#include "RemoveBackupDialog.h"
+#include "CreateRemoveBackupsManager.h"
 #include "QMegaMessageBox.h"
+#include "DialogOpener.h"
 
 #include "ui_SyncSettingsUIBase.h"
 
@@ -19,9 +18,9 @@ BackupSettingsUI::BackupSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setBackupsTitle();
-    setTable<BackupTableView, BackupItemModel>();
+    setTable<BackupTableView, BackupItemModel, BackupsController>();
 
-    connect(mSyncController, &SyncController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
+    connect(&BackupsController::instance(), &BackupsController::backupMoveOrRemoveRemoteFolderError, this, [this](std::shared_ptr<mega::MegaError> err)
     {
         onSavingSyncsCompleted(SAVING_FINISHED);
         QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -54,10 +53,9 @@ BackupSettingsUI::~BackupSettingsUI()
 {
 }
 
-void BackupSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
+void BackupSettingsUI::addButtonClicked(mega::MegaHandle)
 {
-    Q_UNUSED(megaFolderHandle)
-    QmlDialogManager::instance()->openBackupsDialog(true);
+    CreateRemoveBackupsManager::addBackup(true);
 }
 
 void BackupSettingsUI::changeEvent(QEvent *event)
@@ -72,23 +70,9 @@ void BackupSettingsUI::changeEvent(QEvent *event)
     SyncSettingsUIBase::changeEvent(event);
 }
 
-void BackupSettingsUI::reqRemoveSync(std::shared_ptr<SyncSettings> backup)
-{
-    removeSync(backup);
-}
-
 void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 {
-    QPointer<RemoveBackupDialog> dialog = new RemoveBackupDialog(backup, this);
-
-    DialogOpener::showDialog(dialog,[this, dialog]()
-    {
-        if(dialog->result() == QDialog::Accepted)
-        {
-            syncsStateInformation(SyncStateInformation::SAVING);
-            mSyncController->removeSync(dialog->backupToRemove(), dialog->targetFolder());
-        }
-    });
+    CreateRemoveBackupsManager::removeBackup(backup, this);
 }
 
 QString BackupSettingsUI::getFinishWarningIconString() const

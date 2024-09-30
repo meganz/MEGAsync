@@ -6,13 +6,17 @@
 #include <QPointer>
 #include <memory>
 #include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include "QTMegaTransferListener.h"
 #include <QSharedPointer>
 #include <QQueue>
 #include <QList>
 #include "LinkObject.h"
 #include "SetTypes.h"
+
+namespace mega
+{
+    class QTMegaRequestListener;
+}
 
 enum class LinkTransferType { UNKNOWN, DOWNLOAD, IMPORT };
 
@@ -27,14 +31,16 @@ struct LinkTransfer
     LinkTransferType transferType = LinkTransferType::UNKNOWN;
 };
 
-class LinkProcessor: public QObject, public mega::MegaRequestListener, public mega::MegaTransferListener
+class LinkProcessor: public QObject, public mega::MegaTransferListener
 {
     Q_OBJECT
 
 public:
+    LinkProcessor(mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     LinkProcessor(const QStringList& linkList, mega::MegaApi* megaApi, mega::MegaApi* megaApiFolders);
     virtual ~LinkProcessor();
 
+    void resetAndSetLinkList(const QStringList& linkList);
     QString getLink(int index) const;
     bool isSelected(int index) const;
     MegaNodeSPtr getNode(int index) const;
@@ -42,7 +48,8 @@ public:
     void importLinks(const QString& nodePath);
     mega::MegaHandle getImportParentFolder();
     void downloadLinks(const QString& localPath);
-    void setParentHandler(QObject* parent);
+
+    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
 
 signals:
     void requestFetchSetFromLink(const QString& link);
@@ -81,7 +88,6 @@ private:
         return (index >= 0 && index < container.size());
     }
 
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error) override;
 
     // Download
@@ -96,7 +102,6 @@ private:
     void sendLinkInfoAvailableSignal(int index);
     void continueOrFinishLinkInfoReq();
     void createInvalidLinkObject(int index, int error);
-    void markForDeletionIfNoMoreRequests();
 
     void addTransfersAndStartIfNotStartedYet(LinkTransferType transferType);
     void processNextTransfer();
@@ -109,7 +114,6 @@ private:
     mega::MegaHandle mImportParentFolder;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
-    QPointer<QObject> mParentHandler;
     uint32_t mRequestCounter;
     int mCurrentIndex;
     QQueue<LinkTransfer> mTransferQueue;

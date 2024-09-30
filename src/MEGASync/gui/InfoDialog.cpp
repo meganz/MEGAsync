@@ -24,11 +24,15 @@
 #include "TextDecorator.h"
 #include "DialogOpener.h"
 #include "StatsEventHandler.h"
+#include "CreateRemoveSyncsManager.h"
+#include "CreateRemoveBackupsManager.h"
+#include "UserMessageDelegate.h"
 
 #include "Utilities.h"
-#include "platform/Platform.h"
-#include "qml/QmlDialogManager.h"
-#include "syncs/gui/Twoways/BindFolderDialog.h"
+#include "Platform.h"
+#include "QmlDialogManager.h"
+#include "SyncsComponent.h"
+#include "AccountDetailsManager.h"
 
 #ifdef _WIN32
 #include <chrono>
@@ -90,10 +94,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncing (false),
     mTransferring (false),
     mTransferManager(nullptr),
-    mAddSyncDialog (nullptr),
     mPreferences (Preferences::instance()),
     mSyncInfo (SyncInfo::instance()),
-    mSyncController (nullptr),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -102,16 +104,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     mSyncsMenus[ui->bAddBackup] = nullptr;
 
     filterMenu = new FilterAlertWidget(this);
-    connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+    connect(filterMenu, SIGNAL(filterClicked(MessageType)),
+            this, SLOT(applyFilterOption(MessageType)));
 
     setUnseenNotifications(0);
 
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
-
-    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
@@ -169,7 +169,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #endif
 
 #ifdef _WIN32
-    if(getenv("QT_SCREEN_SCALE_FACTORS") || getenv("QT_SCALE_FACTOR"))
+    if (qEnvironmentVariableIsSet("QT_SCREEN_SCALE_FACTORS") ||
+        qEnvironmentVariableIsSet("QT_SCALE_FACTOR"))
     {
         //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
@@ -195,7 +196,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -203,6 +203,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     reset();
 
     hideSomeIssues();
+
+    initNotificationArea();
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -293,11 +295,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesChanged,
             this,  &InfoDialog::onStalledIssuesChanged);
     onStalledIssuesChanged();
+
+    connect(AccountDetailsManager::instance(),
+            &AccountDetailsManager::accountDetailsUpdated,
+            this,
+            &InfoDialog::updateUsageAndAccountType);
 }
 
 InfoDialog::~InfoDialog()
 {
     removeEventFilter(this);
+    if(ui->tvNotifications->itemDelegate())
+    {
+        // Remove delegate cache before deleting the parent QTreeView widget
+        delete ui->tvNotifications->itemDelegate();
+    }
     delete ui;
     delete animation;
     delete filterMenu;
@@ -324,6 +336,8 @@ void InfoDialog::showEvent(QShowEvent *event)
     isShown = true;
     mTransferScanCancelUi->update();
 
+    app->getNotificationController()->requestNotifications();
+
     repositionInfoDialog();
     QDialog::showEvent(event);
 }
@@ -337,6 +351,12 @@ void InfoDialog::setBandwidthOverquotaState(QuotaState state)
 {
     transferQuotaState = state;
     setUsage();
+}
+
+void InfoDialog::updateUsageAndAccountType()
+{
+    setUsage();
+    setAccountType(mPreferences->accountType());
 }
 
 void InfoDialog::enableTransferOverquotaAlert()
@@ -797,7 +817,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync(INVALID_HANDLE);
+            addSync();
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1042,72 +1062,17 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(MegaHandle h)
+void InfoDialog::addSync(mega::MegaHandle handle)
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, h, this]()
-    {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            mAddSyncDialog = new BindFolderDialog(app);
-
-            if (h != mega::INVALID_HANDLE)
-            {
-                mAddSyncDialog->setMegaFolder(h);
-            }
-
-            DialogOpener::showDialog(mAddSyncDialog, this, &InfoDialog::onAddSyncDialogFinished);
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog,addSyncLambda);
-    }
-    else
-    {
-        addSyncLambda();
-    }
-}
-
-void InfoDialog::onAddSyncDialogFinished(QPointer<BindFolderDialog> dialog)
-{
-    if (dialog->result() != QDialog::Accepted)
-    {
-        return;
-    }
-
-    QString localFolderPath = QDir::toNativeSeparators(QDir(dialog->getLocalFolder()).canonicalPath());
-    MegaHandle handle = dialog->getMegaFolder();
-    QString syncName = dialog->getSyncName();
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync %1 from addSync: ").arg(localFolderPath).toUtf8().constData());
-
-    setupSyncController();
-    mSyncController->addSync(localFolderPath, handle, syncName, mega::MegaSync::TYPE_TWOWAY, SyncInfo::SyncOrigin::MAIN_APP_ORIGIN);
-
-    app->createAppMenus();
+    CreateRemoveSyncsManager::addSync(handle);
 }
 
 void InfoDialog::addBackup()
 {
-    auto overQuotaDialog = app->showSyncOverquotaDialog();
-    auto addBackupLambda = [overQuotaDialog, this]()
+    auto manager = CreateRemoveBackupsManager::addBackup(false);
+    if(manager->isBackupsDialogOpen())
     {
-        if(!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QmlDialogManager::instance()->openBackupsDialog();
-            this->hide();
-        }
-    };
-
-    if(overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addBackupLambda);
-    }
-    else
-    {
-        addBackupLambda();
+        hide();
     }
 }
 
@@ -1178,19 +1143,21 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
-void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
+void InfoDialog::onUnseenAlertsChanged(const UnseenUserMessagesMap& alerts)
 {
-    notificationsReady = true;
-    ui->tvNotifications->setModel(model);
-    ui->tvNotifications->setItemDelegate(delegate);
-    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+    setUnseenNotifications(alerts[MessageType::ALL]);
+    filterMenu->setUnseenNotifications(alerts[MessageType::ALL],
+                                       alerts[MessageType::ALERT_CONTACTS],
+                                       alerts[MessageType::ALERT_SHARES],
+                                       alerts[MessageType::ALERT_PAYMENTS]);
+    ui->wSortNotifications->resetAllFilterHasBeenSelected();
 }
 
 void InfoDialog::reset()
 {
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
+    ui->wSortNotifications->setActualFilter(MessageType::ALL);
 
     ui->bTransferManager->reset();
 
@@ -1205,8 +1172,6 @@ void InfoDialog::reset()
     transferOverquotaAlertEnabled = false;
     transferAlmostOverquotaAlertEnabled = false;
     transferQuotaState = QuotaState::OK;
-
-    mSyncController.reset();
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
@@ -1273,7 +1238,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
 #ifdef Q_OS_LINUX
     static bool firstime = true;
-    if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
+    if (qEnvironmentVariableIsSet("START_MEGASYNC_MINIMIZED") && firstime &&
+        (obj == this && e->type() == QEvent::Paint))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog (reason: %1)...").arg(e->type()).toUtf8().constData());
         showMinimized();
@@ -1291,16 +1257,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
     else if (obj == this)
     {
-        static bool in = false;
-        if (e->type() == QEvent::Enter)
-        {
-            in = true;
-        }
-        else if (e->type() == QEvent::Leave)
-        {
-            in = false;
-        }
-        else  if (e->type() == QEvent::WindowDeactivate)
+        if (e->type() == QEvent::WindowDeactivate)
         {
             hide();
             return true;
@@ -1405,6 +1362,8 @@ void InfoDialog::on_tTransfers_clicked()
 
 void InfoDialog::on_tNotifications_clicked()
 {
+    app->getNotificationController()->requestNotifications();
+
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
 
@@ -1428,7 +1387,7 @@ void InfoDialog::onActualFilterClicked()
     filterMenu->show();
 }
 
-void InfoDialog::applyFilterOption(int opt)
+void InfoDialog::applyFilterOption(MessageType opt)
 {
     if (filterMenu && filterMenu->isVisible())
     {
@@ -1437,11 +1396,11 @@ void InfoDialog::applyFilterOption(int opt)
 
     switch (opt)
     {
-        case QFilterAlertsModel::FILTER_CONTACTS:
+        case MessageType::ALERT_CONTACTS:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_CONTACTS);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_CONTACTS))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_CONTACTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1453,11 +1412,11 @@ void InfoDialog::applyFilterOption(int opt)
 
             break;
         }
-        case QFilterAlertsModel::FILTER_SHARES:
+        case MessageType::ALERT_SHARES:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_SHARES);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_SHARES))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_SHARES))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1469,11 +1428,11 @@ void InfoDialog::applyFilterOption(int opt)
 
             break;
         }
-        case QFilterAlertsModel::FILTER_PAYMENT:
+        case MessageType::ALERT_PAYMENTS:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_PAYMENTS);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotificationsOfType(QAlertsModel::ALERT_PAYMENT))
+            if (app->getNotificationController()->hasElementsOfType(MessageType::ALERT_PAYMENTS))
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1484,11 +1443,13 @@ void InfoDialog::applyFilterOption(int opt)
             }
             break;
         }
+        case MessageType::ALL:
+        case MessageType::ALERT_TAKEDOWNS:
         default:
         {
-            ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
+            ui->wSortNotifications->setActualFilter(opt);
 
-            if (app->hasNotifications())
+            if (app->getNotificationController()->hasNotifications())
             {
                 ui->sNotifications->setCurrentWidget(ui->pNotifications);
             }
@@ -1501,7 +1462,7 @@ void InfoDialog::applyFilterOption(int opt)
         }
     }
 
-    app->applyNotificationFilter(opt);
+    app->getNotificationController()->applyFilter(opt);
 }
 
 void InfoDialog::on_bNotificationsSettings_clicked()
@@ -1556,21 +1517,16 @@ void InfoDialog::onAnimationFinished()
 
 void InfoDialog::sTabsChanged(int tab)
 {
-    static int lasttab = -1;
-    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab))
+    static int lastTab = -1;
+    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab)
+            && lastTab == ui->sTabs->indexOf(ui->pNotificationsTab)
+            && ui->wSortNotifications->allFilterHasBeenSelected())
     {
-        if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
-        {
-            if (app->hasNotifications() && !app->notificationsAreFiltered())
-            {
-                megaApi->acknowledgeUserAlerts();
-            }
-        }
+        app->getNotificationController()->ackSeenUserMessages();
+        ui->wSortNotifications->resetAllFilterHasBeenSelected();
     }
-    lasttab = tab;
+    lastTab = tab;
 }
-
-
 
 void InfoDialog::hideSomeIssues()
 {
@@ -1639,27 +1595,19 @@ void InfoDialog::move(int x, int y)
    QDialog::move(x, y);
 }
 
-long long InfoDialog::getUnseenNotifications() const
-{
-    return unseenNotifications;
-}
-
 void InfoDialog::setUnseenNotifications(long long value)
 {
     assert(value >= 0);
-    unseenNotifications = value > 0 ? value : 0;
-    if (!unseenNotifications)
+
+    if (value > 0)
+    {
+        ui->bNumberUnseenNotifications->setText(QString::number(value));
+        ui->bNumberUnseenNotifications->show();
+    }
+    else
     {
         ui->bNumberUnseenNotifications->hide();
-        return;
     }
-    ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
-    ui->bNumberUnseenNotifications->show();
-}
-
-void InfoDialog::setUnseenTypeNotifications(long long all, long long contacts, long long shares, long long payment)
-{
-    filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
 double InfoDialog::computeRatio(long long completed, long long remaining)
@@ -1709,14 +1657,6 @@ void InfoDialog::setTransferManager(TransferManager *transferManager)
 {
     mTransferManager = transferManager;
     mTransferManager->setTransferState(mState);
-}
-
-void InfoDialog::setupSyncController()
-{
-    if (!mSyncController)
-    {
-        mSyncController.reset(new SyncController());
-    }
 }
 
 void InfoDialog::fixMultiscreenResizeBug(int& posX, int& posY)
@@ -1779,4 +1719,27 @@ void InfoDialog::repositionInfoDialog()
     {
         move(posx, posy);
     }
+}
+
+void InfoDialog::initNotificationArea()
+{
+    mNotificationsViewHoverManager.setView(ui->tvNotifications);
+
+    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
+    ui->tvNotifications->setModel(app->getNotificationController()->getModel());
+    ui->tvNotifications->sortByColumn(0, Qt::AscendingOrder);
+    auto delegate = new UserMessageDelegate(app->getNotificationController()->getModel(),
+                                            ui->tvNotifications);
+    ui->tvNotifications->setItemDelegate(delegate);
+
+    applyFilterOption(MessageType::ALL);
+    connect(app->getNotificationController(), &UserMessageController::userMessagesReceived, this, [this]()
+    {
+        // We need to check if there is any user message to display or not
+        // with the actual selected filter.
+        applyFilterOption(filterMenu->getCurrentFilter());
+    });
+
+    notificationsReady = true;
 }

@@ -80,8 +80,8 @@ public:
     ~CloudNameConflict() override {}
 
 protected:
-    bool isCloud(){return true;}
-    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo()
+    bool isCloud() override{return true;}
+    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo() override
     {
         if(mIssue)
         {
@@ -98,7 +98,7 @@ protected:
         return mIssue->getNameConflictCloudData().getConflictedName(info);
     }
 
-    const StalledIssueDataPtr getData()
+    const StalledIssueDataPtr getData() override
     {
         if(mIssue)
         {
@@ -127,8 +127,8 @@ public:
     ~LocalNameConflict() override {}
 
 protected:
-    bool isCloud(){return false;}
-    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo()
+    bool isCloud() override{return false;}
+    QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>> getConflictedNamesInfo() override
     {
         if(mIssue)
         {
@@ -139,7 +139,7 @@ protected:
             return QList<std::shared_ptr<NameConflictedStalledIssue::ConflictedNameInfo>>();
         }
     }
-    const StalledIssueDataPtr getData()
+    const StalledIssueDataPtr getData() override
     {
         if(mIssue)
         {

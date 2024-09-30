@@ -1,10 +1,10 @@
 #include "SyncsMenu.h"
 #include "Utilities.h"
 #include "Preferences.h"
-#include "syncs/control/SyncInfo.h"
+#include "SyncInfo.h"
 #include "Platform.h"
-#include "UserAttributesRequests/DeviceName.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "DeviceName.h"
+#include "MyBackupsHandle.h"
 #include "SyncTooltipCreator.h"
 
 #ifdef Q_OS_WINDOWS
@@ -147,7 +147,7 @@ void SyncsMenu::refresh()
         {
             activeFolders++;
             auto* action =
-                new MenuItemAction(SyncController::getSyncNameFromPath(syncSetting->getLocalFolder(true)),
+                new MenuItemAction(SyncController::instance().getSyncNameFromPath(syncSetting->getLocalFolder(true)),
                                    QLatin1String("://images/icons/folder/folder-mono_24.png"),
                                    mMenu);
             action->setManagesHoverStates(true);

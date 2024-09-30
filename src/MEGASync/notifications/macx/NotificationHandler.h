@@ -6,7 +6,7 @@
 #define NOTIFICATIONHANDLER_H
 
 #include <QObject>
-#include "notificator.h"
+#include "Notificator.h"
 
 /** Macintosh-specific notification handler (supports UserNotificationCenter and Growl).
  */

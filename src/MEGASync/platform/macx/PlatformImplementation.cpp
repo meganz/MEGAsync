@@ -7,6 +7,7 @@
 #include <pwd.h>
 #include <cstdlib>
 #include <filesystem>
+#include <iostream>
 #include <fstream>
 
 using namespace std;
@@ -159,7 +160,7 @@ void PlatformImplementation::streamWithApp(const QString &app, const QString &ur
 
 void PlatformImplementation::processSymLinks()
 {
-    string appBundle = appBundlePath().toStdString();
+    string appBundle = appBundlePath().toUtf8().constData();
     string symlinksPath = appBundle + "/Contents/Resources/mega.links";
 
     std::cout << "Opening file to recreate symlinks." << std::endl;
@@ -389,7 +390,7 @@ QString PlatformImplementation::getDeviceName()
                                                                        "grep \"Model Name\" | awk -F \"Model "
                                                                        "Name: \" '{print $2}' | tr -d '\n'"));
     proc.waitForFinished();
-    deviceName = QString::fromStdString(proc.readAll().toStdString());
+    deviceName = QString::fromUtf8(proc.readAll());
 
     if (deviceName.isEmpty() || deviceName.contains(NotAllowedDefaultFactoryBiosName))
     {
@@ -449,7 +450,7 @@ QString PlatformImplementation::getSizeStringLocalizedOSbased(qint64 bytes)
     return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeSIFormat);
 }
 
-quint64 PlatformImplementation::getBaseUnitsSize() const
+qint64 PlatformImplementation::getBaseUnitsSize() const
 {
     constexpr quint64 base = 1000;
 
@@ -458,8 +459,6 @@ quint64 PlatformImplementation::getBaseUnitsSize() const
 
 void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, int* posx, int* posy)
 {
-    int xSign = 1;
-    int ySign = 1;
     QPoint position;
     QRect screenGeometry;
     QSystemTrayIcon* trayIcon = MegaSyncApp->getTrayIcon();
@@ -494,18 +493,7 @@ void PlatformImplementation::calculateInfoDialogCoordinates(const QRect& rect, i
 
             logInfoDialogCoordinates("screenGeometry 2", screenGeometry, otherInfo);
         }
-        else
-        {
-            if (screenGeometry.y() < 0)
-            {
-                ySign = -1;
-            }
 
-            if (screenGeometry.x() < 0)
-            {
-                xSign = -1;
-            }
-        }
 
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Calculating Info Dialog coordinates. posTrayIcon = %1")
                            .arg(QString::fromUtf8("[%1,%2]").arg(positionTrayIcon.x()).arg(positionTrayIcon.y()))

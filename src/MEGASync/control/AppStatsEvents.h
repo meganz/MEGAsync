@@ -18,7 +18,7 @@ public:
         FIRST_SYNC,
         FIRST_SYNCED_FILE,
         FIRST_WEBCLIENT_DL,
-        UNINSTALL_STATS,
+        UNINSTALL,
         ACC_CREATION_START,
         PRO_REDIRECT,
         MEM_USAGE,
@@ -92,13 +92,16 @@ public:
         SETTINGS_EXPORT_KEY_CLICKED,
         SETTINGS_CHANGE_PASSWORD_CLICKED,
         SETTINGS_REPORT_ISSUE_CLICKED,
+        NOTIFICATION_DISPLAYED,
+        NOTIFICATION_CTA_CLICKED,
         ONBOARDING_CLOSED_WITHOUT_SETTING_SYNCS,
         FIRST_SYNC_FROM_ONBOARDING,
         FIRST_BACKUP_FROM_ONBOARDING
     };
     Q_ENUM(EventType)
 
-    static const char* getEventMessage(EventType event);
+    static QString getEventMessage(EventType event,
+                                   const QStringList& args = QStringList());
     static int getEventType(EventType event);
     static EventType getEventType(int event);
 

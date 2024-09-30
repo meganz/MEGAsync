@@ -1,8 +1,8 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 
-#include <syncs/control/SyncInfo.h>
-#include <syncs/control/SyncController.h>
-#include <syncs/control/SyncSettings.h>
+#include "SyncInfo.h"
+#include "SyncController.h"
+#include "SyncSettings.h"
 #include <StalledIssuesUtilities.h>
 
 #include <StatsEventHandler.h>
@@ -22,7 +22,6 @@ MoveOrRenameCannotOccurIssue::MoveOrRenameCannotOccurIssue(const mega::MegaSyncS
     , mega::MegaRequestListener()
     , mSolvingStarted(false)
     , mUndoSuccessful(false)
-    , mSyncController(new SyncController())
     , mChosenSide(MoveOrRenameIssueChosenSide::NONE)
     , mCombinedNumberOfIssues(1)
     , mSolveAttempts(0)
@@ -79,7 +78,7 @@ void MoveOrRenameCannotOccurIssue::solveIssue(MoveOrRenameIssueChosenSide side)
 
             //We pause the sync and when it is really paused, we continue solving the issue
             //This step is needed as the SDK acts differently if the sync is not paused
-            mSyncController->setSyncToPause(syncSettings);
+            SyncController::instance().setSyncToPause(syncSettings);
 
             startAsyncIssueSolving();
         }
@@ -138,10 +137,10 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                     MegaSyncApp->getMegaApi()->getNodeByHandle(
                         consultCloudData()->getMovePathHandle()));
 
-                if(!nodeToMove)
+                if (!nodeToMove)
                 {
-                    nodeToMove.reset(
-                        MegaSyncApp->getMegaApi()->getNodeByPath(consultCloudData()->getMovePath().path.toStdString().c_str()));
+                    nodeToMove.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
+                        consultCloudData()->getMovePath().path.toUtf8().constData()));
                 }
 
                 if (nodeToMove)
@@ -149,7 +148,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                     QFileInfo targetPath(consultCloudData()->getNativeFilePath());
                     std::unique_ptr<mega::MegaNode> newParent(
                         MegaSyncApp->getMegaApi()->getNodeByPath(
-                            targetPath.path().toStdString().c_str()));
+                            targetPath.path().toUtf8().constData()));
 
                     if (!newParent)
                     {
@@ -163,13 +162,17 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
                         else
                         {
                             newParent.reset(MegaSyncApp->getMegaApi()->getNodeByPath(
-                                targetPath.path().toStdString().c_str()));
+                                targetPath.path().toUtf8().constData()));
                         }
                     }
 
-                    if(strcmp(nodeToMove->getName(), targetPath.fileName().toStdString().c_str()) != 0)
+                    QByteArray byteArray = targetPath.fileName().toUtf8();
+                    const char* fileName = byteArray.constData();
+                    if (strcmp(nodeToMove->getName(), fileName) != 0)
                     {
-                        MegaSyncApp->getMegaApi()->renameNode(nodeToMove.get(), targetPath.fileName().toStdString().c_str(), mListener.get());
+                        MegaSyncApp->getMegaApi()->renameNode(nodeToMove.get(),
+                                                              fileName,
+                                                              mListener.get());
                     }
                     else
                     {
@@ -188,7 +191,7 @@ void MoveOrRenameCannotOccurIssue::onSyncPausedEnds(std::shared_ptr<SyncSettings
 
 void MoveOrRenameCannotOccurIssue::onUndoFinished(std::shared_ptr<SyncSettings> syncSettings)
 {
-    mSyncController->setSyncToRun(syncSettings);
+    SyncController::instance().setSyncToRun(syncSettings);
     disconnect(SyncInfo::instance(),
         &SyncInfo::syncStateChanged,
         this,
@@ -226,16 +229,16 @@ void MoveOrRenameCannotOccurIssue::onRequestFinish(
     }
 }
 
-bool MoveOrRenameCannotOccurIssue::autoSolveIssue()
+StalledIssue::AutoSolveIssueResult MoveOrRenameCannotOccurIssue::autoSolveIssue()
 {
     auto chosenSide(getSyncIdChosenSide());
     if(isAutoSolvable() && !(chosenSide == MoveOrRenameIssueChosenSide::NONE))
     {
         solveIssue(chosenSide);
-        return true;
+        return StalledIssue::AutoSolveIssueResult::ASYNC_SOLVED;
     }
 
-    return false;
+    return StalledIssue::AutoSolveIssueResult::FAILED;
 }
 
 bool MoveOrRenameCannotOccurIssue::checkForExternalChanges()
@@ -322,7 +325,8 @@ void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stal
     {
         initCloudIssue();
         getCloudData()->mPath.path = cloudSourcePath;
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudSourcePath.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByPath(cloudSourcePath.toUtf8().constData()));
         if(node)
         {
             getCloudData()->mPathHandle = node->getHandle();
@@ -336,7 +340,8 @@ void MoveOrRenameCannotOccurIssue::fillCloudSide(const mega::MegaSyncStall* stal
         initCloudIssue();
         getCloudData()->mMovePath.path = cloudTargetPath;
 
-        std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(cloudTargetPath.toStdString().c_str()));
+        std::unique_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByPath(cloudTargetPath.toUtf8().constData()));
         if(node)
         {
             getCloudData()->mMovePathHandle = node->getHandle();

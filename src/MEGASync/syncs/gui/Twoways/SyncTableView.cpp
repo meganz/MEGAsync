@@ -1,9 +1,10 @@
-#include "syncs/gui/Twoways/SyncTableView.h"
+#include "SyncTableView.h"
 
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "PlatformStrings.h"
 #include "MenuItemAction.h"
-#include "syncs/model/SyncItemModel.h"
+#include "SyncItemModel.h"
+#include "SyncSettings.h"
 
 #include <QHeaderView>
 #include <QMenu>
@@ -13,10 +14,9 @@
 
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),
-    mSyncController(this),
-    mIsFirstTime(true),
     mContextMenuName("SyncContextMenu"),
-    mType(mega::MegaSync::TYPE_TWOWAY)
+    mType(mega::MegaSync::TYPE_TWOWAY),
+    mIsFirstTime(true)
 {
     setIconSize(QSize(24, 24));
 

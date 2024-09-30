@@ -4,12 +4,13 @@
 #include "ButtonIconManager.h"
 #include "QTMegaListener.h"
 #include <megaapi.h>
-#include "../model/NodeSelectorModelItem.h"
+#include "NodeSelectorModelItem.h"
 #include <ViewLoadingScene.h>
 
 #include <QWidget>
 #include <QDebug>
 #include <QItemSelectionModel>
+#include <QPersistentModelIndex>
 #include <memory>
 
 
@@ -40,7 +41,6 @@ class NodeSelectorTreeViewWidget : public QWidget,  public mega::MegaListener
     };
 
 public:
-
     static const int LOADING_VIEW_THRESSHOLD;
     static const int LABEL_ELIDE_MARGIN;
     static const char* FULL_NAME_PROPERTY;
@@ -60,10 +60,10 @@ public:
     void clearSearchText();
     void clearSelection();
     void abort();
+    NodeSelectorModelItem* rootItem();
     NodeSelectorProxyModel* getProxyModel();
 
 public slots:
-    void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override;
     void onNodesUpdate(mega::MegaApi *, mega::MegaNodeList *nodes) override;
     void onRowsInserted();
     void onRowsRemoved();
@@ -137,6 +137,7 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
+    void selectIndex(const QModelIndex& index, bool setCurrent);
 
     ButtonIconManager mButtonIconManager;
     bool first;
@@ -152,7 +153,7 @@ private:
     void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
-    QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
+    QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
@@ -170,11 +171,15 @@ class SelectType
 {
 public:
     explicit SelectType() = default;
+    virtual ~SelectType() = default;
     virtual bool isAllowedToNavigateInside(const QModelIndex& index);
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
-    virtual bool okButtonEnabled(const QModelIndexList &selected) = 0;
+    virtual bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) = 0;
     virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)};
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
+
+protected:
+    bool cloudDriveIsCurrentRootIndex(NodeSelectorTreeViewWidget* wdg);
 };
 
 class DownloadType : public SelectType
@@ -182,7 +187,7 @@ class DownloadType : public SelectType
 public:
     explicit DownloadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -193,7 +198,7 @@ public:
     bool isAllowedToNavigateInside(const QModelIndex& index) override;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -202,7 +207,7 @@ class StreamType : public SelectType
 public:
     explicit StreamType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 
@@ -212,7 +217,7 @@ public:
     explicit UploadType() = default;
     void init(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    bool okButtonEnabled(const QModelIndexList &selected) override;
+    bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 };
 

@@ -1,22 +1,16 @@
 #include "QmlDialogManager.h"
 
 #include "QmlDialogWrapper.h"
-
-#include "backups/Backups.h"
-
-#include "onboarding/Onboarding.h"
-#include "onboarding/GuestContent.h"
-#include "onboarding/OnboardingQmlDialog.h"
-#include "onboarding/GuestQmlDialog.h"
-
+#include "Backups.h"
+#include "Onboarding.h"
+#include "GuestContent.h"
+#include "OnboardingQmlDialog.h"
+#include "GuestQmlDialog.h"
 #include "WhatsNewWindow.h"
 #include "DialogOpener.h"
 #include "LoginController.h"
 #include "AccountStatusController.h"
-
-QmlDialogManager::QmlDialogManager()
-{
-}
+#include "SyncsComponent.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
@@ -59,21 +53,6 @@ bool QmlDialogManager::openOnboardingDialog()
         DialogOpener::showDialog(onboarding)->setIgnoreCloseAllAction(true);
     }
     return true;
-}
-
-void QmlDialogManager::openBackupsDialog(bool fromSettings)
-{
-    QPointer<QmlDialogWrapper<Backups>> backupsDialog;
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Backups>>())
-    {
-        backupsDialog = dialog->getDialog();
-    }
-    else
-    {
-        backupsDialog = new QmlDialogWrapper<Backups>();
-    }
-    DialogOpener::showDialog(backupsDialog);
-    backupsDialog->wrapper()->setComesFromSettings(fromSettings);
 }
 
 bool QmlDialogManager::raiseGuestDialog()
@@ -154,5 +133,38 @@ bool QmlDialogManager::openWhatsNewDialog()
         whatsNew->raise();
     }
     return true;
+}
+
+void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSettings)
+{
+    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
+    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder]()
+    {
+        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
+        {
+            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
+            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+            {
+                syncsDialog = dialog->getDialog();
+            }
+            else
+            {
+                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
+            }
+
+            syncsDialog->wrapper()->setComesFromSettings(fromSettings);
+            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
+            DialogOpener::showDialog(syncsDialog);
+        }
+    };
+
+    if (overQuotaDialog)
+    {
+        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
+    }
+    else
+    {
+        addSyncLambda();
+    }
 }
 

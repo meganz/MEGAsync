@@ -1,13 +1,17 @@
 #ifndef SYNCITEMMODEL_H
 #define SYNCITEMMODEL_H
 
-#include "syncs/control/SyncController.h"
-
 #include <QSortFilterProxyModel>
 #include <QAbstractItemModel>
 #include <QCollator>
 
+#include <memory>
+
+#include "megaapi.h"
+
 class SyncInfo;
+class SyncSettings;
+
 class SyncItemModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -24,7 +28,7 @@ public:
         UPLOADS,
         MENU
     };
-    const unsigned int kColumns = 8;
+    const int kColumns = 8;
 
     static const int ICON_SIZE;
     static const int STATES_ICON_SIZE;

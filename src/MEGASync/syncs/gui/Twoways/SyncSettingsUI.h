@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
-#include <syncs/gui/SyncSettingsUIBase.h>
-#include <syncs/gui/Twoways/SyncSettingsElements.h>
+#include "SyncSettingsUIBase.h"
+#include "SyncSettingsElements.h"
 
 class SyncSettingsUI : public SyncSettingsUIBase
 {
@@ -12,7 +12,9 @@ class SyncSettingsUI : public SyncSettingsUIBase
 
 public:
     explicit SyncSettingsUI(QWidget *parent = nullptr);
-    ~SyncSettingsUI() override;
+    ~SyncSettingsUI() override = default;
+
+    void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) override;
 
 protected:
     QString getFinishWarningIconString() const override;
@@ -29,6 +31,8 @@ protected:
     //Error removing
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
+
+    void removeSync(std::shared_ptr<SyncSettings> sync) override;
 
     void setSyncsTitle();
     void changeEvent(QEvent *) override;

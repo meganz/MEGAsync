@@ -1,14 +1,20 @@
 #include "SyncSettingsUI.h"
 
-#include "syncs/gui/Twoways/SyncTableView.h"
-#include "syncs/model/SyncItemModel.h"
-#include <MegaApplication.h>
+#include "QmlDialogWrapper.h"
+#include "Onboarding.h"
+#include "DialogOpener.h"
+#include "SyncTableView.h"
+#include "SyncItemModel.h"
+#include "MegaApplication.h"
+#include "SyncsComponent.h"
+#include "CreateRemoveSyncsManager.h"
+#include "RemoveSyncConfirmationDialog.h"
 
 SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
     SyncSettingsUIBase(parent)
 {
     setSyncsTitle();
-    setTable<SyncTableView,SyncItemModel>();
+    setTable<SyncTableView,SyncItemModel, SyncController>();
 
     mSyncElement.initElements(this);
 
@@ -19,10 +25,28 @@ SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
 #ifdef Q_OS_WINDOWS
     adjustSize();
 #endif
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+        connect(dialog->getDialog(),
+                &QmlDialogWrapper<Onboarding>::finished,
+                this,
+                [this]()
+                {
+                    setAddButtonEnabled(true);
+                });
+    }
+
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    {
+        setAddButtonEnabled(!dialog->getDialog()->isVisible());
+    }
 }
 
-SyncSettingsUI::~SyncSettingsUI()
+void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
+    CreateRemoveSyncsManager::addSync(megaFolderHandle, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const
@@ -77,6 +101,11 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
         .arg(QCoreApplication::translate("MegaError", err->getErrorString()));
 }
 
+void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
+{
+    CreateRemoveSyncsManager::removeSync(sync->getMegaHandle(), this);
+}
+
 void SyncSettingsUI::setSyncsTitle()
 {
     setTitle(tr("Synced Folders"));
@@ -98,9 +127,3 @@ void SyncSettingsUI::storageStateChanged(int newStorageState)
     mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
                                   || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }
-
-
-
-
-
-

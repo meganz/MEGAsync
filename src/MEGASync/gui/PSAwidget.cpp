@@ -1,27 +1,32 @@
 #include "PSAwidget.h"
+
 #include "ui_PSAwidget.h"
+
 #include <QDesktopServices>
 #include <Utilities.h>
 #include <QTimer>
 #include <QtConcurrent/QtConcurrent>
 
-PSAwidget::PSAwidget(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::PSAwidget)
+namespace
+{
+constexpr int DefaultSize = 64;
+constexpr int DownloadTimeout = 5000;
+}
+
+PSAwidget::PSAwidget(QWidget* parent)
+    : QWidget(parent)
+    , ui(new Ui::PSAwidget)
+    , mDownloader(std::make_unique<ImageDownloader>(DownloadTimeout))
 {
     ui->setupUi(this);
 
-    this->reply = NULL;
     this->ready = false;
     this->shown = false;
 
-    networkAccess = new QNetworkAccessManager(this);
-    timer = new QTimer(this);
-    timer->setSingleShot(true);
-
-    connect(timer, SIGNAL(timeout()), this, SLOT(onTestTimeout()));
-    connect(networkAccess, SIGNAL(finished(QNetworkReply*)),
-            this, SLOT(onRequestImgFinished(QNetworkReply*)));
+    connect(mDownloader.get(), &ImageDownloader::downloadFinished,
+            this, &PSAwidget::onDownloadFinished);
+    connect(mDownloader.get(), &ImageDownloader::downloadFinishedWithError,
+            this, &PSAwidget::onDownloadError);
 
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
@@ -39,8 +44,6 @@ PSAwidget::PSAwidget(QWidget *parent) :
 PSAwidget::~PSAwidget()
 {
     delete animationGroup;
-    delete networkAccess;
-    delete timer;
     delete ui;
 }
 
@@ -64,11 +67,7 @@ void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImag
         }
     }
 
-    testRequest.setUrl(QUrl(urlImage));
-    testRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
-
-    timer->start(5000);
-    reply = networkAccess->get(testRequest);
+    mDownloader->downloadImage(urlImage, DefaultSize, DefaultSize);
 }
 
 bool PSAwidget::isPSAready()
@@ -99,7 +98,7 @@ void PSAwidget::setPSAImage(QImage image)
     if (!image.isNull())
     {
         ui->bImage->setIcon(QPixmap::fromImage(image));
-        ui->bImage->setIconSize(QSize(64, 64));
+        ui->bImage->setIconSize(QSize(DefaultSize, DefaultSize));
         ui->wImage->show();
     }
 
@@ -160,11 +159,6 @@ void PSAwidget::removeAnnounce()
 {
     info.clear();
 
-    if (reply)
-    {
-        reply->abort();
-    }
-
     ui->bImage->setIcon(QIcon());
     ui->lTitle->setText(QString::fromUtf8(""));
     ui->lDesc->setText(QString::fromUtf8(""));
@@ -199,36 +193,22 @@ void PSAwidget::onAnimationFinished()
     ui->pPSA->setVisible(shown);
 }
 
-void PSAwidget::onRequestImgFinished(QNetworkReply *reply)
+void PSAwidget::onDownloadFinished(const QImage& image,
+                                   const QString& imageUrl)
 {
-    timer->stop();
-    reply->deleteLater();
-    this->reply = NULL;
-
-    QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
-    if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
-    {
-        setPSAImage();
-        return;
-    }
-
-    QByteArray bytes = reply->readAll();
-    if (bytes.isEmpty())
-    {
-        setPSAImage();
-        return;
-    }
-
-    QImage img(64, 64, QImage::Format_ARGB32_Premultiplied);
-    img.loadFromData(bytes);
-    setPSAImage(img);
+    Q_UNUSED(imageUrl);
+    setPSAImage(image);
 }
 
-void PSAwidget::onTestTimeout()
+void PSAwidget::onDownloadError(const QString& imageUrl,
+                                ImageDownloader::Error error,
+                                QNetworkReply::NetworkError networkError)
 {
-    if (reply)
+    Q_UNUSED(imageUrl);
+    Q_UNUSED(networkError);
+
+    if(error == ImageDownloader::Error::NetworkError)
     {
-        reply->abort();
         setPSAImage();
     }
 }

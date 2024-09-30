@@ -8,6 +8,7 @@
 
 #include <StalledIssuesModel.h>
 #include <StalledIssue.h>
+#include <IgnoredStalledIssue.h>
 #include <NameConflictStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
 #include <QMegaMessageBox.h>
@@ -23,10 +24,42 @@
     #include "limits.h"
 #endif
 
+//Convenient strings and method to avoid changing the translation context on Transifex
+const QString SOLVE_BUTTON_STRING = QApplication::translate("CloudFingerprintMissingHeader", "Solve");
+const QString RENAMING_CONFLICTED_ITEMS_STRING = QApplication::translate("NameConflictsHeader", "This action will rename the conflicted items (adding a suffix like (1)).");
+const QString areYouSure(int number){return QApplication::translate("CloudFingerprintMissingHeader", "Are you sure you want to solve the issue?", "", number);}
+
 StalledIssueHeaderCase::StalledIssueHeaderCase(StalledIssueHeader *header)
     :QObject(header)
 {
     header->setData(this);
+}
+
+StalledIssueHeaderCase::SelectionInfo StalledIssueHeaderCase::getSelectionInfo(
+    StalledIssueHeader* header,
+    std::function<bool (const std::shared_ptr<const StalledIssue>)> checker)
+{
+    SelectionInfo info;
+
+    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
+    info.selection = dialog->getDialog()->getSelection(checker);
+    info.similarToSelected = MegaSyncApp->getStalledIssuesModel()->getIssues(checker);
+    info.hasBeenExternallyChanged = header->checkForExternalChanges(info.selection.size() == 1);
+
+    info.msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
+    info.msgInfo.title = MegaSyncApp->getMEGAString();
+    info.msgInfo.textFormat = Qt::RichText;
+    info.msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    info.msgInfo.buttonsText.insert(QMessageBox::No, QApplication::translate("CloudFingerprintMissingHeader", "Cancel"));
+    info.msgInfo.buttonsText.insert(QMessageBox::Ok, QApplication::translate("CloudFingerprintMissingHeader", "Apply"));
+
+    if (info.selection.size() != info.similarToSelected.size())
+    {
+        auto checkBox = new QCheckBox(QApplication::translate("CloudFingerprintMissingHeader", "Apply to all"));
+        info.msgInfo.checkBox = checkBox;
+    }
+
+    return info;
 }
 
 //Local folder not scannable
@@ -47,81 +80,6 @@ SymLinkHeader::SymLinkHeader(StalledIssueHeader *header)
     : StalledIssueHeaderCase(header)
 {}
 
-void SymLinkHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
-{
-    auto isSymLinkChecker = [](const std::shared_ptr<const StalledIssue> issue){
-        return issue->isSymLink();
-    };
-
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    auto selection = dialog->getDialog()->getSelection(isSymLinkChecker);
-
-    if(header->checkForExternalChanges(selection.size() == 1))
-    {
-        return;
-    }
-
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(isSymLinkChecker);
-
-    if(index == IgnoreType::IgnoreAll)
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Ok"));
-    }
-    else
-    {
-        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-        if(allSimilarIssues.size() != selection.size())
-        {
-            auto checkbox = new QCheckBox(tr("Apply to all"));
-            msgInfo.checkBox = checkbox;
-        }
-    }
-
-    msgInfo.buttonsText = textsByButton;
-
-    if(index == IgnoreType::IgnoreAll)
-    {
-        msgInfo.text = tr("Are you sure you want to ignore all symlinks in all syncs?");
-        msgInfo.informativeText = tr("This action will ignore all present and future symlinks in all your syncs.");
-    }
-    else
-    {
-        msgInfo.text = tr("Are you sure you want to ignore this symlink?");
-        msgInfo.informativeText = tr("This action will ignore this symlink and it will not be synced.");
-    }
-
-    msgInfo.finishFunc = [index, selection, allSimilarIssues](QMessageBox* msgBox)
-    {
-        if(msgBox->result() == QDialogButtonBox::Ok)
-        {
-            if(index == IgnoreType::IgnoreAll)
-            {
-                MegaSyncApp->getStalledIssuesModel()->ignoreSymLinks();
-            }
-            else
-            {
-                if(msgBox->checkBox() && msgBox->checkBox()->isChecked())
-                {
-                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(allSimilarIssues, true);
-                }
-                else
-                {
-                    MegaSyncApp->getStalledIssuesModel()->ignoreItems(selection, true);
-                }
-            }
-        }
-    };
-    QMegaMessageBox::warning(msgInfo);
-}
-
 void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
     QString headerText = tr("Detected sym link: [B]%1[/B]");
@@ -130,15 +88,29 @@ void SymLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
     header->setTitleDescriptionText(QString());
 }
 
-void SymLinkHeader::refreshCaseActions(StalledIssueHeader *header)
-{
-    if(!header->getData().consultData()->isSolved())
-    {
-        QList<StalledIssueHeader::ActionInfo> actions;
-        actions << StalledIssueHeader::ActionInfo(tr("Ignore symlink"), IgnoreType::IgnoreThis);
-        actions << StalledIssueHeader::ActionInfo(tr("Ignore all symlinks in all syncs"), IgnoreType::IgnoreAll);
+//Detected Hard or SpecialLink
+HardSpecialLinkHeader::HardSpecialLinkHeader(StalledIssueHeader *header)
+    : StalledIssueHeaderCase(header)
+{}
 
-        header->showActions(tr("Ignore"), actions);
+void HardSpecialLinkHeader::refreshCaseTitles(StalledIssueHeader* header)
+{
+    if(auto ignorableIssue = header->getData().convert<IgnoredStalledIssue>())
+    {
+        QString headerText;
+        if(ignorableIssue->isSpecialLink())
+        {
+            headerText = tr("Detected special link: [B]%1[/B]");
+        }
+        else if(ignorableIssue->isHardLink())
+        {
+            headerText = tr("Detected hard link: [B]%1[/B]");
+        }
+
+        StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
+        header->setText(headerText.arg(
+            header->getData().consultData()->consultLocalData()->getNativeFilePath()));
+        header->setTitleDescriptionText(QString());
     }
 }
 
@@ -147,58 +119,37 @@ CloudFingerprintMissingHeader::CloudFingerprintMissingHeader(StalledIssueHeader 
     : StalledIssueHeaderCase(header)
 {}
 
-void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void CloudFingerprintMissingHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint)
 {
-    auto fingerprintMissingChecker = [](const std::shared_ptr<const StalledIssue> issue){
+    auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
         return issue->missingFingerprint();
-    };
+    }));
 
-    auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-    auto selection = dialog->getDialog()->getSelection(fingerprintMissingChecker);
-
-    if(header->checkForExternalChanges(selection.size() == 1))
+    if(selectionInfo.hasBeenExternallyChanged)
     {
         return;
     }
 
-    QMegaMessageBox::MessageBoxInfo msgInfo;
-    msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-    msgInfo.title = MegaSyncApp->getMEGAString();
-    msgInfo.textFormat = Qt::RichText;
-    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-    QMap<QMessageBox::Button, QString> textsByButton;
-    textsByButton.insert(QMessageBox::No, tr("Cancel"));
-    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-    auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(fingerprintMissingChecker);
-    if(allSimilarIssues.size() != selection.size())
-    {
-        auto checkBox = new QCheckBox(tr("Apply to all"));
-        msgInfo.checkBox = checkBox;
-    }
     auto pluralNumber(1);
-    msgInfo.text = tr("Are you sure you want to solve the issue?", "", pluralNumber);
-    msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
+    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.informativeText = tr("This action will download the file to a temp location, fix the issue and finally remove it.", "", pluralNumber);
     if(MegaSyncApp->getTransfersModel()->areAllPaused())
     {
         QString informativeMessage = QString::fromUtf8("[BR]") + tr("[B]Please, resume your transfers to fix the issue[/B]", "", pluralNumber);
         StalledIssuesBoldTextDecorator::boldTextDecorator.process(informativeMessage);
         StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(informativeMessage);
-        msgInfo.informativeText.append(informativeMessage);
+        selectionInfo.msgInfo.informativeText.append(informativeMessage);
     }
 
-    msgInfo.buttonsText = textsByButton;
-
-    msgInfo.finishFunc = [selection, allSimilarIssues](QMessageBox* msgBox)
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
     {
         if(msgBox->result() == QDialogButtonBox::Ok)
         {
-            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues: selection);
+            MegaSyncApp->getStalledIssuesModel()->fixFingerprint((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
         }
     };
 
-    QMegaMessageBox::warning(msgInfo);
-
+    QMegaMessageBox::warning(selectionInfo.msgInfo);
 }
 
 void CloudFingerprintMissingHeader::refreshCaseTitles(StalledIssueHeader* header)
@@ -213,7 +164,7 @@ void CloudFingerprintMissingHeader::refreshCaseActions(StalledIssueHeader *heade
 {
     if(!header->getData().consultData()->isSolved())
     {
-        header->showAction(StalledIssueHeader::ActionInfo(tr("Solve"), 0));
+        header->showAction(StalledIssueHeader::ActionInfo(SOLVE_BUTTON_STRING, 0));
     }
 }
 
@@ -224,7 +175,9 @@ CloudNodeIsBlockedHeader::CloudNodeIsBlockedHeader(StalledIssueHeader* header)
 
 void CloudNodeIsBlockedHeader::refreshCaseTitles(StalledIssueHeader* header)
 {
-    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA's Terms of Service[/A].").arg(header->displayFileName());
+    auto headerText = tr("The file %1 is unavailable because it was reported to contain content in "
+                         "breach of [A]MEGA’s Terms of Service[/A].")
+                          .arg(header->displayFileName());
     QStringList links;
     links << QLatin1String("https://mega.io/terms");
     StalledIssuesLinkTextDecorator::process(links, headerText);
@@ -401,6 +354,42 @@ void FolderMatchedAgainstFileHeader::refreshCaseTitles(StalledIssueHeader* heade
     header->setTitleDescriptionText(tr("Cannot sync folders against files."));
 }
 
+void FolderMatchedAgainstFileHeader::refreshCaseActions(StalledIssueHeader* header)
+{
+    if(!header->getData().consultData()->isSolved())
+    {
+        header->showAction(StalledIssueHeader::ActionInfo(SOLVE_BUTTON_STRING, 0));
+    }
+}
+
+void FolderMatchedAgainstFileHeader::onMultipleActionButtonOptionSelected(
+    StalledIssueHeader* header, uint)
+{
+    auto selectionInfo(getSelectionInfo(header, [](const std::shared_ptr<const StalledIssue> issue) {
+        return issue->getReason() == mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile;
+    }));
+
+    if(selectionInfo.hasBeenExternallyChanged)
+    {
+        return;
+    }
+
+    auto pluralNumber(1);
+    selectionInfo.msgInfo.text = areYouSure(pluralNumber);
+    selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
+
+    selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+    {
+        if(msgBox->result() == QDialogButtonBox::Ok)
+        {
+            MegaSyncApp->getStalledIssuesModel()->fixFolderMatchedAgainstFile((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected: selectionInfo.selection);
+        }
+    };
+
+    QMegaMessageBox::warning(selectionInfo.msgInfo);
+}
+
+////////////////////
 LocalAndRemotePreviouslyUnsyncedDifferHeader::LocalAndRemotePreviouslyUnsyncedDifferHeader(StalledIssueHeader* header)
     : StalledIssueHeaderCase(header)
 {
@@ -535,11 +524,11 @@ void NameConflictsHeader::refreshCaseTitles(StalledIssueHeader* header)
     }
 }
 
-void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, int index)
+void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index)
 {
     if(auto nameConflict = header->getData().convert<NameConflictedStalledIssue>())
     {
-        auto solutionCanBeApplied = [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
+        auto selectionInfo(getSelectionInfo(header, [index](const std::shared_ptr<const StalledIssue> issue) -> bool{
             auto result = issue->getReason() == mega::MegaSyncStall::NamesWouldClashWhenSynced;
             if(result)
             {
@@ -565,77 +554,58 @@ void NameConflictsHeader::onMultipleActionButtonOptionSelected(StalledIssueHeade
                 }
             }
             return result;
-        };
+            }));
 
-        auto dialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        auto selection = dialog->getDialog()->getSelection(solutionCanBeApplied);
-
-        if(header->checkForExternalChanges(selection.size() == 1))
+        if(selectionInfo.hasBeenExternallyChanged)
         {
             return;
         }
 
-        QMegaMessageBox::MessageBoxInfo msgInfo;
-        msgInfo.parent = dialog ? dialog->getDialog() : nullptr;
-        msgInfo.title = MegaSyncApp->getMEGAString();
-        msgInfo.textFormat = Qt::RichText;
-        msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
-        QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::No, tr("Cancel"));
-        textsByButton.insert(QMessageBox::Ok, tr("Apply"));
-
-        auto allSimilarIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(solutionCanBeApplied);
-        if(allSimilarIssues.size() != selection.size())
-        {
-            auto checkBox = new QCheckBox(tr("Apply to all"));
-            msgInfo.checkBox = checkBox;
-        }
-        msgInfo.buttonsText = textsByButton;
-        msgInfo.text = tr("Are you sure you want to solve the issue?");
+        selectionInfo.msgInfo.text = tr("Are you sure you want to solve the issue?");
 
         if(index == NameConflictedStalledIssue::Rename)
         {
-            msgInfo.informativeText = tr("This action will rename the conflicted items (adding a suffix like (1)).");
+            selectionInfo.msgInfo.informativeText = RENAMING_CONFLICTED_ITEMS_STRING;
         }
         else if(index == NameConflictedStalledIssue::MergeFolders)
         {
-            msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
+            selectionInfo.msgInfo.informativeText = tr("This action will merge all folders into a single one. We will skip duplicated files\nand rename the files with the same name but different content (adding a suffix like (1))");
         }
         else
         {
             if(index == NameConflictedStalledIssue::RemoveDuplicated)
             {
-               msgInfo.informativeText = tr("This action will delete the duplicate files.");
+               selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files.");
             }
             else if(index & NameConflictedStalledIssue::KeepMostRecentlyModifiedNode)
             {
                 auto mostRecentlyModifiedFile(nameConflict->getNameConflictCloudData()
                                                   .findMostRecentlyModifiedNode()
                                                   .mostRecentlyModified->getConflictedName());
-                msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
+                selectionInfo.msgInfo.informativeText = tr("This action will replace the older files with the same name with the most recently modified file (%1).").arg(mostRecentlyModifiedFile);
             }
             else if(!(index & NameConflictedStalledIssue::MergeFolders))
             {
-                msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
             else
             {
-                 msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
+                 selectionInfo.msgInfo.informativeText = tr("This action will delete the duplicate files, merge all folders into a single one and rename the remaining items in case of name conflict (adding a suffix like (1)).");
             }
         }
 
-        msgInfo.finishFunc = [index, selection, allSimilarIssues, nameConflict](QMessageBox* msgBox)
+        selectionInfo.msgInfo.finishFunc = [index, selectionInfo, nameConflict](QMessageBox* msgBox)
         {
             if(msgBox->result() == QDialogButtonBox::Ok)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? allSimilarIssues : selection, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues((msgBox->checkBox() && msgBox->checkBox()->isChecked())? selectionInfo.similarToSelected : selectionInfo.selection, index);
             }
             else if(msgBox->result() == QDialogButtonBox::Yes)
             {
-                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(allSimilarIssues, index);
+                MegaSyncApp->getStalledIssuesModel()->semiAutoSolveNameConflictIssues(selectionInfo.similarToSelected, index);
             }
         };
 
-        QMegaMessageBox::warning(msgInfo);
+        QMegaMessageBox::warning(selectionInfo.msgInfo);
     }
 }

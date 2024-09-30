@@ -27,6 +27,12 @@
 #include <windows.h>
 #endif
 
+#ifdef _MSC_VER
+#pragma warning(disable : 4996)  // Disable the specific warning
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
 //#define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 //#define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
@@ -195,19 +201,20 @@ private:
     void logThreadFunction(QString filename, QString desktopFilename)
     {
         int logSizeBeforeCompressMb = MAX_LOG_FILESIZE_MB_DEFAULT;
-        if (auto mb = getenv("MEGA_MAX_LOG_FILESIZE_MB"))
-        {
-            logSizeBeforeCompressMb = atoi(mb);
-        }
         int logCountToRotate = MAX_ROTATE_LOGS_DEFAULT;
         int logCountToClean = MAX_ROTATE_LOGS_TODELETE;
-        if (auto count = getenv("MEGA_MAX_ROTATE_LOGS"))
+
+        bool ok;
+        int value = qEnvironmentVariableIntValue("MEGA_MAX_LOG_FILESIZE_MB", &ok);
+        logSizeBeforeCompressMb =  ok ? value : logSizeBeforeCompressMb;
+        value = qEnvironmentVariableIntValue("MEGA_MAX_ROTATE_LOGS", &ok);
+        if (ok)
         {
-            logCountToRotate = atoi(count);
+            logCountToRotate = value;
             logCountToClean = std::max(logCountToRotate, logCountToClean);
         }
 
-    #ifdef WIN32
+#ifdef WIN32
         std::ofstream outputFile(filename.toStdWString().data(), std::ofstream::out | std::ofstream::app);
     #else
         std::ofstream outputFile(filename.toUtf8().data(), std::ofstream::out | std::ofstream::app);

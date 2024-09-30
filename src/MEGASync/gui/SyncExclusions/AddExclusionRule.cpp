@@ -1,6 +1,7 @@
 #include "AddExclusionRule.h"
-#include "syncs/control/MegaIgnoreManager.h"
-#include "gui/SyncExclusions/ExclusionRulesModel.h"
+
+#include "MegaIgnoreManager.h"
+#include "ExclusionRulesModel.h"
 
 AddExclusionRule::AddExclusionRule(QObject *parent, const QStringList &folders)
     : QMLComponent{parent}

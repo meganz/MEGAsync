@@ -23,7 +23,8 @@ StalledIssuesUtilities::StalledIssuesUtilities()
 
 std::shared_ptr<mega::MegaError> StalledIssuesUtilities::removeRemoteFile(const QString& path)
 {
-    std::unique_ptr<mega::MegaNode>fileNode(MegaSyncApp->getMegaApi()->getNodeByPath(path.toStdString().c_str()));
+    std::unique_ptr<mega::MegaNode> fileNode(
+        MegaSyncApp->getMegaApi()->getNodeByPath(path.toUtf8().constData()));
     return removeRemoteFile(fileNode.get());
 }
 
@@ -52,21 +53,26 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
     bool result(false);
 
     QFile file(path);
-    if(file.exists())
+    if (file.exists())
     {
-        if(syncId != mega::INVALID_HANDLE)
+        if (syncId != mega::INVALID_HANDLE)
         {
-            MegaApiSynchronizedRequest::runRequestWithResult(&mega::MegaApi::moveToDebris,
+            MegaApiSynchronizedRequest::runRequestWithResult(
+                &mega::MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result, &file](
-                    const mega::MegaRequest&, const mega::MegaError& e)
+                [=, &result
+#ifdef Q_OS_WIN
+                    ,&file
+#endif
+                ](mega::MegaRequest*, mega::MegaError* e)
                 {
-                    //In case of error, move to OS trash
-                    if(e.getErrorCode() != mega::MegaError::API_OK)
+                    // In case of error, move to OS trash
+                    if (e->getErrorCode() != mega::MegaError::API_OK)
                     {
-                        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                        mega::MegaApi::log(
+                            mega::MegaApi::LOG_LEVEL_ERROR,
                             QString::fromUtf8("Unable to move file to debris: %1. Error: %2")
-                                .arg(path, Utilities::getTranslatedError(&e))
+                                .arg(path, Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
                         result = QFile::moveToTrash(path);
@@ -82,7 +88,8 @@ bool StalledIssuesUtilities::removeLocalFile(const QString& path, const mega::Me
                     {
                         result = true;
                     }
-                },path.toStdString().c_str(),
+                },
+                path.toUtf8().constData(),
                 syncId);
         }
         else
@@ -118,7 +125,7 @@ QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFil
     }
     else
     {
-        return Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
+        return Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/help-circle.png"));
     }
 }
 
@@ -131,23 +138,23 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/drag_generic.png"));
         }
         else
         {
             fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
+                                                          fileInfo.fileName(), QLatin1String(":/images/drag_")));
         }
     }
     else
     {
         if(hasProblem)
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_error_default.png"));
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default.png"));
         }
     }
 
@@ -210,6 +217,54 @@ QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
     }
 
     return url;
+}
+
+StalledIssuesUtilities::KeepBothSidesState StalledIssuesUtilities::KeepBothSides(
+    std::shared_ptr<mega::MegaNode> node, const QString& localFilePath)
+{
+    KeepBothSidesState result;
+
+    if(node)
+    {
+        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
+        if(parentNode)
+        {
+            result.newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+
+            result.error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::renameNode,
+                MegaSyncApp->getMegaApi(),
+                node.get(),
+                result.newName.toUtf8().constData());
+
+            if(result.error)
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                                                                       .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(result.error.get()))
+                                                                       .toUtf8().constData());
+
+                QFileInfo currentFile(localFilePath);
+                QFile file(currentFile.filePath());
+                if(file.exists())
+                {
+                    result.newName = Utilities::getNonDuplicatedLocalName(currentFile, true, QStringList());
+                    currentFile.setFile(currentFile.path(), result.newName);
+                    if(file.rename(QDir::toNativeSeparators(currentFile.filePath())))
+                    {
+                        result.sideRenamed = KeepBothSidesState::Side::LOCAL;
+
+                        //Error no longer needed, at least we have renamed the local file
+                        result.error.reset();
+                    }
+                }
+            }
+            else
+            {
+                result.sideRenamed = KeepBothSidesState::Side::REMOTE;
+            }
+        }
+    }
+
+    return result;
 }
 
 //////////////////////////////////////////////////

@@ -40,7 +40,7 @@ public:
     NodeSelectorModel* getMegaModel();
     bool isModelProcessing() const;
 
-    virtual bool canBeDeleted() const;
+    virtual bool isNotAProtectedModel() const;
 
 signals:
     void expandReady();
@@ -69,7 +69,7 @@ class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
     void setMode(NodeSelectorModelItemSearch::Types mode);
-    bool canBeDeleted() const override;
+    bool isNotAProtectedModel() const override;
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

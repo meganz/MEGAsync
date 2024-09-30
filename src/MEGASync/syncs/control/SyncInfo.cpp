@@ -1,8 +1,8 @@
 
 #include "SyncInfo.h"
-#include "platform/Platform.h"
+#include "Platform.h"
 #include "QMegaMessageBox.h"
-#include "UserAttributesRequests/MyBackupsHandle.h"
+#include "MyBackupsHandle.h"
 #include <MegaNodeNames.h>
 #include <mega/types.h>
 #include "StatsEventHandler.h"
@@ -137,15 +137,16 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         {
             if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::FIRST_SYNC_FROM_ONBOARDING);
             }
             else
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_SYNC);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::FIRST_SYNC);
             }
 
             mSyncToCreateOrigin = SyncOrigin::NONE;
-
         }
         mIsFirstTwoWaySyncDone = true;
         break;
@@ -157,11 +158,13 @@ void SyncInfo::activateSync(std::shared_ptr<SyncSettings> syncSetting)
         {
             if (mSyncToCreateOrigin == SyncOrigin::ONBOARDING_ORIGIN)
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::FIRST_BACKUP_FROM_ONBOARDING);
             }
             else
             {
-                MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::FIRST_BACKUP);
+                MegaSyncApp->getStatsEventHandler()->sendEvent(
+                    AppStatsEvents::EventType::FIRST_BACKUP);
             }
 
             mSyncToCreateOrigin = SyncOrigin::NONE;
@@ -407,7 +410,7 @@ QStringList SyncInfo::getCloudDriveSyncMegaFolders(bool cloudDrive)
         for (auto &cs : configuredSyncs[type])
         {
             QString megaFolder = configuredSyncsMap[cs]->getMegaFolder();
-            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toStdString().data()));
+            auto parent_node = std::unique_ptr<MegaNode>(megaApi->getNodeByPath(megaFolder.toUtf8().constData()));
 
             while(parent_node && parent_node->getParentHandle() != INVALID_HANDLE)
             {
@@ -610,8 +613,6 @@ void SyncInfo::setSyncToCreateOrigin(SyncOrigin newSyncToCreate)
 {
     mSyncToCreateOrigin = newSyncToCreate;
 }
-
-
 
 void SyncInfo::addUnattendedDisabledSync(MegaHandle tag, mega::MegaSync::SyncType type)
 {

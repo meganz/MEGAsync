@@ -79,10 +79,9 @@ void MacXExtServer::onClientData(QByteArray data)
         return;
     }
 
-    qint64 len;
     QByteArray buf;
     QByteArray response;
-    while ((len = client->readCommand(&buf)) > 0)
+    while (client->readCommand(&buf) > 0)
     {
         bool shouldRespond = GetAnswerToRequest(buf.constData(), &response);
         if (shouldRespond)
@@ -266,21 +265,19 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
         }
         case 'V': // View node at MEGA cloud
         {
-            QByteArray filePath = QByteArray(content, strlen(content) + 1);
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath, false);
+                emit viewOnMega(file.filePath().toUtf8(), false);
             }
             return false;
         }
         case 'R': // Open previous versions
         {
-            QByteArray filePath = QByteArray(content, strlen(content) + 1);
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath, true);
+                emit viewOnMega(file.filePath().toUtf8(), true);
             }
             return false;
         }
@@ -308,7 +305,8 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
 {
     QByteArray response;
     string command = "P:";
-    command += localPath.toStdString();
+    string pathString = localPath.toUtf8().constData();
+    command += pathString;
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
@@ -319,7 +317,6 @@ void MacXExtServer::notifyItemChange(QString localPath, int newState)
         command.append(QString::number(newState).toUtf8().constData());
         addOverlayIconsDisabledToCommand(&command);
 
-        std::string pathString(localPath.toStdString());
         const bool isIncomingShare = false;
         addIsIncomingShareToCommand(&pathString, &command, isIncomingShare);
 

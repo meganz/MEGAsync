@@ -1,11 +1,10 @@
 #include "BackupsModel.h"
 
-#include "qml/QmlManager.h"
-#include "qml/StandardIconProvider.h"
-#include "syncs/control/SyncController.h"
-#include "syncs/control/SyncInfo.h"
+#include "QmlManager.h"
+#include "StandardIconProvider.h"
+#include "SyncController.h"
+#include "SyncInfo.h"
 
-#include "MegaApplication.h"
 #include "Utilities.h"
 
 #include "megaapi.h"
@@ -23,15 +22,15 @@ BackupFolder::BackupFolder(const QString& folder,
     , mDone(false)
     , mFolderSizeReady(false)
     , mError(0)
-    , mFolderAttr(nullptr)
-    , mFolder(folder)
     , mFolderSize(FileFolderAttributes::NOT_READY)
     , mSdkError(-1)
     , mSyncError(-1)
+    , mFolderAttr(nullptr)
+    , mFolder(folder)
 {
 }
 
-void BackupFolder::setSize(qint64 size)
+void BackupFolder::setSize(long long size)
 {
     QVector<int> changedRoles;
     changedRoles.append(BackupsModel::SIZE_READY_ROLE);
@@ -40,7 +39,7 @@ void BackupFolder::setSize(qint64 size)
 
     if(size > FileFolderAttributes::NOT_READY)
     {
-        mFolderSize = static_cast<quint64>(size);
+        mFolderSize = size;
         mSize = Utilities::getSizeStringLocalized(mFolderSize);
         changedRoles.append(BackupsModel::SIZE_ROLE);
     }
@@ -60,7 +59,7 @@ void BackupFolder::setFolder(const QString &folder)
     {
         mFolderAttr->setPath(mFolder);
     }
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -77,7 +76,7 @@ void BackupFolder::setError(int error)
 void BackupFolder::calculateFolderSize()
 {
     createFileFolderAttributes();
-    mFolderAttr->requestSize(this, [&](qint64 size)
+    mFolderAttr->requestSize(this, [&](long long size)
     {
         setSize(size);
     });
@@ -88,6 +87,7 @@ bool BackupFolder::createFileFolderAttributes()
     if(!mFolderAttr)
     {
         mFolderAttr = new LocalFileFolderAttributes(mFolder, this);
+        mFolderAttr->setValueUpdatesDisable();
         return true;
     }
     return false;
@@ -100,7 +100,6 @@ BackupsModel::BackupsModel(QObject* parent)
     , mSelectedRowsTotal(0)
     , mBackupsTotalSize(0)
     , mTotalSizeReady(false)
-    , mBackupsController(new BackupsController(this))
     , mConflictsSize(0)
     , mCheckAllState(Qt::CheckState::Unchecked)
     , mGlobalError(BackupErrorCode::NONE)
@@ -110,9 +109,9 @@ BackupsModel::BackupsModel(QObject* parent)
 
     connect(SyncInfo::instance(), &SyncInfo::syncRemoved,
             this, &BackupsModel::onSyncRemoved);
-    connect(mBackupsController.get(), &BackupsController::backupsCreationFinished,
+    connect(&BackupsController::instance(), &BackupsController::backupsCreationFinished,
             this, &BackupsModel::onBackupsCreationFinished);
-    connect(mBackupsController.get(), &BackupsController::backupFinished,
+    connect(&BackupsController::instance(), &BackupsController::backupFinished,
             this, &BackupsModel::onBackupFinished);
     connect(&mCheckDirsTimer, &QTimer::timeout, this, &BackupsModel::checkDirectories);
 
@@ -275,7 +274,7 @@ void BackupsModel::setCheckAllState(Qt::CheckState state, bool fromModel)
 
 BackupsController* BackupsModel::backupsController() const
 {
-    return mBackupsController.get();
+    return &BackupsController::instance();
 }
 
 bool BackupsModel::getExistConflicts() const
@@ -293,7 +292,7 @@ QString BackupsModel::getSdkErrorString() const
 
     if (itFound != mBackupFolderList.cend())
     {
-        message = SyncController::getErrorString((*itFound)->mSdkError, (*itFound)->mSyncError);
+        message = BackupsController::instance().getErrorString((*itFound)->mSdkError, (*itFound)->mSyncError);
     }
 
     return message;
@@ -309,7 +308,7 @@ QString BackupsModel::getSyncErrorString() const
 
     if (itFound != mBackupFolderList.cend())
     {
-        SyncController::isLocalFolderSyncable((*itFound)->getFolder(), mega::MegaSync::TYPE_BACKUP, message);
+        BackupsController::instance().isLocalFolderSyncable((*itFound)->getFolder(), mega::MegaSync::TYPE_BACKUP, message);
     }
 
     return message;
@@ -356,7 +355,7 @@ void BackupsModel::insert(const QString &folder)
         return;
     }
 
-    BackupFolder* data = new BackupFolder(inputPath, mSyncController.getSyncNameFromPath(inputPath), true, this);
+    BackupFolder* data = new BackupFolder(inputPath, BackupsController::instance().getSyncNameFromPath(inputPath), true, this);
 
     auto newBackupFolderModelIndex = mBackupFolderList.size();
     beginInsertRows(QModelIndex(), newBackupFolderModelIndex, newBackupFolderModelIndex);
@@ -415,7 +414,7 @@ void BackupsModel::populateDefaultDirectoryList()
         QString path (QDir::toNativeSeparators(dir.canonicalPath()));
         if(dir.exists() && dir != QDir::home() && isLocalFolderSyncable(path))
         {
-            BackupFolder* folder = new BackupFolder(path, mSyncController.getSyncNameFromPath(path), false, this);
+            BackupFolder* folder = new BackupFolder(path, BackupsController::instance().getSyncNameFromPath(path), false, this);
             mBackupFolderList.append(folder);
         }
         else
@@ -430,7 +429,7 @@ void BackupsModel::updateSelectedAndTotalSize()
 {
     mSelectedRowsTotal = 0;
     auto lastTotalSize = mBackupsTotalSize;
-    unsigned long long totalSize = 0;
+    long long totalSize = 0;
 
     int selectedAndSizeReadyFolders = 0;
 
@@ -490,7 +489,7 @@ void BackupsModel::checkSelectedAll()
 bool BackupsModel::isLocalFolderSyncable(const QString& inputPath)
 {
     QString message;
-    return (SyncController::isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message) != SyncController::CANT_SYNC);
+    return (BackupsController::instance().isLocalFolderSyncable(inputPath, mega::MegaSync::TYPE_BACKUP, message) != SyncController::CANT_SYNC);
 }
 
 bool BackupsModel::selectIfExistsInsertion(const QString& inputPath)
@@ -624,7 +623,7 @@ void BackupsModel::reviewConflicts()
 
 void BackupsModel::checkDuplicatedBackups(const QStringList& candidateList)
 {
-    QSet<QString> remoteSet = mBackupsController->getRemoteFolders();
+    QSet<QString> remoteSet = BackupsController::instance().getRemoteFolders();
     QSet<QString> localSet;
     QStringListIterator it(candidateList);
     while(it.hasNext())
@@ -710,7 +709,7 @@ void BackupsModel::check()
             candidateList.append(mBackupFolderList[row]->mName);
             if (mBackupFolderList[row]->mError == BackupErrorCode::NONE
                 && !existOtherRelatedFolder(row)
-                && SyncController::isLocalFolderSyncable(mBackupFolderList[row]->getFolder(), mega::MegaSync::TYPE_BACKUP, message)
+                && BackupsController::instance().isLocalFolderSyncable(mBackupFolderList[row]->getFolder(), mega::MegaSync::TYPE_BACKUP, message)
                     != SyncController::CAN_SYNC)
             {
                 QDir dir(mBackupFolderList[row]->getFolder());
@@ -778,7 +777,7 @@ int BackupsModel::rename(const QString& folder, const QString& name)
     QSet<QString> candidateSet;
     candidateSet.insert(name);
 
-    QSet<QString> duplicatedSet = mBackupsController->getRemoteFolders();
+    QSet<QString> duplicatedSet = BackupsController::instance().getRemoteFolders();
     duplicatedSet.intersect(candidateSet);
 
     if(!duplicatedSet.isEmpty())
@@ -823,10 +822,14 @@ void BackupsModel::remove(const QString& folder)
         if((found = (*item)->getFolder() == folder))
         {
             name = (*item)->mName;
-            const auto row = std::distance(mBackupFolderList.begin(), item);
-            beginRemoveRows(QModelIndex(), row, row);
-            item = mBackupFolderList.erase(item);
-            endRemoveRows();
+            //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+            const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+            if(row >= 0)
+            {
+                beginRemoveRows(QModelIndex(), row, row);
+                item = mBackupFolderList.erase(item);
+                endRemoveRows();
+            }
         }
         else
         {
@@ -873,7 +876,7 @@ void BackupsModel::change(const QString& oldFolder, const QString& newFolder)
             {
                 remove(newFolder);
             }
-            setData(index(getRow(oldFolder), 0), QVariant(mSyncController.getSyncNameFromPath(newFolder)), NAME_ROLE);
+            setData(index(getRow(oldFolder), 0), QVariant(BackupsController::instance().getSyncNameFromPath(newFolder)), NAME_ROLE);
             setData(index(getRow(oldFolder), 0), QVariant(newFolder), FOLDER_ROLE);
 
             if((*item)->mError == BackupErrorCode::SDK_CREATION)
@@ -903,10 +906,14 @@ void BackupsModel::clean(bool resetErrors)
         {
             if((*item)->mDone)
             {
-                const auto row = std::distance(mBackupFolderList.begin(), item);
-                beginRemoveRows(QModelIndex(), row, row);
-                item = mBackupFolderList.erase(item);
-                endRemoveRows();
+                //QList::size is an int, so it is safe to cast iterator_traits<_InputIter>::difference_type to int
+                const auto row = static_cast<int>(std::distance(mBackupFolderList.begin(), item));
+                if(row >= 0)
+                {
+                    beginRemoveRows(QModelIndex(), row, row);
+                    item = mBackupFolderList.erase(item);
+                    endRemoveRows();
+                }
             }
             else
             {

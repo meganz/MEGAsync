@@ -1,9 +1,9 @@
 #include "DownloadQueueController.h"
 
 #include "LowDiskSpaceDialog.h"
-#include "MegaApplication.h"
 #include "DialogOpener.h"
-#include "platform/Platform.h"
+#include "Platform.h"
+#include "RequestListenerManager.h"
 
 #ifdef WIN32
 #include <fileapi.h>
@@ -12,8 +12,7 @@
 using namespace mega;
 
 DownloadQueueController::DownloadQueueController(MegaApi *_megaApi, const QMap<mega::MegaHandle, QString>& pathMap)
-    : mMegaApi(_megaApi), mPathMap(pathMap),
-      mListener(new QTMegaRequestListener(mMegaApi, this))
+    : mMegaApi(_megaApi), mPathMap(pathMap)
 {
 }
 
@@ -29,9 +28,9 @@ void DownloadQueueController::initialize(QQueue<WrappedNode *> *downloadQueue, B
 
 void DownloadQueueController::startAvailableSpaceChecking()
 {
-    mTotalQueueDiskSize = 0;
+    mTotalQueueDiskSize = 0LL;
     mFolderCountPendingSizeComputation = 0;
-    auto accumulator = [this](qint64 partialSum, WrappedNode* currentNode)
+    auto accumulator = [this](long long partialSum, WrappedNode* currentNode)
     {
         MegaNode *node = currentNode->getMegaNode();
         if (node->getType() == MegaNode::TYPE_FILE)
@@ -42,7 +41,8 @@ void DownloadQueueController::startAvailableSpaceChecking()
         { // Ignore folders if the transfer comes from the webclient, because it provides
           // both all folders and all files, and not only top files/folders.
             mFolderCountPendingSizeComputation++;
-            mMegaApi->getFolderInfo(node, mListener.get());
+            auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
+            mMegaApi->getFolderInfo(node, listener.get());
         }
 
         return partialSum;
@@ -88,21 +88,22 @@ WrappedNode *DownloadQueueController::dequeueDownloadQueue()
     return mDownloadQueue->dequeue();
 }
 
-void DownloadQueueController::onRequestFinish(MegaApi*, MegaRequest *request, MegaError *e)
+void DownloadQueueController::onRequestFinish(MegaRequest *request, MegaError *e)
 {
-    if (request->getType() == mega::MegaRequest::TYPE_FOLDER_INFO)
+    if (request->getType() != mega::MegaRequest::TYPE_FOLDER_INFO)
     {
-        if(e->getErrorCode() == mega::MegaError::API_OK)
-        {
-            auto folderInfo = request->getMegaFolderInfo();
-            mTotalQueueDiskSize += folderInfo->getCurrentSize();
-        }
+        return;
+    }
 
-        --mFolderCountPendingSizeComputation;
-        if (mFolderCountPendingSizeComputation <= 0)
-        {
-            tryDownload();
-        }
+    if (e->getErrorCode() == mega::MegaError::API_OK)
+    {
+        auto folderInfo = request->getMegaFolderInfo();
+        mTotalQueueDiskSize += folderInfo->getCurrentSize();
+    }
+
+    if (--mFolderCountPendingSizeComputation <= 0)
+    {
+        tryDownload();
     }
 }
 
@@ -138,7 +139,6 @@ void DownloadQueueController::askUserForChoice()
     QStorageInfo destinationDrive(mCurrentTargetPath);
 
     const DriveDisplayData driveDisplayData = getDriveDisplayData(destinationDrive);
-
 
     LowDiskSpaceDialog* dialog = new LowDiskSpaceDialog(mTotalQueueDiskSize, mCachedDriveData.mAvailableSpace,
                               mCachedDriveData.mTotalSpace, driveDisplayData);

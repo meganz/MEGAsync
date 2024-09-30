@@ -1,5 +1,5 @@
-#ifndef QMLDIALOGMANAGER_H
-#define QMLDIALOGMANAGER_H
+#ifndef QML_DIALOG_MANAGER_H
+#define QML_DIALOG_MANAGER_H
 
 #include <QTimer>
 
@@ -16,18 +16,15 @@ public:
     void openGuestDialog();
     bool openOnboardingDialog();
     bool openWhatsNewDialog();
-    void openBackupsDialog(bool fromSettings = false);
+    void openAddSync(const QString& remoteFolder, bool fromSettings);
 
     bool raiseGuestDialog();
     void raiseOnboardingDialog();
-
     void raiseOrHideInfoGuestDialog(QTimer* dialogTimer, int msec);
-
     void forceCloseOnboardingDialog();
 
 private:
-    QmlDialogManager();
-
+    QmlDialogManager() = default;
 };
 
-#endif // QMLDIALOGMANAGER_H
+#endif // QML_DIALOG_MANAGER_H

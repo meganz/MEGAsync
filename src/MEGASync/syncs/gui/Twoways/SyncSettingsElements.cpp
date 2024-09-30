@@ -2,7 +2,7 @@
 #include "ui_SyncAccountFullMessage.h"
 #include "ui_SyncStallModeSelector.h"
 
-#include <syncs/gui/SyncSettingsUIBase.h>
+#include "SyncSettingsUIBase.h"
 
 #include <Utilities.h>
 #include "Preferences.h"
@@ -80,7 +80,7 @@ void SyncSettingsElements::onSmartModeSelected(bool checked)
     {
         Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Smart);
         //Update the model to fix automatically the issues
-        MegaSyncApp->getStalledIssuesModel()->updateStalledIssues();
+        MegaSyncApp->getStalledIssuesModel()->updateActiveStalledIssues();
     }
 }
 

@@ -93,11 +93,11 @@ public:
     long long                           mErrorValue = 0;
     bool                                mTemporaryError = false;
     int64_t                             mRemainingTime = 0;
-    unsigned long long                  mTotalSize = 0;
+    long long                           mTotalSize = 0;
     unsigned long long                  mPriority = 0;
-    unsigned long long                  mSpeed = 0;
+    long long                           mSpeed = 0;
     unsigned long long                  mMeanSpeed = 0;
-    unsigned long long                  mTransferredBytes = 0;
+    long long                           mTransferredBytes = 0;
     long long                           mNotificationNumber = 0;
     Utilities::FileType                 mFileType = Utilities::FileType::TYPE_OTHER;
     mega::MegaHandle                    mParentHandle = 0;
