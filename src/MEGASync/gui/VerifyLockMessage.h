@@ -42,8 +42,8 @@ protected:
     mega::MegaApi *megaApi;
     bool eventFilter(QObject* obj, QEvent* event) override;
 
-    void mousePressEvent(QMouseEvent *event);
-    void changeEvent(QEvent *event);
+    void mousePressEvent(QMouseEvent *event) override;
+    void changeEvent(QEvent *event) override;
 
 private:
     Ui::VerifyLockMessage *m_ui;

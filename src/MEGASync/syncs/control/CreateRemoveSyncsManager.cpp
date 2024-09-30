@@ -1,13 +1,13 @@
 #include "CreateRemoveSyncsManager.h"
 
 #include "DialogOpener.h"
-#include "GuiUtilities.h"
 #include "QmlDialogWrapper.h"
 #include "RemoveSyncConfirmationDialog.h"
+#include "SyncController.h"
 #include "SyncsComponent.h"
 #include "SyncSettings.h"
 
-const CreateRemoveSyncsManager* const CreateRemoveSyncsManager::addSync(mega::MegaHandle handle,
+const CreateRemoveSyncsManager* CreateRemoveSyncsManager::addSync(mega::MegaHandle handle,
                                                                         bool comesFromSettings)
 {
     auto syncManager(new CreateRemoveSyncsManager());
@@ -15,7 +15,7 @@ const CreateRemoveSyncsManager* const CreateRemoveSyncsManager::addSync(mega::Me
     return syncManager;
 }
 
-const CreateRemoveSyncsManager* const CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle,
+const CreateRemoveSyncsManager *CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle,
                                                                            QWidget* parent)
 {
     auto syncManager(new CreateRemoveSyncsManager());
@@ -34,7 +34,7 @@ void CreateRemoveSyncsManager::performAddSync(mega::MegaHandle handle, bool come
     }
 
     auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, handle, comesFromSettings, remoteFolder, this]() {
+    auto addSyncLambda = [overQuotaDialog, comesFromSettings, remoteFolder, this]() {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
             QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;

@@ -1,21 +1,28 @@
 #include "QmlDialogManager.h"
 
-#include "QmlDialogWrapper.h"
-#include "Backups.h"
-#include "Onboarding.h"
-#include "GuestContent.h"
-#include "OnboardingQmlDialog.h"
-#include "GuestQmlDialog.h"
-#include "WhatsNewWindow.h"
-#include "DialogOpener.h"
-#include "LoginController.h"
 #include "AccountStatusController.h"
-#include "SyncsComponent.h"
+#include "Backups.h"
+#include "DeviceCentre.h"
+#include "DialogOpener.h"
+#include "GuestContent.h"
+#include "GuestQmlDialog.h"
+#include "LoginController.h"
+#include "Onboarding.h"
+#include "OnboardingQmlDialog.h"
+#include "QmlManager.h"
+#include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
 {
     static std::shared_ptr<QmlDialogManager> manager(new QmlDialogManager());
     return manager;
+}
+
+QmlDialogManager* QmlDialogManager::getQmlInstance(QQmlEngine* qmlEngine, QJSEngine* jsEngine)
+{
+    Q_UNUSED(qmlEngine)
+    Q_UNUSED(jsEngine)
+    return instance().get();
 }
 
 void QmlDialogManager::openGuestDialog()
@@ -135,36 +142,16 @@ bool QmlDialogManager::openWhatsNewDialog()
     return true;
 }
 
-void QmlDialogManager::openAddSync(const QString& remoteFolder, bool fromSettings)
+void QmlDialogManager::openDeviceCentreDialog()
 {
-    auto overQuotaDialog = MegaSyncApp->showSyncOverquotaDialog();
-    auto addSyncLambda = [overQuotaDialog, fromSettings, remoteFolder, this]()
+    QPointer<QmlDialogWrapper<DeviceCentre>> deviceCentreDialog;
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<DeviceCentre>>())
     {
-        if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
-        {
-            QPointer<QmlDialogWrapper<SyncsComponent>> syncsDialog;
-            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
-            {
-                syncsDialog = dialog->getDialog();
-            }
-            else
-            {
-                syncsDialog = new QmlDialogWrapper<SyncsComponent>();
-            }
-
-            syncsDialog->wrapper()->setComesFromSettings(fromSettings);
-            syncsDialog->wrapper()->setRemoteFolder(remoteFolder);
-            DialogOpener::showDialog(syncsDialog);
-        }
-    };
-
-    if (overQuotaDialog)
-    {
-        DialogOpener::showDialog(overQuotaDialog, addSyncLambda);
+        deviceCentreDialog = dialog->getDialog();
     }
     else
     {
-        addSyncLambda();
+        deviceCentreDialog = new QmlDialogWrapper<DeviceCentre>();
     }
+    DialogOpener::showDialog(deviceCentreDialog);
 }
-

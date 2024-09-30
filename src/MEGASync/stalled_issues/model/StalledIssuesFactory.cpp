@@ -6,6 +6,7 @@
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
 #include <IgnoredStalledIssue.h>
 #include <MoveOrRenameCannotOccurIssue.h>
+#include <FolderMatchedAgainstFileIssue.h>
 #include <StatsEventHandler.h>
 
 #include <mega/types.h>
@@ -16,7 +17,7 @@ StalledIssuesFactory::StalledIssuesFactory()
 }
 
 //////////////////////////////////
-StalledIssuesCreator::StalledIssuesCreator() :
+StalledIssuesCreator::StalledIssuesCreator():
     mMoveOrRenameCannotOccurFactory(std::make_shared<MoveOrRenameCannotOccurFactory>())
 {
     qRegisterMetaType<IssuesCount>("IssuesCount");
@@ -48,7 +49,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
 
             StalledIssueVariant variant;
-            std::shared_ptr<StalledIssue> d;
+            StalledIssueSPtr d;
 
             if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
@@ -76,6 +77,11 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 else if(StalledIssue::isCloudNodeBlocked(stall))
                 {
                     d = std::make_shared<CloudNodeIsBlockedIssue>(stall);
+                }
+                else if (stall->reason() ==
+                         mega::MegaSyncStall::SyncStallReason::FolderMatchedAgainstFile)
+                {
+                    d = std::make_shared<FolderMatchedAgainstFileIssue>(stall);
                 }
                 else if(stall->reason() ==
                             mega::MegaSyncStall::SyncStallReason::
@@ -108,10 +114,10 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 multiStepIssueSolver->resetDeadlineIfNeeded(variant);
             }
 
-
             //Check if it is being solved...
             if(!variant.getData()->isSolved())
             {
+                // Init issue file/folder attributes, needed to check if the issue is autosolvable
                 variant.getData()->endFillingIssue();
 
                 if(updateType == UpdateType::EVENT)
@@ -123,6 +129,9 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                         MegaSyncApp->getStatsEventHandler()->sendEvent(
                             AppStatsEvents::EventType::SI_STALLED_ISSUE_RECEIVED, QStringList() << eventMessage);
                     }
+
+                    // We don´t work with these issues, they are just needed to send the event
+                    continue;
                 }
                 else
                 {
@@ -138,15 +147,20 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
         }
 
-        //Add being solved issues taken from the MultiStepIssueSolvers
-        for (auto it = mMultiStepIssueSolversByReason.keyValueBegin(); it != mMultiStepIssueSolversByReason.keyValueEnd(); ++it)
+        // Add being solved issues taken from the MultiStepIssueSolvers
+        if (updateType == UpdateType::UI)
         {
-            if(it->second->isActive() && !solversWithStall.contains(it->second))
+            for (auto it = mMultiStepIssueSolversByReason.keyValueBegin();
+                 it != mMultiStepIssueSolversByReason.keyValueEnd();
+                 ++it)
             {
-                auto issue(it->second->getIssue());
-                auto variant = StalledIssueVariant(issue, issue->getOriginalStall().get());
-                variant.getData()->endFillingIssue();
-                mStalledIssues.mActiveStalledIssues.append(variant);
+                if (it->second->isActive() && !solversWithStall.contains(it->second))
+                {
+                    auto issue(it->second->getIssue());
+                    auto variant = StalledIssueVariant(issue, issue->getOriginalStall().get());
+                    variant.getData()->endFillingIssue();
+                    mStalledIssues.mActiveStalledIssues.append(variant);
+                }
             }
         }
 
@@ -156,22 +170,19 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
         foreach(auto solvableIssue, solvableIssues)
         {
             emit solvingIssues(solvingIssuesStats);
-            auto hasBeenSolved(solvableIssue.getData()->autoSolveIssue());
+            auto result(solvableIssue.getData()->autoSolveIssue());
 
-            if(updateType == UpdateType::UI)
+            if (result == StalledIssue::AutoSolveIssueResult::FAILED)
             {
-                if(!hasBeenSolved)
-                {
-                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::FAILED);
-                    mStalledIssues.mFailedAutoSolvedStalledIssues.append(solvableIssue);
-                    solvingIssuesStats.issuesFailed++;
-                }
-                else
-                {
-                    solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::SOLVED);
-                    mStalledIssues.mAutoSolvedStalledIssues.append(solvableIssue);
-                    solvingIssuesStats.issuesFixed++;
-                }
+                solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::FAILED);
+                mStalledIssues.mFailedAutoSolvedStalledIssues.append(solvableIssue);
+                solvingIssuesStats.issuesFailed++;
+            }
+            else if (result == StalledIssue::AutoSolveIssueResult::SOLVED)
+            {
+                solvableIssue.getData()->setIsSolved(StalledIssue::SolveType::SOLVED);
+                mStalledIssues.mAutoSolvedStalledIssues.append(solvableIssue);
+                solvingIssuesStats.issuesFixed++;
             }
 
             solvingIssuesStats.currentIssueBeingSolved++;

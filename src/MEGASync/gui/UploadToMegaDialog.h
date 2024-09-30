@@ -21,7 +21,7 @@ public:
     ~UploadToMegaDialog();
     mega::MegaHandle getSelectedHandle();
     bool isDefaultFolder();
-    void setDefaultFolder(long long handle);
+    void setDefaultFolder(mega::MegaHandle handle);
 
     void onRequestFinish(mega::MegaRequest *request, mega::MegaError *e);
 

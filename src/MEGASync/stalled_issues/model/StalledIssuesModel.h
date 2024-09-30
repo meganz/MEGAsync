@@ -21,46 +21,75 @@
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;
 
-namespace StalledIssuesStrings
+class StalledIssuesStrings
 {
-static QString RemoveFileFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));}
-static QString RemoveFolderFailedTitle(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));}
-static QString RemoveLocalFileFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the file is in use, and the permissions of the file, then try again."));}
-static QString RemoveLocalFolderFailedDescription(){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Check if the folder is in use, and the permissions of the file, then try again."));}
-static QString RemoveRemoteFailedDescription(const mega::MegaError* error){return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));}
+public:
+    static QString RemoveFileFailedTitle()
+    {
+        return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this file."));
+    }
 
-static QString RemoveRemoteFailedFile(const mega::MegaError* error)
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
-                           .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveFolderFailedTitle()
+    {
+        return QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("Unable to remove this folder."));
+    }
 
-static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
-                           .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveLocalFileFailedDescription()
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String(
+                "Check if the file is in use, and the permissions of the file, then try again."));
+    }
 
-static QString RemoveLocalFailedFile()
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
-    errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
+    static QString RemoveLocalFolderFailedDescription()
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String(
+                "Check if the folder is in use, and the permissions of the file, then try again."));
+    }
 
-static QString RemoveLocalFailedFolder()
-{
-    QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
-    errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
-    StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
-    return errorStr;
-}
-}
+    static QString RemoveRemoteFailedDescription(const mega::MegaError* error)
+    {
+        return QT_TRANSLATE_NOOP(
+            "StalledIssues",
+            QLatin1String("Error: %1").arg(Utilities::getTranslatedError(error)));
+    }
+
+    static QString RemoveRemoteFailedFile(const mega::MegaError* error)
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
+                               .arg(RemoveFileFailedTitle(), RemoveRemoteFailedDescription(error));
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveRemoteFailedFolder(const mega::MegaError* error)
+    {
+        QString errorStr =
+            QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"))
+                .arg(RemoveFolderFailedTitle(), RemoveRemoteFailedDescription(error));
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveLocalFailedFile()
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
+        errorStr = errorStr.arg(RemoveFileFailedTitle(), RemoveLocalFileFailedDescription());
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+
+    static QString RemoveLocalFailedFolder()
+    {
+        QString errorStr = QT_TRANSLATE_NOOP("StalledIssues", QLatin1String("%1[BR]%2"));
+        errorStr = errorStr.arg(RemoveFolderFailedTitle(), RemoveLocalFolderFailedDescription());
+        StalledIssuesNewLineTextDecorator::newLineTextDecorator.process(errorStr);
+        return errorStr;
+    }
+};
 
 class StalledIssuesReceiver : public QObject, public mega::MegaRequestListener
 {
@@ -83,7 +112,7 @@ public slots:
     void onUpdateStalledISsues(UpdateType type);
 
 signals:
-    void stalledIssuesReady(ReceivedStalledIssues);
+    void stalledIssuesReady(ReceivedStalledIssues, UpdateType);
     void solvingIssues(StalledIssuesCreator::IssuesCount count);
     void solvingIssuesFinished(StalledIssuesCreator::IssuesCount count);
 
@@ -126,7 +155,9 @@ public:
     int getCountByFilterCriterion(StalledIssueFilterCriterion criterion);
 
     void finishStalledIssues(const QModelIndexList& indexes);
-    void updateStalledIssues();
+
+    void updateActiveStalledIssues();
+    void updateStalledIssuesForAutoSolve();
 
     void blockUi();
     void unBlockUi();
@@ -150,9 +181,6 @@ public:
     //SOLVE PROBLEMS
     void stopSolvingIssues(MessageInfo::ButtonType buttonType);
 
-    //Solve all issues
-    void solveAllIssues();
-
     bool checkForExternalChanges(const QModelIndex& index);
 
     //Name conflicts
@@ -166,7 +194,7 @@ public:
 
     void finishConflictManually();
 
-    void semiAutoSolveNameConflictIssues(const QModelIndexList& list, int option);
+    void semiAutoSolveNameConflictIssues(const QModelIndexList& list, uint option);
 
     //LocalOrRemoteConflicts
     void chooseRemoteForBackups(const QModelIndexList& list);
@@ -182,6 +210,9 @@ public:
 
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
+
+    //FolderMatchedAgainstFile
+    void fixFolderMatchedAgainstFile(const QModelIndexList& list);
 
     //MoveOrRename issue
     void fixMoveOrRenameCannotOccur(const QModelIndexList& indexes, MoveOrRenameIssueChosenSide side);
@@ -216,13 +247,24 @@ protected slots:
 private slots:
     void onStalledIssueUpdated(StalledIssue* issue);
     void onAsyncIssueSolvingFinished(StalledIssue* issue);
-    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived);
+    void onProcessStalledIssues(ReceivedStalledIssues issuesReceived, UpdateType updateType);
     void onSendEvent();
 
 private:
     void showIssueExternallyChangedMessageBox();
 
-    void appendCachedIssuesToModel(const StalledIssuesVariantList& list, StalledIssueFilterCriterion type);
+    void appendCachedIssuesToModel(
+        const StalledIssuesVariantList& list,
+        StalledIssueFilterCriterion type = StalledIssueFilterCriterion::OTHER_CONFLICTS);
+
+    void checkIssues(StalledIssuesVariantList& receivedIssues,
+                     std::function<bool(const StalledIssue* issue)> func);
+    void checkActiveIssues(StalledIssuesVariantList& receivedIssues);
+    void checkAutoSolvedIssues(StalledIssuesVariantList& receivedIssues);
+    void checkFailedAutoSolvedIssues(StalledIssuesVariantList& receivedIssues);
+
+    void needsUpdate();
+    void setIssuesRequested(bool state);
 
     void removeRows(QModelIndexList& indexesToRemove);
     bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
@@ -271,12 +313,13 @@ private:
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuesReceiver;
     std::atomic_bool mThreadFinished { false };
-    mega::QTMegaRequestListener* mRequestListener;
-    mega::QTMegaGlobalListener* mGlobalListener;
+    std::unique_ptr<mega::QTMegaRequestListener> mRequestListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     mega::MegaApi* mMegaApi;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;
     bool mIsStalledChanged;
+    uint mReceivedEmptyStalledIssuesCounter;
     StalledIssuesCreator::IssuesCount mReceivedIssuesStats;
 
     mutable QReadWriteLock mModelMutex;
@@ -285,10 +328,16 @@ private:
     mutable StalledIssuesVariantList mSolvedStalledIssues;
     mutable StalledIssuesVariantList mFailedStalledIssues;
     mutable QHash<const StalledIssue*, int> mStalledIssuesByOrder;
+    mutable QMultiHash<unsigned long long, const StalledIssue*> mStalledIssueRowByHash;
 
     QHash<int, int> mCountByFilterCriterion;
 
     QTimer mEventTimer;
+    QTimer mUpdateIssuesTimer;
+    void startUpdateIssuesTimer(int interval);
+    void stopUpdateIssuesTimer();
+    QTimer mStopUpdateIssuesTimer;
+
     bool mRawInfoVisible;
 
     std::atomic_bool mSolvingIssues {false};

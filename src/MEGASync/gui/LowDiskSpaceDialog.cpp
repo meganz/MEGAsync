@@ -6,11 +6,13 @@
 
 #include <QFileIconProvider>
 
-LowDiskSpaceDialog::LowDiskSpaceDialog(qint64 neededSize, qint64 freeSize, qint64 driveSize,
-                                       const DriveDisplayData &driveDisplayData,
-                                       QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::LowDiskSpaceDialog)
+LowDiskSpaceDialog::LowDiskSpaceDialog(long neededSize,
+    long long freeSize,
+    long long driveSize,
+    const DriveDisplayData& driveDisplayData,
+    QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::LowDiskSpaceDialog)
 {
     ui->setupUi(this);
     setupShadowEffect();
@@ -34,7 +36,7 @@ LowDiskSpaceDialog::~LowDiskSpaceDialog()
     delete ui;
 }
 
-QString LowDiskSpaceDialog::toString(qint64 bytes)
+QString LowDiskSpaceDialog::toString(long long bytes)
 {
     return Utilities::getSizeString((bytes > 0) ? bytes : 0);
 }

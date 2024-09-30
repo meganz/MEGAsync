@@ -14,8 +14,16 @@ public:
 
     bool isEmpty() const
     {
-        return mAutoSolvedStalledIssues.isEmpty() && mActiveStalledIssues.isEmpty();
+        return mAutoSolvedStalledIssues.isEmpty() && mActiveStalledIssues.isEmpty() &&
+               mFailedAutoSolvedStalledIssues.isEmpty();
     }
+
+    int size() const
+    {
+        return mAutoSolvedStalledIssues.size() + mActiveStalledIssues.size() +
+               mFailedAutoSolvedStalledIssues.size();
+    }
+
     void clear()
     {
         mActiveStalledIssues.clear();
@@ -23,17 +31,17 @@ public:
         mFailedAutoSolvedStalledIssues.clear();
     }
 
-    StalledIssuesVariantList autoSolvedStalledIssues() const
+    StalledIssuesVariantList& autoSolvedStalledIssues()
     {
         return mAutoSolvedStalledIssues;
     }
 
-    StalledIssuesVariantList activeStalledIssues() const
+    StalledIssuesVariantList& activeStalledIssues()
     {
         return mActiveStalledIssues;
     }
 
-    StalledIssuesVariantList failedAutoSolvedStalledIssues() const
+    StalledIssuesVariantList& failedAutoSolvedStalledIssues()
     {
         return mFailedAutoSolvedStalledIssues;
     }

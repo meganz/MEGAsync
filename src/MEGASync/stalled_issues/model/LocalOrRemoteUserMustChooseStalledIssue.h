@@ -10,9 +10,9 @@ class LocalOrRemoteUserMustChooseStalledIssue : public StalledIssue
 {
 public:
     LocalOrRemoteUserMustChooseStalledIssue(const mega::MegaSyncStall *stallIssue);
-    ~LocalOrRemoteUserMustChooseStalledIssue();
+    ~LocalOrRemoteUserMustChooseStalledIssue() = default;
 
-    bool autoSolveIssue() override;
+    StalledIssue::AutoSolveIssueResult autoSolveIssue() override;
     bool isAutoSolvable() const override;
     void setIsSolved(SolveType type) override;
     bool checkForExternalChanges() override;
@@ -23,7 +23,7 @@ public:
     bool chooseLocalSide();
     bool chooseRemoteSide();
     bool chooseLastMTimeSide();
-    bool chooseBothSides(QStringList *namesUsed);
+    bool chooseBothSides();
 
     bool UIShowFileAttributes() const override;
 
@@ -41,7 +41,6 @@ public:
     std::shared_ptr<mega::MegaError> getRemoveRemoteError() const;
 
 private:
-    MegaUploader* mUploader;
     ChosenSide mChosenSide = ChosenSide::NONE;
     QString mNewName;
     std::shared_ptr<mega::MegaError> mError;

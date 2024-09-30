@@ -11,7 +11,6 @@
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
 
-
 using namespace  mega;
 class NodeSelectorTreeView : public LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>
 {
@@ -38,14 +37,15 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 signals:
-    void removeNodeClicked(bool permanently);
+    void removeNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void renameNodeClicked();
+    void moveNodeClicked(const QList<MegaHandle>& handles, const QModelIndex& parent);
     void getMegaLinkClicked();
     void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
-    void removeNode(bool permanently);
+    void removeNode(const QList<MegaHandle>& handles, bool permanently);
     void renameNode();
     void getMegaLink();
     void restore(const QList<MegaHandle>& handles);
@@ -58,9 +58,9 @@ private:
     NodeSelectorProxyModel* proxyModel() const;
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
+    bool areAllEligibleForMove(const QList<mega::MegaHandle>& handles, const QModelIndex& targetIndex) const;
+    bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
-
-    NodeSelectorModel* getSourceModel() const;
 
     MegaApi* mMegaApi;
 };

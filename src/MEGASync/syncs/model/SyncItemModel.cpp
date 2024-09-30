@@ -417,10 +417,13 @@ void SyncItemModel::removeSync(std::shared_ptr<SyncSettings> sync)
         {
             if((*it) == sync)
             {
-                int pos = std::distance(mList.cbegin(), it);
-                beginRemoveRows(QModelIndex(), pos, pos);
-                mList.removeOne((*it));
-                endRemoveRows();
+                int pos = static_cast<int>(std::distance(mList.cbegin(), it));
+                if(pos >= 0)
+                {
+                    beginRemoveRows(QModelIndex(), pos, pos);
+                    mList.removeOne((*it));
+                    endRemoveRows();
+                }
                 break;
             }
         }

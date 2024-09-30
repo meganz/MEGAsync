@@ -28,6 +28,12 @@ public:
           mDepth(0)
     {}
 
+    MergeMEGAFolders(mega::MegaNode* folderTarget):
+        mFolderTarget(folderTarget),
+        mFolderToMerge(nullptr),
+        mDepth(0)
+    {}
+
     enum ActionForDuplicates
     {
         Rename,
@@ -37,6 +43,9 @@ public:
     std::shared_ptr<mega::MegaError> merge(ActionForDuplicates action);
 
 private:
+    std::shared_ptr<mega::MegaError> mergeTwoFolders(ActionForDuplicates action);
+    std::shared_ptr<mega::MegaError> mergeByName(ActionForDuplicates action);
+
     mega::MegaNode* mFolderTarget;
     mega::MegaNode* mFolderToMerge;
     int mDepth;

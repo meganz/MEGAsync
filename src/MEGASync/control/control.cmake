@@ -1,6 +1,7 @@
 
 set(DESKTOP_APP_CONTROL_HEADERS
     control/AccountStatusController.h
+    control/AppState.h
     control/AppStatsEvents.h
     control/AsyncHandler.h
     control/ConnectivityChecker.h
@@ -13,6 +14,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/ExportProcessor.h
     control/FileFolderAttributes.h
     control/HTTPServer.h
+    control/ImageDownloader.h
     control/IntervalExecutioner.h
     control/LinkProcessor.h
     control/LinkObject.h
@@ -41,10 +43,13 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/Preferences/EphemeralCredentials.h
     control/Preferences/Preferences.h
     control/AccountDetailsManager.h
+    control/UserMessageController.h
+    control/UserMessageTypes.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
     control/AccountStatusController.cpp
+    control/AppState.cpp
     control/AppStatsEvents.cpp
     control/ConnectivityChecker.cpp
     control/CrashHandler.cpp
@@ -55,6 +60,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/ExportProcessor.cpp
     control/FileFolderAttributes.cpp
     control/HTTPServer.cpp
+    control/ImageDownloader.cpp
     control/IntervalExecutioner.cpp
     control/LinkProcessor.cpp
     control/LinkObject.cpp
@@ -80,6 +86,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/Preferences/Preferences.cpp
     control/StatsEventHandler.cpp
     control/AccountDetailsManager.cpp
+    control/UserMessageController.cpp
 )
 
 target_sources(MEGAsync

@@ -85,7 +85,7 @@ signals:
     void okBtnClicked();
     void cancelBtnClicked();
     void onSearch(const QString& text);
-    void onCustomBottomButtonClicked(uint8_t id);
+    void onCustomBottomButtonClicked(uint id);
 
 protected:
     void showEvent(QShowEvent* ) override;
@@ -118,7 +118,8 @@ private slots:
     void oncbAlwaysUploadToLocationChanged(bool value);
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
-    void onDeleteClicked(bool permanently);
+    void onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently);
+    void onMoveClicked(const QList<mega::MegaHandle>& handles, const QModelIndex& parent);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -172,7 +173,7 @@ private:
     void updateNode(const UpdateNodesInfo& info, bool scrollTo = false);
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
-    QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
+    QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
     QTimer mNodesUpdateTimer;
@@ -190,6 +191,7 @@ class SelectType
 {
 public:
     explicit SelectType() = default;
+    virtual ~SelectType() = default;
     virtual bool isAllowedToNavigateInside(const QModelIndex& index);
     virtual void init(NodeSelectorTreeViewWidget* wdg) = 0;
     virtual bool okButtonEnabled(NodeSelectorTreeViewWidget* wdg, const QModelIndexList &selected) = 0;

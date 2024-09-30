@@ -12,7 +12,7 @@ Item{
     property alias descriptionText: secondaryText.text
 
     readonly property int imageDimension: 120
-    readonly property int majorSpacing: 24
+    readonly property int majorSpacing: Constants.defaultComponentSpacing
     readonly property int minorSpacing: 12
 
     width: 233
@@ -42,7 +42,7 @@ Item{
             weight: Font.Bold
             pixelSize: Texts.Text.Size.MEDIUM_LARGE
         }
-        color: colorStyle.textPrimary
+        color: ColorTheme.textPrimary
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         lineHeightMode: Text.FixedHeight
@@ -64,7 +64,7 @@ Item{
         }
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
-        color: colorStyle.textSecondary
+        color: ColorTheme.textSecondary
         lineHeightMode: Text.FixedHeight
         lineHeight: 12
     }

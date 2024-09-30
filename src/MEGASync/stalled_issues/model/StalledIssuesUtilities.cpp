@@ -17,6 +17,9 @@ const Text::Decorator StalledIssuesBoldTextDecorator::boldTextDecorator = Text::
 const Text::Decorator StalledIssuesNewLineTextDecorator::newLineTextDecorator = Text::Decorator(new Text::NewLine());
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+std::unique_ptr<MegaDownloader> StalledIssuesUtilities::mDownloader = nullptr;
+std::unique_ptr<MegaUploader> StalledIssuesUtilities::mUploader = nullptr;
+
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
@@ -44,7 +47,7 @@ QIcon StalledIssuesUtilities::getRemoteFileIcon(mega::MegaNode *node, const QFil
     }
     else
     {
-        return Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/help-circle.png"));
+        return Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/help-circle.png"));
     }
 }
 
@@ -57,23 +60,23 @@ QIcon StalledIssuesUtilities::getIcon(bool isFile, const QFileInfo& fileInfo, bo
         //Without extension
         if(fileInfo.completeSuffix().isEmpty())
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/drag_generic.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/drag_generic.png"));
         }
         else
         {
             fileTypeIcon = Utilities::getCachedPixmap(Utilities::getExtensionPixmapName(
-                                                          fileInfo.fileName(), QLatin1Literal(":/images/drag_")));
+                                                          fileInfo.fileName(), QLatin1String(":/images/drag_")));
         }
     }
     else
     {
         if(hasProblem)
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_error_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_error_default.png"));
         }
         else
         {
-            fileTypeIcon = Utilities::getCachedPixmap(QLatin1Literal(":/images/StalledIssues/folder_orange_default.png"));
+            fileTypeIcon = Utilities::getCachedPixmap(QLatin1String(":/images/StalledIssues/folder_orange_default.png"));
         }
     }
 
@@ -136,6 +139,74 @@ QString StalledIssuesUtilities::getLink(bool isCloud, const QString& path)
     }
 
     return url;
+}
+
+StalledIssuesUtilities::KeepBothSidesState StalledIssuesUtilities::KeepBothSides(
+    std::shared_ptr<mega::MegaNode> node, const QString& localFilePath)
+{
+    KeepBothSidesState result;
+
+    if(node)
+    {
+        std::unique_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getParentNode(node.get()));
+        if(parentNode)
+        {
+            result.newName = Utilities::getNonDuplicatedNodeName(node.get(), parentNode.get(), QString::fromUtf8(node->getName()), true, QStringList());
+
+            result.error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::renameNode,
+                MegaSyncApp->getMegaApi(),
+                node.get(),
+                result.newName.toUtf8().constData());
+
+            if(result.error)
+            {
+                mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Unable to rename file: %1. Error: %2")
+                                                                       .arg(QString::fromUtf8(node->getName()), Utilities::getTranslatedError(result.error.get()))
+                                                                       .toUtf8().constData());
+
+                QFileInfo currentFile(localFilePath);
+                QFile file(currentFile.filePath());
+                if(file.exists())
+                {
+                    result.newName = Utilities::getNonDuplicatedLocalName(currentFile, true, QStringList());
+                    currentFile.setFile(currentFile.path(), result.newName);
+                    if(file.rename(QDir::toNativeSeparators(currentFile.filePath())))
+                    {
+                        result.sideRenamed = KeepBothSidesState::Side::LOCAL;
+
+                        //Error no longer needed, at least we have renamed the local file
+                        result.error.reset();
+                    }
+                }
+            }
+            else
+            {
+                result.sideRenamed = KeepBothSidesState::Side::REMOTE;
+            }
+        }
+    }
+
+    return result;
+}
+
+MegaDownloader* StalledIssuesUtilities::getMegaDownloader()
+{
+    if (!mDownloader)
+    {
+        mDownloader = std::make_unique<MegaDownloader>(MegaSyncApp->getMegaApi(), nullptr);
+    }
+
+    return mDownloader.get();
+}
+
+MegaUploader* StalledIssuesUtilities::getMegaUploader()
+{
+    if (!mUploader)
+    {
+        mUploader = std::make_unique<MegaUploader>(MegaSyncApp->getMegaApi(), nullptr);
+    }
+
+    return mUploader.get();
 }
 
 //////////////////////////////////////////////////
@@ -278,10 +349,7 @@ bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QStri
 
 /////////////////////////////////////////////////////
 /// \brief FingerprintMissingSolver::FingerprintMissingSolver
-FingerprintMissingSolver::FingerprintMissingSolver()
-    :mDownloader(new MegaDownloader(MegaSyncApp->getMegaApi(), nullptr))
-{
-}
+FingerprintMissingSolver::FingerprintMissingSolver() {}
 
 void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pathsToSolve)
 {
@@ -348,8 +416,9 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
         foreach(auto targetFolder, nodesToDownloadByPath.keys())
         {
             std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(nodesToDownloadByPath.value(targetFolder));
-            BlockingBatch downloadBatches;
-            mDownloader->processTempDownloadQueue(nodesToDownload.get(), targetFolder);
+            StalledIssuesUtilities::getMegaDownloader()->processTempDownloadQueue(
+                nodesToDownload.get(),
+                targetFolder);
             qDeleteAll(*nodesToDownload.get());
         }
     }

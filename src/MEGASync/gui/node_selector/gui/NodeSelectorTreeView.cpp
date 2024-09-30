@@ -1,14 +1,15 @@
 #include "NodeSelectorTreeView.h"
 
-#include "NodeSelectorModelItem.h"
 #include "MegaApplication.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorModelItem.h"
 #include "NodeSelectorProxyModel.h"
 #include "Platform.h"
 #include "CreateRemoveSyncsManager.h"
-#include "NodeSelectorModel.h"
 
-#include <QPainter>
 #include <QMenu>
+#include <QMouseEvent>
+#include <QPainter>
 
 NodeSelectorTreeView::NodeSelectorTreeView(QWidget* parent) :
     LoadingSceneView<NodeSelectorLoadingDelegate, QTreeView>(parent),
@@ -120,13 +121,13 @@ void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
         accept = mousePressorReleaseEvent(event);
     }
 
-    QPoint pos = event->pos();
-    QPersistentModelIndex index = indexAt(pos);
+    //QPoint pos = event->pos();
+    //QPersistentModelIndex index = indexAt(pos);
 
-    if(!index.isValid())
-    {
-        selectionModel()->clearSelection();
-    }
+    // if(!index.isValid())
+    // {
+    //     selectionModel()->clearSelection();
+    // }
 
     if(accept)
     {
@@ -214,12 +215,11 @@ void NodeSelectorTreeView::keyPressEvent(QKeyEvent *event)
         }
         else if(event->key() == Qt::Key_Delete)
         {
-            auto handlesToRemove(getMultiSelectionNodeHandle());
-            if(getSourceModel()->areAllNodesEligibleForDeletion(handlesToRemove))
+            auto selectionHandles(getMultiSelectionNodeHandle());
+
+            if(areAllEligibleForDeletion(selectionHandles))
             {
-                std::unique_ptr<mega::MegaNode> node(
-                    mMegaApi->getNodeByHandle(handlesToRemove.first()));
-                removeNode(node && mMegaApi->isInRubbish(node.get()));
+                removeNode(selectionHandles, false);
             }
         }
 
@@ -239,84 +239,166 @@ void NodeSelectorTreeView::contextMenuEvent(QContextMenuEvent *event)
 
     if(!indexAt(event->pos()).isValid())
     {
-        return;
-    }
+        //auto selectionHandles(getMultiSelectionNodeHandle());
+        // if(!selectionHandles.isEmpty())
+        // {
+        //     auto parent(indexAt(event->pos()));
+        //     if (!parent.isValid())
+        //     {
+        //         parent = rootIndex();
+        //     }
 
-    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-    auto sourceModel = proxyModel->getMegaModel();
+        //     if(!parent.isValid())
+        //     {
+        //         static QModelIndex cdRootIndex = proxyModel()->getIndexFromNode(MegaSyncApp->getRootNode());
+        //         parent = cdRootIndex;
+        //     }
 
-    auto selectionHandles(getMultiSelectionNodeHandle());
-
-    if(selectionHandles.size() == 1)
-    {
-        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(selectionHandles.first()));
-        if(node && !mMegaApi->isInRubbish(node.get()))
+        //     if(areAllEligibleForMove(selectionHandles, parent))
+        //     {
+        //         parent = proxyModel()->mapToSource(parent);
+        //         customMenu.addAction(tr("Move"),
+        //                              this,
+        //                              [this, selectionHandles, parent]()
+        //                              {
+        //                                  emit moveNodeClicked(selectionHandles, parent);
+        //                              });
+        //     }
+        // }
+        // else
         {
-            int access = sourceModel->getNodeAccess(node.get());
-
-            if (access != MegaShare::ACCESS_UNKNOWN)
-            {
-                if (access == MegaShare::ACCESS_OWNER)
-                {
-                    customMenu.addAction(tr("Get MEGA link"), this, &NodeSelectorTreeView::getMegaLink);
-                }
-
-                if (proxyModel->isNotAProtectedModel() && access >= MegaShare::ACCESS_FULL)
-                {
-                    auto index = proxyModel->mapToSource(selectionModel()->selectedIndexes().first());
-                    auto item = sourceModel->getItemByIndex(index);
-
-                    if(item)
-                    {
-                        auto itemStatus = item->getStatus();
-                        if(itemStatus == NodeSelectorModelItem::Status::NONE && !(item->getNode()->isFile()))
-                        {
-                            customMenu.addAction(tr("Sync"), this, [selectionHandles](){
-                                CreateRemoveSyncsManager::addSync(selectionHandles.first(), true);
-                            });
-                        }
-                        else if(itemStatus == NodeSelectorModelItem::Status::SYNC)
-                        {
-                            customMenu.addAction(tr("Stop syncing"), this, [selectionHandles, this](){
-                                CreateRemoveSyncsManager::removeSync(selectionHandles.first(), this);
-                            });
-                        }
-                    }
-
-                    customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
-                }
-            }
+            return;
         }
     }
-
-    if(!selectionHandles.isEmpty())
+    else
     {
-        //All or none
-        if(proxyModel->isNotAProtectedModel() && sourceModel->areAllNodesEligibleForDeletion(selectionHandles))
+        if (selectionModel()->selectedRows().size() == 1)
         {
-            std::unique_ptr<mega::MegaNode> node(
-                mMegaApi->getNodeByHandle(selectionHandles.first()));
-            if(node && mMegaApi->isInRubbish(node.get()))
+            QList<mega::MegaHandle> selectionHandle{getSelectedNodeHandle()};
+            if (areAllEligibleForRestore(selectionHandle))
             {
-                customMenu.addAction(tr("Permanently delete"),
-                    this,
-                    [this, selectionHandles]() { removeNode(true); });
+                customMenu.addAction(tr("Restore"),
+                                     this,
+                                     [this, selectionHandle]()
+                                     {
+                                         restore(selectionHandle);
+                                     });
+            }
+
+            auto nodeHandle(getSelectedNodeHandle());
+            std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
+            if (node && mMegaApi->isInRubbish(node.get()))
+            {
+                customMenu.addAction(tr("Delete permanently"),
+                                     this,
+                                     [this, selectionHandle]()
+                                     {
+                                         removeNode(selectionHandle, true);
+                                     });
             }
             else
             {
-                customMenu.addAction(tr("Delete"),
-                    this,
-                    [this, selectionHandles]() { removeNode(false); });
+                int access = Utilities::getNodeAccess(getSelectedNodeHandle());
+
+                auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
+                if (proxyModel->isNotAProtectedModel() && access != MegaShare::ACCESS_UNKNOWN)
+                {
+                    if (access == MegaShare::ACCESS_OWNER)
+                    {
+                        customMenu.addAction(tr("Get MEGA link"),
+                                             this,
+                                             &NodeSelectorTreeView::getMegaLink);
+                    }
+
+                    if (access >= MegaShare::ACCESS_FULL)
+                    {
+                        auto sourceModel = proxyModel->getMegaModel();
+                        auto index =
+                            proxyModel->mapToSource(selectionModel()->selectedIndexes().first());
+                        auto item = sourceModel->getItemByIndex(index);
+
+                        if (item)
+                        {
+                            auto itemStatus = item->getStatus();
+                            if (itemStatus == NodeSelectorModelItem::Status::NONE &&
+                                !(item->getNode()->isFile()))
+                            {
+                                customMenu.addAction(tr("Sync"),
+                                                     this,
+                                                     [selectionHandle]()
+                                                     {
+                                                         CreateRemoveSyncsManager::addSync(
+                                                             selectionHandle.first(),
+                                                             true);
+                                                     });
+                            }
+                            else if (itemStatus == NodeSelectorModelItem::Status::SYNC)
+                            {
+                                customMenu.addAction(tr("Unsync"),
+                                                     this,
+                                                     [selectionHandle, this]()
+                                                     {
+                                                         CreateRemoveSyncsManager::removeSync(
+                                                             selectionHandle.first(),
+                                                             this);
+                                                     });
+                            }
+                        }
+
+                        customMenu.addAction(tr("Rename"), this, &NodeSelectorTreeView::renameNode);
+                        customMenu.addAction(tr("Delete"),
+                                             this,
+                                             [this, selectionHandle]()
+                                             {
+                                                 removeNode(selectionHandle, false);
+                                             });
+                    }
+                }
             }
         }
-
-        if(areAllEligibleForRestore(selectionHandles))
+        else if (selectionModel()->selectedRows().size() > 1)
         {
-            customMenu.addAction(
-                tr("Restore"), this, [this, selectionHandles]() { restore(selectionHandles); });
+            auto selectionHandles(getMultiSelectionNodeHandle());
+
+            if (!selectionHandles.isEmpty())
+            {
+                // All or none
+                if (areAllEligibleForDeletion(selectionHandles))
+                {
+                    std::unique_ptr<mega::MegaNode> node(
+                        mMegaApi->getNodeByHandle(selectionHandles.first()));
+                    if (node && mMegaApi->isInRubbish(node.get()))
+                    {
+                        customMenu.addAction(tr("Delete permanently"),
+                                             this,
+                                             [this, selectionHandles]()
+                                             {
+                                                 removeNode(selectionHandles, true);
+                                             });
+                    }
+                    else
+                    {
+                        customMenu.addAction(tr("Delete"),
+                                             this,
+                                             [this, selectionHandles]()
+                                             {
+                                                 removeNode(selectionHandles, false);
+                                             });
+                    }
+                }
+
+                if (areAllEligibleForRestore(selectionHandles))
+                {
+                    customMenu.addAction(tr("Restore"),
+                                         this,
+                                         [this, selectionHandles]()
+                                         {
+                                             restore(selectionHandles);
+                                         });
+                }
+            }
         }
     }
-    
 
     if (!customMenu.actions().isEmpty())
     {
@@ -408,22 +490,70 @@ std::shared_ptr<MegaNode> NodeSelectorTreeView::getDropNode(const QModelIndex& d
     return std::shared_ptr<MegaNode>(mMegaApi->getParentNode(node.get()));
 }
 
+bool NodeSelectorTreeView::areAllEligibleForMove(const QList<MegaHandle>& handles,
+                                                 const QModelIndex& targetIndex) const
+{
+    auto item = NodeSelectorModel::getItemByIndex(targetIndex);
+    if (!item)
+    {
+        return false;
+    }
+
+    auto targetHandle(item->getNode()->getHandle());
+
+    auto movableItems(handles.size());
+    foreach(auto&& nodeHandle, handles)
+    {
+        std::unique_ptr<mega::MegaNode> node(
+            MegaSyncApp->getMegaApi()->getNodeByHandle(nodeHandle));
+        if (node && node->getParentHandle() != targetHandle &&
+            Utilities::getNodeAccess(nodeHandle) >= MegaShare::ACCESS_FULL)
+        {
+            movableItems--;
+        }
+    }
+
+    return movableItems == 0;
+}
+
+bool NodeSelectorTreeView::areAllEligibleForDeletion(const QList<MegaHandle> &handles) const
+{
+    auto removableItems(handles.size());
+    foreach(auto&& nodeHandle, handles)
+    {
+        if (Utilities::getNodeAccess(nodeHandle) >= MegaShare::ACCESS_FULL)
+        {
+            removableItems--;
+        }
+    }
+
+    return removableItems == 0;
+}
+
 bool NodeSelectorTreeView::areAllEligibleForRestore(const QList<MegaHandle> &handles) const
 {
-    auto selectionHandles(handles.isEmpty() ? getMultiSelectionNodeHandle() : handles);
+    auto restorableItems(handles.size());
+    foreach(auto&& nodeHandle, handles)
+    {
+        std::unique_ptr<mega::MegaNode> node(mMegaApi->getNodeByHandle(nodeHandle));
+        if(node && mMegaApi->isInRubbish(node.get()))
+        {
+            std::unique_ptr<mega::MegaNode> parentNode(mMegaApi->getNodeByHandle(node->getParentHandle()));
+            auto previousParentNode = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
 
-    return getSourceModel()->areAllNodesEligibleForRestore(selectionHandles);
+            if(previousParentNode && !mMegaApi->isInRubbish(previousParentNode.get()))
+            {
+                restorableItems--;
+            }
+        }
+    }
+
+    return restorableItems == 0;
 }
 
-NodeSelectorModel* NodeSelectorTreeView::getSourceModel() const
+void NodeSelectorTreeView::removeNode(const QList<MegaHandle> &handles, bool permanently)
 {
-    auto proxyModel = static_cast<NodeSelectorProxyModel*>(model());
-    return proxyModel->getMegaModel();
-}
-
-void NodeSelectorTreeView::removeNode(bool permanently)
-{
-    emit removeNodeClicked(permanently);
+    emit removeNodeClicked(handles, permanently);
 }
 
 void NodeSelectorTreeView::renameNode()

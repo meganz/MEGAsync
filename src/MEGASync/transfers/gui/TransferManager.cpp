@@ -39,6 +39,13 @@ const char* ITS_ON = "itsOn";
 const char* SEARCH_TEXT = "searchText";
 const char* SEARCH_BUTTON_SELECTED = "selected";
 
+namespace
+{
+constexpr const char* STATE_PROPERTY_NAME{"state"};
+const QLatin1String STATE_ALMOST_FULL{"almostfull"};
+const QLatin1String STATE_FULL{"full"};
+}
+
 TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) :
     QDialog(nullptr),
     mUi(new Ui::TransferManager),
@@ -412,6 +419,48 @@ void TransferManager::filterByTab(TransfersWidget::TM_TAB tab)
     }
 }
 
+void TransferManager::setStorageTextState(const QVariant& stateValue, const QString& text)
+{
+    mUi->lStorageOverQuota->setProperty(STATE_PROPERTY_NAME, stateValue);
+    mUi->lStorageOverQuota->setText(text);
+    mUi->lStorageOverQuota->show();
+    mUi->lStorageOverQuota->style()->unpolish(mUi->lStorageOverQuota);
+    mUi->lStorageOverQuota->style()->polish(mUi->lStorageOverQuota);
+    mUi->lStorageOverQuota->update();
+}
+
+void TransferManager::updateStorageOQText()
+{
+    switch (mStorageQuotaState)
+    {
+        case MegaApi::STORAGE_STATE_ORANGE:
+        {
+            setStorageTextState(STATE_ALMOST_FULL,
+                                tr("Storage almost full. Upgrade now before your storage becomes "
+                                   "full and your uploads, syncs and backups stop."));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_RED:
+        {
+            setStorageTextState(
+                STATE_FULL,
+                tr("Storage full. Uploads are disabled and sync and backups are paused."));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
+        default:
+        {
+            mUi->lStorageOverQuota->hide();
+            break;
+        }
+    }
+}
+
 void TransferManager::on_tCompleted_clicked()
 {
     if (mUi->wTransfers->getCurrentTab() != TransfersWidget::COMPLETED_TAB)
@@ -531,7 +580,7 @@ void TransferManager::refreshStateStats()
 {
     QLabel* countLabel (nullptr);
     QString countLabelText;
-    long long processedNumber (0LL);
+    uint processedNumber (0);
 
     // First check Finished states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB];
@@ -558,7 +607,7 @@ void TransferManager::refreshStateStats()
     // The check Failed states -----------------------------------------------------------------
     countLabel = mNumberLabelsGroup[TransfersWidget::FAILED_TAB];
 
-    long long failedNumber(mTransfersCount.totalFailedTransfers());
+    auto failedNumber(mTransfersCount.totalFailedTransfers());
     countLabelText = failedNumber > 0 ? QString::number(failedNumber) : QString();
 
     // Update if the value changed
@@ -620,7 +669,7 @@ void TransferManager::refreshStateStats()
         else if(failedNumber != 0 || !MegaSyncApp->getStalledIssuesModel()->isEmpty())
         {
             leftFooterWidget = mUi->pSomeIssues;
-            mUi->bSomeIssues->setText(tr("Issue found", "", failedNumber));
+            mUi->bSomeIssues->setText(tr("Issue found", "", static_cast<int>(failedNumber)));
         }
         else if(processedNumber != 0)
         {
@@ -730,31 +779,11 @@ void TransferManager::onStorageStateChanged(int storageState)
 {
     mStorageQuotaState = storageState;
 
-    switch (mStorageQuotaState)
-    {
-        case MegaApi::STORAGE_STATE_PAYWALL:
-        case MegaApi::STORAGE_STATE_RED:
-        {
-            mUi->tSeePlans->show();
-            mUi->lStorageOverQuota->show();
-            break;
-        }
-        case MegaApi::STORAGE_STATE_GREEN:
-        case MegaApi::STORAGE_STATE_ORANGE:
-        case MegaApi::STORAGE_STATE_UNKNOWN:
-        default:
-        {
-            mUi->lStorageOverQuota->hide();
-            QuotaState tQuotaState (MegaSyncApp->getTransferQuotaState());
-            mUi->tSeePlans->setVisible(tQuotaState == QuotaState::FULL);
+    updateStorageOQText();
 
-            break;
-        }
-    }
-
-    //TransferQuota is not visible when storage state error is set
-    //This is why we need to check the current transfer quota state
-    //in case we need to show the transferquota errors again
+    // TransferQuota is not visible when storage state error is set
+    // This is why we need to check the current transfer quota state
+    // in case we need to show the transferquota errors again
     onTransferQuotaStateChanged(mTransferQuotaState);
 
     checkPauseButtonVisibilityIfPossible();
@@ -796,7 +825,6 @@ void TransferManager::onTransferQuotaStateChanged(QuotaState transferQuotaState)
         case QuotaState::FULL:
         case QuotaState::OVERQUOTA:
         {
-            mUi->tSeePlans->show();
             showTransferQuotaBanner(mStorageQuotaState != MegaApi::STORAGE_STATE_PAYWALL
                                                 && mStorageQuotaState != MegaApi::STORAGE_STATE_RED);
             break;
@@ -857,15 +885,15 @@ void TransferManager::refreshSpeed()
     mUi->wUpSpeed->setVisible(mTransfersCount.pendingUploads);
     if(mTransfersCount.pendingUploads)
     {
-        auto upSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentUploadSpeed()));
-        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1Literal("/s"));
+        auto upSpeed (mMegaApi->getCurrentUploadSpeed());
+        mUi->lUpSpeed->setText(Utilities::getSizeString(upSpeed) + QLatin1String("/s"));
     }
 
     mUi->wDownSpeed->setVisible(mTransfersCount.pendingDownloads);
     if(mTransfersCount.pendingDownloads)
     {
-        auto dlSpeed (static_cast<unsigned long long>(mMegaApi->getCurrentDownloadSpeed()));
-        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1Literal("/s"));
+        auto dlSpeed (mMegaApi->getCurrentDownloadSpeed());
+        mUi->lDownSpeed->setText(Utilities::getSizeString(dlSpeed) + QLatin1String("/s"));
     }
 }
 
@@ -930,11 +958,6 @@ void TransferManager::on_tActionButton_clicked()
         emit retryAllTransfers();
         checkActionAndMediaVisibility();
     }
-}
-
-void TransferManager::on_tSeePlans_clicked()
-{
-    Utilities::upgradeClicked();
 }
 
 void TransferManager::on_bPause_toggled()
@@ -1205,7 +1228,7 @@ void TransferManager::toggleTab(TransfersWidget::TM_TAB newTab)
                 || previousTab == TransfersWidget::FAILED_TAB
                 || (previousTab > TransfersWidget::TYPES_TAB_BASE && previousTab < TransfersWidget::TYPES_LAST))
         {
-            long long transfers(0);
+            uint transfers(0);
 
             if(previousTab == TransfersWidget::COMPLETED_TAB)
             {
@@ -1301,9 +1324,8 @@ void TransferManager::checkActionAndMediaVisibility()
     }
 
     // Hide Media groupbox if no transfers (active or finished)
-    if (mUi->wTransfers->getCurrentTab() >= TransfersWidget::TYPES_TAB_BASE
-            || ((allTransfers +
-                completedTransfers + failedTransfers) > 0))
+    if (mUi->wTransfers->getCurrentTab() >= TransfersWidget::TYPES_TAB_BASE ||
+        ((allTransfers + completedTransfers + failedTransfers) > 0))
     {
         mUi->wMediaType->show();
     }
@@ -1387,7 +1409,7 @@ bool TransferManager::eventFilter(QObject *obj, QEvent *event)
             {
                 QPainter painter(widget);
                 QStyleOptionFocusRect option;
-                if(option.state |= QStyle::State_KeyboardFocusChange)
+                if((option.state |= QStyle::State_KeyboardFocusChange))
                 {
                     option.init(widget);
                     option.backgroundColor = palette().color(QPalette::Window);
@@ -1434,6 +1456,7 @@ void TransferManager::changeEvent(QEvent *event)
         updateCurrentSearchText();
         updateCurrentOverQuotaLink();
         onUpdatePauseState(mUi->wTransfers->getProxyModel()->getPausedTransfers());
+        updateStorageOQText();
     }
     QDialog::changeEvent(event);
 }

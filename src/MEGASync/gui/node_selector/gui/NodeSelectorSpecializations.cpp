@@ -274,7 +274,7 @@ void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
     mIncomingSharesWidget->enableDragAndDrop(true);
 }
 
-void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint8_t id)
+void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
 {
     if(id == CloudDriveType::Upload)
     {

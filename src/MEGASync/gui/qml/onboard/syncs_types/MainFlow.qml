@@ -26,8 +26,9 @@ Rectangle {
 
     property NavigationInfo navInfo: NavigationInfo {}
 
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     state: root.deviceName
+
     states: [
         State {
             name: root.deviceName
@@ -143,10 +144,11 @@ Rectangle {
                 topMargin: Constants.defaultWindowMargin
                 bottomMargin: Constants.defaultWindowMargin
             }
+
             width: root.lineWidth
-            height: root.contentHeight
             radius: root.lineWidth
-            color: colorStyle.borderDisabled
+            height: root.contentHeight
+            color: ColorTheme.borderDisabled
         }
     }
 

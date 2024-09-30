@@ -18,8 +18,19 @@ class FileFolderAttributes : public QObject
 {
     Q_OBJECT
 
-public:
+protected:
+    enum AttributeTypes
+    {
+        SIZE = 0,
+        MODIFIED_TIME,
+        CREATED_TIME,
+        CRC,
+        LOCAL_ATTRIBUTES = 10,
+        REMOTE_ATTRIBUTES = 20,
+        LAST
+    };
 
+public:
     enum Status
     {
         NOT_READY = -1,
@@ -30,26 +41,13 @@ public:
     virtual ~FileFolderAttributes();
 
     virtual void initAllAttributes();
+    void setValueUpdatesDisable();
+    bool areValueUpdatesDisabled() const;
 
-    template <typename AttributeType, typename VariableType, typename Func1>
-    void requestCustomValue(AttributeType* sender, QObject* caller,std::function<void(VariableType)> func, Func1 signal, int type)
-    {
-        if(auto context = requestReady(type, caller))
-        {
-            connect(sender, signal, context, [this, func, type](VariableType value){
-                if(func)
-                {
-                    func(value);
-                }
-                requestFinish(type);
-            });
-        }
-    }
-
-    virtual void requestSize(QObject* caller,std::function<void(qint64)> func);
-    virtual void requestModifiedTime(QObject *caller, std::function<void(const QDateTime&)> func);
-    virtual void requestCreatedTime(QObject *caller, std::function<void(const QDateTime&)> func);
-    virtual void requestCRC(QObject* caller,std::function<void(const QString&)> func);
+    virtual void requestSize(QObject*, std::function<void(qint64)>) = 0;
+    virtual void requestModifiedTime(QObject*, std::function<void(const QDateTime&)>) = 0;
+    virtual void requestCreatedTime(QObject*, std::function<void(const QDateTime&)>) = 0;
+    virtual void requestCRC(QObject*, std::function<void(const QString&)>) = 0;
 
     void cancel();
 
@@ -60,53 +58,70 @@ public:
     }
 
     int64_t size() const;
-    int64_t modifiedTime() const;
-    int64_t createdTime() const;
-    const QString& fingerprint() const;
+    int64_t modifiedTimeInSecs() const;
+    QDateTime modifiedTime() const;
+    int64_t createdTimeInSecs() const;
+    QDateTime createdTime() const;
+    QString getCRC() const;
 
 signals:
-    void sizeReady(qint64);
-    void modifiedTimeReady(const QDateTime&);
-    void createdTimeReady(const QDateTime&);
-    void CRCReady(const QString&);
-
+    void attributeReady(int type, bool isPlaceHolder = false);
     void attributesChanged();
 
 protected:
-    enum AttributeTypes
-    {
-        Size = 0,
-        ModifiedTime,
-        CreatedTime,
-        CRC,
-        FileCount,
-        LocalAttributes = 10,
-        RemoteAttributes = 20,
-        Last
-    };
-
-    bool mCancelled;
-
-    qint64 mSize;
-    QDateTime mModifiedTime;
-    QDateTime mCreatedTime;
-    QString mFp;
+    virtual bool attributeNeedsUpdate(QObject* caller, int type);
+    QObject* requestReady(int type, QObject* caller);
+    void requestFinish(int type);
 
     template <class ValueType>
-    void setValue(const ValueType& newValue, ValueType& member)
+    void initValue(int type, ValueType value)
     {
-        if(member != newValue)
+        if(!mValues.contains(type))
         {
-            member = newValue;
-            emit attributesChanged();
+            mValues.insert(type, value);
         }
     }
 
-    bool attributeNeedsUpdate(int type);
-    QObject* requestReady(int type, QObject* caller);
-    void requestFinish(int type);
+    template <class ValueType>
+    bool requestValue(QObject* caller, int type, std::function<void(const ValueType&)> func)
+    {
+        if (attributeNeedsUpdate(caller, type))
+        {
+            if (auto context = requestReady(type, caller))
+            {
+                connect(this,
+                    &FileFolderAttributes::attributeReady,
+                    context,
+                    [this, type, func](int signalType, bool isPlaceHolder) {
+                        if (signalType == type && func)
+                        {
+                            auto value(mValues.value(type).value<ValueType>());
+                            func(value);
+
+                            if (!isPlaceHolder)
+                            {
+                                requestFinish(type);
+                            }
+                        }
+                    });
+            }
+            return true;
+        }
+        else if (func)
+        {
+            // send the current value as we don´t need to update it (it was updated at most 2
+            // seconds ago)
+            func(mValues.value(type).value<ValueType>());
+        }
+
+        return false;
+    }
+
+    bool mCancelled;
     QMap<int, QPointer<QObject>> mRequests;
     QMap<int, int64_t> mRequestTimestamps;
+    QMap<int, QVariant> mValues;
+    bool mValueIsConstant;
 };
 
 class LocalFileFolderAttributes : public FileFolderAttributes
@@ -117,10 +132,10 @@ public:
     LocalFileFolderAttributes(const QString& path, QObject* parent);
     ~LocalFileFolderAttributes() override = default;
 
-    void requestSize(QObject* caller,std::function<void(qint64)> func) override;
-    void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
-    void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
-    void requestCRC(QObject* caller,std::function<void(const QString&)> func) override;
+    void requestSize(QObject* caller, std::function<void(qint64)> func) override;
+    void requestModifiedTime(QObject* caller, std::function<void(const QDateTime&)> func) override;
+    void requestCreatedTime(QObject* caller, std::function<void(const QDateTime&)> func) override;
+    void requestCRC(QObject* caller, std::function<void(const QString&)> func) override;
 
     void setPath(const QString &newPath);
 
@@ -129,13 +144,14 @@ private slots:
     void onSizeCalculated();
     
 private:
+    bool attributeNeedsUpdate(QObject* caller, int type) override;
     QDateTime calculateModifiedTime();
     qint64 calculateSize();
 
     QFutureWatcher<qint64> mFolderSizeFuture;
     QFutureWatcher<QDateTime> mModifiedTimeWatcher;
     QString mPath;
-    bool mIsEmpty;
+    bool mDirectoryIsEmpty;
 };
 
 class RemoteFileFolderAttributes : public FileFolderAttributes
@@ -150,24 +166,24 @@ public:
 
     void initAllAttributes() override;
 
-    void requestSize(QObject* caller,std::function<void(qint64)> func) override;
+    void requestSize(QObject* caller, std::function<void(qint64)> func) override;
     void requestFileCount(QObject* caller, std::function<void (int)> func);
     void requestModifiedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCreatedTime(QObject* caller,std::function<void(const QDateTime&)> func) override;
     void requestCRC(QObject* caller,std::function<void(const QString&)> func) override;
-    void requestUser(QObject* caller, std::function<void(QString, bool)> func);
-    void requestUser(QObject* caller, mega::MegaHandle currentUser, std::function<void(QString, bool)> func);
-    void requestVersions(QObject*, std::function<void(int)> func);
+
+    bool isCurrentUser() const;
+    void requestUser(QObject* caller, std::function<void(QString)> func);
+    void requestVersions(QObject*caller, std::function<void(int)> func);
 
     int versionCount();
     int fileCount();
 
     void setHandle(mega::MegaHandle newHandle);
 
-signals:
-    void fileCountReady(int);
-
 private:
+    bool attributeNeedsUpdate(QObject* caller, int type) override;
+
     enum class Version
     {
         First,
@@ -180,15 +196,15 @@ private:
 
     enum RemoteAttributeTypes
     {
-        User = AttributeTypes::RemoteAttributes,
-        Versions
+        USER = AttributeTypes::REMOTE_ATTRIBUTES,
+        FILE_COUNT,
+        VERSIONS
     };
 
     QString mUserEmail;
     mega::MegaHandle mOwner = mega::INVALID_HANDLE;
+    bool mIsCurrentUser = false;
     std::shared_ptr<const UserAttributes::FullName> mUserFullName;
-    int mVersionCount;
-    int mFileCount;
 
     bool mWaitForAttributes;
 

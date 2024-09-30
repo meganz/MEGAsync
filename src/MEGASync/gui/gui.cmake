@@ -10,7 +10,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/InfoDialog.h
     gui/MegaDelegateHoverManager.h
     gui/MegaNodeNames.h
-    gui/MegaUserAlertExt.h
     gui/NotificationsSettings.h
     gui/OverQuotaDialog.h
     gui/ScanningWidget.h
@@ -42,12 +41,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/QRWidget.h
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
-    gui/AlertItem.h
-    gui/QAlertsModel.h
-    gui/MegaAlertDelegate.h
-    gui/QFilterAlertsModel.h
-    gui/FilterAlertWidget.h
-    gui/AlertFilterType.h
     gui/BugReportDialog.h
     gui/VerifyLockMessage.h
     gui/ViewLoadingScene.h
@@ -60,6 +53,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/ThemeManager.h
+    gui/AccountTypeWidget.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -75,12 +70,12 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/node_selector/gui/NodeSelectorLoadingDelegate.h
     gui/node_selector/gui/SearchLineEdit.h
     gui/node_selector/gui/NodeSelectorSpecializations.h
-    gui/qml/ColorTheme.h
     gui/qml/QmlClipboard.h
     gui/qml/QmlDialog.h
     gui/qml/QmlDialogWrapper.h
     gui/qml/QmlDialogManager.h
     gui/qml/QmlManager.h
+    gui/qml/QmlTheme.h
     gui/qml/ApiEnums.h
     gui/qml/StandardIconProvider.h
     gui/qml/ChooseFolder.h
@@ -94,8 +89,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/onboarding/OnboardingQmlDialog.h
     gui/onboarding/GuestContent.h
     gui/SyncExclusions/ExclusionRulesModel.h
-    gui/SyncExclusions/ExclusionsQmlDialog.h
     gui/SyncExclusions/SyncExclusions.h
+    gui/tokenizer/TokenParserWidgetManager.h
+    gui/tokenizer/IconTokenizer.h
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
@@ -104,6 +100,25 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsComponent.h
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
+    gui/user_messages/UserMessageCacheManager.h
+    gui/user_messages/AlertFilterType.h
+    gui/user_messages/AlertItem.h
+    gui/user_messages/FilterAlertWidget.h
+    gui/user_messages/NotificationItem.h
+    gui/user_messages/UserAlert.h
+    gui/user_messages/UserMessage.h
+    gui/user_messages/UserMessageDelegate.h
+    gui/user_messages/UserMessageModel.h
+    gui/user_messages/UserMessageProxyModel.h
+    gui/user_messages/UserNotification.h
+    gui/user_messages/UserMessageWidget.h
+    gui/user_messages/NotificationExpirationTimer.h
+    gui/DeviceCentre/DeviceCentre.h
+    gui/DeviceCentre/DeviceModel.h
+    gui/DeviceCentre/DeviceData.h
+    gui/DeviceCentre/SyncModel.h
+    gui/DeviceCentre/QmlSyncData.h
+    gui/DeviceCentre/SyncStatus.h
 )
 
 set(DESKTOP_APP_GUI_SOURCES
@@ -116,10 +131,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/EventHelper.cpp
     gui/InfoDialog.cpp
     gui/MegaDelegateHoverManager.cpp
-    gui/MegaUserAlertExt.cpp
-    gui/NotificationsSettings.cpp
     gui/OverQuotaDialog.cpp
     gui/ScanningWidget.cpp
+    gui/NotificationsSettings.cpp
     gui/QtPositioningBugFixer.cpp
     gui/PasswordLineEdit.cpp
     gui/UploadToMegaDialog.cpp
@@ -147,12 +161,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/Login2FA.cpp
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
-    gui/AlertItem.cpp
-    gui/QAlertsModel.cpp
-    gui/MegaAlertDelegate.cpp
-    gui/QFilterAlertsModel.cpp
-    gui/FilterAlertWidget.cpp
-    gui/AlertFilterType.cpp
     gui/BugReportDialog.cpp
     gui/VerifyLockMessage.cpp
     gui/MegaInfoMessage.cpp
@@ -165,6 +173,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/ThemeManager.cpp
+    gui/AccountTypeWidget.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -180,12 +190,12 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/node_selector/gui/NodeSelectorLoadingDelegate.cpp
     gui/node_selector/gui/SearchLineEdit.cpp
     gui/node_selector/gui/NodeSelectorSpecializations.cpp
-    gui/qml/ColorTheme.cpp
     gui/qml/QmlClipboard.cpp
     gui/qml/QmlDialog.cpp
     gui/qml/QmlDialogWrapper.cpp
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp
+    gui/qml/QmlTheme.cpp
     gui/qml/StandardIconProvider.cpp
     gui/qml/ChooseFolder.cpp
     gui/qml/ChooseFile.cpp
@@ -198,8 +208,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/onboarding/OnboardingQmlDialog.cpp
     gui/onboarding/GuestContent.cpp
     gui/SyncExclusions/ExclusionRulesModel.cpp
-    gui/SyncExclusions/ExclusionsQmlDialog.cpp
     gui/SyncExclusions/SyncExclusions.cpp
+    gui/tokenizer/TokenParserWidgetManager.cpp
+    gui/tokenizer/IconTokenizer.cpp
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
@@ -208,6 +219,21 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsComponent.cpp
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
+    gui/user_messages/UserMessageCacheManager.cpp
+    gui/user_messages/AlertFilterType.cpp
+    gui/user_messages/AlertItem.cpp
+    gui/user_messages/FilterAlertWidget.cpp
+    gui/user_messages/NotificationItem.cpp
+    gui/user_messages/UserAlert.cpp
+    gui/user_messages/UserMessageDelegate.cpp
+    gui/user_messages/UserMessageModel.cpp
+    gui/user_messages/UserMessageProxyModel.cpp
+    gui/user_messages/UserNotification.cpp
+    gui/user_messages/NotificationExpirationTimer.cpp
+    gui/DeviceCentre/DeviceCentre.cpp
+    gui/DeviceCentre/DeviceModel.cpp
+    gui/DeviceCentre/SyncModel.cpp
+    gui/DeviceCentre/QmlSyncData.cpp
 )
 
 # UI files additions
@@ -252,6 +278,8 @@ target_sources_conditional(MEGAsync
     gui/win/NotificationsSettings.ui
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
+    gui/win/NotificationItem.ui
+    gui/win/AccountTypeWidget.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/win/NodeSelector.ui
@@ -300,11 +328,13 @@ target_sources_conditional(MEGAsync
    gui/macx/NotificationsSettings.ui
    gui/macx/LowDiskSpaceDialog.ui
    gui/macx/ViewLoadingScene.ui
+   gui/macx/NotificationItem.ui
    gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
    gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
    gui/node_selector/gui/macx/NodeSelector.ui
    gui/node_selector/gui/macx/SearchLineEdit.ui
    gui/macx/LockedPopOver.ui
+   gui/macx/AccountTypeWidget.ui
 )
 
 
@@ -351,12 +381,13 @@ target_sources_conditional(MEGAsync
     gui/linux/LowDiskSpaceDialog.ui
     gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
+    gui/linux/NotificationItem.ui
+    gui/linux/AccountTypeWidget.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui
     gui/node_selector/gui/linux/SearchLineEdit.ui
 )
-
 
 # Resources and platform-specific additions
 target_sources_conditional(MEGAsync
@@ -373,13 +404,11 @@ target_sources_conditional(MEGAsync
    PRIVATE
    gui/CocoaHelpButton.mm
    gui/CocoaSwitchButton.mm
-   gui/MegaSystemTrayIcon.mm
    gui/QMacSpinningProgressIndicator.mm
    gui/QSegmentedControl.mm
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
    gui/CocoaSwitchButton.h
-   gui/MegaSystemTrayIcon.h
    gui/QSegmentedControl.h
    gui/images/Images.xcassets
    gui/macx/LockedPopOver.ui
@@ -481,6 +510,8 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/syncs
+    ${CMAKE_CURRENT_LIST_DIR}/user_messages
+    ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

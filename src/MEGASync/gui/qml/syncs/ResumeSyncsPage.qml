@@ -7,7 +7,7 @@ import Syncs 1.0
 ResumeSyncsPageForm {
     id: root
 
-    image.source: Images.guest
+    image.source: Images.ok
     image.sourceSize: Qt.size(128, 128)
 
     footerButtons {

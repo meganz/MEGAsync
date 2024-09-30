@@ -93,19 +93,80 @@ void LinkProcessor::continueOrFinishLinkInfoReq()
     }
 }
 
-void LinkProcessor::createInvalidLinkObject(int index, int error)
+void LinkProcessor::createInvalidLinkObject(int index, int error, const QString& name)
 {
     if (!isValidIndex(mLinkObjects, index)) { return; }
 
     mLinkObjects[index] = std::make_shared<LinkInvalid>();
 
-    if (error == MegaError::API_ETOOMANY) { return; }
+    QString newName = (name.isEmpty()) ?
+                          (QCoreApplication::translate(
+                              "MegaError",
+                              MegaError::getErrorString(error, MegaError::API_EC_IMPORT))) :
+                          name;
 
-    mLinkObjects[index]->setName(QCoreApplication::translate("MegaError",
-                                                             MegaError::getErrorString(error, MegaError::API_EC_IMPORT)));
+    mLinkObjects[index]->setName(newName);
     mLinkObjects[index]->setLinkStatus((error == MegaError::API_ETEMPUNAVAIL) ?
                                            linkStatus::WARNING :
                                            linkStatus::FAILED);
+}
+
+QString LinkProcessor::getReasonForExpiredLink(MegaRequest* request, MegaError* e)
+{
+    int error = e->getErrorCode();
+    long long userStatus = e->getUserStatus();
+    long long linkStatus = e->getLinkStatus();
+
+    // First query the User Status for anomalies
+    switch (userStatus)
+    {
+        case MegaError::UserErrorCode::USER_COPYRIGHT_SUSPENSION:
+            return tr("Terms of Service breach");
+
+        case MegaError::UserErrorCode::USER_ETD_SUSPENSION:
+            return tr("Link owner terminated");
+
+        case MegaError::UserErrorCode::USER_ETD_UNKNOWN:
+        default:
+            break;
+    }
+
+    // Then query the Link Status next
+    switch (linkStatus)
+    {
+        case MegaError::LinkErrorCode::LINK_DELETED_DOWN:
+            return tr("This link has been deleted");
+
+        case MegaError::LinkErrorCode::LINK_DOWN_ETD:
+            return tr("Link owner terminated");
+
+        case MegaError::LinkErrorCode::LINK_UNKNOWN:
+        case MegaError::LinkErrorCode::LINK_UNDELETED:
+        default:
+            break;
+    }
+
+    // Finally, query the Error Code
+    switch (error)
+    {
+        case MegaError::API_EEXPIRED:
+        {
+            return tr("This link has expired");
+        }
+
+        case MegaError::API_ENOENT:
+        {
+            return tr("This link has been deleted");
+        }
+
+        case MegaError::API_EBLOCKED:
+        {
+            return tr("Copyright violation");
+        }
+
+        default:
+            return tr("This link is invalid");
+    }
 }
 
 void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
@@ -121,7 +182,7 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
         if (error != MegaError::API_OK)
         {
             // Invalid Link
-            createInvalidLinkObject(mCurrentIndex, error);
+            createInvalidLinkObject(mCurrentIndex, error, getReasonForExpiredLink(request, e));
         }
         else    // API_OK
         {
@@ -130,7 +191,7 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
             if (!node)
             {
                 // Invalid Link
-                createInvalidLinkObject(mCurrentIndex, error);
+                createInvalidLinkObject(mCurrentIndex, error, getReasonForExpiredLink(request, e));
             }
             else    // Valid Link
             {
@@ -175,7 +236,7 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
         }
         else
         {
-            createInvalidLinkObject(mCurrentIndex, error);
+            createInvalidLinkObject(mCurrentIndex, error, getReasonForExpiredLink(request, e));
             mCurrentIndex++;
             sendLinkInfoAvailableSignal(mCurrentIndex - 1);
             continueOrFinishLinkInfoReq();
@@ -232,7 +293,7 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
         else
         {
             // Invalid Link
-            createInvalidLinkObject(mCurrentIndex, error);
+            createInvalidLinkObject(mCurrentIndex, error, getReasonForExpiredLink(request, e));
         }
 
         mCurrentIndex++;

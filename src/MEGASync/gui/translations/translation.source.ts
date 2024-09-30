@@ -656,6 +656,16 @@
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
         <translation>Wait until the current upload is completed.</translation>
     </message>
+    <message>
+        <source>You must wait 10 minutes before submitting another issue</source>
+        <translatorcomment>Warning message title shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation>You must wait 10 minutes before submitting another issue</translation>
+    </message>
+    <message>
+        <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
+        <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
+        <translation>Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+    </message>
 </context>
 <context>
     <name>CancelConfirmWidget</name>
@@ -721,7 +731,7 @@
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation>Privacy Policy</translation>
+        <translation>Privacy and Data Policy</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -902,9 +912,9 @@
 <context>
     <name>CloudNodeIsBlockedHeader</name>
     <message>
-        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA&apos;s Terms of Service[/A].</source>
+        <source>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</source>
         <translatorcomment>Title for the header widget sync stall that occurs when a file is blocked by ToS infringement. %1 is the file name. [A] is for links.SAT-1209</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The file %1 is unavailable because it was reported to contain content in breach of [A]MEGA’s Terms of Service[/A].</translation>
     </message>
 </context>
 <context>
@@ -2042,12 +2052,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Detected special link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Detected special link: [B]%1[/B]</translation>
     </message>
     <message>
         <source>Detected hard link: [B]%1[/B]</source>
         <translatorcomment>Label descriping a sync stall is happening because the file is a sym link and cannot be synced.[B] is for bold. %1 is the file name. SAT-1229</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Detected hard link: [B]%1[/B]</translation>
     </message>
 </context>
 <context>
@@ -2145,11 +2155,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings for all platforms.</translatorcomment>
         <translation>Settings</translation>
-    </message>
-    <message>
-        <source>Upgrade to PRO</source>
-        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Upgrade account</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -2444,6 +2449,39 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Install just for me</translation>
+    </message>
+</context>
+<context>
+    <name>LinkProcessor</name>
+    <message>
+        <source>Terms of Service breach</source>
+        <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This link has expired</source>
+        <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link owner terminated</source>
+        <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This link has been deleted</source>
+        <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copyright violation</source>
+        <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This link is invalid</source>
+        <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2882,7 +2920,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Enter the code generated by your authentication app</translation>
+        <translation>Enter the code generated by your authenticator app</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2943,7 +2981,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>You have been logged out on this computer from another location</source>
         <translatorcomment>Error message indicating that the loggin session has been clossed from another computer. SNC-4122</translatorcomment>
-        <translation>You have been logged out on this computer from another location</translation>
+        <translation>You’ve been logged out of this device from another location</translation>
     </message>
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
@@ -3575,12 +3613,12 @@ Check your email inbox for more information on how to file a counter-notice.</tr
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Your account was terminated due to a breach of MEGA’s Terms of Service.
-You will not be able to regain access to your stored data or be authorised to register a new MEGA account.</translation>
+You will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.</translation>
     </message>
     <message>
         <source>File removed as it violated our Terms of Service</source>
         <translatorcomment>Error triggered by SDK when a file is not available because of TOS violation. SNC-2750; SNC-3327</translatorcomment>
-        <translation>Violated Terms of Service.</translation>
+        <translation>Copyright violation</translation>
     </message>
     <message>
         <source>Your account has expired</source>
@@ -3861,12 +3899,12 @@ You will not be able to regain access to your stored data or be authorised to re
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync&apos;s root FSID changed meaning it is a different folder, and we can&apos;t identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
+        <translation>Problem syncing or backing up this folder because of changes to the local folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
     </message>
     <message>
         <source>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</source>
         <translatorcomment>SDK error:On MAC in particular, the FSID of a file in an exFAT drive can and does change spontaneously and frequently. SAT-815</translatorcomment>
-        <translation>Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in Settings, or contact Support.</translation>
+        <translation>Syncing of exFAT, FAT32, FUSE and LIFS file systems is not supported by MEGA on macOS.</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -4216,19 +4254,6 @@ Refresh the view.</translation>
     </message>
 </context>
 <context>
-    <name>NameConflictedStalledIssue</name>
-    <message>
-        <source>Unable to rename the file in MEGA</source>
-        <translatorcomment>Tooltip error shown on the local name conflict item when the MEGA item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to rename the local file</source>
-        <translatorcomment>Tooltip error shown on the MEGA name conflict item when the local item failed when it was renamed.SAT-1249</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NameConflictedStalledIssue::CloudConflictedNames</name>
     <message>
         <source>Unable to merge this folder.</source>
@@ -4295,21 +4320,6 @@ This may be due to syncing to case insensitive local filesystems, or the effects
 This may be due to syncing to case insensitive local filesystems, or the effects of escaped characters.</source>
         <translatorcomment>Title description for the header widget in a name conflict sync stall.SNC-2565</translatorcomment>
         <translation>There are multiple items with the same name on one side of your sync that would all become the same single item on the other side of your sync</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button to discard fixing the stalled issue.SNC-2565</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button in the dialog to apply the fix for the sync stall.FM-1615</translatorcomment>
-        <translation>Apply</translation>
-    </message>
-    <message>
-        <source>Apply to all</source>
-        <translatorcomment>Checkbox text to apply the action to all the following conflicts. %1 is the number of conflicts.FM-1615</translatorcomment>
-        <translation>Apply to all</translation>
     </message>
     <message>
         <source>Are you sure you want to solve the issue?</source>
@@ -4515,14 +4525,41 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Error removing items</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The items couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Messagebox title when removing multiple files and folders has failed. SAT-426</translatorcomment>
+        <translation>Error removing items</translation>
     </message>
     <message>
         <source>Error removing files</source>
+        <translatorcomment>Messagebox title when removing multiple files has failed. SAT-426</translatorcomment>
+        <translation>Error removing files</translation>
+    </message>
+    <message>
+        <source>Error removing folders</source>
+        <translatorcomment>Messagebox title when removing multiple folders has failed. SAT-426</translatorcomment>
+        <translation>Error removing folders</translation>
+    </message>
+    <message>
+        <source>Error removing file</source>
+        <translatorcomment>Messagebox title when removing a single file has failed. SAT-426</translatorcomment>
+        <translation>Error removing file</translation>
+    </message>
+    <message>
+        <source>Error removing folder</source>
+        <translatorcomment>Messagebox title when removing a single folder has failed. SAT-426</translatorcomment>
+        <translation>Error removing folder</translation>
+    </message>
+    <message>
+        <source>The file %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single file has failed. %1 is the file name. SAT-426</translatorcomment>
+        <translation>The file %1 couldn’t be removed. Try again later.</translation>
+    </message>
+    <message>
+        <source>The folder %1 couldn’t be removed. Try again later</source>
+        <translatorcomment>Messagebox body when removing a single folder has failed. %1 is the folder name. SAT-426</translatorcomment>
+        <translation>The folder %1 couldn’t be removed. Try again later.</translation>
+    </message>
+    <message>
+        <source>The items couldn´t be removed. Try again later</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4530,27 +4567,7 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Error removing folders</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The folders couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error removing file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The file %1 couldn´t be removed. Try again later</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error removing folder</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The folder %1 couldn´t be removed. Try again later</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4576,16 +4593,20 @@ Enter a different name.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Delete permanently</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Sync</source>
         <translation type="unfinished">Sync</translation>
     </message>
     <message>
-        <source>Stop syncing</source>
+        <source>Unsync</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Permanently delete</source>
-        <translation type="unfinished"></translation>
+        <source>Move</source>
+        <translation type="unfinished">Move</translation>
     </message>
 </context>
 <context>
@@ -4632,29 +4653,41 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Informative text about the potential issues of removing the nodes. CON-334</translatorcomment>
+        <translation>Any shared files or folders will no longer be accessible to the people you shared them with. You can still access these items in the Rubbish bin, restore, and share them.</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Messagebox button to move nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>Move</translation>
     </message>
     <message>
-        <source>Don´t move</source>
-        <translation type="unfinished"></translation>
+        <source>Don’t move</source>
+        <translatorcomment>Messagebox button to cancel moving nodes to the rubbish bin. CON-334</translatorcomment>
+        <translation>Don’t move</translation>
     </message>
     <message>
-        <source>Move &quot;%1&quot; to Rubbish bin?</source>
+        <source>Empty Rubbish bin</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <source>Move %n items to Rubbish bin?</source>
+        <source>You are about to permanently remove %n file.
+Would you like to proceed?</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
     </message>
     <message>
-        <source>Empty Rubbish bin</source>
+        <source>You cannot undo this action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete &quot;%1&quot;?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure that you want to delete %1 items?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4664,6 +4697,61 @@ Enter a different name.</translation>
         <source>Searching:</source>
         <translatorcomment>Label indicating the current search, searched text will be following this label.</translatorcomment>
         <translation>Searching:</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationItem</name>
+    <message>
+        <source>LIMITED TIME OFFER</source>
+        <translatorcomment>Label title for limited time offer category of a notification. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>LIMITED TIME OFFER</translation>
+    </message>
+    <message>
+        <source>PROMO</source>
+        <translatorcomment>Label that indicates there is a promotional notification available. The translation should stay in upper case. CON-868</translatorcomment>
+        <translation>PROMO</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n day</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation>
+            <numerusform>Offer expires in %n day</numerusform>
+            <numerusform>Offer expires in %n days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n hour</source>
+        <translatorcomment>Text indicating that the offer expires in the %n days. The placeholder %n shall be replaced by the number of days. CON-868</translatorcomment>
+        <translation>
+            <numerusform>Offer expires in %n hour</numerusform>
+            <numerusform>Offer expires in %n hours</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Offer expires in %1 m %2 s</source>
+        <translatorcomment>Text indicating that the offer expires in the %1 minutes and %2 seconds. The placeholder %1 shall be replaced by the number of minutes and %2 by the number of seconds. CON-868</translatorcomment>
+        <translation>Offer expires in %1&#xa0;m %2&#xa0;s</translation>
+    </message>
+    <message>
+        <source>Offer expired</source>
+        <translatorcomment>Text indicating that the time of the offer has expired. CON-868</translatorcomment>
+        <translation>Offer expired</translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n second</source>
+        <translatorcomment>Text indicating that the offer expires in the %n seconds. Placeholder %n shall be replaced by the number of seconds. CON-868/SNC-4853</translatorcomment>
+        <translation>
+            <numerusform>Offer expires in %n second</numerusform>
+            <numerusform>Offer expires in %n seconds</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Offer expires in %n minute</source>
+        <translatorcomment>Text indicating that the offer expires in the %n minutes. The placeholder %n shall be replaced by the number of minutes. CON-868/SNC-4853</translatorcomment>
+        <translation>
+            <numerusform>Offer expires in %n minute</numerusform>
+            <numerusform>Offer expires in %n minutes</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4807,6 +4895,11 @@ Enter a different name.</translation>
         <translation>Cancel</translation>
     </message>
     <message>
+        <source>Choose</source>
+        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
+        <translation>Choose</translation>
+    </message>
+    <message>
         <source>Change folder</source>
         <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
         <translation>Change folder</translation>
@@ -4859,7 +4952,7 @@ Enter a different name.</translation>
     <message>
         <source>Account created</source>
         <translatorcomment>Label indicating that the account has been created CON-466</translatorcomment>
-        <translation>Account created</translation>
+        <translation>Complete signup</translation>
     </message>
     <message>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
@@ -5079,7 +5172,7 @@ Enter a different name.</translation>
     <message>
         <source>Create your [B]MEGA account[/B]</source>
         <translatorcomment>Sign up page title CON-466</translatorcomment>
-        <translation>Create your [B]MEGA account[/B]</translation>
+        <translation>Sign up for a [B]MEGA account[/B]</translation>
     </message>
     <message>
         <source>Sync your device with MEGA, and any changes will automatically and instantly apply to MEGA and vice versa.</source>
@@ -5287,19 +5380,14 @@ Enter a different name.</translation>
         <translation>Set exclusions</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Choose</translation>
+        <source>Sync your entire MEGA Cloud drive with your local device.</source>
+        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
+        <translation>Sync your entire MEGA Cloud drive with your local device.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation type="unfinished">Sync selected folders in your MEGA Cloud drive with your local device.</translation>
-    </message>
-    <message>
-        <source>Sync your entire MEGA Cloud drive with your local device.</source>
-        <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation type="unfinished">Sync your entire MEGA Cloud drive with your local device.</translation>
+        <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
     </message>
 </context>
 <context>
@@ -5516,7 +5604,7 @@ Enter a different name.</translation>
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation>Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by the desktop app to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, leave them on the default settings for security reasons.</translation>
+        <translation>Files and folders have an owner and belong to a group of users. Using this dialogue, you can grant different access permissions for new files and folders created by the desktop app to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, leave them on the default settings for security reasons.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -5664,20 +5752,18 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Improved handling of sync conflicts.
-- Improved management of failures within issue resolution.
-- Improved issue resolution dialogs.
-- Added default automatic issue resolution.
-- Added new UI improvements.
-- Fixed other bugs and made assorted other improvements.
+        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.4.0.CON-806</translatorcomment>
-        <translation>- Improved handling of sync conflicts.
-- Improved management of failures within issue resolution.
-- Improved issue resolution dialogs.
-- Added default automatic issue resolution.
-- Added new UI improvements.
-- Fixed other bugs and made assorted other improvements.</translation>
+        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
+        <translation>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
+- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
+- An installation issue which caused some Windows .dll files to be deleted has been resolved.
+- Third-party libraries have been updated.
+- Other bugs have been fixed and numerous improvements made.</translation>
     </message>
 </context>
 <context>
@@ -6844,7 +6930,7 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Go to Backup centre</translation>
+        <translation>Go to Device centre</translation>
     </message>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
@@ -7358,6 +7444,20 @@ Please, refresh the list.</source>
         <translation>The issue may have been resolved externally.
 Refresh the list.</translation>
     </message>
+    <message>
+        <source>Some issues can&apos;t be fixed.
+Verify the permissions of the .megaignore file on your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>Some issues can’t be resolved.
+Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
+    </message>
+    <message>
+        <source>Issues can&apos;t be fixed.
+Verify the permissions of the .megaignore on file your local sync folder locations.</source>
+        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
+        <translation>Some issues can’t be resolved.
+Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
+    </message>
     <message numerus="yes">
         <source>%n issues failed</source>
         <translatorcomment>In-view message displayed when all issue have failed. SAT-1034</translatorcomment>
@@ -7390,20 +7490,6 @@ Refresh the list.</translation>
             <numerusform>%1 and %n issue failed to resolve</numerusform>
             <numerusform>%1 and %n issues failed to resolve</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Some issues can&apos;t be fixed.
-Verify the permissions of the .megaignore file on your local sync folder locations.</source>
-        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation>Some issues can’t be resolved.
-Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
-    </message>
-    <message>
-        <source>Issues can&apos;t be fixed.
-Verify the permissions of the .megaignore on file your local sync folder locations.</source>
-        <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
-        <translation>Some issues can’t be resolved.
-Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
     </message>
 </context>
 <context>
@@ -8125,7 +8211,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
-        <translation type="unfinished">Add sync</translation>
+        <translation>Add sync</translation>
     </message>
 </context>
 <context>
@@ -8372,19 +8458,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         </translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade now</translation>
-    </message>
-    <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Your MEGA account is full</translation>
     </message>
     <message>
         <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
@@ -8405,6 +8481,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform>Issue detected</numerusform>
             <numerusform>Issues detected</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8567,7 +8653,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>Upload stopped</source>
         <translatorcomment>Title of the notification displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Upload stopped</numerusform>
             <numerusform>Uploads stopped</numerusform>
         </translation>
@@ -8575,7 +8661,7 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message numerus="yes">
         <source>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</source>
         <translatorcomment>Notification message displayed in the Operating System when an uploaded is stopped because of a logout. SNC-4660.</translatorcomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>You logged out of MEGA so your upload has stopped. You can resume the upload after logging back in.</numerusform>
             <numerusform>You logged out of MEGA so your uploads have stopped. You can resume the uploads after logging back in.</numerusform>
         </translation>
@@ -9293,6 +9379,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 and %2 substitution placeholders because they will be filled with the required amounts of storage space dynamically. CON-944</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>%1 of %2</numerusform>
+            <numerusform>%1 of %2</numerusform>
+        </translation>
     </message>
 </context>
 <context>

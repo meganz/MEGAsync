@@ -75,14 +75,17 @@ void DuplicatedNodeItem::fillUi()
             setActionAndTitle(tr("Update"));
             break;
         }
+        default:
+        {
+        }
     }
 
     auto nodeName(getNodeName());
     ui->lNodeName->setMaximumLines(4);
     ui->lNodeName->setText(nodeName);
 
-    QIcon icon = isFile() ? QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1Literal(":/images/drag_")))
-                                        : QIcon(QLatin1Literal(":/images/icons/folder/medium-folder.png"));
+    QIcon icon = isFile() ? QIcon(Utilities::getExtensionPixmapName(nodeName, QLatin1String(":/images/drag_")))
+                                        : QIcon(QLatin1String(":/images/icons/folder/medium-folder.png"));
 
     ui->lIcon->setPixmap(icon.pixmap(ui->lIcon->size()));
 }
@@ -255,7 +258,7 @@ DuplicatedRenameItem::DuplicatedRenameItem(QWidget *parent)
 {
 }
 
-void DuplicatedRenameItem::setInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)
+void DuplicatedRenameItem::setRenameInfo(std::shared_ptr<DuplicatedNodeInfo> conflict)
 {
     DuplicatedLocalItem::setInfo(conflict, NodeItemType::UPLOAD_AND_RENAME);
 }

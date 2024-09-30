@@ -234,7 +234,7 @@ void DuplicatedNodeDialog::updateHeader()
     boldFont.setBold(true);
     QFontMetrics boldMetrics(boldFont);
     auto elidedName = boldMetrics.elidedText(mCurrentNodeName, Qt::ElideMiddle, (ui->lDescription->width() - (textBoundingRect - NameBoundingRect - 1)));
-    auto boldName = QString(QLatin1Literal("<b>%1</b>")).arg(elidedName);
+    auto boldName = QString(QLatin1String("<b>%1</b>")).arg(elidedName);
 
     headerText = headerText.replace(placeholder, boldName);
 

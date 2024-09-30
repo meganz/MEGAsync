@@ -138,7 +138,7 @@ int DesktopNotifications::countUnseenAlerts(mega::MegaUserAlertList *alertList)
     return count;
 }
 
-void DesktopNotifications::addUserAlertList(mega::MegaUserAlertList *alertList)
+void DesktopNotifications::onUserAlertsUpdated(mega::MegaUserAlertList* alertList)
 {
     if(mPreferences->isAnyNotificationEnabled())
     {
@@ -293,10 +293,12 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert, const QStrin
     {
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::CONTACT_ESTABLISHED))
         {
-            auto notification = CreateContactNotification(tr("New Contact Established"),
-                                                         tr("New contact with [A] has been established").replace(QString::fromUtf8("[A]"), fullName),
-                                                         email,
-                                                         QStringList() << tr("Accept") << tr("Chat"));
+            auto notification =
+                CreateContactNotification(tr("New Contact Established"),
+                                          tr("New contact with [A] has been established")
+                                              .replace(QString::fromUtf8("[A]"), fullName),
+                                          email,
+                                          QStringList() << tr("Chat"));
 
             QObject::connect(notification, &DesktopAppNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
         }
@@ -910,6 +912,8 @@ void DesktopNotifications::actionPressedOnDownloadFinishedTransferNotification(D
 
                     break;
                 }
+                default:
+                    break;
             }
         }
     }
@@ -972,6 +976,8 @@ void DesktopNotifications::actionPressedOnUploadFinishedTransferNotification(Des
                 }
                 break;
             }
+            default:
+                break;
             }
         }
     }

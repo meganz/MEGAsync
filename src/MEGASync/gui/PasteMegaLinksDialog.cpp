@@ -38,7 +38,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
 {
     QString text = ui->eLinks->toPlainText();
     links = extractLinks(text);
-    links = links.toSet().values();
+    links = QSet<QString>(links.begin(), links.end()).values();
     if (links.size() == 0)
     {
         QMegaMessageBox::MessageBoxInfo info;
@@ -80,7 +80,7 @@ QStringList PasteMegaLinksDialog::extractLinks(QString text)
     separator.append(QString::fromLatin1("https://mega.co.nz/").append(QString::fromUtf8("|")));
     separator.append(QString::fromLatin1("https://mega.nz/").append(QString::fromUtf8("|")));
     separator.append(QString::fromLatin1("http://mega.co.nz/").append(QString::fromUtf8("|")));
-    separator.append(QString::fromLatin1("http//mega.nz/"));
+    separator.append(QString::fromLatin1("http://mega.nz/"));
 
     QStringList tempLinks = text.split(QRegExp(separator));
     tempLinks.removeAt(0);

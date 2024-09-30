@@ -1,7 +1,9 @@
 #pragma once
-#include <vector>
+#include <QList>
+#include <QScreen>
 #include <QString>
 #include <QVector>
+#include <vector>
 
 struct ScreenInfo
 {
@@ -28,7 +30,7 @@ using ScreensInfo = std::vector<ScreenInfo>;
 class ScaleFactorManager
 {
 public:
-    ScaleFactorManager(OsType osType);
+    ScaleFactorManager(OsType osType, const QList<QScreen*>& screens);
     ScaleFactorManager(OsType osType,
                        ScreensInfo screensInfo,
                        const QString& osName,

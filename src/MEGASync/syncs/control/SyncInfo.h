@@ -173,5 +173,5 @@ protected:
     void onSyncDeleted(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
-    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats);
+    void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats) override;
 };

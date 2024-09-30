@@ -100,9 +100,9 @@ private:
     void processTransferFlag(const std::shared_ptr<mega::MegaAccountDetails>& details);
     mega::MegaHandle processNode(const std::shared_ptr<mega::MegaNode>& node,
                                  const std::shared_ptr<mega::MegaAccountDetails>& details,
-                                 std::function<void(mega::MegaHandle)> setStorageUsed,
-                                 std::function<void(mega::MegaHandle)> setNumFiles,
-                                 std::function<void(mega::MegaHandle)> setNumFolders);
+                                 std::function<void (long long)> setStorageUsed,
+                                 std::function<void (long long)> setNumFiles,
+                                 std::function<void (long long)> setNumFolders);
     void processNodesAndVersionsStorage(const std::shared_ptr<mega::MegaAccountDetails>& details);
     void processInShares(const std::shared_ptr<mega::MegaAccountDetails>& details,
                          const std::shared_ptr<mega::MegaNodeList>& inShares);
@@ -110,7 +110,7 @@ private:
 
     static long long getLastRequest(const Flags& flags,
                                     const UserStats<long long>& lastRequestUserStats);
-    static AccountDetailsManager* mInstance;
+    static AccountDetailsManager mInstance;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(AccountDetailsManager::Flags)

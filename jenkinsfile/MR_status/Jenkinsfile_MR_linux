@@ -100,7 +100,7 @@ pipeline {
                     sh "echo Cloning SDK branch ${SDK_BRANCH}"
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: "origin/${SDK_BRANCH}"]],
+                        branches: [[name: "${SDK_BRANCH}"]],
                         userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
                         extensions: [
                             [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
@@ -143,7 +143,7 @@ pipeline {
                             sh "echo Cloning SDK branch ${SDK_BRANCH}"
                             checkout([
                                 $class: 'GitSCM',
-                                branches: [[name: "origin/${SDK_BRANCH}"]],
+                                branches: [[name: "${SDK_BRANCH}"]],
                                 userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
                                 extensions: [
                                     [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
@@ -160,7 +160,7 @@ pipeline {
                         echo "Do Build for $DISTRIBUTION-$ARCHITECTURE"
                         dir(linux_sources_workspace){
                             lock(resource: "$DISTRIBUTION-$ARCHITECTURE-MEGAsync-build", quantity: 1, ){
-                                sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 1 build $DISTRIBUTION . megasync"
+                                sh "/opt/buildTools/build/buildManager.sh -a $ARCHITECTURE -j 3 build $DISTRIBUTION . megasync"
                                 sh "/opt/buildTools/repo/repoManager.sh add /srv/builder/results/$DISTRIBUTION/$ARCHITECTURE/megasync/ $DISTRIBUTION"
                                 sh "SIGN_KEY_PATH=/srv/sign_test/ /opt/buildTools/repo/repoManager.sh build -n $DISTRIBUTION"
                             }

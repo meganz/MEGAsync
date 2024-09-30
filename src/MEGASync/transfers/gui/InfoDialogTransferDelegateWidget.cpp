@@ -127,7 +127,7 @@ void InfoDialogTransferDelegateWidget::updateTransferState()
     }
 
     // Update progress bar
-    unsigned int permil = static_cast<unsigned int>((getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0);
+    int permil = static_cast<int>((getData()->mTotalSize > 0) ? ((1000 * getData()->mTransferredBytes) / getData()->mTotalSize) : 0);
     mUi->pbTransfer->setValue(permil);
 }
 
@@ -195,7 +195,7 @@ QString InfoDialogTransferDelegateWidget::getTransferName()
     return mUi->lFileName->text();
 }
 
-void InfoDialogTransferDelegateWidget::updateFinishedIco(int transferType, bool error)
+void InfoDialogTransferDelegateWidget::updateFinishedIco(TransferData::TransferTypes transferType, bool error)
 {
     QIcon iconCompleted;
 
@@ -249,8 +249,11 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 {
                     bool in = isMouseHoverInAction(mUi->lActionTransfer, pos);
                     mUi->lActionTransfer->setToolTip(tr("Retry"));
-                    setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
-                    hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
+                    update = setActionTransferIcon(mUi->lActionTransfer, QString::fromLatin1("://images/retry.png"));
+                    if(update)
+                    {
+                        hoverType = (in) ? ActionHoverType::HOVER_ENTER : ActionHoverType::HOVER_LEAVE;
+                    }
                 }
                 else
                 {
@@ -267,8 +270,6 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                         hoverType = ActionHoverType::HOVER_LEAVE;
                     }
                 }
-
-                update = true;
             }
             else
             {
@@ -277,7 +278,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 if (getData()->isPublicNode())
                 {
                     inAction = isMouseHoverInAction(mUi->lActionTransfer, pos);
-                    update = setActionTransferIcon(mUi->lActionTransfer,
+                    setActionTransferIcon(mUi->lActionTransfer,
                                                    QString::fromLatin1("://images/link%1.png").arg(QString::fromLatin1(inAction ? "-hover" : "")));
                     mUi->lActionTransfer->setToolTip(tr("Copy link to file"));
                 }
@@ -294,7 +295,7 @@ TransferBaseDelegateWidget::ActionHoverType InfoDialogTransferDelegateWidget::mo
                 bool fileExists = QFile(getData()->path()).exists();
 
                 const char* baseIconName = (fileExists) ? "://images/file-search%1.png" : "://images/file-question%1.png";
-                update |= setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
+                setActionTransferIcon(mUi->lShowInFolder, QString::fromLatin1(baseIconName).arg(QString::fromLatin1(inShowFolder?"-hover":"")));
                 QString tooltipText = (fileExists) ? tr("Show in folder") : tr("Deleted or moved file");
                 mUi->lShowInFolder->setToolTip(tooltipText);
 

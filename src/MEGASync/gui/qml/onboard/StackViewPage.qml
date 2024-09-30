@@ -24,7 +24,7 @@ Item {
             bottomMargin: (Constants.defaultWindowMargin - statusText.height) / 2
         }
         font.pixelSize: Texts.Text.Size.SMALL
-        color: colorStyle.textSecondary
+        color: ColorTheme.textSecondary
         text: {
             switch(loginControllerAccess.state) {
                 case LoginController.FETCHING_NODES:

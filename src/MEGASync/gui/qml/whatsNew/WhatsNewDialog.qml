@@ -21,7 +21,7 @@ QmlDialog {
     maximumWidth: 811
     minimumHeight: 540
     minimumWidth: 811
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     title: WhatsNewStrings.whatsNew
 
     Component.onCompleted: {
@@ -43,7 +43,7 @@ QmlDialog {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             text: WhatsNewStrings.updates
-            color: colorStyle.textPrimary
+            color: ColorTheme.textPrimary
             lineHeightMode: Text.FixedHeight
             font{
                 pixelSize: Texts.Text.Size.EXTRA_LARGE

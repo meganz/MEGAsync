@@ -78,7 +78,7 @@ protected:
     Ui::NodeSelector *ui;
 
 protected slots:
-    virtual void onCustomBottomButtonClicked(uint8_t id){Q_UNUSED(id)}
+    virtual void onCustomBottomButtonClicked(uint id){Q_UNUSED(id)}
 
 private slots:
     void onbShowSearchClicked();

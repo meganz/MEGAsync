@@ -398,7 +398,7 @@ QString defaultOpenApp(QString extension)
     }
 
     CFIndex size = CFStringGetMaximumSizeOfFileSystemRepresentation(info);
-    buffer = new char[size];
+    buffer = new char[static_cast<unsigned long>(size)];
     CFStringGetCString (info, buffer, size, kCFStringEncodingUTF8);
     QString defaultAppPath = QString::fromUtf8(buffer);
     delete [] buffer;
@@ -406,31 +406,6 @@ QString defaultOpenApp(QString extension)
     CFRelease(appURL);
     CFRelease(ext);
     return defaultAppPath;
-}
-
-void enableBlurForWindow(QWidget *window)
-{
-    NSView *nsview = (NSView *)window->winId();
-    NSWindow *nswindow = [nsview window];
-
-    Class vibrantClass = NSClassFromString(@"NSVisualEffectView");
-    if (vibrantClass)
-    {
-        static const NSRect frameRect = {
-            { 0.0, 0.0 },
-            { static_cast<float>(window->width()), static_cast<float>(window->height()) }
-        };
-
-        auto vibrant = [[vibrantClass alloc] initWithFrame:frameRect];
-        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
-        if ([vibrant respondsToSelector:@selector(setBlendingMode:)])
-        {
-            [vibrant setBlendingMode:(NSVisualEffectBlendingMode)0];
-        }
-
-        //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
-        [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
-    }
 }
 
 bool registerUpdateDaemon()
@@ -483,14 +458,14 @@ bool registerUpdateDaemon()
 // Check if it's needed to start the local HTTP server
 // for communications with the webclient
 bool runHttpServer()
-{   
-    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-    int pidBufSize = nProcesses * sizeof(pid_t);
+{
+    size_t nProcesses = static_cast<size_t>(proc_listpids(PROC_ALL_PIDS, 0, NULL, 0));
+    size_t pidBufSize = nProcesses * sizeof(pid_t);
     pid_t *pids = new pid_t[nProcesses];
     memset(pids, 0, pidBufSize);
-    proc_listpids(PROC_ALL_PIDS, 0, pids, pidBufSize);
+    proc_listpids(PROC_ALL_PIDS, 0, pids, static_cast<int>(pidBufSize));
 
-    for (int i = 0; i < nProcesses; ++i)
+    for (size_t i = 0; i < nProcesses; ++i)
     {
         if (pids[i] == 0)
         {
@@ -504,7 +479,7 @@ bool runHttpServer()
             continue;
         }
 
-        int position = strlen(processPath);
+        auto position = strlen(processPath);
         if (position > 0)
         {
             while (position >= 0 && processPath[position] != '/')
@@ -534,7 +509,7 @@ bool runHttpServer()
 bool userActive()
 {
     CFTimeInterval secondsSinceLastEvent = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateHIDSystemState, kCGAnyInputEventType);
-    if (secondsSinceLastEvent > (Preferences::USER_INACTIVITY_MS / 1000))
+    if (secondsSinceLastEvent > static_cast<CFTimeInterval>(Preferences::USER_INACTIVITY_MS / 1000))
     {
          return false;
     }

@@ -35,10 +35,10 @@ Item {
                 console.warn("BannerText: Constants.MessageType -> " + type + " not defined yet");
                 break;
             case Constants.MessageType.WARNING:
-                backgroundColor = colorStyle.notificationWarning;
+                backgroundColor = ColorTheme.notificationWarning;
                 break;
             case Constants.MessageType.ERROR:
-                backgroundColor = colorStyle.notificationError;
+                backgroundColor = ColorTheme.notificationError;
                 break;
             default:
                 console.error("BannerText: Constants.MessageType -> " + type + " does not exist");
@@ -58,7 +58,7 @@ Item {
         height: hint.height + 2 * root.margin
         radius: root.radius
         border {
-            color: colorStyle.borderSubtle
+            color: ColorTheme.borderSubtle
             width: root.showBorder ? root.borderWidth : 0
         }
 

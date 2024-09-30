@@ -3,23 +3,24 @@
 
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
-#include <MegaApplication.h>
-#include "QMegaMessageBox.h"
 #include <megaapi.h>
-
+#include <memory>
 #include <QAbstractItemModel>
-#include <QList>
 #include <QIcon>
+#include <QList>
+#include <QMegaMessageBox.h>
 #include <QPointer>
 
-#include <memory>
+#include <MegaApplication.h>
 
 namespace UserAttributes{
 class CameraUploadFolder;
 class MyChatFilesFolder;
 }
 
+class SyncSettings;
 class DuplicatedNodeInfo;
+struct ConflictTypes;
 
 enum class NodeSelectorModelRoles
 {
@@ -177,7 +178,7 @@ public:
     void setSyncSetupMode(bool value);
 
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
-    void removeNodeFromModel(const QModelIndex &index);
+    void removeNodeFromModel(const QModelIndex& index);
 
     int getNodeAccess(mega::MegaNode* node);
 
@@ -229,6 +230,9 @@ public:
     void setAcceptDragAndDrop(bool newAcceptDragAndDrop);
     bool acceptDragAndDrop(const QMimeData* data);
 
+    QMimeData* mimeData(const QModelIndexList& indexes) const override;
+    QMimeData* mimeData(const QList<mega::MegaHandle>& handles) const;
+
     bool dropMimeData(const QMimeData *data, Qt::DropAction action, int, int, const QModelIndex &parent) override;
     virtual bool canDropMimeData(const QMimeData* data,
         Qt::DropAction action,
@@ -254,10 +258,9 @@ signals:
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
-    Qt::DropActions supportedDropActions() const;
-    QMimeData* mimeData(const QModelIndexList& indexes) const;
+    Qt::DropActions supportedDropActions() const override;
 
-    QStringList mimeTypes() const;
+    QStringList mimeTypes() const override;
 
     void fetchItemChildren(const QModelIndex& parent);
     void addRootItems();
@@ -299,7 +302,7 @@ private:
     bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
     bool mAcceptDragAndDrop;
 
-    //Variables related to move (including moving to rubbish bin or remove)
+    // Variables related to move (including moving to rubbish bin or remove)
     QMap<mega::MegaHandle, int> mRequestByHandle;
     QMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;

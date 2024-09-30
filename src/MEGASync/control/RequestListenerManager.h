@@ -1,15 +1,17 @@
 #ifndef REQUEST_LISTENER_MANAGER_H
 #define REQUEST_LISTENER_MANAGER_H
 
-#include <QObject>
-#include <QList>
-#include <QMutex>
-#include <QPointer>
+#include "megaapi.h"
+#include "QTMegaListener.h"
+#include "QTMegaRequestListener.h"
+
 #include <functional>
 #include <memory>
-#include "megaapi.h"
-#include "QTMegaRequestListener.h"
 #include <mutex>
+#include <QList>
+#include <QMutex>
+#include <QObject>
+#include <QPointer>
 
 struct onRequestFinishOnlyListenerCallback
 {
@@ -19,11 +21,11 @@ struct onRequestFinishOnlyListenerCallback
 
 struct ListenerCallbacks
 {
-    QPointer<QObject> callbackClass;
-    std::function<void(mega::MegaRequest *request)> onRequestStart;
-    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestFinish;
-    std::function<void(mega::MegaRequest *request)> onRequestUpdate;
-    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError;
+    QPointer<QObject> callbackClass = nullptr;
+    std::function<void(mega::MegaRequest *request)> onRequestStart = nullptr;
+    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestFinish = nullptr;
+    std::function<void(mega::MegaRequest *request)> onRequestUpdate = nullptr;
+    std::function<void(mega::MegaRequest *request, mega::MegaError* e)> onRequestTemporaryError = nullptr;
     bool removeAfterReqFinish = false;
     bool isSynchronousOneShotReq = false;
 };
@@ -72,6 +74,8 @@ public:
 
     RequestListenerManager(const RequestListenerManager&) = delete;
     RequestListenerManager& operator=(const RequestListenerManager&) = delete;
+
+    ~RequestListenerManager() {}
 
     std::shared_ptr<mega::QTMegaRequestListener> registerAndGetListener(const ListenerCallbacks& callbacks);
 

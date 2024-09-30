@@ -1,19 +1,21 @@
 #include "MegaTransferDelegate.h"
-#include "Utilities.h"
-#include "QMegaMessageBox.h"
-#include "megaapi.h"
-#include "TransfersModel.h"
-#include "MegaApplication.h"
-#include "Platform.h"
-#include "TransfersWidget.h"
-#include "TransferManagerDelegateWidget.h"
-#include "MegaDelegateHoverManager.h"
 
-#include <QPainter>
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "MegaDelegateHoverManager.h"
+#include "Platform.h"
+#include "QMegaMessageBox.h"
+#include "TransferManagerDelegateWidget.h"
+#include "TransfersModel.h"
+#include "TransfersWidget.h"
+#include "Utilities.h"
+
 #include <QEvent>
-#include <QToolTip>
-#include <QSortFilterProxyModel>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QScrollBar>
+#include <QSortFilterProxyModel>
+#include <QToolTip>
 
 using namespace mega;
 

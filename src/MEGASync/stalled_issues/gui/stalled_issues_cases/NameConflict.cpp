@@ -278,10 +278,12 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
 {
     auto index = title->property(TITLE_INDEX).toInt();
 
-    info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time)
+    if (!isCloud() || info->mIsFile)
     {
-        mTitlesByIndex.value(index)->updateLastTimeModified(time);
-    });
+        info->mItemAttributes->requestModifiedTime(title, [this, index](const QDateTime& time) {
+            mTitlesByIndex.value(index)->updateLastTimeModified(time);
+        });
+    }
 
     if(isCloud())
     {
@@ -332,9 +334,9 @@ void NameConflict::updateTitleExtraInfo(StalledIssueActionTitle* title, std::sha
             }
         });
 
-        cloudAttributes->requestUser(title, MegaSyncApp->getMegaApi()->getMyUserHandleBinary(), [this, index](QString user, bool showAttribute)
+        cloudAttributes->requestUser(title, [this, cloudAttributes, index](QString user)
         {
-            if(mTitlesByIndex.value(index)->updateUser(user, showAttribute))
+            if(mTitlesByIndex.value(index)->updateUser(user, !cloudAttributes->isCurrentUser()))
             {
                 mDelegateWidget->updateSizeHint();
             }

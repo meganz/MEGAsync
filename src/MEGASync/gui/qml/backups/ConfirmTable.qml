@@ -24,7 +24,7 @@ Rectangle {
     width: 400
     height: 184
     radius: tableRadius
-    color: colorStyle.pageBackground
+    color: ColorTheme.pageBackground
 
     Rectangle {
         id: borderRectangle
@@ -32,7 +32,7 @@ Rectangle {
         width: root.width
         height: root.height
         color: "transparent"
-        border.color: colorStyle.borderStrong
+        border.color: ColorTheme.borderStrong
         border.width: 1
         radius: 8
         z: 5
@@ -61,8 +61,10 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
+
             height: root.headerHeight
-            color: colorStyle.pageBackground
+            color: ColorTheme.pageBackground
+
             radius: root.radius
             z: 3
 
@@ -84,7 +86,7 @@ Rectangle {
                         id: headerImage
 
                         source: Images.database
-                        color: colorStyle.iconPrimary
+                        color: ColorTheme.iconPrimary
                         sourceSize: Qt.size(16, 16)
                     }
 
@@ -93,7 +95,7 @@ Rectangle {
 
                         text: BackupsStrings.backupFolders
                         font.weight: Font.DemiBold
-                        color: colorStyle.textPrimary
+                        color: ColorTheme.textPrimary
                     }
                 }
 
@@ -103,7 +105,7 @@ Rectangle {
                     Layout.rightMargin: root.headerMargin
                     Layout.alignment: Qt.AlignRight
                     text: backupsModelAccess.totalSize
-                    color: colorStyle.textPrimary
+                    color: ColorTheme.textPrimary
                     visible: backupsModelAccess.totalSizeReady
                     font {
                         pixelSize: Texts.Text.Size.SMALL
@@ -120,7 +122,7 @@ Rectangle {
                     Layout.preferredHeight: 16
                     imageSize: Qt.size(16, 16)
                     visible: !backupsModelAccess.totalSizeReady
-                    color: colorStyle.textAccent
+                    color: ColorTheme.textAccent
                 }
             }
 
@@ -133,7 +135,7 @@ Rectangle {
                     right: parent.right
                 }
                 height: borderRectangle.border.width
-                color: colorStyle.borderSubtle
+                color: ColorTheme.borderSubtle
 
             }
 
@@ -157,5 +159,4 @@ Rectangle {
             backupsProxyModelRef: root.backupsProxyModelRef
         }
     }
-
 }

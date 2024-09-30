@@ -52,7 +52,7 @@ private:
     QRecursiveMutex mRequestsDataLock;
     QMap<mega::MegaHandle, RequestInfo*> mRequestsData;
     std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
-    static EmailRequester* mInstance;
+    static std::unique_ptr<EmailRequester> mInstance;
 };
 
 #endif

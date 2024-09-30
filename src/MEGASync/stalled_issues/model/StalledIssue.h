@@ -57,6 +57,7 @@ public:
     QString getNativeMovePath() const;
 
     QString getFileName() const;
+    QString getMoveFileName() const;
 
     const std::shared_ptr<const FileFolderAttributes> getAttributes() const {return mAttributes;}
     std::shared_ptr<FileFolderAttributes> getAttributes() {return mAttributes;}
@@ -86,6 +87,7 @@ protected:
     friend class StalledIssue;
     friend class NameConflictedStalledIssue;
     friend class MoveOrRenameCannotOccurIssue;
+    friend class FolderMatchedAgainstFileIssue;
 
     Path mMovePath;
     Path mPath;
@@ -93,6 +95,8 @@ protected:
     std::shared_ptr<FileFolderAttributes> mAttributes;
 
 private:
+    QString calculateFileName(const QString& path) const;
+
     QString mRenamedFileName;
 };
 
@@ -251,8 +255,7 @@ class StalledIssue : public QObject
                     object->deleteLater();
                 };
 
-                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
-                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [this](const QString&){
+                auto onChanged = [this](){
                     mIssue->resetUIUpdated();
 #ifdef Q_OS_LINUX
                     auto paths = mIssue->getLocalFiles();
@@ -264,6 +267,15 @@ class StalledIssue : public QObject
                         }
                     }
 #endif
+                };
+
+                mFileWatcher = std::shared_ptr<QFileSystemWatcher>(new QFileSystemWatcher(mIssue->getLocalFiles()), deleter);
+                connect(mFileWatcher.get(), &QFileSystemWatcher::directoryChanged, this, [onChanged](const QString&){
+                    onChanged();
+                });
+
+                connect(mFileWatcher.get(), &QFileSystemWatcher::fileChanged, this, [onChanged](const QString&){
+                    onChanged();
                 });
             }
         }
@@ -300,6 +312,8 @@ public:
     QString getFileName(bool preferCloud) const;
     static StalledIssueFilterCriterion getCriterionByReason(mega::MegaSyncStall::SyncStallReason reason);
 
+    int getPathProblem() const;
+
     bool operator==(const StalledIssue &data);
 
     virtual void updateIssue(const mega::MegaSyncStall* stallIssue);
@@ -322,9 +336,19 @@ public:
     SolveType getIsSolved() const {return mIsSolved;}
     virtual void setIsSolved(SolveType type);
 
-    virtual bool autoSolveIssue() {return false;}
+    enum class AutoSolveIssueResult
+    {
+        SOLVED,
+        ASYNC_SOLVED,
+        FAILED,
+    };
+
+    virtual AutoSolveIssueResult autoSolveIssue()
+    {
+        return AutoSolveIssueResult::FAILED;
+    }
     virtual bool isAutoSolvable() const;
-    bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info) const;
+    bool isBeingSolvedByUpload(std::shared_ptr<UploadTransferInfo> info, bool isSourcePath) const;
     bool isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo> info) const;
 
     virtual void finishAsyncIssueSolving(){}
@@ -333,8 +357,6 @@ public:
     bool missingFingerprint() const;
     static bool isCloudNodeBlocked(const mega::MegaSyncStall* stall);
     virtual QStringList getLocalFiles();
-
-    bool mDetectedMEGASide = false;
 
     bool isFile() const;
     uint8_t filesCount() const;
@@ -385,6 +407,8 @@ public:
 
     virtual bool isExpandable() const;
 
+    bool detectedCloudSide() const;
+
 signals:
     void asyncIssueSolvingStarted();
     void asyncIssueSolvingFinished(StalledIssue*);
@@ -392,9 +416,13 @@ signals:
 
 protected:
     bool initLocalIssue();
+    void fillSourceLocalPath(const mega::MegaSyncStall* stall);
+    void fillTargetLocalPath(const mega::MegaSyncStall* stall);
     QExplicitlySharedDataPointer<LocalStalledIssueData> mLocalData;
 
     bool initCloudIssue();
+    void fillSourceCloudPath(const mega::MegaSyncStall* stall);
+    void fillTargetCloudPath(const mega::MegaSyncStall* stall);
     QExplicitlySharedDataPointer<CloudStalledIssueData> mCloudData;
 
     void setIsFile(const QString& path, bool isLocal);
@@ -408,12 +436,16 @@ protected:
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
 
+    bool mDetectedCloudSide;
     QSize mHeaderDelegateSize;
     QSize mBodyDelegateSize;
     QPair<bool, bool> mNeedsUIUpdate = qMakePair(false, false);
     std::shared_ptr<FileSystemSignalHandler> mFileSystemWatcher;
     bool mAutoResolutionApplied;
 };
+
+using StalledIssueSPtr = std::shared_ptr<StalledIssue>;
+using StalledIssuesList = QList<StalledIssueSPtr>;
 
 class StalledIssueVariant
 {
@@ -488,7 +520,7 @@ private:
     friend class StalledIssuesCreator;
     friend class MoveOrRenameCannotOccurFactory;
 
-    std::shared_ptr<StalledIssue>& getData()
+    StalledIssueSPtr& getData()
     {
         return mData;
     }
@@ -499,7 +531,7 @@ private:
         return std::dynamic_pointer_cast<Type>(mData);
     }
 
-   std::shared_ptr<StalledIssue> mData = nullptr;
+    StalledIssueSPtr mData = nullptr;
 };
 
 Q_DECLARE_METATYPE(StalledIssueVariant)

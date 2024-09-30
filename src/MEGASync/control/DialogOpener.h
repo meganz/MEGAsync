@@ -16,6 +16,8 @@
 #include <QQueue>
 #include <QApplication>
 
+#include "tokenizer/TokenParserWidgetManager.h"
+
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget
 {
@@ -423,6 +425,8 @@ public:
             }
         }
     }
+
+    static QList<QPointer<QWidget>> getAllOpenedDialogs();
 
 private:
     static QList<std::shared_ptr<DialogInfoBase>> mOpenedDialogs;

@@ -1,21 +1,22 @@
 #include "NodeSelector.h"
-#include "ui_NodeSelector.h"
-#include "MegaApplication.h"
-#include "QMegaMessageBox.h"
-#include "DialogOpener.h"
-#include "Utilities.h"
-#include "megaapi.h"
-#include "NodeSelectorProxyModel.h"
-#include "NodeSelectorModel.h"
-#include "NodeSelectorTreeViewWidgetSpecializations.h"
-#include "DuplicatedNodeDialog.h"
-#include "MegaNodeNames.h"
 
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "QMegaMessageBox.h"
+#include "ui_NodeSelector.h"
+#include "Utilities.h"
+#include "DuplicatedNodeDialog.h"
+#include "DialogOpener.h"
+
+#include <optional>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
-
-#include <optional>
 
 using namespace mega;
 
@@ -405,6 +406,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
     mSearchWidget->setObjectName(QString::fromUtf8("Search"));
     connect(mSearchWidget, &NodeSelectorTreeViewWidgetSearch::nodeDoubleClicked, this, &NodeSelector::setSelectedNodeHandle);
     ui->stackedWidget->addWidget(mSearchWidget);
+
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
     {
         auto viewContainer = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(page));
@@ -444,7 +446,7 @@ void NodeSelector::makeConnections(SelectTypeSPtr selectType)
 
                             DialogOpener::showDialog<DuplicatedNodeDialog>(
                                 checkUploadNameDialog,
-                                [this, model, conflicts]() {
+                                [model, conflicts]() {
                                     model->moveNodesAfterConflictCheck(conflicts);
                                 });
                         });

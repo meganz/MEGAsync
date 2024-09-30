@@ -14,7 +14,10 @@ class BandwidthSettings : public QDialog
 {
     Q_OBJECT
 
-public:       
+public:
+
+    static constexpr unsigned MAX_NUM_CONNECTIONS = 6;
+
     explicit BandwidthSettings(MegaApplication* app, QWidget* parent = nullptr);
     ~BandwidthSettings();
 

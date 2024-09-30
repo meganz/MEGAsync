@@ -118,9 +118,9 @@ QString AbstractPlatform::getSizeStringLocalizedOSbased(qint64 bytes)
     return locale.formattedDataSize(bytes, 2, QLocale::DataSizeFormat::DataSizeTraditionalFormat);
 }
 
-quint64 AbstractPlatform::getBaseUnitsSize() const
+qint64 AbstractPlatform::getBaseUnitsSize() const
 {
-    constexpr quint64 base = 1024;
+    constexpr qint64 base = 1024;
 
     return base;
 }

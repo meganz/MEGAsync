@@ -50,9 +50,9 @@ private:
 
 protected:
     mega::MegaApi *megaApi;
-    mega::QTMegaTransferListener *delegateTransferListener;
+    std::unique_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
 
-    void showErrorMessage();
+    void showErrorMessage(mega::MegaError* error = nullptr);
     void postUpload();
     void createSupportTicket();
 

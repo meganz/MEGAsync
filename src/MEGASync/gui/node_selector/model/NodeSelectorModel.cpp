@@ -1,16 +1,13 @@
 #include "NodeSelectorModel.h"
-#include "NodeSelectorModelSpecialised.h"
-#include "MegaApplication.h"
-#include "Utilities.h"
-#include "DuplicatedNodeDialog.h"
-#include "EventUpdater.h"
 #include "CameraUploadFolder.h"
-#include "MyChatFilesFolder.h"
+#include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "DialogOpener.h"
-#include "MergeMEGAFolders.h"
-#include "StalledIssuesUtilities.h"
+#include "MyChatFilesFolder.h"
+#include "NodeSelectorModelSpecialised.h"
+#include "RequestListenerManager.h"
+#include "Utilities.h"
 #include "MegaApiSynchronizedRequest.h"
+#include "MergeMEGAFolders.h"
 
 #include <QApplication>
 #include <QToolTip>
@@ -711,6 +708,7 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     Q_UNUSED(action);
     Q_UNUSED(row);
     Q_UNUSED(parent);
+    Q_UNUSED(column);
 
     if (!data->hasFormat(MIME_DATA_INTERNAL_MOVE))
         return false;
@@ -852,6 +850,27 @@ QMimeData* NodeSelectorModel::mimeData(const QModelIndexList &indexes) const
                     stream << handle;
                 }
             }
+        }
+    }
+
+    mimeData->setData(MIME_DATA_INTERNAL_MOVE, encodedData);
+    return mimeData;
+}
+
+QMimeData* NodeSelectorModel::mimeData(const QList<mega::MegaHandle>& handles) const
+{
+    QMimeData *mimeData = new QMimeData;
+    QByteArray encodedData;
+
+    QDataStream stream(&encodedData, QIODevice::WriteOnly);
+    QSet<mega::MegaHandle> processedHandles;
+
+    for (const mega::MegaHandle& handle: handles)
+    {
+        if (!processedHandles.contains(handle))
+        {
+            processedHandles.insert(handle);
+            stream << handle;
         }
     }
 
@@ -1144,6 +1163,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
     emit blockUi(true);
+    //It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {
         foreach(auto handle, nodeHandles)
         {
@@ -1176,7 +1196,8 @@ bool NodeSelectorModel::areAllNodesEligibleForDeletion(const QList<mega::MegaHan
     foreach(auto&& handle, handles)
     {
         std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-        if(!node || !node->isNodeKeyDecrypted() || getNodeAccess(node.get()) < mega::MegaShare::ACCESS_FULL)
+        if (!node || !node->isNodeKeyDecrypted() ||
+            getNodeAccess(node.get()) < mega::MegaShare::ACCESS_FULL)
         {
             return false;
         }
@@ -1270,7 +1291,7 @@ void NodeSelectorModel::moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveF
         [this, moveFolder, targetParentFolder, conflictTargetFolder]()
         {
             MegaApiSynchronizedRequest::runRequestLambdaWithResult(
-                [this](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
+                [](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
                 { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
                 MegaSyncApp->getMegaApi(),
                 [this, moveFolder, targetParentFolder, conflictTargetFolder](
@@ -1360,19 +1381,19 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                 {
                     if (multipleRequest)
                     {
-                        if (mMovedItemsType & MovedItemsType::BOTH)
+                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
                             msgInfo.text = tr("Error moving items");
                             msgInfo.informativeText =
                                 tr("The items couldn´t be moved. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FILES)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
                             msgInfo.text = tr("Error moving files");
                             msgInfo.informativeText =
                                 tr("The files couldn´t be moved. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FOLDERS)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
                             msgInfo.text = tr("Error moving folders");
                             msgInfo.informativeText =
@@ -1405,19 +1426,19 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                 {
                     if (multipleRequest)
                     {
-                        if (mMovedItemsType & MovedItemsType::BOTH)
+                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
                             msgInfo.text = tr("Error removing items");
                             msgInfo.informativeText =
                                 tr("The items couldn´t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FILES)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
                             msgInfo.text = tr("Error removing files");
                             msgInfo.informativeText =
                                 tr("The files couldn´t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FOLDERS)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
                             msgInfo.text = tr("Error removing folders");
                             msgInfo.informativeText =
@@ -1434,18 +1455,22 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                         {
                             msgInfo.text = tr("Error removing file");
                             msgInfo.informativeText =
-                                tr("The file %1 couldn´t be removed. Try again later")
+                                tr("The file %1 couldn’t be removed. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                         else
                         {
                             msgInfo.text = tr("Error removing folder");
                             msgInfo.informativeText =
-                                tr("The folder %1 couldn´t be removed. Try again later")
+                                tr("The folder %1 couldn’t be removed. Try again later")
                                     .arg(MegaNodeNames::getNodeName(node.get()));
                         }
                     }
                 }
+
+                //Reset value
+                mMovedItemsType = MovedItemsType::NONE;
+
                 emit showMessageBox(msgInfo);
             }
 

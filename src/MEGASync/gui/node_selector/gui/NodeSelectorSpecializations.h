@@ -59,10 +59,10 @@ public:
     void enableDragAndDrop(bool enable);
 
 protected slots:
-    void onCustomBottomButtonClicked(uint8_t id) override;
+    void onCustomBottomButtonClicked(uint id) override;
 
 private:
-    void checkSelection(){}
+    void checkSelection() override{}
 
     QWidget* mDragBackDrop;
 };

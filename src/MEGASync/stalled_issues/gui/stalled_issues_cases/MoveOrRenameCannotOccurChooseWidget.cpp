@@ -3,11 +3,10 @@
 #include "ui_StalledIssueChooseWidget.h"
 
 //BASE CLASS
-MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget *parent) :
-    mChosenSide(MoveOrRenameIssueChosenSide::NONE),
-    StalledIssueChooseWidget(parent)
-{
-}
+MoveOrRenameCannotOccurChooseWidget::MoveOrRenameCannotOccurChooseWidget(QWidget* parent):
+    StalledIssueChooseWidget(parent),
+    mChosenSide(MoveOrRenameIssueChosenSide::NONE)
+{}
 
 void MoveOrRenameCannotOccurChooseWidget::updateUi(
     std::shared_ptr<const MoveOrRenameCannotOccurIssue> issue)
@@ -71,7 +70,7 @@ void LocalMoveOrRenameCannotOccurChooseWidget::updateUi(
     }
     else
     {
-        if(issue->consultCloudData())
+        if (issue->isKeepSideAvailable(MoveOrRenameIssueChosenSide::LOCAL))
         {
             addDefaultButton();
         }
@@ -109,7 +108,7 @@ void RemoteMoveOrRenameCannotOccurChooseWidget::updateUi(
     }
     else
     {
-        if(issue->consultLocalData())
+        if (issue->isKeepSideAvailable(MoveOrRenameIssueChosenSide::REMOTE))
         {
             addDefaultButton();
         }

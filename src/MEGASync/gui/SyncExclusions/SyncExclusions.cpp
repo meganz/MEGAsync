@@ -1,9 +1,9 @@
 #include "SyncExclusions.h"
 
-#include "ExclusionsQmlDialog.h"
 #include "Platform.h"
 #include "Preferences.h"
 
+#include <cmath>
 #include <QQmlEngine>
 
 using namespace mega;
@@ -20,8 +20,13 @@ SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
     , mRulesModel(new ExclusionRulesModel(this, mMegaIgnoreManager))
 {
     qmlRegisterModule("SyncExclusions", 1, 0);
-    qmlRegisterType<ExclusionsQmlDialog>("ExclusionsQmlDialog", 1, 0, "ExclusionsQmlDialog");
-    qmlRegisterUncreatableType<MegaIgnoreNameRule>("WildCardEnum", 1, 0, "WildCard", QString::fromLatin1("MyEnum is an uncreatable type"));
+
+    qmlRegisterUncreatableType<MegaIgnoreNameRule>(
+        "WildCardEnum",
+        1,
+        0,
+        "WildCard",
+        QString::fromLatin1("WildCard is an uncreatable type"));
 
     setFolder(path);
 }
@@ -235,23 +240,26 @@ void SyncExclusions::setAskOnExclusionRemove(bool value)
     Preferences::instance()->setAskOnExclusionRemove(value);
 }
 
-std::pair<int, int> SyncExclusions::fromDisplay(double value , int unit) const
+std::pair<unsigned long long, int> SyncExclusions::fromDisplay(double value , int unit) const
 {
-    int intgerValue = value * 100;
-    if(unit == MegaIgnoreSizeRule::B || (intgerValue % 100) == 0)
+    double whole, fractional;
+    fractional = std::modf(value, &whole);
+
+    if(unit == MegaIgnoreSizeRule::B || isEqual(fractional, 0.0))
     {
-        return {value , unit};
+        auto truncatedValue(static_cast<unsigned long long>(trunc(value)));
+        return {truncatedValue, unit};
     }
 
-    intgerValue = value * 1024.0;
+    auto nextUnitTruncatedValue(trunc(value * 1024.0));
     --unit;
-    return {intgerValue, unit};
+    return {static_cast<unsigned long long>(nextUnitTruncatedValue), unit};
 }
 
 
-std::pair<double, int> SyncExclusions::toDisplay(int value , int unit) const
+std::pair<double, int> SyncExclusions::toDisplay(unsigned long long value , int unit) const
 {
-    double doubleValue = value;
+    double doubleValue = static_cast<double>(value);
     int updatedUnit = unit;
     for (int unitIterator = unit; unitIterator < MegaIgnoreSizeRule::G; unitIterator++)
     {

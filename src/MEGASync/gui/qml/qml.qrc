@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>common/qmldir</file>
+        <file>common/ColorTheme.qml</file>
         <file>common/Constants.qml</file>
         <file>common/Images.qml</file>
         <file>common/Links.qml</file>
@@ -139,7 +140,6 @@
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
-        <file>guest/MenuItem.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>
@@ -167,5 +167,24 @@
         <file>common/Utilities.qml</file>
         <file>components/steps/StepPanel.qml</file>
         <file>syncs/SyncsPage.qml</file>
+        <file>deviceCentre/DeviceCentreDialog.qml</file>
+        <file>deviceCentre/DeviceCentreStrings.qml</file>
+        <file>deviceCentre/qmldir</file>
+        <file>deviceCentre/LeftSidebar.qml</file>
+        <file>deviceCentre/Toolbar.qml</file>
+        <file>deviceCentre/ToolbarButton.qml</file>
+        <file>deviceCentre/DevicePage.qml</file>
+        <file>deviceCentre/DevicePageHeader.qml</file>
+        <file>deviceCentre/DevicePageContent.qml</file>
+        <file>deviceCentre/NoInternetPage.qml</file>
+        <file>deviceCentre/NoConnectionsPage.qml</file>
+        <file>deviceCentre/SyncTablePage.qml</file>
+        <file>deviceCentre/DeviceWidgetProperty.qml</file>
+        <file>components/menus/MenuItem.qml</file>
+        <file>components/menus/qmldir</file>
+        <file>components/menus/ContextMenuItem.qml</file>
+        <file>components/menus/ContextMenu.qml</file>
+        <file>components/menus/Colors.qml</file>
+        <file>components/menus/Sizes.qml</file>
     </qresource>
 </RCC>

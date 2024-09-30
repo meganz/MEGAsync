@@ -517,7 +517,7 @@
   <customwidget>
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
-   <header>waitingspinnerwidget.h</header>
+   <header>WaitingSpinnerWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
