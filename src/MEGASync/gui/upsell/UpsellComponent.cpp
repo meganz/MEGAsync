@@ -12,6 +12,7 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
 {
     registerQmlModules();
     mController->setViewMode(mode);
+    mController->registerQmlRootContextProperties();
 }
 
 QUrl UpsellComponent::getQmlUrl()

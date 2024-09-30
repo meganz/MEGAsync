@@ -48,7 +48,6 @@ public:
                                                              A&&... args)
     {
         QPointer<QmlDialogWrapper<DialogType>> dialog(nullptr);
-
         if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<DialogType>>())
         {
             dialog = dialogInfo->getDialog();
@@ -58,7 +57,7 @@ public:
             dialog = new QmlDialogWrapper<DialogType>(std::forward<A>(args)...);
         }
 
-        auto dialogInfo = DialogOpener::showDialog(dialog);
+        auto dialogInfo(DialogOpener::showDialog(dialog));
         dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
 
         return dialogInfo->getDialog();

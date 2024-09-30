@@ -29,6 +29,8 @@ public:
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
 
+    void registerQmlRootContextProperties();
+
     bool setData(int row, const QVariant& value, int role);
     bool setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role);
     QVariant data(int row, int role) const;

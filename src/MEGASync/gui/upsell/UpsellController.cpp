@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
+#include "QmlManager.h"
 #include "RequestListenerManager.h"
 #include "UpsellPlans.h"
 #include "Utilities.h"
@@ -75,6 +76,11 @@ void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             break;
         }
     }
+}
+
+void UpsellController::registerQmlRootContextProperties()
+{
+    QmlManager::instance()->setRootContextProperty(mPlans.get());
 }
 
 bool UpsellController::setData(int row, const QVariant& value, int role)
@@ -441,7 +447,6 @@ void UpsellController::updatePlans()
 
     int currentRecommendedRow(getRowForCurrentRecommended());
     int row(getRowForNextRecommendedPlan());
-
     if (currentRecommendedRow != row)
     {
         resetSelectedAndRecommended();

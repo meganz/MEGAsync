@@ -1,7 +1,5 @@
 #include "UpsellPlans.h"
 
-#include "QmlManager.h"
-
 // ************************************************************************************************
 // * UpsellPlans
 // ************************************************************************************************
@@ -14,9 +12,7 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mCurrentPlanSelected(-1),
     mCurrentDiscount(-1),
     mTransferFinishTime(0ll)
-{
-    QmlManager::instance()->setRootContextProperty(this);
-}
+{}
 
 bool UpsellPlans::addPlan(std::shared_ptr<Data> plan)
 {
