@@ -202,7 +202,8 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
         {UpsellPlans::STORAGE_ROLE,     "gbStorage"  },
         {UpsellPlans::TRANSFER_ROLE,    "gbTransfer" },
         {UpsellPlans::PRICE_ROLE,       "price"      },
-        {UpsellPlans::SELECTED_ROLE,    "selected"   }
+        {UpsellPlans::SELECTED_ROLE,    "selected"   },
+        {UpsellPlans::AVAILABLE_ROLE,   "available"  }
     };
 
     return roles;
@@ -275,6 +276,11 @@ UpsellPlans::Data::AccountBillingPlanData::AccountBillingPlanData(int64_t gbStor
     mGBTransfer(gbTransfer),
     mPrice(price)
 {}
+
+bool UpsellPlans::Data::AccountBillingPlanData::isValid() const
+{
+    return mGBStorage != -1 && mGBTransfer != -1 && mPrice != -1.0f;
+}
 
 int64_t UpsellPlans::Data::AccountBillingPlanData::gBStorage() const
 {

@@ -73,8 +73,11 @@ private:
                                                                            int price) const;
     int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
     void addPlan(mega::MegaPricing* pricing, int index);
-    void setPlanDataForRecommended();
+    void updatePlans();
     void updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row);
+    int getRowForNextRecommendedPlan() const;
+    void resetSelectedAndRecommended();
+    int getRowForCurrentRecommended();
 };
 
 #endif // UPSELL_CONTROLLER_H

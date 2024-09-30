@@ -46,7 +46,8 @@ const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOU
 
 UpsellController::UpsellController(QObject* parent):
     QObject(parent),
-    mPlans(std::make_shared<UpsellPlans>())
+    mPlans(std::make_shared<UpsellPlans>()),
+    mTransferFinishTimer(nullptr)
 {
     connect(mPlans.get(),
             &UpsellPlans::monthlyChanged,
@@ -87,26 +88,6 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
 
     switch (role)
     {
-        case UpsellPlans::NAME_ROLE:
-        {
-            break;
-        }
-        case UpsellPlans::RECOMMENDED_ROLE:
-        {
-            break;
-        }
-        case UpsellPlans::STORAGE_ROLE:
-        {
-            break;
-        }
-        case UpsellPlans::TRANSFER_ROLE:
-        {
-            break;
-        }
-        case UpsellPlans::PRICE_ROLE:
-        {
-            break;
-        }
         case UpsellPlans::SELECTED_ROLE:
         {
             data->setSelected(value.toBool());
@@ -122,6 +103,16 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
             }
             break;
         }
+        case UpsellPlans::NAME_ROLE:
+        // Fallthrough
+        case UpsellPlans::RECOMMENDED_ROLE:
+        // Fallthrough
+        case UpsellPlans::STORAGE_ROLE:
+        // Fallthrough
+        case UpsellPlans::TRANSFER_ROLE:
+        // Fallthrough
+        case UpsellPlans::PRICE_ROLE:
+        // Fallthrough
         default:
         {
             result = false;
@@ -178,6 +169,12 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             case UpsellPlans::SELECTED_ROLE:
             {
                 field = data->selected();
+                break;
+            }
+            case UpsellPlans::AVAILABLE_ROLE:
+            {
+                field = mPlans->isMonthly() ? data->monthlyData().isValid() :
+                                              data->yearlyData().isValid();
                 break;
             }
             default:
@@ -263,10 +260,13 @@ QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
 
 void UpsellController::onBilledPeriodChanged()
 {
+    updatePlans();
+
     emit dataChanged(0,
                      mPlans->size() - 1,
                      QVector<int>() << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
-                                    << UpsellPlans::PRICE_ROLE);
+                                    << UpsellPlans::PRICE_ROLE << UpsellPlans::AVAILABLE_ROLE
+                                    << UpsellPlans::RECOMMENDED_ROLE << UpsellPlans::SELECTED_ROLE);
 }
 
 void UpsellController::onTransferRemainingTimeElapsed()
@@ -309,10 +309,7 @@ void UpsellController::process(mega::MegaPricing* pricing)
         addPlan(pricing, i);
     }
 
-    if (!mPlans->plans().isEmpty())
-    {
-        setPlanDataForRecommended();
-    }
+    updatePlans();
 
     emit endInsertRows();
 }
@@ -434,32 +431,91 @@ void UpsellController::addPlan(mega::MegaPricing* pricing, int index)
     }
 }
 
-void UpsellController::setPlanDataForRecommended()
+void UpsellController::updatePlans()
 {
-    int row(0);
-    int current(Preferences::instance()->accountType());
-    auto itCurrent(
-        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), current));
-    for (const auto& plan: mPlans->plans())
+    const auto& plans(mPlans->plans());
+    if (plans.isEmpty())
     {
-        auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
-        if (itNext != ACCOUNT_TYPES_IN_ORDER.cend())
-        {
-            row = mPlans->plans().indexOf(plan);
-            break;
-        }
+        return;
     }
 
-    auto plan(mPlans->getPlan(row));
-    plan->setSelected(true);
-    plan->setRecommended(true);
-    updatePlansAt(plan, row);
+    int currentRecommendedRow(getRowForCurrentRecommended());
+    int row(getRowForNextRecommendedPlan());
+
+    if (currentRecommendedRow != row)
+    {
+        resetSelectedAndRecommended();
+
+        auto plan(mPlans->getPlan(row));
+        plan->setSelected(true);
+        plan->setRecommended(true);
+        updatePlansAt(plan, row);
+    }
 }
 
 void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row)
 {
     mPlans->setCurrentPlanSelected(row);
-    mPlans->setCurrentDiscount(
-        calculateDiscount(data->monthlyData().price(), data->yearlyData().price()));
     mPlans->setCurrentPlanName(data->name());
+
+    // Calculate discount if both monthly and yearly data are available, otherwise set it to -1
+    // to indicate that the discount is not available.
+    int discount(-1);
+    if (mPlans->getPlan(row)->monthlyData().isValid() &&
+        mPlans->getPlan(row)->yearlyData().isValid())
+    {
+        discount = calculateDiscount(data->monthlyData().price(), data->yearlyData().price());
+    }
+    mPlans->setCurrentDiscount(discount);
+}
+
+int UpsellController::getRowForNextRecommendedPlan() const
+{
+    int current(Preferences::instance()->accountType());
+    auto itCurrent =
+        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), current);
+
+    const auto& plans(mPlans->plans());
+    auto it = std::find_if(
+        plans.cbegin(),
+        plans.cend(),
+        [itCurrent, this](const auto& plan)
+        {
+            auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
+            bool isAvailable(mPlans->isMonthly() ? plan->monthlyData().isValid() :
+                                                   plan->yearlyData().isValid());
+            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && isAvailable;
+        });
+
+    return (it != plans.cend()) ? std::distance(plans.cbegin(), it) : 0;
+}
+
+void UpsellController::resetSelectedAndRecommended()
+{
+    const auto& plans(mPlans->plans());
+    std::for_each(plans.begin(),
+                  plans.end(),
+                  [](auto& plan)
+                  {
+                      plan->setRecommended(false);
+                      plan->setSelected(false);
+                  });
+}
+
+int UpsellController::getRowForCurrentRecommended()
+{
+    int currentRecommendedRow(-1);
+    const auto& plans(mPlans->plans());
+    auto it = std::find_if(plans.cbegin(),
+                           plans.cend(),
+                           [](const auto& plan)
+                           {
+                               return plan->isRecommended();
+                           });
+
+    if (it != plans.cend())
+    {
+        currentRecommendedRow = plans.indexOf(*it);
+    }
+    return currentRecommendedRow;
 }

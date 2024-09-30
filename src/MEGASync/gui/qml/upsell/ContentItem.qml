@@ -14,7 +14,7 @@ FocusScope {
 
     readonly property real minimumWidth: 664
     readonly property real itemsSpacing: 12
-    readonly property real radioButtonsSpacing: 28
+    readonly property real radioButtonsSpacing: 24
     readonly property real billedRectHorizontalPadding: 8
     readonly property real billedRectVerticalPadding: 4
     readonly property real billedRectRadius: 4
@@ -74,6 +74,7 @@ FocusScope {
                 anchors.verticalCenter: parent.verticalCenter
                 sizes: Chips.SmallSizes {}
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
+                visible: upsellPlansAccess.currentDiscount > 0
             }
 
         } // Row: billedRow
@@ -102,6 +103,7 @@ FocusScope {
                     gbTransfer: model.gbTransfer
                     price: model.price
                     selected: model.selected
+                    visible: model.available
 
                     ButtonGroup.group: planButtonGroupItem
 

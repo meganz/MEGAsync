@@ -36,7 +36,8 @@ public:
         STORAGE_ROLE,
         TRANSFER_ROLE,
         PRICE_ROLE,
-        SELECTED_ROLE
+        SELECTED_ROLE,
+        AVAILABLE_ROLE
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -51,6 +52,8 @@ public:
             AccountBillingPlanData();
             AccountBillingPlanData(int64_t gbStorage, int64_t gbTransfer, float price);
             ~AccountBillingPlanData() = default;
+
+            bool isValid() const;
 
             int64_t gBStorage() const;
             int64_t gBTransfer() const;
