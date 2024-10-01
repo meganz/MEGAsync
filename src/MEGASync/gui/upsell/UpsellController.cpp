@@ -499,7 +499,7 @@ int UpsellController::getRowForNextRecommendedPlan() const
             return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && isAvailable;
         });
 
-    return (it != plans.cend()) ? std::distance(plans.cbegin(), it) : 0;
+    return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : 0;
 }
 
 void UpsellController::resetSelectedAndRecommended()

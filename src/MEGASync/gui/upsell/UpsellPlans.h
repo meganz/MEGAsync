@@ -6,6 +6,8 @@
 #include <QList>
 #include <QObject>
 
+#include <memory>
+
 class UpsellPlans: public QObject
 {
     Q_OBJECT

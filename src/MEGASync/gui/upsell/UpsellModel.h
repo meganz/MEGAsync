@@ -3,6 +3,8 @@
 
 #include <QAbstractListModel>
 
+#include <memory>
+
 class UpsellController;
 
 class UpsellModel: public QAbstractListModel
