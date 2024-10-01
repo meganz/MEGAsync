@@ -67,7 +67,9 @@ private:
     void processGetPricingRequest(mega::MegaPricing* pricing, mega::MegaCurrency* currency);
     void process(mega::MegaPricing* pricing);
     void process(mega::MegaCurrency* currency);
-    int countNumPlans(mega::MegaPricing* pricin) const;
+    QList<std::shared_ptr<UpsellPlans::Data>> getAllowedPlans(mega::MegaPricing* pricing);
+    std::shared_ptr<UpsellPlans::Data> appendPlan(int proLevel,
+                                                  QList<std::shared_ptr<UpsellPlans::Data>>& plans);
     bool isProLevelValid(int proLevel) const;
     QUrl getUpsellPlanUrl(int proLevel);
     QString getLocalePriceString(float price) const;
@@ -75,7 +77,6 @@ private:
                                                                            int transfer,
                                                                            int price) const;
     int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
-    void addPlan(mega::MegaPricing* pricing, int index);
     void updatePlans();
     void updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row);
     int getRowForNextRecommendedPlan() const;

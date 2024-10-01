@@ -111,7 +111,7 @@ public:
         void setCurrencyName(const QString& newCurrencyName);
     };
 
-    bool addPlan(std::shared_ptr<Data> plan);
+    void addPlans(const QList<std::shared_ptr<Data>>& plans);
 
     QList<std::shared_ptr<Data>> plans() const;
     std::shared_ptr<UpsellPlans::Data> getPlan(int index) const;

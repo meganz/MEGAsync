@@ -47,7 +47,7 @@ const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOU
 
 UpsellController::UpsellController(QObject* parent):
     QObject(parent),
-    mPlans(std::make_shared<UpsellPlans>()),
+    mPlans(std::make_shared<UpsellPlans>(nullptr)),
     mTransferFinishTimer(nullptr)
 {
     connect(mPlans.get(),
@@ -306,20 +306,15 @@ void UpsellController::processGetPricingRequest(mega::MegaPricing* pricing,
 
 void UpsellController::process(mega::MegaPricing* pricing)
 {
-    auto numPlans(countNumPlans(pricing));
-
-    emit beginInsertRows(0, numPlans - 1);
-
-    for (int i = 0; i < pricing->getNumProducts(); ++i)
+    QList<std::shared_ptr<UpsellPlans::Data>> plans(getAllowedPlans(pricing));
+    if (plans.isEmpty())
     {
-        if (!isProLevelValid(pricing->getProLevel(i)))
-        {
-            continue;
-        }
-
-        addPlan(pricing, i);
+        return;
     }
 
+    emit beginInsertRows(0, plans.size() - 1);
+
+    mPlans->addPlans(plans);
     updatePlans();
 
     emit endInsertRows();
@@ -346,24 +341,57 @@ void UpsellController::process(mega::MegaCurrency* currency)
     mPlans->setBillingCurrency(localByteSymbol.isEmpty());
 }
 
-int UpsellController::countNumPlans(mega::MegaPricing* pricing) const
+QList<std::shared_ptr<UpsellPlans::Data>>
+    UpsellController::getAllowedPlans(mega::MegaPricing* pricing)
 {
-    auto numProducts(0);
-    QSet<int> processedProLevels;
+    QList<std::shared_ptr<UpsellPlans::Data>> plans;
     for (int i = 0; i < pricing->getNumProducts(); ++i)
     {
-        auto proLevel = pricing->getProLevel(i);
-
-        if (!isProLevelValid(proLevel) || processedProLevels.contains(proLevel))
+        auto proLevel(pricing->getProLevel(i));
+        if (!isProLevelValid(proLevel))
         {
             continue;
         }
 
-        processedProLevels.insert(proLevel);
-        numProducts++;
+        auto plan(appendPlan(proLevel, plans));
+        int price(mPlans->isBillingCurrency() ? pricing->getAmount(i) : pricing->getLocalPrice(i));
+        auto planData(createAccountBillingPlanData(pricing->getGBStorage(i),
+                                                   pricing->getGBTransfer(i),
+                                                   price));
+        if (pricing->getMonths(i) == MONTH_PERIOD)
+        {
+            plan->setMonthlyData(planData);
+        }
+        else if (pricing->getMonths(i) == YEAR_PERIOD)
+        {
+            plan->setYearlyData(planData);
+        }
+    }
+    return plans;
+}
+
+std::shared_ptr<UpsellPlans::Data>
+    UpsellController::appendPlan(int proLevel, QList<std::shared_ptr<UpsellPlans::Data>>& plans)
+{
+    QString name(Utilities::getReadablePlanFromId(proLevel, true));
+    std::shared_ptr<UpsellPlans::Data> plan(nullptr);
+    auto it = std::find_if(plans.begin(),
+                           plans.end(),
+                           [proLevel](const std::shared_ptr<UpsellPlans::Data>& existingPlan)
+                           {
+                               return existingPlan->proLevel() == proLevel;
+                           });
+    if (it != plans.end())
+    {
+        plan = *it;
+    }
+    else
+    {
+        plan = std::make_shared<UpsellPlans::Data>(proLevel, name);
+        plans.append(plan);
     }
 
-    return numProducts;
+    return plan;
 }
 
 bool UpsellController::isProLevelValid(int proLevel) const
@@ -422,34 +450,8 @@ int UpsellController::calculateDiscount(float monthlyPrice, float yearlyPrice) c
                             (yearlyPrice * PERCENTAGE) / (monthlyPrice * NUM_MONTHS_PER_PLAN));
 }
 
-void UpsellController::addPlan(mega::MegaPricing* pricing, int index)
-{
-    auto proLevel(pricing->getProLevel(index));
-    QString name(Utilities::getReadablePlanFromId(proLevel, true));
-    int price(mPlans->isBillingCurrency() ? pricing->getAmount(index) :
-                                            pricing->getLocalPrice(index));
-    auto planData(createAccountBillingPlanData(pricing->getGBStorage(index),
-                                               pricing->getGBTransfer(index),
-                                               price));
-    if (mPlans->addPlan(std::make_shared<UpsellPlans::Data>(proLevel, name)) &&
-        pricing->getMonths(index) == MONTH_PERIOD)
-    {
-        mPlans->getPlanByProLevel(proLevel)->setMonthlyData(planData);
-    }
-    else if (pricing->getMonths(index) == YEAR_PERIOD)
-    {
-        mPlans->getPlanByProLevel(proLevel)->setYearlyData(planData);
-    }
-}
-
 void UpsellController::updatePlans()
 {
-    const auto& plans(mPlans->plans());
-    if (plans.isEmpty())
-    {
-        return;
-    }
-
     int currentRecommendedRow(getRowForCurrentRecommended());
     int row(getRowForNextRecommendedPlan());
     if (currentRecommendedRow != row)

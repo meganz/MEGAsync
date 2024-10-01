@@ -14,35 +14,14 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mTransferFinishTime(0ll)
 {}
 
-bool UpsellPlans::addPlan(std::shared_ptr<Data> plan)
+void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
 {
-    if (!plan || std::any_of(mPlans.begin(),
-                             mPlans.end(),
-                             [&plan](const std::shared_ptr<Data>& existingPlan)
-                             {
-                                 return existingPlan->proLevel() == plan->proLevel();
-                             }))
-    {
-        return false;
-    }
-    mPlans.append(plan);
-    return true;
+    mPlans.append(plans);
 }
 
 std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlan(int index) const
 {
     return mPlans.at(index);
-}
-
-std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlanByProLevel(int proLevel) const
-{
-    auto it = std::find_if(mPlans.begin(),
-                           mPlans.end(),
-                           [proLevel](const std::shared_ptr<Data>& plan)
-                           {
-                               return plan->proLevel() == proLevel;
-                           });
-    return it != mPlans.end() ? *it : nullptr;
 }
 
 int UpsellPlans::size() const
