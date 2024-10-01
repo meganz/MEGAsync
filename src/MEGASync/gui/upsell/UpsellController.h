@@ -12,7 +12,6 @@
 
 namespace mega
 {
-class QTMegaRequestListener;
 class MegaRequest;
 class MegaError;
 class MegaPricing;
@@ -60,7 +59,6 @@ private slots:
     void onTransferRemainingTimeElapsed();
 
 private:
-    std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
     std::shared_ptr<UpsellPlans> mPlans;
     QTimer* mTransferFinishTimer;
 

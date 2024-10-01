@@ -55,8 +55,8 @@ UpsellController::UpsellController(QObject* parent):
             this,
             &UpsellController::onBilledPeriodChanged);
 
-    mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
-    MegaSyncApp->getMegaApi()->getPricing(mDelegateListener.get());
+    auto listener(RequestListenerManager::instance().registerAndGetFinishListener(this));
+    MegaSyncApp->getMegaApi()->getPricing(listener.get());
 }
 
 void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
