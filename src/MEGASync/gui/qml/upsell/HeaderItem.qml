@@ -102,6 +102,7 @@ FocusScope {
                         }
                     }
                     onLinkClicked: {
+                        upsellComponentAccess.linkInDescriptionClicked();
                         switch (upsellPlansAccess.viewMode) {
                             case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
                             case UpsellPlans.ViewMode.STORAGE_FULL:

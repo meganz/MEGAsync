@@ -3,6 +3,13 @@
 #include "UpsellController.h"
 #include "UpsellModel.h"
 
+namespace
+{
+const QLatin1String
+    URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
+const QLatin1String URL_RUBBISH("mega://#fm/rubbish");
+}
+
 static bool qmlRegistrationDone = false;
 
 UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
@@ -55,7 +62,30 @@ void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
     mController->setBilledPeriod(isMonthly);
 }
 
-void UpsellComponent::rubbishLinkClicked()
+void UpsellComponent::linkInDescriptionClicked()
 {
-    Utilities::openUrl(QUrl(QString::fromLatin1("mega://#fm/rubbish")));
+    QString urlString;
+    switch (viewMode())
+    {
+        case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
+        case UpsellPlans::ViewMode::STORAGE_FULL:
+        {
+            urlString = URL_RUBBISH;
+            break;
+        }
+        case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
+        {
+            urlString = URL_ABOUT_TRANSFER_QUOTA;
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+    if (!urlString.isEmpty())
+    {
+        Utilities::openUrl(QUrl(urlString));
+    }
 }

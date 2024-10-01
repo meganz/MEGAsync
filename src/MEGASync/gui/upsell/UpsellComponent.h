@@ -28,7 +28,7 @@ public:
 public slots:
     void buyButtonClicked();
     void billedRadioButtonClicked(bool isMonthly);
-    void rubbishLinkClicked();
+    void linkInDescriptionClicked();
 
 private:
     std::shared_ptr<UpsellController> mController;
