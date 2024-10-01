@@ -427,7 +427,10 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::createUpsellController()
 {
-    mUpsellController = new UpsellController();
+    if (!mUpsellController)
+    {
+        mUpsellController = std::make_unique<UpsellController>(nullptr);
+    }
 }
 
 void InfoDialog::setUsage()

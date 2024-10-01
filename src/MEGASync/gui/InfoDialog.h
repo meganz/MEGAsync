@@ -216,7 +216,6 @@ private:
     bool isShown = false;
 
     QPointer<TransferManager> mTransferManager;
-    QPointer<UpsellController> mUpsellController;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
@@ -233,6 +232,8 @@ private:
     void showSomeIssues();
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
     MegaDelegateHoverManager mNotificationsViewHoverManager;
+
+    std::unique_ptr<UpsellController> mUpsellController;
 
     void updateUpgradeButtonText();
 
