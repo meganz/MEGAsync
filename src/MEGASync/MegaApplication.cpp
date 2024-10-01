@@ -728,10 +728,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mTransfersModel = new TransfersModel(nullptr);
+    mTransfersModel = new TransfersModel();
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
-    mStalledIssuesModel = new StalledIssuesModel(this);
+    mStalledIssuesModel = new StalledIssuesModel();
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
@@ -2206,8 +2206,6 @@ void MegaApplication::cleanAll()
     mLinkProcessor = nullptr;
     delete mSetManager;
     mSetManager = nullptr;
-    delete mStalledIssuesModel;
-    mStalledIssuesModel = nullptr;
     delete httpServer;
     httpServer = nullptr;
     delete uploader;
@@ -2233,6 +2231,14 @@ void MegaApplication::cleanAll()
     mBackupsMenu->deleteLater();
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
+
+    // Remove models using deleteLater to be sure that they are removed after removing Transfer and
+    // Stalled issues dialogs. Otherwise we need to set to null the view models as the views will
+    // contain dangling pointers
+    mStalledIssuesModel->deleteLater();
+    mStalledIssuesModel = nullptr;
+    mTransfersModel->deleteLater();
+    mTransfersModel = nullptr;
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
