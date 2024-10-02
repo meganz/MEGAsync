@@ -5657,18 +5657,12 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
-- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
-- An installation issue which caused some Windows .dll files to be deleted has been resolved.
-- Third-party libraries have been updated.
+        <source>- We’ve improved the automatic and manual resolution of sync issues.
+- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
-- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
-- An installation issue which caused some Windows .dll files to be deleted has been resolved.
-- Third-party libraries have been updated.
-- Other bugs have been fixed and numerous improvements made.</translation>
+        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
