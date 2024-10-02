@@ -27,7 +27,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/ChangeLogDialog.h
     gui/StreamingFromMegaDialog.h
     gui/MegaProgressCustomDialog.h
-    gui/UpgradeDialog.h
     gui/PlanWidget.h
     gui/QMegaMessageBox.h
     gui/AvatarWidget.h
@@ -35,7 +34,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/StatusInfo.h
     gui/PSAwidget.h
     gui/ElidedLabel.h
-    gui/UpgradeOverStorage.h
     gui/ChangePassword.h
     gui/Login2FA.h
     gui/QRWidget.h
@@ -113,6 +111,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/upsell/UpsellComponent.h
+    gui/upsell/UpsellController.h
+    gui/upsell/UpsellModel.h
+    gui/upsell/UpsellPlans.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
     gui/user_messages/AlertItem.h
@@ -161,7 +162,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/ChangeLogDialog.cpp
     gui/StreamingFromMegaDialog.cpp
     gui/MegaProgressCustomDialog.cpp
-    gui/UpgradeDialog.cpp
     gui/PlanWidget.cpp
     gui/QMegaMessageBox.cpp
     gui/AvatarWidget.cpp
@@ -170,7 +170,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/ChangePassword.cpp
     gui/PSAwidget.cpp
     gui/ElidedLabel.cpp
-    gui/UpgradeOverStorage.cpp
     gui/Login2FA.cpp
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
@@ -244,6 +243,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/upsell/UpsellComponent.cpp
+    gui/upsell/UpsellController.cpp
+    gui/upsell/UpsellModel.cpp
+    gui/upsell/UpsellPlans.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp
@@ -277,10 +279,8 @@ target_sources_conditional(MEGAsync
     gui/win/StreamingFromMegaDialog.ui
     gui/win/MegaProgressCustomDialog.ui
     gui/win/PlanWidget.ui
-    gui/win/UpgradeDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
-    gui/win/UpgradeOverStorage.ui
     gui/win/Login2FA.ui
     gui/win/AlertItem.ui
     gui/win/FilterAlertWidget.ui
@@ -317,10 +317,8 @@ target_sources_conditional(MEGAsync
    gui/macx/StreamingFromMegaDialog.ui
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
-   gui/macx/UpgradeDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
-   gui/macx/UpgradeOverStorage.ui
    gui/macx/Login2FA.ui
    gui/macx/AlertItem.ui
    gui/macx/FilterAlertWidget.ui
@@ -357,10 +355,8 @@ target_sources_conditional(MEGAsync
     gui/linux/StreamingFromMegaDialog.ui
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
-    gui/linux/UpgradeDialog.ui
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
-    gui/linux/UpgradeOverStorage.ui
     gui/linux/Login2FA.ui
     gui/linux/AlertItem.ui
     gui/linux/FilterAlertWidget.ui

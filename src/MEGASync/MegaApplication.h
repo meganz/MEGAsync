@@ -23,7 +23,6 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
-#include "UpgradeOverStorage.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -183,8 +182,6 @@ public:
     void requestUserData(); //groups user attributes retrieving, getting PSA, ... to be retrieved after login in
 
     void updateTrayIconMenu();
-
-    std::shared_ptr<mega::MegaPricing> getPricing() const;
 
     QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
@@ -420,9 +417,6 @@ protected:
     long long receivedStorageSum;
     unsigned long long mMaxMemoryUsage;
     int exportOps;
-    std::shared_ptr<mega::MegaPricing> mPricing;
-    std::shared_ptr<mega::MegaCurrency> mCurrency;
-    QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -605,6 +599,7 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+    void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
 

@@ -12,8 +12,6 @@ public:
 
     QUrl getQmlUrl() override;
 
-    QString contextName() override;
-
     Q_INVOKABLE void appendRuleToFolders(int targetType, int wildCard, QString ruleValue);
 
 private:

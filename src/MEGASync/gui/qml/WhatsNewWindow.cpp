@@ -15,11 +15,6 @@ QUrl WhatsNewWindow::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/whatsNew/WhatsNewDialog.qml"));
 }
 
-QString WhatsNewWindow::contextName()
-{
-    return QString::fromUtf8("whatsNewWindowAccess");
-}
-
 QString WhatsNewWindow::acceptButtonText()
 {
     if (!mController)

@@ -13,7 +13,6 @@ public:
     explicit Backups(QObject* parent = 0);
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
 
     static void registerQmlModules();
 

@@ -24,9 +24,30 @@ RoundButton {
     readonly property int borderWidth: 1
 
     property alias name: titleText.text
-    property alias price: priceText.text
 
+    property bool selected: false
     property bool recommended: false
+    property string gbStorage: ""
+    property string gbTransfer: ""
+    property string price: ""
+
+    function getBackgroundColor() {
+        if(root.hovered) {
+            return ColorTheme.buttonOutlineBackgroundHover;
+        }
+        else {
+            return ColorTheme.pageBackground;
+        }
+    }
+
+    function getBorderColor() {
+        if(root.pressed || root.selected) {
+            return ColorTheme.borderStrongSelected;
+        }
+        else {
+            return ColorTheme.borderStrong;
+        }
+    }
 
     width: root.totalWidth
     height: root.totalHeight
@@ -100,7 +121,7 @@ RoundButton {
                     }
                     lineHeight: root.priceLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: UpsellStrings.priceEuro // TODO: replace depending on the currency
+                    text: price
                 }
 
                 SecondaryText {
@@ -110,7 +131,20 @@ RoundButton {
                         left: parent.left
                         right: parent.right
                     }
-                    text: UpsellStrings.perMonth // TODO: replace depending on the currency
+                    text: {
+                        if (upsellPlansAccess.billingCurrency) {
+                            return upsellPlansAccess.monthly
+                                    ? UpsellStrings.perMonth
+                                    : UpsellStrings.perYear;
+                        }
+                        else {
+                            return upsellPlansAccess.monthly
+                                    ? UpsellStrings.perMonthWithBillingCurrency
+                                        .arg(upsellPlansAccess.currencyName)
+                                    : UpsellStrings.perYearWithBillingCurrency
+                                        .arg(upsellPlansAccess.currencyName);
+                        }
+                    }
                 }
             }
 
@@ -133,7 +167,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: UpsellStrings.storage // TODO: replace depending on the plan
+                text: UpsellStrings.storage.arg(gbStorage)
             }
 
             Text {
@@ -144,7 +178,7 @@ RoundButton {
                     right: parent.right
                 }
                 font.weight: Font.DemiBold
-                text: UpsellStrings.transfer // TODO: replace depending on the plan
+                text: UpsellStrings.transfer.arg(gbTransfer)
             }
         }
 
@@ -168,9 +202,19 @@ RoundButton {
             }
             border {
                 width: root.borderWidth
-                color: ColorTheme.borderStrongSelected
+                color: getBorderColor()
             }
             radius: root.backgroundRadius
+            color: getBackgroundColor()
+        }
+    }
+
+    Keys.onPressed: {
+        if (event.key === Qt.Key_Return
+                || event.key === Qt.Key_Enter
+                || event.key === Qt.Key_Space) {
+            root.clicked();
+            event.accepted = true;
         }
     }
 

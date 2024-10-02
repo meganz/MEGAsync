@@ -5,6 +5,8 @@ import common 1.0
 import components.images 1.0
 import components.texts 1.0
 
+import UpsellPlans 1.0
+
 FocusScope {
     id: root
 
@@ -64,7 +66,18 @@ FocusScope {
                     }
                     lineHeight: root.titleLineHeight
                     lineHeightMode: Text.FixedHeight
-                    text: UpsellStrings.storageAlmostFullTitle // TODO: Replace by the text for each case (almost/full storage, transfer)
+                    text: {
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                                return UpsellStrings.storageAlmostFullTitle;
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                return UpsellStrings.storageFullTitle;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                return UpsellStrings.transferQuotaExceededTitle;
+                            default:
+                                return "";
+                        }
+                    }
                 }
 
                 SecondaryText {
@@ -74,10 +87,34 @@ FocusScope {
                     lineHeight: root.textLineHeight
                     lineHeightMode: Text.FixedHeight
                     urlColor: ColorTheme.textSecondary
-                    urlVisitedColor: ColorTheme.textSecondary
                     underlineLink: true
-                    url: Links.contact // TODO: Add link to rubish bin
-                    rawText: UpsellStrings.storageAlmostFullText // TODO: Replace by the text for each case (almost/full storage, transfer)
+                    manageClick: true
+                    rawText: {
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                return UpsellStrings.storageText;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                return UpsellStrings.transferQuotaExceededText
+                                            .arg(upsellPlansAccess.transferRemainingTime);
+                            default:
+                                return "";
+                        }
+                    }
+                    onLinkClicked: {
+                        upsellComponentAccess.linkInDescriptionClicked();
+                        switch (upsellPlansAccess.viewMode) {
+                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                            case UpsellPlans.ViewMode.STORAGE_FULL:
+                                upsellComponentAccess.rubbishLinkClicked();
+                                break;
+                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                Qt.openUrlExternally(Links.aboutTransferQuota);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
 

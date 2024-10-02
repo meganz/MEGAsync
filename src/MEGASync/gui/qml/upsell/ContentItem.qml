@@ -7,12 +7,14 @@ import components.texts 1.0
 import components.buttons 1.0
 import components.chips 1.0 as Chips
 
+import UpsellPlans 1.0
+
 FocusScope {
     id: root
 
     readonly property real minimumWidth: 664
     readonly property real itemsSpacing: 12
-    readonly property real radioButtonsSpacing: 28
+    readonly property real radioButtonsSpacing: 24
     readonly property real billedRectHorizontalPadding: 8
     readonly property real billedRectVerticalPadding: 4
     readonly property real billedRectRadius: 4
@@ -44,16 +46,25 @@ FocusScope {
                 RadioButton {
                     id: billedMonthlyRadioButton
 
-                    checked: true
+                    checked: upsellPlansAccess.monthly
                     text: UpsellStrings.billedMonthly
-                    ButtonGroup.group: buttonGroupItem
+                    ButtonGroup.group: billedPeriodButtonGroupItem
+
+                    onCheckedChanged: {
+                        upsellComponentAccess.billedRadioButtonClicked(true);
+                    }
                 }
 
                 RadioButton {
                     id: billedYearlyRadioButton
 
+                    checked: !upsellPlansAccess.monthly
                     text: UpsellStrings.billedYearly
-                    ButtonGroup.group: buttonGroupItem
+                    ButtonGroup.group: billedPeriodButtonGroupItem
+
+                    onCheckedChanged: {
+                        upsellComponentAccess.billedRadioButtonClicked(false);
+                    }
                 }
             }
 
@@ -62,7 +73,8 @@ FocusScope {
 
                 anchors.verticalCenter: parent.verticalCenter
                 sizes: Chips.SmallSizes {}
-                text: UpsellStrings.billedSaveUpText
+                text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
+                visible: upsellPlansAccess.currentDiscount > 0
             }
 
         } // Row: billedRow
@@ -77,53 +89,30 @@ FocusScope {
             }
             spacing: root.plansRowSpacing
 
-            /*
-            TODO: Replace by real model using repeater
-
             Repeater {
                 id: plansRepeater
 
-                model: PlanModel {
-                    id: plans
-                }
+                model: upsellModelAccess
 
                 PlanCard {
                     id: card
 
                     name: model.name
+                    recommended: model.recommended
+                    gbStorage: model.gbStorage
+                    gbTransfer: model.gbTransfer
                     price: model.price
+                    selected: model.selected
+                    visible: model.available
+
+                    ButtonGroup.group: planButtonGroupItem
+
+                    onClicked: {
+                        if (!model.selected) {
+                            model.selected = true;
+                        }
+                    }
                 }
-
-            }
-            */
-
-            PlanCard {
-                id: card1
-
-                name: "Pro Flexi"
-                price: "€X.XX*"
-                recommended: true
-            }
-
-            PlanCard {
-                id: card2
-
-                name: "Pro I"
-                price: "€X.XX*"
-            }
-
-            PlanCard {
-                id: card3
-
-                name: "Pro II"
-                price: "€X.XX*"
-            }
-
-            PlanCard {
-                id: card4
-
-                name: "Pro III"
-                price: "€X.XX*"
             }
 
         } // Row: plansRow
@@ -134,6 +123,7 @@ FocusScope {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             text: UpsellStrings.estimatedPrice
+            visible: !upsellPlansAccess.billingCurrency
         }
 
         Row {
@@ -145,20 +135,40 @@ FocusScope {
             SecondaryButton {
                 id: leftButton
 
-                text: UpsellStrings.notNow
+                text: {
+                    switch (upsellPlansAccess.viewMode) {
+                        case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                        case UpsellPlans.ViewMode.STORAGE_FULL:
+                            return UpsellStrings.notNow;
+                        case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                            return UpsellStrings.iWillWait;
+                        default:
+                            return "";
+                    }
+                }
+                onClicked: {
+                    window.close();
+                }
             }
 
             PrimaryButton {
                 id: rightButton
 
-                text: UpsellStrings.buyPro
+                text: UpsellStrings.buyPlan.arg(upsellPlansAccess.currentPlanName)
+                onClicked: {
+                    upsellComponentAccess.buyButtonClicked();
+                }
             }
         }
 
     } // Column: columnItem
 
     ButtonGroup {
-        id: buttonGroupItem
+        id: billedPeriodButtonGroupItem
+    }
+
+    ButtonGroup {
+        id: planButtonGroupItem
     }
 
 }

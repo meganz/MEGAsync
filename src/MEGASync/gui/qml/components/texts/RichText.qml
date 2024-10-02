@@ -10,13 +10,15 @@ Text {
 
     property url url: defaultUrl
     property bool manageMouse: false
-    property bool hovered: false
     property bool manageHover: false
+    property bool manageClick: false
+    property bool hovered: false
     property bool visited: false
     property bool underlineLink: false
     property color urlColor: ColorTheme.linkPrimary
-    property color urlVisitedColor: ColorTheme.linkVisited
     property string rawText: ""
+
+    signal linkClicked
 
     function updateLinkColor() {
         var color = ColorTheme.linkPrimary;
@@ -24,7 +26,7 @@ Text {
             color = ColorTheme.notificationInfo;
         }
         else if(visited) {
-            color = root.urlVisitedColor;
+            color = ColorTheme.linkVisited;
         }
         root.text = root.text.replace("color:" + urlColor, "color:" + color);
         urlColor = color;
@@ -143,8 +145,13 @@ Text {
     }
 
     onLinkActivated: {
-        if(url != defaultUrl) {
-            Qt.openUrlExternally(url);
+        if(url != defaultUrl || manageClick) {
+            if(!manageClick) {
+                Qt.openUrlExternally(url);
+            }
+            else {
+                linkClicked();
+            }
             visited = true;
             updateLinkColor();
         }

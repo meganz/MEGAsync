@@ -22,7 +22,6 @@ public:
     void openGuestDialog();
     bool openOnboardingDialog();
     bool openWhatsNewDialog();
-    void openUpsellDialog();
 
     bool raiseGuestDialog();
     void raiseOnboardingDialog();

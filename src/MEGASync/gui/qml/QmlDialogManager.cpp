@@ -9,7 +9,6 @@
 #include "Onboarding.h"
 #include "OnboardingQmlDialog.h"
 #include "QmlDialogWrapper.h"
-#include "UpsellComponent.h"
 #include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
@@ -141,22 +140,4 @@ bool QmlDialogManager::openWhatsNewDialog()
         whatsNew->raise();
     }
     return true;
-}
-
-void QmlDialogManager::openUpsellDialog()
-{
-    // TODO: Review how to display the upsell dialog
-    // For now, this is the faster way to display the upsell dialog since this task is only focused
-    // in UX/UI In the following MRs we will review the upsell dialog and how to display it
-    QPointer<QmlDialogWrapper<UpsellComponent>> upsellDialog;
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
-    {
-        upsellDialog = dialog->getDialog();
-    }
-    else
-    {
-        upsellDialog = new QmlDialogWrapper<UpsellComponent>();
-    }
-
-    DialogOpener::showDialog(upsellDialog);
 }

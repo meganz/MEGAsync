@@ -13,6 +13,7 @@
 #include "StatsEventHandler.h"
 #include "TransferManager.h"
 #include "ui_InfoDialog.h"
+#include "UpsellController.h"
 #include "UserMessageController.h"
 #include "UserMessageDelegate.h"
 #include "Utilities.h"
@@ -90,16 +91,17 @@ void InfoDialog::upAreaHovered(QMouseEvent *event)
     QToolTip::showText(event->globalPos(), tr("Open Uploads"));
 }
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
+InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddialog):
     QDialog(parent),
     ui(new Ui::InfoDialog),
-    mIndexing (false),
-    mWaiting (false),
-    mSyncing (false),
-    mTransferring (false),
+    mIndexing(false),
+    mWaiting(false),
+    mSyncing(false),
+    mTransferring(false),
     mTransferManager(nullptr),
-    mPreferences (Preferences::instance()),
-    mSyncInfo (SyncInfo::instance()),
+    mUpsellController(nullptr),
+    mPreferences(Preferences::instance()),
+    mSyncInfo(SyncInfo::instance()),
     qtBugFixer(this)
 {
     ui->setupUi(this);
@@ -275,6 +277,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         setAvatar();
         setUsage();
+        createUpsellController();
     }
     highDpiResize.init(this);
 
@@ -420,6 +423,14 @@ void InfoDialog::hideEvent(QHideEvent *event)
 void InfoDialog::setAvatar()
 {
     ui->bAvatar->setUserEmail(mPreferences->email().toUtf8().constData());
+}
+
+void InfoDialog::createUpsellController()
+{
+    if (!mUpsellController)
+    {
+        mUpsellController = std::make_unique<UpsellController>(nullptr);
+    }
 }
 
 void InfoDialog::setUsage()
@@ -856,50 +867,77 @@ void InfoDialog::updateDialogState()
 
     if (storageState == Preferences::STATE_PAYWALL)
     {
-        MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
-        const char *email = megaApi->getMyEmail();
-
-        long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() + mPreferences->rubbishFiles()};
-        QString contactMessage = tr("We have contacted you by email to [A] on [B] but you still have %n file taking up [D] in your MEGA account, which requires you to have [E].", "", static_cast<int>(numFiles));
-        QString overDiskText = QString::fromUtf8("<p style='line-height: 20px;'>") + contactMessage
-                .replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
-                .replace(QString::fromUtf8("[B]"), Utilities::getReadableStringFromTs(tsWarnings))
-                .replace(QString::fromUtf8("[D]"), Utilities::getSizeString(mPreferences->usedStorage()))
-                .replace(QString::fromUtf8("[E]"), Utilities::minProPlanNeeded(MegaSyncApp->getPricing(), mPreferences->usedStorage()))
-                + QString::fromUtf8("</p>");
-        ui->lOverDiskQuotaLabel->setText(overDiskText);
-
-        int64_t remainDaysOut(0);
-        int64_t remainHoursOut(0);
-        Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000, remainDaysOut, remainHoursOut);
-        if (remainDaysOut > 0)
+        if (mUpsellController)
         {
-            QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, your data is subject to deletion.", "", static_cast<int>(remainDaysOut));
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionDays
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                    + QString::fromUtf8("</p>"));
-        }
-        else if (remainDaysOut == 0 && remainHoursOut > 0)
-        {
-            QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After that, your data is subject to deletion.", "", static_cast<int>(remainHoursOut));
-            ui->lWarningOverDiskQuota->setText(QString::fromUtf8("<p style='line-height: 20px;'>") + descriptionHours
-                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style='color: #FF6F00;'>"))
-                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-                    + QString::fromUtf8("</p>"));
-        }
-        else
-        {
-            ui->lWarningOverDiskQuota->setText(tr("You must act immediately to save your data"));
-        }
+            MegaIntegerList* tsWarnings = megaApi->getOverquotaWarningsTs();
+            const char* email = megaApi->getMyEmail();
 
+            long long numFiles{mPreferences->cloudDriveFiles() + mPreferences->vaultFiles() +
+                               mPreferences->rubbishFiles()};
+            QString contactMessage =
+                tr("We have contacted you by email to [A] on [B] but you still have %n file taking "
+                   "up [D] in your MEGA account, which requires you to have [E].",
+                   "",
+                   static_cast<int>(numFiles));
 
-        delete tsWarnings;
-        delete [] email;
+            QString overDiskText =
+                QString::fromUtf8("<p style='line-height: 20px;'>") +
+                contactMessage.replace(QString::fromUtf8("[A]"), QString::fromUtf8(email))
+                    .replace(QString::fromUtf8("[B]"),
+                             Utilities::getReadableStringFromTs(tsWarnings))
+                    .replace(QString::fromUtf8("[D]"),
+                             Utilities::getSizeString(mPreferences->usedStorage()))
+                    .replace(QString::fromUtf8("[E]"),
+                             mUpsellController->getMinProPlanNeeded(mPreferences->usedStorage())) +
+                QString::fromUtf8("</p>");
+            ui->lOverDiskQuotaLabel->setText(overDiskText);
 
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
-        overlay->setVisible(false);
-        ui->wPSA->hidePSA();
+            int64_t remainDaysOut(0);
+            int64_t remainHoursOut(0);
+            Utilities::getDaysAndHoursToTimestamp(megaApi->getOverquotaDeadlineTs() * 1000,
+                                                  remainDaysOut,
+                                                  remainHoursOut);
+            if (remainDaysOut > 0)
+            {
+                QString descriptionDays = tr("You have [A]%n day[/A] left to upgrade. After that, "
+                                             "your data is subject to deletion.",
+                                             "",
+                                             static_cast<int>(remainDaysOut));
+                ui->lWarningOverDiskQuota->setText(
+                    QString::fromUtf8("<p style='line-height: 20px;'>") +
+                    descriptionDays
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("</p>"));
+            }
+            else if (remainDaysOut == 0 && remainHoursOut > 0)
+            {
+                QString descriptionHours = tr("You have [A]%n hour[/A] left to upgrade. After "
+                                              "that, your data is subject to deletion.",
+                                              "",
+                                              static_cast<int>(remainHoursOut));
+                ui->lWarningOverDiskQuota->setText(
+                    QString::fromUtf8("<p style='line-height: 20px;'>") +
+                    descriptionHours
+                        .replace(QString::fromUtf8("[A]"),
+                                 QString::fromUtf8("<span style='color: #FF6F00;'>"))
+                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+                    QString::fromUtf8("</p>"));
+            }
+            else
+            {
+                ui->lWarningOverDiskQuota->setText(
+                    tr("You must act immediately to save your data"));
+            }
+
+            delete tsWarnings;
+            delete[] email;
+
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverDiskQuotaPaywall);
+            overlay->setVisible(false);
+            ui->wPSA->hidePSA();
+        }
     }
     else if(storageState == Preferences::STATE_OVER_STORAGE)
     {

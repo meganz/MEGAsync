@@ -45,6 +45,7 @@
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
+#include "UpsellComponent.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
@@ -311,9 +312,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     updateBlocked = false;
     updateThread = nullptr;
     updateTask = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
-    mStorageOverquotaDialog = nullptr;
     mTransferManager = nullptr;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
@@ -1256,7 +1254,6 @@ void MegaApplication::requestUserData()
     UserAttributes::FullName::requestFullName();
     UserAttributes::Avatar::requestAvatar();
 
-    megaApi->getPricing();
     megaApi->getFileVersionsOption();
     megaApi->getPSA();
 }
@@ -1336,6 +1333,7 @@ if (!preferences->lastExecutionTime())
     infoDialog->setUsage();
     infoDialog->setAvatar();
     infoDialog->setAccountType(preferences->accountType());
+    infoDialog->createUpsellController();
 
     if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -1963,7 +1961,10 @@ void MegaApplication::checkMemoryUsage()
 
 void MegaApplication::checkOverStorageStates()
 {
-    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) && !mStorageOverquotaDialog && !Platform::getInstance()->isUserActive()))
+    // TODO: REVIEW THIS (NEXT TASK)
+    auto existsUpsellDialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
+    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) &&
+                                   !existsUpsellDialog && !Platform::getInstance()->isUserActive()))
     {
         return;
     }
@@ -1975,10 +1976,7 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            if (!mStorageOverquotaDialog)
-            {
-                mStorageOverquotaDialog = new UpgradeOverStorage(megaApi, mPricing, mCurrency);
-            }
+            QMLComponent::openDialog<UpsellComponent>(nullptr, UpsellPlans::ViewMode::STORAGE_FULL);
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2034,10 +2032,8 @@ void MegaApplication::checkOverStorageStates()
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
 
-        if(mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->close();
-        }
+        // TODO: REVIEW THIS (NEXT TASK)
+        closeUpsellStorageDialog();
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
@@ -2060,10 +2056,8 @@ void MegaApplication::checkOverStorageStates()
                 }
             }
 
-            if(mStorageOverquotaDialog)
-            {
-                mStorageOverquotaDialog->close();
-            }
+            // TODO: REVIEW THIS (NEXT TASK)
+            closeUpsellStorageDialog();
         }
     }
     else
@@ -2073,10 +2067,8 @@ void MegaApplication::checkOverStorageStates()
             infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         }
 
-        if(mStorageOverquotaDialog)
-        {
-            mStorageOverquotaDialog->close();
-        }
+        // TODO: REVIEW THIS (NEXT TASK)
+        closeUpsellStorageDialog();
     }
 
     if (infoDialog)
@@ -2205,8 +2197,6 @@ void MegaApplication::cleanAll()
     downloader = nullptr;
     delete delegateListener;
     delegateListener = nullptr;
-    mPricing.reset();
-    mCurrency.reset();
 
     mGfxProvider.reset();
     mUserMessageController.reset();
@@ -2555,11 +2545,6 @@ int MegaApplication::getAppliedStorageState() const
 bool MegaApplication::isAppliedStorageOverquota() const
 {
     return appliedStorageState == MegaApi::STORAGE_STATE_RED || appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL;
-}
-
-std::shared_ptr<MegaPricing> MegaApplication::getPricing() const
-{
-    return mPricing;
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -4525,6 +4510,19 @@ void MegaApplication::createGfxProvider(const QString& basePath)
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
+void MegaApplication::closeUpsellStorageDialog()
+{
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
+    {
+        auto viewMode(dialog->getDialog()->wrapper()->viewMode());
+        if (viewMode == UpsellPlans::ViewMode::STORAGE_FULL ||
+            viewMode == UpsellPlans::ViewMode::STORAGE_ALMOST_FULL)
+        {
+            dialog->close();
+        }
+    }
+}
+
 void MegaApplication::processSetDownload(const QString& publicLink,
                                          const QList<MegaHandle>& elementHandleList)
 {
@@ -5120,7 +5118,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         DialogOpener::raiseAllDialogs();
         QmlDialogManager::instance()->raiseOnboardingDialog();
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
-
     }
 #ifdef Q_OS_WINDOWS
     else if (reason == QSystemTrayIcon::DoubleClick)
@@ -5615,13 +5612,8 @@ void MegaApplication::refreshStorageUIs()
         infoDialog->setUsage();
     }
 
-    AccountDetailsManager::instance()
-        ->notifyStorageObservers(); // Ideally this should be the only call here
-
-    if (mStorageOverquotaDialog)
-    {
-        mStorageOverquotaDialog->refreshStorageDetails();
-    }
+    // Ideally this should be the only call here
+    AccountDetailsManager::instance()->notifyStorageObservers();
 }
 
 void MegaApplication::manageBusinessStatus(int64_t event)
@@ -5795,28 +5787,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             showErrorMessage(tr("Error getting link: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
         }
 
-        break;
-    }
-    case MegaRequest::TYPE_GET_PRICING:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaPricing* pricing (request->getPricing());
-            MegaCurrency* currency (request->getCurrency());
-
-            if (pricing && currency)
-            {
-                mPricing.reset(pricing);
-                mCurrency.reset(currency);
-
-                mTransferQuota->setOverQuotaDialogPricing(mPricing, mCurrency);
-
-                if (mStorageOverquotaDialog)
-                {
-                    mStorageOverquotaDialog->setPricing(mPricing, mCurrency);
-                }
-            }
-        }
         break;
     }
     case MegaRequest::TYPE_SET_ATTR_USER:
@@ -6166,8 +6136,8 @@ void MegaApplication::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
     }
 }
 
-//Called when there is a temporal problem in a transfer
-void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
+// Called when there is a temporal problem in a transfer
+void MegaApplication::onTransferTemporaryError(MegaApi* api, MegaTransfer* transfer, MegaError* e)
 {
     if (appfinished)
     {
@@ -6180,22 +6150,23 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         if (transfer->isForeignOverquota())
         {
-            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
-            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
-                             .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
-
+            MegaUser* contact =
+                megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()),
+                                            true);
+            showErrorMessage(
+                tr("Your upload(s) cannot proceed because %1's account is full")
+                    .arg(contact ? QString::fromUtf8(contact->getEmail()) : tr("contact")));
         }
         else if (e->getValue() && !mTransferQuota->isOverQuota())
         {
-            const auto waitTime = std::chrono::seconds(e->getValue());
             preferences->clearTemporalBandwidth();
-            megaApi->getPricing();
-            // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry).
+            // Get udpated transfer quota (also pro status in case out of quota is due to account
+            // paid period expiry).
             AccountDetailsManager::instance()->updateUserStats(
                 AccountDetailsManager::Flag::TRANSFER_PRO,
                 true,
                 USERSTATS_TRANSFERTEMPERROR);
-            mTransferQuota->setOverQuota(waitTime);
+            mTransferQuota->setOverQuota(std::chrono::seconds(e->getValue()));
         }
     }
 }
