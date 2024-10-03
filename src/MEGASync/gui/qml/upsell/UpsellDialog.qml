@@ -16,7 +16,6 @@ QmlDialog {
     property int maxWidth: Math.max(712, columnItem.width + 2 * window.contentMargin)
     property int maxHeight: Math.max(543, columnItem.height + 2 * window.contentMargin)
 
-    title: Constants.mega
     visible: false
     modality: Qt.NonModal
     width: window.maxWidth
