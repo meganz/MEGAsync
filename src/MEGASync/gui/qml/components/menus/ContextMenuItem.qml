@@ -83,7 +83,7 @@ Qml.MenuItem {
 
     onActiveFocusChanged: {
         if(root.activeFocus) {
-            if (root.focusReason === Qt.TabFocusReason) {
+            if (root.focusReason === Qt.TabFocusReason || root.focusReason === Qt.BacktabFocusReason) {
                 showFocusBorder = true;
             }
             else if(!root.showFocusBorder) {
