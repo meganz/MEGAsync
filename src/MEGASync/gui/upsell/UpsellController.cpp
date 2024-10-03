@@ -22,7 +22,7 @@ constexpr float PERCENTAGE(100.0f);
 constexpr long long TRANSFER_REMAINING_TIME_INTERVAL_MS(1000ll);
 constexpr int64_t NB_B_IN_1GB(1024 * 1024 * 1024);
 constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
-constexpr const char* DEFAULT_PRO_URL("mega://#pro");
+constexpr char* DEFAULT_PRO_URL("mega://#pro");
 const std::map<int, const char*> PRO_LEVEL_TO_URL = {
     {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1" },
     {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2" },
@@ -68,6 +68,7 @@ void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
             if (error->getErrorCode() == mega::MegaError::API_OK)
             {
                 processGetPricingRequest(request->getPricing(), request->getCurrency());
+                emit dataReady();
             }
             break;
         }

@@ -49,6 +49,7 @@ public slots:
     void onBilledPeriodChanged();
 
 signals:
+    void dataReady();
     void beginInsertRows(int first, int last);
     void endInsertRows();
     void beginRemoveRows(int first, int last);

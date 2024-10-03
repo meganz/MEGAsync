@@ -28,10 +28,12 @@ public:
     struct OpenDialogInfo
     {
         OpenDialogInfo():
-            ignoreCloseAllAction(false)
+            ignoreCloseAllAction(false),
+            showWhenCreated(true)
         {}
 
         bool ignoreCloseAllAction;
+        bool showWhenCreated;
     };
 
     using QObject::QObject;
@@ -47,6 +49,7 @@ public:
     static QPointer<QmlDialogWrapper<DialogType>> openDialog(OpenDialogInfo info = OpenDialogInfo(),
                                                              A&&... args)
     {
+        bool show(true);
         QPointer<QmlDialogWrapper<DialogType>> dialog(nullptr);
         if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<DialogType>>())
         {
@@ -54,10 +57,11 @@ public:
         }
         else
         {
+            show = info.showWhenCreated;
             dialog = new QmlDialogWrapper<DialogType>(std::forward<A>(args)...);
         }
 
-        auto dialogInfo(DialogOpener::showDialog(dialog));
+        auto dialogInfo(show ? DialogOpener::showDialog(dialog) : DialogOpener::addDialog(dialog));
         dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
 
         return dialogInfo->getDialog();
