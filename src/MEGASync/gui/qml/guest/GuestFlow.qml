@@ -239,7 +239,7 @@ Item {
                 window.hide();
             }
 
-            KeyNavigation.tab: view.currentItem.leftButton
+            KeyNavigation.tab: aboutMenuItem
         }
     }
 
