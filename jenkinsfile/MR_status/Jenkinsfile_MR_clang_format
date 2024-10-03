@@ -1,5 +1,3 @@
-def REBUILD_IMAGE = false
-
 pipeline {
     agent none
     options {
@@ -60,35 +58,10 @@ pipeline {
                         }
                     }
                 }
-                stage('Rebuild docker image') {
-                    when {
-                        beforeAgent true
-                        expression { REBUILD_IMAGE }
-                    }
-                    steps {
-                        dir ("dockerfile") {
-                            sh """
-                                docker build \
-                                    -f clang-format.dockerfile \
-                                    -t mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest \
-                                    .
-                            """
-                        }
-                        withCredentials([usernamePassword(credentialsId: 'artifactory-jenkins-docker', usernameVariable: 'ART_USER', passwordVariable: 'ART_PASS')]) {
-                            sh """
-                                echo \$ART_PASS | docker login \
-                                                    -u \$ART_USER \
-                                                    --password-stdin \
-                                                    mega-docker.artifactory.developers.mega.co.nz:8443
-                                docker push mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest
-                            """
-                        }
-                    }
-                }
                 stage('Clang format'){
                     agent {
                         docker {
-                            image 'mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest'
+                            image 'mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-sdk:latest'
                             reuseNode true
                         }
                     }
