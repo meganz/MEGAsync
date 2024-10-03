@@ -133,6 +133,11 @@ Item {
     IconButton {
         id: menuButton
 
+        function activateFirstMenuItem() {
+            aboutMenuItem.forceActiveFocus();
+            aboutMenuItem.showFocusBorder = true;
+        }
+
         anchors{
             top: parent.top
             right: parent.right
@@ -149,6 +154,22 @@ Item {
         }
 
         KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
+
+        Keys.onReturnPressed: {
+            activateFirstMenuItem();
+        }
+
+        Keys.onEnterPressed: {
+            activateFirstMenuItem();
+        }
+
+        Keys.onPressed: {
+            // Enter and Return cannot be handled by Keys.onPressed because they are consumed
+            // by the component Button.
+            if (event.key === Qt.Key_Space) {
+                activateFirstMenuItem();
+            }
+        }
     }
 
     Qml.Menu {
@@ -182,12 +203,6 @@ Item {
 
         onClosed: {
             menuButton.checked = false;
-        }
-
-        onVisibleChanged: {
-            if (visible) {
-                aboutMenuItem.forceActiveFocus();
-            }
         }
 
         MenuItem {

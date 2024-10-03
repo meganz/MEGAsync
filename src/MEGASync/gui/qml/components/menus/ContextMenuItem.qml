@@ -10,12 +10,14 @@ Qml.MenuItem {
     id: root
 
     readonly property int itemContentHorizontalPadding: 16
+
+    property bool showFocusBorder: false
     property Colors colors: Colors {}
     property Sizes sizes: Sizes {
         verticalPadding: 0
     }
 
-    function getBackgroundColor(){
+    function getBackgroundColor() {
         if(root.pressed) {
             return colors.itemBackgroundPressed;
         }
@@ -37,10 +39,12 @@ Qml.MenuItem {
 
         implicitWidth: parent.width
         implicitHeight: parent.height
-        color: getBackgroundColor();
-        border.color: root.activeFocus ? colors.focus : "transparent";
-        border.width: sizes.focusBorderWidth
         radius: sizes.focusRadius
+        color: getBackgroundColor()
+        border {
+            width: sizes.focusBorderWidth
+            color: showFocusBorder ? colors.focus : "transparent"
+        }
 
         Row {
             id: row
@@ -77,11 +81,25 @@ Qml.MenuItem {
         color: "transparent"
     }
 
+    onActiveFocusChanged: {
+        if(root.activeFocus) {
+            if (root.focusReason === Qt.TabFocusReason) {
+                showFocusBorder = true;
+            }
+            else if(!root.showFocusBorder) {
+                showFocusBorder = false;
+            }
+        }
+        else {
+            showFocusBorder = false;
+        }
+    }
+
     MouseArea {
         id: mouseArea
 
         anchors.fill: root
         cursorShape: Qt.PointingHandCursor
-        onPressed: mouse.accepted = false;
+        onPressed: { mouse.accepted = false; }
     }
 }

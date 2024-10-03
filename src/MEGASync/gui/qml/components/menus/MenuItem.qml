@@ -26,7 +26,9 @@ ContextMenuItem {
     }
 
     width: 200
-    height: root.position === MenuItem.Position.FIRST || position === MenuItem.Position.LAST ? sizes.itemHeight + sizes.verticalPadding : sizes.itemHeight
+    height: root.position === MenuItem.Position.FIRST || position === MenuItem.Position.LAST
+            ? sizes.itemHeight + sizes.verticalPadding
+            : sizes.itemHeight
     leftPadding: sizes.horizontalPadding
     rightPadding: sizes.horizontalPadding
     topPadding: root.position === MenuItem.Position.FIRST ? sizes.verticalPadding : 0
