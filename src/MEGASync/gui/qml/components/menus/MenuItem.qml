@@ -17,7 +17,7 @@ ContextMenuItem {
 
     property int position: MenuItem.Position.INTER
     property Colors colors: Colors {
-        itemBackgroundHover: colorStyle.textInverse
+        itemBackgroundHover: ColorTheme.textInverse
     }
     property Sizes sizes: Sizes {
         horizontalPadding: 8
