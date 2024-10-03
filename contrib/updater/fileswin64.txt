@@ -1,4 +1,4 @@
-#version=50401
+#version=50500
 #baseurl=http://g.static.mega.co.nz/upd/wsync64/
 #Hash: note this is the hash of the public key assuming an "\n" at the end
 #pubkeysha256sum=381fac98f5c3329ef5c0d9b6768d9f8d0bbc77bfa38256ac6f3da7452e0dc241
@@ -42,9 +42,9 @@ api-ms-win-crt-stdio-l1-1-0.dll;api-ms-win-crt-stdio-l1-1-0.dll;f9d3f380023a4c45
 api-ms-win-crt-string-l1-1-0.dll;api-ms-win-crt-string-l1-1-0.dll;1a916c0db285deb02c0b9df4d08dad5ea95700a6a812ea067bd637a91101a9f6
 api-ms-win-crt-time-l1-1-0.dll;api-ms-win-crt-time-l1-1-0.dll;b56bc94e8539603dd2f0fea2f25efd17966315067442507db4bffafcbc2955b0
 api-ms-win-crt-utility-l1-1-0.dll;api-ms-win-crt-utility-l1-1-0.dll;dd14133adf5c534539298422f6c4b52739f80aca8c5a85ca8c966dea9964ceb1
-avcodec-59.dll;avcodec-59.dll;325f78f665c751d1e21ed10dcfdbcbfcbcee91db821e54551776fe8fac050843
-avformat-59.dll;avformat-59.dll;ba795e65bb83311c39320d75b4b5792385dae1054334d9d299ab5419e691a9d7
-avutil-57.dll;avutil-57.dll;576a1f6e3de1265862a133875d38dc026fa25e8914fb62d1bd965aec35047a83
+avcodec-59.dll;avcodec-59.dll;efcc2255bb295fdcaf0441f90f145dde617b5ff2c8af0262e40db3e394924640
+avformat-59.dll;avformat-59.dll;41924186a613639c948c8e34c52cb0b58521f0dd41c86cf6a4d21f486485bb8e
+avutil-57.dll;avutil-57.dll;45c1ac226b1e56d10c102913c7066e5648a1d239754bf87f6e3de6c534a9ddb6
 concrt140.dll;concrt140.dll;d1a9b1a0ebe71e886b42a59faa67d4bf7646c3f46e0153dd2519b0e77ebbcdc5
 iconengines/qsvgicon.dll;iconengines/qsvgicon.dll;978e5d5568de6c4e9ddd596f96f54eaf287e2c2c289588b997352657bd49b2e9
 imageformats/qgif.dll;imageformats/qgif.dll;f32a0dbfb0204c8810b4242f0e902c00b3af6b8e7355d64a4f3932e91132dcb5
@@ -68,8 +68,8 @@ leftbanner/left_banner96.bmp;leftbanner/left_banner96.bmp;7780f0337551bce407ccee
 libEGL.dll;libEGL.dll;293579ee4d88ba05571a497c3f82ae0641961542d1392999f7118180d7bb3940
 libGLESv2.dll;libGLESv2.dll;10a4b43069545cdecc0479642b1c891d67f302f7c97fda5c3c7aa258d51d1bd6
 MEGA Website.url;MEGA Website.url;7b5f1278de755dde65017404b662b6ab97fa7328974eec3872ce571f7e462dac
-MEGAsync.exe;MEGAsync.exe;7e803b6572811faab5526ada0cbd06f942d2e27dbddb21d6cbe8bb4e72e4736a
-MEGAupdater.exe;MEGAupdater.exe;c402ca1c66e1e5fdd6931c31e556dd2b1f22c1632d81aa5633f480336fb0d849
+MEGAsync.exe;MEGAsync.exe;661582dba9def08142b4c7f1d6a4021d0cd99dad423b1a86c9cdac2c7f8d12db
+MEGAupdater.exe;MEGAupdater.exe;7eb6757889e376fee5ba07cce2cb7271796f291e763f4520ceddc0f7f19749ec
 msvcp140.dll;msvcp140.dll;e0a22a594e148fa55ceef3e49969bfa77011a801267a0bd7805b681b593c9d0b
 msvcp140_1.dll;msvcp140_1.dll;768e0829decea713afb35a7de07e276f051581c8ff2c17e1bae9b07dd1445dd0
 msvcp140_2.dll;msvcp140_2.dll;5c12eaef6db18b168f712bff9b55793e0effddf15b89552e7f5ca4f8f1887b9b
@@ -660,12 +660,12 @@ QtQuick/Templates.2/qtquicktemplates2plugin.dll;QtQuick/Templates.2/qtquicktempl
 QtQuick/Window.2/plugins.qmltypes;QtQuick/Window.2/plugins.qmltypes;602810be90bd59c6682702970a91a003de5f0f636f006b6c8c7d987de6c8f250
 QtQuick/Window.2/qmldir;QtQuick/Window.2/qmldir;8d88b81547e1573f8c91df998ea82608e0a79770b014c82f760a67388b41945a
 QtQuick/Window.2/windowplugin.dll;QtQuick/Window.2/windowplugin.dll;24ca8271e1e19a28fe24d63a03185af5eb356fe7dd99ae8061663cb8e6d5bf56
-ShellExtX64.dll;ShellExtX64.dll;d006a1e9cd7f3551d22649b1292ed26830f34a1057cffb5655bdf1b7af189c8e
+ShellExtX64.dll;ShellExtX64.dll;4613b951dc23311f51add099da1c3ec1131a1cb1e54a971dc740ee2b5eac9ca2
 styles/qwindowsvistastyle.dll;styles/qwindowsvistastyle.dll;a67586fc7e9b38dd2341fb796c6349ef2ee1b6611a0dbcfe290b7aa0c80f7ddb
-swresample-4.dll;swresample-4.dll;9ddbb7de2098143b5896e888878e0d398d7f56fc96b3f70934317305fa484d55
-swscale-6.dll;swscale-6.dll;2be735fa60dd1aada05d8e0ba61741451d6c14d9e5a45a0c717a9ea8399b48ee
+swresample-4.dll;swresample-4.dll;4dfedc9d205155b31fbd359a33fcb0583c1338de93da2b03017b4e12d9eac8d1
+swscale-6.dll;swscale-6.dll;b604cc0bf6133d860ac5c92ef2a7574780618101c9b00925dd3caa5dc6dfc749
 ucrtbase.dll;ucrtbase.dll;6238cbfe9f57c142b75e153c399c478d492252fda8cb40ee539c2dcb0f2eb232
-uninst.exe;uninst.exe;74bb31d22906e2ac7121e96dae30fe8cd3f55d1213fddd56915c0ceaef8b8e41
+uninst.exe;uninst.exe;28179d0943c3e3ca0db725ee715e3977d7371a36fe10b74a27d63ab9eae7ad0c
 vccorlib140.dll;vccorlib140.dll;3e194d5ab03fdb1e97b0bae61070994013487c567f82c9338e7adc202f7d7d67
 vcomp140.dll;vcomp140.dll;d5aa2fc36a84144ca2a420b797f4e645fca530e0ff7bd01383010d5a81d194ef
 vcruntime140.dll;vcruntime140.dll;c179d8914ba8e57b2f8f4d6c101c2c550c7c6712a7f0f9920a97db340f9d9574
