@@ -48,16 +48,6 @@ pipeline {
                         }
                     }
                 }
-                stage('Get parameters'){
-                    steps {
-                        script{
-                            // flag may be `--rebuild-docker` or empty ``
-                            def flag = sh(script: 'echo "$gitlabTriggerPhrase" | grep -o "\\-\\-rebuild-docker\\$" || :', returnStdout: true).trim()
-                            REBUILD_IMAGE = flag == "--rebuild-docker"
-                            echo "REBUILD_IMAGE set to ${REBUILD_IMAGE}"
-                        }
-                    }
-                }
                 stage('Clang format'){
                     agent {
                         docker {
