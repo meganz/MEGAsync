@@ -200,10 +200,12 @@ Qml.RoundButton {
 
     Keys.onReturnPressed: {
         root.clicked();
+        event.accepted = false;
     }
 
     Keys.onEnterPressed: {
         root.clicked();
+        event.accepted = false;
     }
 
     MouseArea {

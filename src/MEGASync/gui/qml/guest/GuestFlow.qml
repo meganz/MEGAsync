@@ -149,6 +149,16 @@ Item {
         }
 
         KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
+
+
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Space
+                || event.key === Qt.Key_Enter
+                || event.key === Qt.Key_Return) {
+                aboutMenuItem.forceActiveFocus();
+                aboutMenuItem.showFocusBorder = true;
+            }
+        }
     }
 
     Qml.Menu {
@@ -182,12 +192,6 @@ Item {
 
         onClosed: {
             menuButton.checked = false;
-        }
-
-        onVisibleChanged: {
-            if (visible) {
-                aboutMenuItem.forceActiveFocus();
-            }
         }
 
         MenuItem {
@@ -224,7 +228,7 @@ Item {
                 window.hide();
             }
 
-            KeyNavigation.tab: view.currentItem.leftButton
+            KeyNavigation.tab: aboutMenuItem
         }
     }
 
