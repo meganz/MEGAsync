@@ -313,7 +313,7 @@ margin-right: 8px;
               <string notr="true"/>
              </property>
              <property name="text">
-              <string> Apply previous exclusion rules</string>
+              <string>Apply previous exclusion rules</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

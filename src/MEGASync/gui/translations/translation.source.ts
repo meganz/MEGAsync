@@ -8050,14 +8050,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Learn more</translation>
     </message>
     <message>
-        <source> Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
         <source>Apply rules</source>
         <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
         <translation></translation>
+    </message>
+    <message>
+        <source>Apply previous exclusion rules</source>
+        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

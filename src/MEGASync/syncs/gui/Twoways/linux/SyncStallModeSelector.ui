@@ -203,7 +203,7 @@ font-size: 12px;
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string> Apply previous exclusion rules</string>
+         <string>Apply previous exclusion rules</string>
         </property>
        </widget>
       </item>
