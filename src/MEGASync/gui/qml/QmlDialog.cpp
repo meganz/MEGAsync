@@ -4,8 +4,8 @@
 
 namespace
 {
-constexpr char* DEFAULT_RES_MEGA_ICON(":/images/app_ico.ico");
-constexpr char* DEFAULT_TITLE("MEGA");
+constexpr const char* DEFAULT_RES_MEGA_ICON(":/images/app_ico.ico");
+constexpr const char* DEFAULT_TITLE("MEGA");
 }
 
 QmlDialog::QmlDialog(QWindow* parent):
