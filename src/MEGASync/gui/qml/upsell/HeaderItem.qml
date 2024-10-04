@@ -80,41 +80,52 @@ FocusScope {
                     }
                 }
 
-                SecondaryText {
-                    id: textItem
+                FocusScope {
+                    id: textFocusScope
 
                     width: parent.width
-                    lineHeight: root.textLineHeight
-                    lineHeightMode: Text.FixedHeight
-                    urlColor: ColorTheme.textSecondary
-                    underlineLink: true
-                    manageClick: true
-                    rawText: {
-                        switch (upsellPlansAccess.viewMode) {
-                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
-                            case UpsellPlans.ViewMode.STORAGE_FULL:
-                                return UpsellStrings.storageText;
-                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
-                                return UpsellStrings.transferQuotaExceededText
-                                            .arg(upsellPlansAccess.transferRemainingTime);
-                            default:
-                                return "";
+                    height: textItem.height
+                    focus: true
+                    activeFocusOnTab: true
+
+                    SecondaryText {
+                        id: textItem
+
+                        width: parent.width
+                        lineHeight: root.textLineHeight
+                        lineHeightMode: Text.FixedHeight
+                        urlColor: ColorTheme.textSecondary
+                        underlineLink: true
+                        manageClick: true
+                        focus: parent.activeFocus
+                        rawText: {
+                            switch (upsellPlansAccess.viewMode) {
+                                case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                                case UpsellPlans.ViewMode.STORAGE_FULL:
+                                    return UpsellStrings.storageText;
+                                case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                    return UpsellStrings.transferQuotaExceededText
+                                                .arg(upsellPlansAccess.transferRemainingTime);
+                                default:
+                                    return "";
+                            }
+                        }
+                        onLinkClicked: {
+                            upsellComponentAccess.linkInDescriptionClicked();
+                            switch (upsellPlansAccess.viewMode) {
+                                case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
+                                case UpsellPlans.ViewMode.STORAGE_FULL:
+                                    upsellComponentAccess.rubbishLinkClicked();
+                                    break;
+                                case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
+                                    Qt.openUrlExternally(Links.aboutTransferQuota);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
-                    onLinkClicked: {
-                        upsellComponentAccess.linkInDescriptionClicked();
-                        switch (upsellPlansAccess.viewMode) {
-                            case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
-                            case UpsellPlans.ViewMode.STORAGE_FULL:
-                                upsellComponentAccess.rubbishLinkClicked();
-                                break;
-                            case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
-                                Qt.openUrlExternally(Links.aboutTransferQuota);
-                                break;
-                            default:
-                                break;
-                        }
-                    }
+
                 }
             }
 
@@ -123,6 +134,6 @@ FocusScope {
     } // Rectangle: content
 
     Component.onCompleted: {
-        textItem.forceActiveFocus();
+        textFocusScope.forceActiveFocus();
     }
 }
