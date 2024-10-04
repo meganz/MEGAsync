@@ -24,18 +24,9 @@ class QmlDialogWrapper;
 
 class QMLComponent: public QObject
 {
+    Q_OBJECT
+
 public:
-    struct OpenDialogInfo
-    {
-        OpenDialogInfo():
-            ignoreCloseAllAction(false),
-            showWhenCreated(true)
-        {}
-
-        bool ignoreCloseAllAction;
-        bool showWhenCreated;
-    };
-
     using QObject::QObject;
     virtual ~QMLComponent() = default;
 
@@ -46,10 +37,34 @@ public:
     QString contextName() const;
 
     template<typename DialogType, typename... A>
-    static QPointer<QmlDialogWrapper<DialogType>> openDialog(OpenDialogInfo info = OpenDialogInfo(),
-                                                             A&&... args)
+    static auto showDialog(A&&... args)
     {
-        bool show(true);
+        return getDialog<DialogType>(
+            [](auto& dialog)
+            {
+                return DialogOpener::showDialog(dialog);
+            },
+            std::forward<A>(args)...);
+    }
+
+    template<typename DialogType, typename... A>
+    static auto addDialog(A&&... args)
+    {
+        return getDialog<DialogType>(
+            [](auto& dialog)
+            {
+                return DialogOpener::addDialog(dialog);
+            },
+            std::forward<A>(args)...);
+    }
+
+signals:
+    void dataReady();
+
+private:
+    template<typename DialogType, typename... A>
+    static QPointer<QmlDialogWrapper<DialogType>> createOrGetDialog(A&&... args)
+    {
         QPointer<QmlDialogWrapper<DialogType>> dialog(nullptr);
         if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<DialogType>>())
         {
@@ -57,20 +72,17 @@ public:
         }
         else
         {
-            show = info.showWhenCreated;
             dialog = new QmlDialogWrapper<DialogType>(std::forward<A>(args)...);
         }
 
-        auto dialogInfo(show ? DialogOpener::showDialog(dialog) : DialogOpener::addDialog(dialog));
-        dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
-
-        return dialogInfo->getDialog();
+        return dialog;
     }
 
-    template<typename DialogType, typename... A>
-    static QPointer<QmlDialogWrapper<DialogType>> openDialog(A&&... args)
+    template<typename DialogType, typename Operation, typename... A>
+    static auto getDialog(Operation operation, A&&... args)
     {
-        return openDialog<DialogType>(OpenDialogInfo(), std::forward<A>(args)...);
+        auto dialog(createOrGetDialog<DialogType>(std::forward<A>(args)...));
+        return operation(dialog);
     }
 };
 
@@ -224,7 +236,24 @@ public:
         }
     }
 
-    Type* wrapper(){ return mWrapper;}
+    inline Type* wrapper()
+    {
+        return mWrapper;
+    }
+
+    void setShowWhenCreated(bool show)
+    {
+        if (show)
+        {
+            connect(mWrapper,
+                    &Type::dataReady,
+                    this,
+                    [this]()
+                    {
+                        mWindow->show();
+                    });
+        }
+    }
 
 private:
     QPointer<Type> mWrapper;

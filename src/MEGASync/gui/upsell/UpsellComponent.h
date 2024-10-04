@@ -30,9 +30,6 @@ public slots:
     void billedRadioButtonClicked(bool isMonthly);
     void linkInDescriptionClicked();
 
-private slots:
-    void onDataReady() const;
-
 private:
     std::shared_ptr<UpsellController> mController;
     std::shared_ptr<UpsellModel> mModel;

@@ -21,7 +21,7 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     mController->setViewMode(mode);
     mController->registerQmlRootContextProperties();
 
-    connect(mController.get(), &UpsellController::dataReady, this, &UpsellComponent::onDataReady);
+    connect(mController.get(), &UpsellController::dataReady, this, &UpsellComponent::dataReady);
 }
 
 QUrl UpsellComponent::getQmlUrl()
@@ -41,11 +41,6 @@ void UpsellComponent::registerQmlModules()
             QString::fromLatin1("UpsellPlans can only be used for the enum values"));
         qmlRegistrationDone = true;
     }
-}
-
-void UpsellComponent::onDataReady() const
-{
-    openDialog<UpsellComponent>(nullptr, viewMode());
 }
 
 void UpsellComponent::setTransferFinishTime(long long time)
