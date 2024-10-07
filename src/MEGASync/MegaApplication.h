@@ -264,7 +264,7 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
-    void checkOverStorageStates();
+    void checkOverStorageStates(bool isOnboardingAboutClosing = false);
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();

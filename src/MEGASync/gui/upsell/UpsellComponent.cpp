@@ -55,6 +55,11 @@ UpsellPlans::ViewMode UpsellComponent::viewMode() const
     return mController->viewMode();
 }
 
+void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
+{
+    mController->setViewMode(mode);
+}
+
 void UpsellComponent::buyButtonClicked()
 {
     mController->openSelectedPlanUrl();

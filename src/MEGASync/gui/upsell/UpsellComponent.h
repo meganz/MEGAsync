@@ -24,6 +24,7 @@ public:
     void setTransferFinishTime(long long time);
 
     UpsellPlans::ViewMode viewMode() const;
+    void setViewMode(UpsellPlans::ViewMode mode);
 
 public slots:
     void buyButtonClicked();
