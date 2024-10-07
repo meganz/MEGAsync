@@ -54,9 +54,6 @@ UpsellController::UpsellController(QObject* parent):
             &UpsellPlans::monthlyChanged,
             this,
             &UpsellController::onBilledPeriodChanged);
-
-    auto listener(RequestListenerManager::instance().registerAndGetFinishListener(this));
-    MegaSyncApp->getMegaApi()->getPricing(listener.get());
 }
 
 void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
@@ -82,6 +79,12 @@ void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
 void UpsellController::registerQmlRootContextProperties()
 {
     QmlManager::instance()->setRootContextProperty(mPlans.get());
+}
+
+void UpsellController::requestPricingData()
+{
+    auto listener(RequestListenerManager::instance().registerAndGetFinishListener(this));
+    MegaSyncApp->getMegaApi()->getPricing(listener.get());
 }
 
 bool UpsellController::setData(int row, const QVariant& value, int role)

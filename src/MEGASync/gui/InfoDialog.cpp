@@ -430,6 +430,7 @@ void InfoDialog::createUpsellController()
     if (!mUpsellController)
     {
         mUpsellController = std::make_unique<UpsellController>(nullptr);
+        mUpsellController->requestPricingData();
     }
 }
 
