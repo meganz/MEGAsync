@@ -71,7 +71,7 @@ pipeline {
                     windows_sources_workspace = WORKSPACE
 
                     dir('src\\MEGASync\\mega'){
-                        sh "echo Cloning SDK branch ${SDK_BRANCH}"
+                        sh "echo Cloning SDK branch \"${SDK_BRANCH}\""
                         checkout([
                             $class: 'GitSCM',
                             branches: [[name: "${SDK_BRANCH}"]],
@@ -108,7 +108,7 @@ pipeline {
                 TMPDIR    = "${windows_sources_workspace}\\tmp"
             }
             steps{
-                sh "echo ${params.SDK_BRANCH}"
+                sh "echo SDK_BRANCH: \"${params.SDK_BRANCH}\""
                 sh "echo ${env.BUILD_OPTIONS}"
                 dir(windows_sources_workspace){
                     sh "mkdir build_dir"
