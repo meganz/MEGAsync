@@ -134,13 +134,26 @@ Text {
     // refreshed internally. We cannot assign other variable and change it here at the
     // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
-        var decoration = root.underlineLink ? "underline" : "none";
-        var copyText = rawText;
-        copyText = copyText.replace("[B]","<b>");
-        copyText = copyText.replace("[/B]","</b>");
-        copyText = copyText.replace("[A]", "<a style=\"text-decoration:" + decoration + "\"
-                                            style=\"color:" + urlColor + ";\" href=\"" + url + "\">");
-        copyText = copyText.replace("[/A]","</a>");
+        let decoration = root.underlineLink ? "underline" : "none";
+        let copyText = rawText;
+
+        const replacements = [
+            { pattern: /\[B\]/g, replacement: "<b>" },
+            { pattern: /\[\/B\]/g, replacement: "</b>" },
+            {
+                pattern: /\[A\]/g,
+                replacement: "<a style=\"text-decoration:" + decoration
+                             + "\" style=\"color:" + urlColor
+                             + ";\" href=\"" + url + "\">"
+            },
+            { pattern: /\[\/A\]/g, replacement: "</a>" },
+            { pattern: /\[BR\]/g, replacement: "<br>" }
+        ];
+
+        replacements.forEach(replacement => {
+            copyText = copyText.replace(replacement.pattern, replacement.replacement);
+        });
+
         root.text = copyText;
     }
 

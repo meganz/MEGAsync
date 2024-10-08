@@ -19,13 +19,9 @@ QtObject {
     readonly property string storage: qsTr("%1 storage")
     readonly property string storageAlmostFullTitle: qsTr("Your MEGA cloud storage is almost full")
     readonly property string storageFullTitle: qsTr("Your MEGA cloud storage is full")
-    readonly property string storageText: qsTr("Upgrade your account to get more storage quota.
-Or delete some files and [A]empty your rubbish bin[/A] to free up storage space.")
+    readonly property string storageText: qsTr("Upgrade your account to get more storage quota.[BR]Or delete some files and [A]empty your rubbish bin[/A] to free up storage space.")
     readonly property string transfer: qsTr("%1 transfer")
     readonly property string transferQuotaExceededTitle: qsTr("Transfer quota exceeded")
-    readonly property string transferQuotaExceededText: qsTr("You can’t continue downloading as you’ve used all of the transfer quota available to you.
-Upgrade your account to get more transfer quota.
-Or you can wait for [B]%1[/B] until more free quota becomes available for you.
-[A]Learn more about transfer quota[/A].")
+    readonly property string transferQuotaExceededText: qsTr("You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR]Upgrade your account to get more transfer quota.[BR]Or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][A]Learn more about transfer quota[/A].")
 
 }
