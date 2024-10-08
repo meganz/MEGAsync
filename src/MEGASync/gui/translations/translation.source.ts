@@ -9303,13 +9303,10 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Pro&#xa0;Flexi</translation>
     </message>
-    <message numerus="yes">
+    <message>
         <source>%1 of %2</source>
-        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 and %2 substitution placeholders because they will be filled with the required amounts of storage space dynamically. CON-944</translatorcomment>
-        <translation type="unfinished">
-            <numerusform>%1 of %2</numerusform>
-            <numerusform>%1 of %2</numerusform>
-        </translation>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
+        <translation type="unfinished">%1 of %2</translation>
     </message>
 </context>
 <context>
