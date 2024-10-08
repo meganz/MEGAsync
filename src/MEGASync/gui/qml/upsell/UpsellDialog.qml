@@ -13,15 +13,17 @@ QmlDialog {
 
     readonly property int contentMargin: 24
 
-    title: Constants.mega
-    visible: true
+    property int maxWidth: Math.max(712, columnItem.width + 2 * window.contentMargin)
+    property int maxHeight: Math.max(543, columnItem.height + 2 * window.contentMargin)
+
+    visible: false
     modality: Qt.NonModal
-    width: columnItem.width + 2 * window.contentMargin
-    height: columnItem.height + 2 * window.contentMargin
-    maximumWidth: columnItem.width + 2 * window.contentMargin
-    maximumHeight: columnItem.height + 2 * window.contentMargin
-    minimumWidth: columnItem.width + 2 * window.contentMargin
-    minimumHeight: columnItem.height + 2 * window.contentMargin
+    width: window.maxWidth
+    height: window.maxHeight
+    maximumWidth: window.maxWidth
+    maximumHeight: window.maxHeight
+    minimumWidth: window.maxWidth
+    minimumHeight: window.maxHeight
 
     Column {
         id: columnItem

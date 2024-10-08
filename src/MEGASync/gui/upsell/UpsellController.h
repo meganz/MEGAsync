@@ -30,6 +30,8 @@ public:
 
     void registerQmlRootContextProperties();
 
+    void requestPricingData();
+
     bool setData(int row, const QVariant& value, int role);
     bool setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role);
     QVariant data(int row, int role) const;
@@ -49,6 +51,7 @@ public slots:
     void onBilledPeriodChanged();
 
 signals:
+    void dataReady();
     void beginInsertRows(int first, int last);
     void endInsertRows();
     void beginRemoveRows(int first, int last);

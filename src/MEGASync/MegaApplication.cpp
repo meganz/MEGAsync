@@ -1976,7 +1976,10 @@ void MegaApplication::checkOverStorageStates()
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            QMLComponent::openDialog<UpsellComponent>(nullptr, UpsellPlans::ViewMode::STORAGE_FULL);
+            auto dialog =
+                QMLComponent::addDialog<UpsellComponent>(nullptr,
+                                                         UpsellPlans::ViewMode::STORAGE_FULL);
+            dialog->getDialog()->setShowWhenCreated(true);
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))

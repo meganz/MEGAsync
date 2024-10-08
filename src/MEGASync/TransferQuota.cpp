@@ -119,9 +119,12 @@ void TransferQuota::checkExecuteDialog()
         const auto endWaitTimeSinceEpoch(mWaitTimeUntil.time_since_epoch());
         const auto endWaitTimeSinceEpochSeconds(
             std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count());
-        QMLComponent::openDialog<UpsellComponent>(nullptr, UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
-            ->wrapper()
-            ->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
+
+        auto dialog =
+            QMLComponent::addDialog<UpsellComponent>(nullptr,
+                                                     UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
+        dialog->getDialog()->setShowWhenCreated(true);
+        dialog->getDialog()->wrapper()->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
     }
 }
 

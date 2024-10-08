@@ -20,6 +20,9 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
     registerQmlModules();
     mController->setViewMode(mode);
     mController->registerQmlRootContextProperties();
+
+    connect(mController.get(), &UpsellController::dataReady, this, &UpsellComponent::dataReady);
+    mController->requestPricingData();
 }
 
 QUrl UpsellComponent::getQmlUrl()

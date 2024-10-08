@@ -2,12 +2,21 @@
 
 #include <QEvent>
 
+namespace
+{
+constexpr const char* DEFAULT_RES_MEGA_ICON(":/images/app_ico.ico");
+constexpr const char* DEFAULT_TITLE("MEGA");
+}
+
 QmlDialog::QmlDialog(QWindow* parent):
     QQuickWindow(parent),
-    mIconSrc(QString::fromUtf8(":/images/app_ico.ico")), // Default mega app icon
+    mIconSrc(QString::fromUtf8(DEFAULT_RES_MEGA_ICON)),
     mInstancesManager(new QmlInstancesManager())
 {
     setFlags(flags() | Qt::Dialog);
+
+    setTitle(QString::fromUtf8(DEFAULT_TITLE));
+
     connect(this,
             &QmlDialog::requestPageFocus,
             this,
