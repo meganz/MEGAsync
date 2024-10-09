@@ -161,6 +161,11 @@ if (UNIX AND NOT APPLE)
 
     install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
 
+    # Install GFX worker if needed
+    if(TARGET gfxworker)
+        install(TARGETS gfxworker RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
+    endif()
+
     set(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/$<$<CONFIG:Debug>:debug/>lib/")
 
     install(DIRECTORY "${vcpkg_lib_folder}"
