@@ -133,6 +133,7 @@ void TransferQuota::checkExecuteDialog()
             dialogInfo =
                 QMLComponent::addDialog<UpsellComponent>(nullptr,
                                                          UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
+            dialogInfo->getDialog()->wrapper()->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
             dialogInfo->getDialog()->setShowWhenCreated(true);
         }
     }
