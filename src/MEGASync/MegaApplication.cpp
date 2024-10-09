@@ -1991,7 +1991,7 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
             {
                 dialogInfo->getDialog()->wrapper()->setViewMode(
                     UpsellPlans::ViewMode::STORAGE_FULL);
-                DialogOpener::showDialog(dialogInfo);
+                DialogOpener::showDialog(dialogInfo->getDialog());
             }
             else
             {
@@ -2043,13 +2043,9 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
             auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
             if (dialogInfo)
             {
-                if (dialogInfo->getDialog()->wrapper()->viewMode() !=
-                    UpsellPlans::ViewMode::STORAGE_FULL)
-                {
-                    dialogInfo->getDialog()->wrapper()->setViewMode(
-                        UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
-                    DialogOpener::showDialog(dialogInfo);
-                }
+                dialogInfo->getDialog()->wrapper()->setViewMode(
+                    UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+                DialogOpener::showDialog(dialogInfo->getDialog());
             }
             else
             {
@@ -2563,26 +2559,6 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     {
         preferences->setUsedStorage(receivedStorageSum);
     }
-}
-
-QuotaState MegaApplication::getTransferQuotaState() const
-{
-     QuotaState quotaState (QuotaState::OK);
-
-     if (mTransferQuota->isQuotaWarning())
-     {
-         quotaState = QuotaState::WARNING;
-     }
-     else if (mTransferQuota->isQuotaFull())
-     {
-         quotaState = QuotaState::FULL;
-     }
-     else if (mTransferQuota->isOverQuota())
-     {
-         quotaState = QuotaState::OVERQUOTA;
-     }
-
-     return quotaState;
 }
 
 std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const

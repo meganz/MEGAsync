@@ -183,7 +183,6 @@ public:
 
     void updateTrayIconMenu();
 
-    QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
 
     int getAppliedStorageState() const;

@@ -557,6 +557,10 @@ void InfoDialog::setUsage()
                 usageColorT = QString::fromLatin1("#D90007");
                 break;
             }
+            default:
+            {
+                break;
+            }
         }
 
         if (accType == Preferences::ACCOUNT_TYPE_FREE)
