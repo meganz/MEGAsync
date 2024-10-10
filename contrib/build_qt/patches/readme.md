@@ -1,8 +1,9 @@
-PATCHES:
+# PATCHES:
 This folder contains the patches to apply before building Qt. Patches will be applied in ascending order. Not all patches need to ba applied to all platforms: use "all", "win" or "macx" to indicate if they should be applied to all platforms, only on Windows, or only on MacOs.
 It is organized like this:
 
-Tree:
+## Tree:
+```
 <Qt Version>
     ├───<qt submodule>
     │       <order>.<os>.<name>
@@ -14,14 +15,15 @@ Tree:
     │       <order>.<os>.<name>
     │       [...]
     [...]
+```
 
-With:
-<order> : numerical value, 2 digits, 0 padded. Patches will be applied in ascending order.
-<os> : "all", "win" or "macx" to apply to all platform build, only Windows or only MacOs.
-<name> : patch name (+ extension).
+## With:
+- `<order>` : numerical value, 2 digits, 0 padded. Patches will be applied in ascending order.
+- `<os>` : "all", "win" or "macx" to apply to all platform build, only Windows or only MacOs.
+- `<name>` : patch name (+ extension).
 
-Example:
-
+## Example:
+```
 5.15.11
     ├───qtbase
     │       00.all.CVE-2023-24607-qtbase-5.15.diff
@@ -43,4 +45,4 @@ Example:
     │
     └───qtsvg
             00.all.CVE-2023-32573-qtsvg-5.15.diff
-			
+```

@@ -17,7 +17,7 @@ ContextMenuItem {
 
     property int position: MenuItem.Position.INTER
     property Colors colors: Colors {
-        itemBackgroundHover: colorStyle.textInverse
+        itemBackgroundHover: ColorTheme.textInverse
     }
     property Sizes sizes: Sizes {
         horizontalPadding: 8
@@ -26,7 +26,9 @@ ContextMenuItem {
     }
 
     width: 200
-    height: root.position === MenuItem.Position.FIRST || position === MenuItem.Position.LAST ? sizes.itemHeight + sizes.verticalPadding : sizes.itemHeight
+    height: root.position === MenuItem.Position.FIRST || position === MenuItem.Position.LAST
+            ? sizes.itemHeight + sizes.verticalPadding
+            : sizes.itemHeight
     leftPadding: sizes.horizontalPadding
     rightPadding: sizes.horizontalPadding
     topPadding: root.position === MenuItem.Position.FIRST ? sizes.verticalPadding : 0

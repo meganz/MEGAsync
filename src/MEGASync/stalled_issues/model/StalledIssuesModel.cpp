@@ -68,8 +68,8 @@ const int UPDATE_ISSUES_MAX_INTERVAL = 300000; /*5 minutes*/
 const int UPDATE_ISSUES_INTERVAL_DELAY_CONSTANT = 2;
 const int MAX_EMPTY_STALLED_LIST_ALLOWED = 5;
 
-StalledIssuesModel::StalledIssuesModel(QObject* parent):
-    QAbstractItemModel(parent),
+StalledIssuesModel::StalledIssuesModel():
+    QAbstractItemModel(),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mIsStalled(false),
     mIsStalledChanged(false),
@@ -127,8 +127,8 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent):
 StalledIssuesModel::~StalledIssuesModel()
 {
     mThreadFinished = true;
-
     mStalledIssuesThread->quit();
+    mStalledIssuesThread->wait();
     mStalledIssuesReceiver->deleteLater();
 }
 
@@ -547,6 +547,11 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
         {
             for (int i = 0; i < copiedNodes->size(); i++)
             {
+                if (mThreadFinished)
+                {
+                    return;
+                }
+
                 mega::MegaNode *node = copiedNodes->get(i);
                 if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_PARENT)
                 {
@@ -1050,6 +1055,11 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
             if (!info.async)
             {
                 sendFixingIssuesMessage(count.currentIssueBeingSolved, totalRows);
+            }
+
+            if (mThreadFinished)
+            {
+                return;
             }
 
             auto potentialIndex = getSolveIssueIndex(index);

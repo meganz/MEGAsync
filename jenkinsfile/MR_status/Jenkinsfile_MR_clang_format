@@ -1,11 +1,12 @@
-def REBUILD_IMAGE = false
-
 pipeline {
     agent none
     options {
         buildDiscarder(logRotator(numToKeepStr: '135', daysToKeepStr: '21'))
         gitLabConnection('GitLabConnectionJenkins')
         ansiColor('xterm')
+    }
+    environment {
+        SDK_BRANCH = 'master'
     }
     stages {
         stage('Update Gitlab commit status') {
@@ -17,7 +18,7 @@ pipeline {
         stage('Build'){
             agent { label 'docker' }
             stages {
-                stage('Checkout'){
+                stage('Checkout desktop'){
                     steps {
                         checkout([
                             $class: 'GitSCM',
@@ -30,45 +31,27 @@ pipeline {
                         ])
                     }
                 }
-                stage('Get parameters'){
+                stage('Checkout SDK'){
                     steps {
+                        dir('src/MEGASync/mega'){
+                            checkout([
+                                $class: 'GitSCM',
+                                branches: [[name: "origin/${SDK_BRANCH}"]],
+                                userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
+                            ])
+                        }
                         script{
-                            // flag may be `--rebuild-docker` or empty ``
-                            def flag = sh(script: 'echo "$gitlabTriggerPhrase" | grep -o "\\-\\-rebuild-docker\\$" || :', returnStdout: true).trim()
-                            REBUILD_IMAGE = flag == "--rebuild-docker"
-                            echo "REBUILD_IMAGE set to ${REBUILD_IMAGE}"
-                        }
-                    }
-                }
-                stage('Rebuild docker image') {
-                    when {
-                        beforeAgent true
-                        expression { REBUILD_IMAGE }
-                    }
-                    steps {
-                        dir ("dockerfile") {
-                            sh """
-                                docker build \
-                                    -f clang-format.dockerfile \
-                                    -t mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest \
-                                    .
-                            """
-                        }
-                        withCredentials([usernamePassword(credentialsId: 'artifactory-jenkins-docker', usernameVariable: 'ART_USER', passwordVariable: 'ART_PASS')]) {
-                            sh """
-                                echo \$ART_PASS | docker login \
-                                                    -u \$ART_USER \
-                                                    --password-stdin \
-                                                    mega-docker.artifactory.developers.mega.co.nz:8443
-                                docker push mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest
-                            """
+                            desktop_sources_workspace = WORKSPACE
+                            sdk_sources_workspace = "${desktop_sources_workspace}/src/MEGASync/mega"
+                            // Get .clang-format file from SDK repo
+                            sh "cp -v ${sdk_sources_workspace}/.clang-format ${desktop_sources_workspace}"
                         }
                     }
                 }
                 stage('Clang format'){
                     agent {
                         docker {
-                            image 'mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-desktop:latest'
+                            image 'mega-docker.artifactory.developers.mega.co.nz:8443/clang-format-sdk:latest'
                             reuseNode true
                         }
                     }

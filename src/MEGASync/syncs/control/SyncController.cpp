@@ -1,10 +1,12 @@
 #include "SyncController.h"
-#include "MegaApplication.h"
-#include "Platform.h"
-#include "MyBackupsHandle.h"
 
 #include "mega/types.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MyBackupsHandle.h"
+#include "Platform.h"
 #include "RequestListenerManager.h"
+
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
@@ -212,20 +214,21 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
 
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest*, MegaError* e){
-            auto syncErrorCode (static_cast<MegaSync::Error>(e->getSyncError()));
+        [=](MegaRequest*, MegaError* e) {
+            auto syncErrorCode(static_cast<MegaSync::Error>(e->getSyncError()));
             auto errorCode(e->getErrorCode());
 
             updateSyncSettings(*e, syncSetting);
 
             if (syncSetting && syncErrorCode != MegaSync::NO_SYNC_ERROR)
             {
-                QString errorMsg = QString::fromUtf8("Error enabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5").arg(
-                    getSyncTypeString(syncSetting->getType()),
-                    syncSetting->name(),
-                    syncSetting->getLocalFolder(),
-                    syncSetting->getMegaFolder(),
-                    QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncErrorCode)));
+                QString errorMsg =
+                    QString::fromUtf8("Error enabling sync (%1) \"%2\" for \"%3\" to \"%4\": %5")
+                        .arg(getSyncTypeString(syncSetting->getType()),
+                             syncSetting->name(),
+                             syncSetting->getLocalFolder(),
+                             syncSetting->getMegaFolder(),
+                             QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncErrorCode)));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, errorMsg.toUtf8().constData());
 
                 emit signalSyncOperationError(syncSetting);
@@ -238,9 +241,11 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
                     errorMsg = QString::fromUtf8(e->getErrorString());
                 }
 
-                QString logMsg = QString::fromUtf8("Error enabling sync (%1) (request reason): %2").arg(
-                    getSyncTypeString(syncSetting ? syncSetting->getType() : MegaSync::SyncType::TYPE_UNKNOWN),
-                    errorMsg);
+                QString logMsg =
+                    QString::fromUtf8("Error enabling sync (%1) (request reason): %2")
+                        .arg(getSyncTypeString(syncSetting ? syncSetting->getType() :
+                                                             MegaSync::SyncType::TYPE_UNKNOWN),
+                             errorMsg);
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
             }
 
@@ -370,6 +375,98 @@ void SyncController::setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting
         });
 
     mApi->setSyncRunState(syncSetting->backupId(), MegaSync::RUNSTATE_DISABLED, listener.get());
+}
+
+void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
+                               MegaSync::SyncRunningState initialState)
+{
+    if (!syncSetting)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                     QString::fromUtf8("Trying to run null sync").toUtf8().constData());
+        return;
+    }
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                 QString::fromUtf8("Resetting sync (%1) \"%2\" to \"%3\"")
+                     .arg(getSyncTypeString(syncSetting->getType()),
+                          syncSetting->getLocalFolder(),
+                          syncSetting->getMegaFolder())
+                     .toUtf8()
+                     .constData());
+
+    std::shared_ptr<mega::MegaError> error(nullptr);
+    auto processResult = [this, error, syncSetting]() {
+        if (error)
+        {
+            auto errorCode(error->getErrorCode());
+            if (errorCode != MegaError::API_OK)
+            {
+                emit signalSyncOperationError(syncSetting);
+                auto syncErrorCode(static_cast<MegaSync::Error>(error->getSyncError()));
+
+                if (syncSetting && syncErrorCode != MegaSync::NO_SYNC_ERROR)
+                {
+                    QString logMsg =
+                        QString::fromUtf8(
+                            "Error resetting sync (%1) \"%2\" for \"%3\" to \"%4\": %5")
+                            .arg(getSyncTypeString(syncSetting->getType()),
+                                 syncSetting->name(),
+                                 syncSetting->getLocalFolder(),
+                                 syncSetting->getMegaFolder(),
+                                 QString::fromUtf8(MegaSync::getMegaSyncErrorCode(syncErrorCode)));
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+                }
+                else if (!syncSetting || errorCode != mega::API_OK)
+                {
+                    QString errorMsg = getSyncAPIErrorMsg(errorCode);
+                    if (errorMsg.isEmpty())
+                    {
+                        errorMsg = QString::fromUtf8(error->getErrorString());
+                    }
+
+                    QString logMsg =
+                        QString::fromUtf8("Error resetting sync (%1) (request error): %2")
+                            .arg(getSyncTypeString(syncSetting ? syncSetting->getType() :
+                                                                 MegaSync::SyncType::TYPE_UNKNOWN),
+                                 errorMsg);
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+                }
+            }
+        }
+
+        syncOperationEnds();
+    };
+
+    syncOperationBegins();
+
+    MegaApiSynchronizedRequest::runRequestWithResult(
+        &mega::MegaApi::setSyncRunState,
+        MegaSyncApp->getMegaApi(),
+        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e) {
+            if (e->getErrorCode() == mega::MegaError::API_OK)
+            {
+                MegaApiSynchronizedRequest::runRequestWithResult(
+                    &mega::MegaApi::setSyncRunState,
+                    MegaSyncApp->getMegaApi(),
+                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e) {
+                        if (e->getErrorCode() != mega::MegaError::API_OK)
+                        {
+                            error.reset(e->copy());
+                        }
+                        processResult();
+                    },
+                    syncSetting->backupId(),
+                    MegaSync::RUNSTATE_RUNNING);
+            }
+            else
+            {
+                error.reset(e->copy());
+                processResult();
+            }
+        },
+        syncSetting->backupId(),
+        initialState);
 }
 
 void SyncController::updateSyncSettings(const MegaError& e, std::shared_ptr<SyncSettings> syncSetting)

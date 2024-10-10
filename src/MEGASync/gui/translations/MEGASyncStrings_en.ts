@@ -540,7 +540,7 @@
     </message>
     <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
-        <translatorcomment>Description label about the option Use HTTPS for transfers that don't start checkbox.</translatorcomment>
+        <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Only enable this option if transfers don’t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</translation>
     </message>
 </context>
@@ -837,7 +837,7 @@
     </message>
     <message numerus="yes">
         <source>Are you sure you want to solve the issue?</source>
-        <translatorcomment>Warning text to confirm the user's choice in resolving a stalled issue.SNC-2565</translatorcomment>
+        <translatorcomment>Warning text to confirm the user&apos;s choice in resolving a stalled issue.SNC-2565</translatorcomment>
         <translation><numerusform>Resolve the issue?</numerusform><numerusform>Resolve the issues?</numerusform></translation>
     </message>
     <message numerus="yes">
@@ -862,7 +862,7 @@
     </message>
     <message>
         <source>Solve</source>
-        <translatorcomment>User options for the header widget of a stalled issue shown when there's a missing file fingerprint.SNC-2565</translatorcomment>
+        <translatorcomment>User options for the header widget of a stalled issue shown when there&apos;s a missing file fingerprint.SNC-2565</translatorcomment>
         <translation>Resolve</translation>
     </message>
 </context>
@@ -1014,7 +1014,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>Waiting for other processes to complete.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when we're waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when we&apos;re waiting for a move operation to complete to make sure the file should be deleted (followed by  file/folder path).SNC-2565</translatorcomment>
         <translation>Waiting for other processes to complete.</translation>
     </message>
 </context>
@@ -1295,7 +1295,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don't have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>You don’t have write permissions in this local folder.</translation>
     </message>
 </context>
@@ -1796,17 +1796,17 @@ In some cases they may contain details about your data, such as file or folder n
     <name>FileIssueHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's an issue with a file or folder which requires user's intervention, [B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s an issue with a file or folder which requires user&apos;s intervention, [B] is for bold.SNC-2565</translatorcomment>
         <translation>Can’t sync [B]%1[/B]</translation>
     </message>
     <message>
         <source>A single file had an issue that needs a user decision to solve</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a file which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a file which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>A file has an issue that needs your decision to resolve it</translation>
     </message>
     <message>
         <source>A single folder had an issue that needs a user decision to solve.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall shown when there's an issue with a folder which requires user's intervention.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall shown when there&apos;s an issue with a folder which requires user&apos;s intervention.SNC-2565</translatorcomment>
         <translation>A folder has an issue that needs your decision to resolve it</translation>
     </message>
 </context>
@@ -1875,12 +1875,12 @@ In some cases they may contain details about your data, such as file or folder n
     <name>FolderMatchedAgainstFileHeader</name>
     <message>
         <source>Can´t sync [B]%1[/B]</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced, file path replaces the placeholder at runtime,[B] is for bold.SNC-2565</translatorcomment>
         <translation>Can’t sync [B]%1[/B]</translation>
     </message>
     <message>
         <source>Cannot sync folders against files.</source>
-        <translatorcomment>Title for the header widget of sync stall shown when there's a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall shown when there&apos;s a folder with the smae name as the local file being synced.SNC-2565</translatorcomment>
         <translation>The file you’re attempting to sync has no extension and has the same name as an existing folder</translation>
     </message>
 </context>
@@ -2164,7 +2164,7 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>No notifications</source>
-        <translatorcomment>Label to indicate that there aren't notifications available at this moment.</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>No notifications</translation>
     </message>
     <message>
@@ -2184,17 +2184,17 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
     <message>
         <source>No notifications for contacts</source>
-        <translatorcomment>Label to indicate that there aren't notifications of contacts</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
         <translation>No notifications for contacts</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
-        <translatorcomment>Label to indicate that there aren't notifications of incoming shares</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
         <translation>No notifications for incoming shares</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
-        <translatorcomment>Label to indicate that there aren't notifications of payments</translatorcomment>
+        <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
         <translation>No notifications for payments</translation>
     </message>
     <message>
@@ -2410,12 +2410,12 @@ Would you like to install the necessary components now?</translation>
     </message>
     <message>
         <source>Error installing components</source>
-        <translatorcomment>This is the title of an error message that appears when there's an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
+        <translatorcomment>This is the title of an error message that appears when there&apos;s an issue during the installation of Notification Area Icon Support. SNC-2270</translatorcomment>
         <translation>Error installing components</translation>
     </message>
     <message>
         <source>Failed to install the necessary components.</source>
-        <translatorcomment>This is the text of an error message displayed when there's a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn't be installed. SNC-2270</translatorcomment>
+        <translatorcomment>This is the text of an error message displayed when there&apos;s a problem installing Notification Area Icon Support. The message indicates that the required components for the feature couldn&apos;t be installed. SNC-2270</translatorcomment>
         <translation>Failed to install the necessary components.</translation>
     </message>
     <message>
@@ -2424,7 +2424,7 @@ Would you like to install the necessary components now?</translation>
 sudo dnf install gnome-shell-extensions
 sudo dnf install gnome-shell-extension-appindicator
 gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com</source>
-        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there's an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
+        <translatorcomment>This is an informative text providing users with manual installation instructions for the Notification Area Icon Support when there&apos;s an error with the automatic installation. Ensure the translation retains the technical accuracy and clarity of the commands, and consider keeping the commands themselves untranslated to avoid any confusion. SNC-2270</translatorcomment>
         <translation>To install manually, run the following commands:
 
 sudo dnf install gnome-shell-extensions
@@ -2791,7 +2791,7 @@ Wait for the upload to complete.</translation>
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation>Enter the code generated by your authentication app</translation>
+        <translation>Enter the code generated by your authenticator app</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -2937,7 +2937,7 @@ Wait for the upload to complete.</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn't any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that the app is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Up to date</translation>
     </message>
     <message>
@@ -2967,7 +2967,7 @@ Wait for the upload to complete.</translation>
     </message>
     <message>
         <source>Stalled</source>
-        <translatorcomment>Tooltip for tray icon when there' a sync stal.SNC-2565</translatorcomment>
+        <translatorcomment>Tooltip for tray icon when there&apos; a sync stal.SNC-2565</translatorcomment>
         <translation>Issue detected</translation>
     </message>
     <message>
@@ -3476,7 +3476,7 @@ Check your email inbox for more information on how to file a counter-notice.</tr
     </message>
     <message>
         <source>Your account was terminated due to a breach of MEGA&apos;s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA's terms of Service.</translatorcomment>
+        <translatorcomment>Error triggered by SDK when an account has been terminated due to a breach of MEGA&apos;s terms of Service.</translatorcomment>
         <translation>Your account was terminated due to a breach of MEGA’s Terms of Service.
 You will not be able to regain access to your stored data or be authorised to sign up for a new MEGA account.</translation>
     </message>
@@ -3917,7 +3917,7 @@ All your selected transfers will be cancelled and cleared.</translation>
     </message>
     <message>
         <source>Cancel transfers?
-Your selected incomplete sync transfers won't be cancelled
+Your selected incomplete sync transfers won&apos;t be cancelled
 All the other selected transfers will be cancelled and cleared.</source>
         <translatorcomment>Messagebox text to confirm if the user wants to cancel and clear all the selected transfers but there are sync transfers in the selection (they cannot be cancelled)</translatorcomment>
         <translation>Cancel transfers?
@@ -4038,7 +4038,7 @@ Your selected incomplete sync transfers won’t be cancelled. All the other sele
     </message>
     <message>
         <source>Modified externally</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's modified externally.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s modified externally.SNC-2565</translatorcomment>
         <translation>Modified externally</translation>
     </message>
     <message>
@@ -4075,7 +4075,7 @@ Refresh the view.</translation>
     </message>
     <message>
         <source>No action needed</source>
-        <translatorcomment>Label in solved name conflict sync stalls when it's solved.SNC-2565</translatorcomment>
+        <translatorcomment>Label in solved name conflict sync stalls when it&apos;s solved.SNC-2565</translatorcomment>
         <translation>No action needed</translation>
     </message>
     <message>
@@ -5467,7 +5467,7 @@ Enter a different name.</translation>
     <name>PlatformStrings</name>
     <message>
         <source>Moved to OS Trash</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in linux.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in linux.SNC-2565</translatorcomment>
         <translation>Item moved to Trash</translation>
     </message>
     <message>
@@ -5482,7 +5482,7 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Moved to OS Rubbish Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's choice in MacOS.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s choice in MacOS.SNC-2565</translatorcomment>
         <translation>Item moved to Trash</translation>
     </message>
     <message>
@@ -5497,7 +5497,7 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Moved to OS Recycle Bin</source>
-        <translatorcomment>Label showing what happened to the file based on the user's in Windows.SNC-2565</translatorcomment>
+        <translatorcomment>Label showing what happened to the file based on the user&apos;s in Windows.SNC-2565</translatorcomment>
         <translation>Item moved to Recycle Bin</translation>
     </message>
     <message>
@@ -5905,7 +5905,7 @@ Please verify the correct file name was given.</source>
 Verify the correct file name was given.</translation>
     </message>
     <message>
-        <source>'%1' is write protected.
+        <source>&apos;%1&apos; is write protected.
 Do you want to delete it anyway?</source>
         <translatorcomment>Warning message when a write protected file is about to be delete</translatorcomment>
         <translation>“%1” is write protected.
@@ -6933,7 +6933,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>Name too long for filesystem.</source>
-        <translatorcomment>Label descriping sync stallwhen move target's name is too long.SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stallwhen move target&apos;s name is too long.SNC-2565</translatorcomment>
         <translation>Name too long for file system</translation>
     </message>
     <message>
@@ -6953,7 +6953,7 @@ Do you want to delete it anyway?</translation>
     </message>
     <message>
         <source>MAC verification failure.</source>
-        <translatorcomment>Label descriping sync stall path issue when there's Cryptographic error .SNC-2565</translatorcomment>
+        <translatorcomment>Label descriping sync stall path issue when there&apos;s Cryptographic error .SNC-2565</translatorcomment>
         <translation>MAC verification failure</translation>
     </message>
     <message>
@@ -7162,14 +7162,14 @@ Please, refresh the list.</source>
 Refresh the list.</translation>
     </message>
     <message>
-        <source>Some issues can't be fixed.
+        <source>Some issues can&apos;t be fixed.
 Verify the permissions of the .megaignore file on your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Some issues can’t be resolved.
 Verify the permissions of the .megaignore file in your local sync folder locations.</translation>
     </message>
     <message>
-        <source>Issues can't be fixed.
+        <source>Issues can&apos;t be fixed.
 Verify the permissions of the .megaignore on file your local sync folder locations.</source>
         <translatorcomment>Error message displayed when sync stall solution cannot be performed.SNC-2565</translatorcomment>
         <translation>Some issues can’t be resolved.
@@ -8175,7 +8175,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Your MEGA account is full</translation>
     </message>
     <message>
-        <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
+        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
 To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>You can’t continue downloading as you don’t have enough transfer quota left for this IP address.
@@ -8776,12 +8776,12 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UploadIssueHeader</name>
     <message>
         <source>Can´t upload [B]%1[/B] to the selected location</source>
-        <translatorcomment>Title for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
+        <translatorcomment>Title for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.[B] is for bold.SNC-2565</translatorcomment>
         <translation>Can’t upload [B]%1[/B] to the selected location</translation>
     </message>
     <message>
         <source>Cannot reach the destination folder.</source>
-        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there's a problem uploading a file to its target location.SNC-2565</translatorcomment>
+        <translatorcomment>Subtitle for the header widget of sync stall that occurs when a there&apos;s a problem uploading a file to its target location.SNC-2565</translatorcomment>
         <translation>Can’t reach the destination folder</translation>
     </message>
 </context>
@@ -8994,17 +8994,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>Starter</translation>
+        <translation>MEGA Starter</translation>
     </message>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>Basic</translation>
+        <translation>MEGA Basic</translation>
     </message>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>Essential</translation>
+        <translation>MEGA Essential</translation>
     </message>
     <message>
         <source>Business</source>
