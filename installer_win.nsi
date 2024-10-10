@@ -347,7 +347,7 @@ Function showHiDpi
     ${EndIf}
 
     strCpy $BITMAP_WELCOME "$BANNER_PATH\leftbanner\left_banner$0.bmp"
-	
+
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
 
@@ -526,6 +526,7 @@ modeselected:
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM mega-desktop-app-gfxworker.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -718,6 +719,10 @@ modeselected:
   File "${SRCDIR_UPDATER}\MEGAupdater.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\mega-desktop-app-gfxworker.exe"
+  AccessControl::SetFileOwner "$INSTDIR\mega-desktop-app-gfxworker.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\mega-desktop-app-gfxworker.exe" "$USERNAME" "GenericRead + GenericWrite"
 
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
@@ -985,6 +990,8 @@ Section Uninstall
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAupdater.exe"
+  Delete "$INSTDIR\mega-desktop-app-gfxworker.exe"
+
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libeay32.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\ssleay32.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcurl.dll"
