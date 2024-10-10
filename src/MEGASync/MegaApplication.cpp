@@ -4527,8 +4527,10 @@ void MegaApplication::createGfxProvider()
     MegaGfxProvider* provider = nullptr;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
+    auto endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
     auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
-    provider = MegaGfxProvider::createIsolatedInstance("megasync-gfx", path.toUtf8().constData());
+    provider = MegaGfxProvider::createIsolatedInstance(endpoint.toUtf8().constData(),
+                                                       path.toUtf8().constData());
 #endif
 
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());

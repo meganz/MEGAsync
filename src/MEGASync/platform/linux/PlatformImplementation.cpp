@@ -525,7 +525,7 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString& path)
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 QString PlatformImplementation::getGfxProviderPath()
 {
-    return QCoreApplication::applicationDirPath() + QLatin1String("/megasync-gfxworker");
+    return QCoreApplication::applicationDirPath() + QLatin1String("/mega-desktop-app-gfxworker");
 }
 #endif
 
