@@ -1168,6 +1168,7 @@ void StalledIssuesModel::onAsyncIssueSolvingFinished(StalledIssue* issue)
     if(issueSolvingFinished(issue))
     {
         emit refreshFilter();
+        emit stalledIssuesChanged();
     }
 }
 
