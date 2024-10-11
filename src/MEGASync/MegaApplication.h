@@ -14,7 +14,6 @@
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
-#include "ScaleFactorManager.h"
 #include "ScanStageController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
@@ -494,9 +493,6 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
-#ifndef Q_OS_MACX
-    ScaleFactorManager mScaleFactorManager;
-#endif
     bool mDisableGfx;
 
     std::unique_ptr<UserMessageController> mUserMessageController;
