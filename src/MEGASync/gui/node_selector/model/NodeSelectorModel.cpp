@@ -754,7 +754,7 @@ bool NodeSelectorModel::dropMimeData(
 
                 while (!stream.atEnd())
                 {
-                    mega::MegaHandle handle;
+                    quint64 handle;
                     stream >> handle;
                     moveHandles.append(handle);
                 }
@@ -847,7 +847,7 @@ QMimeData* NodeSelectorModel::mimeData(const QModelIndexList &indexes) const
                 if(!processedHandles.contains(handle))
                 {
                     processedHandles.insert(handle);
-                    stream << handle;
+                    stream << static_cast<quint64>(handle);
                 }
             }
         }
@@ -870,7 +870,7 @@ QMimeData* NodeSelectorModel::mimeData(const QList<mega::MegaHandle>& handles) c
         if (!processedHandles.contains(handle))
         {
             processedHandles.insert(handle);
-            stream << handle;
+            stream << static_cast<quint64>(handle);
         }
     }
 
