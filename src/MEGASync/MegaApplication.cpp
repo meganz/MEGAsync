@@ -499,10 +499,10 @@ void MegaApplication::initialize()
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
-                                    mGfxProvider.get(),
+                                    nullptr,
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
+    megaApiFolders->disableGfxFeatures(true);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
