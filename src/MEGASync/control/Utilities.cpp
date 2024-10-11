@@ -1596,7 +1596,7 @@ bool Utilities::removeLocalFile(const QString& path, const MegaHandle& syncId)
         {
             MegaApiSynchronizedRequest::runRequestWithResult(&MegaApi::moveToDebris,
                 MegaSyncApp->getMegaApi(),
-                [=, &result](
+                [&](
                     MegaRequest*, MegaError* e)
                 {
                     //In case of error, move to OS trash

@@ -4604,10 +4604,6 @@ Enter a different name.</translation>
         <source>Unsync</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Move</source>
-        <translation type="unfinished">Move</translation>
-    </message>
 </context>
 <context>
     <name>NodeSelectorTreeViewWidget</name>
