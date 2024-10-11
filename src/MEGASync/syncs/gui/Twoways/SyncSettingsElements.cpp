@@ -74,10 +74,12 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
         syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
-    connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
-            &QPushButton::clicked,
-            this,
-            &SyncSettingsElements::applyPreviousExclusions);
+    //! TODO Josep Subirana Oller: FIX!!!
+    // connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
+    //         &QPushButton::clicked,
+    //         this,
+    //         &SyncSettingsElements::applyPreviousExclusions);
+    //! END TODO Josep Subirana Oller: FIX!!!
     connect(syncStallModeSelectorUI->SmartSelector,
             &QRadioButton::toggled,
             this,
