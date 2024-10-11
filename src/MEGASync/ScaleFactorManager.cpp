@@ -1,6 +1,7 @@
 #include "ScaleFactorManager.h"
 
 #include <QDebug>
+#include <QGuiApplication>
 #include <QProcess>
 #include <QScreen>
 #include <stdexcept>
@@ -47,9 +48,7 @@ double getWindowScalingFactorOnXcfe()
     return windowScalingFactor;
 }
 
-ScreensInfo createScreensInfo(OsType osType,
-                              const QString& desktopName,
-                              const QList<QScreen*>& screens)
+ScreensInfo createScreensInfo(OsType osType, const QString& desktopName)
 {
     if (QSysInfo::prettyProductName() == LINUX_OS_DEEPIN_20)
     {
@@ -66,6 +65,12 @@ ScreensInfo createScreensInfo(OsType osType,
             linuxDpi *= getWindowScalingFactorOnXcfe();
         }
     }
+
+    // QGuiApplication needs to be created, even if screens() is static.
+    // Otherwise, the screens are not detected.
+    int argc = 0;
+    QGuiApplication app{argc, nullptr};
+    const auto screens = app.screens();
 
     ScreensInfo screensInfo;
     for (const auto& screen: screens)
@@ -90,9 +95,9 @@ QString getDesktopName()
     return qEnvironmentVariable("XDG_CURRENT_DESKTOP");
 }
 
-ScaleFactorManager::ScaleFactorManager(OsType osType, const QList<QScreen*>& screens):
+ScaleFactorManager::ScaleFactorManager(OsType osType):
     ScaleFactorManager(osType,
-                       createScreensInfo(osType, getDesktopName(), screens),
+                       createScreensInfo(osType, getDesktopName()),
                        QSysInfo::prettyProductName(),
                        getDesktopName())
 {}
