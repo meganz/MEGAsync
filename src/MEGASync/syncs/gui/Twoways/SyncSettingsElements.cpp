@@ -47,7 +47,7 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
 #ifdef Q_OS_MACOS
     CocoaHelpButton* LearnMoreButton = new CocoaHelpButton();
     syncStallModeSelectorUI->horizontalLayout_3->insertWidget(1, LearnMoreButton);
-    syncStallModeSelectorUI->bApplyLegacyExclusions->setAutoDefault(false);
+    // syncStallModeSelectorUI->bApplyLegacyExclusions->setAutoDefault(false);
     connect(LearnMoreButton,
             &CocoaHelpButton::clicked,
             []()
