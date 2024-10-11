@@ -519,6 +519,8 @@ private:
 
             info->raise(true);
 
+            TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
+
             return info;
         }
 

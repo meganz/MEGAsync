@@ -1,16 +1,18 @@
 #include "TokenParserWidgetManager.h"
 
-#include "ThemeManager.h"
-#include "IconTokenizer.h"
-//#include "MegaApplication.h"
 #include "DialogOpener.h"
+#include "IconTokenizer.h"
+#include "MegaApplication.h"
+#include "ThemeManager.h"
+#include "WidgetTokenConfig.h"
 
-#include <QDir>
-#include <QWidget>
+#include <QtConcurrent/QtConcurrent>
+
 #include <QBitmap>
 #include <QComboBox>
+#include <QDir>
 #include <QToolButton>
-#include <QtConcurrent/QtConcurrent>
+#include <QWidget>
 
 namespace // anonymous namespace to hide names from other translation units
 {
@@ -49,7 +51,11 @@ TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
     : QObject{parent}
 {
     connect(ThemeManager::instance(), &ThemeManager::themeChanged, this, &TokenParserWidgetManager::onThemeChanged);
-    //connect(MegaSyncApp, &MegaApplication::updateUserInterface, this, &TokenParserWidgetManager::onUpdateRequested, Qt::QueuedConnection);
+    connect(MegaSyncApp,
+            &MegaApplication::updateUserInterface,
+            this,
+            &TokenParserWidgetManager::onUpdateRequested,
+            Qt::QueuedConnection);
 
     COLOR_TOKEN_REGULAR_EXPRESSION.optimize();
     ICON_COLOR_TOKEN_REGULAR_EXPRESSION.optimize();
@@ -133,6 +139,16 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
     qDebug() << "to the following dialog : " << dialog->objectName();
 }
 
+bool TokenParserWidgetManager::isTokenized(QWidget* widget)
+{
+    static QStringList tokenizedUiFiles =
+        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES).split(QLatin1Char(';'));
+
+    QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
+
+    return !tokenizedUiFiles.filter(uiFileName).empty();
+}
+
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme()
 {
@@ -158,6 +174,11 @@ void TokenParserWidgetManager::applyCurrentTheme()
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
 {
+    if (!isTokenized(widget))
+    {
+        return;
+    }
+
     auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
     if (!mColorThemedTokens.contains(currentTheme))

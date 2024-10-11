@@ -1,13 +1,14 @@
 #include "DownloadFromMegaDialog.h"
+
+#include "CommonMessages.h"
+#include "Platform.h"
+#include "QMegaMessageBox.h"
 #include "ui_DownloadFromMegaDialog.h"
 #include "Utilities.h"
-#include "Platform.h"
-#include "CommonMessages.h"
 
 #include <QDesktopServices>
-#include <QTemporaryFile>
-#include "QMegaMessageBox.h"
 #include <QPointer>
+#include <QTemporaryFile>
 
 DownloadFromMegaDialog::DownloadFromMegaDialog(QString path, QWidget *parent) :
     QDialog(parent),

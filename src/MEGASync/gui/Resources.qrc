@@ -13,5 +13,47 @@
         <file>images/themed/light/spinbox_down_arrow.svg</file>
         <file>images/themed/dark/spinbox_up_arrow.svg</file>
         <file>images/themed/dark/spinbox_down_arrow.svg</file>
+        <file>images/themed/light/switch_on_pressed.svg</file>
+        <file>images/themed/light/switch_on_hover.svg</file>
+        <file>images/themed/light/switch_on.svg</file>
+        <file>images/themed/light/switch_off_pressed.svg</file>
+        <file>images/themed/light/switch_off_hover.svg</file>
+        <file>images/themed/light/switch_off.svg</file>
+        <file>images/themed/light/radio_unchecked.svg</file>
+        <file>images/themed/light/radio_checked.svg</file>
+        <file>images/themed/light/combobox_down_arrow.svg</file>
+        <file>images/themed/light/checkbox_unchecked.svg</file>
+        <file>images/themed/light/checkbox_checked.svg</file>
+        <file>images/themed/dark/switch_on_pressed.svg</file>
+        <file>images/themed/dark/switch_on_hover.svg</file>
+        <file>images/themed/dark/switch_on.svg</file>
+        <file>images/themed/dark/switch_off_pressed.svg</file>
+        <file>images/themed/dark/switch_off_hover.svg</file>
+        <file>images/themed/dark/switch_off.svg</file>
+        <file>images/themed/dark/radio_unchecked.svg</file>
+        <file>images/themed/dark/radio_checked.svg</file>
+        <file>images/themed/dark/combobox_down_arrow.svg</file>
+        <file>images/themed/dark/checkbox_unchecked.svg</file>
+        <file>images/themed/dark/checkbox_checked.svg</file>
+        <file>images/settings-account.svg</file>
+        <file>images/settings-backup.svg</file>
+        <file>images/settings-backup-warn.svg</file>
+        <file>images/settings-folders.svg</file>
+        <file>images/settings-general.svg</file>
+        <file>images/settings-network.svg</file>
+        <file>images/settings-notifications.svg</file>
+        <file>images/settings-shield.svg</file>
+        <file>images/settings-sync.svg</file>
+        <file>images/settings-sync-warn.svg</file>
+        <file>images/Small_Free.png</file>
+        <file>images/Small_Free@2x.png</file>
+        <file>images/Small_Free@3x.png</file>
+        <file>images/key_big.png</file>
+        <file>images/key_big@2x.png</file>
+        <file>images/key_big@3x.png</file>
+        <file>images/lock_big.png</file>
+        <file>images/lock_big@2x.png</file>
+        <file>images/lock_big@3x.png</file>
+        <file>images/help-icon.svg</file>
     </qresource>
 </RCC>

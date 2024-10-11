@@ -52,7 +52,6 @@ target_sources_conditional(MEGAsync
    platform/macx/NSPopover+MISSINGBackgroundView.h
    platform/macx/Protocol.h
    platform/macx/MacXExtServerService.h
-   platform/macx/QCustomMacToolbar.h
    platform/macx/NativeMacPopover.h
    platform/macx/NativeMacPopoverPrivate.h
    platform/macx/PlatformImplementation.cpp
@@ -69,7 +68,6 @@ target_sources_conditional(MEGAsync
    platform/macx/MacXLocalSocket.mm
    platform/macx/MacXLocalSocketPrivate.mm
    platform/macx/NSPopover+MISSINGBackgroundView.mm
-   platform/macx/QCustomMacToolbar.mm
    platform/macx/PowerOptions.mm
    platform/macx/NativeMacPopover.mm
    platform/macx/NativeMacPopoverPrivate.mm

@@ -21,6 +21,12 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
 
     mUi->eProxyPort->setValidator(new QIntValidator(0, std::numeric_limits<uint16_t>::max(), this));
 
+#ifndef Q_OS_LINUX
+    mProxyAuto = new QRadioButton(this);
+    mProxyAuto->setText(tr("Auto-detect"));
+    mUi->verticalLayout->addWidget(mProxyAuto);
+#endif
+
     initialize();
 
     connect(mConnectivityChecker, &ConnectivityChecker::testFinished,
@@ -30,7 +36,13 @@ ProxySettings::ProxySettings(MegaApplication *app, QWidget *parent) :
     connect(mUi->cProxyRequiresPassword, &QCheckBox::toggled, this, [this]{setManualMode(true);});
     connect(mUi->rNoProxy, &QRadioButton::clicked, this, [this]{setManualMode(false);});
 #ifndef Q_OS_LINUX
-    connect(mUi->rProxyAuto, &QRadioButton::clicked, this, [this]{setManualMode(false);});
+    connect(mProxyAuto,
+            &QRadioButton::clicked,
+            this,
+            [this]
+            {
+                setManualMode(false);
+            });
 #endif
 }
 
@@ -44,7 +56,7 @@ void ProxySettings::initialize()
 {
     mUi->rNoProxy->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_NONE);
 #ifndef Q_OS_LINUX
-    mUi->rProxyAuto->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_AUTO);
+    mProxyAuto->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_AUTO);
 #endif
     mUi->rProxyManual->setChecked(mPreferences->proxyType() == Preferences::PROXY_TYPE_CUSTOM);
     mUi->cProxyType->setCurrentIndex(mPreferences->proxyProtocol());
@@ -88,7 +100,7 @@ void ProxySettings::onProxyTestFinished(bool success)
             mPreferences->setProxyType(Preferences::PROXY_TYPE_NONE);
         }
 #ifndef Q_OS_LINUX
-        else if (mUi->rProxyAuto->isChecked())
+        else if (mProxyAuto->isChecked())
         {
             mPreferences->setProxyType(Preferences::PROXY_TYPE_AUTO);
         }
@@ -153,9 +165,9 @@ void ProxySettings::on_bUpdate_clicked()
         }
     }
 #ifndef Q_OS_LINUX
-    else if (mUi->rProxyAuto->isChecked())
+    else if (mProxyAuto->isChecked())
     {
-        MegaProxy *proxySettings = mApp->getMegaApi()->getAutoProxySettings();
+        MegaProxy* proxySettings = mApp->getMegaApi()->getAutoProxySettings();
         if (proxySettings->getProxyType() == MegaProxy::PROXY_CUSTOM)
         {
             std::string sProxyURL = proxySettings->getProxyURL();
@@ -171,7 +183,7 @@ void ProxySettings::on_bUpdate_clicked()
                 proxy.setType(QNetworkProxy::HttpProxy);
             }
 
-            QStringList arguments = parts[parts.size()-1].split(QString::fromUtf8(":"));
+            QStringList arguments = parts[parts.size() - 1].split(QString::fromUtf8(":"));
             if (arguments.size() == 2)
             {
                 proxy.setHostName(arguments[0]);

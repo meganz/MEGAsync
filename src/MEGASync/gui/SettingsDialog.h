@@ -12,10 +12,6 @@
 #include <QFutureWatcher>
 #include <QtCore>
 
-#ifdef Q_OS_MACOS
-#include "platform/macx/QCustomMacToolbar.h"
-#endif
-
 namespace Ui {
 class SettingsDialog;
 }
@@ -82,10 +78,6 @@ public slots:
 private slots:
     void on_bBackupCenter_clicked();
     void on_bHelp_clicked();
-#ifdef Q_OS_MACOS
-    void onAnimationFinished();
-    void initializeNativeUIComponents();
-#endif
 
     // General
     void on_bGeneral_clicked();
@@ -100,9 +92,7 @@ private slots:
     void on_cFileVersioning_toggled(bool checked);
     void on_cbSleepMode_toggled(bool checked);
     void on_cOverlayIcons_toggled(bool checked);
-#ifdef Q_OS_WINDOWS
-    void on_cFinderIcons_toggled(bool checked);
-#endif
+    void on_cbTheme_currentIndexChanged(int index);
     void on_bUpdate_clicked();
     void on_bFullCheck_clicked();
     void on_bSendBug_clicked();
@@ -142,18 +132,9 @@ private slots:
 
 protected:
     void changeEvent(QEvent* event) override;
-#ifdef Q_OS_MACOS
-    void closeEvent(QCloseEvent * event) override;
-#endif
 
 private slots:
     void onShellNotificationsProcessed();
-#ifdef Q_OS_MACOS
-    // Due to issues with QT and window manager on macOS, menus are not closing when
-    // you close settings dialog using close toolbar button. To fix it, emit a signal when about to close
-    // and force to close the sync menu (if visible)
-    void closeMenus();
-#endif
 
 private:
     void loadSettings();
@@ -163,27 +144,8 @@ private:
     void setShortCutsForToolBarItems();
     void showUnexpectedSyncError(const QString& message);
     void updateCacheSchedulerDaysLabel();
-
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
-
-#ifdef Q_OS_MACOS
-    void reloadToolBarItemNames();
-    void macOSretainSizeWhenHidden();
-    void animateSettingPage(int endValue, int duration = 150);
-    QPropertyAnimation* mMinHeightAnimation;
-    QPropertyAnimation* mMaxHeightAnimation;
-    QParallelAnimationGroup* mAnimationGroup;
-    QCustomMacToolbar* mToolBar;
-    QMacToolBarItem *bGeneral;
-    QMacToolBarItem *bAccount;
-    QMacToolBarItem *bSyncs;
-    QMacToolBarItem *bBackup;
-    QMacToolBarItem *bSecurity;
-    QMacToolBarItem *bFolders;
-    QMacToolBarItem* bNetwork;
-    QMacToolBarItem* bNotifications;
-#endif
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;

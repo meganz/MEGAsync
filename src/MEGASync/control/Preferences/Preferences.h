@@ -1,17 +1,17 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include <megaapi.h>
 #include "EncryptedSettings.h"
-#include "SyncInfo.h"
 #include "EphemeralCredentials.h"
-
-#include <QLocale>
-#include <QStringList>
-#include <QMutex>
-#include <QDataStream>
+#include "SyncInfo.h"
 
 #include <chrono>
+#include <megaapi.h>
+#include <memory>
+#include <QDataStream>
+#include <QLocale>
+#include <QMutex>
+#include <QStringList>
 #include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)

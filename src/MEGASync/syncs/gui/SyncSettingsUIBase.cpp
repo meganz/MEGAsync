@@ -1,19 +1,19 @@
 #include "SyncSettingsUIBase.h"
 
-#include <QDateTime>
-
 #include "DialogOpener.h"
-#include "SyncTableView.h"
-#include "SyncItemModel.h"
 #include "SyncExclusions.h"
-
+#include "SyncItemModel.h"
+#include "SyncTableView.h"
+#include "ui_SyncSettingsUIBase.h"
 #ifndef Q_OS_WIN
-#include <MegaApplication.h>
-#include <QScreen>
-#include <PermissionsDialog.h>
+#include "MegaApplication.h"
+#include "PermissionsDialog.h"
 #endif
 
-#include "ui_SyncSettingsUIBase.h"
+#include <QDateTime>
+#ifndef Q_OS_WIN
+#include <QScreen>
+#endif
 
 QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> SyncSettingsUIBase::mModels = QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>>();
 
@@ -107,15 +107,8 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 
                     if(mToolBarItem)
                     {
-#ifdef Q_OS_MACOS
-                        QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
-                        if(toolBar)
-                        {
-                            toolBar->customizeIconToolBarItem(mToolBarItem, getFinishWarningIconString());
-                        }
-#else
                         mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
-#endif
+                        emit MegaSyncApp->updateUserInterface();
                     }
                 }
                 else
@@ -124,32 +117,18 @@ void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 
                     if(mToolBarItem)
                     {
-#ifdef Q_OS_MACOS
-                        QCustomMacToolbar* toolBar = dynamic_cast<QCustomMacToolbar*>(mToolBarItem->parent());
-                        if(toolBar)
-                        {
-                            toolBar->customizeIconToolBarItem(mToolBarItem, getFinishIconString());
-                        }
-#else
                         mToolBarItem->setIcon(QIcon(getFinishIconString()));
-#endif
+                        emit MegaSyncApp->updateUserInterface();
                     }
                 }
                 break;
             }
 }
 
-#ifdef Q_OS_MACOS
-void SyncSettingsUIBase::setToolBarItem(QMacToolBarItem *item)
-{
-    mToolBarItem = item;
-}
-#else
 void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
 {
     mToolBarItem = item;
 }
-#endif
 
 void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
 {

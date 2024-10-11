@@ -30,6 +30,8 @@ void BackupSettingsElements::initElements(SyncSettingsUIBase *syncSettingsUi)
     onMyBackupsFolderHandleSet(myBackupsHandle->getMyBackupsHandle());
 
     syncSettingsUi->insertUIElement(mOpenBackupsFolder, 0);
+
+    emit MegaSyncApp->updateUserInterface();
 }
 
 void BackupSettingsElements::updateUI()

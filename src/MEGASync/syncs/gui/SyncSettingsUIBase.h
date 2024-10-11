@@ -1,21 +1,17 @@
 #ifndef SYNCSETTINGSUIBASE_H
 #define SYNCSETTINGSUIBASE_H
 
-#include <QWidget>
-#include <QIcon>
-#include <QFutureWatcher>
-#ifdef Q_OS_MACOS
-#include "platform/macx/QCustomMacToolbar.h"
-#else
-#include <QToolButton>
-#endif
+#include "GuiUtilities.h"
+#include "MegaApplication.h"
+#include "QMegaMessageBox.h"
+#include "SyncController.h"
+#include "TextDecorator.h"
+#include "Utilities.h"
 
-#include <QMegaMessageBox.h>
-#include <TextDecorator.h>
-#include <Utilities.h>
-#include <GuiUtilities.h>
-#include <MegaApplication.h>
-#include <SyncController.h>
+#include <QFutureWatcher>
+#include <QIcon>
+#include <QToolButton>
+#include <QWidget>
 
 namespace Ui {
 class SyncSettingsUIBase;
@@ -160,11 +156,7 @@ public:
         syncsStateInformation(SAVING_FINISHED);
     }
 
-#ifdef Q_OS_MACOS
-    void setToolBarItem(QMacToolBarItem* item);
-#else
     void setToolBarItem(QToolButton* item);
-#endif
 
     template <class DialogType>
     void setParentDialog(DialogType *newParentDialog)
@@ -221,12 +213,7 @@ private:
     SyncInfo* mSyncInfo;
     static QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> mModels;
     QFutureWatcher<bool> mOpeMegaIgnoreWatcher;
-
-#ifdef Q_OS_MACOS
-    QMacToolBarItem* mToolBarItem;
-#else
     QToolButton* mToolBarItem;
-#endif
 };
 
 #endif // SYNCSETTINGSUIBASE_H

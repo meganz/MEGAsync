@@ -13,21 +13,11 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
     connect(ui->bPermissions, &QPushButton::clicked, this, &RemoteItemUi::permissionsClicked);
 #endif
 
-#ifdef Q_OS_MACOS
-    ui->tableSegementedControl->configureTableSegment();
-    connect(ui->tableSegementedControl, &QSegmentedControl::addButtonClicked,
-            this, [this](){
-        emit addClicked();
-    });
-    connect(ui->tableSegementedControl, &QSegmentedControl::removeButtonClicked,
-            this,  &RemoteItemUi::deleteClicked);
-#else
     connect(ui->bAdd, &QPushButton::clicked, this, [this](){
         emit addClicked();
     });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
     ui->bAdd->setAutoDefault(true);
-#endif
 }
 
 RemoteItemUi::~RemoteItemUi()
@@ -37,11 +27,7 @@ RemoteItemUi::~RemoteItemUi()
 
 void RemoteItemUi::setTitle(const QString &title)
 {
-#ifdef Q_OS_MACOS
-    ui->title->setText(title);
-#else
     ui->groupBox->setTitle(title);
-#endif
 }
 
 void RemoteItemUi::initView(QTableView *newView)
@@ -61,11 +47,7 @@ void RemoteItemUi::setUsePermissions(const bool use)
 {
     ui->bPermissions->setVisible(use);
 
-    if(ui->bPermissions->isHidden()
-        #ifndef Q_OS_MACOS
-            && ui->bAdd->isHidden() && ui->bDelete->isHidden()
-        #endif
-            )
+    if (ui->bPermissions->isHidden() && ui->bAdd->isHidden() && ui->bDelete->isHidden())
     {
         ui->wControlButtons->hide();
     }
@@ -106,9 +88,5 @@ void RemoteItemUi::setTableViewProperties(QTableView *view) const
 
 void RemoteItemUi::setAddButtonEnabled(bool enabled)
 {
-#ifdef Q_OS_MACOS
-    ui->tableSegementedControl->setTableButtonEnable(QSegmentedControl::ADD_BUTTON, enabled);
-#else
     ui->bAdd->setEnabled(enabled);
-#endif
 }

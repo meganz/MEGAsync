@@ -77,20 +77,12 @@ void BackupSettingsUI::removeSync(std::shared_ptr<SyncSettings> backup)
 
 QString BackupSettingsUI::getFinishWarningIconString() const
 {
-#ifdef Q_OS_MACOS
-    return QString::fromUtf8("settings-backups-error");
-#else
-    return QString::fromUtf8(":/images/settings-backups-warn.png");
-#endif
+    return QString::fromUtf8(":/images/settings-backup-warn.svg");
 }
 
 QString BackupSettingsUI::getFinishIconString() const
 {
-#ifdef Q_OS_MACOS
-    return QString::fromUtf8("settings-backup");
-#else
-    return QString::fromUtf8(":/images/settings-backup.png");
-#endif
+    return QString::fromUtf8(":/images/settings-backup.svg");
 }
 
 QString BackupSettingsUI::getOperationFailTitle() const

@@ -216,8 +216,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-    ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
-
 #ifdef __APPLE__
     auto current = QOperatingSystemVersion::current();
     if (current <= QOperatingSystemVersion::OSXMavericks) //Issues with mavericks and popup management

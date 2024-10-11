@@ -20,6 +20,7 @@
 #include "RemoveBackupDialog.h"
 #include "StatsEventHandler.h"
 #include "TextDecorator.h"
+#include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
 
@@ -38,31 +39,7 @@
 #include <QTranslator>
 #include <QUrl>
 
-#ifdef Q_OS_MACOS
-    #include "CocoaHelpButton.h"
-#endif
-
-#ifdef Q_OS_WINDOWS
-extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-#else
-#include "PermissionsDialog.h"
-#endif
-
 using namespace mega;
-
-// Common ------------------------------------------------------------------------------------------
-#ifdef Q_OS_MACOS
-//Const values used for macOS Settings dialog resize animation
-constexpr auto SETTING_ANIMATION_PAGE_TIMEOUT{150};//ms
-constexpr auto SETTING_ANIMATION_GENERAL_TAB_HEIGHT{646};
-constexpr auto SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT{295};//px height
-constexpr auto SETTING_ANIMATION_SYNCS_TAB_HEIGHT{539};
-constexpr auto SETTING_ANIMATION_BACKUP_TAB_HEIGHT{534};
-constexpr auto SETTING_ANIMATION_SECURITY_TAB_HEIGHT{372};
-constexpr auto SETTING_ANIMATION_FOLDERS_TAB_HEIGHT{240};
-constexpr auto SETTING_ANIMATION_NETWORK_TAB_HEIGHT{205};
-constexpr auto SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT{422};
-#endif
 
 const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
 static constexpr int NUMBER_OF_CLICKS_TO_DEBUG {5};
@@ -116,97 +93,46 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     // Add Ctrl+index keyboard shortcut for Settings tabs
     setShortCutsForToolBarItems();
 
-    connect(mUi->wStack, &QStackedWidget::currentChanged, [=](const int &newValue){
-          mUi->wStackFooter->setCurrentIndex(newValue);
-          //Setting new index in the stack widget cause the focus to be set to footer button
-          //avoid it, setting to main wStack to ease tab navigation among different controls.
-          mUi->wStack->setFocus();
-    });
+    connect(mUi->wStack,
+            &QStackedWidget::currentChanged,
+            mUi->wStack,
+            [=](const int& newValue)
+            {
+                mUi->wStackFooter->setCurrentIndex(newValue);
+                // Setting new index in the stack widget cause the focus to be set to footer button
+                // avoid it, setting to main wStack to ease tab navigation among different controls.
+                mUi->wStack->setFocus();
+            });
 
-#ifdef Q_OS_MACOS
-    mUi->wStack->setFocus();
-#else
     mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
     mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-#endif
 
 #ifdef Q_OS_LINUX
-    mUi->wUpdateSection->hide();
+    mUi->bUpdate->hide();
 #endif
 
-#ifdef Q_OS_WINDOWS
-    mUi->cFinderIcons->hide();
-
-    typedef LONG MEGANTSTATUS;
-    typedef struct _MEGAOSVERSIONINFOW {
-        DWORD dwOSVersionInfoSize;
-        DWORD dwMajorVersion;
-        DWORD dwMinorVersion;
-        DWORD dwBuildNumber;
-        DWORD dwPlatformId;
-        WCHAR  szCSDVersion[128];     // Maintenance string for PSS usage
-    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
-
-    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
-    MEGARTL_OSVERSIONINFOW version = {0};
-    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
-    if (hMod)
-    {
-#if defined(_MSC_VER)
-#pragma warning(push)
-#pragma warning( disable : 4191 ) // 'type cast': unsafe conversion from 'FARPROC' to 'RtlGetVersionPtr'
-#endif
-        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
-#if defined(_MSC_VER)
-#pragma warning(pop)
-#endif
-        if (RtlGetVersion)
-        {
-            RtlGetVersion(&version);
-            if (version.dwMajorVersion >= 10)
-            {
-                mUi->cFinderIcons->show();
-            }
-        }
-    }
-#endif
+    mUi->gThemeSelector->hide();
 
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Settings"));
     mUi->cStartOnStartup->setText(tr("Launch at login"));
-    mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-
 
     auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) //FinderSync API support from 10.10+
+    if (current <= QOperatingSystemVersion::OSXMavericks) // FinderSync API support from 10.10+
     {
         mUi->cOverlayIcons->hide();
     }
-
-    initializeNativeUIComponents();
 #endif
 
     setProxyOnly(proxyOnly);
 
 #ifdef Q_OS_MACOS
-    mMinHeightAnimation = new QPropertyAnimation();
-    mMaxHeightAnimation = new QPropertyAnimation();
-    mAnimationGroup = new QParallelAnimationGroup();
-    mAnimationGroup->addAnimation(mMinHeightAnimation);
-    mAnimationGroup->addAnimation(mMaxHeightAnimation);
-    connect(mAnimationGroup, &QParallelAnimationGroup::finished,
-            this, &SettingsDialog::onAnimationFinished);
-
     mUi->pSyncs->hide();
 
     if (!proxyOnly)
     {
-        setMinimumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
-        setMaximumHeight(SETTING_ANIMATION_GENERAL_TAB_HEIGHT);
         mUi->pNetwork->hide();
     }
-
-    macOSretainSizeWhenHidden();
 #endif
 
     AccountDetailsManager::instance()->attachStorageObserver(*this);
@@ -225,94 +151,50 @@ SettingsDialog::~SettingsDialog()
     AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
     AccountDetailsManager::instance()->dettachAccountObserver(*this);
 
-#ifdef Q_OS_MACOS
-    mToolBar->deleteLater();
-#endif
-
     delete mUi;
 }
 
 void SettingsDialog::openSettingsTab(int tab)
 {
-    if(mProxyOnly) // do not switch tabs when in guest mode
+    if (mProxyOnly) // do not switch tabs when in guest mode
         return;
 
     switch (tab)
     {
-    case GENERAL_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bGeneral->click();
-#else
-        mToolBar->setSelectedItem(bGeneral);
-        emit bGeneral->activated();
-#endif
-        break;
+        case GENERAL_TAB:
+            mUi->bGeneral->click();
+            break;
 
-    case ACCOUNT_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bAccount->click();
-#else
-        mToolBar->setSelectedItem(bAccount);
-        emit bAccount->activated();
-#endif
-        break;
+        case ACCOUNT_TAB:
+            mUi->bAccount->click();
+            break;
 
-    case SYNCS_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bSyncs->click();
-#else
-        mToolBar->setSelectedItem(bSyncs);
-        emit bSyncs->activated();
-#endif
-        break;
+        case SYNCS_TAB:
+            mUi->bSyncs->click();
+            break;
 
-    case BACKUP_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bBackup->click();
-#else
-        mToolBar->setSelectedItem(bBackup);
-        emit bBackup->activated();
-#endif
-        break;
+        case BACKUP_TAB:
+            mUi->bBackup->click();
+            break;
 
-    case SECURITY_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bSecurity->click();
-#else
-        mToolBar->setSelectedItem(bSecurity);
-        emit bSecurity->activated();
-#endif
-        break;
+        case SECURITY_TAB:
+            mUi->bSecurity->click();
+            break;
 
-    case FOLDERS_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bFolders->click();
-#else
-        mToolBar->setSelectedItem(bFolders);
-        emit bFolders->activated();
-#endif
-        break;
+        case FOLDERS_TAB:
+            mUi->bFolders->click();
+            break;
 
-    case NETWORK_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bNetwork->click();
-#else
-        mToolBar->setSelectedItem(bNetwork);
-        emit bNetwork->activated();
-#endif
-        break;
+        case NETWORK_TAB:
+            mUi->bNetwork->click();
+            break;
 
-    case NOTIFICATIONS_TAB:
-#ifndef Q_OS_MACOS
-        mUi->bNotifications->click();
-#else
-        mToolBar->setSelectedItem(bNotifications);
-        emit bNotifications->activated();
-#endif
-        break;
+        case NOTIFICATIONS_TAB:
+            mUi->bNotifications->click();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -320,7 +202,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 {
     mProxyOnly = proxyOnly;
 
-#ifndef Q_OS_MACOS
     mUi->bGeneral->setEnabled(!proxyOnly);
     mUi->bAccount->setEnabled(!proxyOnly);
     mUi->bSyncs->setEnabled(!proxyOnly);
@@ -328,19 +209,11 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
     mUi->bNotifications->setEnabled(!proxyOnly);
-#endif
 
     if (proxyOnly)
     {
-#ifdef Q_OS_MACOS
-        // TODO: Re-evaluate sizes for Network tab
-        setMinimumHeight(435);
-        setMaximumHeight(435);
-        mToolBar->setSelectedItem(bNetwork);
-#else
         mUi->bNetwork->setEnabled(true);
         mUi->bNetwork->setChecked(true);
-#endif
     }
     else
     {
@@ -368,79 +241,6 @@ void SettingsDialog::showGuestMode()
         }
     });
 }
-
-#ifdef Q_OS_MACOS
-void SettingsDialog::initializeNativeUIComponents()
-{
-    CocoaHelpButton* helpButton = new CocoaHelpButton();
-    mUi->layoutBottom->insertWidget(0, helpButton);
-    connect(helpButton, &CocoaHelpButton::clicked,
-            this, &SettingsDialog::on_bHelp_clicked);
-
-    // Set native NSToolBar for settings.
-    mToolBar = new QCustomMacToolbar();
-
-    QString general(QString::fromUtf8("settings-general"));
-    QString account(QString::fromUtf8("settings-account"));
-    QString syncs(QString::fromUtf8("settings-syncs"));
-    QString backup(QString::fromUtf8("settings-backup"));
-    QString security(QString::fromUtf8("settings-security"));
-    QString folders(QString::fromUtf8("settings-folders"));
-    QString network(QString::fromUtf8("settings-network"));
-    QString notifications(QString::fromUtf8("settings-notifications"));
-
-    // add Items
-    bGeneral = mToolBar->addItem(QIcon(), tr("General"));
-    mToolBar->customizeIconToolBarItem(bGeneral, general);
-    connect(bGeneral, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bGeneral_clicked);
-
-    bAccount=mToolBar->addItem(QIcon(), tr("Account"));
-    mToolBar->customizeIconToolBarItem(bAccount, account);
-    connect(bAccount, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bAccount_clicked);
-
-    bSyncs=mToolBar->addItem(QIcon(), tr("Sync"));
-    mToolBar->customizeIconToolBarItem(bSyncs, syncs);
-    mUi->syncSettings->setToolBarItem(bSyncs);
-    connect(bSyncs, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bSyncs_clicked);
-
-    bBackup=mToolBar->addItem(QIcon(), tr("Backup"));
-    mToolBar->customizeIconToolBarItem(bBackup, backup);
-    mUi->backupSettings->setToolBarItem(bBackup);
-    connect(bBackup, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bBackup_clicked);
-
-    bSecurity=mToolBar->addItem(QIcon(), tr("Security"));
-    mToolBar->customizeIconToolBarItem(bSecurity, security);
-    connect(bSecurity, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bSecurity_clicked);
-
-    bFolders=mToolBar->addItem(QIcon(), tr("Folders"));
-    mToolBar->customizeIconToolBarItem(bFolders, folders);
-    connect(bFolders, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bFolders_clicked);
-
-    bNetwork=mToolBar->addItem(QIcon(), tr("Network"));
-    mToolBar->customizeIconToolBarItem(bNetwork, network);
-    connect(bNetwork, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bNetwork_clicked);
-
-    bNotifications = mToolBar->addItem(QIcon(), tr("Notifications"));
-    mToolBar->customizeIconToolBarItem(bNotifications, notifications);
-    connect(bNotifications, &QMacToolBarItem::activated,
-            this, &SettingsDialog::on_bNotifications_clicked);
-
-    mToolBar->setSelectableItems(true);
-    mToolBar->setAllowsUserCustomization(false);
-    mToolBar->setSelectedItem(bGeneral);
-
-    // Attach to the window according Qt docs
-    this->window()->winId(); // create window->windowhandle()
-    mToolBar->attachToWindowWithStyle(window()->windowHandle(), QCustomMacToolbar::StylePreference);
-}
-#endif
 
 void SettingsDialog::loadSettings()
 {
@@ -537,6 +337,10 @@ void SettingsDialog::loadSettings()
     mUi->cLanguage->addItems(languages);
     mUi->cLanguage->setCurrentIndex(currentIndex);
 
+    mUi->cbTheme->clear();
+    mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
+    mUi->cbTheme->setCurrentIndex(static_cast<int>(mPreferences->getThemeType()));
+
     //Account
     mUi->lEmail->setText(mPreferences->email());
     auto fullName ((mPreferences->firstName() + QStringLiteral(" ")
@@ -560,21 +364,15 @@ void SettingsDialog::loadSettings()
     updateUploadFolder();
     updateDownloadFolder();
 
-#ifdef Q_OS_WINDOWS
-    mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
-#endif
-
     updateNetworkTab();
 
     // Folders tab
     mUi->syncSettings->setParentDialog(this);
     mUi->backupSettings->setParentDialog(this);
 
-    //Syncs and backups
-#ifndef Q_OS_MACOS
+    // Syncs and backups
     mUi->syncSettings->setToolBarItem(mUi->bSyncs);
     mUi->backupSettings->setToolBarItem(mUi->bBackup);
-#endif
 
     mLoadingSettings--;
 }
@@ -628,115 +426,12 @@ void SettingsDialog::on_bHelp_clicked()
     Utilities::openUrl(QUrl(helpUrl));
 }
 
-#ifdef Q_OS_MACOS
-void SettingsDialog::onAnimationFinished()
-{
-    if (mUi->wStack->currentWidget() == mUi->pGeneral)
-    {
-        mUi->pGeneral->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pAccount)
-    {
-        mUi->pAccount->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pSyncs)
-    {
-        mUi->pSyncs->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pBackup)
-    {
-        mUi->pBackup->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pFolders)
-    {
-        mUi->pFolders->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pNetwork)
-    {
-        mUi->pNetwork->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pSecurity)
-    {
-        mUi->pSecurity->show();
-    }
-    else if (mUi->wStack->currentWidget() == mUi->pNotifications)
-    {
-        mUi->pNotifications->show();
-    }
-}
-
-void SettingsDialog::animateSettingPage(int endValue, int duration)
-{
-    mMinHeightAnimation->setTargetObject(this);
-    mMaxHeightAnimation->setTargetObject(this);
-    mMinHeightAnimation->setPropertyName("minimumHeight");
-    mMaxHeightAnimation->setPropertyName("maximumHeight");
-    mMinHeightAnimation->setStartValue(minimumHeight());
-    mMaxHeightAnimation->setStartValue(maximumHeight());
-    mMinHeightAnimation->setEndValue(endValue);
-    mMaxHeightAnimation->setEndValue(endValue);
-    mMinHeightAnimation->setDuration(duration);
-    mMaxHeightAnimation->setDuration(duration);
-    mAnimationGroup->start();
-}
-
-void SettingsDialog::closeMenus()
-{
-    auto menus = findChildren<QMenu*>();
-    foreach(auto& menu, menus)
-    {
-        if(dynamic_cast<QAbstractItemView*>(menu->parentWidget()))
-        {
-            menu->close();
-        }
-    }
-}
-
-void SettingsDialog::closeEvent(QCloseEvent *event)
-{
-    closeMenus();
-    QDialog::closeEvent(event);
-}
-
-void SettingsDialog::macOSretainSizeWhenHidden()
-{
-    QSizePolicy spStorageQuota = mUi->pStorageQuota->sizePolicy();
-    spStorageQuota.setRetainSizeWhenHidden(true);
-    mUi->pStorageQuota->setSizePolicy(spStorageQuota);
-
-    QSizePolicy spTransferQuota = mUi->pTransferQuota->sizePolicy();
-    spTransferQuota.setRetainSizeWhenHidden(true);
-    mUi->pTransferQuota->setSizePolicy(spTransferQuota);
-}
-
-void SettingsDialog::reloadToolBarItemNames()
-{
-    bGeneral->setText(tr("General"));
-    bAccount->setText(tr("Account"));
-    bSyncs->setText(tr("Sync"));
-    bBackup->setText(tr("Backup"));
-    bSecurity->setText(tr("Security"));
-    bFolders->setText(tr("Folders"));
-    bNetwork->setText(tr("Network"));
-    bNotifications->setText(tr("Notifications"));
-}
-#endif
-
 void SettingsDialog::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
-
-#ifdef Q_OS_MACOS
-        reloadToolBarItemNames();
-        //review and check
-        mUi->cStartOnStartup->setText(tr("Launch at login"));
-
-        mUi->lLocalDebris->setText(mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-#else
         mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-#endif
 
         onCacheSizeAvailable();
         updateNetworkTab();
@@ -763,14 +458,6 @@ void SettingsDialog::on_bGeneral_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    onCacheSizeAvailable();
-
-    mUi->pGeneral->hide();
-    animateSettingPage(SETTING_ANIMATION_GENERAL_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::on_bClearCache_clicked()
@@ -1038,26 +725,15 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
     mApp->notifyChangeToAllFolders();
 }
 
-#ifdef Q_OS_WINDOWS
-void SettingsDialog::on_cFinderIcons_toggled(bool checked)
+void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
 {
-    if (mLoadingSettings) return;
-    if (checked)
+    if (mLoadingSettings)
     {
-        for (auto syncSetting : mModel->getAllSyncSettings())
-        {
-            Platform::getInstance()->addSyncToLeftPane(syncSetting->getLocalFolder(),
-                                        syncSetting->name(),
-                                        syncSetting->getSyncID());
-        }
+        return;
     }
-    else
-    {
-        Platform::getInstance()->removeAllSyncsFromLeftPane();
-    }
-    mPreferences->disableLeftPaneIcons(!checked);
+
+    ThemeManager::instance()->setTheme(static_cast<Preferences::ThemeType>(index));
 }
-#endif
 
 void SettingsDialog::on_bUpdate_clicked()
 {
@@ -1249,12 +925,6 @@ void SettingsDialog::on_bAccount_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pAccount);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pAccount->hide();
-    animateSettingPage(SETTING_ANIMATION_ACCOUNT_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::on_lAccountType_clicked()
@@ -1279,12 +949,7 @@ void SettingsDialog::on_bMyAccount_clicked()
 
 void SettingsDialog::on_bStorageDetails_clicked()
 {
-#ifdef Q_OS_MACOS
-    auto accountDetailsDialog = new AccountDetailsDialog(this);
-#else
     auto accountDetailsDialog = new AccountDetailsDialog();
-#endif
-
     DialogOpener::showNonModalDialog<AccountDetailsDialog>(accountDetailsDialog);
 }
 
@@ -1403,24 +1068,14 @@ void SettingsDialog::setGeneralTabEnabled(const bool enabled)
     // call setEnable() manually for all controls and leave
     // Bug report controls as they are.
 
-#ifdef Q_OS_MACOS
-    mUi->gGeneralDefaultOptions->setEnabled(enabled);
-    mUi->gLanguage->setEnabled(enabled);
-    mUi->gDebris->setEnabled(enabled);
-    mUi->gSyncDebris->setEnabled(enabled);
-    mUi->gVersions->setEnabled(enabled);
-    mUi->gSleepMode->setEnabled(enabled);
-#else
     mUi->gGeneral->setEnabled(enabled);
     mUi->gLanguage->setEnabled(enabled);
     mUi->gCache->setEnabled(enabled);
     mUi->gRemoteCache->setEnabled(enabled);
     mUi->gFileVersions->setEnabled(enabled);
+
 #ifdef Q_OS_LINUX
     mUi->gSleepSettings->setEnabled(enabled);
-#else
-    mUi->gSleepMode->setEnabled(enabled);
-#endif
 #endif
 }
 
@@ -1455,12 +1110,6 @@ void SettingsDialog::on_bSyncs_clicked()
 
     mUi->wStack->setCurrentWidget(mUi->pSyncs);
 
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pSyncs->hide();
-    animateSettingPage(SETTING_ANIMATION_SYNCS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
-
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
@@ -1477,12 +1126,6 @@ void SettingsDialog::on_bBackup_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pBackup);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pBackup->hide();
-    animateSettingPage(SETTING_ANIMATION_BACKUP_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 
     SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
 }
@@ -1505,12 +1148,6 @@ void SettingsDialog::on_bSecurity_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pSecurity);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pSecurity->hide();
-    animateSettingPage(SETTING_ANIMATION_SECURITY_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::on_bExportMasterKey_clicked()
@@ -1643,12 +1280,6 @@ void SettingsDialog::on_bFolders_clicked()
         return;
     }
     mUi->wStack->setCurrentWidget(mUi->pFolders);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pFolders->hide();
-    animateSettingPage(SETTING_ANIMATION_FOLDERS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::on_bUploadFolder_clicked()
@@ -1732,12 +1363,6 @@ void SettingsDialog::on_bNetwork_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pNetwork->hide();
-    animateSettingPage(SETTING_ANIMATION_NETWORK_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::on_bOpenProxySettings_clicked()
@@ -1787,12 +1412,6 @@ void SettingsDialog::on_bNotifications_clicked()
     }
 
     mUi->wStack->setCurrentWidget(mUi->pNotifications);
-
-#ifdef Q_OS_MACOS
-    closeMenus();
-    mUi->pNotifications->hide();
-    animateSettingPage(SETTING_ANIMATION_NOTIFICATIONS_TAB_HEIGHT, SETTING_ANIMATION_PAGE_TIMEOUT);
-#endif
 }
 
 void SettingsDialog::updateNetworkTab()

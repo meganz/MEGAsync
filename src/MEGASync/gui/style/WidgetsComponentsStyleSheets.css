@@ -11,6 +11,7 @@ background: #18191A; /* colorToken.page-background*/
 outline: 0;
 border: 1px solid #18191A; /* colorToken.page-background*/
 border-radius: 5px;
+selection-color: #F3F4F4; /* colorToken.text-primary*/
 }
 
 QTableView::item
@@ -21,6 +22,7 @@ padding-left:4px;
 
 QTableView::item::selected
 {
+background-color: rgba(0,120,215,0.8); /* TODO: replace harcoded color with token!*/
 color: #F3F4F4; /* colorToken.text-primary*/
 }
 
@@ -58,18 +60,20 @@ background: #18191A; /* colorToken.page-background*/
 padding-top: 2px;
 }
 
-QHeaderView::section {
+QHeaderView::section
+{
 background: #18191A; /* colorToken.page-background*/
 color: #F3F4F4; /* colorToken.text-primary*/
-padding-left:6px;
-border-top:0 px;
-border-bottom:0px;
-border-left:0px;
-border-right:0px ;
+padding-left: 6px;
+border-top: 0px;
+border-bottom: 0px;
+border-left: 0px;
+border-right: 0px ;
 }
 
-QHeaderView::section:last {
-border-right:0px;
+QHeaderView::section:last
+{
+border-right: 0px;
 }
 
 QComboBox
@@ -110,6 +114,18 @@ border-radius: 4px;
 background-color:  #fafafa; /* colorToken.surface-1*/
 }
 
+QRadioButton
+{
+color: #303233; /*colorToken.text-primary*/
+background-color: transparent;
+spacing: 0;
+}
+
+QRadioButton::indicator
+{
+margin-right: 6px;
+}
+
 QRadioButton::indicator::unchecked
 {
 image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
@@ -118,12 +134,6 @@ image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
 QRadioButton::indicator::checked
 {
 image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
-}
-
-QRadioButton
-{
-color: #303233; /*colorToken.text-primary*/
-background-color: transparent;
 }
 
 QGroupBox
@@ -161,6 +171,7 @@ border-radius: 4px;
 QCheckBox
 {
 background-color: transparent;
+spacing: 8;
 }
 
 QCheckBox::indicator
