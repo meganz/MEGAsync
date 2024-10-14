@@ -78,7 +78,6 @@ target_sources_conditional(MEGAsync
    transfers/gui/win/TransfersSummaryWidget.ui
    transfers/gui/win/SomeIssuesOccurredMessage.ui
    transfers/gui/win/TransfersAccountInfoWidget.ui
-   transfers/gui/win/TransferManagerStatusHeaderWidget.ui
    transfers/gui/win/MediaTypeFilterWidget.ui
    transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
@@ -101,7 +100,6 @@ target_sources_conditional(MEGAsync
    transfers/gui/macx/TransfersSummaryWidget.ui
    transfers/gui/macx/SomeIssuesOccurredMessage.ui
    transfers/gui/macx/TransfersAccountInfoWidget.ui
-   transfers/gui/macx/TransferManagerStatusHeaderWidget.ui
    transfers/gui/macx/MediaTypeFilterWidget.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
@@ -124,7 +122,6 @@ target_sources_conditional(MEGAsync
    transfers/gui/linux/TransfersSummaryWidget.ui
    transfers/gui/linux/SomeIssuesOccurredMessage.ui
    transfers/gui/linux/TransfersAccountInfoWidget.ui
-   transfers/gui/linux/TransferManagerStatusHeaderWidget.ui
    transfers/gui/linux/MediaTypeFilterWidget.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
@@ -135,31 +132,40 @@ if (WIN32)
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         transfers/gui/win
         transfers/gui/DuplicatedNodeDialogs/win
+        transfers/gui/ui
     )
 elseif (APPLE)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         transfers/gui/macx
         transfers/gui/DuplicatedNodeDialogs/macx
+        transfers/gui/ui
     )
 else()
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
         transfers/gui/linux
         transfers/gui/DuplicatedNodeDialogs/linux
+        transfers/gui/ui
     )
 endif()
+
+set (DESKTOP_APP_TRANSFERS_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui/TransferManagerStatusHeaderWidget.ui
+)
 
 target_sources(MEGAsync
     PRIVATE
     ${DESKTOP_APP_TRANSFERS_HEADERS}
     ${DESKTOP_APP_TRANSFERS_SOURCES}
+    ${DESKTOP_APP_TRANSFERS_UI_FILES}
 )
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/model
     ${CMAKE_CURRENT_LIST_DIR}/gui
+    ${CMAKE_CURRENT_LIST_DIR}/gui/ui
     ${CMAKE_CURRENT_LIST_DIR}/gui/DuplicatedNodeDialogs
 )
 
