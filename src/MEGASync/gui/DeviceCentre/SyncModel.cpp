@@ -16,7 +16,6 @@ QHash<int, QByteArray> SyncModel::roleNames() const
         {TYPE,          "type"        },
         {NAME,          "name"        },
         {SIZE,          "size"        },
-        {DATE_ADDED,    "dateAdded"   },
         {DATE_MODIFIED, "dateModified"},
         {STATUS,        "status"      }
     };
@@ -32,7 +31,7 @@ void SyncModel::add(const QmlSyncData& newSync)
 
 void SyncModel::addOrUpdate(const QmlSyncData& newSync)
 {
-    auto row = findRowByHandle(newSync.handle);
+    auto row = findRowByHandle(newSync.syncID);
     if (!row.has_value())
     {
         add(newSync);
@@ -51,13 +50,12 @@ void SyncModel::remove(mega::MegaHandle handle)
     if (!row.has_value())
         return;
 
-    auto remover = [handle](const QmlSyncData& obj) {
-        return obj.handle == handle;
-    };
-
-    beginRemoveRows(QModelIndex(), row.value(), row.value());
-    std::ignore = std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
-    endRemoveRows();
+    if (row.has_value())
+    {
+        beginRemoveRows(QModelIndex(), row.value(), row.value());
+        mSyncObjects.removeAt(row.value());
+        endRemoveRows();
+    }
 }
 
 void SyncModel::clear()
@@ -67,8 +65,9 @@ void SyncModel::clear()
 
 std::optional<int> SyncModel::findRowByHandle(mega::MegaHandle handle) const
 {
-    auto finder = [handle](const QmlSyncData& obj) {
-        return obj.handle == handle;
+    auto finder = [handle](const QmlSyncData& obj)
+    {
+        return obj.syncID == handle;
     };
     auto itSyncObj = std::find_if(mSyncObjects.begin(), mSyncObjects.end(), finder);
     if (itSyncObj != mSyncObjects.end())
@@ -154,9 +153,6 @@ QVariant SyncModel::data(const QModelIndex& index, int role) const
         case SIZE:
             result = getSize(row);
             break;
-        case DATE_ADDED:
-            result = getDateAdded(row);
-            break;
         case DATE_MODIFIED:
             result = getDateModified(row);
             break;
@@ -182,13 +178,7 @@ QString SyncModel::getSize(int row) const
 
 QmlSyncType::Type SyncModel::getType(int row) const
 {
-    return mSyncObjects[row].type == QString::fromUtf8("Sync") ? QmlSyncType::SYNC :
-                                                                 QmlSyncType::BACKUP;
-}
-
-QDate SyncModel::getDateAdded(int row) const
-{
-    return mSyncObjects[row].dateAdded.date();
+    return mSyncObjects[row].type;
 }
 
 QDate SyncModel::getDateModified(int row) const
@@ -199,4 +189,31 @@ QDate SyncModel::getDateModified(int row) const
 SyncStatus::Value SyncModel::getStatus(int row) const
 {
     return mSyncObjects[row].status;
+}
+
+std::optional<mega::MegaHandle> SyncModel::getHandle(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].nodeHandle;
+}
+
+QString SyncModel::getLocalFolder(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].localFolder;
+}
+
+std::optional<mega::MegaHandle> SyncModel::getSyncID(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].syncID;
 }

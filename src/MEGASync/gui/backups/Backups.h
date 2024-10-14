@@ -17,7 +17,7 @@ public:
 
     static void registerQmlModules();
 
-    Q_INVOKABLE void openBackupsTabInPreferences() const;
+    Q_INVOKABLE void openDeviceCentre() const;
     Q_INVOKABLE void openExclusionsDialog(const QStringList& folderPaths) const;
 
     void setComesFromSettings(bool value = false);

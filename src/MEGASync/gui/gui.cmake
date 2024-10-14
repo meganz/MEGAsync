@@ -51,7 +51,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SwitchButton.h
     gui/GuiUtilities.h
     gui/CancelConfirmWidget.h
-    gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
@@ -83,6 +82,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlDeviceName.h
     gui/qml/AccountInfoData.h
     gui/qml/WhatsNewWindow.h
+    gui/qml/QmlUtils.h
     gui/onboarding/Onboarding.h
     gui/onboarding/PasswordStrengthChecker.h
     gui/onboarding/GuestQmlDialog.h
@@ -95,10 +95,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
-    gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
-    gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
@@ -171,7 +169,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SwitchButton.cpp
     gui/GuiUtilities.cpp
     gui/CancelConfirmWidget.cpp
-    gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
@@ -202,6 +199,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDeviceName.cpp
     gui/qml/AccountInfoData.cpp
     gui/qml/WhatsNewWindow.cpp
+    gui/qml/QmlUtils.cpp
     gui/onboarding/Onboarding.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
     gui/onboarding/GuestQmlDialog.cpp
@@ -214,10 +212,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
-    gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
-    gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
@@ -258,7 +254,6 @@ target_sources_conditional(MEGAsync
     gui/win/UpgradeDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
-    gui/win/RemoteItemUi.ui
     gui/win/UpgradeOverStorage.ui
     gui/win/ChangePassword.ui
     gui/win/Login2FA.ui
@@ -309,7 +304,6 @@ target_sources_conditional(MEGAsync
    gui/macx/UpgradeDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
-   gui/macx/RemoteItemUi.ui
    gui/macx/UpgradeOverStorage.ui
    gui/macx/ChangePassword.ui
    gui/macx/Login2FA.ui
@@ -379,7 +373,6 @@ target_sources_conditional(MEGAsync
     gui/linux/NodeNameSetterDialog.ui
     gui/linux/NotificationsSettings.ui
     gui/linux/LowDiskSpaceDialog.ui
-    gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
     gui/linux/NotificationItem.ui
     gui/linux/AccountTypeWidget.ui

@@ -13,7 +13,7 @@ ResumeSyncsPageForm {
     footerButtons {
 
         rightSecondary.onClicked: {
-            syncsComponentAccess.openSyncsTabInPreferences();
+            syncsComponentAccess.openDeviceCentre();
             window.accept();
         }
 

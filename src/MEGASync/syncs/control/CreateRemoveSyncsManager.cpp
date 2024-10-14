@@ -8,19 +8,17 @@
 #include "SyncSettings.h"
 
 const CreateRemoveSyncsManager* CreateRemoveSyncsManager::addSync(mega::MegaHandle handle,
-                                                                        bool comesFromSettings)
+                                                                  bool comesFromSettings)
 {
     auto syncManager(new CreateRemoveSyncsManager());
     syncManager->performAddSync(handle, comesFromSettings);
     return syncManager;
 }
 
-const CreateRemoveSyncsManager *CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle,
-                                                                           QWidget* parent)
+bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* parent)
 {
     auto syncManager(new CreateRemoveSyncsManager());
-    syncManager->performRemoveSync(handle, parent);
-    return syncManager;
+    return syncManager->performRemoveSync(handle, parent);
 }
 
 void CreateRemoveSyncsManager::performAddSync(mega::MegaHandle handle, bool comesFromSettings)
@@ -68,46 +66,46 @@ void CreateRemoveSyncsManager::performAddSync(mega::MegaHandle handle, bool come
     }
 }
 
-void CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
+bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, QWidget* parent)
 {
-    bool invalidSync(true);
-
     std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(remoteHandle));
-    if (node)
-    {
-        std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByNode(node.get()));
-        auto syncSettings(SyncInfo::instance()->getSyncSettingByTag(sync->getBackupId()));
-        if (syncSettings)
-        {
-            QPointer<RemoveSyncConfirmationDialog> dialog =
-                new RemoveSyncConfirmationDialog(parent);
-
-            DialogOpener::showDialog<RemoveSyncConfirmationDialog>(
-                dialog,
-                [dialog, syncSettings, remoteHandle, this]() {
-                    if (dialog->result() == QDialog::Accepted)
-                    {
-                        SyncController::instance().removeSync(syncSettings, remoteHandle);
-                        connect(&SyncController::instance(),
-                                &SyncController::syncRemoveStatus,
-                                this,
-                                [this](const int) {
-                                    deleteLater();
-                                });
-                    }
-                    else
-                    {
-                        deleteLater();
-                    }
-                });
-
-            // Node and sync settings found, removing has started asynchronously
-            invalidSync = false;
-        }
-    }
-
-    if (invalidSync)
+    if (!node)
     {
         deleteLater();
+        return false;
     }
+    std::unique_ptr<mega::MegaSync> sync(MegaSyncApp->getMegaApi()->getSyncByNode(node.get()));
+    if (!sync)
+    {
+        deleteLater();
+        return false;
+    }
+    auto syncSettings(SyncInfo::instance()->getSyncSettingByTag(sync->getBackupId()));
+    if (!syncSettings)
+    {
+        deleteLater();
+        return false;
+    }
+    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(parent);
+    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(
+        dialog,
+        [dialog, syncSettings, remoteHandle, this]()
+        {
+            if (dialog->result() == QDialog::Accepted)
+            {
+                SyncController::instance().removeSync(syncSettings, remoteHandle);
+                connect(&SyncController::instance(),
+                        &SyncController::syncRemoveStatus,
+                        this,
+                        [this](const int /*errorCode*/)
+                        {
+                            deleteLater();
+                        });
+            }
+            else
+            {
+                deleteLater();
+            }
+        });
+    return true;
 }

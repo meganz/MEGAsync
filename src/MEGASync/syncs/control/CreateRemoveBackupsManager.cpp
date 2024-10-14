@@ -70,6 +70,8 @@ void CreateRemoveBackupsManager::performRemoveBackup(std::shared_ptr<SyncSetting
     DialogOpener::showDialog(dialog, [this, dialog]() {
         if (dialog->result() == QDialog::Accepted)
         {
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP);
             connect(&BackupsController::instance(),
                     &BackupsController::syncRemoveStatus,
                     this,
