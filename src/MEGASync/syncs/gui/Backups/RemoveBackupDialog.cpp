@@ -1,10 +1,12 @@
 #include "RemoveBackupDialog.h"
-#include "ui_RemoveBackupDialog.h"
-#include "MegaApplication.h"
-#include "NodeSelectorSpecializations.h"
-#include "MegaNodeNames.h"
-#include "Utilities.h"
+
 #include "DialogOpener.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "NodeSelectorSpecializations.h"
+#include "ProxyStatsEventHandler.h"
+#include "ui_RemoveBackupDialog.h"
+#include "Utilities.h"
 
 #include <QButtonGroup>
 
@@ -49,12 +51,16 @@ mega::MegaHandle RemoveBackupDialog::targetFolder()
 
 void RemoveBackupDialog::OnDeleteSelected()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED);
     mUi->bConfirm->setEnabled(true);
     mUi->moveToContainer->setEnabled(false);
 }
 
 void RemoveBackupDialog::OnMoveSelected()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER);
     mUi->bConfirm->setEnabled(true);
     mUi->moveToContainer->setEnabled(true);
 }

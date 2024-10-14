@@ -17,6 +17,5 @@ QtObject {
     property color itemBackgroundPressed: ColorTheme.surface2
     property color text: ColorTheme.textPrimary
     property color icon: ColorTheme.iconPrimary
-
 }
 

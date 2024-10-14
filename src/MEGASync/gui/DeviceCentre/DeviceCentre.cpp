@@ -2,7 +2,15 @@
 
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
+#include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "QmlDialogWrapper.h"
+#include "QmlUtils.h"
+#include "SyncController.h"
+#include "SyncExclusions.h"
+#include "SyncInfo.h"
+
+#include <set>
 
 namespace
 {
@@ -23,9 +31,15 @@ DeviceCentre::DeviceCentre(QObject* parent):
 
     mSizeInfoTimer.setInterval(DELAY_TO_NEXT_CALL_IN_MS);
     mSizeInfoTimer.setSingleShot(true);
-    connect(&mSizeInfoTimer, &QTimer::timeout, this, [this]() {
-        mMegaApi->getBackupInfo();
-    });
+    connect(&mSizeInfoTimer,
+            &QTimer::timeout,
+            this,
+            [this]()
+            {
+                mMegaApi->getBackupInfo();
+            });
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(
+        {mega::MegaSync::SyncType::TYPE_BACKUP, mega::MegaSync::SyncType::TYPE_TWOWAY});
 }
 
 DeviceCentre::~DeviceCentre()
@@ -45,17 +59,27 @@ void DeviceCentre::onRequestFinish(mega::MegaApi* api,
 
     if (e->getErrorCode() == mega::MegaError::API_OK)
     {
+        // Receiving device name
         if (request->getParamType() == mega::MegaApi::USER_ATTR_DEVICE_NAMES)
         {
-            mCachedDeviceData.name = QString::fromUtf8(request->getName());
-            mDeviceModel->reset(mDeviceIdFromLastRequest, mCachedDeviceData);
-            emit deviceDataUpdated();
+            // if current device name add it to the model and reset it
+            if (QString::fromUtf8(request->getText()) ==
+                QmlUtils::getQmlInstance(QmlManager::instance()->getEngine(), nullptr)
+                    ->getCurrentDeviceID())
+            {
+                mCachedDeviceData.name = QString::fromUtf8(request->getName());
+                mDeviceModel->reset(mDeviceIdFromLastRequest, mCachedDeviceData);
+                emit deviceDataUpdated();
+            }
+            // Add alldevice name to device model
+            mDeviceModel->addDeviceName(QString::fromUtf8(request->getText()),
+                                        QString::fromUtf8(request->getName()));
         }
         else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_INFO)
         {
             mega::MegaBackupInfoList* backupList = request->getMegaBackupInfoList();
+            requestDeviceNames(*backupList);
             updateLocalData(*backupList);
-
             if (mSyncModel->hasUpdatingStatus())
             {
                 mSizeInfoTimer.start();
@@ -71,6 +95,12 @@ void DeviceCentre::onRequestFinish(mega::MegaApi* api,
             emit deviceDataUpdated();
         }
         else if (request->getType() == mega::MegaRequest::TYPE_REMOVE_SYNC)
+        {
+            mSyncModel->remove(request->getParentHandle());
+            updateDeviceData();
+            emit deviceDataUpdated();
+        }
+        else if (request->getType() == mega::MegaRequest::TYPE_BACKUP_REMOVE)
         {
             mSyncModel->remove(request->getParentHandle());
             updateDeviceData();
@@ -145,12 +175,6 @@ void DeviceCentre::openAddBackupDialog()
 {
     const bool comesFromSettings = true;
     CreateRemoveBackupsManager::addBackup(comesFromSettings);
-}
-
-QString DeviceCentre::getCurrentDeviceId()
-{
-    std::unique_ptr<const char> rawDeviceId{mMegaApi->getDeviceId()};
-    return QString::fromLatin1(rawDeviceId.get());
 }
 
 void DeviceCentre::retrieveDeviceData(const QString& deviceId)
@@ -230,4 +254,133 @@ DeviceModel* DeviceCentre::getDeviceModel() const
 SyncModel* DeviceCentre::getSyncModel() const
 {
     return mSyncModel;
+}
+
+void DeviceCentre::renameCurrentDevice(const QString& newName)
+{
+    mMegaApi->setDeviceName(mDeviceIdFromLastRequest.toStdString().c_str(),
+                            newName.toStdString().c_str());
+}
+
+void DeviceCentre::openInMega(int row) const
+{
+    const auto handle = mSyncModel->getHandle(row);
+    if (handle)
+    {
+        Utilities::openInMega(*handle);
+    }
+}
+
+void DeviceCentre::showInFolder(int row) const
+{
+    const auto localFolder = mSyncModel->getLocalFolder(row);
+    if (!localFolder.isEmpty())
+    {
+        Utilities::openUrl(QUrl::fromLocalFile(localFolder));
+    }
+}
+
+void DeviceCentre::pauseSync(int row) const
+{
+    changeSyncStatus(row,
+                     [](std::shared_ptr<SyncSettings> settings)
+                     {
+                         SyncController::instance().setSyncToPause(settings);
+                     });
+}
+
+void DeviceCentre::resumeSync(int row) const
+{
+    changeSyncStatus(row,
+                     [](std::shared_ptr<SyncSettings> settings)
+                     {
+                         SyncController::instance().setSyncToRun(settings);
+                     });
+}
+
+void DeviceCentre::rescanSync(int row, bool deepRescan) const
+{
+    const auto syncID = mSyncModel->getSyncID(row);
+    if (syncID)
+    {
+        mMegaApi->rescanSync(*syncID, deepRescan);
+    }
+    else
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_WARNING,
+            QString::fromUtf8("Attempted rescanSync with invalid syncID").toUtf8().constData());
+    }
+}
+
+void DeviceCentre::manageExclusions(int row) const
+{
+    const auto folderPath = mSyncModel->getLocalFolder(row);
+    QFileInfo syncDir(folderPath);
+    if (syncDir.exists())
+    {
+        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions =
+            new QmlDialogWrapper<SyncExclusions>(nullptr, folderPath);
+        DialogOpener::showDialog(exclusions);
+    }
+}
+
+void DeviceCentre::stopSync(int row) const
+{
+    const auto syncType = mSyncModel->getType(row);
+    const auto syncID = mSyncModel->getSyncID(row);
+    if (!syncID)
+    {
+        mega::MegaApi::log(
+            mega::MegaApi::LOG_LEVEL_WARNING,
+            QString::fromUtf8("Attempted stopSync with invalid syncID").toUtf8().constData());
+        return;
+    }
+    const auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(*syncID);
+    if (syncType == QmlSyncType::Type::BACKUP)
+    {
+        CreateRemoveBackupsManager::removeBackup(syncSettings, nullptr);
+    }
+    else
+    {
+        const auto handle = mSyncModel->getHandle(row);
+        if (handle && *handle != mega::INVALID_HANDLE &&
+            !CreateRemoveSyncsManager::removeSync(*handle, nullptr))
+        {
+            mMegaApi->removeBackup(*syncID);
+        }
+    }
+}
+
+void DeviceCentre::requestDeviceNames(const mega::MegaBackupInfoList& backupList) const
+{
+    std::set<QString> requestedNames;
+    const auto numBackups = backupList.size();
+    for (uint backupIndex = 0; backupIndex < numBackups; backupIndex++)
+    {
+        auto backupInfo = backupList.get(backupIndex);
+        if (requestedNames.find(QString::fromUtf8(backupInfo->deviceId())) == requestedNames.end())
+        {
+            mMegaApi->getDeviceName(backupInfo->deviceId());
+            requestedNames.insert(QString::fromUtf8(backupInfo->deviceId()));
+        }
+    }
+}
+
+void DeviceCentre::changeSyncStatus(int row,
+                                    std::function<void(std::shared_ptr<SyncSettings>)> action) const
+{
+    const auto syncID = mSyncModel->getSyncID(row);
+    if (!syncID)
+    {
+        return;
+    }
+
+    const auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(*syncID);
+    action(syncSettings);
+}
+
+bool DeviceCentre::deviceNameAlreadyExists(const QString& name) const
+{
+    return mDeviceModel->deviceNameAlreadyExists(name);
 }

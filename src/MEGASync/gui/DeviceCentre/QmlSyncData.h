@@ -17,12 +17,13 @@ struct QmlSyncData
     void updateFields(const QmlSyncData& other);
     QString toString() const;
 
-    mega::MegaHandle handle = mega::INVALID_HANDLE;
+    mega::MegaHandle syncID = mega::INVALID_HANDLE;
+    mega::MegaHandle nodeHandle = mega::INVALID_HANDLE;
+    QString localFolder;
     QmlSyncType::Type type = QmlSyncType::UNDEFINED;
     QString name;
     qint64 size = -1;
     QDateTime dateModified;
-    QDateTime dateAdded;
     SyncStatus::Value status = SyncStatus::UP_TO_DATE;
 
 private:

@@ -30,7 +30,7 @@ Item {
             leftMargin: titleMargins
         }
         wrapMode: Text.NoWrap
-        text: DeviceCentreStrings.deviceCentreWindowTitle
+        text: DeviceCentreStrings.windowTitle
         font {
             pixelSize: Texts.Text.Size.LARGE
             weight: Font.Bold
@@ -69,7 +69,7 @@ Item {
                     width: 232
                     height: itemHeight
 
-                    color: colorStyle.surface1;
+                    color: ColorTheme.surface1;
                     radius: 6;
 
                     Rectangle {
@@ -78,7 +78,7 @@ Item {
                         width: 4
                         height: 24
                         radius: 2
-                        color: colorStyle.buttonBrand
+                        color: ColorTheme.buttonBrand
 
                         anchors.left: deviceComponent.left
                         anchors.verticalCenter: deviceComponent.verticalCenter
@@ -105,7 +105,7 @@ Item {
                             pixelSize: Texts.Text.Size.NORMAL
                             weight: Font.DemiBold
                         }
-                        color: colorStyle.textPrimary
+                        color: ColorTheme.textPrimary
 
                         text: model ? model.name : ""
                     }

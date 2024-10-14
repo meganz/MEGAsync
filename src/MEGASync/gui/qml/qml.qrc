@@ -186,5 +186,7 @@
         <file>components/menus/ContextMenu.qml</file>
         <file>components/menus/Colors.qml</file>
         <file>components/menus/Sizes.qml</file>
+        <file>deviceCentre/RenameDeviceDialog.qml</file>
+        <file>common/DeviceName.qml</file>
     </qresource>
 </RCC>

@@ -4,6 +4,8 @@ import common 1.0
 
 import components.texts 1.0 as Texts
 
+import QmlUtils 1.0
+
 Item {
     id:root
 
@@ -34,7 +36,7 @@ Item {
     }// content
 
     Component.onCompleted: {
-        var deviceId = deviceCentreAccess.getCurrentDeviceId();
+        var deviceId = QmlUtils.getCurrentDeviceID();
         header.deviceId = deviceId;
     }
 } //root

@@ -5,6 +5,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls 2.15 as Qml
 import QtQuick.Controls 2.12 as QmlControlsv212
+import QtQuick.Window 2.15
 
 import common 1.0
 
@@ -16,7 +17,7 @@ import components.buttons 1.0 as Buttons
 import SyncStatus 1.0
 import QmlSyncType 1.0
 import SyncModel 1.0
-
+import AppStatsEvents 1.0
 
 Item {
     id: root
@@ -68,7 +69,54 @@ Item {
         return result;
     }
 
+    function getPauseResumeActionText(currentStatus) {
+        switch(currentStatus) {
+        case SyncStatus.PAUSED:
+            return DeviceCentreStrings.actionResume;
+        case SyncStatus.STOPPED:
+            return DeviceCentreStrings.actionResume;
+        case SyncStatus.UPDATING:
+            return DeviceCentreStrings.actionPause;
+        case SyncStatus.UP_TO_DATE:
+            return DeviceCentreStrings.actionPause;
+        }
+        return "";
+    }
+
+    function getPauseResumeActionIcon(currentStatus) {
+        switch(currentStatus) {
+        case SyncStatus.PAUSED:
+            return Images.playCircle;
+        case SyncStatus.STOPPED:
+            return Images.playCircle;
+        case SyncStatus.UPDATING:
+            return Images.pauseCircle;
+        case SyncStatus.UP_TO_DATE:
+            return Images.pauseCircle;
+        }
+        return "";
+    }
+
+    function getRemoveActionText(currentType) {
+        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.actionRemoveSync
+                                                  : DeviceCentreStrings.actionStopBackup;
+    }
+
+    function getShowLocalText() {
+        if (OS.isWindows()) {
+            return DeviceCentreStrings.actionShowExplorer;
+        } 
+        else if (OS.isMac()) {
+            return DeviceCentreStrings.actionShowFinder;
+        } 
+        else {
+            return DeviceCentreStrings.actionShowFolder;
+        }
+    }
+
+
     anchors.fill: parent
+
     TableView {
         id: tableView
 
@@ -77,19 +125,26 @@ Item {
         model: deviceCentreAccess.getSyncModel()
 
         style: TableViewStyle {
+            id: tableViewStyle
 
             headerDelegate: Rectangle {
                 id: headercomponent
 
-                color: colorStyle.pageBackground
+                color: ColorTheme.pageBackground
                 height: root.headerHeight
 
                 Texts.Text {
+                    id: textHeaderItem
+
+                    anchors {
+                        left: parent.left
+                        verticalCenter: parent.verticalCenter
+                        leftMargin: styleData.column === 0? 64 : 0
+                    }
+
                     text: styleData.value
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: styleData.column === 0? 64 : 0
                     horizontalAlignment: Text.AlignLeft
+
                     font {
                         pixelSize: Texts.Text.Size.SMALL
                         weight: Font.DemiBold
@@ -101,8 +156,18 @@ Item {
         }
 
         rowDelegate: Item {
+            id: rowDelegateItem
+
             height: 64
             width: parent.width
+
+            MouseArea {
+                anchors.fill: parent
+                onDoubleClicked: {
+                    proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_SYNC_ROW_DOUBLE_CLICKED);
+                    deviceCentreAccess.showInFolder(model.index);
+                }
+            }
         }
 
         TableViewColumn {
@@ -110,7 +175,7 @@ Item {
 
             role: "name"
             title: DeviceCentreStrings.name
-            width: 282
+            width: 382
             movable: false
             resizable:false
 
@@ -128,7 +193,7 @@ Item {
                     visible: true
                     source: {
                         if(model) {
-                            return model.type === SyncModel.BACKUP? Images.backupFolder : Images.syncFolder
+                            return model.type === QmlSyncType.BACKUP? Images.backupFolder : Images.syncFolder
                         }
                         return "";
                     }
@@ -154,8 +219,8 @@ Item {
                         pixelSize: Texts.Text.Size.MEDIUM
                         weight: Font.DemiBold
                     }
-                    color: colorStyle.textPrimary
-                    text: model? model.name : ""
+                    color: ColorTheme.textPrimary
+                    text: model ? model.name : ""
                 }
 
                 SvgImage {
@@ -240,31 +305,6 @@ Item {
         } // sizeColumn
 
         TableViewColumn {
-            id: dateAddedColumn
-
-            role: "dateAdded"
-            title: DeviceCentreStrings.dateAdded
-            width: defaultColumnWidth
-            movable: false
-            resizable: false
-
-            delegate: Texts.ElidedText {
-                id: dateAddedText
-
-                verticalAlignment: Text.AlignVCenter
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                }
-                font {
-                    pixelSize: Texts.Text.Size.NORMAL
-                    weight: Font.Normal
-                }
-                lineHeight: 18
-                text: model? model.dateAdded.toLocaleDateString(locale, dateFormat) : ""
-            }
-        } // dateAddedColumn
-
-        TableViewColumn {
             id: dateModified
 
             role: "dateModified"
@@ -290,12 +330,15 @@ Item {
         TableViewColumn {
             id: contextMenuColumn
 
-            width: tableView.width - nameColumn.width - typeColumn.width - sizeColumn.width - dateAddedColumn.width - dateModified.width - 20
+            width: tableView.width - nameColumn.width - typeColumn.width - sizeColumn.width - dateModified.width - 20
             movable: false
             resizable: false
 
             delegate: Rectangle {
+                id: contextMenuColumnDelegate
+
                 anchors.fill: parent
+
                 Buttons.IconButton {
                     id: menuButton
 
@@ -307,42 +350,161 @@ Item {
                     icons.source: Images.threeDots
                     visible: true
                     sizes.iconWidth: 16
+
                     onClicked: {
-                        menu.open();
-
-                    }
-                }
-
-                ContextMenu {
-                    id: menu
-
-                    ContextMenuItem {
-                        id: aboutMenuItem
-
-                        text: DeviceCentreStrings.actionOpenInMega
-                        icon.source: Images.megaOutline
-                        onTriggered: {
+                        let buttonX = menuButton.mapToItem(null, 0, 0).x;
+                        let buttonY = menuButton.mapToItem(null, 0, 0).y;
+                        let menuHeight = menu.height;
+                        let menuWidth = menu.width;
+                        let xOffset = menuButton.width/2;
+                        let yOffset = menuButton.height/2;
+                        if (buttonX + menuWidth > Window.width) {
+                            xOffset = xOffset - menuWidth; // Open left if close to right edge
                         }
-                    }
-
-                    QmlControlsv212.MenuSeparator {
-                        padding: 0
-                        topPadding: 4
-                        bottomPadding: 4
-                        contentItem: Rectangle {
-                            implicitWidth: parent.width
-                            implicitHeight: 1
-                            color: colorStyle.surface2
+                        if (buttonY + yOffset + menuHeight > Window.height) {
+                            yOffset =  yOffset - menuHeight; // Open upwards if close to bottom edge
                         }
+                        menu.popup(xOffset, yOffset);
                     }
+                    
+                    ContextMenu {
+                        id: menu
 
-                    ContextMenuItem {
-                        id: preferencesItem
+                        onFocusChanged: {
+                            if(menu.activeFocus === false){
+                                menu.close();
+                            }
+                        }
 
-                        text: DeviceCentreStrings.actionShowFinder
-                        icon.source: Images.settings
-                        onTriggered: {
+                        ContextMenuItem {
+                            id: openInMegaItem
 
+                            text: DeviceCentreStrings.actionOpenInMega
+                            icon.source: Images.megaOutline
+                            onTriggered: {
+                                deviceCentreAccess.openInMega(model.index);
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: showInFolder
+
+                            text: getShowLocalText()
+                            icon.source: Images.folderOpen
+                            onTriggered: {
+                                deviceCentreAccess.showInFolder(model.index);
+                            }
+                        }
+
+                        QmlControlsv212.MenuSeparator {
+                            padding: 0
+                            topPadding: 4
+                            bottomPadding: 4
+
+                            contentItem: Rectangle {
+                                id: separatorRect
+
+                                implicitWidth: parent.width
+                                implicitHeight: 1
+                                color: ColorTheme.surface2
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: pauseItem
+
+                            text: model? getPauseResumeActionText(model.status) : ""
+                            icon.source: model? getPauseResumeActionIcon(model.status): ""
+                            onTriggered: {
+                                let PAUSE_SYNC = (model.status === SyncStatus.UPDATING || model.status === SyncStatus.UP_TO_DATE);
+                                if(PAUSE_SYNC) {
+                                    proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_PAUSE_ACTION_TIGGERED);
+                                    deviceCentreAccess.pauseSync(model.index, PAUSE_SYNC);
+                                }
+                                else {
+                                    proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_RESUME_ACTION_TRIGGERED);
+                                    deviceCentreAccess.resumeSync(model.index, PAUSE_SYNC);
+                                }
+                            }
+                        }
+
+                        QmlControlsv212.MenuSeparator {
+                            padding: 0
+                            topPadding: 4
+                            bottomPadding: 4
+
+                            contentItem: Rectangle {
+                                implicitWidth: parent.width
+                                implicitHeight: 1
+                                color: ColorTheme.surface2
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: manageExclusionsAction
+
+                            text: DeviceCentreStrings.actionManageExclusions
+                            icon.source: Images.slashCircle
+                            onTriggered: {
+                                deviceCentreAccess.manageExclusions(model.index);
+                            }
+                        }
+
+                        QmlControlsv212.MenuSeparator {
+                            padding: 0
+                            topPadding: 4
+                            bottomPadding: 4
+
+                            contentItem: Rectangle {
+                                implicitWidth: parent.width
+                                implicitHeight: 1
+                                color: ColorTheme.surface2
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: quickRescanAction
+
+                            text: DeviceCentreStrings.actionQuickRescan
+                            icon.source: Images.searchHollow
+                            onTriggered: {
+                                let DEEP_RESCAN = false;
+                                deviceCentreAccess.rescanSync(model.index, DEEP_RESCAN);
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: deepRescanAction
+
+                            text: DeviceCentreStrings.actionDeepRescan
+                            icon.source: Images.searchFilled
+                            onTriggered: {
+                                let DEEP_RESCAN = true;
+                                deviceCentreAccess.rescanSync(model.index, DEEP_RESCAN);
+                            }
+                        }
+
+                        QmlControlsv212.MenuSeparator {
+                            padding: 0
+                            topPadding: 4
+                            bottomPadding: 4
+
+                            contentItem: Rectangle {
+                                implicitWidth: parent.width
+                                implicitHeight: 1
+                                color: ColorTheme.surface2
+                            }
+                        }
+
+                        ContextMenuItem {
+                            id: stopBackupAction
+
+                            text: model ? getRemoveActionText(model.type) : DeviceCentreStrings.actionStopBackup
+                            icon.source: Images.minusCircle
+                            onTriggered: {
+                                proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_STOP_BACKUP_ACTION_TRIGGERED);
+                                deviceCentreAccess.stopSync(model.index);
+                            }
                         }
                     }
                 }
@@ -361,7 +523,7 @@ Item {
             leftMargin: 4
             rightMargin: 4
         }
-        color: colorStyle.divider
+        color: ColorTheme.surface2
         radius: 1
         height: 1
     }

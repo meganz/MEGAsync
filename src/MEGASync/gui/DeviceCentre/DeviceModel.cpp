@@ -17,10 +17,10 @@ QHash<int, QByteArray> DeviceModel::roleNames() const
 
 void DeviceModel::reset(const QString& deviceId, const DeviceData& data)
 {
+    beginResetModel();
     mDevicesData.clear();
-    beginInsertRows(QModelIndex(), 0, 0);
     mDevicesData.append(qMakePair(deviceId, data));
-    endInsertRows();
+    endResetModel();
 }
 
 int DeviceModel::rowCount(const QModelIndex& parent) const
@@ -60,4 +60,19 @@ QVariant DeviceModel::data(const QModelIndex& index, int role) const
 QString DeviceModel::getName(int row) const
 {
     return mDevicesData[row].second.name;
+}
+
+void DeviceModel::addDeviceName(const QString& deviceID, const QString& name)
+{
+    mDeviceNames[deviceID] = name;
+}
+
+bool DeviceModel::deviceNameAlreadyExists(const QString& name) const
+{
+    return std::find_if(std::cbegin(mDeviceNames),
+                        std::cend(mDeviceNames),
+                        [&name](const auto& deviceIDNamepair)
+                        {
+                            return deviceIDNamepair.second == name;
+                        }) != std::cend(mDeviceNames);
 }

@@ -1,9 +1,7 @@
 #include "Backups.h"
 
-#include "BackupsQmlDialog.h"
-#include "BackupsModel.h"
 #include "AddExclusionRule.h"
-
+#include "BackupsModel.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 
@@ -31,7 +29,6 @@ void Backups::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("Backups", 1, 0);
-        qmlRegisterType<BackupsQmlDialog>("BackupsQmlDialog", 1, 0, "BackupsQmlDialog");
         qmlRegisterType<BackupsProxyModel>("BackupsProxyModel", 1, 0, "BackupsProxyModel");
         qmlRegisterUncreatableType<BackupsModel>("BackupsModel", 1, 0, "BackupErrorCode",
                                                  QString::fromUtf8("Cannot register BackupsModel::BackupErrorCode in QML"));
@@ -39,9 +36,9 @@ void Backups::registerQmlModules()
     }
 }
 
-void Backups::openBackupsTabInPreferences() const
+void Backups::openDeviceCentre() const
 {
-    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    MegaSyncApp->openDeviceCentre();
 }
 
 bool Backups::getComesFromSettings() const
