@@ -19,13 +19,15 @@ const int MINIMUM_DOC_HEIGHT = 3;
 //This event is propagated from child to parent, this is why it is used
 const QEvent::Type WordWrapLabel::HeightAdapted = QEvent::WhatsThisClicked;
 
-WordWrapLabel::WordWrapLabel(QWidget* parent)
-    : QTextBrowser(parent)
-    , mLinkActivated(false)
-    , mMaxHeight(-1)
-    , mMaxLines(-1)
-    , mFormat(Qt::PlainText)
-    , mParentHeight(-1)
+WordWrapLabel::WordWrapLabel(QWidget* parent):
+    QTextBrowser(parent),
+    mLinkActivated(false),
+    mMaxHeight(-1),
+    mMaxLines(-1),
+    mFormat(Qt::PlainText),
+    mParentHeight(-1),
+    mKeepParentCursor(true),
+    mAutoManageUrl(true)
 {
     setFrameStyle(QFrame::NoFrame);
     setTextInteractionFlags(Qt::LinksAccessibleByMouse);
@@ -95,6 +97,11 @@ void WordWrapLabel::setText(const QString& text)
 void WordWrapLabel::setTextFormat(Qt::TextFormat format)
 {
     mFormat = format;
+}
+
+void WordWrapLabel::setKeepParentCursor(bool newValue)
+{
+    mKeepParentCursor = newValue;
 }
 
 void WordWrapLabel::onAdaptHeight(bool parentConstrained)
@@ -226,7 +233,7 @@ bool WordWrapLabel::eventFilter(QObject* obj, QEvent* event)
 {
     if(event->type() == QEvent::CursorChange)
     {
-        if(viewport()->cursor().shape() != parentWidget()->cursor().shape())
+        if (mKeepParentCursor && viewport()->cursor().shape() != parentWidget()->cursor().shape())
         {
             setCursor(parentWidget()->cursor());
         }
@@ -258,13 +265,21 @@ void WordWrapLabel::mouseReleaseEvent(QMouseEvent* ev)
 void WordWrapLabel::onLinkActivated(const QUrl& link)
 {
     mLinkActivated = true;
-    Utilities::openUrl(link);
+    if (mAutoManageUrl)
+    {
+        Utilities::openUrl(link);
+    }
 }
 
 void WordWrapLabel::setCursor(const QCursor& cursor)
 {
     QTextEdit::setCursor(cursor);
     viewport()->setCursor(cursor);
+}
+
+void WordWrapLabel::setAutoManageUrl(bool newValue)
+{
+    mAutoManageUrl = newValue;
 }
 
 QString WordWrapLabel::stripHtmlTags(const QString &text)
