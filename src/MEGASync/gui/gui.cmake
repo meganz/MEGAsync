@@ -290,7 +290,6 @@ target_sources_conditional(MEGAsync
     gui/win/ViewLoadingScene.ui
     gui/win/NotificationItem.ui
     gui/win/AccountTypeWidget.ui
-    gui/win/BannerWidget.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/win/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/win/NodeSelector.ui
@@ -335,7 +334,6 @@ target_sources_conditional(MEGAsync
    gui/node_selector/gui/macx/SearchLineEdit.ui
    gui/macx/LockedPopOver.ui
    gui/macx/AccountTypeWidget.ui
-   gui/macx/BannerWidget.ui
 )
 
 target_sources_conditional(MEGAsync
@@ -372,7 +370,6 @@ target_sources_conditional(MEGAsync
     gui/linux/ViewLoadingScene.ui
     gui/linux/NotificationItem.ui
     gui/linux/AccountTypeWidget.ui
-    gui/linux/BannerWidget.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
     gui/node_selector/gui/linux/NodeSelectorLoadingDelegate.ui
     gui/node_selector/gui/linux/NodeSelector.ui
@@ -498,6 +495,10 @@ list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
 
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
+
+set (DESKTOP_APP_GUI_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+)
 
 target_sources(MEGAsync
     PRIVATE
