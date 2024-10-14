@@ -145,7 +145,7 @@ void TransferManagerStatusHeaderWidget::updateStorageBannerText()
 void TransferManagerStatusHeaderWidget::onTransferQuotaExceededUpdate()
 {
     QString bannerText(
-        tr("[B]Transfer quota exceeded[/B][BR]You can't continue downloading as you don't have "
+        tr("[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have "
            "enough transfer quota left for this "
            "IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free "
            "quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.")
