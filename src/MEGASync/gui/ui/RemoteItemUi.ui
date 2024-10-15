@@ -91,6 +91,9 @@ background-color: transparent;
         <property name="cornerButtonEnabled">
          <bool>false</bool>
         </property>
+        <attribute name="horizontalHeaderMinimumSectionSize">
+         <number>60</number>
+        </attribute>
         <attribute name="horizontalHeaderDefaultSectionSize">
          <number>60</number>
         </attribute>

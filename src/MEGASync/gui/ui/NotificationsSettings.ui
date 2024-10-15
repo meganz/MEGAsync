@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>480</height>
+    <width>391</width>
+    <height>570</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1">
+   <property name="spacing">
+    <number>24</number>
+   </property>
    <property name="leftMargin">
     <number>20</number>
    </property>
@@ -51,7 +54,7 @@
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -77,6 +80,9 @@
    <item>
     <widget class="QWidget" name="NotificationSettingCheckboxes" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_6">
+      <property name="spacing">
+       <number>24</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -103,6 +109,12 @@
          </property>
          <item>
           <widget class="QCheckBox" name="CompletedUploadsDownloadsCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -134,6 +146,12 @@
          </property>
          <item>
           <widget class="QCheckBox" name="NewSharedCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -150,6 +168,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="AddOrRemovedFilesCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -166,6 +190,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="RemovedAccessCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -197,6 +227,12 @@
          </property>
          <item>
           <widget class="QCheckBox" name="NewContactCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -213,6 +249,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="ContactReminderCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -229,6 +271,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="ContactAcceptedCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -260,6 +308,12 @@
          </property>
          <item>
           <widget class="QCheckBox" name="DesktopCheck">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -283,7 +337,7 @@
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
-      <enum>Qt::Orientation::Vertical</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
