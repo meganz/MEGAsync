@@ -8261,11 +8261,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Scanning…</translation>
     </message>
     <message>
-        <source>All paused</source>
-        <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation>All paused</translation>
-    </message>
-    <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
         <translation>All</translation>
@@ -8322,11 +8317,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>%1 result found</numerusform>
             <numerusform>%1 results found</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
     </message>
     <message numerus="yes">
         <source>Issue found</source>
