@@ -241,18 +241,17 @@ public:
         return mWrapper;
     }
 
-    void setShowWhenCreated(bool show)
+    void setShowWhenCreated()
     {
-        if (show)
-        {
-            connect(mWrapper,
-                    &Type::dataReady,
-                    this,
-                    [this]()
-                    {
-                        mWindow->show();
-                    });
-        }
+        connect(
+            mWrapper,
+            &Type::dataReady,
+            this,
+            [this]()
+            {
+                mWindow->show();
+            },
+            Qt::UniqueConnection);
     }
 
 private:

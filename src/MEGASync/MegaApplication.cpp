@@ -1963,10 +1963,8 @@ void MegaApplication::checkMemoryUsage()
 
 void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
 {
-    // TODO: REVIEW THIS (NEXT TASK)
-    auto existsUpsellDialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
-    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) &&
-                                   !existsUpsellDialog && !Platform::getInstance()->isUserActive()))
+    if (!preferences->logged() ||
+        ((!infoDialog || !infoDialog->isVisible()) && !Platform::getInstance()->isUserActive()))
     {
         return;
     }
@@ -2105,7 +2103,6 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
                 }
             }
 
-            // TODO: REVIEW THIS (NEXT TASK)
             closeUpsellStorageDialog();
         }
     }
@@ -2116,7 +2113,6 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
             infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         }
 
-        // TODO: REVIEW THIS (NEXT TASK)
         closeUpsellStorageDialog();
     }
 
