@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>410</width>
-    <height>258</height>
+    <width>451</width>
+    <height>268</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>268</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string/>
@@ -17,6 +29,9 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -37,26 +52,35 @@
      <property name="title">
       <string>Sync stall mode</string>
      </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>11</number>
+      </property>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QWidget" name="SelectorsContainer" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <property name="spacing">
-            <number>2</number>
+            <number>5</number>
            </property>
            <property name="leftMargin">
-            <number>10</number>
+            <number>0</number>
            </property>
            <property name="topMargin">
-            <number>15</number>
+            <number>5</number>
            </property>
            <property name="rightMargin">
-            <number>10</number>
+            <number>0</number>
            </property>
            <property name="bottomMargin">
-            <number>20</number>
+            <number>5</number>
            </property>
            <item>
             <widget class="QRadioButton" name="SmartSelector">
@@ -71,7 +95,7 @@
               <string>Let MEGA solve sync issues automatically</string>
              </property>
              <property name="indent">
-              <number>15</number>
+              <number>21</number>
              </property>
             </widget>
            </item>
@@ -104,7 +128,7 @@
               <string>Get full control of the sync issues</string>
              </property>
              <property name="indent">
-              <number>15</number>
+              <number>21</number>
              </property>
             </widget>
            </item>
@@ -162,11 +186,23 @@
               </item>
               <item>
                <widget class="QPushButton" name="LearnMoreButton">
+                <property name="minimumSize">
+                 <size>
+                  <width>89</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string>Learn more</string>
+                </property>
+                <property name="type" stdset="0">
+                 <string notr="true">secondary</string>
+                </property>
+                <property name="dimension" stdset="0">
+                 <string notr="true">small</string>
                 </property>
                </widget>
               </item>
@@ -211,11 +247,23 @@
          </item>
          <item>
           <widget class="QPushButton" name="bPermissions">
+           <property name="minimumSize">
+            <size>
+             <width>89</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
             <string>Permissions</string>
+           </property>
+           <property name="type" stdset="0">
+            <string notr="true">secondary</string>
+           </property>
+           <property name="dimension" stdset="0">
+            <string notr="true">small</string>
            </property>
           </widget>
          </item>
@@ -229,6 +277,9 @@
     <widget class="QGroupBox" name="gBugReport">
      <property name="title">
       <string/>
+     </property>
+     <property name="type" stdset="0">
+      <string notr="true">mega</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <property name="rightMargin">
@@ -256,11 +307,26 @@
       </item>
       <item>
        <widget class="QPushButton" name="bApplyLegacyExclusions">
+        <property name="minimumSize">
+         <size>
+          <width>89</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Apply rules</string>
         </property>
         <property name="autoDefault">
          <bool>false</bool>
+        </property>
+        <property name="type" stdset="0">
+         <string notr="true">secondary</string>
+        </property>
+        <property name="dimension" stdset="0">
+         <string notr="true">small</string>
         </property>
        </widget>
       </item>
