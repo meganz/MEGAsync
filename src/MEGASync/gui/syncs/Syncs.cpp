@@ -117,7 +117,10 @@ void Syncs::helperCheckLocalSync(const QString& path)
     }
 
     mLocalError.swap(localError);
-    emit localErrorChanged();
+    if (mLocalError.has_value())
+    {
+        emit remoteErrorChanged();
+    }
 }
 
 void Syncs::helperCheckRemoteSync(const QString& path)
@@ -148,7 +151,10 @@ void Syncs::helperCheckRemoteSync(const QString& path)
     }
 
     mRemoteError.swap(remoteError);
-    emit remoteErrorChanged();
+    if (mRemoteError.has_value())
+    {
+        emit remoteErrorChanged();
+    }
 }
 
 bool Syncs::checkLocalSync(const QString& path)
@@ -358,8 +364,14 @@ QString Syncs::getRemoteError() const
 
 void Syncs::cleanErrors()
 {
+    // This function is private. In this context, we only want
+    // to clear internal error states without notifying external
+    // observers of the change.
+
+    blockSignals(true);
     clearLocalError();
     clearRemoteError();
+    blockSignals(false);
 }
 
 void Syncs::clearRemoteError()
