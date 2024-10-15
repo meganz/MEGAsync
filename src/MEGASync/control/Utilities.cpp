@@ -1627,7 +1627,7 @@ bool Utilities::restoreNode(const char* nodeName,
     }
     else
     {
-        QFileInfo directoryInfo(QString::fromStdString(nodeDirectoryPath));
+        QFileInfo directoryInfo(QString::fromUtf8(nodeDirectoryPath));
         return restoreNode(directoryInfo.fileName().toStdString().c_str(),
                            directoryInfo.path().toStdString().c_str(),
                            megaApi,
