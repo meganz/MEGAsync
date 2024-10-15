@@ -217,7 +217,7 @@ color: rgba(0, 0, 0, 0.2)
             </property>
             <property name="maximumSize">
              <size>
-              <width>90</width>
+              <width>16777215</width>
               <height>36</height>
              </size>
             </property>
@@ -377,7 +377,7 @@ color: rgba(0, 0, 0, 0.2)
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="text">
-        <string>Stop Backup</string>
+        <string>Stop backup</string>
        </property>
        <property name="icon">
         <iconset resource="../Resources.qrc">

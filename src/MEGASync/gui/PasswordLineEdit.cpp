@@ -1,29 +1,22 @@
 #include "PasswordLineEdit.h"
 
-#include <QString>
-#include <QIcon>
 #include <QAction>
-#include <QToolButton>
-#include <QEvent>
 #include <QApplication>
+#include <QEvent>
+#include <QIcon>
+#include <QString>
 #include <QStyle>
+#include <QToolButton>
 
-PasswordLineEdit::PasswordLineEdit(QWidget *parent) : QLineEdit(parent)
+PasswordLineEdit::PasswordLineEdit(QWidget* parent):
+    QLineEdit(parent)
 {
     mShowAction = new QAction(this);
     mShowAction->setToolTip(tr("Show password"));
-    QIcon showActionIcon;
-    showActionIcon.addFile((QString::fromUtf8(":/images/password/ico_eye_reveal.png")), QSize(), QIcon::Normal);
-    showActionIcon.addFile((QString::fromUtf8(":/images/password/ico_eye_reveal_disabled.png")), QSize(), QIcon::Disabled);
-    mShowAction->setIcon(showActionIcon);
     addAction(mShowAction, QLineEdit::TrailingPosition);
 
     mHideAction = new QAction(this);
     mHideAction->setToolTip(tr("Hide password"));
-    QIcon hideActionIcon;
-    hideActionIcon.addFile((QString::fromUtf8(":/images/password/ico_eye_hide.png")), QSize(), QIcon::Normal);
-    hideActionIcon.addFile((QString::fromUtf8(":/images/password/ico_eye_hide_disabled.png")), QSize(), QIcon::Disabled);
-    mHideAction->setIcon(hideActionIcon);
     addAction(mHideAction, QLineEdit::TrailingPosition);
 
     mHideAction->setVisible(false);
@@ -63,7 +56,7 @@ void PasswordLineEdit::focusInEvent(QFocusEvent* e)
 
 void PasswordLineEdit::focusOutEvent(QFocusEvent* e)
 {
-    if(text().isEmpty())
+    if (text().isEmpty())
     {
         mHideAction->setEnabled(false);
         mShowAction->setEnabled(false);
@@ -71,3 +64,58 @@ void PasswordLineEdit::focusOutEvent(QFocusEvent* e)
     QLineEdit::focusOutEvent(e);
 }
 
+QString PasswordLineEdit::getEyeRevealImage() const
+{
+    return {};
+}
+
+void PasswordLineEdit::setEyeRevealImage(const QString& eyeRevealImage)
+{
+    QIcon showActionIcon = mShowAction->icon();
+    showActionIcon.addFile(eyeRevealImage, QSize(), QIcon::Normal);
+    mShowAction->setIcon(showActionIcon);
+
+    emit eyeImageChanged();
+}
+
+QString PasswordLineEdit::getEyeRevealDisabledImage() const
+{
+    return {};
+}
+
+void PasswordLineEdit::setEyeRevealDisabledImage(const QString& eyeRevealDisabledImage)
+{
+    QIcon showActionIcon = mShowAction->icon();
+    showActionIcon.addFile(eyeRevealDisabledImage, QSize(), QIcon::Disabled);
+    mShowAction->setIcon(showActionIcon);
+
+    emit eyeImageChanged();
+}
+
+QString PasswordLineEdit::getEyeClosedImage() const
+{
+    return {};
+}
+
+void PasswordLineEdit::setEyeClosedImage(const QString& eyeClosedImage)
+{
+    QIcon hideActionIcon = mHideAction->icon();
+    hideActionIcon.addFile(eyeClosedImage, QSize(), QIcon::Normal);
+    mHideAction->setIcon(hideActionIcon);
+
+    emit eyeImageChanged();
+}
+
+QString PasswordLineEdit::getEyeClosedDisabledImage() const
+{
+    return {};
+}
+
+void PasswordLineEdit::setEyeClosedDisabledImage(const QString& eyeClosedDisabledImage)
+{
+    QIcon hideActionIcon = mHideAction->icon();
+    hideActionIcon.addFile(eyeClosedDisabledImage, QSize(), QIcon::Disabled);
+    mHideAction->setIcon(hideActionIcon);
+
+    emit eyeImageChanged();
+}

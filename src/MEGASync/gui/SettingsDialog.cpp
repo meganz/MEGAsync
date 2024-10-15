@@ -41,8 +41,11 @@
 
 using namespace mega;
 
-const QString SYNCS_TAB_MENU_LABEL_QSS = QString::fromUtf8("QLabel{ border-image: url(%1); }");
-static constexpr int NUMBER_OF_CLICKS_TO_DEBUG {5};
+static const QString SYNCS_TAB_MENU_LABEL_QSS =
+    QString::fromLatin1("QLabel{ border-image: url(%1); }");
+static constexpr int NUMBER_OF_CLICKS_TO_DEBUG{5};
+static constexpr int PROGRESS_PERCENTAGE_OK{50};
+static constexpr int PROGRESS_PERCENTAGE_WARNING{95};
 
 long long calculateCacheSize()
 {
@@ -806,6 +809,8 @@ void SettingsDialog::updateStorageElements()
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
 
+            setProgressState(QLatin1String("storageState"), percentage);
+
             mUi->pStorageQuota->setValue(std::min(percentage, mUi->pStorageQuota->maximum()));
             mUi->lStorage->setText(Utilities::createCompleteUsedString(usedStorage, totalStorage, percentage));
         }
@@ -839,9 +844,28 @@ void SettingsDialog::updateBandwidthElements()
         else
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
+
+            setProgressState(QLatin1String("transferState"), percentage);
+
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
             mUi->lBandwidth->setText(Utilities::createCompleteUsedString(usedBandwidth, totalBandwidth, std::min(percentage, 100)));
         }
+    }
+}
+
+void SettingsDialog::setProgressState(const QString& stateName, int value)
+{
+    if (value <= PROGRESS_PERCENTAGE_OK)
+    {
+        setProperty(stateName.toStdString().c_str(), QLatin1String("ok"));
+    }
+    else if (value <= PROGRESS_PERCENTAGE_WARNING)
+    {
+        setProperty(stateName.toStdString().c_str(), QLatin1String("warning"));
+    }
+    else
+    {
+        setProperty(stateName.toStdString().c_str(), QLatin1String("full"));
     }
 }
 

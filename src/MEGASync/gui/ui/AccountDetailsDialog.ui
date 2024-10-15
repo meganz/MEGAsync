@@ -84,6 +84,16 @@ color: #fffb6514; /*colorToken.indicator-orange*/
 color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
+{
+color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage  QProgressBar::chunk
+{
+color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
 {
 background-color: transparent;
@@ -124,7 +134,7 @@ margin-bottom: 4px;
 
 QProgressBar::chunk
 {
-background-color: #ff477EF7; /*colorToken.indicator-indigo*/
+background-color: #ff477EF7; /*colorToken.indicator-green*/
 border-radius: 2px;
 border:0px;
 }
@@ -147,7 +157,6 @@ border-radius: 0 0 4px 4px;
 
 QLabel
 {
-font-family: &quot;Lato&quot;;
 background-color: transparent;
 color: #ff303233; /*colorToken.text-primary*/
 font-size: 13px;
@@ -211,16 +220,6 @@ font-size: 13px;
 #wDetailedUsage
 {
     min-height: 120px;
-}
-
-#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
-{
-  background-color: #FF993B;
-}
-
-#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage  QProgressBar::chunk
-{
-  background-color: #FF5646;
 }
 
 #bCloudDrive, #bVault, #bRubbish

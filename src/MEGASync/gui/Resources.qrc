@@ -21,9 +21,6 @@
         <file>images/themed/light/switch_off.svg</file>
         <file>images/themed/light/radio_unchecked.svg</file>
         <file>images/themed/light/radio_checked.svg</file>
-        <file>images/themed/light/combobox_down_arrow.svg</file>
-        <file>images/themed/light/checkbox_unchecked.svg</file>
-        <file>images/themed/light/checkbox_checked.svg</file>
         <file>images/themed/dark/switch_on_pressed.svg</file>
         <file>images/themed/dark/switch_on_hover.svg</file>
         <file>images/themed/dark/switch_on.svg</file>
@@ -32,9 +29,6 @@
         <file>images/themed/dark/switch_off.svg</file>
         <file>images/themed/dark/radio_unchecked.svg</file>
         <file>images/themed/dark/radio_checked.svg</file>
-        <file>images/themed/dark/combobox_down_arrow.svg</file>
-        <file>images/themed/dark/checkbox_unchecked.svg</file>
-        <file>images/themed/dark/checkbox_checked.svg</file>
         <file>images/settings-account.svg</file>
         <file>images/settings-backup.svg</file>
         <file>images/settings-backup-warn.svg</file>
@@ -48,12 +42,6 @@
         <file>images/Small_Free.png</file>
         <file>images/Small_Free@2x.png</file>
         <file>images/Small_Free@3x.png</file>
-        <file>images/key_big.png</file>
-        <file>images/key_big@2x.png</file>
-        <file>images/key_big@3x.png</file>
-        <file>images/lock_big.png</file>
-        <file>images/lock_big@2x.png</file>
-        <file>images/lock_big@3x.png</file>
         <file>images/help-icon.svg</file>
         <file>images/themed/light/radio_checked_pressed.svg</file>
         <file>images/themed/light/radio_checked_hover.svg</file>
@@ -67,5 +55,51 @@
         <file>images/themed/dark/radio_checked_pressed.svg</file>
         <file>images/themed/dark/radio_checked_hover.svg</file>
         <file>images/themed/dark/radio_checked_disabled.svg</file>
+        <file>images/themed/dark/checkbox_on_pressed.svg</file>
+        <file>images/themed/dark/checkbox_on_hover.svg</file>
+        <file>images/themed/dark/checkbox_on_disabled.svg</file>
+        <file>images/themed/dark/checkbox_on.svg</file>
+        <file>images/themed/dark/checkbox_off_pressed.svg</file>
+        <file>images/themed/dark/checkbox_off_hover.svg</file>
+        <file>images/themed/dark/checkbox_off_disabled.svg</file>
+        <file>images/themed/dark/checkbox_off.svg</file>
+        <file>images/themed/light/checkbox_on_pressed.svg</file>
+        <file>images/themed/light/checkbox_on_hover.svg</file>
+        <file>images/themed/light/checkbox_on_disabled.svg</file>
+        <file>images/themed/light/checkbox_on.svg</file>
+        <file>images/themed/light/checkbox_off_pressed.svg</file>
+        <file>images/themed/light/checkbox_off_hover.svg</file>
+        <file>images/themed/light/checkbox_off_disabled.svg</file>
+        <file>images/themed/light/checkbox_off.svg</file>
+        <file>images/themed/light/lock.png</file>
+        <file>images/themed/light/key_pass.png</file>
+        <file>images/themed/light/eye_press.svg</file>
+        <file>images/themed/light/eye-off_press.svg</file>
+        <file>images/themed/light/eye-off_hover.svg</file>
+        <file>images/themed/light/eye-off_disabled.svg</file>
+        <file>images/themed/light/eye-off_default.svg</file>
+        <file>images/themed/light/eye_hover.svg</file>
+        <file>images/themed/light/eye_disabled.svg</file>
+        <file>images/themed/light/eye_default.svg</file>
+        <file>images/themed/light/chevron-down_press.svg</file>
+        <file>images/themed/light/chevron-down_hover.svg</file>
+        <file>images/themed/light/chevron-down_disabled.svg</file>
+        <file>images/themed/light/chevron-down_default.svg</file>
+        <file>images/themed/light/arrow-up-circle.svg</file>
+        <file>images/themed/light/arrow-down-circle.svg</file>
+        <file>images/themed/dark/arrow-up-circle.svg</file>
+        <file>images/themed/dark/arrow-down-circle.svg</file>
+        <file>images/themed/dark/eye_press.svg</file>
+        <file>images/themed/dark/eye-off_press.svg</file>
+        <file>images/themed/dark/eye-off_hover.svg</file>
+        <file>images/themed/dark/eye-off_disabled.svg</file>
+        <file>images/themed/dark/eye-off_default.svg</file>
+        <file>images/themed/dark/eye_hover.svg</file>
+        <file>images/themed/dark/eye_disabled.svg</file>
+        <file>images/themed/dark/eye_default.svg</file>
+        <file>images/themed/dark/chevron-down_press.svg</file>
+        <file>images/themed/dark/chevron-down_hover.svg</file>
+        <file>images/themed/dark/chevron-down_disabled.svg</file>
+        <file>images/themed/dark/chevron-down_default.svg</file>
     </qresource>
 </RCC>
