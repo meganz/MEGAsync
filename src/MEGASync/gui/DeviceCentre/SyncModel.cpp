@@ -1,5 +1,6 @@
 #include "SyncModel.h"
 
+#include "SyncInfo.h"
 #include "Utilities.h"
 
 #include <algorithm>
@@ -17,7 +18,8 @@ QHash<int, QByteArray> SyncModel::roleNames() const
         {NAME,          "name"        },
         {SIZE,          "size"        },
         {DATE_MODIFIED, "dateModified"},
-        {STATUS,        "status"      }
+        {STATUS,        "status"      },
+        {ERROR_MESSAGE, "errorMessage"}
     };
     return roles;
 }
@@ -159,6 +161,9 @@ QVariant SyncModel::data(const QModelIndex& index, int role) const
         case STATUS:
             result = getStatus(row);
             break;
+        case ERROR_MESSAGE:
+            result = getErrorMessage(row);
+            break;
 
         default:
             break;
@@ -189,6 +194,25 @@ QDate SyncModel::getDateModified(int row) const
 SyncStatus::Value SyncModel::getStatus(int row) const
 {
     return mSyncObjects[row].status;
+}
+
+QString SyncModel::getErrorMessage(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
+    if (syncSetting)
+    {
+        return QCoreApplication::translate(
+            "MegaSyncError",
+            mega::MegaSync::getMegaSyncErrorCode(syncSetting->getError()));
+    }
+    else
+    {
+        return QString();
+    }
 }
 
 std::optional<mega::MegaHandle> SyncModel::getHandle(int row) const
