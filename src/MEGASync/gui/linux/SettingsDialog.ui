@@ -2072,55 +2072,6 @@ color: grey;
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="wSyncsFooter">
-         <layout class="QVBoxLayout" name="verticalLayout_26">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="bFullCheck">
-            <property name="text">
-             <string>Force a Full Scan</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="wBackupFooter">
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="bBackupCenter">
-            <property name="text">
-             <string>Go to backup centre</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
         <widget class="QWidget" name="wSecurityFooter">
          <layout class="QVBoxLayout" name="verticalLayout_211">
           <property name="spacing">
@@ -2182,15 +2133,6 @@ color: grey;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
-  <include location="../Resources_linux.qrc"/>
-  <include location="../Resources_macx.qrc"/>
   <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
