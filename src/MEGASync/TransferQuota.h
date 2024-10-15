@@ -37,6 +37,7 @@ public:
     void checkStreamingAlertDismissed(std::function<void (int)> func);
     QTime getRemainingTransferQuotaTime();
     void reset();
+    QuotaState quotaState() const;
 
 private:
     mega::MegaApi* mMegaApi;

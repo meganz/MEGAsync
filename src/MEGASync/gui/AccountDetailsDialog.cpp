@@ -146,7 +146,7 @@ void AccountDetailsDialog::refresh()
         // Get useful data
         auto totalTransfer(preferences->totalBandwidth());
         auto usedTransfer(preferences->usedBandwidth());
-        auto transferQuotaState(MegaSyncApp->getTransferQuotaState());
+        auto transferQuotaState(MegaSyncApp->getTransferQuota()->quotaState());
 
         QString usedTransferString (Utilities::getSizeString(usedTransfer));
         QString totalTransferString;
@@ -172,6 +172,11 @@ void AccountDetailsDialog::refresh()
             {
                 setProperty("transferState", QLatin1String("full"));
                 mUi->wCircularTransfer->setState(CircularUsageProgressBar::STATE_OVER);
+                break;
+            }
+            default:
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unknown transfer quota state");
                 break;
             }
         }

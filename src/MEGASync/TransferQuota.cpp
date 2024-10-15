@@ -28,7 +28,7 @@ void TransferQuota::setOverQuota(std::chrono::milliseconds waitTime)
 }
 
 bool TransferQuota::isOverQuota()
-{    
+{
     updateQuotaState();
     return (mQuotaState == QuotaState::OVERQUOTA);
 }
@@ -120,11 +120,11 @@ void TransferQuota::checkExecuteDialog()
         const auto endWaitTimeSinceEpochSeconds(
             std::chrono::duration_cast<std::chrono::seconds>(endWaitTimeSinceEpoch).count());
 
-        auto dialog =
-            QMLComponent::addDialog<UpsellComponent>(nullptr,
-                                                     UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
-        dialog->getDialog()->setShowWhenCreated(true);
-        dialog->getDialog()->wrapper()->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
+        MegaSyncApp->showUpsellDialog(UpsellPlans::ViewMode::TRANSFER_EXCEEDED);
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>())
+        {
+            dialogInfo->getDialog()->wrapper()->setTransferFinishTime(endWaitTimeSinceEpochSeconds);
+        }
     }
 }
 
@@ -277,6 +277,11 @@ void TransferQuota::reset()
     almostQuotaAlertVisible = false;
     mQuotaState = QuotaState::OK;
     mWaitTimeUntil = std::chrono::system_clock::time_point();
+}
+
+QuotaState TransferQuota::quotaState() const
+{
+    return mQuotaState;
 }
 
 void TransferQuota::sendQuotaWarningOsNotification()

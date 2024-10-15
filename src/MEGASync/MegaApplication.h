@@ -23,6 +23,7 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
+#include "UpsellPlans.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -183,7 +184,6 @@ public:
 
     void updateTrayIconMenu();
 
-    QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
 
     int getAppliedStorageState() const;
@@ -198,6 +198,7 @@ public:
     AccountStatusController* getAccountStatusController();
 
     void updateUsedStorage(const bool sendEvent = false);
+    void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
 signals:
     void startUpdaterThread();
@@ -264,7 +265,7 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
-    void checkOverStorageStates();
+    void checkOverStorageStates(bool isOnboardingAboutClosing = false);
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();

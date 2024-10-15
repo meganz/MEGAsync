@@ -557,6 +557,11 @@ void InfoDialog::setUsage()
                 usageColorT = QString::fromLatin1("#D90007");
                 break;
             }
+            default:
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unknown transfer quota state");
+                break;
+            }
         }
 
         if (accType == Preferences::ACCOUNT_TYPE_FREE)

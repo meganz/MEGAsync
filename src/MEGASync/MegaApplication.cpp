@@ -1455,6 +1455,8 @@ if (!preferences->lastExecutionTime())
     }
     mStatusController->loggedIn();
     preferences->monitorUserAttributes();
+
+    checkOverStorageStates(true);
 }
 
 void MegaApplication::onLoginFinished()
@@ -1959,27 +1961,30 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
-void MegaApplication::checkOverStorageStates()
+void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
 {
-    // TODO: REVIEW THIS (NEXT TASK)
-    auto existsUpsellDialog = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
-    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) &&
-                                   !existsUpsellDialog && !Platform::getInstance()->isUserActive()))
+    if (!preferences->logged() ||
+        ((!infoDialog || !infoDialog->isVisible()) && !Platform::getInstance()->isUserActive()))
     {
         return;
     }
 
     if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
     {
-        if (!preferences->getOverStorageDialogExecution()
-                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
+        bool isOnboardingDialogVisible(false);
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+        }
+
+        if ((!isOnboardingDialogVisible || isOnboardingAboutClosing) &&
+            (!preferences->getOverStorageDialogExecution() ||
+             ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) >
+              Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-            auto dialog =
-                QMLComponent::addDialog<UpsellComponent>(nullptr,
-                                                         UpsellPlans::ViewMode::STORAGE_FULL);
-            dialog->getDialog()->setShowWhenCreated(true);
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2007,6 +2012,21 @@ void MegaApplication::checkOverStorageStates()
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_ORANGE)
     {
+        bool isOnboardingDialogVisible(false);
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<Onboarding>>())
+        {
+            isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
+        }
+        if ((!isOnboardingDialogVisible || isOnboardingAboutClosing) &&
+            (!preferences->getAlmostOverStorageDialogExecution() ||
+             ((QDateTime::currentMSecsSinceEpoch() -
+               preferences->getAlmostOverStorageDialogExecution()) >
+              Preferences::OQ_DIALOG_INTERVAL_MS)))
+        {
+            preferences->setAlmostOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+        }
+
         if (infoDialog)
         {
             if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OQ_UI_MESSAGE_INTERVAL_MS)
@@ -2034,9 +2054,6 @@ void MegaApplication::checkOverStorageStates()
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::ALMOST_OVER_STORAGE_NOTIF);
             mOsNotifications->sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
-
-        // TODO: REVIEW THIS (NEXT TASK)
-        closeUpsellStorageDialog();
     }
     else if (appliedStorageState == MegaApi::STORAGE_STATE_PAYWALL)
     {
@@ -2059,7 +2076,6 @@ void MegaApplication::checkOverStorageStates()
                 }
             }
 
-            // TODO: REVIEW THIS (NEXT TASK)
             closeUpsellStorageDialog();
         }
     }
@@ -2070,7 +2086,6 @@ void MegaApplication::checkOverStorageStates()
             infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         }
 
-        // TODO: REVIEW THIS (NEXT TASK)
         closeUpsellStorageDialog();
     }
 
@@ -2513,26 +2528,6 @@ void MegaApplication::updateUsedStorage(const bool sendEvent)
     {
         preferences->setUsedStorage(receivedStorageSum);
     }
-}
-
-QuotaState MegaApplication::getTransferQuotaState() const
-{
-     QuotaState quotaState (QuotaState::OK);
-
-     if (mTransferQuota->isQuotaWarning())
-     {
-         quotaState = QuotaState::WARNING;
-     }
-     else if (mTransferQuota->isQuotaFull())
-     {
-         quotaState = QuotaState::FULL;
-     }
-     else if (mTransferQuota->isOverQuota())
-     {
-         quotaState = QuotaState::OVERQUOTA;
-     }
-
-     return quotaState;
 }
 
 std::shared_ptr<TransferQuota> MegaApplication::getTransferQuota() const
@@ -4523,6 +4518,21 @@ void MegaApplication::closeUpsellStorageDialog()
         {
             dialog->close();
         }
+    }
+}
+
+void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
+{
+    auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
+    if (dialogInfo)
+    {
+        dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
+        DialogOpener::showDialog(dialogInfo->getDialog());
+    }
+    else
+    {
+        dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
+        dialogInfo->getDialog()->setShowWhenCreated();
     }
 }
 
