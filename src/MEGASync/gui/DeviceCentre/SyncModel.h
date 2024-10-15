@@ -18,7 +18,8 @@ public:
         NAME,
         SIZE,
         DATE_MODIFIED,
-        STATUS
+        STATUS,
+        ERROR_MESSAGE
     };
 
     explicit SyncModel(QObject* parent = nullptr);
@@ -47,6 +48,7 @@ private:
     QString getSize(int row) const;
     QDate getDateModified(int row) const;
     SyncStatus::Value getStatus(int row) const;
+    QString getErrorMessage(int row) const;
     std::optional<int> findRowByHandle(mega::MegaHandle handle) const;
 
     QList<QmlSyncData> mSyncObjects;

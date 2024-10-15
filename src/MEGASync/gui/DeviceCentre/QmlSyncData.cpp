@@ -1,5 +1,7 @@
 #include "QmlSyncData.h"
 
+#include "SyncInfo.h"
+
 QmlSyncData::QmlSyncData(mega::MegaSync* sync):
     syncID(sync->getBackupId()),
     nodeHandle(sync->getMegaHandle()),
@@ -83,7 +85,8 @@ SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaSync* sync)
     }
     else if (sync->getRunState() == mega::MegaSync::RUNSTATE_SUSPENDED)
     {
-        return SyncStatus::PAUSED;
+        return (sync->getError() == mega::MegaSync::NO_SYNC_ERROR) ? SyncStatus::PAUSED :
+                                                                     SyncStatus::STOPPED;
     }
     else if (sync->getRunState() == mega::MegaSync::RUNSTATE_DISABLED ||
              sync->getError() != mega::MegaSync::NO_SYNC_ERROR)
@@ -95,6 +98,12 @@ SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaSync* sync)
 
 SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaBackupInfo* backupInfo)
 {
+    auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(backupInfo->id());
+    if (syncSetting && syncSetting->getError() != mega::MegaSync::NO_SYNC_ERROR)
+    {
+        return SyncStatus::STOPPED;
+    }
+
     const int apiStatus = backupInfo->status();
     const int syncState = backupInfo->state();
 
