@@ -23,6 +23,7 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
+#include "UpsellPlans.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -197,6 +198,7 @@ public:
     AccountStatusController* getAccountStatusController();
 
     void updateUsedStorage(const bool sendEvent = false);
+    void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
 signals:
     void startUpdaterThread();

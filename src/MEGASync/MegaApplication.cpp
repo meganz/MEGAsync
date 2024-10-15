@@ -1976,6 +1976,7 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
         {
             isOnboardingDialogVisible = dialogInfo->getDialog()->isVisible();
         }
+
         if ((!isOnboardingDialogVisible || isOnboardingAboutClosing) &&
             (!preferences->getOverStorageDialogExecution() ||
              ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) >
@@ -1983,21 +1984,7 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
             mStatsEventHandler->sendEvent(AppStatsEvents::EventType::OVER_STORAGE_DIAL);
-
-            auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
-            if (dialogInfo)
-            {
-                dialogInfo->getDialog()->wrapper()->setViewMode(
-                    UpsellPlans::ViewMode::STORAGE_FULL);
-                DialogOpener::showDialog(dialogInfo->getDialog());
-            }
-            else
-            {
-                dialogInfo =
-                    QMLComponent::addDialog<UpsellComponent>(nullptr,
-                                                             UpsellPlans::ViewMode::STORAGE_FULL);
-                dialogInfo->getDialog()->setShowWhenCreated(true);
-            }
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_FULL);
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
@@ -2037,21 +2024,7 @@ void MegaApplication::checkOverStorageStates(bool isOnboardingAboutClosing)
               Preferences::OQ_DIALOG_INTERVAL_MS)))
         {
             preferences->setAlmostOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
-
-            auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>();
-            if (dialogInfo)
-            {
-                dialogInfo->getDialog()->wrapper()->setViewMode(
-                    UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
-                DialogOpener::showDialog(dialogInfo->getDialog());
-            }
-            else
-            {
-                dialogInfo = QMLComponent::addDialog<UpsellComponent>(
-                    nullptr,
-                    UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
-                dialogInfo->getDialog()->setShowWhenCreated(true);
-            }
+            showUpsellDialog(UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
         }
 
         if (infoDialog)
@@ -4545,6 +4518,21 @@ void MegaApplication::closeUpsellStorageDialog()
         {
             dialog->close();
         }
+    }
+}
+
+void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
+{
+    auto dialogInfo(DialogOpener::findDialog<QmlDialogWrapper<UpsellComponent>>());
+    if (dialogInfo)
+    {
+        dialogInfo->getDialog()->wrapper()->setViewMode(viewMode);
+        DialogOpener::showDialog(dialogInfo->getDialog());
+    }
+    else
+    {
+        dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
+        dialogInfo->getDialog()->setShowWhenCreated();
     }
 }
 

@@ -176,6 +176,7 @@ void AccountDetailsDialog::refresh()
             }
             default:
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unknown transfer quota state");
                 break;
             }
         }
