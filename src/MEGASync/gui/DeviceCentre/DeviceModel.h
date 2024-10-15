@@ -24,10 +24,15 @@ public:
 
     void reset(const QString& deviceId, const DeviceData& data);
 
+    void addDeviceName(const QString& deviceID, const QString& name);
+
+    bool deviceNameAlreadyExists(const QString& name) const;
+
 private:
     QString getName(int row) const;
 
     QList<QPair<QString, DeviceData>> mDevicesData;
+    std::map<QString, QString> mDeviceNames;
 };
 
 #endif // DEVICEMODEL_H

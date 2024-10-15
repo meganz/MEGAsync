@@ -14,6 +14,7 @@
 
 namespace Ui {
 class SettingsDialog;
+class SyncStallModeSelector;
 }
 
 class ProxySettings;
@@ -27,9 +28,7 @@ class SettingsDialog : public QDialog, public IStorageObserver, public IBandwidt
 public:
     enum Tabs{
         GENERAL_TAB  = 0,
-        ACCOUNT_TAB  = 1,
-        SYNCS_TAB    = 2,
-        BACKUP_TAB    = 3,
+        ACCOUNT_TAB = 1,
         SECURITY_TAB = 4,
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
@@ -52,14 +51,10 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    void addSyncFolder(mega::MegaHandle remoteHandle) const;
 
     // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
-
-    void setSyncAddButtonEnabled(bool enabled,
-                                 SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
 
 signals:
     void userActivity();
@@ -71,6 +66,12 @@ public slots:
     // General
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
+    void onSmartModeSelected(bool checked);
+    void onAdvanceModeSelected(bool checked);
+    void onPreferencesValueChanged(QString key);
+#ifndef Q_OS_WINDOWS
+    void onPermissionsClicked();
+#endif
 
     //Enable/Disable controls
     void setEnabledAllControls(const bool enabled);
@@ -104,12 +105,6 @@ private slots:
     void on_bMyAccount_clicked();
     void on_bStorageDetails_clicked();
     void on_bLogout_clicked();
-
-    // Syncs
-    void on_bSyncs_clicked();
-
-    // Backup
-    void on_bBackup_clicked();
 
     // Security
     void on_bSecurity_clicked();
@@ -149,6 +144,7 @@ private:
     void setProgressState(const QString& stateName, int value);
 
     Ui::SettingsDialog* mUi;
+    Ui::SyncStallModeSelector* syncStallModeSelectorUI;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
     SyncInfo* mModel;

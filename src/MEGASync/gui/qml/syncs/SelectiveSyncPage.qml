@@ -51,11 +51,11 @@ SelectiveSyncPageForm {
             root.selectiveSyncMoveToSuccess();
         }
 
-        function onLocalErrorChanged() {
+        function onLocalErrorChanged(message) {
             enableScreen();
         }
 
-        function onRemoteErrorChanged() {
+        function onRemoteErrorChanged(message) {
             enableScreen();
         }
     }

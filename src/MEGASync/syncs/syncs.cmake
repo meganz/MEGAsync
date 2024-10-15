@@ -1,18 +1,9 @@
 
 set(DESKTOP_APP_SYNCS_HEADERS
-    syncs/gui/Backups/BackupSettingsElements.h
-    syncs/gui/Backups/BackupTableView.h
     syncs/gui/Backups/RemoveBackupDialog.h
-    syncs/gui/Backups/BackupSettingsUI.h
-    syncs/gui/SyncSettingsUIBase.h
     syncs/gui/SyncTooltipCreator.h
     syncs/gui/SyncsMenu.h
     syncs/gui/Twoways/RemoveSyncConfirmationDialog.h
-    syncs/gui/Twoways/SyncTableView.h
-    syncs/gui/Twoways/SyncSettingsUI.h
-    syncs/gui/Twoways/SyncSettingsElements.h
-    syncs/model/BackupItemModel.h
-    syncs/model/SyncItemModel.h
     syncs/control/MegaIgnoreManager.h
     syncs/control/MegaIgnoreRules.h
     syncs/control/SyncController.h
@@ -23,19 +14,10 @@ set(DESKTOP_APP_SYNCS_HEADERS
 )
 
 set(DESKTOP_APP_SYNCS_SOURCES
-    syncs/gui/Backups/BackupSettingsElements.cpp
-    syncs/gui/Backups/BackupTableView.cpp
     syncs/gui/Backups/RemoveBackupDialog.cpp
-    syncs/gui/Backups/BackupSettingsUI.cpp
-    syncs/gui/SyncSettingsUIBase.cpp
     syncs/gui/SyncTooltipCreator.cpp
     syncs/gui/SyncsMenu.cpp
     syncs/gui/Twoways/RemoveSyncConfirmationDialog.cpp
-    syncs/gui/Twoways/SyncTableView.cpp
-    syncs/gui/Twoways/SyncSettingsUI.cpp
-    syncs/gui/Twoways/SyncSettingsElements.cpp
-    syncs/model/BackupItemModel.cpp
-    syncs/model/SyncItemModel.cpp
     syncs/control/MegaIgnoreManager.cpp
     syncs/control/MegaIgnoreRules.cpp
     syncs/control/SyncInfo.cpp
@@ -97,7 +79,6 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/gui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways
-    ${CMAKE_CURRENT_LIST_DIR}/model
     ${CMAKE_CURRENT_LIST_DIR}/control
 )
 

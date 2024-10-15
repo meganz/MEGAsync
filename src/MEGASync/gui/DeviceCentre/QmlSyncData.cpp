@@ -1,32 +1,37 @@
 #include "QmlSyncData.h"
 
 QmlSyncData::QmlSyncData(mega::MegaSync* sync):
-    handle(sync->getBackupId()),
+    syncID(sync->getBackupId()),
+    nodeHandle(sync->getMegaHandle()),
+    localFolder(QString::fromUtf8(sync->getLocalFolder())),
     type(convertSyncType(sync)),
     name(QString::fromUtf8(sync->getName())),
     status(convertStatus(sync))
 {}
 
 QmlSyncData::QmlSyncData(mega::MegaSyncStats* syncStats):
-    handle(syncStats->getBackupId()),
+    syncID(syncStats->getBackupId()),
     status((syncStats->isScanning()) ? SyncStatus::UPDATING : SyncStatus::UP_TO_DATE)
 {}
 
 QmlSyncData::QmlSyncData(const mega::MegaBackupInfo* backupInfo, mega::MegaApi* api):
-    handle(backupInfo->id()),
+    syncID(backupInfo->id()),
+    nodeHandle(backupInfo->root()),
+    localFolder(QString::fromUtf8(backupInfo->localFolder())),
     type(convertSyncType(backupInfo)),
     name(QString::fromUtf8(backupInfo->name())),
     size(api->getSize(api->getNodeByHandle(backupInfo->root()))),
     dateModified(QDateTime::fromSecsSinceEpoch(static_cast<qint64>(backupInfo->ts()))),
-    dateAdded(dateModified),
     status(convertStatus(backupInfo))
 {}
 
 QmlSyncData::QmlSyncData(mega::MegaRequest* request, mega::MegaApi* api)
 {
-    handle = request->getParentHandle();
+    syncID = request->getParentHandle();
     type = (request->getParamType() == mega::MegaSync::TYPE_TWOWAY) ? QmlSyncType::SYNC :
                                                                       QmlSyncType::BACKUP;
+    nodeHandle = request->getNodeHandle();
+    localFolder = QString::fromUtf8(request->getFile());
     name = QString::fromUtf8(request->getName());
     size = api->getSize(api->getNodeByHandle(request->getNodeHandle()));
 }
@@ -44,10 +49,6 @@ void QmlSyncData::updateFields(const QmlSyncData& other)
     if (other.size != -1)
     {
         size = other.size;
-    }
-    if (!other.dateAdded.isNull())
-    {
-        dateAdded = other.dateAdded;
     }
     if (!other.dateModified.isNull())
     {

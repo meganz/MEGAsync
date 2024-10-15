@@ -27,15 +27,21 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
     setAttribute(Qt::WA_DeleteOnClose, true);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiBlocked,
-            this,  &StalledIssuesDialog::onUiBlocked);
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::uiUnblocked,
-            this,  &StalledIssuesDialog::onUiUnblocked);
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::uiBlocked,
+            this,
+            &StalledIssuesDialog::onUiBlocked);
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::uiUnblocked,
+            this,
+            &StalledIssuesDialog::onUiUnblocked);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::stalledIssuesReceived,
-            this,  &StalledIssuesDialog::onStalledIssuesLoaded);
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::stalledIssuesReceived,
+            this,
+            &StalledIssuesDialog::onStalledIssuesLoaded);
 
-    //Init all categories
+    // Init all categories
     auto tabs = ui->header->findChildren<StalledIssueTab*>();
     foreach(auto tab, tabs)
     {
@@ -46,25 +52,50 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
 
     mProxyModel = new StalledIssuesProxyModel(this);
     mProxyModel->setSourceModel(MegaSyncApp->getStalledIssuesModel());
-    connect(mProxyModel, &StalledIssuesProxyModel::modelFiltered, this, &StalledIssuesDialog::onModelFiltered);
+    connect(mProxyModel,
+            &StalledIssuesProxyModel::modelFiltered,
+            this,
+            &StalledIssuesDialog::onModelFiltered);
 
-    connect(MegaSyncApp->getStalledIssuesModel(), &StalledIssuesModel::updateLoadingMessage, ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::updateMessage, Qt::QueuedConnection);
-    connect(ui->stalledIssuesTree->getLoadingMessageHandler(), &LoadingSceneMessageHandler::onButtonPressed, this, [](MessageInfo::ButtonType buttonType){
-        MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(buttonType);
-    });
+    connect(MegaSyncApp->getStalledIssuesModel(),
+            &StalledIssuesModel::updateLoadingMessage,
+            ui->stalledIssuesTree->getLoadingMessageHandler(),
+            &LoadingSceneMessageHandler::updateMessage,
+            Qt::QueuedConnection);
+    connect(ui->stalledIssuesTree->getLoadingMessageHandler(),
+            &LoadingSceneMessageHandler::onButtonPressed,
+            this,
+            [](MessageInfo::ButtonType buttonType)
+            {
+                MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(buttonType);
+            });
 
     mDelegate = new StalledIssueDelegate(mProxyModel, ui->stalledIssuesTree);
     ui->stalledIssuesTree->setItemDelegate(mDelegate);
-    connect(mDelegate, &StalledIssueDelegate::goToIssue, this, &StalledIssuesDialog::toggleTabAndScroll);
-    connect(&ui->stalledIssuesTree->loadingView(), &ViewLoadingSceneBase::sceneVisibilityChange, this, &StalledIssuesDialog::onLoadingSceneVisibilityChange);
+    connect(mDelegate,
+            &StalledIssueDelegate::goToIssue,
+            this,
+            &StalledIssuesDialog::toggleTabAndScroll);
+    connect(&ui->stalledIssuesTree->loadingView(),
+            &ViewLoadingSceneBase::sceneVisibilityChange,
+            this,
+            &StalledIssuesDialog::onLoadingSceneVisibilityChange);
 
-    connect(ui->SettingsButton, &QPushButton::clicked, this, [](){
-        MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    });
+    connect(ui->SettingsButton,
+            &QPushButton::clicked,
+            this,
+            []()
+            {
+                MegaSyncApp->openSettings(SettingsDialog::GENERAL_TAB);
+            });
 
-    connect(ui->HelpButton, &QPushButton::clicked, this, [](){
-        Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
-    });
+    connect(ui->HelpButton,
+            &QPushButton::clicked,
+            this,
+            []()
+            {
+                Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
+            });
 
     showView();
     if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
