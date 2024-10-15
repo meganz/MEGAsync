@@ -149,15 +149,15 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             this,
             &SettingsDialog::onPreferencesValueChanged);
 
+    mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
+    mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
+
+#ifdef Q_OS_LINUX
     connect(syncStallModeSelectorUI->bPermissions,
             &QPushButton::clicked,
             this,
             &SettingsDialog::onPermissionsClicked);
 
-    mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
-    mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
-
-#ifdef Q_OS_LINUX
     mUi->bUpdate->hide();
     mUi->cAutoUpdate->hide();
 #endif
