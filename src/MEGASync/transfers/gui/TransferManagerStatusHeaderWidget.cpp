@@ -149,8 +149,8 @@ void TransferManagerStatusHeaderWidget::onTransferQuotaExceededUpdate()
            "enough transfer quota left for this "
            "IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free "
            "quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.")
-            .arg(
-                MegaSyncApp->getTransferQuota()->getTransferQuotaDeadline().toString(TIME_FORMAT)));
+            .arg(MegaSyncApp->getTransferQuota()->getRemainingTransferQuotaTime().toString(
+                TIME_FORMAT)));
     Text::RichText(TRANSFER_QUOTA_EXCEEDED_URL).process(bannerText);
     mUi->wTransferBanner->setText(bannerText);
 }

@@ -23,6 +23,12 @@ BannerWidget::BannerWidget(QWidget* parent):
 
     mUi->lText->setTextFormat(Qt::RichText);
     mUi->lText->setKeepParentCursor(false);
+
+    connect(mUi->lText,
+            &WordWrapLabel::anchorClicked,
+            this,
+            &BannerWidget::linkActivated,
+            Qt::UniqueConnection);
 }
 
 BannerWidget::~BannerWidget()
@@ -60,12 +66,4 @@ void BannerWidget::setText(const QString& text)
 void BannerWidget::setAutoManageTextUrl(bool newValue)
 {
     mUi->lText->setAutoManageUrl(newValue);
-    if (newValue)
-    {
-        disconnect(mUi->lText, &WordWrapLabel::anchorClicked, this, &BannerWidget::linkActivated);
-    }
-    else
-    {
-        connect(mUi->lText, &WordWrapLabel::anchorClicked, this, &BannerWidget::linkActivated);
-    }
 }

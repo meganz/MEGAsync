@@ -268,14 +268,18 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
     func(QDialog::Rejected);
 }
 
-QTime TransferQuota::getTransferQuotaDeadline()
+QTime TransferQuota::getRemainingTransferQuotaTime()
 {
-    auto seconds =
-        std::chrono::duration_cast<std::chrono::seconds>(mWaitTimeUntil.time_since_epoch()).count();
-    auto now = std::chrono::duration_cast<std::chrono::seconds>(
-                   std::chrono::system_clock::now().time_since_epoch())
-                   .count();
-    return QTime(0, 0, 0).addSecs(static_cast<int>(seconds - now));
+    auto remainingDuration = std::chrono::duration_cast<std::chrono::seconds>(
+        mWaitTimeUntil - std::chrono::system_clock::now());
+    int remainingSeconds = static_cast<int>(remainingDuration.count());
+
+    if (remainingSeconds < 0)
+    {
+        remainingSeconds = 0;
+    }
+
+    return QTime(0, 0, 0).addSecs(remainingSeconds);
 }
 
 void TransferQuota::reset()
