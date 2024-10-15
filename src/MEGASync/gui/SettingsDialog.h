@@ -146,6 +146,7 @@ private:
     void updateCacheSchedulerDaysLabel();
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
+    void setProgressState(const QString& stateName, int value);
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;
