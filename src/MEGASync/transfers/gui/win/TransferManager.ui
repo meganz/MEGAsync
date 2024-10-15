@@ -2215,20 +2215,20 @@ QGroupBox::title
            </property>
            <widget class="TransferManagerStatusHeaderWidget" name="pStatusHeaderInfo">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>925</width>
+              <width>0</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>925</width>
+              <width>16777215</width>
               <height>16777215</height>
              </size>
             </property>
