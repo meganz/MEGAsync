@@ -1591,6 +1591,51 @@ bool Utilities::restoreNode(MegaNode* node,
     return true;
 }
 
+bool Utilities::restoreNode(const char* nodeName,
+                            const char* nodeDirectoryPath,
+                            MegaApi* megaApi,
+                            std::function<void(MegaRequest*, MegaError*)> finishFunc)
+{
+    std::unique_ptr<MegaNode> directoryNode(megaApi->getNodeByPath(nodeDirectoryPath));
+    if (directoryNode)
+    {
+        MegaNode* rubbishNodeToRestore(nullptr);
+        std::unique_ptr<MegaNodeList> rubbishNodes(
+            MegaSyncApp->getMegaApi()->getChildren(MegaSyncApp->getRubbishNode().get()));
+        for (auto index = 0; index < rubbishNodes->size(); ++index)
+        {
+            auto rubbishNode(rubbishNodes->get(index));
+            if (rubbishNode)
+            {
+                if (rubbishNode->getRestoreHandle() == directoryNode->getHandle() &&
+                    strcmp(nodeName, rubbishNode->getName()) == 0)
+                {
+                    if (!rubbishNodeToRestore ||
+                        rubbishNodeToRestore->getCreationTime() < rubbishNode->getCreationTime())
+                    {
+                        rubbishNodeToRestore = rubbishNode;
+                    }
+                }
+            }
+        }
+
+        if (rubbishNodeToRestore)
+        {
+            return restoreNode(rubbishNodeToRestore, megaApi, false, finishFunc);
+        }
+
+        return false;
+    }
+    else
+    {
+        QFileInfo directoryInfo(QString::fromUtf8(nodeDirectoryPath));
+        return restoreNode(directoryInfo.fileName().toStdString().c_str(),
+                           directoryInfo.path().toStdString().c_str(),
+                           megaApi,
+                           finishFunc);
+    }
+}
+
 long long Utilities::getSystemsAvailableMemory()
 {
     long long availMemory = 0;
