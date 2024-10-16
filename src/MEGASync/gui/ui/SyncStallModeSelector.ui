@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>451</width>
-    <height>268</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>0</width>
-    <height>268</height>
+    <height>250</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -71,7 +71,7 @@
             <number>5</number>
            </property>
            <property name="leftMargin">
-            <number>0</number>
+            <number>5</number>
            </property>
            <property name="topMargin">
             <number>5</number>
@@ -282,8 +282,14 @@
       <string notr="true">mega</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
       <property name="rightMargin">
        <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
       </property>
       <item>
        <widget class="QLabel" name="label">
