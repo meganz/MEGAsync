@@ -188,5 +188,6 @@
         <file>components/menus/Sizes.qml</file>
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
+        <file>components/dialogs/ErrorDialog.qml</file>
     </qresource>
 </RCC>

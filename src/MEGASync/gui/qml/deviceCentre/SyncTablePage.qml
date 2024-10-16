@@ -13,6 +13,7 @@ import components.texts 1.0 as Texts
 import components.images 1.0
 import components.menus 1.0
 import components.buttons 1.0 as Buttons
+import components.dialogs 1.0
 
 import SyncStatus 1.0
 import QmlSyncType 1.0
@@ -31,21 +32,30 @@ Item {
     property string dateFormat: "d MMM yyyy"
     property var locale: Qt.locale()
 
-    function getStatusText(currentStatus) {
+    ErrorDialog {
+        id: errorDialog
+
+        acceptButtonText: Strings.ok
+        visible: false
+    }
+
+    function getStatusText(model) {
         var result = "";
-        switch(currentStatus) {
-        case SyncStatus.PAUSED:
-            result = DeviceCentreStrings.statusPaused;
-            break;
-        case SyncStatus.STOPPED:
-            result = DeviceCentreStrings.statusStopped;
-            break;
-        case SyncStatus.UPDATING:
-            result = DeviceCentreStrings.statusUpdating;
-            break;
-        case SyncStatus.UP_TO_DATE:
-            result = DeviceCentreStrings.statusUpToDate;
-            break;
+        if (model) {
+            switch(model.status) {
+            case SyncStatus.PAUSED:
+                result = DeviceCentreStrings.statusPaused;
+                break;
+            case SyncStatus.STOPPED:
+                result = DeviceCentreStrings.statusStopped + ".";
+                break;
+            case SyncStatus.UPDATING:
+                result = DeviceCentreStrings.statusUpdating;
+                break;
+            case SyncStatus.UP_TO_DATE:
+                result = DeviceCentreStrings.statusUpToDate;
+                break;
+            }
         }
         return result;
     }
@@ -114,6 +124,13 @@ Item {
         }
     }
 
+    function isErrorLinkVisible(model) {
+        if (model && model.status === SyncStatus.STOPPED)
+        {
+            return (model.errorMessage !== "");
+        }
+        return false;
+    }
 
     anchors.fill: parent
 
@@ -248,8 +265,41 @@ Item {
                         pixelSize: Texts.Text.Size.NORMAL
                         weight: Font.Normal
                     }
+                    color: isErrorLinkVisible(model) ? ColorTheme.textError : ColorTheme.textPrimary
                     lineHeight: 18
-                    text: model? getStatusText(model.status) : ""
+                    text: getStatusText(model)
+                }
+
+                Texts.Text {
+                    id: viewText
+
+                    anchors {
+                        left: statusText.right
+                        top: statusText.top
+                        leftMargin: 4
+                    }
+                    font {
+                        pixelSize: Texts.Text.Size.NORMAL
+                        weight: Font.Normal
+                        underline: true
+                    }
+                    color: ColorTheme.textError
+                    lineHeight: 18
+                    text: DeviceCentreStrings.view
+                    visible: isErrorLinkVisible(model)
+                }
+
+                MouseArea{
+                    id: viewClickArea
+
+                    visible: viewText.visible
+                    anchors.fill: viewText
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: {
+                        errorDialog.titleText = model.errorMessage;
+                        errorDialog.visible = true;
+                        return;
+                    }
                 }
             }
         } // nameColumn
