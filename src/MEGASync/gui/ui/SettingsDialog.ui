@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>727</width>
+    <width>680</width>
     <height>887</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>727</width>
+    <width>680</width>
     <height>887</height>
    </size>
   </property>
@@ -895,7 +895,7 @@ margin-bottom: 3px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="spacing">
-           <number>0</number>
+           <number>10</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cbSleepMode">
@@ -903,10 +903,26 @@ margin-bottom: 3px;
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
-             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
+             <string/>
             </property>
             <property name="type" stdset="0">
              <string notr="true">mega</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
