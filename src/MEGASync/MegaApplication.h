@@ -602,10 +602,6 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-
-private:
-    QFutureWatcher<NodeCount> mWatcher;
-
 };
 
 #endif // MEGAAPPLICATION_H
