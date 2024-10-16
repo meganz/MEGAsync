@@ -303,7 +303,7 @@
       <item row="10" column="1">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <property name="spacing">
-         <number>0</number>
+         <number>10</number>
         </property>
         <item>
          <widget class="QLineEdit" name="eProxyServer">
@@ -312,13 +312,13 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>0</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
-            <width>200</width>
+            <width>150</width>
             <height>16777215</height>
            </size>
           </property>
@@ -379,6 +379,19 @@
            <string notr="true">mega</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Orientation::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
