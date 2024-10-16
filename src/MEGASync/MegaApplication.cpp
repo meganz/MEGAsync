@@ -762,6 +762,8 @@ void MegaApplication::initialize()
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 
     createUserMessageController();
+
+    TokenParserWidgetManager::instance();
 }
 
 QString MegaApplication::applicationFilePath()

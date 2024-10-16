@@ -35,7 +35,7 @@ private:
     bool isRoot(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
-    QString mStandardComponentsStyleSheet;
+    QMap<QString, QString> mThemedStandardComponentsStyleSheet;
     QMap<QString, QString> mWidgetsStyleSheets;
 };
 
