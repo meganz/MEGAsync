@@ -76,7 +76,7 @@ public slots:
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
-
+    void applyPreviousExclusions();
     //Enable/Disable controls
     void setEnabledAllControls(const bool enabled);
 
