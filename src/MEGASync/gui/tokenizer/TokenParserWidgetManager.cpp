@@ -66,7 +66,7 @@ TokenParserWidgetManager::TokenParserWidgetManager(QObject *parent)
 
 void TokenParserWidgetManager::loadStandardStyleSheetComponents()
 {
-    mStandardComponentsStyleSheet.clear();
+    mThemedStandardComponentsStyleSheet.clear();
 
     QFile file(CSS_STANDARD_WIDGETS_COMPONENTS_FILE);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -82,7 +82,15 @@ void TokenParserWidgetManager::loadStandardStyleSheetComponents()
         return;
     }
 
-    mStandardComponentsStyleSheet = QLatin1String(data);
+    QString sourceStandardComponentsStyleSheet = QString::fromLatin1(data);
+    for (const auto& theme: mColorThemedTokens.keys())
+    {
+        const auto& colorTokens = mColorThemedTokens.value(theme);
+
+        replaceColorTokens(sourceStandardComponentsStyleSheet, colorTokens);
+        replaceThemeTokens(sourceStandardComponentsStyleSheet, theme);
+        mThemedStandardComponentsStyleSheet[theme] = sourceStandardComponentsStyleSheet;
+    }
 }
 
 void TokenParserWidgetManager::loadColorThemeJson()
@@ -129,14 +137,19 @@ void TokenParserWidgetManager::onUpdateRequested()
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 {
+#if defined QT_DEBUG
     auto start = std::chrono::steady_clock::now();
+#endif
     applyTheme(dialog);
 
+#if defined QT_DEBUG
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsed = end - start;
 
-    qDebug() << "Time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
+    qDebug() << "Time used to apply the theme : "
+             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
     qDebug() << "to the following dialog : " << dialog->objectName();
+#endif
 }
 
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
@@ -162,10 +175,12 @@ bool TokenParserWidgetManager::isRoot(QWidget* widget)
 // performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme()
 {
+#if defined QT_DEBUG
     auto start = std::chrono::steady_clock::now();
+#endif
 
     QStringList dialogsName;
-    foreach (const auto& dialog, DialogOpener::getAllOpenedDialogs())
+    foreach(const auto& dialog, DialogOpener::getAllOpenedDialogs())
     {
         if (!dialog.isNull())
         {
@@ -175,11 +190,14 @@ void TokenParserWidgetManager::applyCurrentTheme()
         }
     }
 
+#if defined QT_DEBUG
     auto end = std::chrono::steady_clock::now();
     std::chrono::duration<float> elapsed = end - start;
 
-    qDebug() << "Time used to apply the theme : " << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
+    qDebug() << "Time used to apply the theme : "
+             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
     qDebug() << "to the following dialogs : " << dialogsName;
+#endif
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
@@ -191,15 +209,15 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 
     auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
 
-    QString localWidgetStyleSheet;
+    QString widgetStyleSheet;
     if (mWidgetsStyleSheets.contains(widget->objectName()))
     {
-        localWidgetStyleSheet = mWidgetsStyleSheets[widget->objectName()];
+        widgetStyleSheet = mWidgetsStyleSheets[widget->objectName()];
     }
     else
     {
-        localWidgetStyleSheet = widget->styleSheet();
-        mWidgetsStyleSheets[widget->objectName()] = localWidgetStyleSheet;
+        widgetStyleSheet = widget->styleSheet();
+        mWidgetsStyleSheets[widget->objectName()] = widgetStyleSheet;
     }
 
     if (!mColorThemedTokens.contains(currentTheme))
@@ -210,14 +228,15 @@ void TokenParserWidgetManager::applyTheme(QWidget* widget)
 
     const auto& colorTokens = mColorThemedTokens.value(currentTheme);
 
-    QString styleSheet =
-        (isRoot(widget) ? mStandardComponentsStyleSheet : QLatin1String()) % localWidgetStyleSheet;
-
-    replaceColorTokens(styleSheet, colorTokens);
-    replaceIconColorTokens(widget, styleSheet, colorTokens);
-    replaceThemeTokens(styleSheet, currentTheme);
+    replaceColorTokens(widgetStyleSheet, colorTokens);
+    replaceIconColorTokens(widget, widgetStyleSheet, colorTokens);
+    replaceThemeTokens(widgetStyleSheet, currentTheme);
 
     removeFrameOnDialogCombos(widget);
+
+    QString styleSheet =
+        (isRoot(widget) ? mThemedStandardComponentsStyleSheet[currentTheme] : QLatin1String()) %
+        widgetStyleSheet;
 
     widget->setStyleSheet(styleSheet);
 }
