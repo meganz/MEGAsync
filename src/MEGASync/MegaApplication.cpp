@@ -4821,15 +4821,21 @@ void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
         if (!foldersSelected.isEmpty())
         {
             QFuture<NodeCount> future;
+            QFutureWatcher<NodeCount>* watcher(new QFutureWatcher<NodeCount>());
 
-            connect(&mWatcher, &QFutureWatcher<NodeCount>::finished, this, [this, foldersSelected]() {
-                const NodeCount nodeCount = mWatcher.result();
-                processUploads(foldersSelected);
-                HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
-            });
+            connect(watcher,
+                    &QFutureWatcher<NodeCount>::finished,
+                    this,
+                    [this, foldersSelected, watcher]()
+                    {
+                        const NodeCount nodeCount = watcher->result();
+                        processUploads(foldersSelected);
+                        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+                        watcher->deleteLater();
+                    });
 
             future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
-            mWatcher.setFuture(future);
+            watcher->setFuture(future);
         }
         else
         {
