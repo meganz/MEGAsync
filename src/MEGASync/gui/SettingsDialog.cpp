@@ -159,6 +159,8 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onPermissionsClicked);
     mUi->bUpdate->hide();
     mUi->cAutoUpdate->hide();
+#else
+    syncStallModeSelectorUI->bPermissions->hide();
 #endif
 
     connect(syncStallModeSelectorUI->LearnMoreButton,
