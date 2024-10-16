@@ -11,6 +11,7 @@
 #include "QmlDialog.h"
 #include "QmlDialogManager.h"
 #include "QmlTheme.h"
+#include "QmlUtils.h"
 #include "SyncInfo.h"
 
 #include <QDataStream>
@@ -65,6 +66,7 @@ void QmlManager::registerCommonQmlElements()
         QString::fromUtf8("Cannot register SyncInfo::SyncOrigin in QML"));
     qRegisterMetaType<AppStatsEvents::EventType>();
 
+    qmlRegisterSingletonType<QmlUtils>("QmlUtils", 1, 0, "QmlUtils", &QmlUtils::getQmlInstance);
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
     qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
     qmlRegisterSingletonType<QmlDialogManager>("QmlDialogManager",

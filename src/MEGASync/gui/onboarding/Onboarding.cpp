@@ -14,8 +14,8 @@
 
 using namespace mega;
 
-Onboarding::Onboarding(QObject *parent)
-    : QMLComponent(parent)
+Onboarding::Onboarding(QObject* parent):
+    QMLComponent(parent)
 {
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
@@ -41,7 +41,13 @@ QString Onboarding::contextName()
     return QString::fromUtf8("onboardingAccess");
 }
 
-void Onboarding::openPreferences(int tabIndex) const
+void Onboarding::openDeviceCentre() const
 {
-    MegaSyncApp->openSettings(tabIndex);
+    MegaSyncApp->openDeviceCentre();
+}
+
+bool Onboarding::deviceNameAlreadyExists(const QString& name) const
+{
+    // TODO : SAT-1645 implement this
+    return false;
 }

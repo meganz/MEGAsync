@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import common 1.0
+
 import components.images 1.0
 import components.texts 1.0 as Texts
 
@@ -21,7 +23,7 @@ Item {
             pixelSize: Texts.Text.Size.SMALL
             weight: Font.DemiBold
         }
-        color: colorStyle.textSecondary
+        color: ColorTheme.textSecondary
         wrapMode: Text.NoWrap
 
         text: name;
@@ -60,7 +62,7 @@ Item {
             pixelSize: Texts.Text.Size.NORMAL
             weight: Font.Normal
         }
-        color: colorStyle.textSecondary
+        color: ColorTheme.textSecondary
         wrapMode: Text.NoWrap
 
         text: value;

@@ -14,7 +14,7 @@ FooterButtonsPage {
     footerButtons {
         leftPrimary.visible: false
         rightSecondary {
-            text: Strings.viewInSettings
+            text: Strings.viewInDeviceCentre
             visible: backupsAccess != null ? !backupsAccess.comesFromSettings : false
         }
         rightPrimary {

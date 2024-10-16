@@ -28,7 +28,6 @@ public:
     QString contextName() override;
     static void registerQmlModules();
 
-    Q_INVOKABLE QString getCurrentDeviceId();
     Q_INVOKABLE void retrieveDeviceData(const QString& deviceId);
     Q_INVOKABLE QString getSizeString(long long bytes) const;
     Q_INVOKABLE DeviceOs::Os getCurrentOS();
@@ -36,6 +35,15 @@ public:
     Q_INVOKABLE void openAddSyncDialog();
     Q_INVOKABLE DeviceModel* getDeviceModel() const;
     Q_INVOKABLE SyncModel* getSyncModel() const;
+    Q_INVOKABLE void renameCurrentDevice(const QString& newName);
+    Q_INVOKABLE void openInMega(int row) const;
+    Q_INVOKABLE void showInFolder(int row) const;
+    Q_INVOKABLE void pauseSync(int row) const;
+    Q_INVOKABLE void resumeSync(int row) const;
+    Q_INVOKABLE void rescanSync(int row, bool deepRescan = true) const;
+    Q_INVOKABLE void manageExclusions(int row) const;
+    Q_INVOKABLE void stopSync(int row) const;
+    Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
 
 signals:
     void deviceNameReceived(QString deviceName);
@@ -46,6 +54,9 @@ private:
     void updateLocalData(const mega::MegaBackupInfoList& backupList);
     void updateLocalData(const QmlSyncData& syncObj);
     void updateDeviceData();
+    void requestDeviceNames(const mega::MegaBackupInfoList& backupList) const;
+
+    void changeSyncStatus(int row, std::function<void(std::shared_ptr<SyncSettings>)> action) const;
 
     BackupList filterBackupList(const char* deviceId, const mega::MegaBackupInfoList& backupList);
 

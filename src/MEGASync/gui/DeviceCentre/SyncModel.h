@@ -17,9 +17,9 @@ public:
         TYPE = Qt::UserRole + 1,
         NAME,
         SIZE,
-        DATE_ADDED,
         DATE_MODIFIED,
-        STATUS
+        STATUS,
+        ERROR_MESSAGE
     };
 
     explicit SyncModel(QObject* parent = nullptr);
@@ -38,14 +38,17 @@ public:
 
     void setStatus(mega::MegaHandle handle, const SyncStatus::Value status);
     bool hasUpdatingStatus() const;
+    std::optional<mega::MegaHandle> getHandle(int row) const;
+    std::optional<mega::MegaHandle> getSyncID(int row) const;
+    QmlSyncType::Type getType(int row) const;
+    QString getLocalFolder(int row) const;
 
 private:
     QString getName(int row) const;
     QString getSize(int row) const;
-    QmlSyncType::Type getType(int row) const;
-    QDate getDateAdded(int row) const;
     QDate getDateModified(int row) const;
     SyncStatus::Value getStatus(int row) const;
+    QString getErrorMessage(int row) const;
     std::optional<int> findRowByHandle(mega::MegaHandle handle) const;
 
     QList<QmlSyncData> mSyncObjects;

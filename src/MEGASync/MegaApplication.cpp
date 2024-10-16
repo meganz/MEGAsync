@@ -8,7 +8,9 @@
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
+#include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
+#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "DuplicatedNodeDialog.h"
 #include "EmailRequester.h"
@@ -1361,7 +1363,6 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
-        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
         QString message;
         QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
@@ -1385,18 +1386,20 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled. Go to settings to enable them again.");
+            message = tr("Some syncs and backups have been disabled. Go to device centre to enable "
+                         "them again.");
         }
         else if (haveBackups)
         {
-            settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled. Go to settings to enable them again.");
+            message = tr("One or more backups have been disabled. Go to device centre to enable "
+                         "them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr("One or more syncs have been disabled. Go to settings to enable them again.");
+            message = tr(
+                "One or more syncs have been disabled. Go to device centre to enable them again.");
         }
 
         // Display the message if it has been set
@@ -1407,15 +1410,16 @@ if (!preferences->lastExecutionTime())
             msgInfo.text = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
             QMap<QMessageBox::Button, QString> textsByButton;
-            textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
+            textsByButton.insert(QMessageBox::Yes, tr("Open device centre"));
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg){
-                if(msg->result() == QMessageBox::Yes)
+            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
             {
-                openSettings(settingsTabToOpen);
-            }
+                if (msg->result() == QMessageBox::Yes)
+                {
+                    openDeviceCentre();
+                }
             };
             QMegaMessageBox::warning(msgInfo);
         }
@@ -3994,7 +3998,10 @@ void MegaApplication::openDeviceCentre()
     {
         return;
     }
-
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DEVICE_CENTRE_CLICKED,
+                                         sender(),
+                                         deviceCentreAction,
+                                         true);
 #ifdef Q_OS_MACOS
     if (infoDialog)
     {
@@ -4002,7 +4009,7 @@ void MegaApplication::openDeviceCentre()
     }
 #endif
 
-    QmlDialogManager::instance()->openDeviceCentreDialog();
+    QMLComponent::openDialog<DeviceCentre>();
 }
 
 void MegaApplication::importLinks()
@@ -5083,6 +5090,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if (reason == QSystemTrayIcon::Trigger)
             {
+                mStatsEventHandler->sendTrackedEvent(
+                    AppStatsEvents::EventType::TRAY_ICON_TRIGGERED);
                 if (mStatusController->isAccountBlocked())
                 {
                     createInfoDialog();
@@ -5214,7 +5223,6 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
     else
     {
-        openSettings(SettingsDialog::SYNCS_TAB);
         if (megaFolderHandle == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -5224,7 +5232,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            mSettingsDialog->addSyncFolder(megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(megaFolderHandle);
         }
     }
 }
@@ -5420,8 +5428,8 @@ void MegaApplication::createInfoDialogMenus()
 
     recreateMenuAction(&deviceCentreAction,
                        infoDialogMenu,
-                       QString::fromLatin1("Device Center"),
-                       "://images/ico-cloud-drive.png",
+                       tr("Device Centre"),
+                       "://images/ico-device-centre.svg",
                        &MegaApplication::openDeviceCentre);
 
     bool previousEnabledState = exitAction->isEnabled();
@@ -5477,7 +5485,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     infoDialogMenu->addAction(myCloudAction);
-    // infoDialogMenu->addAction(deviceCentreAction);
+    infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());

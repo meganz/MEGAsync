@@ -56,7 +56,6 @@ FooterButtonsPage {
             sizes: LargeSizes {}
             textField {
                 text: deviceName.name
-                maximumLength: 32 // It is non-technical length limit for device name => UX choice
             }
         }
     }

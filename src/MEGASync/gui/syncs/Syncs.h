@@ -60,8 +60,8 @@ signals:
     void syncSetupSuccess();
     void syncStatusChanged();
     void syncRemoved();
-    void localErrorChanged();
-    void remoteErrorChanged();
+    void localErrorChanged(QString errorMessage);
+    void remoteErrorChanged(QString errorMessage);
 
 private:
     enum class LocalErrors
@@ -101,6 +101,8 @@ private:
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
     void cleanErrors();
+
+    QString getLocalError(const QString& path) const;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
