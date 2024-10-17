@@ -905,7 +905,7 @@ margin-bottom: 3px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="spacing">
-           <number>10</number>
+           <number>5</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cbSleepMode">
