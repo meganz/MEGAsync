@@ -301,21 +301,30 @@ void CircularUsageProgressBar::setProgressBarColors(const QString& color, STATE 
 
 void CircularUsageProgressBar::setOuterCircleBackgroundColor(const QString& color)
 {
-    mPbBgColor = color;
+    if (mPbBgColor != color)
+    {
+        mPbBgColor = color;
 
-    emit colorChanged();
+        emit colorChanged();
+    }
 }
 
 void CircularUsageProgressBar::setInnerCircleBackgroundColor(const QString& color)
 {
-    mBgColor = color;
+    if (mBgColor != color)
+    {
+        mBgColor = color;
 
-    emit colorChanged();
+        emit colorChanged();
+    }
 }
 
 void CircularUsageProgressBar::setOkStateTextColor(const QString& color)
 {
-    mOkStateTextColor = color;
+    if (mOkStateTextColor != color)
+    {
+        mOkStateTextColor = color;
 
-    emit colorChanged();
+        emit colorChanged();
+    }
 }

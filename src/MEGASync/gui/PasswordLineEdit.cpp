@@ -3,7 +3,6 @@
 #include <QAction>
 #include <QApplication>
 #include <QEvent>
-#include <QIcon>
 #include <QString>
 #include <QStyle>
 #include <QToolButton>
@@ -71,11 +70,7 @@ QString PasswordLineEdit::getEyeRevealImage() const
 
 void PasswordLineEdit::setEyeRevealImage(const QString& eyeRevealImage)
 {
-    QIcon showActionIcon = mShowAction->icon();
-    showActionIcon.addFile(eyeRevealImage, QSize(), QIcon::Normal);
-    mShowAction->setIcon(showActionIcon);
-
-    emit eyeImageChanged();
+    setEyeImage(mShowAction, eyeRevealImage, QIcon::Normal);
 }
 
 QString PasswordLineEdit::getEyeRevealDisabledImage() const
@@ -85,11 +80,7 @@ QString PasswordLineEdit::getEyeRevealDisabledImage() const
 
 void PasswordLineEdit::setEyeRevealDisabledImage(const QString& eyeRevealDisabledImage)
 {
-    QIcon showActionIcon = mShowAction->icon();
-    showActionIcon.addFile(eyeRevealDisabledImage, QSize(), QIcon::Disabled);
-    mShowAction->setIcon(showActionIcon);
-
-    emit eyeImageChanged();
+    setEyeImage(mShowAction, eyeRevealDisabledImage, QIcon::Disabled);
 }
 
 QString PasswordLineEdit::getEyeClosedImage() const
@@ -99,11 +90,7 @@ QString PasswordLineEdit::getEyeClosedImage() const
 
 void PasswordLineEdit::setEyeClosedImage(const QString& eyeClosedImage)
 {
-    QIcon hideActionIcon = mHideAction->icon();
-    hideActionIcon.addFile(eyeClosedImage, QSize(), QIcon::Normal);
-    mHideAction->setIcon(hideActionIcon);
-
-    emit eyeImageChanged();
+    setEyeImage(mHideAction, eyeClosedImage, QIcon::Normal);
 }
 
 QString PasswordLineEdit::getEyeClosedDisabledImage() const
@@ -113,9 +100,14 @@ QString PasswordLineEdit::getEyeClosedDisabledImage() const
 
 void PasswordLineEdit::setEyeClosedDisabledImage(const QString& eyeClosedDisabledImage)
 {
-    QIcon hideActionIcon = mHideAction->icon();
-    hideActionIcon.addFile(eyeClosedDisabledImage, QSize(), QIcon::Disabled);
-    mHideAction->setIcon(hideActionIcon);
+    setEyeImage(mHideAction, eyeClosedDisabledImage, QIcon::Disabled);
+}
+
+void PasswordLineEdit::setEyeImage(QAction* action, const QString& imagePath, QIcon::Mode mode)
+{
+    QIcon icon = action->icon();
+    icon.addFile(imagePath, QSize(), mode);
+    action->setIcon(icon);
 
     emit eyeImageChanged();
 }

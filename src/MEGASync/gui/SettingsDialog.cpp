@@ -114,10 +114,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             mUi->wStack,
             [=](const int& newValue)
             {
-                mUi->wStackFooter->setCurrentIndex(newValue);
-                // Setting new index in the stack widget cause the focus to be set to footer button
-                // avoid it, setting to main wStack to ease tab navigation among different controls.
-                mUi->wStack->setFocus();
+                if (newValue < mUi->wStackFooter->count())
+                {
+                    mUi->wStackFooter->setCurrentIndex(newValue);
+                    // Setting new index in the stack widget cause the focus to be set to footer
+                    // button avoid it, setting to main wStack to ease tab navigation among
+                    // different controls.
+                    mUi->wStack->setFocus();
+                }
             });
 
     syncStallModeSelectorUI->bApplyLegacyExclusions->setAutoDefault(false);
@@ -387,7 +391,12 @@ void SettingsDialog::loadSettings()
 
     mUi->cbTheme->clear();
     mUi->cbTheme->addItems(ThemeManager::instance()->themesAvailable());
-    mUi->cbTheme->setCurrentIndex(static_cast<int>(mPreferences->getThemeType()));
+
+    auto themeIndex = static_cast<int>(mPreferences->getThemeType());
+    if (themeIndex < mUi->cbTheme->count())
+    {
+        mUi->cbTheme->setCurrentIndex(themeIndex);
+    }
 
     //Account
     mUi->lEmail->setText(mPreferences->email());

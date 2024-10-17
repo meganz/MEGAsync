@@ -64,12 +64,10 @@ void PermissionsDialog::permissionsChanged()
 
 void PermissionsDialog::on_bUpdate_clicked()
 {
-    QDialog::setResult(QDialog::Accepted);
-    close();
+    accept();
 }
 
 void PermissionsDialog::on_bCancel_clicked()
 {
-    QDialog::setResult(QDialog::Rejected);
-    close();
+    reject();
 }

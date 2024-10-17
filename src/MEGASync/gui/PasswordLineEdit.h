@@ -1,6 +1,7 @@
 #ifndef PASSWORDLINEEDIT_H
 #define PASSWORDLINEEDIT_H
 
+#include <QIcon>
 #include <QLineEdit>
 
 class PasswordLineEdit: public QLineEdit
@@ -35,6 +36,7 @@ signals:
     void eyeImageChanged();
 
 private:
+    void setEyeImage(QAction* action, const QString& imagePath, QIcon::Mode mode);
     void revealPassword();
     void hidePassword();
 
