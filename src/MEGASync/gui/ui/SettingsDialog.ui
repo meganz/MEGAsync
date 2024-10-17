@@ -633,6 +633,16 @@ margin-bottom: 3px;
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="cFinderIcons">
+              <property name="text">
+               <string>Enable Windows Explorer integration</string>
+              </property>
+              <property name="type" stdset="0">
+               <string>mega</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QCheckBox" name="cOverlayIcons">
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>

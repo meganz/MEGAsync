@@ -174,6 +174,45 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
                 Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
             });
 
+    mUi->cFinderIcons->hide();
+#ifdef Q_OS_WINDOWS
+    typedef LONG MEGANTSTATUS;
+
+    typedef struct _MEGAOSVERSIONINFOW
+    {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR szCSDVersion[128]; // Maintenance string for PSS usage
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS(WINAPI * RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+    MEGARTL_OSVERSIONINFOW version = {0};
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (hMod)
+    {
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning( \
+    disable: 4191) // 'type cast': unsafe conversion from 'FARPROC' to 'RtlGetVersionPtr'
+#endif
+        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+        if (RtlGetVersion)
+        {
+            RtlGetVersion(&version);
+            if (version.dwMajorVersion >= 10)
+            {
+                mUi->cFinderIcons->show();
+            }
+        }
+    }
+#endif
+
     mUi->gThemeSelector->hide();
 
 #ifdef Q_OS_MACOS
@@ -188,6 +227,13 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #endif
 
     setProxyOnly(proxyOnly);
+
+#ifdef Q_OS_MACOS
+    if (!proxyOnly)
+    {
+        mUi->pNetwork->hide();
+    }
+#endif
 
     AccountDetailsManager::instance()->attachStorageObserver(*this);
     AccountDetailsManager::instance()->attachBandwidthObserver(*this);
@@ -425,8 +471,11 @@ void SettingsDialog::loadSettings()
     updateUploadFolder();
     updateDownloadFolder();
 
-    updateNetworkTab();
+#ifdef Q_OS_WINDOWS
+    mUi->cFinderIcons->setChecked(!mPreferences->leftPaneIconsDisabled());
+#endif
 
+    updateNetworkTab();
     mLoadingSettings--;
 }
 
@@ -793,6 +842,30 @@ void SettingsDialog::on_cOverlayIcons_toggled(bool checked)
 #endif
     mApp->notifyChangeToAllFolders();
 }
+
+#ifdef Q_OS_WINDOWS
+void SettingsDialog::on_cFinderIcons_toggled(bool checked)
+{
+    if (mLoadingSettings)
+        return;
+
+    if (checked)
+    {
+        for (auto syncSetting: mModel->getAllSyncSettings())
+        {
+            Platform::getInstance()->addSyncToLeftPane(syncSetting->getLocalFolder(),
+                                                       syncSetting->name(),
+                                                       syncSetting->getSyncID());
+        }
+    }
+    else
+    {
+        Platform::getInstance()->removeAllSyncsFromLeftPane();
+        return;
+    }
+    mPreferences->disableLeftPaneIcons(!checked);
+}
+#endif
 
 void SettingsDialog::on_cbTheme_currentIndexChanged(int index)
 {
