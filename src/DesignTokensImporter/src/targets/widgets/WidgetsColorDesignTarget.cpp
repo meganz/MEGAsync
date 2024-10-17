@@ -12,6 +12,11 @@
 
 using namespace DTI;
 
+static auto NO_ALPHA_COLOR_SIZE{
+    7u}; /* 7 is the size of #aa34bb, so solid alpha channel is missing */
+
+static auto RGB_COLOR_VALUE_SIZE{6u};
+
 bool WidgetsColorDesignTarget::registered =
     ConcreteDesignTargetFactory<WidgetsColorDesignTarget>::Register("widgetsColor");
 
@@ -37,10 +42,10 @@ void WidgetsColorDesignTarget::deploy(const DesignAssets& designAssets) const
             const auto& colorName = colorData.first;
             const auto& colorValue = colorData.second;
 
-            if (colorValue.size() ==
-                7) /* 7 is the size of #aa34bb, so solid alpha channel is missing */
+            if (colorValue.size() == NO_ALPHA_COLOR_SIZE)
             {
-                QString colorWithAddedAlpha = QString("#ff%0").arg(colorValue.right(6));
+                QString colorWithAddedAlpha =
+                    QString("#ff%0").arg(colorValue.right(RGB_COLOR_VALUE_SIZE));
                 jsonTheme[colorName] = colorWithAddedAlpha;
             }
             else
