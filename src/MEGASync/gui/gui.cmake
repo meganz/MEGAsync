@@ -52,6 +52,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
+    gui/OneQuestionSurveyWidget.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
     gui/BannerWidget.h
@@ -186,6 +187,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
+    gui/OneQuestionSurveyWidget.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
     gui/BannerWidget.cpp
