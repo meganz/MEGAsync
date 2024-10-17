@@ -2433,32 +2433,32 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Terms of Service breach</source>
         <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terms of Service breach</translation>
     </message>
     <message>
         <source>This link has expired</source>
         <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link has expired</translation>
     </message>
     <message>
         <source>Link owner terminated</source>
         <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Link owner terminated</translation>
     </message>
     <message>
         <source>This link has been deleted</source>
         <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link has been deleted</translation>
     </message>
     <message>
         <source>Copyright violation</source>
         <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Copyright violation</translation>
     </message>
     <message>
         <source>This link is invalid</source>
         <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link is invalid</translation>
     </message>
 </context>
 <context>
@@ -5662,7 +5662,10 @@ Enter a different name.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- We’ve improved the automatic and manual resolution of sync issues.
+- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+- Other bugs have been fixed and numerous improvements made.
+</translation>
     </message>
 </context>
 <context>
@@ -7948,17 +7951,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply</source>
         <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>Apply</translation>
     </message>
     <message>
         <source>[B]Apply previous exclusion rules?[/B]</source>
         <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>[B]Apply previous exclusion rules?[/B]</translation>
     </message>
     <message>
         <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
         <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
     </message>
 </context>
 <context>
@@ -8052,12 +8055,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply rules</source>
         <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>Apply rules</translation>
     </message>
     <message>
         <source>Apply previous exclusion rules</source>
         <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Apply previous exclusion rules</translation>
     </message>
 </context>
 <context>
@@ -8408,12 +8411,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
     </message>
     <message>
         <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
     </message>
 </context>
 <context>
@@ -9306,7 +9309,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation>%1 of %2</translation>
     </message>
 </context>
 <context>
