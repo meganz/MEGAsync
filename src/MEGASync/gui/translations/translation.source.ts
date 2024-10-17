@@ -9332,9 +9332,9 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <translation>What’s new</translation>
     </message>
     <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>Updates</translation>
+        <source>Updates in the MEGA desktop app</source>
+        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703.SNC-4881</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Better Performance</source>
