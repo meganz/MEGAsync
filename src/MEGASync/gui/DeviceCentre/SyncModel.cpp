@@ -205,6 +205,17 @@ QString SyncModel::getErrorMessage(int row) const
     auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
     if (syncSetting)
     {
+        if (syncSetting->getError() == mega::MegaSync::LOCAL_PATH_UNAVAILABLE)
+        {
+            return tr("Your folder \"%1\" can't sync because local path is unavailable.")
+                .arg(getName(row));
+        }
+        else if (syncSetting->getError() == mega::MegaSync::LOGGED_OUT)
+        {
+            const QString typeStr = (getType(row) == QmlSyncType::SYNC) ? tr("Sync") : tr("Backup");
+            return tr("%1 was stopped because you logged out. Resume the %1 to re-enable.")
+                .arg(typeStr);
+        }
         return QCoreApplication::translate(
             "MegaSyncError",
             mega::MegaSync::getMegaSyncErrorCode(syncSetting->getError()));

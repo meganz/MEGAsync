@@ -33,6 +33,7 @@ QtObject {
     readonly property string actionRemoveSync: qsTr("Remove synced folder")
     readonly property string renameDevice: qsTr("Rename Device")
     readonly property string rename: qsTr("Rename")
+    readonly property string view: qsTr("View")
 
     function folderCount(count) {
         return qsTr("%n folders", "", count)

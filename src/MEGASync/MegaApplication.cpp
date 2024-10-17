@@ -131,11 +131,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mIsFirstFileBackedUp(false),
     mLoginController(nullptr),
     scanStageController(this),
-#if defined(Q_OS_LINUX)
-    mScaleFactorManager(OsType::LINUX, screens()),
-#elif defined(WIN32)
-    mScaleFactorManager(OsType::WIN, screens()),
-#endif
     mDisableGfx(false),
     mUserMessageController(nullptr)
 {
@@ -378,27 +373,8 @@ QAbstractItemView:indicator:unchecked:disabled {image: url(:/images/cb_unchecked
 
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
-    mIntervalExecutioner = std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
-
-#ifndef Q_OS_MACX
-    const QVector<QString> scaleFactorLogMessages = mScaleFactorManager.getLogMessages();
-    for (const QString& message: scaleFactorLogMessages)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
-    }
-
-    try
-    {
-        mScaleFactorManager.setScaleFactorEnvironmentVariable();
-    }
-    catch (const std::exception& exception)
-    {
-        const QString errorMessage(
-            QString::fromUtf8("Error while setting scale factor environment variable: %1")
-                .arg(QString::fromUtf8(exception.what())));
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, errorMessage.toUtf8().constData());
-    }
-#endif
+    mIntervalExecutioner =
+        std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
 }
 
 MegaApplication::~MegaApplication()
@@ -4829,15 +4805,21 @@ void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
         if (!foldersSelected.isEmpty())
         {
             QFuture<NodeCount> future;
+            QFutureWatcher<NodeCount>* watcher(new QFutureWatcher<NodeCount>());
 
-            connect(&mWatcher, &QFutureWatcher<NodeCount>::finished, this, [this, foldersSelected]() {
-                const NodeCount nodeCount = mWatcher.result();
-                processUploads(foldersSelected);
-                HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
-            });
+            connect(watcher,
+                    &QFutureWatcher<NodeCount>::finished,
+                    this,
+                    [this, foldersSelected, watcher]()
+                    {
+                        const NodeCount nodeCount = watcher->result();
+                        processUploads(foldersSelected);
+                        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+                        watcher->deleteLater();
+                    });
 
             future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
-            mWatcher.setFuture(future);
+            watcher->setFuture(future);
         }
         else
         {

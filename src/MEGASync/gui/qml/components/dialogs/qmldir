@@ -1,2 +1,3 @@
 module components.dialogs
 ConfirmCloseDialog 1.0 ConfirmCloseDialog.qml
+ErrorDialog 1.0 ErrorDialog.qml

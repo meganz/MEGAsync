@@ -1329,12 +1329,17 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Sync/Backup context menu entry label for the &quot;Open in local machine&quot; action. For Windows devices. SAT-1616.</translatorcomment>
-        <translation type="unfinished">Show in File Explorer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Sync/Backup context menu entry label for the &quot;Open in local machine&quot; action. For Linux devices. SAT-1616.</translatorcomment>
-        <translation type="unfinished">Show in folder</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translatorcomment>Label of the link to open the dialog with the details of the Sync/Backup error. SAT-1658.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7512,6 +7517,56 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View in device centre</source>
+        <translatorcomment>Button text that opens the device centre dialog. CON-1018.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Label for the Ok button of the Sync/Backup error dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -7791,6 +7846,29 @@ Please move it to a location that is less than 64 folders deep.</source>
         <translatorcomment>Title for the header widget of sync stall that occurs when the file is more than 64 folders deep.SNC-2565</translatorcomment>
         <translation>The target is too deep in your folder structure. Stop the sync, move the folder to a location that is less than 64 folders deep, and recreate your sync.
 If this doesn’t resolve the issue, contact support@mega.nz.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncModel</name>
+    <message>
+        <source>Your folder &quot;%1&quot; can&apos;t sync because local path is unavailable</source>
+        <translatorcomment>Error message of the Error Dialog when the cause is the local path that is not available. %1 refers to the type of Sync/Backup. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Name of the type of Sync for the "path unavailable" error in the Error dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Name of the type of backup for the "path unavailable" error in the Error dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 was stopped because you logged out. Resume the %1 to re-enable.</source>
+        <translatorcomment>Error message of the Error Dialog when the cause is a logout. SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
