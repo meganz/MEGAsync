@@ -10,6 +10,7 @@ Item {
     id: root
 
     property int numRateItems: 5
+    property int score: -1
 
     height: content.height
 
@@ -19,22 +20,36 @@ Item {
         width: parent.width
 
         readonly property real defaultLineHeight: 20
-        readonly property real contentSpacing: 10
 
         Row {
             width: parent.width
             height: rateItem.height
-            //spacing: content.contentSpacing
 
             Repeater {
+                id: rateRepeater
+
                 model: root.numRateItems
                 delegate: IconButton {
                     id: rateItem
 
-                    icons.source: Images.helpCircle
-                    sizes.iconSize: Qt.size(35, 35)
+                    property color colorChecked: checked
+                                                 ? ColorTheme.supportWarning
+                                                 : ColorTheme.iconDisabled
+
+                    icons {
+                        colorEnabled: colorChecked
+                        colorDisabled: colorChecked
+                        colorHovered: colorChecked
+                        colorPressed: colorChecked
+                        source: checked ? Images.starFilled : Images.starEmpty
+                    }
+                    colors.pressed: "transparent"
+                    sizes.iconSize: Qt.size(34, 33)
                     onClicked: {
-                        console.log("FERTEST: RateScaleItem clicked " + index);
+                        score = index;
+                        for (var i = 0; i < root.numRateItems; i++) {
+                            rateRepeater.itemAt(i).checked = i <= score;
+                        }
                     }
                 }
             }

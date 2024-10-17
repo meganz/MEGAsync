@@ -88,6 +88,8 @@ Rectangle {
                     }
 
                     RateScaleItem {
+                        id: rateScale
+
                         width: parent.width
                     }
 
@@ -122,6 +124,7 @@ Rectangle {
                             onClicked: {
                                 content.state = content.finalView;
                             }
+                            enabled: rateScale.score > 0
                         }
 
                         TextButton {

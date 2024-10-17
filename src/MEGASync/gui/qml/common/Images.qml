@@ -16,7 +16,7 @@ QtObject {
     readonly property url imagesGuestPath: Qt.resolvedUrl(imagesQmlPath + "guest/")
     readonly property url imagesExclusionsPath: Qt.resolvedUrl(imagesQmlPath + "/sync_exclusions/")
     readonly property url imagesDeviceCentrePath: Qt.resolvedUrl(imagesQmlPath + "/device_center/")
-    readonly property url imagesIconsPath: Qt.resolvedUrl(imagesPath + "icons/")
+    readonly property url imagesSurveysPath: Qt.resolvedUrl(imagesQmlPath + "/surveys/")
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Image paths
@@ -119,6 +119,9 @@ QtObject {
     readonly property url statusUpToDate: imagesDeviceCentrePath + "status-uptodate.svg"
     readonly property url devices: imagesDeviceCentrePath + "devices.svg"
     readonly property url tool: imagesDeviceCentrePath + "tool.svg"
+
+    readonly property url starFilled: imagesSurveysPath + "star_filled.svg"
+    readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
