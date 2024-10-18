@@ -102,6 +102,7 @@ Rectangle {
                             margins: Constants.focusAdjustment
                         }
                         placeholderText: OneQuestionSurveyStrings.tellUsMore
+                        visible: rateScale.score >= 0 && rateScale.score <= 1
                     }
 
                     Column {
@@ -124,7 +125,7 @@ Rectangle {
                             onClicked: {
                                 content.state = content.finalView;
                             }
-                            enabled: rateScale.score > 0
+                            enabled: rateScale.score >= 0
                         }
 
                         TextButton {

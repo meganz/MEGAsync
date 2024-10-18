@@ -32,23 +32,41 @@ Item {
                 delegate: IconButton {
                     id: rateItem
 
-                    property color colorChecked: checked
+                    property color colorChecked: rateItem.enabled && (rateItem.checked || rateItem.hovered)
                                                  ? ColorTheme.supportWarning
                                                  : ColorTheme.iconDisabled
 
                     icons {
-                        colorEnabled: colorChecked
-                        colorDisabled: colorChecked
-                        colorHovered: colorChecked
-                        colorPressed: colorChecked
-                        source: checked ? Images.starFilled : Images.starEmpty
+                        colorEnabled: rateItem.colorChecked
+                        colorDisabled: rateItem.colorChecked
+                        colorHovered: rateItem.colorChecked
+                        colorPressed: rateItem.colorChecked
+                        manageSource: true
+                        sourcePressed: Images.starFilled
+                        sourceHovered: Images.starFilled
+                        sourceDisabled: rateItem.checked ? Images.starFilled : Images.starEmpty
+                        sourceEnabled: Images.starEmpty
                     }
                     colors.pressed: "transparent"
                     sizes.iconSize: Qt.size(34, 33)
                     onClicked: {
                         score = index;
-                        for (var i = 0; i < root.numRateItems; i++) {
+                        for (let i = 0; i < root.numRateItems; i++) {
                             rateRepeater.itemAt(i).checked = i <= score;
+                        }
+                    }
+
+                    onHoveredChanged: {
+                        if (rateItem.hovered) {
+                            for (let j = 0; j < root.numRateItems; j++) {
+                                rateRepeater.itemAt(j).focus = false;
+                                rateRepeater.itemAt(j).checked = j <= index;
+                            }
+                        }
+                        else {
+                            for (let k = 0; k < root.numRateItems; k++) {
+                                rateRepeater.itemAt(k).checked = k <= score;
+                            }
                         }
                     }
                 }
