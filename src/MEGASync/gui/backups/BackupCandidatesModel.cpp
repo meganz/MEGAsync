@@ -68,44 +68,5 @@ bool BackupCandidatesProxyModel::filterAcceptsRow(int sourceRow,
     }
 
     const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    return index.data(BackupsModel::BackupFolderRoles::SELECTED_ROLE).toBool();
-}
-
-QStringList BackupsProxyModel::getSelectedFolders() const
-{
-    QStringList selectedFolders;
-    for (int row = 0; row < rowCount(); row++)
-    {
-        if (!index(row, 0).data(BackupsModel::BackupFolderRoles::DONE_ROLE).toBool())
-        {
-            QString folderPath(
-                index(row, 0).data(BackupsModel::BackupFolderRoles::FOLDER_ROLE).toString());
-            selectedFolders.append(folderPath);
-        }
-    }
-    return selectedFolders;
-}
-
-void BackupsProxyModel::createBackups(SyncInfo::SyncOrigin origin)
-{
-    // if(!backupsModel()->checkDirectories())
-    // {
-    //     return;
-    // }
-
-    // // All expected errors have been handled
-    // BackupsController::BackupInfoList candidateList;
-    // for (int row = 0; row < rowCount(); row++)
-    // {
-    //     if(!index(row, 0).data(BackupsModel::BackupFolderRoles::DONE_ROLE).toBool())
-    //     {
-    //         BackupsController::BackupInfo candidate;
-    //         candidate.first = index(row,
-    //         0).data(BackupsModel::BackupFolderRoles::FOLDER_ROLE).toString(); candidate.second =
-    //         index(row, 0).data(BackupsModel::BackupFolderRoles::NAME_ROLE).toString();
-    //         candidateList.append(candidate);
-    //     }
-    // }
-    // backupsModel()->backupsController()->addBackups(candidateList, origin);
     return index.data(BackupCandidates::SELECTED_ROLE).toBool();
 }
