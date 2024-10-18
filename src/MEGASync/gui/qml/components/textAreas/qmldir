@@ -1,0 +1,4 @@
+module components.textAreas
+TextArea 1.0 TextArea.qml
+MediumSizes 1.0 MediumSizes.qml
+Colors 1.0 Colors.qml

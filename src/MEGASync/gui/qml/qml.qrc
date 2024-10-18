@@ -65,6 +65,10 @@
         <file>components/steps/Step.qml</file>
         <file>components/steps/SubStep.qml</file>
         <file>components/steps/StepPanel.qml</file>
+        <file>components/textAreas/qmldir</file>
+        <file>components/textAreas/TextArea.qml</file>
+        <file>components/textAreas/MediumSizes.qml</file>
+        <file>components/textAreas/Colors.qml</file>
         <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
