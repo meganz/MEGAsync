@@ -5,16 +5,13 @@ import QtQuick.Window 2.15
 import common 1.0
 
 import components.texts 1.0
-import components.textFields 1.0
+import components.textAreas 1.0
 import components.buttons 1.0
 
-//Window {
 Rectangle {
     id: root
 
     color: "#88555555"
-    //width: content.width
-    //height: content.height
 
     Rectangle {
         id: content
@@ -93,7 +90,7 @@ Rectangle {
                         width: parent.width
                     }
 
-                    TextField {
+                    TextArea {
                         id: commentItem
 
                         anchors {
@@ -101,6 +98,13 @@ Rectangle {
                             right: parent.right
                             margins: Constants.focusAdjustment
                         }
+                        sizes {
+                            adaptableHeight: true
+                            maxHeight: 60.0
+                            textSize: Text.Size.MEDIUM
+                        }
+                        maxCharLength: 150
+                        allowLineBreaks: false
                         placeholderText: OneQuestionSurveyStrings.tellUsMore
                         visible: rateScale.score >= 0 && rateScale.score <= 1
                     }
