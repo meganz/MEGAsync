@@ -532,12 +532,12 @@ void SettingsDialog::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
+        mUi->retranslateUi(this);
+        syncStallModeSelectorUI->retranslateUi(this);
+
 #ifdef Q_OS_MACOS
         mUi->cStartOnStartup->setText(tr("Launch at login"));
         this->setWindowTitle(tr("Settings"));
-
-        mUi->lLocalDebris->setText(
-            mUi->lLocalDebris->text().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #else
         mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 #endif
