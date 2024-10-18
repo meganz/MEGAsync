@@ -1,5 +1,6 @@
 #include "StalledIssuesFactory.h"
 
+#include "DownloadFileIssue.h"
 #include "FolderMatchedAgainstFileIssue.h"
 #include "IgnoredStalledIssue.h"
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
@@ -119,6 +120,10 @@ void StalledIssuesCreator::createIssues(const mega::MegaSyncStallMap* stallsMap,
                         mega::MegaSyncStall::SyncStallReason::NamesWouldClashWhenSynced)
                     {
                         d = std::make_shared<NameConflictedStalledIssue>(stall);
+                    }
+                    else if (stall->reason() == mega::MegaSyncStall::SyncStallReason::DownloadIssue)
+                    {
+                        d = DownloadFileIssueFactory::createAndFillIssue(stall);
                     }
                     else if (stall->couldSuggestIgnoreThisPath(false, 0) ||
                              stall->couldSuggestIgnoreThisPath(false, 1) ||

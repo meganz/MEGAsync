@@ -1,5 +1,6 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
+#include "DownloadFileIssue.h"
 #include "FolderMatchedAgainstFileWidget.h"
 #include "IgnoredStalledIssue.h"
 #include "LocalAndRemoteDifferentWidget.h"
@@ -271,18 +272,26 @@ StalledIssueHeaderCase* StalledIssuesDelegateWidgetsCache::createHeaderCaseWidge
         }
         case mega::MegaSyncStall::SyncStallReason::DownloadIssue:
         {
-            if(issue.consultData()->missingFingerprint())
+            if (auto downloadIssue = issue.convert<const DownloadIssue>())
             {
-                headerCase = new CloudFingerprintMissingHeader(header);
+                if (downloadIssue->getType() == std::nullopt)
+                {
+                    headerCase = new DownloadIssueHeader(header);
+                }
+                else if (downloadIssue->getType() == DownloadIssue::FINGERPRINT)
+                {
+                    headerCase = new CloudFingerprintMissingHeader(header);
+                }
+                else if (downloadIssue->getType() == DownloadIssue::UNKNOWN)
+                {
+                    headerCase = new UnknownDownloadIssueHeader(header);
+                }
+                else if (downloadIssue->getType() == DownloadIssue::NODEBLOCKED)
+                {
+                    headerCase = new CloudNodeIsBlockedHeader(header);
+                }
             }
-            else if(StalledIssue::isCloudNodeBlocked(issue.consultData()->getOriginalStall().get()))
-            {
-                headerCase = new CloudNodeIsBlockedHeader(header);
-            }
-            else
-            {
-                headerCase = new DownloadIssueHeader(header);
-            }
+
             break;
         }
         case mega::MegaSyncStall::SyncStallReason::CannotCreateFolder:

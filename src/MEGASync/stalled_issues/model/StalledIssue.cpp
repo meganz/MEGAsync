@@ -518,7 +518,7 @@ bool StalledIssue::isBeingSolvedByDownload(std::shared_ptr<DownloadTransferInfo>
     if(node)
     {
         info->nodeHandle = consultCloudData()->getPathHandle();
-        auto transfer = MegaSyncApp->getTransfersModel()->activeDownloadTransferFound(info.get());
+        auto transfer = MegaSyncApp->getTransfersModel()->downloadTransferFound(info.get());
 
         result =  transfer != nullptr;
     }

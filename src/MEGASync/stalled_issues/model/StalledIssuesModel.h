@@ -211,6 +211,9 @@ public:
     //Fingerprint missing
     void fixFingerprint(const QModelIndexList& list);
 
+    // UnkownDownloadIssue
+    void fixUnknownDownloadIssueByRetry(const QModelIndexList& list);
+
     //FolderMatchedAgainstFile
     void fixFolderMatchedAgainstFile(const QModelIndexList& list);
 
@@ -347,10 +350,6 @@ private:
 
     //SyncDisable for backups
     QList<std::shared_ptr<SyncSettings>> mSyncsToDisable;
-    
-    //Fix fingerprint
-    QList<StalledIssueVariant> mFingerprintIssuesToFix;
-    FingerprintMissingSolver mFingerprintIssuesSolver;
 };
 
 #endif // STALLEDISSUESMODEL_H

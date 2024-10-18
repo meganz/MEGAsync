@@ -232,11 +232,13 @@ private:
 
 struct DownloadTransferInfo
 {
+    TransferData::TransferStates state;
     mega::MegaHandle nodeHandle;
 };
 
 struct UploadTransferInfo
 {
+    TransferData::TransferStates state;
     QString localPath;
     QString filename;
     mega::MegaHandle parentHandle;
@@ -284,6 +286,7 @@ public:
     void retryTransferByIndex(const QModelIndex& index);
     void retryTransfers(QModelIndexList indexes, unsigned long long suggestedUploadAppData = 0, unsigned long long suggestedDownloadAppData = 0);
     void retryTransfersByAppDataId(const std::shared_ptr<TransferMetaData> &data);
+    void retrySyncFailedTransfers(const QList<mega::MegaHandle>& handlesToRetry);
 
     void cancelAndClearTransfers(const QModelIndexList& indexes, QWidget *canceledFrom);
     void cancelAllTransfers(QWidget *canceledFrom);
@@ -321,8 +324,8 @@ public:
 
     bool areAllPaused() const;
 
-
-    const QExplicitlySharedDataPointer<const TransferData> activeDownloadTransferFound(DownloadTransferInfo *info) const;
+    const QExplicitlySharedDataPointer<const TransferData>
+        downloadTransferFound(DownloadTransferInfo* info) const;
     const QExplicitlySharedDataPointer<const TransferData> activeUploadTransferFound(UploadTransferInfo* info) const;
 
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
@@ -365,6 +368,8 @@ signals:
     void showInFolderFinished(bool);
     void activeTransfersChanged();
     void rowsAboutToBeMoved(TransferTag firstRowTag);
+    void retryableSyncTransferRetried(mega::MegaHandle handle);
+    void retriedSyncTransferFinished(mega::MegaHandle handle, TransferData::TransferState state);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -414,6 +419,9 @@ private:
 
     void openFolder(const QFileInfo& info);
 
+    const QExplicitlySharedDataPointer<const TransferData>
+        downloadTransferFound(TransferData::TransferStates state, DownloadTransferInfo* info) const;
+
     void updateMetaDataBeforeRetryingTransfers(std::shared_ptr<mega::MegaTransfer> transfer);
 
 private:
@@ -428,6 +436,9 @@ private:
     QList<QExplicitlySharedDataPointer<TransferData>> mTransfers;
     QHash<int,QExplicitlySharedDataPointer<TransferData>> mFailedFoldersByTag;
     QHash<mega::MegaHandle,QPersistentModelIndex> mCompletedTransfersByTag;
+
+    QHash<mega::MegaHandle, QPersistentModelIndex> mRetryableSyncFailedTransfersByHandle;
+    QSet<mega::MegaHandle> mRetriedSyncFailedTransfersByHandle;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;

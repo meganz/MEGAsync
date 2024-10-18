@@ -408,29 +408,45 @@ bool TransferData::isFailed() const
 
 bool TransferData::canBeRetried() const
 {
-    auto result(false);
-
-    if(!isFailed())
+    if (!mFailedTransfer || !isFailed())
     {
-        return result;
+        return false;
     }
 
-    if(!isSyncTransfer())
+    return canBeRetried(mFailedTransfer.get());
+}
+
+bool TransferData::canBeRetried(mega::MegaTransfer* transfer)
+{
+    auto result(false);
+
+    if (transfer->isSyncTransfer())
     {
-        if(isUpload())
+        if (transfer->getType() == mega::MegaTransfer::TYPE_DOWNLOAD)
+        {
+            mega::MegaError error = transfer->getLastError();
+
+            // If it is not any of these errors, it can be retried
+            result = error.getErrorCode() != mega::MegaError::API_EKEY &&
+                     error.getErrorCode() != mega::MegaError::API_EBLOCKED /*&&
+                     error.getErrorCode() != mega::MegaError::API_EWRITE*/
+                ;
+        }
+    }
+    else
+    {
+        if (transfer->getType() == mega::MegaTransfer::TYPE_UPLOAD)
         {
             result = true;
         }
         else
         {
-            const mega::MegaError* error = mFailedTransfer->getLastErrorExtended();
-            //If it is not any of these errors, it can be retried
-            if (error->getErrorCode() != mega::MegaError::API_EARGS &&
-                error->getErrorCode() != mega::MegaError::API_ENOENT &&
-                error->getErrorCode() != mega::MegaError::API_EREAD)
-            {
-                result = true;
-            }
+            mega::MegaError error = transfer->getLastErrorExtended();
+
+            // If it is not any of these errors, it can be retried
+            result = error.getErrorCode() != mega::MegaError::API_EARGS &&
+                     error.getErrorCode() != mega::MegaError::API_ENOENT &&
+                     error.getErrorCode() != mega::MegaError::API_EREAD;
         }
     }
 

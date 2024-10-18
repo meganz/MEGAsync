@@ -133,6 +133,7 @@ public:
     bool isCompleting() const;
     bool isFailed() const;
     bool canBeRetried() const;
+    static bool canBeRetried(mega::MegaTransfer* transfer);
     bool isCancelled() const;
     bool isTempTransfer() const;
     int64_t getRawFinishedTime() const;

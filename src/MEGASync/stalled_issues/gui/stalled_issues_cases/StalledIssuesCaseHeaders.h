@@ -172,6 +172,20 @@ protected slots:
     void refreshCaseTitles(StalledIssueHeader* header) override;
 };
 
+// Unkown download issue
+class UnknownDownloadIssueHeader: public StalledIssueHeaderCase
+{
+    Q_OBJECT
+
+public:
+    UnknownDownloadIssueHeader(StalledIssueHeader* header);
+
+protected slots:
+    void refreshCaseTitles(StalledIssueHeader* header) override;
+    void refreshCaseActions(StalledIssueHeader* header) override;
+    void onMultipleActionButtonOptionSelected(StalledIssueHeader* header, uint index) override;
+};
+
 //Create folder failed
 class CannotCreateFolderHeader : public StalledIssueHeaderCase
 {
