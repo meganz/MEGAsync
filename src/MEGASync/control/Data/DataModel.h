@@ -3,6 +3,8 @@
 
 #include <QAbstractItemModel>
 
+#include <memory>
+
 template<class ControllerType>
 class DataModel: public QAbstractItemModel
 {
