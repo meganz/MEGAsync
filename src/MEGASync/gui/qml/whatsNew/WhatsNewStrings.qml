@@ -6,7 +6,7 @@ import common 1.0
 QtObject {
 
     readonly property string whatsNew: qsTr("What's new")
-    readonly property string updates: qsTr("Updates")
+    readonly property string updates: qsTr("Updates in the MEGA desktop app")
     readonly property string leftTitle: qsTr("Better Performance")
     readonly property string middleTitle: qsTr("Greater control")
     readonly property string rightTitle: qsTr("Advanced filters")
