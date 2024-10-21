@@ -1,18 +1,21 @@
 #include "BackupCandidatesController.h"
 
-#include "BackupCandidates.h"
-#include "BackupCandidatesModel.h"
-#include "BackupsController.h"
-#include "QmlManager.h"
-#include "StandardIconProvider.h"
-#include "SyncSettings.h"
-#include "Utilities.h"
+#include <BackupCandidates.h>
+#include <BackupCandidatesFolderSizeRequester.h>
+#include <BackupCandidatesModel.h>
+#include <BackupsController.h>
+#include <StandardIconProvider.h>
+#include <SyncSettings.h>
+#include <Utilities.h>
+
+#include <QmlManager.h>
 
 int BackupCandidatesController::CHECK_DIRS_TIME = 1000;
 
 BackupCandidatesController::BackupCandidatesController():
     DataController(),
-    mBackupCandidates(std::make_shared<BackupCandidates>())
+    mBackupCandidates(std::make_shared<BackupCandidates>()),
+    mBackupCandidatesSizeRequester(new BackupCandidatesFolderSizeRequester(this))
 {
     connect(SyncInfo::instance(),
             &SyncInfo::syncRemoved,
@@ -37,6 +40,11 @@ BackupCandidatesController::BackupCandidatesController():
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
     mCheckDirsTimer.start();
+
+    connect(mBackupCandidatesSizeRequester,
+            &BackupCandidatesFolderSizeRequester::sizeReceived,
+            this,
+            &BackupCandidatesController::onFolderSizeReceived);
 }
 
 std::shared_ptr<BackupCandidates::Data>
@@ -46,7 +54,7 @@ std::shared_ptr<BackupCandidates::Data>
 {
     auto data = std::make_shared<BackupCandidates::Data>(folder, displayName, selected);
     // Used to detect size changes
-    data->mFolderAttrContext->installEventFilter(this);
+    mBackupCandidatesSizeRequester->addFolder(folder);
     return data;
 }
 
@@ -181,7 +189,7 @@ void BackupCandidatesController::updateSelectedAndTotalSize()
         {
             ++newSelectedRowsTotal;
 
-            if (candidate->mFolderSizeReady)
+            if (data(candidate, BackupCandidates::SIZE_READY_ROLE).toBool())
             {
                 ++selectedAndSizeReadyFolders;
                 totalSize += candidate->mFolderSize;
@@ -471,10 +479,6 @@ void BackupCandidatesController::check()
                             BackupCandidates::ERROR_ROLE);
                 }
             }
-            else
-            {
-                backupCandidate->calculateFolderSize();
-            }
         }
     }
 
@@ -499,8 +503,11 @@ bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data>
         case BackupCandidates::NAME_ROLE:
             candidate->mName = value.toString();
             break;
+        case BackupCandidates::SIZE_ROLE:
+            candidate->mFolderSize = value.toLongLong();
+            break;
         case BackupCandidates::FOLDER_ROLE:
-            candidate->setFolder(value.toString());
+            candidate->mFolder = value.toString();
             break;
         case BackupCandidates::SELECTED_ROLE:
         {
@@ -556,7 +563,7 @@ QVariant BackupCandidatesController::data(std::shared_ptr<BackupCandidates::Data
                 field = Utilities::getSizeStringLocalized(candidate->mFolderSize);
                 break;
             case BackupCandidates::SIZE_READY_ROLE:
-                field = candidate->mFolderSizeReady;
+                field = candidate->mFolderSize != LocalFileFolderAttributes::NOT_READY;
                 break;
             case BackupCandidates::SELECTED_ROLE:
                 field = candidate->mSelected;
@@ -586,7 +593,7 @@ void BackupCandidatesController::calculateFolderSizes()
     {
         if (backupFolder->mSelected)
         {
-            backupFolder->calculateFolderSize();
+            mBackupCandidatesSizeRequester->calculateFolderSize(backupFolder->mFolder);
         }
     }
 }
@@ -656,6 +663,7 @@ void BackupCandidatesController::remove(const QString& folder)
 
         if (mBackupCandidates->removeBackupCandidate(folder))
         {
+            mBackupCandidatesSizeRequester->removeFolder(folder);
             check();
             checkSelectedAll();
         }
@@ -667,26 +675,6 @@ void BackupCandidatesController::remove(const QString& folder)
 bool BackupCandidatesController::existsFolder(const QString& inputPath)
 {
     return mBackupCandidates->getBackupCandidateByFolder(inputPath) != nullptr;
-}
-
-bool BackupCandidatesController::eventFilter(QObject* watched, QEvent* event)
-{
-    if (auto propertyChanged = dynamic_cast<QDynamicPropertyChangeEvent*>(event))
-    {
-        if (propertyChanged->propertyName() == BackupCandidates::Data::SIZE_READY)
-        {
-            auto folder(watched->property(BackupCandidates::Data::SIZE_READY).toString());
-            auto candidate(mBackupCandidates->getBackupCandidateByFolder(folder));
-            if (candidate)
-            {
-                updateModel(BackupCandidates::SIZE_READY_ROLE, candidate);
-                updateModel(BackupCandidates::SIZE_ROLE, candidate);
-                updateSelectedAndTotalSize();
-            }
-        }
-    }
-
-    return QObject::eventFilter(watched, event);
 }
 
 void BackupCandidatesController::change(const QString& oldFolder, const QString& newFolder)
@@ -728,6 +716,22 @@ void BackupCandidatesController::onSyncRemoved(std::shared_ptr<SyncSettings> syn
     check();
 }
 
+void BackupCandidatesController::onFolderSizeReceived(QString folder, int size)
+{
+    auto backupCandidate = mBackupCandidates->getBackupCandidateByFolder(folder);
+    if (backupCandidate)
+    {
+        setData(backupCandidate, size, BackupCandidates::SIZE_ROLE);
+
+        if (size != FileFolderAttributes::NOT_READY)
+        {
+            updateSelectedAndTotalSize();
+            updateModel(BackupCandidates::SIZE_ROLE, backupCandidate);
+            updateModel(BackupCandidates::SIZE_READY_ROLE, backupCandidate);
+        }
+    }
+}
+
 void BackupCandidatesController::clean(bool resetErrors)
 {
     auto row(0);
@@ -739,6 +743,7 @@ void BackupCandidatesController::clean(bool resetErrors)
             {
                 emit beginRemoveRows(row, row);
                 mBackupCandidates->removeBackupCandidate(candidate->mFolder);
+                mBackupCandidatesSizeRequester->removeFolder(candidate->mFolder);
                 emit endRemoveRows();
             }
             else
@@ -761,7 +766,6 @@ void BackupCandidatesController::updateModel(
     std::shared_ptr<BackupCandidates::Data> backupCandidate)
 {
     auto row = mBackupCandidates->getBackupCandidates().indexOf(backupCandidate);
-    updateSelectedAndTotalSize();
     DataController::updateModel(row, roles);
 }
 

@@ -52,15 +52,9 @@ public:
         Data(const QString& folder, const QString& displayName, bool selected = true);
         ~Data();
 
-        void setSize(long long size);
-        void setFolder(const QString& folder);
-        void calculateFolderSize();
-
         static QHash<int, QByteArray> roleNames();
 
     private:
-        bool createFileFolderAttributes();
-
         friend class BackupCandidates;
         friend class BackupCandidatesController;
 
@@ -69,16 +63,12 @@ public:
         QString mName;
         bool mSelected;
         bool mDone;
-        bool mFolderSizeReady;
         int mError;
 
         // Back (without role)
         long long mFolderSize;
         int mSdkError;
         int mSyncError;
-
-        QObject* mFolderAttrContext = nullptr;
-        LocalFileFolderAttributes* mFolderAttr;
     };
 
     BackupCandidates();

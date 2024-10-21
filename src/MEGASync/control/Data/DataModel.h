@@ -1,20 +1,20 @@
 #ifndef DATAMODEL_H
 #define DATAMODEL_H
 
-#include <QAbstractItemModel>
+#include "DataController.h"
 
 #include <memory>
+#include <QAbstractItemModel>
 
-template<class ControllerType>
 class DataModel: public QAbstractItemModel
 {
 public:
-    DataModel(std::shared_ptr<ControllerType> controller, QObject* parent):
+    DataModel(std::shared_ptr<DataController> controller, QObject* parent):
         QAbstractItemModel(parent),
         mController(controller)
     {
         connect(controller.get(),
-                &ControllerType::beginInsertRows,
+                &DataController::beginInsertRows,
                 this,
                 [this](int first, int last)
                 {
@@ -22,7 +22,7 @@ public:
                 });
 
         connect(controller.get(),
-                &ControllerType::endInsertRows,
+                &DataController::endInsertRows,
                 this,
                 [this]()
                 {
@@ -30,7 +30,7 @@ public:
                 });
 
         connect(controller.get(),
-                &ControllerType::beginRemoveRows,
+                &DataController::beginRemoveRows,
                 this,
                 [this](int first, int last)
                 {
@@ -38,7 +38,7 @@ public:
                 });
 
         connect(controller.get(),
-                &ControllerType::endRemoveRows,
+                &DataController::endRemoveRows,
                 this,
                 [this]()
                 {
@@ -46,7 +46,7 @@ public:
                 });
 
         connect(controller.get(),
-                &ControllerType::dataChanged,
+                &DataController::dataChanged,
                 this,
                 [this](int row, QVector<int> roles)
                 {
@@ -91,7 +91,7 @@ public:
     }
 
 private:
-    std::shared_ptr<ControllerType> mController;
+    std::shared_ptr<DataController> mController;
 };
 
 #endif // DATAMODEL_H

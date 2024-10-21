@@ -104,6 +104,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupCandidatesModel.h
     gui/backups/BackupCandidatesController.h
     gui/backups/BackupCandidates.h
+    gui/backups/BackupCandidatesFolderSizeRequester.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
     gui/syncs/Syncs.h
@@ -229,6 +230,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupCandidatesModel.cpp
     gui/backups/BackupCandidatesController.cpp
     gui/backups/BackupCandidates.cpp
+    gui/backups/BackupCandidatesFolderSizeRequester.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
     gui/syncs/Syncs.cpp

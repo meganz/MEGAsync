@@ -12,7 +12,7 @@
 
 BackupCandidatesModel::BackupCandidatesModel(std::shared_ptr<BackupCandidatesController> controller,
                                              QObject* parent):
-    DataModel<BackupCandidatesController>(controller, parent)
+    DataModel(controller, parent)
 {}
 
 BackupCandidatesModel::~BackupCandidatesModel()

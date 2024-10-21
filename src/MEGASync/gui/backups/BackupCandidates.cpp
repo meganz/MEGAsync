@@ -10,71 +10,13 @@ BackupCandidates::Data::Data(const QString& folder, const QString& displayName, 
     mName(displayName),
     mSelected(selected),
     mDone(false),
-    mFolderSizeReady(false),
     mError(0),
     mFolderSize(FileFolderAttributes::NOT_READY),
     mSdkError(-1),
-    mSyncError(-1),
-    mFolderAttrContext(new QObject()),
-    mFolderAttr(nullptr)
+    mSyncError(-1)
 {}
 
-BackupCandidates::Data::~Data()
-{
-    mFolderAttrContext->deleteLater();
-}
-
-void BackupCandidates::Data::setSize(long long size)
-{
-    if (mFolderSize != size)
-    {
-        mFolderSizeReady = (size != FileFolderAttributes::NOT_READY);
-
-        if (size > FileFolderAttributes::NOT_READY)
-        {
-            mFolderSize = size;
-            // Swap the value to emit "dynamic_property" change signal
-            mFolderAttrContext->setProperty(SIZE_READY, mFolder);
-        }
-        else
-        {
-            mFolderAttrContext->setProperty(SIZE_READY, QString());
-        }
-    }
-}
-
-void BackupCandidates::Data::setFolder(const QString& folder)
-{
-    mFolder = folder;
-
-    calculateFolderSize();
-}
-
-void BackupCandidates::Data::calculateFolderSize()
-{
-    if (!createFileFolderAttributes())
-    {
-        mFolderAttr->setPath(mFolder);
-    }
-
-    mFolderAttr->requestSize(mFolderAttrContext,
-                             [&](long long size)
-                             {
-                                 setSize(size);
-                             });
-}
-
-bool BackupCandidates::Data::createFileFolderAttributes()
-{
-    if (!mFolderAttr)
-    {
-        mFolderAttr = new LocalFileFolderAttributes(mFolder, mFolderAttrContext);
-        mFolderAttr->setValueUpdatesDisable();
-        return true;
-    }
-
-    return false;
-}
+BackupCandidates::Data::~Data() {}
 
 QHash<int, QByteArray> BackupCandidates::Data::roleNames()
 {

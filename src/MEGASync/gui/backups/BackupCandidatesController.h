@@ -1,13 +1,15 @@
 #ifndef BACKUPCANDIDATESCONTROLLER_H
 #define BACKUPCANDIDATESCONTROLLER_H
 
-#include "BackupCandidates.h"
-#include "DataController.h"
-#include "SyncInfo.h"
+#include <BackupCandidates.h>
+#include <DataController.h>
+#include <SyncInfo.h>
 
+#include <QPointer>
 #include <QTimer>
 
 class SyncSettings;
+class BackupCandidatesFolderSizeRequester;
 
 class BackupCandidatesController: public DataController
 {
@@ -49,6 +51,7 @@ signals:
 
 private:
     std::shared_ptr<BackupCandidates> mBackupCandidates;
+    QPointer<BackupCandidatesFolderSizeRequester> mBackupCandidatesSizeRequester;
 
     void updateModel(QVector<int> roles, std::shared_ptr<BackupCandidates::Data> backupCandidate);
     void updateModel(int role, std::shared_ptr<BackupCandidates::Data> backupCandidate);
@@ -77,12 +80,11 @@ private:
                                                        const QString& displayName,
                                                        bool selected = true);
 
-    bool eventFilter(QObject* watched, QEvent* event) override;
-
     QTimer mCheckDirsTimer;
 
 private slots:
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
+    void onFolderSizeReceived(QString folder, int size);
     void onBackupsCreationFinished(bool success);
     void onBackupFinished(const QString& folder, int errorCode, int syncErrorCode);
 };

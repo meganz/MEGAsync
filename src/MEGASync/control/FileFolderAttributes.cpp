@@ -345,6 +345,11 @@ qint64 LocalFileFolderAttributes::calculateSize()
     return newSize;
 }
 
+QString LocalFileFolderAttributes::path() const
+{
+    return mPath;
+}
+
 void LocalFileFolderAttributes::setPath(const QString &newPath)
 {
     if(mPath != newPath)

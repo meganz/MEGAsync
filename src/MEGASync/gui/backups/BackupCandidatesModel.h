@@ -9,7 +9,7 @@
 
 class BackupCandidatesController;
 
-class BackupCandidatesModel: public DataModel<BackupCandidatesController>
+class BackupCandidatesModel: public DataModel
 {
     Q_OBJECT
 
