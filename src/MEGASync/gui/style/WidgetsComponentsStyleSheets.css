@@ -23,6 +23,16 @@ QComboBox[type="mega"][dimension=medium]
 height: 36px;
 }
 
+QComboBox::item:selected[type="mega"]
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+}
+
+QComboBox::item[type="mega"]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/;
+}
+
 QComboBox[type="mega"]
 {
 background-color: #ffFFFFFF; /*colorToken.page-background*/
