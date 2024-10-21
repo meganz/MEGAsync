@@ -16,6 +16,7 @@ class BackupsComponent: public QMLComponent
 
 public:
     explicit BackupsComponent(QObject* parent = 0);
+    ~BackupsComponent();
 
     QUrl getQmlUrl() override;
     QString contextName() override;
@@ -52,7 +53,7 @@ signals:
 private:
     bool mComesFromSettings;
     std::shared_ptr<BackupCandidatesController> mBackupCandidatesController;
-    std::shared_ptr<BackupCandidatesProxyModel> mBackupsProxyModel;
+    QPointer<BackupCandidatesProxyModel> mBackupsProxyModel;
 };
 
 #endif // BACKUPS_H

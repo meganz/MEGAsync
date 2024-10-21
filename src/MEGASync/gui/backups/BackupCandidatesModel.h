@@ -30,8 +30,7 @@ class BackupCandidatesProxyModel: public QSortFilterProxyModel
                    NOTIFY selectedFilterEnabledChanged)
 
 public:
-    explicit BackupCandidatesProxyModel(std::shared_ptr<BackupCandidatesController> controller,
-                                        QObject* parent = nullptr);
+    explicit BackupCandidatesProxyModel(std::shared_ptr<BackupCandidatesController> controller);
     BackupCandidatesProxyModel() = default;
 
     bool selectedFilterEnabled() const;

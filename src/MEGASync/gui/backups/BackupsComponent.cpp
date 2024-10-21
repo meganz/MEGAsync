@@ -12,7 +12,7 @@ BackupsComponent::BackupsComponent(QObject* parent):
     QMLComponent(parent),
     mComesFromSettings(false),
     mBackupCandidatesController(std::make_shared<BackupCandidatesController>()),
-    mBackupsProxyModel(std::make_shared<BackupCandidatesProxyModel>(mBackupCandidatesController))
+    mBackupsProxyModel(new BackupCandidatesProxyModel(mBackupCandidatesController))
 {
     registerQmlModules();
 
@@ -24,6 +24,11 @@ BackupsComponent::BackupsComponent(QObject* parent):
             &BackupCandidatesController::backupsCreationFinished,
             this,
             &BackupsComponent::onBackupsCreationFinished);
+}
+
+BackupsComponent::~BackupsComponent()
+{
+    mBackupsProxyModel->deleteLater();
 }
 
 QUrl BackupsComponent::getQmlUrl()

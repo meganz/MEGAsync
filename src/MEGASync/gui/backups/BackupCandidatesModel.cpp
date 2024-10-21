@@ -30,9 +30,8 @@ QHash<int, QByteArray> BackupCandidatesModel::roleNames() const
 // ************************************************************************************************
 
 BackupCandidatesProxyModel::BackupCandidatesProxyModel(
-    std::shared_ptr<BackupCandidatesController> controller,
-    QObject* parent):
-    QSortFilterProxyModel(parent),
+    std::shared_ptr<BackupCandidatesController> controller):
+    QSortFilterProxyModel(),
     mSelectedFilterEnabled(false)
 {
     mBackupsModel = std::make_shared<BackupCandidatesModel>(controller);
