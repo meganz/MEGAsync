@@ -91,14 +91,14 @@ background-color: #fff63d6b; /*colorToken.indicator-pink*/
 
 #lRecoveryKeyPic
 {
-border-image: url(:/images/themed/light/key_pass.png);
+border-image: url(:/images/key_pass.png);
 min-width: 72px;
 min-height: 72px;
 }
 
 #lChangePasswordPic
 {
-border-image: url(:/images/themed/light/lock.png);
+border-image: url(:/images/lock.png);
 min-width: 72px;
 min-height: 72px;
 }
