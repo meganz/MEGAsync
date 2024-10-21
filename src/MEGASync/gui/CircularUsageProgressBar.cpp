@@ -77,7 +77,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent*)
 
     painter.fillRect(mBaseRect, Qt::NoBrush);
 
-    // Draw white disc background
+    // Draw disc background
     painter.setBrush(mBgColor);
     painter.drawEllipse(mBaseRect);
 

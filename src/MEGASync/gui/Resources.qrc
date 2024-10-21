@@ -100,6 +100,10 @@
         <file>images/themed/dark/chevron-down_disabled.svg</file>
         <file>images/themed/dark/chevron-down_default.svg</file>
         <file>images/lock.png</file>
+        <file>images/lock@2x.png</file>
+        <file>images/lock@3x.png</file>
         <file>images/key_pass.png</file>
+        <file>images/key_pass@2x.png</file>
+        <file>images/key_pass@3x.png</file>
     </qresource>
 </RCC>
