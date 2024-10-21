@@ -22,14 +22,24 @@ public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
 
-    void setReportObject(const QString& title);
-    void setReportText(const QString& desc);
+    struct DefaultInfo
+    {
+        bool sendLogsChecked = true;
+        bool sendLogsMandatory = false;
+        QString title;
+        QString description;
+    };
 
-private slots:
-    void onReportStarted();
-    void onReportFinished();
-    void onReportFailed();
-    void onReportUploadedFinished();
+    void setDefaultInfo(const DefaultInfo& info);
+
+    virtual void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
+    virtual void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
+    virtual void onTransferFinish(mega::MegaApi* api,
+                                  mega::MegaTransfer* transfer,
+                                  mega::MegaError* error);
+    virtual void onTransferTemporaryError(mega::MegaApi* api,
+                                          mega::MegaTransfer* transfer,
+                                          mega::MegaError* e);
 
     void onReportUpdated(int value);
 

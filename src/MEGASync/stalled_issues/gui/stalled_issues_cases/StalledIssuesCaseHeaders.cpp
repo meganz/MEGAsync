@@ -294,19 +294,8 @@ void DownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
 
 // Unkown download issue
 UnknownDownloadIssueHeader::UnknownDownloadIssueHeader(StalledIssueHeader* header):
-    StalledIssueHeaderCase(header)
+    DownloadIssueHeader(header)
 {}
-
-void UnknownDownloadIssueHeader::refreshCaseTitles(StalledIssueHeader* header)
-{
-    QString headerText = tr("Can´t download [B]%1[/B] to the selected location");
-    StalledIssuesBoldTextDecorator::boldTextDecorator.process(headerText);
-    header->setText(headerText.arg(header->displayFileName(true)));
-    header->setTitleDescriptionText(
-        tr("A failure occurred either downloading the file, or moving the downloaded temporary "
-           "file to its final name and location. You can retry the transfer or send feedback to "
-           "helpdesk."));
-}
 
 void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
 {
@@ -318,7 +307,12 @@ void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
 
     QList<StalledIssueHeader::ActionInfo> actions;
 
-    actions << StalledIssueHeader::ActionInfo(tr("Retry"), UnknownDownloadIssue::RETRY);
+    auto downloadIssue(header->getData().convert<UnknownDownloadIssue>());
+    if (downloadIssue && downloadIssue->canBeRetried())
+    {
+        actions << StalledIssueHeader::ActionInfo(tr("Retry"), UnknownDownloadIssue::RETRY);
+    }
+
     actions << StalledIssueHeader::ActionInfo(tr("Send feedback"),
                                               UnknownDownloadIssue::SEND_FEEDBACK);
 
@@ -328,50 +322,53 @@ void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
 void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIssueHeader* header,
                                                                       uint index)
 {
-    auto selectionInfo(getSelectionInfo(
-        header,
-        [index](const std::shared_ptr<const StalledIssue> issue)
-        {
-            auto downloadIssue(StalledIssue::convert<UnknownDownloadIssue>(issue));
-            return downloadIssue &&
-                   (index == UnknownDownloadIssue::SEND_FEEDBACK || downloadIssue->canBeRetried());
-        }));
-
-    if (selectionInfo.hasBeenExternallyChanged)
-    {
-        return;
-    }
-
-    selectionInfo.msgInfo.text = areYouSure();
     if (index == UnknownDownloadIssue::RETRY)
     {
-        selectionInfo.msgInfo.informativeText = tr("The download will be retried another time.");
-    }
-    else if (index == UnknownDownloadIssue::SEND_FEEDBACK)
-    {
-        selectionInfo.msgInfo.informativeText =
-            tr("The feedback will be received by the helpdesk team.");
-    }
+        auto selectionInfo(getSelectionInfo(
+            header,
+            [index](const std::shared_ptr<const StalledIssue> issue)
+            {
+                auto downloadIssue(StalledIssue::convert<UnknownDownloadIssue>(issue));
+                return downloadIssue && (index == UnknownDownloadIssue::SEND_FEEDBACK ||
+                                         downloadIssue->canBeRetried());
+            }));
 
-    selectionInfo.msgInfo.finishFunc = [selectionInfo, index](QMessageBox* msgBox)
-    {
-        if (msgBox->result() == QDialogButtonBox::Ok)
+        if (selectionInfo.hasBeenExternallyChanged ||
+            (selectionInfo.selection.isEmpty() && selectionInfo.similarToSelected.isEmpty()))
         {
-            if (index == UnknownDownloadIssue::RETRY)
+            return;
+        }
+
+        selectionInfo.msgInfo.text = areYouSure();
+        selectionInfo.msgInfo.informativeText = tr("The download will be retried another time.");
+        selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
+        {
+            if (msgBox->result() == QDialogButtonBox::Ok)
             {
                 MegaSyncApp->getStalledIssuesModel()->fixUnknownDownloadIssueByRetry(
                     (msgBox->checkBox() && msgBox->checkBox()->isChecked()) ?
                         selectionInfo.similarToSelected :
                         selectionInfo.selection);
             }
-            else
-            {
-                // Show Feedback dialog
-            }
-        }
-    };
+        };
 
-    QMegaMessageBox::warning(selectionInfo.msgInfo);
+        QMegaMessageBox::warning(selectionInfo.msgInfo);
+    }
+    else if (index == UnknownDownloadIssue::SEND_FEEDBACK)
+    {
+        // Show Feedback dialog
+        auto stallDialog = DialogOpener::findDialog<StalledIssuesDialog>();
+        QPointer<BugReportDialog> bugReport =
+            new BugReportDialog(stallDialog->getDialog(), MegaSyncApp->getLogger());
+        BugReportDialog::DefaultInfo info;
+        info.sendLogsMandatory = true;
+        info.title = tr("Sync download unknown issue");
+        info.description =
+            tr("Some unknown errors have been encountered when downloading files during "
+               "sync operation.");
+        bugReport->setDefaultInfo(info);
+        DialogOpener::showDialog(bugReport);
+    }
 }
 
 //Create folder failed

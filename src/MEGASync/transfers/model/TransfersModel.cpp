@@ -283,6 +283,8 @@ void TransferThread::onTransferStart(MegaApi *, MegaTransfer *transfer)
                 {
                     data = createData(transfer, nullptr);
 
+                    trackTransfer(data);
+
                     if(transfer->isSyncTransfer())
                     {
                         mTransfersToProcess.startSyncTransfersByTag.insert(transfer->getTag(), data);
@@ -483,6 +485,8 @@ void TransferThread::onTransferFinish(MegaApi* megaApi, MegaTransfer *transfer, 
             if(!data)
             {
                 data =  createData(transfer, e);
+
+                trackTransfer(data);
 
                 if(transfer->isFolderTransfer())
                 {
@@ -819,6 +823,53 @@ void TransferThread::setMaxTransfersToProcess(int max)
     mMaxTransfersToProcess = max;
 }
 
+void TransferThread::trackTransfer(QExplicitlySharedDataPointer<TransferData> data)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    foreach(auto track, mTrackToTransfers)
+    {
+        track->checkTransfer(data);
+        if (track->areAllFinished())
+        {
+            removeFinishedTracks(track->id());
+        }
+    }
+}
+
+std::shared_ptr<TransferTrack> TransferThread::addTrackToTransfer(const QString& id,
+                                                                  TransferData::TransferType type)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+
+    auto& track(mTrackToTransfers[id]);
+
+    if (!track)
+    {
+        track = std::make_shared<TransferTrack>(id, type);
+        mTrackToTransfers.insert(id, track);
+    }
+
+    return track;
+}
+
+std::shared_ptr<TransferTrack> TransferThread::getTrackToTransfer(const QString& id)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    return mTrackToTransfers.value(id, nullptr);
+}
+
+void TransferThread::removeTrackToTransfer(const QString& id)
+{
+    QMutexLocker lock(&mTrackTransferMutex);
+    removeFinishedTracks(id);
+}
+
+void TransferThread::removeFinishedTracks(const QString& id)
+{
+    // No need of mutex as it is used from the caller
+    mTrackToTransfers.remove(id);
+}
+
 ///////////////// TRANSFERS MODEL //////////////////////////////////////////////
 
 const int PROCESS_TIMER = 100;
@@ -842,6 +893,7 @@ TransfersModel::TransfersModel():
     qRegisterMetaType<QAbstractItemModel::LayoutChangeHint>("QAbstractItemModel::LayoutChangeHint");
     qRegisterMetaType<QVector<int>>("QVector<int>");
     qRegisterMetaType<QVector<int>>("QSet<int>");
+    qRegisterMetaType<TransferItem>("TransferItem");
 
     mAreAllPaused = mPreferences->getGlobalPaused();
     mMegaApi->pauseTransfers(mAreAllPaused);
@@ -906,6 +958,22 @@ void TransfersModel::pauseModelProcessing(bool value)
 bool TransfersModel::areAllPaused() const
 {
     return mAreAllPaused;
+}
+
+std::shared_ptr<TransferTrack> TransfersModel::addTrackToTransfer(const QString& id,
+                                                                  TransferData::TransferType type)
+{
+    return mTransferEventWorker->addTrackToTransfer(id, type);
+}
+
+std::shared_ptr<TransferTrack> TransfersModel::getTrackToTransfer(const QString& id)
+{
+    return mTransferEventWorker->getTrackToTransfer(id);
+}
+
+void TransfersModel::removeTrackToTransfer(const QString& id)
+{
+    mTransferEventWorker->removeTrackToTransfer(id);
 }
 
 const QExplicitlySharedDataPointer<const TransferData>

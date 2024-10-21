@@ -440,21 +440,18 @@ void StalledIssuesModel::appendCachedIssuesToModel(
                 mCountByFilterCriterion[static_cast<int>(
                     StalledIssue::getCriterionByReason((*it).consultData()->getReason()))]++;
 
-                if (!(*it).consultData()->isBeingSolved())
-                {
-                    // Connect issue signals
-                    connect(issue.getData().get(),
-                            &StalledIssue::asyncIssueSolvingFinished,
-                            this,
-                            &StalledIssuesModel::onAsyncIssueSolvingFinished,
-                            Qt::UniqueConnection);
+                // Connect issue signals
+                connect(issue.getData().get(),
+                        &StalledIssue::asyncIssueSolvingFinished,
+                        this,
+                        &StalledIssuesModel::onAsyncIssueSolvingFinished,
+                        Qt::UniqueConnection);
 
-                    connect(issue.getData().get(),
-                            &StalledIssue::dataUpdated,
-                            this,
-                            &StalledIssuesModel::onStalledIssueUpdated,
-                            Qt::UniqueConnection);
-                }
+                connect(issue.getData().get(),
+                        &StalledIssue::dataUpdated,
+                        this,
+                        &StalledIssuesModel::onStalledIssueUpdated,
+                        Qt::UniqueConnection);
             }
             else
             {
@@ -1140,6 +1137,10 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
             showIssueExternallyChangedMessageBox();
             finishSolvingIssues(count, false);
         }
+        else if (info.async && info.finishFunc)
+        {
+            info.finishFunc(-1, -1);
+        }
 
         // Update counters and filters
         emit stalledIssuesCountChanged();
@@ -1627,16 +1628,24 @@ void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& l
     auto resolveIssue = [this](int row) -> bool
     {
         auto item(getStalledIssueByRow(row));
-        UnknownDownloadIssue::addIssueToSolve(item);
+        if (auto unknownIssue = item.convert<UnknownDownloadIssue>())
+        {
+            unknownIssue->addIssueToSolveQueue();
 
-        MegaSyncApp->getStatsEventHandler()->sendEvent(
-            AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_RETRY);
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_RETRY);
 
-        return true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     };
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
+    info.async = true;
     solveListOfIssues(info);
 }
 

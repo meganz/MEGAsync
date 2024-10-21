@@ -2,7 +2,7 @@
 #define DOWNLOADFILEISSUEFACTORY_H
 
 #include <StalledIssue.h>
-#include <TransferItem.h>
+#include <TransferTrack.h>
 
 class DownloadFileIssueFactory
 {
@@ -51,14 +51,17 @@ public:
 
     void solveIssue();
     static void solveIssues();
-    static void addIssueToSolve(const StalledIssueVariant& issueToFix);
+    void addIssueToSolveQueue();
 
 private slots:
-    void onRetryableSyncTransferRetried(mega::MegaHandle handle);
-    void onRetriedSyncTransferFinished(mega::MegaHandle handle, TransferData::TransferState state);
+    void onTrackedTransferStarted(TransferItem transfer);
+    void onTrackedTransferFinished(TransferItem transfer);
 
 private:
+    void connectTrack();
+
     static QList<mega::MegaHandle> mIssuesToRetry;
+    std::shared_ptr<TransferTrack> mTrack;
 };
 
 class InvalidFingerprintDownloadIssue: public DownloadIssue

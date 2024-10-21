@@ -6,6 +6,8 @@
 #include "QTMegaTransferListener.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
+#include "TransferRemainingTime.h"
+#include "TransferTrack.h"
 
 #include <QAbstractItemModel>
 #include <QFutureWatcher>
@@ -14,6 +16,7 @@
 #include <QtConcurrent/QtConcurrent>
 
 #include <memory>
+#include <set>
 
 struct TransfersCount
 {
@@ -172,6 +175,11 @@ public:
 
     void setMaxTransfersToProcess(int max);
 
+    std::shared_ptr<TransferTrack> addTrackToTransfer(const QString& id,
+                                                      TransferData::TransferType type);
+    std::shared_ptr<TransferTrack> getTrackToTransfer(const QString& id);
+    void removeTrackToTransfer(const QString& id);
+
     TransfersToProcess processTransfers();
     void clear();
 
@@ -189,6 +197,9 @@ private:
     bool isTempTransfer(mega::MegaTransfer* transfer, bool removeCache = false);
     void updateFailedTransfer(QExplicitlySharedDataPointer<TransferData> data, mega::MegaTransfer* transfer,
                               mega::MegaError* e);
+
+    void trackTransfer(QExplicitlySharedDataPointer<TransferData> data);
+    void removeFinishedTracks(const QString& id);
 
     QExplicitlySharedDataPointer<TransferData> createData(mega::MegaTransfer* transfer, mega::MegaError *e);
     QExplicitlySharedDataPointer<TransferData> onTransferEvent(mega::MegaTransfer* transfer, mega::MegaError *e);
@@ -220,6 +231,7 @@ private:
     cacheTransfers mTransfersToProcess;
     QMutex mCacheMutex;
     QMutex mCountersMutex;
+    QMutex mTrackTransferMutex;
     TransfersCount mTransfersCount;
     LastTransfersCount mLastTransfersCount;
     std::atomic<int> mMaxTransfersToProcess;
@@ -228,6 +240,8 @@ private:
     QList<int> mIgnoredFiles;
 
     std::unique_ptr<mega::QTMegaTransferListener> mDelegateListener;
+
+    QHash<QString, std::shared_ptr<TransferTrack>> mTrackToTransfers;
 };
 
 struct DownloadTransferInfo
@@ -324,12 +338,20 @@ public:
 
     bool areAllPaused() const;
 
+    //////////////
+    // Track transfers
+    std::shared_ptr<TransferTrack> addTrackToTransfer(const QString& id,
+                                                      TransferData::TransferType type);
+    std::shared_ptr<TransferTrack> getTrackToTransfer(const QString& id);
+    void removeTrackToTransfer(const QString& id);
+
     const QExplicitlySharedDataPointer<const TransferData>
         downloadTransferFound(DownloadTransferInfo* info) const;
     const QExplicitlySharedDataPointer<const TransferData> activeUploadTransferFound(UploadTransferInfo* info) const;
 
     const QExplicitlySharedDataPointer<const TransferData> getTransferByTag(int tag) const;
     QExplicitlySharedDataPointer<TransferData> getTransferByTag(int tag);
+    //////////////
 
     int getRowByTransferTag(int tag) const;
     void sendDataChangedByTag(int tag);

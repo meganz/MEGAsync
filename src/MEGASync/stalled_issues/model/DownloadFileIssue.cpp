@@ -56,27 +56,20 @@ UnknownDownloadIssue::UnknownDownloadIssue(const mega::MegaSyncStall* stall):
     DownloadIssue(stall)
 {
     mType = IssueType::UNKNOWN;
-
-    connect(MegaSyncApp->getTransfersModel(),
-            &TransfersModel::retryableSyncTransferRetried,
-            this,
-            &UnknownDownloadIssue::onRetryableSyncTransferRetried);
-
-    connect(MegaSyncApp->getTransfersModel(),
-            &TransfersModel::retriedSyncTransferFinished,
-            this,
-            &UnknownDownloadIssue::onRetriedSyncTransferFinished);
 }
 
 void UnknownDownloadIssue::fillIssue(const mega::MegaSyncStall* stall)
 {
     DownloadIssue::fillIssue(stall);
 
-    std::shared_ptr<DownloadTransferInfo> info(new DownloadTransferInfo());
-    info->state = TransferData::ACTIVE_STATES_MASK | TransferData::TRANSFER_COMPLETED;
-    if (isBeingSolvedByDownload(info))
+    mTrack = MegaSyncApp->getTransfersModel()->getTrackToTransfer(
+        QString::number(getOriginalStall()->getHash()));
+
+    // If the track exists, it is because the transfer is still being processes (active)
+    if (mTrack)
     {
-        setIsSolved(SolveType::SOLVED);
+        connectTrack();
+        setIsSolved(SolveType::BEING_SOLVED);
     }
 }
 
@@ -98,38 +91,55 @@ void UnknownDownloadIssue::solveIssues()
     mIssuesToRetry.clear();
 }
 
-void UnknownDownloadIssue::addIssueToSolve(const StalledIssueVariant& issueToFix)
+void UnknownDownloadIssue::addIssueToSolveQueue()
 {
-    if (issueToFix.isValid() && issueToFix.consultData()->consultCloudData())
+    if (isValid() && consultCloudData())
     {
-        mIssuesToRetry.append(issueToFix.consultData()->consultCloudData()->getPathHandle());
+        auto pathHandle(consultCloudData()->getPathHandle());
+
+        if (!mTrack)
+        {
+            mTrack = MegaSyncApp->getTransfersModel()->addTrackToTransfer(
+                QString::number(getOriginalStall()->getHash()),
+                TransferData::TRANSFER_DOWNLOAD);
+            connectTrack();
+        }
+
+        mTrack->addTransferToTrack(pathHandle);
+
+        mIssuesToRetry.append(pathHandle);
     }
 }
 
-void UnknownDownloadIssue::onRetryableSyncTransferRetried(mega::MegaHandle handle)
+void UnknownDownloadIssue::onTrackedTransferStarted(TransferItem transfer)
 {
-    if (handle == consultCloudData()->getPathHandle())
+    if (consultCloudData()->getPathHandle() == transfer.getTransferData()->mNodeHandle)
     {
         setIsSolved(SolveType::BEING_SOLVED);
     }
 }
 
-void UnknownDownloadIssue::onRetriedSyncTransferFinished(mega::MegaHandle handle,
-                                                         TransferData::TransferState state)
+void UnknownDownloadIssue::onTrackedTransferFinished(TransferItem transfer)
 {
-    if (handle == consultCloudData()->getPathHandle())
+    auto data(transfer.getTransferData());
+    if (consultCloudData()->getPathHandle() == data->mNodeHandle)
     {
-        if (state == TransferData::TransferState::TRANSFER_FAILED)
-        {
-            setIsSolved(SolveType::FAILED);
-        }
-        else
-        {
-            setIsSolved(SolveType::SOLVED);
-        }
+        performFinishAsyncIssueSolving(data->getState() ==
+                                       TransferData::TransferState::TRANSFER_FAILED);
     }
+}
 
-    emit asyncIssueSolvingFinished(this);
+void UnknownDownloadIssue::connectTrack()
+{
+    connect(mTrack.get(),
+            &TransferTrack::transferStarted,
+            this,
+            &UnknownDownloadIssue::onTrackedTransferStarted);
+
+    connect(mTrack.get(),
+            &TransferTrack::transferFinished,
+            this,
+            &UnknownDownloadIssue::onTrackedTransferFinished);
 }
 
 ////////////////////////////////
