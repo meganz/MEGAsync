@@ -51,7 +51,7 @@
 
 #cbSleepMode
 {
-spacing: 0px;
+word-wrap: normal;
 }
 
 #downloadIcon
@@ -906,9 +906,9 @@ margin-bottom: 3px;
          <property name="type" stdset="0">
           <string notr="true">mega</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <layout class="QVBoxLayout" name="verticalLayout_9">
           <property name="spacing">
-           <number>15</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>14</number>
@@ -919,26 +919,10 @@ margin-bottom: 3px;
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="text">
-             <string/>
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
             </property>
             <property name="type" stdset="0">
              <string notr="true">mega</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lsleepModeDescription">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
