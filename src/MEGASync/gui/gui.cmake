@@ -111,6 +111,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/surveys/OneQuestionSurveyWidget.h
+    gui/surveys/Surveys.h
+    gui/surveys/SurveyController.h
     gui/upsell/UpsellComponent.h
     gui/upsell/UpsellController.h
     gui/upsell/UpsellModel.h
@@ -243,11 +245,13 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsComponent.cpp
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
+    gui/surveys/OneQuestionSurveyWidget.cpp
+    gui/surveys/Surveys.cpp
+    gui/surveys/SurveyController.cpp
     gui/upsell/UpsellComponent.cpp
     gui/upsell/UpsellController.cpp
     gui/upsell/UpsellModel.cpp
     gui/upsell/UpsellPlans.cpp
-    gui/surveys/OneQuestionSurveyWidget.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp

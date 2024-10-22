@@ -81,7 +81,7 @@ Rectangle {
                         lineHeight: content.titleLineHeight
                         lineHeightMode: Text.FixedHeight
                         horizontalAlignment: Text.AlignHCenter
-                        text: "How would you rate your experience uploading to MEGA?"
+                        text: surveysAccess.question
                     }
 
                     RateScaleItem {
@@ -103,7 +103,7 @@ Rectangle {
                             maxHeight: 60.0
                             textSize: Text.Size.MEDIUM
                         }
-                        maxCharLength: 150
+                        maxCharLength: surveysAccess.commentMaxLength
                         allowLineBreaks: false
                         placeholderText: OneQuestionSurveyStrings.tellUsMore
                         visible: rateScale.score >= 0 && rateScale.score <= 1
@@ -127,7 +127,8 @@ Rectangle {
                             sizes.fillWidth: true
                             text: OneQuestionSurveyStrings.submit
                             onClicked: {
-                                content.state = content.finalView;
+                                oneQuestionSurveyWidgetAccess.submitButtonClicked(rateScale.score,
+                                                                                  commentItem.text);
                             }
                             enabled: rateScale.score >= 0
                         }
@@ -140,7 +141,7 @@ Rectangle {
                             sizes.fillWidth: true
                             text: Strings.notNow
                             onClicked: {
-                                console.log("Not now");
+                                oneQuestionSurveyWidgetAccess.close();
                             }
                         }
                     }
@@ -186,7 +187,7 @@ Rectangle {
                         sizes.fillWidth: true
                         text: OneQuestionSurveyStrings.okGotIt
                         onClicked: {
-                            console.log("OK, got it")
+                            oneQuestionSurveyWidgetAccess.close();
                         }
                     }
                 }
@@ -196,5 +197,12 @@ Rectangle {
         } // StackView: stackViewItem
 
     } // Rectangle: content
+
+    Connections {
+        target: oneQuestionSurveyWidgetAccess
+        onSurveySubmitted: {
+            content.state = content.finalView;
+        }
+    }
 
 }
