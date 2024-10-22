@@ -52,7 +52,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CancelConfirmWidget.h
     gui/RemoteItemUi.h
     gui/WordWrapLabel.h
-    gui/OneQuestionSurveyWidget.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
     gui/BannerWidget.h
@@ -111,6 +110,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsComponent.h
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
+    gui/surveys/OneQuestionSurveyWidget.h
     gui/upsell/UpsellComponent.h
     gui/upsell/UpsellController.h
     gui/upsell/UpsellModel.h
@@ -187,7 +187,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/CancelConfirmWidget.cpp
     gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
-    gui/OneQuestionSurveyWidget.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
     gui/BannerWidget.cpp
@@ -248,6 +247,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/upsell/UpsellController.cpp
     gui/upsell/UpsellModel.cpp
     gui/upsell/UpsellPlans.cpp
+    gui/surveys/OneQuestionSurveyWidget.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
     gui/user_messages/AlertItem.cpp
@@ -522,6 +522,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/upsell
+    ${CMAKE_CURRENT_LIST_DIR}/surveys
     ${CMAKE_CURRENT_LIST_DIR}/syncs
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
