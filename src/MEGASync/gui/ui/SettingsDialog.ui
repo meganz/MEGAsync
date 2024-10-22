@@ -49,11 +49,6 @@
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
-#cbSleepMode
-{
-word-wrap: normal;
-}
-
 #downloadIcon
 {
 image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
