@@ -908,7 +908,10 @@ margin-bottom: 3px;
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <property name="spacing">
-           <number>0</number>
+           <number>15</number>
+          </property>
+          <property name="leftMargin">
+           <number>14</number>
           </property>
           <item>
            <widget class="QCheckBox" name="cbSleepMode">
@@ -922,22 +925,6 @@ margin-bottom: 3px;
              <string notr="true">mega</string>
             </property>
            </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_16">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>10</width>
-              <height>2</height>
-             </size>
-            </property>
-           </spacer>
           </item>
           <item>
            <widget class="QLabel" name="lsleepModeDescription">
