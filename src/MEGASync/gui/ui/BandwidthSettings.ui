@@ -601,6 +601,9 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <spacer name="horizontalSpacer_5">
           <property name="orientation">
@@ -611,8 +614,8 @@
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>15</width>
-            <height>20</height>
+            <width>27</width>
+            <height>2</height>
            </size>
           </property>
          </spacer>
