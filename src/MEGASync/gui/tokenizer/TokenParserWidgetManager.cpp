@@ -171,13 +171,8 @@ bool TokenParserWidgetManager::isRoot(QWidget* widget)
     return !tokenizedRootUiFiles.filter(uiFileName).empty();
 }
 
-// performance mesurament code will be removed in latter stages of project.
 void TokenParserWidgetManager::applyCurrentTheme()
 {
-#if defined QT_DEBUG
-    auto start = std::chrono::steady_clock::now();
-#endif
-
     QStringList dialogsName;
     foreach(const auto& dialog, DialogOpener::getAllOpenedDialogs())
     {
@@ -188,15 +183,6 @@ void TokenParserWidgetManager::applyCurrentTheme()
             dialogsName << dialog->objectName();
         }
     }
-
-#if defined QT_DEBUG
-    auto end = std::chrono::steady_clock::now();
-    std::chrono::duration<float> elapsed = end - start;
-
-    qDebug() << "Time used to apply the theme : "
-             << std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() << " ms";
-    qDebug() << "to the following dialogs : " << dialogsName;
-#endif
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)
