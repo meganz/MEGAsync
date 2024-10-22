@@ -67,8 +67,8 @@ public:
     QString getQuestion() const;
     int getCommentMaxLength() const;
 
-    int currentSurveyId() const;
-    void setCurrentSurveyId(int newCurrentSurveyId);
+    unsigned int currentSurveyId() const;
+    void setCurrentSurveyId(unsigned int newCurrentSurveyId);
 
 signals:
     void questionChanged();
@@ -76,7 +76,7 @@ signals:
 
 private:
     QMap<unsigned int, std::shared_ptr<Data>> mSurveys;
-    int mCurrentSurveyId;
+    unsigned int mCurrentSurveyId;
 
     std::shared_ptr<Data> survey(unsigned int triggerActionId) const;
 };

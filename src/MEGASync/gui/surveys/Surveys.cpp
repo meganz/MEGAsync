@@ -6,7 +6,7 @@
 
 Surveys::Surveys(QObject* parent):
     QObject(parent),
-    mCurrentSurveyId(-1)
+    mCurrentSurveyId(0)
 {}
 
 void Surveys::addSurvey(unsigned int triggerActionId)
@@ -44,28 +44,30 @@ std::shared_ptr<Surveys::Data> Surveys::survey(unsigned int triggerActionId) con
 
 QString Surveys::getQuestion() const
 {
-    if (mCurrentSurveyId == -1)
+    auto survey(currentSurvey());
+    if (survey == nullptr)
     {
         return QString();
     }
-    return mSurveys.value(mCurrentSurveyId)->question();
+    return survey->question();
 }
 
 int Surveys::getCommentMaxLength() const
 {
-    if (mCurrentSurveyId == -1)
+    auto survey(currentSurvey());
+    if (survey == nullptr)
     {
         return -1;
     }
-    return mSurveys.value(mCurrentSurveyId)->answer().maximumCommentLength();
+    return survey->answer().maximumCommentLength();
 }
 
-int Surveys::currentSurveyId() const
+unsigned int Surveys::currentSurveyId() const
 {
     return mCurrentSurveyId;
 }
 
-void Surveys::setCurrentSurveyId(int newCurrentSurveyId)
+void Surveys::setCurrentSurveyId(unsigned int newCurrentSurveyId)
 {
     if (mCurrentSurveyId == newCurrentSurveyId)
     {
