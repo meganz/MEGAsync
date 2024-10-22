@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
+    <width>480</width>
     <height>430</height>
    </rect>
   </property>
@@ -21,13 +21,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>470</width>
+    <width>480</width>
     <height>430</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>479</width>
+    <width>480</width>
     <height>430</height>
    </size>
   </property>
@@ -38,11 +38,20 @@
    <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>20</number>
    </property>
    <item>
     <widget class="QGroupBox" name="gProxy">
@@ -66,7 +75,7 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <property name="leftMargin">
-       <number>20</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>20</number>
@@ -78,10 +87,10 @@
        <number>20</number>
       </property>
       <property name="horizontalSpacing">
-       <number>10</number>
+       <number>6</number>
       </property>
       <property name="verticalSpacing">
-       <number>15</number>
+       <number>20</number>
       </property>
       <item row="8" column="0">
        <widget class="QLabel" name="lProxySettings2">
@@ -95,7 +104,7 @@
          <string>Proxy settings:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
         </property>
         <property name="margin">
          <number>0</number>
@@ -180,7 +189,7 @@
          <string>Username:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -196,7 +205,7 @@
          <string>Password:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -206,7 +215,7 @@
          <string>Proxy type:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
@@ -252,7 +261,7 @@
          <string>Server:</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
