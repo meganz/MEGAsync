@@ -6811,8 +6811,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
         <translation>Recovery key</translation>
     </message>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsDialog_Bandwith</name>
