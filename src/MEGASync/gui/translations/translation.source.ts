@@ -6802,7 +6802,15 @@ Do you want to delete it anyway?</translation>
         <translation>Disabling sync status icons</translation>
     </message>
     <message>
-        <source>Theme</source>
+        <source>Enable Windows Explorer integration</source>
+        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
+        <translation>Enable File Explorer integration</translation>
+    </message>
+    <message>
+        <source>Recovery key</source>
+        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
+        <translation>Recovery key</translation>
+    </message>
         <translation type="unfinished"></translation>
     </message>
 </context>

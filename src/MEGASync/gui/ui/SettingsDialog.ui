@@ -636,7 +636,7 @@ margin-bottom: 3px;
                <string>Enable Windows Explorer integration</string>
               </property>
               <property name="type" stdset="0">
-               <string>mega</string>
+               <string notr="true">mega</string>
               </property>
              </widget>
             </item>
