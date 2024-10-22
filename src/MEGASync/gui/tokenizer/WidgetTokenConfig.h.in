@@ -1,4 +1,0 @@
-// clang-format off
-#cmakedefine DESKTOP_APP_GUI_UI_FILES "@DESKTOP_APP_GUI_UI_FILES@"
-#cmakedefine DESKTOP_APP_GUI_UI_FILES_ROOT "@DESKTOP_APP_GUI_UI_FILES_ROOT@"
-// clang-format on

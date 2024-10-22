@@ -4,7 +4,6 @@
 #include "IconTokenizer.h"
 #include "MegaApplication.h"
 #include "ThemeManager.h"
-#include "WidgetTokenConfig.h"
 
 #include <QtConcurrent/QtConcurrent>
 
@@ -155,7 +154,7 @@ void TokenParserWidgetManager::applyCurrentTheme(QWidget* dialog)
 bool TokenParserWidgetManager::isTokenized(QWidget* widget)
 {
     static QStringList tokenizedUiFiles =
-        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES).split(QLatin1Char(';'));
+        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES).split(QLatin1Char('|'));
 
     QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
 
@@ -165,7 +164,7 @@ bool TokenParserWidgetManager::isTokenized(QWidget* widget)
 bool TokenParserWidgetManager::isRoot(QWidget* widget)
 {
     static QStringList tokenizedRootUiFiles =
-        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES_ROOT).split(QLatin1Char(';'));
+        QString::fromUtf8(DESKTOP_APP_GUI_UI_FILES_ROOT).split(QLatin1Char('|'));
 
     QString uiFileName = QLatin1String("ui/%0.ui").arg(widget->objectName());
 

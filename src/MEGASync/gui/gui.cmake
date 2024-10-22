@@ -92,8 +92,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/SyncExclusions.h
     gui/tokenizer/TokenParserWidgetManager.h
     gui/tokenizer/IconTokenizer.h
-    gui/tokenizer/WidgetTokenConfig.h
-    gui/tokenizer/WidgetTokenConfig.h.in
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
@@ -474,7 +472,11 @@ set (DESKTOP_APP_GUI_UI_FILES_ROOT
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
 )
 
-configure_file(${CMAKE_CURRENT_LIST_DIR}/tokenizer/WidgetTokenConfig.h.in ${CMAKE_CURRENT_LIST_DIR}/tokenizer/WidgetTokenConfig.h @ONLY)
+list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
+list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
+
+target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
+target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
 target_sources(MEGAsync
     PRIVATE
