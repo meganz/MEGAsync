@@ -156,15 +156,18 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->bGeneral->setChecked(true); // override whatever might be set in .ui
     mUi->gCache->setTitle(mUi->gCache->title().arg(QString::fromUtf8(MEGA_DEBRIS_FOLDER)));
 
-#ifndef Q_OS_WINDOWS
+#ifdef Q_OS_LINUX
+    mUi->bUpdate->hide();
+    mUi->cAutoUpdate->hide();
+#endif
+
+#ifdef Q_OS_WINDOWS
+    syncStallModeSelectorUI->permissionsContainer->hide();
+#else
     connect(syncStallModeSelectorUI->bPermissions,
             &QPushButton::clicked,
             this,
             &SettingsDialog::onPermissionsClicked);
-    mUi->bUpdate->hide();
-    mUi->cAutoUpdate->hide();
-#else
-    syncStallModeSelectorUI->permissionsContainer->hide();
 #endif
 
     connect(syncStallModeSelectorUI->LearnMoreButton,

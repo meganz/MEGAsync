@@ -49,6 +49,11 @@
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
+#cbSleepMode
+{
+spacing: 0px;
+}
+
 #downloadIcon
 {
 image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
@@ -180,17 +185,12 @@ margin: 0px;
 
 #lBandwidthFree
 {
-	 color: #0078D7;
+color: #0078D7;
 }
 
 #lUploadRateLimit, #lDownloadRateLimit, #lProxySettings
 {
-    font-weight: bold;
-}
-
-#cbSleepSettings
-{
-margin-top: 4px;
+font-weight: bold;
 }
 
 #AddOrRemovedFilesCheck, #NewSharedCheck, #RemovedAccessCheck, #ContactAcceptedCheck, #ContactReminderCheck, #NewContactCheck
@@ -924,7 +924,23 @@ margin-bottom: 3px;
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_3">
+           <spacer name="horizontalSpacer_16">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>2</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lsleepModeDescription">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>

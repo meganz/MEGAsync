@@ -200,7 +200,7 @@ border-radius: 4px;
 QCheckBox[type="mega"]
 {
 background-color: transparent;
-spacing: 8;
+spacing: 10px;
 }
 
 QCheckBox:disabled[type="mega"]
@@ -212,7 +212,6 @@ QCheckBox::indicator[type="mega"]
 {
 height: 16px;
 width: 16px;
-padding: 2px;
 border-style: none;
 }
 
