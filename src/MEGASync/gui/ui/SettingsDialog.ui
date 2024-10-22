@@ -2422,65 +2422,36 @@ margin-top: 0px;
          <property name="type" stdset="0">
           <string notr="true">mega</string>
          </property>
-         <layout class="QHBoxLayout" name="gBandwidthSettingsLayout">
-          <property name="leftMargin">
-           <number>20</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>20</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_24">
           <item>
-           <spacer name="horizontalSpacer_17">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <layout class="QFormLayout" name="bandwidthLimitTextLayout">
-            <property name="labelAlignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="formAlignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <property name="horizontalSpacing">
-             <number>7</number>
-            </property>
-            <property name="verticalSpacing">
-             <number>7</number>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lUploadRateLimitText">
-              <property name="text">
-               <string>Upload rate limit:</string>
-              </property>
-             </widget>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item>
+               <widget class="QLabel" name="lUploadRateLimitText">
+                <property name="text">
+                 <string>Upload rate limit:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lUploadRateLimit"/>
+              </item>
+             </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lDownloadRateLimitText">
-              <property name="text">
-               <string>Download rate limit:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="lUploadRateLimit"/>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="lDownloadRateLimit"/>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_22">
+              <item>
+               <widget class="QLabel" name="lDownloadRateLimitText">
+                <property name="text">
+                 <string>Download rate limit:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="lDownloadRateLimit"/>
+              </item>
+             </layout>
             </item>
            </layout>
           </item>
@@ -2545,51 +2516,16 @@ margin-top: 0px;
          <property name="type" stdset="0">
           <string notr="true">mega</string>
          </property>
-         <layout class="QHBoxLayout" name="gProxySettingsLayout">
-          <property name="leftMargin">
-           <number>20</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>20</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_19">
           <item>
-           <spacer name="horizontalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QLabel" name="lProxySettingsText">
+            <property name="text">
+             <string>Proxy settings:</string>
             </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
-           <layout class="QFormLayout" name="proxyLayout">
-            <property name="labelAlignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-            </property>
-            <property name="formAlignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lProxySettingsText">
-              <property name="text">
-               <string>Proxy settings:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLabel" name="lProxySettings"/>
-            </item>
-           </layout>
+           <widget class="QLabel" name="lProxySettings"/>
           </item>
           <item>
            <spacer name="horizontalSpacer_4">
