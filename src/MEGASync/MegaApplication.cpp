@@ -4527,10 +4527,25 @@ void MegaApplication::createGfxProvider()
     MegaGfxProvider* provider = nullptr;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
-    auto endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    auto prefs(Preferences::instance());
+    auto endpoint = prefs->getGfxWorkerEndpoint();
+    if (endpoint == prefs->getDefaultGfxWorkerEndpoint())
+    {
+        endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
+        prefs->setGfxWorkerEndpoint(endpoint);
+    }
     auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
+    auto logdirParam = QString::fromUtf8("%1/%2").arg(MegaApplication::applicationDataPath(),
+                                                      LOGS_FOLDER_LEAFNAME_QSTRING);
+    logdirParam = QString::fromLatin1("-d=") + QDir::toNativeSeparators(logdirParam);
+
+    std::unique_ptr<MegaStringList> extraParams(MegaStringList::createInstance());
+    extraParams->add(logdirParam.toUtf8().constData());
+
     provider = MegaGfxProvider::createIsolatedInstance(endpoint.toUtf8().constData(),
-                                                       path.toUtf8().constData());
+                                                       path.toUtf8().constData(),
+                                                       Preferences::GFXWORKER_KEEPALIVE_S,
+                                                       extraParams.get());
 #endif
 
     mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
