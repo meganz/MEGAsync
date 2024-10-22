@@ -50,9 +50,9 @@ Item {
                     colors.pressed: "transparent"
                     sizes.iconSize: Qt.size(34, 33)
                     onClicked: {
-                        score = index;
+                        score = index + 1;
                         for (let i = 0; i < root.numRateItems; i++) {
-                            rateRepeater.itemAt(i).checked = i <= score;
+                            rateRepeater.itemAt(i).checked = i <= (score - 1);
                         }
                     }
 
@@ -65,7 +65,7 @@ Item {
                         }
                         else {
                             for (let k = 0; k < root.numRateItems; k++) {
-                                rateRepeater.itemAt(k).checked = k <= score;
+                                rateRepeater.itemAt(k).checked = k <= (score - 1);
                             }
                         }
                     }

@@ -7,6 +7,7 @@ import common 1.0
 import components.texts 1.0
 import components.textAreas 1.0
 import components.buttons 1.0
+import components.views 1.0
 
 Rectangle {
     id: root
@@ -52,7 +53,7 @@ Rectangle {
             }
         ]
 
-        StackView {
+        StackViewBase {
             id: stackViewItem
 
             anchors {
@@ -106,7 +107,7 @@ Rectangle {
                         maxCharLength: surveysAccess.commentMaxLength
                         allowLineBreaks: false
                         placeholderText: OneQuestionSurveyStrings.tellUsMore
-                        visible: rateScale.score >= 0 && rateScale.score <= 1
+                        visible: rateScale.score >= 1 && rateScale.score <= 2
                     }
 
                     Column {
