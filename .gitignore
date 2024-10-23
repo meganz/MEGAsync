@@ -95,4 +95,3 @@ src/.qmake.stash
 # qml
 *.qtds
 builds/
-build/
