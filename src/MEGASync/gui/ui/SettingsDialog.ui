@@ -6,13 +6,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>680</width>
+    <width>725</width>
     <height>887</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>680</width>
+    <width>725</width>
     <height>887</height>
    </size>
   </property>
@@ -48,11 +48,6 @@
 /*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
-
-#cbSleepMode
-{
-spacing: 0px;
-}
 
 #downloadIcon
 {
@@ -914,50 +909,17 @@ margin-bottom: 3px;
            <number>14</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="0,0,1">
-            <property name="spacing">
-             <number>0</number>
+           <widget class="QCheckBox" name="cbSleepMode">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
             </property>
-            <item>
-             <widget class="QCheckBox" name="cbSleepMode">
-              <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="type" stdset="0">
-               <string notr="true">mega</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Maximum</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>8</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
-              </property>
-              <property name="wordWrap">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
+            <property name="text">
+             <string>Prevent the computer from going to sleep when transfers or syncs are in progress.</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
