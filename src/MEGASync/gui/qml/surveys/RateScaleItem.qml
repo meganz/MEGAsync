@@ -23,7 +23,7 @@ Item {
 
         Row {
             width: parent.width
-            height: rateItem.height
+            height: rateRepeater.count > 0 ? rateRepeater.itemAt(0).implicitHeight : 0
 
             Repeater {
                 id: rateRepeater

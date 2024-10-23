@@ -201,7 +201,8 @@ Rectangle {
 
     Connections {
         target: oneQuestionSurveyWidgetAccess
-        onSurveySubmitted: {
+
+        function onSurveySubmitted() {
             content.state = content.finalView;
         }
     }
