@@ -600,7 +600,7 @@ private:
 
     void createUserMessageController();
 
-    void createGfxProvider();
+    void createGfxProvider(const QString& basePath);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

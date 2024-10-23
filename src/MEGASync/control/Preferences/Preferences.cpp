@@ -2564,14 +2564,22 @@ Preferences::ThemeType Preferences::getThemeType()
 }
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
-void Preferences::setGfxWorkerEndpoint(QString endpoint)
+void Preferences::setGfxWorkerEndpointInGeneral(const QString& endpoint)
 {
-    auto currentValue(getGfxWorkerEndpoint());
-
-    if (endpoint != currentValue)
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
     {
-        setValueConcurrently(gfxWorkerEndpointKey, endpoint);
+        mSettings->endGroup();
+        currentAccount = mSettings->value(currentAccountKey).toString();
     }
+
+    mSettings->setValue(gfxWorkerEndpointKey, endpoint);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
 }
 
 QString Preferences::getDefaultGfxWorkerEndpoint() const
@@ -2579,9 +2587,22 @@ QString Preferences::getDefaultGfxWorkerEndpoint() const
     return defaultGfxWorkerEndpoint;
 }
 
-QString Preferences::getGfxWorkerEndpoint()
+QString Preferences::getGfxWorkerEndpointInGeneral()
 {
-    auto value = getValueConcurrent<QString>(gfxWorkerEndpointKey, defaultGfxWorkerEndpoint);
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        mSettings->endGroup();
+        currentAccount = mSettings->value(currentAccountKey).toString();
+    }
+
+    QString value = getValue<QString>(gfxWorkerEndpointKey, defaultGfxWorkerEndpoint);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
     return value;
 }
 #endif

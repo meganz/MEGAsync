@@ -418,9 +418,9 @@ public:
     ThemeType getThemeType();
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
-    void setGfxWorkerEndpoint(QString endpoint);
+    void setGfxWorkerEndpointInGeneral(const QString& endpoint);
     QString getDefaultGfxWorkerEndpoint() const;
-    QString getGfxWorkerEndpoint();
+    QString getGfxWorkerEndpointInGeneral();
 #endif
 
     enum {

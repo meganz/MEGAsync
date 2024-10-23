@@ -486,9 +486,9 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
-    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
+    const QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
 
-    createGfxProvider();
+    createGfxProvider(basePath);
 
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
@@ -4522,21 +4522,20 @@ void MegaApplication::createUserMessageController()
     }
 }
 
-void MegaApplication::createGfxProvider()
+void MegaApplication::createGfxProvider(const QString& basePath)
 {
     MegaGfxProvider* provider = nullptr;
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     auto prefs(Preferences::instance());
-    auto endpoint = prefs->getGfxWorkerEndpoint();
+    auto endpoint = prefs->getGfxWorkerEndpointInGeneral();
     if (endpoint == prefs->getDefaultGfxWorkerEndpoint())
     {
         endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
-        prefs->setGfxWorkerEndpoint(endpoint);
+        prefs->setGfxWorkerEndpointInGeneral(endpoint);
     }
-    auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
-    auto logdirParam = QString::fromUtf8("%1/%2").arg(MegaApplication::applicationDataPath(),
-                                                      LOGS_FOLDER_LEAFNAME_QSTRING);
+    const auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
+    auto logdirParam = QString::fromUtf8("%1/%2").arg(basePath, LOGS_FOLDER_LEAFNAME_QSTRING);
     logdirParam = QString::fromLatin1("-d=") + QDir::toNativeSeparators(logdirParam);
 
     std::unique_ptr<MegaStringList> extraParams(MegaStringList::createInstance());
