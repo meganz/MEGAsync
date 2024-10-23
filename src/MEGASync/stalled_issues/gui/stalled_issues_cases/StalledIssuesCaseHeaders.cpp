@@ -333,9 +333,16 @@ void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIss
                                          downloadIssue->canBeRetried());
             }));
 
-        if (selectionInfo.hasBeenExternallyChanged ||
-            (selectionInfo.selection.isEmpty() && selectionInfo.similarToSelected.isEmpty()))
+        if (selectionInfo.hasBeenExternallyChanged)
         {
+            return;
+        }
+        // We don´t show the retry option when there are no retryable sync failed transfers, but
+        // just in case
+        else if (selectionInfo.selection.isEmpty() && selectionInfo.similarToSelected.isEmpty())
+        {
+            MegaSyncApp->getStalledIssuesModel()->checkForExternalChanges(
+                header->getCurrentIndex());
             return;
         }
 
