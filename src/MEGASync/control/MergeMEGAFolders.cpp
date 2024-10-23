@@ -8,6 +8,44 @@
 
 std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates action)
 {
+    std::shared_ptr<mega::MegaError> error;
+
+    if (mFolderTarget && mFolderToMerge)
+    {
+        error.reset(mergeTwoFolders(action).get());
+    }
+    else if (mFolderTarget)
+    {
+        std::unique_ptr<mega::MegaNode> parentNode(
+            MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderTarget->getParentHandle()));
+        if (parentNode)
+        {
+            QString targetNodeName(QString::fromUtf8(mFolderTarget->getName()));
+            std::unique_ptr<mega::MegaNodeList> folderToMergeNodes(
+                MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
+            for (int index = 0; index < folderToMergeNodes->size(); ++index)
+            {
+                auto node(folderToMergeNodes->get(index));
+                QString checkNodeName(QString::fromUtf8(node->getName()));
+                if (targetNodeName.compare(checkNodeName, Qt::CaseInsensitive) == 0 &&
+                    node->getHandle() != mFolderTarget->getHandle())
+                {
+                    mFolderToMerge = node;
+                    error.reset(mergeTwoFolders(action).get());
+                    if (error)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    return error;
+}
+
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeTwoFolders(ActionForDuplicates action)
+{
     std::shared_ptr<mega::MegaError> error(nullptr);
 
     QStringList itemsBeingRenamed;
@@ -69,14 +107,16 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
                 auto newName = Utilities::getNonDuplicatedNodeName(
                     node, mFolderTarget, nodeName, true, itemsBeingRenamed);
 
-                error = MegaApiSynchronizedRequest::runRequestLambda([](mega::MegaNode* node,
-                                                           mega::MegaNode* targetNode,
-                                                           const char* newName,
-                                                           mega::MegaRequestListener* listener)
-                       { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener); },
-                       MegaSyncApp->getMegaApi(),
-                       node,
-                       mFolderTarget,
+                error = MegaApiSynchronizedRequest::runRequestLambda(
+                    [](mega::MegaNode* node,
+                       mega::MegaNode* targetNode,
+                       const char* newName,
+                       mega::MegaRequestListener* listener) {
+                        MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
+                    },
+                    MegaSyncApp->getMegaApi(),
+                    node,
+                    mFolderTarget,
                     newName.toUtf8().constData());
 
                 if(error)
@@ -87,12 +127,14 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
         }
         else
         {
-            error = MegaApiSynchronizedRequest::runRequestLambda([](mega::MegaNode* node,
-                                                       mega::MegaNode* targetNode,
-                                                       mega::MegaRequestListener* listener)
-                   { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
-                   MegaSyncApp->getMegaApi(),
-                   node,
+            error = MegaApiSynchronizedRequest::runRequestLambda(
+                [](mega::MegaNode* node,
+                   mega::MegaNode* targetNode,
+                   mega::MegaRequestListener* listener) {
+                    MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+                },
+                MegaSyncApp->getMegaApi(),
+                node,
                 mFolderTarget);
 
             if(error)
@@ -127,8 +169,11 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
 
     if(error)
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Merge folders failed. Error: %1").arg(Utilities::getTranslatedError(error.get()))
-                                                   .toUtf8().constData());
+        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
+                           QString::fromUtf8("Merge folders failed. Error: %1")
+                               .arg(Utilities::getTranslatedError(error.get()))
+                               .toUtf8()
+                               .constData());
     }
     return error;
 }

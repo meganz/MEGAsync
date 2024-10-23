@@ -293,10 +293,12 @@ void DesktopNotifications::processAlert(mega::MegaUserAlert* alert, const QStrin
     {
         if(mPreferences->isNotificationEnabled(Preferences::NotificationsTypes::CONTACT_ESTABLISHED))
         {
-            auto notification = CreateContactNotification(tr("New Contact Established"),
-                                                         tr("New contact with [A] has been established").replace(QString::fromUtf8("[A]"), fullName),
-                                                         email,
-                                                         QStringList() << tr("Accept") << tr("Chat"));
+            auto notification =
+                CreateContactNotification(tr("New Contact Established"),
+                                          tr("New contact with [A] has been established")
+                                              .replace(QString::fromUtf8("[A]"), fullName),
+                                          email,
+                                          QStringList() << tr("Chat"));
 
             QObject::connect(notification, &DesktopAppNotification::activated, this, &DesktopNotifications::viewContactOnWebClient);
         }

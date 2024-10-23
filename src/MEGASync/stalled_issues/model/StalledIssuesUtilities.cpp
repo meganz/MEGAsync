@@ -18,6 +18,9 @@ const Text::Decorator StalledIssuesBoldTextDecorator::boldTextDecorator = Text::
 const Text::Decorator StalledIssuesNewLineTextDecorator::newLineTextDecorator = Text::Decorator(new Text::NewLine());
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+std::unique_ptr<MegaDownloader> StalledIssuesUtilities::mDownloader = nullptr;
+std::unique_ptr<MegaUploader> StalledIssuesUtilities::mUploader = nullptr;
+
 StalledIssuesUtilities::StalledIssuesUtilities()
 {}
 
@@ -267,6 +270,26 @@ StalledIssuesUtilities::KeepBothSidesState StalledIssuesUtilities::KeepBothSides
     return result;
 }
 
+MegaDownloader* StalledIssuesUtilities::getMegaDownloader()
+{
+    if (!mDownloader)
+    {
+        mDownloader = std::make_unique<MegaDownloader>(MegaSyncApp->getMegaApi(), nullptr);
+    }
+
+    return mDownloader.get();
+}
+
+MegaUploader* StalledIssuesUtilities::getMegaUploader()
+{
+    if (!mUploader)
+    {
+        mUploader = std::make_unique<MegaUploader>(MegaSyncApp->getMegaApi(), nullptr);
+    }
+
+    return mUploader.get();
+}
+
 //////////////////////////////////////////////////
 QMap<QVariant, mega::MegaHandle> StalledIssuesBySyncFilter::mSyncIdCache = QMap<QVariant, mega::MegaHandle>();
 QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>> StalledIssuesBySyncFilter::mSyncIdCacheByStall = QHash<const mega::MegaSyncStall*, QSet<mega::MegaHandle>>();
@@ -407,10 +430,7 @@ bool StalledIssuesBySyncFilter::isBelow(const QString &syncRootPath, const QStri
 
 /////////////////////////////////////////////////////
 /// \brief FingerprintMissingSolver::FingerprintMissingSolver
-FingerprintMissingSolver::FingerprintMissingSolver()
-    :mDownloader(new MegaDownloader(MegaSyncApp->getMegaApi(), nullptr))
-{
-}
+FingerprintMissingSolver::FingerprintMissingSolver() {}
 
 void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pathsToSolve)
 {
@@ -477,8 +497,9 @@ void FingerprintMissingSolver::solveIssues(const QList<StalledIssueVariant> &pat
         foreach(auto targetFolder, nodesToDownloadByPath.keys())
         {
             std::shared_ptr<QQueue<WrappedNode*>> nodesToDownload(nodesToDownloadByPath.value(targetFolder));
-            BlockingBatch downloadBatches;
-            mDownloader->processTempDownloadQueue(nodesToDownload.get(), targetFolder);
+            StalledIssuesUtilities::getMegaDownloader()->processTempDownloadQueue(
+                nodesToDownload.get(),
+                targetFolder);
             qDeleteAll(*nodesToDownload.get());
         }
     }

@@ -1,15 +1,15 @@
 #include "BugReportDialog.h"
-#include "DialogOpener.h"
 
-#include <TransfersModel.h>
+#include "DialogOpener.h"
 #include "Preferences.h"
-#include <QMegaMessageBox.h>
+#include "QTMegaApiManager.h"
+#include "RequestListenerManager.h"
+#include "ui_BugReportDialog.h"
 
 #include <QCloseEvent>
+#include <QMegaMessageBox.h>
 #include <QRegExp>
-
-#include "ui_BugReportDialog.h"
-#include "RequestListenerManager.h"
+#include <TransfersModel.h>
 
 using namespace mega;
 
@@ -39,16 +39,18 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     lastpermil = -3;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
-    delegateTransferListener = new QTMegaTransferListener(megaApi, this);
+    mDelegateTransferListener = std::make_unique<QTMegaTransferListener>(megaApi, this);
 }
 
 BugReportDialog::~BugReportDialog()
 {
-    //Just in case the dialog is closed from an exit action
-    cancelCurrentReportUpload();
+    if (QTMegaApiManager::isMegaApiValid(megaApi))
+    {
+        // Just in case the dialog is closed from an exit action
+        cancelCurrentReportUpload();
+    }
 
     delete ui;
-    delete delegateTransferListener;
 }
 
 void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
@@ -311,7 +313,10 @@ void BugReportDialog::onReadyForReporting()
                 mHadGlobalPause = true;
                 MegaSyncApp->getTransfersModel()->setGlobalPause(false);
             }
-            megaApi->startUploadForSupport(QDir::toNativeSeparators(pathToLogFile).toUtf8().constData(), true, delegateTransferListener);
+            megaApi->startUploadForSupport(
+                QDir::toNativeSeparators(pathToLogFile).toUtf8().constData(),
+                true,
+                mDelegateTransferListener.get());
         }
     }
     else

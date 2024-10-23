@@ -34,7 +34,10 @@ const int CLEAR_THRESHOLD_THREAD = 300;
 
 //LISTENER THREAD
 TransferThread::TransferThread() : mMaxTransfersToProcess(MAX_TRANSFERS)
-{}
+{
+    mDelegateListener = std::make_unique<QTMegaTransferListener>(MegaSyncApp->getMegaApi(), this);
+    MegaSyncApp->getMegaApi()->addTransferListener(mDelegateListener.get());
+}
 
 TransferThread::TransfersToProcess TransferThread::processTransfers()
 {
@@ -813,10 +816,10 @@ const int PROCESS_TIMER = 100;
 const int RESET_AFTER_EMPTY_RECEIVES = 10;
 const int MODEL_HAS_CHANGED_AFTER_EMPTY_RECEIVES = 5;
 
-TransfersModel::TransfersModel(QObject *parent) :
-    QAbstractItemModel (parent),
-    mMegaApi (MegaSyncApp->getMegaApi()),
-    mPreferences (Preferences::instance()),
+TransfersModel::TransfersModel():
+    QAbstractItemModel(),
+    mMegaApi(MegaSyncApp->getMegaApi()),
+    mPreferences(Preferences::instance()),
     mTransfersProcessChanged(0),
     mUpdateMostPriorityTransfer(0),
     mUiBlockedCounter(0),
@@ -837,9 +840,6 @@ TransfersModel::TransfersModel(QObject *parent) :
     mTransferEventThread = new QThread();
     mTransferEventWorker = new TransferThread();
     mTransferEventWorker->moveToThread(mTransferEventThread);
-    mDelegateListener = new QTMegaTransferListener(mMegaApi, mTransferEventWorker);
-    mDelegateListener->moveToThread(mTransferEventThread);
-    mMegaApi->addTransferListener(mDelegateListener);
 
     //Update transfers state for the first time
     updateTransfersCount();
@@ -871,9 +871,10 @@ TransfersModel::~TransfersModel()
 
     // Cleanup
     mTransfers.clear();
-    mTransferEventThread->quit();
 
-    mMegaApi->removeTransferListener(mDelegateListener);
+    mTransferEventThread->quit();
+    mTransferEventThread->wait();
+    mTransferEventThread->deleteLater();
 }
 
 void TransfersModel::pauseModelProcessing(bool value)

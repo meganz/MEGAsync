@@ -20,8 +20,6 @@ set(DESKTOP_APP_SYNCS_HEADERS
     syncs/control/SyncSettings.h
     syncs/control/CreateRemoveSyncsManager.h
     syncs/control/CreateRemoveBackupsManager.h
-    syncs/control/CreateRemoveSyncsManagerQML.h
-    syncs/control/CreateRemoveBackupsManagerQML.h
 )
 
 set(DESKTOP_APP_SYNCS_SOURCES
@@ -45,8 +43,6 @@ set(DESKTOP_APP_SYNCS_SOURCES
     syncs/control/SyncSettings.cpp
     syncs/control/CreateRemoveSyncsManager.cpp
     syncs/control/CreateRemoveBackupsManager.cpp
-    syncs/control/CreateRemoveSyncsManagerQML.cpp
-    syncs/control/CreateRemoveBackupsManagerQML.cpp
 )
 
 target_sources_conditional(MEGAsync

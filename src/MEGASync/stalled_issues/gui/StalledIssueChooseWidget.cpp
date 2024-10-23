@@ -1,11 +1,13 @@
 #include "StalledIssueChooseWidget.h"
-#include "ui_StalledIssueChooseWidget.h"
 
-#include "Utilities.h"
-#include "PlatformStrings.h"
 #include "MegaApplication.h"
+#include "PlatformStrings.h"
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
+#include "ui_StalledIssueChooseWidget.h"
+#include "Utilities.h"
+
+#include <QMouseEvent>
 
 const int StalledIssueChooseWidget::BUTTON_ID = 0;
 

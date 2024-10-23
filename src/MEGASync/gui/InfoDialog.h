@@ -231,6 +231,8 @@ private:
     QHash<QPushButton*, SyncsMenu*> mSyncsMenus;
     MegaDelegateHoverManager mNotificationsViewHoverManager;
 
+    void updateUpgradeButtonText();
+
 protected:
     void updateBlockedState();
     void updateState();

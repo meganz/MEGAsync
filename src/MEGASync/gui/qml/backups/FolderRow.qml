@@ -46,7 +46,7 @@ Item {
             leftMargin: internalMargin
         }
         radius: internalMargin
-        color: (index % 2 === 0) ? colorStyle.pageBackground : colorStyle.surface1
+        color: (index % 2 === 0) ? ColorTheme.pageBackground : ColorTheme.surface1
 
         Loader {
             id: content
@@ -169,7 +169,7 @@ Item {
                                (busyIndicator.visible ? (busyIndicator.width + selectRoot.checkboxSpacing) : 0)
                         font.pixelSize: Texts.Text.Size.SMALL
                         text: name
-                        color: colorStyle.textPrimary
+                        color: ColorTheme.textPrimary
                     }
                 }
 
@@ -187,7 +187,7 @@ Item {
                 verticalAlignment: Qt.AlignVCenter
                 text: size
                 font.pixelSize: Texts.Text.Size.SMALL
-                color: colorStyle.textSecondary
+                color: ColorTheme.textSecondary
                 visible: backupsProxyModelRef.selectedFilterEnabled && sizeReady
             }
 
@@ -199,7 +199,7 @@ Item {
                     verticalCenter: parent.verticalCenter
                 }
                 imageSize: Qt.size(12, 12)
-                color: colorStyle.textAccent
+                color: ColorTheme.textAccent
                 visible: backupsProxyModelRef.selectedFilterEnabled && !sizeReady
             }
 
@@ -257,8 +257,8 @@ Item {
                             : Images.alertTriangle
                     sourceSize: Qt.size(conflictRoot.imageWidth, conflictRoot.imageWidth)
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                           ? colorStyle.textError
-                           : colorStyle.textWarning
+                           ? ColorTheme.textError
+                           : ColorTheme.textWarning
                 }
 
                 Texts.ElidedText {
@@ -273,8 +273,8 @@ Item {
                     font.pixelSize: Texts.Text.Size.SMALL
                     text: name
                     color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
-                           ? colorStyle.textError
-                           : colorStyle.textWarning
+                           ? ColorTheme.textError
+                           : ColorTheme.textWarning
                     showTooltip: false
                 }
             }
@@ -416,7 +416,7 @@ Item {
                 width: parent.width - parent.spacing - doneButton.width
                 text: name
                 leftIconSource: Images.edit
-                leftIconColor: colorStyle.iconSecondary
+                leftIconColor: ColorTheme.iconSecondary
                 error: hint.visible
                 sizes: SmallSizes {}
                 validator: RegExpValidator { regExp: RegexExpressions.allowedFolderChars }

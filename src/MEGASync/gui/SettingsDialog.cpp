@@ -1,40 +1,42 @@
-#include "MegaApplication.h"
 #include "SettingsDialog.h"
-#include "QMegaMessageBox.h"
-#include "ui_SettingsDialog.h"
-#include "Utilities.h"
-#include "Platform.h"
+
+#include "AccountDetailsDialog.h"
+#include "AccountDetailsManager.h"
 #include "BandwidthSettings.h"
 #include "BugReportDialog.h"
-#include "ProxySettings.h"
+#include "ChangePassword.h"
+#include "CommonMessages.h"
+#include "DialogOpener.h"
 #include "FullName.h"
+#include "GuiUtilities.h"
+#include "mega/types.h"
+#include "MegaApplication.h"
 #include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
+#include "Platform.h"
 #include "PowerOptions.h"
+#include "ProxySettings.h"
+#include "QMegaMessageBox.h"
 #include "RemoveBackupDialog.h"
-#include "TextDecorator.h"
-#include "DialogOpener.h"
-#include "mega/types.h"
-#include "GuiUtilities.h"
-#include "CommonMessages.h"
 #include "StatsEventHandler.h"
-#include "AccountDetailsDialog.h"
-#include "ChangePassword.h"
-#include "AccountDetailsManager.h"
+#include "TextDecorator.h"
+#include "ui_SettingsDialog.h"
+#include "Utilities.h"
 
-#include <QApplication>
-#include <QDesktopServices>
-#include <QUrl>
-#include <QRect>
-#include <QTranslator>
-#include <QMessageBox>
-#include <QButtonGroup>
 #include <QtConcurrent/QtConcurrent>
-#include <QShortcut>
-#include <QMenu>
 
 #include <assert.h>
 #include <memory>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDesktopServices>
+#include <QFileDialog>
+#include <QMenu>
+#include <QMessageBox>
+#include <QRect>
+#include <QShortcut>
+#include <QTranslator>
+#include <QUrl>
 
 #ifdef Q_OS_MACOS
     #include "CocoaHelpButton.h"
@@ -1176,31 +1178,26 @@ void SettingsDialog::updateAccountElements()
     {
         case Preferences::ACCOUNT_TYPE_FREE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Free.png"));
-            mUi->bUpgrade->show();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_PROI:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_I.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_II.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_PROIII:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Pro_III.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_LITE:
             icon = Utilities::getCachedPixmap(QString::fromLatin1(":/images/Small_Lite.png"));
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
@@ -1217,17 +1214,14 @@ void SettingsDialog::updateAccountElements()
             mUi->pTransferQuota->hide();
             break;
         case Preferences::ACCOUNT_TYPE_STARTER:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_BASIC:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;
         case Preferences::ACCOUNT_TYPE_ESSENTIAL:
-            mUi->bUpgrade->hide();
             mUi->pStorageQuota->show();
             mUi->pTransferQuota->show();
             break;

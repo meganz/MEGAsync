@@ -147,7 +147,7 @@ Qml.RoundButton {
 
         color: "transparent"
         border.color: root.enabled
-                      ? (root.activeFocus ? colorStyle.focus : "transparent")
+                      ? (root.activeFocus ? ColorTheme.focusColor : "transparent")
                       : "transparent"
         border.width: sizes.focusBorderWidth
         radius: sizes.focusBorderRadius
@@ -200,10 +200,12 @@ Qml.RoundButton {
 
     Keys.onReturnPressed: {
         root.clicked();
+        event.accepted = false;
     }
 
     Keys.onEnterPressed: {
         root.clicked();
+        event.accepted = false;
     }
 
     MouseArea {

@@ -26,8 +26,6 @@ StalledIssuesCreator::StalledIssuesCreator():
 
 void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateType updateType)
 {
-    clear();
-
     if(stalls)
     {
         StalledIssuesVariantList solvableIssues;
@@ -35,6 +33,8 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
 
         QSet<mega::MegaSyncStall::SyncStallReason> reasonsToFilter;
         QList<MultiStepIssueSolverBase*> solversWithStall;
+
+        clear();
 
         for(size_t i = 0; i < totalSize; ++i)
         {
@@ -49,7 +49,7 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
             }
 
             StalledIssueVariant variant;
-            std::shared_ptr<StalledIssue> d;
+            StalledIssueSPtr d;
 
             if(stall->reason() == mega::MegaSyncStall::SyncStallReason::MoveOrRenameCannotOccur)
             {
@@ -205,6 +205,8 @@ void StalledIssuesCreator::createIssues(mega::MegaSyncStallList* stalls, UpdateT
                 issueIt.remove();
             }
         }
+
+        finish();
     }
 }
 
@@ -225,6 +227,11 @@ void StalledIssuesCreator::clear()
 {
     mStalledIssues.clear();
     mMoveOrRenameCannotOccurFactory->clear();
+}
+
+void StalledIssuesCreator::finish()
+{
+    mMoveOrRenameCannotOccurFactory->finish();
 }
 
 void StalledIssuesCreator::addMultiStepIssueSolver(MultiStepIssueSolverBase* solver)

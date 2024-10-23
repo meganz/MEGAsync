@@ -1,38 +1,39 @@
-#include <QDesktopServices>
-#include <QDesktopWidget>
-#include <QUrl>
-#include <QRect>
-#include <QTimer>
-#include <QHelpEvent>
-#include <QToolTip>
-#include <QSignalMapper>
-#include <QVBoxLayout>
-#include <QFileInfo>
-#include <QEvent>
-#include <QScrollBar>
-
 #include "InfoDialog.h"
+
 #include "AccountDetailsDialog.h"
-#include "ui_InfoDialog.h"
+#include "AccountDetailsManager.h"
+#include "assert.h"
+#include "CreateRemoveBackupsManager.h"
+#include "CreateRemoveSyncsManager.h"
+#include "DialogOpener.h"
 #include "GuiUtilities.h"
 #include "MegaApplication.h"
-#include "TransferManager.h"
 #include "MenuItemAction.h"
-#include "StalledIssuesModel.h"
-#include "assert.h"
-#include "QMegaMessageBox.h"
-#include "TextDecorator.h"
-#include "DialogOpener.h"
-#include "StatsEventHandler.h"
-#include "CreateRemoveSyncsManager.h"
-#include "CreateRemoveBackupsManager.h"
-#include "UserMessageDelegate.h"
-
-#include "Utilities.h"
 #include "Platform.h"
+#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
+#include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
 #include "SyncsComponent.h"
-#include "AccountDetailsManager.h"
+#include "TextDecorator.h"
+#include "TransferManager.h"
+#include "ui_InfoDialog.h"
+#include "UserMessageController.h"
+#include "UserMessageDelegate.h"
+#include "Utilities.h"
+
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QEvent>
+#include <QFileInfo>
+#include <QHelpEvent>
+#include <QRect>
+#include <QScrollBar>
+#include <QSignalMapper>
+#include <QTimer>
+#include <QToolTip>
+#include <QUrl>
+#include <QVBoxLayout>
 
 #ifdef _WIN32
 #include <chrono>
@@ -300,6 +301,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
             &AccountDetailsManager::accountDetailsUpdated,
             this,
             &InfoDialog::updateUsageAndAccountType);
+
+    updateUpgradeButtonText();
 }
 
 InfoDialog::~InfoDialog()
@@ -1212,18 +1215,18 @@ void InfoDialog::updateUiOnFolderTransferUpdate(const FolderTransferUpdateEvent 
     mTransferScanCancelUi->onFolderTransferUpdate(event);
 }
 
-void InfoDialog::changeEvent(QEvent *event)
+void InfoDialog::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-
-//        if (mPreferences->logged())
-//        {
-//            setUsage();
-//            mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-//            updateDialogState();
-//        }
+        updateUpgradeButtonText();
+        // if (mPreferences->logged())
+        // {
+        //     setUsage();
+        //     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
+        //     updateDialogState();
+        // }
     }
     QDialog::changeEvent(event);
 }
@@ -1544,6 +1547,11 @@ void InfoDialog::showSomeIssues()
     ui->wSomeIssuesOccurred->show();
     animationGroupSomeIssues.start();
     mShownSomeIssuesOccurred = true;
+}
+
+void InfoDialog::updateUpgradeButtonText()
+{
+    ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
 }
 
 void InfoDialog::on_bDismissSyncSettings_clicked()

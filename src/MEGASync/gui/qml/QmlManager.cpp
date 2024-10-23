@@ -5,11 +5,12 @@
 #include "AppStatsEvents.h"
 #include "ChooseFile.h"
 #include "ChooseFolder.h"
-#include "ColorTheme.h"
 #include "LoginController.h"
 #include "QmlClipboard.h"
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
+#include "QmlDialogManager.h"
+#include "QmlTheme.h"
 #include "SyncInfo.h"
 
 #include <QDataStream>
@@ -66,13 +67,18 @@ void QmlManager::registerCommonQmlElements()
 
     qmlRegisterSingletonType<QmlClipboard>("QmlClipboard", 1, 0, "QmlClipboard", &QmlClipboard::qmlInstance);
     qmlRegisterSingletonType<AccountInfoData>("AccountInfoData", 1, 0, "AccountInfoData", AccountInfoData::instance);
+    qmlRegisterSingletonType<QmlDialogManager>("QmlDialogManager",
+                                               1,
+                                               0,
+                                               "QmlDialogManager",
+                                               QmlDialogManager::getQmlInstance);
 
     qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
 
-    setRootContextProperty(QString::fromUtf8("colorStyle"), new ColorTheme(mEngine, mEngine));
+    setRootContextProperty(QString::fromUtf8("themeManager"), new QmlTheme(mEngine));
 }
 
 void QmlManager::setRootContextProperty(QObject* value)

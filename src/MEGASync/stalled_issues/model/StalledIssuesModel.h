@@ -134,7 +134,7 @@ class StalledIssuesModel : public QAbstractItemModel, public mega::MegaGlobalLis
 public:
     static const int ADAPTATIVE_HEIGHT_ROLE;
 
-    explicit StalledIssuesModel(QObject* parent = 0);
+    explicit StalledIssuesModel();
     ~StalledIssuesModel();
 
     virtual Qt::DropActions supportedDropActions() const override;
@@ -313,8 +313,8 @@ private:
     QThread* mStalledIssuesThread;
     StalledIssuesReceiver* mStalledIssuesReceiver;
     std::atomic_bool mThreadFinished { false };
-    mega::QTMegaRequestListener* mRequestListener;
-    mega::QTMegaGlobalListener* mGlobalListener;
+    std::unique_ptr<mega::QTMegaRequestListener> mRequestListener;
+    std::unique_ptr<mega::QTMegaGlobalListener> mGlobalListener;
     mega::MegaApi* mMegaApi;
     std::atomic_bool mIssuesRequested {false};
     bool mIsStalled;

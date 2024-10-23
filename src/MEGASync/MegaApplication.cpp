@@ -1,70 +1,73 @@
 #include "MegaApplication.h"
-#include "CrashReportDialog.h"
-#include "MegaProxyStyle.h"
-#include "QMegaMessageBox.h"
-#include "AppStatsEvents.h"
-#include "Utilities.h"
-#include "CrashHandler.h"
-#include "ExportProcessor.h"
-#include "LoginController.h"
+
+#include "AccountDetailsManager.h"
 #include "AccountStatusController.h"
-#include "EphemeralCredentials.h"
-#include "IntervalExecutioner.h"
-#include "CommonMessages.h"
-#include "EventUpdater.h"
-#include "GuiUtilities.h"
-#include "Platform.h"
-#include "OverQuotaDialog.h"
-#include "StalledIssuesModel.h"
-#include "TransferMetaData.h"
-#include "DuplicatedNodeDialog.h"
-#include "NodeSelectorSpecializations.h"
-#include "PlatformStrings.h"
-#include "ProxyStatsEventHandler.h"
-
-#include "UserAttributesManager.h"
-#include "FullName.h"
+#include "AppStatsEvents.h"
 #include "Avatar.h"
-#include "MyBackupsHandle.h"
-#include "SyncsMenu.h"
-#include "UploadToMegaDialog.h"
-#include "EmailRequester.h"
-#include "StatsEventHandler.h"
-
-#include "DialogOpener.h"
-#include "PowerOptions.h"
+#include "ChangeLogDialog.h"
+#include "CommonMessages.h"
+#include "CrashHandler.h"
+#include "CrashReportDialog.h"
 #include "DateTimeFormatter.h"
-#include <StalledIssuesDialog.h>
-#include <DialogOpener.h>
-#include "QmlDialogWrapper.h"
-#include "Onboarding.h"
-
+#include "DialogOpener.h"
+#include "DuplicatedNodeDialog.h"
+#include "EmailRequester.h"
+#include "EphemeralCredentials.h"
+#include "EventUpdater.h"
+#include "ExportProcessor.h"
+#include "FullName.h"
+#include "GuiUtilities.h"
+#include "ImportMegaLinksDialog.h"
+#include "IntervalExecutioner.h"
+#include "LoginController.h"
 #include "mega/types.h"
+#include "MyBackupsHandle.h"
+#include "NodeSelectorSpecializations.h"
+#include "Onboarding.h"
+#include "OverQuotaDialog.h"
+#include "Platform.h"
+#include "PlatformStrings.h"
+#include "PowerOptions.h"
+#include "ProxyStatsEventHandler.h"
+#include "QMegaMessageBox.h"
+#include "QmlDialogManager.h"
+#include "QmlDialogWrapper.h"
+#include "QTMegaApiManager.h"
+#include "RequestListenerManager.h"
+#include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
+#include "StreamingFromMegaDialog.h"
+#include "SyncsMenu.h"
+#include "TransferMetaData.h"
+#include "UploadToMegaDialog.h"
+#include "UserAttributesManager.h"
+#include "UserMessageController.h"
+#include "Utilities.h"
 
-#include <QTranslator>
+#include <QtConcurrent/QtConcurrent>
+
+#include <assert.h>
+#include <DialogOpener.h>
+#include <QCheckBox>
 #include <QClipboard>
 #include <QDesktopWidget>
 #include <QFontDatabase>
+#include <QFuture>
 #include <QNetworkProxy>
 #include <QScreen>
 #include <QSettings>
 #include <QToolTip>
-#include <QFuture>
-#include <QCheckBox>
-#include <QtConcurrent/QtConcurrent>
-#include "RequestListenerManager.h"
-#include "AccountDetailsManager.h"
-
-#include <assert.h>
+#include <QTranslator>
+#include <StalledIssuesDialog.h>
 
 #ifdef Q_OS_LINUX
-    #include <signal.h>
-    #include <condition_variable>
-    #include <QSvgRenderer>
+#include <condition_variable>
+#include <QSvgRenderer>
+#include <signal.h>
 #endif
 
 #ifdef Q_OS_MACX
-    #include "platform/macx/PlatformImplementation.h"
+#include "platform/macx/PlatformImplementation.h"
 #endif
 
 #ifndef WIN32
@@ -316,6 +319,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     downloadAction = nullptr;
     streamAction = nullptr;
     myCloudAction = nullptr;
+    deviceCentreAction = nullptr;
     mWaiting = false;
     updated = false;
     mSyncing = false;
@@ -361,7 +365,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
     // eg. queueing a folder with 1k items for upload/download
-    mIntervalExecutioner = std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
+    mIntervalExecutioner =
+        std::make_unique<IntervalExecutioner>(Preferences::minSyncStateChangeProcessingIntervalMs);
 }
 
 MegaApplication::~MegaApplication()
@@ -479,16 +484,23 @@ void MegaApplication::initialize()
     }
 
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
-    megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
+
+    QTMegaApiManager::createMegaApi(megaApi,
+                                    Preferences::CLIENT_KEY,
+                                    basePath.toUtf8().constData(),
+                                    Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
+
+    QTMegaApiManager::createMegaApi(megaApiFolders,
+                                    Preferences::CLIENT_KEY,
+                                    basePath.toUtf8().constData(),
+                                    Preferences::USER_AGENT.toUtf8().constData());
+    megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncRemoved, this, &MegaApplication::onSyncModelUpdated);
     connect(model, &SyncInfo::syncDisabledListUpdated, this, &MegaApplication::updateTrayIcon);
-
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Graphics processing %1")
                  .arg(mDisableGfx ? QLatin1String("disabled")
@@ -692,10 +704,10 @@ void MegaApplication::initialize()
         connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 
-    mTransfersModel = new TransfersModel(nullptr);
+    mTransfersModel = new TransfersModel();
     connect(mTransfersModel.data(), &TransfersModel::transfersCountUpdated, this, &MegaApplication::onTransfersModelUpdate);
 
-    mStalledIssuesModel = new StalledIssuesModel(this);
+    mStalledIssuesModel = new StalledIssuesModel();
     connect(Platform::getInstance()->getShellNotifier().get(), &AbstractShellNotifier::shellNotificationProcessed,
             this, &MegaApplication::onNotificationProcessed);
 
@@ -1202,7 +1214,6 @@ void MegaApplication::start()
     // The same name is used for fast login
     QmlManager::instance()->setRootContextProperty(QString::fromUtf8("loginControllerAccess"),
                                                    mLoginController);
-
     if (preferences->getSession().isEmpty())
     {
         QmlDialogManager::instance()->openOnboardingDialog();
@@ -2171,8 +2182,6 @@ void MegaApplication::cleanAll()
     mLinkProcessor = nullptr;
     delete mSetManager;
     mSetManager = nullptr;
-    delete mStalledIssuesModel;
-    mStalledIssuesModel = nullptr;
     delete httpServer;
     httpServer = nullptr;
     delete uploader;
@@ -2183,9 +2192,6 @@ void MegaApplication::cleanAll()
     delegateListener = nullptr;
     mPricing.reset();
     mCurrency.reset();
-
-    delete AccountDetailsManager::instance();
-    delete EmailRequester::instance();
 
     mUserMessageController.reset();
     infoDialog->deleteLater();
@@ -2202,17 +2208,21 @@ void MegaApplication::cleanAll()
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
 
+    // Remove models using deleteLater to be sure that they are removed after removing Transfer and
+    // Stalled issues dialogs. Otherwise we need to set to null the view models as the views will
+    // contain dangling pointers
+    mStalledIssuesModel->deleteLater();
+    mStalledIssuesModel = nullptr;
+    mTransfersModel->deleteLater();
+    mTransfersModel = nullptr;
+
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
     // their deletion
     // Besides that, do not set any preference setting after this line, it won´t be persistent.
     QApplication::processEvents();
 
-    delete megaApi;
-    megaApi = nullptr;
-
-    delete megaApiFolders;
-    megaApiFolders = nullptr;
+    QTMegaApiManager::removeMegaApis();
 
     trayIcon->deleteLater();
     trayIcon = nullptr;
@@ -3948,6 +3958,23 @@ void MegaApplication::goToMyCloud()
                                          sender(), myCloudAction, true);
 }
 
+void MegaApplication::openDeviceCentre()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+#ifdef Q_OS_MACOS
+    if (infoDialog)
+    {
+        infoDialog->hide();
+    }
+#endif
+
+    QmlDialogManager::instance()->openDeviceCentreDialog();
+}
+
 void MegaApplication::importLinks()
 {
     if (appfinished)
@@ -4763,15 +4790,21 @@ void MegaApplication::externalFolderUpload(MegaHandle targetFolder)
         if (!foldersSelected.isEmpty())
         {
             QFuture<NodeCount> future;
+            QFutureWatcher<NodeCount>* watcher(new QFutureWatcher<NodeCount>());
 
-            connect(&mWatcher, &QFutureWatcher<NodeCount>::finished, this, [this, foldersSelected]() {
-                const NodeCount nodeCount = mWatcher.result();
-                processUploads(foldersSelected);
-                HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
-            });
+            connect(watcher,
+                    &QFutureWatcher<NodeCount>::finished,
+                    this,
+                    [this, foldersSelected, watcher]()
+                    {
+                        const NodeCount nodeCount = watcher->result();
+                        processUploads(foldersSelected);
+                        HTTPServer::onUploadSelectionAccepted(nodeCount.files, nodeCount.folders);
+                        watcher->deleteLater();
+                    });
 
             future = QtConcurrent::run(countFilesAndFolders, foldersSelected);
-            mWatcher.setFuture(future);
+            watcher->setFuture(future);
         }
         else
         {
@@ -5361,6 +5394,12 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
+    recreateMenuAction(&deviceCentreAction,
+                       infoDialogMenu,
+                       QString::fromLatin1("Device Center"),
+                       "://images/ico-cloud-drive.png",
+                       &MegaApplication::openDeviceCentre);
+
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
     {
@@ -5413,11 +5452,13 @@ void MegaApplication::createInfoDialogMenus()
         infoDialogMenu->addAction(aboutAction);
     }
 
-
     infoDialogMenu->addAction(myCloudAction);
+    // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
-    if (mSyncs2waysMenu) infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
-    if (mBackupsMenu) infoDialogMenu->addAction(mBackupsMenu->getAction());
+    if (mSyncs2waysMenu)
+        infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
+    if (mBackupsMenu)
+        infoDialogMenu->addAction(mBackupsMenu->getAction());
     infoDialogMenu->addAction(importLinksAction);
     infoDialogMenu->addAction(uploadAction);
     infoDialogMenu->addAction(downloadAction);

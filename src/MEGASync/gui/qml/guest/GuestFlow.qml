@@ -6,6 +6,8 @@ import common 1.0
 
 import components.images 1.0
 import components.buttons 1.0
+import components.menus 1.0
+
 import components.progressBars 1.0
 import components.texts 1.0 as Texts
 
@@ -147,6 +149,16 @@ Item {
         }
 
         KeyNavigation.tab: menu.visible ? aboutMenuItem : view.currentItem.leftButton
+
+
+        Keys.onPressed: {
+            if (event.key === Qt.Key_Space
+                || event.key === Qt.Key_Enter
+                || event.key === Qt.Key_Return) {
+                aboutMenuItem.forceActiveFocus();
+                aboutMenuItem.showFocusBorder = true;
+            }
+        }
     }
 
     Qml.Menu {
@@ -164,7 +176,7 @@ Item {
         background: Rectangle {
             implicitWidth: 200
             implicitHeight: 120
-            color: colorStyle.pageBackground
+            color: ColorTheme.pageBackground
             radius: 12
             layer.enabled: true
             layer.effect: DropShadow {
@@ -180,12 +192,6 @@ Item {
 
         onClosed: {
             menuButton.checked = false;
-        }
-
-        onVisibleChanged: {
-            if (visible) {
-                aboutMenuItem.forceActiveFocus();
-            }
         }
 
         MenuItem {
@@ -222,7 +228,7 @@ Item {
                 window.hide();
             }
 
-            KeyNavigation.tab: view.currentItem.leftButton
+            KeyNavigation.tab: aboutMenuItem
         }
     }
 
@@ -323,7 +329,7 @@ Item {
             title: GuestStrings.accountTempLocked
             description: GuestStrings.accountTempLockedEmail
             descriptionFontSize: Texts.Text.Size.NORMAL
-            descriptionColor: colorStyle.textPrimary
+            descriptionColor: ColorTheme.textPrimary
             descriptionLineHeight: 18
             leftButton {
                 text: GuestStrings.logOut

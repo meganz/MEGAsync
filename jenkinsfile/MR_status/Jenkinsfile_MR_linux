@@ -100,7 +100,7 @@ pipeline {
                     sh "echo Cloning SDK branch ${SDK_BRANCH}"
                     checkout([
                         $class: 'GitSCM',
-                        branches: [[name: "origin/${SDK_BRANCH}"]],
+                        branches: [[name: "${SDK_BRANCH}"]],
                         userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
                         extensions: [
                             [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]
@@ -143,7 +143,7 @@ pipeline {
                             sh "echo Cloning SDK branch ${SDK_BRANCH}"
                             checkout([
                                 $class: 'GitSCM',
-                                branches: [[name: "origin/${SDK_BRANCH}"]],
+                                branches: [[name: "${SDK_BRANCH}"]],
                                 userRemoteConfigs: [[ url: "${env.GIT_URL_SDK}", credentialsId: "12492eb8-0278-4402-98f0-4412abfb65c1" ]],
                                 extensions: [
                                     [$class: "UserIdentity",name: "jenkins", email: "jenkins@jenkins"]

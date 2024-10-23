@@ -406,6 +406,17 @@ public:
     void clearAll();
     void sync();
 
+    enum class ThemeType
+    {
+        LIGHT_THEME = 0,
+        DARK_THEME = 1,
+        LAST
+    };
+    Q_ENUM(ThemeType)
+
+    void setThemeType(ThemeType theme);
+    ThemeType getThemeType();
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -737,6 +748,7 @@ protected:
     static const QString systemTrayLastPromptTimestamp;
     static const QString lastDailyStatTimeKey;
     static const QString askOnExclusionRemove;
+    static const QString themeKey;
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -791,6 +803,7 @@ protected:
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
     static const bool defaultAskOnExclusionRemove;
+    static const ThemeType defaultTheme;
 
 private:
     void updateFullName();

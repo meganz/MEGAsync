@@ -11,10 +11,13 @@ class SyncSettings;
 
 enum class MoveOrRenameIssueChosenSide
 {
-    NONE,
-    LOCAL,
-    REMOTE,
+    NONE = 0x0,
+    LOCAL = 0x1,
+    REMOTE = 0x2,
 };
+
+Q_DECLARE_FLAGS(ChoosableSides, MoveOrRenameIssueChosenSide)
+Q_DECLARE_OPERATORS_FOR_FLAGS(ChoosableSides)
 
 class MoveOrRenameCannotOccurIssue : public StalledIssue, public mega::MegaRequestListener
 {
@@ -27,14 +30,14 @@ public:
 
     bool isValid() const override;
 
-    void fillIssue(const mega::MegaSyncStall*stall) override;
-    void fillCloudSide(const mega::MegaSyncStall* stall);
-    void fillLocalSide(const mega::MegaSyncStall* stall);
+    void fillIssue(const mega::MegaSyncStall* stall) override;
 
     void setIsSolved(SolveType type) override;
     bool isAutoSolvable() const override;
     void solveIssue(MoveOrRenameIssueChosenSide side);
     StalledIssue::AutoSolveIssueResult autoSolveIssue() override;
+
+    bool isKeepSideAvailable(MoveOrRenameIssueChosenSide side) const;
 
     bool checkForExternalChanges() override;
 
@@ -55,9 +58,6 @@ public:
 signals:
     void issueBeingSolved();
 
-protected:
-    void onRequestFinish(mega::MegaApi*, mega::MegaRequest *request, mega::MegaError *e) override;
-
 private slots:
     void onSyncPausedEnds(std::shared_ptr<SyncSettings> syncSettings);
 
@@ -65,15 +65,35 @@ private:
     void onUndoFinished(std::shared_ptr<SyncSettings> syncSettings);
 
     bool mSolvingStarted;
-    bool mUndoSuccessful;
+
+    bool solveIssueByPathProblem(StalledIssueSPtr issue);
+    bool solveSourceWasMovedToElsewhere(StalledIssueSPtr issue);
+    bool solveParentFolderDoesNotExist(StalledIssueSPtr issue);
+    bool solveDestinationPathInUnresolvedArea(StalledIssueSPtr issue);
+    bool solveRemoteGenericIssues(StalledIssueSPtr issue);
+    bool solveLocalGenericIssues(StalledIssueSPtr issue);
+
+    bool wasSourceDeleted(StalledIssueSPtr issue) const;
+    bool areInTheSameDirectory(StalledIssueSPtr issue);
+
+    bool remoteSideWasChosen() const;
+    bool localSideWasChosen() const;
+
+    ChoosableSides calculateChoosableSidesByPathProblem(StalledIssueSPtr issue);
 
     static QMap<mega::MegaHandle, MoveOrRenameIssueChosenSide> mChosenSideBySyncId;
     MoveOrRenameIssueChosenSide mChosenSide;
     int mCombinedNumberOfIssues;
+    // Not in used for the moment
     QSet<QString> mFailedLocalPaths;
     QMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mFailedRemotePaths;
+    //
+
+    int mUndoSuccessful;
     uint mSolveAttempts;
-    std::shared_ptr<mega::QTMegaRequestListener> mListener;
+
+    StalledIssuesList mDetectedCloudSideIssuesToFix;
+    StalledIssuesList mDetectedLocalSideIssuesToFix;
 };
 
 class MoveOrRenameCannotOccurFactory : public StalledIssuesFactory
@@ -82,11 +102,16 @@ public:
     MoveOrRenameCannotOccurFactory(){}
     ~MoveOrRenameCannotOccurFactory() = default;
 
-    std::shared_ptr<StalledIssue> createIssue(MultiStepIssueSolverBase* solver, const mega::MegaSyncStall* stall) override;
+    StalledIssueSPtr createIssue(MultiStepIssueSolverBase* solver,
+                                 const mega::MegaSyncStall* stall) override;
     void clear() override;
+    void finish() override;
+
+    QSet<mega::MegaHandle> backupSyncsDetected() const;
 
 private:
     QHash<mega::MegaHandle, std::shared_ptr<MoveOrRenameCannotOccurIssue>> mIssueBySyncId;
+    QSet<mega::MegaHandle> mBackupSyncsDetected;
 };
 
 class MoveOrRenameMultiStepIssueSolver : public MultiStepIssueSolver<MoveOrRenameCannotOccurIssue>

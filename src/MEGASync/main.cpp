@@ -422,12 +422,15 @@ int main(int argc, char *argv[])
     ScaleFactorManager scaleFactorManager(OsType::LINUX);
 #endif
 
-    try {
-        scaleFactorManager.setScaleFactorEnvironmentVariable();
-    } catch (const std::exception& exception)
+    try
     {
-        const QString errorMessage{QString::fromStdString("Error while setting scale factor environment variable: "+
-                    std::string(exception.what()))};
+        scaleFactorManager.setScaleFactorEnvironmentVariable();
+    }
+    catch (const std::exception& exception)
+    {
+        const QString errorMessage{
+            QString::fromStdString("Error while setting scale factor environment variable: " +
+                                   std::string(exception.what()))};
         logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
     }
 #endif

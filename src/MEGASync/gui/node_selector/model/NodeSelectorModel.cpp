@@ -1039,19 +1039,19 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                 {
                     if (multipleRequest)
                     {
-                        if (mMovedItemsType & MovedItemsType::BOTH)
+                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
                         {
                             msgInfo.text = tr("Error removing items");
                             msgInfo.informativeText =
                                 tr("The items couldn’t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FILES)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
                         {
                             msgInfo.text = tr("Error removing files");
                             msgInfo.informativeText =
                                 tr("The files couldn’t be removed. Try again later");
                         }
-                        else if (mMovedItemsType & MovedItemsType::FOLDERS)
+                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
                         {
                             msgInfo.text = tr("Error removing folders");
                             msgInfo.informativeText =
@@ -1080,6 +1080,10 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
                         }
                     }
                 }
+
+                //Reset value
+                mMovedItemsType = MovedItemsType::NONE;
+
                 emit showMessageBox(msgInfo);
             }
 

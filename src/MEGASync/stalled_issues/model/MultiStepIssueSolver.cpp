@@ -6,10 +6,10 @@ int MultiStepIssueSolverBase::mSolversFixedInTheSameNotification = 0;
 int MultiStepIssueSolverBase::mSolversFailedInTheSameNotification = 0;
 int MultiStepIssueSolverBase::mSolversBeingFixedInTheSameNotification = 0;
 
-MultiStepIssueSolverBase::MultiStepIssueSolverBase(std::shared_ptr<StalledIssue> issue)
-    : mDeadline(std::make_unique<QTimer>(this))
-    , mIssue(issue)
-    , mFailed(false)
+MultiStepIssueSolverBase::MultiStepIssueSolverBase(StalledIssueSPtr issue):
+    mDeadline(std::make_unique<QTimer>(this)),
+    mIssue(issue),
+    mFailed(false)
 {
     mDeadline->setInterval(REQUEST_THRESHOLD);
     mDeadline->setSingleShot(true);

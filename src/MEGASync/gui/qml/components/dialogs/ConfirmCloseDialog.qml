@@ -35,7 +35,7 @@ Window {
     minimumHeight: root.dialogHeight
     flags: Qt.Dialog
     modality: Qt.WindowModal
-    color: colorStyle.surface1
+    color: ColorTheme.surface1
     title: Constants.mega
 
     Column {

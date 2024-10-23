@@ -1,20 +1,20 @@
 #include "NodeSelector.h"
-#include "ui_NodeSelector.h"
-#include "MegaApplication.h"
-#include "QMegaMessageBox.h"
-#include "Utilities.h"
+
 #include "megaapi.h"
-#include "NodeSelectorProxyModel.h"
-#include "NodeSelectorModel.h"
-#include "NodeSelectorTreeViewWidgetSpecializations.h"
-
+#include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "NodeSelectorModel.h"
+#include "NodeSelectorProxyModel.h"
+#include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "QMegaMessageBox.h"
+#include "ui_NodeSelector.h"
+#include "Utilities.h"
 
+#include <optional>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
-
-#include <optional>
 
 using namespace mega;
 

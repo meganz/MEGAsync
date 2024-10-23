@@ -255,6 +255,7 @@ const QString Preferences::systemTrayPromptSuppressed = QString::fromLatin1("sys
 const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("systemTrayLastPromptTimestamp");
 const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
 const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
+const QString Preferences::themeKey = QString::fromLatin1("themeType");
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -304,7 +305,7 @@ const bool  Preferences::defaultNeverCreateLink   = false;
 const bool  Preferences::defaultImportMegaLinksEnabled = true;
 const bool  Preferences::defaultDownloadMegaLinksEnabled = true;
 const bool Preferences::defaultSystemTrayPromptSuppressed = false;
-
+const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::LIGHT_THEME;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
@@ -2533,6 +2534,22 @@ void Preferences::sync()
 {
     QMutexLocker locker(&mutex);
     mSettings->sync();
+}
+
+void Preferences::setThemeType(ThemeType theme)
+{
+    auto currentValue(getThemeType());
+
+    if (theme != currentValue)
+    {
+        setValueConcurrently(themeKey, static_cast<int>(theme));
+    }
+}
+
+Preferences::ThemeType Preferences::getThemeType()
+{
+    auto value = getValueConcurrent<int>(themeKey, static_cast<int>(defaultTheme));
+    return static_cast<ThemeType>(value);
 }
 
 void Preferences::setEmailAndGeneralSettings(const QString &email)

@@ -3,19 +3,20 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class SyncAccountFullMessage;
 class SyncStallModeSelector;
 }
 
 class SyncSettingsUIBase;
 
-class SyncSettingsElements : public QObject
+class SyncSettingsElements: public QObject
 {
     Q_OBJECT
 
 public:
-    explicit SyncSettingsElements(QObject *parent = nullptr);
+    explicit SyncSettingsElements(QObject* parent = nullptr);
     ~SyncSettingsElements();
 
     void initElements(SyncSettingsUIBase* syncSettingsUi);
@@ -29,6 +30,7 @@ private slots:
     void onAdvanceModeSelected(bool checked);
 
     void onPreferencesValueChanged(QString key);
+    void applyPreviousExclusions();
 
 private:
     Ui::SyncAccountFullMessage* syncAccountFullMessageUI;

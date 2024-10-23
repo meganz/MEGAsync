@@ -110,7 +110,7 @@ private:
 
     static long long getLastRequest(const Flags& flags,
                                     const UserStats<long long>& lastRequestUserStats);
-    static AccountDetailsManager* mInstance;
+    static AccountDetailsManager mInstance;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(AccountDetailsManager::Flags)

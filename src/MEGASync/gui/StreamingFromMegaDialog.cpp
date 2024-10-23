@@ -1,17 +1,20 @@
-#include "mega/types.h"
 #include "StreamingFromMegaDialog.h"
-#include "ui_StreamingFromMegaDialog.h"
-#include "NodeSelectorSpecializations.h"
-#include "DialogOpener.h"
 
-#include "QMegaMessageBox.h"
+#include "DialogOpener.h"
+#include "mega/types.h"
+#include "MegaNodeNames.h"
+#include "NodeSelectorSpecializations.h"
 #include "Platform.h"
+#include "QMegaMessageBox.h"
+#include "QTMegaApiManager.h"
+#include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
-#include <MegaNodeNames.h>
+
+#include <QtConcurrent/QtConcurrent>
 
 #include <QCloseEvent>
+#include <QFileDialog>
 #include <QInputDialog>
-#include <QtConcurrent/QtConcurrent>
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
@@ -55,7 +58,10 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, mega::M
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()
 {
-    megaApi->httpServerStop();
+    if (QTMegaApiManager::isMegaApiValid(megaApi))
+    {
+        megaApi->httpServerStop();
+    }
 }
 
 void StreamingFromMegaDialog::changeEvent(QEvent *event)

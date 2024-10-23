@@ -17,7 +17,7 @@ Qml.Text {
         HUGE = 48
     }
 
-    color: enabled ? colorStyle.textPrimary : colorStyle.textDisabled
+    color: enabled ? ColorTheme.textPrimary : ColorTheme.textDisabled
     wrapMode: Text.WordWrap
     font {
         family: FontStyles.fontFamily

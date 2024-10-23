@@ -101,10 +101,11 @@ private:
     inline bool isLinkObjectValid(int index) const;
     void sendLinkInfoAvailableSignal(int index);
     void continueOrFinishLinkInfoReq();
-    void createInvalidLinkObject(int index, int error);
+    void createInvalidLinkObject(int index, int error, const QString& name = QString::fromUtf8(""));
 
     void addTransfersAndStartIfNotStartedYet(LinkTransferType transferType);
     void processNextTransfer();
+    QString getReasonForExpiredLink(mega::MegaRequest* request, mega::MegaError* e);
 
 private:
     mega::MegaApi* mMegaApi;

@@ -42,3 +42,23 @@ DialogBlocker::~DialogBlocker()
 {
     close();
 }
+
+QList<QPointer<QWidget>> DialogOpener::getAllOpenedDialogs()
+{
+    QList<QPointer<QWidget>> dialogs;
+
+    foreach (const auto& dialogInfo, mOpenedDialogs)
+    {
+        auto dialogPtr = std::static_pointer_cast<DialogInfo<QWidget>>(dialogInfo);
+        if (dialogPtr)
+        {
+            auto dialog = dialogPtr->getDialog();
+            if (dialog)
+            {
+                dialogs.append(dialog);
+            }
+        }
+    }
+
+    return dialogs;
+}

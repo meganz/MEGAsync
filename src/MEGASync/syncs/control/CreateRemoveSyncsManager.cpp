@@ -1,9 +1,9 @@
 #include "CreateRemoveSyncsManager.h"
 
 #include "DialogOpener.h"
-#include "GuiUtilities.h"
 #include "QmlDialogWrapper.h"
 #include "RemoveSyncConfirmationDialog.h"
+#include "SyncController.h"
 #include "SyncsComponent.h"
 #include "SyncSettings.h"
 

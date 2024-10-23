@@ -1,16 +1,18 @@
 #include "SyncTableView.h"
 
+#include "MenuItemAction.h"
 #include "Platform.h"
 #include "PlatformStrings.h"
-#include "MenuItemAction.h"
 #include "SyncItemModel.h"
 #include "SyncSettings.h"
 
-#include <QHeaderView>
-#include <QMenu>
-#include <QToolTip>
-#include <QPainter>
 #include <QtConcurrent/QtConcurrent>
+
+#include <QHeaderView>
+#include <QKeyEvent>
+#include <QMenu>
+#include <QPainter>
+#include <QToolTip>
 
 SyncTableView::SyncTableView(QWidget *parent)
     : QTableView(parent),

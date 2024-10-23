@@ -86,10 +86,10 @@ Item {
         id: background
 
         anchors.fill: parent
-        color: colorStyle.pageBackground
+        color: ColorTheme.pageBackground
         radius: 8
         border {
-            color: colorStyle.borderDisabled
+            color: ColorTheme.borderDisabled
             width: 1
         }
 

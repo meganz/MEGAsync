@@ -1,7 +1,7 @@
 #include "ScaleFactorManager.h"
-#include <QCoreApplication>
-#include <QGuiApplication>
+
 #include <QDebug>
+#include <QGuiApplication>
 #include <QProcess>
 #include <QScreen>
 #include <stdexcept>
@@ -66,9 +66,12 @@ ScreensInfo createScreensInfo(OsType osType, const QString& desktopName)
         }
     }
 
+    // QGuiApplication needs to be created, even if screens() is static.
+    // Otherwise, the screens are not detected.
     int argc = 0;
     QGuiApplication app{argc, nullptr};
     const auto screens = app.screens();
+
     ScreensInfo screensInfo;
     for (const auto& screen: screens)
     {

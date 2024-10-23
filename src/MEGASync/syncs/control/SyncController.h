@@ -58,6 +58,9 @@ public:
     void setSyncToPause(std::shared_ptr<SyncSettings> syncSetting);
     void setSyncToSuspend(std::shared_ptr<SyncSettings> syncSetting);
     void setSyncToDisabled(std::shared_ptr<SyncSettings> syncSetting);
+    // Change state and then set to running
+    void resetSync(std::shared_ptr<SyncSettings> syncSetting,
+                   mega::MegaSync::SyncRunningState initialState);
 
     // Local folder checks
     QString getIsLocalFolderAlreadySyncedMsg(const QString& path, const mega::MegaSync::SyncType& syncType);

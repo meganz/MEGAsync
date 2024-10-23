@@ -28,7 +28,7 @@ FooterButtonsPage {
             left: parent.left
             right: parent.right
         }
-        spacing: 24
+        spacing: Constants.defaultComponentSpacing
 
         HeaderTexts {
             id: headerItem
@@ -39,7 +39,7 @@ FooterButtonsPage {
             description: OnboardingStrings.chooseInstallation
             spacing: 36
             descriptionWeight: Font.DemiBold
-            descriptionColor: colorStyle.textPrimary
+            descriptionColor: ColorTheme.textPrimary
         }
 
         ButtonGroup {

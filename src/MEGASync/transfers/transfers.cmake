@@ -25,6 +25,7 @@ set(DESKTOP_APP_TRANSFERS_HEADERS
     transfers/gui/TransferScanCancelUi.h
     transfers/gui/TransferWidgetHeaderItem.h
     transfers/gui/TransfersWidget.h
+    transfers/gui/TransfersAccountInfoWidget.h
 )
 
 set(DESKTOP_APP_TRANSFERS_SOURCES
@@ -52,6 +53,7 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     transfers/gui/TransferScanCancelUi.cpp
     transfers/gui/TransferWidgetHeaderItem.cpp
     transfers/gui/TransfersWidget.cpp
+    transfers/gui/TransfersAccountInfoWidget.cpp
 )
 
 
@@ -71,6 +73,7 @@ target_sources_conditional(MEGAsync
    transfers/gui/win/TransfersStatusWidget.ui
    transfers/gui/win/TransfersSummaryWidget.ui
    transfers/gui/win/SomeIssuesOccurredMessage.ui
+   transfers/gui/win/TransfersAccountInfoWidget.ui
    transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/win/DuplicatedNodeItem.ui
 )
@@ -91,6 +94,7 @@ target_sources_conditional(MEGAsync
    transfers/gui/macx/TransfersStatusWidget.ui
    transfers/gui/macx/TransfersSummaryWidget.ui
    transfers/gui/macx/SomeIssuesOccurredMessage.ui
+   transfers/gui/macx/TransfersAccountInfoWidget.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/macx/DuplicatedNodeItem.ui
 )
@@ -111,6 +115,7 @@ target_sources_conditional(MEGAsync
    transfers/gui/linux/TransfersStatusWidget.ui
    transfers/gui/linux/TransfersSummaryWidget.ui
    transfers/gui/linux/SomeIssuesOccurredMessage.ui
+   transfers/gui/linux/TransfersAccountInfoWidget.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeDialog.ui
    transfers/gui/DuplicatedNodeDialogs/linux/DuplicatedNodeItem.ui
 )

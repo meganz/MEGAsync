@@ -793,6 +793,13 @@ QString Utilities::createSimpleUsedString(long long usedData)
     return createSimpleUsedStringWithoutReplacement(usedData).arg(getSizeString(usedData));
 }
 
+QString Utilities::createSimpleUsedOfString(long long usedData, long long totalData)
+{
+    return QCoreApplication::translate("Utilities", "%1 of %2")
+        .arg(getSizeString(usedData))
+        .arg(getSizeString(totalData));
+}
+
 QString Utilities::createSimpleUsedStringWithoutReplacement(long long usedData)
 {
     return QCoreApplication::translate("Utilities", "%1 used", "", toNearestUnit(usedData));
@@ -1536,6 +1543,97 @@ bool Utilities::monthHasChangedSince(qint64 msecs)
 QString Utilities::getTranslatedError(const MegaError* error)
 {
     return QCoreApplication::translate("MegaError", error->getErrorString());
+}
+
+bool Utilities::restoreNode(MegaNode* node,
+                            MegaApi* megaApi,
+                            bool async,
+                            std::function<void(MegaRequest*, MegaError*)> finishFunc)
+{
+    if (!node)
+    {
+        return false;
+    }
+
+    auto newParent = std::unique_ptr<MegaNode>(megaApi->getNodeByHandle(node->getRestoreHandle()));
+
+    if (!newParent)
+    {
+        return false;
+    }
+
+    auto moveAnswer = [finishFunc](MegaRequest* request, MegaError* e) {
+        if (finishFunc)
+        {
+            finishFunc(request, e);
+        }
+    };
+
+    if (async)
+    {
+        auto listener =
+            RequestListenerManager::instance().registerAndGetSynchronousFinishListener(moveAnswer);
+
+        megaApi->moveNode(node, newParent.get(), listener.get());
+    }
+    else
+    {
+        MegaApiSynchronizedRequest::runRequestLambdaWithResult(
+            [moveAnswer](MegaNode* node, MegaNode* targetNode, MegaRequestListener* listener) {
+                MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+            },
+            megaApi,
+            moveAnswer,
+            node,
+            newParent.get());
+    }
+
+    return true;
+}
+
+bool Utilities::restoreNode(const char* nodeName,
+                            const char* nodeDirectoryPath,
+                            MegaApi* megaApi,
+                            std::function<void(MegaRequest*, MegaError*)> finishFunc)
+{
+    std::unique_ptr<MegaNode> directoryNode(megaApi->getNodeByPath(nodeDirectoryPath));
+    if (directoryNode)
+    {
+        MegaNode* rubbishNodeToRestore(nullptr);
+        std::unique_ptr<MegaNodeList> rubbishNodes(
+            MegaSyncApp->getMegaApi()->getChildren(MegaSyncApp->getRubbishNode().get()));
+        for (auto index = 0; index < rubbishNodes->size(); ++index)
+        {
+            auto rubbishNode(rubbishNodes->get(index));
+            if (rubbishNode)
+            {
+                if (rubbishNode->getRestoreHandle() == directoryNode->getHandle() &&
+                    strcmp(nodeName, rubbishNode->getName()) == 0)
+                {
+                    if (!rubbishNodeToRestore ||
+                        rubbishNodeToRestore->getCreationTime() < rubbishNode->getCreationTime())
+                    {
+                        rubbishNodeToRestore = rubbishNode;
+                    }
+                }
+            }
+        }
+
+        if (rubbishNodeToRestore)
+        {
+            return restoreNode(rubbishNodeToRestore, megaApi, false, finishFunc);
+        }
+
+        return false;
+    }
+    else
+    {
+        QFileInfo directoryInfo(QString::fromUtf8(nodeDirectoryPath));
+        return restoreNode(directoryInfo.fileName().toStdString().c_str(),
+                           directoryInfo.path().toStdString().c_str(),
+                           megaApi,
+                           finishFunc);
+    }
 }
 
 long long Utilities::getSystemsAvailableMemory()

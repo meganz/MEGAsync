@@ -91,6 +91,33 @@ struct PSA_info
     }
 };
 
+namespace DeviceOs
+{
+Q_NAMESPACE
+
+enum Os
+{
+    UNDEFINED,
+    LINUX,
+    MAC,
+    WINDOWS
+};
+Q_ENUM_NS(Os)
+
+inline DeviceOs::Os getCurrentOS()
+{
+#ifdef Q_OS_WINDOWS
+    return DeviceOs::WINDOWS;
+#endif
+#ifdef Q_OS_MACOS
+    return DeviceOs::MAC;
+#endif
+#ifdef Q_OS_LINUX
+    return DeviceOs::LINUX;
+#endif
+}
+}
+
 class IStorageObserver
 {
 public:
@@ -323,6 +350,7 @@ public:
     static ProgressSize getProgressSizes(long long transferredBytes, long long totalBytes);
 
     static QString createSimpleUsedString(long long usedData);
+    static QString createSimpleUsedOfString(long long usedData, long long totalData);
     static QString createSimpleUsedStringWithoutReplacement(long long usedData);
     static QString createCompleteUsedString(long long usedData, long long totalData, int percentage);
     static QString getTimeString(long long secs, bool secondPrecision = true, bool color = true);
@@ -373,6 +401,16 @@ public:
     static bool monthHasChangedSince(qint64 msecs);
 
     static QString getTranslatedError(const mega::MegaError* error);
+
+    static bool restoreNode(mega::MegaNode* node,
+                            mega::MegaApi* megaApi,
+                            bool async,
+                            std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
+
+    static bool restoreNode(const char* nodeName,
+                            const char* nodeDirectoryPath,
+                            mega::MegaApi* megaApi,
+                            std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
 
 private:
     Utilities() {}

@@ -65,7 +65,35 @@ QPushButton
 padding-right: 12px;
 padding-left: 12px;
 }
-</string>
+
+#bUpgrade
+{
+font-family: Inter;
+font-size: 12px;
+line-height: 18px;
+border: 1px solid #0000001A;
+border-radius: 4px;
+color: #FFFFFF;
+padding: 4px 8px;
+background-color:  #00BFA5;
+image-position: left;
+text-align: right;
+}
+
+#bUpgrade::hover
+{
+background-color:  #00A787;
+}
+
+#bUpgrade::pressed
+{
+background-color: #00D7C2;
+}
+
+#bUpgrade::disabled
+{
+background-color: #00BFA54D;
+}</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -248,53 +276,30 @@ border: none;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>30</height>
+                   <height>26</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>30</height>
+                   <height>26</height>
                   </size>
                  </property>
                  <property name="cursor">
-                  <cursorShape>ArrowCursor</cursorShape>
+                  <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="mouseTracking">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">#bUpgrade
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0, 0, 0, 5%);
-border-radius: 3px;
-color: #333333;
-padding: 3px 12px 3px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
-}
-
-#bUpgrade::hover
-{
-border: 1px solid rgba(0, 0, 0, 10%);
-}
-
-#bUpgrade::pressed
-{
-font-family: Lato;
-font-size: 14px;
-border: 1px solid rgba(0, 0, 0, 5%);
-border-radius: 3px;
-color: #333333;
-padding: 6px 12px 6px 12px;
-background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-stop: 0 #ffffff, stop: 1 #fafafa);
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="text">
-                  <string>Upgrade to PRO</string>
+                  <string/>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../Resources_win.qrc">
+                   <normaloff>:/images/star-spark.svg</normaloff>:/images/star-spark.svg</iconset>
                  </property>
                  <property name="flat">
                   <bool>true</bool>
@@ -2677,7 +2682,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 <string/>
                                </property>
                                <property name="icon">
-                                <iconset>
+                                <iconset resource="../Resources_win.qrc">
                                  <normaloff>:/images/icons/infodialog/warning-disabled-backups.png</normaloff>:/images/icons/infodialog/warning-disabled-backups.png</iconset>
                                </property>
                                <property name="iconSize">
@@ -3770,6 +3775,12 @@ border: none;
    <container>1</container>
   </customwidget>
   <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
    <class>InfoDialogTransfersWidget</class>
    <extends>QWidget</extends>
    <header location="global">InfoDialogTransfersWidget.h</header>
@@ -3785,12 +3796,6 @@ border: none;
    <class>PSAwidget</class>
    <extends>QWidget</extends>
    <header location="global">PSAwidget.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CircularUsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>CircularUsageProgressBar.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>

@@ -1,51 +1,42 @@
 #ifndef MEGAAPPLICATION_H
 #define MEGAAPPLICATION_H
 
-#include <QApplication>
-#include <QSystemTrayIcon>
-#include <QMenu>
-#include <QAction>
-#include <QDir>
-#include <QLocalServer>
-#include <QLocalSocket>
-#include <QDataStream>
-#include <QQueue>
-#include <QNetworkInterface>
-#include <QFutureWatcher>
+#include "BlockingStageProgressController.h"
+#include "DownloadFromMegaDialog.h"
+#include "HTTPServer.h"
+#include "InfoDialog.h"
+#include "LinkProcessor.h"
+#include "megaapi.h"
+#include "MegaDownloader.h"
+#include "MegaSyncLogger.h"
+#include "MegaUploader.h"
+#include "notifications/DesktopNotifications.h"
+#include "PasteMegaLinksDialog.h"
+#include "Preferences.h"
+#include "QTMegaListener.h"
+#include "ScanStageController.h"
+#include "SetManager.h"
+#include "SettingsDialog.h"
+#include "SyncInfo.h"
+#include "ThreadPool.h"
+#include "TransferManager.h"
+#include "TransferQuota.h"
+#include "UpdateTask.h"
+#include "UpgradeOverStorage.h"
+#include "Utilities.h"
 
 #include <memory>
-
-#include "TransferManager.h"
-#include "InfoDialog.h"
-#include "UpgradeOverStorage.h"
-#include "SettingsDialog.h"
-#include "DownloadFromMegaDialog.h"
-#include "StreamingFromMegaDialog.h"
-#include "ImportMegaLinksDialog.h"
-#include "MultiQFileDialog.h"
-#include "PasteMegaLinksDialog.h"
-#include "ChangeLogDialog.h"
-#include "Preferences.h"
-#include "HTTPServer.h"
-#include "MegaUploader.h"
-#include "MegaDownloader.h"
-#include "UpdateTask.h"
-#include "MegaSyncLogger.h"
-#include "ThreadPool.h"
-#include "Utilities.h"
-#include "SetManager.h"
-#include "SyncInfo.h"
-#include "SyncController.h"
-#include "megaapi.h"
-#include "QTMegaListener.h"
-#include "VerifyLockMessage.h"
-#include "notifications/DesktopNotifications.h"
-#include "ScanStageController.h"
-#include "TransferQuota.h"
-#include "BlockingStageProgressController.h"
-#include "QmlManager.h"
-#include "QmlDialogManager.h"
-#include "UserMessageController.h"
+#include <QAction>
+#include <QApplication>
+#include <QDataStream>
+#include <QDir>
+#include <QFutureWatcher>
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QMenu>
+#include <QNetworkInterface>
+#include <QQueue>
+#include <QSystemTrayIcon>
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -238,6 +229,7 @@ public slots:
     void importLinks();
     void officialWeb();
     void goToMyCloud();
+    void openDeviceCentre();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
@@ -376,6 +368,7 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *myCloudAction;
+    MenuItemAction* deviceCentreAction;
     MenuItemAction *updateAction;
     MenuItemAction *aboutAction;
     QAction *showStatusAction;
@@ -484,7 +477,6 @@ protected:
     QMutex mMutexOpenUrls;
     QMap<QString, std::chrono::system_clock::time_point> mOpenUrlsClusterTs;
 
-    // Note: mSyncController is used only to add the syncs set up in the onboarding wizard
     LogoutController* mLogoutController;
 
     QPointer<TransfersModel> mTransfersModel;
@@ -492,7 +484,6 @@ protected:
     ScanStageController scanStageController;
     std::shared_ptr<FolderTransferListener> mFolderTransferListener;
 
-    bool mDisableGfx;
     StalledIssuesModel* mStalledIssuesModel;
     std::unique_ptr<StatsEventHandler> mStatsEventHandler;
 
@@ -502,6 +493,7 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
+    bool mDisableGfx;
 
     std::unique_ptr<UserMessageController> mUserMessageController;
 
@@ -610,10 +602,6 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-
-private:
-    QFutureWatcher<NodeCount> mWatcher;
-
 };
 
 #endif // MEGAAPPLICATION_H

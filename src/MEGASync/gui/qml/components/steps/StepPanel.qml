@@ -26,21 +26,21 @@ Rectangle {
     property url helpUrl
 
     height: 104
-    color: colorStyle.pageBackground
+    color: ColorTheme.pageBackground
 
     state: root.step1
     states: [
         State {
             name: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.CURRENT; }
-            PropertyChanges { target: line; color: colorStyle.iconButtonDisabled; }
+            PropertyChanges { target: line; color: ColorTheme.buttonDisabled; }
             PropertyChanges { target: step2; toState: Step.ToStates.DISABLED; }
         },
         State {
             name: root.step2
             extend: root.step1
             PropertyChanges { target: step1; toState: Step.ToStates.DONE; }
-            PropertyChanges { target: line; color: colorStyle.iconButton; }
+            PropertyChanges { target: line; color: ColorTheme.buttonPrimary; }
             PropertyChanges { target: step2; toState: Step.ToStates.CURRENT; }
         },
         State {
@@ -90,7 +90,7 @@ Rectangle {
 
                 Layout.preferredWidth: Math.min((contentItem.width - step2.width - step1.width - (3 * root.contentSpacing) - helpButton.width), root.lineWidth)
                 Layout.preferredHeight: root.lineHeight
-                color: colorStyle.buttonSecondaryPressed
+                color: ColorTheme.buttonSecondaryPressed
                 radius: root.lineRadius
             }
 

@@ -11,10 +11,10 @@ QtObject {
         BOTH
     }
 
-    property color colorEnabled: colorStyle.textInverseAccent
-    property color colorDisabled: colorStyle.textDisabled
-    property color colorHovered: colorStyle.textInverseAccent
-    property color colorPressed: colorStyle.textInverseAccent
+    property color colorEnabled: ColorTheme.textInverseAccent
+    property color colorDisabled: ColorTheme.textDisabled
+    property color colorHovered: ColorTheme.textInverseAccent
+    property color colorPressed: ColorTheme.textInverseAccent
     property string source
     property int position: Icon.Position.RIGHT
     property int busyIndicatorPosition: Icon.Position.RIGHT

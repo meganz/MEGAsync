@@ -45,7 +45,7 @@ BackupsQmlDialog {
 
             width: parent.width
             height: parent.height - stepPanelItem.height
-            color: colorStyle.surface1
+            color: ColorTheme.surface1
 
             state: backupsFlow
             states: [

@@ -1,20 +1,21 @@
 #include "StalledIssuesModel.h"
 
+#include "FolderMatchedAgainstFileIssue.h"
 #include "MegaApplication.h"
-#include <StalledIssuesDelegateWidgetsCache.h>
-#include "NameConflictStalledIssue.h"
+#include "MegaIgnoreManager.h"
 #include "MoveOrRenameCannotOccurIssue.h"
+#include "NameConflictStalledIssue.h"
+#include "StatsEventHandler.h"
+#include "SyncController.h"
+
+#include <DialogOpener.h>
 #include <IgnoredStalledIssue.h>
 #include <LocalOrRemoteUserMustChooseStalledIssue.h>
-#include "FolderMatchedAgainstFileIssue.h"
-#include <QMegaMessageBox.h>
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
 #include <MultiStepIssueSolver.h>
-#include "MegaIgnoreManager.h"
-#include "StatsEventHandler.h"
-
+#include <QMegaMessageBox.h>
 #include <QSortFilterProxyModel>
+#include <StalledIssuesDelegateWidgetsCache.h>
+#include <StalledIssuesDialog.h>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {
@@ -67,8 +68,8 @@ const int UPDATE_ISSUES_MAX_INTERVAL = 300000; /*5 minutes*/
 const int UPDATE_ISSUES_INTERVAL_DELAY_CONSTANT = 2;
 const int MAX_EMPTY_STALLED_LIST_ALLOWED = 5;
 
-StalledIssuesModel::StalledIssuesModel(QObject* parent):
-    QAbstractItemModel(parent),
+StalledIssuesModel::StalledIssuesModel():
+    QAbstractItemModel(),
     mMegaApi(MegaSyncApp->getMegaApi()),
     mIsStalled(false),
     mIsStalledChanged(false),
@@ -78,13 +79,14 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent):
     mStalledIssuesThread = new QThread();
     mStalledIssuesReceiver = new StalledIssuesReceiver();
 
-    mRequestListener = new mega::QTMegaRequestListener(mMegaApi, mStalledIssuesReceiver);
+    mRequestListener =
+        std::make_unique<mega::QTMegaRequestListener>(mMegaApi, mStalledIssuesReceiver);
     mStalledIssuesReceiver->moveToThread(mStalledIssuesThread);
     mRequestListener->moveToThread(mStalledIssuesThread);
-    mMegaApi->addRequestListener(mRequestListener);
+    mMegaApi->addRequestListener(mRequestListener.get());
 
-    mGlobalListener = new mega::QTMegaGlobalListener(mMegaApi,this);
-    mMegaApi->addGlobalListener(mGlobalListener);
+    mGlobalListener = std::make_unique<mega::QTMegaGlobalListener>(mMegaApi, this);
+    mMegaApi->addGlobalListener(mGlobalListener.get());
 
     connect(mStalledIssuesReceiver, &StalledIssuesReceiver::solvingIssues, this, [this](StalledIssuesCreator::IssuesCount count)
     {
@@ -124,12 +126,9 @@ StalledIssuesModel::StalledIssuesModel(QObject* parent):
 
 StalledIssuesModel::~StalledIssuesModel()
 {
-    delete mRequestListener;
-    delete mGlobalListener;
-
     mThreadFinished = true;
-
     mStalledIssuesThread->quit();
+    mStalledIssuesThread->wait();
     mStalledIssuesReceiver->deleteLater();
 }
 
@@ -548,6 +547,11 @@ void StalledIssuesModel::onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes
         {
             for (int i = 0; i < copiedNodes->size(); i++)
             {
+                if (mThreadFinished)
+                {
+                    return;
+                }
+
                 mega::MegaNode *node = copiedNodes->get(i);
                 if (node->getChanges() & mega::MegaNode::CHANGE_TYPE_PARENT)
                 {
@@ -1053,6 +1057,11 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
                 sendFixingIssuesMessage(count.currentIssueBeingSolved, totalRows);
             }
 
+            if (mThreadFinished)
+            {
+                return;
+            }
+
             auto potentialIndex = getSolveIssueIndex(index);
             mModelMutex.lockForRead();
             auto issue(mStalledIssues.at(potentialIndex.row()));
@@ -1159,6 +1168,7 @@ void StalledIssuesModel::onAsyncIssueSolvingFinished(StalledIssue* issue)
     if(issueSolvingFinished(issue))
     {
         emit refreshFilter();
+        emit stalledIssuesChanged();
     }
 }
 

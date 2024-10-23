@@ -4,23 +4,23 @@ Button {
     id: root
 
     icons {
-        colorEnabled: colorStyle.buttonOutline
-        colorHovered: colorStyle.buttonOutlineHover
-        colorPressed: colorStyle.buttonOutlinePressed
+        colorEnabled: ColorTheme.buttonOutline
+        colorHovered: ColorTheme.buttonOutlineHover
+        colorPressed: ColorTheme.buttonOutlinePressed
     }
 
     colors {
         background: "transparent"
         disabled: "transparent"
-        hover: colorStyle.buttonOutlineBackgroundHover
-        border: colorStyle.buttonOutline
-        borderHover: colorStyle.buttonOutlineHover
-        borderDisabled: colorStyle.buttonDisabled
-        text: colorStyle.buttonOutline
-        textHover: colorStyle.buttonOutlineHover
-        textPressed: colorStyle.buttonOutlinePressed
+        hover: ColorTheme.buttonOutlineBackgroundHover
+        border: ColorTheme.buttonOutline
+        borderHover: ColorTheme.buttonOutlineHover
+        borderDisabled: ColorTheme.buttonDisabled
+        text: ColorTheme.buttonOutline
+        textHover: ColorTheme.buttonOutlineHover
+        textPressed: ColorTheme.buttonOutlinePressed
         pressed: "transparent"
-        borderPressed: colorStyle.buttonOutlinePressed
+        borderPressed: ColorTheme.buttonOutlinePressed
     }
 }
 
