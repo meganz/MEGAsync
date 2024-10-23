@@ -5550,14 +5550,17 @@ Enter a different name.</translation>
     </message>
     <message>
         <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-3941</translatorcomment>
         <translation type="unfinished">Permissions</translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-3941</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-3941</translatorcomment>
         <translation type="unfinished">Apply</translation>
     </message>
 </context>
