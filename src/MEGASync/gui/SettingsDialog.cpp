@@ -221,22 +221,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
 #ifdef Q_OS_MACOS
     this->setWindowTitle(tr("Settings"));
     mUi->cStartOnStartup->setText(tr("Launch at login"));
-
-    auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) // FinderSync API support from 10.10+
-    {
-        mUi->cOverlayIcons->hide();
-    }
 #endif
 
     setProxyOnly(proxyOnly);
-
-#ifdef Q_OS_MACOS
-    if (!proxyOnly)
-    {
-        mUi->pNetwork->hide();
-    }
-#endif
 
     AccountDetailsManager::instance()->attachStorageObserver(*this);
     AccountDetailsManager::instance()->attachBandwidthObserver(*this);
@@ -319,7 +306,6 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 void SettingsDialog::showGuestMode()
 {
     mUi->wStack->setCurrentWidget(mUi->pNetwork);
-    mUi->pNetwork->show();
     QPointer<ProxySettings> proxySettingsDialog = new ProxySettings(mApp, this);
     proxySettingsDialog->setAttribute(Qt::WA_DeleteOnClose);
     DialogOpener::showDialog(proxySettingsDialog,
