@@ -16,8 +16,6 @@ BackupCandidates::Data::Data(const QString& folder, const QString& displayName, 
     mSyncError(-1)
 {}
 
-BackupCandidates::Data::~Data() {}
-
 QHash<int, QByteArray> BackupCandidates::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
@@ -34,9 +32,6 @@ QHash<int, QByteArray> BackupCandidates::Data::roleNames()
 }
 
 //////////////////////////////////////////////////////////////////
-
-BackupCandidates::BackupCandidates() {}
-
 QString BackupCandidates::getTotalSize() const
 {
     return Utilities::getSizeStringLocalized(mBackupsTotalSize);
@@ -49,8 +44,11 @@ bool BackupCandidates::getIsTotalSizeReady() const
 
 void BackupCandidates::setIsTotalSizeReady(bool totalSizeReady)
 {
-    mTotalSizeReady = totalSizeReady;
-    emit totalSizeReadyChanged();
+    if (mTotalSizeReady != totalSizeReady)
+    {
+        mTotalSizeReady = totalSizeReady;
+        emit totalSizeReadyChanged();
+    }
 }
 
 Qt::CheckState BackupCandidates::getCheckAllState() const

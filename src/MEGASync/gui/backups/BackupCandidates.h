@@ -50,7 +50,7 @@ public:
         Data() = default;
         Data(const Data& folder);
         Data(const QString& folder, const QString& displayName, bool selected = true);
-        ~Data();
+        ~Data() = default;
 
         static QHash<int, QByteArray> roleNames();
 
@@ -71,7 +71,7 @@ public:
         int mSyncError;
     };
 
-    BackupCandidates();
+    BackupCandidates() = default;
 
     QString getTotalSize() const;
     bool getIsTotalSizeReady() const;
