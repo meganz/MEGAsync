@@ -41,6 +41,7 @@ signals:
     void syncStatsUpdated(std::shared_ptr<::mega::MegaSyncStats>);
     void syncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void syncDisabledListUpdated();
+    void syncRemoteRootChanged(std::shared_ptr<SyncSettings> syncSettings);
 
 private:
     static std::unique_ptr<SyncInfo> model;
@@ -174,4 +175,5 @@ protected:
     void onSyncAdded(mega::MegaApi *api, mega::MegaSync *sync) override;
     void onSyncFileStateChanged(mega::MegaApi *, mega::MegaSync *, std::string *localPath, int newState) override;
     void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats) override;
+    void onSyncRemoteRootChanged(mega::MegaApi*, mega::MegaSync* sync) override;
 };

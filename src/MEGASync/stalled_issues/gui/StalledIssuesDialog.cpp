@@ -1,14 +1,14 @@
 #include "StalledIssuesDialog.h"
-#include "ui_StalledIssuesDialog.h"
 
 #include "MegaApplication.h"
+#include "StalledIssue.h"
+#include "StalledIssueDelegate.h"
 #include "StalledIssuesModel.h"
 #include "StalledIssuesProxyModel.h"
-#include "StalledIssueDelegate.h"
-#include "StalledIssuesProxyModel.h"
-#include "StalledIssue.h"
-
+#include "ui_StalledIssuesDialog.h"
 #include "Utilities.h"
+
+#include <DialogOpener.h>
 
 const char* MODE_SELECTED = "SELECTED";
 
@@ -97,6 +97,11 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
                 Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
             });
 
+    connect(SyncInfo::instance(),
+            &SyncInfo::syncRemoteRootChanged,
+            this,
+            &StalledIssuesDialog::onSyncRootChanged);
+
     showView();
     if(MegaSyncApp->getStalledIssuesModel()->issuesRequested())
     {
@@ -175,6 +180,54 @@ void StalledIssuesDialog::checkIfViewIsEmpty()
     {
         auto isEmpty = proxyModel->rowCount(QModelIndex()) == 0;
         ui->TreeViewContainer->setCurrentWidget(isEmpty ? ui->EmptyViewContainerPage : ui->TreeViewContainerPage);
+    }
+}
+
+void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
+{
+    auto areSyncIssues = [sync](const std::shared_ptr<const StalledIssue> issue)
+    {
+        return issue->syncIds().contains(sync->backupId());
+    };
+    auto syncIssues = MegaSyncApp->getStalledIssuesModel()->getIssues(areSyncIssues);
+
+    if (!syncIssues.isEmpty())
+    {
+        auto refreshLogic = [this]()
+        {
+            DialogOpener::closeDialogsByParentClass<StalledIssuesDialog>();
+
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = MegaSyncApp->getMEGAString();
+            msgInfo.textFormat = Qt::RichText;
+            msgInfo.buttons = QMessageBox::Ok;
+            QMap<QMessageBox::StandardButton, QString> buttonsText;
+            buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
+            msgInfo.buttonsText = buttonsText;
+            msgInfo.text =
+                tr("A sync with stalled issues has changed its root MEGA folder.\nPlease, "
+                   "refresh the list.");
+            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
+            {
+                mProxyModel->updateStalledIssues();
+            };
+
+            MegaSyncApp->getStalledIssuesModel()->runMessageBox(std::move(msgInfo));
+        };
+
+        if (MegaSyncApp->getStalledIssuesModel()->isSolvingIssues())
+        {
+            // First stop solving issues before it is too late
+            MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(MessageInfo::ButtonType::STOP);
+            connect(MegaSyncApp->getStalledIssuesModel(),
+                    &StalledIssuesModel::stalledIssuesSolvingFinished,
+                    this,
+                    refreshLogic);
+        }
+        else
+        {
+            refreshLogic();
+        }
     }
 }
 

@@ -17,6 +17,7 @@ class StalledIssuesDialog;
 class StalledIssueTab;
 class StalledIssuesProxyModel;
 class StalledIssueDelegate;
+class SyncSettings;
 
 class StalledIssuesDialog : public QDialog
 {
@@ -36,6 +37,8 @@ private slots:
     void on_doneButton_clicked();
     void on_refreshButton_clicked();
     void checkIfViewIsEmpty();
+
+    void onSyncRootChanged(std::shared_ptr<SyncSettings> sync);
     void onGlobalSyncStateChanged(bool);
 
     void onTabToggled(StalledIssueFilterCriterion filterCriterion);

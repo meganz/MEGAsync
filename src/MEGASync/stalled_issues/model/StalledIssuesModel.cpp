@@ -987,6 +987,11 @@ void StalledIssuesModel::stopSolvingIssues(MessageInfo::ButtonType buttonType)
     }
 }
 
+bool StalledIssuesModel::isSolvingIssues() const
+{
+    return mSolvingIssues.load();
+}
+
 void StalledIssuesModel::startSolvingIssues()
 {
     mSolvingIssues = true;
@@ -999,6 +1004,7 @@ void StalledIssuesModel::finishSolvingIssues(StalledIssuesCreator::IssuesCount c
     mIssuesSolved = true;
 
     sendFinishSolvingMessage(count, sendMessage);
+    emit stalledIssuesSolvingFinished();
 }
 
 void StalledIssuesModel::sendFinishSolvingMessage(
