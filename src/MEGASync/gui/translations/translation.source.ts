@@ -1191,37 +1191,37 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Add Backup</source>
         <translatorcomment>Button label for the Add Backup button. SAT-1234.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add backup</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label for the Add Sync button. SAT-1234.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Add sync</translation>
     </message>
     <message>
         <source>Sync</source>
         <translatorcomment>Type name for Syncs in the Sync/Backup table. SAT-1240.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sync</translation>
     </message>
     <message>
         <source>Backup</source>
         <translatorcomment>Type name for Backups in the Sync/Backup table. SAT-1240.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Backup</translation>
     </message>
     <message>
         <source>Name</source>
         <translatorcomment>Label for Name column in the Sync/Backup table. SAT-1240.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Name</translation>
     </message>
     <message>
         <source>Type</source>
         <translatorcomment>Label for Type column in the Sync/Backup table. SAT-1240.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Type</translation>
     </message>
     <message>
         <source>Size</source>
         <translatorcomment>Label for Size column in the Sync/Backup table. SAT-1240.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Size</translation>
     </message>
     <message>
         <source>Last updated</source>
@@ -1231,7 +1231,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Status</source>
         <translatorcomment>Label for Status information for current device being displayed. SAT-1239.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Status</translation>
     </message>
     <message>
         <source>Contains</source>
@@ -1246,7 +1246,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Up to date</source>
         <translatorcomment>A status value for a Sync/Backup/Device. SAT-1239.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Up to date</translation>
     </message>
     <message>
         <source>Updating...</source>
@@ -1256,7 +1256,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Paused</source>
         <translatorcomment>A status value for a Sync/Backup/Device. SAT-1239.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Paused</translation>
     </message>
     <message>
         <source>Stopped</source>
@@ -1266,12 +1266,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Open in MEGA</source>
         <translatorcomment>Menu entry label for the context menu in a Sync/Backup displayed in the main view. SAT-1244.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Open in MEGA</translation>
     </message>
     <message>
         <source>Show in Finder</source>
         <translatorcomment>Sync/Backup context menu entry label for the &quot;Open in local machine&quot; action. For MacOs devices. SAT-1244.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show in Finder</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -1281,12 +1281,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Pause</source>
         <translatorcomment>Menu entry label for the context menu in a Sync/Backup displayed in the main view. SAT-1244.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Pause</translation>
     </message>
     <message>
         <source>Manage exclusions</source>
         <translatorcomment>Menu entry label for the context menu in a Sync/Backup displayed in the main view. SAT-1244.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Manage exclusions</translation>
     </message>
     <message>
         <source>Quick rescan</source>
@@ -1301,7 +1301,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Stop backup</source>
         <translatorcomment>Context menu entry text for removing a Backup displayed in the main view. SAT-1244.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stop backup</translation>
     </message>
     <message numerus="yes">
         <source>%n folders</source>
@@ -1319,27 +1319,27 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Rename</source>
         <translatorcomment>Button label for the Rename action in the Rename Device dialog. SAT-1243.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rename</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu entry text for removing a Sync displayed in the main view. SAT-1616.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remove synced folder</translation>
     </message>
     <message>
         <source>Show in Explorer</source>
         <translatorcomment>Sync/Backup context menu entry label for the &quot;Open in local machine&quot; action. For Windows devices. SAT-1616.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show in File Explorer</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Sync/Backup context menu entry label for the &quot;Open in local machine&quot; action. For Linux devices. SAT-1616.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Show in folder</translation>
     </message>
     <message>
         <source>View</source>
         <translatorcomment>Label of the link to open the dialog with the details of the Sync/Backup error. SAT-1658.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">View</translation>
     </message>
 </context>
 <context>
@@ -5326,11 +5326,6 @@ Enter a different name.</translation>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
         <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
     </message>
-    <message>
-        <source>View in device centre</source>
-        <translatorcomment>Button text that opens the device centre dialog CON-1018</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>OpenBackupsFolder</name>
@@ -6252,10 +6247,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
     </message>
-    <message>
-        <source>Stop Backup</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>RemoveSyncConfirmationDialog</name>
@@ -6609,11 +6600,6 @@ Do you want to delete it anyway?</translation>
         <translation>Transfer quota</translation>
     </message>
     <message>
-        <source>Recovery Key</source>
-        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Recovery key</translation>
-    </message>
-    <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
         <translation>Your password is not stored by MEGA and we can’t recover it for you. To avoid losing access to your account, save your Recovery key in a safe place.</translation>
@@ -6647,11 +6633,6 @@ Do you want to delete it anyway?</translation>
         <source>Proxies</source>
         <translatorcomment>Section title text for the Proxy summary text and actions in Network pane.</translatorcomment>
         <translation>Proxy</translation>
-    </message>
-    <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Force a full scan</translation>
     </message>
     <message>
         <source>Session history</source>
@@ -6780,11 +6761,6 @@ Do you want to delete it anyway?</translation>
         <translation>Want to log out?</translation>
     </message>
     <message>
-        <source>Go to backup centre</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Go to Device centre</translation>
-    </message>
-    <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
@@ -6803,6 +6779,21 @@ Do you want to delete it anyway?</translation>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
         <translation>Disabling sync status icons</translation>
+    </message>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
+        <translation type="unfinished">Apply</translation>
     </message>
     <message>
         <source>Enable Windows Explorer integration</source>
@@ -7519,7 +7510,7 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Enter a device name</source>
         <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enter a device name</translation>
     </message>
     <message>
         <source>The following characters are not allowed: %1</source>
@@ -7529,37 +7520,37 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Choose</translation>
     </message>
     <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Done</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Next</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Skip</translation>
     </message>
     <message>
         <source>Previous</source>
         <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Previous</translation>
     </message>
     <message>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Try again</translation>
     </message>
     <message>
         <source>View in device centre</source>
@@ -7569,12 +7560,12 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Set Exclusions</source>
         <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Set exclusions</translation>
     </message>
     <message>
         <source>Ok</source>
         <translatorcomment>Label for the Ok button of the Sync/Backup error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 <context>
@@ -7860,23 +7851,23 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
 <context>
     <name>SyncModel</name>
     <message>
-        <source>Your folder &quot;%1&quot; can&apos;t sync because local path is unavailable</source>
-        <translatorcomment>Error message of the Error Dialog when the cause is the local path that is not available. %1 refers to the type of Sync/Backup. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Sync</source>
-        <translatorcomment>Name of the type of Sync for the "path unavailable" error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Name of the type of Sync for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished">Sync</translation>
     </message>
     <message>
         <source>Backup</source>
-        <translatorcomment>Name of the type of backup for the "path unavailable" error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Name of the type of backup for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
+        <translation type="unfinished">Backup</translation>
     </message>
     <message>
         <source>%1 was stopped because you logged out. Resume the %1 to re-enable.</source>
-        <translatorcomment>Error message of the Error Dialog when the cause is a logout. SAT-1678.</translatorcomment>
+        <translatorcomment>Error message of the Error Dialog when the cause is a logout. %1 stands for the type name (Sync or Backup). SAT-1678.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your folder &quot;%1&quot; can&apos;t sync because local path is unavailable.</source>
+        <translatorcomment>Error message of the Error Dialog when the cause is the local path that is not available. %1 refers to the type of Sync/Backup. SAT-1678.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7940,39 +7931,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.SAt-1297</translatorcomment>
         <translation type="unfinished">Permissions</translation>
-    </message>
-</context>
-<context>
-    <name>SyncTableView</name>
-    <message>
-        <source>Open in MEGA</source>
-        <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
-        <translation>Open in MEGA</translation>
-    </message>
-    <message>
-        <source>Remove synced folder</source>
-        <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
-        <translation>Remove synced folder</translation>
-    </message>
-    <message>
-        <source>Run</source>
-        <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
-        <translation>Resume</translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
-        <translation>Pause</translation>
-    </message>
-    <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Quick rescan</translation>
-    </message>
-    <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Deep rescan</translation>
     </message>
 </context>
 <context>
