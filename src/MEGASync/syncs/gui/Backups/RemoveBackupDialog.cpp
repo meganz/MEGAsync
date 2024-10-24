@@ -25,7 +25,6 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     connect(mUi->rDeleteFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnDeleteSelected);
     connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
 
-    mUi->bConfirm->setEnabled(false);
     mUi->moveToContainer->setEnabled(false);
     mUi->lTarget->setText(MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get())
                           .append(QLatin1Char('/')));

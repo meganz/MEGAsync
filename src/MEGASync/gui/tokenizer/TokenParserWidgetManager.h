@@ -25,13 +25,18 @@ private:
     void onThemeChanged(Preferences::ThemeType theme);
     void onUpdateRequested();
     void applyTheme(QWidget* widget);
-    bool replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
-    bool replaceIconColorTokens(QWidget* widget, QString& styleSheet, const ColorTokens& colorTokens);
-    bool replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
+    void replaceThemeTokens(QString& styleSheet, const QString& currentTheme);
+    void replaceIconColorTokens(QWidget* widget,
+                                QString& styleSheet,
+                                const ColorTokens& colorTokens);
+    void replaceColorTokens(QString& styleSheet, const ColorTokens& colorTokens);
     void removeFrameOnDialogCombos(QWidget* widget);
+    bool isTokenized(QWidget* widget);
+    bool isRoot(QWidget* widget);
 
     QMap<QString, ColorTokens> mColorThemedTokens;
-    QString mStandardComponentsStyleSheet;
+    QMap<QString, QString> mThemedStandardComponentsStyleSheet;
+    QMap<QString, QString> mWidgetsStyleSheets;
 };
 
 #endif // THEMEWIDGET_H

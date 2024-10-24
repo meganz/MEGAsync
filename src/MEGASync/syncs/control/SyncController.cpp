@@ -214,7 +214,8 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
 
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest*, MegaError* e) {
+        [=](MegaRequest*, MegaError* e)
+        {
             auto syncErrorCode(static_cast<MegaSync::Error>(e->getSyncError()));
             auto errorCode(e->getErrorCode());
 
@@ -396,7 +397,8 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
                      .constData());
 
     std::shared_ptr<mega::MegaError> error(nullptr);
-    auto processResult = [this, error, syncSetting]() {
+    auto processResult = [this, error, syncSetting]()
+    {
         if (error)
         {
             auto errorCode(error->getErrorCode());
@@ -443,13 +445,15 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
     MegaApiSynchronizedRequest::runRequestWithResult(
         &mega::MegaApi::setSyncRunState,
         MegaSyncApp->getMegaApi(),
-        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e) {
+        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e)
+        {
             if (e->getErrorCode() == mega::MegaError::API_OK)
             {
                 MegaApiSynchronizedRequest::runRequestWithResult(
                     &mega::MegaApi::setSyncRunState,
                     MegaSyncApp->getMegaApi(),
-                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e) {
+                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e)
+                    {
                         if (e->getErrorCode() != mega::MegaError::API_OK)
                         {
                             error.reset(e->copy());

@@ -440,26 +440,6 @@
         <translation>Apply</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Upload rate limit:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Download rate limit:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Number of connections per transfer:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Update</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>Use HTTPS for transfers that don’t start</translation>
@@ -4784,21 +4764,6 @@ Enter a different name.</translation>
         <translation>Info</translation>
     </message>
     <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Info:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Contacts:</translation>
-    </message>
-    <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Shares:</translation>
-    </message>
-    <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
         <translation>System notifications:</translation>
@@ -4817,11 +4782,6 @@ Enter a different name.</translation>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
         <translation>Completed uploads and downloads</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>Uploads and downloads:</translation>
     </message>
 </context>
 <context>
@@ -5384,11 +5344,6 @@ Enter a different name.</translation>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>View in MEGA</translation>
     </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>Backup folder:</translation>
-    </message>
 </context>
 <context>
     <name>OsNotifications</name>
@@ -5592,6 +5547,21 @@ Enter a different name.</translation>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Owner permissions:</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation type="unfinished">Permissions</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation type="unfinished">Apply</translation>
     </message>
 </context>
 <context>
@@ -5808,11 +5778,6 @@ Enter a different name.</translation>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
         <translation>Auto-detect</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Update</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6283,14 +6248,13 @@ Do you want to delete it anyway?</translation>
         <translation>Folder will be deleted from MEGA. It won’t be deleted from your computer. This action can’t be undone.</translation>
     </message>
     <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Confirm</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translatorcomment>Button text that cancels</translatorcomment>
         <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>Stop Backup</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6445,11 +6409,6 @@ Do you want to delete it anyway?</translation>
         <translation>Help</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Start on startup</translation>
-    </message>
-    <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>Update automatically</translation>
@@ -6483,16 +6442,6 @@ Do you want to delete it anyway?</translation>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Clear</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>Default folders</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -6710,41 +6659,6 @@ Do you want to delete it anyway?</translation>
         <translation>Session history</translation>
     </message>
     <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Language:</translation>
-    </message>
-    <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (local cache):</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (in MEGA):</translation>
-    </message>
-    <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>File versions:</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Issue report:</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Storage space:</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Transfer quota:</translation>
-    </message>
-    <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
         <translation>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</translation>
@@ -6763,11 +6677,6 @@ Do you want to delete it anyway?</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
         <translation>Proxy settings:</translation>
-    </message>
-    <message>
-        <source>Enable Windows Explorer integration</source>
-        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Enable File Explorer integration</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -6841,11 +6750,6 @@ Do you want to delete it anyway?</translation>
         <translation>Sleep mode</translation>
     </message>
     <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Sleep mode:</translation>
-    </message>
-    <message>
         <source>Sleep mode can&apos;t be setup</source>
         <translatorcomment>Sleep/Active mode: Error messagebox title when the pc awake mode could not be activated after activating the feature using the checkbox.</translatorcomment>
         <translation>Sleep mode can’t be set up</translation>
@@ -6899,6 +6803,16 @@ Do you want to delete it anyway?</translation>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
         <translation>Disabling sync status icons</translation>
+    </message>
+    <message>
+        <source>Enable Windows Explorer integration</source>
+        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
+        <translation>Enable File Explorer integration</translation>
+    </message>
+    <message>
+        <source>Recovery key</source>
+        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
+        <translation>Recovery key</translation>
     </message>
 </context>
 <context>

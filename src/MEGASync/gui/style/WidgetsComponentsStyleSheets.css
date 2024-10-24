@@ -1,113 +1,112 @@
+*
+{
+font-family: "Segoe UI";
+font-size: 12px;
+}
+
 QWidget
 {
-font-size: 12px;
-background-color: #FFFFFF; /* colorToken.page-background*/
-color: #303233; /*colorToken.text-primary*/
+background-color: #FFFFFFFF; /*colorToken.page-background*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
-QTableView
-{
-background: #18191A; /* colorToken.page-background*/
-outline: 0;
-border: 1px solid #18191A; /* colorToken.page-background*/
-border-radius: 5px;
-}
-
-QTableView::item
-{
-border: none;
-padding-left:4px;
-}
-
-QTableView::item::selected
-{
-color: #F3F4F4; /* colorToken.text-primary*/
-}
-
-QTableView::indicator
-{
-height: 16px;
-width: 18px;
-}
-
-QTableView::indicator:checked
-{
-padding: 2px;
-border-style: solid;
-border-color: #04101E; /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #04101E; /*colorToken.button-primary*/
-image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
-}
-
-QTableView::indicator:unchecked
-{
-padding: 2px;
-border-style: solid;
-border-color: #04101E;  /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #f3f4f4;
-image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
-}
-
-QHeaderView
-{
-background: #18191A; /* colorToken.page-background*/
-padding-top: 2px;
-}
-
-QHeaderView::section {
-background: #18191A; /* colorToken.page-background*/
-color: #F3F4F4; /* colorToken.text-primary*/
-padding-left:6px;
-border-top:0 px;
-border-bottom:0px;
-border-left:0px;
-border-right:0px ;
-}
-
-QHeaderView::section:last {
-border-right:0px;
-}
-
-QComboBox
+/*
+    QComboBox
+*/
+QComboBox[type="mega"][dimension=small]
 {
 height: 18px;
-background-color:  #fafafa; /* colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #333333; /*colorToken.text-primary*/
-border-width: 1px;
+}
+
+QComboBox[type="mega"][dimension=medium]
+{
+height: 36px;
+}
+
+QComboBox::item:selected[type="mega"]
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+}
+
+QComboBox::item[type="mega"]
+{
+background-color: #fffafafa; /*colorToken.surface-1*/;
+}
+
+QComboBox[type="mega"]
+{
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+color: #ff333333; /*colorToken.text-primary*/
+border-color: #ff04101E; /*colorToken.button-outline*/
+border-width: 2px;
 border-style: solid;
-border-radius: 5px;
-padding: 1px 1px 1px 5px;
+border-radius: 6px;
+padding: 4px 5px 4px 8px;
 }
 
-QComboBox::on
+QComboBox:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.button-disabled*/
+image : url("");
+}
+
+QComboBox::on[type="mega"]
 {
 padding: 1px 1px 1px 5px;
 }
 
-QComboBox::down-arrow
+QComboBox::drop-down[type="mega"]
 {
-image: url(:/images/themed/light/combobox_down_arrow.svg); /*replaceThemeToken*/
-}
-
-QComboBox::drop-down
-{
+image: url(:/images/themed/light/chevron-down_default.svg); /*replaceThemeToken*/
 subcontrol-origin: padding;
 subcontrol-position: top right;
+padding-right: 8px;
 width: 15px;
 border-top-right-radius: 5px;
 border-bottom-right-radius: 5px;
 }
 
-QComboBox QAbstractItemView
+QComboBox::drop-down:disabled[type="mega"]
 {
-border: 2px solid #04101E; /*colorToken.button-outline*/
+image: url(:/images/themed/light/chevron-down_disabled.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down:hover[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_hover.svg); /*replaceThemeToken*/
+}
+
+QComboBox::drop-down:pressed[type="mega"]
+{
+image: url(:/images/themed/light/chevron-down_press.svg); /*replaceThemeToken*/
+}
+
+QComboBox[type="mega"] QAbstractItemView
+{
+border: 2px solid #ff04101E; /*colorToken.button-outline*/
 border-radius: 4px;
-background-color:  #fafafa; /* colorToken.surface-1*/
+background-color:  #fffafafa; /*colorToken.surface-1*/
+}
+
+/*
+    QRadioButton
+*/
+QRadioButton
+{
+color: #ff303233; /*colorToken.text-primary*/
+background-color: transparent;
+spacing: 0;
+}
+
+QRadioButton:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+QRadioButton::indicator
+{
+margin-right: 6px;
 }
 
 QRadioButton::indicator::unchecked
@@ -115,130 +114,438 @@ QRadioButton::indicator::unchecked
 image: url(:/images/themed/light/radio_unchecked.svg); /*replaceThemeToken*/
 }
 
+QRadioButton::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/radio_unchecked_hover.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/radio_unchecked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:unchecked:disabled
+{
+image: url(:/images/themed/light/radio_unchecked_disabled.svg); /*replaceThemeToken*/
+}
+
 QRadioButton::indicator::checked
 {
 image: url(:/images/themed/light/radio_checked.svg); /*replaceThemeToken*/
 }
 
-QRadioButton
+QRadioButton::indicator:checked:hover
 {
-color: #303233; /*colorToken.text-primary*/
-background-color: transparent;
+image: url(:/images/themed/light/radio_checked_hover.svg); /*replaceThemeToken*/
 }
 
-QGroupBox
+QRadioButton::indicator:checked:pressed
+{
+image: url(:/images/themed/light/radio_checked_pressed.svg); /*replaceThemeToken*/
+}
+
+QRadioButton::indicator:checked:disabled
+{
+image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QGroupBox
+*/
+QGroupBox[type="mega"]
 {
 font-weight: bold;
 margin-top: 25px;
-background-color: #fafafa; /*colorToken.surface-1*/
-border: 0px solid gray;
-border-radius: 10px;
+background-color: transparent;
+border-width: 1px;
+border-style: solid;
+border-radius: 12px;
+border-color: #ffd8d9db; /*colorToken.border-strong*/
 }
 
-QGroupBox::title
+QGroupBox::title[type="mega"]
 {
-color: #04101E; /*colorToken.text-accent*/
+color: #ff04101E; /*colorToken.text-accent*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
-padding: 7 0 0 5px;
+padding: 5 0 0 5px;
 }
 
-/* TODO: surface-2 should be replaced by --color-indicator-background */
+QGroupBox::title:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+}
+
+/*
+    QProgressBar
+*/
 QProgressBar
 {
+/* TODO: surface-2 should be replaced by --color-indicator-background */
 border-style: none;
 border-radius: 4px;
-background-color: #f3f4f4; /*colorToken.surface-2*/
+background-color: #fff3f4f4; /*colorToken.surface-2*/
 max-height: 8px;
 }
 
 QProgressBar::chunk
 {
-background-color: #477EF7; /*colorToken.indicator-indigo*/
+background-color: #ff09bf5b; /*colorToken.indicator-green*/
 border-radius: 4px;
 }
 
-QCheckBox
+/*
+    QCheckBox
+*/
+QCheckBox[type="mega"]
 {
 background-color: transparent;
+spacing: 8px;
 }
 
-QCheckBox::indicator
+QCheckBox:disabled[type="mega"]
 {
-height: 8px;
-width: 8px;
+color: #ff797c80; /*colorToken.icon-disabled*/
 }
 
-QCheckBox::indicator:checked
+QCheckBox::indicator[type="mega"]
 {
-padding: 2px;
-border-style: solid;
-border-color: #04101E; /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #04101E; /*colorToken.button-primary*/
-image: url(:/images/themed/light/checkbox_checked.svg); /*replaceThemeToken*/
+height: 16px;
+width: 16px;
+border-style: none;
 }
 
-QCheckBox::indicator:unchecked
+QCheckBox::indicator:checked[type="mega"]
 {
-padding: 2px;
-border-style: solid;
-border-color: #04101E;  /*colorToken.button-primary*/
-border-width: 2px;
-border-radius: 4px;
-background-color: #f3f4f4;
-image: url(:/images/themed/light/checkbox_unchecked.svg); /*replaceThemeToken*/
+image: url(:/images/themed/light/checkbox_on.svg); /*replaceThemeToken*/
 }
 
+QCheckBox::indicator:checked:hover[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_hover.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:pressed[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_pressed.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:checked:disabled[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:hover[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_hover.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:pressed[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_pressed.svg); /*replaceThemeToken*/
+}
+
+QCheckBox::indicator:unchecked:disabled[type="mega"]
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QLabel
+*/
 QLabel
 {
+font-family: Inter;
+font-size: 12px;
+font-weight: 400;
 background-color: transparent;
-color: #303233; /*colorToken.text-primary*/
+color: #ff303233; /*colorToken.text-primary*/
 }
 
-QPushButton
+QLabel[type="sub-title"]
 {
-padding-left: 10px;
-padding-right: 10px;
-height: 22px;
-background-color:  #fafafa; /*colorToken.surface-1*/
-color: #333333; /*colorToken.text-primary*/
-border-color: #04101E; /*colorToken.button-outline*/
+font-size: 14px;
+font-weight: 600;
+}
+
+QLabel[type="title"]
+{
+font-size: 16px;
+font-weight: 600;
+}
+
+QLabel:disabled
+{
+color: #ff797c80; /*colorToken.icon-disabled*/
+}
+
+/*
+    Outline button.
+*/
+QPushButton[type="outline"]
+{
 border-width: 2px;
 border-style: solid;
-border-radius: 5px;
-font-weight: bold;
+font-family: Inter;
+font-weight: 600;
+
+background-color: transparent;
+color: #ff04101E; /*colorToken.button-outline*/
+border-color: #ff04101E; /*colorToken.button-outline*/
 }
 
-QLineEdit
+QPushButton[type="outline"][dimension=small]
 {
-height: 20px;
-background-color: #fafafa; /*colorToken.surface-1*/
-border: none;
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
 }
 
+QPushButton[type="outline"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="outline"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="outline"]
+{
+color: #ff39424E; /*colorToken.button-outline-hover*/
+border-color: #ff39424E; /*colorToken.button-outline-hover*/
+}
+
+QPushButton:pressed[type="outline"]
+{
+color: #ff535B65; /*colorToken.button-outline-pressed*/
+border-color: #ff535B65; /*colorToken.button-outline-pressed*/
+}
+
+QPushButton:disabled[type="outline"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+border-color: #ff494a4d; /*colorToken.border-disabled*/
+}
+
+/*
+    Primary button.
+*/
+QPushButton[type="primary"]
+{
+border-width: 2px;
+border-style: solid;
+font-family: Inter;
+font-weight: 600;
+
+background-color: #ff04101E; /*colorToken.button-primary*/
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+border-color: #ff04101E; /*colorToken.button-primary*/
+}
+
+QPushButton[type="primary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="primary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="primary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff39424E; /*colorToken.button-primary-hover*/
+border-color: #ff39424E; /*colorToken.button-primary-hover*/
+}
+
+QPushButton:pressed[type="primary"]
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: #ff535B65; /*colorToken.button-primary-pressed*/
+border-color: #ff535B65; /*colorToken.button-primary-pressed*/
+}
+
+QPushButton:disabled[type="primary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: transparent;
+}
+
+/*
+    Secondary button.
+*/
+QPushButton[type="secondary"]
+{
+border-width: 2px;
+border-style: solid;
+font-family: Inter;
+font-weight: 600;
+
+background-color: #ff04101E; /*colorToken.button-secondary*/
+color: #ffFAFAFB; /*colorToken.text-secondary*/
+border-color: #ff04101E; /*colorToken.button-secondary*/
+}
+
+QPushButton[type="secondary"][dimension=small]
+{
+border-radius: 6px;
+font-size: 12px;
+padding-left: 8px;
+padding-right: 8px;
+padding-top: 4px;
+padding-bottom: 4px;
+}
+
+QPushButton[type="secondary"][dimension=medium]
+{
+border-radius: 6px;
+font-size: 14px;
+padding-left: 16px;
+padding-right: 16px;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+QPushButton[type="secondary"][dimension=large]
+{
+border-radius: 8px;
+font-size: 16px;
+padding-left: 24px;
+padding-right: 24px;
+padding-top: 12px;
+padding-bottom: 12px;
+}
+
+QPushButton:hover[type="secondary"]
+{
+background-color: #ff39424E; /*colorToken.button-secondary-hover*/
+border-color: #ff39424E; /*colorToken.button-secondary-hover*/
+}
+
+QPushButton:pressed[type="secondary"]
+{
+background-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+border-color: #ff535B65; /*colorToken.button-secondary-pressed*/
+}
+
+QPushButton:disabled[type="secondary"]
+{
+color: #ffC1C2C4; /*colorToken.text-disabled*/
+background-color: #ff797c80; /*colorToken.button-disabled*/
+border-color: transparent;
+}
+
+/*
+    QLineEdit
+*/
+QLineEdit[type="mega"], QTextEdit[type="mega"]
+{
+background-color: #ffFFFFFF; /*colorToken.page-background*/
+padding-right: 10px;
+padding-left: 10px;
+border-radius: 8px;
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+color: #ff303233; /*colorToken.text-primary*/
+border-style: solid;
+border-width: 1px;
+height: 28px;
+}
+
+QLineEdit:focus[type="mega"], QTextEdit:focus[type="mega"]
+{
+border-color: #ff04101e; /*colorToken.border-strong-selected*/
+}
+
+QLineEdit:disabled[type="mega"], QTextEdit:disabled[type="mega"]
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.border-disabled*/
+}
+
+/*
+    QSpinBox
+*/
 QSpinBox
 {
 border-radius: 8px;
-border-color: #04101E; /*colorToken.border-strong-selected*/
+border-color: #ffd8d9db; /*colorToken.border-strong*/
+color: #ff303233; /*colorToken.text-primary*/
 border-style: solid;
 border-width: 1px;
-background-color: #FFFFFF; /*colorToken.page-background*/
+background-color: #ffFFFFFF; /*colorToken.page-background*/
 height: 25px;
-
-padding-right: 5px;
 padding-left: 5px;
+}
+
+QSpinBox:focus
+{
+border-color: #ff04101e; /*colorToken.border-strong-selected*/
+}
+
+QSpinBox:disabled
+{
+color: #ff797c80; /*colorToken.text-disabled*/
+border-color: #ff797c80; /*colorToken.border-disabled*/
 }
 
 QSpinBox::up-arrow
 {
 image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+subcontrol-origin: padding;
+subcontrol-position: top right;
+padding-right: 4px;
+padding-top: 4px;
 }
 
 QSpinBox::down-arrow
 {
 image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+subcontrol-origin: padding;
+subcontrol-position: bottom right;
+padding-right: 4px;
+padding-bottom: 4px;
 }
 
 QSpinBox::down-button
@@ -249,4 +556,63 @@ background-color: transparent;
 QSpinBox::up-button
 {
 background-color: transparent;
+}
+
+/*
+    SwitchButton
+    In the constructor of the class we assign the object name switch
+*/
+#switch
+{
+border-style: none;
+background-color: transparent;
+}
+
+#switch::indicator
+{
+border-style: none;
+background-color: transparent;
+width: 40px;
+height: 19px;
+}
+
+#switch::indicator:checked
+{
+image: url(:/images/themed/light/switch_on.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:hover
+{
+image: url(:/images/themed/light/switch_on_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:checked:pressed
+{
+image: url(:/images/themed/light/switch_on_pressed.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked
+{
+image: url(:/images/themed/light/switch_off.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/switch_off_hover.svg); /*replaceThemeToken*/
+}
+
+#switch::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/switch_off_pressed.svg); /*replaceThemeToken*/
+}
+
+/*
+    PasswordLineEdit
+*/
+PasswordLineEdit
+{
+qproperty-eyeRevealImage: url(:/images/themed/light/eye_default.svg); /*replaceThemeToken*/
+qproperty-eyeRevealDisabledImage: url(:/images/themed/light/eye_disabled.svg); /*replaceThemeToken*/
+qproperty-eyeClosedImage: url(:/images/themed/light/eye-off_default.svg); /*replaceThemeToken*/
+qproperty-eyeClosedDisabledImage: url(:/images/themed/light/eye-off_disabled.svg); /*replaceThemeToken*/
 }

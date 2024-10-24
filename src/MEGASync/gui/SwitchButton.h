@@ -9,7 +9,6 @@ class SwitchButton : public QWidget
 
 public:
     SwitchButton(QWidget* parent);
-
     void setChecked(bool state);
     bool isChecked();
 
@@ -19,14 +18,10 @@ signals:
 protected:
     void paintEvent(QPaintEvent *event) override;
 
-private slots:
-    void onSwitchToggled(bool state);
-
 private:
-    void applyWinLinuxStyleSheet();
-    void applyMacStyleSheet();
-
     QWidget* mSwitchButton;
+
+    void onSwitchToggled(bool state);
 };
 
-#endif // SWITCHBUTTON_H
+#endif
