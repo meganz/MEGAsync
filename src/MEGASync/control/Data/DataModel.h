@@ -48,9 +48,9 @@ public:
         connect(controller.get(),
                 &DataController::dataChanged,
                 this,
-                [this](int row, QVector<int> roles)
+                [this](int row, int column, QVector<int> roles)
                 {
-                    QModelIndex updateIndex(index(row, 0));
+                    QModelIndex updateIndex(index(row, column));
                     emit dataChanged(updateIndex, updateIndex, roles);
                 });
     }

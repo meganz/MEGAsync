@@ -1,5 +1,5 @@
-#ifndef BACKUPSMODEL_H
-#define BACKUPSMODEL_H
+#ifndef BACKUPCANDIDATESMODEL_H
+#define BACKUPCANDIDATESMODEL_H
 
 #include "DataModel.h"
 #include "SyncController.h"
@@ -47,4 +47,4 @@ private:
     std::shared_ptr<BackupCandidatesModel> mBackupsModel;
 };
 
-#endif // BACKUPSMODEL_H
+#endif // BACKUPCANDIDATESMODEL_H

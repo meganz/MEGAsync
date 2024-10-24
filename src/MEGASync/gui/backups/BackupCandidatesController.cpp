@@ -4,13 +4,14 @@
 #include <BackupCandidatesFolderSizeRequester.h>
 #include <BackupCandidatesModel.h>
 #include <BackupsController.h>
+#include <FileFolderAttributes.h>
 #include <StandardIconProvider.h>
 #include <SyncSettings.h>
 #include <Utilities.h>
 
 #include <QmlManager.h>
 
-int BackupCandidatesController::CHECK_DIRS_TIME = 1000;
+static const int CHECK_DIRS_TIME = 1000;
 
 BackupCandidatesController::BackupCandidatesController():
     DataController(),
@@ -34,8 +35,6 @@ BackupCandidatesController::BackupCandidatesController():
             this,
             &BackupCandidatesController::checkDirectories);
 
-    QmlManager::instance()->addImageProvider(QLatin1String("standardicons"),
-                                             new StandardIconProvider);
     QmlManager::instance()->setRootContextProperty(mBackupCandidates.get());
 
     mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
@@ -77,7 +76,8 @@ void BackupCandidatesController::init()
         {
             auto data =
                 createData(path, BackupsController::instance().getSyncNameFromPath(path), false);
-            emit beginInsertRows(mBackupCandidates->size(), mBackupCandidates->size());
+            auto size(mBackupCandidates->getSize());
+            emit beginInsertRows(size, size);
             mBackupCandidates->addBackupCandidate(data);
             emit endInsertRows();
         }
@@ -133,7 +133,7 @@ int BackupCandidatesController::insert(const QString& folder)
         return existingRow;
     }
 
-    auto last(mBackupCandidates->size());
+    auto last(mBackupCandidates->getSize());
     emit beginInsertRows(last, last);
 
     auto data =
@@ -143,7 +143,7 @@ int BackupCandidatesController::insert(const QString& folder)
 
     checkSelectedAll();
 
-    return (mBackupCandidates->size() - 1);
+    return (mBackupCandidates->getSize() - 1);
 }
 
 void BackupCandidatesController::setAllSelected(bool selected)
@@ -178,7 +178,7 @@ bool BackupCandidatesController::checkPermissions(const QString& inputPath)
 void BackupCandidatesController::updateSelectedAndTotalSize()
 {
     auto newSelectedRowsTotal(0);
-    auto lastTotalSize = mBackupCandidates->backupsTotalSize();
+    auto lastTotalSize = mBackupCandidates->getBackupsTotalSize();
     long long totalSize = 0;
 
     int selectedAndSizeReadyFolders = 0;
@@ -223,7 +223,7 @@ void BackupCandidatesController::checkSelectedAll()
     {
         state = Qt::CheckState::Unchecked;
     }
-    else if (mBackupCandidates->selectedRowsTotal() == mBackupCandidates->size())
+    else if (mBackupCandidates->selectedRowsTotal() == mBackupCandidates->getSize())
     {
         state = Qt::CheckState::Checked;
     }
@@ -361,6 +361,89 @@ void BackupCandidatesController::reviewConflicts()
     mBackupCandidates->setGlobalError(error);
 }
 
+bool BackupCandidatesController::existOtherRelatedFolder(
+    std::shared_ptr<BackupCandidates::Data> backupCandidate)
+{
+    auto backupCandidates(mBackupCandidates->getBackupCandidates());
+    auto foundBackupCandidate = std::find_if(
+        backupCandidates.cbegin(),
+        backupCandidates.cend(),
+        [this, backupCandidate](std::shared_ptr<BackupCandidates::Data> conflictBackupCandidate)
+        {
+            return conflictBackupCandidate->mSelected &&
+                   backupCandidate != conflictBackupCandidate &&
+                   isRelatedFolder(backupCandidate->mFolder, conflictBackupCandidate->mFolder);
+        });
+
+    if (foundBackupCandidate == backupCandidates.cend())
+    {
+        return false;
+    }
+
+    setData(backupCandidate,
+            BackupCandidates::BackupErrorCode::PATH_RELATION,
+            BackupCandidates::ERROR_ROLE);
+    setData((*foundBackupCandidate),
+            BackupCandidates::BackupErrorCode::PATH_RELATION,
+            BackupCandidates::ERROR_ROLE);
+
+    return true;
+}
+
+void BackupCandidatesController::refreshBackupCandidatesErrors()
+{
+    auto candidateList(checkIfFoldersAreSyncable());
+
+    checkDuplicatedBackups(candidateList);
+
+    reviewConflicts();
+}
+
+QStringList BackupCandidatesController::checkIfFoldersAreSyncable()
+{
+    QStringList candidateList;
+    foreach(const auto& backupCandidate, mBackupCandidates->getBackupCandidates())
+    {
+        if (backupCandidate->mSelected)
+        {
+            if (backupCandidate->mError == BackupCandidates::BackupErrorCode::SDK_CREATION)
+            {
+                continue;
+            }
+
+            // Clean error
+            setData(backupCandidate,
+                    BackupCandidates::BackupErrorCode::NONE,
+                    BackupCandidates::ERROR_ROLE);
+
+            if (!backupCandidate->mDone)
+            {
+                candidateList.append(backupCandidate->mName);
+
+                if (!existOtherRelatedFolder(backupCandidate) &&
+                    BackupsController::instance().isLocalFolderSyncable(
+                        backupCandidate->mFolder,
+                        mega::MegaSync::TYPE_BACKUP) != SyncController::CAN_SYNC)
+                {
+                    handleDirectoryStatus(backupCandidate);
+                }
+            }
+        }
+    }
+
+    return candidateList;
+}
+
+void BackupCandidatesController::handleDirectoryStatus(
+    std::shared_ptr<BackupCandidates::Data> candidate)
+{
+    QDir dir(candidate->mFolder);
+    setData(candidate,
+            dir.exists() ? BackupCandidates::BackupErrorCode::SYNC_CONFLICT :
+                           BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR,
+            BackupCandidates::ERROR_ROLE);
+}
+
 void BackupCandidatesController::checkDuplicatedBackups(const QStringList& candidateList)
 {
     QSet<QString> remoteSet = BackupsController::instance().getRemoteFolders();
@@ -372,25 +455,17 @@ void BackupCandidatesController::checkDuplicatedBackups(const QStringList& candi
 
         BackupCandidates::BackupErrorCode error = BackupCandidates::BackupErrorCode::NONE;
 
-        int remoteSize = remoteSet.size();
-        remoteSet.insert(name); // if it fails means that the name already exist in the QSet
-        if (remoteSize == remoteSet.size())
+        if (remoteSet.contains(name))
         {
             error = BackupCandidates::BackupErrorCode::EXISTS_REMOTE;
         }
+        else if (localSet.contains(name))
+        {
+            error = BackupCandidates::BackupErrorCode::DUPLICATED_NAME;
+        }
         else
         {
-            remoteSet.remove(name); // It went ok so we don´t want the name in the set
-        }
-
-        if (error == BackupCandidates::BackupErrorCode::NONE)
-        {
-            int localSize = localSet.size();
-            localSet.insert(name); // if it fails means that the name already exist in the QSet
-            if (localSize == localSet.size())
-            {
-                error = BackupCandidates::BackupErrorCode::DUPLICATED_NAME;
-            }
+            localSet.insert(name);
         }
 
         if (error != BackupCandidates::BackupErrorCode::NONE)
@@ -401,90 +476,6 @@ void BackupCandidatesController::checkDuplicatedBackups(const QStringList& candi
             }
         }
     }
-}
-
-bool BackupCandidatesController::existOtherRelatedFolder(const int currentRow)
-{
-    if (currentRow > mBackupCandidates->size())
-    {
-        return false;
-    }
-
-    bool found = false;
-
-    auto backupCandidate = mBackupCandidates->getBackupCandidate(currentRow);
-    QString folder(backupCandidate->mFolder);
-    int conflictRow = 1;
-    while (!found && conflictRow < mBackupCandidates->size())
-    {
-        auto conflictBackupCandidate(mBackupCandidates->getBackupCandidate(conflictRow));
-        if ((found = conflictBackupCandidate->mSelected && conflictRow != currentRow &&
-                     isRelatedFolder(folder, conflictBackupCandidate->mFolder)))
-        {
-            setData(backupCandidate,
-                    BackupCandidates::BackupErrorCode::PATH_RELATION,
-                    BackupCandidates::ERROR_ROLE);
-            setData(conflictBackupCandidate,
-                    BackupCandidates::BackupErrorCode::PATH_RELATION,
-                    BackupCandidates::ERROR_ROLE);
-        }
-        conflictRow++;
-    }
-    return found;
-}
-
-void BackupCandidatesController::check()
-{
-    // Clean errors
-    for (int index = 0; index < mBackupCandidates->size(); index++)
-    {
-        auto backupCandidate = mBackupCandidates->getBackupCandidate(index);
-
-        if (backupCandidate->mSelected &&
-            backupCandidate->mError != BackupCandidates::BackupErrorCode::SDK_CREATION)
-        {
-            setData(backupCandidate,
-                    BackupCandidates::BackupErrorCode::NONE,
-                    BackupCandidates::ERROR_ROLE);
-        }
-    }
-
-    QStringList candidateList;
-    for (int index = 0; index < mBackupCandidates->size(); index++)
-    {
-        auto backupCandidate = mBackupCandidates->getBackupCandidate(index);
-
-        if (backupCandidate->mSelected && !backupCandidate->mDone)
-        {
-            QString message;
-            candidateList.append(backupCandidate->mName);
-            if (backupCandidate->mError == BackupCandidates::BackupErrorCode::NONE &&
-                !existOtherRelatedFolder(index) &&
-                BackupsController::instance().isLocalFolderSyncable(backupCandidate->mFolder,
-                                                                    mega::MegaSync::TYPE_BACKUP,
-                                                                    message) !=
-                    SyncController::CAN_SYNC)
-            {
-                QDir dir(backupCandidate->mFolder);
-                if (dir.exists())
-                {
-                    setData(backupCandidate,
-                            BackupCandidates::BackupErrorCode::SYNC_CONFLICT,
-                            BackupCandidates::ERROR_ROLE);
-                }
-                else
-                {
-                    setData(backupCandidate,
-                            BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR,
-                            BackupCandidates::ERROR_ROLE);
-                }
-            }
-        }
-    }
-
-    checkDuplicatedBackups(candidateList);
-
-    reviewConflicts();
 }
 
 bool BackupCandidatesController::setData(int row, const QVariant& value, int role)
@@ -584,7 +575,7 @@ QVariant BackupCandidatesController::data(std::shared_ptr<BackupCandidates::Data
 
 int BackupCandidatesController::size() const
 {
-    return mBackupCandidates->size();
+    return mBackupCandidates->getSize();
 }
 
 void BackupCandidatesController::calculateFolderSizes()
@@ -607,49 +598,29 @@ int BackupCandidatesController::rename(const QString& folder, const QString& nam
         return BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR;
     }
 
-    QString originalName = candidate->mName;
-    bool hasError = false;
-    QSet<QString> candidateSet;
-    candidateSet.insert(name);
-
-    QSet<QString> duplicatedSet = BackupsController::instance().getRemoteFolders();
-    duplicatedSet.intersect(candidateSet);
-
-    if (!duplicatedSet.isEmpty())
+    QSet<QString> remoteFolders = BackupsController::instance().getRemoteFolders();
+    if (remoteFolders.contains(name))
     {
         setData(candidate,
                 BackupCandidates::BackupErrorCode::EXISTS_REMOTE,
                 BackupCandidates::ERROR_ROLE);
-        hasError = true;
+        return candidate->mError;
     }
 
-    if (!hasError)
+    foreach(const auto& checkCandidate, mBackupCandidates->getBackupCandidates())
     {
-        int i = -1;
-        while (!hasError && ++i < mBackupCandidates->size())
+        if (checkCandidate != candidate && candidate->mSelected && name == checkCandidate->mName)
         {
-            auto checkCandidate(mBackupCandidates->getBackupCandidate(i));
-            hasError = (checkCandidate != candidate && candidate->mSelected &&
-                        name == checkCandidate->mName);
-            if (hasError)
-            {
-                setData(candidate,
-                        BackupCandidates::BackupErrorCode::DUPLICATED_NAME,
-                        BackupCandidates::ERROR_ROLE);
-            }
+            setData(candidate,
+                    BackupCandidates::BackupErrorCode::DUPLICATED_NAME,
+                    BackupCandidates::ERROR_ROLE);
+            return candidate->mError;
         }
     }
 
-    if (!hasError)
-    {
-        // How to let the model know that there was a changed?
-        setData(candidate, name, BackupCandidates::NAME_ROLE);
-        check();
-    }
-    else
-    {
-        setData(candidate, originalName, BackupCandidates::NAME_ROLE);
-    }
+    // How to let the model know that there was a changed?
+    setData(candidate, name, BackupCandidates::NAME_ROLE);
+    refreshBackupCandidatesErrors();
 
     return candidate->mError;
 }
@@ -664,7 +635,7 @@ void BackupCandidatesController::remove(const QString& folder)
         if (mBackupCandidates->removeBackupCandidate(folder))
         {
             mBackupCandidatesSizeRequester->removeFolder(folder);
-            check();
+            refreshBackupCandidatesErrors();
             checkSelectedAll();
         }
 
@@ -692,7 +663,6 @@ void BackupCandidatesController::change(const QString& oldFolder, const QString&
             remove(newFolder);
         }
 
-        auto candidate = mBackupCandidates->getBackupCandidateByFolder(oldFolder);
         setData(candidate,
                 BackupsController::instance().getSyncNameFromPath(newFolder),
                 BackupCandidates::NAME_ROLE);
@@ -706,14 +676,14 @@ void BackupCandidatesController::change(const QString& oldFolder, const QString&
         }
 
         checkSelectedAll();
-        check();
+        refreshBackupCandidatesErrors();
     }
 }
 
 void BackupCandidatesController::onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings)
 {
     Q_UNUSED(syncSettings);
-    check();
+    refreshBackupCandidatesErrors();
 }
 
 void BackupCandidatesController::onFolderSizeReceived(QString folder, int size)
@@ -734,30 +704,32 @@ void BackupCandidatesController::onFolderSizeReceived(QString folder, int size)
 
 void BackupCandidatesController::clean(bool resetErrors)
 {
-    auto row(0);
+    auto row(-1);
     foreach(auto candidate, mBackupCandidates->getBackupCandidates())
     {
-        if (candidate->mSelected)
+        row++;
+
+        if (!candidate->mSelected)
         {
-            if (candidate->mDone)
-            {
-                emit beginRemoveRows(row, row);
-                mBackupCandidates->removeBackupCandidate(candidate->mFolder);
-                mBackupCandidatesSizeRequester->removeFolder(candidate->mFolder);
-                emit endRemoveRows();
-            }
-            else
-            {
-                if (resetErrors)
-                {
-                    setData(candidate,
-                            BackupCandidates::BackupErrorCode::NONE,
-                            BackupCandidates::FOLDER_ROLE);
-                }
-            }
+            continue;
         }
 
-        row++;
+        if (candidate->mDone)
+        {
+            emit beginRemoveRows(row, row);
+            mBackupCandidates->removeBackupCandidate(candidate->mFolder);
+            mBackupCandidatesSizeRequester->removeFolder(candidate->mFolder);
+            emit endRemoveRows();
+        }
+        else
+        {
+            if (resetErrors)
+            {
+                setData(candidate,
+                        BackupCandidates::BackupErrorCode::NONE,
+                        BackupCandidates::FOLDER_ROLE);
+            }
+        }
     }
 }
 
@@ -766,7 +738,7 @@ void BackupCandidatesController::updateModel(
     std::shared_ptr<BackupCandidates::Data> backupCandidate)
 {
     auto row = mBackupCandidates->getBackupCandidates().indexOf(backupCandidate);
-    DataController::updateModel(row, roles);
+    DataController::updateModel(row, 0, roles);
 }
 
 void BackupCandidatesController::updateModel(
@@ -780,7 +752,7 @@ QStringList BackupCandidatesController::getSelectedCandidates() const
 {
     QStringList selectedCandidates;
 
-    for (int row = 0; row < mBackupCandidates->size(); row++)
+    for (int row = 0; row < mBackupCandidates->getSize(); row++)
     {
         if (data(row, BackupCandidates::SELECTED_ROLE).toBool())
         {
@@ -804,7 +776,7 @@ void BackupCandidatesController::createBackups(int syncOrigin)
 
     // All expected errors have been handled
     BackupsController::BackupInfoList candidateList;
-    for (int row = 0; row < mBackupCandidates->size(); row++)
+    for (int row = 0; row < mBackupCandidates->getSize(); row++)
     {
         if (data(row, BackupCandidates::SELECTED_ROLE).toBool())
         {
@@ -859,7 +831,7 @@ bool BackupCandidatesController::checkDirectories()
 {
     bool success = true;
     bool reviewErrors = false;
-    for (int index = 0; index < mBackupCandidates->size(); index++)
+    for (int index = 0; index < mBackupCandidates->getSize(); index++)
     {
         auto backupCandidate = mBackupCandidates->getBackupCandidate(index);
 
@@ -889,7 +861,7 @@ bool BackupCandidatesController::checkDirectories()
     {
         // If one or more UNAVAILABLE_DIR errors have been reverted
         // Then we need to check all the conflicts again
-        check();
+        refreshBackupCandidatesErrors();
     }
     else
     {
@@ -904,7 +876,7 @@ QString BackupCandidatesController::getSdkErrorString() const
 {
     QString message = BackupCandidates::tr("Folder wasn't backed up. Try again.",
                                            "",
-                                           mBackupCandidates->SDKConflictCount());
+                                           mBackupCandidates->getSDKConflictCount());
     auto candidateList(mBackupCandidates->getBackupCandidates());
     auto itFound = std::find_if(candidateList.cbegin(),
                                 candidateList.cend(),
@@ -968,7 +940,7 @@ void BackupCandidatesController::createConflictsNotificationText(
                                      "Rename the new folder to continue with the backup. "
                                      "Folder name will not change on your computer.",
                                      "",
-                                     mBackupCandidates->remoteConflictCount());
+                                     mBackupCandidates->getRemoteConflictCount());
             break;
         }
         case BackupCandidates::BackupErrorCode::SYNC_CONFLICT:

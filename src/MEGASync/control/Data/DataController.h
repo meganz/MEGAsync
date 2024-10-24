@@ -16,9 +16,9 @@ public:
     virtual int size() const = 0;
 
 protected:
-    void updateModel(int row, QVector<int> roles)
+    void updateModel(int row, int column = 0, QVector<int> roles = QVector<int>())
     {
-        emit dataChanged(row, roles);
+        emit dataChanged(row, column, roles);
     }
 
 signals:
@@ -31,7 +31,7 @@ signals:
     void endRemoveRows();
 
     // Update row
-    void dataChanged(int row, QVector<int> rol);
+    void dataChanged(int row, int column, QVector<int> rol);
 };
 
 #endif // DATACONTROLLER_H

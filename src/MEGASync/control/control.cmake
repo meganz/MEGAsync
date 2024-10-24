@@ -104,8 +104,8 @@ target_sources(MEGAsync
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/Preferences
     ${CMAKE_CURRENT_LIST_DIR}/BugReport
     ${CMAKE_CURRENT_LIST_DIR}/Data
+    ${CMAKE_CURRENT_LIST_DIR}/Preferences
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

@@ -51,6 +51,7 @@ void BackupsComponent::registerQmlModules()
                                                     0,
                                                     "BackupCandidatesProxyModel");
         qmlRegisterType<BackupCandidates>("BackupCandidates", 1, 0, "BackupCandidates");
+        qmlRegistrationDone = true;
     }
 }
 
@@ -100,7 +101,7 @@ void BackupsComponent::selectFolderMoveToConfirm()
 {
     mBackupCandidatesController->calculateFolderSizes();
     mBackupsProxyModel->setSelectedFilterEnabled(true);
-    mBackupCandidatesController->check();
+    mBackupCandidatesController->refreshBackupCandidatesErrors();
 }
 
 void BackupsComponent::insertFolder(const QString& path)

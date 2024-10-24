@@ -1,9 +1,7 @@
 #include "BackupCandidates.h"
 
-#include "BackupsController.h"
-#include "Utilities.h"
-
-const char* BackupCandidates::Data::SIZE_READY = "size_ready";
+#include <FileFolderAttributes.h>
+#include <Utilities.h>
 
 BackupCandidates::Data::Data(const QString& folder, const QString& displayName, bool selected):
     mFolder(folder),
@@ -79,31 +77,35 @@ int BackupCandidates::getGlobalError() const
     return mGlobalError;
 }
 
-std::shared_ptr<BackupCandidates::Data> BackupCandidates::getBackupCandidate(int index) const
+std::shared_ptr<BackupCandidates::Data> BackupCandidates::getBackupCandidate(int index)
 {
     return mBackupCandidatesList.at(index);
 }
 
 std::shared_ptr<BackupCandidates::Data>
-    BackupCandidates::getBackupCandidateByFolder(const QString& folder) const
+    BackupCandidates::getBackupCandidateByFolder(const QString& folder)
 {
-    foreach(auto& candidate, mBackupCandidatesList)
+    auto candidateFound = std::find_if(mBackupCandidatesList.cbegin(),
+                                       mBackupCandidatesList.cend(),
+                                       [&folder](const auto& backupCandidate)
+                                       {
+                                           return folder == backupCandidate->mFolder;
+                                       });
+
+    if (candidateFound != mBackupCandidatesList.cend())
     {
-        if (candidate->mFolder == folder)
-        {
-            return candidate;
-        }
+        return *candidateFound;
     }
 
     return nullptr;
 }
 
-QList<std::shared_ptr<BackupCandidates::Data>> BackupCandidates::getBackupCandidates() const
+QList<std::shared_ptr<BackupCandidates::Data>> BackupCandidates::getBackupCandidates()
 {
     return mBackupCandidatesList;
 }
 
-int BackupCandidates::size() const
+int BackupCandidates::getSize() const
 {
     return mBackupCandidatesList.size();
 }
@@ -115,12 +117,16 @@ int BackupCandidates::getRow(std::shared_ptr<BackupCandidates::Data> candidate) 
 
 int BackupCandidates::getRow(const QString& folder) const
 {
-    foreach(auto& candidate, mBackupCandidatesList)
+    auto candidateFound = std::find_if(mBackupCandidatesList.cbegin(),
+                                       mBackupCandidatesList.cend(),
+                                       [&folder](const auto& backupCandidate)
+                                       {
+                                           return folder == backupCandidate->mFolder;
+                                       });
+
+    if (candidateFound != mBackupCandidatesList.cend())
     {
-        if (candidate->mFolder == folder)
-        {
-            return getRow(candidate);
-        }
+        return getRow(*candidateFound);
     }
 
     return -1;
@@ -131,24 +137,23 @@ void BackupCandidates::addBackupCandidate(std::shared_ptr<BackupCandidates::Data
     mBackupCandidatesList.append(backupCandidate);
 }
 
-void BackupCandidates::removeBackupCandidate(int index)
+bool BackupCandidates::removeBackupCandidate(int index)
 {
-    mBackupCandidatesList.removeAt(index);
-}
-
-bool BackupCandidates::removeBackupCandidate(const QString& folder)
-{
-    auto row(getRow(folder));
-    if (row >= 0)
+    if (index >= 0 && index < mBackupCandidatesList.size())
     {
-        mBackupCandidatesList.removeAt(row);
+        mBackupCandidatesList.removeAt(index);
         return true;
     }
 
     return false;
 }
 
-int BackupCandidates::SDKConflictCount() const
+bool BackupCandidates::removeBackupCandidate(const QString& folder)
+{
+    return removeBackupCandidate(getRow(folder));
+}
+
+int BackupCandidates::getSDKConflictCount() const
 {
     return mSDKConflictCount;
 }
@@ -158,7 +163,7 @@ void BackupCandidates::setSDKConflictCount(int newSdkConflictCount)
     mSDKConflictCount = newSdkConflictCount;
 }
 
-int BackupCandidates::remoteConflictCount() const
+int BackupCandidates::getRemoteConflictCount() const
 {
     return mRemoteConflictCount;
 }
@@ -183,7 +188,7 @@ void BackupCandidates::setSelectedRowsTotal(int newSelectedRowsTotal)
     }
 }
 
-long long BackupCandidates::backupsTotalSize() const
+long long BackupCandidates::getBackupsTotalSize() const
 {
     return mBackupsTotalSize;
 }

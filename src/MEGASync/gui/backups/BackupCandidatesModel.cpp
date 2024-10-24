@@ -13,7 +13,10 @@
 BackupCandidatesModel::BackupCandidatesModel(std::shared_ptr<BackupCandidatesController> controller,
                                              QObject* parent):
     DataModel(controller, parent)
-{}
+{
+    QmlManager::instance()->addImageProvider(QLatin1String("standardicons"),
+                                             new StandardIconProvider);
+}
 
 BackupCandidatesModel::~BackupCandidatesModel()
 {

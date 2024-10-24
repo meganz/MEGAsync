@@ -1,9 +1,9 @@
 #ifndef BACKUPCANDIDATES_H
 #define BACKUPCANDIDATES_H
 
-#include "FileFolderAttributes.h"
-
 #include <QObject>
+
+#include <memory>
 
 class BackupCandidates: public QObject
 {
@@ -27,26 +27,24 @@ public:
         SELECTED_ROLE,
         SELECTABLE_ROLE,
         DONE_ROLE,
-        ERROR_ROLE
+        ERROR_ROLE,
     };
 
     enum BackupErrorCode
     {
         NONE = 0,
-        DUPLICATED_NAME = 1,
-        EXISTS_REMOTE = 2,
-        SYNC_CONFLICT = 3,
-        PATH_RELATION = 4,
-        UNAVAILABLE_DIR = 5,
-        SDK_CREATION = 6
+        DUPLICATED_NAME,
+        EXISTS_REMOTE,
+        SYNC_CONFLICT,
+        PATH_RELATION,
+        UNAVAILABLE_DIR,
+        SDK_CREATION,
     };
     Q_ENUM(BackupErrorCode)
 
     class Data
     {
     public:
-        static const char* SIZE_READY;
-
         Data() = default;
         Data(const Data& folder);
         Data(const QString& folder, const QString& displayName, bool selected = true);
@@ -78,15 +76,15 @@ public:
     Qt::CheckState getCheckAllState() const;
     int getGlobalError() const;
     int selectedRowsTotal() const;
-    long long backupsTotalSize() const;
+    long long getBackupsTotalSize() const;
     const QString& getConflictsNotificationText() const;
-    int SDKConflictCount() const;
-    int remoteConflictCount() const;
+    int getSDKConflictCount() const;
+    int getRemoteConflictCount() const;
 
-    std::shared_ptr<BackupCandidates::Data> getBackupCandidate(int index) const;
-    std::shared_ptr<BackupCandidates::Data> getBackupCandidateByFolder(const QString& folder) const;
-    QList<std::shared_ptr<BackupCandidates::Data>> getBackupCandidates() const;
-    int size() const;
+    std::shared_ptr<BackupCandidates::Data> getBackupCandidate(int index);
+    std::shared_ptr<BackupCandidates::Data> getBackupCandidateByFolder(const QString& folder);
+    QList<std::shared_ptr<BackupCandidates::Data>> getBackupCandidates();
+    int getSize() const;
     int getRow(std::shared_ptr<BackupCandidates::Data> candidate) const;
     int getRow(const QString& folder) const;
 
@@ -100,12 +98,11 @@ signals:
 private:
     friend class BackupCandidatesController;
 
-    QList<std::shared_ptr<Data>> mBackupCandidatesList;
     void setIsTotalSizeReady(bool totalSizeReady);
     void setCheckAllState(Qt::CheckState state);
     void setGlobalError(BackupCandidates::BackupErrorCode error);
     void addBackupCandidate(std::shared_ptr<BackupCandidates::Data> backupCandidate);
-    void removeBackupCandidate(int index);
+    bool removeBackupCandidate(int index);
     bool removeBackupCandidate(const QString& folder);
     void setSDKConflictCount(int newSdkConflictCount);
     void setRemoteConflictCount(int newRemoteConflictCount);
@@ -113,7 +110,9 @@ private:
     void setBackupsTotalSize(long long newBackupsTotalSize);
     void setConflictsNotificationText(const QString& text);
 
+    QList<std::shared_ptr<Data>> mBackupCandidatesList;
     int mSelectedRowsTotal;
+    // In bytes
     long long mBackupsTotalSize;
     bool mTotalSizeReady;
     Qt::CheckState mCheckAllState;

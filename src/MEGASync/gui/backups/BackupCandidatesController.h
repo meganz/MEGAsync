@@ -1,9 +1,9 @@
 #ifndef BACKUPCANDIDATESCONTROLLER_H
 #define BACKUPCANDIDATESCONTROLLER_H
 
-#include <BackupCandidates.h>
-#include <DataController.h>
-#include <SyncInfo.h>
+#include "BackupCandidates.h"
+#include "DataController.h"
+#include "SyncInfo.h"
 
 #include <QPointer>
 #include <QTimer>
@@ -14,8 +14,6 @@ class BackupCandidatesFolderSizeRequester;
 class BackupCandidatesController: public DataController
 {
     Q_OBJECT
-
-    static int CHECK_DIRS_TIME;
 
 public:
     BackupCandidatesController();
@@ -39,7 +37,7 @@ public:
 
 public slots:
     int insert(const QString& folder);
-    void check();
+    void refreshBackupCandidatesErrors();
     int rename(const QString& folder, const QString& name);
     void remove(const QString& folder);
     void change(const QString& oldFolder, const QString& newFolder);
@@ -66,10 +64,12 @@ private:
     bool isRelatedFolder(const QString& folder, const QString& existingPath) const;
     void setAllSelected(bool selected);
     bool checkPermissions(const QString& inputPath);
+    QStringList checkIfFoldersAreSyncable();
     void checkDuplicatedBackups(const QStringList& candidateList);
+    void handleDirectoryStatus(std::shared_ptr<BackupCandidates::Data> candidate);
     void reviewConflicts();
     void changeConflictsNotificationText(const QString& text);
-    bool existOtherRelatedFolder(const int currentRow);
+    bool existOtherRelatedFolder(std::shared_ptr<BackupCandidates::Data>);
     bool existsFolder(const QString& inputPath);
 
     void createConflictsNotificationText(BackupCandidates::BackupErrorCode error);

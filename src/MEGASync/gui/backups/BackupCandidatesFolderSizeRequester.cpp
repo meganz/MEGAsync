@@ -1,7 +1,7 @@
 #include "BackupCandidatesFolderSizeRequester.h"
 
-#include <DataController.h>
-#include <FileFolderAttributes.h>
+#include "DataController.h"
+#include "FileFolderAttributes.h"
 
 BackupCandidatesFolderSizeRequester::BackupCandidatesFolderSizeRequester(QObject* parent):
     QObject(parent)
