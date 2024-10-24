@@ -6781,21 +6781,6 @@ Do you want to delete it anyway?</translation>
         <translation>Disabling sync status icons</translation>
     </message>
     <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message>
         <source>Enable Windows Explorer integration</source>
         <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
         <translation>Enable File Explorer integration</translation>
@@ -6804,6 +6789,21 @@ Do you want to delete it anyway?</translation>
         <source>Recovery key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
         <translation>Recovery key</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Title of the group box with the button to open the permissions dialog.</translatorcomment>
+        <translation type="unfinished">Permissions</translation>
+    </message>
+    <message>
+        <source>Permissions for new folders and files</source>
+        <translatorcomment>Description of the task to be executed by the change permissions button.</translatorcomment>
+        <translation type="unfinished">Permissions for new folders and files</translation>
+    </message>
+    <message>
+        <source>Change permissions</source>
+        <translatorcomment>Button label for the button that will open the dialog that allows us to change the permissions on syncs or backups.</translatorcomment>
+        <translation type="unfinished">Change permissions</translation>
     </message>
 </context>
 <context>
