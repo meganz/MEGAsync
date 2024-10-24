@@ -232,136 +232,20 @@ ContextMenuExt::~ContextMenuExt(void)
     InterlockedDecrement(&g_cDllRef);
 }
 
-bool ContextMenuExt::isSynced(int type, int state)
-{
-    return (state == MegaInterface::FILE_SYNCED) ||
-        ((type == MegaInterface::TYPE_FOLDER) && state == MegaInterface::FILE_SYNCING);
-}
-
-bool ContextMenuExt::isUnsynced(int state)
-{
-    return (state == MegaInterface::FILE_NOTFOUND);
-}
-
 void ContextMenuExt::processFile(HDROP hDrop, int i)
 {
-    WIN32_FILE_ATTRIBUTE_DATA fad;
     int characters = DragQueryFileW(hDrop, i, NULL, 0);
-    int type = MegaInterface::TYPE_UNKNOWN;
     if (characters)
     {
         characters+=1; //NUL character
-        std::string buffer;
+        std::wstring buffer;
         buffer.resize(characters*sizeof(wchar_t));
         int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
         ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
         if (ok)
         {
-            if (GetFileAttributesExW((LPCWSTR)buffer.data(), GetFileExInfoStandard, (LPVOID)&fad))
-            {
-                type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
-                    MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
-            }
-            else
-            {
-                DWORD error = GetLastError();
-                if(error == ERROR_PATH_NOT_FOUND || error == ERROR_INVALID_NAME)
-                {
-                    type = MegaInterface::TYPE_NOTFOUND;
-                }
-            }
-
-            int state = MegaInterface::getPathState((PCWSTR)buffer.data(), false);
-            selectedFiles.push_back(buffer);
-            pathStates.push_back(state);
-            pathTypes.push_back(type);
-            if (isSynced(type, state))
-            {
-                if (type == MegaInterface::TYPE_FOLDER)
-                {
-                    syncedFolders++;
-                }
-                else if (type == MegaInterface::TYPE_FILE)
-                {
-                    syncedFiles++;
-                }
-                else if (type == MegaInterface::TYPE_UNKNOWN)
-                {
-                    syncedUnknowns++;
-                }
-            }
-            else if (isUnsynced(state))
-            {
-                if (type == MegaInterface::TYPE_FOLDER)
-                {
-                    unsyncedFolders++;
-                }
-                else if (type == MegaInterface::TYPE_FILE)
-                {
-                    unsyncedFiles++;
-                }
-                else if(type == MegaInterface::TYPE_UNKNOWN)
-                {
-                    unsyncedUnknowns++;
-                }
-            }
-
-            if ((type == MegaInterface::TYPE_FOLDER || type == MegaInterface::TYPE_NOTFOUND) && !inLeftPane.size())
-            {
-                if (CheckLeftPaneIcon((wchar_t *)buffer.data(), false))
-                {
-                    inLeftPane = buffer;
-                }
-            }
+            ContextMenuData::processFile(buffer);
         }
-    }
-}
-
-void ContextMenuExt::requestUpload()
-{
-    for (unsigned int i = 0; i < selectedFiles.size(); i++)
-    {
-        if (isUnsynced(pathStates[i]))
-        {
-            MegaInterface::upload((PCWSTR)selectedFiles[i].data());
-        }
-    }
-}
-
-void ContextMenuExt::requestGetLinks()
-{
-    for (unsigned int i = 0; i < selectedFiles.size(); i++)
-    {
-        if (isSynced(pathTypes[i], pathStates[i]))
-        {
-            MegaInterface::pasteLink((PCWSTR)selectedFiles[i].data());
-        }
-    }
-}
-
-void ContextMenuExt::removeFromLeftPane()
-{
-    if (!inLeftPane.size())
-    {
-        return;
-    }
-
-    CheckLeftPaneIcon((wchar_t *)inLeftPane.data(), true);
-}
-
-void ContextMenuExt::viewOnMEGA()
-{
-    if (selectedFiles.size())
-    {
-        MegaInterface::viewOnMEGA((PCWSTR)selectedFiles[0].data());
-    }
-}
-
-void ContextMenuExt::viewVersions()
-{
-    if (selectedFiles.size())
-    {
-        MegaInterface::viewVersions((PCWSTR)selectedFiles[0].data());
     }
 }
 
@@ -461,12 +345,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
         // The pDataObj pointer contains the objects being acted upon. In this
         // example, we get an HDROP handle for enumerating the selected files and
         // folders.
-        selectedFiles.clear();
-        pathStates.clear();
-        pathTypes.clear();
-        inLeftPane.clear();
-        syncedFolders = syncedFiles = syncedUnknowns = 0;
-        unsyncedFolders = unsyncedFiles = unsyncedUnknowns = 0;
+        reset();
         if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
         {
             // Get an HDROP handle.
@@ -483,7 +362,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
                             processFile(hDrop, i);
                         }
 
-                        if (selectedFiles.size())
+                        if (mSelectedFiles.size())
                         {
                             hr = S_OK;
                         }
@@ -537,9 +416,11 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         // http://www.codeproject.com/KB/shell/ctxextsubmenu.aspx
 
         int lastItem = 0;
-        if (unsyncedFolders || unsyncedFiles)
+        if (mUnsyncedFolders || mUnsyncedFiles)
         {
-            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_UPLOAD,
+                                                       mUnsyncedFiles,
+                                                       mUnsyncedFolders);
             if (menuText)
             {
                 MENUITEMINFO mii = { sizeof(mii) };
@@ -559,29 +440,31 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             }
         }
 
-        if (syncedFolders || syncedFiles)
+        if (mSyncedFolders || mSyncedFiles)
+        {
+            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK,
+                                                       mSyncedFiles,
+                                                       mSyncedFolders);
+            if (menuText)
             {
-                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_GETLINK, syncedFiles, syncedFolders);
-                if (menuText)
+                MENUITEMINFO mii = {sizeof(mii)};
+                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+                mii.wID = idCmdFirst + IDM_GETLINK;
+                mii.fType = MFT_STRING;
+                mii.dwTypeData = menuText;
+                mii.fState = MFS_ENABLED;
+                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
                 {
-                    MENUITEMINFO mii = { sizeof(mii) };
-                    mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
-                    mii.wID = idCmdFirst + IDM_GETLINK;
-                    mii.fType = MFT_STRING;
-                    mii.dwTypeData = menuText;
-                    mii.fState = MFS_ENABLED;
-                    mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
-                    if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
-                    {
-                        delete menuText;
-                        return HRESULT_FROM_WIN32(GetLastError());
-                    }
                     delete menuText;
-                    lastItem = IDM_GETLINK;
+                    return HRESULT_FROM_WIN32(GetLastError());
                 }
+                delete menuText;
+                lastItem = IDM_GETLINK;
             }
+        }
 
-        if (inLeftPane.size())
+        if (mInLeftPane.size())
         {
             LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
             if (menuText)
@@ -603,14 +486,15 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             }
         }
 
-        if (!unsyncedFiles && !unsyncedFolders && !unsyncedUnknowns && !syncedUnknowns
-                && selectedFiles.size() == 1
-                && (syncedFiles + syncedFolders) == 1)
+        if (!mUnsyncedFiles && !mUnsyncedFolders && !mUnsyncedUnknowns && !mSyncedUnknowns &&
+            mSelectedFiles.size() == 1 && (mSyncedFiles + mSyncedFolders) == 1)
         {
             // One synced file or folder selected
-            if (syncedFolders)
+            if (mSyncedFolders)
             {
-                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA, syncedFiles, syncedFolders);
+                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA,
+                                                           mSyncedFiles,
+                                                           mSyncedFolders);
                 if (menuText)
                 {
                     MENUITEMINFO mii = { sizeof(mii) };
@@ -631,7 +515,9 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             }
             else
             {
-                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS, syncedFiles, syncedFolders);
+                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS,
+                                                           mSyncedFiles,
+                                                           mSyncedFolders);
                 if (menuText)
                 {
                     MENUITEMINFO mii = { sizeof(mii) };
@@ -819,7 +705,6 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             }
         }
 
-        MegaInterface::endRequest();
         return S_OK;
     }
     __except(EXCEPTION_EXECUTE_HANDLER)

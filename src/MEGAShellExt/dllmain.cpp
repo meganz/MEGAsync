@@ -1,13 +1,21 @@
-#include <windows.h>
-#include <Guiddef.h>
 #include "ClassFactoryContextMenuExt.h"
-#include "ClassFactoryShellExtSynced.h" 
-#include "ClassFactoryShellExtPending.h"
-#include "ClassFactoryShellExtSyncing.h"
 #include "ClassFactoryShellExtNotFound.h"
+#include "ClassFactoryShellExtPending.h"
+#include "ClassFactoryShellExtSynced.h"
+#include "ClassFactoryShellExtSyncing.h"
+#include "ContextMenuCommandGetLink.h"
+#include "ContextMenuCommandRemoveFromLeftPane.h"
+#include "ContextMenuCommandSeparator.h"
+#include "ContextMenuCommandUpload.h"
+#include "ContextMenuCommandView.h"
+#include "ContextMenuCommandViewVersions.h"
+#include "Installer.h"
 #include "RegUtils.h"
+#include "SimpleFactory.h"
+#include <Guiddef.h>
 
 #include <new>
+#include <windows.h>
 
 STDAPI DllRegisterServer(void);
 STDAPI DllUnregisterServer(void);
@@ -52,6 +60,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     case DLL_PROCESS_ATTACH:
         g_hInst = hModule;
         DisableThreadLibraryCalls(hModule);
+        if (IsWindows11Installation())
+            EnsureRegistrationOnCurrentUser();
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
@@ -73,12 +83,43 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     }
 
     *ppv = NULL;
-    if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
+    if (IsWindows11Installation())
     {
-        hr = E_OUTOFMEMORY;
-        pClassFactory = new (std::nothrow) ClassFactoryContextMenuExt();
+        if (rclsid == __uuidof(ContextMenuCommandGetLink))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandGetLink>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommandRemoveFromLeftPane))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandRemoveFromLeftPane>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommandSeparator))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandSeparator>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommandUpload))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandUpload>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommandView))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandView>>().as(riid, ppv);
+        }
+        else if (rclsid == __uuidof(ContextMenuCommandViewVersions))
+        {
+            hr = winrt::make<SimpleFactory<ContextMenuCommandViewVersions>>().as(riid, ppv);
+        }
     }
-    else if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
+    else
+    {
+        if (IsEqualCLSID(CLSID_ContextMenuExt, rclsid))
+        {
+            hr = E_OUTOFMEMORY;
+            pClassFactory = new (std::nothrow) ClassFactoryContextMenuExt();
+        }
+    }
+
+    if (IsEqualCLSID(CLSID_ShellExtSynced, rclsid))
     {
         hr = E_OUTOFMEMORY;
         pClassFactory = new (std::nothrow) ClassFactoryShellExtSynced();
@@ -142,27 +183,39 @@ STDAPI DllRegisterServer(void)
         }
 
         // Register the component.
-        hr = RegisterInprocServer(szModule, CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName,
-            L"Apartment");
-        if (!SUCCEEDED(hr)) return hr;
+        if (IsWindows11Installation())
+        {
+            InstallSparsePackage();
+        }
+        else
+        {
+            hr = RegisterInprocServer(szModule,
+                                      CLSID_ContextMenuExt,
+                                      ContextMenuExtFriendlyName,
+                                      L"Apartment");
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        // Register the context menu handler. The context menu handler is
-        // associated with the .cpp file class.
-        hr = RegisterShellExtContextMenuHandler(L"*",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            // Register the context menu handler. The context menu handler is
+            // associated with the .cpp file class.
+            hr = RegisterShellExtContextMenuHandler(L"*",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        hr = RegisterShellExtContextMenuHandler(L"AllFilesystemObjects",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            hr = RegisterShellExtContextMenuHandler(L"AllFilesystemObjects",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
 
-        hr = RegisterShellExtContextMenuHandler(L"Drive",
-            CLSID_ContextMenuExt,
-            ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
+            hr = RegisterShellExtContextMenuHandler(L"Drive",
+                                                    CLSID_ContextMenuExt,
+                                                    ContextMenuExtFriendlyName);
+            if (!SUCCEEDED(hr))
+                return hr;
+        }
 
         hr = RegisterInprocServer(szModule, CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName,
@@ -228,8 +281,16 @@ STDAPI DllUnregisterServer(void)
         }
 
         // Unregister the component.
-        hr = UnregisterInprocServer(CLSID_ContextMenuExt);
-        if (!SUCCEEDED(hr)) return hr;
+        if (IsWindows11Installation())
+        {
+            UninstallSparsePackage();
+        }
+        else
+        {
+            hr = UnregisterInprocServer(CLSID_ContextMenuExt);
+            if (!SUCCEEDED(hr))
+                return hr;
+        }
 
         hr = UnregisterInprocServer(CLSID_ShellExtSynced);
         if (!SUCCEEDED(hr)) return hr;;
@@ -243,10 +304,21 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtNotFound);
         if (!SUCCEEDED(hr)) return hr;
 
-        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyNameOld);
-        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        UnregisterShellExtContextMenuHandler(L"Drive", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
+        if (!IsWindows11Installation())
+        {
+            UnregisterShellExtContextMenuHandler(L"*",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyNameOld);
+            UnregisterShellExtContextMenuHandler(L"*",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+            UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+            UnregisterShellExtContextMenuHandler(L"Drive",
+                                                 CLSID_ContextMenuExt,
+                                                 ContextMenuExtFriendlyName);
+        }
         UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyNameOld);
         UnregisterShellExtOverlayHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyName);
         UnregisterShellExtOverlayHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyNameOld);

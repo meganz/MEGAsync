@@ -6,6 +6,22 @@
 add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
+    contextmenu/data/ContextMenuData.h
+    contextmenu/gui/AclHelper.h
+    contextmenu/gui/ContextMenuCommandBase.h
+    contextmenu/gui/ContextMenuCommandGetLink.h
+    contextmenu/gui/ContextMenuCommandRemoveFromLeftPane.h
+    contextmenu/gui/ContextMenuCommandSeparator.h
+    contextmenu/gui/ContextMenuCommandUpload.h
+    contextmenu/gui/ContextMenuCommandView.h
+    contextmenu/gui/ContextMenuCommandViewVersions.h
+    contextmenu/gui/framework.h
+    contextmenu/gui/Installer.h
+    contextmenu/gui/PathHelper.h
+    contextmenu/gui/RegistryKey.h
+    contextmenu/gui/SharedCounter.h
+    contextmenu/gui/SharedState.h
+    contextmenu/gui/SimpleFactory.h
     ShellExt.h
     ShellExtNotASync.h
     resource.h
@@ -21,15 +37,29 @@ set(MEGAShellExt_HEADERS
 )
 
 set(MEGAShellExt_SOURCES
+    contextmenu/data/ContextMenuData.cpp
+    contextmenu/gui/AclHelper.cpp
+    contextmenu/gui/ContextMenuCommandBase.cpp
+    contextmenu/gui/ContextMenuCommandGetLink.cpp
+    contextmenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp
+    contextmenu/gui/ContextMenuCommandSeparator.cpp
+    contextmenu/gui/ContextMenuCommandUpload.cpp
+    contextmenu/gui/ContextMenuCommandView.cpp
+    contextmenu/gui/ContextMenuCommandViewVersions.cpp
+    contextmenu/gui/Installer.cpp
+    contextmenu/gui/PathHelper.cpp
+    contextmenu/gui/RegistryKey.cpp
+    contextmenu/gui/SharedCounter.cpp
+    contextmenu/gui/SharedState.cpp
     ShellExt.cpp
-	ShellExtNotASync.cpp
+    ShellExtNotASync.cpp
     RegUtils.cpp
     dllmain.cpp
     ContextMenuExt.cpp
     ClassFactoryShellExtSyncing.cpp
     ClassFactoryShellExtSynced.cpp
     ClassFactoryShellExtPending.cpp
-	ClassFactoryShellExtNotFound.cpp
+    ClassFactoryShellExtNotFound.cpp
     ClassFactoryContextMenuExt.cpp
     ClassFactory.cpp
     MegaInterface.cpp
@@ -58,3 +88,10 @@ target_link_libraries(MEGAShellExt
     user32 ole32 oleaut32 gdi32 uuid Advapi32 Shell32
 )
 
+target_include_directories(MEGAShellExt
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/contextmenu/data
+    ${CMAKE_CURRENT_SOURCE_DIR}/contextmenu/gui
+)
+
+target_compile_features(MEGAShellExt PRIVATE cxx_std_17)

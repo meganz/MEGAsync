@@ -30,19 +30,18 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #ifndef CONTEXTMENUEXT_H
 #define CONTEXTMENUEXT_H
 
-#include <windows.h>
+#include "ContextMenuData.h"
+
+#include <shellapi.h>
 #include <shlobj.h>
 #include <uxtheme.h>
-#include <vector>
-#include <string>
-#include <uxtheme.h>
-#include <shellapi.h>
+#include <windows.h>
 
 typedef HRESULT (WINAPI *pGetBufferedPaintBits) (HPAINTBUFFER hBufferedPaint, RGBQUAD **ppbBuffer, int *pcxRow);
 typedef HPAINTBUFFER (WINAPI *pBeginBufferedPaint) (HDC hdcTarget, const RECT *prcTarget, BP_BUFFERFORMAT dwFormat, BP_PAINTPARAMS *pPaintParams, HDC *phdc);
-typedef HRESULT (WINAPI *pEndBufferedPaint) (HPAINTBUFFER hBufferedPaint, BOOL fUpdateTarget);
+typedef HRESULT(WINAPI* pEndBufferedPaint)(HPAINTBUFFER hBufferedPaint, BOOL fUpdateTarget);
 
-class ContextMenuExt : public IShellExtInit, public IContextMenu3
+class ContextMenuExt: public IShellExtInit, public IContextMenu3, public ContextMenuData
 {
 public:
     // IUnknown
@@ -65,29 +64,12 @@ public:
 
 protected:
     ~ContextMenuExt(void);
-    bool isSynced(int type, int state);
-    bool isUnsynced(int state);
     void processFile(HDROP hDrop, int i);
 
 private:
     // Reference count of component.
     long m_cRef;
 
-    // The name of the selected file.
-    //wchar_t m_szSelectedFile[MAX_PATH];
-    std::string inLeftPane;
-    std::vector<std::string> selectedFiles;
-    std::vector<int> pathStates;
-    std::vector<int> pathTypes;
-    int syncedFolders, syncedFiles, syncedUnknowns;
-    int unsyncedFolders, unsyncedFiles, unsyncedUnknowns;
-
-    // The method that handles the "display" verb.
-    void requestUpload();
-    void requestGetLinks();
-    void removeFromLeftPane();
-    void viewOnMEGA();
-    void viewVersions();
     HBITMAP getBitmap(HICON icon);
     HBITMAP getBitmapLegacy(HICON hIcon);
     bool legacyIcon;
