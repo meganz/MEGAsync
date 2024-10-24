@@ -55,9 +55,6 @@ static constexpr int NUMBER_OF_CLICKS_TO_DEBUG{5};
 static constexpr int PROGRESS_PERCENTAGE_OK{50};
 static constexpr int PROGRESS_PERCENTAGE_WARNING{95};
 
-constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
-constexpr char MEGA_IGNORE_DEFAULT_FILE_NAME[] = ".megaignore.default";
-
 long long calculateCacheSize()
 {
     long long cacheSize = 0;
