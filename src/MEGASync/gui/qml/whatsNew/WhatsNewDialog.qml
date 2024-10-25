@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
-
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import common 1.0
 
 import components.texts 1.0 as Texts
@@ -12,15 +13,24 @@ import QmlDialog 1.0
 QmlDialog {
     id: window
 
-    readonly property int contentMargins: 48
-    readonly property int elementsSpacing: 8
+    readonly property int contentMargins: 64
+    readonly property int gridButtonSpacing: 48
+    readonly property int elementsSpacing: 16
+    property int columnCount: repeater.count < 4 ? 1 : 2
+    property int rowCount: repeater.count < 4 ? 1 : 2
 
-    width: 811
-    height: 540
-    maximumHeight: 540
-    maximumWidth: 811
-    minimumHeight: 540
-    minimumWidth: 811
+
+    function adjustSize() {
+        let windowWidth  = grid.width + contentMargins * 2
+        let windowHeight  = grid.height + contentMargins * 2 + acceptButton.height + Constants.focusAdjustment + gridButtonSpacing
+        window.width = windowWidth
+        window.height = windowHeight
+        window.minimumWidth = windowWidth
+        window.minimumHeight = windowHeight
+        window.maximumWidth = windowWidth
+        window.maximumHeight = windowHeight
+    }
+
     color: ColorTheme.surface1
     title: WhatsNewStrings.whatsNew
 
@@ -32,91 +42,47 @@ QmlDialog {
     Rectangle {
         id: content
 
-        color:'transparent'
         anchors {
             fill: parent
             margins: contentMargins
         }
-        Texts.Text {
-            id: title
+        color: 'transparent'
+        Grid {
+            id: grid
 
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
-            text: WhatsNewStrings.updates
-            color: ColorTheme.textPrimary
-            lineHeightMode: Text.FixedHeight
-            font{
-                pixelSize: Texts.Text.Size.EXTRA_LARGE
-                weight: Font.DemiBold
-                family: FontStyles.poppinsFontFamily
+            rows: repeater.count < 4? 1 : 2
+            columns: repeater.count < 4 ? repeater.count :2
+            rowSpacing: 16
+            columnSpacing: 16
+
+            Repeater {
+                id: repeater
+                model: updatesModelAccess
+
+                UpdatesElement {
+                    id: element
+
+                    imageSource: model? Images.imagesQmlPath + model.image + ".png" : ""
+                    titleText: model? model.title : ""
+                    descriptionText: model? model.description : ""
+                }
             }
-            lineHeight: 30
+            onWidthChanged: {
+                adjustSize();
+            }
         }
-        Rectangle{
-            id: elementsRect
 
-            anchors{
-                left: parent.left
-                right: parent.right
-                top: title.bottom
-                topMargin: contentMargins
-                bottom: acceptButton.top
-                bottomMargin: contentMargins
-            }
-
-            color:'transparent'
-
-            Row{
-                id: elementsRow
-
-                anchors.fill: parent
-                spacing: elementsSpacing
-                UpdatesElement{
-                    id: firstElemnt
-
-                    anchors{
-                        top: parent.top
-                        bottom: parent.bottom
-                    }
-                    imageSource: Images.rocket
-                    titleText: WhatsNewStrings.leftTitle
-                    descriptionText: WhatsNewStrings.leftDescription
-                }
-                UpdatesElement{
-                    id: secondElement
-
-                    anchors{
-                        top: parent.top
-                        bottom: parent.bottom
-                    }
-                    imageSource: Images.contols
-                    titleText: WhatsNewStrings.middleTitle
-                    descriptionText: WhatsNewStrings.middleDescription
-                }
-                UpdatesElement{
-                    id: thirdElement
-
-                    anchors{
-                        top: parent.top
-                        bottom: parent.bottom
-                    }
-                    imageSource: Images.megaCloud
-                    titleText: WhatsNewStrings.rightTitle
-                    descriptionText: WhatsNewStrings.rightDescription
-                }
-            } // Row: elementsRow
-        }// Rectangle: elementsRect
-
-        PrimaryButton{
+        PrimaryButton {
             id: acceptButton
-
-            anchors{
-                horizontalCenter: parent.horizontalCenter
-                bottom: parent.bottom
-            }
-            text: WhatsNewStrings.gotIt
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Constants.focusAdjustment
+            text: whatsNewWindowAccess.acceptButtonText()
             focus: true
-            onClicked: window.close();
+            onClicked: {
+                whatsNewWindowAccess.acceptButtonClicked();
+                window.close();
+            }
         }
-    } // Rectangle: content
+    }
 }

@@ -41,6 +41,7 @@
 #include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
+#include "UpdatesModel.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"

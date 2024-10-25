@@ -553,6 +553,8 @@ public:
     //In this section, you need to move the keys to make them accessible from outside
     static const int minSyncStateChangeProcessingIntervalMs;
 
+    static int lastVersionUponStartup;
+
 protected:
     QMutex mutex;
     void login(QString account);
@@ -803,6 +805,7 @@ protected:
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
     static const bool defaultAskOnExclusionRemove;
+
     static const ThemeType defaultTheme;
 
 private:
