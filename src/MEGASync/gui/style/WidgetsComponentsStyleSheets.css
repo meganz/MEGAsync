@@ -490,7 +490,7 @@ border-color: #ffd8d9db; /*colorToken.border-strong*/
 color: #ff303233; /*colorToken.text-primary*/
 border-style: solid;
 border-width: 1px;
-height: 28px;
+height: 26px;
 }
 
 QLineEdit:focus[type="mega"], QTextEdit:focus[type="mega"]

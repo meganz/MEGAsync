@@ -49,6 +49,11 @@
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
+#uploadGroup, #downloadGroup
+{
+border-radius: 8px;
+}
+
 #downloadIcon
 {
 image: url(:/images/themed/light/arrow-down-circle.svg); /*replaceThemeToken*/
@@ -1759,6 +1764,12 @@ margin-top: 0px;
                </item>
                <item>
                 <widget class="QLineEdit" name="eUploadFolder">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>26</height>
+                  </size>
+                 </property>
                  <property name="accessibleName">
                   <string>Uploads:</string>
                  </property>
@@ -1891,6 +1902,12 @@ margin-top: 0px;
                </item>
                <item>
                 <widget class="QLineEdit" name="eDownloadFolder">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>26</height>
+                  </size>
+                 </property>
                  <property name="accessibleName">
                   <string>Downloads:</string>
                  </property>
