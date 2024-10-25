@@ -46,7 +46,6 @@ if (WIN32)
 elseif (APPLE)
     set(RESOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/app.icns
-        ${CMAKE_CURRENT_SOURCE_DIR}/folder.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff

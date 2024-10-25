@@ -337,13 +337,9 @@ void setFolderIcon(QString path)
     {
         iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_bigsur.icns"]];
     }
-    else if (osVersion >= QOperatingSystemVersion::OSXYosemite)
-    {
-        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
-    }
     else
     {
-        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
+        iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
     }
 
     if (iconImage)
