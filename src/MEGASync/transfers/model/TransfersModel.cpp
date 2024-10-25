@@ -829,7 +829,8 @@ void TransferThread::trackTransfer(QExplicitlySharedDataPointer<TransferData> da
     foreach(auto track, mTrackToTransfers)
     {
         track->checkTransfer(data);
-        if (track->areAllFinished())
+
+        if (track->areAllTransfersFinished())
         {
             removeFinishedTracks(track->id());
         }
@@ -1319,7 +1320,7 @@ void TransfersModel::processUpdateTransfers()
 
         auto row(getRowByTransferTag(itValue->mTag));
         auto d  = getTransfer(row);
-        if(d && !d->ignoreUpdate(itValue->getState()))
+        if (d && !d->ignoreUpdate(itValue->getState()) && !d->isSyncTransfer())
         {
             if(!mCompletedTransfersByTag.contains(itValue->mNodeHandle))
             {
@@ -1329,25 +1330,18 @@ void TransfersModel::processUpdateTransfers()
                 updateTransfer(d, row);
                 sendDataChanged(row);
                 d->resetStateHasChanged();
-
-                if(d->isCompleted())
-                {
-                    mCompletedTransfersByTag.insert(d->mNodeHandle, index(row, 0));
-
-                    if (mRetriedSyncFailedTransfersByHandle.contains(d->mNodeHandle))
-                    {
-                        mRetriedSyncFailedTransfersByHandle.remove(d->mNodeHandle);
-                        emit retriedSyncTransferFinished(
-                            d->mNodeHandle,
-                            TransferData::TransferState::TRANSFER_COMPLETED);
-                    }
-                }
             }
             else
             {
                 assert(false);
                 MegaSyncApp->getStatsEventHandler()->sendEvent(AppStatsEvents::EventType::DUP_FINISHED_TRSF,
                                                                { QString::number(itValue->mTag) });
+            }
+
+            if (d->isCompleted() && itValue->mNodeHandle != mega::INVALID_HANDLE &&
+                !mCompletedTransfersByTag.contains(itValue->mNodeHandle))
+            {
+                mCompletedTransfersByTag.insert(d->mNodeHandle, index(row, 0));
             }
         }
     }
@@ -1376,14 +1370,6 @@ void TransfersModel::processFailedTransfers()
             {
                 if (d->isSyncTransfer())
                 {
-                    if (mRetriedSyncFailedTransfersByHandle.contains(d->mNodeHandle))
-                    {
-                        mRetriedSyncFailedTransfersByHandle.remove(d->mNodeHandle);
-                        emit retriedSyncTransferFinished(
-                            d->mNodeHandle,
-                            TransferData::TransferState::TRANSFER_FAILED);
-                    }
-
                     mRetryableSyncFailedTransfersByHandle.insert(d->mNodeHandle, index(row, 0));
                 }
 
@@ -1845,8 +1831,6 @@ void TransfersModel::retryTransfers(QModelIndexList indexes, unsigned long long 
                     mRetryableSyncFailedTransfersByHandle.contains(d->mNodeHandle))
                 {
                     mRetryableSyncFailedTransfersByHandle.remove(d->mNodeHandle);
-                    mRetriedSyncFailedTransfersByHandle.insert(d->mNodeHandle);
-                    emit retryableSyncTransferRetried(d->mNodeHandle);
                 }
             }
         }

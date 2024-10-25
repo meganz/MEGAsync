@@ -1,5 +1,6 @@
 #include "DownloadFileIssue.h"
 
+#include <BugReportController.h>
 #include <MegaApplication.h>
 #include <StalledIssuesUtilities.h>
 
@@ -7,7 +8,7 @@ StalledIssueSPtr DownloadFileIssueFactory::createAndFillIssue(const mega::MegaSy
 {
     StalledIssueSPtr issue;
 
-    if (stall->pathProblem(true, 0) == mega::MegaSyncStall::DownloadToTmpDestinationFailed)
+    if (stall->pathProblem(true, 0) == mega::MegaSyncStall::UnknownDownloadIssue)
     {
         issue = std::make_shared<UnknownDownloadIssue>(stall);
     }
@@ -85,7 +86,7 @@ bool UnknownDownloadIssue::checkForExternalChanges()
     return !canBeRetried();
 }
 
-void UnknownDownloadIssue::solveIssues()
+void UnknownDownloadIssue::solveIssuesByRetry()
 {
     MegaSyncApp->getTransfersModel()->retrySyncFailedTransfers(mIssuesToRetry);
     mIssuesToRetry.clear();
@@ -111,6 +112,34 @@ void UnknownDownloadIssue::addIssueToSolveQueue()
     }
 }
 
+void UnknownDownloadIssue::sendFeedback()
+{
+    mReportController = std::make_shared<BugReportController>(MegaSyncApp->getLogger());
+    mReportController->attachLogToReport(true);
+    mReportController->setReportTitle(tr("Unknown download issue detected"));
+    mReportController->setReportDescription(tr("An unknown download issue has been detected during "
+                                               "the sync operation. Error: UnknownDownloadIssue"));
+    connect(mReportController.get(),
+            &BugReportController::reportStarted,
+            this,
+            &UnknownDownloadIssue::onReportStarted);
+    connect(mReportController.get(),
+            &BugReportController::reportFinished,
+            this,
+            &UnknownDownloadIssue::onReportFinished);
+    connect(mReportController.get(),
+            &BugReportController::reportFailed,
+            this,
+            &UnknownDownloadIssue::onReportFailed);
+
+    mReportController->submitReport();
+}
+
+bool UnknownDownloadIssue::isSendingFeedback() const
+{
+    return mReportController != nullptr;
+}
+
 void UnknownDownloadIssue::onTrackedTransferStarted(TransferItem transfer)
 {
     if (consultCloudData()->getPathHandle() == transfer.getTransferData()->mNodeHandle)
@@ -127,6 +156,30 @@ void UnknownDownloadIssue::onTrackedTransferFinished(TransferItem transfer)
         performFinishAsyncIssueSolving(data->getState() ==
                                        TransferData::TransferState::TRANSFER_FAILED);
     }
+}
+
+void UnknownDownloadIssue::onReportStarted()
+{
+    setCustomMessage(tr("Sending feedback"), SolveType::BEING_SOLVED);
+    resetUIUpdated();
+}
+
+void UnknownDownloadIssue::onReportFinished()
+{
+    // Even if the report is submitted correctly, the issue is not fixed
+    // But the message will use the SOLVED style
+    setCustomMessage(tr("Feedback sent"), SolveType::SOLVED);
+    mReportController.reset();
+    resetUIUpdated();
+}
+
+void UnknownDownloadIssue::onReportFailed()
+{
+    // Even if the report submit failed, the issue is not failed
+    // But the message will use the FAILED style
+    setCustomMessage(tr("Feedback failed"), SolveType::FAILED);
+    mReportController.reset();
+    resetUIUpdated();
 }
 
 void UnknownDownloadIssue::connectTrack()

@@ -308,13 +308,19 @@ void UnknownDownloadIssueHeader::refreshCaseActions(StalledIssueHeader* header)
     QList<StalledIssueHeader::ActionInfo> actions;
 
     auto downloadIssue(header->getData().convert<UnknownDownloadIssue>());
-    if (downloadIssue && downloadIssue->canBeRetried())
+    if (downloadIssue)
     {
-        actions << StalledIssueHeader::ActionInfo(tr("Retry"), UnknownDownloadIssue::RETRY);
-    }
+        if (downloadIssue->canBeRetried())
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Retry"), UnknownDownloadIssue::RETRY);
+        }
 
-    actions << StalledIssueHeader::ActionInfo(tr("Send feedback"),
-                                              UnknownDownloadIssue::SEND_FEEDBACK);
+        if (!downloadIssue->isSendingFeedback())
+        {
+            actions << StalledIssueHeader::ActionInfo(tr("Report issue"),
+                                                      UnknownDownloadIssue::SEND_FEEDBACK);
+        }
+    }
 
     header->showActions(SOLVE_OPTIONS_BUTTON_STRING, actions);
 }
@@ -346,8 +352,14 @@ void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIss
             return;
         }
 
-        selectionInfo.msgInfo.text = areYouSure();
-        selectionInfo.msgInfo.informativeText = tr("The download will be retried another time.");
+        header->getData().consultData()->isFile() ?
+            selectionInfo.msgInfo.text = tr("Try to sync this file again?") :
+            selectionInfo.msgInfo.text = tr("Try to sync this folder again?");
+        selectionInfo.msgInfo.informativeText =
+            tr("If your transfers have been paused, the sync will not "
+               "retry until they have been resumed.");
+        selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Retry"));
+
         selectionInfo.msgInfo.finishFunc = [selectionInfo](QMessageBox* msgBox)
         {
             if (msgBox->result() == QDialogButtonBox::Ok)
@@ -363,18 +375,33 @@ void UnknownDownloadIssueHeader::onMultipleActionButtonOptionSelected(StalledIss
     }
     else if (index == UnknownDownloadIssue::SEND_FEEDBACK)
     {
-        // Show Feedback dialog
-        auto stallDialog = DialogOpener::findDialog<StalledIssuesDialog>();
-        QPointer<BugReportDialog> bugReport =
-            new BugReportDialog(stallDialog->getDialog(), MegaSyncApp->getLogger());
-        BugReportDialog::DefaultInfo info;
-        info.sendLogsMandatory = true;
-        info.title = tr("Sync download unknown issue");
-        info.description =
-            tr("Some unknown errors have been encountered when downloading files during "
-               "sync operation.");
-        bugReport->setDefaultInfo(info);
-        DialogOpener::showDialog(bugReport);
+        // We don´t detect any similar issues
+        auto selectionInfo(getSelectionInfo(header,
+                                            [](const std::shared_ptr<const StalledIssue>)
+                                            {
+                                                return false;
+                                            }));
+
+        if (selectionInfo.hasBeenExternallyChanged)
+        {
+            return;
+        }
+
+        selectionInfo.msgInfo.text = tr("Report issue");
+        selectionInfo.msgInfo.informativeText =
+            tr("This will send your logs to our Support team for diagnostics.");
+        selectionInfo.msgInfo.buttonsText.insert(QMessageBox::Ok, tr("Send"));
+
+        selectionInfo.msgInfo.finishFunc = [header](QMessageBox* msgBox)
+        {
+            if (msgBox->result() == QDialogButtonBox::Ok)
+            {
+                MegaSyncApp->getStalledIssuesModel()->sendReportForUnknownDownloadIssue(
+                    header->getCurrentIndex());
+            }
+        };
+
+        QMegaMessageBox::warning(selectionInfo.msgInfo);
     }
 }
 

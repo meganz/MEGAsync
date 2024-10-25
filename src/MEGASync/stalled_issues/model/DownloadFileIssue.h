@@ -33,6 +33,8 @@ protected:
     std::optional<IssueType> mType;
 };
 
+class BugReportController;
+
 class UnknownDownloadIssue: public DownloadIssue
 {
 public:
@@ -50,18 +52,26 @@ public:
     bool checkForExternalChanges() override;
 
     void solveIssue();
-    static void solveIssues();
+    static void solveIssuesByRetry();
     void addIssueToSolveQueue();
+
+    void sendFeedback();
+    bool isSendingFeedback() const;
 
 private slots:
     void onTrackedTransferStarted(TransferItem transfer);
     void onTrackedTransferFinished(TransferItem transfer);
+
+    void onReportStarted();
+    void onReportFinished();
+    void onReportFailed();
 
 private:
     void connectTrack();
 
     static QList<mega::MegaHandle> mIssuesToRetry;
     std::shared_ptr<TransferTrack> mTrack;
+    std::shared_ptr<BugReportController> mReportController;
 };
 
 class InvalidFingerprintDownloadIssue: public DownloadIssue

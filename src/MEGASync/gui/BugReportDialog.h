@@ -32,34 +32,31 @@ public:
 
     void setDefaultInfo(const DefaultInfo& info);
 
-    virtual void onTransferStart(mega::MegaApi* api, mega::MegaTransfer* transfer);
-    virtual void onTransferUpdate(mega::MegaApi* api, mega::MegaTransfer* transfer);
-    virtual void onTransferFinish(mega::MegaApi* api,
-                                  mega::MegaTransfer* transfer,
-                                  mega::MegaError* error);
-    virtual void onTransferTemporaryError(mega::MegaApi* api,
-                                          mega::MegaTransfer* transfer,
-                                          mega::MegaError* e);
+private slots:
+    void onReportStarted();
+    void resetProgressDialog();
+    void onReportFinished();
+    void onReportFailed();
 
     void onReportUpdated(int value);
 
 private:
     void closeProgressDialog();
-    void openProgressDialog();
 
     Ui::BugReportDialog* ui;
-    QPointer<ProgressIndicatorDialog> mProgressIndicatorDialog;
+    QPointer<QProgressDialog> mSendProgress;
     std::unique_ptr<BugReportController> mController;
 
     const static int mMaxDescriptionLength = 3000;
 
+protected:
 private slots:
     void onSubmitClicked();
     void onCancelClicked();
     void cancelSendReport();
     void onDescriptionChanged();
     void onTitleChanged();
-    void onDescribeBugTextChanged();
+    void on_teDescribeBug_textChanged();
 };
 
 #endif // BUGREPORTDIALOG_H

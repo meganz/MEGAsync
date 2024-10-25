@@ -408,6 +408,16 @@ public:
 
     bool detectedCloudSide() const;
 
+    struct CustomMessage
+    {
+        QString customMessage;
+        SolveType customType;
+    };
+
+    const CustomMessage& getCustomMessage() const;
+    bool hasCustomMessage() const;
+    void resetCustomMessage();
+
 signals:
     void asyncIssueSolvingStarted();
     void asyncIssueSolvingFinished(StalledIssue*);
@@ -428,10 +438,13 @@ protected:
 
     void performFinishAsyncIssueSolving(bool hasFailed);
 
+    void setCustomMessage(const QString& newCustomMessage, SolveType type);
+
     std::shared_ptr<mega::MegaSyncStall> originalStall;
     mega::MegaSyncStall::SyncStallReason mReason = mega::MegaSyncStall::SyncStallReason::NoReason;
     QSet<mega::MegaHandle> mSyncIds;
     mutable SolveType mIsSolved = SolveType::UNSOLVED;
+    CustomMessage mCustomMessage;
     uint8_t mFiles = 0;
     uint8_t mFolders = 0;
 

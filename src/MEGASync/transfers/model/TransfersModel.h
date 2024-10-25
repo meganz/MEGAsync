@@ -390,8 +390,6 @@ signals:
     void showInFolderFinished(bool);
     void activeTransfersChanged();
     void rowsAboutToBeMoved(TransferTag firstRowTag);
-    void retryableSyncTransferRetried(mega::MegaHandle handle);
-    void retriedSyncTransferFinished(mega::MegaHandle handle, TransferData::TransferState state);
 
 public slots:
     void pauseResumeAllTransfers(bool state);
@@ -460,7 +458,6 @@ private:
     QHash<mega::MegaHandle,QPersistentModelIndex> mCompletedTransfersByTag;
 
     QHash<mega::MegaHandle, QPersistentModelIndex> mRetryableSyncFailedTransfersByHandle;
-    QSet<mega::MegaHandle> mRetriedSyncFailedTransfersByHandle;
 
     TransferThread::TransfersToProcess mTransfersToProcess;
     QFutureWatcher<void> mUpdateTransferWatcher;

@@ -41,8 +41,6 @@ void BugReportController::submitReport()
     }
     else
     {
-        mData.mStatus = BugReportData::STATUS::LOG_FAILED;
-
         onReportFailed();
     }
 }

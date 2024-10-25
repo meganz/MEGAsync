@@ -1622,7 +1622,7 @@ void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& l
 {
     auto finishIssue = [](int, bool)
     {
-        UnknownDownloadIssue::solveIssues();
+        UnknownDownloadIssue::solveIssuesByRetry();
     };
 
     auto resolveIssue = [this](int row) -> bool
@@ -1645,6 +1645,31 @@ void StalledIssuesModel::fixUnknownDownloadIssueByRetry(const QModelIndexList& l
 
     SolveListInfo info(list, resolveIssue);
     info.finishFunc = finishIssue;
+    info.async = true;
+    solveListOfIssues(info);
+}
+
+void StalledIssuesModel::sendReportForUnknownDownloadIssue(const QModelIndex& index)
+{
+    auto resolveIssue = [this](int row) -> bool
+    {
+        auto item(getStalledIssueByRow(row));
+        if (auto unknownIssue = item.convert<UnknownDownloadIssue>())
+        {
+            unknownIssue->sendFeedback();
+
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::SI_UNKNOWN_DOWNLOAD_ISSUE_SOLVED_BY_FEEDBACK);
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    };
+
+    SolveListInfo info(QModelIndexList() << index, resolveIssue);
     info.async = true;
     solveListOfIssues(info);
 }

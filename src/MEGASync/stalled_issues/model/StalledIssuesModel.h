@@ -213,6 +213,7 @@ public:
 
     // UnkownDownloadIssue
     void fixUnknownDownloadIssueByRetry(const QModelIndexList& list);
+    void sendReportForUnknownDownloadIssue(const QModelIndex& index);
 
     //FolderMatchedAgainstFile
     void fixFolderMatchedAgainstFile(const QModelIndexList& list);
