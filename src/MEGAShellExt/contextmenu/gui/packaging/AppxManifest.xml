@@ -11,7 +11,7 @@
   xmlns:uap10="http://schemas.microsoft.com/appx/manifest/uap/windows10/10"
   xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
   IgnorableNamespaces="uap uap2 uap3 rescap desktop desktop4 desktop5 uap10 com">
-  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="CN=Notepadpp, O=Notepadpp, L=Saint Cloud, S=Ile-de-France, C=FR" Version="1.0.0.0" />
+  <Identity Name="MEGASyncShellSparse" ProcessorArchitecture="neutral" Publisher="CN=GlobalSign GCC R45 EV CodeSigning CA 2020, O=GlobalSign nv-sa, C=BE" Version="1.0.0.0" />
   <Properties>
     <DisplayName>MEGAsync</DisplayName>
     <PublisherDisplayName>MEGAsync</PublisherDisplayName>
@@ -54,12 +54,12 @@
         <com:Extension Category="windows.comServer">
           <com:ComServer>
             <com:SurrogateServer DisplayName="MEGAsync Shell Extension">
-              <com:Class Id="F85CF690-330F-4EC2-89E5-3E7ED0344BF5" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
-              <com:Class Id="F043C633-970A-43DF-A382-9D51C8D14E97" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
-              <com:Class Id="0313D546-594C-49D6-AF85-F53575420E6C" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
-              <com:Class Id="7FBA45D9-8232-4EA6-A61B-717C1F1819FE" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
-              <com:Class Id="9172EFEE-604B-492A-B2B3-9CC6164F52CC" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
-              <com:Class Id="D13F4639-DCFF-4866-98B8-3FA95388E5E1" Path="MEGAShellExt1.dll" ThreadingModel="STA"/>
+              <com:Class Id="F85CF690-330F-4EC2-89E5-3E7ED0344BF5" Path="ShellExtX64.dll" ThreadingModel="STA"/>
+              <com:Class Id="F043C633-970A-43DF-A382-9D51C8D14E97" Path="ShellExtX64.dll" ThreadingModel="STA"/>
+              <com:Class Id="0313D546-594C-49D6-AF85-F53575420E6C" Path="ShellExtX64.dll" ThreadingModel="STA"/>
+              <com:Class Id="7FBA45D9-8232-4EA6-A61B-717C1F1819FE" Path="ShellExtX64.dll" ThreadingModel="STA"/>
+              <com:Class Id="9172EFEE-604B-492A-B2B3-9CC6164F52CC" Path="ShellExtX64.dll" ThreadingModel="STA"/>
+              <com:Class Id="D13F4639-DCFF-4866-98B8-3FA95388E5E1" Path="ShellExtX64.dll" ThreadingModel="STA"/>
             </com:SurrogateServer>
           </com:ComServer>
         </com:Extension>
