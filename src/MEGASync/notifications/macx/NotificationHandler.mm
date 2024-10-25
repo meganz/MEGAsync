@@ -6,7 +6,6 @@
 #include "NotificationDelegate.h"
 
 #include "UNUserNotificationHandler.h"
-#include "NSUserNotificationHandler.h"
 
 #include <QOperatingSystemVersion>
 
@@ -34,15 +33,6 @@ void NotificationHandler::sendAppleScript(const QString &script)
 
 NotificationHandler *NotificationHandler::instance()
 {
-    auto current = QOperatingSystemVersion::current();
-    if (current > QOperatingSystemVersion::MacOSHighSierra) //New Notification API support from 10.14+
-    {
-        static UNUserNotificationHandler instance;
-        return &instance;
-    }
-    else
-    {
-        static NSUserNotificationHandler instance;
-        return &instance;
-    }
+    static UNUserNotificationHandler instance;
+    return &instance;
 }

@@ -31,12 +31,5 @@ if (ENABLE_DESKTOP_APP)
     set(ENABLE_QT_BINDINGS ON)
 endif()
 
-if (ENABLE_SDK_ISOLATED_GFX)
-    set(ENABLE_ISOLATED_GFX ON)
-    if (APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS "10.15")
-        set(ENABLE_ISOLATED_GFX OFF) #Disable isolated GFX processing on x86_64 due to problems with macOS 10.13
-    endif()
-endif()
-
 include(sdklib_options)
 
