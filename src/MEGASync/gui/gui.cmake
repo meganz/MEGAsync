@@ -73,6 +73,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlDialog.h
     gui/qml/QmlDialogWrapper.h
     gui/qml/QmlWidgetWrapper.h
+    gui/qml/QmlInstancesManager.h
     gui/qml/QmlItem.h
     gui/qml/QmlDialogManager.h
     gui/qml/QmlManager.h
@@ -196,6 +197,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDialog.cpp
     gui/qml/QmlDialogWrapper.cpp
     gui/qml/QmlWidgetWrapper.cpp
+    gui/qml/QmlInstancesManager.cpp
     gui/qml/QmlItem.cpp
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp

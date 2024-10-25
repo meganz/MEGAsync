@@ -35,11 +35,6 @@ public:
         return QString();
     }
 
-    virtual QVector<QQmlContext::PropertyPair> contextProperties()
-    {
-        return QVector<QQmlContext::PropertyPair>();
-    };
-
     struct OpenDialogInfo
     {
         bool ignoreCloseAllAction;
@@ -68,6 +63,11 @@ public:
         dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
 
         return dialogInfo->getDialog();
+    }
+
+    virtual QList<QObject*> getInstancesFromContext()
+    {
+        return QList<QObject*>();
     }
 };
 
@@ -157,13 +157,13 @@ public:
             {
                 context->setContextProperty(mWrapper->contextName(), mWrapper);
             }
-            auto propertyList = mWrapper->contextProperties();
-            if(!propertyList.isEmpty())
-            {
-                context->setContextProperties(propertyList);
-            }
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
+
+            if (mWindow)
+            {
+                mWindow->getInstancesManager()->initInstances(mWrapper);
+            }
 
             connect(mWindow, &QmlDialog::finished, this, [this]()
             {

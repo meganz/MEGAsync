@@ -1,38 +1,16 @@
 #include "QmlItem.h"
 
-namespace
+QmlItem::QmlItem(QQuickItem* parent):
+    QQuickItem(parent),
+    mInstancesManager(new QmlInstancesManager())
 {
-const QLatin1String DEFAULT_QML_INSTANCES_SUFFIX("Access");
+    connect(mInstancesManager,
+            &QmlInstancesManager::instancesChanged,
+            this,
+            &QmlItem::instancesManagerChanged);
 }
 
-void QmlItem::setInstance(const QString& name, QObject* instance)
+QmlInstancesManager* QmlItem::getInstancesManager()
 {
-    if (mInstances[name] != QVariant::fromValue(instance))
-    {
-        mInstances[name] = QVariant::fromValue(instance);
-        emit instancesChanged();
-    }
-}
-
-QObject* QmlItem::getInstance(const QString& name)
-{
-    return mInstances.value(name).value<QObject*>();
-}
-
-void QmlItem::setInstance(QObject* instance)
-{
-    QString name(QString::fromUtf8(instance->metaObject()->className()));
-    if (name.isEmpty())
-    {
-        return;
-    }
-
-    // Example: "Surveys" -> "surveysAccess"
-    name.replace(0, 1, name.at(0).toLower()).append(DEFAULT_QML_INSTANCES_SUFFIX);
-    setInstance(name, instance);
-}
-
-QVariantMap QmlItem::getInstances() const
-{
-    return mInstances;
+    return mInstancesManager;
 }

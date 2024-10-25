@@ -1,31 +1,29 @@
 #ifndef QML_ITEM_H
 #define QML_ITEM_H
 
+#include "QmlInstancesManager.h"
+
 #include <QQuickItem>
 
 class QmlItem: public QQuickItem
 {
     Q_OBJECT
 
-    Q_PROPERTY(QVariantMap instances READ getInstances NOTIFY instancesChanged)
+    Q_PROPERTY(QmlInstancesManager* instancesManager READ getInstancesManager NOTIFY
+                   instancesManagerChanged)
 
 public:
-    using QQuickItem::QQuickItem;
+    explicit QmlItem(QQuickItem* parent = nullptr);
     virtual ~QmlItem() = default;
 
-    void setInstance(QObject* instance);
-    QVariantMap getInstances() const;
-
 public slots:
-    QObject* getInstance(const QString& name);
+    QmlInstancesManager* getInstancesManager();
 
 signals:
-    void instancesChanged();
+    void instancesManagerChanged();
 
 private:
-    QVariantMap mInstances;
-
-    void setInstance(const QString& name, QObject* instance);
+    QPointer<QmlInstancesManager> mInstancesManager;
 };
 
 #endif // QML_ITEM_H

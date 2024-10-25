@@ -6,7 +6,7 @@ const QLatin1String NAMESPACE_SEPARATOR("::");
 }
 
 // ************************************************************************************************
-// * QmlWidgetWrapperBase
+// * QMLWidgetComponent
 // ************************************************************************************************
 
 QString QMLWidgetComponent::contextName() const
@@ -23,6 +23,11 @@ QString QMLWidgetComponent::contextName() const
     }
 
     return className;
+}
+
+QList<QObject*> QMLWidgetComponent::getInstances()
+{
+    return QList<QObject*>();
 }
 
 // ************************************************************************************************

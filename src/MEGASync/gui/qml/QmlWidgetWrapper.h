@@ -23,6 +23,7 @@ public:
     virtual QUrl getQmlUrl() = 0;
 
     virtual QString contextName() const;
+    virtual QList<QObject*> getInstances();
 };
 
 class QmlWidgetWrapperBase: public QQuickWidget
@@ -59,9 +60,8 @@ public:
 
         if (mItem)
         {
-            mItem->setInstance(this);
-            mItem->setInstance(mWrapper);
-            mWrapper->updateInstances(mItem);
+            mItem->getInstancesManager()->setInstance(this);
+            mItem->getInstancesManager()->initInstances(mWrapper);
         }
 
         QApplication::postEvent(this, new QEvent(QEvent::ScreenChangeInternal));
