@@ -4529,7 +4529,7 @@ void MegaApplication::createGfxProvider(const QString& basePath)
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     auto prefs(Preferences::instance());
     auto endpoint = prefs->getGfxWorkerEndpointInGeneral();
-    if (endpoint == prefs->getDefaultGfxWorkerEndpoint())
+    if (endpoint.isEmpty())
     {
         endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
         prefs->setGfxWorkerEndpointInGeneral(endpoint);

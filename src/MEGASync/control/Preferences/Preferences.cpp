@@ -315,10 +315,6 @@ const bool Preferences::defaultSystemTrayPromptSuppressed = false;
 const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType::LIGHT_THEME;
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
-#if defined(ENABLE_SDK_ISOLATED_GFX)
-const QString Preferences::defaultGfxWorkerEndpoint = QString();
-#endif
-
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
 
 std::shared_ptr<Preferences> Preferences::instance()
@@ -2582,11 +2578,6 @@ void Preferences::setGfxWorkerEndpointInGeneral(const QString& endpoint)
     mutex.unlock();
 }
 
-QString Preferences::getDefaultGfxWorkerEndpoint() const
-{
-    return defaultGfxWorkerEndpoint;
-}
-
 QString Preferences::getGfxWorkerEndpointInGeneral()
 {
     mutex.lock();
@@ -2597,7 +2588,7 @@ QString Preferences::getGfxWorkerEndpointInGeneral()
         currentAccount = mSettings->value(currentAccountKey).toString();
     }
 
-    QString value = getValue<QString>(gfxWorkerEndpointKey, defaultGfxWorkerEndpoint);
+    QString value = getValue<QString>(gfxWorkerEndpointKey);
     if (!currentAccount.isEmpty())
     {
         mSettings->beginGroup(currentAccount);

@@ -419,7 +419,6 @@ public:
 
 #if defined(ENABLE_SDK_ISOLATED_GFX)
     void setGfxWorkerEndpointInGeneral(const QString& endpoint);
-    QString getDefaultGfxWorkerEndpoint() const;
     QString getGfxWorkerEndpointInGeneral();
 #endif
 
@@ -817,9 +816,6 @@ protected:
     static const bool defaultSystemTrayPromptSuppressed;
     static const bool defaultAskOnExclusionRemove;
     static const ThemeType defaultTheme;
-#if defined(ENABLE_SDK_ISOLATED_GFX)
-    static const QString defaultGfxWorkerEndpoint;
-#endif
 
 private:
     void updateFullName();
