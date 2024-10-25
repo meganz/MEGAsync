@@ -421,25 +421,8 @@
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
         <file>translations/MEGASyncStrings_zh_TW.qm</file>
-        <file>images/settings-account-macx.png</file>
-        <file>images/settings-account-macx@2x.png</file>
-        <file>images/settings-syncs-macx.png</file>
-        <file>images/settings-syncs-macx@2x.png</file>
-        <file>images/settings-advanced-macx.png</file>
-        <file>images/settings-advanced-macx@2x.png</file>
-        <file>images/settings-general-macx.png</file>
-        <file>images/settings-general-macx@2x.png</file>
-        <file>images/settings-network-macx.png</file>
-        <file>images/settings-network-macx@2x.png</file>
         <file>images/settings-transfers-macx.png</file>
         <file>images/settings-transfers-macx@2x.png</file>
-        <file>images/settings-security-macx.png</file>
-        <file>images/settings-security-macx@2x.png</file>
-        <file>images/settings-notifications-macx.png</file>
-        <file>images/settings-notifications-macx@2x.png</file>
-        <file>images/settings-notifications-macx@3x.png</file>
-        <file>images/settings-syncs-error-macx.png</file>
-        <file>images/settings-syncs-error-macx@2x.png</file>
         <file>images/Storage_Quota_full@3x.png</file>
         <file>images/Storage_Quota_almost_full@3x.png</file>
         <file>images/File_download_succeed@3x.png</file>
@@ -475,8 +458,6 @@
         <file>images/Item_options_press@2x.png</file>
         <file>images/show_in_folder_ico.png</file>
         <file>images/show_in_folder_ico@2x.png</file>
-        <file>images/settings-folders-macx.png</file>
-        <file>images/settings-folders-macx@2x.png</file>
         <file>images/ico_dialog_check.png</file>
         <file>images/ico_dialog_check@2x.png</file>
         <file>images/ico_dialog_check@3x.png</file>
@@ -508,8 +489,6 @@
         <file>images/icons/pc/pc-mac_24@3x.png</file>
         <file>images/icons/folder/folder-mono_24.png</file>
         <file>images/icons/folder/folder-mono_24@2x.png</file>
-        <file>images/settings-backup-macx.png</file>
-        <file>images/settings-backup-macx@2x.png</file>
         <file>images/icons/pc/pc_24.png</file>
         <file>images/icons/pc/pc_24@2x.png</file>
         <file>images/icons/pc/pc_24@3x.png</file>
@@ -969,9 +948,6 @@
         <file>images/StalledIssues/tree_double_link_default.png</file>
         <file>images/StalledIssues/tree_double_link_default@2x.png</file>
         <file>images/StalledIssues/tree_double_link_default@3x.png</file>
-        <file>images/settings-backups-error-macx.png</file>
-        <file>images/settings-backups-error-macx@2x.png</file>
-        <file>images/settings-backups-error-macx@3x.png</file>
         <file>images/StalledIssues/ico_menu_full.png</file>
         <file>images/StalledIssues/ico_menu_full@2x.png</file>
         <file>images/StalledIssues/ico_menu_full@3x.png</file>
