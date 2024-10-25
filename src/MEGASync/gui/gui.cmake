@@ -110,7 +110,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/syncs/SyncsComponent.h
     gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
-    gui/surveys/OneQuestionSurveyWidget.h
+    gui/surveys/SurveyWidget.h
+    gui/surveys/SurveyComponent.h
     gui/surveys/Surveys.h
     gui/surveys/SurveyController.h
     gui/upsell/UpsellComponent.h
@@ -245,7 +246,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/syncs/SyncsComponent.cpp
     gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
-    gui/surveys/OneQuestionSurveyWidget.cpp
+    gui/surveys/SurveyWidget.cpp
+    gui/surveys/SurveyComponent.cpp
     gui/surveys/Surveys.cpp
     gui/surveys/SurveyController.cpp
     gui/upsell/UpsellComponent.cpp

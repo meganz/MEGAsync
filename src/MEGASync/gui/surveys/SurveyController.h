@@ -16,15 +16,15 @@ class SurveyController: public QObject
     Q_OBJECT
 
 public:
-    SurveyController(QObject* parent = nullptr);
+    SurveyController(int type, QObject* parent = nullptr);
     virtual ~SurveyController() = default;
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
 
-    void registerQmlRootContextProperties();
-
     void updateCurrentAnwer(int response, const QString& comment);
     void submitSurvey();
+
+    std::shared_ptr<Surveys> surveys() const;
 
 signals:
     void surveySubmitted();

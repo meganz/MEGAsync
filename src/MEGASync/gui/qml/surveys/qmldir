@@ -1,4 +1,4 @@
 module surveys
-singleton OneQuestionSurveyStrings 1.0 OneQuestionSurveyStrings.qml
-OneQuestionSurveyItem 1.0 OneQuestionSurveyItem.qml
+singleton SurveyStrings 1.0 SurveyStrings.qml
+SurveyItem 1.0 SurveyItem.qml
 RateScaleItem 1.0 RateScaleItem.qml

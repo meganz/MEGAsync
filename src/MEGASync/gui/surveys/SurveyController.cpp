@@ -4,7 +4,7 @@
 #include "MegaApplication.h"
 #include "QmlManager.h"
 
-SurveyController::SurveyController(QObject* parent):
+SurveyController::SurveyController(int type, QObject* parent):
     QObject(parent),
     mSurveys(std::make_shared<Surveys>(nullptr))
 {}
@@ -28,11 +28,6 @@ void SurveyController::onRequestFinish(mega::MegaRequest* request, mega::MegaErr
     }
 }
 
-void SurveyController::registerQmlRootContextProperties()
-{
-    QmlManager::instance()->setRootContextProperty(mSurveys.get());
-}
-
 void SurveyController::updateCurrentAnwer(int response, const QString& comment)
 {
     auto survey(mSurveys->currentSurvey());
@@ -50,4 +45,9 @@ void SurveyController::submitSurvey()
         response == 1 || response == 2 ? survey->answer().comment().toUtf8().data() : nullptr);
 
     emit surveySubmitted();
+}
+
+std::shared_ptr<Surveys> SurveyController::surveys() const
+{
+    return mSurveys;
 }

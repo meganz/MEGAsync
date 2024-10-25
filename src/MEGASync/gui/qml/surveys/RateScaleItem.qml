@@ -83,7 +83,7 @@ Item {
                 lineHeight: content.defaultLineHeight
                 lineHeightMode: Text.FixedHeight
                 horizontalAlignment: Text.AlignLeft
-                text: OneQuestionSurveyStrings.poor
+                text: SurveyStrings.poor
             }
 
             SecondaryText {
@@ -92,7 +92,7 @@ Item {
                 lineHeight: content.defaultLineHeight
                 lineHeightMode: Text.FixedHeight
                 horizontalAlignment: Text.AlignRight
-                text: OneQuestionSurveyStrings.excellent
+                text: SurveyStrings.excellent
             }
         }
 
