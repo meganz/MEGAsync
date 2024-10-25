@@ -13,9 +13,9 @@ import QmlItem 1.0
 QmlItem {
     id: root
 
-    property QtObject widgetAccess: instances["qmlWidgetWrapperBaseAccess"] || null
-    property QtObject surveyComponentAccess: instances["surveyComponentAccess"] || null
-    property QtObject surveysAccess: instances["surveysAccess"] || null
+    property QtObject widgetAccess: instancesManager.instances["qmlWidgetWrapperBaseAccess"] || null
+    property QtObject surveyComponentAccess: instancesManager.instances["surveyComponentAccess"] || null
+    property QtObject surveysAccess: instancesManager.instances["surveysAccess"] || null
 
     Rectangle {
 
