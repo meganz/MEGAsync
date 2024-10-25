@@ -1,13 +1,14 @@
 #include "WhatsNewWindow.h"
 
+#include "UpdatesModel.h"
+
 #include <QQmlEngine>
 
-WhatsNewWindow::WhatsNewWindow(QObject *parent)
-    : QMLComponent(parent)
-{
-    qmlRegisterModule("WhatsNewWidnow", 1, 0);
-    qmlRegisterType<QmlDialog>("WhatsNewDialog", 1, 0, "WhatsNewDialog");
-}
+WhatsNewWindow::WhatsNewWindow(QObject* parent):
+    QMLComponent(parent),
+    mController(std::make_shared<WhatsNewController>()),
+    mModel(std::make_shared<UpdatesModel>(mController))
+{}
 
 QUrl WhatsNewWindow::getQmlUrl()
 {
@@ -17,4 +18,22 @@ QUrl WhatsNewWindow::getQmlUrl()
 QString WhatsNewWindow::contextName()
 {
     return QString::fromUtf8("whatsNewWindowAccess");
+}
+
+QString WhatsNewWindow::acceptButtonText()
+{
+    if (!mController)
+    {
+        return {};
+    }
+    return mController->acceptButtonText();
+}
+
+void WhatsNewWindow::acceptButtonClicked()
+{
+    if (!mController)
+    {
+        return;
+    }
+    mController->acceptButtonClicked();
 }

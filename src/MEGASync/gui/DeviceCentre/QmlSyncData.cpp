@@ -99,11 +99,10 @@ SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaSync* sync)
 SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaBackupInfo* backupInfo)
 {
     auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(backupInfo->id());
-    if (syncSetting && syncSetting->getError() != mega::MegaSync::NO_SYNC_ERROR)
+    if (!syncSetting || syncSetting->getError() != mega::MegaSync::NO_SYNC_ERROR)
     {
         return SyncStatus::STOPPED;
     }
-
     const int apiStatus = backupInfo->status();
     const int syncState = backupInfo->state();
 

@@ -82,6 +82,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlDeviceName.h
     gui/qml/AccountInfoData.h
     gui/qml/WhatsNewWindow.h
+    gui/qml/UpdatesList.h
+    gui/qml/WhatsNewController.h
+    gui/qml/UpdatesModel.h
     gui/qml/QmlUtils.h
     gui/onboarding/Onboarding.h
     gui/onboarding/PasswordStrengthChecker.h
@@ -199,6 +202,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDeviceName.cpp
     gui/qml/AccountInfoData.cpp
     gui/qml/WhatsNewWindow.cpp
+    gui/qml/WhatsNewController.cpp
+    gui/qml/UpdatesModel.cpp
     gui/qml/QmlUtils.cpp
     gui/onboarding/Onboarding.cpp
     gui/onboarding/PasswordStrengthChecker.cpp

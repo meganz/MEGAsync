@@ -9199,49 +9199,69 @@ Check your email inbox for instructions on unlocking your account and tips on ho
 <context>
     <name>WhatsNewStrings</name>
     <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>What’s new</translation>
-    </message>
-    <message>
-        <source>Updates in the MEGA desktop app</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703.SNC-4881</translatorcomment>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Better performance</translation>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Greater control</translation>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Advanced filters</translation>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New device centre</source>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. SAT-1670</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Files now sync up to 5x faster than before</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Files now sync up to 5x faster than before.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>We now provide full visibility into sync issues and give you total control over how conflicts are resolved.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Customise your syncs and backups with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs and backups.</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New features help you track and manage your syncs and backups in one place</source>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. SAT-1670</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Got it</source>
         <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
-        <translation>Got it</translation>
+        <translation type="unfinished">Got it</translation>
+    </message>
+    <message>
+        <source>Do more with your data in MEGA’s new device centre</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .SAT-1670</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Easier to use, and with new features, you can track your syncs and backups, view real time statuses and manage them all in one place</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .SAT-1670</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Take me there</source>
+        <translatorcomment>Button to accept whats new dialog.SAT-1670</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

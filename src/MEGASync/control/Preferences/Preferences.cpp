@@ -310,6 +310,8 @@ const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
 
+int Preferences::lastVersionUponStartup = 0;
+
 std::shared_ptr<Preferences> Preferences::instance()
 {
     static std::shared_ptr<Preferences> preferences (new Preferences());
@@ -2592,6 +2594,7 @@ void Preferences::login(QString account)
     readFolders();
     loadExcludedSyncNames();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
+    lastVersionUponStartup = lastVersion;
     if (lastVersion != Preferences::VERSION_CODE)
     {
         if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
