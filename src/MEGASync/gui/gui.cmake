@@ -377,7 +377,6 @@ target_sources_conditional(MEGAsync
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
    gui/QSegmentedControl.h
-   gui/images/Images.xcassets
    gui/macx/LockedPopOver.ui
 )
 
@@ -444,16 +443,6 @@ set(DESKTOP_APP_GUI_RESOURCES
 list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
 list(REMOVE_DUPLICATES QML_IMPORT_PATH)
 set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
-
-if (CMAKE_HOST_APPLE)
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --output-format human-readable-text --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${CMAKE_CURRENT_SOURCE_DIR}/gui/images/Images.xcassets"
-            COMMENT "Building Assets.car in Resources..."
-            VERBATIM
-            )
-endif()
 
 set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
