@@ -14,7 +14,6 @@
 
 namespace Ui {
 class SettingsDialog;
-class SyncStallModeSelector;
 }
 
 class ProxySettings;
@@ -66,13 +65,9 @@ public slots:
     // General
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-    void onSmartModeSelected(bool checked);
-    void onAdvanceModeSelected(bool checked);
-    void onPreferencesValueChanged(QString key);
 #ifndef Q_OS_WINDOWS
     void onPermissionsClicked();
 #endif
-    void applyPreviousExclusions();
     //Enable/Disable controls
     void setEnabledAllControls(const bool enabled);
 
@@ -147,7 +142,6 @@ private:
     void setProgressState(const QString& stateName, int value);
 
     Ui::SettingsDialog* mUi;
-    Ui::SyncStallModeSelector* syncStallModeSelectorUI;
     MegaApplication* mApp;
     std::shared_ptr<Preferences> mPreferences;
     SyncInfo* mModel;

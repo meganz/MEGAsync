@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>765</width>
-    <height>887</height>
+    <height>765</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>765</width>
-    <height>887</height>
+    <height>765</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -572,7 +572,7 @@ margin-bottom: 3px;
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QVBoxLayout" name="pGeneralLayout" stretch="0,0,0,0,0,10">
+      <layout class="QVBoxLayout" name="pGeneralLayout" stretch="0,0,0,0,10">
        <property name="spacing">
         <number>15</number>
        </property>
@@ -923,9 +923,6 @@ margin-bottom: 3px;
           </item>
          </layout>
         </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="gSyncStallModeSelector" native="true"/>
        </item>
        <item>
         <widget class="QGroupBox" name="gBugReport">
@@ -1659,7 +1656,7 @@ margin-bottom: 3px;
       </layout>
      </widget>
      <widget class="QWidget" name="pFolders">
-      <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0,0,0,1">
+      <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0,0,0,0,1">
        <property name="spacing">
         <number>20</number>
        </property>
@@ -2335,6 +2332,60 @@ margin-top: 0px;
              </size>
             </property>
            </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="permissionsGroupBox">
+         <property name="title">
+          <string>Permissions</string>
+         </property>
+         <property name="type" stdset="0">
+          <string notr="true">mega</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Permissions for new folders and files</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>5</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bPermissions">
+            <property name="minimumSize">
+             <size>
+              <width>89</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>Change permissions</string>
+            </property>
+            <property name="type" stdset="0">
+             <string notr="true">secondary</string>
+            </property>
+            <property name="dimension" stdset="0">
+             <string notr="true">small</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
