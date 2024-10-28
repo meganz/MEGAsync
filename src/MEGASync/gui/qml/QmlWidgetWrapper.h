@@ -23,7 +23,7 @@ public:
     virtual QUrl getQmlUrl() = 0;
 
     virtual QString contextName() const;
-    virtual QList<QObject*> getInstances();
+    virtual QList<QObject*> getInstancesFromContext();
 };
 
 class QmlWidgetWrapperBase: public QQuickWidget
