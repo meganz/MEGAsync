@@ -554,17 +554,30 @@ modeselected:
 		Delete $0
 		Rename "$INSTDIR\ShellExtX32.dll" $0
 		Delete /REBOOTOK $0
+  IfFileExists "$INSTDIR\ShellExtX32.msix" 0 new_installation_x32
+        !define LIBRARY_COM
+		!define LIBRARY_SHELL_EXTENSION
+        !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.msix"
+		!undef LIBRARY_COM
+		!undef LIBRARY_SHELL_EXTENSION
+		GetTempFileName $0
+		Delete $0
+        Rename "$INSTDIR\ShellExtX32.msix" $0
+		Delete /REBOOTOK $0
   
   new_installation_x32:
   !ifndef BUILD_X64_VERSION
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.msix" "$INSTDIR\ShellExtX32.msix" "$INSTDIR"
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
 
         AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.dll" "$USERNAME"
         AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.dll" "$USERNAME" "GenericRead + GenericWrite"
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX32.msix" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX32.msix" "$USERNAME" "GenericRead + GenericWrite"
   !endif
 
   ${If} ${RunningX64}
@@ -580,18 +593,33 @@ modeselected:
 			Delete $0
 			Rename "$INSTDIR\ShellExtX64.dll" $0
 			Delete /REBOOTOK $0
+        IfFileExists "$INSTDIR\ShellExtX64.msix" 0 new_installation_x64
+			!define LIBRARY_X64
+			!define LIBRARY_COM
+			!define LIBRARY_SHELL_EXTENSION
+            !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.msix"
+			!undef LIBRARY_X64
+			!undef LIBRARY_COM
+			!undef LIBRARY_SHELL_EXTENSION
+			GetTempFileName $0
+			Delete $0
+            Rename "$INSTDIR\ShellExtX64.msix" $0
+			Delete /REBOOTOK $0
         
 		new_installation_x64:
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
         !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.msix" "$INSTDIR\ShellExtX64.msix" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION
 
         AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.dll" "$USERNAME"
         AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.dll" "$USERNAME" "GenericRead + GenericWrite"
+        AccessControl::SetFileOwner "$INSTDIR\ShellExtX64.msix" "$USERNAME"
+        AccessControl::GrantOnFile "$INSTDIR\ShellExtX64.msix" "$USERNAME" "GenericRead + GenericWrite"
   ${EndIf}
 
   !ifdef BUILD_X64_VERSION
@@ -877,6 +905,7 @@ Section Uninstall
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
   !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.dll"
+  !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX32.msix"
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
 
@@ -885,6 +914,7 @@ Section Uninstall
 	!define LIBRARY_COM
 	!define LIBRARY_SHELL_EXTENSION
 	!insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.dll"
+    !insertmacro UnInstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "$INSTDIR\ShellExtX64.msix"
 	!undef LIBRARY_X64
 	!undef LIBRARY_COM
 	!undef LIBRARY_SHELL_EXTENSION
