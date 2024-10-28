@@ -498,6 +498,8 @@ protected:
 
     std::unique_ptr<UserMessageController> mUserMessageController;
 
+    std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
+
 private:
     void loadSyncExclusionRules(QString email = QString());
 
@@ -598,6 +600,8 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+
+    void createGfxProvider(const QString& basePath);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

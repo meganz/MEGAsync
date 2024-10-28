@@ -13,8 +13,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/contri
 set(VCPKG_ROOT "" CACHE PATH "If set, it will build and use the VCPKG packages defined in the manifest file")
 
 # Load global CMake configuration for the project
-include(desktopapp_options)
 include(desktopapp_initial_configuration)
+include(desktopapp_options)
 
 if(NOT PROJECT_NAME)
     if(VCPKG_ROOT)

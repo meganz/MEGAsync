@@ -133,7 +133,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx(false),
-    mUserMessageController(nullptr)
+    mUserMessageController(nullptr),
+    mGfxProvider(nullptr)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -492,19 +493,23 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
-    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
+    const QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
+
+    createGfxProvider(basePath);
 
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
+                                    mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
+                                    nullptr,
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
+    megaApiFolders->disableGfxFeatures(true);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
@@ -1520,6 +1525,7 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                mGfxProvider.reset();
                 mUserMessageController.reset();
                 createUserMessageController();
                 infoDialog->deleteLater();
@@ -2206,6 +2212,7 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
+    mGfxProvider.reset();
     mUserMessageController.reset();
     infoDialog->deleteLater();
 
@@ -4522,6 +4529,34 @@ void MegaApplication::createUserMessageController()
                     mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
         }
     }
+}
+
+void MegaApplication::createGfxProvider(const QString& basePath)
+{
+    MegaGfxProvider* provider = nullptr;
+
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    auto prefs(Preferences::instance());
+    auto endpoint = prefs->getGfxWorkerEndpointInGeneral();
+    if (endpoint.isEmpty())
+    {
+        endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
+        prefs->setGfxWorkerEndpointInGeneral(endpoint);
+    }
+    const auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
+    auto logdirParam = QString::fromUtf8("%1/%2").arg(basePath, LOGS_FOLDER_LEAFNAME_QSTRING);
+    logdirParam = QString::fromLatin1("-d=") + QDir::toNativeSeparators(logdirParam);
+
+    std::unique_ptr<MegaStringList> extraParams(MegaStringList::createInstance());
+    extraParams->add(logdirParam.toUtf8().constData());
+
+    provider = MegaGfxProvider::createIsolatedInstance(endpoint.toUtf8().constData(),
+                                                       path.toUtf8().constData(),
+                                                       Preferences::GFXWORKER_KEEPALIVE_S,
+                                                       extraParams.get());
+#endif
+
+    mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,

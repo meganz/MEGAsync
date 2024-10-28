@@ -2,8 +2,6 @@
 #define PLATFORM_H
 
 #include "AbstractPlatform.h"
-#include "Notificator.h"
-#include "ShellNotifier.h"
 
 class Platform
 {

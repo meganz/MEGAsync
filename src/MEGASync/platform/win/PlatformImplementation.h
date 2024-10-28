@@ -62,6 +62,10 @@ public:
     void processSymLinks() override;
     DriveSpaceData getDriveData(const QString &path) override;
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    QString getGfxProviderPath() override;
+#endif
+
     static void notify(const std::string& path);
 
     void calculateInfoDialogCoordinates(const QRect& rect, int *posx, int *posy) override;

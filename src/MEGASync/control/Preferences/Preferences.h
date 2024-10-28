@@ -417,6 +417,11 @@ public:
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    void setGfxWorkerEndpointInGeneral(const QString& endpoint);
+    QString getGfxWorkerEndpointInGeneral();
+#endif
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -514,6 +519,10 @@ public:
     static unsigned int MUTEX_STEALER_MS; //to create a task that steals the sdk mutex for a while (how long)
     static unsigned int MUTEX_STEALER_PERIOD_MS; //periodicity (how often)
     static unsigned int MUTEX_STEALER_PERIOD_ONLY_ONCE; //if only done once
+
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    static unsigned int GFXWORKER_KEEPALIVE_S;
+#endif
 
     static const QString UPDATE_CHECK_URL;
     static const QString CRASH_REPORT_URL;
@@ -751,6 +760,9 @@ protected:
     static const QString lastDailyStatTimeKey;
     static const QString askOnExclusionRemove;
     static const QString themeKey;
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    static const QString gfxWorkerEndpointKey;
+#endif
 
     //Sleep mode
     static const QString awakeIfActiveKey;

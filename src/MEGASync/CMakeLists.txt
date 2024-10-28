@@ -162,6 +162,11 @@ if (UNIX AND NOT APPLE)
 
     install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
 
+    # Install GFX worker if needed
+    if(TARGET gfxworker)
+        install(TARGETS gfxworker RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
+    endif()
+
     set(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/$<$<CONFIG:Debug>:debug/>lib/")
 
     install(DIRECTORY "${vcpkg_lib_folder}"
@@ -185,5 +190,15 @@ if (MSVC)
         POST_BUILD
         COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
         COMMENT "Adding display aware manifest..."
+    )
+endif()
+
+# Copy GFX worker if needed
+if(TARGET gfxworker)
+    set_target_properties(gfxworker PROPERTIES OUTPUT_NAME "mega-desktop-app-gfxworker")
+    add_custom_command(
+        TARGET MEGAsync POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:gfxworker> $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying gfxworker for MEGAsync."
     )
 endif()

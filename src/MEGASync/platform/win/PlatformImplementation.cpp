@@ -1735,3 +1735,11 @@ DriveSpaceData PlatformImplementation::getDriveData(const QString &path)
     data.mTotalSpace = totalBytes.QuadPart;
     return data;
 }
+
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+QString PlatformImplementation::getGfxProviderPath()
+{
+    return QCoreApplication::applicationDirPath() +
+           QLatin1String("/mega-desktop-app-gfxworker.exe");
+}
+#endif
