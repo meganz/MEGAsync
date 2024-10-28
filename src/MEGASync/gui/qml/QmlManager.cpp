@@ -10,6 +10,7 @@
 #include "QmlDeviceName.h"
 #include "QmlDialog.h"
 #include "QmlDialogManager.h"
+#include "QmlItem.h"
 #include "QmlTheme.h"
 #include "QmlUtils.h"
 #include "SyncInfo.h"
@@ -76,6 +77,7 @@ void QmlManager::registerCommonQmlElements()
                                                QmlDialogManager::getQmlInstance);
 
     qmlRegisterType<QmlDialog>("QmlDialog", 1, 0, "QmlDialog");
+    qmlRegisterType<QmlItem>("QmlItem", 1, 0, "QmlItem");
     qmlRegisterType<QmlDeviceName>("QmlDeviceName", 1, 0, "QmlDeviceName");
     qmlRegisterType<ChooseLocalFolder>("ChooseLocalFolder", 1, 0, "ChooseLocalFolder");
     qmlRegisterType<ChooseLocalFile>("ChooseLocalFile", 1, 0, "ChooseLocalFile");
