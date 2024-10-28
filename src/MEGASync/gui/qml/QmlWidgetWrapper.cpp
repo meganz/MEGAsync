@@ -25,7 +25,7 @@ QString QMLWidgetComponent::contextName() const
     return className;
 }
 
-QList<QObject*> QMLWidgetComponent::getInstances()
+QList<QObject*> QMLWidgetComponent::getInstancesFromContext()
 {
     return QList<QObject*>();
 }
