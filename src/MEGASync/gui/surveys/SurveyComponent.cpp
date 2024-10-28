@@ -18,10 +18,10 @@ QUrl SurveyComponent::getQmlUrl()
     return QUrl(QStringLiteral("qrc:/surveys/SurveyItem.qml"));
 }
 
-QList<QObject*> SurveyComponent::getInstances()
+QList<QObject*> SurveyComponent::getInstancesFromContext()
 {
     QList<QObject*> instances;
-    instances.append(mController.get());
+    instances.append(mController->surveys().get());
     return instances;
 }
 

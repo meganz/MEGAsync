@@ -16,7 +16,7 @@ public:
     ~SurveyComponent() = default;
 
     QUrl getQmlUrl() override;
-    QList<QObject*> getInstances() override;
+    QList<QObject*> getInstancesFromContext() override;
 
 public slots:
     void submitButtonClicked(int response, const QString& comment);
