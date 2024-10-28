@@ -3942,7 +3942,7 @@ void MegaApplication::openDeviceCentre()
     }
 #endif
 
-    QMLComponent::openDialog<DeviceCentre>();
+    QMLComponent::showDialog<DeviceCentre>();
 }
 
 void MegaApplication::importLinks()
