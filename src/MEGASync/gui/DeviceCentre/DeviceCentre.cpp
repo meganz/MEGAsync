@@ -222,6 +222,7 @@ void DeviceCentre::updateDeviceData()
 DeviceCentre::BackupList DeviceCentre::filterBackupList(const char* deviceId,
                                                         const mega::MegaBackupInfoList& backupList)
 {
+    auto activeSyncs = SyncInfo::instance()->getAllSyncSettings();
     BackupList filteredList;
     const auto numBackups = backupList.size();
     for (uint backupIndex = 0; backupIndex < numBackups; backupIndex++)
@@ -229,7 +230,17 @@ DeviceCentre::BackupList DeviceCentre::filterBackupList(const char* deviceId,
         auto backupInfo = backupList.get(backupIndex);
         if (strcmp(backupInfo->deviceId(), deviceId) == 0)
         {
-            filteredList.push_back(backupInfo);
+            bool isSyncActive = std::find_if(std::begin(activeSyncs),
+                                             std::end(activeSyncs),
+                                             [&backupInfo](std::shared_ptr<SyncSettings> sync)
+                                             {
+                                                 return sync->backupId() == backupInfo->id();
+                                             }) != std::end(activeSyncs);
+
+            if (isSyncActive)
+            {
+                filteredList.push_back(backupInfo);
+            }
         }
     }
     return filteredList;
