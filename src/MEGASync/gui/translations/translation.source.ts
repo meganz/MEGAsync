@@ -7886,54 +7886,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
-    <name>SyncStallModeSelector</name>
-    <message>
-        <source>Sync stall mode</source>
-        <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
-        <translation>Issue resolution mode</translation>
-    </message>
-    <message>
-        <source>Smart</source>
-        <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
-        <translation>Smart</translation>
-    </message>
-    <message>
-        <source>Let MEGA solve sync issues automatically</source>
-        <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation>Let MEGA resolve sync issues automatically</translation>
-    </message>
-    <message>
-        <source>Advanced</source>
-        <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
-        <translation>Advanced</translation>
-    </message>
-    <message>
-        <source>Get full control of the sync issues</source>
-        <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
-        <translation>Get full control of the sync issues</translation>
-    </message>
-    <message>
-        <source>Learn more</source>
-        <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
-        <translation>Learn more</translation>
-    </message>
-    <message>
-        <source>Apply rules</source>
-        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Apply previous exclusion rules</source>
-        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Permissions</source>
-        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.SAt-1297</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
-    </message>
-</context>
-<context>
     <name>SyncTooltip</name>
     <message>
         <source>Local path:</source>

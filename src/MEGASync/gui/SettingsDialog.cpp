@@ -23,7 +23,6 @@
 #include "TextDecorator.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
-#include "ui_SyncStallModeSelector.h"
 #include "Utilities.h"
 
 #include <QtConcurrent/QtConcurrent>
