@@ -81,22 +81,6 @@ BugReportDialog::~BugReportDialog()
     delete ui;
 }
 
-void BugReportDialog::setDefaultInfo(const DefaultInfo& info)
-{
-    if (!info.description.isEmpty())
-    {
-        ui->teDescribeBug->setText(info.description);
-    }
-
-    if (!info.title.isEmpty())
-    {
-        ui->leTitleBug->setText(info.title);
-    }
-
-    ui->cbAttachLogs->setChecked(info.sendLogsChecked);
-    ui->cbAttachLogs->setDisabled(info.sendLogsMandatory);
-}
-
 void BugReportDialog::onReportStarted()
 {
     openProgressDialog();
