@@ -27,7 +27,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
-    wstring icon(GetContextMenuPath() + L"/upload.ico");
+    wstring icon(GetContextMenuPath() + L"/MEGAsync.exe");
     SHStrDup(icon.data(), ppszIcon);
 
     return S_OK;

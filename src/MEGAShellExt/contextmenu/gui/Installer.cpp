@@ -128,7 +128,7 @@ HRESULT RegisterSparsePackage()
     AddPackageOptions options;
 
     const wstring externalLocation = GetContextMenuPath();
-    const wstring sparsePkgPath = externalLocation + L"\\MEGAShell.msix";
+    const wstring sparsePkgPath = externalLocation + L"\\ShellExtX64.msix";
 
     winrt::Windows::Foundation::Uri externalUri(externalLocation);
     winrt::Windows::Foundation::Uri packageUri(sparsePkgPath);
