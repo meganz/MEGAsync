@@ -59,16 +59,10 @@ public:
         void setAnswerData(int response, const QString& comment);
     };
 
-    void addSurvey(unsigned int triggerActionId);
-    void addSurvey(unsigned int triggerActionId, std::shared_ptr<Data> survey);
-
     std::shared_ptr<Data> currentSurvey() const;
-
     QString getQuestion() const;
     int getCommentMaxLength() const;
-
     unsigned int currentSurveyId() const;
-    void setCurrentSurveyId(unsigned int newCurrentSurveyId);
 
 signals:
     void questionChanged();
@@ -78,7 +72,13 @@ private:
     QMap<unsigned int, std::shared_ptr<Data>> mSurveys;
     unsigned int mCurrentSurveyId;
 
+    friend class SurveyController;
+
     std::shared_ptr<Data> survey(unsigned int triggerActionId) const;
+
+    void addSurvey(unsigned int triggerActionId);
+    void addSurvey(unsigned int triggerActionId, std::shared_ptr<Data> survey);
+    void setCurrentSurveyId(unsigned int newCurrentSurveyId);
 };
 
 #endif // SURVEYS_H
