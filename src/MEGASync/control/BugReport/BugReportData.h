@@ -2,7 +2,6 @@
 #define BUGREPORTDATA_H
 
 #include <megaapi.h>
-#include <optional>
 #include <QFileInfo>
 #include <QString>
 

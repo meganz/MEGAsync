@@ -5,13 +5,10 @@
 #include "MegaSyncLogger.h"
 #include "ProgressIndicatorDialog.h"
 
-#include "megaapi.h"
-#include "QTMegaTransferListener.h"
-
 #include <QPointer>
 #include <QDialog>
-
 // clang-format on
+
 class QProgressDialog;
 class BugReportController;
 
@@ -26,16 +23,6 @@ class BugReportDialog: public QDialog
 public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
-
-    struct DefaultInfo
-    {
-        bool sendLogsChecked = true;
-        bool sendLogsMandatory = false;
-        QString title;
-        QString description;
-    };
-
-    void setDefaultInfo(const DefaultInfo& info);
 
 private slots:
     void onReportStarted();

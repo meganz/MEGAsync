@@ -2,9 +2,6 @@
 
 // clang-format off
 #include "DialogOpener.h"
-#include "Preferences.h"
-#include "QTMegaApiManager.h"
-#include "RequestListenerManager.h"
 #include "ui_BugReportDialog.h"
 #include "ui_ProgressIndicatorDialog.h"
 
