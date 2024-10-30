@@ -35,6 +35,8 @@ public:
 
     int size() const override;
 
+    std::shared_ptr<BackupCandidates> getBackupCandidates();
+
 public slots:
     int insert(const QString& folder);
     void refreshBackupCandidatesErrors();

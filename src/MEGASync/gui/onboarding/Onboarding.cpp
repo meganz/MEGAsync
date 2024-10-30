@@ -13,8 +13,7 @@
 using namespace mega;
 
 Onboarding::Onboarding(QObject* parent):
-    QMLComponent(parent),
-    mBackupComponents(new BackupsComponent(this))
+    QMLComponent(parent)
 {
     qmlRegisterModule("Onboarding", 1, 0);
     qmlRegisterType<OnboardingQmlDialog>("OnboardingQmlDialog", 1, 0, "OnboardingQmlDialog");
@@ -24,6 +23,7 @@ Onboarding::Onboarding(QObject* parent):
                                                QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
     SyncsComponent::registerQmlModules();
+    BackupsComponent::registerQmlModules();
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);

@@ -5,12 +5,18 @@ import backups 1.0
 import onboard 1.0
 import onboard.syncs_types 1.0
 
+import BackupsComponent 1.0
 import BackupCandidates 1.0
 
 BackupsFlow {
     id: root
 
     required property StepPanel stepPanelRef
+
+    BackupsComponent
+    {
+        id: backupsComponentAccess
+    }
 
     selectFoldersPage: Component {
         id: selectFoldersPageComponent
@@ -25,6 +31,7 @@ BackupsFlow {
 
         ConfirmFoldersPage {
             id: confirmFoldersPageItem
+            backupsComponentAccessRef: backupsComponentAccess
         }
     }
 
@@ -49,8 +56,8 @@ BackupsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: {
-                        if(backupCandidatesAccess.globalError !== BackupCandidates.NONE) {
-                            if(backupCandidatesAccess.globalError === BackupCandidates.SDK_CREATION) {
+                        if(backupsComponentAccess.data.globalError !== BackupCandidates.NONE) {
+                            if(backupsComponentAccess.data.globalError === BackupCandidates.SDK_CREATION) {
                                 return root.stepPanelRef.step4Error;
                             }
                             else {

@@ -5,11 +5,11 @@
 #include <BackupCandidatesModel.h>
 #include <BackupsController.h>
 #include <FileFolderAttributes.h>
+#include <QApplication>
+#include <QmlManager.h>
 #include <StandardIconProvider.h>
 #include <SyncSettings.h>
 #include <Utilities.h>
-
-#include <QmlManager.h>
 
 static const int CHECK_DIRS_TIME = 1000;
 
@@ -734,6 +734,11 @@ void BackupCandidatesController::clean(bool resetErrors)
     }
 }
 
+std::shared_ptr<BackupCandidates> BackupCandidatesController::getBackupCandidates()
+{
+    return mBackupCandidates;
+}
+
 void BackupCandidatesController::updateModel(
     QVector<int> roles,
     std::shared_ptr<BackupCandidates::Data> backupCandidate)
@@ -875,9 +880,10 @@ bool BackupCandidatesController::checkDirectories()
 
 QString BackupCandidatesController::getSdkErrorString() const
 {
-    QString message = BackupCandidates::tr("Folder wasn't backed up. Try again.",
-                                           "",
-                                           mBackupCandidates->getSDKConflictCount());
+    QString message = QCoreApplication::translate("BackupsModel",
+                                                  "Folder wasn't backed up. Try again.",
+                                                  "",
+                                                  mBackupCandidates->getSDKConflictCount());
     auto candidateList(mBackupCandidates->getBackupCandidates());
     auto itFound = std::find_if(candidateList.cbegin(),
                                 candidateList.cend(),
@@ -929,19 +935,22 @@ void BackupCandidatesController::createConflictsNotificationText(
     {
         case BackupCandidates::BackupErrorCode::DUPLICATED_NAME:
         {
-            errorMessage = BackupCandidates::tr("You can't back up folders with the same name. "
-                                                "Rename them to continue with the backup. "
-                                                "Folder names won't change on your computer.");
+            errorMessage =
+                QCoreApplication::translate("BackupsModel",
+                                            "You can't back up folders with the same name. "
+                                            "Rename them to continue with the backup. "
+                                            "Folder names won't change on your computer.");
             break;
         }
         case BackupCandidates::BackupErrorCode::EXISTS_REMOTE:
         {
-            errorMessage =
-                BackupCandidates::tr("A folder with the same name already exists in your Backups. "
-                                     "Rename the new folder to continue with the backup. "
-                                     "Folder name will not change on your computer.",
-                                     "",
-                                     mBackupCandidates->getRemoteConflictCount());
+            errorMessage = QCoreApplication::translate(
+                "BackupsModel",
+                "A folder with the same name already exists in your Backups. "
+                "Rename the new folder to continue with the backup. "
+                "Folder name will not change on your computer.",
+                "",
+                mBackupCandidates->getRemoteConflictCount());
             break;
         }
         case BackupCandidates::BackupErrorCode::SYNC_CONFLICT:
@@ -951,13 +960,15 @@ void BackupCandidatesController::createConflictsNotificationText(
         }
         case BackupCandidates::BackupErrorCode::PATH_RELATION:
         {
-            errorMessage = BackupCandidates::tr(
+            errorMessage = QCoreApplication::translate(
+                "BackupsModel",
                 "Backup folders can't contain or be contained by other backup folder");
             break;
         }
         case BackupCandidates::BackupErrorCode::UNAVAILABLE_DIR:
         {
-            errorMessage = BackupCandidates::tr(
+            errorMessage = QCoreApplication::translate(
+                "BackupsModel",
                 "Folder can't be backed up as it can't be located. "
                 "It may have been moved or deleted, or you might not have access.");
             break;

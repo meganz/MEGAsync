@@ -13,6 +13,7 @@ class BackupsComponent: public QMLComponent
     Q_OBJECT
 
     Q_PROPERTY(bool comesFromSettings READ getComesFromSettings NOTIFY comesFromSettingsChanged)
+    Q_PROPERTY(BackupCandidates* data READ getData CONSTANT)
 
 public:
     explicit BackupsComponent(QObject* parent = 0);
@@ -41,6 +42,8 @@ public:
 
     void setComesFromSettings(bool value = false);
     bool getComesFromSettings() const;
+
+    Q_INVOKABLE BackupCandidates* getData();
 
 public slots:
     void onBackupsCreationFinished(bool success);

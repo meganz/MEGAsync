@@ -45,7 +45,7 @@ void BackupsComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)
     {
-        qmlRegisterModule("BackupsComponent", 1, 0);
+        qmlRegisterType<BackupsComponent>("BackupsComponent", 1, 0, "BackupsComponent");
         qmlRegisterType<BackupCandidatesProxyModel>("BackupCandidatesProxyModel",
                                                     1,
                                                     0,
@@ -63,6 +63,11 @@ void BackupsComponent::openDeviceCentre() const
 bool BackupsComponent::getComesFromSettings() const
 {
     return mComesFromSettings;
+}
+
+BackupCandidates* BackupsComponent::getData()
+{
+    return mBackupCandidatesController->getBackupCandidates().get();
 }
 
 void BackupsComponent::onBackupsCreationFinished(bool success)
