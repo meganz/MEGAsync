@@ -635,11 +635,12 @@ void BackupCandidatesController::remove(const QString& folder)
         if (mBackupCandidates->removeBackupCandidate(folder))
         {
             mBackupCandidatesSizeRequester->removeFolder(folder);
-            refreshBackupCandidatesErrors();
-            checkSelectedAll();
         }
 
         emit endRemoveRows();
+
+        refreshBackupCandidatesErrors();
+        checkSelectedAll();
     }
 }
 
