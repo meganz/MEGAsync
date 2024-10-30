@@ -1,29 +1,36 @@
 #include "BugReportDialog.h"
 
+// clang-format off
 #include "DialogOpener.h"
 #include "Preferences.h"
 #include "QTMegaApiManager.h"
 #include "RequestListenerManager.h"
 #include "ui_BugReportDialog.h"
+#include "ui_ProgressIndicatorDialog.h"
 
+#include <iostream>
 #include <QCloseEvent>
 #include <QMegaMessageBox.h>
 #include <QRegExp>
 #include <TransfersModel.h>
+// clang-format on
 
 using namespace mega;
 
-BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
+BugReportDialog::BugReportDialog(QWidget* parent, MegaSyncLogger& logger):
     QDialog(parent),
     logger(logger),
     ui(new Ui::BugReportDialog),
+    mProgressIndicatorDialog(new ProgressIndicatorDialog(this)),
     mTransferFinished(false),
     mTransferError(MegaError::API_OK),
     mHadGlobalPause(false)
 {
     ui->setupUi(this);
 
-    ui->lDescribeBug->setText(ui->lDescribeBug->text() + QString::fromUtf8("<span style=\"color:red; text-decoration:none;\">*</span>"));
+    ui->lDescribeBug->setText(
+        ui->lDescribeBug->text() +
+        QString::fromUtf8("<span style=\"color:red; text-decoration:none;\">*</span>"));
     ui->bSubmit->setDefault(true);
     ui->bSubmit->setEnabled(false);
 
@@ -38,7 +45,7 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     transferredBytes = 0;
     lastpermil = -3;
 
-    megaApi = ((MegaApplication *)qApp)->getMegaApi();
+    megaApi = ((MegaApplication*)qApp)->getMegaApi();
     mDelegateTransferListener = std::make_unique<QTMegaTransferListener>(megaApi, this);
 }
 
@@ -64,36 +71,32 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     mTransferError = MegaError::API_OK;
     mTransferFinished = false;
 
-    mSendProgress = new QProgressDialog(this);
+    connect(mProgressIndicatorDialog->ui->bCancel,
+            &QPushButton::clicked,
+            this,
+            &BugReportDialog::cancelSendReport);
 
-    connect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
-
-    mSendProgress->setMinimumDuration(0);
-    mSendProgress->setMinimum(0);
-    mSendProgress->setMaximum(1010);
-    mSendProgress->setValue(0);
-    mSendProgress->setAutoClose(false);
-    mSendProgress->setAutoReset(false);
+    mProgressIndicatorDialog->ui->progressBar->reset();
+    mProgressIndicatorDialog->ui->progressBar->setMinimum(0);
+    mProgressIndicatorDialog->ui->progressBar->setMaximum(1010);
+    mProgressIndicatorDialog->ui->progressBar->setValue(0);
     lastpermil = 0;
 
-    auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
-    labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
-    labelWidget->setWordWrap(true);
-    labelWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    mSendProgress->setLabel(labelWidget);
+    mProgressIndicatorDialog->show();
 
-    DialogOpener::showDialog(mSendProgress);
+    DialogOpener::showDialog(mProgressIndicatorDialog);
 }
 
 void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 {
-    if (mSendProgress && transfer->getState() == MegaTransfer::STATE_ACTIVE)
+    if (mProgressIndicatorDialog && transfer->getState() == MegaTransfer::STATE_ACTIVE)
     {
         transferredBytes = transfer->getTransferredBytes();
-        int permil = (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
+        int permil =
+            (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
         if (permil > lastpermil)
         {
-            mSendProgress->setValue(permil);
+            mProgressIndicatorDialog->ui->progressBar->setValue(permil);
             lastpermil = permil;
         }
     }
@@ -101,14 +104,17 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
 void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaError* error)
 {
-    if(mHadGlobalPause)
+    if (mHadGlobalPause)
     {
         MegaSyncApp->getTransfersModel()->setGlobalPause(true);
     }
 
-    disconnect(mSendProgress.data(), &QProgressDialog::canceled, this, &BugReportDialog::cancelSendReport);
+    disconnect(mProgressIndicatorDialog->ui->bCancel,
+               &QPushButton::clicked,
+               this,
+               &BugReportDialog::cancelSendReport);
 
-    mSendProgress->reset();
+    mProgressIndicatorDialog->ui->progressBar->reset();
     totalBytes = 0;
     transferredBytes = 0;
     currentTransfer = 0;
@@ -117,14 +123,14 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaErr
     mTransferError = error->getErrorCode();
     mTransferFinished = true;
 
-    if(transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
+    if (transfer->getState() == mega::MegaTransfer::STATE_CANCELLED)
     {
         preparing = false;
         warningShown = false;
 
-        if(mSendProgress)
+        if (mProgressIndicatorDialog)
         {
-            mSendProgress->close();
+            mProgressIndicatorDialog->close();
         }
     }
     else if (!warningShown)
@@ -135,23 +141,26 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaErr
     logger.resumeAfterReporting();
 }
 
-void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError *e)
+void BugReportDialog::onTransferTemporaryError(MegaApi*, MegaTransfer*, MegaError* e)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                 QString::fromUtf8("Temporary error at report dialog: %1")
-                     .arg(QString::fromUtf8(mega::MegaError::getErrorString(e->getErrorCode(), mega::MegaError::API_EC_UPLOAD)))
-                     .toUtf8().constData());
+    MegaApi::log(
+        MegaApi::LOG_LEVEL_ERROR,
+        QString::fromUtf8("Temporary error at report dialog: %1")
+            .arg(QString::fromUtf8(
+                mega::MegaError::getErrorString(e->getErrorCode(), mega::MegaError::API_EC_UPLOAD)))
+            .toUtf8()
+            .constData());
 }
 
 void BugReportDialog::onRequestFinish(MegaRequest* request, MegaError* e)
 {
-    switch(request->getType())
+    switch (request->getType())
     {
         case MegaRequest::TYPE_SUPPORT_TICKET:
         {
-            if (mSendProgress)
+            if (mProgressIndicatorDialog)
             {
-                mSendProgress->close();
+                mProgressIndicatorDialog->close();
             }
 
             if (e->getErrorCode() == MegaError::API_OK)
@@ -160,11 +169,14 @@ void BugReportDialog::onRequestFinish(MegaRequest* request, MegaError* e)
                 msgInfo.parent = this->parentWidget();
                 msgInfo.title = tr("Bug report");
                 msgInfo.text = tr("Bug report success!");
-                msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation email will sent to you accordingly.");
+                msgInfo.informativeText = tr("Your bug report has been submitted, a confirmation "
+                                             "email will sent to you accordingly.");
                 msgInfo.textFormat = Qt::RichText;
                 msgInfo.buttons = QMessageBox::Ok;
-                msgInfo.iconPixmap = QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/bug_report_success.png")
-                                                                            : QString::fromUtf8(":/images/bug_report_success@2x.png"));
+                msgInfo.iconPixmap =
+                    QPixmap(Utilities::getDevicePixelRatio() < 2 ?
+                                QString::fromUtf8(":/images/bug_report_success.png") :
+                                QString::fromUtf8(":/images/bug_report_success@2x.png"));
 
                 accept();
                 QMegaMessageBox::information(msgInfo);
@@ -204,46 +216,53 @@ void BugReportDialog::showErrorMessage(mega::MegaError* error)
 
     if (mTransferFinished && mTransferError == MegaError::API_EEXIST)
     {
-        msgInfo.informativeText = tr("There is an ongoing report being uploaded.")
-                + QString::fromUtf8("<br>") +
-                tr("Please wait until the current upload is completed.");
+        msgInfo.informativeText = tr("There is an ongoing report being uploaded.") +
+                                  QString::fromUtf8("<br>") +
+                                  tr("Please wait until the current upload is completed.");
         QMegaMessageBox::information(msgInfo);
     }
     else if (error && error->getErrorCode() == MegaError::API_ETOOMANY)
     {
         msgInfo.text = tr("You must wait 10 minutes before submitting another issue");
-        msgInfo.informativeText = tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.")
-                                      .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                                      .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
+        msgInfo.informativeText =
+            tr("Please try again later or contact our support team via [A]support@mega.co.nz[/A] "
+               "if the problem persists.")
+                .replace(
+                    QString::fromUtf8("[A]"),
+                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"));
         QMegaMessageBox::warning(msgInfo);
     }
     else
     {
         msgInfo.informativeText =
-            tr("Bug report can't be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]")
-                .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
-                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
-            + QString::fromLatin1("\n");
+            tr("Bug report can't be submitted due to some error. Please try again or contact our "
+               "support team via [A]support@mega.co.nz[/A]")
+                .replace(
+                    QString::fromUtf8("[A]"),
+                    QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) +
+            QString::fromLatin1("\n");
         QMegaMessageBox::warning(msgInfo);
     }
 }
-
 
 void BugReportDialog::postUpload()
 {
     if (mTransferError == MegaError::API_OK)
     {
-        if(mSendProgress)
+        if (mProgressIndicatorDialog)
         {
-            mSendProgress->setValue(mSendProgress->maximum());
+            mProgressIndicatorDialog->ui->progressBar->setValue(
+                mProgressIndicatorDialog->ui->progressBar->maximum());
         }
         createSupportTicket();
     }
     else
     {
-        if(mSendProgress)
+        if (mProgressIndicatorDialog)
         {
-            mSendProgress->close();
+            mProgressIndicatorDialog->close();
         }
         showErrorMessage();
     }
@@ -251,14 +270,21 @@ void BugReportDialog::postUpload()
 
 void BugReportDialog::createSupportTicket()
 {
-    QString report = QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4\n").arg(Preferences::VERSION_STRING)
-                                    .arg(Preferences::VERSION_CODE)
-                                    .arg(Preferences::BUILD_ID)
-                                    .arg(QString::fromUtf8(megaApi->getUserAgent()));
+    QString report =
+        QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4\n")
+            .arg(Preferences::VERSION_STRING)
+            .arg(Preferences::VERSION_CODE)
+            .arg(Preferences::BUILD_ID)
+            .arg(QString::fromUtf8(megaApi->getUserAgent()));
 
-    report.append(QString::fromUtf8("Report filename: %1").arg(reportFileName.isEmpty() ? QString::fromUtf8("Not sent") : reportFileName).append(QString::fromUtf8("\n")));
-    report.append(QString::fromUtf8("Title: %1").arg(ui->leTitleBug->text().append(QString::fromUtf8("\n"))));
-    report.append(QString::fromUtf8("Description: %1").arg(ui->teDescribeBug->toPlainText().append(QString::fromUtf8("\n"))));
+    report.append(
+        QString::fromUtf8("Report filename: %1")
+            .arg(reportFileName.isEmpty() ? QString::fromUtf8("Not sent") : reportFileName)
+            .append(QString::fromUtf8("\n")));
+    report.append(
+        QString::fromUtf8("Title: %1").arg(ui->leTitleBug->text().append(QString::fromUtf8("\n"))));
+    report.append(QString::fromUtf8("Description: %1")
+                      .arg(ui->teDescribeBug->toPlainText().append(QString::fromUtf8("\n"))));
 
     auto listener = RequestListenerManager::instance().registerAndGetFinishListener(this, true);
     megaApi->createSupportTicket(report.toUtf8().constData(), 6, listener.get());
@@ -270,7 +296,7 @@ void BugReportDialog::cancelCurrentReportUpload()
     {
         megaApi->cancelTransferByTag(currentTransfer);
 
-        if(mHadGlobalPause)
+        if (mHadGlobalPause)
         {
             MegaSyncApp->getTransfersModel()->setGlobalPause(true);
         }
@@ -294,7 +320,7 @@ void BugReportDialog::onReadyForReporting()
 {
     reportFileName.clear();
 
-    //If send log file is enabled
+    // If send log file is enabled
     if (ui->cbAttachLogs->isChecked())
     {
         QString pathToLogFile = Utilities::joinLogZipFiles(megaApi);
@@ -308,7 +334,7 @@ void BugReportDialog::onReadyForReporting()
         {
             QFileInfo joinLogsFile{pathToLogFile};
             reportFileName = joinLogsFile.fileName();
-            if(Preferences::instance()->getGlobalPaused())
+            if (Preferences::instance()->getGlobalPaused())
             {
                 mHadGlobalPause = true;
                 MegaSyncApp->getTransfersModel()->setGlobalPause(false);
@@ -321,14 +347,14 @@ void BugReportDialog::onReadyForReporting()
     }
     else
     {
-        //Create support ticket
+        // Create support ticket
         createSupportTicket();
     }
 }
 
 void BugReportDialog::on_bCancel_clicked()
 {
-    reject();
+    // reject();
 }
 
 void BugReportDialog::cancelSendReport()
@@ -341,9 +367,9 @@ void BugReportDialog::cancelSendReport()
     warningShown = true;
 
     MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
-    if(mSendProgress)
+    if (mProgressIndicatorDialog)
     {
-        mSendProgress->close();
+        mProgressIndicatorDialog->close();
     }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -353,6 +379,7 @@ void BugReportDialog::cancelSendReport()
     msgInfo.informativeText = tr("The bug report will not be submitted if you exit uploading.");
     msgInfo.textFormat = Qt::RichText;
     msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
+
     QMap<QMessageBox::Button, QString> textsByButton;
     textsByButton.insert(QMessageBox::Yes, tr("Continue"));
     textsByButton.insert(QMessageBox::No, tr("Yes"));
@@ -367,16 +394,29 @@ void BugReportDialog::cancelSendReport()
         }
         else
         {
+            if (mProgressIndicatorDialog)
+            {
+                std::cout << "********************************************************  "
+                             "mProgressIndicatorDialog is ok"
+                          << std::endl;
+            }
+            else
+            {
+                std::cout << "********************************************************  "
+                             "mProgressIndicatorDialog is not ok"
+                          << std::endl;
+            }
+
             warningShown = false;
             if (mTransferFinished)
             {
                 postUpload();
             }
-            else if (currentTransfer && mSendProgress)
+            else if (currentTransfer && mProgressIndicatorDialog)
             {
-                DialogOpener::showDialog(mSendProgress);
-                mSendProgress->setValue(lastpermil);
-                MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer,false);
+                DialogOpener::showDialog(mProgressIndicatorDialog);
+                mProgressIndicatorDialog->ui->progressBar->setValue(lastpermil);
+                MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, false);
             }
         }
     };
@@ -391,9 +431,10 @@ void BugReportDialog::onDescriptionChanged()
 
 void BugReportDialog::on_teDescribeBug_textChanged()
 {
-    if(ui->teDescribeBug->toPlainText().length() > mMaxDescriptionLength)
+    if (ui->teDescribeBug->toPlainText().length() > mMaxDescriptionLength)
     {
-        int diff = ui->teDescribeBug->toPlainText().length() - mMaxDescriptionLength; //m_maxTextEditLength - just an integer
+        int diff = ui->teDescribeBug->toPlainText().length() -
+                   mMaxDescriptionLength; // m_maxTextEditLength - just an integer
         QString newStr = ui->teDescribeBug->toPlainText();
         newStr.chop(diff);
         ui->teDescribeBug->setText(newStr);

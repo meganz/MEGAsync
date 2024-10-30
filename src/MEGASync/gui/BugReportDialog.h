@@ -1,13 +1,17 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
-#include <QPointer>
-#include <QDialog>
+// clang-format off
+#include "MegaSyncLogger.h"
+#include "ProgressIndicatorDialog.h"
+
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
-#include "MegaSyncLogger.h"
 
-class QProgressDialog;
+#include <QPointer>
+#include <QDialog>
+
+// clang-format on
 
 namespace Ui {
 class BugReportDialog;
@@ -30,10 +34,10 @@ public:
 
 private:
     MegaSyncLogger& logger;
-    Ui::BugReportDialog *ui;
-    int currentTransfer;
-    QPointer<QProgressDialog> mSendProgress;
+    Ui::BugReportDialog* ui;
+    QPointer<ProgressIndicatorDialog> mProgressIndicatorDialog;
 
+    int currentTransfer;
     long long totalBytes;
     long long transferredBytes;
     int lastpermil;
