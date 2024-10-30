@@ -6803,12 +6803,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Please let us know if you encounter any issues.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.CON-1116.</translatorcomment>
--       <translation>Let us know if you encounter any issues.</translation>
+-       <translation type="unfinished">Let us know if you encounter any issues.</translation>
     </message>
     <message>
         <source>Help us by providing as much detail as possible.</source>
         <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.CON-1116.</translatorcomment>
--       <translation>Help us by providing as much detail as possible.</translation>
+-       <translation type="unfinished">Help us by providing as much detail as possible.</translation>
     </message>
 </context>
 <context>
