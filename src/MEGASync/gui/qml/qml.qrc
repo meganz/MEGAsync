@@ -77,6 +77,7 @@
         <file>components/toolTips/qmldir</file>
         <file>components/toolTips/ToolTip.qml</file>
         <file>components/views/qmldir</file>
+        <file>components/views/GroupBox.qml</file>
         <file>components/views/ScrollPanel.qml</file>
         <file>components/views/StackViewBase.qml</file>
         <file>components/dialogs/qmldir</file>
@@ -180,6 +181,9 @@
         <file>deviceCentre/NoConnectionsPage.qml</file>
         <file>deviceCentre/SyncTablePage.qml</file>
         <file>deviceCentre/DeviceWidgetProperty.qml</file>
+        <file>deviceCentre/TroubleshootDialog.qml</file>
+        <file>deviceCentre/IssueResolutionOption.qml</file>
+        <file>deviceCentre/TroubleshootButton.qml</file>
         <file>components/menus/MenuItem.qml</file>
         <file>components/menus/qmldir</file>
         <file>components/menus/ContextMenuItem.qml</file>

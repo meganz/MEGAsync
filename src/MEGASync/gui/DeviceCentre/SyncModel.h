@@ -19,7 +19,9 @@ public:
         SIZE,
         DATE_MODIFIED,
         STATUS,
-        ERROR_MESSAGE
+        ERROR_MESSAGE,
+        LOCAL_PATH,
+        REMOTE_PATH
     };
 
     explicit SyncModel(QObject* parent = nullptr);
@@ -42,6 +44,7 @@ public:
     std::optional<mega::MegaHandle> getSyncID(int row) const;
     QmlSyncType::Type getType(int row) const;
     QString getLocalFolder(int row) const;
+    QString getRemoteFolder(int row) const;
 
 private:
     QString getName(int row) const;

@@ -14,6 +14,7 @@ import components.images 1.0
 import components.menus 1.0
 import components.buttons 1.0 as Buttons
 import components.dialogs 1.0
+import components.toolTips 1.0
 
 import SyncStatus 1.0
 import QmlSyncType 1.0
@@ -29,6 +30,7 @@ Item {
     readonly property int statusIconSize: 16
     readonly property int defaultColumnWidth: 100
     readonly property int lastColumnWidth: 84
+    readonly property int tooltipMargin: 8
     property string dateFormat: "d MMM yyyy"
     property var locale: Qt.locale()
 
@@ -132,6 +134,30 @@ Item {
         return false;
     }
 
+    function getTooltipText(model) {
+        if (model) {
+            let message = DeviceCentreStrings.localPathLabel.arg(model.localPath) + "\n";
+            message += DeviceCentreStrings.remotePathLabel.arg(model.remotePath);
+            return message;
+        }
+        return "";
+    }
+
+    function getTooltipWidth(tooltipControl)
+    {
+        let charSize = tooltipControl.font.pixelSize;
+        let tooltips = tooltipControl.text.split("\n");
+        let maxCharCount = 0;
+        for (let i = 0; i < tooltips.length; i++) {
+            if (tooltips[i].length > maxCharCount) {
+                maxCharCount = tooltips[i].length;
+            }
+        }
+        let resizeFactor = 0.65;
+        let margin = 2;
+        return (maxCharCount * charSize) * resizeFactor + margin;
+    }
+
     anchors.fill: parent
 
     TableView {
@@ -139,7 +165,7 @@ Item {
 
         anchors.fill: parent
         anchors.bottomMargin: 20
-        model: deviceCentreAccess.getSyncModel()
+        model: deviceCentreAccess ? deviceCentreAccess.getSyncModel() : null
 
         style: TableViewStyle {
             id: tableViewStyle
@@ -200,6 +226,7 @@ Item {
                 id: nameDelegateItem
 
                 anchors.fill: parent
+
                 SvgImage {
                     id: typeImage
 
@@ -247,7 +274,7 @@ Item {
                     anchors.top: folderName.bottom
                     anchors.topMargin: 2
                     visible: true
-                    source: model? getStatusIcon(model.status) : ""
+                    source: model ? getStatusIcon(model.status) : ""
                     height: root.statusIconSize
                     width: root.statusIconSize
                     sourceSize: Qt.size(14.5, 14.5)
@@ -287,6 +314,29 @@ Item {
                     lineHeight: 18
                     text: DeviceCentreStrings.view
                     visible: isErrorLinkVisible(model)
+                }
+
+                MouseArea {
+                    id: nameArea
+
+                    hoverEnabled: true
+                    anchors.fill: nameDelegateItem
+
+                    ToolTip {
+                        id: nameTooltip
+
+                        visible: model && parent.containsMouse
+                        text: getTooltipText(model)
+                        delay: 500
+
+                        onVisibleChanged: {
+                            if (visible) {
+                                x = parent.mouseX + tooltipMargin
+                                y = parent.mouseY + tooltipMargin
+                                width = getTooltipWidth(nameTooltip)
+                            }
+                        }
+                    }
                 }
 
                 MouseArea{

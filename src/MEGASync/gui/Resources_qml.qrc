@@ -116,5 +116,6 @@
         <file>images/qml/device-centre-update.png</file>
         <file>images/qml/device-centre-update@2x.png</file>
         <file>images/qml/device-centre-update@3x.png</file>
+        <file>images/qml/device_center/tool.svg</file>
     </qresource>
 </RCC>

@@ -1182,6 +1182,24 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
+    <name>DeviceCentre</name>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title of the confirmation dialog to apply exclusion rules. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Informative text about the Apply rules action. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Label for the Apply button, to apply the previous exclusion rules. SAT-1816.</translatorcomment>
+        <translation type="unfinished">Apply</translation>
+    </message>
+</context>
+<context>
     <name>DeviceCentreStrings</name>
     <message>
         <source>Device Centre</source>
@@ -1340,6 +1358,66 @@ In some cases they may contain details about your data, such as file or folder n
         <source>View</source>
         <translatorcomment>Label of the link to open the dialog with the details of the Sync/Backup error. SAT-1658.</translatorcomment>
         <translation type="unfinished">View</translation>
+    </message>
+    <message>
+        <source>Troubleshoot</source>
+        <translatorcomment>Title of the Troubleshoot dialog. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Issue resolution mode</source>
+        <translatorcomment>Title of the Issue resolution mode group containing the actions regarding issue resolution. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smart</source>
+        <translatorcomment>Label of the &quot;Smart&quot; resolution mode selection. SAT-1816.</translatorcomment>
+        <translation type="unfinished">Smart</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Label of the &quot;Advanced&quot; resolution mode selection. SAT-1816.</translatorcomment>
+        <translation type="unfinished">Advanced</translation>
+    </message>
+    <message>
+        <source>Exclusion rules</source>
+        <translatorcomment>Title of the Exclusion rules group. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Let MEGA resolve sync issues automatically</source>
+        <translatorcomment>Description of what the &quot;Smart&quot; resolution mode does. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Get full control of backup issues</source>
+        <translatorcomment>Description of what the &quot;Advanced&quot; resolution mode does. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Description of what the &quot;Apply previous rules&quot; button does. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Button label for the Learn more action (opens a webpage with more information about issue resolution modes). SAT-1816.</translatorcomment>
+        <translation type="unfinished">Learn more</translation>
+    </message>
+    <message>
+        <source>Apply previous rules</source>
+        <translatorcomment>Button label. The button applies the old exclusion rules to the new format. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>    
+        <source>Local path: %1</source>
+        <translatorcomment>Part of the tooltip text. %1 will be replaced by the local path of the sync. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote path: %1</source>
+        <translatorcomment>Part of the tooltip text. %1 will be replaced by the remote path of the sync. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

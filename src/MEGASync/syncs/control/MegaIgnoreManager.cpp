@@ -13,9 +13,6 @@
 #include <QTemporaryFile>
 #include <QFileInfo>
 
-constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
-constexpr char MEGA_IGNORE_DEFAULT_FILE_NAME[] = ".megaignore.default";
-
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
 {
     setInputDirPath(syncLocalFolder, createDefaultIfNotExist);
