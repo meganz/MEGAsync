@@ -6289,11 +6289,23 @@ Do you want to delete it anyway?</translation>
 <context>
     <name>ReloadingEventHandler</name>
     <message>
-        <source>Reload needed</source>
+        <source>MEGA is reloading</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The Desktop App needed to reload your account. This has been done automatically.</source>
+        <source>The app has detected an issue and is reloading your account. Please wait…</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA has reloaded</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
