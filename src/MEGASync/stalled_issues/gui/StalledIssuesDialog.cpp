@@ -205,8 +205,7 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
             buttonsText.insert(QMessageBox::Ok, tr("Refresh"));
             msgInfo.buttonsText = buttonsText;
             msgInfo.text =
-                tr("A sync with stalled issues has changed its root MEGA folder.\nPlease, "
-                   "refresh the list.");
+                tr("One of your synced folders has been renamed. Refresh the list of sync issues.");
             msgInfo.finishFunc = [this](QPointer<QMessageBox>)
             {
                 mProxyModel->updateStalledIssues();
@@ -217,7 +216,7 @@ void StalledIssuesDialog::onSyncRootChanged(std::shared_ptr<SyncSettings> sync)
 
         if (MegaSyncApp->getStalledIssuesModel()->isSolvingIssues())
         {
-            // First stop solving issues before it is too late
+            // First stop solving issues as they are solved in another thread
             MegaSyncApp->getStalledIssuesModel()->stopSolvingIssues(MessageInfo::ButtonType::STOP);
             connect(MegaSyncApp->getStalledIssuesModel(),
                     &StalledIssuesModel::stalledIssuesSolvingFinished,
