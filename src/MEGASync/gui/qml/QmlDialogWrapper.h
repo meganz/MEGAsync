@@ -34,8 +34,6 @@ public:
 
     virtual QList<QObject*> getInstancesFromContext();
 
-    QString contextName() const;
-
     template<typename DialogType, typename... A>
     static auto showDialog(A&&... args)
     {
@@ -168,10 +166,7 @@ public:
         if (qmlComponent.isReady())
         {
             QQmlContext* context = new QQmlContext(engine->rootContext(), this);
-            if(!mWrapper->contextName().isEmpty())
-            {
-                context->setContextProperty(mWrapper->contextName(), mWrapper);
-            }
+            QmlManager::instance()->setRootContextProperty(mWrapper);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
 
