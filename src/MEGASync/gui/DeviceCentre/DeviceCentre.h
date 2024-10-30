@@ -45,6 +45,12 @@ public:
     Q_INVOKABLE void stopSync(int row) const;
     Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
 
+    Q_INVOKABLE void learnMore() const;
+    Q_INVOKABLE void applyPreviousExclusionRules() const;
+    Q_INVOKABLE void onSmartModeSelected() const;
+    Q_INVOKABLE void onAdvancedModeSelected() const;
+    Q_INVOKABLE bool isSmartModeSelected() const;
+
 signals:
     void deviceNameReceived(QString deviceName);
     void deviceDataUpdated();

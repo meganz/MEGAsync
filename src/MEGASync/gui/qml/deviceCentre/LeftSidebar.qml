@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 import common 1.0
 
+import components.buttons 1.0
 import components.images 1.0
 import components.texts 1.0 as Texts
 
@@ -52,8 +53,48 @@ Item {
 
         spacing: 8
 
-        model: deviceCentreAccess.getDeviceModel()
+        model: deviceCentreAccess ? deviceCentreAccess.getDeviceModel() : null
         delegate: deviceListDelegate
+    }
+
+    ToolbarButton {
+        id: troubleshootButton
+
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+            leftMargin: 26
+            bottomMargin: 23
+        }
+
+        icons.source: Images.tool
+        text: DeviceCentreStrings.troubleshoot
+
+        TroubleshootDialog {
+            id: troubleshootDialog
+
+            visible: false
+
+            onApplyPreviousRulesClicked: {
+                deviceCentreAccess.applyPreviousExclusionRules();
+            }
+
+            onLearnMoreClicked: {
+                deviceCentreAccess.learnMore();
+            }
+
+            onSmartModeSelected: {
+                deviceCentreAccess.onSmartModeSelected();
+            }
+
+            onAdvancedModeSelected: {
+                deviceCentreAccess.onAdvancedModeSelected();
+            }
+        }
+
+        onClicked: {
+            troubleshootDialog.visible = true;
+        }
     }
 
     Component {
@@ -62,7 +103,9 @@ Item {
         Item {
             width: deviceList.width;
             height: itemHeight + 8
+
             Column {
+
                 Rectangle {
                     id: deviceComponent
 
@@ -84,6 +127,7 @@ Item {
                         anchors.verticalCenter: deviceComponent.verticalCenter
                         anchors.leftMargin: 4
                     }
+
                     SvgImage {
                         id: deviceIcon
 
@@ -94,6 +138,7 @@ Item {
                         source: Images.devices
                         sourceSize: Qt.size(16, 16)
                     }
+
                     Texts.RichText {
 
                         anchors.left: deviceIcon.right

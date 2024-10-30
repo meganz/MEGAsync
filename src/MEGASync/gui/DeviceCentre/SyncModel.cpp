@@ -19,7 +19,9 @@ QHash<int, QByteArray> SyncModel::roleNames() const
         {SIZE,          "size"        },
         {DATE_MODIFIED, "dateModified"},
         {STATUS,        "status"      },
-        {ERROR_MESSAGE, "errorMessage"}
+        {ERROR_MESSAGE, "errorMessage"},
+        {LOCAL_PATH,    "localPath"   },
+        {REMOTE_PATH,   "remotePath"  }
     };
     return roles;
 }
@@ -164,6 +166,12 @@ QVariant SyncModel::data(const QModelIndex& index, int role) const
         case ERROR_MESSAGE:
             result = getErrorMessage(row);
             break;
+        case LOCAL_PATH:
+            result = getLocalFolder(row);
+            break;
+        case REMOTE_PATH:
+            result = getRemoteFolder(row);
+            break;
 
         default:
             break;
@@ -242,6 +250,16 @@ QString SyncModel::getLocalFolder(int row) const
         return {};
     }
     return mSyncObjects[row].localFolder;
+}
+
+QString SyncModel::getRemoteFolder(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
+    return syncSetting ? syncSetting->getMegaFolder() : QString();
 }
 
 std::optional<mega::MegaHandle> SyncModel::getSyncID(int row) const

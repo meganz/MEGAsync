@@ -1,14 +1,17 @@
 #include "DeviceCentre.h"
 
+#include "control/TextDecorator.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "QmlDialogWrapper.h"
 #include "QmlUtils.h"
+#include "StalledIssuesModel.h"
 #include "SyncController.h"
 #include "SyncExclusions.h"
 #include "SyncInfo.h"
+#include "syncs/control/MegaIgnoreManager.h"
 
 #include <set>
 
@@ -394,4 +397,76 @@ void DeviceCentre::changeSyncStatus(int row,
 bool DeviceCentre::deviceNameAlreadyExists(const QString& name) const
 {
     return mDeviceModel->deviceNameAlreadyExists(name);
+}
+
+void DeviceCentre::learnMore() const
+{
+    Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
+}
+
+void DeviceCentre::applyPreviousExclusionRules() const
+{
+    QMegaMessageBox::MessageBoxInfo msgInfo;
+    msgInfo.text = tr("[B]Apply previous exclusion rules?[/B]");
+    Text::Bold boldDecorator;
+    boldDecorator.process(msgInfo.text);
+    msgInfo.informativeText =
+        tr("The exclusion rules you set up in a previous version of the app will be applied to all "
+           "of your syncs and backups. Any rules created since then will be overwritten.");
+    msgInfo.textFormat = Qt::RichText;
+    msgInfo.buttons = QMessageBox::Ok | QMessageBox::Cancel;
+    QMap<QMessageBox::Button, QString> textsByButton;
+    textsByButton.insert(QMessageBox::Ok, tr("Apply"));
+    msgInfo.buttonsText = textsByButton;
+    msgInfo.finishFunc = [](QPointer<QMessageBox> msg)
+    {
+        if (msg->result() == QMessageBox::Ok)
+        {
+            // Step 0: Remove old default ignore
+            const auto defaultIgnoreFolder = Preferences::instance()->getDataPath();
+            const auto defaultIgnorePath =
+                defaultIgnoreFolder + QString::fromUtf8("/") +
+                QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_DEFAULT_FILE_NAME);
+            QFile::remove(defaultIgnorePath);
+
+            // Step 1: Replace default ignore with one populated with legacy rules
+            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
+                defaultIgnoreFolder.toStdString().c_str());
+            QFile::rename(defaultIgnoreFolder + QString::fromUtf8("/") +
+                              QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_FILE_NAME),
+                          defaultIgnorePath);
+
+            // Step 2: Replace existing mega ignores files in all syncs
+            const auto syncsSettings = SyncInfo::instance()->getAllSyncSettings();
+            for (auto& sync: syncsSettings)
+            {
+                QFile ignoreFile(sync->getLocalFolder() + QString::fromUtf8("/") +
+                                 QString::fromUtf8(MegaIgnoreManager::MEGA_IGNORE_FILE_NAME));
+                if (ignoreFile.exists())
+                {
+                    ignoreFile.moveToTrash();
+                }
+                MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
+                    sync->getLocalFolder().toStdString().c_str());
+            }
+        }
+    };
+    QMegaMessageBox::warning(msgInfo);
+}
+
+void DeviceCentre::onSmartModeSelected() const
+{
+    Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Smart);
+    // Update the model to fix automatically the issues
+    MegaSyncApp->getStalledIssuesModel()->updateActiveStalledIssues();
+}
+
+void DeviceCentre::onAdvancedModeSelected() const
+{
+    Preferences::instance()->setStalledIssuesMode(Preferences::StalledIssuesModeType::Advance);
+}
+
+bool DeviceCentre::isSmartModeSelected() const
+{
+    return Preferences::instance()->isStalledIssueSmartModeActivated();
 }
