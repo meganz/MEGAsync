@@ -1,8 +1,10 @@
 #ifndef DOWNLOADFILEISSUEFACTORY_H
 #define DOWNLOADFILEISSUEFACTORY_H
 
-#include <StalledIssue.h>
-#include <TransferTrack.h>
+#include "StalledIssue.h"
+#include "TransferTrack.h"
+
+#include <optional>
 
 class DownloadFileIssueFactory
 {
