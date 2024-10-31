@@ -215,8 +215,18 @@ QString SyncModel::getErrorMessage(int row) const
     {
         if (syncSetting->getError() == mega::MegaSync::LOCAL_PATH_UNAVAILABLE)
         {
-            return tr("Your folder \"%1\" can't sync because local path is unavailable.")
-                .arg(getName(row));
+            if (getType(row) == QmlSyncType::SYNC)
+            {
+                return tr("We can't find the folder you're trying to sync. Make sure the folder "
+                          "hasn't been moved, renamed, or deleted and try again.")
+                    .arg(getName(row));
+            }
+            else // Backup
+            {
+                return tr("We can't find the folder you're trying to back up. Make sure the folder "
+                          "hasn't been moved, renamed, or deleted and try again.")
+                    .arg(getName(row));
+            }
         }
         else if (syncSetting->getError() == mega::MegaSync::LOGGED_OUT)
         {
