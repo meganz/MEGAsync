@@ -8,7 +8,6 @@
 #include "ui_BugReportDialog.h"
 #include "ui_ProgressIndicatorDialog.h"
 
-#include <iostream>
 #include <QCloseEvent>
 #include <QMegaMessageBox.h>
 #include <QRegExp>
@@ -21,7 +20,6 @@ BugReportDialog::BugReportDialog(QWidget* parent, MegaSyncLogger& logger):
     QDialog(parent),
     logger(logger),
     ui(new Ui::BugReportDialog),
-    mProgressIndicatorDialog(new ProgressIndicatorDialog(this)),
     mTransferFinished(false),
     mTransferError(MegaError::API_OK),
     mHadGlobalPause(false)
@@ -71,6 +69,8 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     mTransferError = MegaError::API_OK;
     mTransferFinished = false;
 
+    mProgressIndicatorDialog = new ProgressIndicatorDialog(this);
+
     connect(mProgressIndicatorDialog->ui->bCancel,
             &QPushButton::clicked,
             this,
@@ -82,8 +82,6 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
     mProgressIndicatorDialog->ui->progressBar->setValue(0);
     lastpermil = 0;
 
-    mProgressIndicatorDialog->show();
-
     DialogOpener::showDialog(mProgressIndicatorDialog);
 }
 
@@ -94,6 +92,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
         transferredBytes = transfer->getTransferredBytes();
         int permil =
             (totalBytes > 0) ? static_cast<int>((1000 * transferredBytes) / totalBytes) : 0;
+
         if (permil > lastpermil)
         {
             mProgressIndicatorDialog->ui->progressBar->setValue(permil);
@@ -109,12 +108,16 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaErr
         MegaSyncApp->getTransfersModel()->setGlobalPause(true);
     }
 
-    disconnect(mProgressIndicatorDialog->ui->bCancel,
-               &QPushButton::clicked,
-               this,
-               &BugReportDialog::cancelSendReport);
+    if (mProgressIndicatorDialog)
+    {
+        disconnect(mProgressIndicatorDialog->ui->bCancel,
+                   &QPushButton::clicked,
+                   this,
+                   &BugReportDialog::cancelSendReport);
 
-    mProgressIndicatorDialog->ui->progressBar->reset();
+        mProgressIndicatorDialog->ui->progressBar->reset();
+    }
+
     totalBytes = 0;
     transferredBytes = 0;
     currentTransfer = 0;
@@ -354,7 +357,7 @@ void BugReportDialog::onReadyForReporting()
 
 void BugReportDialog::on_bCancel_clicked()
 {
-    // reject();
+    reject();
 }
 
 void BugReportDialog::cancelSendReport()
@@ -369,7 +372,7 @@ void BugReportDialog::cancelSendReport()
     MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, true);
     if (mProgressIndicatorDialog)
     {
-        mProgressIndicatorDialog->close();
+        mProgressIndicatorDialog->hide();
     }
 
     QMegaMessageBox::MessageBoxInfo msgInfo;
@@ -388,25 +391,17 @@ void BugReportDialog::cancelSendReport()
     {
         if (msg->result() == QMessageBox::No)
         {
+            if (mProgressIndicatorDialog)
+            {
+                mProgressIndicatorDialog->close();
+            }
+
             cancelCurrentReportUpload();
             preparing = false;
             warningShown = false;
         }
         else
         {
-            if (mProgressIndicatorDialog)
-            {
-                std::cout << "********************************************************  "
-                             "mProgressIndicatorDialog is ok"
-                          << std::endl;
-            }
-            else
-            {
-                std::cout << "********************************************************  "
-                             "mProgressIndicatorDialog is not ok"
-                          << std::endl;
-            }
-
             warningShown = false;
             if (mTransferFinished)
             {
@@ -414,7 +409,10 @@ void BugReportDialog::cancelSendReport()
             }
             else if (currentTransfer && mProgressIndicatorDialog)
             {
-                DialogOpener::showDialog(mProgressIndicatorDialog);
+                if (mProgressIndicatorDialog)
+                {
+                    mProgressIndicatorDialog->show();
+                }
                 mProgressIndicatorDialog->ui->progressBar->setValue(lastpermil);
                 MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, false);
             }

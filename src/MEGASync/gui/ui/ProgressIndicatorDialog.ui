@@ -3,7 +3,7 @@
  <class>ProgressIndicatorDialog</class>
  <widget class="QDialog" name="ProgressIndicatorDialog">
   <property name="windowModality">
-   <enum>Qt::ApplicationModal</enum>
+   <enum>Qt::NonModal</enum>
   </property>
   <property name="geometry">
    <rect>
@@ -173,6 +173,9 @@
         <property name="text">
          <string>Cancel</string>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
         <property name="type" stdset="0">
          <string notr="true">outline</string>
         </property>
@@ -187,22 +190,5 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>bCancel</sender>
-   <signal>clicked()</signal>
-   <receiver>ProgressIndicatorDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>354</x>
-     <y>119</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>244</x>
-     <y>73</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
