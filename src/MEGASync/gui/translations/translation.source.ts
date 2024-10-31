@@ -3428,11 +3428,6 @@ https://mega.co.nz/#sync</source>
         <translation>One or more syncs have been disabled</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>The app will continue to work, however updates will no longer be supported for versions prior to macOS Sierra.</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Thank you for your collaboration</translation>

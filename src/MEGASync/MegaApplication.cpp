@@ -1158,15 +1158,12 @@ void MegaApplication::start()
     applyProxySettings();
     Platform::getInstance()->startShellDispatcher(this);
 #ifdef Q_OS_MACX
-    auto current = QOperatingSystemVersion::current();
-    if (current > QOperatingSystemVersion::OSXMavericks) //FinderSync API support from 10.10+
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
     {
-        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA Finder Sync added to system database and enabled");
-            Platform::getInstance()->addFileManagerExtensionToSystem();
-            QTimer::singleShot(5000, this, SLOT(enableFinderExt()));
-        }
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     "MEGA Finder Sync added to system database and enabled");
+        Platform::getInstance()->addFileManagerExtensionToSystem();
+        QTimer::singleShot(5000, this, SLOT(enableFinderExt()));
     }
 #endif
 
@@ -3589,31 +3586,6 @@ void MegaApplication::checkOperatingSystem()
         isOSdeprecated = true;
 #endif
 
-#ifdef __APPLE__
-        char releaseStr[256];
-        size_t size = sizeof(releaseStr);
-        if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
-        {
-            if (strchr(releaseStr,'.'))
-            {
-                char *token = strtok(releaseStr, ".");
-                if (token)
-                {
-                    errno = 0;
-                    char *endPtr = nullptr;
-                    long majorVersion = strtol(token, &endPtr, 10);
-                    if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
-                    {
-                        if((int)majorVersion < 14) // Older versions from 10.10 (yosemite)
-                        {
-                            isOSdeprecated = true;
-                        }
-                    }
-                }
-            }
-        }
-#endif
-
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable: 4996) // declared deprecated
@@ -3628,13 +3600,13 @@ void MegaApplication::checkOperatingSystem()
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = getMEGAString();
-            QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
-#ifdef __APPLE__
-                              + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
-#elif defined(_WIN32)
-                              + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
+            QString message =
+                tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+#ifdef WIN32
+                + tr("MEGAsync will continue to work, however, updates will no longer be supported "
+                     "for Windows Vista and older operating systems soon.");
 #else
-                              + tr("MEGAsync will continue to work, however you might not receive new updates.");
+                + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
             msgInfo.text = message;
