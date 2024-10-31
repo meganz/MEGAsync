@@ -1487,7 +1487,7 @@ margin-bottom: 3px;
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Recovery key</string>
+               <string>Recovery Key</string>
               </property>
               <property name="type" stdset="0">
                <string notr="true">sub-title</string>

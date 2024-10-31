@@ -6902,7 +6902,7 @@ Do you want to delete it anyway?</translation>
         <translation>Enable File Explorer integration</translation>
     </message>
     <message>
-        <source>Recovery key</source>
+        <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
         <translation>Recovery key</translation>
     </message>
