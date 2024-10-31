@@ -4,6 +4,7 @@
 #include "megaapi.h"
 #include "QmlSyncData.h"
 
+#include <memory>
 #include <optional>
 #include <QAbstractListModel>
 
