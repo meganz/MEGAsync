@@ -34,6 +34,8 @@ Item {
     property string dateFormat: "d MMM yyyy"
     property var locale: Qt.locale()
 
+    property int oldWidth: width
+
     ErrorDialog {
         id: errorDialog
 
@@ -117,10 +119,10 @@ Item {
     function getShowLocalText() {
         if (OS.isWindows()) {
             return DeviceCentreStrings.actionShowExplorer;
-        } 
+        }
         else if (OS.isMac()) {
             return DeviceCentreStrings.actionShowFinder;
-        } 
+        }
         else {
             return DeviceCentreStrings.actionShowFolder;
         }
@@ -158,6 +160,20 @@ Item {
         return (maxCharCount * charSize) * resizeFactor + margin;
     }
 
+    function getRebootActionText(currentType) {
+        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.actionRebootSync
+                                                  : DeviceCentreStrings.actionRebootBackup;
+    }
+
+    function getRebootActionWarningTitle(currentType) {
+        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.rebootDialogTitleSync
+                                                  : DeviceCentreStrings.rebootDialogTitleBackup;
+    }
+
+    function getRebootActionWarningBody(currentType) {
+        return (currentType === QmlSyncType.SYNC) ? DeviceCentreStrings.rebootDialogBodySync.replace("[Br]","<br><br>")
+                                                  : DeviceCentreStrings.rebootDialogBodyBackup.replace("[Br]","<br><br>");
+    }
     anchors.fill: parent
 
     TableView {
@@ -584,6 +600,27 @@ Item {
                             }
                         }
 
+                        ContextMenuItem {
+                            id: rebootAction
+
+                            TitleBodyDialog {
+                                id: rebootConfirmationDialog
+
+                                acceptButtonText: Strings.continueText
+                                cancelButtonText: Strings.cancel
+                                titleText: model? root.getRebootActionWarningTitle(model.type) : ""
+                                bodyText:  model? root.getRebootActionWarningBody(model.type) : ""
+                                visible: false
+                                onAccepted: {
+                                    deviceCentreAccess.rebootSync(model.index)
+                                }
+                            }
+                            text:  model? root.getRebootActionText(model.type) : ""
+                            icon.source: Images.power
+                            onTriggered: {
+                                rebootConfirmationDialog.visible = true;
+                            }
+                        }
                         QmlControlsv212.MenuSeparator {
                             padding: 0
                             topPadding: 4
@@ -609,6 +646,12 @@ Item {
                     }
                 }
             }
+        }
+
+        onWidthChanged: {
+            let widthDifference = width - oldWidth
+            nameColumn.width = nameColumn.width + widthDifference
+            oldWidth = width
         }
     }
 

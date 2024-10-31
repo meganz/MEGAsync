@@ -14,8 +14,7 @@ QmlDialog {
     modality: Qt.NonModal
     width: 1024
     height: 720
-    maximumHeight: 720
-    maximumWidth: 1024
+
     minimumHeight: 720
     minimumWidth: 1024
     color: ColorTheme.pageBackground

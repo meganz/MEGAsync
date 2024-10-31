@@ -15,7 +15,7 @@ Item {
         id: stackView
 
         anchors.fill: parent
-        state: syncTableState
+        state: deviceCentreAccess.rowCount === 0? noConnectionsState : syncTableState
         states: [
             State {
                 name: noInternetState

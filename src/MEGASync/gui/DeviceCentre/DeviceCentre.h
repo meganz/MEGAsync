@@ -13,6 +13,7 @@ class DeviceCentre: public QMLComponent, public mega::MegaListener
 {
     Q_OBJECT
     Q_PROPERTY(DeviceData deviceData MEMBER mCachedDeviceData CONSTANT)
+    Q_PROPERTY(int rowCount READ getRowCount NOTIFY rowCountChanged)
 
 public:
     explicit DeviceCentre(QObject* parent = 0);
@@ -43,7 +44,9 @@ public:
     Q_INVOKABLE void rescanSync(int row, bool deepRescan = true) const;
     Q_INVOKABLE void manageExclusions(int row) const;
     Q_INVOKABLE void stopSync(int row) const;
+    Q_INVOKABLE void rebootSync(int row) const;
     Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
+    Q_INVOKABLE int getRowCount() const;
 
     Q_INVOKABLE void learnMore() const;
     Q_INVOKABLE void applyPreviousExclusionRules() const;
@@ -54,6 +57,7 @@ public:
 signals:
     void deviceNameReceived(QString deviceName);
     void deviceDataUpdated();
+    void rowCountChanged();
 
 private:
     using BackupList = QList<const mega::MegaBackupInfo*>;

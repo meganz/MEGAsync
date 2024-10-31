@@ -1409,9 +1409,52 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Button label. The button applies the old exclusion rules to the new format. SAT-1816.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>    
+    <message>
         <source>Local path: %1</source>
         <translatorcomment>Part of the tooltip text. %1 will be replaced by the local path of the sync. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting syncs.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have no connections</source>
+        <translatorcomment>Title text shown when the user does not have any syncs or backups.SAT-1230</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create your first sync or backup to start managing your data across all your devices, or download the Android app</source>
+        <translatorcomment>Text shown when the user does not have any syncs or backups.SAT-1230</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reboot sync?</source>
+        <translatorcomment>Title for warning dialog that shows up when a user tries to reboot a sync.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reboot backup?</source>
+        <translatorcomment>Title for warning dialog that shows up when a user tries to reboot a backup.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action automatically removes and recreates your sync, which can resolve sync issues. Files that are the same on both sides of the sync will not be affected.
+It may take some time to complete synchronising.[Br]
+If this doesn&apos;t resolve your sync issues, report the issue to Support.</source>
+        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a sync [Br]is for a line break.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action automatically removes and recreates your backup, which can resolve backup issues. Files that are the same on both sides of the backup will not be affected. It may take some time to complete synchronising.[Br]
+If this doesn&apos;t resolve your backup issues, report the issue to Support.</source>
+        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a backup[Br] is for a line break.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7644,6 +7687,11 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <source>Ok</source>
         <translatorcomment>Label for the Ok button of the Sync/Backup error dialog. SAT-1678.</translatorcomment>
         <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translatorcomment>Label for Continue buttons. Con-1063</translatorcomment>
+        <translation type="unfinished">Continue</translation>
     </message>
 </context>
 <context>

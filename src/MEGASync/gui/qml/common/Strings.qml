@@ -5,6 +5,7 @@ QtObject {
     id: root
 
     readonly property string cancel: qsTr("Cancel")
+    readonly property string continueText: qsTr("Continue")
     readonly property string choose: qsTr("Choose")
     readonly property string done: qsTr("Done")
     readonly property string next: qsTr("Next")

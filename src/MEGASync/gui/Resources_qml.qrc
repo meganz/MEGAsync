@@ -117,5 +117,9 @@
         <file>images/qml/device-centre-update@2x.png</file>
         <file>images/qml/device-centre-update@3x.png</file>
         <file>images/qml/device_center/tool.svg</file>
+        <file>images/qml/multidevices.png</file>
+        <file>images/qml/multidevices@2x.png</file>
+        <file>images/qml/multidevices@3x.png</file>
+        <file>images/qml/power.svg</file>
     </qresource>
 </RCC>
