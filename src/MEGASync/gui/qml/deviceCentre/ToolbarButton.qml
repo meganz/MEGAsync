@@ -13,7 +13,6 @@ IconButton {
     }
     icons {
         position: Icon.Position.LEFT
-        colorPressed: ColorTheme.surface2
     }
 
     sizes: SmallSizes {
@@ -21,5 +20,4 @@ IconButton {
         horizontalPadding: 4
         spacing: 8
     }
-
 }

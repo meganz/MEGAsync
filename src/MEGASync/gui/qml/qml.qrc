@@ -193,5 +193,6 @@
         <file>deviceCentre/RenameDeviceDialog.qml</file>
         <file>common/DeviceName.qml</file>
         <file>components/dialogs/ErrorDialog.qml</file>
+        <file>components/dialogs/TitleBodyDialog.qml</file>
     </qresource>
 </RCC>

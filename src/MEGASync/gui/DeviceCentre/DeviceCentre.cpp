@@ -28,6 +28,9 @@ DeviceCentre::DeviceCentre(QObject* parent):
     mDeviceModel(new DeviceModel(this))
 {
     registerQmlModules();
+    connect(mSyncModel, &QAbstractItemModel::rowsInserted, this, &DeviceCentre::rowCountChanged);
+    connect(mSyncModel, &QAbstractItemModel::rowsRemoved, this, &DeviceCentre::rowCountChanged);
+    connect(mSyncModel, &QAbstractItemModel::modelReset, this, &DeviceCentre::rowCountChanged);
 
     mDelegateListener = std::make_unique<mega::QTMegaListener>(mMegaApi, this);
     mMegaApi->addListener(mDelegateListener.get());
@@ -128,8 +131,15 @@ void DeviceCentre::onSyncStateChanged(mega::MegaApi*, mega::MegaSync* sync)
 
 void DeviceCentre::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats* syncStats)
 {
-    const QmlSyncData syncObject(syncStats);
-    updateLocalData(syncObject);
+    if (syncStats->isScanning())
+    {
+        const QmlSyncData syncObject(syncStats);
+        updateLocalData(syncObject);
+    }
+    else
+    {
+        mMegaApi->getBackupInfo();
+    }
 }
 
 QUrl DeviceCentre::getQmlUrl()
@@ -381,6 +391,22 @@ void DeviceCentre::requestDeviceNames(const mega::MegaBackupInfoList& backupList
     }
 }
 
+void DeviceCentre::rebootSync(int row) const
+{
+    const auto syncID = mSyncModel->getSyncID(row);
+    if (!syncID)
+    {
+        return;
+    }
+    const auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(*syncID);
+    if (!syncSettings)
+    {
+        return;
+    }
+    SyncController::instance().resetSync(syncSettings,
+                                         mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED);
+}
+
 void DeviceCentre::changeSyncStatus(int row,
                                     std::function<void(std::shared_ptr<SyncSettings>)> action) const
 {
@@ -469,4 +495,9 @@ void DeviceCentre::onAdvancedModeSelected() const
 bool DeviceCentre::isSmartModeSelected() const
 {
     return Preferences::instance()->isStalledIssueSmartModeActivated();
+}
+
+int DeviceCentre::getRowCount() const
+{
+    return mSyncModel->rowCount();
 }

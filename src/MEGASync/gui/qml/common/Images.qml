@@ -43,6 +43,7 @@ QtObject {
     readonly property url checkCircle: imagesQmlPath + "check_circle.svg"
     readonly property url checkCircleFilled: imagesQmlPath + "check_circle_filled.svg"
     readonly property url warning: imagesQmlPath + "warning.png"
+    readonly property url multidevices: imagesQmlPath + "multidevices.png"
     readonly property url twofa: imagesQmlPath + "lock.png"
     readonly property url eye: imagesQmlPath + "eye.svg"
     readonly property url eyeOff: imagesQmlPath + "eye-off.svg"
@@ -60,6 +61,7 @@ QtObject {
     readonly property url minusCircle: imagesQmlPath + "minus-circle.svg"
     readonly property url slashCircle: imagesQmlPath + "slash-circle.svg"
     readonly property url playCircle: imagesQmlPath + "play-circle.svg"
+    readonly property url power: imagesQmlPath + "power.svg"
 
     readonly property url building: imagesOnboardingPath + "building.svg"
     readonly property url database: imagesOnboardingPath + "database.svg"

@@ -103,42 +103,5 @@ SyncStatus::Value QmlSyncData::convertStatus(const mega::MegaBackupInfo* backupI
     {
         return SyncStatus::STOPPED;
     }
-    const int apiStatus = backupInfo->status();
-    const int syncState = backupInfo->state();
-
-    if (syncState == mega::MegaBackupInfo::BACKUP_STATE_PAUSE_UP ||
-        syncState == mega::MegaBackupInfo::BACKUP_STATE_PAUSE_DOWN ||
-        syncState == mega::MegaBackupInfo::BACKUP_STATE_PAUSE_FULL ||
-        syncState == mega::MegaBackupInfo::BACKUP_STATE_TEMPORARY_DISABLED)
-    {
-        return SyncStatus::PAUSED;
-    }
-    else if (syncState == mega::MegaBackupInfo::BACKUP_STATE_FAILED ||
-             syncState == mega::MegaBackupInfo::BACKUP_STATE_DELETED)
-    {
-        return SyncStatus::STOPPED;
-    }
-
-    if (apiStatus == mega::MegaBackupInfo::BACKUP_STATUS_INACTIVE)
-    {
-        return SyncStatus::PAUSED;
-    }
-    else if (apiStatus == mega::MegaBackupInfo::BACKUP_STATUS_UPTODATE)
-    {
-        return SyncStatus::UP_TO_DATE;
-    }
-    else if (apiStatus == mega::MegaBackupInfo::BACKUP_STATUS_PENDING)
-    {
-        return SyncStatus::UPDATING;
-    }
-    else if (apiStatus == mega::MegaBackupInfo::BACKUP_STATUS_SYNCING)
-    {
-        return (syncState == mega::MegaBackupInfo::BACKUP_STATE_TEMPORARY_DISABLED) ?
-                   SyncStatus::PAUSED :
-                   SyncStatus::UPDATING;
-    }
-    else
-    {
-        return SyncStatus::STOPPED;
-    }
+    return convertStatus(syncSetting->getSync());
 }

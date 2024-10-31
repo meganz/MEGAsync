@@ -29,6 +29,8 @@ QtObject {
     readonly property string actionManageExclusions: qsTr("Manage exclusions")
     readonly property string actionQuickRescan: qsTr("Quick rescan")
     readonly property string actionDeepRescan: qsTr("Deep rescan")
+    readonly property string actionRebootSync: qsTr("Reboot sync")
+    readonly property string actionRebootBackup: qsTr("Reboot backup")
     readonly property string actionStopBackup: qsTr("Stop backup")
     readonly property string actionRemoveSync: qsTr("Remove synced folder")
     readonly property string renameDevice: qsTr("Rename Device")
@@ -46,6 +48,14 @@ QtObject {
     readonly property string applyPreviousRules: qsTr("Apply previous rules")
     readonly property string localPathLabel: qsTr("Local path: %1")
     readonly property string remotePathLabel: qsTr("Remote path: %1")
+    readonly property string noConnectionTitle: qsTr("You have no connections")
+    readonly property string noConnectionDescription: qsTr("Create your first sync or backup to start managing your data across all your devices")
+    readonly property string rebootDialogTitleSync: qsTr("Reboot sync?")
+    readonly property string rebootDialogTitleBackup: qsTr("Reboot backup?")
+    readonly property string rebootDialogBodySync: qsTr("This action automatically restarts your sync, which can resolve sync issues. Files that are the same on both sides of the sync will not be affected.
+[Br]It may take some time to complete synchronising. If this doesn't resolve your sync issues, report the issue to Support.")
+    readonly property string rebootDialogBodyBackup: qsTr("This action automatically restarts your backup, which can resolve backup issues. Files that are the same on both sides of the backup will not be affected.
+[Br]It may take some time to complete synchronising. If this doesn't resolve your backup issues, report the issue to Support.")
 
     function folderCount(count) {
         return qsTr("%n folders", "", count)
