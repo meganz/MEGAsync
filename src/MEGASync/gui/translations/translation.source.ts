@@ -1409,7 +1409,7 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Button label. The button applies the old exclusion rules to the new format. SAT-1816.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>    
+    <message>
         <source>Local path: %1</source>
         <translatorcomment>Part of the tooltip text. %1 will be replaced by the local path of the sync. SAT-1816.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -7944,8 +7944,13 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Your folder &quot;%1&quot; can&apos;t sync because local path is unavailable.</source>
-        <translatorcomment>Error message of the Error Dialog when the cause is the local path that is not available. %1 refers to the type of Sync/Backup. SAT-1678.</translatorcomment>
+        <source>We can&apos;t find the folder you&apos;re trying to sync. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
+        <translatorcomment>Error message displayed when the sync has been moved/renamed/deleted. SAT-1856.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>We can&apos;t find the folder you&apos;re trying to back up. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
+        <translatorcomment>Error message displayed when the backup has been moved/renamed/deleted. SAT-1856.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
