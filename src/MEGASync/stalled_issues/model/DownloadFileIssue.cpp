@@ -160,7 +160,7 @@ void UnknownDownloadIssue::onTrackedTransferFinished(TransferItem transfer)
 
 void UnknownDownloadIssue::onReportStarted()
 {
-    setCustomMessage(tr("Sending feedback"), SolveType::BEING_SOLVED);
+    setCustomMessage(tr("Reporting issue"), SolveType::BEING_SOLVED);
     resetUIUpdated();
 }
 
@@ -168,7 +168,7 @@ void UnknownDownloadIssue::onReportFinished()
 {
     // Even if the report is submitted correctly, the issue is not fixed
     // But the message will use the SOLVED style
-    setCustomMessage(tr("Feedback sent"), SolveType::SOLVED);
+    setCustomMessage(tr("Reporting successful"), SolveType::SOLVED);
     mReportController.reset();
     resetUIUpdated();
 }
@@ -177,7 +177,7 @@ void UnknownDownloadIssue::onReportFailed()
 {
     // Even if the report submit failed, the issue is not failed
     // But the message will use the FAILED style
-    setCustomMessage(tr("Feedback failed"), SolveType::FAILED);
+    setCustomMessage(tr("Reporting failed"), SolveType::FAILED);
     mReportController.reset();
     resetUIUpdated();
 }

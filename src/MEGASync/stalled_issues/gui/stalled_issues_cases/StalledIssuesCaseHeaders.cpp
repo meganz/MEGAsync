@@ -27,7 +27,7 @@
 //Convenient strings and method to avoid changing the translation context on Transifex
 const QString SOLVE_BUTTON_STRING = QApplication::translate("CloudFingerprintMissingHeader", "Solve");
 const QString SOLVE_OPTIONS_BUTTON_STRING =
-    QApplication::translate("StalledIssueHeaderCase", "Solve options");
+    QApplication::translate("NameConflictsHeader", "Solve options");
 const QString RENAMING_CONFLICTED_ITEMS_STRING = QApplication::translate(
     "NameConflictsHeader",
     "This action will rename the conflicted items (adding a suffix like (1)).");
