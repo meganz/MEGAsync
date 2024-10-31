@@ -5705,18 +5705,13 @@ Enter a different name.</translation>
 <context>
     <name>ProgressIndicatorDialog</name>
     <message>
-        <source>Uploading bug report</source>
-        <translatorcomment>Dialog title to inform about the transfer state of the bug report.</translatorcomment>
-        <translation type="unfinished">Uploading bug report</translation>
-    </message>
-    <message>
-        <source>Bug report is uploading, it may take a few minutes</source>
-        <translatorcomment>Description on dialog to inform about the underlying action.</translatorcomment>
-        <translation type="unfinished">Bug report is uploading, it may take a few minutes</translation>
+        <source>Your reported issue is uploading, it may take a few minutes.</source>
+        <translatorcomment>Description on dialog to inform about the underlying action. SNC-4958</translatorcomment>
+        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translatorcomment>Button text for cancel option.</translatorcomment>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
 </context>

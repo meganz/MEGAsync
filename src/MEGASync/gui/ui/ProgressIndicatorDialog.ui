@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Uploading bug report</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -71,7 +71,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Bug report is uploading, it may take a few minutes</string>
+         <string>Your reported issue is uploading, it may take a few minutes.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
