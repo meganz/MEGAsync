@@ -954,7 +954,7 @@ margin-bottom: 3px;
            <number>12</number>
           </property>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0,0">
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_14">
               <property name="spacing">
@@ -969,17 +969,10 @@ margin-bottom: 3px;
                  </sizepolicy>
                 </property>
                 <property name="text">
-                 <string>Please let us know if you encounter any issues.</string>
+                 <string>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_4">
-                <property name="text">
-                 <string>Help us by providing as much detail as possible.</string>
                 </property>
                </widget>
               </item>
@@ -992,14 +985,14 @@ margin-bottom: 3px;
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
+                <width>10</width>
                 <height>20</height>
                </size>
               </property>
              </spacer>
             </item>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_16">
+             <layout class="QVBoxLayout" name="verticalLayout_16" stretch="0,1">
               <item>
                <spacer name="verticalSpacer_8">
                 <property name="orientation">
@@ -1020,6 +1013,12 @@ margin-bottom: 3px;
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
