@@ -71,7 +71,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Bug report is uploading, it may take a few minutes </string>
+         <string>Bug report is uploading, it may take a few minutes</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -93,7 +93,7 @@
          <string/>
         </property>
         <property name="type" stdset="0">
-         <string>mega</string>
+         <string notr="true">mega</string>
         </property>
        </widget>
       </item>
