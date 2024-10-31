@@ -1409,7 +1409,7 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Button label. The button applies the old exclusion rules to the new format. SAT-1816.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>    
+    <message>
         <source>Local path: %1</source>
         <translatorcomment>Part of the tooltip text. %1 will be replaced by the local path of the sync. SAT-1816.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -6859,7 +6859,7 @@ Do you want to delete it anyway?</translation>
         <translation>Enable File Explorer integration</translation>
     </message>
     <message>
-        <source>Recovery key</source>
+        <source>Recovery Key</source>
         <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
         <translation>Recovery key</translation>
     </message>
