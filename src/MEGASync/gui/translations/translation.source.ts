@@ -6575,6 +6575,11 @@ Do you want to delete it anyway?</translation>
         <translation>Enable file versioning</translation>
     </message>
     <message>
+        <source>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</source>
+        <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.</translatorcomment>
+        <translation>Let us know if you encounter any issues. Help us by providing as much detail as possible.</translation>
+    </message>
+    <message>
         <source>Report Issue</source>
         <translatorcomment>Button label used to submit bug reports to MEGA.</translatorcomment>
         <translation>Report issue</translation>
@@ -6799,16 +6804,6 @@ Do you want to delete it anyway?</translation>
         <source>Change permissions</source>
         <translatorcomment>Button label for the button that will open the dialog that allows us to change the permissions on syncs or backups.CON-1105.</translatorcomment>
         <translation type="unfinished">Change permissions</translation>
-    </message>
-    <message>
-        <source>Please let us know if you encounter any issues.</source>
-        <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.CON-1116.</translatorcomment>
-    <translation type="unfinished">Let us know if you encounter any issues.</translation>
-    </message>
-    <message>
-        <source>Help us by providing as much detail as possible.</source>
-        <translatorcomment>Descriptive text label used to encourage users to submit bug reports via the Report Issue button.CON-1116.</translatorcomment>
-        <translation type="unfinished">Help us by providing as much detail as possible.</translation>
     </message>
 </context>
 <context>

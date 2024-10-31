@@ -956,27 +956,20 @@ margin-bottom: 3px;
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_13" stretch="1,0,0">
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_14">
-              <property name="spacing">
-               <number>12</number>
+             <widget class="QLabel" name="lBugReport">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <item>
-               <widget class="QLabel" name="lBugReport">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="text">
-                 <string>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</string>
-                </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-             </layout>
+              <property name="text">
+               <string>Please let us know if you encounter any issues. Help us by providing as much detail as possible.</string>
+              </property>
+              <property name="wordWrap">
+               <bool>true</bool>
+              </property>
+             </widget>
             </item>
             <item>
              <spacer name="horizontalSpacer_13">
