@@ -4634,7 +4634,7 @@ and rename the files with the same name but different content (adding a suffix l
         <translation>This action will replace the older files with the same name with the most recently modified file (%1).</translation>
     </message>
     <message>
-        <source>Solve options</source>        
+        <source>Solve options</source>
         <translatorcomment>Button text to show the solve action of sync stall.SNC-2565</translatorcomment>
         <translation>Resolve options</translation>
     </message>
