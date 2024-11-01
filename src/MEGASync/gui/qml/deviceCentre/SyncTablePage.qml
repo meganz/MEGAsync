@@ -212,6 +212,31 @@ Item {
             }
 
             frame: Rectangle{ } // Make the table borderless
+
+            handle: Rectangle {
+                anchors {
+                    fill: parent
+                    leftMargin: 3
+                    rightMargin: 3
+                    topMargin: 4
+                    bottomMargin: 2
+                }
+
+                implicitWidth: 15
+                implicitHeight: 20
+                color: ColorTheme.buttonSecondaryHover
+                radius: 4
+            }
+
+            scrollBarBackground: Rectangle {
+                implicitWidth: 15
+                implicitHeight: 5
+                color: ColorTheme.pageBackground
+                border.width: 0
+            }
+
+            incrementControl: Item {}
+            decrementControl: Item {}
         }
 
         rowDelegate: Item {
