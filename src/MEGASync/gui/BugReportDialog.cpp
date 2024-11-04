@@ -77,7 +77,7 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
             &BugReportDialog::cancelSendReport);
 
     mProgressIndicatorDialog->setDialogDescription(
-        tr("Your reported issue is uploading, it may take a few minutes."));
+        tr("Bug report is uploading, it may take a few minutes"));
     mProgressIndicatorDialog->resetProgressBar();
     mProgressIndicatorDialog->setMinimumProgressBarValue(0);
     mProgressIndicatorDialog->setMaximumProgressBarValue(1010);
