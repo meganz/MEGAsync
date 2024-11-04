@@ -24,6 +24,7 @@ public:
                          mega::MegaError* e) override;
     void onSyncStateChanged(mega::MegaApi*, mega::MegaSync* sync) override;
     void onSyncStatsUpdated(mega::MegaApi* api, mega::MegaSyncStats* syncStats) override;
+    void onSyncDeleted(mega::MegaApi* api, mega::MegaSync* sync) override;
 
     QUrl getQmlUrl() override;
     QString contextName() override;
