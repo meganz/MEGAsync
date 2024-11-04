@@ -76,6 +76,7 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
             this,
             &BugReportDialog::cancelSendReport);
 
+    mProgressIndicatorDialog->setDialogTitle(QLatin1String(" "));
     mProgressIndicatorDialog->setDialogDescription(
         tr("Bug report is uploading, it may take a few minutes"));
     mProgressIndicatorDialog->resetProgressBar();
