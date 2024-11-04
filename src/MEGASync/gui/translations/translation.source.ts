@@ -1425,11 +1425,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create your first sync or backup to start managing your data across all your devices, or download the Android app</source>
-        <translatorcomment>Text shown when the user does not have any syncs or backups.SAT-1230</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reboot sync?</source>
         <translatorcomment>Title for warning dialog that shows up when a user tries to reboot a sync.CON-1036</translatorcomment>
         <translation type="unfinished"></translation>
@@ -1440,19 +1435,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This action automatically removes and recreates your sync, which can resolve sync issues. Files that are the same on both sides of the sync will not be affected.
-It may take some time to complete synchronising.[Br]
-If this doesn&apos;t resolve your sync issues, report the issue to Support.</source>
-        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a sync [Br]is for a line break.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This action automatically removes and recreates your backup, which can resolve backup issues. Files that are the same on both sides of the backup will not be affected. It may take some time to complete synchronising.[Br]
-If this doesn&apos;t resolve your backup issues, report the issue to Support.</source>
-        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a backup[Br] is for a line break.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reboot backup</source>
         <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
         <translation type="unfinished"></translation>
@@ -1460,6 +1442,23 @@ If this doesn&apos;t resolve your backup issues, report the issue to Support.</s
     <message>
         <source>Remote path: %1</source>
         <translatorcomment>Part of the tooltip text. %1 will be replaced by the remote path of the sync. SAT-1816.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create your first sync or backup to start managing your data across all your devices</source>
+        <translatorcomment>Text shown when the user does not have any syncs or backups.SAT-1230</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action automatically restarts your sync, which can resolve sync issues. Files that are the same on both sides of the sync will not be affected.
+[Br]It may take some time to complete synchronising.&#xa0;If this doesn&apos;t resolve your sync issues, report the issue to Support.</source>
+        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a sync[Br] is for a line break.CON-1036</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This action automatically restarts your backup, which can resolve backup issues. Files that are the same on both sides of the backup will not be affected.
+[Br]It may take some time to complete synchronising.&#xa0;If this doesn&apos;t resolve your backup issues, report the issue to Support.</source>
+        <translatorcomment>Body text for warning dialog that shows up when a user tries to reboot a backup[Br] is for a line break.CON-1036</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
