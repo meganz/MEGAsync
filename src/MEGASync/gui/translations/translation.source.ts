@@ -493,11 +493,6 @@
         <translation>Optional</translation>
     </message>
     <message>
-        <source>Bug report is uploading, it may take a few minutes</source>
-        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>Your reported issue is uploading, it may take a few minutes.</translation>
-    </message>
-    <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
         <translation>Your issue has been reported.</translation>
@@ -556,6 +551,11 @@
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
         <translation>Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+    </message>
+    <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation>Your reported issue is uploading, it may take a few minutes.</translation>
     </message>
 </context>
 <context>
@@ -5821,6 +5821,14 @@ Enter a different name.</translation>
 </source>
         <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
     </message>
 </context>
 <context>

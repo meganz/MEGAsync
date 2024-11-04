@@ -42,6 +42,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
     gui/BugReportDialog.h
+    gui/ProgressIndicatorDialog.h
     gui/VerifyLockMessage.h
     gui/ViewLoadingScene.h
     gui/MegaInfoMessage.h
@@ -166,6 +167,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
     gui/BugReportDialog.cpp
+    gui/ProgressIndicatorDialog.cpp
     gui/VerifyLockMessage.cpp
     gui/MegaInfoMessage.cpp
     gui/ViewLoadingScene.cpp
@@ -464,6 +466,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
