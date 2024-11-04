@@ -40,7 +40,7 @@ BugReportDialog::BugReportDialog(QWidget* parent, MegaSyncLogger& logger):
     connect(mController.get(),
             &BugReportController::reportUploadFinished,
             this,
-            &BugReportDialog::resetProgressDialog);
+            &BugReportDialog::onReportUploadedFinished);
 
     connect(mController.get(),
             &BugReportController::reportStarted,
@@ -65,6 +65,13 @@ BugReportDialog::BugReportDialog(QWidget* parent, MegaSyncLogger& logger):
             this,
             &BugReportDialog::onDescriptionChanged);
     connect(ui->leTitleBug, &QLineEdit::textChanged, this, &BugReportDialog::onTitleChanged);
+
+    connect(ui->bCancel, &QPushButton::clicked, this, &BugReportDialog::onCancelClicked);
+    connect(ui->bSubmit, &QPushButton::clicked, this, &BugReportDialog::onSubmitClicked);
+    connect(ui->teDescribeBug,
+            &QTextEdit::textChanged,
+            this,
+            &BugReportDialog::onDescribeBugTextChanged);
 }
 
 BugReportDialog::~BugReportDialog()
@@ -72,75 +79,60 @@ BugReportDialog::~BugReportDialog()
     delete ui;
 }
 
-void BugReportDialog::setDefaultInfo(const DefaultInfo& info)
-{
-    if (!info.description.isEmpty())
-    {
-        ui->teDescribeBug->setText(info.description);
-    }
-
-    if (!info.title.isEmpty())
-    {
-        ui->leTitleBug->setText(info.title);
-    }
-
-    ui->cbAttachLogs->setChecked(info.sendLogsChecked);
-    ui->cbAttachLogs->setDisabled(info.sendLogsMandatory);
-}
-
 void BugReportDialog::onReportStarted()
 {
-    mSendProgress = new QProgressDialog(this);
-
-    mSendProgress->setMinimumDuration(0);
-    mSendProgress->setMinimum(0);
-    mSendProgress->setMaximum(BugReportData::MAXIMUM_PERMIL_VALUE);
-    mSendProgress->setAutoClose(false);
-    mSendProgress->setAutoReset(false);
-
-    auto labelWidget = new QLabel(tr("Bug report is uploading, it may take a few minutes"));
-    labelWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Maximum);
-    labelWidget->setWordWrap(true);
-    labelWidget->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    mSendProgress->setLabel(labelWidget);
+    openProgressDialog();
 
     // Open with min value
     onReportUpdated(0);
 }
 
-void BugReportDialog::resetProgressDialog()
+void BugReportDialog::onReportUploadedFinished()
 {
     // We don´t allow cancelling the log submit to the SDK
-    disconnect(mSendProgress.data(),
-               &QProgressDialog::canceled,
-               this,
-               &BugReportDialog::cancelSendReport);
-    mSendProgress->reset();
+    if (mProgressIndicatorDialog)
+    {
+        mProgressIndicatorDialog->setCancelButtonEnable(false);
+    }
 }
 
 void BugReportDialog::onReportUpdated(int value)
 {
-    if (mSendProgress)
-    {
-        if (!mSendProgress->isVisible())
-        {
-            connect(mSendProgress.data(),
-                    &QProgressDialog::canceled,
-                    this,
-                    &BugReportDialog::cancelSendReport);
-            DialogOpener::showDialog(mSendProgress);
-        }
+    openProgressDialog();
 
-        mSendProgress->setValue(value);
+    if (mProgressIndicatorDialog)
+    {
+        mProgressIndicatorDialog->setProgressBarValue(value);
     }
 }
 
 void BugReportDialog::closeProgressDialog()
 {
-    if (mSendProgress)
+    if (mProgressIndicatorDialog)
     {
-        resetProgressDialog();
-        mSendProgress->close();
+        mProgressIndicatorDialog->close();
+    }
+}
+
+void BugReportDialog::openProgressDialog()
+{
+    if (!mProgressIndicatorDialog)
+    {
+        mProgressIndicatorDialog = new ProgressIndicatorDialog(this);
+
+        mProgressIndicatorDialog->setDialogDescription(
+            tr("Bug report is uploading, it may take a few minutes"));
+        mProgressIndicatorDialog->resetProgressBar();
+        mProgressIndicatorDialog->setMinimumProgressBarValue(0);
+        mProgressIndicatorDialog->setMaximumProgressBarValue(BugReportData::MAXIMUM_PERMIL_VALUE);
+        mProgressIndicatorDialog->setProgressBarValue(0);
+
+        connect(mProgressIndicatorDialog,
+                &ProgressIndicatorDialog::cancelClicked,
+                this,
+                &BugReportDialog::cancelSendReport);
+
+        DialogOpener::showDialog(mProgressIndicatorDialog);
     }
 }
 
@@ -211,12 +203,12 @@ void BugReportDialog::onReportFailed()
     }
 }
 
-void BugReportDialog::on_bSubmit_clicked()
+void BugReportDialog::onSubmitClicked()
 {
     mController->submitReport();
 }
 
-void BugReportDialog::on_bCancel_clicked()
+void BugReportDialog::onCancelClicked()
 {
     reject();
 }
@@ -258,11 +250,6 @@ void BugReportDialog::onDescriptionChanged()
     auto description(ui->teDescribeBug->toPlainText());
     ui->bSubmit->setEnabled(!description.isEmpty());
     mController->setReportDescription(description);
-}
-
-void BugReportDialog::onTitleChanged()
-{
-    mController->setReportTitle(ui->leTitleBug->text());
 }
 
 void BugReportDialog::onTitleChanged()

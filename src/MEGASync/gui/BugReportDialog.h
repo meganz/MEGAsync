@@ -22,41 +22,31 @@ public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
 
-    struct DefaultInfo
-    {
-        bool sendLogsChecked = true;
-        bool sendLogsMandatory = false;
-        QString title;
-        QString description;
-    };
-
-    void setDefaultInfo(const DefaultInfo& info);
-
 private slots:
     void onReportStarted();
-    void resetProgressDialog();
     void onReportFinished();
     void onReportFailed();
+    void onReportUploadedFinished();
 
     void onReportUpdated(int value);
 
 private:
     void closeProgressDialog();
+    void openProgressDialog();
 
     Ui::BugReportDialog* ui;
-    QPointer<QProgressDialog> mSendProgress;
+    QPointer<ProgressIndicatorDialog> mProgressIndicatorDialog;
     std::unique_ptr<BugReportController> mController;
 
     const static int mMaxDescriptionLength = 3000;
 
-protected:
 private slots:
     void onSubmitClicked();
     void onCancelClicked();
     void cancelSendReport();
     void onDescriptionChanged();
     void onTitleChanged();
-    void on_teDescribeBug_textChanged();
+    void onDescribeBugTextChanged();
 };
 
 #endif // BUGREPORTDIALOG_H

@@ -1139,7 +1139,7 @@ void StalledIssuesModel::solveListOfIssues(const SolveListInfo &info)
         }
         else if (info.async && info.finishFunc)
         {
-            info.finishFunc(-1, -1);
+            info.finishFunc(-1, false);
         }
 
         // Update counters and filters
