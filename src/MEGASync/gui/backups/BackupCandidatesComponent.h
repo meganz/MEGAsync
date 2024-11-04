@@ -8,7 +8,7 @@ class BackupCandidates;
 class BackupCandidatesModel;
 class BackupCandidatesProxyModel;
 
-class BackupsComponent: public QMLComponent
+class BackupCandidatesComponent: public QMLComponent
 {
     Q_OBJECT
 
@@ -16,8 +16,8 @@ class BackupsComponent: public QMLComponent
     Q_PROPERTY(BackupCandidates* data READ getData CONSTANT)
 
 public:
-    explicit BackupsComponent(QObject* parent = 0);
-    ~BackupsComponent();
+    explicit BackupCandidatesComponent(QObject* parent = 0);
+    ~BackupCandidatesComponent();
 
     QUrl getQmlUrl() override;
     QString contextName() override;

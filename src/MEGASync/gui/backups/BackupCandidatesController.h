@@ -18,7 +18,7 @@ class BackupCandidatesController: public DataController
 public:
     BackupCandidatesController();
 
-    void init();
+    void initWithDefaultDirectories();
 
     void calculateFolderSizes();
     void updateSelectedAndTotalSize();
@@ -43,7 +43,7 @@ public slots:
     int rename(const QString& folder, const QString& name);
     void remove(const QString& folder);
     void change(const QString& oldFolder, const QString& newFolder);
-    bool checkDirectories();
+    bool handleDirectoriesAvailabilityErrors();
     void clean(bool resetErrors = false);
 
 signals:
@@ -58,12 +58,14 @@ private:
 
     void checkSelectedAll();
     bool isLocalFolderSyncable(const QString& inputPath);
-    int selectIfExistsInsertion(const QString& inputPath);
+    int selectCandidateIfExists(const QString& inputPath);
     QList<QList<std::shared_ptr<BackupCandidates::Data>>::const_iterator>
         getRepeatedNameItList(const QString& name);
 
-    bool folderContainsOther(const QString& folder, const QString& other) const;
-    bool isRelatedFolder(const QString& folder, const QString& existingPath) const;
+    // Utilities to find related folders
+    static bool folderContainsOther(const QString& folder, const QString& other);
+    static bool isRelatedFolder(const QString& folder, const QString& existingPath);
+
     void setAllSelected(bool selected);
     bool checkPermissions(const QString& inputPath);
     QStringList checkIfFoldersAreSyncable();

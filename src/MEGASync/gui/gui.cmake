@@ -99,7 +99,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SyncExclusions/SyncExclusions.h
     gui/tokenizer/TokenParserWidgetManager.h
     gui/tokenizer/IconTokenizer.h
-    gui/backups/BackupsComponent.h
+    gui/backups/BackupCandidatesComponent.h
     gui/backups/BackupsController.h
     gui/backups/BackupCandidatesModel.h
     gui/backups/BackupCandidatesController.h
@@ -225,7 +225,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SyncExclusions/SyncExclusions.cpp
     gui/tokenizer/TokenParserWidgetManager.cpp
     gui/tokenizer/IconTokenizer.cpp
-    gui/backups/BackupsComponent.cpp
+    gui/backups/BackupCandidatesComponent.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupCandidatesModel.cpp
     gui/backups/BackupCandidatesController.cpp

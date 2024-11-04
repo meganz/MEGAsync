@@ -45,8 +45,8 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/AccountDetailsManager.h
     control/UserMessageController.h
     control/UserMessageTypes.h
-    control/Data/DataModel.h
-    control/Data/DataController.h
+    control/DataBaseClasses/DataModel.h
+    control/DataBaseClasses/DataController.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -105,7 +105,7 @@ target_sources(MEGAsync
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/BugReport
-    ${CMAKE_CURRENT_LIST_DIR}/Data
+    ${CMAKE_CURRENT_LIST_DIR}/DataBaseClasses
     ${CMAKE_CURRENT_LIST_DIR}/Preferences
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

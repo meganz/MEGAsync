@@ -33,7 +33,7 @@ BackupCandidatesController::BackupCandidatesController():
     connect(&mCheckDirsTimer,
             &QTimer::timeout,
             this,
-            &BackupCandidatesController::checkDirectories);
+            &BackupCandidatesController::handleDirectoriesAvailabilityErrors);
 
     QmlManager::instance()->setRootContextProperty(mBackupCandidates.get());
 
@@ -57,16 +57,14 @@ std::shared_ptr<BackupCandidates::Data>
     return data;
 }
 
-void BackupCandidatesController::init()
+void BackupCandidatesController::initWithDefaultDirectories()
 {
-    // Default directories definition
     static QVector<QStandardPaths::StandardLocation> defaultPaths = {
         QStandardPaths::DesktopLocation,
         QStandardPaths::DocumentsLocation,
         QStandardPaths::MusicLocation,
         QStandardPaths::PicturesLocation};
 
-    // Iterate defaultPaths to add to mBackupFolderList if the path is not empty
     for (auto type: qAsConst(defaultPaths))
     {
         const auto standardPaths(QStandardPaths::standardLocations(type));
@@ -126,7 +124,7 @@ void BackupCandidatesController::setCheckState(int row, bool state)
 int BackupCandidatesController::insert(const QString& folder)
 {
     QString inputPath(QDir::toNativeSeparators(QDir(folder).absolutePath()));
-    auto existingRow(selectIfExistsInsertion(inputPath));
+    auto existingRow(selectCandidateIfExists(inputPath));
     if (existingRow >= 0)
     {
         // If the folder exists in the table then select the item and return
@@ -148,16 +146,11 @@ int BackupCandidatesController::insert(const QString& folder)
 
 void BackupCandidatesController::setAllSelected(bool selected)
 {
-    QListIterator<std::shared_ptr<BackupCandidates::Data>> it(
-        mBackupCandidates->getBackupCandidates());
-
-    while (it.hasNext())
+    foreach(auto& candidate, mBackupCandidates->getBackupCandidates())
     {
-        auto backupFolder = it.next();
-        if (backupFolder->mSelected != selected &&
-            (!selected || checkPermissions(backupFolder->mFolder)))
+        if (candidate->mSelected != selected && (!selected || checkPermissions(candidate->mFolder)))
         {
-            setData(backupFolder, selected, BackupCandidates::SELECTED_ROLE);
+            setData(candidate, selected, BackupCandidates::SELECTED_ROLE);
         }
     }
 
@@ -177,8 +170,8 @@ bool BackupCandidatesController::checkPermissions(const QString& inputPath)
 
 void BackupCandidatesController::updateSelectedAndTotalSize()
 {
-    auto newSelectedRowsTotal(0);
-    auto lastTotalSize = mBackupCandidates->getBackupsTotalSize();
+    int newSelectedRowsTotal(0);
+    long long lastTotalSize = mBackupCandidates->getBackupsTotalSize();
     long long totalSize = 0;
 
     int selectedAndSizeReadyFolders = 0;
@@ -240,7 +233,7 @@ bool BackupCandidatesController::isLocalFolderSyncable(const QString& inputPath)
             SyncController::CANT_SYNC);
 }
 
-int BackupCandidatesController::selectIfExistsInsertion(const QString& inputPath)
+int BackupCandidatesController::selectCandidateIfExists(const QString& inputPath)
 {
     auto backupCandidate = mBackupCandidates->getBackupCandidateByFolder(inputPath);
     if (backupCandidate)
@@ -256,8 +249,7 @@ int BackupCandidatesController::selectIfExistsInsertion(const QString& inputPath
     return -1;
 }
 
-bool BackupCandidatesController::folderContainsOther(const QString& folder,
-                                                     const QString& other) const
+bool BackupCandidatesController::folderContainsOther(const QString& folder, const QString& other)
 {
     if (folder == other)
     {
@@ -266,8 +258,7 @@ bool BackupCandidatesController::folderContainsOther(const QString& folder,
     return folder.startsWith(other) && folder[other.size()] == QDir::separator();
 }
 
-bool BackupCandidatesController::isRelatedFolder(const QString& folder,
-                                                 const QString& existingPath) const
+bool BackupCandidatesController::isRelatedFolder(const QString& folder, const QString& existingPath)
 {
     return folderContainsOther(folder, existingPath) || folderContainsOther(existingPath, folder);
 }
@@ -294,8 +285,8 @@ void BackupCandidatesController::reviewConflicts()
     int pathRelationCount = 0;
     int unavailableCount = 0;
 
-    auto SDKConflictCount = 0;
-    auto remoteConflictCount = 0;
+    int SDKConflictCount = 0;
+    int remoteConflictCount = 0;
 
     foreach(auto candidate, mBackupCandidates->getBackupCandidates())
     {
@@ -368,7 +359,7 @@ bool BackupCandidatesController::existOtherRelatedFolder(
     auto foundBackupCandidate = std::find_if(
         backupCandidates.cbegin(),
         backupCandidates.cend(),
-        [this, backupCandidate](std::shared_ptr<BackupCandidates::Data> conflictBackupCandidate)
+        [backupCandidate](std::shared_ptr<BackupCandidates::Data> conflictBackupCandidate)
         {
             return conflictBackupCandidate->mSelected &&
                    backupCandidate != conflictBackupCandidate &&
@@ -705,12 +696,11 @@ void BackupCandidatesController::onFolderSizeReceived(QString folder, int size)
 
 void BackupCandidatesController::clean(bool resetErrors)
 {
-    auto row(-1);
-    foreach(auto candidate, mBackupCandidates->getBackupCandidates())
+    for (int row = mBackupCandidates->getSize() - 1; row >= 0; row--)
     {
-        row++;
+        auto candidate(mBackupCandidates->getBackupCandidate(row));
 
-        if (!candidate->mSelected)
+        if (!candidate || !candidate->mSelected)
         {
             continue;
         }
@@ -722,14 +712,11 @@ void BackupCandidatesController::clean(bool resetErrors)
             mBackupCandidatesSizeRequester->removeFolder(candidate->mFolder);
             emit endRemoveRows();
         }
-        else
+        else if (resetErrors)
         {
-            if (resetErrors)
-            {
-                setData(candidate,
-                        BackupCandidates::BackupErrorCode::NONE,
-                        BackupCandidates::FOLDER_ROLE);
-            }
+            setData(candidate,
+                    BackupCandidates::BackupErrorCode::NONE,
+                    BackupCandidates::FOLDER_ROLE);
         }
     }
 }
@@ -758,15 +745,11 @@ QStringList BackupCandidatesController::getSelectedCandidates() const
 {
     QStringList selectedCandidates;
 
-    for (int row = 0; row < mBackupCandidates->getSize(); row++)
+    foreach(auto candidate, mBackupCandidates->getBackupCandidates())
     {
-        if (data(row, BackupCandidates::SELECTED_ROLE).toBool())
+        if (candidate->mSelected)
         {
-            auto candidate = mBackupCandidates->getBackupCandidate(row);
-            if (candidate)
-            {
-                selectedCandidates.append(candidate->mFolder);
-            }
+            selectedCandidates.append(candidate->mFolder);
         }
     }
 
@@ -775,21 +758,20 @@ QStringList BackupCandidatesController::getSelectedCandidates() const
 
 void BackupCandidatesController::createBackups(int syncOrigin)
 {
-    if (!checkDirectories())
+    if (!handleDirectoriesAvailabilityErrors())
     {
         return;
     }
 
-    // All expected errors have been handled
     BackupsController::BackupInfoList candidateList;
-    for (int row = 0; row < mBackupCandidates->getSize(); row++)
+    foreach(auto candidate, mBackupCandidates->getBackupCandidates())
     {
-        if (data(row, BackupCandidates::SELECTED_ROLE).toBool())
+        if (candidate->mSelected)
         {
-            BackupsController::BackupInfo candidate;
-            candidate.first = data(row, BackupCandidates::FOLDER_ROLE).toString();
-            candidate.second = data(row, BackupCandidates::NAME_ROLE).toString();
-            candidateList.append(candidate);
+            BackupsController::BackupInfo candidateInfo;
+            candidateInfo.first = candidate->mFolder;
+            candidateInfo.second = candidate->mName;
+            candidateList.append(candidateInfo);
         }
     }
 
@@ -833,14 +815,13 @@ void BackupCandidatesController::onBackupFinished(const QString& folder,
     }
 }
 
-bool BackupCandidatesController::checkDirectories()
+bool BackupCandidatesController::handleDirectoriesAvailabilityErrors()
 {
     bool success = true;
     bool reviewErrors = false;
-    for (int index = 0; index < mBackupCandidates->getSize(); index++)
-    {
-        auto backupCandidate = mBackupCandidates->getBackupCandidate(index);
 
+    foreach(auto backupCandidate, mBackupCandidates->getBackupCandidates())
+    {
         if (backupCandidate->mSelected && !backupCandidate->mDone &&
             backupCandidate->mError != BackupCandidates::BackupErrorCode::SDK_CREATION)
         {
@@ -884,20 +865,13 @@ QString BackupCandidatesController::getSdkErrorString() const
                                                   "Folder wasn't backed up. Try again.",
                                                   "",
                                                   mBackupCandidates->getSDKConflictCount());
-    auto candidateList(mBackupCandidates->getBackupCandidates());
-    auto itFound = std::find_if(candidateList.cbegin(),
-                                candidateList.cend(),
-                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
-                                {
-                                    return (backupFolder->mSelected &&
-                                            backupFolder->mError ==
-                                                BackupCandidates::BackupErrorCode::SDK_CREATION);
-                                });
+    auto candidate(mBackupCandidates->getSelectedBackupCandidateByError(
+        BackupCandidates::BackupErrorCode::SDK_CREATION));
 
-    if (itFound != candidateList.cend())
+    if (candidate)
     {
-        message = BackupsController::instance().getErrorString((*itFound)->mSdkError,
-                                                               (*itFound)->mSyncError);
+        message = BackupsController::instance().getErrorString(candidate->mSdkError,
+                                                               candidate->mSyncError);
     }
 
     return message;
@@ -906,19 +880,12 @@ QString BackupCandidatesController::getSdkErrorString() const
 QString BackupCandidatesController::getSyncErrorString() const
 {
     QString message;
-    auto candidateList(mBackupCandidates->getBackupCandidates());
-    auto itFound = std::find_if(candidateList.cbegin(),
-                                candidateList.cend(),
-                                [](const std::shared_ptr<BackupCandidates::Data> backupFolder)
-                                {
-                                    return (backupFolder->mSelected &&
-                                            backupFolder->mError ==
-                                                BackupCandidates::BackupErrorCode::SYNC_CONFLICT);
-                                });
+    auto candidate(mBackupCandidates->getSelectedBackupCandidateByError(
+        BackupCandidates::BackupErrorCode::SYNC_CONFLICT));
 
-    if (itFound != candidateList.cend())
+    if (candidate)
     {
-        BackupsController::instance().isLocalFolderSyncable((*itFound)->mFolder,
+        BackupsController::instance().isLocalFolderSyncable(candidate->mFolder,
                                                             mega::MegaSync::TYPE_BACKUP,
                                                             message);
     }

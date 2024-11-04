@@ -1,6 +1,6 @@
 #include "CreateRemoveBackupsManager.h"
 
-#include "BackupsComponent.h"
+#include "BackupCandidatesComponent.h"
 #include "BackupsController.h"
 #include "DialogOpener.h"
 #include "QmlDialogWrapper.h"
@@ -23,7 +23,7 @@ const CreateRemoveBackupsManager *CreateRemoveBackupsManager::removeBackup(std::
 
 bool CreateRemoveBackupsManager::isBackupsDialogOpen() const
 {
-    return DialogOpener::findDialog<QmlDialogWrapper<BackupsComponent>>() != nullptr;
+    return DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>() != nullptr;
 }
 
 void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
@@ -32,14 +32,15 @@ void CreateRemoveBackupsManager::performAddBackup(bool comesFromSettings)
     auto addBackupLambda = [overQuotaDialog, comesFromSettings, this]() {
         if (!overQuotaDialog || overQuotaDialog->result() == QDialog::Rejected)
         {
-            QPointer<QmlDialogWrapper<BackupsComponent>> backupsDialog;
-            if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupsComponent>>())
+            QPointer<QmlDialogWrapper<BackupCandidatesComponent>> backupsDialog;
+            if (auto dialog =
+                    DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
             {
                 backupsDialog = dialog->getDialog();
             }
             else
             {
-                backupsDialog = new QmlDialogWrapper<BackupsComponent>();
+                backupsDialog = new QmlDialogWrapper<BackupCandidatesComponent>();
             }
             DialogOpener::showDialog(backupsDialog, [this]() {
                 deleteLater();

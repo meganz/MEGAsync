@@ -1,4 +1,4 @@
-#include "BackupsComponent.h"
+#include "BackupCandidatesComponent.h"
 
 #include "AddExclusionRule.h"
 #include "BackupCandidatesController.h"
@@ -8,7 +8,7 @@
 
 static bool qmlRegistrationDone = false;
 
-BackupsComponent::BackupsComponent(QObject* parent):
+BackupCandidatesComponent::BackupCandidatesComponent(QObject* parent):
     QMLComponent(parent),
     mComesFromSettings(false),
     mBackupCandidatesController(std::make_shared<BackupCandidatesController>()),
@@ -16,36 +16,36 @@ BackupsComponent::BackupsComponent(QObject* parent):
 {
     registerQmlModules();
 
-    mBackupCandidatesController->init();
+    mBackupCandidatesController->initWithDefaultDirectories();
     // Just in case it is used from the Onboarding Dialog
     QmlManager::instance()->setRootContextProperty(this);
 
     connect(mBackupCandidatesController.get(),
             &BackupCandidatesController::backupsCreationFinished,
             this,
-            &BackupsComponent::onBackupsCreationFinished);
+            &BackupCandidatesComponent::onBackupsCreationFinished);
 }
 
-BackupsComponent::~BackupsComponent()
+BackupCandidatesComponent::~BackupCandidatesComponent()
 {
     mBackupsProxyModel->deleteLater();
 }
 
-QUrl BackupsComponent::getQmlUrl()
+QUrl BackupCandidatesComponent::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/backups/BackupsDialog.qml"));
 }
 
-QString BackupsComponent::contextName()
+QString BackupCandidatesComponent::contextName()
 {
     return QString::fromUtf8("backupsComponentAccess");
 }
 
-void BackupsComponent::registerQmlModules()
+void BackupCandidatesComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)
     {
-        qmlRegisterType<BackupsComponent>("BackupsComponent", 1, 0, "BackupsComponent");
+        qmlRegisterType<BackupCandidatesComponent>("BackupsComponent", 1, 0, "BackupsComponent");
         qmlRegisterType<BackupCandidatesProxyModel>("BackupCandidatesProxyModel",
                                                     1,
                                                     0,
@@ -55,22 +55,22 @@ void BackupsComponent::registerQmlModules()
     }
 }
 
-void BackupsComponent::openDeviceCentre() const
+void BackupCandidatesComponent::openDeviceCentre() const
 {
     MegaSyncApp->openDeviceCentre();
 }
 
-bool BackupsComponent::getComesFromSettings() const
+bool BackupCandidatesComponent::getComesFromSettings() const
 {
     return mComesFromSettings;
 }
 
-BackupCandidates* BackupsComponent::getData()
+BackupCandidates* BackupCandidatesComponent::getData()
 {
     return mBackupCandidatesController->getBackupCandidates().get();
 }
 
-void BackupsComponent::onBackupsCreationFinished(bool success)
+void BackupCandidatesComponent::onBackupsCreationFinished(bool success)
 {
     emit backupsCreationFinished(success);
     if (success)
@@ -79,14 +79,14 @@ void BackupsComponent::onBackupsCreationFinished(bool success)
     }
 }
 
-void BackupsComponent::setComesFromSettings(bool value)
+void BackupCandidatesComponent::setComesFromSettings(bool value)
 {
     mComesFromSettings = value;
 }
 
-void BackupsComponent::openExclusionsDialog() const
+void BackupCandidatesComponent::openExclusionsDialog() const
 {
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupsComponent>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<BackupCandidatesComponent>>())
     {
         auto folderPaths = mBackupCandidatesController->getSelectedCandidates();
 
@@ -97,45 +97,45 @@ void BackupsComponent::openExclusionsDialog() const
     }
 }
 
-void BackupsComponent::confirmFoldersMoveToSelect()
+void BackupCandidatesComponent::confirmFoldersMoveToSelect()
 {
     mBackupsProxyModel->setSelectedFilterEnabled(false);
 }
 
-void BackupsComponent::selectFolderMoveToConfirm()
+void BackupCandidatesComponent::selectFolderMoveToConfirm()
 {
     mBackupCandidatesController->calculateFolderSizes();
     mBackupsProxyModel->setSelectedFilterEnabled(true);
     mBackupCandidatesController->refreshBackupCandidatesErrors();
 }
 
-void BackupsComponent::insertFolder(const QString& path)
+void BackupCandidatesComponent::insertFolder(const QString& path)
 {
     auto row = mBackupCandidatesController->insert(path);
     emit insertFolderAdded(row);
 }
 
-int BackupsComponent::rename(const QString& folder, const QString& newName)
+int BackupCandidatesComponent::rename(const QString& folder, const QString& newName)
 {
     return mBackupCandidatesController->rename(folder, newName);
 }
 
-void BackupsComponent::remove(const QString& folder)
+void BackupCandidatesComponent::remove(const QString& folder)
 {
     mBackupCandidatesController->remove(folder);
 }
 
-void BackupsComponent::change(const QString& folder, const QString& newFolder)
+void BackupCandidatesComponent::change(const QString& folder, const QString& newFolder)
 {
     mBackupCandidatesController->change(folder, newFolder);
 }
 
-void BackupsComponent::selectAllFolders(Qt::CheckState state, bool fromModel)
+void BackupCandidatesComponent::selectAllFolders(Qt::CheckState state, bool fromModel)
 {
     mBackupCandidatesController->setCheckAllState(state, fromModel);
 }
 
-void BackupsComponent::createBackups(int syncOrigin)
+void BackupCandidatesComponent::createBackups(int syncOrigin)
 {
     mBackupCandidatesController->createBackups(syncOrigin);
 }

@@ -138,7 +138,7 @@ public:
     void requestCRC(QObject* caller, std::function<void(const QString&)> func) override;
 
     void setPath(const QString &newPath);
-    const QString& path() const;
+    const QString& getPath() const;
 
 private slots:
     void onModifiedTimeCalculated();

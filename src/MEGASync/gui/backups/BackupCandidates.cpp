@@ -100,6 +100,25 @@ std::shared_ptr<BackupCandidates::Data>
     return nullptr;
 }
 
+std::shared_ptr<BackupCandidates::Data>
+    BackupCandidates::getSelectedBackupCandidateByError(int error)
+{
+    auto candidateFound =
+        std::find_if(mBackupCandidatesList.cbegin(),
+                     mBackupCandidatesList.cend(),
+                     [error](const auto& backupCandidate)
+                     {
+                         return backupCandidate->mSelected && error == backupCandidate->mError;
+                     });
+
+    if (candidateFound != mBackupCandidatesList.cend())
+    {
+        return *candidateFound;
+    }
+
+    return nullptr;
+}
+
 QList<std::shared_ptr<BackupCandidates::Data>> BackupCandidates::getBackupCandidates()
 {
     return mBackupCandidatesList;

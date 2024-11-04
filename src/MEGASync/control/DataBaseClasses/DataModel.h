@@ -3,8 +3,9 @@
 
 #include "DataController.h"
 
-#include <memory>
 #include <QAbstractItemModel>
+
+#include <memory>
 
 class DataModel: public QAbstractItemModel
 {

@@ -83,6 +83,7 @@ public:
 
     std::shared_ptr<BackupCandidates::Data> getBackupCandidate(int index);
     std::shared_ptr<BackupCandidates::Data> getBackupCandidateByFolder(const QString& folder);
+    std::shared_ptr<BackupCandidates::Data> getSelectedBackupCandidateByError(int error);
     QList<std::shared_ptr<BackupCandidates::Data>> getBackupCandidates();
     int getSize() const;
     int getRow(std::shared_ptr<BackupCandidates::Data> candidate) const;

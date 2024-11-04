@@ -43,7 +43,7 @@ void BackupCandidatesFolderSizeRequester::requestSize(
 {
     if (attributeRequester)
     {
-        auto folder(attributeRequester->path());
+        auto folder(attributeRequester->getPath());
         attributeRequester->requestSize(this,
                                         [this, folder](long long size)
                                         {
