@@ -46,7 +46,9 @@ private:
         QString getDialogClass() const {return mDialogClass;}
         void setDialogClass(const QString &newDialogClass) {mDialogClass = newDialogClass;}
 
+        virtual bool sameDialog(QObject* check) const = 0;
         virtual void raise(bool raiseIfMinimized = false) = 0;
+        virtual void show() = 0;
         virtual void close() = 0;
         virtual bool isParent(QObject* parent) = 0;
 
@@ -72,6 +74,11 @@ private:
             mDialog = newDialog;
         }
 
+        bool sameDialog(QObject* check) const override
+        {
+            return mDialog == check;
+        }
+
         void raise(bool raiseIfMinimized = false) override
         {
             if(raiseIfMinimized && mDialog->isMinimized())
@@ -84,6 +91,11 @@ private:
                 mDialog->raise();
                 mDialog->activateWindow();
             }
+        }
+
+        void show() override
+        {
+            mDialog->setWindowState(Qt::WindowActive);
         }
 
         void close() override
@@ -517,6 +529,15 @@ private:
                 dialog->show();
             }
 
+            if (dialog->parent())
+            {
+                auto parentInfo = findDialogInfo(dialog->parent());
+                if (parentInfo)
+                {
+                    parentInfo->raise(true);
+                }
+            }
+
             info->raise(true);
 
             TokenParserWidgetManager::instance()->applyCurrentTheme(dialog);
@@ -554,6 +575,22 @@ private:
         if (itOccurence != mOpenedDialogs.end())
         {
             return std::dynamic_pointer_cast<DialogInfo<DialogType>>(*itOccurence);
+        }
+
+        return nullptr;
+    }
+
+    static std::shared_ptr<DialogInfoBase> findDialogInfo(QObject* dialog)
+    {
+        auto finder = [dialog](const std::shared_ptr<DialogInfoBase> dialogInfo)
+        {
+            return dialogInfo->sameDialog(dialog);
+        };
+
+        auto itOccurence = std::find_if(mOpenedDialogs.begin(), mOpenedDialogs.end(), finder);
+        if (itOccurence != mOpenedDialogs.end())
+        {
+            return (*itOccurence);
         }
 
         return nullptr;

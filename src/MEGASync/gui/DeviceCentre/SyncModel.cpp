@@ -9,7 +9,12 @@
 
 SyncModel::SyncModel(QObject* parent):
     QAbstractListModel(parent)
-{}
+{
+    connect(SyncInfo::instance(),
+            &SyncInfo::syncRemoteRootChanged,
+            this,
+            &SyncModel::onSyncRootChanged);
+}
 
 QHash<int, QByteArray> SyncModel::roleNames() const
 {
@@ -270,6 +275,16 @@ QString SyncModel::getRemoteFolder(int row) const
     }
     auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
     return syncSetting ? syncSetting->getMegaFolder() : QString();
+}
+
+void SyncModel::onSyncRootChanged(std::shared_ptr<SyncSettings> syncSettings)
+{
+    auto row(findRowByHandle(syncSettings->backupId()));
+    if (row >= 0)
+    {
+        const QModelIndex modelIndex = QAbstractListModel::index(row.value());
+        emit dataChanged(modelIndex, modelIndex, QVector<int>() << SyncModelRole::REMOTE_PATH);
+    }
 }
 
 std::optional<mega::MegaHandle> SyncModel::getSyncID(int row) const

@@ -4,8 +4,11 @@
 #include "megaapi.h"
 #include "QmlSyncData.h"
 
+#include <memory>
 #include <optional>
 #include <QAbstractListModel>
+
+class SyncSettings;
 
 class SyncModel: public QAbstractListModel
 {
@@ -45,6 +48,9 @@ public:
     QmlSyncType::Type getType(int row) const;
     QString getLocalFolder(int row) const;
     QString getRemoteFolder(int row) const;
+
+private slots:
+    void onSyncRootChanged(std::shared_ptr<SyncSettings> syncSettings);
 
 private:
     QString getName(int row) const;

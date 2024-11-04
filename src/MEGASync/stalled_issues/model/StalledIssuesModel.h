@@ -178,8 +178,9 @@ public:
     //ISSUE USE FOR UI ITEM
     void UiItemUpdate(const QModelIndex& oldIndex, const QModelIndex& newIndex);
 
-    //SOLVE PROBLEMS
+    // SOLVING STATE
     void stopSolvingIssues(MessageInfo::ButtonType buttonType);
+    bool isSolvingIssues() const;
 
     bool checkForExternalChanges(const QModelIndex& index);
 
@@ -225,6 +226,7 @@ public:
     static QString issuesFixedString(StalledIssuesCreator::IssuesCount numberOfIssues);
 
 signals:
+    void stalledIssuesSolvingFinished();
     void stalledIssuesChanged();
     void stalledIssuesCountChanged();
     void stalledIssuesReceived();
