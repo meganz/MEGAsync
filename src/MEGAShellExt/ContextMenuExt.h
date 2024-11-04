@@ -32,10 +32,12 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
 #include "ContextMenuData.h"
 
+// clang-format off
+#include <windows.h>
 #include <shellapi.h>
 #include <shlobj.h>
 #include <uxtheme.h>
-#include <windows.h>
+// clang-format on
 
 typedef HRESULT (WINAPI *pGetBufferedPaintBits) (HPAINTBUFFER hBufferedPaint, RGBQUAD **ppbBuffer, int *pcxRow);
 typedef HPAINTBUFFER (WINAPI *pBeginBufferedPaint) (HDC hdcTarget, const RECT *prcTarget, BP_BUFFERFORMAT dwFormat, BP_PAINTPARAMS *pPaintParams, HDC *phdc);
