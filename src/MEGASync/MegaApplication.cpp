@@ -192,39 +192,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 
     setQuitOnLastWindowClosed(false);
 
-    /*
-#ifdef _WIN32
-    setStyleSheet(QString::fromUtf8(
-    "QRadioButton::indicator, QCheckBox::indicator, QAbstractItemView::indicator {width: 12px;
-height: 12px;}" "QRadioButton::indicator:unchecked {image: url(:/images/rb_unchecked.svg);}"
-    "QRadioButton::indicator:unchecked:hover {image: url(:/images/rb_unchecked_hover.svg);}"
-    "QRadioButton::indicator:unchecked:pressed {image: url(:/images/rb_unchecked_pressed.svg);}"
-    "QRadioButton::indicator:unchecked:disabled {image: url(:/images/rb_unchecked_disabled.svg);}"
-    "QRadioButton::indicator:checked {image: url(:/images/rb_checked.svg);}"
-    "QRadioButton::indicator:checked:hover {image: url(:/images/rb_checked_hover.svg);}"
-    "QRadioButton::indicator:checked:pressed {image: url(:/images/rb_checked_pressed.svg);}"
-    "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"
-    "QCheckBox::indicator:checked, QAbstractItemView::indicator:checked {image:
-url(:/images/cb_checked.svg);}" "QCheckBox::indicator:checked:hover,
-QAbstractItemView::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
-    "QCheckBox::indicator:checked:pressed, QAbstractItemView::indicator:checked:pressed {image:
-url(:/images/cb_checked_pressed.svg);}" "QCheckBox::indicator:checked:disabled,
-QAbstractItemView::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
-    "QCheckBox::indicator:unchecked, QAbstractItemView::indicator:unchecked {image:
-url(:/images/cb_unchecked.svg);}" "QCheckBox::indicator:unchecked:hover,
-QAbstractItemView::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
-    "QCheckBox::indicator:unchecked:pressed, QAbstractItemView::indicator:unchecked:pressed {image:
-url(:/images/cb_unchecked_pressed.svg);}" "QCheckBox::indicator::unchecked:disabled,
-QAbstractItemView:indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
-    "QMessageBox QLabel {font-size: 13px;}"
-    "QMenu {font-size: 13px;}"
-    "QToolTip {color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px;}"
-    "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
-    "QFileDialog QWidget {font-size: 13px;}"
-                      ));
-#endif
-*/
-
     // For some reason this doesn't work on Windows (done in stylesheet above)
     // TODO: re-try with Qt > 5.12.15
     QPalette palette = QToolTip::palette();

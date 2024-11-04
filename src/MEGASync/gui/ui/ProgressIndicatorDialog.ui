@@ -26,7 +26,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string/>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -71,7 +71,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Your reported issue is uploading, it may take a few minutes.</string>
+         <string notr="true">Description of the underlying task.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

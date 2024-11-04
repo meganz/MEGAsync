@@ -552,6 +552,11 @@
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
         <translation>Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
     </message>
+    <message>
+        <source>Your reported issue is uploading, it may take a few minutes.</source>
+        <translatorcomment>Description on progress dialog to inform about the underlying action. SNC-4958</translatorcomment>
+        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+    </message>
 </context>
 <context>
     <name>CancelConfirmWidget</name>
@@ -5704,11 +5709,6 @@ Enter a different name.</translation>
 </context>
 <context>
     <name>ProgressIndicatorDialog</name>
-    <message>
-        <source>Your reported issue is uploading, it may take a few minutes.</source>
-        <translatorcomment>Description on dialog to inform about the underlying action. SNC-4958</translatorcomment>
-        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>

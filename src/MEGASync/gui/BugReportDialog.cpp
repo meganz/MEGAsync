@@ -71,15 +71,17 @@ void BugReportDialog::onTransferStart(MegaApi*, MegaTransfer* transfer)
 
     mProgressIndicatorDialog = new ProgressIndicatorDialog(this);
 
-    connect(mProgressIndicatorDialog->ui->bCancel,
-            &QPushButton::clicked,
+    connect(mProgressIndicatorDialog,
+            &ProgressIndicatorDialog::cancelClicked,
             this,
             &BugReportDialog::cancelSendReport);
 
-    mProgressIndicatorDialog->ui->progressBar->reset();
-    mProgressIndicatorDialog->ui->progressBar->setMinimum(0);
-    mProgressIndicatorDialog->ui->progressBar->setMaximum(1010);
-    mProgressIndicatorDialog->ui->progressBar->setValue(0);
+    mProgressIndicatorDialog->setDialogDescription(
+        tr("Your reported issue is uploading, it may take a few minutes."));
+    mProgressIndicatorDialog->resetProgressBar();
+    mProgressIndicatorDialog->setMinimumProgressBarValue(0);
+    mProgressIndicatorDialog->setMaximumProgressBarValue(1010);
+    mProgressIndicatorDialog->setProgressBarValue(0);
     lastpermil = 0;
 
     DialogOpener::showDialog(mProgressIndicatorDialog);
@@ -95,7 +97,7 @@ void BugReportDialog::onTransferUpdate(MegaApi*, MegaTransfer* transfer)
 
         if (permil > lastpermil)
         {
-            mProgressIndicatorDialog->ui->progressBar->setValue(permil);
+            mProgressIndicatorDialog->setProgressBarValue(permil);
             lastpermil = permil;
         }
     }
@@ -110,12 +112,12 @@ void BugReportDialog::onTransferFinish(MegaApi*, MegaTransfer* transfer, MegaErr
 
     if (mProgressIndicatorDialog)
     {
-        disconnect(mProgressIndicatorDialog->ui->bCancel,
-                   &QPushButton::clicked,
+        disconnect(mProgressIndicatorDialog,
+                   &ProgressIndicatorDialog::cancelClicked,
                    this,
                    &BugReportDialog::cancelSendReport);
 
-        mProgressIndicatorDialog->ui->progressBar->reset();
+        mProgressIndicatorDialog->resetProgressBar();
     }
 
     totalBytes = 0;
@@ -256,8 +258,8 @@ void BugReportDialog::postUpload()
     {
         if (mProgressIndicatorDialog)
         {
-            mProgressIndicatorDialog->ui->progressBar->setValue(
-                mProgressIndicatorDialog->ui->progressBar->maximum());
+            mProgressIndicatorDialog->setProgressBarValue(
+                mProgressIndicatorDialog->getMaximumProgressBarValue());
         }
         createSupportTicket();
     }
@@ -413,7 +415,7 @@ void BugReportDialog::cancelSendReport()
                 {
                     mProgressIndicatorDialog->show();
                 }
-                mProgressIndicatorDialog->ui->progressBar->setValue(lastpermil);
+                mProgressIndicatorDialog->setProgressBarValue(lastpermil);
                 MegaSyncApp->getTransfersModel()->pauseResumeTransferByTag(currentTransfer, false);
             }
         }
