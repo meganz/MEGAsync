@@ -28,7 +28,7 @@ Syncs::Syncs(QObject* parent):
 
 void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
 {
-    cleanErrors();
+    cleanErrorsPrivately();
 
     if (checkErrorsOnSyncPaths(local, remote))
     {
@@ -74,7 +74,7 @@ bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remo
     helperCheckLocalSync(localPath);
     helperCheckRemoteSync(remotePath);
 
-    return (mLocalError.has_value() || mRemoteError.has_value());
+    return (!mLocalErrorMessage.isEmpty() || mRemoteError.has_value());
 }
 
 void Syncs::helperCheckLocalSync(const QString& path)
@@ -106,20 +106,22 @@ void Syncs::helperCheckLocalSync(const QString& path)
         }
     }
 
+    QString errorMessage;
     if (!localError.has_value())
     {
-        QString errorMessage;
         auto syncability = SyncController::instance().isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
         if (syncability == SyncController::CANT_SYNC)
         {
             localError = LocalErrors::CantSync;
         }
     }
+    if (errorMessage.isEmpty())
+        errorMessage = getLocalErrorMessage(localError, path);
 
-    if (mLocalError != localError)
+    if (mLocalErrorMessage != errorMessage)
     {
-        mLocalError.swap(localError);
-        emit localErrorChanged(getLocalError(path));
+        mLocalErrorMessage = errorMessage;
+        emit localErrorChanged(mLocalErrorMessage);
     }
 }
 
@@ -160,14 +162,12 @@ void Syncs::helperCheckRemoteSync(const QString& path)
 bool Syncs::checkLocalSync(const QString& path)
 {
     helperCheckLocalSync(path);
-
-    return (!mLocalError.has_value());
+    return (mLocalErrorMessage.isEmpty());
 }
 
 bool Syncs::checkRemoteSync(const QString& path)
 {
     helperCheckRemoteSync(path);
-
     return (!mRemoteError.has_value());
 }
 
@@ -271,7 +271,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 QString Syncs::getLocalError() const
 {
-    return getLocalError(mSyncConfig.localFolder);
+    return mLocalErrorMessage;
 }
 
 QString Syncs::getRemoteError() const
@@ -330,10 +330,13 @@ QString Syncs::getRemoteError() const
     return {};
 }
 
-void Syncs::cleanErrors()
+void Syncs::cleanErrorsPrivately()
 {
-    clearLocalError();
-    clearRemoteError();
+    mLocalErrorMessage.clear();
+    mRemoteError.reset();
+    mRemoteStringMessage.clear();
+    mRemoteMegaError.error = mega::MegaError::API_OK;
+    mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 }
 
 void Syncs::clearRemoteError()
@@ -348,18 +351,18 @@ void Syncs::clearRemoteError()
 
 void Syncs::clearLocalError()
 {
-    mLocalError.reset();
-    emit localErrorChanged(getLocalError());
+    mLocalErrorMessage.clear();
+    emit localErrorChanged(QString());
 }
 
-QString Syncs::getLocalError(const QString& path) const
+QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const
 {
-    if (!mLocalError.has_value())
+    if (!error.has_value())
     {
-        return {};
+        return QString();
     }
 
-    switch (mLocalError.value())
+    switch (error.value())
     {
         case LocalErrors::EmptyPath:
         {
@@ -389,5 +392,5 @@ QString Syncs::getLocalError(const QString& path) const
         }
     }
 
-    return {};
+    return QString();
 }

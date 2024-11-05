@@ -93,16 +93,16 @@ private:
     bool mCreatingFolder;
     SyncStatusCode mSyncStatus;
     QString mRemoteFolder;
-    std::optional<LocalErrors> mLocalError;
+    QString mLocalErrorMessage;
     std::optional<RemoteErrors> mRemoteError;
     QString mRemoteStringMessage;
 
     bool checkErrorsOnSyncPaths(const QString& localPath, const QString& remotePath);
     void helperCheckLocalSync(const QString& path);
     void helperCheckRemoteSync(const QString& path);
-    void cleanErrors();
+    void cleanErrorsPrivately();
 
-    QString getLocalError(const QString& path) const;
+    QString getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const;
 
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
