@@ -4,21 +4,11 @@
 
 using namespace mega;
 
-ObserverRequestListener::ObserverRequestListener(const ListenerCallbacks& callbacks)
-    : mCallbacks(callbacks)
-    , mDelegateListener(std::make_shared<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
-{
-    // Connect to destroyed signal of callbackClass
-    if (mCallbacks.callbackClass)
-    {
-        connect(mCallbacks.callbackClass, &QObject::destroyed, this, &ObserverRequestListener::objectDestroyed);
-    }
-}
-
-void ObserverRequestListener::objectDestroyed(QObject*)
-{
-    emit removeListener(this);
-}
+ObserverRequestListener::ObserverRequestListener(const ListenerCallbacks& callbacks):
+    mCallbacks(callbacks),
+    mDelegateListener(
+        std::make_shared<mega::QTMegaRequestListener>(MegaSyncApp->getMegaApi(), this))
+{}
 
 std::shared_ptr<mega::QTMegaRequestListener> ObserverRequestListener::getDelegateListener() const
 {
