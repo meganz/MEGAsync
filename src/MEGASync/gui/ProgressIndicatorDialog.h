@@ -26,6 +26,8 @@ public:
     int getMaximumProgressBarValue();
     int getProgressBarValue();
 
+    void setCancelButtonEnable(bool state);
+
 signals:
     void cancelClicked();
 

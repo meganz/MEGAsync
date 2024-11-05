@@ -87,6 +87,9 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/StatsEventHandler.cpp
     control/AccountDetailsManager.cpp
     control/UserMessageController.cpp
+    control/BugReport/BugReportController.h
+    control/BugReport/BugReportController.cpp
+    control/BugReport/BugReportData.h
 )
 
 target_sources(MEGAsync
@@ -98,5 +101,6 @@ target_sources(MEGAsync
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/Preferences
+    ${CMAKE_CURRENT_LIST_DIR}/BugReport
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

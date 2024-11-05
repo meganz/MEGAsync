@@ -66,3 +66,8 @@ int ProgressIndicatorDialog::getProgressBarValue()
 {
     return ui->progressBar->value();
 }
+
+void ProgressIndicatorDialog::setCancelButtonEnable(bool state)
+{
+    ui->bCancel->setEnabled(state);
+}
