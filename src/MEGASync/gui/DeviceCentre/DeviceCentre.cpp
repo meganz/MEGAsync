@@ -142,6 +142,13 @@ void DeviceCentre::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats* syncS
     }
 }
 
+void DeviceCentre::onSyncDeleted(mega::MegaApi* api, mega::MegaSync* sync)
+{
+    mSyncModel->remove(sync->getBackupId());
+    updateDeviceData();
+    emit deviceDataUpdated();
+}
+
 QUrl DeviceCentre::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/deviceCentre/DeviceCentreDialog.qml"));
