@@ -1,21 +1,21 @@
 #ifndef REMOTEITEMUI_H
 #define REMOTEITEMUI_H
 
-#include <QWidget>
-#include <QTableView>
-
 #include <megaapi.h>
+#include <QTableView>
+#include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class RemoteItemUi;
 }
 
-class RemoteItemUi : public QWidget
+class RemoteItemUi: public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit RemoteItemUi(QWidget *parent = nullptr);
+    explicit RemoteItemUi(QWidget* parent = nullptr);
     ~RemoteItemUi();
 
     void setTitle(const QString& title);
@@ -40,7 +40,7 @@ protected:
 private:
     void setTableViewProperties(QTableView* view) const;
 
-    Ui::RemoteItemUi *ui;
+    Ui::RemoteItemUi* ui;
 };
 
 #endif // REMOTEITEMUI_H

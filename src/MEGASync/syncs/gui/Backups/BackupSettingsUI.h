@@ -1,18 +1,18 @@
 #ifndef BACKUPSSETTINGSUI_H
 #define BACKUPSSETTINGSUI_H
 
-#include <QWidget>
-#include <QPointer>
-
-#include "SyncSettingsUIBase.h"
 #include "BackupSettingsElements.h"
+#include "SyncSettingsUIBase.h"
 
-class BackupSettingsUI : public SyncSettingsUIBase
+#include <QPointer>
+#include <QWidget>
+
+class BackupSettingsUI: public SyncSettingsUIBase
 {
     Q_OBJECT
 
 public:
-    explicit BackupSettingsUI(QWidget *parent = nullptr);
+    explicit BackupSettingsUI(QWidget* parent = nullptr);
     ~BackupSettingsUI() override;
 
     void addButtonClicked(mega::MegaHandle = mega::INVALID_HANDLE) override;
@@ -22,14 +22,14 @@ protected:
     QString getFinishIconString() const override;
     QString disableString() const override;
 
-    //Operation failed
+    // Operation failed
     QString getOperationFailTitle() const override;
     QString getOperationFailText(std::shared_ptr<SyncSettings> sync) override;
 
-    //Error adding
+    // Error adding
     QString getErrorAddingTitle() const override;
 
-    //Error removing
+    // Error removing
     QString getErrorRemovingTitle() const override;
     QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) override;
 

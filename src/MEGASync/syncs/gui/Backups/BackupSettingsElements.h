@@ -1,21 +1,22 @@
 #ifndef BACKUPSETTINGSELEMENTS_H
 #define BACKUPSETTINGSELEMENTS_H
 
-#include <QObject>
 #include <megaapi.h>
+#include <QObject>
 
-namespace Ui {
+namespace Ui
+{
 class OpenBackupsFolder;
 }
 
 class SyncSettingsUIBase;
 
-class BackupSettingsElements : public QObject
+class BackupSettingsElements: public QObject
 {
     Q_OBJECT
 
 public:
-    explicit BackupSettingsElements(QObject *parent = nullptr);
+    explicit BackupSettingsElements(QObject* parent = nullptr);
     ~BackupSettingsElements();
 
     void initElements(SyncSettingsUIBase* syncSettingsUi);

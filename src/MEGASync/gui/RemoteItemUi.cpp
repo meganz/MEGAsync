@@ -1,7 +1,8 @@
 #include "RemoteItemUi.h"
+
 #include "ui_RemoteItemUi.h"
 
-RemoteItemUi::RemoteItemUi(QWidget *parent) :
+RemoteItemUi::RemoteItemUi(QWidget* parent):
     QWidget(parent),
     ui(new Ui::RemoteItemUi)
 {
@@ -13,9 +14,13 @@ RemoteItemUi::RemoteItemUi(QWidget *parent) :
     connect(ui->bPermissions, &QPushButton::clicked, this, &RemoteItemUi::permissionsClicked);
 #endif
 
-    connect(ui->bAdd, &QPushButton::clicked, this, [this](){
-        emit addClicked();
-    });
+    connect(ui->bAdd,
+            &QPushButton::clicked,
+            this,
+            [this]()
+            {
+                emit addClicked();
+            });
     connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
     ui->bAdd->setAutoDefault(true);
 }
@@ -25,12 +30,12 @@ RemoteItemUi::~RemoteItemUi()
     delete ui;
 }
 
-void RemoteItemUi::setTitle(const QString &title)
+void RemoteItemUi::setTitle(const QString& title)
 {
     ui->groupBox->setTitle(title);
 }
 
-void RemoteItemUi::initView(QTableView *newView)
+void RemoteItemUi::initView(QTableView* newView)
 {
     newView->setParent(this);
     newView->setObjectName(QString::fromUtf8("tableViewReplaced"));
@@ -53,14 +58,14 @@ void RemoteItemUi::setUsePermissions(const bool use)
     }
 }
 
-QTableView *RemoteItemUi::getView()
+QTableView* RemoteItemUi::getView()
 {
     return ui->tableView;
 }
 
 void RemoteItemUi::changeEvent(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
     }
@@ -68,7 +73,7 @@ void RemoteItemUi::changeEvent(QEvent* event)
     QWidget::changeEvent(event);
 }
 
-void RemoteItemUi::setTableViewProperties(QTableView *view) const
+void RemoteItemUi::setTableViewProperties(QTableView* view) const
 {
     view->setFrameShape(QFrame::NoFrame);
     view->setEditTriggers(QAbstractItemView::AllEditTriggers);

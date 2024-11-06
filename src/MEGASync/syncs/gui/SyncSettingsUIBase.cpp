@@ -15,9 +15,10 @@
 #include <QScreen>
 #endif
 
-QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>> SyncSettingsUIBase::mModels = QMap<mega::MegaSync::SyncType,QPointer<SyncItemModel>>();
+QMap<mega::MegaSync::SyncType, QPointer<SyncItemModel>> SyncSettingsUIBase::mModels =
+    QMap<mega::MegaSync::SyncType, QPointer<SyncItemModel>>();
 
-SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
+SyncSettingsUIBase::SyncSettingsUIBase(QWidget* parent):
     QWidget(parent),
     ui(new Ui::SyncSettingsUIBase),
     mTable(nullptr),
@@ -27,105 +28,116 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget *parent):
 {
     ui->setupUi(this);
 
-    connect(&mOpeMegaIgnoreWatcher, &QFutureWatcher<bool>::finished, this, &SyncSettingsUIBase::onOpenMegaIgnoreFinished);
+    connect(&mOpeMegaIgnoreWatcher,
+            &QFutureWatcher<bool>::finished,
+            this,
+            &SyncSettingsUIBase::onOpenMegaIgnoreFinished);
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
-    connect(ui->gSyncs, &RemoteItemUi::deleteClicked, this, &SyncSettingsUIBase::removeSyncButtonClicked);
+    connect(ui->gSyncs,
+            &RemoteItemUi::deleteClicked,
+            this,
+            &SyncSettingsUIBase::removeSyncButtonClicked);
 
 #ifndef Q_OS_WINDOWS
-    connect(ui->gSyncs, &RemoteItemUi::permissionsClicked, this, &SyncSettingsUIBase::onPermissionsClicked);
+    connect(ui->gSyncs,
+            &RemoteItemUi::permissionsClicked,
+            this,
+            &SyncSettingsUIBase::onPermissionsClicked);
 #endif
 }
 
-void SyncSettingsUIBase::setTitle(const QString &title)
+void SyncSettingsUIBase::setTitle(const QString& title)
 {
     ui->gSyncs->setTitle(title);
 }
 
-void SyncSettingsUIBase::insertUIElement(QWidget *widget, int position)
+void SyncSettingsUIBase::insertUIElement(QWidget* widget, int position)
 {
     ui->SyncSettingsLayout->insertWidget(position, widget);
 
-    if(position == 0 && ui->SyncSettingsLayout->count() > 0)
+    if (position == 0 && ui->SyncSettingsLayout->count() > 0)
     {
-        auto secondWidget = ui->SyncSettingsLayout->itemAt(position +1)->widget();
-        setTabOrder(widget,secondWidget);
+        auto secondWidget = ui->SyncSettingsLayout->itemAt(position + 1)->widget();
+        setTabOrder(widget, secondWidget);
     }
-    else if(position > 0 && position < ui->SyncSettingsLayout->count())
+    else if (position > 0 && position < ui->SyncSettingsLayout->count())
     {
-        auto previousWidget = ui->SyncSettingsLayout->itemAt(position-1)->widget();
-        setTabOrder(previousWidget,widget);
-        if(ui->SyncSettingsLayout->count() > (position + 1))
+        auto previousWidget = ui->SyncSettingsLayout->itemAt(position - 1)->widget();
+        setTabOrder(previousWidget, widget);
+        if (ui->SyncSettingsLayout->count() > (position + 1))
         {
             auto nextWidget = ui->SyncSettingsLayout->itemAt(position + 1)->widget();
             setTabOrder(widget, nextWidget);
         }
     }
-    else if(position > 0  && position >= ui->SyncSettingsLayout->count())
+    else if (position > 0 && position >= ui->SyncSettingsLayout->count())
     {
-        auto previousWidget = ui->SyncSettingsLayout->itemAt(position-1)->widget();
-        setTabOrder(previousWidget,widget);
+        auto previousWidget = ui->SyncSettingsLayout->itemAt(position - 1)->widget();
+        setTabOrder(previousWidget, widget);
     }
 }
 
 void SyncSettingsUIBase::onSavingSyncsCompleted(SyncStateInformation value)
 {
     qint64 startTime(0);
-    if(value == SyncStateInformation::SAVING_FINISHED)
+    if (value == SyncStateInformation::SAVING_FINISHED)
     {
-        startTime =  ui->wSpinningIndicatorSyncs->getStartTime();
+        startTime = ui->wSpinningIndicatorSyncs->getStartTime();
     }
-    auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch()
-                                             - startTime));
-    QTimer::singleShot(closeDelay, this, [this, value] () {
-        syncsStateInformation(value);
-    });
+    auto closeDelay = std::max(0ll, 350ll - (QDateTime::currentMSecsSinceEpoch() - startTime));
+    QTimer::singleShot(closeDelay,
+                       this,
+                       [this, value]()
+                       {
+                           syncsStateInformation(value);
+                       });
 }
 
 void SyncSettingsUIBase::syncsStateInformation(SyncStateInformation state)
 {
-        switch (state)
-        {
-            case SAVING:
-                if(mParentDialog)
-                {
-                    emit disableParentDialog(false);
-                }
-                ui->wSpinningIndicatorSyncs->start();
-                ui->sSyncsState->setCurrentWidget(ui->pSavingSyncs);
-                break;
-            case SAVING_FINISHED:
-                if(mParentDialog)
-                {
-                    emit disableParentDialog(true);
-                }
-                ui->wSpinningIndicatorSyncs->stop();
-                // If any sync is disabled, shows warning message
-                if (mSyncInfo->syncWithErrorExist(mTable->getType()))
-                {
-                    ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
-
-                    if(mToolBarItem)
-                    {
-                        mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
-                        emit MegaSyncApp->updateUserInterface();
-                    }
-                }
-                else
-                {
-                    ui->sSyncsState->setCurrentWidget(ui->pNoErrorsSyncs);
-
-                    if(mToolBarItem)
-                    {
-                        mToolBarItem->setIcon(QIcon(getFinishIconString()));
-                        emit MegaSyncApp->updateUserInterface();
-                    }
-                }
-                break;
+    switch (state)
+    {
+        case SAVING:
+            if (mParentDialog)
+            {
+                emit disableParentDialog(false);
             }
+            ui->wSpinningIndicatorSyncs->start();
+            ui->sSyncsState->setCurrentWidget(ui->pSavingSyncs);
+            break;
+        case SAVING_FINISHED:
+            if (mParentDialog)
+            {
+                emit disableParentDialog(true);
+            }
+            ui->wSpinningIndicatorSyncs->stop();
+            // If any sync is disabled, shows warning message
+            if (mSyncInfo->syncWithErrorExist(mTable->getType()))
+            {
+                ui->sSyncsState->setCurrentWidget(ui->pSyncsDisabled);
+
+                if (mToolBarItem)
+                {
+                    mToolBarItem->setIcon(QIcon(getFinishWarningIconString()));
+                    emit MegaSyncApp->updateUserInterface();
+                }
+            }
+            else
+            {
+                ui->sSyncsState->setCurrentWidget(ui->pNoErrorsSyncs);
+
+                if (mToolBarItem)
+                {
+                    mToolBarItem->setIcon(QIcon(getFinishIconString()));
+                    emit MegaSyncApp->updateUserInterface();
+                }
+            }
+            break;
+    }
 }
 
-void SyncSettingsUIBase::setToolBarItem(QToolButton *item)
+void SyncSettingsUIBase::setToolBarItem(QToolButton* item)
 {
     mToolBarItem = item;
 }
@@ -138,28 +150,33 @@ void SyncSettingsUIBase::setAddButtonEnabled(bool enabled)
 #ifndef Q_OS_WIN
 void SyncSettingsUIBase::onPermissionsClicked()
 {
-    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(Preferences::instance()->folderPermissionsValue());
+    MegaSyncApp->getMegaApi()->setDefaultFolderPermissions(
+        Preferences::instance()->folderPermissionsValue());
     int folderPermissions = MegaSyncApp->getMegaApi()->getDefaultFolderPermissions();
-    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(Preferences::instance()->filePermissionsValue());
+    MegaSyncApp->getMegaApi()->setDefaultFilePermissions(
+        Preferences::instance()->filePermissionsValue());
     int filePermissions = MegaSyncApp->getMegaApi()->getDefaultFilePermissions();
 
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
     dialog->setFolderPermissions(folderPermissions);
     dialog->setFilePermissions(filePermissions);
-    DialogOpener::showDialog<PermissionsDialog>(dialog, [dialog, &folderPermissions, &filePermissions](){
-        if (dialog->result() == QDialog::Accepted)
+    DialogOpener::showDialog<PermissionsDialog>(
+        dialog,
+        [dialog, &folderPermissions, &filePermissions]()
         {
-            filePermissions = dialog->filePermissions();
-            folderPermissions = dialog->folderPermissions();
-
-            if (filePermissions != Preferences::instance()->filePermissionsValue()
-                    || folderPermissions != Preferences::instance()->folderPermissionsValue())
+            if (dialog->result() == QDialog::Accepted)
             {
-                Preferences::instance()->setFilePermissionsValue(filePermissions);
-                Preferences::instance()->setFolderPermissionsValue(folderPermissions);
+                filePermissions = dialog->filePermissions();
+                folderPermissions = dialog->folderPermissions();
+
+                if (filePermissions != Preferences::instance()->filePermissionsValue() ||
+                    folderPermissions != Preferences::instance()->folderPermissionsValue())
+                {
+                    Preferences::instance()->setFilePermissionsValue(filePermissions);
+                    Preferences::instance()->setFolderPermissionsValue(folderPermissions);
+                }
             }
-        }
-    });
+        });
 }
 #endif
 
@@ -180,9 +197,10 @@ void SyncSettingsUIBase::removeSyncButtonClicked()
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
 {
     QFileInfo syncDir(sync->getLocalFolder());
-    if(syncDir.exists())
+    if (syncDir.exists())
     {
-        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions = new QmlDialogWrapper<SyncExclusions>(this, sync->getLocalFolder());
+        QPointer<QmlDialogWrapper<SyncExclusions>> exclusions =
+            new QmlDialogWrapper<SyncExclusions>(this, sync->getLocalFolder());
         DialogOpener::showDialog(exclusions);
     }
     else
@@ -201,7 +219,7 @@ void SyncSettingsUIBase::openMegaIgnore(std::shared_ptr<SyncSettings> sync)
 void SyncSettingsUIBase::onOpenMegaIgnoreFinished()
 {
     auto result = mOpeMegaIgnoreWatcher.result();
-    if(!result)
+    if (!result)
     {
         showOpenMegaIgnoreError();
     }
@@ -228,5 +246,5 @@ void SyncSettingsUIBase::rescanQuick(std::shared_ptr<SyncSettings> sync)
 
 void SyncSettingsUIBase::rescanDeep(std::shared_ptr<SyncSettings> sync)
 {
-     MegaSyncApp->getMegaApi()->rescanSync(sync->backupId(), true);
+    MegaSyncApp->getMegaApi()->rescanSync(sync->backupId(), true);
 }
