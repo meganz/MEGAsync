@@ -52,6 +52,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SwitchButton.h
     gui/GuiUtilities.h
     gui/CancelConfirmWidget.h
+    gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
@@ -177,6 +178,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SwitchButton.cpp
     gui/GuiUtilities.cpp
     gui/CancelConfirmWidget.cpp
+    gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
@@ -467,6 +469,9 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT

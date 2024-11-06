@@ -28,6 +28,8 @@ public:
     enum Tabs{
         GENERAL_TAB  = 0,
         ACCOUNT_TAB = 1,
+        SYNCS_TAB    = 2,
+        BACKUP_TAB    = 3,
         SECURITY_TAB = 4,
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
@@ -50,6 +52,10 @@ public:
     void updateAccountElements() override;
 
     // Syncs
+    //void on_bSyncs_clicked();
+
+    // Backup
+    void on_bBackup_clicked();
 
     // Folders
     void updateUploadFolder();

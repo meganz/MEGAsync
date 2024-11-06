@@ -32,6 +32,9 @@
    <string notr="true">/*ColorTokenIcon;Button;bAccount;normal;on;colorToken.icon-primary*/
 /*ColorTokenIcon;Button;bAccount;normal;off;colorToken.icon-secondary*/
 
+/*ColorTokenIcon;Button;bBackup;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bBackup;normal;off;colorToken.icon-secondary*/
+
 /*ColorTokenIcon;Button;bFolders;normal;on;colorToken.icon-primary*/
 /*ColorTokenIcon;Button;bFolders;normal;off;colorToken.icon-secondary*/
 
@@ -46,6 +49,9 @@
 
 /*ColorTokenIcon;Button;bSecurity;normal;on;colorToken.icon-primary*/
 /*ColorTokenIcon;Button;bSecurity;normal;off;colorToken.icon-secondary*/
+
+/*ColorTokenIcon;Button;bSyncs;normal;on;colorToken.icon-primary*/
+/*ColorTokenIcon;Button;bSyncs;normal;off;colorToken.icon-secondary*/
 
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
@@ -199,7 +205,7 @@ margin-top: 3px;
 margin-bottom: 3px;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,1,0">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QWidget" name="wTabHeader" native="true">
      <property name="sizePolicy">
@@ -223,10 +229,7 @@ margin-bottom: 3px;
      <property name="styleSheet">
       <string notr="true"/>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,0,0,0,0,0,0,1">
-      <property name="spacing">
-       <number>5</number>
-      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <spacer name="horizontalSpacer_9">
         <property name="orientation">
@@ -325,6 +328,106 @@ margin-bottom: 3px;
         <property name="icon">
          <iconset>
           <normaloff>:/images/settings-account.svg</normaloff>:/images/settings-account.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="bSyncs">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Sync</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/settings-sync.svg</normaloff>:/images/settings-sync.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>25</width>
+          <height>25</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>true</bool>
+        </property>
+        <property name="autoExclusive">
+         <bool>true</bool>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="bBackup">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>70</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>-1</pointsize>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="text">
+         <string>Backup</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_win.qrc">
+          <normaloff>:/images/settings-backup.svg</normaloff>:/images/settings-backup.svg</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -1416,6 +1519,25 @@ margin-bottom: 3px;
           </size>
          </property>
         </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pBackup">
+      <layout class="QVBoxLayout" name="verticalLayout_19">
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="BackupSettingsUI" name="backupSettings" native="true"/>
        </item>
       </layout>
      </widget>
@@ -2924,6 +3046,12 @@ margin-top: 0px;
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>BackupSettingsUI</class>
+   <extends>QWidget</extends>
+   <header>syncs/gui/Backups/BackupSettingsUI.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
