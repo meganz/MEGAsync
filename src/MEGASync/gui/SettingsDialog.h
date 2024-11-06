@@ -52,7 +52,7 @@ public:
     void updateAccountElements() override;
 
     // Syncs
-    // void on_bSyncs_clicked();
+    void on_bSyncs_clicked();
 
     // Backup
     void on_bBackup_clicked();

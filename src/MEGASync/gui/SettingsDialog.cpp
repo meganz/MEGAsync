@@ -192,6 +192,7 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
                               mUi->cOverlayIcons->isChecked());
 
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
+    connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -1236,6 +1237,22 @@ void SettingsDialog::on_bBackup_clicked()
 void SettingsDialog::on_bBackupCenter_clicked()
 {
     Utilities::openBackupCenter();
+}
+
+void SettingsDialog::on_bSyncs_clicked()
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
+
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pSyncs)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pSyncs);
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
 // Security ----------------------------------------------------------------------------------------

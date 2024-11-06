@@ -2778,6 +2778,29 @@ margin-top: 0px;
       </layout>
      </widget>
      <widget class="NotificationsSettings" name="pNotifications"/>
+     <widget class="QWidget" name="pSyncs">
+      <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+
+       <property name="topMargin">
+        <number>10</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="SyncSettingsUI" name="syncSettings" native="true"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item alignment="Qt::AlignmentFlag::AlignBottom">
@@ -3046,6 +3069,12 @@ margin-top: 0px;
    <class>WaitingSpinnerWidget</class>
    <extends>QWidget</extends>
    <header>gui/WaitingSpinnerWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>SyncSettingsUI</class>
+   <extends>QWidget</extends>
+   <header>syncs/gui/Twoways/SyncSettingsUI.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
