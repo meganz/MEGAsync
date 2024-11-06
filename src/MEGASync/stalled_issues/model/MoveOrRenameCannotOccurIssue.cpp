@@ -388,10 +388,12 @@ bool MoveOrRenameCannotOccurIssue::solveLocalGenericIssues(StalledIssueSPtr issu
             {
                 if (targetNode && targetNode->isFolder())
                 {
-                    MergeMEGAFolders mergeItem(targetNode.get());
-                    mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                     // Don´t handle error, if it fails, we will have a name conflict, but nothing
                     // important
+                    MergeMEGAFolders::merge(
+                        targetNode.get(),
+                        nullptr,
+                        MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                 }
 
                 mUndoSuccessful--;
