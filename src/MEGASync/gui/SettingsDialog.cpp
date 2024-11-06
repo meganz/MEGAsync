@@ -1241,7 +1241,8 @@ void SettingsDialog::on_bBackupCenter_clicked()
 
 void SettingsDialog::on_bSyncs_clicked()
 {
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
 
     emit userActivity();
 
