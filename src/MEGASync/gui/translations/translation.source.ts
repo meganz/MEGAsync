@@ -308,6 +308,87 @@
     </message>
 </context>
 <context>
+    <name>BackupItemModel</name>
+    <message>
+        <source>Local Folder</source>
+        <translatorcomment>Local folder column header name for backlups table in settings dialog</translatorcomment>
+        <translation>Local folder</translation>
+    </message>
+    <message>
+        <source>Sort by name</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by name</translatorcomment>
+        <translation>Sort by name</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translatorcomment>backup state column header name for backlups table in settings dialog.SNC-2565</translatorcomment>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Sort by backup state</source>
+        <translatorcomment>Backup table header label tooltip that indicates that if you click here the column will be sorted by backup state.SNC-2565</translatorcomment>
+        <translation>Sort by backup status</translation>
+    </message>
+    <message>
+        <source>Backup is enabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is checked.(Backup enabled).SNC-4208</translatorcomment>
+        <translation>Backup is enabled</translation>
+    </message>
+    <message>
+        <source>Backup is disabled</source>
+        <translatorcomment>Checkbox tooltip that is displayed when it is unchecked.(Backup disabled).SNC-4208</translatorcomment>
+        <translation>Backup is disabled</translation>
+    </message>
+</context>
+<context>
+    <name>BackupSettingsUI</name>
+    <message>
+        <source>Backups</source>
+        <translatorcomment>Title for backups tab in the settings.SNC-2565</translatorcomment>
+        <translation>Backups</translation>
+    </message>
+    <message>
+        <source>Error moving or removing remote backup folder</source>
+        <translatorcomment>Title of the dialog shown when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Error moving or deleting MEGA backup folder</translation>
+    </message>
+    <message>
+        <source>Failed to move or remove the remote backup folder. Reason: %1</source>
+        <translatorcomment>Error text when the deletion or move of the remote backup folder failed.SNC-4208</translatorcomment>
+        <translation>Unable to move or delete the MEGA backup folder. Reason: %1</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for error dialog shown when a  sync fails.SNC-2565</translatorcomment>
+        <translation>Unable to sync</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>text for error dialog shown when a  sync fails, folder path and reason are given during runtime in the placeholders.SNC-2565</translatorcomment>
+        <translation>Your folder “%1” can’t sync. Reason: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Error adding sync</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Error stopping backup</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>Warning message title indicating that an error happened removing a sync. the reason is given at runtime in place of the placeholder.SNC-4208</translatorcomment>
+        <translation>Your sync can’t be removed. Reason: %1</translation>
+    </message>
+    <message>
+        <source>Some folders haven&apos;t been backed up. For more information, hover over the red icon.</source>
+        <translatorcomment>Warning message displayed inside settings dialog indicating that there is a problem with a backup.SNC-2565</translatorcomment>
+        <translation>Some folders haven’t been backed up. For more information, hover over the red icon.</translation>
+    </message>
+</context>
+<context>
     <name>BackupSyncsMenu</name>
     <message>
         <source>Add Backup</source>
@@ -318,6 +399,14 @@
         <source>Backups</source>
         <translatorcomment>Menu option that shows backups menu;SNC-3654</translatorcomment>
         <translation>Backups</translation>
+    </message>
+</context>
+<context>
+    <name>BackupTableView</name>
+    <message>
+        <source>Stop backup</source>
+        <translatorcomment>Menu action that stops the backup.SNC-2565</translatorcomment>
+        <translation>Stop backup</translation>
     </message>
 </context>
 <context>
@@ -6311,6 +6400,24 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>RemoteItemUi</name>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
+        <translation>Permissions</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Add</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
+        <translation>Delete</translation>
+    </message>
+</context>
+<context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
     <message>
         <source>Remote</source>
@@ -6927,6 +7034,26 @@ Do you want to delete it anyway?</translation>
         <source>Change permissions</source>
         <translatorcomment>Button label for the button that will open the dialog that allows us to change the permissions on syncs or backups.CON-1105.</translatorcomment>
         <translation type="unfinished">Change permissions</translation>
+    </message>
+    <message>
+        <source>Sync</source>
+        <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Sync</translation>
+    </message>
+    <message>
+        <source>Backup</source>
+        <translatorcomment>Toolbar button text</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
+        <source>Force a Full Scan</source>
+        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
+        <translation>Force a full scan</translation>
+    </message>
+    <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>Go to Device centre</translation>
     </message>
 </context>
 <context>
@@ -7987,6 +8114,114 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
     </message>
 </context>
 <context>
+    <name>SyncItemModel</name>
+    <message>
+        <source>Sort by state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by state in case the user clicks.</translatorcomment>
+        <translation>Sort by status</translation>
+    </message>
+    <message>
+        <source>Sync Name</source>
+        <translatorcomment>Syncs table column header, it shows sync name.SNC-2565</translatorcomment>
+        <translation>Sync name</translation>
+    </message>
+    <message>
+        <source>Sort by sync name</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder name in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by sync name</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translatorcomment>Syncs table column header, it shows sync state.SNC-2565</translatorcomment>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <source>Sort by sync state</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by sync state in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by sync status</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translatorcomment>Syncs table  column name, it shows number of files in a sync.SNC-2565</translatorcomment>
+        <translation>Files</translation>
+    </message>
+    <message>
+        <source>Sort by file count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by file count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by file count</translation>
+    </message>
+    <message>
+        <source>Folders</source>
+        <translatorcomment>Syncs table column name, it shows number of folders in a sync.SNC-2565</translatorcomment>
+        <translation>Folders</translation>
+    </message>
+    <message>
+        <source>Sort by folder count</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by folder count in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by folder count</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Syncs table column name, it shows number of downloads.SNC-2565</translatorcomment>
+        <translation>Downloads</translation>
+    </message>
+    <message>
+        <source>Sort by Downloads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by downloads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by downloads</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Syncs table column header, it shows number of uploads.SNC-2565</translatorcomment>
+        <translation>Uploads</translation>
+    </message>
+    <message>
+        <source>Sort by Uploads</source>
+        <translatorcomment>Sync table header tooltip indicating that it is going to sort the table by uploads in case the user clicks.SNC-2565</translatorcomment>
+        <translation>Sort by uploads</translation>
+    </message>
+    <message>
+        <source>Loading</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Loading</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Paused</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Disabled</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Scanning</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Syncing</translation>
+    </message>
+    <message>
+        <source>Monitoring</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Monitoring</translation>
+    </message>
+    <message>
+        <source>Click menu for more Sync actions</source>
+        <translatorcomment>Menu column tooltip (three dots in the table).SNC-4208</translatorcomment>
+        <translation>Click the menu for more sync actions</translation>
+    </message>
+    <message>
+        <source>Stopped</source>
+        <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
+        <translation>Stopped</translation>
+    </message>
+</context>
+<context>
     <name>SyncModel</name>
     <message>
         <source>Sync</source>
@@ -8026,6 +8261,146 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Error message shown while the user is trying to download an file or folder but all selected nodes were removed</translatorcomment>
         <translation>Can’t sync folder. Make sure you don’t use “\”, “/” or “:” in folder names.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsElements</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsUI</name>
+    <message>
+        <source>Synced Folders</source>
+        <translatorcomment>Section title for Synchronized folders table view.SNC-4208</translatorcomment>
+        <translation>Synced folders</translation>
+    </message>
+    <message>
+        <source>Some folders have not synchronised. For more information please hover over the red icon.</source>
+        <translatorcomment>Warning text message shown in Sync pane when folders are not synchronizing, inviting the user to use the warning message icon for each affected sync to find out more.SNC-2565</translatorcomment>
+        <translation>Some folders have not synchronised. For more information, hover over the red icon.</translation>
+    </message>
+    <message>
+        <source>Sync operation failed</source>
+        <translatorcomment>Title for message box shown when an error occurs in a sync.SNC-2565</translatorcomment>
+        <translation>Unable to sync</translation>
+    </message>
+    <message>
+        <source>Operation on sync &apos;%1&apos; failed. Reason: %2</source>
+        <translatorcomment>Text in message box shown when an error occurs when removing a sync.SNC-2565</translatorcomment>
+        <translation>Your folder “%1” can’t sync. Reason: %2</translation>
+    </message>
+    <message>
+        <source>Error adding sync</source>
+        <translatorcomment>Title of the error message displayed when there was en error while trying to add a sync. SNC-4208</translatorcomment>
+        <translation>Error adding sync</translation>
+    </message>
+    <message>
+        <source>Error removing backup</source>
+        <translatorcomment>Error message dialog title.SNC-4208</translatorcomment>
+        <translation>Error stopping backup</translation>
+    </message>
+    <message>
+        <source>Your sync can&apos;t be removed. Reason: %1</source>
+        <translatorcomment>MEssage box text shown when an error occurs when removing sync.SNC-4208</translatorcomment>
+        <translation>Your sync can’t be removed. Reason: %1</translation>
+    </message>
+</context>
+<context>
+    <name>SyncSettingsUIBase</name>
+    <message>
+        <source>Saving synchronised folders…</source>
+        <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
+        <translation>Saving synchronised folders…</translation>
+    </message>
+    <message>
+        <source>Error opening megaignore file</source>
+        <translatorcomment>Text in message box shown when the ignore rules file cannot be opened.SNC-2565</translatorcomment>
+        <translation>Error opening .megaignore file</translation>
+    </message>
+    <message>
+        <source>%1 can&apos;t be added as your Pro Flexi account has been deactivated due to payment failure or you&apos;ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</source>
+        <translatorcomment>Error message displayed when there was en error while trying to add a sync and the account is an expired Pro Flexi account. SNC-4208</translatorcomment>
+        <translation>[B]%1[/B] can’t be added as your Pro&#xa0;Flexi account has been deactivated due to payment failure or you’ve cancelled your subscription. To continue, make a payment and reactivate your subscription.</translation>
+    </message>
+</context>
+<context>
+    <name>SyncStallModeSelector</name>
+    <message>
+        <source>Sync stall mode</source>
+        <translatorcomment>Section subtitle for the window allowing the user to select sync stall solve mode.SNC-2565</translatorcomment>
+        <translation>Issue resolution mode</translation>
+    </message>
+    <message>
+        <source>Smart</source>
+        <translatorcomment>Stalled issues solve mode to allow mega to try solve stalled issues when it can.SNC-2565</translatorcomment>
+        <translation>Smart</translation>
+    </message>
+    <message>
+        <source>Let MEGA solve sync issues automatically</source>
+        <translatorcomment>Description for smart solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>Let MEGA resolve sync issues automatically</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
+        <translation>Advanced</translation>
+    </message>
+    <message>
+        <source>Get full control of the sync issues</source>
+        <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
+        <translation>Get full control of the sync issues</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
+        <translation>Learn more</translation>
+    </message>
+</context>
+<context>
+    <name>SyncTableView</name>
+    <message>
+        <source>Open in MEGA</source>
+        <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
+        <translation>Open in MEGA</translation>
+    </message>
+    <message>
+        <source>Remove synced folder</source>
+        <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
+        <translation>Remove synced folder</translation>
+    </message>
+    <message>
+        <source>Run</source>
+        <translatorcomment>Menu action to resume syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Resume</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translatorcomment>Menu action to pause syncing for syncs or backups.SNC-2565</translatorcomment>
+        <translation>Pause</translation>
+    </message>
+    <message>
+        <source>Quick Rescan</source>
+        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Quick rescan</translation>
+    </message>
+    <message>
+        <source>Deep Rescan</source>
+        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
+        <translation>Deep rescan</translation>
     </message>
 </context>
 <context>
