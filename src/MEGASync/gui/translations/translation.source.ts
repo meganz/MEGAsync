@@ -1368,7 +1368,7 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Stopped</source>
         <translatorcomment>A status value for a Sync/Backup/Device. SAT-1239.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stopped</translation>
     </message>
     <message>
         <source>Open in MEGA</source>
@@ -8368,6 +8368,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Learn more</source>
         <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
         <translation>Learn more</translation>
+    </message>
+    <message>
+        <source>Apply rules</source>
+        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Apply previous exclusion rules</source>
+        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
