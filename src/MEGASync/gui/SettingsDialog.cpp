@@ -254,7 +254,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
     mUi->bGeneral->setEnabled(!proxyOnly);
     mUi->bAccount->setEnabled(!proxyOnly);
-    // mUi->bSyncs->setEnabled(!proxyOnly);
+    mUi->bSyncs->setEnabled(!proxyOnly);
     mUi->bBackup->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
@@ -435,11 +435,11 @@ void SettingsDialog::loadSettings()
     updateNetworkTab();
 
     // Folders tab
-    // mUi->syncSettings->setParentDialog(this);
+    mUi->syncSettings->setParentDialog(this);
     mUi->backupSettings->setParentDialog(this);
 
     // Syncs and backups
-    // mUi->syncSettings->setToolBarItem(mUi->bSyncs);
+    mUi->syncSettings->setToolBarItem(mUi->bSyncs);
     mUi->backupSettings->setToolBarItem(mUi->bBackup);
 
     mLoadingSettings--;
