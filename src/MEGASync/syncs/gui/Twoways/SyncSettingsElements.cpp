@@ -44,26 +44,13 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     mSyncStallModeSelector = new QWidget();
     syncStallModeSelectorUI->setupUi(mSyncStallModeSelector);
 
-#ifdef Q_OS_MACOS
-    /*
-    CocoaHelpButton* LearnMoreButton = new CocoaHelpButton();
-    syncStallModeSelectorUI->horizontalLayout_3->insertWidget(1, LearnMoreButton);
-    syncStallModeSelectorUI->bApplyLegacyExclusions->setAutoDefault(false);
-    connect(LearnMoreButton,
-            &CocoaHelpButton::clicked,
-            []()
-            {
-                Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
-            });
-    */
-#else
     connect(syncStallModeSelectorUI->LearnMoreButton,
             &QPushButton::clicked,
             []()
             {
                 Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
             });
-#endif
+
     auto mode = Preferences::instance()->stalledIssuesMode();
     if (mode == Preferences::StalledIssuesModeType::Smart)
     {
@@ -76,16 +63,16 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
         syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
-    //! TODO Josep Subirana Oller: FIX!!!
-    // connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
-    //         &QPushButton::clicked,
-    //         this,
-    //         &SyncSettingsElements::applyPreviousExclusions);
-    //! END TODO Josep Subirana Oller: FIX!!!
+    connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
+            &QPushButton::clicked,
+            this,
+            &SyncSettingsElements::applyPreviousExclusions);
+
     connect(syncStallModeSelectorUI->SmartSelector,
             &QRadioButton::toggled,
             this,
             &SyncSettingsElements::onSmartModeSelected);
+
     connect(syncStallModeSelectorUI->AdvanceSelector,
             &QRadioButton::toggled,
             this,
