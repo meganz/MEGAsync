@@ -5086,11 +5086,40 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
     }
 #ifndef __APPLE__
+    else if (reason == QSystemTrayIcon::DoubleClick)
+    {
+        openFirstSync();
+    }
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
     }
 #endif
+}
+
+void MegaApplication::openFirstSync()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    auto* model(SyncInfo::instance());
+    if (model != nullptr)
+    {
+        const int numItems = (Preferences::instance()->logged()) ?
+                                 model->getNumSyncedFolders(MegaSync::SyncType::TYPE_TWOWAY) :
+                                 0;
+
+        if (numItems > 0)
+        {
+            auto syncSetting = model->getSyncSetting(0, MegaSync::SyncType::TYPE_TWOWAY);
+            if (syncSetting->isActive())
+            {
+                Utilities::openUrl(QUrl::fromLocalFile(syncSetting->getLocalFolder()));
+            }
+        }
+    }
 }
 
 void MegaApplication::onMessageClicked()
