@@ -37,11 +37,14 @@ private slots:
     void onCTAClicked();
     void onTimerExpirated(int64_t remainingTimeSecs);
 
+    void onUserNotificationDestroyed(QObject* UserNotification);
+
 private:
     Ui::NotificationItem* mUi;
     QPointer<UserNotification> mNotificationData;
     NotificationExpirationTimer mExpirationTimer;
-    bool mDisplayEventSent = false;
+    bool mDisplayEventSent;
+    QMetaObject::Connection mTimerConnection;
 
     void setNotificationData(UserNotification* newNotificationData);
     void updateNotificationData(UserNotification* newNotificationData);
