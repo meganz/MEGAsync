@@ -5,22 +5,23 @@
 #include <MoveToMEGABin.h>
 #include <Utilities.h>
 
-
-std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates action)
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(mega::MegaNode* folderTarget,
+                                                         mega::MegaNode* folderToMerge,
+                                                         ActionForDuplicates action)
 {
-    std::shared_ptr<mega::MegaError> error;
+    std::shared_ptr<mega::MegaError> error(nullptr);
 
-    if (mFolderTarget && mFolderToMerge)
+    if (folderTarget && folderToMerge)
     {
-        error.reset(mergeTwoFolders(action).get());
+        error = performMerge(folderTarget, folderToMerge, action);
     }
-    else if (mFolderTarget)
+    else if (folderTarget)
     {
         std::unique_ptr<mega::MegaNode> parentNode(
-            MegaSyncApp->getMegaApi()->getNodeByHandle(mFolderTarget->getParentHandle()));
+            MegaSyncApp->getMegaApi()->getNodeByHandle(folderTarget->getParentHandle()));
         if (parentNode)
         {
-            QString targetNodeName(QString::fromUtf8(mFolderTarget->getName()));
+            QString targetNodeName(QString::fromUtf8(folderTarget->getName()));
             std::unique_ptr<mega::MegaNodeList> folderToMergeNodes(
                 MegaSyncApp->getMegaApi()->getChildren(parentNode.get()));
             for (int index = 0; index < folderToMergeNodes->size(); ++index)
@@ -28,10 +29,9 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
                 auto node(folderToMergeNodes->get(index));
                 QString checkNodeName(QString::fromUtf8(node->getName()));
                 if (targetNodeName.compare(checkNodeName, Qt::CaseInsensitive) == 0 &&
-                    node->getHandle() != mFolderTarget->getHandle())
+                    node->getHandle() != folderTarget->getHandle())
                 {
-                    mFolderToMerge = node;
-                    error.reset(mergeTwoFolders(action).get());
+                    error = performMerge(folderTarget, node, action);
                     if (error)
                     {
                         break;
@@ -41,133 +41,215 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(ActionForDuplicates act
         }
     }
 
+    logError(error);
+
     return error;
 }
 
-std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeTwoFolders(ActionForDuplicates action)
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::performMerge(mega::MegaNode* folderTarget,
+                                                                mega::MegaNode* folderToMerge,
+                                                                ActionForDuplicates action)
 {
-    std::shared_ptr<mega::MegaError> error(nullptr);
+    // Fill the folderTarget child names container, used to know if the folderToMerge nested nodes
+    // will be moved, rename or removed
+    QMap<QString, std::shared_ptr<mega::MegaNode>> targetNodeWithNameConflict;
+    QMap<QString, std::shared_ptr<mega::MegaNode>> targetNodeWithoutNameConflict;
 
-    QStringList itemsBeingRenamed;
+    readTargetFolder(folderTarget, targetNodeWithoutNameConflict, targetNodeWithNameConflict);
+    std::shared_ptr<mega::MegaError> error =
+        fixTargetFolderNameConflicts(targetNodeWithNameConflict, action);
 
-    std::unique_ptr<mega::MegaNodeList> folderTargetNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderTarget));
-    QMultiMap<QString, int> nodesIndexesByName;
-    for(int index = 0; index < folderTargetNodes->size(); ++index)
+    if (error)
     {
-        auto node(folderTargetNodes->get(index));
-        nodesIndexesByName.insert(QString::fromUtf8(node->getName()), index);
+        return error;
     }
 
-    std::unique_ptr<mega::MegaNodeList> folderToMergeNodes(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
-    for(int index = 0; index < folderToMergeNodes->size(); ++index)
+    error = mergeNestedNodesIntoTargetFolder(folderTarget,
+                                             folderToMerge,
+                                             targetNodeWithoutNameConflict,
+                                             action);
+
+    if (error)
     {
-        auto node(folderToMergeNodes->get(index));
-        QString nodeName(QString::fromUtf8(node->getName()));
-        auto targetIndexes(nodesIndexesByName.values(nodeName));
-        if(!targetIndexes.isEmpty())
+        return error;
+    }
+
+    return finishMerge(folderTarget, folderToMerge, action);
+}
+
+void MergeMEGAFolders::readTargetFolder(
+    mega::MegaNode* folderTarget,
+    QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict,
+    QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict)
+{
+    std::unique_ptr<mega::MegaNodeList> folderTargetNodes(
+        MegaSyncApp->getMegaApi()->getChildren(folderTarget));
+
+    for (int index = folderTargetNodes->size() - 1; index >= 0; --index)
+    {
+        auto node(folderTargetNodes->get(index));
+        QString nodeName(QString::fromUtf8(node->getName()).toLower());
+
+        // Name conflict detected
+        if (!targetNodeWithoutNameConflict.contains(nodeName))
         {
-            bool duplicateFound(false);
-            foreach(auto targetIndex, targetIndexes)
+            targetNodeWithoutNameConflict.insert(nodeName,
+                                                 std::shared_ptr<mega::MegaNode>(node->copy()));
+        }
+        else if (!targetNodeWithNameConflict.contains(nodeName))
+        {
+            targetNodeWithNameConflict.insert(nodeName,
+                                              std::shared_ptr<mega::MegaNode>(node->copy()));
+        }
+    }
+}
+
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::fixTargetFolderNameConflicts(
+    const QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict,
+    ActionForDuplicates action)
+{
+    // Check if the target folder has name conflicts and solve them first
+    if (targetNodeWithNameConflict.size() > 0)
+    {
+        foreach(auto node, targetNodeWithNameConflict)
+        {
+            auto error = merge(node.get(), nullptr, action);
+            if (error)
             {
-                auto targetNode(folderTargetNodes->get(targetIndex));
-                if(node->isFile() && targetNode->isFile())
-                {
-                    auto nodeFp(QString::fromUtf8(node->getFingerprint()));
-                    auto targetNodeFp(QString::fromUtf8(targetNode->getFingerprint()));
-                    if(nodeFp == targetNodeFp)
-                    {
-                        duplicateFound = true;
-                        break;
-                    }
-                }
-                else if(node->isFolder() && targetNode->isFolder())
-                {
-                    mDepth++;
-                    MergeMEGAFolders folderMerge(targetNode, node);
-                    folderMerge.merge(action);
-                    mDepth--;
-                    std::unique_ptr<mega::MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(node));
-                    if(action == ActionForDuplicates::IgnoreAndRemove || folderChild->size() == 0)
-                    {
-                        error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove, MegaSyncApp->getMegaApi(), node);
-                        if(error)
-                        {
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        duplicateFound = true;
-                    }
-                }
-            }
-
-            if(!duplicateFound || action == ActionForDuplicates::Rename)
-            {
-                auto newName = Utilities::getNonDuplicatedNodeName(
-                    node, mFolderTarget, nodeName, true, itemsBeingRenamed);
-
-                error = MegaApiSynchronizedRequest::runRequestLambda(
-                    [](mega::MegaNode* node,
-                       mega::MegaNode* targetNode,
-                       const char* newName,
-                       mega::MegaRequestListener* listener) {
-                        MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
-                    },
-                    MegaSyncApp->getMegaApi(),
-                    node,
-                    mFolderTarget,
-                    newName.toUtf8().constData());
-
-                if(error)
-                {
-                    break;
-                }
+                return error;
             }
         }
+    }
+
+    return nullptr;
+}
+
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::finishMerge(mega::MegaNode* folderTarget,
+                                                               mega::MegaNode* folderToMerge,
+                                                               ActionForDuplicates action)
+{
+    std::shared_ptr<mega::MegaError> error(nullptr);
+    bool remove(false);
+
+    if (folderToMerge->isFolder())
+    {
+        std::unique_ptr<mega::MegaNodeList> folderChild(
+            MegaSyncApp->getMegaApi()->getChildren(folderToMerge));
+
+        remove = folderChild->size() == 0;
+    }
+
+    if (action == ActionForDuplicates::IgnoreAndRemove || remove)
+    {
+        error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
+                                                       MegaSyncApp->getMegaApi(),
+                                                       folderToMerge);
+    }
+    else if (action == ActionForDuplicates::IgnoreAndMoveToBin)
+    {
+        MoveToMEGABin toBin;
+        auto moveToBinError =
+            toBin.moveToBin(folderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
+        if (moveToBinError.binFolderCreationError)
+        {
+            error = moveToBinError.binFolderCreationError;
+        }
+        else if (!moveToBinError.moveError)
+        {
+            error = moveToBinError.moveError;
+        }
+    }
+    else if (action == ActionForDuplicates::Rename)
+    {
+        QStringList itemsBeingRenamed;
+        error = rename(folderToMerge, folderTarget, itemsBeingRenamed);
+    }
+
+    return error;
+}
+
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeNestedNodesIntoTargetFolder(
+    mega::MegaNode* folderTarget,
+    mega::MegaNode* folderToMerge,
+    QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict,
+    ActionForDuplicates action)
+{
+    QStringList itemsBeingRenamed;
+
+    std::shared_ptr<mega::MegaError> error(nullptr);
+    std::unique_ptr<mega::MegaNodeList> folderToMergeNodes(
+        MegaSyncApp->getMegaApi()->getChildren(folderToMerge));
+
+    for (int index = 0; index < folderToMergeNodes->size(); ++index)
+    {
+        auto nestedNodeToMerge(folderToMergeNodes->get(index));
+        QString nestedNodeName(QString::fromUtf8(nestedNodeToMerge->getName()).toLower());
+        auto targetNode(targetNodeWithoutNameConflict.value(nestedNodeName));
+
+        // There are one item with the same name in folderTarget (if there were more, they were
+        // merged in "fixTargetFolderNameConflicts" method)
+        if (targetNode)
+        {
+            if (nestedNodeToMerge->isFile() && targetNode->isFile())
+            {
+                auto nodeToMoveFp(QString::fromUtf8(nestedNodeToMerge->getFingerprint()));
+                auto targetNodeFp(QString::fromUtf8(targetNode->getFingerprint()));
+                if (nodeToMoveFp == targetNodeFp)
+                {
+                    error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
+                                                                   MegaSyncApp->getMegaApi(),
+                                                                   nestedNodeToMerge);
+                }
+                else
+                {
+                    error = rename(nestedNodeToMerge, folderTarget, itemsBeingRenamed);
+                }
+            }
+            else if (nestedNodeToMerge->isFolder() && targetNode->isFolder())
+            {
+                error = merge(targetNode.get(), nestedNodeToMerge, action);
+            }
+            else
+            {
+                error = rename(nestedNodeToMerge, folderTarget, itemsBeingRenamed);
+            }
+        }
+        // We can simply move the node, as there is no item with the same name in the target node
         else
         {
             error = MegaApiSynchronizedRequest::runRequestLambda(
                 [](mega::MegaNode* node,
                    mega::MegaNode* targetNode,
-                   mega::MegaRequestListener* listener) {
+                   mega::MegaRequestListener* listener)
+                {
                     MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
                 },
                 MegaSyncApp->getMegaApi(),
-                node,
-                mFolderTarget);
+                nestedNodeToMerge,
+                folderTarget);
 
-            if(error)
+            // If the node was correctly moved, now it is part of the targetNodeWithoutNameConflict
+            if (!error)
             {
-                break;
+                targetNodeWithoutNameConflict.insert(
+                    nestedNodeName,
+                    std::shared_ptr<mega::MegaNode>(nestedNodeToMerge->copy()));
             }
+        }
+
+        // Don´t continue if any step failed
+        if (error)
+        {
+            break;
         }
     }
 
-    //Only done when the recursion finishes and there is no error
-    if(!error && mDepth == 0)
-    {
-        std::unique_ptr<mega::MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
-        if(folderChild->size() != 0)
-        {
-            MoveToMEGABin toBin;
-            auto moveToBinError = toBin.moveToBin(mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
-            if(moveToBinError.binFolderCreationError)
-            {
-                error = moveToBinError.binFolderCreationError;
-            }
-            else if(!moveToBinError.moveError)
-            {
-                error = moveToBinError.moveError;
-            }
-        }
-        else
-        {
-            error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove, MegaSyncApp->getMegaApi(), mFolderToMerge);
-        }
-    }
+    return error;
+}
 
-    if(error)
+void MergeMEGAFolders::logError(std::shared_ptr<mega::MegaError> error)
+{
+    if (error)
     {
         mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR,
                            QString::fromUtf8("Merge folders failed. Error: %1")
@@ -175,5 +257,36 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeTwoFolders(ActionForDupl
                                .toUtf8()
                                .constData());
     }
+}
+
+std::shared_ptr<mega::MegaError> MergeMEGAFolders::rename(mega::MegaNode* nodeToRename,
+                                                          mega::MegaNode* parentNode,
+                                                          QStringList& itemsBeingRenamed)
+{
+    QString currentName(QString::fromUtf8(nodeToRename->getName()));
+    QString newName = Utilities::getNonDuplicatedNodeName(nodeToRename,
+                                                          parentNode,
+                                                          currentName,
+                                                          true,
+                                                          itemsBeingRenamed);
+
+    auto error = MegaApiSynchronizedRequest::runRequestLambda(
+        [](mega::MegaNode* node,
+           mega::MegaNode* targetNode,
+           const char* newName,
+           mega::MegaRequestListener* listener)
+        {
+            MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
+        },
+        MegaSyncApp->getMegaApi(),
+        nodeToRename,
+        parentNode,
+        newName.toUtf8().constData());
+
+    if (!error)
+    {
+        itemsBeingRenamed.append(newName);
+    }
+
     return error;
 }
