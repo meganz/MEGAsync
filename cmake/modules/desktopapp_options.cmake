@@ -21,14 +21,13 @@ option(ENABLE_DESKTOP_UPDATE_GEN "Enable desktop update generator tool" ON)
 option(ENABLE_DESKTOP_APP_WERROR "Enable warnings as errors" ON)
 option(ENABLE_DESIGN_TOKENS_IMPORTER "Enable design tokens importer tool" ON)
 
-option(ENABLE_SDK_ISOLATED_GFX "Enable GFX processing in an isolated process" ON)
-
 # MEGAsdk options
 # Configure MEGAsdk specific options for MEGAchat and then load the rest of MEGAsdk configuration
 if (ENABLE_DESKTOP_APP)
     set(USE_LIBUV ON) # Used by the Qt Desktop App: Includes the library and turns on internal web and ftp server functionality in the SDK.
     set(ENABLE_LOG_PERFORMANCE ON)
     set(ENABLE_QT_BINDINGS ON)
+    set(ENABLE_ISOLATED_GFX ON)
 endif()
 
 include(sdklib_options)
