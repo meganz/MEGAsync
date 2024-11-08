@@ -178,6 +178,12 @@ void NotificationItem::onTimerExpirated(int64_t remainingTimeSecs)
     mUi->lTime->setText(timeText);
 }
 
+void NotificationItem::onUserNotificationDestroyed(QObject*)
+{
+    mExpirationTimer.stopExpirationTime();
+    disconnect(mTimerConnection);
+}
+
 void NotificationItem::setNotificationData(UserNotification* newNotificationData)
 {
     if (!newNotificationData)
@@ -194,11 +200,11 @@ void NotificationItem::setNotificationData(UserNotification* newNotificationData
     // NotificationExpirationTimer is a QTimer optimized for this use case.
     // We want only update the remaining time every second, minute, hour or day
     // depending in the remaining time, not always to update every second.
-    connect(&mExpirationTimer,
-            &NotificationExpirationTimer::expired,
-            this,
-            &NotificationItem::onTimerExpirated,
-            Qt::UniqueConnection);
+    mTimerConnection = connect(&mExpirationTimer,
+                               &NotificationExpirationTimer::expired,
+                               this,
+                               &NotificationItem::onTimerExpirated,
+                               Qt::UniqueConnection);
 
     updateNotificationData(newNotificationData);
 }
@@ -221,6 +227,10 @@ void NotificationItem::updateNotificationData(UserNotification* newNotificationD
     }
 
     mNotificationData = newNotificationData;
+    connect(mNotificationData,
+            &QObject::destroyed,
+            this,
+            &NotificationItem::onUserNotificationDestroyed);
 
     updateNotificationData(imageHasChanged, iconHasChanged);
 
@@ -316,7 +326,10 @@ bool NotificationItem::updateExpiredTimeAndClicks(int64_t remainingTimeSecs)
         else if (remainingTimeSecs == -NUM_SECS_TO_WAIT_BEFORE_REMOVE)
         {
             mExpirationTimer.stopExpirationTime();
-            mNotificationData->markAsExpired();
+            if (mNotificationData)
+            {
+                mNotificationData->markAsExpired();
+            }
         }
         updated = true;
     }
