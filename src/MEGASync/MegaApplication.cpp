@@ -5085,11 +5085,13 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
-#ifndef __APPLE__
+#ifdef __WINDOWS__
     else if (reason == QSystemTrayIcon::DoubleClick)
     {
         openFirstActiveSync();
     }
+#endif
+#ifndef __APPLE__
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
