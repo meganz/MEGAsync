@@ -5088,7 +5088,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
     else if (reason == QSystemTrayIcon::DoubleClick)
     {
-        openFirstSync();
+        openFirstActiveSync();
     }
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
@@ -5097,26 +5097,37 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #endif
 }
 
-void MegaApplication::openFirstSync()
+void MegaApplication::openFirstActiveSync()
 {
     if (appfinished)
     {
         return;
     }
 
-    auto* model(SyncInfo::instance());
-    if (model != nullptr)
+    auto* syncInfo{SyncInfo::instance()};
+    if (syncInfo != nullptr)
     {
-        const int numItems = (Preferences::instance()->logged()) ?
-                                 model->getNumSyncedFolders(MegaSync::SyncType::TYPE_TWOWAY) :
-                                 0;
+        const auto syncsSettings(syncInfo->getAllSyncSettings());
+        auto firstActiveSyncSettings(std::find_if(syncsSettings.cbegin(),
+                                                  syncsSettings.cend(),
+                                                  [](auto syncSettings)
+                                                  {
+                                                      return syncSettings->isActive();
+                                                  }));
 
-        if (numItems > 0)
+        if (firstActiveSyncSettings != syncsSettings.cend())
         {
-            auto syncSetting = model->getSyncSetting(0, MegaSync::SyncType::TYPE_TWOWAY);
-            if (syncSetting->isActive())
+            infoDialogTimer->stop();
+
+            if (infoDialog)
             {
-                Utilities::openUrl(QUrl::fromLocalFile(syncSetting->getLocalFolder()));
+                infoDialog->hide();
+            }
+
+            QString localFolderPath = (*firstActiveSyncSettings)->getLocalFolder();
+            if (!localFolderPath.isEmpty())
+            {
+                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
             }
         }
     }
