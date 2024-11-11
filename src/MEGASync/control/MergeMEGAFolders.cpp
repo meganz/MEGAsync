@@ -56,8 +56,11 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::performMerge(mega::MegaNode* 
     QMap<QString, std::shared_ptr<mega::MegaNode>> targetNodeWithoutNameConflict;
 
     readTargetFolder(folderTarget, targetNodeWithoutNameConflict, targetNodeWithNameConflict);
+
+#ifndef Q_OS_LINUX
     std::shared_ptr<mega::MegaError> error =
         fixTargetFolderNameConflicts(targetNodeWithNameConflict, action);
+#endif
 
     if (error)
     {
@@ -88,7 +91,11 @@ void MergeMEGAFolders::readTargetFolder(
     for (int index = folderTargetNodes->size() - 1; index >= 0; --index)
     {
         auto node(folderTargetNodes->get(index));
+#ifdef Q_OS_LINUX
+        QString nodeName(QString::fromUtf8(node->getName()));
+#else
         QString nodeName(QString::fromUtf8(node->getName()).toLower());
+#endif
 
         // Name conflict detected
         if (!targetNodeWithoutNameConflict.contains(nodeName))
@@ -183,7 +190,11 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeNestedNodesIntoTargetFol
     for (int index = 0; index < folderToMergeNodes->size(); ++index)
     {
         auto nestedNodeToMerge(folderToMergeNodes->get(index));
+#ifdef Q_OS_LINUX
+        QString nestedNodeName(QString::fromUtf8(nestedNodeToMerge->getName()));
+#else
         QString nestedNodeName(QString::fromUtf8(nestedNodeToMerge->getName()).toLower());
+#endif
         auto targetNode(targetNodeWithoutNameConflict.value(nestedNodeName));
 
         // There are one item with the same name in folderTarget (if there were more, they were
