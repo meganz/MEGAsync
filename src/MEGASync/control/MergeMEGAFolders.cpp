@@ -300,7 +300,7 @@ QString MergeMEGAFolders::getNodeName(mega::MegaNode* node)
 
 #ifndef Q_OS_LINUX
     return nodeName.toLower();
-#elif
+#else
     return nodeName;
 #endif
 }
