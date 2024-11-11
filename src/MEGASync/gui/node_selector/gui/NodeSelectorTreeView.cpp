@@ -121,14 +121,6 @@ void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
         accept = mousePressorReleaseEvent(event);
     }
 
-    //QPoint pos = event->pos();
-    //QPersistentModelIndex index = indexAt(pos);
-
-    // if(!index.isValid())
-    // {
-    //     selectionModel()->clearSelection();
-    // }
-
     if(accept)
     {
         QTreeView::mousePressEvent(event);
@@ -139,11 +131,11 @@ void NodeSelectorTreeView::mousePressEvent(QMouseEvent *event)
 void NodeSelectorTreeView::mouseReleaseEvent(QMouseEvent *event)
 {
     bool accept = true;
-
     if (style()->styleHint(QStyle::SH_ListViewExpand_SelectMouseType, 0, this) == QEvent::MouseButtonRelease)
     {
         accept = mousePressorReleaseEvent(event);
     }
+
     if(accept)
     {
         QTreeView::mouseReleaseEvent(event);

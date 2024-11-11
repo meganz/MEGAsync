@@ -1,22 +1,21 @@
 #include "Utilities.h"
 
-#include "Preferences.h"
-#include "MegaApplication.h"
 #include "gzjoin.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MoveToMEGABin.h"
 #include "Platform.h"
-
-#include <QApplication>
-#include <QImageReader>
-#include <QDirIterator>
-#include <QTextStream>
-#include <QDateTime>
-#include <QDesktopWidget>
-#include <QScreen>
-#include <QCryptographicHash>
-#include <MegaApiSynchronizedRequest.h>
-#include <MoveToMEGABin.h>
+#include "Preferences.h"
 
 #include <iostream>
+#include <QApplication>
+#include <QCryptographicHash>
+#include <QDateTime>
+#include <QDesktopWidget>
+#include <QDirIterator>
+#include <QImageReader>
+#include <QScreen>
+#include <QTextStream>
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -1565,15 +1564,7 @@ std::shared_ptr<MegaError> Utilities::removeRemoteFile(const MegaNode* node)
 
     if(node)
     {
-        auto moveToBinError = MoveToMEGABin::moveToBin(node->getHandle(), QLatin1String("SyncDebris"), true);
-        if(moveToBinError.binFolderCreationError)
-        {
-            error = moveToBinError.binFolderCreationError;
-        }
-        else if(moveToBinError.moveError)
-        {
-            error = moveToBinError.moveError;
-        }
+        error = MoveToMEGABin()(node->getHandle(), QLatin1String("SyncDebris"), true);
     }
 
     return error;

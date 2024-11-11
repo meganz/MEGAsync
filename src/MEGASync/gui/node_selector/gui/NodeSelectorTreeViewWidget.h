@@ -80,6 +80,7 @@ public slots:
     virtual void onRowsInserted();
     void onRowsRemoved();
     void onProxyModelSorted();
+    void setLoadingSceneVisible(bool visible);
 
 signals:
     void okBtnClicked();
@@ -128,7 +129,6 @@ private slots:
     void onRemoveIndexFromGoBack(const QModelIndex &index);
     void onSectionResized();
     void onExpandReady();
-    void setLoadingSceneVisible(bool visible);
     void onUiBlocked(bool state);
     void processCachedNodesUpdated();
     void removeItemByHandle(mega::MegaHandle handle);

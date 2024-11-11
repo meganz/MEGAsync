@@ -150,16 +150,8 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeTwoFolders(ActionForDupl
         std::unique_ptr<mega::MegaNodeList>folderChild(MegaSyncApp->getMegaApi()->getChildren(mFolderToMerge));
         if(folderChild->size() != 0)
         {
-            MoveToMEGABin toBin;
-            auto moveToBinError = toBin.moveToBin(mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
-            if(moveToBinError.binFolderCreationError)
-            {
-                error = moveToBinError.binFolderCreationError;
-            }
-            else if(!moveToBinError.moveError)
-            {
-                error = moveToBinError.moveError;
-            }
+            error =
+                MoveToMEGABin()(mFolderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
         }
         else
         {

@@ -857,28 +857,19 @@ NameConflictedStalledIssue::CloudConflictedNames::removeDuplicatedNodes()
                         NameConflictedStalledIssue::ConflictedNameInfo::SolvedType::UNSOLVED &&
                     conflictedName != (*(conflictedNamesGroup.conflictedNames.end() - 1)))
                 {
-                    auto moveToBinErrors = MoveToMEGABin::moveToBin(
-                        conflictedName->mHandle, QLatin1String("SyncDuplicated"), true);
-                    if(!moveToBinErrors.binFolderCreationError && !moveToBinErrors.moveError)
+                    auto error = MoveToMEGABin()(conflictedName->mHandle,
+                                                 QLatin1String("SyncDuplicated"),
+                                                 true);
+                    if (error)
                     {
-                        conflictedName->solveByRemove();
-                    }
-                    else
-                    {
-                        std::shared_ptr<mega::MegaError> error;
-                        if(moveToBinErrors.binFolderCreationError)
-                        {
-                            error = moveToBinErrors.binFolderCreationError;
-                        }
-                        else
-                        {
-                            error = moveToBinErrors.moveError;
-                        }
-
                         auto errorStr = StalledIssuesStrings::RemoveRemoteFailedFile(error.get());
                         conflictedName->setFailed(errorStr);
 
                         return error;
+                    }
+                    else
+                    {
+                        conflictedName->solveByRemove();
                     }
                 }
             }

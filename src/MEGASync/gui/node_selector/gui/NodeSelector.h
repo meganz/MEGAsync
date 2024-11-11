@@ -45,7 +45,7 @@ public:
     };
     Q_ENUM(TabItem)
 
-    explicit NodeSelector(QWidget *parent = 0);
+    explicit NodeSelector(SelectTypeSPtr selectType, QWidget* parent = 0);
 
     ~NodeSelector();
     void showDefaultUploadOption(bool show = true);
@@ -57,13 +57,17 @@ public:
     void closeEvent(QCloseEvent* event) override;
     static void showNotFoundNodeMessageBox();
 
+public slots:
+    void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
+
 protected:
     void changeEvent(QEvent * event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
-    void makeConnections(SelectTypeSPtr selectType);
+    void makeConnections();
+    void createSearchWidget();
     bool eventFilter(QObject *obj, QEvent *event) override;
 
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
@@ -76,6 +80,7 @@ protected:
     NodeSelectorTreeViewWidgetRubbish* mRubbishWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
+    SelectTypeSPtr mSelectType;
 
 protected slots:
     virtual void onCustomBottomButtonClicked(uint id){Q_UNUSED(id)}
@@ -90,7 +95,6 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
-    void onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
     void onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
 
@@ -104,6 +108,10 @@ private:
     QGraphicsDropShadowEffect* mShadowTab;
     QMap<TabItem, QFrame*> mTabFramesToggleGroup;
     std::unique_ptr<mega::QTMegaListener> mDelegateListener;
+
+    NodeSelectorTreeViewWidget* getTreeViewWidget(int page) const;
+    NodeSelectorTreeViewWidget* getTreeViewWidget(QObject* object) const;
+    NodeSelectorTreeViewWidget* getCurrentTreeViewWidget() const;
 
     bool mManuallyResizedColumn;
 };

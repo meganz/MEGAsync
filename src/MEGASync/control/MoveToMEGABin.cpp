@@ -11,11 +11,18 @@
 /// As the SDK createFolder is async, we need to use QEventLoop to stop the thread (the UI thread will be frozen only if you run this method in the UI thread)
 /// When the createFolder returns we continue or stop the eventloop.
 /// When all files are moved, we stop the eventloop and we continue
-MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle,
-                                                       const QString& binFolderName,
-                                                       bool addDateFolder)
+std::shared_ptr<mega::MegaError> MoveToMEGABin::operator()(mega::MegaHandle handle,
+                                                           const QString& binFolderName,
+                                                           bool addDateFolder)
 {
-    MoveToBinError error;
+    return moveToBin(handle, binFolderName, addDateFolder);
+}
+
+std::shared_ptr<mega::MegaError> MoveToMEGABin::moveToBin(mega::MegaHandle handle,
+                                                          const QString& binFolderName,
+                                                          bool addDateFolder)
+{
+    std::shared_ptr<mega::MegaError> error;
 
     auto moveLambda = [handle, &error](std::shared_ptr<mega::MegaNode> rubbishNode)
     {
@@ -42,7 +49,7 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle,
                                      Utilities::getTranslatedError(e))
                                 .toUtf8()
                                 .constData());
-                        error.moveError = std::shared_ptr<mega::MegaError>(e->copy());
+                        error = std::shared_ptr<mega::MegaError>(e->copy());
                     }
                 },
                 nodeToMove.get(),
@@ -57,10 +64,8 @@ MoveToMEGABin::MoveToBinError MoveToMEGABin::moveToBin(mega::MegaHandle handle,
         folderPath = QString::fromLatin1("%1/%2").arg(folderPath, dateFolder);
     }
 
-    auto folderNode = MEGAPathCreator::mkDir(QString::fromLatin1("//bin"),
-                                             folderPath,
-                                             error.binFolderCreationError);
-    if (folderNode)
+    auto folderNode = MEGAPathCreator::mkDir(QString::fromLatin1("//bin"), folderPath, error);
+    if (!error && folderNode)
     {
         moveLambda(folderNode);
     }

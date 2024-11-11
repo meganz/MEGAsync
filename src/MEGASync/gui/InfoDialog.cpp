@@ -1095,7 +1095,6 @@ void InfoDialog::on_bTransferManager_clicked()
 void InfoDialog::on_bCloudDrive_clicked()
 {
     CloudDriveNodeSelector* nodeSelector = new CloudDriveNodeSelector();
-    nodeSelector->enableDragAndDrop(true);
     DialogOpener::showGeometryRetainerDialog<NodeSelector>(nodeSelector);
 }
 

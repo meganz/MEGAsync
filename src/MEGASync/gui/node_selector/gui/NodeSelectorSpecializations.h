@@ -62,7 +62,9 @@ protected slots:
     void onCustomBottomButtonClicked(uint id) override;
 
 private:
-    void checkSelection() override{}
+    void checkSelection() override {}
+
+    void makeModelConntections();
 
     QWidget* mDragBackDrop;
 };
