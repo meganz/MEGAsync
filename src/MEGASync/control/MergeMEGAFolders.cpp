@@ -265,7 +265,7 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::rename(mega::MegaNode* nodeTo
                                                           mega::MegaNode* parentNode,
                                                           QStringList& itemsBeingRenamed)
 {
-    QString currentName(QString::fromUtf8(nodeToRename->getName()));
+    QString currentName(getNodeName(nodeToRename));
     QString newName = Utilities::getNonDuplicatedNodeName(nodeToRename,
                                                           parentNode,
                                                           currentName,
@@ -295,9 +295,12 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::rename(mega::MegaNode* nodeTo
 
 QString MergeMEGAFolders::getNodeName(mega::MegaNode* node)
 {
-#ifdef Q_OS_LINUX
-    return QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName()));
-#else
-    return QString::fromUtf8(node->getName()).toLower();
+    QString nodeName =
+        QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName()));
+
+#ifndef Q_OS_LINUX
+    return nodeName.toLower();
+#elif
+    return nodeName;
 #endif
 }
