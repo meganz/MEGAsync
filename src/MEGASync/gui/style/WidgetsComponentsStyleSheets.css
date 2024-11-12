@@ -30,7 +30,7 @@ padding-left:4px;
 
 QTableView::item::selected
 {
-background-color: rgba(0,120,215,0.8); /* TODO: replace harcoded color with token!*/
+background-color: #ffbdd9ff; /*colorToken.focus*/
 }
 
 QTableView::indicator
