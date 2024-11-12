@@ -19,7 +19,7 @@ background: #ff18191A; /*colorToken.page-background*/
 outline: 0;
 border: 1px solid #ff18191A; /*colorToken.page-background*/
 border-radius: 5px;
-selection-color: #ffF3F4F4; /*colorToken.text-primary*/
+selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 }
 
 QTableView::item
@@ -31,7 +31,6 @@ padding-left:4px;
 QTableView::item::selected
 {
 background-color: rgba(0,120,215,0.8); /* TODO: replace harcoded color with token!*/
-color: #FFF3F4F4; /* colorToken.text-primary*/
 }
 
 QTableView::indicator
