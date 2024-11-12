@@ -7021,21 +7021,6 @@ Do you want to delete it anyway?</translation>
         <translation>Recovery key</translation>
     </message>
     <message>
-        <source>Permissions</source>
-        <translatorcomment>Title of the group box with the button to open the permissions dialog.CON-1105.</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
-    </message>
-    <message>
-        <source>Permissions for new folders and files</source>
-        <translatorcomment>Description of the task to be executed by the change permissions button.CON-1105.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
-    </message>
-    <message>
-        <source>Change permissions</source>
-        <translatorcomment>Button label for the button that will open the dialog that allows us to change the permissions on syncs or backups.CON-1105.</translatorcomment>
-        <translation type="unfinished">Change permissions</translation>
-    </message>
-    <message>
         <source>Sync</source>
         <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Sync</translation>
