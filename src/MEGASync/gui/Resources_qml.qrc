@@ -102,5 +102,24 @@
         <file>images/qml/device_center/sync_folder.svg</file>
         <file>images/qml/three_dots.svg</file>
         <file>images/qml/device_center/devices.svg</file>
+        <file>images/qml/monitor.svg</file>
+        <file>images/qml/folder-open.svg</file>
+        <file>images/qml/slash-circle.svg</file>
+        <file>images/qml/search-large.svg</file>
+        <file>images/qml/search.svg</file>
+        <file>images/qml/pause-circle.svg</file>
+        <file>images/qml/minus-circle.svg</file>
+        <file>images/qml/play-circle.svg</file>
+        <file>images/qml/alert-triangle.png</file>
+        <file>images/qml/alert-triangle@2x.png</file>
+        <file>images/qml/alert-triangle@3x.png</file>
+        <file>images/qml/device-centre-update.png</file>
+        <file>images/qml/device-centre-update@2x.png</file>
+        <file>images/qml/device-centre-update@3x.png</file>
+        <file>images/qml/device_center/tool.svg</file>
+        <file>images/qml/multidevices.png</file>
+        <file>images/qml/multidevices@2x.png</file>
+        <file>images/qml/multidevices@3x.png</file>
+        <file>images/qml/power.svg</file>
     </qresource>
 </RCC>

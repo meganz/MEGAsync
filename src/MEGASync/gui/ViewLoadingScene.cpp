@@ -106,11 +106,13 @@ void ViewLoadingSceneBase::showViewCopy()
     ui->lParentViewCopyLabel->setPixmap(mViewPixmap);
     ui->wParentViewCopy->show();
     ui->wParentViewCopy->raise();
+    mMessageHandler->setLoadingViewVisible(false);
 }
 
 void ViewLoadingSceneBase::showLoadingScene()
 {
     ui->wParentViewCopy->hide();
+    mMessageHandler->setLoadingViewVisible(true);
 }
 
 LoadingSceneMessageHandler::LoadingSceneMessageHandler(Ui::ViewLoadingSceneUI *viewBaseUI, QWidget* viewBase)
@@ -162,18 +164,18 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
 {
     if(!info)
     {
-        sendLoadingMessageVisibilityChange(false);
-        mCurrentInfo.reset();
+        //sendLoadingMessageVisibilityChange(false);
+        //mCurrentInfo.reset();
     }
     else
     {
-        if(!mLoadingViewVisible)
-        {
-            mCurrentInfo = info;
-            return;
-        }
+        // if(!mLoadingViewVisible)
+        // {
+        //     mCurrentInfo = info;
+        //     return;
+        // }
 
-        if(!info->message.isEmpty() && !ui->lMessageLabel->isVisible())
+        if(!info->message.isEmpty() && !ui->wMessageContainer->isVisible())
         {
             sendLoadingMessageVisibilityChange(true);
         }
@@ -210,7 +212,7 @@ void LoadingSceneMessageHandler::updateMessage(std::shared_ptr<MessageInfo> info
         }
 
         ui->wMessageContainer->adjustSize();
-        updateMessagePos();
+        //updateMessagePos();
     }
 }
 
@@ -228,7 +230,6 @@ bool LoadingSceneMessageHandler::eventFilter(QObject *watched, QEvent *event)
             ui->bStopButton->click();
         }
     }
-
 
     return QObject::eventFilter(watched, event);
 }
@@ -255,24 +256,6 @@ void LoadingSceneMessageHandler::sendLoadingMessageVisibilityChange(bool value)
 
 void LoadingSceneMessageHandler::updateMessagePos()
 {
-    if(mFadeOutWidget)
-    {
-        if(mTopParent)
-        {
-            mFadeOutWidget->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
-        }
-        else
-        {
-            mFadeOutWidget->resize(mViewBase->size());
-            mFadeOutWidget->move(0,0);
-        }
-
-        mFadeOutWidget->stackUnder(ui->wMessageContainer);
-    }
-    else
-    {
-        ui->swLoadingViewContainer->stackUnder(ui->wMessageContainer);
-    }
 
     auto messageGeo(ui->wMessageContainer->geometry());
 
@@ -287,6 +270,29 @@ void LoadingSceneMessageHandler::updateMessagePos()
     }
 
     ui->wMessageContainer->setGeometry(messageGeo);
+
+    if(mFadeOutWidget)
+    {
+        if(mTopParent)
+        {
+            mFadeOutWidget->setGeometry(QRect(QPoint(0,0), mTopParent->size()));
+        }
+        else
+        {
+            mFadeOutWidget->resize(mViewBase->size());
+            mFadeOutWidget->move(0,0);
+        }
+
+        ui->wParentViewCopy->stackUnder(ui->wMessageContainer);
+
+        qDebug() << ui->wMessageContainer->parent() << mFadeOutWidget->parent()
+                 << ui->wMessageContainer->isVisible() << ui->wMessageContainer->geometry();
+    }
+    else
+    {
+        ui->swLoadingViewContainer->stackUnder(ui->wMessageContainer);
+    }
+
     ui->wMessageContainer->raise();
 }
 

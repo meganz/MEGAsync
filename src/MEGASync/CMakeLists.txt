@@ -5,7 +5,8 @@
 if (WIN32)
     add_executable(MEGAsync WIN32)
 elseif (APPLE)
-    add_executable(MEGAsync MACOSX_BUNDLE)
+    add_executable(MEGAsync MACOSX_BUNDLE
+        gui/ViewLoadingMessage.h gui/ViewLoadingMessage.cpp gui/ViewLoadingMessage.ui)
 else()
     add_executable(MEGAsync)
     set_target_properties(MEGAsync PROPERTIES OUTPUT_NAME "megasync")
@@ -46,7 +47,6 @@ if (WIN32)
 elseif (APPLE)
     set(RESOURCE_FILES
         ${CMAKE_CURRENT_SOURCE_DIR}/app.icns
-        ${CMAKE_CURRENT_SOURCE_DIR}/folder.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_yosemite.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/folder_bigsur.icns
         ${CMAKE_CURRENT_SOURCE_DIR}/appicon32.tiff
@@ -116,7 +116,7 @@ else()
     find_package(Qt5 REQUIRED COMPONENTS Svg)
 endif()
 
-find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick)
+find_package(Qt5 REQUIRED COMPONENTS Widgets Core Gui Network Qml Quick QuickWidgets)
 message(STATUS "Building the MEGA Desktop App with Qt v${Qt5_VERSION} from ${Qt5_DIR}")
 
 target_link_libraries(MEGAsync
@@ -132,6 +132,7 @@ target_link_libraries(MEGAsync
     Qt5::Network
     Qt5::Qml
     Qt5::Quick
+    Qt5::QuickWidgets
     MEGA::google_breakpad
 )
 
@@ -161,6 +162,11 @@ if (UNIX AND NOT APPLE)
 
     install(TARGETS MEGAsync RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
 
+    # Install GFX worker if needed
+    if(TARGET gfxworker)
+        install(TARGETS gfxworker RUNTIME) # In CMAKE_INSTALL_LIBDIR directory
+    endif()
+
     set(vcpkg_lib_folder "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/$<$<CONFIG:Debug>:debug/>lib/")
 
     install(DIRECTORY "${vcpkg_lib_folder}"
@@ -184,5 +190,15 @@ if (MSVC)
         POST_BUILD
         COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
         COMMENT "Adding display aware manifest..."
+    )
+endif()
+
+# Copy GFX worker if needed
+if(TARGET gfxworker)
+    set_target_properties(gfxworker PROPERTIES OUTPUT_NAME "mega-desktop-app-gfxworker")
+    add_custom_command(
+        TARGET MEGAsync POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:gfxworker> $<TARGET_FILE_DIR:MEGAsync>
+        COMMENT "Copying gfxworker for MEGAsync."
     )
 endif()

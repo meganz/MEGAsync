@@ -26,7 +26,12 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">#cbAlwaysUploadToLocation
+   <string notr="true">QGroupBox, QPushButton
+{
+background-color: transparent;
+}
+
+#cbAlwaysUploadToLocation
 {
     spacing: 10px;
 }

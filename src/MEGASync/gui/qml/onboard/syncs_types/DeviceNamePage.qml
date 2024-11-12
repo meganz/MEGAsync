@@ -17,15 +17,10 @@ DeviceNamePageForm {
     }
 
     footerButtons.rightPrimary.onClicked: {
-        var emptyText = deviceNameTextField.text.length === 0;
-        if(emptyText) {
-            deviceNameTextField.hint.textColor = ColorTheme.textError;
-        }
-        deviceNameTextField.error = emptyText;
-        deviceNameTextField.hint.text = emptyText ? OnboardingStrings.errorEmptyDeviceName : "";
-        deviceNameTextField.hint.visible = emptyText;
 
-        if(emptyText) {
+        let error = DeviceName.getErrorCode(onboardingAccess, deviceNameTextField.text);
+        DeviceName.showErrorRoutine(deviceNameTextField, error);
+        if (error !== DeviceName.Error.NONE) {
             return;
         }
 
@@ -35,14 +30,8 @@ DeviceNamePageForm {
     }
 
     deviceNameTextField.onTextChanged: {
-        deviceNameTextField.error = false;
-        deviceNameTextField.hint.text = "";
-        deviceNameTextField.hint.visible = false;
-
-        if(deviceNameTextField.text.length >= deviceNameTextField.textField.maximumLength) {
-            deviceNameTextField.hint.textColor = ColorTheme.textSecondary;
-            deviceNameTextField.hint.text = OnboardingStrings.errorDeviceNameLimit;
-            deviceNameTextField.hint.visible = true;
+        if(error) {
+            DeviceName.showErrorRoutine(deviceNameTextField, DeviceName.Error.NONE)
         }
     }
 

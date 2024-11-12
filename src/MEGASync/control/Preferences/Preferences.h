@@ -1,17 +1,17 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H
 
-#include <megaapi.h>
 #include "EncryptedSettings.h"
-#include "SyncInfo.h"
 #include "EphemeralCredentials.h"
-
-#include <QLocale>
-#include <QStringList>
-#include <QMutex>
-#include <QDataStream>
+#include "SyncInfo.h"
 
 #include <chrono>
+#include <megaapi.h>
+#include <memory>
+#include <QDataStream>
+#include <QLocale>
+#include <QMutex>
+#include <QStringList>
 #include <type_traits>
 
 Q_DECLARE_METATYPE(QList<long long>)
@@ -417,6 +417,11 @@ public:
     void setThemeType(ThemeType theme);
     ThemeType getThemeType();
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    void setGfxWorkerEndpointInGeneral(const QString& endpoint);
+    QString getGfxWorkerEndpointInGeneral();
+#endif
+
     enum {
         PROXY_TYPE_NONE = 0,
         PROXY_TYPE_AUTO   = 1,
@@ -515,6 +520,10 @@ public:
     static unsigned int MUTEX_STEALER_PERIOD_MS; //periodicity (how often)
     static unsigned int MUTEX_STEALER_PERIOD_ONLY_ONCE; //if only done once
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    static unsigned int GFXWORKER_KEEPALIVE_S;
+#endif
+
     static const QString UPDATE_CHECK_URL;
     static const QString CRASH_REPORT_URL;
     static const QString UPDATE_FOLDER_NAME;
@@ -552,6 +561,8 @@ public:
 
     //In this section, you need to move the keys to make them accessible from outside
     static const int minSyncStateChangeProcessingIntervalMs;
+
+    static int lastVersionUponStartup;
 
 protected:
     QMutex mutex;
@@ -749,6 +760,9 @@ protected:
     static const QString lastDailyStatTimeKey;
     static const QString askOnExclusionRemove;
     static const QString themeKey;
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    static const QString gfxWorkerEndpointKey;
+#endif
 
     //Sleep mode
     static const QString awakeIfActiveKey;
@@ -803,6 +817,7 @@ protected:
     static const bool defaultDownloadMegaLinksEnabled;
     static const bool defaultSystemTrayPromptSuppressed;
     static const bool defaultAskOnExclusionRemove;
+
     static const ThemeType defaultTheme;
 
 private:

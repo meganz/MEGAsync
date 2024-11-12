@@ -8,3 +8,4 @@ singleton Utilities 1.0 Utilities.qml
 singleton OS 1.0 OS.qml
 singleton ColorTheme 1.0 ColorTheme.qml
 singleton Strings 1.0 Strings.qml
+singleton DeviceName 1.0 DeviceName.qml

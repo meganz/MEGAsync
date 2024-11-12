@@ -87,10 +87,12 @@ sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 
 pre_upgrade() {
 killall -s SIGUSR1 megasync 2> /dev/null || true
+killall mega-desktop-app-gfxworker 2> /dev/null || true
 }
 
 pre_remove() {
 killall megasync 2> /dev/null || true
+killall mega-desktop-app-gfxworker 2> /dev/null || true
 username=$SUDO_USER 2> /dev/null || true
 # Check if the variable is empty (e.g. if the script is not executed with sudo)
 [ -z "$username" ] && username=$(whoami) 2> /dev/null || true

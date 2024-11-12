@@ -11,12 +11,13 @@ Item{
     property alias titleText: title.text
     property alias descriptionText: secondaryText.text
 
-    readonly property int imageDimension: 120
+    readonly property int imageDimension: 128
     readonly property int majorSpacing: Constants.defaultComponentSpacing
     readonly property int minorSpacing: 12
 
-    width: 233
 
+    width: 248
+    height: image.height + title.height + secondaryText.height + majorSpacing + minorSpacing
     Image {
         id: image
 
@@ -66,6 +67,6 @@ Item{
         verticalAlignment: Text.AlignVCenter
         color: ColorTheme.textSecondary
         lineHeightMode: Text.FixedHeight
-        lineHeight: 12
+        lineHeight: 18
     }
 } // Rectangle: root

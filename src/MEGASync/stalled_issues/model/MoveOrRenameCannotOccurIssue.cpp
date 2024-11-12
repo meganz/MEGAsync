@@ -316,14 +316,17 @@ bool MoveOrRenameCannotOccurIssue::solveParentFolderDoesNotExist(StalledIssueSPt
 
             QFileInfo currentPath(cloudData->getNativeMoveFilePath());
 
-            std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByPath(
-                currentPath.absolutePath().toStdString().c_str()));
+            std::unique_ptr<mega::MegaNode> node(
+                MegaSyncApp->getMegaApi()->getNodeByPath(currentPath.path().toStdString().c_str()));
 
             if (!node)
             {
-                std::shared_ptr<mega::MegaError> error(nullptr);
-                MEGAPathCreator::mkDir(QString(), currentPath.absolutePath(), error);
-                issueIsSolved = error == nullptr ? true : false;
+                // Try to restore removed node by path
+                // If not possible, mark it as failed
+                issueIsSolved = Utilities::restoreNode(currentPath.fileName().toStdString().c_str(),
+                                                       currentPath.path().toStdString().c_str(),
+                                                       MegaSyncApp->getMegaApi(),
+                                                       nullptr);
             }
             else
             {
@@ -385,10 +388,12 @@ bool MoveOrRenameCannotOccurIssue::solveLocalGenericIssues(StalledIssueSPtr issu
             {
                 if (targetNode && targetNode->isFolder())
                 {
-                    MergeMEGAFolders mergeItem(targetNode.get());
-                    mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                     // Don´t handle error, if it fails, we will have a name conflict, but nothing
                     // important
+                    MergeMEGAFolders::merge(
+                        targetNode.get(),
+                        nullptr,
+                        MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                 }
 
                 mUndoSuccessful--;

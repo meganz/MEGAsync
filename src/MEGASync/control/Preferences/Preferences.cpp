@@ -63,6 +63,10 @@ unsigned int Preferences::MUTEX_STEALER_MS                    = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_MS             = 0;
 unsigned int Preferences::MUTEX_STEALER_PERIOD_ONLY_ONCE      = 0;
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+unsigned int Preferences::GFXWORKER_KEEPALIVE_S = 60u;
+#endif
+
 const unsigned short Preferences::HTTP_PORT                   = 6341;
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
@@ -256,6 +260,9 @@ const QString Preferences::systemTrayLastPromptTimestamp = QString::fromLatin1("
 const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDailyStatTimeKey");
 const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
 const QString Preferences::themeKey = QString::fromLatin1("themeType");
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+const QString Preferences::gfxWorkerEndpointKey = QString::fromLatin1("gfxWorkerEndpoint");
+#endif
 
 //Sleep settings
 const QString Preferences::awakeIfActiveKey = QString::fromLatin1("sleepIfInactiveEnabledKey");
@@ -309,6 +316,8 @@ const Preferences::ThemeType Preferences::defaultTheme = Preferences::ThemeType:
 const bool Preferences::defaultAskOnExclusionRemove = true;
 
 const int Preferences::minSyncStateChangeProcessingIntervalMs = 200;
+
+int Preferences::lastVersionUponStartup = 0;
 
 std::shared_ptr<Preferences> Preferences::instance()
 {
@@ -2552,6 +2561,45 @@ Preferences::ThemeType Preferences::getThemeType()
     return static_cast<ThemeType>(value);
 }
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+void Preferences::setGfxWorkerEndpointInGeneral(const QString& endpoint)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        mSettings->endGroup();
+        currentAccount = mSettings->value(currentAccountKey).toString();
+    }
+
+    mSettings->setValue(gfxWorkerEndpointKey, endpoint);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+}
+
+QString Preferences::getGfxWorkerEndpointInGeneral()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        mSettings->endGroup();
+        currentAccount = mSettings->value(currentAccountKey).toString();
+    }
+
+    QString value = getValue<QString>(gfxWorkerEndpointKey);
+    if (!currentAccount.isEmpty())
+    {
+        mSettings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+#endif
+
 void Preferences::setEmailAndGeneralSettings(const QString &email)
 {
     int proxyType = this->proxyType();
@@ -2592,6 +2640,7 @@ void Preferences::login(QString account)
     readFolders();
     loadExcludedSyncNames();
     int lastVersion = mSettings->value(lastVersionKey).toInt();
+    lastVersionUponStartup = lastVersion;
     if (lastVersion != Preferences::VERSION_CODE)
     {
         if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))

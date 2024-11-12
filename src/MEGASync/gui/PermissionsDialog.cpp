@@ -61,3 +61,13 @@ void PermissionsDialog::permissionsChanged()
                                                              .arg(ui->wFileGroup->getCurrentPermissions())
                                                              .arg(ui->wFilePublic->getCurrentPermissions()));
 }
+
+void PermissionsDialog::on_bUpdate_clicked()
+{
+    accept();
+}
+
+void PermissionsDialog::on_bCancel_clicked()
+{
+    reject();
+}

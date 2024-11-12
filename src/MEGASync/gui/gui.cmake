@@ -42,6 +42,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/CircularUsageProgressBar.h
     gui/HighDpiResize.h
     gui/BugReportDialog.h
+    gui/ProgressIndicatorDialog.h
     gui/VerifyLockMessage.h
     gui/ViewLoadingScene.h
     gui/MegaInfoMessage.h
@@ -51,7 +52,6 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SwitchButton.h
     gui/GuiUtilities.h
     gui/CancelConfirmWidget.h
-    gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
@@ -73,6 +73,9 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlClipboard.h
     gui/qml/QmlDialog.h
     gui/qml/QmlDialogWrapper.h
+    gui/qml/QmlWidgetWrapper.h
+    gui/qml/QmlInstancesManager.h
+    gui/qml/QmlItem.h
     gui/qml/QmlDialogManager.h
     gui/qml/QmlManager.h
     gui/qml/QmlTheme.h
@@ -83,6 +86,10 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/qml/QmlDeviceName.h
     gui/qml/AccountInfoData.h
     gui/qml/WhatsNewWindow.h
+    gui/qml/UpdatesList.h
+    gui/qml/WhatsNewController.h
+    gui/qml/UpdatesModel.h
+    gui/qml/QmlUtils.h
     gui/onboarding/Onboarding.h
     gui/onboarding/PasswordStrengthChecker.h
     gui/onboarding/GuestQmlDialog.h
@@ -95,10 +102,8 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
-    gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
-    gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
@@ -162,6 +167,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/QRWidget.cpp
     gui/CircularUsageProgressBar.cpp
     gui/BugReportDialog.cpp
+    gui/ProgressIndicatorDialog.cpp
     gui/VerifyLockMessage.cpp
     gui/MegaInfoMessage.cpp
     gui/ViewLoadingScene.cpp
@@ -171,7 +177,6 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SwitchButton.cpp
     gui/GuiUtilities.cpp
     gui/CancelConfirmWidget.cpp
-    gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
@@ -193,6 +198,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlClipboard.cpp
     gui/qml/QmlDialog.cpp
     gui/qml/QmlDialogWrapper.cpp
+    gui/qml/QmlWidgetWrapper.cpp
+    gui/qml/QmlInstancesManager.cpp
+    gui/qml/QmlItem.cpp
     gui/qml/QmlDialogManager.cpp
     gui/qml/QmlManager.cpp
     gui/qml/QmlTheme.cpp
@@ -202,6 +210,9 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/qml/QmlDeviceName.cpp
     gui/qml/AccountInfoData.cpp
     gui/qml/WhatsNewWindow.cpp
+    gui/qml/WhatsNewController.cpp
+    gui/qml/UpdatesModel.cpp
+    gui/qml/QmlUtils.cpp
     gui/onboarding/Onboarding.cpp
     gui/onboarding/PasswordStrengthChecker.cpp
     gui/onboarding/GuestQmlDialog.cpp
@@ -214,10 +225,8 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
-    gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
-    gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
@@ -248,9 +257,6 @@ target_sources_conditional(MEGAsync
     gui/win/ImportMegaLinksDialog.ui
     gui/win/ImportListWidgetItem.ui
     gui/win/CrashReportDialog.ui
-    gui/win/SettingsDialog.ui
-    gui/win/AccountDetailsDialog.ui
-    gui/win/DownloadFromMegaDialog.ui
     gui/win/ChangeLogDialog.ui
     gui/win/StreamingFromMegaDialog.ui
     gui/win/MegaProgressCustomDialog.ui
@@ -258,24 +264,18 @@ target_sources_conditional(MEGAsync
     gui/win/UpgradeDialog.ui
     gui/win/StatusInfo.ui
     gui/win/PSAwidget.ui
-    gui/win/RemoteItemUi.ui
     gui/win/UpgradeOverStorage.ui
-    gui/win/ChangePassword.ui
     gui/win/Login2FA.ui
     gui/win/AlertItem.ui
     gui/win/FilterAlertWidget.ui
     gui/win/AlertFilterType.ui
-    gui/win/BugReportDialog.ui
     gui/win/LockedPopOver.ui
     gui/win/VerifyLockMessage.ui
     gui/win/MegaInfoMessage.ui
     gui/win/OverQuotaDialog.ui
-    gui/win/ProxySettings.ui
-    gui/win/BandwidthSettings.ui
     gui/win/ScanningWidget.ui
     gui/win/CancelConfirmWidget.ui
     gui/win/NodeNameSetterDialog.ui
-    gui/win/NotificationsSettings.ui
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
     gui/win/NotificationItem.ui
@@ -297,35 +297,24 @@ target_sources_conditional(MEGAsync
    gui/macx/ImportMegaLinksDialog.ui
    gui/macx/ImportListWidgetItem.ui
    gui/macx/CrashReportDialog.ui
-   gui/macx/SettingsDialog.ui
-   gui/macx/AccountDetailsDialog.ui
-   gui/macx/DownloadFromMegaDialog.ui
    gui/macx/ChangeLogDialog.ui
    gui/macx/StreamingFromMegaDialog.ui
-   gui/macx/PermissionsDialog.ui
-   gui/macx/PermissionsWidget.ui
    gui/macx/MegaProgressCustomDialog.ui
    gui/macx/PlanWidget.ui
    gui/macx/UpgradeDialog.ui
    gui/macx/StatusInfo.ui
    gui/macx/PSAwidget.ui
-   gui/macx/RemoteItemUi.ui
    gui/macx/UpgradeOverStorage.ui
-   gui/macx/ChangePassword.ui
    gui/macx/Login2FA.ui
    gui/macx/AlertItem.ui
    gui/macx/FilterAlertWidget.ui
    gui/macx/AlertFilterType.ui
-   gui/macx/BugReportDialog.ui
    gui/macx/VerifyLockMessage.ui
    gui/macx/MegaInfoMessage.ui
    gui/macx/OverQuotaDialog.ui
-   gui/macx/ProxySettings.ui
-   gui/macx/BandwidthSettings.ui
    gui/macx/ScanningWidget.ui
    gui/macx/CancelConfirmWidget.ui
    gui/macx/NodeNameSetterDialog.ui
-   gui/macx/NotificationsSettings.ui
    gui/macx/LowDiskSpaceDialog.ui
    gui/macx/ViewLoadingScene.ui
    gui/macx/NotificationItem.ui
@@ -336,7 +325,6 @@ target_sources_conditional(MEGAsync
    gui/macx/LockedPopOver.ui
    gui/macx/AccountTypeWidget.ui
 )
-
 
 target_sources_conditional(MEGAsync
     FLAG UNIX AND NOT APPLE
@@ -349,37 +337,26 @@ target_sources_conditional(MEGAsync
     gui/linux/ImportMegaLinksDialog.ui
     gui/linux/ImportListWidgetItem.ui
     gui/linux/CrashReportDialog.ui
-    gui/linux/SettingsDialog.ui
-    gui/linux/AccountDetailsDialog.ui
-    gui/linux/DownloadFromMegaDialog.ui
     gui/linux/ChangeLogDialog.ui
     gui/linux/StreamingFromMegaDialog.ui
-    gui/linux/PermissionsDialog.ui
-    gui/linux/PermissionsWidget.ui
     gui/linux/MegaProgressCustomDialog.ui
     gui/linux/PlanWidget.ui
     gui/linux/UpgradeDialog.ui
     gui/linux/StatusInfo.ui
     gui/linux/PSAwidget.ui
     gui/linux/UpgradeOverStorage.ui
-    gui/linux/ChangePassword.ui
     gui/linux/Login2FA.ui
     gui/linux/AlertItem.ui
     gui/linux/FilterAlertWidget.ui
     gui/linux/AlertFilterType.ui
-    gui/linux/BugReportDialog.ui
     gui/linux/LockedPopOver.ui
     gui/linux/VerifyLockMessage.ui
     gui/linux/MegaInfoMessage.ui
     gui/linux/OverQuotaDialog.ui
-    gui/linux/ProxySettings.ui
-    gui/linux/BandwidthSettings.ui
     gui/linux/CancelConfirmWidget.ui
     gui/linux/ScanningWidget.ui
     gui/linux/NodeNameSetterDialog.ui
-    gui/linux/NotificationsSettings.ui
     gui/linux/LowDiskSpaceDialog.ui
-    gui/linux/RemoteItemUi.ui
     gui/linux/ViewLoadingScene.ui
     gui/linux/NotificationItem.ui
     gui/linux/AccountTypeWidget.ui
@@ -403,14 +380,11 @@ target_sources_conditional(MEGAsync
    QT_AWARE
    PRIVATE
    gui/CocoaHelpButton.mm
-   gui/CocoaSwitchButton.mm
    gui/QMacSpinningProgressIndicator.mm
    gui/QSegmentedControl.mm
    gui/QMacSpinningProgressIndicator.h
    gui/CocoaHelpButton.h
-   gui/CocoaSwitchButton.h
    gui/QSegmentedControl.h
-   gui/images/Images.xcassets
    gui/macx/LockedPopOver.ui
 )
 
@@ -429,17 +403,17 @@ target_sources_conditional(MEGAsync
 if (WIN32)
     set_property(TARGET MEGAsync
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/win gui/node_selector/gui/win
+        gui/win gui/node_selector/gui/win gui/ui
     )
 elseif (APPLE)
     set_property(TARGET MEGAsync
         PROPERTY AUTOUIC_SEARCH_PATHS
-        gui/macx gui/node_selector/gui/macx
+        gui/macx gui/node_selector/gui/macx gui/ui
     )
     elseif(UNIX)
         set_property(TARGET MEGAsync
             PROPERTY AUTOUIC_SEARCH_PATHS
-            gui/linux gui/node_selector/gui/linux
+            gui/linux gui/node_selector/gui/linux gui/ui
         )
 endif()
 
@@ -469,6 +443,7 @@ set_source_files_properties(${DESKTOP_APP_TS_FILES} PROPERTIES OUTPUT_LOCATION $
 qt5_add_translation(DESKTOP_APP_QM_FILES ${DESKTOP_APP_TS_FILES})
 
 set(DESKTOP_APP_GUI_RESOURCES
+    gui/Resources.qrc
     gui/Resources_qml.qrc
     gui/qml/qml.qrc
 )
@@ -477,15 +452,35 @@ list(APPEND QML_IMPORT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/gui/qml)
 list(REMOVE_DUPLICATES QML_IMPORT_PATH)
 set(QML_IMPORT_PATH ${QML_IMPORT_PATH} CACHE STRING "Qt Creator extra qml import paths" FORCE)
 
-if (CMAKE_HOST_APPLE)
-    add_custom_command(
-            TARGET MEGAsync
-            POST_BUILD
-            COMMAND xcrun actool --compile "$<TARGET_FILE_DIR:MEGAsync>/../Resources" --output-format human-readable-text --platform macosx --minimum-deployment-target ${CMAKE_OSX_DEPLOYMENT_TARGET} "${CMAKE_CURRENT_SOURCE_DIR}/gui/images/Images.xcassets"
-            COMMENT "Building Assets.car in Resources..."
-            VERBATIM
-            )
-endif()
+set (DESKTOP_APP_GUI_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BugReportDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ChangePassword.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BandwidthSettings.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/PermissionsWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ProxySettings.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
+)
+
+set (DESKTOP_APP_GUI_UI_FILES_ROOT
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SettingsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
+)
+
+list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
+list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
+
+target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
+target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
 target_sources(MEGAsync
     PRIVATE
@@ -493,6 +488,7 @@ target_sources(MEGAsync
     ${DESKTOP_APP_GUI_SOURCES}
     ${DESKTOP_APP_GUI_RESOURCES}
     ${DESKTOP_APP_QM_FILES}
+    ${DESKTOP_APP_GUI_UI_FILES}
 )
 
 target_include_directories(MEGAsync PRIVATE
@@ -510,6 +506,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/SyncExclusions
     ${CMAKE_CURRENT_LIST_DIR}/backups
     ${CMAKE_CURRENT_LIST_DIR}/syncs
+    ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
 )

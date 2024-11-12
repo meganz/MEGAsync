@@ -107,6 +107,7 @@ pipeline {
                                 ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
                                 cd ${buildDir}
                                 ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
+                                ${JF_PATH}\\jf rt upload mega-desktop-app-gfxworker.pdb ${ART_UPLOAD_PATH}
                                 ${JF_PATH}\\jf rt upload SDKlib.pdb ${ART_UPLOAD_PATH}
                                 ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
                                 ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}

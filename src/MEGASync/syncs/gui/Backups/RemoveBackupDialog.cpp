@@ -1,10 +1,12 @@
 #include "RemoveBackupDialog.h"
-#include "ui_RemoveBackupDialog.h"
-#include "MegaApplication.h"
-#include "NodeSelectorSpecializations.h"
-#include "MegaNodeNames.h"
-#include "Utilities.h"
+
 #include "DialogOpener.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "NodeSelectorSpecializations.h"
+#include "ProxyStatsEventHandler.h"
+#include "ui_RemoveBackupDialog.h"
+#include "Utilities.h"
 
 #include <QButtonGroup>
 
@@ -23,7 +25,6 @@ RemoveBackupDialog::RemoveBackupDialog(std::shared_ptr<SyncSettings> backup, QWi
     connect(mUi->rDeleteFolder, &QRadioButton::toggled, this, &RemoveBackupDialog::OnDeleteSelected);
     connect(mUi->bChange, &QPushButton::clicked, this, &RemoveBackupDialog::OnChangeButtonClicked);
 
-    mUi->bConfirm->setEnabled(false);
     mUi->moveToContainer->setEnabled(false);
     mUi->lTarget->setText(MegaNodeNames::getRootNodeName(MegaSyncApp->getRootNode().get())
                           .append(QLatin1Char('/')));
@@ -49,12 +50,16 @@ mega::MegaHandle RemoveBackupDialog::targetFolder()
 
 void RemoveBackupDialog::OnDeleteSelected()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED);
     mUi->bConfirm->setEnabled(true);
     mUi->moveToContainer->setEnabled(false);
 }
 
 void RemoveBackupDialog::OnMoveSelected()
 {
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER);
     mUi->bConfirm->setEnabled(true);
     mUi->moveToContainer->setEnabled(true);
 }

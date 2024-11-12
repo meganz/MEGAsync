@@ -217,16 +217,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-    ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
-
-#ifdef __APPLE__
-    auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) //Issues with mavericks and popup management
-    {
-        installEventFilter(this);
-    }
-#endif
-
 #ifdef Q_OS_LINUX
     installEventFilter(this);
 #endif
@@ -1280,16 +1270,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
 
 #endif
-#ifdef __APPLE__
-    auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) //manage spontaneus mouse press events
-    {
-        if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
-        {
-            return true;
-        }
-    }
-#endif
 
     return QDialog::eventFilter(obj, e);
 }
@@ -1568,30 +1548,27 @@ void InfoDialog::on_bDismissSyncSettings_clicked()
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    MegaSyncApp->openDeviceCentre();
 }
 
 void InfoDialog::on_bDismissBackupsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
+    MegaSyncApp->openDeviceCentre();
 }
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
+    MegaSyncApp->openDeviceCentre();
 }
 
 int InfoDialog::getLoggedInMode() const

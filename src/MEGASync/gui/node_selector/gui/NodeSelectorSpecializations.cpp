@@ -17,6 +17,10 @@
 UploadNodeSelector::UploadNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new UploadType), parent)
 {
+}
+
+void UploadNodeSelector::createSpecialisedWidgets()
+{
     ui->fBackups->hide();
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -25,6 +29,8 @@ UploadNodeSelector::UploadNodeSelector(QWidget* parent):
     mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
+
+    NodeSelector::createSpecialisedWidgets();
 }
 
 void UploadNodeSelector::checkSelection()
@@ -55,10 +61,16 @@ void UploadNodeSelector::checkSelection()
     }
 }
 
+/////////////////////////////////////////////////////////////
 DownloadNodeSelector::DownloadNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new DownloadType), parent)
 {
     setWindowTitle(tr("Download"));
+
+}
+
+void DownloadNodeSelector::createSpecialisedWidgets()
+{
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
@@ -68,6 +80,8 @@ DownloadNodeSelector::DownloadNodeSelector(QWidget* parent):
     mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
+
+    NodeSelector::createSpecialisedWidgets();
 }
 
 void DownloadNodeSelector::checkSelection()
@@ -115,8 +129,18 @@ void DownloadNodeSelector::checkSelection()
     }
 }
 
+/////////////////////////////////////////////////////////////
 SyncNodeSelector::SyncNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new SyncType), parent)
+{
+    if (isFullSync())
+    {
+        ui->fCloudDrive->setVisible(false);
+        emit ui->bShowIncomingShares->clicked();
+    }
+}
+
+void SyncNodeSelector::createSpecialisedWidgets()
 {
     ui->fBackups->hide();
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
@@ -127,12 +151,9 @@ SyncNodeSelector::SyncNodeSelector(QWidget* parent):
     mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
     ui->stackedWidget->addWidget(mIncomingSharesWidget);
 
-    if (isFullSync())
-    {
-        ui->fCloudDrive->setVisible(false);
-        emit ui->bShowIncomingShares->clicked();
-    }
+    NodeSelector::createSpecialisedWidgets();
 }
+
 
 bool SyncNodeSelector::isFullSync()
 {
@@ -188,8 +209,14 @@ void SyncNodeSelector::checkSelection()
     }
 }
 
+/////////////////////////////////////////////////////////////
 StreamNodeSelector::StreamNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new StreamType), parent)
+{
+
+}
+
+void StreamNodeSelector::createSpecialisedWidgets()
 {
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
@@ -200,6 +227,8 @@ StreamNodeSelector::StreamNodeSelector(QWidget* parent):
     mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
     mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
     ui->stackedWidget->addWidget(mBackupsWidget);
+
+    NodeSelector::createSpecialisedWidgets();
 }
 
 void StreamNodeSelector::checkSelection()
@@ -234,10 +263,26 @@ void StreamNodeSelector::checkSelection()
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new CloudDriveType), parent)
 {
+    setWindowTitle(MegaNodeNames::getCloudDriveName());
+
     mDragBackDrop = new QWidget(this);
     mDragBackDrop->hide();
 
-    setWindowTitle(MegaNodeNames::getCloudDriveName());
+    ui->fRubbish->show();
+    resize(1280,800);
+    setAcceptDrops(true);
+
+#ifndef Q_OS_MACOS
+    Qt::WindowFlags flags = Qt::Window;
+    this->setWindowFlags(flags);
+#ifdef Q_OS_LINUX
+    this->setWindowFlags(this->windowFlags());
+#endif
+#endif
+}
+
+void CloudDriveNodeSelector::createSpecialisedWidgets()
+{
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     ui->stackedWidget->addWidget(mCloudDriveWidget);
@@ -250,20 +295,10 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
     mRubbishWidget = new NodeSelectorTreeViewWidgetRubbish(mSelectType);
     mRubbishWidget->setObjectName(QString::fromUtf8("Rubbish"));
     ui->stackedWidget->addWidget(mRubbishWidget);
-    ui->fRubbish->show();
-    resize(1280,800);
-    setAcceptDrops(true);
+
     enableDragAndDrop(true);
 
-    makeModelConntections();
-
-#ifndef Q_OS_MACOS
-    Qt::WindowFlags flags = Qt::Window;
-    this->setWindowFlags(flags);
-#ifdef Q_OS_LINUX
-    this->setWindowFlags(this->windowFlags());
-#endif
-#endif
+    NodeSelector::createSpecialisedWidgets();
 }
 
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
@@ -318,49 +353,22 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
 }
 
-void CloudDriveNodeSelector::makeModelConntections()
-{
-    auto model = mCloudDriveWidget->getProxyModel()->getMegaModel();
-    connect(model,
-            &NodeSelectorModel::updateLoadingMessage,
-            this,
-            &NodeSelector::onUpdateLoadingMessage);
-    connect(model,
-            &NodeSelectorModel::showMessageBox,
-            this,
-            [this](QMegaMessageBox::MessageBoxInfo info)
-            {
-                info.parent = this;
-                QMegaMessageBox::warning(info);
-            });
-    connect(model,
-            &NodeSelectorModel::showDuplicatedNodeDialog,
-            this,
-            [this, model](std::shared_ptr<ConflictTypes> conflicts)
-            {
-                auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
-                checkUploadNameDialog->setConflicts(conflicts);
-
-                DialogOpener::showDialog<DuplicatedNodeDialog>(
-                    checkUploadNameDialog,
-                    [model, conflicts]()
-                    {
-                        model->moveNodesAfterConflictCheck(conflicts);
-                    });
-            });
-}
-
 ////////////////////////////////
 MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new MoveBackupType), parent)
 {
     ui->fBackups->hide();
     ui->fIncomingShares->hide();
+}
+
+void MoveBackupNodeSelector::createSpecialisedWidgets()
+{
     mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
     mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
     mCloudDriveWidget->setShowEmptyView(false);
     ui->stackedWidget->addWidget(mCloudDriveWidget);
 }
+
 void MoveBackupNodeSelector::checkSelection()
 {
     accept();

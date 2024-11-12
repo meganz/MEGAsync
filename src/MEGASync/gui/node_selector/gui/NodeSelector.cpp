@@ -10,6 +10,7 @@
 #include "QMegaMessageBox.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
+#include "DuplicatedNodeDialog.h"
 
 #include <optional>
 #include <QKeyEvent>
@@ -26,12 +27,10 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     mMegaApi(MegaSyncApp->getMegaApi()),
     ui(new Ui::NodeSelector),
     mSelectType(selectType),
-    mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this))
+    mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
+    mInitialised(false)
 {
     ui->setupUi(this);
-
-    createSearchWidget();
-    makeConnections();
 
     mMegaApi->addListener(mDelegateListener.get());
 
@@ -174,6 +173,18 @@ void NodeSelector::mousePressEvent(QMouseEvent *event)
     QDialog::mousePressEvent(event);
 }
 
+void NodeSelector::showEvent(QShowEvent*)
+{
+    if(!mInitialised)
+    {
+        createSpecialisedWidgets();
+        createSearchWidget();
+        initSpecialisedWidgets();
+
+        mInitialised = true;
+    }
+}
+
 void NodeSelector::onbOkClicked()
 {
     for(int page = 0; page < ui->stackedWidget->count(); ++page)
@@ -203,7 +214,7 @@ void NodeSelector::on_tClearSearchResultNS_clicked()
 void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
 {
     auto viewContainer = getCurrentTreeViewWidget();
-    if (viewContainer)
+    if (viewContainer && viewContainer->getProxyModel()->getMegaModel() == sender())
     {
         viewContainer->updateLoadingMessage(message);
     }
@@ -432,7 +443,7 @@ void NodeSelector::showNotFoundNodeMessageBox()
     QMegaMessageBox::warning(msgInfo);
 }
 
-void NodeSelector::makeConnections()
+void NodeSelector::initSpecialisedWidgets()
 {
     NodeSelectorModel* model(nullptr);
 
@@ -457,16 +468,40 @@ void NodeSelector::makeConnections()
                 connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestored, this, &NodeSelector::onItemsRestored, Qt::UniqueConnection);
             }
 
-            // if (!model)
-            {
-                model = viewContainer->getProxyModel()->getMegaModel();
-                connect(model,
-                        &NodeSelectorModel::updateLoadingMessage,
-                        this,
-                        &NodeSelector::onUpdateLoadingMessage);
-            }
+            model = viewContainer->getProxyModel()->getMegaModel();
+
+            connect(model,
+                    &NodeSelectorModel::updateLoadingMessage,
+                    this,
+                    &NodeSelector::onUpdateLoadingMessage);
+
+            connect(model,
+                    &NodeSelectorModel::showMessageBox,
+                    this,
+                    [this](QMegaMessageBox::MessageBoxInfo info)
+                    {
+                        info.parent = this;
+                        QMegaMessageBox::warning(info);
+                    });
+            connect(model,
+                    &NodeSelectorModel::showDuplicatedNodeDialog,
+                    this,
+                    [this, model](std::shared_ptr<ConflictTypes> conflicts)
+                    {
+                        auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
+                        checkUploadNameDialog->setConflicts(conflicts);
+
+                        DialogOpener::showDialog<DuplicatedNodeDialog>(
+                            checkUploadNameDialog,
+                            [model, conflicts]()
+                            {
+                                model->moveNodesAfterConflictCheck(conflicts);
+                            });
+                    });
         }
     }
+
+
 }
 
 void NodeSelector::createSearchWidget()

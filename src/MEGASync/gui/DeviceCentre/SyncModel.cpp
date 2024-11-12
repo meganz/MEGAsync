@@ -1,5 +1,6 @@
 #include "SyncModel.h"
 
+#include "SyncInfo.h"
 #include "Utilities.h"
 
 #include <algorithm>
@@ -8,7 +9,12 @@
 
 SyncModel::SyncModel(QObject* parent):
     QAbstractListModel(parent)
-{}
+{
+    connect(SyncInfo::instance(),
+            &SyncInfo::syncRemoteRootChanged,
+            this,
+            &SyncModel::onSyncRootChanged);
+}
 
 QHash<int, QByteArray> SyncModel::roleNames() const
 {
@@ -16,9 +22,11 @@ QHash<int, QByteArray> SyncModel::roleNames() const
         {TYPE,          "type"        },
         {NAME,          "name"        },
         {SIZE,          "size"        },
-        {DATE_ADDED,    "dateAdded"   },
         {DATE_MODIFIED, "dateModified"},
-        {STATUS,        "status"      }
+        {STATUS,        "status"      },
+        {ERROR_MESSAGE, "errorMessage"},
+        {LOCAL_PATH,    "localPath"   },
+        {REMOTE_PATH,   "remotePath"  }
     };
     return roles;
 }
@@ -32,7 +40,7 @@ void SyncModel::add(const QmlSyncData& newSync)
 
 void SyncModel::addOrUpdate(const QmlSyncData& newSync)
 {
-    auto row = findRowByHandle(newSync.handle);
+    auto row = findRowByHandle(newSync.syncID);
     if (!row.has_value())
     {
         add(newSync);
@@ -51,13 +59,12 @@ void SyncModel::remove(mega::MegaHandle handle)
     if (!row.has_value())
         return;
 
-    auto remover = [handle](const QmlSyncData& obj) {
-        return obj.handle == handle;
-    };
-
-    beginRemoveRows(QModelIndex(), row.value(), row.value());
-    std::ignore = std::remove_if(mSyncObjects.begin(), mSyncObjects.end(), remover);
-    endRemoveRows();
+    if (row.has_value())
+    {
+        beginRemoveRows(QModelIndex(), row.value(), row.value());
+        mSyncObjects.removeAt(row.value());
+        endRemoveRows();
+    }
 }
 
 void SyncModel::clear()
@@ -67,8 +74,9 @@ void SyncModel::clear()
 
 std::optional<int> SyncModel::findRowByHandle(mega::MegaHandle handle) const
 {
-    auto finder = [handle](const QmlSyncData& obj) {
-        return obj.handle == handle;
+    auto finder = [handle](const QmlSyncData& obj)
+    {
+        return obj.syncID == handle;
     };
     auto itSyncObj = std::find_if(mSyncObjects.begin(), mSyncObjects.end(), finder);
     if (itSyncObj != mSyncObjects.end())
@@ -154,14 +162,20 @@ QVariant SyncModel::data(const QModelIndex& index, int role) const
         case SIZE:
             result = getSize(row);
             break;
-        case DATE_ADDED:
-            result = getDateAdded(row);
-            break;
         case DATE_MODIFIED:
             result = getDateModified(row);
             break;
         case STATUS:
             result = getStatus(row);
+            break;
+        case ERROR_MESSAGE:
+            result = getErrorMessage(row);
+            break;
+        case LOCAL_PATH:
+            result = getLocalFolder(row);
+            break;
+        case REMOTE_PATH:
+            result = getRemoteFolder(row);
             break;
 
         default:
@@ -182,13 +196,7 @@ QString SyncModel::getSize(int row) const
 
 QmlSyncType::Type SyncModel::getType(int row) const
 {
-    return mSyncObjects[row].type == QString::fromUtf8("Sync") ? QmlSyncType::SYNC :
-                                                                 QmlSyncType::BACKUP;
-}
-
-QDate SyncModel::getDateAdded(int row) const
-{
-    return mSyncObjects[row].dateAdded.date();
+    return mSyncObjects[row].type;
 }
 
 QDate SyncModel::getDateModified(int row) const
@@ -199,4 +207,91 @@ QDate SyncModel::getDateModified(int row) const
 SyncStatus::Value SyncModel::getStatus(int row) const
 {
     return mSyncObjects[row].status;
+}
+
+QString SyncModel::getErrorMessage(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
+    if (syncSetting)
+    {
+        if (syncSetting->getError() == mega::MegaSync::LOCAL_PATH_UNAVAILABLE)
+        {
+            if (getType(row) == QmlSyncType::SYNC)
+            {
+                return tr("We can't find the folder you're trying to sync. Make sure the folder "
+                          "hasn't been moved, renamed, or deleted and try again.")
+                    .arg(getName(row));
+            }
+            else // Backup
+            {
+                return tr("We can't find the folder you're trying to back up. Make sure the folder "
+                          "hasn't been moved, renamed, or deleted and try again.")
+                    .arg(getName(row));
+            }
+        }
+        else if (syncSetting->getError() == mega::MegaSync::LOGGED_OUT)
+        {
+            const QString typeStr = (getType(row) == QmlSyncType::SYNC) ? tr("Sync") : tr("Backup");
+            return tr("%1 was stopped because you logged out. Resume the %1 to re-enable.")
+                .arg(typeStr);
+        }
+        return QCoreApplication::translate(
+            "MegaSyncError",
+            mega::MegaSync::getMegaSyncErrorCode(syncSetting->getError()));
+    }
+    else
+    {
+        return QString();
+    }
+}
+
+std::optional<mega::MegaHandle> SyncModel::getHandle(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].nodeHandle;
+}
+
+QString SyncModel::getLocalFolder(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].localFolder;
+}
+
+QString SyncModel::getRemoteFolder(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    auto syncSetting = SyncInfo::instance()->getSyncSettingByTag(mSyncObjects[row].syncID);
+    return syncSetting ? syncSetting->getMegaFolder() : QString();
+}
+
+void SyncModel::onSyncRootChanged(std::shared_ptr<SyncSettings> syncSettings)
+{
+    auto row(findRowByHandle(syncSettings->backupId()));
+    if (row >= 0)
+    {
+        const QModelIndex modelIndex = QAbstractListModel::index(row.value());
+        emit dataChanged(modelIndex, modelIndex, QVector<int>() << SyncModelRole::REMOTE_PATH);
+    }
+}
+
+std::optional<mega::MegaHandle> SyncModel::getSyncID(int row) const
+{
+    if (row < 0 || row >= mSyncObjects.size())
+    {
+        return {};
+    }
+    return mSyncObjects[row].syncID;
 }

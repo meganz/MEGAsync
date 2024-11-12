@@ -10,6 +10,9 @@ class UploadNodeSelector : public NodeSelector
 public:
     explicit UploadNodeSelector(QWidget *parent = 0);
 
+protected:
+    void createSpecialisedWidgets() override;
+
 private:
     void checkSelection() override;
 };
@@ -20,6 +23,9 @@ class DownloadNodeSelector : public NodeSelector
 
 public:
     explicit DownloadNodeSelector(QWidget *parent = 0);
+
+protected:
+    void createSpecialisedWidgets() override;
 
 private:
     void checkSelection() override;
@@ -32,6 +38,9 @@ class SyncNodeSelector : public NodeSelector
 public:
     explicit SyncNodeSelector(QWidget *parent = 0);
 
+protected:
+    void createSpecialisedWidgets() override;
+
 private:
     void checkSelection() override;
     bool isFullSync();
@@ -43,6 +52,9 @@ class StreamNodeSelector : public NodeSelector
 
 public:
     explicit StreamNodeSelector(QWidget *parent = 0);
+
+protected:
+    void createSpecialisedWidgets() override;
 
 private:
     void checkSelection() override;
@@ -58,13 +70,14 @@ public:
 
     void enableDragAndDrop(bool enable);
 
+protected:
+    void createSpecialisedWidgets() override;
+
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
 
 private:
     void checkSelection() override {}
-
-    void makeModelConntections();
 
     QWidget* mDragBackDrop;
 };
@@ -76,6 +89,9 @@ class MoveBackupNodeSelector : public NodeSelector
 public:
 
     explicit MoveBackupNodeSelector(QWidget *parent = 0);
+
+protected:
+    void createSpecialisedWidgets() override;
 
 private:
     void checkSelection() override;

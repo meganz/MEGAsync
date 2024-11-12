@@ -411,6 +411,11 @@ public:
                             bool async,
                             std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
 
+    static bool restoreNode(const char* nodeName,
+                            const char* nodeDirectoryPath,
+                            mega::MegaApi* megaApi,
+                            std::function<void(mega::MegaRequest*, mega::MegaError*)> finishFunc);
+
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;

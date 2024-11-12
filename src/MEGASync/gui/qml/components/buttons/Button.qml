@@ -13,6 +13,7 @@ Qml.RoundButton {
     id: root
 
     property alias progressValue: backgroundProgress.value
+    property alias underlineText: buttonText.font.underline
 
     property Colors colors: Colors {}
     property Icon icons: Icon {}

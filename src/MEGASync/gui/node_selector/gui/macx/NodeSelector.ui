@@ -26,7 +26,12 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QGroupBox {
+   <string notr="true">QGroupBox, QPushButton
+{
+background-color: transparent;
+}
+
+QGroupBox {
 border-radius: 0px;
 background-color: transparent;
 }

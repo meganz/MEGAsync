@@ -182,6 +182,7 @@
         <file>images/ico-cloud-drive.png</file>
         <file>images/ico-cloud-drive@2x.png</file>
         <file>images/ico-cloud-drive@3x.png</file>
+        <file>images/ico-device-centre.svg</file>
         <file>images/ico_about_MEGA.png</file>
         <file>images/ico_about_MEGA@2x.png</file>
         <file>images/ico_about_MEGA@3x.png</file>
@@ -626,12 +627,6 @@
         <file>images/Backups_24_ico.png</file>
         <file>images/Backups_24_ico@2x.png</file>
         <file>images/Backups_24_ico@3x.png</file>
-        <file>images/key_big.png</file>
-        <file>images/key_big@2x.png</file>
-        <file>images/key_big@3x.png</file>
-        <file>images/lock_big.png</file>
-        <file>images/lock_big@2x.png</file>
-        <file>images/lock_big@3x.png</file>
         <file>images/icons/infodialog/warning-disabled-syncs.png</file>
         <file>images/icons/infodialog/warning-disabled-syncs@2x.png</file>
         <file>images/icons/infodialog/warning-disabled-syncs@3x.png</file>
@@ -1214,18 +1209,6 @@
         <file>images/StalledIssues/tree_double_link_default.png</file>
         <file>images/StalledIssues/tree_double_link_default@2x.png</file>
         <file>images/StalledIssues/tree_double_link_default@3x.png</file>
-        <file>images/account_details/versions@3x.png</file>
-        <file>images/account_details/versions@2x.png</file>
-        <file>images/account_details/versions.png</file>
-        <file>images/account_details/available_storage@3x.png</file>
-        <file>images/account_details/available_storage@2x.png</file>
-        <file>images/account_details/available_storage.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico@3x.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico@2x.png</file>
-        <file>images/account_details/Cloud_Drive_24_ico.png</file>
-        <file>images/account_details/Bin_24_ico@3x.png</file>
-        <file>images/account_details/Bin_24_ico@2x.png</file>
-        <file>images/account_details/Bin_24_ico.png</file>
         <file>images/settings-backups-warn@3x.png</file>
         <file>images/settings-backups-warn@2x.png</file>
         <file>images/settings-backups-warn.png</file>
@@ -1458,12 +1441,25 @@
         <file>images/copy@3x.png</file>
         <file>images/copy.png</file>
         <file>images/copy@2x.png</file>
-        <file>images/StalledIssues/rotate-ccw.png</file>
-        <file>images/StalledIssues/rotate-ccw@2x.png</file>
-        <file>images/StalledIssues/rotate-ccw@3x.png</file>
+        <file>images/settings-account.svg</file>
+        <file>images/settings-backup.svg</file>
+        <file>images/settings-folders.svg</file>
+        <file>images/settings-general.svg</file>
+        <file>images/settings-network.svg</file>
+        <file>images/settings-notifications.svg</file>
+        <file>images/settings-shield.svg</file>
+        <file>images/settings-sync.svg</file>
+        <file>images/settings-sync-warn.svg</file>
+        <file>images/settings-backup-warn.svg</file>
+        <file>images/help-icon.svg</file>
+        <file>images/plus.svg</file>
+        <file>images/minus.svg</file>
         <file>images/icons/folder/synced-folder.png</file>
         <file>images/icons/folder/synced-folder@2x.png</file>
         <file>images/icons/folder/synced-folder@3x.png</file>
+        <file>images/StalledIssues/rotate-ccw.png</file>
+        <file>images/StalledIssues/rotate-ccw@2x.png</file>
+        <file>images/StalledIssues/rotate-ccw@3x.png</file>
         <file>images/StalledIssues/solved-issues-outline.png</file>
         <file>images/StalledIssues/solved-issues-outline@2x.png</file>
         <file>images/StalledIssues/solved-issues-outline@3x.png</file>

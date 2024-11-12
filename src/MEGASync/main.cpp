@@ -413,6 +413,28 @@ int main(int argc, char *argv[])
     }
 #endif
 
+#ifndef Q_OS_MACX
+#if defined(WIN32)
+    ScaleFactorManager scaleFactorManager(OsType::WIN);
+#endif
+
+#if defined(Q_OS_LINUX)
+    ScaleFactorManager scaleFactorManager(OsType::LINUX);
+#endif
+
+    try
+    {
+        scaleFactorManager.setScaleFactorEnvironmentVariable();
+    }
+    catch (const std::exception& exception)
+    {
+        const QString errorMessage{
+            QString::fromStdString("Error while setting scale factor environment variable: " +
+                                   std::string(exception.what()))};
+        logMessages.emplace_back(MegaApi::LOG_LEVEL_DEBUG, errorMessage);
+    }
+#endif
+
 #if defined(Q_OS_LINUX)
     if (!qEnvironmentVariableIsSet("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME") &&
         qEnvironmentVariableIsSet("QT_QPA_PLATFORMTHEME"))
@@ -465,6 +487,14 @@ int main(int argc, char *argv[])
     }
 #endif
 
+#ifndef Q_OS_MACX
+    const QVector<QString> scaleFactorLogMessages = scaleFactorManager.getLogMessages();
+    for (const QString& message: scaleFactorLogMessages)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
+    }
+#endif
+
 #if defined(Q_OS_LINUX)
     for (const auto& screen : app.screens())
     {
@@ -474,7 +504,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    qInstallMessageHandler(messageHandler);
+    //qInstallMessageHandler(messageHandler);
 
     app.setStyle(new MegaProxyStyle());
 

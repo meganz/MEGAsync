@@ -1,12 +1,10 @@
 #include "SyncsComponent.h"
 
-#include "SyncsQmlDialog.h"
-#include "Syncs.h"
-#include "ChooseFolder.h"
 #include "AddExclusionRule.h"
-
+#include "ChooseFolder.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
+#include "Syncs.h"
 
 static bool qmlRegistrationDone = false;
 
@@ -32,7 +30,6 @@ void SyncsComponent::registerQmlModules()
     if (!qmlRegistrationDone)
     {
         qmlRegisterModule("Syncs", 1, 0);
-        qmlRegisterType<SyncsQmlDialog>("SyncsQmlDialog", 1, 0, "SyncsQmlDialog");
         qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
         qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
         qmlRegisterUncreatableType<Syncs>("Syncs", 1, 0, "SyncStatusCode",
@@ -41,9 +38,9 @@ void SyncsComponent::registerQmlModules()
     }
 }
 
-void SyncsComponent::openSyncsTabInPreferences() const
+void SyncsComponent::openDeviceCentre() const
 {
-    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    MegaSyncApp->openDeviceCentre();
 }
 
 bool SyncsComponent::getComesFromSettings() const

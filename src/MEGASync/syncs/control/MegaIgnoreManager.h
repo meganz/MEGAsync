@@ -12,6 +12,9 @@
 class MegaIgnoreManager
 {
 public:
+    static constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
+    static constexpr char MEGA_IGNORE_DEFAULT_FILE_NAME[] = ".megaignore.default";
+
     explicit MegaIgnoreManager(const QString& syncLocalFolder, bool createIfNotExist);
     explicit MegaIgnoreManager() = default;
 

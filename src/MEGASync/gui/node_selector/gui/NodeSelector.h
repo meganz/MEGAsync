@@ -64,15 +64,19 @@ protected:
     void changeEvent(QEvent * event) override;
     void keyPressEvent(QKeyEvent *e) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void showEvent(QShowEvent *) override;
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
-    void makeConnections();
+    void initSpecialisedWidgets();
     void createSearchWidget();
     bool eventFilter(QObject *obj, QEvent *event) override;
+
 
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
+    //Create specialised widgets
+    virtual void createSpecialisedWidgets(){}
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
     NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
@@ -114,6 +118,7 @@ private:
     NodeSelectorTreeViewWidget* getCurrentTreeViewWidget() const;
 
     bool mManuallyResizedColumn;
+    bool mInitialised;
 };
 
 #endif // NODESELECTOR_H

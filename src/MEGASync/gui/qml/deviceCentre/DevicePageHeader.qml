@@ -4,9 +4,11 @@ import QtQuick.Layouts 1.15
 import common 1.0
 import components.images 1.0
 import components.texts 1.0 as Texts
+import components.buttons 1.0 as Buttons
 
 import DeviceOs 1.0
 import SyncStatus 1.0
+import AppStatsEvents 1.0
 
 Item {
     id:root
@@ -40,7 +42,7 @@ Item {
             bottomMargin: 4;
         }
 
-        color: colorStyle.surface1;
+        color: ColorTheme.surface1;
         radius: 8;
 
         SvgImage {
@@ -83,10 +85,41 @@ Item {
                     pixelSize: Texts.Text.Size.MEDIUM_LARGE
                     weight: Font.DemiBold
                 }
-                color: colorStyle.textPrimary
+                color: ColorTheme.textPrimary
                 wrapMode: Text.NoWrap
 
                 text: "";
+            }
+
+            Buttons.IconButton {
+                id: menuButton
+
+                anchors {
+                    left: deviceTitle.right
+                    verticalCenter: deviceTitle.verticalCenter
+                    leftMargin: Constants.focusAdjustment + 8
+                }
+
+                icons.source: Images.threeDots
+                visible: true
+                sizes.iconWidth: 16
+
+                onClicked: {
+                    renameDialog.initialName =  deviceTitle.text;
+                    renameDialog.deviceName =  deviceTitle.text;
+                    renameDialog.visible = true;
+                    proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_RENAME_ICON_CLICKED);
+                }
+
+                RenameDeviceDialog{
+                    id: renameDialog
+
+                    visible: false
+                    onAccepted: {
+                        proxyStatsEventHandlerAccess.sendTrackedEvent(AppStatsEvents.DEVICE_CENTRE_RENAME_ICON_CLICKED);
+                        deviceCentreAccess.renameCurrentDevice(renameDialog.deviceName);
+                    }
+                }
             }
 
             RowLayout {

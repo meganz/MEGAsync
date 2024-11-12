@@ -357,7 +357,7 @@ public:
         if (mLoadingViewSet != type)
         {
             mLoadingViewSet = type;
-            mMessageHandler->setLoadingViewVisible(type == LoadingViewType::LOADING_VIEW);
+            //mMessageHandler->setLoadingViewVisible(type == LoadingViewType::LOADING_VIEW);
         }
     }
 

@@ -104,8 +104,7 @@ ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../MEGAsync/MEGAsync/debian.copyright $MEGASYNC_NAME/debian.copyright
 ln -s ../../CMakeLists.txt $MEGASYNC_NAME/CMakeLists.txt
 ln -s ../../vcpkg.json $MEGASYNC_NAME/vcpkg.json
-mkdir $MEGASYNC_NAME/contrib
-ln -s ../../../contrib/cmake $MEGASYNC_NAME/contrib/
+ln -s ../../cmake $MEGASYNC_NAME/
 mkdir $MEGASYNC_NAME/src
 ln -s ../../../src/CMakeLists.txt $MEGASYNC_NAME/src/CMakeLists.txt
 ln -s ../../../src/MEGASync $MEGASYNC_NAME/src/

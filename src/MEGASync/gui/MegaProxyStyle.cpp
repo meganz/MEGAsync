@@ -190,6 +190,11 @@ QIcon MegaProxyStyle::standardIcon(QStyle::StandardPixmap standardIcon, const QS
 
 void MegaProxyStyle::polish(QWidget *widget)
 {
+    if (!widget)
+    {
+        return;
+    }
+
     if(auto spinBox = qobject_cast<QSpinBox*>(widget))
     {
         EventManager::addEvent(spinBox, QEvent::Wheel, EventHelper::BLOCK);
@@ -233,4 +238,3 @@ bool MegaProxyStyle::event(QEvent *e)
 {
     return QProxyStyle::event(e);
 }
-

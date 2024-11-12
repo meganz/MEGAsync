@@ -1,23 +1,26 @@
 #ifndef QMLCOMPONENTWRAPPER_H
 #define QMLCOMPONENTWRAPPER_H
 
+#include "DialogOpener.h"
+#include "MegaApplication.h"
 #include "QmlDialog.h"
 #include "QmlManager.h"
-#include "MegaApplication.h"
 #include "StatsEventHandler.h"
 
-#include "megaapi.h"
-
-#include <QQmlComponent>
+#include <megaapi.h>
+#include <QApplication>
 #include <QDebug>
-#include <QQmlEngine>
-#include <QQmlContext>
-#include <QQuickWindow>
+#include <QDialog>
 #include <QEvent>
 #include <QPointer>
-#include <QDialog>
-#include <QApplication>
+#include <QQmlComponent>
+#include <QQmlContext>
+#include <QQmlEngine>
+#include <QQuickWindow>
 #include <QScreen> // Implicitly included
+
+template<class Type>
+class QmlDialogWrapper;
 
 class QMLComponent : public QObject
 {
@@ -26,9 +29,46 @@ public:
     ~QMLComponent();
 
     virtual QUrl getQmlUrl() = 0;
-    virtual QString contextName(){return QString();}
-    virtual QVector<QQmlContext::PropertyPair> contextProperties() {return QVector<QQmlContext::PropertyPair>();};
 
+    virtual QString contextName()
+    {
+        return QString();
+    }
+
+    struct OpenDialogInfo
+    {
+        bool ignoreCloseAllAction;
+
+        OpenDialogInfo():
+            ignoreCloseAllAction(false)
+        {}
+    };
+
+    template<typename DialogType, typename... A>
+    static QPointer<QmlDialogWrapper<DialogType>> openDialog(OpenDialogInfo info = OpenDialogInfo(),
+                                                             A&&... args)
+    {
+        QPointer<QmlDialogWrapper<DialogType>> dialog(nullptr);
+
+        if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<DialogType>>())
+        {
+            dialog = dialogInfo->getDialog();
+        }
+        else
+        {
+            dialog = new QmlDialogWrapper<DialogType>(std::forward<A>(args)...);
+        }
+
+        auto dialogInfo = DialogOpener::showDialog(dialog);
+        dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
+
+        return dialogInfo->getDialog();
+    }
+
+    virtual QList<QObject*> getInstancesFromContext()
+    {
+        return QList<QObject*>();
+    }
 };
 
 class QmlDialogWrapperBase : public QWidget
@@ -102,6 +142,10 @@ public:
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
 
         mWrapper = new Type(parent, std::forward<A>(args)...);
+        if (!parent)
+        {
+            mWrapper->setParent(this);
+        }
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
@@ -113,13 +157,13 @@ public:
             {
                 context->setContextProperty(mWrapper->contextName(), mWrapper);
             }
-            auto propertyList = mWrapper->contextProperties();
-            if(!propertyList.isEmpty())
-            {
-                context->setContextProperties(propertyList);
-            }
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
+
+            if (mWindow)
+            {
+                mWindow->getInstancesManager()->initInstances(mWrapper);
+            }
 
             connect(mWindow, &QmlDialog::finished, this, [this]()
             {
@@ -167,7 +211,6 @@ public:
                 QString message = QString::fromUtf8("QML import path: ") + path;
                 ::mega::MegaApi::log(::mega::MegaApi::LOG_LEVEL_DEBUG, message.toUtf8().constData());
             }
-            // qrc:/whatsNew/WhatsNewDialog.qml:40 Type Texts.Text unavailable
         }
     }
 

@@ -1301,10 +1301,9 @@ void NodeSelectorModel::moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveF
                     if(e->getErrorCode() ==
                         mega::MegaError::API_OK)
                     {
-                        MergeMEGAFolders merge(
-                            moveFolder.get(), conflictTargetFolder.get());
-                        merge.merge(MergeMEGAFolders::
-                            ActionForDuplicates::Rename);
+                        MergeMEGAFolders::merge(moveFolder.get(),
+                                                conflictTargetFolder.get(),
+                                                MergeMEGAFolders::ActionForDuplicates::Rename);
                     }
                     else
                     {

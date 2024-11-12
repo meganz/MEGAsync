@@ -28,7 +28,7 @@ Syncs::Syncs(QObject* parent):
 
 void Syncs::addSync(SyncInfo::SyncOrigin origin, const QString& local, const QString& remote)
 {
-    cleanErrors();
+    cleanErrorsPrivately();
 
     if (checkErrorsOnSyncPaths(local, remote))
     {
@@ -74,7 +74,7 @@ bool Syncs::checkErrorsOnSyncPaths(const QString& localPath, const QString& remo
     helperCheckLocalSync(localPath);
     helperCheckRemoteSync(remotePath);
 
-    return (mLocalError.has_value() || mRemoteError.has_value());
+    return (!mLocalErrorMessage.isEmpty() || mRemoteError.has_value());
 }
 
 void Syncs::helperCheckLocalSync(const QString& path)
@@ -106,18 +106,23 @@ void Syncs::helperCheckLocalSync(const QString& path)
         }
     }
 
+    QString errorMessage;
     if (!localError.has_value())
     {
-        QString errorMessage;
         auto syncability = SyncController::instance().isLocalFolderSyncable(path, mega::MegaSync::TYPE_TWOWAY, errorMessage);
         if (syncability == SyncController::CANT_SYNC)
         {
             localError = LocalErrors::CantSync;
         }
     }
+    if (errorMessage.isEmpty())
+        errorMessage = getLocalErrorMessage(localError, path);
 
-    mLocalError.swap(localError);
-    emit localErrorChanged();
+    if (mLocalErrorMessage != errorMessage)
+    {
+        mLocalErrorMessage = errorMessage;
+        emit localErrorChanged(mLocalErrorMessage);
+    }
 }
 
 void Syncs::helperCheckRemoteSync(const QString& path)
@@ -147,21 +152,22 @@ void Syncs::helperCheckRemoteSync(const QString& path)
         }
     }
 
-    mRemoteError.swap(remoteError);
-    emit remoteErrorChanged();
+    if (mRemoteError != remoteError)
+    {
+        mRemoteError.swap(remoteError);
+        emit remoteErrorChanged(getRemoteError());
+    }
 }
 
 bool Syncs::checkLocalSync(const QString& path)
 {
     helperCheckLocalSync(path);
-
-    return (!mLocalError.has_value());
+    return (mLocalErrorMessage.isEmpty());
 }
 
 bool Syncs::checkRemoteSync(const QString& path)
 {
     helperCheckRemoteSync(path);
-
     return (!mRemoteError.has_value());
 }
 
@@ -213,7 +219,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             else
             {
                 mRemoteError = RemoteErrors::CantCreateRemoteFolder;
-                emit remoteErrorChanged();
+                emit remoteErrorChanged(getRemoteError());
             }
         }
         else if (error->getErrorCode() != mega::MegaError::API_ESSL
@@ -224,7 +230,7 @@ void Syncs::onRequestFinish(mega::MegaApi* api,
             mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
             mRemoteStringMessage = QString::fromUtf8(error->getErrorString());
 
-            emit remoteErrorChanged();
+            emit remoteErrorChanged(getRemoteError());
         }
     }
 }
@@ -255,7 +261,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
         mRemoteMegaError.error = errorCode;
         mRemoteMegaError.syncError = syncErrorCode;
 
-        emit remoteErrorChanged();
+        emit remoteErrorChanged(getRemoteError());
     }
     else
     {
@@ -265,39 +271,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
 
 QString Syncs::getLocalError() const
 {
-    if (!mLocalError.has_value())
-    {
-        return {};
-    }
-
-    switch (mLocalError.value())
-    {
-        case LocalErrors::EmptyPath:
-        {
-            return tr("Select a local folder to sync.");
-        }
-
-        case LocalErrors::NoAccessPermissionsCantCreate:
-        {
-            return QCoreApplication::translate("OnboardingStrings", "Folder can’t be synced as you don’t have permissions to create a new folder. To continue, select an existing folder.");
-        }
-
-        case LocalErrors::NoAccessPermissionsNoExist:
-        {
-            return QCoreApplication::translate("MegaSyncError", "Local path not available");
-        }
-
-        case LocalErrors::CantSync:
-        {
-            QString errorMessage;
-            SyncController::instance().isLocalFolderSyncable(mSyncConfig.localFolder,
-                                                             mega::MegaSync::TYPE_TWOWAY,
-                                                             errorMessage);
-            return errorMessage;
-        }
-    }
-
-    return {};
+    return mLocalErrorMessage;
 }
 
 QString Syncs::getRemoteError() const
@@ -356,10 +330,13 @@ QString Syncs::getRemoteError() const
     return {};
 }
 
-void Syncs::cleanErrors()
+void Syncs::cleanErrorsPrivately()
 {
-    clearLocalError();
-    clearRemoteError();
+    mLocalErrorMessage.clear();
+    mRemoteError.reset();
+    mRemoteStringMessage.clear();
+    mRemoteMegaError.error = mega::MegaError::API_OK;
+    mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 }
 
 void Syncs::clearRemoteError()
@@ -369,12 +346,51 @@ void Syncs::clearRemoteError()
     mRemoteMegaError.error = mega::MegaError::API_OK;
     mRemoteMegaError.syncError = mega::SyncError::NO_SYNC_ERROR;
 
-    emit remoteErrorChanged();
+    emit remoteErrorChanged(getRemoteError());
 }
 
 void Syncs::clearLocalError()
 {
-    mLocalError.reset();
+    mLocalErrorMessage.clear();
+    emit localErrorChanged(QString());
+}
 
-    emit localErrorChanged();
+QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const
+{
+    if (!error.has_value())
+    {
+        return QString();
+    }
+
+    switch (error.value())
+    {
+        case LocalErrors::EmptyPath:
+        {
+            return tr("Select a local folder to sync.");
+        }
+
+        case LocalErrors::NoAccessPermissionsCantCreate:
+        {
+            return QCoreApplication::translate(
+                "OnboardingStrings",
+                "Folder can’t be synced as you don’t have permissions to create a new folder. To "
+                "continue, select an existing folder.");
+        }
+
+        case LocalErrors::NoAccessPermissionsNoExist:
+        {
+            return QCoreApplication::translate("MegaSyncError", "Local path not available");
+        }
+
+        case LocalErrors::CantSync:
+        {
+            QString errorMessage;
+            SyncController::instance().isLocalFolderSyncable(path,
+                                                             mega::MegaSync::TYPE_TWOWAY,
+                                                             errorMessage);
+            return errorMessage;
+        }
+    }
+
+    return QString();
 }

@@ -996,8 +996,10 @@ NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
             std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
             if(folderToMerge && folderToMerge->isFolder())
             {
-                MergeMEGAFolders mergeItem(targetFolder.get(), folderToMerge.get());
-                auto error = mergeItem.merge(MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
+                auto error = MergeMEGAFolders::merge(
+                    targetFolder.get(),
+                    folderToMerge.get(),
+                    MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
                 if(error)
                 {
                     errorInfo.conflictIndex = index;

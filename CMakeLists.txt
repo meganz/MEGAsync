@@ -6,25 +6,25 @@ cmake_minimum_required(VERSION 3.18)
 set(QT_CREATOR_SKIP_VCPKG_SETUP TRUE CACHE BOOL "")
 
 ## Modules location
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/contrib/cmake/modules) # Modules from MEGA Desktop App
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/contrib/cmake/modules) # Modules from MEGAsdk
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake/modules) # Modules from MEGA Desktop App
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/cmake/modules) # Modules from MEGAsdk
 
 ## Configurable options ##
 set(VCPKG_ROOT "" CACHE PATH "If set, it will build and use the VCPKG packages defined in the manifest file")
 
 # Load global CMake configuration for the project
-include(desktopapp_options)
 include(desktopapp_initial_configuration)
+include(desktopapp_options)
 
 if(NOT PROJECT_NAME)
     if(VCPKG_ROOT)
         # Include VCPKG management tools.
         include(vcpkg_management)
-        list(APPEND vcpkg_overlay ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/contrib/cmake) # MEGAsdk overlays
+        list(APPEND vcpkg_overlay ${CMAKE_CURRENT_LIST_DIR}/src/MEGASync/mega/cmake) # MEGAsdk overlays
         process_vcpkg_libraries("${vcpkg_overlay}") # Choose and build libraries depending on the configured options.
     else()
         # For packages with no pkg-config in the system.
-        list(APPEND CMAKE_MODULE_PATH third-party/mega/contrib/cmake/modules/packages)
+        list(APPEND CMAKE_MODULE_PATH third-party/mega/cmake/modules/packages)
         message(STATUS "Using system dependencies")
     endif()
 endif()

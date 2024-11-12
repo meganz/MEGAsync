@@ -14,7 +14,6 @@
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
-#include "ScaleFactorManager.h"
 #include "ScanStageController.h"
 #include "SetManager.h"
 #include "SettingsDialog.h"
@@ -218,6 +217,7 @@ signals:
     void pauseStateChanged();
     void addBackup();
     void shellNotificationsProcessed();
+    void updateUserInterface();
 
 public slots:
     void updateTrayIcon();
@@ -498,12 +498,11 @@ protected:
     QString mLinkToPublicSet;
     QList<mega::MegaHandle> mElementHandleList;
     std::unique_ptr<IntervalExecutioner> mIntervalExecutioner;
-#ifndef Q_OS_MACX
-    ScaleFactorManager mScaleFactorManager;
-#endif
     bool mDisableGfx;
 
     std::unique_ptr<UserMessageController> mUserMessageController;
+
+    std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
 
 private:
     void loadSyncExclusionRules(QString email = QString());
@@ -606,14 +605,12 @@ private:
 
     void createUserMessageController();
 
+    void createGfxProvider(const QString& basePath);
+
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-
-private:
-    QFutureWatcher<NodeCount> mWatcher;
-
 };
 
 #endif // MEGAAPPLICATION_H

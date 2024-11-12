@@ -491,8 +491,10 @@ sysctl -p /etc/sysctl.d/99-megasync-inotify-limit.conf
 %preun
 if [ "$1" == "1" ]; then
     killall -s SIGUSR1 megasync 2> /dev/null || true
+    killall mega-desktop-app-gfxworker 2> /dev/null || true
 else
     killall megasync 2> /dev/null || true
+    killall mega-desktop-app-gfxworker 2> /dev/null || true
     username=$SUDO_USER 2> /dev/null || true
     # Check if the variable is empty (e.g. if the script is not executed with sudo)
     [ -z "$username" ] && username=$(whoami) 2> /dev/null || true
@@ -531,6 +533,7 @@ killall -s SIGUSR2 megasync 2> /dev/null || true
 %files
 %defattr(-,root,root)
 %{_bindir}/%{name}
+%{_bindir}/mega-desktop-app-gfxworker
 %{_datadir}/applications/megasync.desktop
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/icons/hicolor/*/*/*

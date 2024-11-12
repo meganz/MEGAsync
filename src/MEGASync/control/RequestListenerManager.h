@@ -47,13 +47,28 @@ public:
 signals:
     void removeListener(ObserverRequestListener *listener);
 
-private slots:
-    void objectDestroyed(QObject *obj);
-
 private:
     ListenerCallbacks mCallbacks;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
 };
+
+/* Class usage
+ *
+ * This class is used to create request listeners, and it manages their life.
+ * There are two ways to use request listeners:
+ * Adding them with megaApi::addRequestListener or using them in one of the different requests.
+ * In the first case, it would not be strictly necessary to use this manager,
+ * since the request listener destructor itself calls the megaApi::removeRequestListener function,
+ * avoiding crashes, so this manager would only be used to facilitate its creation.
+ * In the second case, the use of the manager is recommended to ensure that the listener
+ * is not destroyed while the request is in progress.
+ * For this, it is recommended to create the listener just before using it,
+ * to minimize the case in which the class that uses it is destroyed before the SDK processes the
+ * request, and not to save it as a member of the class.
+ * In case that happens, it has been preferred not to delete the listener and accumulate
+ * instances, than to suffer a crash, as it is an edge case.
+ *
+ */
 
 class RequestListenerManager : public QObject
 {
