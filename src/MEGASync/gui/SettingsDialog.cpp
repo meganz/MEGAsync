@@ -126,12 +126,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->cAutoUpdate->hide();
 #endif
 
-#ifdef Q_OS_WINDOWS
-    mUi->permissionsGroupBox->hide();
-#else
-    connect(mUi->bPermissions, &QPushButton::clicked, this, &SettingsDialog::onPermissionsClicked);
-#endif
-
     mUi->cFinderIcons->hide();
 #ifdef Q_OS_WINDOWS
     typedef LONG MEGANTSTATUS;
