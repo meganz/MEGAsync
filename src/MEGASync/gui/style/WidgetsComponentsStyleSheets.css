@@ -30,7 +30,7 @@ padding-left:4px;
 
 QTableView::item::selected
 {
-background-color: #ffbdd9ff; /*colorToken.focus*/
+background-color: #ff2c5beb; /*colorToken.link-primary*/
 }
 
 QTableView::indicator
