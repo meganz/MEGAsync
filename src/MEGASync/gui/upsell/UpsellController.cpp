@@ -183,8 +183,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::AVAILABLE_ROLE:
             {
-                field = mPlans->isMonthly() ? data->monthlyData().isValid() :
-                                              data->yearlyData().isValid();
+                field = isAvailable(data);
                 break;
             }
             default:
@@ -218,18 +217,24 @@ void UpsellController::setBilledPeriod(bool isMonthly)
 
 void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
 {
-    mPlans->setViewMode(mode);
-    if (mode == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
+    if (mPlans->getViewMode() != mode)
     {
-        if (!mTransferFinishTimer)
+        mPlans->setViewMode(mode);
+        if (mode == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
         {
-            mTransferFinishTimer = new QTimer(this);
-            mTransferFinishTimer->setSingleShot(false);
-            connect(mTransferFinishTimer,
-                    &QTimer::timeout,
-                    this,
-                    &UpsellController::onTransferRemainingTimeElapsed);
+            if (!mTransferFinishTimer)
+            {
+                mTransferFinishTimer = new QTimer(this);
+                mTransferFinishTimer->setSingleShot(false);
+                connect(mTransferFinishTimer,
+                        &QTimer::timeout,
+                        this,
+                        &UpsellController::onTransferRemainingTimeElapsed);
+            }
         }
+
+        // Force update of the plans to show the correct ones.
+        emit dataChanged(0, mPlans->size() - 1, QVector<int>() << UpsellPlans::AVAILABLE_ROLE);
     }
 }
 
@@ -265,7 +270,7 @@ QString UpsellController::getMinProPlanNeeded(long long usedStorage) const
         }
     }
 
-    return Utilities::getReadablePlanFromId(proLevel);
+    return Utilities::getReadablePlanFromId(proLevel, true);
 }
 
 UpsellPlans::ViewMode UpsellController::viewMode() const
@@ -400,9 +405,8 @@ std::shared_ptr<UpsellPlans::Data>
 
 bool UpsellController::isProLevelValid(int proLevel) const
 {
-    // Skip showing current plan, pro flexi, business and feature plans in the dialog.
-    return proLevel != Preferences::instance()->accountType() &&
-           proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FREE &&
+    // Skip showing pro flexi, business and feature plans in the dialog.
+    return proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FREE &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE;
@@ -498,9 +502,7 @@ int UpsellController::getRowForNextRecommendedPlan() const
         [itCurrent, this](const auto& plan)
         {
             auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
-            bool isAvailable(mPlans->isMonthly() ? plan->monthlyData().isValid() :
-                                                   plan->yearlyData().isValid());
-            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && isAvailable;
+            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && isAvailable(plan);
         });
 
     return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : 0;
@@ -534,4 +536,16 @@ int UpsellController::getRowForCurrentRecommended()
         currentRecommendedRow = plans.indexOf(*it);
     }
     return currentRecommendedRow;
+}
+
+bool UpsellController::isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
+{
+    // - Storage: don't show the current plan.
+    // - Transfer: show the current plan (users can buy the same one).
+    // And show if it is valid depending on the period.
+    auto showCandidate(((mPlans->getViewMode() != UpsellPlans::ViewMode::TRANSFER_EXCEEDED &&
+                         data->proLevel() != Preferences::instance()->accountType()) ||
+                        mPlans->getViewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED));
+    return showCandidate &&
+           (mPlans->isMonthly() ? data->monthlyData().isValid() : data->yearlyData().isValid());
 }

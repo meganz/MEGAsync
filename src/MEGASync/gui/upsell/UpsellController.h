@@ -83,6 +83,7 @@ private:
     int getRowForNextRecommendedPlan() const;
     void resetSelectedAndRecommended();
     int getRowForCurrentRecommended();
+    bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
 };
 
 #endif // UPSELL_CONTROLLER_H
