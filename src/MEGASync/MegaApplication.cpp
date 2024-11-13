@@ -5085,7 +5085,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
-#ifdef __WINDOWS__
+#ifdef Q_OS_WINDOWS
     else if (reason == QSystemTrayIcon::DoubleClick)
     {
         openFirstActiveSync();
