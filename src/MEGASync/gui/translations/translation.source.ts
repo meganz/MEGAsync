@@ -7031,11 +7031,6 @@ Do you want to delete it anyway?</translation>
         <translation>Backup</translation>
     </message>
     <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Force a full scan</translation>
-    </message>
-    <message>
         <source>Go to backup centre</source>
         <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
         <translation>Go to Device centre</translation>
