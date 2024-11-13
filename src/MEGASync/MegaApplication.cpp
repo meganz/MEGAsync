@@ -5085,12 +5085,54 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
+#ifdef Q_OS_WINDOWS
+    else if (reason == QSystemTrayIcon::DoubleClick)
+    {
+        openFirstActiveSync();
+    }
+#endif
 #ifndef __APPLE__
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
     }
 #endif
+}
+
+void MegaApplication::openFirstActiveSync()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    auto* syncInfo{SyncInfo::instance()};
+    if (syncInfo != nullptr)
+    {
+        const auto syncsSettings(syncInfo->getAllSyncSettings());
+        auto firstActiveSyncSettings(std::find_if(syncsSettings.cbegin(),
+                                                  syncsSettings.cend(),
+                                                  [](auto syncSettings)
+                                                  {
+                                                      return syncSettings->isActive();
+                                                  }));
+
+        if (firstActiveSyncSettings != syncsSettings.cend())
+        {
+            infoDialogTimer->stop();
+
+            if (infoDialog)
+            {
+                infoDialog->hide();
+            }
+
+            QString localFolderPath = (*firstActiveSyncSettings)->getLocalFolder();
+            if (!localFolderPath.isEmpty())
+            {
+                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
+            }
+        }
+    }
 }
 
 void MegaApplication::onMessageClicked()
