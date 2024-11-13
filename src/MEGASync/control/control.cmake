@@ -92,8 +92,6 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/BugReport/BugReportController.h
     control/BugReport/BugReportController.cpp
     control/BugReport/BugReportData.h
-    control/Data/DataModel.cpp
-    control/Data/DataController.cpp
 )
 
 target_sources(MEGAsync
