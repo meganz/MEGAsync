@@ -281,10 +281,7 @@ void NotificationItem::setImage()
     mUi->lImageLarge->setVisible(showImage);
     if (showImage)
     {
-        mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
-            mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        });
+        mUi->lImageLarge->setImageUrl(mNotificationData->getImageNamePath());
     }
 }
 
@@ -294,10 +291,7 @@ void NotificationItem::setIcon()
     mUi->lImageSmall->setVisible(showIcon);
     if (showIcon)
     {
-        mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
-            mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        });
+        mUi->lImageSmall->setImageUrl(mNotificationData->getIconNamePath());
     }
     else
     {
