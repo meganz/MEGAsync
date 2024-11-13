@@ -4,7 +4,15 @@
 
 #include <QPainter>
 
+namespace
+{
 constexpr int DownloadTimeout = 5000;
+const QLatin1String IMAGE_NAME_PREFIX(".");
+const QLatin1String HIGH_RESOLUTION_SUFFIX("@2x");
+const QLatin1String HIGH_RESOLUTION_SUFFIX_REGEXP("@2x$");
+const int MINIMUM_PIXEL_RATIO(2);
+const int IMAGE_FILENAME_INDEX(0);
+}
 
 ApiImageLabel::ApiImageLabel(QWidget* parent):
     QLabel(parent),
@@ -22,12 +30,13 @@ ApiImageLabel::ApiImageLabel(QWidget* parent):
 
 void ApiImageLabel::setImageUrl(QString url)
 {
-    if (Utilities::getDevicePixelRatio() >= 2)
+    if (Utilities::getDevicePixelRatio() >= MINIMUM_PIXEL_RATIO)
     {
-        QString imageName = QFileInfo(url).fileName().split(QString::fromUtf8(".")).at(0);
-        if (!imageName.contains(QRegExp(QString::fromUtf8("@2x$"))))
+        QString imageName =
+            QFileInfo(url).fileName().split(IMAGE_NAME_PREFIX).at(IMAGE_FILENAME_INDEX);
+        if (!imageName.contains(QRegExp(HIGH_RESOLUTION_SUFFIX_REGEXP)))
         {
-            url.replace(imageName, imageName + QString::fromUtf8("@2x"));
+            url.replace(imageName, imageName + HIGH_RESOLUTION_SUFFIX);
         }
     }
 
