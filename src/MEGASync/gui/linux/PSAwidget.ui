@@ -181,7 +181,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="bImage">
+              <widget class="ApiImageLabel" name="bImage">
                <property name="minimumSize">
                 <size>
                  <width>64</width>
@@ -195,13 +195,7 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                 </size>
                </property>
                <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>64</width>
-                 <height>64</height>
-                </size>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -404,6 +398,11 @@ stop: 0 #ffffff, stop: 1 #fafafa);
    <extends>QFrame</extends>
    <header location="global">ElidedLabel.h</header>
    <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ApiImageLabel</class>
+   <extends>QLabel</extends>
+   <header>ApiImageLabel.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

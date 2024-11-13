@@ -1,32 +1,21 @@
 #include "PSAwidget.h"
 
 #include "ui_PSAwidget.h"
+#include <Utilities.h>
 
 #include <QDesktopServices>
-#include <Utilities.h>
-#include <QTimer>
+#include <QPainter>
 #include <QtConcurrent/QtConcurrent>
+#include <QTimer>
 
-namespace
-{
-constexpr int DefaultSize = 64;
-constexpr int DownloadTimeout = 5000;
-}
-
-PSAwidget::PSAwidget(QWidget* parent)
-    : QWidget(parent)
-    , ui(new Ui::PSAwidget)
-    , mDownloader(std::make_unique<ImageDownloader>(DownloadTimeout))
+PSAwidget::PSAwidget(QWidget* parent):
+    QWidget(parent),
+    ui(new Ui::PSAwidget)
 {
     ui->setupUi(this);
 
     this->ready = false;
     this->shown = false;
-
-    connect(mDownloader.get(), &ImageDownloader::downloadFinished,
-            this, &PSAwidget::onDownloadFinished);
-    connect(mDownloader.get(), &ImageDownloader::downloadFinishedWithError,
-            this, &PSAwidget::onDownloadError);
 
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
@@ -39,6 +28,8 @@ PSAwidget::PSAwidget(QWidget* parent)
     ui->sWidget->hide();
     ui->wImage->hide();
     ui->bMore->hide();
+
+    connect(ui->bImage, &ApiImageLabel::imageReady, this, &PSAwidget::setPSAImage);
 }
 
 PSAwidget::~PSAwidget()
@@ -58,16 +49,7 @@ void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImag
     info.textButton = textButton;
     info.urlClick = urlClick;
 
-    if (Utilities::getDevicePixelRatio() >= 2)
-    {
-        QString imageName = QFileInfo(urlImage).fileName().split(QString::fromUtf8(".")).at(0);
-        if (!imageName.contains(QRegExp(QString::fromUtf8("@2x$"))))
-        {
-            urlImage.replace(imageName, imageName + QString::fromUtf8("@2x"));
-        }
-    }
-
-    mDownloader->downloadImage(urlImage, DefaultSize, DefaultSize);
+    ui->bImage->setImageUrl(urlImage);
 }
 
 bool PSAwidget::isPSAready()
@@ -80,7 +62,7 @@ bool PSAwidget::isPSAshown()
     return shown;
 }
 
-void PSAwidget::setPSAImage(QImage image)
+void PSAwidget::setPSAImage(bool isValid)
 {
     ui->lTitle->ensurePolished();
     int width = ui->lTitle->width();
@@ -95,12 +77,7 @@ void PSAwidget::setPSAImage(QImage image)
         ui->bMore->show();
     }
 
-    if (!image.isNull())
-    {
-        ui->bImage->setIcon(QPixmap::fromImage(image));
-        ui->bImage->setIconSize(QSize(DefaultSize, DefaultSize));
-        ui->wImage->show();
-    }
+    ui->wImage->setVisible(isValid);
 
     ready = true;
 }
@@ -159,7 +136,6 @@ void PSAwidget::removeAnnounce()
 {
     info.clear();
 
-    ui->bImage->setIcon(QIcon());
     ui->lTitle->setText(QString::fromUtf8(""));
     ui->lDesc->setText(QString::fromUtf8(""));
     ui->bMore->setText(QString::fromUtf8(""));
@@ -191,24 +167,4 @@ void PSAwidget::on_bDismiss_clicked()
 void PSAwidget::onAnimationFinished()
 {
     ui->pPSA->setVisible(shown);
-}
-
-void PSAwidget::onDownloadFinished(const QImage& image,
-                                   const QString& imageUrl)
-{
-    Q_UNUSED(imageUrl);
-    setPSAImage(image);
-}
-
-void PSAwidget::onDownloadError(const QString& imageUrl,
-                                ImageDownloader::Error error,
-                                QNetworkReply::NetworkError networkError)
-{
-    Q_UNUSED(imageUrl);
-    Q_UNUSED(networkError);
-
-    if(error == ImageDownloader::Error::NetworkError)
-    {
-        setPSAImage();
-    }
 }
