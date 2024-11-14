@@ -145,7 +145,7 @@
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>10</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -154,7 +154,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QGroupBox" name="groupBox">
+           <widget class="QGroupBox" name="gDisabledSyncError">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -164,9 +164,12 @@
             <property name="title">
              <string notr="true"/>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_91">
+            <property name="type" stdset="0">
+             <string notr="true">mega</string>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
              <property name="spacing">
-              <number>0</number>
+              <number>8</number>
              </property>
              <property name="leftMargin">
               <number>12</number>
@@ -180,6 +183,25 @@
              <property name="bottomMargin">
               <number>12</number>
              </property>
+             <item>
+              <widget class="QLabel" name="iconDisabledSyncs">
+               <property name="minimumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="lDisabledSyncs">
                <property name="text">

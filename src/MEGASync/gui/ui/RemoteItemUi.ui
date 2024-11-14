@@ -111,6 +111,9 @@ background-color: transparent;
       <item>
        <widget class="QWidget" name="wControlButtons" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>8</number>
+         </property>
          <property name="leftMargin">
           <number>0</number>
          </property>

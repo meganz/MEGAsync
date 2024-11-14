@@ -100,6 +100,22 @@ background-color: #fffb6514; /*colorToken.indicator-orange*/
 background-color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
+#iconDisabledSyncs
+{
+border-image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
+}
+
+#lDisabledSyncs
+{
+color: #ffe31b57; /*colorToken.text-error*/
+}
+
+#gDisabledSyncError
+{
+border-width: 0px;
+background-color: #ffffe4e8; /*colorToken.notification-error*/
+}
+
 #lRecoveryKeyPic
 {
 border-image: url(:/images/key_pass.png);
