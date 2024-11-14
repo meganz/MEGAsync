@@ -102,7 +102,7 @@ background-color: #fff63d6b; /*colorToken.indicator-pink*/
 
 #iconDisabledSyncs
 {
-border-image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
+image: url(:/images/themed/light/error_sync_icon.svg); /*replaceThemeToken*/
 }
 
 #lDisabledSyncs

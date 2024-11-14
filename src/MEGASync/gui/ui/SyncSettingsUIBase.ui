@@ -175,16 +175,16 @@
               <number>12</number>
              </property>
              <property name="topMargin">
-              <number>12</number>
+              <number>4</number>
              </property>
              <property name="rightMargin">
               <number>12</number>
              </property>
              <property name="bottomMargin">
-              <number>12</number>
+              <number>4</number>
              </property>
              <item>
-              <widget class="QLabel" name="iconDisabledSyncs">
+              <widget class="QPushButton" name="iconDisabledSyncs">
                <property name="minimumSize">
                 <size>
                  <width>16</width>
@@ -197,8 +197,14 @@
                  <height>16</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: transparent;</string>
+               </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
