@@ -146,7 +146,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
             // issues.
             QMessageBox::warning(
                 nullptr,
-                tr("Error"),
+                QMegaMessageBox::errorTitle(),
                 QCoreApplication::translate("MegaSyncError",
                                             "You can't run MEGA Desktop App from this location. "
                                             "Move it into the Applications folder then run it."),
