@@ -138,7 +138,12 @@ font-weight: 400;
 border: none;
 color: #ff2C5BEB; /*colorToken.link-primary*/
 background-color: transparent;
-font-weight: bold;
+font-weight: 600;
+}
+
+#lName
+{
+font-weight: 600;
 }
 
 #LearnMoreContainer, #SelectorsContainer, #ButtonContainer,#widget_6, #widget_21
@@ -1242,6 +1247,9 @@ margin-bottom: 3px;
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>12</number>
+            </property>
             <item>
              <widget class="AvatarWidget" name="wAvatar" native="true">
               <property name="minimumSize">
@@ -1260,6 +1268,9 @@ margin-bottom: 3px;
             </item>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout">
+              <property name="spacing">
+               <number>0</number>
+              </property>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_3">
                 <item>
@@ -2803,33 +2814,17 @@ margin-top: 0px;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_18">
       <property name="leftMargin">
-       <number>8</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>33</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
        <number>20</number>
       </property>
-      <item>
-       <spacer name="horizontalSpacer_11">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Fixed</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QPushButton" name="bHelp">
         <property name="cursor">
