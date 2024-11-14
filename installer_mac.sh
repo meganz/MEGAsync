@@ -161,7 +161,7 @@ if [ ${build_cmake} -eq 1 ]; then
     MEGASYNC_VERSION=`grep -o -E '#define VER_PRODUCTVERSION_STR\s+(.*)' ../src/MEGASync/control/Version.h | grep -oE '\d+\.\d+\.\d+'`
     /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "${MSYNC_PREFIX}$APP_NAME.app/Contents/Info.plist"
 
-    for i in `otool -L ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/mega-desktop-app-gfxworker | sed '1,2d' | awk '/\/Users/ {print $1}'`; do
+    for i in `otool -L ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/mega-desktop-app-gfxworker | sed '1,2d' | awk '/libav|libsw/ {print $1}'`; do
         install_name_tool -change $i @executable_path/../Frameworks/`basename $i` ${MSYNC_PREFIX}MEGAsync.app/Contents/MacOS/mega-desktop-app-gfxworker; 
     done
 
