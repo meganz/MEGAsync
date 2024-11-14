@@ -63,7 +63,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             &LoadingSceneMessageHandler::updateMessage,
             Qt::QueuedConnection);
     connect(ui->stalledIssuesTree->getLoadingMessageHandler(),
-            &LoadingSceneMessageHandler::onButtonPressed,
+            &LoadingSceneMessageHandler::buttonPressed,
             this,
             [](MessageInfo::ButtonType buttonType)
             {

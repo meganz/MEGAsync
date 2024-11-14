@@ -41,7 +41,6 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
             {
                 blockSignals(true);
                 sourceModel()->blockSignals(true);
-                QThread::sleep(5);
                 invalidateFilter();
                 QSortFilterProxyModel::sort(column, order);
                 for (auto it = mItemsToMap.crbegin(); it != mItemsToMap.crend(); ++it)

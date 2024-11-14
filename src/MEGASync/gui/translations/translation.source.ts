@@ -2739,11 +2739,6 @@ Please restart your computer to complete the installation.</translation>
 <context>
     <name>LoadingSceneMessageHandler</name>
     <message>
-        <source>%1 of %2</source>
-        <translatorcomment>Loading message showing the progress of stalled issues being solved in smart mode, placeholders are filled in runtime with the number of solved issues and the total number of issues.SNC-2565</translatorcomment>
-        <translation>%1 of %2</translation>
-    </message>
-    <message>
         <source>Stop</source>
         <translatorcomment>stop button in the loading scene of stalled issues dialog shown during stalled issues are solved in smart mode to stop the solving.SNC-2565</translatorcomment>
         <translation>Stop</translation>
@@ -2752,6 +2747,11 @@ Please restart your computer to complete the installation.</translation>
         <source>Ok</source>
         <translatorcomment>Confirmation button inthe loading scene of stalled issues dialog shown when all issues have been solved in the smart mode.SNC-2565</translatorcomment>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Loading message showing the progress of stalled issues being solved in smart mode, placeholders are filled in runtime with the number of solved issues and the total number of issues.SNC-2565</translatorcomment>
+        <translation>%1 of %2</translation>
     </message>
 </context>
 <context>
@@ -9376,14 +9376,6 @@ Check your email inbox for instructions on unlocking your account and tips on ho
         <source>Email sent</source>
         <translatorcomment>Informative label to indicate that an email has been send to the user in order to unlock his account.</translatorcomment>
         <translation>Email sent</translation>
-    </message>
-</context>
-<context>
-    <name>ViewLoadingSceneUI</name>
-    <message>
-        <source>Stop</source>
-        <translatorcomment>button in auto solve view of stalled issues to stop the auto solve process.SNC-2565</translatorcomment>
-        <translation>Stop</translation>
     </message>
 </context>
 <context>

@@ -5,8 +5,7 @@
 if (WIN32)
     add_executable(MEGAsync WIN32)
 elseif (APPLE)
-    add_executable(MEGAsync MACOSX_BUNDLE
-        gui/ViewLoadingMessage.h gui/ViewLoadingMessage.cpp gui/ViewLoadingMessage.ui)
+    add_executable(MEGAsync MACOSX_BUNDLE)
 else()
     add_executable(MEGAsync)
     set_target_properties(MEGAsync PROPERTIES OUTPUT_NAME "megasync")

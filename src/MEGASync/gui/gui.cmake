@@ -45,6 +45,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/ProgressIndicatorDialog.h
     gui/VerifyLockMessage.h
     gui/ViewLoadingScene.h
+    gui/ViewLoadingMessage.h
     gui/MegaInfoMessage.h
     gui/WaitingSpinnerWidget.h
     gui/ProxySettings.h
@@ -171,6 +172,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/VerifyLockMessage.cpp
     gui/MegaInfoMessage.cpp
     gui/ViewLoadingScene.cpp
+    gui/ViewLoadingMessage.cpp
     gui/WaitingSpinnerWidget.cpp
     gui/ProxySettings.cpp
     gui/BandwidthSettings.cpp
@@ -278,6 +280,7 @@ target_sources_conditional(MEGAsync
     gui/win/NodeNameSetterDialog.ui
     gui/win/LowDiskSpaceDialog.ui
     gui/win/ViewLoadingScene.ui
+    gui/win/ViewLoadingMessage.ui
     gui/win/NotificationItem.ui
     gui/win/AccountTypeWidget.ui
     gui/node_selector/gui/win/NodeSelectorTreeViewWidget.ui
@@ -317,6 +320,7 @@ target_sources_conditional(MEGAsync
    gui/macx/NodeNameSetterDialog.ui
    gui/macx/LowDiskSpaceDialog.ui
    gui/macx/ViewLoadingScene.ui
+   gui/macx/ViewLoadingMessage.ui
    gui/macx/NotificationItem.ui
    gui/node_selector/gui/macx/NodeSelectorTreeViewWidget.ui
    gui/node_selector/gui/macx/NodeSelectorLoadingDelegate.ui
@@ -358,6 +362,7 @@ target_sources_conditional(MEGAsync
     gui/linux/NodeNameSetterDialog.ui
     gui/linux/LowDiskSpaceDialog.ui
     gui/linux/ViewLoadingScene.ui
+    gui/linux/ViewLoadingMessage.ui
     gui/linux/NotificationItem.ui
     gui/linux/AccountTypeWidget.ui
     gui/node_selector/gui/linux/NodeSelectorTreeViewWidget.ui
