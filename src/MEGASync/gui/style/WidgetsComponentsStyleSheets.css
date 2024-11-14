@@ -249,8 +249,8 @@ image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToke
 */
 QGroupBox[type="mega"]
 {
+margin-top: 20px;
 font-weight: bold;
-margin-top: 25px;
 background-color: transparent;
 border-width: 1px;
 border-style: solid;
@@ -263,7 +263,7 @@ QGroupBox::title[type="mega"]
 color: #ff04101E; /*colorToken.text-accent*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
-padding: 5 0 0 5px;
+padding: 0 0 0 10px;
 }
 
 QGroupBox::title:disabled[type="mega"]
@@ -372,6 +372,13 @@ QLabel[type="title"]
 {
 font-size: 16px;
 font-weight: 600;
+}
+
+QLabel[type="secondary"]
+{
+font-size: 12px;
+font-weight: 400;
+color: #ff616366; /*colorToken.text-secondary*/
 }
 
 QLabel:disabled
