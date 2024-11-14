@@ -296,6 +296,8 @@ QCheckBox[type="mega"]
 {
 background-color: transparent;
 spacing: 8px;
+min-height: 16px;
+max-height: 16px;
 }
 
 QCheckBox:disabled[type="mega"]
