@@ -142,15 +142,16 @@ MegaApplication::MegaApplication(int& argc, char** argv):
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it.");
-            msgInfo.buttons = QMessageBox::Ok;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-            {
-                ::exit(0);
-            };
-            QMegaMessageBox::information(msgInfo);
+            // Use regular QMessageBox with modal behaviour instead of QMegaMessageBox to avoid
+            // issues.
+            QMessageBox::warning(
+                nullptr,
+                tr("Error"),
+                QCoreApplication::translate("MegaSyncError",
+                                            "You can't run MEGA Desktop App from this location. "
+                                            "Move it into the Applications folder then run it."),
+                QMessageBox::Ok);
+            ::exit(0);
         }
     }
 #endif
