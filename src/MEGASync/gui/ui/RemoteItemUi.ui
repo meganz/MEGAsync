@@ -45,19 +45,19 @@ background-color: transparent;
      </property>
      <layout class="QVBoxLayout" name="tableLayout">
       <property name="spacing">
-       <number>8</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>12</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>12</number>
       </property>
       <property name="bottomMargin">
-       <number>10</number>
+       <number>12</number>
       </property>
       <item>
        <widget class="QTableView" name="tableView">

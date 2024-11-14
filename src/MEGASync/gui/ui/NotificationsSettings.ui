@@ -38,6 +38,18 @@
       <string notr="true">mega</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>12</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
       <item>
        <widget class="QLabel" name="GeneralSwithState">
         <property name="font">
@@ -104,8 +116,17 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="CompletedUploadsDownloadsCheck">
@@ -141,8 +162,17 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="NewSharedCheck">
@@ -222,8 +252,17 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="NewContactCheck">
@@ -303,8 +342,17 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="DesktopCheck">
