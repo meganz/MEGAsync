@@ -33,12 +33,11 @@ private slots:
 
 private:
     Ui::MediaTypeFilterWidget* mUi;
-    bool mIsOtherVisible = false;
-    bool mIsAudioVisible = false;
-    bool mIsVideoVisible = false;
-    bool mIsArchiveVisible = false;
-    bool mIsDocumentVisible = false;
-    bool mIsImageVisible = false;
+    std::map<TransfersWidget::TM_TAB, bool> mVisibilityMap;
+
+    void initializeVisibilityStates();
+    bool isVisible(TransfersWidget::TM_TAB tab) const;
+    void setIsVisible(TransfersWidget::TM_TAB tab, bool isVisible);
 };
 
 #endif // MEDIA_TYPE_FILTER_WIDGET_H

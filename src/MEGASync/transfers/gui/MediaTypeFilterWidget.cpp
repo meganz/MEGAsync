@@ -8,6 +8,8 @@ MediaTypeFilterWidget::MediaTypeFilterWidget(QWidget* parent):
 {
     mUi->setupUi(this);
 
+    initializeVisibilityStates();
+
     connect(mUi->bTitle,
             &QPushButton::toggled,
             this,
@@ -72,13 +74,13 @@ QLabel* MediaTypeFilterWidget::getLabel(TransfersWidget::TM_TAB tab) const
 
 void MediaTypeFilterWidget::resetCounter(TransfersWidget::TM_TAB tab)
 {
-    QLabel* label(getLabel(tab));
-    if (!label)
+    if (!isVisible(tab))
     {
         return;
     }
 
-    if (label->parentWidget()->isVisible())
+    QLabel* label(getLabel(tab));
+    if (label)
     {
         label->parentWidget()->hide();
         label->clear();
@@ -105,64 +107,45 @@ void MediaTypeFilterWidget::showIfGroupboxVisible(TransfersWidget::TM_TAB tab,
 
 void MediaTypeFilterWidget::handleGroupboxToggled(bool checked)
 {
-    if (checked)
+    for (auto& [tab, frameVisible]: mVisibilityMap)
     {
-        if (mIsOtherVisible)
+        QFrame* frame = getFrame(tab);
+        if (checked)
         {
-            mUi->fOther->show();
+            if (frameVisible)
+            {
+                frame->show();
+            }
         }
-        if (mIsAudioVisible)
+        else
         {
-            mUi->fAudio->show();
-        }
-        if (mIsVideoVisible)
-        {
-            mUi->fVideos->show();
-        }
-        if (mIsArchiveVisible)
-        {
-            mUi->fArchives->show();
-        }
-        if (mIsDocumentVisible)
-        {
-            mUi->fDocuments->show();
-        }
-        if (mIsImageVisible)
-        {
-            mUi->fImages->show();
+            mVisibilityMap[tab] = frame->isVisible();
+            frame->hide();
         }
     }
-    else
+}
+
+void MediaTypeFilterWidget::initializeVisibilityStates()
+{
+    mVisibilityMap[TransfersWidget::TYPE_OTHER_TAB] = false;
+    mVisibilityMap[TransfersWidget::TYPE_AUDIO_TAB] = false;
+    mVisibilityMap[TransfersWidget::TYPE_VIDEO_TAB] = false;
+    mVisibilityMap[TransfersWidget::TYPE_ARCHIVE_TAB] = false;
+    mVisibilityMap[TransfersWidget::TYPE_DOCUMENT_TAB] = false;
+    mVisibilityMap[TransfersWidget::TYPE_IMAGE_TAB] = false;
+}
+
+bool MediaTypeFilterWidget::isVisible(TransfersWidget::TM_TAB tab) const
+{
+    auto it = mVisibilityMap.find(tab);
+    return it != mVisibilityMap.end() ? it->second : false;
+}
+
+void MediaTypeFilterWidget::setIsVisible(TransfersWidget::TM_TAB tab, bool isVisible)
+{
+    auto it = mVisibilityMap.find(tab);
+    if (it != mVisibilityMap.end())
     {
-        mIsOtherVisible = mUi->fOther->isVisible();
-        if (mIsOtherVisible)
-        {
-            mUi->fOther->hide();
-        }
-        mIsAudioVisible = mUi->fAudio->isVisible();
-        if (mIsAudioVisible)
-        {
-            mUi->fAudio->hide();
-        }
-        mIsVideoVisible = mUi->fVideos->isVisible();
-        if (mIsVideoVisible)
-        {
-            mUi->fVideos->hide();
-        }
-        mIsArchiveVisible = mUi->fArchives->isVisible();
-        if (mIsArchiveVisible)
-        {
-            mUi->fArchives->hide();
-        }
-        mIsDocumentVisible = mUi->fDocuments->isVisible();
-        if (mIsDocumentVisible)
-        {
-            mUi->fDocuments->hide();
-        }
-        mIsImageVisible = mUi->fImages->isVisible();
-        if (mIsImageVisible)
-        {
-            mUi->fImages->hide();
-        }
+        it->second = isVisible;
     }
 }
