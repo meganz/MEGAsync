@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -127,7 +127,7 @@ QGroupBox
       <enum>Qt::RightToLeft</enum>
      </property>
      <property name="text">
-      <string>Media type</string>
+      <string notr="true"/>
      </property>
      <property name="icon">
       <iconset resource="../../../gui/Resources.qrc">
@@ -228,7 +228,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Archives</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="compressed" resource="../../../gui/Resources_win.qrc">
@@ -312,7 +312,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Documents</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="text" resource="../../../gui/Resources_win.qrc">
@@ -393,7 +393,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Images</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="image" resource="../../../gui/Resources_win.qrc">
@@ -474,7 +474,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Videos</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="video" resource="../../../gui/Resources_win.qrc">
@@ -555,7 +555,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Audio</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="audio" resource="../../../gui/Resources_win.qrc">
@@ -636,7 +636,7 @@ QGroupBox
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Other</string>
+            <string notr="true"/>
            </property>
            <property name="icon">
             <iconset theme="generic" resource="../../../gui/Resources_win.qrc">

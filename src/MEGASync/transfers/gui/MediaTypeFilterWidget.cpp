@@ -9,6 +9,7 @@ MediaTypeFilterWidget::MediaTypeFilterWidget(QWidget* parent):
     mUi->setupUi(this);
 
     initializeVisibilityStates();
+    updateStrings();
 
     connect(mUi->bTitle,
             &QPushButton::toggled,
@@ -26,6 +27,7 @@ void MediaTypeFilterWidget::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         mUi->retranslateUi(this);
+        updateStrings();
     }
     QWidget::changeEvent(event);
 }
@@ -148,4 +150,15 @@ void MediaTypeFilterWidget::setIsVisible(TransfersWidget::TM_TAB tab, bool isVis
     {
         it->second = isVisible;
     }
+}
+
+void MediaTypeFilterWidget::updateStrings()
+{
+    mUi->bTitle->setText(QCoreApplication::translate("TransferManager", "Media type"));
+    mUi->bArchives->setText(QCoreApplication::translate("TransferManager", "Archives"));
+    mUi->bDocuments->setText(QCoreApplication::translate("TransferManager", "Documents"));
+    mUi->bImages->setText(QCoreApplication::translate("TransferManager", "Images"));
+    mUi->bVideos->setText(QCoreApplication::translate("TransferManager", "Videos"));
+    mUi->bAudio->setText(QCoreApplication::translate("TransferManager", "Audio"));
+    mUi->bOther->setText(QCoreApplication::translate("TransferManager", "Other"));
 }

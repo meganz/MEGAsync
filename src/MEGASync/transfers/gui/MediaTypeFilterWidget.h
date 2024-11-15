@@ -38,6 +38,7 @@ private:
     void initializeVisibilityStates();
     bool isVisible(TransfersWidget::TM_TAB tab) const;
     void setIsVisible(TransfersWidget::TM_TAB tab, bool isVisible);
+    void updateStrings();
 };
 
 #endif // MEDIA_TYPE_FILTER_WIDGET_H
