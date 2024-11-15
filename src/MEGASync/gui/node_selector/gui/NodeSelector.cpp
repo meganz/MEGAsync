@@ -556,7 +556,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
     }
 }
 
-void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes)
+void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
 {
     mCloudDriveWidget->onNodesUpdate(api, nodes);
     mIncomingSharesWidget->onNodesUpdate(api, nodes);

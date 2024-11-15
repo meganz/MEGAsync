@@ -52,6 +52,8 @@ private slots:
     void onNavigateReady(const QModelIndex& index);
 
 private:
+    friend class NodeSelectorDelegate;
+
     bool mousePressorReleaseEvent(QMouseEvent* event);
     bool handleStandardMouseEvent(QMouseEvent* event);
     QModelIndex getIndexFromSourceModel(const QModelIndex& index) const;
