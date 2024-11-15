@@ -15,11 +15,10 @@ color: #ff303233; /*colorToken.text-primary*/
 */
 QTableView
 {
-background: #ff18191A; /*colorToken.page-background*/
+background-color: transparent;
 outline: 0;
 border: 1px solid #ff18191A; /*colorToken.page-background*/
 border-radius: 5px;
-selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 }
 
 QTableView::item
@@ -30,6 +29,7 @@ padding-left:4px;
 
 QTableView::item::selected
 {
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 background-color: #ff2c5beb; /*colorToken.link-primary*/
 }
 

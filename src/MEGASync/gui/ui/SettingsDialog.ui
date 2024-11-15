@@ -235,7 +235,13 @@ margin-bottom: 3px;
    <property name="leftMargin">
     <number>24</number>
    </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
    <property name="rightMargin">
+    <number>24</number>
+   </property>
+   <property name="bottomMargin">
     <number>24</number>
    </property>
    <item>
@@ -2990,10 +2996,10 @@ margin-top: 0px;
        <number>20</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>20</number>
+       <number>0</number>
       </property>
       <item>
        <widget class="QPushButton" name="bHelp">
@@ -3029,6 +3035,18 @@ margin-top: 0px;
         <widget class="QWidget" name="pEmpty"/>
         <widget class="QWidget" name="pProcessing">
          <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <spacer name="horizontalSpacer_10">
             <property name="orientation">
