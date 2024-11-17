@@ -21,6 +21,13 @@ bool CreateRemoveSyncsManager::removeSync(mega::MegaHandle handle, QWidget* pare
     return syncManager->performRemoveSync(handle, parent);
 }
 
+bool CreateRemoveSyncsManager::removeSync(std::shared_ptr<SyncSettings> syncSettings,
+                                          QWidget* parent)
+{
+    auto syncManager(new CreateRemoveSyncsManager());
+    return syncManager->performRemoveSync(syncSettings, parent);
+}
+
 void CreateRemoveSyncsManager::performAddSync(mega::MegaHandle handle, bool comesFromSettings)
 {
     QString remoteFolder;
@@ -86,26 +93,43 @@ bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, 
         deleteLater();
         return false;
     }
-    QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(parent);
-    DialogOpener::showDialog<RemoveSyncConfirmationDialog>(
-        dialog,
-        [dialog, syncSettings, remoteHandle, this]()
-        {
-            if (dialog->result() == QDialog::Accepted)
+
+    return performRemoveSync(syncSettings, parent);
+}
+
+void CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> syncSettings,
+                                                 QWidget* parent)
+{
+    if (syncSettings)
+    {
+        QPointer<RemoveSyncConfirmationDialog> dialog = new RemoveSyncConfirmationDialog(parent);
+
+        DialogOpener::showDialog<RemoveSyncConfirmationDialog>(
+            dialog,
+            [dialog, syncSettings, this]()
             {
-                SyncController::instance().removeSync(syncSettings, remoteHandle);
-                connect(&SyncController::instance(),
-                        &SyncController::syncRemoveStatus,
-                        this,
-                        [this](const int /*errorCode*/)
-                        {
-                            deleteLater();
-                        });
-            }
-            else
-            {
-                deleteLater();
-            }
-        });
-    return true;
+                if (dialog->result() == QDialog::Accepted)
+                {
+                    SyncController::instance().removeSync(syncSettings);
+                    connect(&SyncController::instance(),
+                            &SyncController::syncRemoveStatus,
+                            this,
+                            [this](const int)
+                            {
+                                deleteLater();
+                            });
+                }
+                else
+                {
+                    deleteLater();
+                }
+            });
+
+        return true;
+    }
+    else
+    {
+        deleteLater();
+        return false;
+    }
 }

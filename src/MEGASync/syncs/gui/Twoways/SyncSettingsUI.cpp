@@ -99,7 +99,7 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
 
 void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
 {
-    CreateRemoveSyncsManager::removeSync(sync->getMegaHandle(), this);
+    CreateRemoveSyncsManager::removeSync(sync, this);
 }
 
 void SyncSettingsUI::setSyncsTitle()
