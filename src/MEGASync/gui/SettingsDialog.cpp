@@ -126,12 +126,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->cAutoUpdate->hide();
 #endif
 
-#ifdef Q_OS_WINDOWS
-    mUi->permissionsGroupBox->hide();
-#else
-    connect(mUi->bPermissions, &QPushButton::clicked, this, &SettingsDialog::onPermissionsClicked);
-#endif
-
     mUi->cFinderIcons->hide();
 #ifdef Q_OS_WINDOWS
     typedef LONG MEGANTSTATUS;
@@ -190,6 +184,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
+
+    connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
+    connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -214,6 +211,14 @@ void SettingsDialog::openSettingsTab(int tab)
 
         case ACCOUNT_TAB:
             mUi->bAccount->click();
+            break;
+
+        case SYNCS_TAB:
+            mUi->bSyncs->click();
+            break;
+
+        case BACKUP_TAB:
+            mUi->bBackup->click();
             break;
 
         case SECURITY_TAB:
@@ -243,6 +248,8 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
     mUi->bGeneral->setEnabled(!proxyOnly);
     mUi->bAccount->setEnabled(!proxyOnly);
+    mUi->bSyncs->setEnabled(!proxyOnly);
+    mUi->bBackup->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
     mUi->bNotifications->setEnabled(!proxyOnly);
@@ -420,6 +427,15 @@ void SettingsDialog::loadSettings()
 #endif
 
     updateNetworkTab();
+
+    // Folders tab
+    mUi->syncSettings->setParentDialog(this);
+    mUi->backupSettings->setParentDialog(this);
+
+    // Syncs and backups
+    mUi->syncSettings->setToolBarItem(mUi->bSyncs);
+    mUi->backupSettings->setToolBarItem(mUi->bBackup);
+
     mLoadingSettings--;
 }
 
@@ -1194,9 +1210,44 @@ void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool ch
     }
 }
 
+// Backup ----------------------------------------------------------------------------------------
+void SettingsDialog::on_bBackup_clicked()
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_BACKUP_TAB_CLICKED);
+
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pBackup)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pBackup);
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+}
+
 void SettingsDialog::on_bBackupCenter_clicked()
 {
     Utilities::openBackupCenter();
+}
+
+void SettingsDialog::on_bSyncs_clicked()
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
+
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pSyncs)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pSyncs);
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
 // Security ----------------------------------------------------------------------------------------
