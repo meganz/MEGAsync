@@ -40,10 +40,13 @@ void TransferTrack::checkTransfer(QExplicitlySharedDataPointer<TransferData> dat
                 emitSignal(data, path);
             }
         }
-        else if (mType == TransferData::TransferType::TRANSFER_DOWNLOAD &&
-                 mTrackedTransfers.contains(data->mNodeHandle))
+        else if (mType == TransferData::TransferType::TRANSFER_DOWNLOAD)
         {
-            emitSignal(data, QVariant::fromValue<uint64_t>(data->mNodeHandle));
+            auto handle(QVariant::fromValue<uint64_t>(data->mNodeHandle));
+            if (mTrackedTransfers.contains(handle))
+            {
+                emitSignal(data, handle);
+            }
         }
     }
 }
