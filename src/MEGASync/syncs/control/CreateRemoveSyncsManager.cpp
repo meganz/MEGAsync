@@ -97,7 +97,7 @@ bool CreateRemoveSyncsManager::performRemoveSync(mega::MegaHandle remoteHandle, 
     return performRemoveSync(syncSettings, parent);
 }
 
-void CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> syncSettings,
+bool CreateRemoveSyncsManager::performRemoveSync(std::shared_ptr<SyncSettings> syncSettings,
                                                  QWidget* parent)
 {
     if (syncSettings)
