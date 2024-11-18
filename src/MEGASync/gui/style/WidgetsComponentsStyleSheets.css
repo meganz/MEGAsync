@@ -1,6 +1,6 @@
 *
 {
-font-family: "Segoe UI";
+font-family: "Inter";
 font-size: 12px;
 }
 
@@ -19,6 +19,7 @@ background-color: transparent;
 outline: 0;
 border: 1px solid #ff18191A; /*colorToken.page-background*/
 border-radius: 5px;
+selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
 }
 
 QTableView::item
@@ -357,7 +358,6 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 */
 QLabel
 {
-font-family: Inter;
 font-size: 12px;
 font-weight: 400;
 background-color: transparent;
@@ -395,7 +395,6 @@ QPushButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: transparent;
@@ -458,7 +457,6 @@ QPushButton[type="primary"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: #ff04101E; /*colorToken.button-primary*/
@@ -524,7 +522,6 @@ QPushButton[type="secondary"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: #ff04101E; /*colorToken.button-secondary*/
