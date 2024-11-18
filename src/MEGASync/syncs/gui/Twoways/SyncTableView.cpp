@@ -305,21 +305,9 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
 
     if (sync->getSync()->getRunState() == mega::MegaSync::RUNSTATE_RUNNING)
     {
-        auto rescanQuick(
-            new MenuItemAction(QCoreApplication::translate("SyncTableView", "Quick Rescan"),
-                               QLatin1String("://images/sync_context_menu/search-small.png"),
-                               menu));
-        connect(rescanQuick,
-                &MenuItemAction::triggered,
-                this,
-                [this, sync]()
-                {
-                    emit signalRescanQuick(sync);
-                });
-
         auto rescanDeep(
-            new MenuItemAction(QCoreApplication::translate("SyncTableView", "Deep Rescan"),
-                               QLatin1String("://images/sync_context_menu/search-dark-small.png"),
+            new MenuItemAction(QCoreApplication::translate("SyncTableView", "Rescan"),
+                               QLatin1String("://images/sync_context_menu/search-small.png"),
                                menu));
         connect(rescanDeep,
                 &MenuItemAction::triggered,
@@ -343,7 +331,6 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                 });
 
         menu->addSeparator();
-        menu->addAction(rescanQuick);
         menu->addAction(rescanDeep);
         menu->addAction(reboot);
     }
