@@ -428,8 +428,8 @@ bool TransferData::canBeRetried(mega::MegaTransfer* transfer)
 
             // If it is not any of these errors, it can be retried
             result = error.getErrorCode() != mega::MegaError::API_EKEY &&
-                     error.getErrorCode() != mega::MegaError::API_EBLOCKED &&
-                     error.getErrorCode() != mega::MegaError::API_EWRITE;
+                     error.getErrorCode() != mega::MegaError::API_EBLOCKED
+                /* && error.getErrorCode() != mega::MegaError::API_EWRITE*/;
         }
     }
     else
