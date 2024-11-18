@@ -113,12 +113,8 @@ void NodeRowDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
     if (isPaintingDrag(painter))
     {
         QPainterPath selectedPath;
-        selectedPath.addRoundedRect(opt.rect.x(),
-                                    opt.rect.y(),
-                                    opt.rect.width(),
-                                    opt.rect.height(),
-                                    10,
-                                    10);
+        selectedPath
+            .addRoundedRect(opt.rect.x(), opt.rect.y(), opt.rect.width(), opt.rect.height(), 4, 4);
         painter->save();
         painter->setPen(Qt::NoPen);
         painter->setBrush(option.palette.highlight());
