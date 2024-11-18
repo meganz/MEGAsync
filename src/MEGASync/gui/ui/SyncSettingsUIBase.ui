@@ -168,7 +168,8 @@
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">margin-top: 0px;</string>
+             <string notr="true">margin-top: 0px;
+border-radius: 8px;</string>
             </property>
             <property name="title">
              <string notr="true"/>

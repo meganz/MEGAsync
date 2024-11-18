@@ -106,5 +106,6 @@
         <file>images/key_pass@2x.png</file>
         <file>images/key_pass@3x.png</file>
         <file>images/themed/light/error_sync_icon.svg</file>
+        <file>images/themed/dark/error_sync_icon.svg</file>
     </qresource>
 </RCC>
