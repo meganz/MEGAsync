@@ -83,15 +83,19 @@ Rectangle {
                     root.navInfo.comesFromResumePage = true;
 
                     var resumePageState = "";
+                    var toOpenTabIndex = 0;
                     switch(root.navInfo.typeSelected) {
                         case Constants.SyncType.SELECTIVE_SYNC:
                             resumePageState = "stateSelectiveSync";
+                            toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case Constants.SyncType.FULL_SYNC:
                             resumePageState = "stateFullSync";
+                            toOpenTabIndex = SettingsDialog.SYNCS_TAB;
                             break;
                         case Constants.SyncType.BACKUP:
                             resumePageState = "stateBackup";
+                            toOpenTabIndex = SettingsDialog.BACKUP_TAB;
                             break;
                         default:
                             console.warn("ResumePage: typeSelected does not exist -> "
@@ -101,6 +105,7 @@ Rectangle {
 
                     rightPanel.replace(resumePage,
                                        { "state": resumePageState,
+                                         "tabToOpen": toOpenTabIndex,
                                          "fullSyncDone": root.navInfo.fullSyncDone,
                                          "selectiveSyncDone": root.navInfo.selectiveSyncDone
                                        });

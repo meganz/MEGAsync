@@ -248,3 +248,12 @@ void SyncSettingsUIBase::rescanDeep(std::shared_ptr<SyncSettings> sync)
 {
     MegaSyncApp->getMegaApi()->rescanSync(sync->backupId(), true);
 }
+
+void SyncSettingsUIBase::reboot(std::shared_ptr<SyncSettings> sync)
+{
+    if (!sync)
+    {
+        return;
+    }
+    SyncController::instance().resetSync(sync, mega::MegaSync::SyncRunningState::RUNSTATE_DISABLED);
+}

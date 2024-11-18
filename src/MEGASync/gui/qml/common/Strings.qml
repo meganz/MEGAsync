@@ -12,7 +12,7 @@ QtObject {
     readonly property string skip: qsTr("Skip")
     readonly property string previous: qsTr("Previous")
     readonly property string tryAgain: qsTr("Try again")
-    readonly property string viewInDeviceCentre: qsTr("View in device centre")
+    readonly property string viewInSettings: qsTranslate("OnboardingStrings", "View in Settings")
     readonly property string setExclusions: qsTr("Set Exclusions")
     readonly property string deviceNameSpecialCharactersErr: qsTr("The following characters are not allowed: %1")
     readonly property string deviceNameTooLongErr: qsTr("Maximum 32 characters")

@@ -5,10 +5,10 @@ import common 1.0
 import components.views 1.0
 import components.steps 1.0
 
-import QmlDialog 1.0
+import BackupsQmlDialog 1.0
 import SyncInfo 1.0
 
-QmlDialog {
+BackupsQmlDialog {
     id: window
 
     readonly property int syncOrigin: SyncInfo.MAIN_APP_ORIGIN

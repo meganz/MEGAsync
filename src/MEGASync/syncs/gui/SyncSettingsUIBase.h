@@ -82,6 +82,7 @@ public:
         connect(table, &TableType::signalOpenMegaignore, this, &SyncSettingsUIBase::openMegaIgnore);
         connect(table, &TableType::signalRescanQuick, this, &SyncSettingsUIBase::rescanQuick);
         connect(table, &TableType::signalRescanDeep, this, &SyncSettingsUIBase::rescanDeep);
+        connect(table, &TableType::signalReboot, this, &SyncSettingsUIBase::reboot);
 
         auto& model = mModels[table->getType()];
         if (!model)
@@ -246,6 +247,7 @@ protected slots:
 
     void rescanQuick(std::shared_ptr<SyncSettings>);
     void rescanDeep(std::shared_ptr<SyncSettings>);
+    void reboot(std::shared_ptr<SyncSettings>);
 
     void openExclusionsDialog(std::shared_ptr<SyncSettings> sync);
     void openMegaIgnore(std::shared_ptr<SyncSettings>);

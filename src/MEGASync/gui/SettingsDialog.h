@@ -61,6 +61,9 @@ public:
     void updateUploadFolder();
     void updateDownloadFolder();
 
+    void setSyncAddButtonEnabled(bool enabled,
+                                 SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
+
 signals:
     void userActivity();
 

@@ -1913,7 +1913,7 @@ void TransfersModel::showSyncCancelledWarning()
                 QTimer::singleShot(0,
                                    []()
                                    {
-                                       MegaSyncApp->openDeviceCentre();
+                                       MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
                                    });
             }
 

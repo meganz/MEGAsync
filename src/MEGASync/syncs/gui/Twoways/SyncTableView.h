@@ -40,6 +40,7 @@ signals:
     void signaladdExclusions(std::shared_ptr<SyncSettings> sync);
     void signalRescanQuick(std::shared_ptr<SyncSettings> sync);
     void signalRescanDeep(std::shared_ptr<SyncSettings> sync);
+    void signalReboot(std::shared_ptr<SyncSettings> sync);
 
 private slots:
     virtual void onCustomContextMenuRequested(const QPoint& pos);

@@ -15,8 +15,8 @@ public:
 
     QString contextName() override;
 
+    Q_INVOKABLE void openPreferences(int tabIndex) const;
     Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
-    Q_INVOKABLE void openDeviceCentre() const;
 
 signals:
     void accountBlocked(int errorCode);

@@ -1169,6 +1169,32 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled, SettingsDialog::Tabs tab)
+{
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
+    {
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
+    }
+}
+
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)
 {
     // We want to keep only the "Send bug report" button enabled.
