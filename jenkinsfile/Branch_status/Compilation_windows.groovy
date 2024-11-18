@@ -51,7 +51,7 @@ pipeline {
                 dir(desktop_sources_workspace){
                     sh "mkdir build_dir"
                     sh "mkdir tmp"
-                    sh "cmake ${env.BUILD_OPTIONS} -DCMAKE_GENERATOR_PLATFORM=x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DVCPKG_ROOT='${VCPKGPATH}' -S '${desktop_sources_workspace}' -B '${desktop_sources_workspace}'\\\\build_dir\\\\"
+                    sh "cmake ${env.BUILD_OPTIONS} -G 'Visual Studio 17 2022' -A x64 -DCMAKE_PREFIX_PATH='${MEGAQTPATH}' -DVCPKG_ROOT='${VCPKGPATH}' -S '${desktop_sources_workspace}' -B '${desktop_sources_workspace}'\\\\build_dir\\\\"
                     sh "cmake --build '${desktop_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAsync -j 1"
                     sh "cmake --build '${desktop_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAupdater -j 1"
                     sh "cmake --build '${desktop_sources_workspace}'\\\\build_dir\\\\ --config Debug --target MEGAShellExt -j 1"            
