@@ -5,6 +5,8 @@
 
 #include <QObject>
 
+#include <memory>
+
 class SyncSettings;
 
 class CreateRemoveSyncsManager: public QObject
