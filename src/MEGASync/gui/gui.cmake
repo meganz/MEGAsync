@@ -104,8 +104,10 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
+    gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
+    gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
@@ -229,8 +231,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
+    gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
+    gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp

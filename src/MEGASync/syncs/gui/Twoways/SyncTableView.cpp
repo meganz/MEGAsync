@@ -329,9 +329,23 @@ void SyncTableView::createStatesContextActions(QMenu* menu, std::shared_ptr<Sync
                     emit signalRescanDeep(sync);
                 });
 
+        auto reboot(new MenuItemAction(sync->getType() == mega::MegaSync::TYPE_TWOWAY ?
+                                           tr("Reboot sync") :
+                                           tr("Reboot backup"),
+                                       QLatin1String("://images/qml/power.svg"),
+                                       menu));
+        connect(reboot,
+                &MenuItemAction::triggered,
+                this,
+                [this, sync]()
+                {
+                    emit signalReboot(sync);
+                });
+
         menu->addSeparator();
         menu->addAction(rescanQuick);
         menu->addAction(rescanDeep);
+        menu->addAction(reboot);
     }
 }
 

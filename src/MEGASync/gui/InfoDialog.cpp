@@ -1541,27 +1541,30 @@ void InfoDialog::on_bDismissSyncSettings_clicked()
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bDismissBackupsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 int InfoDialog::getLoggedInMode() const
