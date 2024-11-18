@@ -106,7 +106,7 @@ void UnknownDownloadIssue::addIssueToSolveQueue()
             connectTrack();
         }
 
-        mTrack->addTransferToTrack(pathHandle);
+        mTrack->addTransferToTrack(QVariant::fromValue<uint64_t>(pathHandle));
 
         mIssuesToRetry.append(pathHandle);
     }
