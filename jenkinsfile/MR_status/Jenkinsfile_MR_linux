@@ -171,8 +171,23 @@ pipeline {
                     steps {
                         dir(linux_sources_workspace){
                             script{
-                                sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/linux/$DISTRIBUTION"
-                                sh "cd /srv/repo/private/$DISTRIBUTION && jf rt upload --regexp '(megasync.*deb\$|megasync.*rpm\$|megasync.*\\.pkg\\.tar\\.zst\$|megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/linux/$DISTRIBUTION/"
+                                withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                    sh """
+                                        jf rt del \
+                                            --url ${REPO_URL} \
+                                            --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                            MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/linux/$DISTRIBUTION
+                                    """
+                                    dir("/srv/repo/private/$DISTRIBUTION"){
+                                        sh """
+                                            jf rt upload \
+                                                --url ${REPO_URL} \
+                                                --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                --regexp '(megasync.*deb\$|megasync.*rpm\$|megasync.*\\.pkg\\.tar\\.zst\$|megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/linux/$DISTRIBUTION/
+                                        """
+                                    }
+                                }
                                 uploadPackagesExecuted = true
                             }
                         }

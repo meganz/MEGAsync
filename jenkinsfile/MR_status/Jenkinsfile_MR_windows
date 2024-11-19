@@ -161,17 +161,18 @@ pipeline {
                             script {
                                 def windows_artifactory_upload = { String ART_UPLOAD_PATH, String buildDir, String arch ->
                                 
-                                    powershell """
-                                        ${JF_PATH}\\jf config use artifactory
-                                        ${JF_PATH}\\jf rt del ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
-                                        cd ${buildDir}
-                                        ${JF_PATH}\\jf rt upload MEGAsync.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload mega-desktop-app-gfxworker.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload SDKlib.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload MEGAShellExt.pdb ${ART_UPLOAD_PATH}
-                                        ${JF_PATH}\\jf rt upload MEGAupdater.pdb ${ART_UPLOAD_PATH}
-                                    """
+                                    withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                        powershell """
+                                            ${JF_PATH}\\jf rt del --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} ${ART_UPLOAD_PATH}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} MEGAsyncSetup${arch}.exe ${ART_UPLOAD_PATH}
+                                            cd ${buildDir}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} MEGAsync.pdb ${ART_UPLOAD_PATH}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} mega-desktop-app-gfxworker.pdb ${ART_UPLOAD_PATH}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} SDKlib.pdb ${ART_UPLOAD_PATH}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} MEGAShellExt.pdb ${ART_UPLOAD_PATH}
+                                            ${JF_PATH}\\jf rt upload --url ${REPO_URL} --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} MEGAupdater.pdb ${ART_UPLOAD_PATH}
+                                        """
+                                    }
                                 }
                                 if (env.ARCHITECTURE == "64") {
                                     windows_artifactory_upload("MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/windows/built64/", "built64", "64")
