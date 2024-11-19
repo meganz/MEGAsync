@@ -72,6 +72,10 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define WinRedist32BasePath "${winRedistBasePath}\x86"
 !define WinRedist64BasePath "${winRedistBasePath}\x64"
 
+!define D3DRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\D3D"
+!define D3DRedist32BasePath "${D3DRedistBasePath}\x86"
+!define D3DRedist64BasePath "${D3DRedistBasePath}\x64"
+
 
 ; Version info: get version directly from the binary
 !getdllversion "${SRCDIR_MEGASYNC}/MEGAsync.exe" Expv_
@@ -643,6 +647,7 @@ modeselected:
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "${D3DRedist64BasePath}\d3dcompiler_47.dll"  "$INSTDIR\d3dcompiler_47.dll"
   !else
     !insertmacro Install3264DLL "${VcRedist32Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\msvcp140.dll" "$INSTDIR\msvcp140.dll"
@@ -694,6 +699,7 @@ modeselected:
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "${D3DRedist32BasePath}\d3dcompiler_47.dll"  "$INSTDIR\d3dcompiler_47.dll"
   !endif
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
@@ -986,6 +992,7 @@ Section Uninstall
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\d3dcompiler_47.dll"
 
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
