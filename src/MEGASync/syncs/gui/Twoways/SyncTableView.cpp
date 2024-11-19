@@ -5,6 +5,7 @@
 #include "PlatformStrings.h"
 #include "SyncItemModel.h"
 #include "SyncSettings.h"
+#include "TokenParserWidgetManager.h"
 
 #include <QHeaderView>
 #include <QKeyEvent>
@@ -346,24 +347,38 @@ void BackgroundColorDelegate::paint(QPainter* painter,
 {
     if (option.state & QStyle::State_Selected)
     {
-        paintRowBackground(painter,
-                           option,
-                           index,
-                           QColor(QLatin1String("#ff2c5beb"))); /*colorToken.link-primary*/
+        paintRowBackground(
+            painter,
+            option,
+            index,
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary"),
+                                                           QLatin1String("#FF2C5BEB")));
 
-        painter->setPen(QColor(QLatin1String("#ffFAFAFB"))); /*colorToken.text-inverse-accent*/
+        painter->setPen(
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("text-inverse-accent"),
+                                                           QLatin1String("#FFFAFAFB")));
     }
     else
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         if (sync->getError())
         {
-            paintRowBackground(painter,
-                               option,
-                               index,
-                               QColor(QLatin1String("#FFE4E8"))); /*colorToken.notification-error*/
+            paintRowBackground(
+                painter,
+                option,
+                index,
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("notification-error"),
+                                                               QLatin1String("#FFFFE4E8")));
 
-            painter->setPen(QColor(QLatin1String("#E31B57"))); /*colorToken.text-error*/
+            painter->setPen(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-error"),
+                                                               QLatin1String("#FFE31B57")));
+        }
+        else
+        {
+            painter->setPen(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"),
+                                                               QLatin1String("#ff303233")));
         }
     }
 
