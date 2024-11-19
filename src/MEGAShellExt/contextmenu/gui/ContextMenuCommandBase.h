@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONTEXTMENUCOMMANDBASE_H
+#define CONTEXTMENUCOMMANDBASE_H
+
 #include "../data/ContextMenuData.h"
 #include "SharedCounter.h"
 #include "SharedState.h"
@@ -21,7 +23,9 @@ protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) = 0;
 
 protected:
-    unique_ptr<SharedCounter> mCounter;
-    unique_ptr<SharedState> mState;
+    std::unique_ptr<SharedCounter> mCounter;
+    std::unique_ptr<SharedState> mState;
     static ContextMenuData mContextMenuData;
 };
+
+#endif

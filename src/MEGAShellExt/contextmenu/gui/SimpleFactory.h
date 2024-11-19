@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SIMPLEFACTORY_H
+#define SIMPLEFACTORY_H
+
 #include "framework.h"
 
 template<class T>
@@ -29,3 +31,5 @@ struct SimpleFactory: winrt::implements<SimpleFactory<T>, IClassFactory>
         return S_OK;
     }
 };
+
+#endif

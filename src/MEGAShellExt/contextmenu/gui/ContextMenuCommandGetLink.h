@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONTEXTMENUCOMMANDGETLINK_H
+#define CONTEXTMENUCOMMANDGETLINK_H
+
 #include "ContextMenuCommandBase.h"
 
 class __declspec(uuid("0313D546-594C-49D6-AF85-F53575420E6C")) ContextMenuCommandGetLink:
@@ -12,3 +14,5 @@ public:
 protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
 };
+
+#endif

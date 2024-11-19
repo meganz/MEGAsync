@@ -44,7 +44,7 @@ SharedState::~SharedState()
     CloseHandle(hFileMapping);
 }
 
-CounterState SharedState::GetState(const wstring caller) const
+CounterState SharedState::GetState(const std::wstring caller) const
 {
     WaitForSingleObject(hMutex, INFINITE);
     CounterState value = *pState;
@@ -53,7 +53,7 @@ CounterState SharedState::GetState(const wstring caller) const
     return value;
 }
 
-void SharedState::SetState(const wstring caller, const CounterState state)
+void SharedState::SetState(const std::wstring caller, const CounterState state)
 {
     WaitForSingleObject(hMutex, INFINITE);
     *pState = state;

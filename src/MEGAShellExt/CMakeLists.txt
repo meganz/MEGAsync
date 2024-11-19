@@ -7,7 +7,7 @@ add_library(MEGAShellExt SHARED)
 
 set(MEGAShellExt_HEADERS
     contextmenu/data/ContextMenuData.h
-    contextmenu/gui/AclHelper.h
+    contextmenu/gui/AclSetter.h
     contextmenu/gui/ContextMenuCommandBase.h
     contextmenu/gui/ContextMenuCommandGetLink.h
     contextmenu/gui/ContextMenuCommandRemoveFromLeftPane.h
@@ -38,7 +38,6 @@ set(MEGAShellExt_HEADERS
 
 set(MEGAShellExt_SOURCES
     contextmenu/data/ContextMenuData.cpp
-    contextmenu/gui/AclHelper.cpp
     contextmenu/gui/ContextMenuCommandBase.cpp
     contextmenu/gui/ContextMenuCommandGetLink.cpp
     contextmenu/gui/ContextMenuCommandRemoveFromLeftPane.cpp

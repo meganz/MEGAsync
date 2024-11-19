@@ -5,7 +5,7 @@
 
 IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
-    wstring title;
+    std::wstring title;
     int unsyncedFolders = mContextMenuData.getUnsyncedFolders();
     int unsyncedFiles = mContextMenuData.getUnsyncedFiles();
     LPWSTR menuText =

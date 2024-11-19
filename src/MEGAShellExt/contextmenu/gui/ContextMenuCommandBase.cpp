@@ -6,8 +6,8 @@ ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
 ContextMenuCommandBase::ContextMenuCommandBase()
 {
-    mCounter = make_unique<SharedCounter>();
-    mState = make_unique<SharedState>();
+    mCounter = std::make_unique<SharedCounter>();
+    mState = std::make_unique<SharedState>();
     mContextMenuData.reset();
 }
 
@@ -27,7 +27,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
-    wstring icon(GetContextMenuPath() + L"\\MEGAsync.exe");
+    std::wstring icon(GetContextMenuPath() + L"\\MEGAsync.exe");
     SHStrDup(icon.data(), ppszIcon);
 
     return S_OK;
@@ -76,7 +76,7 @@ void ContextMenuCommandBase::initializeContextMenuData(IShellItemArray* psiItemA
         // Release the IShellItem pointer, since we are done with it as well.
         psi->Release();
 
-        selectedFiles.push_back(wstring(file2OpenPath));
+        selectedFiles.push_back(std::wstring(file2OpenPath));
 
         // Cleanup itemName, since we are done with it.
         if (file2OpenPath)

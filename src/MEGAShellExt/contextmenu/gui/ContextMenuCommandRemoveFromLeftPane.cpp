@@ -6,7 +6,7 @@
 IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::GetTitle(IShellItemArray* psiItemArray,
                                                               LPWSTR* ppszName)
 {
-    wstring title;
+    std::wstring title;
     LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
     if (menuText)
     {

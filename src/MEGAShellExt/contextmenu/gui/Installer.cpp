@@ -1,10 +1,8 @@
 #include "Installer.h"
 
-#include "AclHelper.h"
+#include "AclSetter.h"
 #include "PathHelper.h"
 #include "RegistryKey.h"
-
-#define GUID_STRING_SIZE 40
 
 using namespace winrt::Windows::ApplicationModel;
 using namespace winrt::Windows::Foundation::Collections;
@@ -12,81 +10,26 @@ using namespace winrt::Windows::Management::Deployment;
 
 extern HMODULE g_hInst;
 
-const wstring SparsePackageName = L"MEGASyncShellSparse";
+const std::wstring SparsePackageName = L"MEGASyncShellSparse";
 constexpr int FirstWindows11BuildNumber = 22000;
 
 bool IsWindows11Installation()
 {
     RegistryKey registryKey(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion");
-    wstring buildNumberString = registryKey.GetStringValue(L"CurrentBuildNumber");
+    std::wstring buildNumberString = registryKey.GetStringValue(L"CurrentBuildNumber");
 
     const int buildNumber = stoi(buildNumberString);
 
     return buildNumber >= FirstWindows11BuildNumber;
 }
 
-HRESULT MoveFileToTempAndScheduleDeletion(const wstring& filePath, bool moveToTempDirectory)
-{
-    // Recommended way to check if a file exist:
-    // https://devblogs.microsoft.com/oldnewthing/20071023-00/?p=24713
-    DWORD fileAttributes = GetFileAttributesW(filePath.c_str());
-
-    if (fileAttributes == INVALID_FILE_ATTRIBUTES)
-    {
-        // If GetFileAttributes return INVALID_FILE_ATTRIBUTES, that means the file doesn't exist.
-        // In that case, we shouldn't try and schedule a deletion of it.
-        return S_OK;
-    }
-
-    wstring tempPath(MAX_PATH, L'\0');
-    wstring tempFileName(MAX_PATH, L'\0');
-
-    BOOL moveResult;
-
-    if (moveToTempDirectory)
-    {
-        // First we get the path to the temporary directory.
-        GetTempPath(MAX_PATH, &tempPath[0]);
-
-        // Then we get a temporary filename in the temporary directory.
-        GetTempFileName(tempPath.c_str(), L"tempFileName", 0, &tempFileName[0]);
-
-        // Move the file into the temp directory - it can be moved even when it is loaded into
-        // memory and locked.
-        moveResult = MoveFileEx(filePath.c_str(), tempFileName.c_str(), MOVEFILE_REPLACE_EXISTING);
-
-        if (!moveResult)
-        {
-            return S_FALSE;
-        }
-
-        // Schedule it to be deleted from the temp directory on the next reboot.
-        moveResult = MoveFileExW(tempFileName.c_str(), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
-    }
-    else
-    {
-        // Schedule it to be deleted on the next reboot, without moving it.
-        moveResult = MoveFileExW(filePath.c_str(), NULL, MOVEFILE_DELAY_UNTIL_REBOOT);
-    }
-
-    if (!moveResult)
-    {
-        return S_FALSE;
-    }
-
-    return S_OK;
-}
-
 void ResetAclPermissionsOnApplicationFolder()
 {
-    // First we get the path where Notepad++ is installed.
-    const wstring applicationPath = GetApplicationPath();
+    // First we get the path where the app is installed.
+    const std::wstring applicationPath = GetApplicationPath();
 
-    // Create a new AclHelper
-    AclHelper aclHelper;
-
-    // Reset the ACL of the folder where Notepad++ is installed.
-    aclHelper.ResetAcl(applicationPath);
+    // Reset the ACL of the folder where the app is installed.
+    AclSetter::resetAcl(applicationPath);
 }
 
 Package GetSparsePackage()
@@ -127,8 +70,8 @@ HRESULT RegisterSparsePackage()
     PackageManager packageManager;
     AddPackageOptions options;
 
-    const wstring externalLocation = GetContextMenuPath();
-    const wstring sparsePkgPath = externalLocation + L"\\ShellExtX64.msix";
+    const std::wstring externalLocation = GetContextMenuPath();
+    const std::wstring sparsePkgPath = externalLocation + L"\\ShellExtX64.msix";
 
     winrt::Windows::Foundation::Uri externalUri(externalLocation);
     winrt::Windows::Foundation::Uri packageUri(sparsePkgPath);
@@ -155,8 +98,6 @@ HRESULT UnregisterSparsePackage()
     }
 
     PackageManager packageManager;
-    IIterable<Package> packages;
-
     Package package = GetSparsePackage();
 
     if (package == NULL)
@@ -206,7 +147,7 @@ HRESULT InstallSparsePackage()
     {
         // To register the sparse package, we need to do it on another thread due to WinRT
         // requirements.
-        thread reRegisterThread(ReRegisterSparsePackage);
+        std::thread reRegisterThread(ReRegisterSparsePackage);
         reRegisterThread.join();
     }
 
@@ -273,7 +214,7 @@ void EnsureRegistrationOnCurrentUserWorker()
 void EnsureRegistrationOnCurrentUser()
 {
     // First we find the name of the process the DLL is being loaded into.
-    wstring moduleName = GetExecutingModuleName();
+    std::wstring moduleName = GetExecutingModuleName();
 
     if (moduleName == L"explorer.exe")
     {
@@ -286,18 +227,9 @@ void EnsureRegistrationOnCurrentUser()
             // after that it stays in memory for the rest of their session.
             // Since we are here, we spawn a thread and call the
             // EnsureRegistrationOnCurrentUserWorker function.
-            thread ensureRegistrationThread = thread(EnsureRegistrationOnCurrentUserWorker);
+            std::thread ensureRegistrationThread =
+                std::thread(EnsureRegistrationOnCurrentUserWorker);
             ensureRegistrationThread.detach();
         }
     }
-}
-
-STDAPI CleanupDll()
-{
-    // First we get the full path to this DLL.
-    wstring currentFilePath(MAX_PATH, L'\0');
-    GetModuleFileName(g_hInst, &currentFilePath[0], MAX_PATH);
-
-    // Then we get it moved out of the way and scheduled for deletion.
-    return MoveFileToTempAndScheduleDeletion(currentFilePath, true);
 }

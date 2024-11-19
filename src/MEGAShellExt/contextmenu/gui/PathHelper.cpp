@@ -12,25 +12,25 @@ const path GetModulePath()
     return path(pathBuffer);
 }
 
-const wstring GetApplicationPath()
+const std::wstring GetApplicationPath()
 {
     path modulePath = GetModulePath();
     return modulePath.parent_path().parent_path().wstring();
 }
 
-const wstring GetContextMenuPath()
+const std::wstring GetContextMenuPath()
 {
     path modulePath = GetModulePath();
     return modulePath.parent_path().wstring();
 }
 
-const wstring GetExecutingModuleName()
+const std::wstring GetExecutingModuleName()
 {
     wchar_t pathBuffer[FILENAME_MAX] = {0};
     GetModuleFileNameW(NULL, pathBuffer, FILENAME_MAX);
     PathStripPathW(pathBuffer);
 
-    wstring moduleName(pathBuffer);
+    std::wstring moduleName(pathBuffer);
     transform(moduleName.begin(), moduleName.end(), moduleName.begin(), towlower);
 
     return moduleName;

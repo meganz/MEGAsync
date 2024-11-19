@@ -1,6 +1,10 @@
-#pragma once
+#ifndef PATHUTILITIES_H
+#define PATHUTILITIES_H
+
 #include "framework.h"
 
-const wstring GetApplicationPath();
-const wstring GetContextMenuPath();
-const wstring GetExecutingModuleName();
+const std::wstring GetApplicationPath();
+const std::wstring GetContextMenuPath();
+const std::wstring GetExecutingModuleName();
+
+#endif

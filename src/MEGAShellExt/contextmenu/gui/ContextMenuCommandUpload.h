@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONTEXTMENUCOMMANDUPLOAD_H
+#define CONTEXTMENUCOMMANDUPLOAD_H
+
 #include "ContextMenuCommandBase.h"
 
 class __declspec(uuid("F043C633-970A-43DF-A382-9D51C8D14E97")) ContextMenuCommandUpload:
@@ -12,3 +14,5 @@ public:
 protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
 };
+
+#endif

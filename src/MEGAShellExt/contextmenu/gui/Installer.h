@@ -1,4 +1,6 @@
-#pragma once
+#ifndef INSTALLER_H
+#define INSTALLER_H
+
 #include "framework.h"
 
 bool IsWindows11Installation();
@@ -11,4 +13,4 @@ HRESULT UninstallSparsePackage();
 
 void EnsureRegistrationOnCurrentUser();
 
-STDAPI CleanupDll();
+#endif

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHAREDCOUNTER_H
+#define SHAREDCOUNTER_H
+
 #include "framework.h"
 
 class SharedCounter
@@ -15,3 +17,5 @@ private:
     int* pCounter;
     int localValue;
 };
+
+#endif

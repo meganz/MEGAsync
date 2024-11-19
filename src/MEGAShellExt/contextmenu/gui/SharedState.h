@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHAREDSTATE_H
+#define SHAREDSTATE_H
+
 #include "framework.h"
 
 enum CounterState
@@ -13,11 +15,13 @@ public:
     SharedState();
     ~SharedState();
 
-    CounterState GetState(const wstring caller) const;
-    void SetState(const wstring caller, const CounterState state);
+    CounterState GetState(const std::wstring caller) const;
+    void SetState(const std::wstring caller, const CounterState state);
 
 private:
     HANDLE hFileMapping = 0;
     HANDLE hMutex = 0;
     CounterState* pState = 0;
 };
+
+#endif

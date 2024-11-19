@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CONTEXTMENUCOMMANDSEPARATOR_H
+#define CONTEXTMENUCOMMANDSEPARATOR_H
+
 #include "ContextMenuCommandBase.h"
 
 class __declspec(uuid("F85CF690-330F-4EC2-89E5-3E7ED0344BF5")) ContextMenuCommandSeparator:
@@ -13,3 +15,5 @@ public:
 protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) override;
 };
+
+#endif

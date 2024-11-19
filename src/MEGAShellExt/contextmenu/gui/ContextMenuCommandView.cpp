@@ -5,7 +5,7 @@
 
 IFACEMETHODIMP ContextMenuCommandView::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
-    wstring title;
+    std::wstring title;
     int syncedFolders = mContextMenuData.getSyncedFolders();
     int syncedFiles = mContextMenuData.getSyncedFiles();
     LPWSTR menuText =

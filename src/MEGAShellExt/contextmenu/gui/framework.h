@@ -1,4 +1,6 @@
-#pragma once
+#ifndef FRAMEWORK_H
+#define FRAMEWORK_H
+
 #pragma warning(disable: 4324)
 
 #define _SILENCE_CLANG_COROUTINE_MESSAGE
@@ -24,4 +26,4 @@
 #pragma comment(lib, "shlwapi.lib")
 #pragma comment(lib, "runtimeobject.lib")
 
-using namespace std;
+#endif

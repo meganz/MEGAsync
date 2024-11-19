@@ -1,6 +1,9 @@
 #include "RegistryKey.h"
 
-RegistryKey::RegistryKey(HKEY hKey, const wstring& subKey, REGSAM access, bool createIfMissing):
+RegistryKey::RegistryKey(HKEY hKey,
+                         const std::wstring& subKey,
+                         REGSAM access,
+                         bool createIfMissing):
     m_hKey(nullptr),
     m_regsam(access),
     m_originalHKey(hKey),
@@ -28,7 +31,7 @@ RegistryKey::RegistryKey(HKEY hKey, const wstring& subKey, REGSAM access, bool c
                         &m_hKey,
                         &disposition) != ERROR_SUCCESS)
     {
-        throw runtime_error("Failed to create registry key.");
+        throw std::runtime_error("Failed to create registry key.");
     }
 }
 
@@ -40,11 +43,11 @@ RegistryKey::~RegistryKey()
     }
 }
 
-wstring RegistryKey::GetStringValue(const wstring& valueName)
+std::wstring RegistryKey::GetStringValue(const std::wstring& valueName)
 {
     if (m_hKey == nullptr)
     {
-        throw runtime_error("Registry key is not open.");
+        throw std::runtime_error("Registry key is not open.");
     }
 
     DWORD dataSize = 0;
@@ -57,20 +60,20 @@ wstring RegistryKey::GetStringValue(const wstring& valueName)
                      nullptr,
                      &dataSize) != ERROR_SUCCESS)
     {
-        throw runtime_error("Failed to get registry value size.");
+        throw std::runtime_error("Failed to get registry value size.");
     }
 
-    wstring value(dataSize / sizeof(wchar_t), L'\0');
+    std::wstring value(dataSize / sizeof(wchar_t), L'\0');
 
     if (RegGetValueW(m_hKey,
                      nullptr,
                      valueName.empty() ? NULL : valueName.data(),
                      RRF_RT_REG_SZ,
                      nullptr,
-                     _Bit_cast<BYTE*>(value.data()),
+                     reinterpret_cast<BYTE*>(value.data()),
                      &dataSize) != ERROR_SUCCESS)
     {
-        throw runtime_error("Failed to get registry value.");
+        throw std::runtime_error("Failed to get registry value.");
     }
 
     return value;
