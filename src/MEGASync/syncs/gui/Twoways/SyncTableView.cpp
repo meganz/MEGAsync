@@ -6,12 +6,12 @@
 #include "SyncItemModel.h"
 #include "SyncSettings.h"
 
-#include <QtConcurrent/QtConcurrent>
-
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QPainter>
+#include <QPainterPath>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolTip>
 
 SyncTableView::SyncTableView(QWidget* parent):
@@ -344,30 +344,88 @@ void BackgroundColorDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
-    QStyleOptionViewItem opt(option);
-
-    QPalette::ColorGroup cg =
-        option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
-
     if (option.state & QStyle::State_Selected)
     {
-        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+        paintRowBackground(painter,
+                           option,
+                           index,
+                           QColor(QLatin1String("#ff2c5beb"))); /*colorToken.link-primary*/
+
+        painter->setPen(QColor(QLatin1String("#ffFAFAFB"))); /*colorToken.text-inverse-accent*/
     }
     else
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         if (sync->getError())
         {
-            painter->fillRect(option.rect, QColor(QLatin1String("#FFE4E8")));
-            painter->setPen(QColor(QLatin1String("#E31B57")));
-        }
-        else
-        {
-            painter->setPen(option.palette.color(cg, QPalette::Text));
+            paintRowBackground(painter,
+                               option,
+                               index,
+                               QColor(QLatin1String("#FFE4E8"))); /*colorToken.notification-error*/
+
+            painter->setPen(QColor(QLatin1String("#E31B57"))); /*colorToken.text-error*/
         }
     }
 
-    QStyledItemDelegate::paint(painter, opt, index);
+    QStyledItemDelegate::paint(painter, option, index);
+}
+
+void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
+                                                 const QStyleOptionViewItem& option,
+                                                 const QModelIndex& index,
+                                                 const QColor& color) const
+{
+    constexpr double radiusPercent = 0.20;
+
+    auto optionRect = option.rect;
+    auto radius = optionRect.width() * radiusPercent;
+
+    if (index.column() == 0) // first column will have the left squares rounded.
+    {
+        QPainterPath roundRectPath;
+        roundRectPath.moveTo(optionRect.left() + 2 * radius, optionRect.top());
+        roundRectPath
+            .arcTo(optionRect.left(), optionRect.top(), radius * 2.0, radius * 2.0, 90.0, 90.0);
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - radius);
+        roundRectPath.arcTo(optionRect.left(),
+                            (optionRect.bottom() + 1) - radius * 2.0,
+                            radius * 2.0,
+                            radius * 2.0,
+                            180.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.bottom() + 1);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top());
+        roundRectPath.closeSubpath();
+
+        painter->fillPath(roundRectPath, color);
+    }
+    else if (index.column() == 7) // last column will have the right squares rounded.
+    {
+        QPainterPath roundRectPath;
+        roundRectPath.moveTo(optionRect.left(), optionRect.top());
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() + 1);
+        roundRectPath.lineTo(optionRect.right() + 1 - radius, optionRect.bottom() + 1);
+        roundRectPath.arcTo(optionRect.right() + 1 - radius * 2.0,
+                            optionRect.bottom() + 1 - radius * 2.0,
+                            radius * 2.0,
+                            radius * 2.0,
+                            270.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top() + radius);
+        roundRectPath.arcTo(optionRect.right() + 1 - 2.0 * radius,
+                            optionRect.top(),
+                            2.0 * radius,
+                            2.0 * radius,
+                            0.0,
+                            90.0);
+        roundRectPath.closeSubpath();
+
+        painter->fillPath(roundRectPath, color);
+    }
+    else
+    {
+        painter->fillRect(option.rect, color);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
