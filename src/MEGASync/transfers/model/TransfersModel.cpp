@@ -1898,11 +1898,11 @@ void TransfersModel::showSyncCancelledWarning()
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = tr("Sync transfers cannot be cancelled individually.\n"
-                          "Please delete the folder sync from device centre to cancel them.");
+                          "Please delete the folder sync from settings to cancel them.");
         msgInfo.parent = mCancelledFrom;
         msgInfo.buttons = QMessageBox::Yes|QMessageBox::No;
         QMap<QMessageBox::Button, QString> textsByButton;
-        textsByButton.insert(QMessageBox::Yes, tr("Open device centre"));
+        textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
         textsByButton.insert(QMessageBox::No, tr("Dismiss"));
         msgInfo.buttonsText = textsByButton;
         msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
