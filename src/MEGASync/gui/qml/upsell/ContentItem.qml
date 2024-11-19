@@ -28,7 +28,7 @@ FocusScope {
     Column {
         id: columnItem
 
-        width: Math.max(root.minimumWidth, plansRow.width - 2 * Constants.focusBorderWidth)
+        width: Math.max(root.minimumWidth, plansItem.width)
         spacing: root.itemsSpacing
 
         Row {
@@ -79,43 +79,67 @@ FocusScope {
 
         } // Row: billedRow
 
-        Row {
-            id: plansRow
+        Item {
+            id: plansItem
+
+            readonly property real planTotalWidth: 168
+            readonly property real planTotalHeight: 223
 
             anchors {
+                horizontalCenter: parent.horizontalCenter
                 topMargin: Constants.focusAdjustment
                 leftMargin: Constants.focusAdjustment
-                horizontalCenter: parent.horizontalCenter
             }
-            spacing: root.plansRowSpacing
+            height: plansItem.planTotalHeight
 
-            Repeater {
-                id: plansRepeater
+            Row {
+                id: plansRow
 
-                model: upsellModelAccess
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                }
+                height: plansRepeater.height
+                spacing: root.plansRowSpacing
 
-                PlanCard {
-                    id: card
+                onWidthChanged: {
+                    // The width depends on the total number of plans, in some cases the number
+                    // of plans is different for monthly/yearly billing.
+                    plansItem.width = plansItem.planTotalWidth * upsellModelAccess.rowCount()
+                                        + 2 * Constants.focusAdjustment;
+                }
 
-                    name: model.name
-                    recommended: model.recommended
-                    gbStorage: model.gbStorage
-                    gbTransfer: model.gbTransfer
-                    price: model.price
-                    selected: model.selected
-                    visible: model.available
+                Repeater {
+                    id: plansRepeater
 
-                    ButtonGroup.group: planButtonGroupItem
+                    model: upsellModelAccess
 
-                    onClicked: {
-                        if (!model.selected) {
-                            model.selected = true;
+                    PlanCard {
+                        id: card
+
+                        width: plansItem.planTotalWidth
+                        height: plansItem.planTotalHeight
+
+                        name: model.name
+                        recommended: model.recommended
+                        gbStorage: model.gbStorage
+                        gbTransfer: model.gbTransfer
+                        price: model.price
+                        selected: model.selected
+                        visible: model.available
+
+                        ButtonGroup.group: planButtonGroupItem
+
+                        onClicked: {
+                            if (!model.selected) {
+                                model.selected = true;
+                            }
                         }
                     }
                 }
-            }
 
-        } // Row: plansRow
+            } // Row: plansRow
+
+        } // Item: plansItem
 
         SecondaryText {
             id: footerText
@@ -169,6 +193,6 @@ FocusScope {
 
     ButtonGroup {
         id: planButtonGroupItem
-    }
+    }    
 
 }

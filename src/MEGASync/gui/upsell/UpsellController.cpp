@@ -124,6 +124,8 @@ bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant
         // Fallthrough
         case UpsellPlans::PRICE_ROLE:
         // Fallthrough
+        case UpsellPlans::AVAILABLE_ROLE:
+        // Fallthrough
         default:
         {
             result = false;
@@ -406,11 +408,12 @@ std::shared_ptr<UpsellPlans::Data>
 
 bool UpsellController::isProLevelValid(int proLevel) const
 {
-    // Skip showing pro flexi, business and feature plans in the dialog.
+    // Skip showing plans under the current one, pro flexi, business and feature in the dialog.
     return proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FREE &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS &&
-           proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE;
+           proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE &&
+           !isPlanUnderCurrentProLevel(proLevel);
 }
 
 QUrl UpsellController::getUpsellPlanUrl(int proLevel)
@@ -506,7 +509,8 @@ int UpsellController::getRowForNextRecommendedPlan() const
         [itCurrent, this](const auto& plan)
         {
             auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
-            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && isAvailable(plan);
+            bool isCurrent(plan->proLevel() == Preferences::instance()->accountType());
+            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && !isCurrent && isAvailable(plan);
         });
 
     return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : 0;
@@ -544,12 +548,18 @@ int UpsellController::getRowForCurrentRecommended()
 
 bool UpsellController::isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
 {
-    // - Storage: don't show the current plan.
-    // - Transfer: show the current plan (users can buy the same one).
-    // And show if it is valid depending on the period.
-    auto showCandidate(((mPlans->getViewMode() != UpsellPlans::ViewMode::TRANSFER_EXCEEDED &&
-                         data->proLevel() != Preferences::instance()->accountType()) ||
-                        mPlans->getViewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED));
-    return showCandidate &&
+    return (!isPlanUnderCurrentProLevel(data->proLevel())) &&
            (mPlans->isMonthly() ? data->monthlyData().isValid() : data->yearlyData().isValid());
+}
+
+bool UpsellController::isPlanUnderCurrentProLevel(int proLevel) const
+{
+    int currentAccountType(Preferences::instance()->accountType());
+    auto currentLevelIt(std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(),
+                                  ACCOUNT_TYPES_IN_ORDER.cend(),
+                                  currentAccountType));
+    auto planLevelIt(
+        std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), proLevel));
+
+    return planLevelIt < currentLevelIt;
 }

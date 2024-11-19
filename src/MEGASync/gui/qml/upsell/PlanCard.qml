@@ -11,7 +11,6 @@ RoundButton {
 
     readonly property real contentMargin: 2 * Constants.focusBorderWidth + root.borderWidth + 12
     readonly property real contentBottomMargin: root.contentMargin + 4
-    readonly property real totalWidth: 168
     readonly property real totalHeight: 223
     readonly property real contentSpacing: 20
     readonly property real topSpacing: 12
@@ -48,9 +47,6 @@ RoundButton {
             return ColorTheme.borderStrong;
         }
     }
-
-    width: root.totalWidth
-    height: root.totalHeight
 
     contentItem: Column {
         id: contentColumn

@@ -84,6 +84,7 @@ private:
     void resetSelectedAndRecommended();
     int getRowForCurrentRecommended();
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool isPlanUnderCurrentProLevel(int proLevel) const;
 };
 
 #endif // UPSELL_CONTROLLER_H
