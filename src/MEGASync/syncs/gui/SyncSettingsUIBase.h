@@ -242,7 +242,6 @@ protected:
     virtual QString getErrorRemovingText(std::shared_ptr<mega::MegaError> err) = 0;
 
 protected slots:
-    virtual void removeSyncButtonClicked();
     virtual void removeSync(std::shared_ptr<SyncSettings> sync) = 0;
 
     void rescanQuick(std::shared_ptr<SyncSettings>);

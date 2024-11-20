@@ -6148,11 +6148,6 @@ Do you want to delete it anyway?</translation>
         <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
         <translation>Add</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>Delete</translation>
-    </message>
 </context>
 <context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>

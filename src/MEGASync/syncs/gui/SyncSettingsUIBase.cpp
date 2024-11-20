@@ -34,10 +34,6 @@ SyncSettingsUIBase::SyncSettingsUIBase(QWidget* parent):
             &SyncSettingsUIBase::onOpenMegaIgnoreFinished);
 
     connect(ui->gSyncs, &RemoteItemUi::addClicked, this, &SyncSettingsUIBase::addButtonClicked);
-    connect(ui->gSyncs,
-            &RemoteItemUi::deleteClicked,
-            this,
-            &SyncSettingsUIBase::removeSyncButtonClicked);
 
 #ifndef Q_OS_WINDOWS
     connect(ui->gSyncs,
@@ -183,15 +179,6 @@ void SyncSettingsUIBase::onPermissionsClicked()
 void SyncSettingsUIBase::setDisabledSyncsText()
 {
     ui->lDisabledSyncs->setText(disableString());
-}
-
-void SyncSettingsUIBase::removeSyncButtonClicked()
-{
-    if (mTable->selectionModel()->hasSelection())
-    {
-        QModelIndex index = mTable->selectionModel()->selectedRows().first();
-        removeSync(index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>());
-    }
 }
 
 void SyncSettingsUIBase::openExclusionsDialog(std::shared_ptr<SyncSettings> sync)
