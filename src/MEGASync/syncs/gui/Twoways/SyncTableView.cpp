@@ -390,12 +390,14 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
                                                  const QModelIndex& index,
                                                  const QColor& color) const
 {
-    constexpr double radiusPercent = 0.20;
+    const int ENABLED_COLUMN_INDEX = 0;
+    const int MENU_COLUMN_INDEX = 7;
+    const double RADIUS_SQUARE_PERCENTATGE = 0.20;
 
     auto optionRect = option.rect;
-    auto radius = optionRect.width() * radiusPercent;
+    auto radius = optionRect.width() * RADIUS_SQUARE_PERCENTATGE;
 
-    if (index.column() == 0) // first column will have the left squares rounded.
+    if (index.column() == ENABLED_COLUMN_INDEX) // first column will have the left squares rounded.
     {
         QPainterPath roundRectPath;
         roundRectPath.moveTo(optionRect.left() + 2 * radius, optionRect.top());
@@ -414,7 +416,8 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
 
         painter->fillPath(roundRectPath, color);
     }
-    else if (index.column() == 7) // last column will have the right squares rounded.
+    else if (index.column() ==
+             MENU_COLUMN_INDEX) // last column will have the right squares rounded.
     {
         QPainterPath roundRectPath;
         roundRectPath.moveTo(optionRect.left(), optionRect.top());
