@@ -56,7 +56,6 @@
 /*ColorTokenIcon;Button;bHelp;normal;off;colorToken.link-primary*/
 
 /*ColorTokenIcon;Button;bAdd;normal;off;colorToken.text-inverse-accent*/
-/*ColorTokenIcon;Button;bDelete;normal;off;colorToken.button-outline*/
 
 #pSecurity QGroupBox
 {
