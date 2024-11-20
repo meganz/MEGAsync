@@ -5,13 +5,14 @@
 #include "PlatformStrings.h"
 #include "SyncItemModel.h"
 #include "SyncSettings.h"
-
-#include <QtConcurrent/QtConcurrent>
+#include "TokenParserWidgetManager.h"
 
 #include <QHeaderView>
 #include <QKeyEvent>
 #include <QMenu>
 #include <QPainter>
+#include <QPainterPath>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolTip>
 
 SyncTableView::SyncTableView(QWidget* parent):
@@ -345,30 +346,105 @@ void BackgroundColorDelegate::paint(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const
 {
-    QStyleOptionViewItem opt(option);
-
-    QPalette::ColorGroup cg =
-        option.state & QStyle::State_Enabled ? QPalette::Normal : QPalette::Disabled;
-
     if (option.state & QStyle::State_Selected)
     {
-        painter->setPen(option.palette.color(cg, QPalette::HighlightedText));
+        paintRowBackground(
+            painter,
+            option,
+            index,
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("link-primary"),
+                                                           QLatin1String("#FF2C5BEB")));
+
+        painter->setPen(
+            TokenParserWidgetManager::instance()->getColor(QLatin1String("text-inverse-accent"),
+                                                           QLatin1String("#FFFAFAFB")));
     }
     else
     {
         auto sync = index.data(Qt::UserRole).value<std::shared_ptr<SyncSettings>>();
         if (sync->getError())
         {
-            painter->fillRect(option.rect, QColor(QLatin1String("#FFE4E8")));
-            painter->setPen(QColor(QLatin1String("#E31B57")));
+            paintRowBackground(
+                painter,
+                option,
+                index,
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("notification-error"),
+                                                               QLatin1String("#FFFFE4E8")));
+
+            painter->setPen(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-error"),
+                                                               QLatin1String("#FFE31B57")));
         }
         else
         {
-            painter->setPen(option.palette.color(cg, QPalette::Text));
+            painter->setPen(
+                TokenParserWidgetManager::instance()->getColor(QLatin1String("text-primary"),
+                                                               QLatin1String("#ff303233")));
         }
     }
 
-    QStyledItemDelegate::paint(painter, opt, index);
+    QStyledItemDelegate::paint(painter, option, index);
+}
+
+void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
+                                                 const QStyleOptionViewItem& option,
+                                                 const QModelIndex& index,
+                                                 const QColor& color) const
+{
+    const int ENABLED_COLUMN_INDEX = 0;
+    const int MENU_COLUMN_INDEX = index.model()->columnCount() - 1;
+    const double RADIUS_SQUARE_PERCENTATGE = 0.20;
+
+    auto optionRect = option.rect;
+    auto radius = optionRect.width() * RADIUS_SQUARE_PERCENTATGE;
+
+    if (index.column() == ENABLED_COLUMN_INDEX) // first column will have the left squares rounded.
+    {
+        QPainterPath roundRectPath;
+        roundRectPath.moveTo(optionRect.left() + 2 * radius, optionRect.top());
+        roundRectPath
+            .arcTo(optionRect.left(), optionRect.top(), radius * 2.0, radius * 2.0, 90.0, 90.0);
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() - radius);
+        roundRectPath.arcTo(optionRect.left(),
+                            (optionRect.bottom() + 1) - radius * 2.0,
+                            radius * 2.0,
+                            radius * 2.0,
+                            180.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.bottom() + 1);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top());
+        roundRectPath.closeSubpath();
+
+        painter->fillPath(roundRectPath, color);
+    }
+    else if (index.column() ==
+             MENU_COLUMN_INDEX) // last column will have the right squares rounded.
+    {
+        QPainterPath roundRectPath;
+        roundRectPath.moveTo(optionRect.left(), optionRect.top());
+        roundRectPath.lineTo(optionRect.left(), optionRect.bottom() + 1);
+        roundRectPath.lineTo(optionRect.right() + 1 - radius, optionRect.bottom() + 1);
+        roundRectPath.arcTo(optionRect.right() + 1 - radius * 2.0,
+                            optionRect.bottom() + 1 - radius * 2.0,
+                            radius * 2.0,
+                            radius * 2.0,
+                            270.0,
+                            90.0);
+        roundRectPath.lineTo(optionRect.right() + 1, optionRect.top() + radius);
+        roundRectPath.arcTo(optionRect.right() + 1 - 2.0 * radius,
+                            optionRect.top(),
+                            2.0 * radius,
+                            2.0 * radius,
+                            0.0,
+                            90.0);
+        roundRectPath.closeSubpath();
+
+        painter->fillPath(roundRectPath, color);
+    }
+    else
+    {
+        painter->fillRect(option.rect, color);
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

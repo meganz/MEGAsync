@@ -20,18 +20,19 @@ outline: 0;
 border: 1px solid #ff18191A; /*colorToken.page-background*/
 border-radius: 5px;
 selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+selection-background-color: transparent;
 }
 
 QTableView::item
 {
 border: none;
-padding-left:4px;
+padding-left: 4px;
 }
 
 QTableView::item::selected
 {
 color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
-background-color: #ff2c5beb; /*colorToken.link-primary*/
+background-color: transparent;
 }
 
 QTableView::indicator

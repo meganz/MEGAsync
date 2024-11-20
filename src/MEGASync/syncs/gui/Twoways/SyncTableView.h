@@ -59,6 +59,12 @@ public:
     void paint(QPainter* painter,
                const QStyleOptionViewItem& option,
                const QModelIndex& index) const override;
+
+private:
+    void paintRowBackground(QPainter* painter,
+                            const QStyleOptionViewItem& option,
+                            const QModelIndex& index,
+                            const QColor& color) const;
 };
 
 class MenuItemDelegate: public BackgroundColorDelegate
