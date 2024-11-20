@@ -1271,24 +1271,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>DeviceCentre</name>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title of the confirmation dialog to apply exclusion rules. SAT-1816.</translatorcomment>
-        <translation type="unfinished">[B]Apply previous exclusion rules?[/B]</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Informative text about the Apply rules action. SAT-1816.</translatorcomment>
-        <translation type="unfinished">The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Label for the Apply button, to apply the previous exclusion rules. SAT-1816.</translatorcomment>
-        <translation type="unfinished">Apply</translation>
-    </message>
-</context>
-<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
@@ -7531,16 +7513,6 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
         <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
         <translation type="unfinished">Set exclusions</translation>
     </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Label for the Ok button of the Sync/Backup error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translatorcomment>Label for Continue buttons. Con-1063</translatorcomment>
-        <translation type="unfinished">Continue</translation>
-    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -7928,34 +7900,6 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
         <source>Stopped</source>
         <translatorcomment>Text in syncs table indicating sync state.SNC-2565</translatorcomment>
         <translation>Stopped</translation>
-    </message>
-</context>
-<context>
-    <name>SyncModel</name>
-    <message>
-        <source>Sync</source>
-        <translatorcomment>Name of the type of Sync for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Sync</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translatorcomment>Name of the type of backup for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Backup</translation>
-    </message>
-    <message>
-        <source>%1 was stopped because you logged out. Resume the %1 to re-enable.</source>
-        <translatorcomment>Error message of the Error Dialog when the cause is a logout. %1 stands for the type name (Sync or Backup). SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We can&apos;t find the folder you&apos;re trying to sync. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
-        <translatorcomment>Error message displayed when the sync has been moved/renamed/deleted. SAT-1856.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We can&apos;t find the folder you&apos;re trying to back up. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
-        <translatorcomment>Error message displayed when the backup has been moved/renamed/deleted. SAT-1856.</translatorcomment>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
