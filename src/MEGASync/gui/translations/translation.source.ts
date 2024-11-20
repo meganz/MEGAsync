@@ -582,6 +582,11 @@
         <translation>Optional</translation>
     </message>
     <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation>Your reported issue is uploading, it may take a few minutes.</translation>
+    </message>
+    <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
         <translation>Your issue has been reported.</translation>
@@ -640,11 +645,6 @@
         <source>Please try again later or contact our support team via [A]support@mega.co.nz[/A] if the problem persists.</source>
         <translatorcomment>Warning informative message shown when the user tries to send two bug reports in under 10 mins.con-364</translatorcomment>
         <translation>Please try again later or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
-    </message>
-    <message>
-        <source>Bug report is uploading, it may take a few minutes</source>
-        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation>Your reported issue is uploading, it may take a few minutes.</translation>
     </message>
 </context>
 <context>
@@ -1275,12 +1275,12 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>[B]Apply previous exclusion rules?[/B]</source>
         <translatorcomment>Title of the confirmation dialog to apply exclusion rules. SAT-1816.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">[B]Apply previous exclusion rules?[/B]</translation>
     </message>
     <message>
         <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
         <translatorcomment>Informative text about the Apply rules action. SAT-1816.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2431,32 +2431,32 @@ In some cases they may contain details about your data, such as file or folder n
     <message>
         <source>Terms of Service breach</source>
         <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Terms of Service breach</translation>
     </message>
     <message>
         <source>This link has expired</source>
         <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link has expired</translation>
     </message>
     <message>
         <source>Link owner terminated</source>
         <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Link owner terminated</translation>
     </message>
     <message>
         <source>This link has been deleted</source>
         <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link has been deleted</translation>
     </message>
     <message>
         <source>Copyright violation</source>
         <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Copyright violation</translation>
     </message>
     <message>
         <source>This link is invalid</source>
         <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>This link is invalid</translation>
     </message>
 </context>
 <context>
@@ -3417,7 +3417,7 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Open settings</translation>
     </message>
 </context>
 <context>
@@ -5640,11 +5640,12 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved the automatic and manual resolution of sync issues.
-- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6492,6 +6493,11 @@ Do you want to delete it anyway?</translation>
         <translation>General</translation>
     </message>
     <message>
+        <source>Sync</source>
+        <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
+        <translation>Sync</translation>
+    </message>
+    <message>
         <source>Security</source>
         <translatorcomment>Title for the Settings -&gt; Security pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Security</translation>
@@ -6562,6 +6568,11 @@ Do you want to delete it anyway?</translation>
         <translation>Transfer quota</translation>
     </message>
     <message>
+        <source>Recovery Key</source>
+        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
+        <translation>Recovery key</translation>
+    </message>
+    <message>
         <source>Your password is not stored by MEGA and we cannot recover it for you. To avoid losing access to your account, save your Recovery Key in a safe place.</source>
         <translatorcomment>Informative text message shown in the Recovery Key section in Security pane, inviting the user to save the Recovery Key in a safe place.</translatorcomment>
         <translation>Your password is not stored by MEGA and we can’t recover it for you. To avoid losing access to your account, save your Recovery key in a safe place.</translation>
@@ -6620,6 +6631,11 @@ Do you want to delete it anyway?</translation>
         <source>Proxy settings:</source>
         <translatorcomment>Form label text indicating the active Proxy settings.</translatorcomment>
         <translation>Proxy settings:</translation>
+    </message>
+    <message>
+        <source>Enable Windows Explorer integration</source>
+        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
+        <translation>Enable File Explorer integration</translation>
     </message>
     <message>
         <source>Install Update</source>
@@ -6703,6 +6719,11 @@ Do you want to delete it anyway?</translation>
         <translation>Your operating system doesn’t allow its sleep setting to be overwritten.</translation>
     </message>
     <message>
+        <source>Backup</source>
+        <translatorcomment>Toolbar button text</translatorcomment>
+        <translation>Backup</translation>
+    </message>
+    <message>
         <source>Synchronizations and backups will stop working.</source>
         <translatorcomment>Warning message displayed on logout if there are active syncs and backups</translatorcomment>
         <translation>Syncs and backups will be disabled.</translation>
@@ -6723,6 +6744,11 @@ Do you want to delete it anyway?</translation>
         <translation>Want to log out?</translation>
     </message>
     <message>
+        <source>Go to backup centre</source>
+        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
+        <translation>Go to Device centre</translation>
+    </message>
+    <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
         <translation>Prevent the computer from going to sleep when transfers or syncs are in progress.</translation>
@@ -6741,31 +6767,6 @@ Do you want to delete it anyway?</translation>
         <source>Disabling sync status icons</source>
         <translatorcomment>Label displayed in the bottom of the dialog while the status icons are being disabled. It disappears once the operation is finished. SNC-4039.</translatorcomment>
         <translation>Disabling sync status icons</translation>
-    </message>
-    <message>
-        <source>Enable Windows Explorer integration</source>
-        <translatorcomment>Checkbox label displayed on Windows, allowing the user to enable / disable the Windows Explorer integration.</translatorcomment>
-        <translation>Enable File Explorer integration</translation>
-    </message>
-    <message>
-        <source>Recovery Key</source>
-        <translatorcomment>Section title for MEGA recovery key download in Security pane.</translatorcomment>
-        <translation>Recovery key</translation>
-    </message>
-    <message>
-        <source>Sync</source>
-        <translatorcomment>Title for the Settings -&gt; Sync pane tab button. Keep as short as possible.</translatorcomment>
-        <translation>Sync</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translatorcomment>Toolbar button text</translatorcomment>
-        <translation>Backup</translation>
-    </message>
-    <message>
-        <source>Go to backup centre</source>
-        <translatorcomment>Button text that opens backup center in webclient</translatorcomment>
-        <translation>Go to Device centre</translation>
     </message>
 </context>
 <context>
@@ -7975,17 +7976,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply</source>
         <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>Apply</translation>
     </message>
     <message>
         <source>[B]Apply previous exclusion rules?[/B]</source>
         <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>[B]Apply previous exclusion rules?[/B]</translation>
     </message>
     <message>
         <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
         <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
     </message>
 </context>
 <context>
@@ -8079,12 +8080,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply rules</source>
         <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation></translation>
+        <translation>Apply rules</translation>
     </message>
     <message>
         <source>Apply previous exclusion rules</source>
         <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Apply previous exclusion rules</translation>
     </message>
 </context>
 <context>
@@ -8440,12 +8441,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
     </message>
     <message>
         <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
     </message>
 </context>
 <context>
@@ -8710,14 +8711,14 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     </message>
     <message>
         <source>Sync transfers cannot be cancelled individually.
-Please delete the folder sync from device centre to cancel them.</source>
-        <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.con-1018</translatorcomment>
-        <translation type="unfinished"></translation>
+Please delete the folder sync from settings to cancel them.</source>
+        <translatorcomment>Message displayed when the user is trying to cancel a sync transfer.</translatorcomment>
+        <translation>Sync transfers can’t be cancelled. To remove the sync, go to settings and remove the synced folder.</translation>
     </message>
     <message>
-        <source>Open device centre</source>
-        <translatorcomment>Button label to open the Settings dialog.con-1018</translatorcomment>
-        <translation type="unfinished"></translation>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open the Settings dialog</translatorcomment>
+        <translation>Open settings</translation>
     </message>
 </context>
 <context>
@@ -9338,7 +9339,7 @@ Please delete the folder sync from device centre to cancel them.</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation>%1 of %2</translation>
     </message>
 </context>
 <context>
@@ -9398,22 +9399,22 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Better Performance</source>
         <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Better performance</translation>
     </message>
     <message>
         <source>Greater control</source>
         <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Greater control</translation>
     </message>
     <message>
         <source>Advanced filters</source>
         <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Advanced filters</translation>
     </message>
     <message>
         <source>Files now sync up to 5x faster than before</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Files now sync up to 5x faster than before.</translation>
     </message>
     <message>
         <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
@@ -9428,7 +9429,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Got it</source>
         <translatorcomment>Button to accept whats new dialog.con-703</translatorcomment>
-        <translation type="unfinished">Got it</translation>
+        <translation>Got it</translation>
     </message>
 </context>
 <context>
