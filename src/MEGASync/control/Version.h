@@ -29,9 +29,15 @@ Format: 1 item by line, starting from line following the #define
 )*/
 #define VER_CHANGES_NOTES \
 QT_TRANSLATE_NOOP("Preferences", \
-                  "- We’ve improved the automatic and manual resolution of sync issues.\n" \
-                  "- The MEGA account interface and the account upgrade process have both been " \
-                  "revamped and enhanced.\n" \
+                  "- Enhanced stability with isolated graphics processing: We’ve upgraded our " \
+                  "app to run the graphics processor (GFX) in a separate process. This means " \
+                  "that if any third-party graphics libraries encounter issues, the app remains " \
+                  "stable and unaffected, ensuring a smoother, uninterrupted experience.\n" \
+                  "- End of support for macOS 10.13 and 10.14: This update no longer supports " \
+                  "macOS 10.13 and 10.14. To continue receiving updates and support, please " \
+                  "upgrade to a more recent version of macOS.\n" \
+                  "- The Settings dialogue has been redesigned.\n" \
+                  "- Improved app issue detection and resolution.\n" \
                   "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H
