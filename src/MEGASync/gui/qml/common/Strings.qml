@@ -5,7 +5,7 @@ QtObject {
     id: root
 
     readonly property string cancel: qsTr("Cancel")
-    readonly property string continueText: qsTr("Continue")
+    readonly property string continueText: /*qsTr*/("Continue")
     readonly property string choose: qsTr("Choose")
     readonly property string done: qsTr("Done")
     readonly property string next: qsTr("Next")
@@ -18,5 +18,5 @@ QtObject {
     readonly property string deviceNameTooLongErr: qsTr("Maximum 32 characters")
     readonly property string deviceNameExistErr: qsTr("A device with this name already exists. Enter a different name.")
     readonly property string deviceNameEmptyErr: qsTr("Enter a device name")
-    readonly property string ok: qsTr("Ok")
+    readonly property string ok: /*qsTr*/("Ok")
 }
