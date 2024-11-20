@@ -5646,6 +5646,7 @@ Enter a different name.</translation>
 - Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9314,17 +9315,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>MEGA&#xa0;Starter</translation>
+        <translation>Starter</translation>
     </message>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>MEGA&#xa0;Basic</translation>
+        <translation>Basic</translation>
     </message>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>MEGA&#xa0;Essential</translation>
+        <translation>Essential</translation>
     </message>
     <message>
         <source>Business</source>
