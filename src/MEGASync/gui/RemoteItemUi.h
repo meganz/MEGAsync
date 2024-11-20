@@ -28,7 +28,6 @@ public:
 
 signals:
     void addClicked(mega::MegaHandle = mega::INVALID_HANDLE);
-    void deleteClicked();
 
 #ifndef Q_OS_WIN
     void permissionsClicked();

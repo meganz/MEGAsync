@@ -21,7 +21,7 @@ RemoteItemUi::RemoteItemUi(QWidget* parent):
             {
                 emit addClicked();
             });
-    connect(ui->bDelete, &QPushButton::clicked, this, &RemoteItemUi::deleteClicked);
+
     ui->bAdd->setAutoDefault(true);
 }
 
@@ -52,7 +52,7 @@ void RemoteItemUi::setUsePermissions(const bool use)
 {
     ui->bPermissions->setVisible(use);
 
-    if (ui->bPermissions->isHidden() && ui->bAdd->isHidden() && ui->bDelete->isHidden())
+    if (ui->bPermissions->isHidden() && ui->bAdd->isHidden())
     {
         ui->wControlButtons->hide();
     }

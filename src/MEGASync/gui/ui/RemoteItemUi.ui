@@ -208,44 +208,6 @@ background-color: transparent;
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QPushButton" name="bDelete">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>26</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>26</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::FocusPolicy::StrongFocus</enum>
-           </property>
-           <property name="text">
-            <string>Delete</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_win.qrc">
-             <normaloff>:/images/minus.svg</normaloff>:/images/minus.svg</iconset>
-           </property>
-           <property name="autoDefault">
-            <bool>false</bool>
-           </property>
-           <property name="type" stdset="0">
-            <string notr="true">outline</string>
-           </property>
-           <property name="dimension" stdset="0">
-            <string notr="true">small</string>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
       </item>
