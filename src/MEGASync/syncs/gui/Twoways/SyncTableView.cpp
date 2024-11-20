@@ -391,7 +391,7 @@ void BackgroundColorDelegate::paintRowBackground(QPainter* painter,
                                                  const QColor& color) const
 {
     const int ENABLED_COLUMN_INDEX = 0;
-    const int MENU_COLUMN_INDEX = 7;
+    const int MENU_COLUMN_INDEX = index.model()->columnCount() - 1;
     const double RADIUS_SQUARE_PERCENTATGE = 0.20;
 
     auto optionRect = option.rect;
