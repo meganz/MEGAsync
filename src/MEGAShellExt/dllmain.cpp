@@ -9,9 +9,10 @@
 #include "ContextMenuCommandUpload.h"
 #include "ContextMenuCommandView.h"
 #include "ContextMenuCommandViewVersions.h"
-#include "Installer.h"
 #include "RegUtils.h"
 #include "SimpleFactory.h"
+#include "SparsePackageManager.h"
+#include "Utilities.h"
 #include <Guiddef.h>
 
 #include <new>
@@ -60,8 +61,10 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
     case DLL_PROCESS_ATTACH:
         g_hInst = hModule;
         DisableThreadLibraryCalls(hModule);
-        if (IsWindows11Installation())
-            EnsureRegistrationOnCurrentUser();
+        if (Utilities::isWindows11())
+        {
+            SparsePackageManager::EnsureRegistrationOnCurrentUser();
+        }
         break;
     case DLL_THREAD_ATTACH:
     case DLL_THREAD_DETACH:
@@ -83,7 +86,7 @@ STDAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
     }
 
     *ppv = NULL;
-    if (IsWindows11Installation())
+    if (Utilities::isWindows11())
     {
         if (rclsid == __uuidof(ContextMenuCommandGetLink))
         {
@@ -183,9 +186,9 @@ STDAPI DllRegisterServer(void)
         }
 
         // Register the component.
-        if (IsWindows11Installation())
+        if (Utilities::isWindows11())
         {
-            InstallSparsePackage();
+            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::INSTALL);
         }
         else
         {
@@ -281,9 +284,9 @@ STDAPI DllUnregisterServer(void)
         }
 
         // Unregister the component.
-        if (IsWindows11Installation())
+        if (Utilities::isWindows11())
         {
-            UninstallSparsePackage();
+            SparsePackageManager::modifySparsePackage(SparsePackageManager::MODIFY_TYPE::UNINSTALL);
         }
         else
         {
@@ -304,7 +307,7 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtNotFound);
         if (!SUCCEEDED(hr)) return hr;
 
-        if (!IsWindows11Installation())
+        if (!Utilities::isWindows11())
         {
             UnregisterShellExtContextMenuHandler(L"*",
                                                  CLSID_ContextMenuExt,

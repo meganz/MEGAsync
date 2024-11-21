@@ -1,12 +1,11 @@
 #include "ContextMenuCommandBase.h"
 
-#include "PathHelper.h"
+#include "Utilities.h"
 
 ContextMenuData ContextMenuCommandBase::mContextMenuData;
 
 ContextMenuCommandBase::ContextMenuCommandBase()
 {
-    mCounter = std::make_unique<SharedCounter>();
     mState = std::make_unique<SharedState>();
     mContextMenuData.reset();
 }
@@ -27,7 +26,7 @@ IFACEMETHODIMP ContextMenuCommandBase::GetIcon(IShellItemArray* psiItemArray, LP
 {
     UNREFERENCED_PARAMETER(psiItemArray);
 
-    std::wstring icon(GetContextMenuPath() + L"\\MEGAsync.exe");
+    std::wstring icon(Utilities::GetContextMenuPath() + L"\\MEGAsync.exe");
     SHStrDup(icon.data(), ppszIcon);
 
     return S_OK;

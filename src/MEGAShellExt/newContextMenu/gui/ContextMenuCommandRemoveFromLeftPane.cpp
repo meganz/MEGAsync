@@ -1,6 +1,6 @@
 #include "ContextMenuCommandRemoveFromLeftPane.h"
 
-#include "../../MEGAinterface.h"
+#include "MEGAinterface.h"
 #include "SharedState.h"
 
 IFACEMETHODIMP ContextMenuCommandRemoveFromLeftPane::GetTitle(IShellItemArray* psiItemArray,

@@ -1,6 +1,6 @@
 #include "ContextMenuCommandUpload.h"
 
-#include "../../MEGAinterface.h"
+#include "MEGAinterface.h"
 #include "SharedState.h"
 
 IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)

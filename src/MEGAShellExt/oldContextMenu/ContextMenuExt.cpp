@@ -3,50 +3,52 @@ Module Name:  FileContextMenuExt.cpp
 Project:      CppShellExtContextMenuHandler
 Copyright (c) Microsoft Corporation.
 
-The code sample demonstrates creating a Shell context menu handler with C++. 
+The code sample demonstrates creating a Shell context menu handler with C++.
 
-A context menu handler is a shell extension handler that adds commands to an 
-existing context menu. Context menu handlers are associated with a particular 
-file class and are called any time a context menu is displayed for a member 
-of the class. While you can add items to a file class context menu with the 
-registry, the items will be the same for all members of the class. By 
-implementing and registering such a handler, you can dynamically add items to 
+A context menu handler is a shell extension handler that adds commands to an
+existing context menu. Context menu handlers are associated with a particular
+file class and are called any time a context menu is displayed for a member
+of the class. While you can add items to a file class context menu with the
+registry, the items will be the same for all members of the class. By
+implementing and registering such a handler, you can dynamically add items to
 an object's context menu, customized for the particular object.
 
 The example context menu handler adds the menu item "Display File Name (C++)"
-to the context menu when you right-click a .cpp file in the Windows Explorer. 
-Clicking the menu item brings up a message box that displays the full path 
+to the context menu when you right-click a .cpp file in the Windows Explorer.
+Clicking the menu item brings up a message box that displays the full path
 of the .cpp file.
 
 This source is subject to the Microsoft Public License.
 See http://www.microsoft.com/opensource/licenses.mspx#Ms-PL.
 All other rights reserved.
 
-THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, 
-EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED 
+THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED
 WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 \***************************************************************************/
 
 #include "ContextMenuExt.h"
-#include "resource.h"
-#include <strsafe.h>
+
+#include "../MEGAinterface.h"
+#include "../RegUtils.h"
+#include "../resource.h"
 #include <Shlwapi.h>
 
-#include "RegUtils.h"
-#include "MEGAinterface.h"
+#include <strsafe.h>
 
 #pragma comment(lib, "shlwapi.lib")
 
 extern HINSTANCE g_hInst;
 extern long g_cDllRef;
 
-#define IDM_UPLOAD             0  // The command's identifier offset
-#define IDM_GETLINK            1
+#define IDM_UPLOAD 0 // The command's identifier offset
+#define IDM_GETLINK 1
 #define IDM_REMOVEFROMLEFTPANE 2
-#define IDM_VIEWONMEGA         3
-#define IDM_VIEWVERSIONS       4
+#define IDM_VIEWONMEGA 3
+#define IDM_VIEWVERSIONS 4
 
-ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
+ContextMenuExt::ContextMenuExt(void):
+    m_cRef(1),
     m_pszUploadMenuText(L"&Upload to MEGA"),
     m_pszUploadVerb("UploadToMEGA"),
     m_pwszUploadVerb(L"UploadToMEGA"),
@@ -102,8 +104,10 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
     if (UxThemeDLL)
     {
-        GetBufferedPaintBits = (pGetBufferedPaintBits)::GetProcAddress(UxThemeDLL, "GetBufferedPaintBits");
-        BeginBufferedPaint = (pBeginBufferedPaint)::GetProcAddress(UxThemeDLL, "BeginBufferedPaint");
+        GetBufferedPaintBits =
+            (pGetBufferedPaintBits)::GetProcAddress(UxThemeDLL, "GetBufferedPaintBits");
+        BeginBufferedPaint =
+            (pBeginBufferedPaint)::GetProcAddress(UxThemeDLL, "BeginBufferedPaint");
         EndBufferedPaint = (pEndBufferedPaint)::GetProcAddress(UxThemeDLL, "EndBufferedPaint");
         if (GetBufferedPaintBits && BeginBufferedPaint && EndBufferedPaint)
         {
@@ -117,7 +121,8 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
     if (g_hInst)
     {
-        hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
+        hIcon = (HICON)
+            LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
         if (hIcon)
         {
             m_hMenuBmp = legacyIcon ? getBitmapLegacy(hIcon) : getBitmap(hIcon);
@@ -132,11 +137,12 @@ HBITMAP ContextMenuExt::getBitmapLegacy(HICON hIcon)
         RECT rect;
         rect.right = ::GetSystemMetrics(SM_CXMENUCHECK);
         rect.bottom = ::GetSystemMetrics(SM_CYMENUCHECK);
-        rect.left = rect.top  = 0;
+        rect.left = rect.top = 0;
 
         // Create a compatible DC
         HDC dst_hdc = ::CreateCompatibleDC(NULL);
-        if (dst_hdc == NULL) return NULL;
+        if (dst_hdc == NULL)
+            return NULL;
 
         // Create a new bitmap of icon size
         HBITMAP bmp = ::CreateCompatibleBitmap(dst_hdc, rect.right, rect.bottom);
@@ -153,9 +159,8 @@ HBITMAP ContextMenuExt::getBitmapLegacy(HICON hIcon)
         DeleteDC(dst_hdc);
         return bmp;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return NULL;
 }
 
@@ -165,24 +170,25 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
     {
         HBITMAP bitmap = NULL;
         HDC hdc = CreateCompatibleDC(NULL);
-        if (!hdc) return NULL;
+        if (!hdc)
+            return NULL;
 
-        int width   = GetSystemMetrics(SM_CXSMICON);
-        int height  = GetSystemMetrics(SM_CYSMICON);
+        int width = GetSystemMetrics(SM_CXSMICON);
+        int height = GetSystemMetrics(SM_CYSMICON);
         if (!width || !height)
         {
             DeleteDC(hdc);
             return NULL;
         }
 
-        RECT rect   = {0, 0, width, height};
+        RECT rect = {0, 0, width, height};
         BITMAPINFO bmInfo = {0};
-        bmInfo.bmiHeader.biSize        = sizeof(BITMAPINFOHEADER);
-        bmInfo.bmiHeader.biPlanes      = 1;
+        bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+        bmInfo.bmiHeader.biPlanes = 1;
         bmInfo.bmiHeader.biCompression = BI_RGB;
-        bmInfo.bmiHeader.biWidth       = width;
-        bmInfo.bmiHeader.biHeight      = height;
-        bmInfo.bmiHeader.biBitCount    = 32;
+        bmInfo.bmiHeader.biWidth = width;
+        bmInfo.bmiHeader.biHeight = height;
+        bmInfo.bmiHeader.biBitCount = 32;
 
         bitmap = CreateDIBSection(hdc, &bmInfo, DIB_RGB_COLORS, NULL, NULL, 0);
         if (!bitmap)
@@ -198,7 +204,7 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
             return NULL;
         }
 
-        BLENDFUNCTION blendFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+        BLENDFUNCTION blendFunction = {AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
         BP_PAINTPARAMS paintParams = {0};
         paintParams.cbSize = sizeof(BP_PAINTPARAMS);
         paintParams.dwFlags = BPPF_ERASE;
@@ -215,9 +221,8 @@ HBITMAP ContextMenuExt::getBitmap(HICON icon)
         DeleteDC(hdc);
         return bitmap;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return NULL;
 }
 
@@ -237,11 +242,11 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
     int characters = DragQueryFileW(hDrop, i, NULL, 0);
     if (characters)
     {
-        characters+=1; //NUL character
+        characters += 1; // NUL character
         std::wstring buffer;
-        buffer.resize(characters*sizeof(wchar_t));
+        buffer.resize(characters * sizeof(wchar_t));
         int ok = DragQueryFileW(hDrop, i, (LPWSTR)buffer.data(), characters);
-        ((LPWSTR)buffer.data())[characters-1]=L'\0'; //Ensure a trailing NUL character
+        ((LPWSTR)buffer.data())[characters - 1] = L'\0'; // Ensure a trailing NUL character
         if (ok)
         {
             ContextMenuData::processFile(buffer);
@@ -252,7 +257,7 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
 #pragma region IUnknown
 
 // Query to the interface the component supported.
-IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
+IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void** ppv)
 {
     __try
     {
@@ -262,21 +267,21 @@ IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
         }
 
         *ppv = NULL;
-        if (riid == __uuidof (IContextMenu))
+        if (riid == __uuidof(IContextMenu))
         {
-            *ppv = (IContextMenu *) this;
+            *ppv = (IContextMenu*)this;
         }
-        else if (riid == __uuidof (IContextMenu2))
+        else if (riid == __uuidof(IContextMenu2))
         {
-            *ppv = (IContextMenu2 *) this;
+            *ppv = (IContextMenu2*)this;
         }
-        else if (riid == __uuidof (IContextMenu3))
+        else if (riid == __uuidof(IContextMenu3))
         {
-            *ppv = (IContextMenu3 *) this;
+            *ppv = (IContextMenu3*)this;
         }
-        else if (riid == __uuidof (IShellExtInit))
+        else if (riid == __uuidof(IShellExtInit))
         {
-            *ppv = (IShellExtInit *) this;
+            *ppv = (IShellExtInit*)this;
         }
         else if (riid == IID_IUnknown)
         {
@@ -290,9 +295,8 @@ IFACEMETHODIMP ContextMenuExt::QueryInterface(REFIID riid, void **ppv)
         AddRef();
         return S_OK;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return E_NOINTERFACE;
 }
 
@@ -315,20 +319,17 @@ IFACEMETHODIMP_(ULONG) ContextMenuExt::Release()
 
         return cRef;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return 0;
 }
 
 #pragma endregion
 
-
 #pragma region IShellExtInit
 
 // Initialize the context menu handler.
-IFACEMETHODIMP ContextMenuExt::Initialize(
-    LPCITEMIDLIST , LPDATAOBJECT pDataObj, HKEY )
+IFACEMETHODIMP ContextMenuExt::Initialize(LPCITEMIDLIST, LPDATAOBJECT pDataObj, HKEY)
 {
     __try
     {
@@ -339,7 +340,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
 
         HRESULT hr = E_FAIL;
 
-        FORMATETC fe = { CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL };
+        FORMATETC fe = {CF_HDROP, NULL, DVASPECT_CONTENT, -1, TYMED_HGLOBAL};
         STGMEDIUM stm;
 
         // The pDataObj pointer contains the objects being acted upon. In this
@@ -376,32 +377,32 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
         }
         return hr;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
 
-    }
-
-    // If any value other than S_OK is returned from the method, the context 
+    // If any value other than S_OK is returned from the method, the context
     // menu item is not displayed.
     return E_FAIL;
 }
 
 #pragma endregion
 
-
 #pragma region IContextMenu
 
 //
 //   FUNCTION: FileContextMenuExt::QueryContextMenu
 //
-//   PURPOSE: The Shell calls IContextMenu::QueryContextMenu to allow the 
-//            context menu handler to add its menu items to the menu. It 
-//            passes in the HMENU handle in the hmenu parameter. The 
-//            indexMenu parameter is set to the index to be used for the 
+//   PURPOSE: The Shell calls IContextMenu::QueryContextMenu to allow the
+//            context menu handler to add its menu items to the menu. It
+//            passes in the HMENU handle in the hmenu parameter. The
+//            indexMenu parameter is set to the index to be used for the
 //            first menu item that is to be added.
 //
-IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
-    HMENU hMenu, UINT indexMenu, UINT idCmdFirst, UINT , UINT uFlags)
+IFACEMETHODIMP ContextMenuExt::QueryContextMenu(HMENU hMenu,
+                                                UINT indexMenu,
+                                                UINT idCmdFirst,
+                                                UINT,
+                                                UINT uFlags)
 {
     __try
     {
@@ -423,7 +424,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
                                                        mUnsyncedFolders);
             if (menuText)
             {
-                MENUITEMINFO mii = { sizeof(mii) };
+                MENUITEMINFO mii = {sizeof(mii)};
                 mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
                 mii.wID = idCmdFirst + IDM_UPLOAD;
                 mii.fType = MFT_STRING;
@@ -466,10 +467,11 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
 
         if (mInLeftPane.size())
         {
-            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
+            LPWSTR menuText =
+                MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
             if (menuText)
             {
-                MENUITEMINFO mii = { sizeof(mii) };
+                MENUITEMINFO mii = {sizeof(mii)};
                 mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
                 mii.wID = idCmdFirst + IDM_REMOVEFROMLEFTPANE;
                 mii.fType = MFT_STRING;
@@ -497,7 +499,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
                                                            mSyncedFolders);
                 if (menuText)
                 {
-                    MENUITEMINFO mii = { sizeof(mii) };
+                    MENUITEMINFO mii = {sizeof(mii)};
                     mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
                     mii.wID = idCmdFirst + IDM_VIEWONMEGA;
                     mii.fType = MFT_STRING;
@@ -520,7 +522,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
                                                            mSyncedFolders);
                 if (menuText)
                 {
-                    MENUITEMINFO mii = { sizeof(mii) };
+                    MENUITEMINFO mii = {sizeof(mii)};
                     mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
                     mii.wID = idCmdFirst + IDM_VIEWVERSIONS;
                     mii.fType = MFT_STRING;
@@ -539,7 +541,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         }
 
         // Add a separator.
-        MENUITEMINFO sep = { sizeof(sep) };
+        MENUITEMINFO sep = {sizeof(sep)};
         sep.fMask = MIIM_TYPE;
         sep.fType = MFT_SEPARATOR;
         if (!InsertMenuItem(hMenu, indexMenu, TRUE, &sep))
@@ -552,19 +554,16 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
         // that was assigned, plus one (1).
         return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(lastItem + 1));
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
 }
-
 
 //
 //   FUNCTION: FileContextMenuExt::InvokeCommand
 //
-//   PURPOSE: This method is called when a user clicks a menu item to tell 
-//            the handler to run the associated command. The lpcmi parameter 
+//   PURPOSE: This method is called when a user clicks a menu item to tell
+//            the handler to run the associated command. The lpcmi parameter
 //            points to a structure that contains the needed information.
 //
 IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
@@ -649,7 +648,8 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             {
                 requestGetLinks();
             }
-            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszRemoveFromLeftPaneVerb))
+            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW,
+                               m_pwszRemoveFromLeftPaneVerb))
             {
                 removeFromLeftPane();
             }
@@ -707,30 +707,30 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 
         return S_OK;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
 
     return E_FAIL;
 }
 
-
 //
 //   FUNCTION: CFileContextMenuExt::GetCommandString
 //
-//   PURPOSE: If a user highlights one of the items added by a context menu 
-//            handler, the handler's IContextMenu::GetCommandString method is 
-//            called to request a Help text string that will be displayed on 
-//            the Windows Explorer status bar. This method can also be called 
-//            to request the verb string that is assigned to a command. 
-//            Either ANSI or Unicode verb strings can be requested. This 
-//            example only implements support for the Unicode values of 
-//            uFlags, because only those have been used in Windows Explorer 
+//   PURPOSE: If a user highlights one of the items added by a context menu
+//            handler, the handler's IContextMenu::GetCommandString method is
+//            called to request a Help text string that will be displayed on
+//            the Windows Explorer status bar. This method can also be called
+//            to request the verb string that is assigned to a command.
+//            Either ANSI or Unicode verb strings can be requested. This
+//            example only implements support for the Unicode values of
+//            uFlags, because only those have been used in Windows Explorer
 //            since Windows 2000.
 //
-IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand, 
-    UINT uFlags, UINT *, LPSTR pszName, UINT cchMax)
+IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
+                                                UINT uFlags,
+                                                UINT*,
+                                                LPSTR pszName,
+                                                UINT cchMax)
 {
     __try
     {
@@ -740,115 +740,125 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
         {
             switch (uFlags)
             {
-            case GCS_HELPTEXTW:
-                // Only useful for pre-Vista versions of Windows that have a
-                // Status bar.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszUploadVerbHelpText);
-                break;
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszUploadVerbHelpText);
+                    break;
 
-            case GCS_VERBW:
-                // GCS_VERBW is an optional feature that enables a caller to
-                // discover the canonical name for the verb passed in through
-                // idCommand.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszUploadVerbCanonicalName);
-                break;
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszUploadVerbCanonicalName);
+                    break;
 
-            default:
-                hr = S_OK;
+                default:
+                    hr = S_OK;
             }
         }
         else if (idCommand == IDM_GETLINK)
         {
             switch (uFlags)
             {
-            case GCS_HELPTEXTW:
-                // Only useful for pre-Vista versions of Windows that have a
-                // Status bar.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszGetLinkVerbHelpText);
-                break;
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszGetLinkVerbHelpText);
+                    break;
 
-            case GCS_VERBW:
-                // GCS_VERBW is an optional feature that enables a caller to
-                // discover the canonical name for the verb passed in through
-                // idCommand.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszGetLinkVerbCanonicalName);
-                break;
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszGetLinkVerbCanonicalName);
+                    break;
 
-            default:
-                hr = S_OK;
+                default:
+                    hr = S_OK;
             }
         }
         else if (idCommand == IDM_REMOVEFROMLEFTPANE)
         {
             switch (uFlags)
             {
-            case GCS_HELPTEXTW:
-                // Only useful for pre-Vista versions of Windows that have a
-                // Status bar.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszRemoveFromLeftPaneVerbHelpText);
-                break;
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszRemoveFromLeftPaneVerbHelpText);
+                    break;
 
-            case GCS_VERBW:
-                // GCS_VERBW is an optional feature that enables a caller to
-                // discover the canonical name for the verb passed in through
-                // idCommand.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszRemoveFromLeftPaneVerbCanonicalName);
-                break;
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszRemoveFromLeftPaneVerbCanonicalName);
+                    break;
 
-            default:
-                hr = S_OK;
+                default:
+                    hr = S_OK;
             }
         }
         else if (idCommand == IDM_VIEWONMEGA)
         {
             switch (uFlags)
             {
-            case GCS_HELPTEXTW:
-                // Only useful for pre-Vista versions of Windows that have a
-                // Status bar.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszViewOnMEGAVerbHelpText);
-                break;
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszViewOnMEGAVerbHelpText);
+                    break;
 
-            case GCS_VERBW:
-                // GCS_VERBW is an optional feature that enables a caller to
-                // discover the canonical name for the verb passed in through
-                // idCommand.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszViewOnMEGAVerbCanonicalName);
-                break;
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszViewOnMEGAVerbCanonicalName);
+                    break;
 
-            default:
-                hr = S_OK;
+                default:
+                    hr = S_OK;
             }
         }
         else if (idCommand == IDM_VIEWVERSIONS)
         {
             switch (uFlags)
             {
-            case GCS_HELPTEXTW:
-                // Only useful for pre-Vista versions of Windows that have a
-                // Status bar.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszViewVersionsVerbHelpText);
-                break;
+                case GCS_HELPTEXTW:
+                    // Only useful for pre-Vista versions of Windows that have a
+                    // Status bar.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszViewVersionsVerbHelpText);
+                    break;
 
-            case GCS_VERBW:
-                // GCS_VERBW is an optional feature that enables a caller to
-                // discover the canonical name for the verb passed in through
-                // idCommand.
-                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
-                    m_pwszViewVersionsVerbCanonicalName);
-                break;
+                case GCS_VERBW:
+                    // GCS_VERBW is an optional feature that enables a caller to
+                    // discover the canonical name for the verb passed in through
+                    // idCommand.
+                    hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName),
+                                       cchMax,
+                                       m_pwszViewVersionsVerbCanonicalName);
+                    break;
 
-            default:
-                hr = S_OK;
+                default:
+                    hr = S_OK;
             }
         }
 
@@ -856,14 +866,13 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
         // extension handler, return E_INVALIDARG.
         return hr;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
 
     return E_FAIL;
 }
 
-IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, LRESULT *plResult)
+IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, LRESULT* plResult)
 {
     __try
     {
@@ -879,7 +888,12 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
 
         if (!hIcon)
         {
-            hIcon = (HICON)LoadImage(g_hInst, MAKEINTRESOURCE(IDI_ICON4), IMAGE_ICON, 1024, 1024, LR_DEFAULTCOLOR);
+            hIcon = (HICON)LoadImage(g_hInst,
+                                     MAKEINTRESOURCE(IDI_ICON4),
+                                     IMAGE_ICON,
+                                     1024,
+                                     1024,
+                                     LR_DEFAULTCOLOR);
             if (!hIcon)
             {
                 return E_FAIL;
@@ -891,7 +905,7 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
             case WM_MEASUREITEM:
             {
                 MEASUREITEMSTRUCT* lpmis = (MEASUREITEMSTRUCT*)lParam;
-                if (lpmis==NULL)
+                if (lpmis == NULL)
                     break;
                 lpmis->itemWidth = 16;
                 lpmis->itemHeight = 16;
@@ -902,24 +916,26 @@ IFACEMETHODIMP ContextMenuExt::HandleMenuMsg2(UINT uMsg, WPARAM, LPARAM lParam, 
             case WM_DRAWITEM:
             {
                 DRAWITEMSTRUCT* lpdis = (DRAWITEMSTRUCT*)lParam;
-                if ((lpdis==NULL)||(lpdis->CtlType != ODT_MENU))
-                    return S_OK;        //not for a menu
+                if ((lpdis == NULL) || (lpdis->CtlType != ODT_MENU))
+                    return S_OK; // not for a menu
 
                 DrawIconEx(lpdis->hDC,
-                    lpdis->rcItem.left-16,
-                    lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
-                    hIcon, 16, 16,
-                    0, NULL, DI_NORMAL);
+                           lpdis->rcItem.left - 16,
+                           lpdis->rcItem.top + (lpdis->rcItem.bottom - lpdis->rcItem.top - 16) / 2,
+                           hIcon,
+                           16,
+                           16,
+                           0,
+                           NULL,
+                           DI_NORMAL);
                 *plResult = TRUE;
             }
             break;
         }
         return S_OK;
     }
-    __except(EXCEPTION_EXECUTE_HANDLER)
-    {
-
-    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {}
     return E_FAIL;
 }
 

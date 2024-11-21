@@ -2,8 +2,7 @@
 #define CONTEXTMENUCOMMANDBASE_H
 
 #include "../data/ContextMenuData.h"
-#include "SharedCounter.h"
-#include "SharedState.h"
+#include "../utilities/SharedState.h"
 
 class ContextMenuCommandBase: public winrt::implements<ContextMenuCommandBase, IExplorerCommand>
 {
@@ -23,7 +22,6 @@ protected:
     virtual const EXPCMDSTATE GetState(IShellItemArray* psiItemArray) = 0;
 
 protected:
-    std::unique_ptr<SharedCounter> mCounter;
     std::unique_ptr<SharedState> mState;
     static ContextMenuData mContextMenuData;
 };

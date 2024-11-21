@@ -1,6 +1,6 @@
 #include "ContextMenuCommandView.h"
 
-#include "../../MEGAinterface.h"
+#include "MEGAinterface.h"
 #include "SharedState.h"
 
 IFACEMETHODIMP ContextMenuCommandView::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
