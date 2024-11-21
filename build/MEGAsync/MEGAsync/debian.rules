@@ -9,6 +9,7 @@ DEB_TESTING := $(shell cat /etc/issue | grep "Debian" > /dev/null && cat /etc/ap
 MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 DISTRO := $(shell lsb_release -ds)
 VER := $(shell lsb_release -rs)
+EXPORT_VCPKG_FORCE_SYSTEM_BINARIES := $(shell uname -m | grep "armv7l" >/dev/null && echo "VCPKG_FORCE_SYSTEM_BINARIES=1" || echo "")
 
 export VCPKG_DEFAULT_BINARY_CACHE := $(shell [ -f /opt/vcpkg.tar.gz ] && echo "/opt/persistent/vcpkg_cache" || echo "")
 export PATH := $(shell [ -f /opt/cmake.tar.gz ] && echo "`pwd`/cmake_inst/bin:${PATH}" || echo "${PATH}")
@@ -33,7 +34,7 @@ build-stamp:
 	fi
 
 	cmake --version
-	cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
+	$(EXPORT_VCPKG_FORCE_SYSTEM_BINARIES) cmake $(VCPKG_ROOT) -DENABLE_DESKTOP_UPDATE_GEN=OFF -DENABLE_DESIGN_TOKENS_IMPORTER=OFF $(QTDEFINES) -DCMAKE_VERBOSE_MAKEFILE=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo -S $(CURDIR) -B $(CURDIR)/build_dir
 	cmake --build $(CURDIR)/build_dir -j$(NJOBS)
 	cmake --install $(CURDIR)/build_dir --prefix $(CURDIR)/install_dir
 
