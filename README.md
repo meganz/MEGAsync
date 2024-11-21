@@ -11,38 +11,36 @@ Changes that you make on your device will also be made on the MEGA Cloud Drive. 
 changes made in your MEGA Cloud Drive (such as renaming, moving and deleting) will also be
 made to the synced folders on your device.
 
-https://help.mega.io/installs-apps/desktop-syncing
+https://help.mega.io/installs-apps/desktop
 
-# Supported Platforms
+## Supported Desktop Operating Systems
 
-The minimum version of Windows required at the moment is Windows 7.
-The minimum version of Windows Server required at the moment is Windows Server 2008 R2.
-The minimum version of macOS required at the moment is macOS Sierra 10.12. 
+Since this list may be out of date, please also check the MEGA Desktop download page: https://mega.io/desktop
 
-We officially support a handful of Linux flavors based on Debian and RedHat, such as:
-- Debian
-- Ubuntu
-- Mint
-- Fedora
-- CentOS
+* Windows
+  * Windows 7 and newer.
+  * Windows Server 2008 R2 and newer.
+* macOS
+  * Apple CPU: Big Sur 11 and newer.
+  * Intel CPU: High Sierra 10.13 and newer.
+* Linux distribution with KDE Plasma, Gnome Shell, Xfce, Cinnamon, etc.
+  * Arch Linux
+  * Debian, Ubuntu, Elementary OS, Mint
+  * Fedora
+  * OpenSUSE
 
-We provide pre-built packages for several other distributions, please check the MEGA
-Desktop download page:
-https://mega.io/desktop
-
-# Source code
+## Source code
 
 Build instructions are provided in the distribution specific files:
 [Windows](README.win.md)
 [macOS](README.mac.md)
 [Linux](README.linux.md)
 
-# Issues
+## Issues
 
 You can report issues and bugs on GitHub https://github.com/meganz/MEGAsync/issues
 
-# Licence
+## Licence
 
 Our source code licence is available in [LICENCE.md](LICENCE.md). For third-party libraries
 please check [CREDITS.md](CREDITS.md).
-
