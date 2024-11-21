@@ -48,7 +48,7 @@ pipeline {
                         branchToCheckout = "develop"
                         shouldCloneSDK = true
                     } else {
-                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        def status = sh(script: "git submodule status src/MEGASync/mega", returnStdout: true).trim()
                         branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
                     dir('src\\MEGASync\\mega') {
