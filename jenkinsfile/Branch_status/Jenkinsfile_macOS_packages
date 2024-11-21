@@ -105,14 +105,42 @@ pipeline {
                         returnStdout: true 
                         ).trim()
                         sh "echo $MEGASYNC_VERSION > version.txt"
-                        if (params.ARM64 == true){
-                            sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64"
-                            sh "cd Release_arm64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/"                       
+                        withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                            if (params.ARM64 == true){
+                                sh """
+                                    jf rt del \
+                                        --url ${REPO_URL} \
+                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64
+                                """
+                                dir("Release_arm64") {
+                                    sh """
+                                        jf rt upload \
+                                            --url ${REPO_URL} \
+                                            --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                            --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' \
+                                            MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/arm64/
+                                    """
+                                }
+                            }
+                            if (params.X86_64 == true){
+                                sh """
+                                    jf rt del \
+                                        --url ${REPO_URL} \
+                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64
+                                """
+                                dir("Release_x86_64") {
+                                    sh """
+                                        jf rt upload \
+                                            --url ${REPO_URL} \
+                                            --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                            --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' \
+                                            MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/
+                                   """
+                                }
+                            }
                         }
-                        if (params.X86_64 == true){
-                            sh "jf rt del MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64"
-                            sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/macOS/x86_64/"
-                        } 
                     }
                     archiveArtifacts artifacts: 'version.txt', onlyIfSuccessful: true
                 }
