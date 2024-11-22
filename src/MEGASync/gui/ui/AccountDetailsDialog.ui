@@ -64,6 +64,12 @@ qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
 }
 
+
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #headerBox #lUsedStorage
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
 #AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
 {
 color: #fffb6514; /*colorToken.indicator-orange*/
@@ -72,6 +78,11 @@ color: #fffb6514; /*colorToken.indicator-orange*/
 #AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
 {
 color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[transferState=&quot;ok&quot;] #headerBox #lUsedTransfer
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
 }
 
 #AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
@@ -84,14 +95,19 @@ color: #fffb6514; /*colorToken.indicator-orange*/
 color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
-#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #wDetailedUsage QProgressBar::chunk
 {
-color: #fffb6514; /*colorToken.indicator-orange*/
+background-color: #ff09bf5b; /*colorToken.indicator-green*/
 }
 
-#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage  QProgressBar::chunk
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
 {
-color: #fff63d6b; /*colorToken.indicator-pink*/
+background-color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage QProgressBar::chunk
+{
+background-color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
