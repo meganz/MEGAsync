@@ -66,7 +66,7 @@ pipeline {
         stage ('Build macOS packages'){
             environment{
                 VCPKGPATH  = "${env.HOME}/jenkins/vcpkg"
-                QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
+                QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.16/5.15.16"
             }
             steps {
                 gitlabCommitStatus (name: 'Build macOS packages'){
