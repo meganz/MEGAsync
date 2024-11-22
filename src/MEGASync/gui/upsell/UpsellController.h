@@ -2,6 +2,7 @@
 #define UPSELL_CONTROLLER_H
 
 #include "UpsellPlans.h"
+#include "Utilities.h"
 
 #include <QObject>
 #include <QTimer>
@@ -18,13 +19,15 @@ class MegaPricing;
 class MegaCurrency;
 }
 
-class UpsellController: public QObject
+class UpsellController: public QObject, public IStorageObserver
 {
     Q_OBJECT
 
 public:
     UpsellController(QObject* parent = nullptr);
-    virtual ~UpsellController() = default;
+    virtual ~UpsellController();
+
+    void updateStorageElements() override;
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* error);
 
@@ -54,8 +57,6 @@ signals:
     void dataReady();
     void beginInsertRows(int first, int last);
     void endInsertRows();
-    void beginRemoveRows(int first, int last);
-    void endRemoveRows();
     void dataChanged(int rowStart, int rowFinal, QVector<int> roles);
 
 private slots:
@@ -85,6 +86,7 @@ private:
     int getRowForCurrentRecommended();
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isPlanUnderCurrentProLevel(int proLevel) const;
+    bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
 };
 
 #endif // UPSELL_CONTROLLER_H

@@ -1,5 +1,6 @@
 #include "UpsellController.h"
 
+#include "AccountDetailsManager.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
@@ -55,6 +56,24 @@ UpsellController::UpsellController(QObject* parent):
             &UpsellPlans::monthlyChanged,
             this,
             &UpsellController::onBilledPeriodChanged);
+
+    // Subscribe to data updates
+    AccountDetailsManager::instance()->attachStorageObserver(*this);
+    AccountDetailsManager::instance()->updateUserStats(AccountDetailsManager::Flag::ALL,
+                                                       true,
+                                                       USERSTATS_STORAGECLICKED);
+}
+
+UpsellController::~UpsellController()
+{
+    AccountDetailsManager::instance()->dettachStorageObserver(*this);
+}
+
+void UpsellController::updateStorageElements()
+{
+    // Force update of the plans to check the availability of the plans based on the current
+    // storage conditions.
+    emit dataChanged(0, mPlans->size() - 1, QVector<int>() << UpsellPlans::AVAILABLE_ROLE);
 }
 
 void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
@@ -220,7 +239,7 @@ void UpsellController::setBilledPeriod(bool isMonthly)
 
 void UpsellController::setViewMode(UpsellPlans::ViewMode mode)
 {
-    if (mPlans->getViewMode() != mode)
+    if (viewMode() != mode)
     {
         mPlans->setViewMode(mode);
         if (mode == UpsellPlans::ViewMode::TRANSFER_EXCEEDED)
@@ -548,7 +567,12 @@ int UpsellController::getRowForCurrentRecommended()
 
 bool UpsellController::isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
 {
-    return (!isPlanUnderCurrentProLevel(data->proLevel())) &&
+    // Check if the used storage fits in the plan, for trasnfer exceeded
+    // the current plan is available unless the storage does not fit in the plan.
+    int64_t planStorage(mPlans->isMonthly() ? data->monthlyData().gBStorage() :
+                                              data->yearlyData().gBStorage());
+    bool planStorageFits(planFitsUnderStorageOQConditions(planStorage));
+    return (!isPlanUnderCurrentProLevel(data->proLevel())) && planStorageFits &&
            (mPlans->isMonthly() ? data->monthlyData().isValid() : data->yearlyData().isValid());
 }
 
@@ -562,4 +586,23 @@ bool UpsellController::isPlanUnderCurrentProLevel(int proLevel) const
         std::find(ACCOUNT_TYPES_IN_ORDER.cbegin(), ACCOUNT_TYPES_IN_ORDER.cend(), proLevel));
 
     return planLevelIt < currentLevelIt;
+}
+
+bool UpsellController::planFitsUnderStorageOQConditions(int64_t planGbStorage) const
+{
+    bool isFree(Preferences::instance()->accountType() == Preferences::ACCOUNT_TYPE_FREE);
+    bool isFullStorageOQ(viewMode() == UpsellPlans::ViewMode::STORAGE_FULL);
+    bool isAlmostFullStorageOQ(viewMode() == UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
+
+    auto totalStorage(Preferences::instance()->totalStorage());
+    auto usedStorage(Preferences::instance()->usedStorage());
+    bool isTxExceeded(viewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED &&
+                      (usedStorage < totalStorage));
+    bool isFullStorageUnderTxExceeded(viewMode() == UpsellPlans::ViewMode::TRANSFER_EXCEEDED &&
+                                      (usedStorage >= totalStorage));
+
+    bool isStorageFit(usedStorage < planGbStorage);
+
+    return !isFree && (isAlmostFullStorageOQ || isTxExceeded ||
+                       ((isFullStorageOQ || isFullStorageUnderTxExceeded) && isStorageFit));
 }

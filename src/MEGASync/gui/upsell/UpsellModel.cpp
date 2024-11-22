@@ -25,22 +25,6 @@ UpsellModel::UpsellModel(std::shared_ptr<UpsellController> controller, QObject* 
             });
 
     connect(controller.get(),
-            &UpsellController::beginRemoveRows,
-            this,
-            [this](int first, int last)
-            {
-                beginRemoveRows(QModelIndex(), first, last);
-            });
-
-    connect(controller.get(),
-            &UpsellController::endRemoveRows,
-            this,
-            [this]()
-            {
-                endRemoveRows();
-            });
-
-    connect(controller.get(),
             &UpsellController::dataChanged,
             this,
             [this](int rowStart, int rowFinal, QVector<int> roles)
