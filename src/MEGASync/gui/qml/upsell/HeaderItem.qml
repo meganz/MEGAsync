@@ -124,6 +124,13 @@ FocusScope {
                                     break;
                             }
                         }
+                        onWidthChanged: {
+                            // Corner case:
+                            // Force focus border to be updated when the text width changes.
+                            if (textFocusScope.activeFocus || textItem.activeFocus) {
+                                placeFocusBorder();
+                            }
+                        }
                     }
 
                 }
