@@ -590,7 +590,6 @@ bool UpsellController::isPlanUnderCurrentProLevel(int proLevel) const
 
 bool UpsellController::planFitsUnderStorageOQConditions(int64_t planGbStorage) const
 {
-    bool isFree(Preferences::instance()->accountType() == Preferences::ACCOUNT_TYPE_FREE);
     bool isFullStorageOQ(viewMode() == UpsellPlans::ViewMode::STORAGE_FULL);
     bool isAlmostFullStorageOQ(viewMode() == UpsellPlans::ViewMode::STORAGE_ALMOST_FULL);
 
@@ -603,6 +602,6 @@ bool UpsellController::planFitsUnderStorageOQConditions(int64_t planGbStorage) c
 
     bool isStorageFit(usedStorage < planGbStorage);
 
-    return !isFree && (isAlmostFullStorageOQ || isTxExceeded ||
-                       ((isFullStorageOQ || isFullStorageUnderTxExceeded) && isStorageFit));
+    return (isAlmostFullStorageOQ || isTxExceeded ||
+            ((isFullStorageOQ || isFullStorageUnderTxExceeded) && isStorageFit));
 }
