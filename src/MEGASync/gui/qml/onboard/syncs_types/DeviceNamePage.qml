@@ -29,8 +29,8 @@ DeviceNamePageForm {
         }
     }
 
-    deviceNameTextField.onTextChanged: (error) =>{
-        if(error) {
+    deviceNameTextField.onTextChanged: {
+        if(deviceNameTextField.error) {
             DeviceName.showErrorRoutine(deviceNameTextField, DeviceName.Error.NONE)
         }
     }
