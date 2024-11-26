@@ -57,7 +57,6 @@ private:
     QString mNotificationHeading;
     QPointer<UserAlert> mAlertData;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
-    QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 
     void updateAlertType();
     QString formatRichString(const QString& str);
