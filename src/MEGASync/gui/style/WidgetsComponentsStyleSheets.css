@@ -184,6 +184,7 @@ QComboBox[type="mega"] QAbstractItemView
 border: 2px solid #ff04101E; /*colorToken.button-outline*/
 border-radius: 6px;
 background-color:  #fffafafa; /*colorToken.surface-1*/
+padding: 5 5 5 5px;
 }
 
 /*
