@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </rect>
   </property>
@@ -21,13 +21,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </size>
   </property>
@@ -181,14 +181,6 @@ font-size: 13px;
 #sHeader
 {
     background-color: transparent;
-    height: 96px;
-    width: 440px;
-    height: 96px;
-    width: 440px;
-    max-height: 96px;
-    min-height: 96px;
-    max-width:440px;
-    min-width:440px;
 }
 
 #lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
@@ -250,7 +242,6 @@ font-size: 13px;
     height: 32px;
     max-height: 32px;
     min-height: 32px;
-    max-width:440px;
     min-width:10px;
     font-size: 14px;
     color: #ff303233; /*colorToken.text-primary*/
@@ -262,11 +253,8 @@ font-size: 13px;
 #pLoading, #pStorageAndTransferUsage
 {
     height: 96px;
-    width: 440px;
     max-height: 96px;
     min-height: 96px;
-    max-width:440px;
-    min-width:440px;
 }
 
 #AccountDetailsDialog[loading=true]  #sHeader
@@ -301,8 +289,17 @@ min-height: 65px;
 min-width: 70px;
 max-height: 65px;
 max-width: 70px;
-margin-left: 20px;
 background-color: transparent;
+}
+
+#sStorage
+{
+margin-left: 10px;
+}
+
+#sTransfer
+{
+margin-left: 5px;
 }
 
 #wStorageUsage, #wTransferUsage
@@ -311,7 +308,6 @@ height: 96px;
 width: 219px;
 max-height: 96px;
 min-height: 96px;
-max-width:219px;
 min-width:219px;
 }
 
@@ -483,9 +479,9 @@ min-width:219px;
             </property>
             <item>
              <widget class="QWidget" name="wStorageUsage" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="0,1">
                <property name="spacing">
-                <number>6</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -598,9 +594,9 @@ min-width:219px;
             </item>
             <item>
              <widget class="QWidget" name="wTransferUsage" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_25">
+              <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="0,1">
                <property name="spacing">
-                <number>6</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
