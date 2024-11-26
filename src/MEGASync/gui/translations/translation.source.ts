@@ -4750,16 +4750,6 @@ Enter a different name.</translation>
         <translation>Back up to:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
         <source>Change folder</source>
         <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
         <translation>Change folder</translation>
@@ -4833,11 +4823,6 @@ Enter a different name.</translation>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Confirm password</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>Done</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4955,24 +4940,9 @@ Enter a different name.</translation>
         <translation>Log in to your [B]MEGA account[/B]</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Next</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Skip</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>Password</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Previous</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5215,11 +5185,6 @@ Enter a different name.</translation>
         <translation>Incorrect 2FA code</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Try again</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>Your backup has been set up and selected data will automatically back up whenever the desktop app is running.</translation>
@@ -5228,11 +5193,6 @@ Enter a different name.</translation>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the user can view the backups in settings&apos; backups tab CON-738</translatorcomment>
         <translation>You can view your backups and their statuses under the Backup tab in Settings.</translation>
-    </message>
-    <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Set exclusions</translation>
     </message>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
