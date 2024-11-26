@@ -86,8 +86,21 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
 
     if (list != nullptr)
     {
-        // Process synchronously if list is provided
-        populateUserAlerts(list);
+        std::shared_ptr<mega::MegaUserAlertList> auxList(list->copy());
+        ThreadPoolSingleton::getInstance()->push(
+            [this, auxList]()
+            {
+                // Sleep and wait for the shared folders to be undecrypted
+                QThread::sleep(1);
+
+                Utilities::queueFunctionInAppThread(
+                    [this, auxList]()
+                    {
+                        // Process synchronously if list is provided
+                        populateUserAlerts(auxList.get());
+                        auxList->clear();
+                    });
+            });
     }
     else
     {

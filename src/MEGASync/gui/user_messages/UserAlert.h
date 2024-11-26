@@ -39,6 +39,8 @@ public:
     virtual const char* getTitle() const;
     virtual MessageType getMessageType() const;
 
+    std::shared_ptr<mega::MegaNode> getAlertNode() const;
+
 signals:
     void emailChanged();
 

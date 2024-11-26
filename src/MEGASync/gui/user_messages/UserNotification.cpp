@@ -25,7 +25,7 @@ void UserNotification::reset(const mega::MegaNotification* notification)
 {
     mNotification.reset(notification);
 
-    emit dataChanged();
+    emit dataReset();
 }
 
 bool UserNotification::equals(const mega::MegaNotification* notification) const

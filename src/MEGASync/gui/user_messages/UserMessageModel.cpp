@@ -112,11 +112,12 @@ void UserMessageModel::insertAlerts(const QList<mega::MegaUserAlert*>& alerts)
         return;
     }
 
-    beginInsertRows(QModelIndex(), mUserMessages.size(), mUserMessages.size() + alerts.size() - 1);
+    beginInsertRows(QModelIndex(), 0, alerts.size() - 1);
     for (auto& alert: alerts)
     {
         auto alertItem = new UserAlert(alert);
-        mUserMessages.push_back(alertItem);
+        connect(alertItem, &UserAlert::uiUpdated, this, &UserMessageModel::onUiUpdated);
+        mUserMessages.prepend(alertItem);
 
         if (!alertItem->isSeen())
         {
@@ -268,6 +269,7 @@ void UserMessageModel::insertNotifications(const QList<mega::MegaNotification*>&
     for (auto& notification: notifications)
     {
         auto item = new UserNotification(notification);
+        connect(item, &UserAlert::uiUpdated, this, &UserMessageModel::onUiUpdated);
         mUserMessages.push_back(item);
 
         if (!mSeenStatusManager.markNotificationAsUnseen(item->id()))
@@ -387,6 +389,16 @@ void UserMessageModel::onExpired(unsigned id)
         delete mUserMessages[row];
         mUserMessages.erase(it);
         endRemoveRows();
+    }
+}
+
+void UserMessageModel::onUiUpdated()
+{
+    auto userMessage(qobject_cast<UserMessage*>(sender()));
+    if (userMessage)
+    {
+        int row = mUserMessages.indexOf(userMessage);
+        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
     }
 }
 
