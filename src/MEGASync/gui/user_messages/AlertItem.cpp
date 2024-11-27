@@ -25,13 +25,8 @@ AlertItem::AlertItem(QWidget *parent)
     mUi->wNotificationIcon->hide();
     mUi->lNew->hide();
 
-    connect(&mAlertNodeWatcher, &QFutureWatcher<void>::finished, this, [=]()
-    {
-        mAlertNode.reset(static_cast<MegaNode*>(mAlertNodeWatcher.result()));
-        updateAlertData();
-    });
-
     mUi->bNotificationIcon->installEventFilter(this);
+    connect(mUi->wAvatarContact, &AvatarWidget::avatarUpdated, this, &AlertItem::dataChanged);
 }
 
 AlertItem::~AlertItem()
@@ -42,11 +37,43 @@ AlertItem::~AlertItem()
 void AlertItem::setData(UserMessage* data)
 {
     UserAlert* alert = dynamic_cast<UserAlert*>(data);
-    if (alert)
+    if (alert && mAlertData != data)
     {
-        setAlertData(alert);
-        connect(mAlertData, &UserMessage::dataChanged, this, &AlertItem::updateAlertData);
+        if (mAlertData)
+        {
+            disconnect(mAlertData, &UserMessage::dataReset, this, &AlertItem::updateAlertData);
+        }
+
+        mAlertData = alert;
+
+        connect(mAlertData, &UserMessage::dataReset, this, &AlertItem::updateAlertData);
+
+        connect(mAlertData,
+                &UserAlert::emailChanged,
+                this,
+                &AlertItem::contactEmailChanged,
+                Qt::QueuedConnection);
+        connect(mAlertData, &UserAlert::emailChanged, this, &AlertItem::updateAlertData);
+
+        if (mAlertData->getUserHandle() != INVALID_HANDLE)
+        {
+            if (!mAlertData->getEmail().isEmpty())
+            {
+                requestFullName();
+                setAvatarEmail();
+            }
+        }
+        else // If it comes without user handler, it is because is an own alert, then take your
+             // email.
+        {
+            if (mMegaApi)
+            {
+                mUi->wAvatarContact->setUserEmail(mMegaApi->getMyEmail());
+            }
+        }
     }
+
+    updateAlertData();
 }
 
 UserMessage* AlertItem::getData() const
@@ -54,35 +81,11 @@ UserMessage* AlertItem::getData() const
     return mAlertData.data();
 }
 
-void AlertItem::setAlertData(UserAlert* alert)
-{
-    mAlertData = alert;
-
-    connect(mAlertData, &UserAlert::emailChanged,
-            this, &AlertItem::contactEmailChanged, Qt::QueuedConnection);
-    connect(mAlertData, &UserAlert::emailChanged, this, &AlertItem::updateAlertData);
-
-    if (mAlertData->getUserHandle() != INVALID_HANDLE)
-    {
-        if (!mAlertData->getEmail().isEmpty())
-        {
-            requestFullName();
-        }
-    }
-    else //If it comes without user handler, it is because is an own alert, then take your email.
-    {
-        if(mMegaApi)
-        {
-            mUi->wAvatarContact->setUserEmail(mMegaApi->getMyEmail());
-        }
-    }
-
-    onAttributesReady();
-}
-
 void AlertItem::contactEmailChanged()
 {
     requestFullName();
+    setAvatarEmail();
+    updateAlertData();
 }
 
 void AlertItem::requestFullName()
@@ -96,30 +99,22 @@ void AlertItem::requestFullName()
 
     if(mFullNameAttributes)
     {
-        connect(mFullNameAttributes.get(), &UserAttributes::FullName::fullNameReady,
-                this, &AlertItem::onAttributesReady);
+        connect(mFullNameAttributes.get(),
+                &UserAttributes::FullName::fullNameReady,
+                this,
+                &AlertItem::onAttributesReady);
     }
+}
 
+void AlertItem::setAvatarEmail()
+{
     mUi->wAvatarContact->setUserEmail(mAlertData->getEmail().toUtf8().constData());
-
-    onAttributesReady();
 }
 
 void AlertItem::onAttributesReady()
 {
-    MegaHandle handle = mAlertData->getNodeHandle();
-
-    if (handle != INVALID_HANDLE)
-    {
-        mAlertNodeWatcher.setFuture(QtConcurrent::run([=]()
-        {
-            return mMegaApi ? mMegaApi->getNodeByHandle(handle) : nullptr;
-        }));
-    }
-    else
-    {
-        updateAlertData();
-    }
+    updateAlertData();
+    mAlertData->updated();
 }
 
 void AlertItem::updateAlertData()
@@ -292,7 +287,7 @@ void AlertItem::setAlertHeading(UserAlert* alert)
         {
             mUi->sIconWidget->setCurrentWidget(mUi->pSharedFolder);
             mUi->sIconWidget->show();
-            mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
+            mNotificationHeading = MegaNodeNames::getNodeName(mAlertData->getAlertNode().get());
 
             if (mNotificationHeading.isEmpty())
             {
@@ -304,7 +299,7 @@ void AlertItem::setAlertHeading(UserAlert* alert)
         {
             mUi->sIconWidget->setCurrentWidget(mUi->pSharedFolder);
             mUi->sIconWidget->show();
-            mNotificationHeading = MegaNodeNames::getNodeName(mAlertNode.get());
+            mNotificationHeading = MegaNodeNames::getNodeName(mAlertData->getAlertNode().get());
 
             if (mNotificationHeading.isEmpty())
             {
@@ -486,17 +481,22 @@ void AlertItem::setAlertContent(UserAlert *alert)
         // Takedown notifications
         case MegaUserAlert::TYPE_TAKEDOWN:
         {
-            if (mAlertNode)
+            auto alertNode(mAlertData->getAlertNode().get());
+            if (alertNode)
             {
-                if (mAlertNode->getType() == MegaNode::TYPE_FILE)
+                if (alertNode->getType() == MegaNode::TYPE_FILE)
                 {
-                    notificationContent = tr("Your publicly shared file ([A]) has been taken down")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
+                    notificationContent =
+                        tr("Your publicly shared file ([A]) has been taken down")
+                            .replace(QString::fromUtf8("[A]"),
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
                 }
-                else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
+                else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
-                    notificationContent = tr("Your publicly shared folder ([A]) has been taken down")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
+                    notificationContent =
+                        tr("Your publicly shared folder ([A]) has been taken down")
+                            .replace(QString::fromUtf8("[A]"),
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
                 }
                 else
                 {
@@ -511,17 +511,22 @@ void AlertItem::setAlertContent(UserAlert *alert)
         }
         case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
-            if (mAlertNode)
+            auto alertNode(mAlertData->getAlertNode().get());
+            if (alertNode)
             {
-                if (mAlertNode->getType() == MegaNode::TYPE_FILE)
+                if (alertNode->getType() == MegaNode::TYPE_FILE)
                 {
-                    notificationContent = tr("Your publicly shared file ([A]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
+                    notificationContent =
+                        tr("Your publicly shared file ([A]) has been reinstated")
+                            .replace(QString::fromUtf8("[A]"),
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
                 }
-                else if (mAlertNode->getType() == MegaNode::TYPE_FOLDER)
+                else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
-                    notificationContent = tr("Your publicly shared folder ([A]) has been reinstated")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(MegaNodeNames::getNodeName(mAlertNode.get())));
+                    notificationContent =
+                        tr("Your publicly shared folder ([A]) has been reinstated")
+                            .replace(QString::fromUtf8("[A]"),
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
                 }
                 else
                 {

@@ -1,14 +1,14 @@
 #include "UserMessageDelegate.h"
 
 #include "MegaDelegateHoverManager.h"
-#include "UserMessageProxyModel.h"
-#include "UserMessageCacheManager.h"
 #include "UserMessage.h"
+#include "UserMessageCacheManager.h"
+#include "UserMessageProxyModel.h"
 #include "UserMessageWidget.h"
 
 #include <QPainter>
-#include <QTreeView>
 #include <QTimer>
+#include <QTreeView>
 
 #ifdef __APPLE__
 #include <QScrollBar>
