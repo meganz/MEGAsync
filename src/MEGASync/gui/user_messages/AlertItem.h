@@ -56,20 +56,17 @@ private:
     mega::MegaApi* mMegaApi;
     QString mNotificationHeading;
     QPointer<UserAlert> mAlertData;
-    std::unique_ptr<mega::MegaNode> mAlertNode;
     std::shared_ptr<const UserAttributes::FullName> mFullNameAttributes;
-    QFutureWatcher<mega::MegaNode*> mAlertNodeWatcher;
 
     void updateAlertType();
     QString formatRichString(const QString& str);
     QString getUserFullName();
     void requestFullName();
+    void setAvatarEmail();
     void processIncomingPendingContactClick();
     void processIncomingContactChangeOrAcceptedClick();
     void processShareOrTakedownClick();
     void processPaymentClick();
-    void setAlertData(UserAlert* alert);
-
 };
 
 #endif // ALERT_ITEM_H

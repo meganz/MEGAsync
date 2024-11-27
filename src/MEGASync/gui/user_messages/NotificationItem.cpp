@@ -43,9 +43,13 @@ void NotificationItem::setData(UserMessage* data)
     if (notification)
     {
         setNotificationData(notification);
-        connect(notification, &UserMessage::dataChanged, this, [this, notification]() {
-            updateNotificationData(notification);
-        });
+        connect(notification,
+                &UserMessage::dataReset,
+                this,
+                [this, notification]()
+                {
+                    updateNotificationData(notification);
+                });
         mDisplayEventSent = false;
     }
 }
