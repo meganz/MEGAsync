@@ -80,6 +80,12 @@ public:
     QString getErrorString(int errorCode, int syncErrorCode) const;
     QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
+    // Create legacy rules megaignore
+    std::optional<int> resetAllSyncsMegaIgnoreUsingLegacyRules();
+    std::optional<int> createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder,
+                                                        bool fullReset);
+    bool removeMegaIgnore(const QString& syncLocalFolder);
+
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
     void syncRemoveStatus(int errorCode);

@@ -12,6 +12,10 @@
 
 using namespace mega;
 
+const QLatin1String MEGA_IGNORE_FILE_NAME = QLatin1String(".megaignore");
+const QLatin1String MEGA_IGNORE_RUBBISH_PATH = QLatin1String("/.megaignore_debris");
+const QLatin1String MEGA_IGNORE_RUBBISH_TIMESTAMP_FORMAT = QLatin1String("dd.MM.yyyy hh:mm:ss");
+
 SyncController::SyncController(QObject* parent)
     : QObject(parent)
     , mPendingBackups(QMap<QString, QString>())
@@ -97,9 +101,12 @@ void SyncController::addSync(SyncConfig& sync)
     }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
 
+    auto correctlyCreated = createMegaIgnoreUsingLegacyRules(sync.localFolder, false);
+
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e) {
+        [sync, correctlyCreated, this](MegaRequest* request, MegaError* e)
+        {
             int errorCode = e->getErrorCode();
             int syncErrorCode = request->getNumDetails();
 
@@ -116,6 +123,13 @@ void SyncController::addSync(SyncConfig& sync)
                                  MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
                              getErrorString(errorCode, syncErrorCode));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+
+                // Remove if legacy rules .megaignore was created
+                if (correctlyCreated.has_value() &&
+                    correctlyCreated.value() == mega::MegaError::API_OK)
+                {
+                    removeMegaIgnore(sync.localFolder);
+                }
             }
 
             emit syncAddStatus(errorCode, syncErrorCode, sync.localFolder);
@@ -703,6 +717,67 @@ QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncError
     }
 
     return message;
+}
+
+std::optional<int> SyncController::resetAllSyncsMegaIgnoreUsingLegacyRules()
+{
+    const auto syncsSettings = mSyncInfo->getAllSyncSettings();
+    for (const auto& sync: syncsSettings)
+    {
+        auto result = createMegaIgnoreUsingLegacyRules(sync->getLocalFolder(), true);
+        if (result.has_value())
+        {
+            return result.value();
+        }
+    }
+
+    return std::nullopt;
+}
+
+std::optional<int> SyncController::createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder,
+                                                                    bool fullReset)
+{
+    if (Preferences::instance()->hasLegacyExclusionRules())
+    {
+        QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
+
+        if (ignoreFile.exists() && fullReset)
+        {
+            // Move to ".megaignore_rubbish" folder inside sync folder
+            QDir debrisPath(syncLocalFolder + MEGA_IGNORE_RUBBISH_PATH);
+            if (debrisPath.exists() || debrisPath.mkpath(QString::fromUtf8(".")))
+            {
+                QDateTime date = QDateTime::currentDateTime();
+                QString timestamp = date.toString(MEGA_IGNORE_RUBBISH_TIMESTAMP_FORMAT);
+
+                ignoreFile.rename(debrisPath.absolutePath() + QLatin1String("/") +
+                                  MEGA_IGNORE_FILE_NAME + QLatin1String("_") + timestamp);
+            }
+        }
+
+        std::unique_ptr<mega::MegaError> error(
+            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
+                syncLocalFolder.toStdString().c_str()));
+
+        if (error)
+        {
+            return error->getErrorCode();
+        }
+    }
+
+    return std::nullopt;
+}
+
+bool SyncController::removeMegaIgnore(const QString& syncLocalFolder)
+{
+    QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
+
+    if (ignoreFile.exists())
+    {
+        return ignoreFile.remove();
+    }
+
+    return false;
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)
