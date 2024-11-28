@@ -9,7 +9,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </rect>
   </property>
@@ -21,13 +21,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>496</width>
+    <width>560</width>
     <height>397</height>
    </size>
   </property>
@@ -64,6 +64,12 @@ qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
 qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
 }
 
+
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #headerBox #lUsedStorage
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
 #AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
 {
 color: #fffb6514; /*colorToken.indicator-orange*/
@@ -72,6 +78,11 @@ color: #fffb6514; /*colorToken.indicator-orange*/
 #AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
 {
 color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[transferState=&quot;ok&quot;] #headerBox #lUsedTransfer
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
 }
 
 #AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
@@ -84,14 +95,19 @@ color: #fffb6514; /*colorToken.indicator-orange*/
 color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
-#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #wDetailedUsage QProgressBar::chunk
 {
-color: #fffb6514; /*colorToken.indicator-orange*/
+background-color: #ff09bf5b; /*colorToken.indicator-green*/
 }
 
-#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage  QProgressBar::chunk
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
 {
-color: #fff63d6b; /*colorToken.indicator-pink*/
+background-color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage QProgressBar::chunk
+{
+background-color: #fff63d6b; /*colorToken.indicator-pink*/
 }
 
 #pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
@@ -165,14 +181,6 @@ font-size: 13px;
 #sHeader
 {
     background-color: transparent;
-    height: 96px;
-    width: 440px;
-    height: 96px;
-    width: 440px;
-    max-height: 96px;
-    min-height: 96px;
-    max-width:440px;
-    min-width:440px;
 }
 
 #lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
@@ -234,7 +242,6 @@ font-size: 13px;
     height: 32px;
     max-height: 32px;
     min-height: 32px;
-    max-width:440px;
     min-width:10px;
     font-size: 14px;
     color: #ff303233; /*colorToken.text-primary*/
@@ -246,11 +253,8 @@ font-size: 13px;
 #pLoading, #pStorageAndTransferUsage
 {
     height: 96px;
-    width: 440px;
     max-height: 96px;
     min-height: 96px;
-    max-width:440px;
-    min-width:440px;
 }
 
 #AccountDetailsDialog[loading=true]  #sHeader
@@ -285,8 +289,17 @@ min-height: 65px;
 min-width: 70px;
 max-height: 65px;
 max-width: 70px;
-margin-left: 20px;
 background-color: transparent;
+}
+
+#sStorage
+{
+margin-left: 10px;
+}
+
+#sTransfer
+{
+margin-left: 5px;
 }
 
 #wStorageUsage, #wTransferUsage
@@ -295,7 +308,6 @@ height: 96px;
 width: 219px;
 max-height: 96px;
 min-height: 96px;
-max-width:219px;
 min-width:219px;
 }
 
@@ -467,9 +479,9 @@ min-width:219px;
             </property>
             <item>
              <widget class="QWidget" name="wStorageUsage" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_23">
+              <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="0,1">
                <property name="spacing">
-                <number>6</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -582,9 +594,9 @@ min-width:219px;
             </item>
             <item>
              <widget class="QWidget" name="wTransferUsage" native="true">
-              <layout class="QHBoxLayout" name="horizontalLayout_25">
+              <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="0,1">
                <property name="spacing">
-                <number>6</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
                 <number>0</number>
@@ -794,6 +806,9 @@ min-width:219px;
              <property name="spacing">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
               <widget class="QLabel" name="lCloudDrive">
                <property name="text">
@@ -899,6 +914,9 @@ min-width:219px;
              <property name="spacing">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
               <widget class="QLabel" name="lVault">
                <property name="text">
@@ -1003,6 +1021,9 @@ min-width:219px;
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
              </property>
              <item>
               <widget class="QLabel" name="lRubbish">
