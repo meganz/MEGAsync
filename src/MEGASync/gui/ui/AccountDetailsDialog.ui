@@ -806,6 +806,9 @@ min-width:219px;
              <property name="spacing">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
               <widget class="QLabel" name="lCloudDrive">
                <property name="text">
@@ -911,6 +914,9 @@ min-width:219px;
              <property name="spacing">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
              <item>
               <widget class="QLabel" name="lVault">
                <property name="text">
@@ -1015,6 +1021,9 @@ min-width:219px;
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <property name="spacing">
               <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
              </property>
              <item>
               <widget class="QLabel" name="lRubbish">
