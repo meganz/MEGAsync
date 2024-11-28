@@ -51,8 +51,6 @@ using namespace mega;
 static const QString SYNCS_TAB_MENU_LABEL_QSS =
     QString::fromLatin1("QLabel{ border-image: url(%1); }");
 static constexpr int NUMBER_OF_CLICKS_TO_DEBUG{5};
-static constexpr int PROGRESS_PERCENTAGE_OK{50};
-static constexpr int PROGRESS_PERCENTAGE_WARNING{95};
 
 long long calculateCacheSize()
 {
@@ -914,7 +912,7 @@ void SettingsDialog::updateStorageElements()
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
 
-            setProgressState(QLatin1String("storageState"), percentage);
+            setProgressState(QLatin1String("storageState"));
 
             mUi->pStorageQuota->setValue(std::min(percentage, mUi->pStorageQuota->maximum()));
             mUi->lStorage->setText(
@@ -952,7 +950,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
 
-            setProgressState(QLatin1String("transferState"), percentage);
+            setProgressState(QLatin1String("transferState"));
 
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
             mUi->lBandwidth->setText(
@@ -963,19 +961,31 @@ void SettingsDialog::updateBandwidthElements()
     }
 }
 
-void SettingsDialog::setProgressState(const QString& stateName, int value)
+void SettingsDialog::setProgressState(const QString& stateName)
 {
-    if (value <= PROGRESS_PERCENTAGE_OK)
+    switch (mPreferences->getStorageState())
     {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("ok"));
-    }
-    else if (value <= PROGRESS_PERCENTAGE_WARNING)
-    {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("warning"));
-    }
-    else
-    {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("full"));
+        case MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_RED:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("full"));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_ORANGE:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("warning"));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
+        default:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("ok"));
+            break;
+        }
     }
 }
 
