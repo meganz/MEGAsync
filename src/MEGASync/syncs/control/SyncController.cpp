@@ -720,33 +720,11 @@ QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncError
 
 void SyncController::resetAllSyncsMegaIgnoreUsingLegacyRules()
 {
-    // int hasFailedCounter(0);
-
     const auto syncsSettings = mSyncInfo->getAllSyncSettings();
     for (const auto& sync: syncsSettings)
     {
-        auto result = overwriteMegaIgnoreUsingLegacyRules(sync);
-        if (result.has_value() && result.value() != mega::MegaError::API_OK)
-        {
-            // hasFailedCounter = true;
-        }
+        overwriteMegaIgnoreUsingLegacyRules(sync);
     }
-
-    /*
-        if(hasFailedCounter > 0)
-        {
-            DesktopNotifications::NotificationInfo failedMigrationInfo;
-            failedMigrationInfo.title = tr("Previous exclusions application failed");
-            failedMigrationInfo.message =
-                tr("We couldn't apply previous exclusion rules to some syncs, please try again.",
-                   "",
-                   hasFailedCounter);
-            failedMigrationInfo.actions = QStringList() << tr("Retry");
-            failedMigrationInfo.activatedFunction =
-        std::bind(&SyncController::resetAllSyncsMegaIgnoreUsingLegacyRules, this);
-            MegaSyncApp->showInfoMessage(failedMigrationInfo);
-        }
-    */
 }
 
 std::optional<int> SyncController::createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder)
