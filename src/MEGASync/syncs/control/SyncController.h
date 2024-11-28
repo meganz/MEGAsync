@@ -1,12 +1,13 @@
 #pragma once
 
-#include "SyncSettings.h"
-#include "SyncInfo.h"
-
 #include "megaapi.h"
+#include "SyncInfo.h"
+#include "SyncSettings.h"
 
-#include <QString>
 #include <QDir>
+#include <QString>
+
+#include <optional>
 
 /**
  * @brief Sync Controller class
