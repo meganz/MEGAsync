@@ -81,9 +81,9 @@ public:
     QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
     // Create legacy rules megaignore
-    std::optional<int> resetAllSyncsMegaIgnoreUsingLegacyRules();
-    std::optional<int> createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder,
-                                                        bool fullReset);
+    void resetAllSyncsMegaIgnoreUsingLegacyRules();
+    std::optional<int> createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder);
+    std::optional<int> overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync);
     bool removeMegaIgnore(const QString& syncLocalFolder);
 
 signals:
@@ -101,8 +101,12 @@ protected:
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
     void createPendingBackups(SyncInfo::SyncOrigin origin);
+    std::optional<int> performMegaIgnoreCreation(const QString& syncLocalFolder,
+                                                 mega::MegaHandle backupId);
+
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+
     QMap<QString, QString> mPendingBackups;
 
     //Sync/Backup operation signals
