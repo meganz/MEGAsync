@@ -767,12 +767,9 @@ std::optional<int> SyncController::performMegaIgnoreCreation(const QString& sync
 
     if (Preferences::instance()->hasLegacyExclusionRules())
     {
-        QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
-
-        if (backupId != mega::INVALID_HANDLE && ignoreFile.exists())
+        if (backupId != mega::INVALID_HANDLE)
         {
-            StalledIssuesUtilities utilities;
-            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+            removeMegaIgnore(syncLocalFolder, backupId);
         }
 
         std::unique_ptr<mega::MegaError> error(
@@ -788,13 +785,21 @@ std::optional<int> SyncController::performMegaIgnoreCreation(const QString& sync
     return result;
 }
 
-bool SyncController::removeMegaIgnore(const QString& syncLocalFolder)
+bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::MegaHandle backupId)
 {
     QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
 
     if (ignoreFile.exists())
     {
-        return ignoreFile.remove();
+        if (backupId != mega::INVALID_HANDLE)
+        {
+            StalledIssuesUtilities utilities;
+            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+        }
+        else
+        {
+            return ignoreFile.remove();
+        }
     }
 
     return false;

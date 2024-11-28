@@ -84,7 +84,8 @@ public:
     void resetAllSyncsMegaIgnoreUsingLegacyRules();
     std::optional<int> createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder);
     std::optional<int> overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync);
-    bool removeMegaIgnore(const QString& syncLocalFolder);
+    bool removeMegaIgnore(const QString& syncLocalFolder,
+                          mega::MegaHandle backupId = mega::INVALID_HANDLE);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
