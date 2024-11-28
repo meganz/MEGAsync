@@ -89,13 +89,13 @@ QHeaderView
 {
 background: #FF18191A; /*colorToken.page-background*/
 padding-top: 2px;
+padding-right: 15px;
 }
 
 QHeaderView::section
 {
 background: #FF18191A; /*colorToken.page-background*/
 color: #FFF3F4F4; /*colorToken.text-primary*/
-padding-left: 6px;
 border-top: 0px;
 border-bottom: 0px;
 border-left: 0px;
