@@ -1,10 +1,9 @@
 #include "AccountDetailsManager.h"
 
-#include "Preferences.h"
-#include "StatsEventHandler.h"
 #include "DialogOpener.h"
-#include "SettingsDialog.h"
+#include "Preferences.h"
 #include "RequestListenerManager.h"
+#include "SettingsDialog.h"
 
 //
 // UserStats implementation (private).

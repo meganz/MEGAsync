@@ -1,10 +1,10 @@
 #include "AccountDetailsDialog.h"
-#include "ui_AccountDetailsDialog.h"
 
-#include "Utilities.h"
+#include "AccountDetailsManager.h"
 #include "MegaApplication.h"
 #include "TransferQuota.h"
-#include "AccountDetailsManager.h"
+#include "ui_AccountDetailsDialog.h"
+#include "Utilities.h"
 
 #include <QStyle>
 

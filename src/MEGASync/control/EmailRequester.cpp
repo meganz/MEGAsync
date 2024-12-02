@@ -1,8 +1,8 @@
 #include "EmailRequester.h"
-#include "MegaApplication.h"
 
-#include "mega/types.h"
+#include "MegaApplication.h"
 #include "RequestListenerManager.h"
+
 #include <QMutexLocker>
 
 std::unique_ptr<EmailRequester> EmailRequester::mInstance = std::unique_ptr<EmailRequester>();

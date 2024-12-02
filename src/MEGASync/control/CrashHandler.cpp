@@ -1,11 +1,12 @@
 #include "CrashHandler.h"
-#include <QtCore/QDir>
-#include <QtCore/QProcess>
-#include <QtCore/QCoreApplication>
-#include <QString>
-#include <QDateTime>
-#include <sstream>
+
 #include "MegaApplication.h"
+
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QDir>
+#include <QProcess>
+#include <QString>
 
 using namespace mega;
 using namespace std;

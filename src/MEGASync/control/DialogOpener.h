@@ -3,12 +3,12 @@
 
 #include "HighDpiResize.h"
 #include "Platform.h"
+#include "QMegaMessageBox.h"
 #include "TokenParserWidgetManager.h"
 
 #include <QApplication>
 #include <QDialog>
 #include <QMap>
-#include <QMegaMessageBox.h>
 #include <QMessageBox>
 #include <QPointer>
 #include <QQueue>
