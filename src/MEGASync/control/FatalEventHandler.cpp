@@ -24,137 +24,116 @@ std::shared_ptr<FatalEventHandler> FatalEventHandler::instance()
 
 QString FatalEventHandler::getErrorTitle() const
 {
-    QString errorTitle;
     switch (getErrorCode())
     {
         case FatalErrorCode::ERR_UNHANDLED:
         // Fallthrough
         case FatalErrorCode::ERR_UNKNOWN:
         {
-            errorTitle = QCoreApplication::translate("MegaError", "An unknown error has occurred");
-            break;
+            return QCoreApplication::translate("MegaError", "An unknown error has occurred");
         }
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            errorTitle =
-                QCoreApplication::translate("MegaError", "A critical error has been detected");
-            break;
+            return QCoreApplication::translate("MegaError", "A critical error has been detected");
         }
         case FatalErrorCode::ERR_DB_FULL:
         {
-            errorTitle = QCoreApplication::translate("MegaError", "Your local storage is full");
-            break;
+            return QCoreApplication::translate("MegaError", "Your local storage is full");
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
-            errorTitle = QCoreApplication::translate("MegaError", "Error reading app system files");
-            break;
+            return QCoreApplication::translate("MegaError", "Error reading app system files");
         }
         case FatalErrorCode::ERR_NO_JSCD:
         {
-            errorTitle =
-                QCoreApplication::translate("MegaError", "Error with sync configuration files");
-            break;
+            return QCoreApplication::translate("MegaError", "Error with sync configuration files");
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
-            errorTitle = QCoreApplication::translate("MegaError", "An error has been detected");
-            break;
+            return QCoreApplication::translate("MegaError", "An error has been detected");
         }
         case FatalErrorCode::ERR_NO_ERROR:
         {
-            // Do nothing
-            break;
+            return {};
         }
     }
-    return errorTitle;
+    return {};
 }
 
 QString FatalEventHandler::getErrorReason() const
 {
-    QString errorReason;
     switch (getErrorCode())
     {
         case FatalErrorCode::ERR_UNHANDLED:
         // Fallthrough
         case FatalErrorCode::ERR_UNKNOWN:
         {
-            errorReason = QCoreApplication::translate(
+            return QCoreApplication::translate(
                 "MegaError",
                 "An error is causing the communication with MEGA to fail. Your syncs and backups "
                 "are unable to update, and there may be further issues if you continue using this "
                 "app without restarting. We strongly recommend immediately restarting the app to "
                 "resolve this problem.");
-            break;
         }
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            errorReason = QCoreApplication::translate(
+            return QCoreApplication::translate(
                 "MegaError",
                 "A serious issue has been detected in the MEGA software or the connection between "
                 "this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact "
                 "support for further assistance.");
-            break;
         }
         case FatalErrorCode::ERR_DB_FULL:
         {
-            errorReason = QCoreApplication::translate("MegaError",
-                                                      "You need to make more space available in "
-                                                      "your local storage to be able to run MEGA.");
-            break;
+            return QCoreApplication::translate("MegaError",
+                                               "You need to make more space available in "
+                                               "your local storage to be able to run MEGA.");
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
-            errorReason = QCoreApplication::translate(
+            return QCoreApplication::translate(
                 "MegaError",
                 "Critical system files which are required by this app are unable to be reached. "
                 "This may be the permissions of the folder the system files are in. You can also "
                 "try restarting the app to see if this resolves the issue. If the folder "
                 "permissions have been checked and the app restarted, please [A]contact "
                 "support[/A].");
-            break;
         }
         case FatalErrorCode::ERR_NO_JSCD:
         {
-            errorReason = QCoreApplication::translate(
+            return QCoreApplication::translate(
                 "MegaError",
                 "The app has detected an error in your sync configuration data. You need to log "
                 "out of MEGA to resolve this issue. If the problem persists after logging back in, "
                 "report the issue to our Support team.");
-            break;
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
-            errorReason = QCoreApplication::translate(
+            return QCoreApplication::translate(
                 "MegaError",
                 "The app has detected an error and needs to reload. If you experience this issue "
                 "more than once, contact our Support team.");
-            break;
         }
         case FatalErrorCode::ERR_NO_ERROR:
         {
-            // Do nothing
-            break;
+            return {};
         }
     }
-    return errorReason;
+    return {};
 }
 
 QString FatalEventHandler::getErrorReasonUrl() const
 {
-    QString errorReasonUrl;
     switch (getErrorCode())
     {
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            errorReasonUrl = Utilities::DESKTOP_APP_URL;
-            break;
+            return Utilities::DESKTOP_APP_URL;
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
             // Open bug report dialog, do not send to support page
-            errorReasonUrl = CONTACT_SUPPORT_URL;
-            break;
+            return CONTACT_SUPPORT_URL;
         }
         case FatalErrorCode::ERR_UNKNOWN:
         // Fallthrough
@@ -168,11 +147,10 @@ QString FatalEventHandler::getErrorReasonUrl() const
         // Fallthrough
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
-            // Do nothing
-            break;
+            return {};
         }
     }
-    return errorReasonUrl;
+    return {};
 }
 
 void FatalEventHandler::processEvent(std::unique_ptr<mega::MegaEvent> event, MegaSyncLogger* logger)
@@ -298,13 +276,11 @@ QString FatalEventHandler::getErrorCodeString() const
 
 FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getDefaultAction() const
 {
-    FatalEventHandler::FatalErrorCorrectiveAction action = FatalErrorCorrectiveAction::NO_ACTION;
     switch (getErrorCode())
     {
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            action = FatalErrorCorrectiveAction::CONTACT_SUPPORT;
-            break;
+            return FatalErrorCorrectiveAction::CONTACT_SUPPORT;
         }
         case FatalErrorCode::ERR_UNKNOWN:
         // Fallthrough
@@ -312,36 +288,30 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getDefaultActio
         // Fallthrough
         case FatalErrorCode::ERR_DB_FULL:
         {
-            action = FatalErrorCorrectiveAction::RESTART_APP;
-            break;
+            return FatalErrorCorrectiveAction::RESTART_APP;
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
-            action = FatalErrorCorrectiveAction::CHECK_PERMISSIONS;
-            break;
+            return FatalErrorCorrectiveAction::CHECK_PERMISSIONS;
         }
         case FatalErrorCode::ERR_NO_JSCD:
         {
-            action = FatalErrorCorrectiveAction::LOGOUT;
-            break;
+            return FatalErrorCorrectiveAction::LOGOUT;
         }
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
-            action = FatalErrorCorrectiveAction::RELOAD;
-            break;
+            return FatalErrorCorrectiveAction::RELOAD;
         }
         case FatalErrorCode::ERR_NO_ERROR:
         {
-            action = FatalErrorCorrectiveAction::NO_ACTION;
-            break;
+            return FatalErrorCorrectiveAction::NO_ACTION;
         }
     }
-    return action;
+    return FatalErrorCorrectiveAction::NO_ACTION;
 }
 
 FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getSecondaryAction() const
 {
-    FatalEventHandler::FatalErrorCorrectiveAction action = FatalErrorCorrectiveAction::NO_ACTION;
     switch (getErrorCode())
     {
         case FatalErrorCode::ERR_UNKNOWN:
@@ -352,13 +322,11 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getSecondaryAct
         // Fallthrough
         case FatalErrorCode::ERR_DB_INDEX_OVERFLOW:
         {
-            action = FatalErrorCorrectiveAction::CONTACT_SUPPORT;
-            break;
+            return FatalErrorCorrectiveAction::CONTACT_SUPPORT;
         }
         case FatalErrorCode::ERR_DB_IO_FAILURE:
         {
-            action = FatalErrorCorrectiveAction::RESTART_APP;
-            break;
+            return FatalErrorCorrectiveAction::RESTART_APP;
         }
         case FatalErrorCode::ERR_DB_FULL:
         // Fallthrough
@@ -366,87 +334,74 @@ FatalEventHandler::FatalErrorCorrectiveAction FatalEventHandler::getSecondaryAct
         // Fallthrough
         case FatalErrorCode::ERR_FAILURE_UNSERIALIZE_NODE:
         {
-            action = FatalErrorCorrectiveAction::NO_ACTION;
-            break;
+            return FatalErrorCorrectiveAction::NO_ACTION;
         }
     }
-    return action;
+    return FatalErrorCorrectiveAction::NO_ACTION;
 }
 
 QString
     FatalEventHandler::getActionLabel(FatalEventHandler::FatalErrorCorrectiveAction action) const
 {
-    QString label;
-
     switch (action)
     {
         case FatalErrorCorrectiveAction::CONTACT_SUPPORT:
         {
-            label = QCoreApplication::translate("MegaError", "Contact support");
-            break;
+            return QCoreApplication::translate("MegaError", "Contact support");
         }
         case FatalErrorCorrectiveAction::RESTART_APP:
         {
-            label = QCoreApplication::translate("MegaError", "Restart MEGA");
-            break;
+            return QCoreApplication::translate("MegaError", "Restart MEGA");
         }
         case FatalErrorCorrectiveAction::LOGOUT:
         {
-            label = QCoreApplication::translate("MegaError", "Log out");
-            break;
+            return QCoreApplication::translate("MegaError", "Log out");
         }
         case FatalErrorCorrectiveAction::CHECK_PERMISSIONS:
         {
-            label = QCoreApplication::translate("MegaError", "Check permissions");
-            break;
+            return QCoreApplication::translate("MegaError", "Check permissions");
         }
         case FatalErrorCorrectiveAction::RELOAD:
         {
-            label = QCoreApplication::translate("MegaError", "Reload");
-            break;
+            return QCoreApplication::translate("MegaError", "Reload");
         }
         case FatalErrorCorrectiveAction::NO_ACTION:
         {
             // No associated user interaction
-            break;
+            return {};
         }
     }
-    return label;
+    return {};
 }
 
 QString FatalEventHandler::getActionIcon(FatalEventHandler::FatalErrorCorrectiveAction action) const
 {
-    QString icon;
     switch (action)
     {
         case FatalErrorCorrectiveAction::CONTACT_SUPPORT:
         {
-            icon = QLatin1String("icons/headset.svg");
-            break;
+            return QLatin1String("icons/headset.svg");
         }
         case FatalErrorCorrectiveAction::RESTART_APP:
         {
-            icon = QLatin1String("icons/rotate_ccw.svg");
-            break;
+            return QLatin1String("icons/rotate_ccw.svg");
         }
         case FatalErrorCorrectiveAction::LOGOUT:
         {
-            icon = QLatin1String("icons/log-out-01.svg");
-            break;
+            return QLatin1String("icons/log-out-01.svg");
         }
         case FatalErrorCorrectiveAction::CHECK_PERMISSIONS:
         {
-            icon = QLatin1String("icons/file_edit.svg");
-            break;
+            return QLatin1String("icons/file_edit.svg");
         }
         case FatalErrorCorrectiveAction::RELOAD:
         case FatalErrorCorrectiveAction::NO_ACTION:
         {
             // No associated user interaction
-            break;
+            return {};
         }
     }
-    return icon;
+    return {};
 }
 
 void FatalEventHandler::triggerAction(FatalEventHandler::FatalErrorCorrectiveAction action)

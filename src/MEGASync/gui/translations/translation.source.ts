@@ -3477,7 +3477,6 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation type="unfinished"></translation>
     </message>
     <message>
-
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
         <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>

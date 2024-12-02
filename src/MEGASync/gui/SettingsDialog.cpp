@@ -266,14 +266,7 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 void SettingsDialog::onAppStateChanged(AppState::AppStates oldAppState,
                                        AppState::AppStates newAppState)
 {
-    if (newAppState == AppState::NOMINAL)
-    {
-        setProxyOnly(false);
-    }
-    else
-    {
-        setProxyOnly(true);
-    }
+    setProxyOnly(newAppState != AppState::NOMINAL);
 }
 
 void SettingsDialog::showGuestMode()
