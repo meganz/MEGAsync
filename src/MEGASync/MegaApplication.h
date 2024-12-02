@@ -542,6 +542,7 @@ private:
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
+    void openFirstActiveSync();
 
     QString getDefaultUploadPath();
 

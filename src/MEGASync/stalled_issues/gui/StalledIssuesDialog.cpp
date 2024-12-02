@@ -86,7 +86,7 @@ StalledIssuesDialog::StalledIssuesDialog(QWidget *parent) :
             this,
             []()
             {
-                MegaSyncApp->openSettings(SettingsDialog::GENERAL_TAB);
+                MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
             });
 
     connect(ui->HelpButton,

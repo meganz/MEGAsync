@@ -2717,6 +2717,12 @@ void Preferences::loadExcludedSyncNames()
     std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
 }
 
+bool Preferences::hasLegacyExclusionRules()
+{
+    return (!getExcludedSyncNames().isEmpty() || !getExcludedSyncPaths().isEmpty() ||
+            lowerSizeLimit() || upperSizeLimit());
+}
+
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const
 {
     return loadedSyncsMap;

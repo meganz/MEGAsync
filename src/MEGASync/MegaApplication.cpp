@@ -142,15 +142,16 @@ MegaApplication::MegaApplication(int& argc, char** argv):
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it.");
-            msgInfo.buttons = QMessageBox::Ok;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-            {
-                ::exit(0);
-            };
-            QMegaMessageBox::information(msgInfo);
+            // Use regular QMessageBox with modal behaviour instead of QMegaMessageBox to avoid
+            // issues.
+            QMessageBox::warning(
+                nullptr,
+                QMegaMessageBox::errorTitle(),
+                QCoreApplication::translate("MegaSyncError",
+                                            "You can't run MEGA Desktop App from this location. "
+                                            "Move it into the Applications folder then run it."),
+                QMessageBox::Ok);
+            ::exit(0);
         }
     }
 #endif
@@ -1199,11 +1200,12 @@ void MegaApplication::start()
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 
-    if(updated && !preferences->getSession().isEmpty())
+    static constexpr int FIRST_5_X_VERSION = 50000;
+    if (updated && !(preferences->getSession().isEmpty()) &&
+        (Preferences::lastVersionUponStartup < FIRST_5_X_VERSION))
     {
         QmlDialogManager::instance()->openWhatsNewDialog();
     }
-
     updateTrayIcon();
 }
 
@@ -1311,6 +1313,7 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
         QString message;
         QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
@@ -1334,20 +1337,20 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled. Go to device centre to enable "
-                         "them again.");
+            message = tr(
+                "Some syncs and backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled. Go to device centre to enable "
-                         "them again.");
+            message =
+                tr("One or more backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr(
-                "One or more syncs have been disabled. Go to device centre to enable them again.");
+            message =
+                tr("One or more syncs have been disabled. Go to settings to enable them again.");
         }
 
         // Display the message if it has been set
@@ -1358,15 +1361,15 @@ if (!preferences->lastExecutionTime())
             msgInfo.text = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
             QMap<QMessageBox::Button, QString> textsByButton;
-            textsByButton.insert(QMessageBox::Yes, tr("Open device centre"));
+            textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg)
             {
                 if (msg->result() == QMessageBox::Yes)
                 {
-                    openDeviceCentre();
+                    openSettings(settingsTabToOpen);
                 }
             };
             QMegaMessageBox::warning(msgInfo);
@@ -5189,12 +5192,54 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
+#ifdef Q_OS_WINDOWS
+    else if (reason == QSystemTrayIcon::DoubleClick)
+    {
+        openFirstActiveSync();
+    }
+#endif
 #ifndef __APPLE__
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
     }
 #endif
+}
+
+void MegaApplication::openFirstActiveSync()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    auto* syncInfo{SyncInfo::instance()};
+    if (syncInfo != nullptr)
+    {
+        const auto syncsSettings(syncInfo->getAllSyncSettings());
+        auto firstActiveSyncSettings(std::find_if(syncsSettings.cbegin(),
+                                                  syncsSettings.cend(),
+                                                  [](auto syncSettings)
+                                                  {
+                                                      return syncSettings->isActive();
+                                                  }));
+
+        if (firstActiveSyncSettings != syncsSettings.cend())
+        {
+            infoDialogTimer->stop();
+
+            if (infoDialog)
+            {
+                infoDialog->hide();
+            }
+
+            QString localFolderPath = (*firstActiveSyncSettings)->getLocalFolder();
+            if (!localFolderPath.isEmpty())
+            {
+                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
+            }
+        }
+    }
 }
 
 void MegaApplication::onMessageClicked()
@@ -5286,6 +5331,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
     else
     {
+        openSettings(SettingsDialog::SYNCS_TAB);
         if (megaFolderHandle == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -5489,11 +5535,11 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-    recreateMenuAction(&deviceCentreAction,
-                       infoDialogMenu,
-                       tr("Device Centre"),
-                       "://images/ico-device-centre.svg",
-                       &MegaApplication::openDeviceCentre);
+    // recreateMenuAction(&deviceCentreAction,
+    //                    infoDialogMenu,
+    //                    tr("Device Centre"),
+    //                    "://images/ico-device-centre.svg",
+    //                    &MegaApplication::openDeviceCentre);
 
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
@@ -5548,7 +5594,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     infoDialogMenu->addAction(myCloudAction);
-    infoDialogMenu->addAction(deviceCentreAction);
+    // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());

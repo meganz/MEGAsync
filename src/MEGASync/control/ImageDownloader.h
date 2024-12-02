@@ -12,16 +12,11 @@
 struct ImageData
 {
     QString url = QString();
-    QSize size;
     QImage::Format format;
 
-    ImageData(const QString& url,
-              int width = 0,
-              int height = 0,
-              QImage::Format format = QImage::Format_ARGB32_Premultiplied)
-        : url(url)
-        , size(QSize(width, height))
-        , format(format)
+    ImageData(const QString& url, QImage::Format format = QImage::Format_ARGB32_Premultiplied):
+        url(url),
+        format(format)
     {
     }
 };
@@ -46,10 +41,6 @@ public:
 
 public slots:
     void downloadImage(const QString& imageUrl,
-                       QImage::Format format = QImage::Format_ARGB32_Premultiplied);
-    void downloadImage(const QString& imageUrl,
-                       int width,
-                       int height,
                        QImage::Format format = QImage::Format_ARGB32_Premultiplied);
 
 signals:

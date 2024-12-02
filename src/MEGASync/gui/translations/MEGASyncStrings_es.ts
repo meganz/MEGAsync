@@ -2303,11 +2303,6 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
         <translation>Ampliar cuenta</translation>
     </message>
     <message>
-        <source>Upgrade to PRO</source>
-        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Ampliar cuenta</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>Amplía tu cuenta ahora antes que tu espacio de almacenamiento se agote y tus subidas a MEGA se detengan.</translation>
@@ -2431,6 +2426,39 @@ En algunos casos podría contener detalles como nombres de archivo o carpeta.</t
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
         <translation>Selecciona si quieres instalar $(^NameDA) sólo para ti o para todos los usuarios de este equipo. $(^ClickNext)</translation>
+    </message>
+</context>
+<context>
+    <name>LinkProcessor</name>
+    <message>
+        <source>Copyright violation</source>
+        <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Violación de copyright</translation>
+    </message>
+    <message>
+        <source>Link owner terminated</source>
+        <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Cuenta del enlace cerrada</translation>
+    </message>
+    <message>
+        <source>Terms of Service breach</source>
+        <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Violación de los Términos</translation>
+    </message>
+    <message>
+        <source>This link has been deleted</source>
+        <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Se ha eliminado el enlace</translation>
+    </message>
+    <message>
+        <source>This link has expired</source>
+        <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Este enlace ha caducado</translation>
+    </message>
+    <message>
+        <source>This link is invalid</source>
+        <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Este enlace no es válido</translation>
     </message>
 </context>
 <context>
@@ -5219,7 +5247,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label wellcoming the user to MEGA CON-467</translatorcomment>
-        <translation>Bienvenido a MEGA</translation>
+        <translation>Te damos la bienvenida a MEGA</translation>
     </message>
     <message>
         <source>What else do you want to do?</source>
@@ -5629,18 +5657,15 @@ Introduzca un nombre diferente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
-- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
-- An installation issue which caused some Windows .dll files to be deleted has been resolved.
-- Third-party libraries have been updated.
+        <source>- We’ve improved the automatic and manual resolution of sync issues.
+- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation>- Ahora puedes seleccionar varios archivos y carpetas para eliminarlos de la Nube desde la opción Descargar.
-- Crear sincronizaciones y backups desde los ajustes es más fácil que nunca con nuestra nueva interfaz.
-- Se ha resuelto un problema de instalación que hacía que se eliminaran algunos archivos.dll de Windows.
-- Se han actualizado las bibliotecas de terceros.
-- Se han corregido otros errores y se han realizado numerosas mejoras.</translation>
+        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
+        <translation>- Hemos mejorado la resolución automática y manual de los problemas de sincronización.
+- La interfaz de la cuenta de MEGA y el proceso de ampliación de la cuenta se han renovado y mejorado.
+- Se han corregido otros errores y se han realizado numerosas mejoras.
+</translation>
     </message>
 </context>
 <context>
@@ -6809,7 +6834,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
         <translatorcomment>Informative text with password best practice for the user.</translatorcomment>
-        <translation>La seguridad de tu cuenta depende de lo fuerte que es tu contraseña. Las contraseñas deben ser únicas e imposibles de adivinar. Te recomendamos utilizar un administrador de contraseñas.</translation>
+        <translation>La seguridad de tu cuenta depende de lo fuerte que es tu contraseña. Las contraseñas deben ser únicas e imposibles de adivinar. Te recomendamos utilizar un gestor de contraseñas.</translation>
     </message>
     <message>
         <source>Your operating system doesn&apos;t allow its sleep setting to be overwritten.</source>
@@ -7922,6 +7947,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsElements</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
+        <translation>Aplicar</translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
+        <translation>Las reglas de exclusión que hayas configurado en una versión anterior de la aplicación se aplicarán a todas tus sincronizaciones y backups. Se sobrescribirán todas las reglas que se hayan creado desde entonces.</translation>
+    </message>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
+        <translation>[B]¿Aplicar las reglas de exclusión anteriores?[/B]</translation>
+    </message>
+</context>
+<context>
     <name>SyncSettingsUI</name>
     <message>
         <source>Error adding sync</source>
@@ -7983,6 +8026,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Advanced</source>
         <translatorcomment>Stalled issues solve mode to allow users to solve them manually.SNC-2565</translatorcomment>
         <translation>Avanzado</translation>
+    </message>
+    <message>
+        <source>Apply previous exclusion rules</source>
+        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
+        <translation>Aplicar reglas de exclusión anteriores</translation>
+    </message>
+    <message>
+        <source>Apply rules</source>
+        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
+        <translation>Aplicar reglas</translation>
     </message>
     <message>
         <source>Get full control of the sync issues</source>
@@ -8309,6 +8362,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Búsqueda:</translation>
     </message>
     <message>
+        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
+        <translation>Almacenamiento casi lleno. Amplía ahora antes de que tu almacenamiento se agote y que las subidas, las sincronizaciones y los backups se detengan.</translation>
+    </message>
+    <message>
+        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
+        <translation>Almacenamiento lleno. Las subidas están desactivadas y la sincronización y los backups están pausados.</translation>
+    </message>
+    <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation>Gestor de transferencias</translation>
@@ -8334,11 +8397,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Actualizado</translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Ampliar cuenta</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Subir</translation>
@@ -8359,11 +8417,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>No puedes continuar con la descarga porque no hay suficiente cuota de transferencia para esta dirección IP.
 Para obtener más cuota, amplía tu cuenta a Pro o espera [A] hasta que haya más cuota gratuita disponible para tu dirección IP.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>Tu cuenta de MEGA está llena.</translation>
     </message>
 </context>
 <context>
@@ -9082,6 +9135,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1 [A]s[/A]</translation>
     </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
+        <translation>%1 de %2</translation>
+    </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
@@ -9151,7 +9209,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Business</source>
@@ -9166,7 +9224,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9231,7 +9289,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>

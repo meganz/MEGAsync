@@ -52,8 +52,6 @@ using namespace mega;
 static const QString SYNCS_TAB_MENU_LABEL_QSS =
     QString::fromLatin1("QLabel{ border-image: url(%1); }");
 static constexpr int NUMBER_OF_CLICKS_TO_DEBUG{5};
-static constexpr int PROGRESS_PERCENTAGE_OK{50};
-static constexpr int PROGRESS_PERCENTAGE_WARNING{95};
 
 long long calculateCacheSize()
 {
@@ -127,12 +125,6 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mUi->cAutoUpdate->hide();
 #endif
 
-#ifdef Q_OS_WINDOWS
-    mUi->permissionsGroupBox->hide();
-#else
-    connect(mUi->bPermissions, &QPushButton::clicked, this, &SettingsDialog::onPermissionsClicked);
-#endif
-
     mUi->cFinderIcons->hide();
 #ifdef Q_OS_WINDOWS
     typedef LONG MEGANTSTATUS;
@@ -191,6 +183,9 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
+
+    connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
+    connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -215,6 +210,14 @@ void SettingsDialog::openSettingsTab(int tab)
 
         case ACCOUNT_TAB:
             mUi->bAccount->click();
+            break;
+
+        case SYNCS_TAB:
+            mUi->bSyncs->click();
+            break;
+
+        case BACKUP_TAB:
+            mUi->bBackup->click();
             break;
 
         case SECURITY_TAB:
@@ -244,6 +247,8 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
     mUi->bGeneral->setEnabled(!proxyOnly);
     mUi->bAccount->setEnabled(!proxyOnly);
+    mUi->bSyncs->setEnabled(!proxyOnly);
+    mUi->bBackup->setEnabled(!proxyOnly);
     mUi->bSecurity->setEnabled(!proxyOnly);
     mUi->bFolders->setEnabled(!proxyOnly);
     mUi->bNotifications->setEnabled(!proxyOnly);
@@ -421,6 +426,15 @@ void SettingsDialog::loadSettings()
 #endif
 
     updateNetworkTab();
+
+    // Folders tab
+    mUi->syncSettings->setParentDialog(this);
+    mUi->backupSettings->setParentDialog(this);
+
+    // Syncs and backups
+    mUi->syncSettings->setToolBarItem(mUi->bSyncs);
+    mUi->backupSettings->setToolBarItem(mUi->bBackup);
+
     mLoadingSettings--;
 }
 
@@ -899,7 +913,7 @@ void SettingsDialog::updateStorageElements()
         {
             int percentage = Utilities::partPer(usedStorage, totalStorage);
 
-            setProgressState(QLatin1String("storageState"), percentage);
+            setProgressState(QLatin1String("storageState"));
 
             mUi->pStorageQuota->setValue(std::min(percentage, mUi->pStorageQuota->maximum()));
             mUi->lStorage->setText(
@@ -937,7 +951,7 @@ void SettingsDialog::updateBandwidthElements()
         {
             int percentage = Utilities::partPer(usedBandwidth, totalBandwidth);
 
-            setProgressState(QLatin1String("transferState"), percentage);
+            setProgressState(QLatin1String("transferState"));
 
             mUi->pTransferQuota->setValue(std::min(percentage, 100));
             mUi->lBandwidth->setText(
@@ -948,19 +962,31 @@ void SettingsDialog::updateBandwidthElements()
     }
 }
 
-void SettingsDialog::setProgressState(const QString& stateName, int value)
+void SettingsDialog::setProgressState(const QString& stateName)
 {
-    if (value <= PROGRESS_PERCENTAGE_OK)
+    switch (mPreferences->getStorageState())
     {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("ok"));
-    }
-    else if (value <= PROGRESS_PERCENTAGE_WARNING)
-    {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("warning"));
-    }
-    else
-    {
-        setProperty(stateName.toStdString().c_str(), QLatin1String("full"));
+        case MegaApi::STORAGE_STATE_PAYWALL:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_RED:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("full"));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_ORANGE:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("warning"));
+            break;
+        }
+        case MegaApi::STORAGE_STATE_UNKNOWN:
+        // Fallthrough
+        case MegaApi::STORAGE_STATE_GREEN:
+        // Fallthrough
+        default:
+        {
+            setProperty(stateName.toStdString().c_str(), QLatin1String("ok"));
+            break;
+        }
     }
 }
 
@@ -1153,6 +1179,32 @@ void SettingsDialog::setEnabledAllControls(const bool enabled)
     mUi->wStackFooter->setEnabled(enabled);
 }
 
+void SettingsDialog::setSyncAddButtonEnabled(const bool enabled, SettingsDialog::Tabs tab)
+{
+    SyncSettingsUIBase* syncSettings = nullptr;
+
+    switch (tab)
+    {
+        case SYNCS_TAB:
+            syncSettings = mUi->syncSettings;
+            break;
+        case BACKUP_TAB:
+            syncSettings = mUi->backupSettings;
+            break;
+        default:
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING,
+                         QString::fromUtf8("Unexpected tab when setting add button enabled state")
+                             .toUtf8()
+                             .constData());
+            break;
+    }
+
+    if (syncSettings != nullptr)
+    {
+        syncSettings->setAddButtonEnabled(enabled);
+    }
+}
+
 void SettingsDialog::setGeneralTabEnabled(const bool enabled)
 {
     // We want to keep only the "Send bug report" button enabled.
@@ -1194,9 +1246,44 @@ void SettingsDialog::setOverlayCheckboxEnabled(const bool enabled, const bool ch
     }
 }
 
+// Backup ----------------------------------------------------------------------------------------
+void SettingsDialog::on_bBackup_clicked()
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_BACKUP_TAB_CLICKED);
+
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pBackup)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pBackup);
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_BACKUP);
+}
+
 void SettingsDialog::on_bBackupCenter_clicked()
 {
     Utilities::openBackupCenter();
+}
+
+void SettingsDialog::on_bSyncs_clicked()
+{
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::SETTINGS_SYNC_TAB_CLICKED);
+
+    emit userActivity();
+
+    if (mUi->wStack->currentWidget() == mUi->pSyncs)
+    {
+        return;
+    }
+
+    mUi->wStack->setCurrentWidget(mUi->pSyncs);
+
+    SyncInfo::instance()->dismissUnattendedDisabledSyncs(MegaSync::TYPE_TWOWAY);
 }
 
 // Security ----------------------------------------------------------------------------------------

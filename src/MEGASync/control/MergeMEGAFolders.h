@@ -64,6 +64,7 @@ private:
     static std::shared_ptr<mega::MegaError> rename(mega::MegaNode* nodeToRename,
                                                    mega::MegaNode* parentNode,
                                                    QStringList& itemsBeingRenamed);
+    static QString getNodeName(mega::MegaNode* node);
 };
 
 #endif // MERGEMEGAFOLDERS_H

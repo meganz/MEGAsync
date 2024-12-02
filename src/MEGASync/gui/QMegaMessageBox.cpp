@@ -69,6 +69,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();
         Q_ASSERT(buttonBox != 0);
 
+#ifdef Q_OS_LINUX
+        buttonBox->setStyleSheet(QLatin1String("background: rgb(246, 245, 244);"));
+#endif
+
         uint mask = FirstButton;
         while(mask <= LastButton)
         {

@@ -53,9 +53,11 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SwitchButton.h
     gui/GuiUtilities.h
     gui/CancelConfirmWidget.h
+    gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
+    gui/ApiImageLabel.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -103,8 +105,10 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/Backups.h
     gui/backups/BackupsController.h
     gui/backups/BackupsModel.h
+    gui/backups/BackupsQmlDialog.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
+    gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
@@ -179,9 +183,11 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SwitchButton.cpp
     gui/GuiUtilities.cpp
     gui/CancelConfirmWidget.cpp
+    gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
+    gui/ApiImageLabel.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -227,8 +233,10 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/Backups.cpp
     gui/backups/BackupsController.cpp
     gui/backups/BackupsModel.cpp
+    gui/backups/BackupsQmlDialog.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
+    gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
@@ -472,6 +480,9 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
@@ -514,6 +525,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

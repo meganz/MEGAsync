@@ -222,21 +222,27 @@ QString SyncModel::getErrorMessage(int row) const
         {
             if (getType(row) == QmlSyncType::SYNC)
             {
-                return tr("We can't find the folder you're trying to sync. Make sure the folder "
-                          "hasn't been moved, renamed, or deleted and try again.")
+                return /*tr*/ QString::fromUtf8(
+                           "We can't find the folder you're trying to sync. Make sure the folder "
+                           "hasn't been moved, renamed, or deleted and try again.")
                     .arg(getName(row));
             }
             else // Backup
             {
-                return tr("We can't find the folder you're trying to back up. Make sure the folder "
-                          "hasn't been moved, renamed, or deleted and try again.")
+                return /*tr*/ QString::fromUtf8(
+                           "We can't find the folder you're trying to back up. Make sure the "
+                           "folder "
+                           "hasn't been moved, renamed, or deleted and try again.")
                     .arg(getName(row));
             }
         }
         else if (syncSetting->getError() == mega::MegaSync::LOGGED_OUT)
         {
-            const QString typeStr = (getType(row) == QmlSyncType::SYNC) ? tr("Sync") : tr("Backup");
-            return tr("%1 was stopped because you logged out. Resume the %1 to re-enable.")
+            const QString typeStr = (getType(row) == QmlSyncType::SYNC) ?
+                                        /*tr*/ QString::fromUtf8("Sync") :
+                                        /*tr*/ QString::fromUtf8("Backup");
+            return /*tr*/ QString::fromUtf8(
+                       "%1 was stopped because you logged out. Resume the %1 to re-enable.")
                 .arg(typeStr);
         }
         return QCoreApplication::translate(

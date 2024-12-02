@@ -38,6 +38,7 @@ public:
 
 private slots:
     void onExpired(unsigned id);
+    void onUiUpdated();
 
 private:
     class SeenStatusManager

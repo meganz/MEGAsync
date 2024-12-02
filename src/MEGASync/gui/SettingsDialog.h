@@ -28,6 +28,8 @@ public:
     enum Tabs{
         GENERAL_TAB  = 0,
         ACCOUNT_TAB = 1,
+        SYNCS_TAB = 2,
+        BACKUP_TAB = 3,
         SECURITY_TAB = 4,
         FOLDERS_TAB  = 5,
         NETWORK_TAB  = 6,
@@ -49,9 +51,18 @@ public:
     void updateBandwidthElements() override;
     void updateAccountElements() override;
 
+    // Syncs
+    void on_bSyncs_clicked();
+
+    // Backup
+    void on_bBackup_clicked();
+
     // Folders
     void updateUploadFolder();
     void updateDownloadFolder();
+
+    void setSyncAddButtonEnabled(bool enabled,
+                                 SettingsDialog::Tabs tab = SettingsDialog::Tabs::SYNCS_TAB);
 
 signals:
     void userActivity();
@@ -137,7 +148,7 @@ private:
     void updateCacheSchedulerDaysLabel();
     void setGeneralTabEnabled(const bool enabled);
     void setOverlayCheckboxEnabled(const bool enabled, const bool checked);
-    void setProgressState(const QString& stateName, int value);
+    void setProgressState(const QString& stateName);
 
     Ui::SettingsDialog* mUi;
     MegaApplication* mApp;

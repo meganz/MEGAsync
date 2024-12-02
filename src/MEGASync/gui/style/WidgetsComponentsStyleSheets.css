@@ -1,6 +1,6 @@
 *
 {
-font-family: "Segoe UI";
+font-family: "Inter Regular";
 font-size: 12px;
 }
 
@@ -8,6 +8,103 @@ QWidget
 {
 background-color: #FFFFFFFF; /*colorToken.page-background*/
 color: #ff303233; /*colorToken.text-primary*/
+}
+
+/*
+    QTableView
+*/
+QTableView
+{
+background-color: transparent;
+outline: 0;
+border: 1px solid #ff18191A; /*colorToken.page-background*/
+border-radius: 5px;
+selection-color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+selection-background-color: transparent;
+}
+
+QTableView::item
+{
+border: none;
+padding-left: 4px;
+}
+
+QTableView::item::selected
+{
+color: #ffFAFAFB; /*colorToken.text-inverse-accent*/
+background-color: transparent;
+}
+
+QTableView::indicator
+{
+height: 16px;
+width: 16px;
+border-style: none;
+}
+
+QTableView::indicator:checked
+{
+image: url(:/images/themed/light/checkbox_on.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:hover
+{
+image: url(:/images/themed/light/checkbox_on_hover.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:pressed
+{
+image: url(:/images/themed/light/checkbox_on_pressed.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:checked:disabled
+{
+image: url(:/images/themed/light/checkbox_on_disabled.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked
+{
+image: url(:/images/themed/light/checkbox_off.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:hover
+{
+image: url(:/images/themed/light/checkbox_off_hover.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:pressed
+{
+image: url(:/images/themed/light/checkbox_off_pressed.svg); /*replaceThemeToken*/
+}
+
+QTableView::indicator:unchecked:disabled
+{
+image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken*/
+}
+
+/*
+    QHeaderView
+*/
+QHeaderView
+{
+background: #FF18191A; /*colorToken.page-background*/
+padding-top: 2px;
+padding-right: 15px;
+}
+
+QHeaderView::section
+{
+background: #FF18191A; /*colorToken.page-background*/
+color: #FFF3F4F4; /*colorToken.text-primary*/
+border-top: 0px;
+border-bottom: 0px;
+border-left: 0px;
+border-right: 0px ;
+}
+
+QHeaderView::section:last
+{
+border-right: 0px;
 }
 
 /*
@@ -85,8 +182,9 @@ image: url(:/images/themed/light/chevron-down_press.svg); /*replaceThemeToken*/
 QComboBox[type="mega"] QAbstractItemView
 {
 border: 2px solid #ff04101E; /*colorToken.button-outline*/
-border-radius: 4px;
+border-radius: 6px;
 background-color:  #fffafafa; /*colorToken.surface-1*/
+padding: 5 5 5 5px;
 }
 
 /*
@@ -154,8 +252,8 @@ image: url(:/images/themed/light/radio_checked_disabled.svg); /*replaceThemeToke
 */
 QGroupBox[type="mega"]
 {
+margin-top: 20px;
 font-weight: bold;
-margin-top: 25px;
 background-color: transparent;
 border-width: 1px;
 border-style: solid;
@@ -168,7 +266,7 @@ QGroupBox::title[type="mega"]
 color: #ff04101E; /*colorToken.text-accent*/
 subcontrol-origin: margin;
 subcontrol-position: top left;
-padding: 5 0 0 5px;
+padding: 0 0 0 10px;
 }
 
 QGroupBox::title:disabled[type="mega"]
@@ -201,6 +299,8 @@ QCheckBox[type="mega"]
 {
 background-color: transparent;
 spacing: 8px;
+min-height: 16px;
+max-height: 16px;
 }
 
 QCheckBox:disabled[type="mega"]
@@ -260,7 +360,6 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 */
 QLabel
 {
-font-family: Inter;
 font-size: 12px;
 font-weight: 400;
 background-color: transparent;
@@ -279,6 +378,13 @@ font-size: 16px;
 font-weight: 600;
 }
 
+QLabel[type="secondary"]
+{
+font-size: 12px;
+font-weight: 400;
+color: #ff616366; /*colorToken.text-secondary*/
+}
+
 QLabel:disabled
 {
 color: #ff797c80; /*colorToken.icon-disabled*/
@@ -291,7 +397,6 @@ QPushButton[type="outline"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: transparent;
@@ -354,7 +459,6 @@ QPushButton[type="primary"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: #ff04101E; /*colorToken.button-primary*/
@@ -420,7 +524,6 @@ QPushButton[type="secondary"]
 {
 border-width: 2px;
 border-style: solid;
-font-family: Inter;
 font-weight: 600;
 
 background-color: #ff04101E; /*colorToken.button-secondary*/

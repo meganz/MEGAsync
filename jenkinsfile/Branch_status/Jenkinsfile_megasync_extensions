@@ -51,7 +51,7 @@ pipeline {
                     } else if (env.MEGASYNC_BRANCH in ['develop', 'master']) {
                         branchToCheckout = "develop"
                     } else {
-                        def status = sh(script: "git submodule status", returnStdout: true).trim()
+                        def status = sh(script: "git submodule status src/MEGASync/mega", returnStdout: true).trim()
                         branchToCheckout = status.tokenize(' ')[0].substring(1)
                     }
                     dir('src/MEGASync/mega') {
@@ -78,7 +78,7 @@ pipeline {
                     }
                     axis {
                         name 'DISTRO'
-                        values  'xUbuntu_24.10','xUbuntu_24.04', 'xUbuntu_23.10', 'xUbuntu_22.04', 'xUbuntu_20.04',
+                        values  'xUbuntu_24.10','xUbuntu_24.04', 'xUbuntu_22.04', 'xUbuntu_20.04',
                                 'Debian_11','Debian_12','Debian_testing',
                                 'DEB_Arch_Extra',
                                 'Fedora_39','Fedora_40','Fedora_41',
@@ -105,7 +105,17 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                            dir("/srv/repo/private/$DISTRO"){
+                                                sh """
+                                                    jf rt upload \
+                                                        --url ${REPO_URL} \
+                                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                        --regexp '(dolphin-megasync.*deb\$|dolphin-megasync.*rpm\$|dolphin-megasync.*\\.pkg\\.tar\\.zst\$|dolphin-megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/
+                                                """
+                                            }
+                                        }
                                         echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
@@ -132,7 +142,17 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                            dir("/srv/repo/private/$DISTRO"){
+                                                sh """
+                                                    jf rt upload \
+                                                        --url ${REPO_URL} \
+                                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                        --regexp '(nemo-megasync.*deb\$|nemo-megasync.*rpm\$|nemo-megasync.*\\.pkg\\.tar\\.zst\$|nemo-megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/
+                                                """
+                                            }
+                                        }
                                         echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
@@ -159,7 +179,17 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                            dir("/srv/repo/private/$DISTRO"){
+                                                sh """
+                                                    jf rt upload \
+                                                        --url ${REPO_URL} \
+                                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                        --regexp '(thunar-megasync.*deb\$|thunar-megasync.*rpm\$|thunar-megasync.*\\.pkg\\.tar\\.zst\$|thunar-megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/
+                                                """
+                                            }
+                                        }
                                         echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }
@@ -186,7 +216,17 @@ pipeline {
                                 script{
                                     if (params.IS_RELEASE_CANDIDATE == true){
                                         def MEGASYNC_VERSION = getVersionFromHeader("src/MEGASync/control/Version.h")
-                                        sh "cd /srv/repo/private/$DISTRO && jf rt upload --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/"
+                                        withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                            dir("/srv/repo/private/$DISTRO"){
+                                                sh """
+                                                    jf rt upload \
+                                                        --url ${REPO_URL} \
+                                                        --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                        --regexp '(nautilus-megasync.*deb\$|nautilus-megasync.*rpm\$|nautilus-megasync.*\\.pkg\\.tar\\.zst\$|nautilus-megasync.*\\.pkg\\.tar\\.xz\$)' \
+                                                        MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/
+                                                """
+                                            }
+                                        }
                                         echo "Packages successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/extensions/$DISTRO/]"
                                     }
                                 }

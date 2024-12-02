@@ -104,6 +104,7 @@ target_compile_definitions(MEGAsync
     QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII
     $<$<CONFIG:Debug>:LOG_TO_STDOUT LOG_TO_LOGGER CREATE_COMPATIBLE_MINIDUMPS>
     $<$<BOOL:${WIN32}>:PUBLIC NOMINMAX WIN32_LEAN_AND_MEAN UNICODE>
+    $<$<BOOL:${ENABLE_ISOLATED_GFX}>:ENABLE_SDK_ISOLATED_GFX>
 )
 
 # Load and link needed libraries for the Desktop App target

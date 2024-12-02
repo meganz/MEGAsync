@@ -12,7 +12,6 @@ add_compile_definitions(
     $<$<BOOL:${WIN32}>:NTDDI_VERSION=NTDDI_WIN7> # Supported windows versions: 7 and beyond
     $<$<BOOL:${WIN32}>:_WIN32_WINNT=0x0601>      # 0x0601 == Windows 7
     $<$<BOOL:${WIN32}>:PSAPI_VERSION=1>          # PS API version used in Windows 7
-    $<$<BOOL:${ENABLE_SDK_ISOLATED_GFX}>:ENABLE_SDK_ISOLATED_GFX>
 )
 
 if (MSVC)

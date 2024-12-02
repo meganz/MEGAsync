@@ -5,6 +5,8 @@ import common 1.0
 ResumePageForm {
     id: root
 
+    property int tabToOpen: 0
+
     signal resumePageMoveToSyncs
     signal resumePageMoveToSelectiveSyncs
     signal resumePageMoveToBackup
@@ -35,7 +37,7 @@ ResumePageForm {
         }
 
         rightSecondary.onClicked: {
-            onboardingAccess.openDeviceCentre();
+            onboardingAccess.openPreferences(tabToOpen);
         }
 
         rightPrimary.onClicked: {

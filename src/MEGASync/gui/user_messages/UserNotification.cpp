@@ -11,9 +11,6 @@ namespace
 const QLatin1String DEFAULT_IMAGE_EXTENSION(".png");
 constexpr const char* KEY_CALL_TO_ACTION_TEXT = "text";
 constexpr const char* KEY_CALL_TO_ACTION_LINK = "link";
-constexpr int SMALL_IMAGE_SIZE = 48;
-constexpr int LARGE_IMAGE_WIDTH = 370;
-constexpr int LARGE_IMAGE_HEIGHT = 115;
 }
 
 UserNotification::UserNotification(const mega::MegaNotification* notification, QObject* parent):
@@ -21,36 +18,14 @@ UserNotification::UserNotification(const mega::MegaNotification* notification, Q
                 UserMessage::Type::NOTIFICATION,
                 parent),
     mNotification(notification),
-    mDownloader(std::make_unique<ImageDownloader>(nullptr)),
     mSeen(false)
-{
-    connect(mDownloader.get(),
-            &ImageDownloader::downloadFinished,
-            this,
-            &UserNotification::onDownloadFinished);
-
-    mDownloader->downloadImage(getImageNamePath(), LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
-    mDownloader->downloadImage(getIconNamePath(), SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
-}
+{}
 
 void UserNotification::reset(const mega::MegaNotification* notification)
 {
-    QString oldImageNamePath = getImageNamePath();
-    QString oldIconNamePath = getIconNamePath();
-
     mNotification.reset(notification);
 
-    if (oldImageNamePath != getImageNamePath())
-    {
-        mDownloader->downloadImage(getImageNamePath(), LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
-    }
-
-    if (oldIconNamePath != getIconNamePath())
-    {
-        mDownloader->downloadImage(getIconNamePath(), SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
-    }
-
-    emit dataChanged();
+    emit dataReset();
 }
 
 bool UserNotification::equals(const mega::MegaNotification* notification) const
@@ -114,16 +89,6 @@ bool UserNotification::showIcon() const
     return !QString::fromUtf8(mNotification->getIconName()).isEmpty();
 }
 
-QPixmap UserNotification::getImagePixmap() const
-{
-    return mImage;
-}
-
-QPixmap UserNotification::getIconPixmap() const
-{
-    return mIcon;
-}
-
 QString UserNotification::getIconNamePath() const
 {
     return QString::fromUtf8(mNotification->getImagePath()) +
@@ -165,27 +130,4 @@ bool UserNotification::sort(UserMessage* checkWith) const
     }
 
     return UserMessage::sort(checkWith);
-}
-
-void UserNotification::onDownloadFinished(const QImage& image, const QString& imageUrl)
-{
-    if (image.isNull())
-    {
-        return;
-    }
-
-    if (imageUrl == getImageNamePath())
-    {
-        QSize size = QSize(LARGE_IMAGE_WIDTH, LARGE_IMAGE_HEIGHT);
-        mImage =
-            QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        emit imageChanged();
-    }
-    else if (imageUrl == getIconNamePath())
-    {
-        QSize size = QSize(SMALL_IMAGE_SIZE, SMALL_IMAGE_SIZE);
-        mIcon =
-            QPixmap::fromImage(image).scaled(size, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        emit iconChanged();
-    }
 }
