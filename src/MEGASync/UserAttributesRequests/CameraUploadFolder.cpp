@@ -1,7 +1,6 @@
 #include "CameraUploadFolder.h"
 
 #include "megaapi.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
 
 namespace UserAttributes
