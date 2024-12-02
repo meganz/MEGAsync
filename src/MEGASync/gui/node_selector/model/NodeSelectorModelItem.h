@@ -1,10 +1,10 @@
 #ifndef MODELSELECTORMODELITEM_H
 #define MODELSELECTORMODELITEM_H
 
-#include <QList>
-#include <QIcon>
-
 #include "megaapi.h"
+
+#include <QIcon>
+#include <QList>
 
 #include <memory>
 

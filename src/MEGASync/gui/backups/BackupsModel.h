@@ -2,9 +2,7 @@
 #define BACKUPSMODEL_H
 
 #include "BackupsController.h"
-
 #include "FileFolderAttributes.h"
-#include "SyncController.h"
 
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>

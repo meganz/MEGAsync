@@ -1,8 +1,6 @@
 #include "BackupsController.h"
 
 #include "MegaApplication.h"
-#include "TextDecorator.h"
-#include "QMegaMessageBox.h"
 #include "Utilities.h"
 
 BackupsController::BackupsController(QObject* parent):
