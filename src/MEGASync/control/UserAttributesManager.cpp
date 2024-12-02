@@ -1,13 +1,12 @@
 #include "UserAttributesManager.h"
 
+#include "megaapi.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
 
-#include "megaapi.h"
-#include "mega/types.h"
-#include <assert.h>
 #include <QMap>
 
+#include <cassert>
 
 namespace UserAttributes
 {
