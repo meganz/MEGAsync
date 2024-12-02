@@ -771,8 +771,7 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     {
         if (backupId != mega::INVALID_HANDLE)
         {
-            StalledIssuesUtilities utilities;
-            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+            Utilities::removeLocalFile(ignoreFile.fileName(), backupId);
         }
         else
         {
