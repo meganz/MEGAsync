@@ -1,9 +1,7 @@
 #include "UserMessageCacheManager.h"
 
 #include "AlertItem.h"
-#include "UserAlert.h"
 #include "NotificationItem.h"
-#include "UserNotification.h"
 
 namespace
 {

@@ -1,9 +1,8 @@
 #ifndef NOTIFICATION_ITEM_H
 #define NOTIFICATION_ITEM_H
 
-#include "UserMessageWidget.h"
-#include "Utilities.h"
 #include "NotificationExpirationTimer.h"
+#include "UserMessageWidget.h"
 
 #include <QPointer>
 

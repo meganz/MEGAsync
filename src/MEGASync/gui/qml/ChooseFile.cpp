@@ -2,8 +2,6 @@
 
 #include "Platform.h"
 
-#include "megaapi.h"
-
 #include <QDir>
 
 ChooseLocalFile::ChooseLocalFile(QObject *parent)
