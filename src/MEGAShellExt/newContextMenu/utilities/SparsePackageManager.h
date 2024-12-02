@@ -2,6 +2,9 @@
 #define SPARSEPACKAGE_H
 
 #include "framework.h"
+#include "pplawait.h"
+
+using namespace winrt::Windows::Management::Deployment;
 
 class SparsePackageManager
 {
@@ -26,6 +29,8 @@ private:
 
     static void EnsureRegistrationOnCurrentUserWorker();
     static void ReRegisterSparsePackage();
+    static concurrency::task<HRESULT> addPackage(const winrt::Windows::Foundation::Uri& packageUri,
+                                                 const AddPackageOptions& options);
 };
 
 #endif

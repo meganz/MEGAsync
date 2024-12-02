@@ -18,19 +18,12 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
     std::wstring value;
 
     HKEY keyRef;
-
-    if (RegOpenKeyExW(hKey, subKey.data(), 0, KEY_READ, &keyRef) == ERROR_SUCCESS)
-    {
-        return value;
-    }
-
-    if (keyRef == nullptr)
+    if (RegOpenKeyExW(hKey, subKey.data(), 0, KEY_READ, &keyRef) != ERROR_SUCCESS)
     {
         return value;
     }
 
     DWORD dataSize = 0;
-
     if (RegGetValueW(keyRef,
                      nullptr,
                      valueName.empty() ? NULL : valueName.data(),
@@ -42,7 +35,7 @@ std::wstring getRegisterKeyStringValue(HKEY hKey,
         return value;
     }
 
-    value = dataSize / sizeof(wchar_t), L'\0';
+    value = dataSize / sizeof(wchar_t);
 
     if (RegGetValueW(keyRef,
                      nullptr,

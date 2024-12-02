@@ -2,6 +2,9 @@
 
 #include "MEGAinterface.h"
 #include "SharedState.h"
+#include "Utilities.h"
+
+#include <iostream>
 
 IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray, LPWSTR* ppszName)
 {
@@ -17,6 +20,16 @@ IFACEMETHODIMP ContextMenuCommandUpload::GetTitle(IShellItemArray* psiItemArray,
     }
 
     SHStrDup(title.data(), ppszName);
+
+    return S_OK;
+}
+
+IFACEMETHODIMP ContextMenuCommandUpload::GetIcon(IShellItemArray* psiItemArray, LPWSTR* ppszIcon)
+{
+    UNREFERENCED_PARAMETER(psiItemArray);
+
+    std::wstring icon;
+    SHStrDup(icon.data(), ppszIcon);
 
     return S_OK;
 }

@@ -4,16 +4,15 @@
 
 using namespace winrt::Windows::ApplicationModel;
 using namespace winrt::Windows::Foundation::Collections;
-using namespace winrt::Windows::Management::Deployment;
 
 extern HMODULE g_hInst;
 
 const std::wstring SparsePackageName = L"MEGASyncShellSparse";
 #if _WIN32 || _WIN64
 #if _WIN64
-const std::wstring SparseInstallerName = L"\\ShellExtX64.msix";
+const std::wstring SparseInstallerName = L"\\MEGAShellExt.msix";
 #else
-const std::wstring SparseInstallerName = L"\\ShellExtX32.msix";
+const std::wstring SparseInstallerName = L"\\MEGAShellExt.msix";
 #endif
 #endif
 
@@ -95,15 +94,28 @@ HRESULT SparsePackageManager::RegisterSparsePackage()
     AddPackageOptions options;
     options.ExternalLocationUri(externalUri);
 
-    PackageManager packageManager;
-    auto deployResult = packageManager.AddPackageByUriAsync(packageUri, options).get();
+    auto errorCode{addPackage(packageUri, options)};
 
-    if (!SUCCEEDED(deployResult.ExtendedErrorCode()))
+    if (!SUCCEEDED(errorCode.get()))
     {
-        return deployResult.ExtendedErrorCode();
+        return errorCode.get();
     }
 
     return S_OK;
+}
+
+concurrency::task<HRESULT>
+    SparsePackageManager::addPackage(const winrt::Windows::Foundation::Uri& packageUri,
+                                     const AddPackageOptions& options)
+{
+    return concurrency::create_task(
+        [packageUri, options]
+        {
+            PackageManager packageManager;
+            auto deploy = packageManager.AddPackageByUriAsync(packageUri, options);
+            auto deployResult = deploy.get();
+            return HRESULT(deployResult.ExtendedErrorCode());
+        });
 }
 
 void SparsePackageManager::ReRegisterSparsePackage()
@@ -135,7 +147,7 @@ HRESULT SparsePackageManager::modifySparsePackage(MODIFY_TYPE type)
             // To register the sparse package, we need to do it on another thread due to WinRT
             // requirements.
             std::thread reRegisterThread(&SparsePackageManager::ReRegisterSparsePackage);
-            reRegisterThread.join();
+            reRegisterThread.detach();
         }
         else
         {

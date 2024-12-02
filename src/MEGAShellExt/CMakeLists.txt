@@ -99,11 +99,27 @@ target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
 
 #if(ENABLE_EXPLORER_EXT_SPARSE)
     if(MSVC)
+        # Create resources .pri
+        add_custom_command(
+            TARGET MEGAShellExt
+            POST_BUILD
+            COMMAND makepri createconfig "/o" "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/dq" "en-US"
+            COMMENT "Creating priconfig.xml"
+        )
+
+        add_custom_command(
+            TARGET MEGAShellExt
+            POST_BUILD
+            COMMAND MakePri.exe new "/cf" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/priconfig.xml" "/pr" "${CMAKE_CURRENT_SOURCE_DIR}"
+            "/mn" "${CMAKE_CURRENT_SOURCE_DIR}/packaging/AppAplication.xml" "/o" "/of" "$<TARGET_FILE_DIR:MEGAShellExt>/resources.pri"
+            COMMENT "Creating resources.pri"
+        )
+
         # Create sparse package
         add_custom_command(
             TARGET MEGAShellExt
             POST_BUILD
-            COMMAND makeappx pack "/nv" "/o" "/d" "${CMAKE_CURRENT_SOURCE_DIR}/newContextMenu/gui/packaging" "/p" "MEGAShellExt.msix"
+            COMMAND makeappx pack "/nv" "/o" "/d" "${CMAKE_CURRENT_SOURCE_DIR}/packaging" "/p" "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
             COMMENT "Creating sparse package for Win11 context menus"
         )
 
@@ -111,7 +127,7 @@ target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
         add_custom_command(
             TARGET MEGAShellExt
             POST_BUILD
-            COMMAND signtool sign "/sha1" $ENV{SHELL_EXT_CERT_SHA} "/td" SHA256 "/fd" SHA256 "MEGAShellExt.msix"
+            COMMAND signtool sign "/n" "Mega Limited" "/td" SHA256 "/fd" SHA256 "$<TARGET_FILE_DIR:MEGAShellExt>/MEGAShellExt.msix"
             COMMENT "Signing sparse package"
         )
 
@@ -119,7 +135,7 @@ target_compile_features(MEGAShellExt PRIVATE cxx_std_17)
         add_custom_command(
             TARGET MEGAShellExt
             POST_BUILD
-            COMMAND signtool sign "/sha1" $ENV{SHELL_EXT_CERT_SHA} "/td" SHA256 "/fd" SHA256 "MEGAShellExt.dll"
+            COMMAND signtool sign "/n" "Mega Limited"  "/td" SHA256 "/fd" SHA256 $<TARGET_FILE:MEGAShellExt>
             COMMENT "Signing DLL"
         )
     endif()
