@@ -22,15 +22,9 @@ UploadNodeSelector::UploadNodeSelector(QWidget* parent):
 void UploadNodeSelector::createSpecialisedWidgets()
 {
     ui->fBackups->hide();
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    addCloudDrive();
     mCloudDriveWidget->setShowEmptyView(false);
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
-    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
-    ui->stackedWidget->addWidget(mIncomingSharesWidget);
-
-    NodeSelector::createSpecialisedWidgets();
+    addIncomingShares();
 }
 
 void UploadNodeSelector::checkSelection()
@@ -71,17 +65,9 @@ DownloadNodeSelector::DownloadNodeSelector(QWidget* parent):
 
 void DownloadNodeSelector::createSpecialisedWidgets()
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
-    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
-    ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
-    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
-    ui->stackedWidget->addWidget(mBackupsWidget);
-
-    NodeSelector::createSpecialisedWidgets();
+    addCloudDrive();
+    addIncomingShares();
+    addBackups();
 }
 
 void DownloadNodeSelector::checkSelection()
@@ -143,15 +129,9 @@ SyncNodeSelector::SyncNodeSelector(QWidget* parent):
 void SyncNodeSelector::createSpecialisedWidgets()
 {
     ui->fBackups->hide();
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    addCloudDrive();
     mCloudDriveWidget->setShowEmptyView(false);
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
-    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
-    ui->stackedWidget->addWidget(mIncomingSharesWidget);
-
-    NodeSelector::createSpecialisedWidgets();
+    addIncomingShares();
 }
 
 
@@ -212,23 +192,13 @@ void SyncNodeSelector::checkSelection()
 /////////////////////////////////////////////////////////////
 StreamNodeSelector::StreamNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new StreamType), parent)
-{
-
-}
+{}
 
 void StreamNodeSelector::createSpecialisedWidgets()
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
-    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
-    ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
-    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
-    ui->stackedWidget->addWidget(mBackupsWidget);
-
-    NodeSelector::createSpecialisedWidgets();
+    addCloudDrive();
+    addIncomingShares();
+    addBackups();
 }
 
 void StreamNodeSelector::checkSelection()
@@ -283,22 +253,12 @@ CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
 
 void CloudDriveNodeSelector::createSpecialisedWidgets()
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
-    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
-    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
-    ui->stackedWidget->addWidget(mIncomingSharesWidget);
-    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
-    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
-    ui->stackedWidget->addWidget(mBackupsWidget);
-    mRubbishWidget = new NodeSelectorTreeViewWidgetRubbish(mSelectType);
-    mRubbishWidget->setObjectName(QString::fromUtf8("Rubbish"));
-    ui->stackedWidget->addWidget(mRubbishWidget);
+    addCloudDrive();
+    addIncomingShares();
+    addBackups();
+    addRubbish();
 
     enableDragAndDrop(true);
-
-    NodeSelector::createSpecialisedWidgets();
 }
 
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
@@ -363,10 +323,8 @@ MoveBackupNodeSelector::MoveBackupNodeSelector(QWidget* parent):
 
 void MoveBackupNodeSelector::createSpecialisedWidgets()
 {
-    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
-    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    addCloudDrive();
     mCloudDriveWidget->setShowEmptyView(false);
-    ui->stackedWidget->addWidget(mCloudDriveWidget);
 }
 
 void MoveBackupNodeSelector::checkSelection()

@@ -13,7 +13,6 @@
 #include "NewFolderDialog.h"
 #include "RequestListenerManager.h"
 
-const char* NodeSelectorTreeViewWidget::CUSTOM_BOTTOM_BUTTON_ID = "BUTTON_ID";
 const int NodeSelectorTreeViewWidget::LOADING_VIEW_THRESSHOLD = 500;
 const int NodeSelectorTreeViewWidget::LABEL_ELIDE_MARGIN = 250;
 const char* NodeSelectorTreeViewWidget::FULL_NAME_PROPERTY = "full_name";
@@ -63,9 +62,6 @@ NodeSelectorTreeViewWidget::NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWid
         button->setProperty(ButtonIconManager::CHANGE_LATER, true);
         mButtonIconManager.addButton(button);
     }
-
-    connect(&mNodesUpdateTimer, &QTimer::timeout, this, &NodeSelectorTreeViewWidget::processCachedNodesUpdated);
-    mNodesUpdateTimer.start(CHECK_UPDATED_NODES_INTERVAL);
 }
 
 NodeSelectorTreeViewWidget::~NodeSelectorTreeViewWidget()
@@ -132,7 +128,13 @@ void NodeSelectorTreeViewWidget::init()
 
 #ifdef __APPLE__
     ui->tMegaFolders->setAnimated(false);
-#endif    
+#endif
+
+    connect(&mNodesUpdateTimer,
+            &QTimer::timeout,
+            this,
+            &NodeSelectorTreeViewWidget::processCachedNodesUpdated);
+    mNodesUpdateTimer.start(CHECK_UPDATED_NODES_INTERVAL);
 }
 
 void NodeSelectorTreeViewWidget::showDefaultUploadOption(bool show)
@@ -539,12 +541,14 @@ void NodeSelectorTreeViewWidget::addCustomBottomButtons(NodeSelectorTreeViewWidg
         auto button = buttonsMap.value(id);
         if(button)
         {
-            button->setProperty(CUSTOM_BOTTOM_BUTTON_ID, id);
             ui->customBottomButtonsLayout->addWidget(button);
-            connect(button, &QPushButton::clicked, this, [this](){
-                uint id = sender()->property(CUSTOM_BOTTOM_BUTTON_ID).toUInt();
-                emit onCustomBottomButtonClicked(id);
-            });
+            connect(button,
+                    &QPushButton::clicked,
+                    this,
+                    [this, id]()
+                    {
+                        emit onCustomBottomButtonClicked(id);
+                    });
         }
     }
 }
@@ -1533,7 +1537,7 @@ void CloudDriveType::customButtonsVisibility(NodeSelectorTreeViewWidget *wdg)
     }
 }
 
-QMap<int, QPushButton *> CloudDriveType::addCustomBottomButtons(NodeSelectorTreeViewWidget *wdg)
+QMap<uint, QPushButton*> CloudDriveType::addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg)
 {
     auto& buttons = mCustomBottomButtons[wdg];
     if(buttons.isEmpty())

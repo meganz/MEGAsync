@@ -68,7 +68,6 @@ protected:
     void addBackupsView();
     std::shared_ptr<mega::MegaNode> getSelectedNode();
     void initSpecialisedWidgets();
-    void createSearchWidget();
     bool eventFilter(QObject *obj, QEvent *event) override;
 
 
@@ -76,11 +75,16 @@ protected:
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
     //Create specialised widgets
-    virtual void createSpecialisedWidgets(){}
+    virtual void createSpecialisedWidgets() = 0;
+    void addCloudDrive();
     NodeSelectorTreeViewWidgetCloudDrive* mCloudDriveWidget;
+    void addIncomingShares();
     NodeSelectorTreeViewWidgetIncomingShares* mIncomingSharesWidget;
+    void addBackups();
     NodeSelectorTreeViewWidgetBackups* mBackupsWidget;
+    void addSearch();
     NodeSelectorTreeViewWidgetSearch* mSearchWidget;
+    void addRubbish();
     NodeSelectorTreeViewWidgetRubbish* mRubbishWidget;
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;

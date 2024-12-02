@@ -44,8 +44,6 @@ class NodeSelectorTreeViewWidget : public QWidget
       void clear();
     };
 
-    static const char* CUSTOM_BOTTOM_BUTTON_ID;
-
 public:
     static const int LOADING_VIEW_THRESSHOLD;
     static const int LABEL_ELIDE_MARGIN;
@@ -198,8 +196,12 @@ public:
     virtual void selectionHasChanged(const QModelIndexList &selected, NodeSelectorTreeViewWidget *){Q_UNUSED(selected)}
     virtual void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)}
     virtual void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg){Q_UNUSED(wdg)}
-    virtual void customButtonsVisibility(NodeSelectorTreeViewWidget*){}
-    virtual QMap<int, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget*){return QMap<int, QPushButton*>();}
+    virtual void customButtonsVisibility(NodeSelectorTreeViewWidget*) {}
+
+    virtual QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget*)
+    {
+        return QMap<uint, QPushButton*>();
+    }
     virtual NodeSelectorModelItemSearch::Types allowedTypes() = 0;
 
 protected:
@@ -248,7 +250,7 @@ public:
 class CloudDriveType : public SelectType
 {
 public:
-    enum ButtonId
+    enum ButtonId : uint
     {
         Upload,
         Download,
@@ -261,13 +263,13 @@ public:
     void okCancelButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void newFolderButtonVisibility(NodeSelectorTreeViewWidget* wdg) override;
     void customButtonsVisibility(NodeSelectorTreeViewWidget* wdg) override;
-    QMap<int, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget *wdg) override;
+    QMap<uint, QPushButton*> addCustomBottomButtons(NodeSelectorTreeViewWidget* wdg) override;
 
     bool okButtonEnabled(NodeSelectorTreeViewWidget*, const QModelIndexList &selected) override;
     NodeSelectorModelItemSearch::Types allowedTypes() override;
 
 private:
-    QMap<QWidget*, QMap<int, QPushButton*>> mCustomBottomButtons;
+    QMap<QWidget*, QMap<uint, QPushButton*>> mCustomBottomButtons;
 };
  
 class MoveBackupType : public UploadType

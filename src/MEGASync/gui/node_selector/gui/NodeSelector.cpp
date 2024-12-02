@@ -178,7 +178,7 @@ void NodeSelector::showEvent(QShowEvent*)
     if(!mInitialised)
     {
         createSpecialisedWidgets();
-        createSearchWidget();
+        addSearch();
         initSpecialisedWidgets();
 
         mInitialised = true;
@@ -504,13 +504,6 @@ void NodeSelector::initSpecialisedWidgets()
 
 }
 
-void NodeSelector::createSearchWidget()
-{
-    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(mSelectType);
-    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
-    ui->stackedWidget->addWidget(mSearchWidget);
-}
-
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
 {
     if(event->type() == QEvent::DragEnter)
@@ -563,4 +556,39 @@ void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
     mBackupsWidget->onNodesUpdate(api, nodes);
     mSearchWidget->onNodesUpdate(api, nodes);
     mRubbishWidget->onNodesUpdate(api, nodes);
+}
+
+void NodeSelector::addCloudDrive()
+{
+    mCloudDriveWidget = new NodeSelectorTreeViewWidgetCloudDrive(mSelectType);
+    mCloudDriveWidget->setObjectName(QString::fromUtf8("CloudDrive"));
+    ui->stackedWidget->addWidget(mCloudDriveWidget);
+}
+
+void NodeSelector::addIncomingShares()
+{
+    mIncomingSharesWidget = new NodeSelectorTreeViewWidgetIncomingShares(mSelectType);
+    mIncomingSharesWidget->setObjectName(QString::fromUtf8("IncomingShares"));
+    ui->stackedWidget->addWidget(mIncomingSharesWidget);
+}
+
+void NodeSelector::addBackups()
+{
+    mBackupsWidget = new NodeSelectorTreeViewWidgetBackups(mSelectType);
+    mBackupsWidget->setObjectName(QString::fromUtf8("Backups"));
+    ui->stackedWidget->addWidget(mBackupsWidget);
+}
+
+void NodeSelector::addSearch()
+{
+    mSearchWidget = new NodeSelectorTreeViewWidgetSearch(mSelectType);
+    mSearchWidget->setObjectName(QString::fromUtf8("Search"));
+    ui->stackedWidget->addWidget(mSearchWidget);
+}
+
+void NodeSelector::addRubbish()
+{
+    mRubbishWidget = new NodeSelectorTreeViewWidgetRubbish(mSelectType);
+    mRubbishWidget->setObjectName(QString::fromUtf8("Rubbish"));
+    ui->stackedWidget->addWidget(mRubbishWidget);
 }
