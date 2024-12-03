@@ -3384,22 +3384,22 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished">Open settings</translation>
+        <translation>Open settings</translation>
     </message>
 </context>
 <context>
@@ -5207,7 +5207,7 @@ Enter a different name.</translation>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>View in Settings</translation>
     </message>
 </context>
 <context>
@@ -5429,17 +5429,17 @@ Enter a different name.</translation>
     <message>
         <source>Permissions</source>
         <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
+        <translation>Permissions</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Apply</translation>
+        <translation>Apply</translation>
     </message>
 </context>
 <context>
@@ -5589,7 +5589,12 @@ Enter a different name.</translation>
 - Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
+- Other bugs have been fixed and numerous improvements made.
+</translation>
     </message>
 </context>
 <context>
@@ -5597,7 +5602,7 @@ Enter a different name.</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -7168,12 +7173,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Refresh</source>
         <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
-        <translation type="unfinished">Refresh</translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
         <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One of your synced folders has been renamed. Refresh the list of sync issues.</translation>
     </message>
 </context>
 <context>
@@ -7416,62 +7421,62 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Maximum 32 characters</source>
         <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum 32 characters</translation>
     </message>
     <message>
         <source>A device with this name already exists. Enter a different name.</source>
         <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A device with this name already exists. Enter a different name.</translation>
     </message>
     <message>
         <source>Enter a device name</source>
         <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
-        <translation type="unfinished">Enter a device name</translation>
+        <translation>Enter a device name</translation>
     </message>
     <message>
         <source>The following characters are not allowed: %1</source>
         <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The following characters are not allowed: %1</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Choose</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Done</translation>
+        <translation>Done</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Next</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Skip</translation>
+        <translation>Skip</translation>
     </message>
     <message>
         <source>Previous</source>
         <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Previous</translation>
+        <translation>Previous</translation>
     </message>
     <message>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Try again</translation>
+        <translation>Try again</translation>
     </message>
     <message>
         <source>Set Exclusions</source>
         <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Set exclusions</translation>
+        <translation>Set exclusions</translation>
     </message>
 </context>
 <context>
@@ -8018,17 +8023,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Reboot sync</source>
         <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot sync</translation>
     </message>
     <message>
         <source>Reboot backup</source>
         <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot backup</translation>
     </message>
     <message>
         <source>Rescan</source>
         <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rescan</translation>
     </message>
 </context>
 <context>
@@ -9299,7 +9304,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>What&apos;s new in MEGA</source>
         <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>What’s new in MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
@@ -9324,12 +9329,12 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Full visibility into sync issues and total control over how conflicts are resolved</translation>
     </message>
     <message>
         <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Advanced settings allow you to write your own exclusion rules for each of your syncs</translation>
     </message>
     <message>
         <source>Got it</source>

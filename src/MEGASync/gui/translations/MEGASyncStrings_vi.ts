@@ -514,26 +514,6 @@
         <translation>Áp dụng</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Giới hạn tốc độ tải lên:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Giới hạn tốc độ tải xuống:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Số lượng đường truyền kết nối cho mỗi truyền tải:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Cập nhật</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>Sử dụng HTTPS khi các phiên truyền tải không khởi động</translation>
@@ -3220,11 +3200,6 @@ https://mega.co.nz/#sync</source>
         <translation>Một hoặc vài phiên đồng bộ đã bị vô hiệu</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Ứng dụng sẽ vẫn tiếp tục hoạt động nhưng các bản cập nhật mới sẽ sớm không hỗ trợ các phiên bản đời trước macOS Sierra.</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Cảm ơn sự hợp tác của bạn</translation>
@@ -3287,26 +3262,6 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <translation>Thất bại nâng cấp bảo mật. Lỗi: %1</translation>
     </message>
     <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Một số phiên đồng bộ và sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Một hay nhiều việc sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation>Một hay nhiều mục sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation>Đi tới Thiết Đặt</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Thiết đặt</translation>
@@ -3340,6 +3295,26 @@ Các phiên truyền tải sẽ được tự động tiếp tục khi bạn m�
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation>Vượt mức băng thông truyền tải</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Một số phiên đồng bộ và sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Một hay nhiều việc sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>Một hay nhiều mục sao lưu đã bị tắt. Đi tới trang Thiết Đặt và bật lại.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>Đi tới Thiết Đặt</translation>
     </message>
 </context>
 <context>
@@ -4591,21 +4566,6 @@ Nhập một tên khác.</translation>
         <translation>Thông tin</translation>
     </message>
     <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Thông tin:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Liên lạc:</translation>
-    </message>
-    <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Chia sẻ:</translation>
-    </message>
-    <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
         <translation>Thông báo hệ thống:</translation>
@@ -4624,11 +4584,6 @@ Nhập một tên khác.</translation>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
         <translation>Các phiên tải lên và tải xuống đã hoàn tất</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>Phiên tải lên và tải xuống:</translation>
     </message>
 </context>
 <context>
@@ -4677,16 +4632,6 @@ Nhập một tên khác.</translation>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
         <translation>Tạo sao lưu đến:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Hủy</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Chọn</translation>
     </message>
     <message>
         <source>Change folder</source>
@@ -4762,11 +4707,6 @@ Nhập một tên khác.</translation>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Xác nhận mật khẩu</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>Xong</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4884,29 +4824,9 @@ Nhập một tên khác.</translation>
         <translation>Đăng nhập vào [B]tài khoản MEGA[/B] của bạn</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Tiếp</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Bỏ qua</translation>
-    </message>
-    <message>
-        <source>View in Settings</source>
-        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>Xem trong Thiết Đặt</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>Mật khẩu</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Trước</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5149,11 +5069,6 @@ Nhập một tên khác.</translation>
         <translation>Mã XT2B không đúng</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Thử lại</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>Sao lưu của bạn đã được thiết lập và sẽ tự động tiến hành sao lưu bất cứ khi nào ứng dụng máy tính đang chạy.</translation>
@@ -5164,11 +5079,6 @@ Nhập một tên khác.</translation>
         <translation>Bạn có thể xem các bản sao lưu của mình và trạng thái của mọi thứ ở tab Sao lưu trong Thiết đặt.</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Đặt loại trừ</translation>
-    </message>
-    <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
         <translation>Đồng bộ hóa toàn bộ Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
@@ -5177,6 +5087,11 @@ Nhập một tên khác.</translation>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
         <translation>Đồng bộ hóa các thư mục đã chọn ra trong Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Xem trong Thiết Đặt</translation>
     </message>
 </context>
 <context>
@@ -5190,11 +5105,6 @@ Nhập một tên khác.</translation>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>Xem trên MEGA</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>Thư mục sao lưu:</translation>
     </message>
 </context>
 <context>
@@ -5397,6 +5307,21 @@ Nhập một tên khác.</translation>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Quyền hạn chủ sở hữu:</translation>
     </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>Quyền hạn</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>Áp dụng</translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -5535,15 +5460,27 @@ Nhập một tên khác.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved the automatic and manual resolution of sync issues.
-- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
-        <translation>- Chúng tôi đã cải thiện khả năng giải quyết tự động và thủ công của các vấn đề đồng bộ hóa.
-- Giao diện tài khoản MEGA và quá trình nâng cấp tài khoản đã được tân trang lại và tốt hơn.
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- Tăng cường độ ổn định cho xử lý đồ họa cô lập: Chúng tôi đã nâng cấp ứng dụng của mình để chạy bộ xử lý đồ họa (GFX) trong một quy trình riêng biệt. Có nghĩa là nếu bất kỳ thư viện đồ họa của bên thứ ba nào gặp sự cố, ứng dụng vẫn sẽ ổn định và không bị ảnh hưởng, đảm bảo trải nghiệm mượt mà hơn, không bị gián đoạn.
+- Kết thúc hỗ trợ cho macOS 10.13 và 10.14: Bản cập nhật này không còn hỗ trợ macOS 10.13 và 10.14. Để tiếp tục nhận các bản cập nhật và hỗ trợ, vui lòng nâng cấp lên phiên bản macOS mới hơn.
+- Hộp thoại Thiết Đặt đã được thiết kế lại.
+- Cải thiện và giải quyết vấn đề đã được phát hiện của ứng dụng.
 - Các lỗi khác đã được sửa và nhiều cải tiến đã được thực hiện.
 </translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>Hủy</translation>
     </message>
 </context>
 <context>
@@ -5612,11 +5549,6 @@ Nhập một tên khác.</translation>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
         <translation>Tự động xác định</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Cập nhật</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6043,11 +5975,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
         <translation>Thêm</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>Xóa</translation>
-    </message>
 </context>
 <context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
@@ -6103,11 +6030,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
         <translation>Thư mục sẽ bị xóa khỏi MEGA, và sẽ vẫn giữ nguyên vẹn trên máy tính của bạn. Hành động này sẽ không thể hồi lại được.</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Xác nhận</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6261,11 +6183,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation>Thắc mắc cần trợ giúp</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Chạy chương trình khi khởi động máy</translation>
-    </message>
-    <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>Tự động cập nhật</translation>
@@ -6299,16 +6216,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Dọn</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Chọn</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>Thư mục mặc định</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -6521,49 +6428,9 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translation>Proxy</translation>
     </message>
     <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Tiến hành quét toàn bộ</translation>
-    </message>
-    <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
         <translation>Lịch sử phiên hoạt động</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Ngôn ngữ:</translation>
-    </message>
-    <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (nhớ tạm cục bộ):</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (trên MEGA)</translation>
-    </message>
-    <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>Phiên bản lưu tệp tin:</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Báo cáo lỗi:</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Không gian lưu trữ:</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Băng thông truyền tải:</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -6654,11 +6521,6 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
         <translation>Chế độ ngủ</translation>
-    </message>
-    <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Chế độ ngủ:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
@@ -7153,6 +7015,16 @@ Bạn có vẫn muốn xóa nó đi không?</translation>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
         <translation>Thắc mắc cần trợ giúp</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>Tải lại thông tin</translation>
+    </message>
+    <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>Một trong những thư mục đồng bộ hóa của bạn đã có thay đổi tên. Làm mới lại danh sách các vấn đề đồng bộ hóa.</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
@@ -7372,6 +7244,69 @@ Kiểm tra quyền của tệp .megaignore trong vị trí thư mục đồng
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
         <translation>Lựa chọn các mục</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>Tối[w]đa 32 ký[w]tự</translation>
+    </message>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>Đã có một thiết bị với tên này rồi. Nhập một tên khác.</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>Nhập tên thiết bị</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>Các ký tự sau không được phép sử dụng: %1</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>Hủy</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>Chọn</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>Xong</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>Tiếp</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>Bỏ qua</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>Trước</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>Thử lại</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>Đặt loại trừ</translation>
     </message>
 </context>
 <context>
@@ -7916,14 +7851,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Tạm dừng</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Quét lại nhanh</translation>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>Khởi động lại đồng bộ này</translation>
     </message>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Quét lại sâu</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>Khởi động lại sao lưu</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>Quét lại</translation>
     </message>
 </context>
 <context>
@@ -9123,28 +9063,23 @@ Kiểm tra hộp thư email của bạn để biết hướng dẫn mở khóa
 <context>
     <name>WhatsNewStrings</name>
     <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>Có gì mới</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>Cập nhật mới</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>MEGA có gì mới?</translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Hiệu suất tốt hơn</translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Kiểm soát dễ hơn</translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Bộ lọc nâng cao</translation>
     </message>
     <message>
@@ -9153,14 +9088,14 @@ Kiểm tra hộp thư email của bạn để biết hướng dẫn mở khóa
         <translation>Các tệp tin hiện được đồng bộ hóa nhanh hơn gấp 5 lần so với trước đây.</translation>
     </message>
     <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Giờ đây, chúng tôi cung cấp khả năng hiển thị đầy đủ về các vấn đề đồng bộ hóa và cung cấp cho bạn toàn quyền kiểm soát cách giải quyết xung đột.</translation>
+        <translation>Khả năng hiển thị đầy đủ về các vấn đề đồng bộ hóa và toàn quyền kiểm soát cách giải quyết xung đột</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Tùy chỉnh đồng bộ hóa và các sao lưu của bạn với giao diện hoàn toàn mới để đặt loại trừ các tệp tin và thư mục. Các thiết đặt nâng cao cho phép bạn viết các quy tắc loại trừ của riêng bạn cho mỗi bản đồng bộ và sao lưu khác nhau.</translation>
+        <translation>Các thiết đặt nâng cao cho phép bạn đề ra các quy tắc loại trừ của riêng bạn cho từng phiên đồng bộ của mình</translation>
     </message>
     <message>
         <source>Got it</source>
