@@ -8,27 +8,18 @@
 #include "CommonMessages.h"
 #include "DialogOpener.h"
 #include "FullName.h"
-#include "GuiUtilities.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
-#include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
 #include "QMegaMessageBox.h"
 #include "RemoveBackupDialog.h"
-#include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "TextDecorator.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
 
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
-#include <memory>
 #include <QApplication>
 #include <QButtonGroup>
 #include <QDesktopServices>
@@ -37,8 +28,12 @@
 #include <QMessageBox>
 #include <QRect>
 #include <QShortcut>
+#include <QtConcurrent/QtConcurrent>
 #include <QTranslator>
 #include <QUrl>
+
+#include <cassert>
+#include <memory>
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;

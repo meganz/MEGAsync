@@ -4,23 +4,20 @@
 
 #include "Notificator.h"
 
+#include "MegaApplication.h"
+#include "NotificationHandler.h"
+#include "Utilities.h"
+
+#include <ApplicationServices/ApplicationServices.h>
 #include <QApplication>
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
-#include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
 #include <QTemporaryFile>
 #include <QVariant>
-#include <memory>
-
-#include "MegaApplication.h"
-
-#include <ApplicationServices/ApplicationServices.h>
-#include "macx/NotificationHandler.h"
 
 using namespace mega;
 

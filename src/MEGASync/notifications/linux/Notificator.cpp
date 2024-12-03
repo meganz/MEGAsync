@@ -4,24 +4,20 @@
 
 #include "Notificator.h"
 
+#include "MegaApplication.h"
+
 #include <QApplication>
 #include <QByteArray>
+#include <QDebug>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
-#include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
 #include <QTemporaryFile>
 #include <QVariant>
-#include <memory>
-#include <QDebug>
 
-#include "MegaApplication.h"
-
-#include <stdint.h>
-#include <assert.h>
+#include <cassert>
 
 #ifdef USE_DBUS
 #include <QtDBus/QtDBus>

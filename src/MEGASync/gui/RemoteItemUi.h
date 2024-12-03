@@ -1,7 +1,8 @@
 #ifndef REMOTEITEMUI_H
 #define REMOTEITEMUI_H
 
-#include <megaapi.h>
+#include "megaapi.h"
+
 #include <QTableView>
 #include <QWidget>
 

@@ -502,10 +502,6 @@ target_sources(MEGAsync
     ${DESKTOP_APP_GUI_UI_FILES}
 )
 
-target_include_directories(MEGAsync PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
-)
-
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
     ${CMAKE_CURRENT_LIST_DIR}/NodeNameSetterDialog
@@ -520,7 +516,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
-    ${CMAKE_CURRENT_LIST_DIR}/tokenizer/
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

@@ -1,6 +1,8 @@
-#pragma once
-#include "Notificator.h"
+#ifndef DESKTOP_NOTIFICATIONS_H
+#define DESKTOP_NOTIFICATIONS_H
+
 #include "NotificationDelayer.h"
+#include "Notificator.h"
 #include "Preferences.h"
 
 #include <QObject>
@@ -101,3 +103,4 @@ private:
     QMultiMap<QString, mega::MegaUserAlert*> mPendingUserAlerts;
     QString mSetDownloadPath;
 };
+#endif

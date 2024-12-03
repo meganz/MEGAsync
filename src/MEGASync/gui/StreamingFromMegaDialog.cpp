@@ -1,7 +1,6 @@
 #include "StreamingFromMegaDialog.h"
 
 #include "DialogOpener.h"
-#include "mega/types.h"
 #include "MegaNodeNames.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
@@ -10,11 +9,10 @@
 #include "ui_StreamingFromMegaDialog.h"
 #include "Utilities.h"
 
-#include <QtConcurrent/QtConcurrent>
-
 #include <QCloseEvent>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QtConcurrent/QtConcurrent>
 
 #define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
 
