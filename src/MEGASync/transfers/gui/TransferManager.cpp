@@ -1,21 +1,17 @@
 #include "TransferManager.h"
-#include "QMegaMessageBox.h"
+
+#include "MegaApplication.h"
+#include "MegaTransferView.h"
+#include "Platform.h"
+#include "StalledIssuesModel.h"
 #include "ui_TransferManager.h"
 #include "ui_TransferManagerDragBackDrop.h"
-#include "MegaApplication.h"
-#include "Platform.h"
-#include "MegaTransferDelegate.h"
-#include "MegaTransferView.h"
-#include "OverQuotaDialog.h"
-#include "DialogOpener.h"
-#include "StalledIssuesDialog.h"
-#include "StalledIssuesModel.h"
 
 #include <QMouseEvent>
-#include <QScrollBar>
-#include <QPalette>
-#include <QStyleOptionFocusRect>
 #include <QPainter>
+#include <QPalette>
+#include <QScrollBar>
+#include <QStyleOptionFocusRect>
 
 using namespace mega;
 

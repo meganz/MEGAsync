@@ -4,12 +4,12 @@
 #include "TransfersWidget.h"
 #include "ViewLoadingScene.h"
 
-#include <QGraphicsEffect>
-#include <QTreeView>
-#include <QMenu>
-#include <QMouseEvent>
 #include <QFutureWatcher>
+#include <QGraphicsEffect>
+#include <QMenu>
 #include <QMessageBox>
+#include <QMouseEvent>
+#include <QTreeView>
 
 class MegaTransferView : public LoadingSceneView<TransferManagerLoadingItem, QTreeView>
 {

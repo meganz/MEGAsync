@@ -1,10 +1,8 @@
 #include "DuplicatedNodeItem.h"
+
+#include "MegaApplication.h"
 #include "ui_DuplicatedNodeItem.h"
-
-#include <Utilities.h>
-#include <MegaApplication.h>
-
-#include "mega/types.h"
+#include "Utilities.h"
 
 /*
  * BASE CLASS

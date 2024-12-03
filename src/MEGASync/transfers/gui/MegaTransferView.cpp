@@ -1,13 +1,14 @@
 #include "MegaTransferView.h"
+
 #include "MegaApplication.h"
 #include "Platform.h"
-#include "Utilities.h"
 #include "QMegaMessageBox.h"
 #include "TransfersWidget.h"
+#include "Utilities.h"
 
+#include <QIcon>
 #include <QScrollBar>
 #include <QtConcurrent/QtConcurrent>
-#include <QIcon>
 
 using namespace mega;
 

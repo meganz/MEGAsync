@@ -1,9 +1,9 @@
 #include "InfoDialogTransferDelegateWidget.h"
-#include "ui_InfoDialogTransferDelegateWidget.h"
+
 #include "MegaApplication.h"
+#include "TransferItem.h"
+#include "ui_InfoDialogTransferDelegateWidget.h"
 #include "Utilities.h"
-#include "Platform.h"
-#include <TransferItem.h>
 
 #include <QImageReader>
 #include <QtConcurrent/QtConcurrent>

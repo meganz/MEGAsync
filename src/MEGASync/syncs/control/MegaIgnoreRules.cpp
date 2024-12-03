@@ -1,8 +1,7 @@
 #include "MegaIgnoreRules.h"
 
-#include <Utilities.h>
-#include "MegaApplication.h"
 #include "Platform.h"
+#include "Utilities.h"
 
 #include <QRegularExpression>
 

@@ -1,7 +1,7 @@
 #include "TransferItem.h"
-#include "Utilities.h"
+
 #include "MegaApplication.h"
-#include "TransfersModel.h"
+#include "Utilities.h"
 
 using namespace mega;
 

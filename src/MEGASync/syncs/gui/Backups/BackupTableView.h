@@ -1,7 +1,6 @@
 #ifndef BACKUPTABLEVIEW_H
 #define BACKUPTABLEVIEW_H
 
-#include "SyncSettings.h"
 #include "SyncTableView.h"
 
 #include <QObject>
