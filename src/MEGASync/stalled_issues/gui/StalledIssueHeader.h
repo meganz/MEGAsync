@@ -1,23 +1,19 @@
 #ifndef STALLEDISSUEHEADER_H
 #define STALLEDISSUEHEADER_H
 
-#include "megaapi.h"
-#include "StalledIssue.h"
 #include "StalledIssueBaseDelegateWidget.h"
+#include "ui_StalledIssueHeader.h"
 
-#include <QWidget>
-#include <QStyleOptionViewItem>
 #include <QFutureWatcher>
 #include <QPointer>
-
-#include "ui_StalledIssueHeader.h"
+#include <QStyleOptionViewItem>
+#include <QWidget>
 
 class StalledIssueHeaderCase;
 
 class StalledIssueHeader : public StalledIssueBaseDelegateWidget
 {
     Q_OBJECT
-
 
 public:
     enum ActionsId

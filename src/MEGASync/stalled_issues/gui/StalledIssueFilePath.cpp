@@ -1,11 +1,8 @@
 #include "StalledIssueFilePath.h"
-#include "ui_StalledIssueFilePath.h"
 
+#include "StalledIssuesUtilities.h"
+#include "ui_StalledIssueFilePath.h"
 #include "Utilities.h"
-#include "Platform.h"
-#include "QMegaMessageBox.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
 
 #include <QPainter>
 #include <QPoint>

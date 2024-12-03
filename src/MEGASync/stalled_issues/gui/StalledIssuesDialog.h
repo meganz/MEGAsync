@@ -3,9 +3,6 @@
 
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
-#include "StalledIssueLoadingItem.h"
-
-#include <ViewLoadingScene.h>
 
 #include <QDialog>
 #include <QGraphicsDropShadowEffect>

@@ -1,13 +1,9 @@
 #include "LocalAndRemoteChooseWidget.h"
-#include "ui_StalledIssueChooseWidget.h"
+
+#include "PlatformStrings.h"
 #include "StalledIssuesModel.h"
+#include "ui_StalledIssueChooseWidget.h"
 
-#include <platform/PlatformStrings.h>
-
-///// Choose titles
-///
-///
-//BASE CLASS
 LocalAndRemoteStalledIssueBaseChooseWidget::LocalAndRemoteStalledIssueBaseChooseWidget(QWidget *parent) :
     StalledIssueChooseWidget(parent)
 {
