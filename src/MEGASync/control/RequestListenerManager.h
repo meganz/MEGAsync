@@ -90,7 +90,7 @@ public:
     RequestListenerManager(const RequestListenerManager&) = delete;
     RequestListenerManager& operator=(const RequestListenerManager&) = delete;
 
-    ~RequestListenerManager() {}
+    ~RequestListenerManager();
 
     std::shared_ptr<mega::QTMegaRequestListener> registerAndGetListener(const ListenerCallbacks& callbacks);
 
@@ -142,7 +142,8 @@ private:
     RequestListenerManager();
 
     QMutex mListenerMutex;
-    QList<std::shared_ptr<ObserverRequestListener>> mListeners;
+
+    QList<QPointer<ObserverRequestListener>> mListeners;
 };
 
 #endif // REQUEST_LISTENER_MANAGER_H
