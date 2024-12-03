@@ -1,14 +1,15 @@
 #include "PlatformImplementation.h"
 
+#include "RecursiveShellNotifier.h"
+#include "ThreadedQueueShellNotifier.h"
+#include "WinAPIShell.h"
+#include "WinTrayReceiver.h"
 #include <AccCtrl.h>
 #include <Aclapi.h>
 #include <Sddl.h>
 #include <Shlobj.h>
 #include <Shlwapi.h>
 
-#include <platform/win/RecursiveShellNotifier.h>
-#include <platform/win/ThreadedQueueShellNotifier.h>
-#include <platform/win/WinAPIShell.h>
 #include <QDesktopWidget>
 #include <QHostInfo>
 #include <QOperatingSystemVersion>
