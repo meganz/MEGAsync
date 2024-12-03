@@ -1,15 +1,15 @@
 #include "MegaApplication.h"
 #include "MegaProxyStyle.h"
 #include "Platform.h"
-#include "qtlockedfile/qtlockedfile.h"
-#include "ScaleFactorManager.h"
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
-#include "StatsEventHandler.h"
-#include "CrashHandler.h"
+#include "qtlockedfile/qtlockedfile.h"
+#include "ScaleFactorManager.h"
 
 #include <QFontDatabase>
-#include <assert.h>
+
+#include <cassert>
+#include <iostream>
 
 #ifdef Q_OS_LINUX
     #include <signal.h>

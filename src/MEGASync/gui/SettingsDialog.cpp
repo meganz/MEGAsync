@@ -1455,7 +1455,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
                 if (node)
                 {
                     std::unique_ptr<const char[]> nPath(mMegaApi->getNodePath(node.get()));
-                    if (nPath && std::strlen(nPath.get()))
+                    if (nPath && strlen(nPath.get()))
                     {
                         mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
                         mUi->eUploadFolder->setText(QString::fromUtf8(nPath.get()));

@@ -1,14 +1,13 @@
 #include "PlatformImplementation.h"
 
-#include <QScreen>
 #include <QHostInfo>
+#include <QScreen>
 
-#include <unistd.h>
-#include <pwd.h>
 #include <cstdlib>
-#include <filesystem>
-#include <iostream>
 #include <fstream>
+#include <iostream>
+#include <pwd.h>
+#include <unistd.h>
 
 using namespace std;
 using namespace mega;
