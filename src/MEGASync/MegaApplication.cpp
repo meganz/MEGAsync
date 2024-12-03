@@ -41,16 +41,13 @@
 #include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
-#include "UpdatesModel.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
-
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
 #include <DialogOpener.h>
+#include <StalledIssuesDialog.h>
+
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -59,9 +56,11 @@
 #include <QNetworkProxy>
 #include <QScreen>
 #include <QSettings>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolTip>
 #include <QTranslator>
-#include <StalledIssuesDialog.h>
+
+#include <cassert>
 
 #ifdef Q_OS_LINUX
 #include <condition_variable>

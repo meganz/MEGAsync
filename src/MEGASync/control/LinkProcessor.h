@@ -1,17 +1,19 @@
 #ifndef LINKPROCESSOR_H
 #define LINKPROCESSOR_H
 
-#include <QObject>
-#include <QStringList>
-#include <QPointer>
-#include <memory>
+#include "LinkObject.h"
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
-#include <QSharedPointer>
-#include <QQueue>
-#include <QList>
-#include "LinkObject.h"
 #include "SetTypes.h"
+
+#include <QList>
+#include <QObject>
+#include <QPointer>
+#include <QQueue>
+#include <QSharedPointer>
+#include <QStringList>
+
+#include <memory>
 
 namespace mega
 {

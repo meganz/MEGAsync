@@ -1,6 +1,7 @@
 #include "TransferItem.h"
 
 #include "MegaApplication.h"
+#include "TransferRemainingTime.h"
 #include "Utilities.h"
 
 using namespace mega;

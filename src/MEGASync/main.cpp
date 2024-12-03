@@ -4,7 +4,6 @@
 #include "PowerOptions.h"
 #include "ProxyStatsEventHandler.h"
 #include "qtlockedfile/qtlockedfile.h"
-#include "ScaleFactorManager.h"
 
 #include <QFontDatabase>
 
@@ -12,21 +11,22 @@
 #include <iostream>
 
 #ifdef Q_OS_LINUX
-    #include <signal.h>
-    #include <condition_variable>
+#include <condition_variable>
+#include <signal.h>
 #endif
 
 #ifndef WIN32
-//sleep
 #include <unistd.h>
 #else
-#include <Windows.h>
 #include <Psapi.h>
-#include <Strsafe.h>
 #include <Shellapi.h>
+#include <Strsafe.h>
+#include <Windows.h>
 #endif
 
 #if defined(WIN32) || defined(Q_OS_LINUX)
+#include "ScaleFactorManager.h"
+
 #include <QScreen>
 #endif
 

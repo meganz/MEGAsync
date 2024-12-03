@@ -1,9 +1,7 @@
 #ifndef TRANSFERMANAGERDELEGATEWIDGET_H
 #define TRANSFERMANAGERDELEGATEWIDGET_H
 
-#include "TransferItem.h"
 #include "TransferBaseDelegateWidget.h"
-
 
 #include <QDateTime>
 #include <QUrl>

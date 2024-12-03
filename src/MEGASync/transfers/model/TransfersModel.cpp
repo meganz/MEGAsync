@@ -1,19 +1,18 @@
 #include "TransfersModel.h"
-#include "MegaApplication.h"
-#include "Utilities.h"
-#include "Platform.h"
-#include "TransferItem.h"
-#include "QMegaMessageBox.h"
-#include "EventUpdater.h"
-#include "SettingsDialog.h"
-#include "PowerOptions.h"
-#include "PlatformStrings.h"
-#include "TransferMetaData.h"
-#include <QMegaMessageBox.h>
-#include "MegaTransferView.h"
-#include "StalledIssuesUtilities.h"
-#include "StatsEventHandler.h"
 
+#include "EventUpdater.h"
+#include "MegaApplication.h"
+#include "MegaTransferView.h"
+#include "Platform.h"
+#include "PowerOptions.h"
+#include "QMegaMessageBox.h"
+#include "SettingsDialog.h"
+#include "StatsEventHandler.h"
+#include "TransferItem.h"
+#include "TransferMetaData.h"
+#include "Utilities.h"
+
+#include <QMegaMessageBox.h>
 #include <QSharedData>
 
 #include <algorithm>

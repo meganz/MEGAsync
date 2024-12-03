@@ -1,21 +1,18 @@
 #ifndef TRANSFERSMODEL_H
 #define TRANSFERSMODEL_H
 
+#include "megaapi.h"
+#include "Preferences.h"
 #include "QTMegaTransferListener.h"
 #include "TransferItem.h"
 #include "TransferMetaData.h"
-#include "TransferRemainingTime.h"
-#include "Preferences.h"
-
-#include <megaapi.h>
 
 #include <QAbstractItemModel>
-#include <QLinkedList>
-#include <QtConcurrent/QtConcurrent>
 #include <QFutureWatcher>
+#include <QLinkedList>
 #include <QReadWriteLock>
+#include <QtConcurrent/QtConcurrent>
 
-#include <set>
 #include <memory>
 
 struct TransfersCount

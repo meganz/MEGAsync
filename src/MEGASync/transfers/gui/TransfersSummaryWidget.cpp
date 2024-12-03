@@ -1,16 +1,15 @@
 #include "TransfersSummaryWidget.h"
-#include "ui_TransfersSummaryWidget.h"
-
-#include <QPainter>
-#include <QtMath>
-#include <QPainterPath>
-#include <QTimer>
-#include <QGraphicsOpacityEffect>
 
 #include "TransferItem.h"
-#include "Utilities.h"
+#include "ui_TransfersSummaryWidget.h"
 
-TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
+#include <QGraphicsOpacityEffect>
+#include <QPainter>
+#include <QPainterPath>
+#include <QTimer>
+#include <QtMath>
+
+TransfersSummaryWidget::TransfersSummaryWidget(QWidget* parent):
     QWidget(parent),
     ui(new Ui::TransfersSummaryWidget)
 {

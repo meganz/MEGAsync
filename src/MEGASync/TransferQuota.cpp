@@ -1,8 +1,8 @@
-#include "mega/types.h"
 #include "TransferQuota.h"
-#include "Platform.h"
-#include "OverQuotaDialog.h"
+
 #include "DialogOpener.h"
+#include "OverQuotaDialog.h"
+#include "Platform.h"
 #include "StatsEventHandler.h"
 
 TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)

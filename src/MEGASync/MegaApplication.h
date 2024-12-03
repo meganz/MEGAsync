@@ -2,6 +2,7 @@
 #define MEGAAPPLICATION_H
 
 #include "BlockingStageProgressController.h"
+#include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
@@ -10,7 +11,6 @@
 #include "MegaDownloader.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
-#include "notifications/DesktopNotifications.h"
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
@@ -25,7 +25,6 @@
 #include "UpgradeOverStorage.h"
 #include "Utilities.h"
 
-#include <memory>
 #include <QAction>
 #include <QApplication>
 #include <QDataStream>
@@ -37,6 +36,8 @@
 #include <QNetworkInterface>
 #include <QQueue>
 #include <QSystemTrayIcon>
+
+#include <memory>
 
 class IntervalExecutioner;
 class TransfersModel;

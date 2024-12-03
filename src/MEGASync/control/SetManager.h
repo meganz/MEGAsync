@@ -1,14 +1,16 @@
 #ifndef SET_MANAGER_H
 #define SET_MANAGER_H
 
-#include <QObject>
-#include <QList>
-#include <QMutex>
-#include <memory>
+#include "AsyncHandler.h"
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
-#include "AsyncHandler.h"
 #include "SetTypes.h"
+
+#include <QList>
+#include <QMutex>
+#include <QObject>
+
+#include <memory>
 
 namespace mega
 {
