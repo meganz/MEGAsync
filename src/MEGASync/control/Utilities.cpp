@@ -1,10 +1,12 @@
 #include "Utilities.h"
 
+// clang-format off
+#include "Platform.h"
 #include "gzjoin.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
-#include "Platform.h"
 #include "Preferences.h"
+// clang-format on
 
 #include <QApplication>
 #include <QCryptographicHash>
@@ -19,10 +21,11 @@
 
 #ifndef WIN32
 #include "megaapi.h"
+
 #include <utime.h>
 #else
-#include <windows.h>
 #include <shellapi.h>
+#include <windows.h>
 #endif
 
 using namespace std;
