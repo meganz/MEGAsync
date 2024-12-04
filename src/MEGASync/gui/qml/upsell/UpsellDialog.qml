@@ -13,8 +13,8 @@ QmlDialog {
 
     readonly property int contentMargin: 24
 
-    property int maxWidth: Math.max(712, columnItem.width + 2 * window.contentMargin)
-    property int maxHeight: Math.max(543, columnItem.height + 2 * window.contentMargin)
+    property int maxWidth: Math.max(544, columnItem.width + 2 * window.contentMargin)
+    property int maxHeight: Math.max(495, columnItem.height + 2 * window.contentMargin)
 
     visible: false
     modality: Qt.NonModal
@@ -28,19 +28,17 @@ QmlDialog {
     Column {
         id: columnItem
 
-        readonly property int columnSpacing: 12
-
         anchors {
             left: parent.left
             top: parent.top
             topMargin: window.contentMargin
             leftMargin: window.contentMargin
             rightMargin: window.contentMargin
-            bottomMargin: window.contentMargin - Constants.focusBorderWidth
+            bottomMargin: window.contentMargin
         }
         width: content.width
         height: header.height + content.height + columnItem.spacing
-        spacing: columnItem.columnSpacing
+        spacing: window.contentMargin + Constants.focusAdjustment
 
         HeaderItem {
             id: header

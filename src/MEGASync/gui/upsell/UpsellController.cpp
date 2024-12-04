@@ -107,54 +107,6 @@ void UpsellController::requestPricingData()
     MegaSyncApp->getMegaApi()->getPricing(listener.get());
 }
 
-bool UpsellController::setData(int row, const QVariant& value, int role)
-{
-    return setData(mPlans->getPlan(row), value, role);
-}
-
-bool UpsellController::setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role)
-{
-    auto result(true);
-
-    switch (role)
-    {
-        case UpsellPlans::SELECTED_ROLE:
-        {
-            data->setSelected(value.toBool());
-            auto row = mPlans->plans().indexOf(data);
-            emit dataChanged(row, row, QVector<int>() << role);
-
-            if (value.toBool())
-            {
-                auto currentSelected(mPlans->getCurrentPlanSelected());
-                mPlans->getPlan(currentSelected)->setSelected(false);
-                emit dataChanged(currentSelected, currentSelected, QVector<int>() << role);
-                updatePlansAt(data, row);
-            }
-            break;
-        }
-        case UpsellPlans::NAME_ROLE:
-        // Fallthrough
-        case UpsellPlans::RECOMMENDED_ROLE:
-        // Fallthrough
-        case UpsellPlans::STORAGE_ROLE:
-        // Fallthrough
-        case UpsellPlans::TRANSFER_ROLE:
-        // Fallthrough
-        case UpsellPlans::PRICE_ROLE:
-        // Fallthrough
-        case UpsellPlans::AVAILABLE_ROLE:
-        // Fallthrough
-        default:
-        {
-            result = false;
-            break;
-        }
-    }
-
-    return result;
-}
-
 QVariant UpsellController::data(int row, int role) const
 {
     return data(mPlans->getPlan(row), role);
@@ -198,14 +150,26 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                                                                    data->yearlyData().price());
                 break;
             }
-            case UpsellPlans::SELECTED_ROLE:
+            case UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE:
             {
-                field = data->selected();
+                field = getLocalePriceString(
+                    calculateTotalPriceWithoutDiscount(data->monthlyData().price()));
+                break;
+            }
+            case UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE:
+            {
+                field = getLocalePriceString(
+                    calculateMonthlyPriceWithDiscount(data->yearlyData().price()));
                 break;
             }
             case UpsellPlans::AVAILABLE_ROLE:
             {
                 field = isAvailable(data);
+                break;
+            }
+            case UpsellPlans::SHOW_PRO_FLEXI_MESSAGE:
+            {
+                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII;
                 break;
             }
             default:
@@ -223,10 +187,15 @@ std::shared_ptr<UpsellPlans> UpsellController::getPlans() const
     return mPlans;
 }
 
-void UpsellController::openSelectedPlanUrl()
+void UpsellController::openPlanUrl(int index)
 {
-    auto row = mPlans->getCurrentPlanSelected();
-    Utilities::openUrl(getUpsellPlanUrl(mPlans->getPlan(row)->proLevel()));
+    auto plan = mPlans->getPlan(index);
+    if (!plan)
+    {
+        return;
+    }
+
+    Utilities::openUrl(getUpsellPlanUrl(plan->proLevel()));
 }
 
 void UpsellController::setBilledPeriod(bool isMonthly)
@@ -311,9 +280,10 @@ void UpsellController::onBilledPeriodChanged()
 
     emit dataChanged(0,
                      mPlans->size() - 1,
-                     QVector<int>() << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
-                                    << UpsellPlans::PRICE_ROLE << UpsellPlans::AVAILABLE_ROLE
-                                    << UpsellPlans::RECOMMENDED_ROLE << UpsellPlans::SELECTED_ROLE);
+                     QVector<int>()
+                         << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
+                         << UpsellPlans::PRICE_ROLE << UpsellPlans::AVAILABLE_ROLE
+                         << UpsellPlans::RECOMMENDED_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE);
 }
 
 void UpsellController::onTransferRemainingTimeElapsed()
@@ -495,10 +465,9 @@ void UpsellController::updatePlans()
     int row(getRowForNextRecommendedPlan());
     if (currentRecommendedRow != row)
     {
-        resetSelectedAndRecommended();
+        resetRecommended();
 
         auto plan(mPlans->getPlan(row));
-        plan->setSelected(true);
         plan->setRecommended(true);
         updatePlansAt(plan, row);
     }
@@ -506,7 +475,6 @@ void UpsellController::updatePlans()
 
 void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row)
 {
-    mPlans->setCurrentPlanSelected(row);
     mPlans->setCurrentPlanName(data->name());
 
     // Calculate discount if both monthly and yearly data are available, otherwise set it to -1
@@ -540,7 +508,7 @@ int UpsellController::getRowForNextRecommendedPlan() const
     return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : 0;
 }
 
-void UpsellController::resetSelectedAndRecommended()
+void UpsellController::resetRecommended()
 {
     const auto& plans(mPlans->plans());
     std::for_each(plans.begin(),
@@ -548,7 +516,6 @@ void UpsellController::resetSelectedAndRecommended()
                   [](auto& plan)
                   {
                       plan->setRecommended(false);
-                      plan->setSelected(false);
                   });
 }
 
@@ -609,4 +576,14 @@ bool UpsellController::planFitsUnderStorageOQConditions(int64_t planGbStorage) c
 
     return (isAlmostFullStorageOQ || isTxExceeded ||
             ((isFullStorageOQ || isFullStorageUnderTxExceeded) && isStorageFit));
+}
+
+float UpsellController::calculateTotalPriceWithoutDiscount(float monthlyPrice) const
+{
+    return monthlyPrice * NUM_MONTHS_PER_PLAN;
+}
+
+float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) const
+{
+    return yearlyPrice / NUM_MONTHS_PER_PLAN;
 }

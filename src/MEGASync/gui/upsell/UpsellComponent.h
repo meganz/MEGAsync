@@ -27,7 +27,7 @@ public:
     void setViewMode(UpsellPlans::ViewMode mode);
 
 public slots:
-    void buyButtonClicked();
+    void buyButtonClicked(int index);
     void billedRadioButtonClicked(bool isMonthly);
     void linkInDescriptionClicked();
 

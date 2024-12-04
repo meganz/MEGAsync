@@ -60,9 +60,9 @@ void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
     mController->setViewMode(mode);
 }
 
-void UpsellComponent::buyButtonClicked()
+void UpsellComponent::buyButtonClicked(int index)
 {
-    mController->openSelectedPlanUrl();
+    mController->openPlanUrl(index);
 }
 
 void UpsellComponent::billedRadioButtonClicked(bool isMonthly)

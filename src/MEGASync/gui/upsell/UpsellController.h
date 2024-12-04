@@ -35,12 +35,10 @@ public:
 
     void requestPricingData();
 
-    bool setData(int row, const QVariant& value, int role);
-    bool setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role);
     QVariant data(int row, int role) const;
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
-    void openSelectedPlanUrl();
+    void openPlanUrl(int index);
 
     std::shared_ptr<UpsellPlans> getPlans() const;
     QString getMinProPlanNeeded(long long usedStorage) const;
@@ -84,11 +82,13 @@ private:
     void updatePlans();
     void updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row);
     int getRowForNextRecommendedPlan() const;
-    void resetSelectedAndRecommended();
+    void resetRecommended();
     int getRowForCurrentRecommended();
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isPlanUnderCurrentProLevel(int proLevel) const;
     bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
+    float calculateTotalPriceWithoutDiscount(float monthlyPrice) const;
+    float calculateMonthlyPriceWithDiscount(float yearlyPrice) const;
 };
 
 #endif // UPSELL_CONTROLLER_H

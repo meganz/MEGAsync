@@ -31,15 +31,17 @@ public:
     };
     Q_ENUM(ViewMode)
 
-    enum BackupFolderRoles
+    enum UpsellPlanRoles
     {
         NAME_ROLE = Qt::UserRole + 1,
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
         PRICE_ROLE,
-        SELECTED_ROLE,
-        AVAILABLE_ROLE
+        TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE,
+        MONTHLY_PRICE_WITH_DISCOUNT_ROLE,
+        AVAILABLE_ROLE,
+        SHOW_PRO_FLEXI_MESSAGE
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -72,7 +74,6 @@ public:
         static QHash<int, QByteArray> roleNames();
 
         int proLevel() const;
-        bool selected() const;
         bool isRecommended() const;
         const QString& name() const;
         const AccountBillingPlanData& monthlyData() const;
@@ -81,7 +82,6 @@ public:
     private:
         int mProLevel;
         bool mRecommended;
-        bool mSelected;
         QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
@@ -89,7 +89,6 @@ public:
         friend class UpsellPlans;
         friend class UpsellController;
 
-        void setSelected(bool newChecked);
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
@@ -128,7 +127,6 @@ public:
     QString getCurrencyName() const;
     QString getCurrentPlanName() const;
     QString getTransferRemainingTime() const;
-    int getCurrentPlanSelected() const;
     long long getTransferFinishTime() const;
 
 signals:
@@ -146,7 +144,6 @@ private:
     ViewMode mViewMode;
     bool mIsMonthly;
     bool mIsBillingCurrency;
-    int mCurrentPlanSelected;
     int mCurrentDiscount;
     QString mCurrentPlanName;
     QString mTransferRemainingTime;
@@ -160,7 +157,6 @@ private:
     void setCurrentDiscount(int discount);
     void setCurrentPlanName(const QString& name);
     void setTransferRemainingTime(const QString& time);
-    void setCurrentPlanSelected(int row);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);
 };

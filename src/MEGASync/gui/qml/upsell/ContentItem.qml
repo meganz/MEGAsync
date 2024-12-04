@@ -12,15 +12,10 @@ import UpsellPlans 1.0
 FocusScope {
     id: root
 
-    readonly property real minimumWidth: 664
-    readonly property real itemsSpacing: 12
-    readonly property real radioButtonsSpacing: 24
-    readonly property real billedRectHorizontalPadding: 8
-    readonly property real billedRectVerticalPadding: 4
-    readonly property real billedRectRadius: 4
-    readonly property real billedTextLineHeight: 16
-    readonly property real buttonsSpacing: 4
-    readonly property real plansRowSpacing: 0
+    readonly property real minimumWidth: 496
+    readonly property real itemsSpacing: 22
+    readonly property real chipSpacing: 12
+    readonly property real plansRowSpacing: 8
 
     height: columnItem.height
     width: columnItem.width
@@ -32,16 +27,17 @@ FocusScope {
         spacing: root.itemsSpacing
 
         Row {
-            id: billedRow
-
-            spacing: root.itemsSpacing
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors {
+                left: parent.left
+                leftMargin: root.chipSpacing + Constants.focusAdjustment
+            }
+            spacing: root.chipSpacing
             height: comboBoxRow.height
 
             Row {
                 id: comboBoxRow
 
-                spacing: root.radioButtonsSpacing
+                spacing: root.itemsSpacing
 
                 RadioButton {
                     id: billedMonthlyRadioButton
@@ -73,17 +69,22 @@ FocusScope {
 
                 anchors.verticalCenter: parent.verticalCenter
                 sizes: Chips.SmallSizes {}
+                colors {
+                    background: ColorTheme.notificationInfo
+                    border: ColorTheme.notificationInfo
+                    text: ColorTheme.textInfo
+                }
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
                 visible: upsellPlansAccess.currentDiscount > 0
             }
 
-        } // Row: billedRow
+        }
 
         Item {
             id: plansItem
 
-            readonly property real planTotalWidth: 168
-            readonly property real planTotalHeight: 223
+            readonly property real planTotalWidth: 160
+            readonly property real planTotalHeight: 283
 
             anchors {
                 horizontalCenter: parent.horizontalCenter
@@ -93,8 +94,6 @@ FocusScope {
             height: plansItem.planTotalHeight
 
             Row {
-                id: plansRow
-
                 anchors {
                     horizontalCenter: parent.horizontalCenter
                 }
@@ -105,7 +104,7 @@ FocusScope {
                     // The width depends on the total number of plans, in some cases the number
                     // of plans is different for monthly/yearly billing.
                     plansItem.width = plansItem.planTotalWidth * upsellModelAccess.rowCount()
-                                        + 2 * Constants.focusAdjustment;
+                                        + root.plansRowSpacing * (upsellModelAccess.rowCount() - 1);
                 }
 
                 Repeater {
@@ -124,20 +123,21 @@ FocusScope {
                         gbStorage: model.gbStorage
                         gbTransfer: model.gbTransfer
                         price: model.price
-                        selected: model.selected
+                        totalPriceWithoutDiscount: model.totalPriceWithoutDiscount
+                        monthlyPriceWithDiscount: model.monthlyPriceWithDiscount
                         visible: model.available
+                        showProFlexiMessage: model.showProFlexiMessage
+                        monthly: upsellPlansAccess.monthly
+                        billingCurrency: upsellPlansAccess.billingCurrency
+                        currencyName: upsellPlansAccess.currencyName
 
-                        ButtonGroup.group: planButtonGroupItem
-
-                        onClicked: {
-                            if (!model.selected) {
-                                model.selected = true;
-                            }
+                        onBuyButtonClicked: {
+                            upsellComponentAccess.buyButtonClicked(model.index);
                         }
                     }
                 }
 
-            } // Row: plansRow
+            }
 
         } // Item: plansItem
 
@@ -150,49 +150,10 @@ FocusScope {
             visible: !upsellPlansAccess.billingCurrency
         }
 
-        Row {
-            id: footerButtonsRow
-
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: root.buttonsSpacing
-
-            SecondaryButton {
-                id: leftButton
-
-                text: {
-                    switch (upsellPlansAccess.viewMode) {
-                        case UpsellPlans.ViewMode.STORAGE_ALMOST_FULL:
-                        case UpsellPlans.ViewMode.STORAGE_FULL:
-                            return UpsellStrings.notNow;
-                        case UpsellPlans.ViewMode.TRANSFER_EXCEEDED:
-                            return UpsellStrings.iWillWait;
-                        default:
-                            return "";
-                    }
-                }
-                onClicked: {
-                    window.close();
-                }
-            }
-
-            PrimaryButton {
-                id: rightButton
-
-                text: UpsellStrings.buyPlan.arg(upsellPlansAccess.currentPlanName)
-                onClicked: {
-                    upsellComponentAccess.buyButtonClicked();
-                }
-            }
-        }
-
     } // Column: columnItem
 
     ButtonGroup {
         id: billedPeriodButtonGroupItem
-    }
-
-    ButtonGroup {
-        id: planButtonGroupItem
-    }    
+    }   
 
 }
