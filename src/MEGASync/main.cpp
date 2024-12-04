@@ -1,3 +1,7 @@
+#ifndef DEBUG
+#include "CrashHandler.h"
+#endif
+
 #include "MegaApplication.h"
 #include "MegaProxyStyle.h"
 #include "Platform.h"
