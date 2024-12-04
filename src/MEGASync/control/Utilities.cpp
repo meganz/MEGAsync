@@ -1,19 +1,19 @@
 #include "Utilities.h"
 
-#include "Preferences.h"
-#include "MegaApplication.h"
 #include "gzjoin.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
 #include "Platform.h"
+#include "Preferences.h"
 
 #include <QApplication>
-#include <QImageReader>
-#include <QDirIterator>
-#include <QTextStream>
+#include <QCryptographicHash>
 #include <QDateTime>
 #include <QDesktopWidget>
+#include <QDirIterator>
+#include <QImageReader>
 #include <QScreen>
-#include <QCryptographicHash>
-#include <MegaApiSynchronizedRequest.h>
+#include <QTextStream>
 
 #include <iostream>
 

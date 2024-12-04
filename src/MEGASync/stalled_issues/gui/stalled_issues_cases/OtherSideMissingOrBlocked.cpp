@@ -1,7 +1,7 @@
 #include "OtherSideMissingOrBlocked.h"
-#include "ui_OtherSideMissingOrBlocked.h"
 
 #include "StalledIssueHeader.h"
+#include "ui_OtherSideMissingOrBlocked.h"
 
 #include <QGraphicsOpacityEffect>
 

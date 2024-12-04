@@ -12,7 +12,6 @@
 #include "TransferMetaData.h"
 #include "Utilities.h"
 
-#include <QMegaMessageBox.h>
 #include <QSharedData>
 
 #include <algorithm>

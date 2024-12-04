@@ -1,14 +1,12 @@
 #include "Onboarding.h"
 
-#include "PasswordStrengthChecker.h"
 #include "AccountStatusController.h"
-#include "OnboardingQmlDialog.h"
-
 #include "Backups.h"
-#include "SyncsComponent.h"
-
-#include "SettingsDialog.h"
 #include "MegaApplication.h"
+#include "OnboardingQmlDialog.h"
+#include "PasswordStrengthChecker.h"
+#include "SettingsDialog.h"
+#include "SyncsComponent.h"
 
 #include <QQmlEngine>
 

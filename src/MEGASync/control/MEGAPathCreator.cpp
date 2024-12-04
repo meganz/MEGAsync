@@ -1,7 +1,7 @@
 #include "MEGAPathCreator.h"
 
-#include <MegaApplication.h>
-#include <MegaApiSynchronizedRequest.h>
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
 
 //Create Folders
 std::shared_ptr<mega::MegaNode> MEGAPathCreator::createFolder(mega::MegaNode* parentNode,

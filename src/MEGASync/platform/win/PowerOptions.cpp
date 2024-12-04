@@ -1,10 +1,9 @@
-#include <platform/PowerOptions.h>
+#include "platform/PowerOptions.h"
 
 #include "Preferences.h"
-#include "megaapi.h"
-
-#include <Windows.h>
 #include <WinBase.h>
+#include <Windows.h>
+
 #include <powersetting.h>
 
 #ifdef _MSC_VER

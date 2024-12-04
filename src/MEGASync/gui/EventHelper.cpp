@@ -1,4 +1,5 @@
 #include "EventHelper.h"
+
 #include <QVariant>
 
 const QString EventManager::EVENT_PROPERTY = QString::fromUtf8("EVENTMANAGER_EVENT_%1");

@@ -2,7 +2,6 @@
 
 #include "AccountDetailsDialog.h"
 #include "AccountDetailsManager.h"
-#include "assert.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
@@ -29,6 +28,8 @@
 #include <QToolTip>
 #include <QUrl>
 #include <QVBoxLayout>
+
+#include <cassert>
 
 #ifdef _WIN32
 #include <chrono>

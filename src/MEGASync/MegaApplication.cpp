@@ -36,6 +36,7 @@
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
 #include "RequestListenerManager.h"
+#include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
@@ -45,8 +46,6 @@
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
 
 #include <QCheckBox>
 #include <QClipboard>

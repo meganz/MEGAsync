@@ -2,7 +2,7 @@
 
 #include "EventHelper.h"
 #include "MegaApplication.h"
-#include "StatsEventHandler.h"
+#include "StatsEventHandler.h" // used in cast in function polish
 
 #include <QComboBox>
 #include <QHeaderView>

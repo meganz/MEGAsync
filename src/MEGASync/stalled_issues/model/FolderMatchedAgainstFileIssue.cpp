@@ -1,4 +1,5 @@
 #include "FolderMatchedAgainstFileIssue.h"
+
 #include "StalledIssuesUtilities.h"
 
 FolderMatchedAgainstFileIssue::FolderMatchedAgainstFileIssue(const mega::MegaSyncStall* stallIssue):

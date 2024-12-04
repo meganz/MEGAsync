@@ -1,13 +1,11 @@
 #include "BackupsModel.h"
 
+#include "megaapi.h"
 #include "QmlManager.h"
 #include "StandardIconProvider.h"
 #include "SyncController.h"
 #include "SyncInfo.h"
-
 #include "Utilities.h"
-
-#include "megaapi.h"
 
 #include <QQmlContext>
 

@@ -1,4 +1,5 @@
 #include "CrashReportDialog.h"
+
 #include "ui_CrashReportDialog.h"
 
 CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :

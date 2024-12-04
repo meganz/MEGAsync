@@ -1,10 +1,11 @@
 #include "ScanningWidget.h"
+
+#include "BlurredShadowEffect.h"
+#include "TransferMetaData.h"
 #include "ui_ScanningWidget.h"
+#include "Utilities.h"
 
 #include <QMovie>
-#include "BlurredShadowEffect.h"
-#include "Utilities.h"
-#include "TransferMetaData.h"
 
 ScanningWidget::ScanningWidget(QWidget *parent) :
     QWidget(parent),

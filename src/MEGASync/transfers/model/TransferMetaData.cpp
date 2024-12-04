@@ -1,17 +1,14 @@
-#include <TransferMetaData.h>
+#include "TransferMetaData.h"
+
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "Notificator.h"
+#include "Preferences.h"
 
 #include <QDir>
 
-#include <MegaApplication.h>
-#include "Preferences.h"
-#include <Notificator.h>
-#include <MegaNodeNames.h>
-
-#include <megaapi.h>
-#include <mega/types.h>
-
-
-//CLASS TRANSFERMETADATAITEMID
+// CLASS TRANSFERMETADATAITEMID
 bool TransferMetaDataItemId::operator==(const TransferMetaDataItemId& item) const
 {
     if((item.tag < 0) && (item.handle == mega::INVALID_HANDLE))

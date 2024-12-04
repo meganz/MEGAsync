@@ -1,10 +1,12 @@
 #include "UploadToMegaDialog.h"
-#include "ui_UploadToMegaDialog.h"
-#include "NodeSelectorSpecializations.h"
-#include "MegaApplication.h"
-#include "DialogOpener.h"
+
 #include "CommonMessages.h"
+#include "DialogOpener.h"
+#include "MegaApplication.h"
+#include "NodeSelectorSpecializations.h"
 #include "RequestListenerManager.h"
+#include "ui_UploadToMegaDialog.h"
+
 #include <QPointer>
 
 using namespace mega;

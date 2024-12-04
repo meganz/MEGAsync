@@ -1,7 +1,6 @@
 #include "StalledIssueLoadingItem.h"
-#include "ui_StalledIssueLoadingItem.h"
 
-#include <StalledIssueHeader.h>
+#include "ui_StalledIssueLoadingItem.h"
 
 const int LOADINGITEM_HEIGHT = 50; /*check ui*/
 

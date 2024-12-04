@@ -4,7 +4,7 @@
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
 #include "NodeSelectorSpecializations.h"
-#include "ProxyStatsEventHandler.h"
+#include "StatsEventHandler.h"
 #include "ui_RemoveBackupDialog.h"
 #include "Utilities.h"
 

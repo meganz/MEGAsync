@@ -1,17 +1,17 @@
 #include "MoveOrRenameCannotOccurIssue.h"
 
 #include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MEGAPathCreator.h"
 #include "MergeMEGAFolders.h"
+#include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
 #include "SyncController.h"
 #include "SyncInfo.h"
 #include "SyncSettings.h"
+#include "Utilities.h"
 
-#include <MegaApplication.h>
-#include <MEGAPathCreator.h>
 #include <QDir>
-#include <StalledIssuesUtilities.h>
-#include <StatsEventHandler.h>
-#include <Utilities.h>
 
 //////////////////////////////////////
 

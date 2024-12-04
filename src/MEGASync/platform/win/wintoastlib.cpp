@@ -1,11 +1,13 @@
 #include "wintoastlib.h"
+
 #include "Preferences.h"
 #include <VersionHelpers.h>
-#include <memory>
-#include <assert.h>
+
+#include <QCoreApplication>
 #include <QMessageBox>
 #include <QPushButton>
-#include <QCoreApplication>
+
+#include <cassert>
 
 #pragma comment(lib,"shlwapi")
 #pragma comment(lib,"user32")

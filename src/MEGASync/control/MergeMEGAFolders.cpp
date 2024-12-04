@@ -1,9 +1,9 @@
 #include "MergeMEGAFolders.h"
 
-#include <MegaApiSynchronizedRequest.h>
-#include <MegaApplication.h>
-#include <MoveToMEGABin.h>
-#include <Utilities.h>
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MoveToMEGABin.h"
+#include "Utilities.h"
 
 std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(mega::MegaNode* folderTarget,
                                                          mega::MegaNode* folderToMerge,

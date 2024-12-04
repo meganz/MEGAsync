@@ -1,4 +1,5 @@
 #include "ThemeManager.h"
+
 #include "Preferences/Preferences.h"
 
 const QMap<Preferences::ThemeType, QString> ThemeManager::mThemesMap = {

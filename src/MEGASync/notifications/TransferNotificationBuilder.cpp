@@ -1,8 +1,7 @@
 #include "TransferNotificationBuilder.h"
 
-#include <megaapi.h>
+#include "megaapi.h"
 #include "MegaApplication.h"
-#include <MegaNodeNames.h>
 
 #include <QString>
 

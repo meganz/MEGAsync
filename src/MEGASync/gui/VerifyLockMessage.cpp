@@ -1,17 +1,16 @@
 #include "VerifyLockMessage.h"
 
-#ifdef __APPLE__
-    #include "platform/macx/LockedPopOver.h"
-#endif
-
-#include "ui_VerifyLockMessage.h"
-
-#include <QTimer>
-#include <QDebug>
-#include <QStyle>
-#include "Utilities.h"
 #include "MegaApplication.h"
 #include "RequestListenerManager.h"
+#include "ui_VerifyLockMessage.h"
+#include "Utilities.h"
+#ifdef __APPLE__
+#include "platform/macx/LockedPopOver.h"
+#endif
+
+#include <QDebug>
+#include <QStyle>
+#include <QTimer>
 
 using namespace mega;
 

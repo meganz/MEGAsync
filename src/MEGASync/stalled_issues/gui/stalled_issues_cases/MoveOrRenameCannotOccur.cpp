@@ -1,14 +1,12 @@
 #include "MoveOrRenameCannotOccur.h"
-#include "ui_MoveOrRenameCannotOccur.h"
-
-#include <StalledIssueHeader.h>
-#include <MoveOrRenameCannotOccurIssue.h>
-#include <MegaApplication.h>
-#include <StalledIssuesModel.h>
 
 #include "LocalAndRemoteDifferentWidget.h"
-
-#include <TextDecorator.h>
+#include "MegaApplication.h"
+#include "MoveOrRenameCannotOccurIssue.h"
+#include "StalledIssueHeader.h"
+#include "StalledIssuesModel.h"
+#include "TextDecorator.h"
+#include "ui_MoveOrRenameCannotOccur.h"
 
 #include <QDialogButtonBox>
 

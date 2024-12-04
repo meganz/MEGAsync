@@ -1,4 +1,5 @@
 #include "MacXLocalSocketPrivate.h"
+
 #include "ClientSide.h"
 
 #include <QMutexLocker>

@@ -1,18 +1,16 @@
 #include "LoginController.h"
 
-#include "MegaApplication.h"
 #include "ConnectivityChecker.h"
+#include "MegaApplication.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
-
-#include "TextDecorator.h"
-#include "StatsEventHandler.h"
-
 #include "Preferences.h"
+#include "QMegaMessageBox.h"
 #include "QmlDialogManager.h"
+#include "RequestListenerManager.h"
+#include "StatsEventHandler.h"
+#include "TextDecorator.h"
 
 #include <QQmlContext>
-#include "RequestListenerManager.h"
 
 LoginController::LoginController(QObject* parent)
     : QObject{parent}

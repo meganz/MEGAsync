@@ -1,4 +1,5 @@
 #include "NodeSelectorLoadingDelegate.h"
+
 #include "ui_NodeSelectorLoadingDelegate.h"
 
 NodeSelectorLoadingDelegate::NodeSelectorLoadingDelegate(QWidget *parent) :

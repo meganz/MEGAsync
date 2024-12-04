@@ -1,4 +1,5 @@
 #include "TextDecorator.h"
+
 #include <QDebug>
 
 namespace Text
