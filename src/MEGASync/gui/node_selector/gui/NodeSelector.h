@@ -5,6 +5,7 @@
 #include "NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
+#include <QFrame>
 #include <QGraphicsDropShadowEffect>
 #include <QItemSelection>
 #include <QTimer>

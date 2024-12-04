@@ -1,18 +1,18 @@
-#pragma once
-
-#include "SyncSettings.h"
-#include "QTMegaListener.h"
+#ifndef SYNC_INFO_H
+#define SYNC_INFO_H
 
 #include "megaapi.h"
+#include "QTMegaListener.h"
+#include "SyncSettings.h"
 
+#include <QList>
+#include <QMap>
+#include <QMutex>
+#include <QSet>
 #include <QString>
 #include <QStringList>
-#include <QSet>
-#include <QMutex>
-#include <QVector>
-#include <QMap>
-#include <QList>
 #include <QTimer>
+#include <QVector>
 
 #include <memory>
 
@@ -177,3 +177,4 @@ protected:
     void onSyncStatsUpdated(mega::MegaApi *api, mega::MegaSyncStats* syncStats) override;
     void onSyncRemoteRootChanged(mega::MegaApi*, mega::MegaSync* sync) override;
 };
+#endif

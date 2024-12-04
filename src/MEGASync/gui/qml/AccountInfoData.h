@@ -1,10 +1,10 @@
 #ifndef ACCOUNTINFODATA_H
 #define ACCOUNTINFODATA_H
 
-#include "QTMegaRequestListener.h"
 #include "QTMegaGlobalListener.h"
+#include "QTMegaRequestListener.h"
 
-#include <qqml.h>
+#include <QtQml>
 
 #include <memory>
 

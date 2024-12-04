@@ -1,9 +1,9 @@
 #ifndef SYMLINKSTALLEDISSUE_H
 #define SYMLINKSTALLEDISSUE_H
 
-#include <StalledIssue.h>
-#include <syncs/control/MegaIgnoreRules.h>
-#include <megaapi.h>
+#include "megaapi.h"
+#include "MegaIgnoreRules.h"
+#include "StalledIssue.h"
 
 class IgnoredStalledIssue : public StalledIssue
 {

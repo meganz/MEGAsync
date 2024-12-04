@@ -1,6 +1,7 @@
 #ifndef MEGATRANSFERVIEW_H
 #define MEGATRANSFERVIEW_H
 
+#include "TransferManagerLoadingItem.h"
 #include "TransfersWidget.h"
 #include "ViewLoadingScene.h"
 

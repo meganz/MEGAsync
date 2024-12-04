@@ -1,11 +1,10 @@
 #ifndef SOLVEISSUEINSEVERALSTEPS_H
 #define SOLVEISSUEINSEVERALSTEPS_H
 
-#include <MegaApplication.h>
-#include <StalledIssue.h>
+#include "StalledIssue.h"
 
-#include <QTimer>
 #include <QDeadlineTimer>
+#include <QTimer>
 
 const int REQUEST_THRESHOLD = 60000; /*60 seconds*/
 

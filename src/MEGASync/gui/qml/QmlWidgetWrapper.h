@@ -1,9 +1,7 @@
 #ifndef QML_WIDGET_WRAPPER_H
 #define QML_WIDGET_WRAPPER_H
 
-#include "megaapi.h"
 #include "QmlItem.h"
-#include "QmlManager.h"
 
 #include <QApplication>
 #include <QEvent>

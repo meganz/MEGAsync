@@ -3,8 +3,9 @@
 
 #include "ShellNotifier.h"
 
-#include <memory>
 #include <QString>
+
+#include <memory>
 
 /**
  * @brief Uses baseNotifier to notify for every folder

@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QTimer>
+
 #include <mutex>
 
 class BlockingStageProgressController : public QObject

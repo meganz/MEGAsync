@@ -1,7 +1,7 @@
 #ifndef UPGRADEDIALOG_H
 #define UPGRADEDIALOG_H
 
-#include <megaapi.h>
+#include "megaapi.h"
 
 #include <QDialog>
 #include <QHBoxLayout>

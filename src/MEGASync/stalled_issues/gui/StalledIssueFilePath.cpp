@@ -1,5 +1,6 @@
 #include "StalledIssueFilePath.h"
 
+#include "MegaApplication.h"
 #include "StalledIssuesUtilities.h"
 #include "ui_StalledIssueFilePath.h"
 #include "Utilities.h"

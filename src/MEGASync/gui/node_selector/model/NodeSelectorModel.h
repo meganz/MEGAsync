@@ -1,16 +1,17 @@
 #ifndef NODESELECTORMODEL_H
 #define NODESELECTORMODEL_H
 
+#include "megaapi.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
 
-#include <megaapi.h>
-#include <memory>
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QList>
 #include <QMegaMessageBox.h>
 #include <QPointer>
+
+#include <memory>
 
 namespace UserAttributes{
 class CameraUploadFolder;

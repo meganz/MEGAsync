@@ -1,11 +1,10 @@
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
 
-#include "ui_NodeSelectorTreeViewWidget.h"
-#include "NodeSelectorProxyModel.h"
+#include "MegaNodeNames.h"
 #include "NodeSelectorModel.h"
 #include "NodeSelectorModelSpecialised.h"
-
-#include "MegaNodeNames.h"
+#include "NodeSelectorProxyModel.h"
+#include "ui_NodeSelectorTreeViewWidget.h"
 
 ///////////////////////////////////////////////////////////////////
 NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent)

@@ -1,8 +1,10 @@
 #ifndef UPLOADTOMEGADIALOG_H
 #define UPLOADTOMEGADIALOG_H
 
-#include <QDialog>
 #include "megaapi.h"
+
+#include <QDialog>
+
 #include <memory>
 
 namespace Ui {

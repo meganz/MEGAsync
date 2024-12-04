@@ -1,5 +1,6 @@
 #include "LocalAndRemoteChooseWidget.h"
 
+#include "MegaApplication.h"
 #include "PlatformStrings.h"
 #include "StalledIssuesModel.h"
 #include "ui_StalledIssueChooseWidget.h"

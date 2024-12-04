@@ -2,10 +2,11 @@
 #define NODESELECTORTREEVIEWWIDGETSPECIALIZATIONS_H
 
 #include "NodeSelectorTreeViewWidget.h"
-#include <QWidget>
-#include <QModelIndex>
+
 #include <QLabel>
+#include <QModelIndex>
 #include <QToolButton>
+#include <QWidget>
 
 #include <memory>
 

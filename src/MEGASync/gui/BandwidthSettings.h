@@ -1,10 +1,10 @@
 #ifndef BANDWIDTHSETTINGS_H
 #define BANDWIDTHSETTINGS_H
 
-#include <QDialog>
-
 #include "MegaApplication.h"
 #include "Preferences.h"
+
+#include <QDialog>
 
 namespace Ui {
 class BandwidthSettings;
