@@ -5,6 +5,15 @@
 #
 set(CMAKE_AUTOMOC ON)
 
+include(FetchContent)
+FetchContent_Declare(
+    megadesignassets
+    GIT_REPOSITORY git@code.developers.mega.co.nz:megadesignassets/megadesignassets.git
+    SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/megadesignassets"
+    GIT_TAG main  # Branch, tag, or commit
+)
+FetchContent_MakeAvailable(megadesignassets)
+
 add_executable(DesignTokensImporter)
 set_target_properties(DesignTokensImporter PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/src/DesignTokensImporter)
 
