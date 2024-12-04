@@ -494,11 +494,6 @@
         <translation>Limite velocità di download</translation>
     </message>
     <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Limite velocità di download:</translation>
-    </message>
-    <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
         <translation>Download:</translation>
@@ -524,29 +519,14 @@
         <translation>Numero di connessioni per trasferimento</translation>
     </message>
     <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Numero di connessioni per trasferimento:</translation>
-    </message>
-    <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Attiva questa opzione solo se i trasferimenti non partono. In tutte le altre circostanze, utilizzare HTTP è soddisfacente in quanto MEGA già cripta tutti i dati.</translation>
     </message>
     <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Aggiorna</translation>
-    </message>
-    <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
         <translation>Limite velocità di upload</translation>
-    </message>
-    <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Limite velocità di upload:</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -3161,11 +3141,6 @@ Attendi il completamento dei caricamenti.</translation>
         <translation>L&#8217;app ora è attiva. Clicca qui per aprire la finestra dello status.</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>L&#8217;app continuerà a lavorare, però gli aggiornamenti non saranno più supportati dalle versioni precedenti di macOS Sierra.</translation>
-    </message>
-    <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation>L&#8217;app continuerà a lavorare, anche se potresti non ricevere nuovi aggiornamenti.</translation>
@@ -4680,11 +4655,6 @@ Inserisci un nome differente.</translation>
         <translation>Contatti</translation>
     </message>
     <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Contatti:</translation>
-    </message>
-    <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
@@ -4693,11 +4663,6 @@ Inserisci un nome differente.</translation>
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
         <translation>Notifiche di informazioni</translation>
-    </message>
-    <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Info:</translation>
     </message>
     <message>
         <source>New contact request</source>
@@ -4720,11 +4685,6 @@ Inserisci un nome differente.</translation>
         <translation>Condivisioni</translation>
     </message>
     <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Condivisioni:</translation>
-    </message>
-    <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Qualcuno ha accettato la tua richiesta di contatto</translation>
@@ -4738,11 +4698,6 @@ Inserisci un nome differente.</translation>
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Download e upload</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>Download e upload:</translation>
     </message>
 </context>
 <context>
@@ -4813,11 +4768,6 @@ Inserisci un nome differente.</translation>
         <translation>Backup: Seleziona cartelle</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Annulla</translation>
-    </message>
-    <message>
         <source>Cancel account</source>
         <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
         <translation>Annulla creazione</translation>
@@ -4836,11 +4786,6 @@ Inserisci un nome differente.</translation>
         <source>Change your email address</source>
         <translatorcomment>Change email window title CON-466</translatorcomment>
         <translation>Cambia il tuo indirizzo email</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Scegli</translation>
     </message>
     <message>
         <source>Choose sync type</source>
@@ -4906,11 +4851,6 @@ Inserisci un nome differente.</translation>
         <source>Device name</source>
         <translatorcomment>Device name window title CON-467</translatorcomment>
         <translation>Nome del dispositivo</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>Fatto</translation>
     </message>
     <message>
         <source>Don’t cancel</source>
@@ -5043,11 +4983,6 @@ Inserisci un nome differente.</translation>
         <translation>I nomi più lunghi di 32 caratteri non sono supportati</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Avanti</translation>
-    </message>
-    <message>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>Una volta confermato, il tuo account verrà attivato.</translation>
@@ -5081,11 +5016,6 @@ Inserisci un nome differente.</translation>
         <source>Please enter your name</source>
         <translatorcomment>Name text input title CON-466</translatorcomment>
         <translation>Inserisci il tuo nome</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Precedente</translation>
     </message>
     <message>
         <source>Problem with two-factor authentication?</source>
@@ -5138,11 +5068,6 @@ Inserisci un nome differente.</translation>
         <translation>Sincronizzazione selettiva</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Imposta eccezioni</translation>
-    </message>
-    <message>
         <source>Set up MEGA</source>
         <translatorcomment>Onboarding window title CON-467</translatorcomment>
         <translation>Imposta MEGA</translation>
@@ -5156,11 +5081,6 @@ Inserisci un nome differente.</translation>
         <source>Sign up</source>
         <translatorcomment>Sign up button text CON-465</translatorcomment>
         <translation>Iscriviti</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Salta</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
@@ -5221,11 +5141,6 @@ Inserisci un nome differente.</translation>
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
         <translation>Per attivare il tuo account, devi verificare il tuo indirizzo email. Ti abbiamo inviato un&#8217;email con un link di conferma. Clicca sul link per verificare il tuo indirizzo email, poi potrai effettuare il login.</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Riprova</translation>
     </message>
     <message>
         <source>Upper and lower case letters</source>
@@ -5299,11 +5214,6 @@ Inserisci un nome differente.</translation>
         <source>Backup Folder</source>
         <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>Cartella di backup</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>Cartella di backuo:</translation>
     </message>
     <message>
         <source>View in MEGA</source>
@@ -5475,6 +5385,16 @@ Inserisci un nome differente.</translation>
 <context>
     <name>PermissionsDialog</name>
     <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>Applica</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
         <source>Files</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
         <translation>File</translation>
@@ -5503,6 +5423,11 @@ Inserisci un nome differente.</translation>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Permessi del proprietario:</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>Permessi</translation>
     </message>
     <message>
         <source>Permissions for new folders and files</source>
@@ -5655,15 +5580,27 @@ Inserisci un nome differente.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved the automatic and manual resolution of sync issues.
-- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
-        <translation>- Abbiamo migliorato la risoluzione automatica e manuale dei problemi di sincronizzazione.
-- L&#8217;interfaccia dell&#8217;account MEGA e il processo di upgrade dell&#8217;account sono stati entrambi rinnovati e migliorati.
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- Stabilità migliorata con elaborazione grafica isolata: abbiamo aggiornato la nostra app per eseguire il processore grafico (GFX) in un processo separato. Ciò significa che se le librerie grafiche di terze parti riscontrano problemi, l&#8217;app rimane stabile e inalterata, garantendo un&#8217;esperienza più fluida e senza interruzioni.
+- Fine del supporto per macOS 10.13 e 10.14: questo aggiornamento non supporta più macOS 10.13 e 10.14. Per continuare a ricevere aggiornamenti e supporto, aggiorna a una versione più recente di macOS.
+- La finestra Impostazioni è stata riprogettata.
+- Rilevamento e risoluzione dei problemi delle app migliorati.
 - Altri bug sono stati corretti e sono stati apportati numerosi miglioramenti.
 </translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>Annulla</translation>
     </message>
 </context>
 <context>
@@ -5727,11 +5664,6 @@ Inserisci un nome differente.</translation>
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
         <translation>Server:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Aggiorna</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -6159,11 +6091,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Aggiungi</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>Cancella</translation>
-    </message>
-    <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
         <translation>Permessi</translation>
@@ -6188,11 +6115,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Change</source>
         <translatorcomment>Button text to change the target folder</translatorcomment>
         <translation>Cambia</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Conferma</translation>
     </message>
     <message>
         <source>Delete folder permanently</source>
@@ -6377,11 +6299,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>%1 (cache locale)</translation>
     </message>
     <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (cache locale):</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
         <translation>Account</translation>
@@ -6437,11 +6354,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Controlla aggiornamenti</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Scegli</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Pulisci</translation>
@@ -6464,11 +6376,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation>Cartelle predefinite</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
         <translation>Cartelle predefinite</translation>
     </message>
     <message>
@@ -6547,11 +6454,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Versioni dei file</translation>
     </message>
     <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>Versioni dei file:</translation>
-    </message>
-    <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
         <translation>Una cartella in MEGA con il backup dei file eliminati nel computer locale</translation>
@@ -6560,11 +6462,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Folders</source>
         <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Cartelle</translation>
-    </message>
-    <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Esegui scansione completa</translation>
     </message>
     <message>
         <source>General</source>
@@ -6592,19 +6489,9 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Riporta un problema</translation>
     </message>
     <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Riporta problema:</translation>
-    </message>
-    <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
         <translation>Lingua</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Lingua:</translation>
     </message>
     <message>
         <source>Launch at login</source>
@@ -6722,11 +6609,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>La modalità di sospensione non può essere impostata</translation>
     </message>
     <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Modalità di sospensione:</translation>
-    </message>
-    <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
         <translation>Impostazioni di sospensione</translation>
@@ -6737,19 +6619,9 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Spazio utilizzato:</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Apri all&#8217;avvio</translation>
-    </message>
-    <message>
         <source>Storage Space</source>
         <translatorcomment>Section title for account storage details.</translatorcomment>
         <translation>Spazio di archiviazione</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Spazio di archiviazione:</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -6760,11 +6632,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (in MEGA)</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (in MEGA):</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
@@ -6780,11 +6647,6 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Quota di trasferimento</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Banda di trasferimento:</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -7297,6 +7159,16 @@ Sei sicuro di volerlo eliminare lo stesso?</translation>
         <translation>Nessun problema</translation>
     </message>
     <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>Una delle tue cartelle sincronizzate è stata rinominata. Aggiorna l&#8217;elenco dei problemi di sincronizzazione.</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>Aggiorna</translation>
+    </message>
+    <message>
         <source>Stalled Issues</source>
         <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
         <translation>Problemi</translation>
@@ -7540,6 +7412,69 @@ Aggiorna la lista.</translation>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
         <translation>Il link è stato copiato negli appunti</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>Un dispositivo con questo nome esiste già. Inserisci un nome differente.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>Scegli</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>Fatto</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>Inserisci il nome del dispositivo</translation>
+    </message>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>Massimo 32 caratteri</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>Avanti</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>Precedente</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>Imposta eccezioni</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>Salta</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>I seguenti caratteri non sono consentiti: %1</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>Riprova</translation>
     </message>
 </context>
 <context>
@@ -8064,11 +7999,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>SyncTableView</name>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Scansione profonda</translation>
-    </message>
-    <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
         <translation>Apri in MEGA</translation>
@@ -8079,14 +8009,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pausa</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Scansione veloce</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>Riavvia il backup</translation>
+    </message>
+    <message>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>Riavvia la sincronizzazione</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
         <translation>Rimuovi cartella sincronizzata</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>Scansiona di nuovo</translation>
     </message>
     <message>
         <source>Run</source>
@@ -9361,23 +9301,28 @@ Controlla la tua casella di posta elettronica per istruzioni su come sbloccare i
     <name>WhatsNewStrings</name>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Filtri avanzati</translation>
     </message>
     <message>
-        <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Prestazioni migliori</translation>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Le impostazioni avanzate ti consentono di scrivere le tue regole di eccezione per ciascuna sincronizzazione</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Personalizza le sincronizzazioni e i backup con un&#8217;interfaccia completamente nuova per escludere file e cartelle. Le impostazioni avanzate consentono di scrivere regole di eccezione personalizzate per ciascuna sincronizzazione e backup.</translation>
+        <source>Better Performance</source>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>Prestazioni migliori</translation>
     </message>
     <message>
         <source>Files now sync up to 5x faster than before</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
         <translation>I file ora si sincronizzano fino a 5 volte più velocemente di prima.</translation>
+    </message>
+    <message>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Visibilità completa sui problemi di sincronizzazione e controllo totale su come vengono risolti i conflitti</translation>
     </message>
     <message>
         <source>Got it</source>
@@ -9386,23 +9331,13 @@ Controlla la tua casella di posta elettronica per istruzioni su come sbloccare i
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Maggiore controllo</translation>
     </message>
     <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>Aggiornamenti</translation>
-    </message>
-    <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Ora forniamo piena visibilità sui problemi di sincronizzazione e ti diamo il controllo totale su come vengono risolti i conflitti.</translation>
-    </message>
-    <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>Cosa c&#8217;è di nuovo</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>Cosa c&#8217;è di nuovo in MEGA</translation>
     </message>
 </context>
 <context>

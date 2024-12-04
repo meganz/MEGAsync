@@ -514,26 +514,6 @@
         <translation>Aplică</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Limita ratei de încărcare:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Limita ratei de descărcare:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Număr de conexiuni per transfer:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Actualizează</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>Folosește HTTPS pentru transferurile care nu pornesc</translation>
@@ -3220,11 +3200,6 @@ https://mega.co.nz/#sync</source>
         <translation>Una sau mai multe sincronizări au fost dezactivate</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>Aplicația va continua să funcționeze, însă, actualizările nu vor mai fi suportate pentru versiunile anterioare macOS Sierra.</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>Îți mulțumim pentru colaborare</translation>
@@ -3289,26 +3264,6 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <translation>Eșec la actualizarea securității. Eroare: %1</translation>
     </message>
     <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Unele sincronizări și backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>Unul sau mai multe backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation>Una sau mai multe sincronizări au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation>Deschide Setările</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>Setări</translation>
@@ -3342,6 +3297,26 @@ Transferurile se vor relua automat când redeschizi aplicația.</numerusform></t
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation>Cotă de transfer depășită</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Unele sincronizări și backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>Unul sau mai multe backupuri au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>Una sau mai multe sincronizări au fost dezactivate. Mergi la Setări pentru a le activa din nou.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>Deschide Setările</translation>
     </message>
 </context>
 <context>
@@ -4594,21 +4569,6 @@ Introdu un alt nume.</translation>
         <translation>Informații</translation>
     </message>
     <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Informații:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Contacte:</translation>
-    </message>
-    <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Partajări:</translation>
-    </message>
-    <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
         <translation>Notificări de sistem:</translation>
@@ -4627,11 +4587,6 @@ Introdu un alt nume.</translation>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
         <translation>Încărcări și descărcări finalizate</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>Încărcări și descărcări:</translation>
     </message>
 </context>
 <context>
@@ -4680,16 +4635,6 @@ Introdu un alt nume.</translation>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
         <translation>Realizează backup către:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Anulează</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Alege</translation>
     </message>
     <message>
         <source>Change folder</source>
@@ -4765,11 +4710,6 @@ Introdu un alt nume.</translation>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Confirmă parola</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>Gata</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4887,29 +4827,9 @@ Introdu un alt nume.</translation>
         <translation>Conectați-vă la [B]Cont MEGA[/B]</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Înainte</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Omite</translation>
-    </message>
-    <message>
-        <source>View in Settings</source>
-        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>Vizualizare în Setări</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>Parolă</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Anterior</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5152,11 +5072,6 @@ Introdu un alt nume.</translation>
         <translation>Cod A2F incorect</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Reîncearcă</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>Backup-ul dvs. a fost configurat, iar datele selectate vor fi backupate automat ori de câte ori aplicația desktop rulează.</translation>
@@ -5167,11 +5082,6 @@ Introdu un alt nume.</translation>
         <translation>Puteți vizualiza backupurile și statusurile acestora în fila Backup din Setări.</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Setați excluderi</translation>
-    </message>
-    <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
         <translation>Sincronizați întreaga unitate MEGA Cloud cu dispozitivul dvs. local.</translation>
@@ -5180,6 +5090,11 @@ Introdu un alt nume.</translation>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
         <translation>Sincronizați folderele selectate din unitatea MEGA Cloud cu dispozitivul dvs. local.</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>Vizualizare în Setări</translation>
     </message>
 </context>
 <context>
@@ -5193,11 +5108,6 @@ Introdu un alt nume.</translation>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>Afișare în MEGA</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>Folder de backup:</translation>
     </message>
 </context>
 <context>
@@ -5400,6 +5310,21 @@ Introdu un alt nume.</translation>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Permisiuni pentru proprietar:</translation>
     </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>Permisiuni</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>Anulați</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>Aplică</translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -5538,15 +5463,27 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved the automatic and manual resolution of sync issues.
-- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
-        <translation>- Am îmbunătățit rezolvarea automată și manuală a problemelor de sincronizare.
-- Interfața contului MEGA și procesul de actualizare a contului au fost ambele reînnoite și îmbunătățite.
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- Stabilitate îmbunătățită cu procesare grafică izolată: Am actualizat aplicația noastră pentru a rula procesorul grafic (GFX) într-un proces separat. Aceasta înseamnă că, dacă bibliotecile grafice terțe întâmpină probleme, aplicația rămâne stabilă și neafectată, asigurând o experiență mai lină și neîntreruptă.
+- Sfârșitul asistenței pentru macOS 10.13 și 10.14: Această actualizare nu mai acceptă macOS 10.13 și 10.14. Pentru a primi în continuare actualizări și asistență, vă rugăm să faceți upgrade la o versiune mai recentă de macOS.
+- Dialogul Setări a fost reproiectat.
+- Detectarea și rezolvarea problemelor aplicației îmbunătățite.
 - Alte erori au fost remediate și s-au făcut numeroase îmbunătățiri.
 </translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>Anulați</translation>
     </message>
 </context>
 <context>
@@ -5615,11 +5552,6 @@ Introdu un alt nume.</translation>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
         <translation>Detectează automat</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Actualizează</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6046,11 +5978,6 @@ Vrei să îl ștergi oricum?</translation>
         <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
         <translation>Adaugă</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>Șterge</translation>
-    </message>
 </context>
 <context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
@@ -6106,11 +6033,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
         <translation>Folderul va fi șters de pe MEGA. Nu va fi șters de pe calculator. Această acțiune nu poate fi anulată.</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Confirmă</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6264,11 +6186,6 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Ajutor</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Pornește aplicația la pornirea sistemului de operare</translation>
-    </message>
-    <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>Actualizează automat</translation>
@@ -6302,16 +6219,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Șterge</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Alege</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>Foldere implicite</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -6524,49 +6431,9 @@ Vrei să îl ștergi oricum?</translation>
         <translation>Proxy</translation>
     </message>
     <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Forțați o analiză completă</translation>
-    </message>
-    <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
         <translation>Istoricul sesiunilor</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Limbă:</translation>
-    </message>
-    <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (cache local):</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (în MEGA):</translation>
-    </message>
-    <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>Versiuni ale fișierelor:</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Raportare de probleme:</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Spațiu de stocare:</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Cotă de transfer:</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -6657,11 +6524,6 @@ Vrei să îl ștergi oricum?</translation>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
         <translation>Mod de repaus</translation>
-    </message>
-    <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Mod de repaus:</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
@@ -7156,6 +7018,16 @@ Vrei să îl ștergi oricum?</translation>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
         <translation>Ajutor</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>Reîmprospătează</translation>
+    </message>
+    <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>Unul dintre folderele sincronizate a fost redenumit. Reîmprospătați lista problemelor de sincronizare.</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
@@ -7375,6 +7247,69 @@ Verificați permisiunile fișierului.megaignore în locațiile folderului local 
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
         <translation>Selectează elementele</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>Maximum 32 de caractere</translation>
+    </message>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>Un dispozitiv cu acest nume există deja. Introduceți un alt nume.</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>Introduceți un nume de dispozitiv</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>Următoarele caractere nu sunt permise: %1</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>Anulați</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>Alege</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>Terminat</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>Înainte</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>Omite</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>Anterior</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>Reîncearcă</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>Setați excluderi</translation>
     </message>
 </context>
 <context>
@@ -7919,14 +7854,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pune pe pauză</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Recanare rapidă</translation>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>Reporniți sincronizarea</translation>
     </message>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Recanare profundă</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>Reporniți backup-ul</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>Rescanați</translation>
     </message>
 </context>
 <context>
@@ -9126,28 +9066,23 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
 <context>
     <name>WhatsNewStrings</name>
     <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>Noutăți</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>Actualizări</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>Ce este nou în MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Performanțe mai bune</translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Control mai mare</translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Filtre avansate</translation>
     </message>
     <message>
@@ -9156,14 +9091,14 @@ Verificați căsuța de e-mail pentru instrucțiuni despre deblocarea contului �
         <translation>Fișierele se sincronizează acum cu până la 5 ori mai repede decât înainte.</translation>
     </message>
     <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Acum oferim vizibilitate completă asupra problemelor de sincronizare și vă oferim control total asupra modului în care sunt rezolvate conflictele.</translation>
+        <translation>Vizibilitate completă asupra problemelor de sincronizare și control total asupra modului în care sunt rezolvate conflictele</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Personalizați-vă sincronizările și backup-urile cu o interfață complet nouă pentru a exclude fișiere și foldere. Setările avansate vă permit să scrieți propriile reguli de excludere pentru fiecare dintre sincronizările și backup-uri..</translation>
+        <translation>Setările avansate vă permit să scrieți propriile reguli de excludere pentru fiecare sincronizare</translation>
     </message>
     <message>
         <source>Got it</source>
