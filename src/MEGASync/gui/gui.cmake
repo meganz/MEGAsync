@@ -485,6 +485,7 @@ set (DESKTOP_APP_GUI_UI_FILES_ROOT
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
 )
 
 list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
