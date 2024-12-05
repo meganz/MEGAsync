@@ -66,12 +66,35 @@ Rectangle {
         }
     }
 
+    function getBilledPeriodInfoText() {
+        if (root.billingCurrency) {
+            return root.monthly
+                    ? UpsellStrings.perMonth
+                    : UpsellStrings.billedYearly;
+        }
+        else {
+            return root.monthly
+                    ? UpsellStrings.perMonthWithBillingCurrency
+                        .arg(root.currencyName)
+                    : UpsellStrings.billedYearlyWithBillingCurrency
+                        .arg(root.currencyName);
+        }
+    }
+
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
         color: root.recommended ? ColorTheme.borderInteractive : ColorTheme.borderStrong
     }
     radius: root.cardRadius
     color: ColorTheme.pageBackground
+
+    onMonthlyChanged: {
+        // When the component is disabled, the text is not being updated.
+        // Force to update the text when the component is disabled.
+        if (root.monthly && !root.enabled) {
+            billedPeriodInfoText.text = getBilledPeriodInfoText();
+        }
+    }
 
     Column {
         anchors {
@@ -154,6 +177,8 @@ Rectangle {
             }
 
             SecondaryText {
+                id: billedPeriodInfoText
+
                 anchors {
                     left: parent.left
                     right: parent.right
@@ -161,20 +186,7 @@ Rectangle {
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
                 enabled: root.enabled && !root.showOnlyProFlexi
-                text: {
-                    if (root.billingCurrency) {
-                        return root.monthly
-                                ? UpsellStrings.perMonth
-                                : UpsellStrings.billedYearly;
-                    }
-                    else {
-                        return root.monthly
-                                ? UpsellStrings.perMonthWithBillingCurrency
-                                    .arg(root.currencyName)
-                                : UpsellStrings.billedYearlyWithBillingCurrency
-                                    .arg(root.currencyName);
-                    }
-                }
+                text: getBilledPeriodInfoText()
             }
 
             SecondaryText {
