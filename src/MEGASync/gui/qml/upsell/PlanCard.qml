@@ -274,9 +274,12 @@ Rectangle {
                     }
                 }
                 underlineLink: true
+                manageClick: true
                 rawText: UpsellStrings.tryProFlexi
-                url: Links.contact // TODO: Change by the real one.
                 visible: root.showProFlexiMessage
+                onLinkClicked: {
+                    upsellComponentAccess.linkTryProFlexiClicked();
+                }
             }
 
         }
