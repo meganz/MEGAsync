@@ -2,7 +2,3 @@
 	path = src/MEGASync/mega
 	url = https://github.com/meganz/sdk.git
 	branch = master
-[submodule "src/DesignTokensImporter/megadesignassets"]
-	path = src/DesignTokensImporter/megadesignassets
-	url = git@code.developers.mega.co.nz:megadesignassets/megadesignassets.git
-	branch = master
