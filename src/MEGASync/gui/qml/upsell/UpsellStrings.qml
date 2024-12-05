@@ -23,4 +23,5 @@ QtObject {
     readonly property string transferQuotaExceededTitle: qsTr("Transfer quota exceeded")
     readonly property string transferQuotaExceededText: qsTr("You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][A]Learn more about transfer quota.[/A]")
     readonly property string tryProFlexi: qsTr("Need more storage?[BR][A]Try Pro Flexi[/A]")
+
 }

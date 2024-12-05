@@ -12,27 +12,36 @@ import UpsellPlans 1.0
 FocusScope {
     id: root
 
+    readonly property real planDefaultWidth: 160
+    readonly property real planDefaultHeight: upsellPlansAccess.monthly ? 246 : 283
     readonly property real minimumWidth: 496
     readonly property real itemsSpacing: 22
     readonly property real chipSpacing: 12
     readonly property real plansRowSpacing: 8
 
+    property real plansWidth: root.planDefaultWidth * upsellPlansAccess.plansCount
+                                + root.plansRowSpacing * (upsellPlansAccess.plansCount - 1)
+
     height: columnItem.height
-    width: columnItem.width
+    width: Math.max(root.minimumWidth, root.plansWidth)
 
     Column {
         id: columnItem
 
-        width: Math.max(root.minimumWidth, plansItem.width)
+        width: parent.width
+        height: topRow.height + root.itemsSpacing + root.planDefaultHeight
+                + (footerText.visible ? footerText.height + root.itemsSpacing : 0)
         spacing: root.itemsSpacing
 
         Row {
+            id: topRow
+
             anchors {
                 left: parent.left
                 leftMargin: root.chipSpacing + Constants.focusAdjustment
             }
             spacing: root.chipSpacing
-            height: comboBoxRow.height
+            height: Math.max(comboBoxRow.height, billedChip.height)
 
             Row {
                 id: comboBoxRow
@@ -78,34 +87,24 @@ FocusScope {
                 visible: upsellPlansAccess.currentDiscount > 0
             }
 
-        }
+        } // Row: topRow
 
         Item {
             id: plansItem
-
-            readonly property real planTotalWidth: 160
-            readonly property real planTotalHeight: 283
 
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 topMargin: Constants.focusAdjustment
                 leftMargin: Constants.focusAdjustment
             }
-            height: plansItem.planTotalHeight
+            width: parent.width
+            height: root.planDefaultHeight
 
             Row {
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: parent.width
                 height: plansRepeater.height
                 spacing: root.plansRowSpacing
-
-                onWidthChanged: {
-                    // The width depends on the total number of plans, in some cases the number
-                    // of plans is different for monthly/yearly billing.
-                    plansItem.width = plansItem.planTotalWidth * upsellModelAccess.rowCount()
-                                        + root.plansRowSpacing * (upsellModelAccess.rowCount() - 1);
-                }
 
                 Repeater {
                     id: plansRepeater
@@ -115,10 +114,11 @@ FocusScope {
                     PlanCard {
                         id: card
 
-                        width: plansItem.planTotalWidth
-                        height: plansItem.planTotalHeight
+                        width: root.planDefaultWidth
+                        height: root.planDefaultHeight
 
                         name: model.name
+                        buttonName: model.buttonName
                         recommended: model.recommended
                         currentPlan: model.currentPlan
                         gbStorage: model.gbStorage

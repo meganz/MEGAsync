@@ -13,17 +13,29 @@ QmlDialog {
 
     readonly property int contentMargin: 24
 
-    property int maxWidth: Math.max(544, columnItem.width + 2 * window.contentMargin)
-    property int maxHeight: Math.max(495, columnItem.height + 2 * window.contentMargin)
+    property int totalWidth: Math.max(544, columnItem.width + 2 * window.contentMargin)
+    property int totalHeight: columnItem.height + 2 * window.contentMargin
 
     visible: false
     modality: Qt.NonModal
-    width: window.maxWidth
-    height: window.maxHeight
-    maximumWidth: window.maxWidth
-    maximumHeight: window.maxHeight
-    minimumWidth: window.maxWidth
-    minimumHeight: window.maxHeight
+    width: window.totalWidth
+    height: window.totalHeight
+    maximumWidth: window.totalWidth
+    maximumHeight: window.totalHeight
+    minimumWidth: window.totalWidth
+    minimumHeight: window.totalHeight
+
+    onTotalHeightChanged: {
+        // Force to change height depending on the billed period selected.
+        // Maintain this order to resize the window.
+        window.minimumHeight = window.totalHeight;
+        window.maximumHeight = window.totalHeight;
+        window.height = window.totalHeight;
+    }
+
+    Component.onCompleted: {
+        header.forceActiveFocus();
+    }
 
     Column {
         id: columnItem
@@ -37,8 +49,8 @@ QmlDialog {
             bottomMargin: window.contentMargin
         }
         width: content.width
-        height: header.height + content.height + columnItem.spacing
-        spacing: window.contentMargin + Constants.focusAdjustment
+        height: header.height + content.height + window.contentMargin
+        spacing: window.contentMargin
 
         HeaderItem {
             id: header
@@ -49,15 +61,6 @@ QmlDialog {
         ContentItem {
             id: content
         }
-    }
-
-    Component.onCompleted: {
-        header.forceActiveFocus();
-    }
-
-
-    onHeightChanged: {
-        console.log("height changed: " + height);
     }
 
 }

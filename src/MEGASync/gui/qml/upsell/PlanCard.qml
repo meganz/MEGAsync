@@ -38,6 +38,7 @@ Rectangle {
     property string price: ""
     property string totalPriceWithoutDiscount: ""
     property string monthlyPriceWithDiscount: ""
+    property string buttonName: ""
 
     signal buyButtonClicked()
 

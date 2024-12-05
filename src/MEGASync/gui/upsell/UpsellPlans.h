@@ -19,6 +19,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
+    Q_PROPERTY(int plansCount READ size NOTIFY sizeChanged)
 
 public:
     enum class ViewMode
@@ -138,6 +139,7 @@ signals:
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
     void remainingTimeChanged();
+    void sizeChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
