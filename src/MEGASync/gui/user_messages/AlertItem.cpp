@@ -481,7 +481,7 @@ void AlertItem::setAlertContent(UserAlert *alert)
         // Takedown notifications
         case MegaUserAlert::TYPE_TAKEDOWN:
         {
-            auto alertNode(mAlertData->getAlertNode().get());
+            auto alertNode(mAlertData->getAlertNode());
             if (alertNode)
             {
                 if (alertNode->getType() == MegaNode::TYPE_FILE)
@@ -489,14 +489,14 @@ void AlertItem::setAlertContent(UserAlert *alert)
                     notificationContent =
                         tr("Your publicly shared file ([A]) has been taken down")
                             .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
                 }
                 else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
                     notificationContent =
                         tr("Your publicly shared folder ([A]) has been taken down")
                             .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
                 }
                 else
                 {
@@ -511,7 +511,7 @@ void AlertItem::setAlertContent(UserAlert *alert)
         }
         case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
         {
-            auto alertNode(mAlertData->getAlertNode().get());
+            auto alertNode(mAlertData->getAlertNode());
             if (alertNode)
             {
                 if (alertNode->getType() == MegaNode::TYPE_FILE)
@@ -519,14 +519,14 @@ void AlertItem::setAlertContent(UserAlert *alert)
                     notificationContent =
                         tr("Your publicly shared file ([A]) has been reinstated")
                             .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
                 }
                 else if (alertNode->getType() == MegaNode::TYPE_FOLDER)
                 {
                     notificationContent =
                         tr("Your publicly shared folder ([A]) has been reinstated")
                             .replace(QString::fromUtf8("[A]"),
-                                     formatRichString(MegaNodeNames::getNodeName(alertNode)));
+                                     formatRichString(MegaNodeNames::getNodeName(alertNode.get())));
                 }
                 else
                 {
