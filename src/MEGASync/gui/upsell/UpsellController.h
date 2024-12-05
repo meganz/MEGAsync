@@ -79,16 +79,18 @@ private:
                                                                            int transfer,
                                                                            int price) const;
     int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
+    int getRowForNextRecommendedPlan() const;
+    int getRowForCurrentRecommended();
     void updatePlans();
     void updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row);
-    int getRowForNextRecommendedPlan() const;
     void resetRecommended();
-    int getRowForCurrentRecommended();
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isPlanUnderCurrentProLevel(int proLevel) const;
     bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
     float calculateTotalPriceWithoutDiscount(float monthlyPrice) const;
     float calculateMonthlyPriceWithDiscount(float yearlyPrice) const;
+    bool isOnlyProFlexiIsAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool storageFitsUnderStorageOQConditions(const std::shared_ptr<UpsellPlans::Data>& data) const;
 };
 
 #endif // UPSELL_CONTROLLER_H

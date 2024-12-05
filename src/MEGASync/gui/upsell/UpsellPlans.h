@@ -17,7 +17,6 @@ class UpsellPlans: public QObject
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
-    Q_PROPERTY(QString currentPlanName READ getCurrentPlanName NOTIFY currentPlanNameChanged)
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
 
@@ -34,14 +33,17 @@ public:
     enum UpsellPlanRoles
     {
         NAME_ROLE = Qt::UserRole + 1,
+        BUTTON_NAME_ROLE,
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
         PRICE_ROLE,
         TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE,
         MONTHLY_PRICE_WITH_DISCOUNT_ROLE,
+        CURRENT_PLAN_ROLE,
         AVAILABLE_ROLE,
-        SHOW_PRO_FLEXI_MESSAGE
+        SHOW_PRO_FLEXI_MESSAGE,
+        SHOW_ONLY_PRO_FLEXI
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -92,6 +94,7 @@ public:
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
+        void setName(const QString& name);
     };
 
     class CurrencyData
@@ -125,7 +128,6 @@ public:
     int getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
-    QString getCurrentPlanName() const;
     QString getTransferRemainingTime() const;
     long long getTransferFinishTime() const;
 
@@ -135,7 +137,6 @@ signals:
     void monthlyChanged();
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
-    void currentPlanNameChanged();
     void remainingTimeChanged();
 
 private:
@@ -145,7 +146,6 @@ private:
     bool mIsMonthly;
     bool mIsBillingCurrency;
     int mCurrentDiscount;
-    QString mCurrentPlanName;
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
 
@@ -155,7 +155,6 @@ private:
     void setMonthly(bool monthly);
     void setBillingCurrency(bool isCurrencyBilling);
     void setCurrentDiscount(int discount);
-    void setCurrentPlanName(const QString& name);
     void setTransferRemainingTime(const QString& time);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);

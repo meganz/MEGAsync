@@ -55,4 +55,9 @@ QmlDialog {
         header.forceActiveFocus();
     }
 
+
+    onHeightChanged: {
+        console.log("height changed: " + height);
+    }
+
 }

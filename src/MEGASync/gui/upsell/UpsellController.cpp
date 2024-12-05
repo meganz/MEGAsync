@@ -71,9 +71,12 @@ UpsellController::~UpsellController()
 
 void UpsellController::updateStorageElements()
 {
-    // Force update of the plans to check the availability of the plans based on the current
-    // storage conditions.
-    emit dataChanged(0, mPlans->size() - 1, QVector<int>() << UpsellPlans::AVAILABLE_ROLE);
+    // Force update of the plans based on the current storage conditions.
+    emit dataChanged(0,
+                     mPlans->size() - 1,
+                     QVector<int>() << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
+                                    << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
+                                    << UpsellPlans::SHOW_ONLY_PRO_FLEXI);
 }
 
 void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
@@ -125,9 +128,36 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                 field = data->name();
                 break;
             }
+            case UpsellPlans::BUTTON_NAME_ROLE:
+            {
+                if (isOnlyProFlexiIsAvailable(data))
+                {
+                    // For Pro III, if the storage is full, only the Pro Flexi plan is available.
+                    // We check if the storage if the plan offered is enough for the current used
+                    // one. Override the last plan name to show the Pro Flexi name instead of Pro
+                    // III.
+                    field = Utilities::getReadablePlanFromId(
+                        mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI,
+                        true);
+                }
+                else
+                {
+                    field = data->name();
+                }
+                break;
+            }
             case UpsellPlans::RECOMMENDED_ROLE:
             {
-                field = data->isRecommended();
+                if (isOnlyProFlexiIsAvailable(data))
+                {
+                    // For Pro III, only Pro III and/or Pro Flexi are available.
+                    // Override recommended to show the border as for recommended plans.
+                    field = true;
+                }
+                else
+                {
+                    field = data->isRecommended();
+                }
                 break;
             }
             case UpsellPlans::STORAGE_ROLE:
@@ -162,6 +192,11 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
                     calculateMonthlyPriceWithDiscount(data->yearlyData().price()));
                 break;
             }
+            case UpsellPlans::CURRENT_PLAN_ROLE:
+            {
+                field = data->proLevel() == Preferences::instance()->accountType();
+                break;
+            }
             case UpsellPlans::AVAILABLE_ROLE:
             {
                 field = isAvailable(data);
@@ -170,6 +205,11 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             case UpsellPlans::SHOW_PRO_FLEXI_MESSAGE:
             {
                 field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII;
+                break;
+            }
+            case UpsellPlans::SHOW_ONLY_PRO_FLEXI:
+            {
+                field = isOnlyProFlexiIsAvailable(data);
                 break;
             }
             default:
@@ -283,7 +323,11 @@ void UpsellController::onBilledPeriodChanged()
                      QVector<int>()
                          << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
                          << UpsellPlans::PRICE_ROLE << UpsellPlans::AVAILABLE_ROLE
-                         << UpsellPlans::RECOMMENDED_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE);
+                         << UpsellPlans::RECOMMENDED_ROLE
+                         << UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE
+                         << UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE
+                         << UpsellPlans::CURRENT_PLAN_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
+                         << UpsellPlans::SHOW_ONLY_PRO_FLEXI);
 }
 
 void UpsellController::onTransferRemainingTimeElapsed()
@@ -406,8 +450,7 @@ bool UpsellController::isProLevelValid(int proLevel) const
     return proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FREE &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI &&
            proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_BUSINESS &&
-           proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE &&
-           !isPlanUnderCurrentProLevel(proLevel);
+           proLevel != mega::MegaAccountDetails::ACCOUNT_TYPE_FEATURE;
 }
 
 QUrl UpsellController::getUpsellPlanUrl(int proLevel)
@@ -463,7 +506,7 @@ void UpsellController::updatePlans()
 {
     int currentRecommendedRow(getRowForCurrentRecommended());
     int row(getRowForNextRecommendedPlan());
-    if (currentRecommendedRow != row)
+    if (row != -1 && currentRecommendedRow != row)
     {
         resetRecommended();
 
@@ -475,8 +518,6 @@ void UpsellController::updatePlans()
 
 void UpsellController::updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row)
 {
-    mPlans->setCurrentPlanName(data->name());
-
     // Calculate discount if both monthly and yearly data are available, otherwise set it to -1
     // to indicate that the discount is not available.
     int discount(-1);
@@ -500,12 +541,18 @@ int UpsellController::getRowForNextRecommendedPlan() const
         plans.cend(),
         [itCurrent, this](const auto& plan)
         {
+            // Recommended plan is the next one in the list that is not the current one,
+            // not a lower tier plan (never recommended) and is available.
             auto itNext(std::find(itCurrent, ACCOUNT_TYPES_IN_ORDER.cend(), plan->proLevel()));
             bool isCurrent(plan->proLevel() == Preferences::instance()->accountType());
-            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && !isCurrent && isAvailable(plan);
+            bool isLTP(plan->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_STARTER ||
+                       plan->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_BASIC ||
+                       plan->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_ESSENTIAL);
+            return itNext != ACCOUNT_TYPES_IN_ORDER.cend() && !isCurrent && !isLTP &&
+                   isAvailable(plan);
         });
 
-    return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : 0;
+    return (it != plans.cend()) ? static_cast<int>(std::distance(plans.cbegin(), it)) : -1;
 }
 
 void UpsellController::resetRecommended()
@@ -539,12 +586,8 @@ int UpsellController::getRowForCurrentRecommended()
 
 bool UpsellController::isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
 {
-    // Check if the used storage fits in the plan, for trasnfer exceeded
-    // the current plan is available unless the storage does not fit in the plan.
-    int64_t planStorage(mPlans->isMonthly() ? data->monthlyData().gBStorage() :
-                                              data->yearlyData().gBStorage());
-    bool planStorageFits(planFitsUnderStorageOQConditions(planStorage));
-    return (!isPlanUnderCurrentProLevel(data->proLevel())) && planStorageFits &&
+    return (!isPlanUnderCurrentProLevel(data->proLevel())) &&
+           storageFitsUnderStorageOQConditions(data) &&
            (mPlans->isMonthly() ? data->monthlyData().isValid() : data->yearlyData().isValid());
 }
 
@@ -586,4 +629,22 @@ float UpsellController::calculateTotalPriceWithoutDiscount(float monthlyPrice) c
 float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) const
 {
     return yearlyPrice / NUM_MONTHS_PER_PLAN;
+}
+
+bool UpsellController::isOnlyProFlexiIsAvailable(
+    const std::shared_ptr<UpsellPlans::Data>& data) const
+{
+    int currentAccountType(Preferences::instance()->accountType());
+    return currentAccountType == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
+           data->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
+           !storageFitsUnderStorageOQConditions(data);
+}
+
+bool UpsellController::storageFitsUnderStorageOQConditions(
+    const std::shared_ptr<UpsellPlans::Data>& data) const
+{
+    // Check if the used storage fits in the plan.
+    int64_t planStorage(mPlans->isMonthly() ? data->monthlyData().gBStorage() :
+                                              data->yearlyData().gBStorage());
+    return planFitsUnderStorageOQConditions(planStorage);
 }

@@ -48,11 +48,6 @@ QString UpsellPlans::getCurrencyName() const
     return mCurrency.currencyName();
 }
 
-QString UpsellPlans::getCurrentPlanName() const
-{
-    return mCurrentPlanName;
-}
-
 QString UpsellPlans::getTransferRemainingTime() const
 {
     return mTransferRemainingTime;
@@ -107,15 +102,6 @@ void UpsellPlans::setCurrentDiscount(int discount)
     }
 }
 
-void UpsellPlans::setCurrentPlanName(const QString& name)
-{
-    if (mCurrentPlanName != name)
-    {
-        mCurrentPlanName = name;
-        emit currentPlanNameChanged();
-    }
-}
-
 void UpsellPlans::setTransferRemainingTime(const QString& time)
 {
     if (mTransferRemainingTime != time)
@@ -163,14 +149,17 @@ QHash<int, QByteArray> UpsellPlans::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
         {UpsellPlans::NAME_ROLE,                         "name"                     },
+        {UpsellPlans::BUTTON_NAME_ROLE,                  "buttonName"               },
         {UpsellPlans::RECOMMENDED_ROLE,                  "recommended"              },
         {UpsellPlans::STORAGE_ROLE,                      "gbStorage"                },
         {UpsellPlans::TRANSFER_ROLE,                     "gbTransfer"               },
         {UpsellPlans::PRICE_ROLE,                        "price"                    },
         {UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE, "totalPriceWithoutDiscount"},
         {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE,  "monthlyPriceWithDiscount" },
+        {UpsellPlans::CURRENT_PLAN_ROLE,                 "currentPlan"              },
         {UpsellPlans::AVAILABLE_ROLE,                    "available"                },
-        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE,            "showProFlexiMessage"      }
+        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE,            "showProFlexiMessage"      },
+        {UpsellPlans::SHOW_ONLY_PRO_FLEXI,               "showOnlyProFlexi"         }
     };
 
     return roles;
@@ -204,6 +193,11 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
 void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)
 {
     mYearlyData = newYearlyData;
+}
+
+void UpsellPlans::Data::setName(const QString& name)
+{
+    mName = name;
 }
 
 void UpsellPlans::Data::setRecommended(bool newRecommended)

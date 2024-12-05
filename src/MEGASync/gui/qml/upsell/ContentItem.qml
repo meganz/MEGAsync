@@ -120,13 +120,15 @@ FocusScope {
 
                         name: model.name
                         recommended: model.recommended
+                        currentPlan: model.currentPlan
                         gbStorage: model.gbStorage
                         gbTransfer: model.gbTransfer
                         price: model.price
                         totalPriceWithoutDiscount: model.totalPriceWithoutDiscount
                         monthlyPriceWithDiscount: model.monthlyPriceWithDiscount
-                        visible: model.available
+                        enabled: model.available || model.showOnlyProFlexi
                         showProFlexiMessage: model.showProFlexiMessage
+                        showOnlyProFlexi: model.showOnlyProFlexi
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName

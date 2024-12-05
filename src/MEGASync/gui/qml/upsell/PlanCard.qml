@@ -26,9 +26,11 @@ Rectangle {
     readonly property int borderWidthRecommended: 2
 
     property bool recommended: false
+    property bool currentPlan: false
     property bool monthly: false
     property bool billingCurrency: false
     property bool showProFlexiMessage: false
+    property bool showOnlyProFlexi: false
     property string currencyName: ""
     property string name: ""
     property string gbStorage: ""
@@ -38,6 +40,30 @@ Rectangle {
     property string monthlyPriceWithDiscount: ""
 
     signal buyButtonClicked()
+
+    function getChipBackgroundColor() {
+        if (root.currentPlan) {
+            return ColorTheme.notificationInfo;
+        }
+        else if (root.recommended) {
+            return ColorTheme.borderInteractive;
+        }
+        else {
+            return "transparent";
+        }
+    }
+
+    function getChipTextColor() {
+        if (root.currentPlan) {
+            return ColorTheme.textInfo;
+        }
+        else if (root.recommended) {
+            return ColorTheme.textOnColor;
+        }
+        else {
+            return "transparent";
+        }
+    }
 
     border {
         width: root.recommended ? root.borderWidthRecommended : root.borderWidthDefault
@@ -71,19 +97,20 @@ Rectangle {
             lineHeight: root.titleLineHeight
             lineHeightMode: Text.FixedHeight
             text: root.name
+            enabled: root.enabled && !root.showOnlyProFlexi
         }
 
         Chips.Chip {
             id: recommendedChip
 
             sizes: Chips.SmallSizes {}
-            text: UpsellStrings.recommended
+            text: root.currentPlan ? UpsellStrings.currentPlan : UpsellStrings.recommended
             visible: true
-            opacity: root.recommended ? 1.0 : 0.0
+            opacity: (root.recommended || root.currentPlan) ? 1.0 : 0.0
             colors {
-                background: root.recommended ? ColorTheme.borderInteractive : "transparent"
-                border: root.recommended ? ColorTheme.borderInteractive : "transparent"
-                text: root.recommended ? ColorTheme.textOnColor : "transparent"
+                background: getChipBackgroundColor()
+                border: getChipBackgroundColor()
+                text: getChipTextColor()
             }
         }
 
@@ -106,6 +133,7 @@ Rectangle {
                 font.strikeout: true
                 text: root.totalPriceWithoutDiscount
                 visible: !root.monthly
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             Text {
@@ -121,6 +149,7 @@ Rectangle {
                 lineHeight: root.priceLineHeight
                 lineHeightMode: Text.FixedHeight
                 text: root.price
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
             SecondaryText {
@@ -130,6 +159,7 @@ Rectangle {
                 }
                 lineHeight: root.pricePeriodLineHeight
                 lineHeightMode: Text.FixedHeight
+                enabled: root.enabled && !root.showOnlyProFlexi
                 text: {
                     if (root.billingCurrency) {
                         return root.monthly
@@ -155,6 +185,7 @@ Rectangle {
                 lineHeightMode: Text.FixedHeight
                 text: UpsellStrings.pricePerMonth.arg(root.monthlyPriceWithDiscount)
                 visible: !root.monthly
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
         }
 
@@ -174,6 +205,7 @@ Rectangle {
                 }
                 height: parent.height - root.bottomTextsSpacing
                             - (tryProFlexiText.visible ? tryProFlexiText.height : 0)
+                enabled: root.enabled && !root.showOnlyProFlexi
 
                 Column {
                     spacing: root.bottomSpacing
@@ -216,7 +248,18 @@ Rectangle {
                 }
                 lineHeight: root.tryProFlexiLineHeight
                 lineHeightMode: Text.FixedHeight
-                font.pixelSize: Text.Size.SMALL
+                font {
+                    pixelSize: Text.Size.SMALL
+                    bold: root.showOnlyProFlexi
+                }
+                color: {
+                    if (root.showOnlyProFlexi) {
+                        return ColorTheme.textPrimary;
+                    }
+                    else {
+                        return enabled ? ColorTheme.textSecondary : ColorTheme.textDisabled;
+                    }
+                }
                 underlineLink: true
                 rawText: UpsellStrings.tryProFlexi
                 url: Links.contact // TODO: Change by the real one.
@@ -246,11 +289,11 @@ Rectangle {
                     textFontSize: Text.Size.NORMAL
                 }
                 height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.name)
+                text: UpsellStrings.buyPlan.arg(root.buttonName)
                 onClicked: {
                     root.buyButtonClicked();
                 }
-                visible: root.recommended
+                visible: root.recommended && root.enabled
             }
 
             OutlineButton {
@@ -264,7 +307,7 @@ Rectangle {
                     textFontSize: Text.Size.NORMAL
                 }
                 height: root.buttonHeight + 2 * Constants.focusBorderWidth
-                text: UpsellStrings.buyPlan.arg(root.name)
+                text: UpsellStrings.buyPlan.arg(root.buttonName)
                 onClicked: {
                     root.buyButtonClicked();
                 }
