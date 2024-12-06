@@ -128,6 +128,9 @@ color: rgba(0, 0, 0, 0.2)
        <property name="text">
         <string>Move folder</string>
        </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -265,7 +268,10 @@ color: rgba(0, 0, 0, 0.2)
         <string>Delete folder permanently</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
        </property>
       </widget>
      </item>
@@ -361,6 +367,9 @@ color: rgba(0, 0, 0, 0.2)
      </item>
      <item>
       <widget class="QPushButton" name="bConfirm">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="minimumSize">
         <size>
          <width>146</width>
