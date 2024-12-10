@@ -29,7 +29,7 @@ DeviceNamePageForm {
         }
     }
 
-    deviceNameTextField.onTextChanged: {
+    deviceNameTextField.onTextChanged: (error) =>{
         if(error) {
             DeviceName.showErrorRoutine(deviceNameTextField, DeviceName.Error.NONE)
         }
