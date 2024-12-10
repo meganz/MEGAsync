@@ -33,6 +33,14 @@ QmlDialog {
         window.height = window.totalHeight;
     }
 
+    onHeightChanged: {
+        // Force to change height depending on the billed period selected.
+        // Maintain this order to resize the window.
+        if (window.height < window.totalHeight) {
+            window.height = window.totalHeight;
+        }
+    }
+
     Component.onCompleted: {
         header.forceActiveFocus();
     }
