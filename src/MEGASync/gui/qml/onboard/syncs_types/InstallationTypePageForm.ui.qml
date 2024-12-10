@@ -61,6 +61,7 @@ FooterButtonsPage {
                 imageSource: Images.sync
                 type: Constants.SyncType.SYNC
                 ButtonGroup.group: buttonGroupComp
+                checked: true
             }
 
             SyncsHorizontalButton {
