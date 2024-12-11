@@ -358,7 +358,6 @@ public:
         if (mLoadingViewSet != type)
         {
             mLoadingViewSet = type;
-            //mMessageHandler->setLoadingViewVisible(type == LoadingViewType::LOADING_VIEW);
         }
     }
 
@@ -507,8 +506,6 @@ private:
         mView->hide();
         mView->blockSignals(true);
         mView->header()->blockSignals(true);
-
-        //emit sceneVisibilityChange(true);
     }
 
     void showLoadingScene() override
