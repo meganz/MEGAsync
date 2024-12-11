@@ -491,7 +491,8 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mDisplayFiles(false),
     mSyncSetupMode(false),
     mIsBeingModified(true),
-    mAcceptDragAndDrop(false)
+    mAcceptDragAndDrop(false),
+    mAddNodesQueue(this)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
     mMyChatFilesFolderAttribute = UserAttributes::MyChatFilesFolder::requestMyChatFilesFolder();
@@ -536,6 +537,12 @@ NodeSelectorModel::~NodeSelectorModel()
 {
     mNodeRequesterThread->quit();
     mNodeRequesterThread->wait();
+}
+
+void NodeSelectorModel::setIsModelBeingModified(bool state)
+{
+    mIsBeingModified = state;
+    emit modelIsBeingModifiedChanged(state);
 }
 
 void NodeSelectorModel::protectModelWhenPerformingActions()
@@ -1076,12 +1083,21 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
     {
         if(parent.isValid())
         {
-            NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
-            if(parentItem && parentItem->getNode()->isFolder() && parentItem->areChildrenInitialized())
+            if (isBeingModified())
             {
-                auto totalRows = rowCount(parent);
-                beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
-                emit requestAddNodes(nodes, parent, parentItem);
+                mAddNodesQueue.addStep(nodes, parent);
+            }
+            else
+            {
+                NodeSelectorModelItem* parentItem =
+                    static_cast<NodeSelectorModelItem*>(parent.internalPointer());
+                if (parentItem && parentItem->getNode()->isFolder() &&
+                    parentItem->areChildrenInitialized())
+                {
+                    auto totalRows = rowCount(parent);
+                    beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
+                    emit requestAddNodes(nodes, parent, parentItem);
+                }
             }
         }
     }
@@ -1932,4 +1948,33 @@ QIcon NodeSelectorModel::getFolderIcon(NodeSelectorModelItem *item) const
     }
 
     return QIcon();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+/// Add nodes queue (To avoid calling beginInsertRows more than once at the same time)
+AddNodesQueue::AddNodesQueue(NodeSelectorModel* model):
+    mModel(model)
+{
+    connect(mModel,
+            &NodeSelectorModel::modelIsBeingModifiedChanged,
+            this,
+            &AddNodesQueue::onNodesAdded);
+}
+
+void AddNodesQueue::addStep(const QList<std::shared_ptr<mega::MegaNode>>& nodes,
+                            const QModelIndex& parentIndex)
+{
+    Info info;
+    info.nodesToAdd = nodes;
+    info.parentIndex = parentIndex;
+    mSteps.append(info);
+}
+
+void AddNodesQueue::onNodesAdded(bool state)
+{
+    if (!state && !mSteps.isEmpty())
+    {
+        auto info(mSteps.dequeue());
+        mModel->addNodes(info.nodesToAdd, info.parentIndex);
+    }
 }

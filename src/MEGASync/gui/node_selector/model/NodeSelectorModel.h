@@ -10,6 +10,7 @@
 #include <QList>
 #include <QMegaMessageBox.h>
 #include <QPointer>
+#include <QQueue>
 
 #include <megaapi.h>
 #include <memory>
@@ -129,6 +130,30 @@ private:
      NodeSelectorModelItemSearch::Types mSearchedTypes;
 };
 
+class AddNodesQueue: public QObject
+{
+    Q_OBJECT
+
+public:
+    AddNodesQueue(NodeSelectorModel* model);
+
+    void addStep(const QList<std::shared_ptr<mega::MegaNode>>& nodes,
+                 const QModelIndex& parentIndex);
+
+private slots:
+    void onNodesAdded(bool state);
+
+private:
+    struct Info
+    {
+        QList<std::shared_ptr<mega::MegaNode>> nodesToAdd;
+        QModelIndex parentIndex;
+    };
+
+    QQueue<Info> mSteps;
+    NodeSelectorModel* mModel;
+};
+
 class NodeSelectorModel : public QAbstractItemModel
 {
     Q_OBJECT
@@ -229,8 +254,12 @@ public:
 
     bool showFiles() const;
 
-    bool isBeingModified() const {return mIsBeingModified;}
-    void setIsModelBeingModified(bool state) {mIsBeingModified = state;}
+    bool isBeingModified() const
+    {
+        return mIsBeingModified;
+    }
+
+    void setIsModelBeingModified(bool state);
 
     void setAcceptDragAndDrop(bool newAcceptDragAndDrop);
     bool acceptDragAndDrop(const QMimeData* data);
@@ -261,6 +290,7 @@ signals:
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts);
     void allNodeRequestsFinished();
+    void modelIsBeingModifiedChanged(bool status);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -319,6 +349,9 @@ private:
     QMap<mega::MegaHandle, int> mRequestByHandle;
     QMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;
+
+    // Add nodes secuentially, not all at the same time
+    AddNodesQueue mAddNodesQueue;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaNodeList>)
