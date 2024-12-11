@@ -335,11 +335,9 @@ void NodeRequester::createBackupRootItems(mega::MegaHandle backupsHandle)
             if(!isAborted())
             {
                 NodeSelectorModelItem* item = new NodeSelectorModelItemBackup(std::move(backupsNode), mShowFiles);
-                //Here we are setting my backups node as vault node in the item, it is not the same vault node that we get
-                //doing megaapi->getVaultNode(), we have to hide it here thats why are doing this trick.
-                //The real vault is the parent of my backups folder
-                //NodeSelectorModelItem* item = new NodeSelectorModelItem(std::move(backupsNode), mShowFiles);
-                //item->setAsVaultNode();
+                // Here we are setting my backups node as vault node in the item, it is not the same
+                // vault node that we get doing megaapi->getVaultNode(), we have to hide it here
+                // thats why are doing this trick. The real vault is the parent of my backups folder
                 mRootItems.append(item);
             }
         }
@@ -1240,7 +1238,7 @@ bool NodeSelectorModel::areAllNodesEligibleForRestore(const QList<mega::MegaHand
 {
     auto restorableItems(handles.size());
 
-    foreach(auto&& nodeHandle, handles)
+    for (auto nodeHandle: qAsConst(handles))
     {
         std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(nodeHandle));
         if(node && MegaSyncApp->getMegaApi()->isInRubbish(node.get()))
@@ -1663,9 +1661,6 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
                 }
                 else
                 {
-                    // mIndexesToBeExpanded.append(qMakePair(node->getHandle(), indexToCheck));
-                    //  mIndexesActionInfo.indexesToBeExpanded.append(
-                    //      qMakePair(node->getHandle(), indexToCheck));
                     result = continueWithNextItemToLoad(indexToCheck);
                 }
             }

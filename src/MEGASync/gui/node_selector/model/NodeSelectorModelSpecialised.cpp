@@ -168,13 +168,6 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(
                     auto access = Utilities::getNodeAccess(node->getHandle());
                     if (access < MegaShare::ACCESS_READWRITE)
                     {
-                        // QMegaMessageBox::MessageBoxInfo msgInfo;
-                        // msgInfo.title = MegaSyncApp->getMEGAString();
-                        // msgInfo.text = tr("Error moving items");
-                        // msgInfo.informativeText = tr("You don´t have right to move items here");
-
-                        // emit showMessageBox(msgInfo);
-
                         return false;
                     }
                 }
@@ -563,8 +556,10 @@ void NodeSelectorModelRubbish::fetchMore(const QModelIndex &parent)
 
 void NodeSelectorModelRubbish::firstLoad()
 {
-    connect(this, &NodeSelectorModelRubbish::requestRubbishRootCreation, mNodeRequesterWorker, &NodeRequester::createRubbishRootItems);
-    //connect(this, &NodeSelectorModelRubbish::addRubbishRoot, mNodeRequesterWorker, &NodeRequester::addRubbishRootItem);
+    connect(this,
+            &NodeSelectorModelRubbish::requestRubbishRootCreation,
+            mNodeRequesterWorker,
+            &NodeRequester::createRubbishRootItems);
     connect(this, &NodeSelectorModelRubbish::deleteRubbishRoot, this, [this](std::shared_ptr<mega::MegaNode> node)
             {
                 mNodeRequesterWorker->removeRootItem(node);
