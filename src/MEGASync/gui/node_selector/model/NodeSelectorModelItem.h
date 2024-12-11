@@ -86,6 +86,7 @@ protected:
 private slots:
     void onFullNameAttributeReady();
     void onAvatarAttributeReady();
+    void onChildDestroyed();
 
 private:
     virtual NodeSelectorModelItem* createModelItem(std::unique_ptr<mega::MegaNode> node, bool showFiles, NodeSelectorModelItem *parentItem = 0) = 0;

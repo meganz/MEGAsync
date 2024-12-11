@@ -42,7 +42,9 @@ public:
               enqueue(false),
               ignoreCloseAll(false),
               checkboxText(QString())
-        {}
+        {
+            qRegisterMetaType<MessageBoxInfo>("QMegaMessageBox::MessageBoxInfo");
+        }
     };
 
     static void information(const MessageBoxInfo& info);

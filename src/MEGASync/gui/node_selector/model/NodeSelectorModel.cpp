@@ -315,11 +315,11 @@ void NodeRequester::addIncomingSharesRootItem(std::shared_ptr<mega::MegaNode> no
 
 void NodeRequester::createRubbishRootItems()
 {
-    auto root = std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRubbishNode());
-
-    if(!isAborted())
+    if (!isAborted())
     {
-        auto item = new NodeSelectorModelItemRubbish(std::move(root), mShowFiles);
+        auto item = new NodeSelectorModelItemRubbish(
+            std::unique_ptr<mega::MegaNode>(MegaSyncApp->getMegaApi()->getRubbishNode()),
+            mShowFiles);
         mRootItems.append(item);
         emit megaRubbishRootItemsCreated();
     }
@@ -485,7 +485,7 @@ void NodeRequester::abort()
 const int NodeSelectorModel::ROW_HEIGHT = 25;
 const QString MIME_DATA_INTERNAL_MOVE = QLatin1String("application/node_move");
 
-NodeSelectorModel::NodeSelectorModel(QObject *parent) :
+NodeSelectorModel::NodeSelectorModel(QObject* parent):
     QAbstractItemModel(parent),
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
@@ -718,8 +718,7 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
 
 QStringList NodeSelectorModel::mimeTypes() const
 {
-    QStringList types;
-    types << MIME_DATA_INTERNAL_MOVE;
+    static QStringList types{MIME_DATA_INTERNAL_MOVE};
     return types;
 }
 
@@ -734,56 +733,45 @@ bool NodeSelectorModel::dropMimeData(
         {
             if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(targetIndex.internalPointer()))
             {
-                auto node = chkItem->getNode();
+                QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
+                QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+                QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
+
+                auto sourceNode = chkItem->getNode();
 
                 mega::MegaHandle targetFolder(mega::INVALID_HANDLE);
-                if(node->isFile())
+                if (sourceNode->isFile())
                 {
-                    targetFolder = node->getParentHandle();
+                    targetFolder = sourceNode->getParentHandle();
                 }
                 else
                 {
-                    targetFolder = node->getHandle();
+                    targetFolder = sourceNode->getHandle();
                 }
-
-                std::shared_ptr<mega::MegaNode> parentNode(MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
-
-                QList<mega::MegaHandle> moveHandles;
-                QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
-                QDataStream stream(&encodedData, QIODevice::ReadOnly);
 
                 while (!stream.atEnd())
                 {
                     quint64 handle;
                     stream >> handle;
-                    moveHandles.append(handle);
+
+                    std::unique_ptr<mega::MegaNode> moveNode(
+                        MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+
+                    if (moveNode->getParentHandle() == targetFolder ||
+                        moveNode->getHandle() == targetFolder)
+                    {
+                        continue;
+                    }
+
+                    std::shared_ptr<mega::MegaNode> targetNode(
+                        MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
+                    nodesToMove.append(
+                        qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle,
+                                                                                     targetNode));
                 }
 
-                if(moveHandles.isEmpty())
-                {
-                    return false;
-                }
-
-                std::unique_ptr<mega::MegaNode> firstMoveNode(MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandles.first()));
-
-                if(firstMoveNode->getParentHandle() == targetFolder
-                    || firstMoveNode->getHandle() == targetFolder)
-                {
-                    return false;
-                }
-
-                auto conflicts = CheckDuplicatedNodes::checkMoves(moveHandles, node, parentNode);
-
-                if(!conflicts->isEmpty())
-                {
-                    emit showDuplicatedNodeDialog(conflicts);
-                }
-                else
-                {
-                    moveNodesAfterConflictCheck(conflicts);
-                }
-
-                return true;
+                return moveNodesAndCheckConflicts(nodesToMove, sourceNode);
             }
         }
     }
@@ -802,31 +790,57 @@ void NodeSelectorModel::moveNodesAfterConflictCheck(
                 MegaSyncApp->getMegaApi()->getNodeByHandle(resolvedMoveConflict->getSourceItemHandle()));
             if (nodeToMove)
             {
+                auto decision = resolvedMoveConflict->getSolution();
                 mRequestByHandle.insert(nodeToMove->getHandle(), mega::MegaRequest::TYPE_MOVE);
 
-                if (resolvedMoveConflict->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
+                if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
                     moveFolderAndMerge(nodeToMove,
-                        resolvedMoveConflict->getConflictNode(),
-                        conflicts->mTargetNode);
+                                       resolvedMoveConflict->getConflictNode(),
+                                       resolvedMoveConflict->getParentNode());
                 }
-                else if (resolvedMoveConflict->getSolution() == NodeItemType::FILE_UPLOAD_AND_REPLACE)
+                else if (decision == NodeItemType::FILE_UPLOAD_AND_REPLACE)
                 {
                     moveFileAndReplace(nodeToMove,
-                        resolvedMoveConflict->getConflictNode(),
-                        conflicts->mTargetNode);
+                                       resolvedMoveConflict->getConflictNode(),
+                                       resolvedMoveConflict->getParentNode());
                 }
-                else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD_AND_RENAME)
+                else if (decision == NodeItemType::UPLOAD_AND_RENAME)
                 {
-                    moveNodeAndRename(nodeToMove, resolvedMoveConflict->getNewName(), conflicts->mTargetNode);
+                    moveNodeAndRename(nodeToMove,
+                                      resolvedMoveConflict->getNewName(),
+                                      resolvedMoveConflict->getParentNode());
                 }
-                else if (resolvedMoveConflict->getSolution() == NodeItemType::UPLOAD)
+                else if (decision == NodeItemType::UPLOAD)
                 {
-                    moveNode(nodeToMove, conflicts->mTargetNode);
+                    moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
                 }
             }
         }
     }
+}
+
+bool NodeSelectorModel::moveNodesAndCheckConflicts(
+    const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
+    std::shared_ptr<mega::MegaNode> sourceNode)
+{
+    if (handleAndTarget.isEmpty())
+    {
+        return false;
+    }
+
+    auto conflicts = CheckDuplicatedNodes::checkMoves(handleAndTarget, sourceNode);
+
+    if (!conflicts->isEmpty())
+    {
+        emit showDuplicatedNodeDialog(conflicts);
+    }
+    else
+    {
+        moveNodesAfterConflictCheck(conflicts);
+    }
+
+    return true;
 }
 
 QMimeData* NodeSelectorModel::mimeData(const QModelIndexList &indexes) const
@@ -1065,7 +1079,6 @@ void NodeSelectorModel::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, c
             NodeSelectorModelItem* parentItem = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
             if(parentItem && parentItem->getNode()->isFolder() && parentItem->areChildrenInitialized())
             {
-                clearIndexesNodeInfo();
                 auto totalRows = rowCount(parent);
                 beginInsertRows(parent, totalRows, totalRows + nodes.size() - 1);
                 emit requestAddNodes(nodes, parent, parentItem);
@@ -1094,7 +1107,7 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
 {
     if(showsSyncStates() && sync)
     {
-        auto syncIndex = findItemByNodeHandle(sync->getMegaHandle(), QModelIndex());
+        auto syncIndex = findIndexByNodeHandle(sync->getMegaHandle(), QModelIndex());
         auto item = getItemByIndex(syncIndex);
         if(item)
         {
@@ -1291,24 +1304,26 @@ void NodeSelectorModel::moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveF
         [this, moveFolder, targetParentFolder, conflictTargetFolder]()
         {
             MegaApiSynchronizedRequest::runRequestLambdaWithResult(
-                [](mega::MegaNode* node, mega::MegaNode* targetNode, mega::MegaRequestListener* listener)
-                { MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener); },
-                MegaSyncApp->getMegaApi(),
-                [this, moveFolder, targetParentFolder, conflictTargetFolder](
-                    mega::MegaRequest* request,
-                    mega::MegaError* e)
+                [](mega::MegaNode* node,
+                   mega::MegaNode* targetNode,
+                   mega::MegaRequestListener* listener)
                 {
-                    if(e->getErrorCode() ==
-                        mega::MegaError::API_OK)
+                    MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+                },
+                MegaSyncApp->getMegaApi(),
+                [this, moveFolder, targetParentFolder, conflictTargetFolder](mega::MegaRequest*,
+                                                                             mega::MegaError* e)
+                {
+                    if (e->getErrorCode() == mega::MegaError::API_OK)
                     {
-                        MergeMEGAFolders::merge(moveFolder.get(),
-                                                conflictTargetFolder.get(),
-                                                MergeMEGAFolders::ActionForDuplicates::Rename);
+                        e = MergeMEGAFolders::merge(moveFolder.get(),
+                                                    conflictTargetFolder.get(),
+                                                    MergeMEGAFolders::ActionForDuplicates::Rename)
+                                .get();
                     }
-                    else
-                    {
-                        onRequestFinish(request, e);
-                    }
+
+                    checkFinishedRequest(moveFolder->getHandle(),
+                                         e ? e->getErrorCode() : mega::MegaError::API_OK);
                 },
                 moveFolder.get(),
                 targetParentFolder.get());
@@ -1319,13 +1334,21 @@ void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveF
                                            std::shared_ptr<mega::MegaNode> conflictTargetFile,
                                            std::shared_ptr<mega::MegaNode> targetParentFolder)
 {
-    QtConcurrent::run([this, moveFile, targetParentFolder, conflictTargetFile]() {
-        Utilities::removeRemoteFile(conflictTargetFile.get());
-        MegaSyncApp->getMegaApi()->moveNode(
-            moveFile.get(),
-            targetParentFolder.get(),
-            mListener.get());
-    });
+    QtConcurrent::run(
+        [this, moveFile, targetParentFolder, conflictTargetFile]()
+        {
+            auto e = Utilities::removeRemoteFile(conflictTargetFile.get());
+            if (e && e->getErrorCode() == mega::MegaError::API_OK)
+            {
+                MegaSyncApp->getMegaApi()->moveNode(moveFile.get(),
+                                                    targetParentFolder.get(),
+                                                    mListener.get());
+            }
+            else
+            {
+                checkFinishedRequest(moveFile->getHandle(), e->getErrorCode());
+            }
+        });
 }
 
 void NodeSelectorModel::moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode,
@@ -1349,135 +1372,144 @@ void NodeSelectorModel::moveNode(std::shared_ptr<mega::MegaNode> moveNode, std::
 
 void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
-    if (request->getType() == mega::MegaRequest::TYPE_MOVE ||
-        request->getType() == mega::MegaRequest::TYPE_REMOVE)
+    auto type(request->getType());
+
+    if (type == mega::MegaRequest::TYPE_MOVE || type == mega::MegaRequest::TYPE_REMOVE)
     {
-        auto requestType = mRequestByHandle.take(request->getNodeHandle());
-        if (e->getErrorCode() != mega::MegaError::API_OK)
+        auto handle(request->getNodeHandle());
+
+        checkFinishedRequest(handle, e->getErrorCode());
+    }
+}
+
+void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorCode)
+{
+    auto requestType = mRequestByHandle.take(handle);
+
+    if (errorCode != mega::MegaError::API_OK)
+    {
+        mRequestFailedByHandle.insert(handle, requestType);
+    }
+
+    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    if (node)
+    {
+        MovedItemsType itemType = node->isFile() ? MovedItemsType::FILES : MovedItemsType::FOLDERS;
+        mMovedItemsType |= itemType;
+    }
+
+    if (mRequestByHandle.isEmpty())
+    {
+        if (!mRequestFailedByHandle.isEmpty())
         {
-            mRequestFailedByHandle.insert(request->getNodeHandle(), requestType);
+            QMegaMessageBox::MessageBoxInfo msgInfo;
+            msgInfo.title = MegaSyncApp->getMEGAString();
 
-            std::unique_ptr<mega::MegaNode> node(
-                MegaSyncApp->getMegaApi()->getNodeByHandle(request->getNodeHandle()));
-            if (node)
+            auto multipleRequest(mRequestFailedByHandle.size() > 1);
+
+            if (requestType == mega::MegaRequest::TYPE_MOVE)
             {
-                MovedItemsType itemType =
-                    node->isFile() ? MovedItemsType::FILES : MovedItemsType::FOLDERS;
-                mMovedItemsType |= itemType;
-            }
-        }
-
-        auto multipleRequest(mRequestFailedByHandle.size() > 1);
-
-        if (mRequestByHandle.isEmpty())
-        {
-            if (!mRequestFailedByHandle.isEmpty())
-            {
-                QMegaMessageBox::MessageBoxInfo msgInfo;
-                msgInfo.title = MegaSyncApp->getMEGAString();
-
-                if (requestType == mega::MegaRequest::TYPE_MOVE)
+                if (multipleRequest)
                 {
-                    if (multipleRequest)
+                    if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
+                        mMovedItemsType.testFlag(MovedItemsType::BOTH))
                     {
-                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
-                        {
-                            msgInfo.text = tr("Error moving items");
-                            msgInfo.informativeText =
-                                tr("The items couldn´t be moved. Try again later");
-                        }
-                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
-                        {
-                            msgInfo.text = tr("Error moving files");
-                            msgInfo.informativeText =
-                                tr("The files couldn´t be moved. Try again later");
-                        }
-                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
-                        {
-                            msgInfo.text = tr("Error moving folders");
-                            msgInfo.informativeText =
-                                tr("The folders couldn´t be moved. Try again later");
-                        }
+                        msgInfo.text = tr("Error moving items");
+                        msgInfo.informativeText =
+                            tr("The items couldn´t be moved. Try again later");
+                    }
+                    else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
+                    {
+                        msgInfo.text = tr("Error moving files");
+                        msgInfo.informativeText =
+                            tr("The files couldn´t be moved. Try again later");
+                    }
+                    else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
+                    {
+                        msgInfo.text = tr("Error moving folders");
+                        msgInfo.informativeText =
+                            tr("The folders couldn´t be moved. Try again later");
+                    }
+                }
+                else
+                {
+                    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(
+                        mRequestFailedByHandle.firstKey()));
+
+                    if (node->isFile())
+                    {
+                        msgInfo.text = tr("Error moving file");
+                        msgInfo.informativeText =
+                            tr("The file %1 couldn´t be moved. Try again later")
+                                .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                     else
                     {
-                        std::unique_ptr<mega::MegaNode> node(
-                            MegaSyncApp->getMegaApi()->getNodeByHandle(
-                                mRequestFailedByHandle.firstKey()));
-
-                        if (node->isFile())
-                        {
-                            msgInfo.text = tr("Error moving file");
-                            msgInfo.informativeText =
-                                tr("The file %1 couldn´t be moved. Try again later")
-                                    .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
-                        else
-                        {
-                            msgInfo.text = tr("Error moving folder");
-                            msgInfo.informativeText =
-                                tr("The folder %1 couldn´t be moved. Try again later")
-                                    .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
+                        msgInfo.text = tr("Error moving folder");
+                        msgInfo.informativeText =
+                            tr("The folder %1 couldn´t be moved. Try again later")
+                                .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                 }
-                else if (requestType == mega::MegaRequest::TYPE_REMOVE)
+            }
+            else if (requestType == mega::MegaRequest::TYPE_REMOVE)
+            {
+                if (multipleRequest)
                 {
-                    if (multipleRequest)
+                    if (mMovedItemsType.testFlag(MovedItemsType::NONE) ||
+                        mMovedItemsType.testFlag(MovedItemsType::BOTH))
                     {
-                        if (mMovedItemsType.testFlag(MovedItemsType::BOTH))
-                        {
-                            msgInfo.text = tr("Error removing items");
-                            msgInfo.informativeText =
-                                tr("The items couldn´t be removed. Try again later");
-                        }
-                        else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
-                        {
-                            msgInfo.text = tr("Error removing files");
-                            msgInfo.informativeText =
-                                tr("The files couldn´t be removed. Try again later");
-                        }
-                        else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
-                        {
-                            msgInfo.text = tr("Error removing folders");
-                            msgInfo.informativeText =
-                                tr("The folders couldn´t be removed. Try again later");
-                        }
+                        msgInfo.text = tr("Error removing items");
+                        msgInfo.informativeText =
+                            tr("The items couldn´t be removed. Try again later");
+                    }
+                    else if (mMovedItemsType.testFlag(MovedItemsType::FILES))
+                    {
+                        msgInfo.text = tr("Error removing files");
+                        msgInfo.informativeText =
+                            tr("The files couldn´t be removed. Try again later");
+                    }
+                    else if (mMovedItemsType.testFlag(MovedItemsType::FOLDERS))
+                    {
+                        msgInfo.text = tr("Error removing folders");
+                        msgInfo.informativeText =
+                            tr("The folders couldn´t be removed. Try again later");
+                    }
+                }
+                else
+                {
+                    std::unique_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(
+                        mRequestFailedByHandle.firstKey()));
+
+                    if (node->isFile())
+                    {
+                        msgInfo.text = tr("Error removing file");
+                        msgInfo.informativeText =
+                            tr("The file %1 couldn’t be removed. Try again later")
+                                .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                     else
                     {
-                        std::unique_ptr<mega::MegaNode> node(
-                            MegaSyncApp->getMegaApi()->getNodeByHandle(
-                                mRequestFailedByHandle.firstKey()));
-
-                        if (node->isFile())
-                        {
-                            msgInfo.text = tr("Error removing file");
-                            msgInfo.informativeText =
-                                tr("The file %1 couldn’t be removed. Try again later")
-                                    .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
-                        else
-                        {
-                            msgInfo.text = tr("Error removing folder");
-                            msgInfo.informativeText =
-                                tr("The folder %1 couldn’t be removed. Try again later")
-                                    .arg(MegaNodeNames::getNodeName(node.get()));
-                        }
+                        msgInfo.text = tr("Error removing folder");
+                        msgInfo.informativeText =
+                            tr("The folder %1 couldn’t be removed. Try again later")
+                                .arg(MegaNodeNames::getNodeName(node.get()));
                     }
                 }
-
-                //Reset value
-                mMovedItemsType = MovedItemsType::NONE;
-
-                emit showMessageBox(msgInfo);
             }
 
+            // Show dialog
+            emit showMessageBox(msgInfo);
+
+            // Reset value
             mRequestFailedByHandle.clear();
-            mRequestByHandle.clear();
-
-            emit blockUi(false);
         }
+
+        // Reset values for next move action
+        mMovedItemsType = MovedItemsType::NONE;
+        emit blockUi(false);
+
+        emit allNodeRequestsFinished();
     }
 }
 
@@ -1548,18 +1580,14 @@ QVariant NodeSelectorModel::getText(const QModelIndex &index, NodeSelectorModelI
     return QVariant();
 }
 
-NodeSelectorModel::IndexesActionInfo NodeSelectorModel::needsToBeExpandedAndSelected()
+QList<QPair<mega::MegaHandle, QModelIndex>>& NodeSelectorModel::needsToBeExpanded()
 {
-    IndexesActionInfo info = mIndexesActionInfo;
-    clearIndexesNodeInfo(mIndexesActionInfo.needsToBeSelected);
-
-    return info;
+    return mIndexesToBeExpanded;
 }
 
-void NodeSelectorModel::clearIndexesNodeInfo(bool select)
+QList<QPair<mega::MegaHandle, QModelIndex>>& NodeSelectorModel::needsToBeSelected()
 {
-    mIndexesActionInfo = IndexesActionInfo();
-    mIndexesActionInfo.needsToBeSelected = select;
+    return mIndexesToBeSelected;
 }
 
 void NodeSelectorModel::abort()
@@ -1577,9 +1605,6 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
     //First, we set the loading view as it can take long to load the tree path to the node
     emit blockUi(true);
 
-    clearIndexesNodeInfo();
-    mIndexesActionInfo.needsToBeSelected = true;
-
     mNodesToLoad.clear();
     mNodesToLoad.append(node);
 
@@ -1590,9 +1615,12 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
     //will stops working in backups screen.
     while(addToLoadingList(p_node))
     {
+        mIndexesToBeExpanded.append(qMakePair(p_node->getHandle(), QModelIndex()));
         mNodesToLoad.append(p_node);
         p_node.reset(MegaSyncApp->getMegaApi()->getParentNode(p_node.get()));
     }
+
+    mIndexesToBeSelected.append(qMakePair(node->getHandle(), QModelIndex()));
 
     if(!fetchMoreRecursively(QModelIndex()))
     {
@@ -1610,15 +1638,20 @@ bool NodeSelectorModel::fetchMoreRecursively(const QModelIndex& parentIndex)
         if(node)
         {
             auto indexToCheck = getIndexFromNode(node, parentIndex);
-            if(canFetchMore(indexToCheck))
+            if (indexToCheck.isValid())
             {
-                fetchMore(indexToCheck);
-                result = true;
-            }
-            else
-            {
-                mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(node->getHandle(),indexToCheck));
-                result = continueWithNextItemToLoad(indexToCheck);
+                if (canFetchMore(indexToCheck))
+                {
+                    fetchMore(indexToCheck);
+                    result = true;
+                }
+                else
+                {
+                    // mIndexesToBeExpanded.append(qMakePair(node->getHandle(), indexToCheck));
+                    //  mIndexesActionInfo.indexesToBeExpanded.append(
+                    //      qMakePair(node->getHandle(), indexToCheck));
+                    result = continueWithNextItemToLoad(indexToCheck);
+                }
             }
         }
     }
@@ -1662,7 +1695,7 @@ void NodeSelectorModel::addRootItems()
 
 void NodeSelectorModel::loadLevelFinished()
 {
-   emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
+    emit levelsAdded(mIndexesToBeExpanded);
 }
 
 bool NodeSelectorModel::canFetchMore(const QModelIndex &parent) const
@@ -1723,7 +1756,7 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     emit updateLoadingMessage(info);
 
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
-    mIndexesActionInfo.indexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
+    mIndexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
     continueWithNextItemToLoad(index);
 }
 
@@ -1753,7 +1786,8 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     return result;
 }
 
-QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& handle, const QModelIndex &parent)
+QModelIndex NodeSelectorModel::findIndexByNodeHandle(const mega::MegaHandle& handle,
+                                                     const QModelIndex& parent)
 {
     for(int i = 0; i < rowCount(parent); ++i)
     {
@@ -1774,7 +1808,7 @@ QModelIndex NodeSelectorModel::findItemByNodeHandle(const mega::MegaHandle& hand
         QModelIndex child = parent.isValid() ? index(i, COLUMN::NODE, parent) : index(i, COLUMN::NODE);
         if(child.isValid())
         {
-            auto ret = findItemByNodeHandle(handle, child);
+            auto ret = findIndexByNodeHandle(handle, child);
             if(ret.isValid())
             {
                 return ret;

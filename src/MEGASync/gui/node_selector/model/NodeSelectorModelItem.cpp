@@ -63,7 +63,12 @@ void NodeSelectorModelItem::createChildItems(std::unique_ptr<mega::MegaNodeList>
             }
 
             auto node = std::unique_ptr<MegaNode>(nodeList->get(i)->copy());
-            mChildItems.append(createModelItem(std::move(node), mShowFiles, this));
+            auto child = createModelItem(std::move(node), mShowFiles, this);
+            connect(child,
+                    &NodeSelectorModelItem::destroyed,
+                    this,
+                    &NodeSelectorModelItem::onChildDestroyed);
+            mChildItems.append(child);
         }
 
         mRequestingChildren = false;
@@ -188,6 +193,11 @@ void NodeSelectorModelItem::onAvatarAttributeReady()
     emit infoUpdated(Qt::DecorationRole);
 }
 
+void NodeSelectorModelItem::onChildDestroyed()
+{
+    mChildrenCounter--;
+}
+
 QPixmap NodeSelectorModelItem::getOwnerIcon()
 {
     if(mAvatarAttribute)
@@ -251,9 +261,14 @@ QList<QPointer<NodeSelectorModelItem>> NodeSelectorModelItem::addNodes(QList<std
     QList<QPointer<NodeSelectorModelItem>> items;
     foreach(auto& node, nodes)
     {
-        auto item = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
-        items.append(item);
-        mChildItems.append(item);
+        auto child = createModelItem(std::unique_ptr<MegaNode>(node->copy()), mShowFiles, this);
+        items.append(child);
+        connect(child,
+                &NodeSelectorModelItem::destroyed,
+                this,
+                &NodeSelectorModelItem::onChildDestroyed);
+        mChildItems.append(child);
+        mChildrenCounter++;
     }
     return items;
 }

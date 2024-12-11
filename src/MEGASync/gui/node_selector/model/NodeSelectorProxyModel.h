@@ -32,7 +32,7 @@ public:
     QModelIndex getIndexFromSource(const QModelIndex& index);
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
-    QVector<QModelIndex> getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node);
+    QModelIndex findIndexInParentList(const std::shared_ptr<mega::MegaNode> node);
     void removeNode(const QModelIndex &item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
@@ -49,7 +49,8 @@ signals:
     void modelSorted();
 
 private:
-    QVector<QModelIndex> forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent = QModelIndex());
+    QModelIndex findIndexInParentList(mega::MegaNode* NodeToFind,
+                                      QModelIndex sourceModelParent = QModelIndex());
     QCollator mCollator;
     int mSortColumn;
     Qt::SortOrder mOrder;

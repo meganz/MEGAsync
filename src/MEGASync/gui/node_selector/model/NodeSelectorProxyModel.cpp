@@ -84,32 +84,6 @@ QModelIndex NodeSelectorProxyModel::getIndexFromHandle(const mega::MegaHandle& h
     return ret;
 }
 
-QVector<QModelIndex> NodeSelectorProxyModel::getRelatedModelIndexes(const std::shared_ptr<mega::MegaNode> node)
-{
-    QVector<QModelIndex> ret;
-
-    if(!node)
-    {
-        return ret;
-    }
-    auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-    parentNodeList->addNode(node.get());
-    mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
-
-    std::shared_ptr<mega::MegaNode> this_node = node;
-    while(this_node)
-    {
-        this_node.reset(megaApi->getParentNode(this_node.get()));
-        if(this_node)
-        {
-            parentNodeList->addNode(this_node.get());
-        }
-    }
-    ret.append(forEach(parentNodeList));
-
-    return ret;
-}
-
 std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelIndex &index)
 {
     if(!index.isValid())
@@ -191,59 +165,63 @@ void NodeSelectorProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     }
 }
 
-QVector<QModelIndex> NodeSelectorProxyModel::forEach(std::shared_ptr<mega::MegaNodeList> parentNodeList, QModelIndex parent)
+QModelIndex NodeSelectorProxyModel::findIndexInParentList(mega::MegaNode* NodeToFind,
+                                                          QModelIndex sourceModelParent)
 {
-    QVector<QModelIndex> ret;
+    auto handle = NodeToFind->getHandle();
 
-    for(int j = parentNodeList->size()-1; j >= 0; --j)
+    for (int i = 0; i < sourceModel()->rowCount(sourceModelParent); ++i)
     {
-        auto handle = parentNodeList->get(j)->getHandle();
-        for(int i = 0; i < sourceModel()->rowCount(parent); ++i)
+        QModelIndex index = sourceModel()->index(i, 0, sourceModelParent);
+
+        if (NodeSelectorModelItem* item =
+                static_cast<NodeSelectorModelItem*>(index.internalPointer()))
         {
-            QModelIndex index = sourceModel()->index(i, 0, parent);
-
-            if(NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(index.internalPointer()))
+            if (handle == item->getNode()->getHandle())
             {
-                if(handle == item->getNode()->getHandle())
-                {
-                    ret.append(mapFromSource(index));
-
-                    auto interList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
-                    for(int k = 0; k < parentNodeList->size(); ++k)
-                    {
-                        interList->addNode(parentNodeList->get(k));
-                    }
-                    ret.append(forEach(interList, index));
-                    break;
-                }
+                return mapFromSource(index);
             }
         }
     }
 
-    return ret;
+    return QModelIndex();
 }
 
-QModelIndex NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> node)
+QModelIndex
+    NodeSelectorProxyModel::getIndexFromNode(const std::shared_ptr<mega::MegaNode> nodeToFind)
 {
-    if(!node)
+    if (!nodeToFind)
     {
         return QModelIndex();
     }
+
+    auto parentNodeList = std::shared_ptr<mega::MegaNodeList>(mega::MegaNodeList::createInstance());
+    parentNodeList->addNode(nodeToFind.get());
     mega::MegaApi* megaApi = MegaSyncApp->getMegaApi();
 
-    std::shared_ptr<mega::MegaNode> root_p_node = node;
-    auto p_node = std::unique_ptr<mega::MegaNode>(megaApi->getParentNode(root_p_node.get()));
-    while(p_node)
+    std::shared_ptr<mega::MegaNode> this_node = nodeToFind;
+    while (this_node)
     {
-        root_p_node = std::move(p_node);
-        p_node.reset(megaApi->getParentNode(root_p_node.get()));
+        this_node.reset(megaApi->getParentNode(this_node.get()));
+        if (this_node)
+        {
+            parentNodeList->addNode(this_node.get());
+        }
     }
 
-    QVector<QModelIndex> indexList = getRelatedModelIndexes(node);
-    if(!indexList.isEmpty())
+    QModelIndex foundIndex;
+
+    // Start from top parent to last child
+    for (int i = parentNodeList->size() - 1; i >= 0; --i)
     {
-        return indexList.last();
+        auto nodeFromList(parentNodeList->get(i));
+        foundIndex = findIndexInParentList(nodeFromList, mapToSource(foundIndex));
+        if (foundIndex.isValid() && nodeFromList->getHandle() == nodeToFind->getHandle())
+        {
+            return foundIndex;
+        }
     }
+
     return QModelIndex();
 }
 
@@ -293,11 +271,8 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
     }
     else
     {
-        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() : mapFromSource(mItemsToMap.first()));
-        if(auto nodeSelectorModel = dynamic_cast<NodeSelectorModel*>(sourceModel()))
-        {
-            nodeSelectorModel->clearIndexesNodeInfo();
-        }
+        emit navigateReady(mItemsToMap.isEmpty() ? QModelIndex() :
+                                                   mapFromSource(mItemsToMap.first()));
         mExpandMapped = true;
     }
     emit getMegaModel()->blockUi(false);

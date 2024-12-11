@@ -173,35 +173,34 @@ bool DuplicatedMoveNodeInfo::sourceItemIsFile() const
     return mSourceItemNode->isFile();
 }
 
-std::shared_ptr<ConflictTypes>
-    CheckDuplicatedNodes::checkMoves(QList<mega::MegaHandle> moveHandles,
-                                     std::shared_ptr<mega::MegaNode> sourceNode,
-                                     std::shared_ptr<mega::MegaNode> targetNode)
+std::shared_ptr<ConflictTypes> CheckDuplicatedNodes::checkMoves(
+    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> handlesAndTargetNode,
+    std::shared_ptr<mega::MegaNode> sourceNode)
 {
     auto conflicts = std::make_shared<ConflictTypes>();
     conflicts->mFolderCheck = new DuplicatedMoveFolder();
     conflicts->mFileCheck = new DuplicatedMoveFile();
     conflicts->mSourceNode = sourceNode;
-    conflicts->mTargetNode = targetNode;
 
-    std::unique_ptr<mega::MegaNodeList> nodes(
-        MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
-    QHash<QString, mega::MegaNode*> nodesOnCloudDrive;
-
-    for (int index = 0; index < nodes->size(); ++index)
-    {
-        QString nodeName(QString::fromUtf8(nodes->get(index)->getName()));
-        nodesOnCloudDrive.insert(nodeName, nodes->get(index));
-    }
+    QHash<mega::MegaHandle, QHash<QString, std::shared_ptr<mega::MegaNode>>>
+        nodesOnCloudDriveByParentHandle;
 
     auto counter(0);
-    EventUpdater checkUpdater(moveHandles.size());
+    EventUpdater checkUpdater(handlesAndTargetNode.size());
 
-    while (!moveHandles.isEmpty())
+    while (!handlesAndTargetNode.isEmpty())
     {
-        auto moveHandle(moveHandles.takeFirst());
-        std::unique_ptr<mega::MegaNode> moveNode(
+        auto moveHandleAndTarget(handlesAndTargetNode.takeFirst());
+
+        auto moveHandle(moveHandleAndTarget.first);
+
+        std::shared_ptr<mega::MegaNode> moveNode(
             MegaSyncApp->getMegaApi()->getNodeByHandle(moveHandle));
+        if (!moveNode)
+        {
+            continue;
+        }
+
         auto moveNodeName(QString::fromUtf8(moveNode->getName()));
 
         DuplicatedUploadBase* checker(nullptr);
@@ -215,14 +214,40 @@ std::shared_ptr<ConflictTypes>
         }
 
         auto info = std::make_shared<DuplicatedMoveNodeInfo>(checker);
-        info->setParentNode(targetNode);
         info->setSourceItemHandle(moveHandle);
 
-        auto MEGANode(nodesOnCloudDrive.value(moveNodeName));
-        if (MEGANode)
+        auto targetNode(moveHandleAndTarget.second);
+        if (!targetNode)
         {
-            std::shared_ptr<mega::MegaNode> smartNode(MEGANode->copy());
-            info->setConflictNode(smartNode);
+            continue;
+        }
+        info->setParentNode(targetNode);
+
+        QHash<QString, std::shared_ptr<mega::MegaNode>> nodesOnCloudDrive;
+
+        if (nodesOnCloudDriveByParentHandle.contains(targetNode->getHandle()))
+        {
+            nodesOnCloudDrive = nodesOnCloudDriveByParentHandle.value(targetNode->getHandle());
+        }
+        else
+        {
+            std::unique_ptr<mega::MegaNodeList> childNodes(
+                MegaSyncApp->getMegaApi()->getChildren(targetNode.get()));
+
+            for (int index = 0; index < childNodes->size(); ++index)
+            {
+                std::shared_ptr<mega::MegaNode> node(childNodes->get(index)->copy());
+                QString nodeName(QString::fromUtf8(node->getName()));
+                nodesOnCloudDrive.insert(nodeName, node);
+            }
+
+            nodesOnCloudDriveByParentHandle.insert(targetNode->getHandle(), nodesOnCloudDrive);
+        }
+
+        auto foundNode(nodesOnCloudDrive.value(moveNodeName));
+        if (foundNode)
+        {
+            info->setConflictNode(foundNode);
             info->setHasConflict(true);
             info->setName(moveNodeName);
             info->setIsNameConflict(true);
@@ -231,6 +256,7 @@ std::shared_ptr<ConflictTypes>
         }
         else
         {
+            nodesOnCloudDriveByParentHandle[targetNode->getHandle()].insert(moveNodeName, moveNode);
             conflicts->mResolvedConflicts.append(info);
         }
 

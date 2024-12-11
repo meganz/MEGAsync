@@ -3,15 +3,16 @@
 
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
-#include <megaapi.h>
-#include <memory>
+#include <MegaApplication.h>
+
 #include <QAbstractItemModel>
 #include <QIcon>
 #include <QList>
 #include <QMegaMessageBox.h>
 #include <QPointer>
 
-#include <MegaApplication.h>
+#include <megaapi.h>
+#include <memory>
 
 namespace UserAttributes{
 class CameraUploadFolder;
@@ -152,13 +153,6 @@ public:
     };
     Q_DECLARE_FLAGS(MovedItemsTypes, MovedItemsType)
 
-    struct IndexesActionInfo
-    {
-        bool needsToBeSelected = false;
-        QList<QPair<mega::MegaHandle, QModelIndex>> indexesToBeExpanded;
-        bool needsToBeEntered = false;
-    };
-
     explicit NodeSelectorModel(QObject *parent = 0);
     virtual ~NodeSelectorModel();
 
@@ -187,11 +181,21 @@ public:
     bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
     bool areAllNodesEligibleForRestore(const QList<mega::MegaHandle> &handles) const;
 
-    void moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveFolder, std::shared_ptr<mega::MegaNode> conflictTargetFolder, std::shared_ptr<mega::MegaNode> targetParentFolder);
-    void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile, std::shared_ptr<mega::MegaNode> conflictTargetFile, std::shared_ptr<mega::MegaNode> targetParentFolder);
-    void moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode, const QString& newName, std::shared_ptr<mega::MegaNode> targetParentFolder);
-    void moveNode(std::shared_ptr<mega::MegaNode> moveNode, std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveFolder,
+                            std::shared_ptr<mega::MegaNode> conflictTargetFolder,
+                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
+                            std::shared_ptr<mega::MegaNode> conflictTargetFile,
+                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode,
+                           const QString& newName,
+                           std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void moveNode(std::shared_ptr<mega::MegaNode> moveNode,
+                  std::shared_ptr<mega::MegaNode> targetParentFolder);
     void moveNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts);
+    bool moveNodesAndCheckConflicts(
+        const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
+        std::shared_ptr<mega::MegaNode> sourceNode);
 
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
@@ -202,7 +206,7 @@ public:
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
-    QModelIndex findItemByNodeHandle(const mega::MegaHandle &handle, const QModelIndex& parent);
+    QModelIndex findIndexByNodeHandle(const mega::MegaHandle& handle, const QModelIndex& parent);
 
     static NodeSelectorModelItem *getItemByIndex(const QModelIndex& index);
     void updateItemNode(const QModelIndex& indexToUpdate, std::shared_ptr<mega::MegaNode> node);
@@ -213,8 +217,9 @@ public:
 
     virtual void proxyInvalidateFinished(){}
 
-    IndexesActionInfo needsToBeExpandedAndSelected();
-    void clearIndexesNodeInfo(bool select = false);
+    QList<QPair<mega::MegaHandle, QModelIndex>>& needsToBeExpanded();
+    QList<QPair<mega::MegaHandle, QModelIndex>>& needsToBeSelected();
+
     void abort();
 
     virtual bool canBeDeleted() const;
@@ -253,8 +258,9 @@ signals:
     void blockUi(bool state);
     void forceFilter();
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
-    void showMessageBox(QMegaMessageBox::MessageBoxInfo info);
+    void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts);
+    void allNodeRequestsFinished();
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -270,9 +276,14 @@ protected:
     int mRequiredRights;
     bool mDisplayFiles;
     bool mSyncSetupMode;
-    mutable IndexesActionInfo mIndexesActionInfo;
     NodeRequester* mNodeRequesterWorker;
     QList<std::shared_ptr<mega::MegaNode>> mNodesToLoad;
+
+    // Indexes to be selected as they are loaded
+    QList<QPair<mega::MegaHandle, QModelIndex>> mIndexesToBeSelected;
+
+    // Indexes to be expanded as they are loaded
+    QList<QPair<mega::MegaHandle, QModelIndex>> mIndexesToBeExpanded;
 
 protected slots:
     virtual void onRootItemAdded();
@@ -292,6 +303,8 @@ private:
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
+
+    void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;

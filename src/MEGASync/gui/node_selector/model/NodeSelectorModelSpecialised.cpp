@@ -104,7 +104,7 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     {
         if(node->isInShare())
         {
-            auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            auto folderIndex = findIndexByNodeHandle(node->getHandle(), QModelIndex());
             if(!folderIndex.isValid())
             {
                 auto totalRows = rowCount(QModelIndex());
@@ -132,7 +132,7 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     {
         if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
         {
-            auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
             if(index.isValid())
             {
                 beginRemoveRows(QModelIndex(), index.row(), index.row());
@@ -141,7 +141,7 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
             }
         }
 
-        auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+        auto folderIndex = findIndexByNodeHandle(node->getHandle(), QModelIndex());
         if(folderIndex.isValid())
         {
             updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
@@ -166,8 +166,15 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(
                 if(node)
                 {
                     auto access = Utilities::getNodeAccess(node->getHandle());
-                    if(access < MegaShare::ACCESS_FULL)
+                    if (access < MegaShare::ACCESS_READWRITE)
                     {
+                        // QMegaMessageBox::MessageBoxInfo msgInfo;
+                        // msgInfo.title = MegaSyncApp->getMEGAString();
+                        // msgInfo.text = tr("Error moving items");
+                        // msgInfo.informativeText = tr("You don´t have right to move items here");
+
+                        // emit showMessageBox(msgInfo);
+
                         return false;
                     }
                 }
@@ -297,7 +304,7 @@ bool NodeSelectorModelBackups::addToLoadingList(const std::shared_ptr<MegaNode> 
 
 void NodeSelectorModelBackups::loadLevelFinished()
 {
-    if(mIndexesActionInfo.indexesToBeExpanded.size() == 1 && mIndexesActionInfo.indexesToBeExpanded.at(0).second == index(0, 0))
+    if (mIndexesToBeExpanded.size() == 1 && mIndexesToBeExpanded.at(0).second == index(0, 0))
     {
         QModelIndex rootIndex(index(0, 0));
         int rowcount = rowCount(rootIndex);
@@ -318,7 +325,7 @@ void NodeSelectorModelBackups::loadLevelFinished()
     }
     if(mBackupDevicesSize == 0)
     {
-        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded);
+        emit levelsAdded(mIndexesToBeExpanded);
     }
 }
 
@@ -425,7 +432,6 @@ QVariant NodeSelectorModelSearch::data(const QModelIndex &index, int role) const
 
 void NodeSelectorModelSearch::addNodes(QList<std::shared_ptr<mega::MegaNode>> nodes, const QModelIndex &parent)
 {
-    clearIndexesNodeInfo();
     auto totalRows = rowCount(parent);
     beginInsertRows(QModelIndex(), totalRows, totalRows + nodes.size() - 1);
     emit requestAddSearchRootItem(nodes, mAllowedTypes);
@@ -449,7 +455,7 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
     {
         if(node->getChanges() & MegaNode::CHANGE_TYPE_REMOVED)
         {
-            auto index = findItemByNodeHandle(node->getHandle(), QModelIndex());
+            auto index = findIndexByNodeHandle(node->getHandle(), QModelIndex());
             if(index.isValid())
             {
                 beginRemoveRows(QModelIndex(), index.row(), index.row());
@@ -458,7 +464,7 @@ bool NodeSelectorModelSearch::rootNodeUpdated(mega::MegaNode *node)
             }
         }
 
-        auto folderIndex = findItemByNodeHandle(node->getHandle(), QModelIndex());
+        auto folderIndex = findIndexByNodeHandle(node->getHandle(), QModelIndex());
         if(folderIndex.isValid())
         {
             updateItemNode(folderIndex, std::shared_ptr<mega::MegaNode>(node->copy()));
@@ -479,7 +485,7 @@ void NodeSelectorModelSearch::onRootItemsCreated()
     if(mNodeRequesterWorker->trySearchLock())
     {
         rootItemsLoaded();
-        emit levelsAdded(mIndexesActionInfo.indexesToBeExpanded, true);
+        emit levelsAdded(mIndexesToBeExpanded, true);
     }
 }
 

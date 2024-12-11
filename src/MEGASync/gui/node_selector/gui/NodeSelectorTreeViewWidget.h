@@ -54,7 +54,7 @@ public:
     mega::MegaHandle getSelectedNodeHandle();
     void init();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
-    void setSelectedNodeHandle(const mega::MegaHandle &selectedHandle, bool goToInit = false);
+    void setSelectedNodeHandle(const mega::MegaHandle& selectedHandle);
     void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
@@ -155,13 +155,14 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
-    void selectIndex(const QModelIndex& index, bool setCurrent);
+    void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
 
     ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
     mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
+
     struct UpdateNodesInfo
     {
       mega::MegaHandle previousHandle = mega::INVALID_HANDLE;
@@ -174,6 +175,7 @@ private:
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
     QList<mega::MegaHandle> mMovedNodesByHandle;
+
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;

@@ -18,12 +18,9 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
 
 public:
     explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
-    void itemsRestored(mega::MegaHandle &handle, bool parentLoaded);
+    void itemsRestored(const QList<mega::MegaHandle>& handles);
 
     void setShowEmptyView(bool newShowEmptyView);
-
-public slots:
-    void onRowsInserted() override;
 
 private:
     QString getRootText() override;
@@ -34,8 +31,10 @@ private:
     bool showEmptyView() override {return mShowEmptyView;}
     bool isCurrentRootIndexReadOnly() override;
 
+    mega::MegaHandle findMergedSibling(std::shared_ptr<mega::MegaNode> node);
+
     bool mShowEmptyView = true;
-    mega::MegaHandle mRestoredHandle = mega::INVALID_HANDLE;
+    QList<mega::MegaHandle> mRestoredHandles;
 };
 
 class NodeSelectorTreeViewWidgetIncomingShares : public NodeSelectorTreeViewWidget
@@ -115,17 +114,20 @@ public:
     explicit NodeSelectorTreeViewWidgetRubbish(SelectTypeSPtr mode, QWidget *parent = nullptr);
     void setShowEmptyView(bool newShowEmptyView);
     bool isEmpty() const;
-    void restoreItems(const QList<mega::MegaHandle> &handles, bool parentLoaded, mega::MegaHandle firstRestoredHandle);
+    void restoreItems(const QList<mega::MegaHandle>& handles);
 
 signals:
     void itemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-    void itemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
+    void itemsRestored(const QList<mega::MegaHandle>& handles);
 
 protected:
     void makeCustomConnections() override;
 
 protected slots:
     void onRestoreClicked(const QList<mega::MegaHandle>& handles);
+
+private slots:
+    void onRestoreItemsFinished();
 
 private:
     QString getRootText() override;
@@ -140,8 +142,6 @@ private:
 
     bool mShowEmptyView = true;
     QList<mega::MegaHandle> mRestoredItems;
-    mega::MegaHandle mFirstRestoredHandle = mega::INVALID_HANDLE;
-    bool mFirstRestoredHandleParentLoaded = false;
 };
 
 

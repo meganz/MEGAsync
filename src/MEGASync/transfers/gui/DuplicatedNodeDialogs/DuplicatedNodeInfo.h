@@ -121,9 +121,9 @@ struct ConflictTypes
 class CheckDuplicatedNodes
 {
 public:
-    static std::shared_ptr<ConflictTypes> checkMoves(QList<mega::MegaHandle> moveHandles,
-                                                     std::shared_ptr<mega::MegaNode> sourceNode,
-                                                     std::shared_ptr<mega::MegaNode> targetNode);
+    static std::shared_ptr<ConflictTypes> checkMoves(
+        QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> handlesAndTargetNode,
+        std::shared_ptr<mega::MegaNode> sourceNode);
     static std::shared_ptr<ConflictTypes> checkUploads(
         QQueue<QString>& nodePaths, std::shared_ptr<mega::MegaNode> targetNode);
 };

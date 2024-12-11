@@ -28,7 +28,8 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     ui(new Ui::NodeSelector),
     mSelectType(selectType),
     mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
-    mInitialised(false)
+    mInitialised(false),
+    mNodeToBeSelected(mega::INVALID_HANDLE)
 {
     ui->setupUi(this);
 
@@ -222,69 +223,20 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
 
 void NodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
 {
-    auto cloudDriveViewContainer = getTreeViewWidget(ui->stackedWidget->widget(CLOUD_DRIVE));
-    if(cloudDriveViewContainer)
+    auto rubbishViewContainer =
+        dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(ui->stackedWidget->widget(RUBBISH));
+    if (rubbishViewContainer)
     {
-        mega::MegaHandle firstValidRestoredHandle(mega::INVALID_HANDLE);
-        auto cloudDriveModel = cloudDriveViewContainer->getProxyModel()->getMegaModel();
-
-        bool parentLoaded(false);
-        foreach(auto handle, handles)
-        {
-            auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
-            if (node && node->getRestoreHandle() != mega::INVALID_HANDLE)
-            {
-                auto restoreHandle(node->getRestoreHandle());
-
-                if (firstValidRestoredHandle == mega::INVALID_HANDLE)
-                {
-                    firstValidRestoredHandle = handle;
-                }
-
-                auto parentNode =
-                    std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(restoreHandle));
-                if (parentNode)
-                {
-                    if (restoreHandle == MegaSyncApp->getRootNode()->getHandle())
-                    {
-                        parentLoaded = true;
-                    }
-                    else
-                    {
-                        auto parentIndex =
-                            cloudDriveModel->findItemByNodeHandle(restoreHandle, QModelIndex());
-                        if (parentIndex.isValid())
-                        {
-                            auto item = cloudDriveModel->getItemByIndex(parentIndex);
-                            if (item && item->areChildrenInitialized())
-                            {
-                                parentLoaded = true;
-                            }
-                        }
-                    }
-                }
-
-                if (parentLoaded)
-                {
-                    break;
-                }
-            }
-        }
-
-        auto rubbishViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(ui->stackedWidget->widget(RUBBISH));
-        if(rubbishViewContainer)
-        {
-            rubbishViewContainer->restoreItems(handles, parentLoaded, firstValidRestoredHandle);
-        }
+        rubbishViewContainer->restoreItems(handles);
     }
 }
 
-void NodeSelector::onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded)
+void NodeSelector::onItemsRestored(const QList<mega::MegaHandle>& handles)
 {
     auto cloudDriveViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
     if(cloudDriveViewContainer)
     {
-        cloudDriveViewContainer->itemsRestored(restoredHandle, parentLoaded);
+        cloudDriveViewContainer->itemsRestored(handles);
         onbShowCloudDriveClicked();
     }
 }
@@ -501,7 +453,12 @@ void NodeSelector::initSpecialisedWidgets()
         }
     }
 
-
+    auto treeViewWidget = getCurrentTreeViewWidget();
+    if (treeViewWidget && mNodeToBeSelected != mega::INVALID_HANDLE)
+    {
+        treeViewWidget->setSelectedNodeHandle(mNodeToBeSelected);
+        mNodeToBeSelected = mega::INVALID_HANDLE;
+    }
 }
 
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
@@ -517,7 +474,7 @@ bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
     return QDialog::eventFilter(obj,event);
 }
 
-void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool goToInit)
+void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
     if (node)
     {
@@ -539,12 +496,7 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node, bool go
         if (option.has_value())
         {
             onOptionSelected(option.value());
-
-            auto tree_view_widget = getCurrentTreeViewWidget();
-            if (tree_view_widget)
-            {
-                tree_view_widget->setSelectedNodeHandle(node->getHandle(), goToInit);
-            }
+            mNodeToBeSelected = node->getHandle();
         }
     }
 }

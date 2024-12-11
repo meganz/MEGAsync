@@ -51,7 +51,7 @@ public:
     void showDefaultUploadOption(bool show = true);
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
-    void setSelectedNodeHandle(std::shared_ptr<mega::MegaNode> node = nullptr, bool goToInit = false);
+    void setSelectedNodeHandle(std::shared_ptr<mega::MegaNode> node = nullptr);
     mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void closeEvent(QCloseEvent* event) override;
@@ -104,7 +104,7 @@ private slots:
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
     void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-    void onItemsRestored(mega::MegaHandle restoredHandle, bool parentLoaded);
+    void onItemsRestored(const QList<mega::MegaHandle>& handles);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
@@ -123,6 +123,8 @@ private:
 
     bool mManuallyResizedColumn;
     bool mInitialised;
+
+    mega::MegaHandle mNodeToBeSelected;
 };
 
 #endif // NODESELECTOR_H

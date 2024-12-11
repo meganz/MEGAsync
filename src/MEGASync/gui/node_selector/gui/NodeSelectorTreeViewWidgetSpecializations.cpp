@@ -17,34 +17,37 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     ui->searchEmptyInfoWidget->hide();
 }
 
-void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(mega::MegaHandle& handle, bool parentLoaded)
+void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(const QList<mega::MegaHandle>& handles)
 {
+    QList<mega::MegaHandle> handlesToSelect(handles);
+
     this->setAcceptDrops(true);
     ui->tMegaFolders->setAcceptDrops(true);
-    if(!parentLoaded)
+
+    for (auto& handle: qAsConst(handles))
+    {
+        std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+        // In case the restored items were merged (and the final folder was already on the model)
+        if (!node)
+        {
+            auto mergedSibling(findMergedSibling(node));
+            if (mergedSibling != mega::INVALID_HANDLE)
+            {
+                handlesToSelect.removeOne(handle);
+                handlesToSelect.append(mergedSibling);
+            }
+        }
+    }
+
+    for (auto& handle: qAsConst(handles))
     {
         setSelectedNodeHandle(handle);
-    }
-    else
-    {
-        mRestoredHandle = handle;
     }
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
 {
     mShowEmptyView = newShowEmptyView;
-}
-
-void NodeSelectorTreeViewWidgetCloudDrive::onRowsInserted()
-{
-    NodeSelectorTreeViewWidget::onRowsInserted();
-
-    if(mRestoredHandle != mega::INVALID_HANDLE)
-    {
-        setSelectedNodeHandle(mRestoredHandle);
-        mRestoredHandle = mega::INVALID_HANDLE;
-    }
 }
 
 QString NodeSelectorTreeViewWidgetCloudDrive::getRootText()
@@ -78,6 +81,24 @@ QIcon NodeSelectorTreeViewWidgetCloudDrive::getEmptyIcon()
 bool NodeSelectorTreeViewWidgetCloudDrive::isCurrentRootIndexReadOnly()
 {
     return false;
+}
+
+MegaHandle
+    NodeSelectorTreeViewWidgetCloudDrive::findMergedSibling(std::shared_ptr<mega::MegaNode> node)
+{
+    std::unique_ptr<mega::MegaNode> parentNode(
+        MegaSyncApp->getMegaApi()->getParentNode(node.get()));
+    if (parentNode)
+    {
+        std::unique_ptr<mega::MegaNode> foundNode(
+            MegaSyncApp->getMegaApi()->getChildNode(parentNode.get(), node->getName()));
+        if (foundNode)
+        {
+            return foundNode->getHandle();
+        }
+    }
+
+    return mega::INVALID_HANDLE;
 }
 
 void NodeSelectorTreeViewWidgetCloudDrive::onRootIndexChanged(const QModelIndex &source_idx)
@@ -255,7 +276,7 @@ bool NodeSelectorTreeViewWidgetSearch::containsIndexToAddOrUpdate(mega::MegaNode
 {
     if(mHasRows && node)
     {
-        auto index = mModel->findItemByNodeHandle(node->getHandle(), QModelIndex());
+        auto index = mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex());
         if(index.isValid())
         {
             return true;
@@ -399,35 +420,40 @@ bool NodeSelectorTreeViewWidgetRubbish::isEmpty() const
     return mModel->rowCount(rootIndex) == 0;
 }
 
-void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandle> &handles, bool parentLoaded, mega::MegaHandle firstRestoredHandle)
+void NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished()
+{
+    emit itemsRestored(mRestoredItems);
+
+    disconnect(mModel.get(),
+               &NodeSelectorModel::allNodeRequestsFinished,
+               this,
+               &NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished);
+}
+
+void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandle>& handles)
 {
     mRestoredItems = handles;
-    mFirstRestoredHandle = firstRestoredHandle;
-    mFirstRestoredHandleParentLoaded = parentLoaded;
+
+    connect(mModel.get(),
+            &NodeSelectorModel::allNodeRequestsFinished,
+            this,
+            &NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished);
+
+    QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> moveHandles;
 
     foreach(auto handle, handles)
     {
         auto node = std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(handle));
         if (node)
         {
-            auto newParent = std::unique_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
-
-            auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
-                this,
-                [=](mega::MegaRequest*, mega::MegaError* e) {
-                    if(e->getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        mRestoredItems.removeOne(handle);
-                        if(mRestoredItems.isEmpty())
-                        {
-                            emit itemsRestored(mFirstRestoredHandle, mFirstRestoredHandleParentLoaded);
-                        }
-                    }
-                });
-
-            mMegaApi->moveNode(node.get(), newParent.get(), listener.get());
+            auto newParent =
+                std::shared_ptr<MegaNode>(mMegaApi->getNodeByHandle(node->getRestoreHandle()));
+            moveHandles.append(
+                qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle, newParent));
         }
     }
+
+    mModel->moveNodesAndCheckConflicts(moveHandles, MegaSyncApp->getRubbishNode());
 }
 
 void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()
