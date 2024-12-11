@@ -127,6 +127,23 @@ QHeaderView::section:last
 border-right: 0px;
 }
 
+QHeaderView::up-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+padding-right: 5px;
+}
+
+QHeaderView::down-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+padding-right: 5px;
+}
+
+
 /*
     QComboBox
 */
