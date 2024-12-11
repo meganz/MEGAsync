@@ -85,16 +85,21 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 /*
     QScrollBar
 */
-QScrollBar:vertical, QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+QScrollBar:vertical
+{
+width: 10px;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
 {
 border-style: none;
-max-width: 10px;
 }
 
 QScrollBar::handle:vertical
 {
-border: 1px solid #ffd8d9db; /*colorToken.border-strong*/
+border-style: none;
 border-radius: 5px;
+background: #ff04101e; /*colorToken.selection-control*/
 }
 
 /*
