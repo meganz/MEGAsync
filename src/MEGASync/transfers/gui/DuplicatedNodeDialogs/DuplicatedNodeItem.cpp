@@ -9,8 +9,9 @@
 /*
  * BASE CLASS
 */
-DuplicatedNodeItem::DuplicatedNodeItem(QWidget *parent) :
+DuplicatedNodeItem::DuplicatedNodeItem(QWidget* parent):
     QWidget(parent),
+    mType(NodeItemType::DONT_UPLOAD),
     mInfo(nullptr),
     mNodeSize(-1),
     ui(new Ui::DuplicatedNodeItem)
@@ -48,12 +49,6 @@ void DuplicatedNodeItem::fillUi()
 {
     switch(mType)
     {
-        case NodeItemType::DONT_UPLOAD:
-        {
-            ui->bAction->setText(tr("Skip"));
-            ui->lTitle->setText(mInfo->sourceItemIsFile() ? tr("Skip this file") : tr("Skip this folder"));
-            break;
-        }
         case NodeItemType::FOLDER_UPLOAD_AND_MERGE:
         {
             setActionAndTitle(tr("Merge"));
@@ -75,8 +70,13 @@ void DuplicatedNodeItem::fillUi()
             setActionAndTitle(tr("Update"));
             break;
         }
+        case NodeItemType::DONT_UPLOAD:
         default:
         {
+            ui->bAction->setText(tr("Skip"));
+            ui->lTitle->setText(mInfo->sourceItemIsFile() ? tr("Skip this file") :
+                                                            tr("Skip this folder"));
+            break;
         }
     }
 

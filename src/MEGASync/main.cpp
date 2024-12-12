@@ -504,7 +504,7 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    //qInstallMessageHandler(messageHandler);
+    qInstallMessageHandler(messageHandler);
 
     app.setStyle(new MegaProxyStyle());
 

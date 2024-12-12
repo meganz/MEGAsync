@@ -600,7 +600,7 @@ void LoggingThread::log(int loglevel, const char *message, const char **directMe
 //    }
 //#endif
 
-    if(gAppExit || true)
+    if (gAppExit)
     {
         return;
     }
