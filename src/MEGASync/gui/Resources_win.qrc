@@ -1507,5 +1507,8 @@
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
         <file>images/star-spark.svg</file>
+        <file>images/banner/warning.svg</file>
+        <file>images/banner/error.svg</file>
+        <file>images/banner/info.svg</file>
     </qresource>
 </RCC>
