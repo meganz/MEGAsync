@@ -152,12 +152,6 @@ FocusScope {
                         else if ((event.key === Qt.Key_V) && (event.modifiers & Qt.ControlModifier)) {
                             pastePressed();
                         }
-                        else if (event.key === Qt.Key_Up) {
-                            cursorPosition = 0;
-                        }
-                        else if (event.key === Qt.Key_Down) {
-                            cursorPosition = text.length;
-                        }
                         else if (event.key === Qt.Key_Return) {
                             if (!root.allowLineBreaks) {
                                 event.accepted = true;
