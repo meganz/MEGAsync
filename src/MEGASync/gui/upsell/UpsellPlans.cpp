@@ -11,7 +11,8 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mIsBillingCurrency(true),
     mCurrentDiscount(-1),
     mTransferFinishTime(0ll),
-    mIsOnlyProFlexiAvailable(false)
+    mIsOnlyProFlexiAvailable(false),
+    mIsPro(false)
 {}
 
 void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
@@ -80,6 +81,15 @@ void UpsellPlans::setOnlyProFlexiAvailable(bool onlyProFlexiAvailable)
     }
 }
 
+void UpsellPlans::setPro(bool isPro)
+{
+    if (mIsPro != isPro)
+    {
+        mIsPro = isPro;
+        emit isProChanged();
+    }
+}
+
 long long UpsellPlans::getTransferFinishTime() const
 {
     return mTransferFinishTime;
@@ -88,6 +98,11 @@ long long UpsellPlans::getTransferFinishTime() const
 bool UpsellPlans::isOnlyProFlexiAvailable() const
 {
     return mIsOnlyProFlexiAvailable;
+}
+
+bool UpsellPlans::isPro() const
+{
+    return mIsPro;
 }
 
 bool UpsellPlans::isMonthly() const

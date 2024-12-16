@@ -22,6 +22,7 @@ class UpsellPlans: public QObject
     Q_PROPERTY(int plansCount READ size NOTIFY sizeChanged)
     Q_PROPERTY(
         bool onlyProFlexiAvailable READ isOnlyProFlexiAvailable NOTIFY onlyProFlexiAvailableChanged)
+    Q_PROPERTY(bool isProAccount READ isPro NOTIFY isProChanged)
 
 public:
     enum class ViewMode
@@ -135,6 +136,7 @@ public:
     QString getTransferRemainingTime() const;
     long long getTransferFinishTime() const;
     bool isOnlyProFlexiAvailable() const;
+    bool isPro() const;
 
 signals:
     void viewModeChanged();
@@ -145,6 +147,7 @@ signals:
     void remainingTimeChanged();
     void sizeChanged();
     void onlyProFlexiAvailableChanged();
+    void isProChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
@@ -156,6 +159,7 @@ private:
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
     bool mIsOnlyProFlexiAvailable;
+    bool mIsPro;
 
     friend class UpsellController;
 
@@ -167,6 +171,7 @@ private:
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);
     void setOnlyProFlexiAvailable(bool onlyProFlexiAvailable);
+    void setPro(bool isPro);
 };
 
 #endif // UPSELL_PLANS_H

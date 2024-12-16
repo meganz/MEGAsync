@@ -63,6 +63,9 @@ UpsellController::UpsellController(QObject* parent):
     AccountDetailsManager::instance()->updateUserStats(AccountDetailsManager::Flag::ALL,
                                                        true,
                                                        USERSTATS_STORAGECLICKED);
+
+    mPlans->setPro(Preferences::instance()->accountType() !=
+                   Preferences::AccountType::ACCOUNT_TYPE_FREE);
 }
 
 UpsellController::~UpsellController()
@@ -84,6 +87,8 @@ void UpsellController::updateStorageElements()
                      QVector<int>() << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
                                     << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
                                     << UpsellPlans::SHOW_ONLY_PRO_FLEXI);
+    mPlans->setPro(Preferences::instance()->accountType() !=
+                   Preferences::AccountType::ACCOUNT_TYPE_FREE);
 }
 
 void UpsellController::onRequestFinish(mega::MegaRequest* request, mega::MegaError* error)
