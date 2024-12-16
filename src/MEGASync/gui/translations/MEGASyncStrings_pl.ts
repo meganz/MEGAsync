@@ -4855,7 +4855,7 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Wybrane katalogi automatycznie utworzą kopię zapasową w MEGA, gdy aplikacja desktopowa jest uruchomiona.</translation>
+        <translation>Wybrane katalog automatycznie utworzą kopię zapasową do MEGA jako katalog tylko do odczytu, gdy aplikacja desktopowa jest uruchomiona. Zmiany można wprowadzać tylko do kopii zapasowych na urządzeniu lokalnym. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5085,12 +5085,12 @@ Wprowadź inną nazwę.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Synchronizuj cały dysk MEGA Cloud z urządzeniem lokalnym.</translation>
+        <translation>Dwukierunkowa synchronizacja całej chmury MEGA z urządzeniem lokalnym. Foldery będą na bieżąco z edycjami dokonanymi lokalnie lub w MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Synchronizuj wybrane katalog na dysku MEGA Cloud z urządzeniem lokalnym.</translation>
+        <translation>Synchronizuj wybrane katalog na dysku MEGA Cloud z urządzeniem lokalnym. Foldery będą na bieżąco z edycjami dokonanymi lokalnie lub w MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>
