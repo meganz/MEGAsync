@@ -4855,7 +4855,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Резервные копии выбранных папок будут автоматически сохраняться в MEGA во время работы настольного приложения.</translation>
+        <translation>Резервные копии выбранных папок будут автоматически сохраняться в MEGA во время работы настольного приложения как папки только для чтения. Изменения можно вносить только в резервные копии на локальном устройстве. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5085,12 +5085,12 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Синхронизируйте весь свой Облачный диск MEGA с локальным устройством.</translation>
+        <translation>Двусторонняя синхронизация всего Облака MEGA с локальным устройством. Папки будут обновляться с учётом изменений, внесённых локально или в MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Синхронизируйте выбранные папки Облачного диска MEGA с локальным устройством.</translation>
+        <translation>Синхронизация выбранных папок Облака MEGA с локальным устройством. Папки будут обновляться с учётом изменений, внесённых локально или в MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>
