@@ -7,7 +7,7 @@
 // Update scripts relying on this value if you move it
 #define VER_PRODUCTVERSION_STR "5.7.0.0\0"
 
-#define VER_BUILD_ID 2
+#define VER_BUILD_ID 3
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
@@ -18,7 +18,7 @@
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
 
 /* SDK commit hash, 7 chars */
-#define VER_SDK_ID "a014e4c"
+#define VER_SDK_ID "81f2d1c"
 
 /* Update scrips relying on this value if you move it
 Format: 1 item by line, starting from line following the #define
