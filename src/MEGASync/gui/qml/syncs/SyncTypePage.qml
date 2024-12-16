@@ -41,7 +41,7 @@ SyncTypePageForm {
         target: window
 
         function onInitializePageFocus() {
-            fullSyncButton.forceActiveFocus();
+            selectiveSyncButton.forceActiveFocus();
         }
     }
 }
