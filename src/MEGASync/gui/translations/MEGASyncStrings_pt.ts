@@ -5063,7 +5063,7 @@ Digite um nome diferente.
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>As pastas selecionadas farão o backup automaticamente no MEGA quando o aplicativo para desktop estiver em execução.</translation>
+        <translation>O backup das pastas selecionadas será feito automaticamente no MEGA com permissão de somente leitura quando o aplicativo para desktop estiver em execução. As alterações só podem ser feitas nos backups no seu dispositivo local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5108,7 +5108,7 @@ Digite um nome diferente.
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sincronize pastas específicas na sua Nuvem de arquivos no MEGA com o seu dispositivo local.</translation>
+        <translation>Sincronize as pastas selecionadas na sua Nuvem de arquivos MEGA com o seu dispositivo local. As pastas permanecerão atualizadas com as edições feitas localmente ou no MEGA.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5123,7 +5123,7 @@ Digite um nome diferente.
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com o seu dispositivo local.</translation>
+        <translation>Sincronização bidirecional de toda a sua Nuvem do MEGA com um dispositivo local. As pastas permanecerão atualizadas com as edições feitas localmente ou no MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>

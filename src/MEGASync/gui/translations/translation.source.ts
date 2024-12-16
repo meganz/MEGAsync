@@ -4967,7 +4967,7 @@ Enter a different name.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Selected folders will automatically back up to MEGA when the desktop app is running.</translation>
+        <translation>Selected folders will automatically back up to MEGA as read-only folders when the desktop app is running. Changes can only be made to backups on your local device. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5197,12 +5197,12 @@ Enter a different name.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with your local device.</translation>
+        <translation>Two-way sync your entire MEGA Cloud with a local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+        <translation>Sync selected folders in your MEGA Cloud drive with your local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>

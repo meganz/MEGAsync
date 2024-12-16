@@ -4849,7 +4849,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>デスクトップアプリの実行中に、選択されたフォルダが自動的にMEGAにバックアップされます。</translation>
+        <translation>選択されたフォルダは、デスクトップアプリの実行中に、読み取り専用フォルダとして自動的にMEGAにバックアップされます。変更はローカルデバイス上のバックアップにのみ行うことができます。</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5079,12 +5079,12 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>MEGA Cloudドライブ全体をローカルデバイスと同期します。</translation>
+        <translation>MEGAクラウド全体をローカルデバイスと双方向同期します。フォルダは、ローカルまたはMEGAで編集された最新の状態に保たれます。</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>MEGAクラウドドライブ内の選択されたフォルダをローカルデバイスと同期します。</translation>
+        <translation>MEGAクラウドドライブの選択されたフォルダをローカルデバイスと同期します。フォルダは、ローカルまたはMEGAで編集された最新の状態に保たれます。</translation>
     </message>
     <message>
         <source>View in Settings</source>
