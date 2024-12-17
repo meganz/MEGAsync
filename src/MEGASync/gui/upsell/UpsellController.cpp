@@ -130,6 +130,12 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
     {
         switch (role)
         {
+            case Qt::DisplayRole:
+            {
+                field = mPlans->isMonthly() ? data->monthlyData().isValid() :
+                                              data->yearlyData().isValid();
+                break;
+            }
             case UpsellPlans::NAME_ROLE:
             {
                 field = data->name();
@@ -329,9 +335,9 @@ void UpsellController::onBilledPeriodChanged()
     emit dataChanged(0,
                      mPlans->size() - 1,
                      QVector<int>()
-                         << UpsellPlans::STORAGE_ROLE << UpsellPlans::TRANSFER_ROLE
-                         << UpsellPlans::PRICE_ROLE << UpsellPlans::AVAILABLE_ROLE
-                         << UpsellPlans::RECOMMENDED_ROLE
+                         << Qt::DisplayRole << UpsellPlans::STORAGE_ROLE
+                         << UpsellPlans::TRANSFER_ROLE << UpsellPlans::PRICE_ROLE
+                         << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::RECOMMENDED_ROLE
                          << UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE
                          << UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE
                          << UpsellPlans::CURRENT_PLAN_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE

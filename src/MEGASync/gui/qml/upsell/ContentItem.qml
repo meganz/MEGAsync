@@ -105,7 +105,6 @@ FocusScope {
 
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: parent.width
                 height: plansRepeater.height
                 spacing: root.plansRowSpacing
 
@@ -132,6 +131,7 @@ FocusScope {
                         enabled: model.available || model.showOnlyProFlexi
                         showProFlexiMessage: model.showProFlexiMessage
                         showOnlyProFlexi: model.showOnlyProFlexi
+                        visible: model.display
                         monthly: upsellPlansAccess.monthly
                         billingCurrency: upsellPlansAccess.billingCurrency
                         currencyName: upsellPlansAccess.currencyName

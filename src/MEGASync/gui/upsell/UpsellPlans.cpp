@@ -168,6 +168,7 @@ UpsellPlans::Data::Data(int proLevel, const QString& name):
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
+        {Qt::DisplayRole,                                "display"                  },
         {UpsellPlans::NAME_ROLE,                         "name"                     },
         {UpsellPlans::BUTTON_NAME_ROLE,                  "buttonName"               },
         {UpsellPlans::RECOMMENDED_ROLE,                  "recommended"              },
