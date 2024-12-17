@@ -689,7 +689,7 @@ void UpsellController::reviewPlansToCheckProFlexi(
         // Pro flexi is only available monthly.
         auto it(std::find_if(plans.cbegin(),
                              plans.cend(),
-                             [this](const auto& plan)
+                             [](const auto& plan)
                              {
                                  return plan->proLevel() ==
                                         mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII;
