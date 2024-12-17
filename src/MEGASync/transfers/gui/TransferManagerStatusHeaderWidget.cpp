@@ -13,7 +13,7 @@ namespace
 constexpr int TRANSFER_QUOTA_CHECK_TIME_MS(1000);
 const QLatin1String TIME_FORMAT("hh:mm:ss");
 const QLatin1String
-    TRANSFER_QUOTA_EXCEEDED_URL("https://mega.nz/help/client/transfer-quota-exceeded");
+    TRANSFER_QUOTA_EXCEEDED_URL("https://help.mega.io/plans-storage/space-storage/transfer-quota");
 }
 
 TransferManagerStatusHeaderWidget::TransferManagerStatusHeaderWidget(QWidget* parent):
