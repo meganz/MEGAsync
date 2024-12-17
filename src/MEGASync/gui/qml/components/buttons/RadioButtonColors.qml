@@ -7,7 +7,7 @@ QtObject {
 
     property color pressed: ColorTheme.buttonPrimaryPressed
     property color hover: ColorTheme.buttonPrimaryHover
-    property color diabled: ColorTheme.buttonDisabled
+    property color disabled: ColorTheme.buttonDisabled
     property color enabled: ColorTheme.buttonPrimary
     property color focus: ColorTheme.focusColor
 
