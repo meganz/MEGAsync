@@ -10,7 +10,8 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mIsMonthly(false),
     mIsBillingCurrency(true),
     mCurrentDiscount(-1),
-    mTransferFinishTime(0ll)
+    mTransferFinishTime(0ll),
+    mIsOnlyProFlexiAvailable(false)
 {}
 
 void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
@@ -70,9 +71,23 @@ void UpsellPlans::setTransferFinishTime(long long newTime)
     mTransferFinishTime = newTime;
 }
 
+void UpsellPlans::setOnlyProFlexiAvailable(bool onlyProFlexiAvailable)
+{
+    if (mIsOnlyProFlexiAvailable != onlyProFlexiAvailable)
+    {
+        mIsOnlyProFlexiAvailable = onlyProFlexiAvailable;
+        emit onlyProFlexiAvailableChanged();
+    }
+}
+
 long long UpsellPlans::getTransferFinishTime() const
 {
     return mTransferFinishTime;
+}
+
+bool UpsellPlans::isOnlyProFlexiAvailable() const
+{
+    return mIsOnlyProFlexiAvailable;
 }
 
 bool UpsellPlans::isMonthly() const
@@ -193,6 +208,11 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::monthlyData(
 const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData() const
 {
     return mYearlyData;
+}
+
+void UpsellPlans::Data::setProLevel(int newProLevel)
+{
+    mProLevel = newProLevel;
 }
 
 void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)

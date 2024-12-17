@@ -66,9 +66,12 @@ FocusScope {
                     checked: !upsellPlansAccess.monthly
                     text: UpsellStrings.billedYearly
                     ButtonGroup.group: billedPeriodButtonGroupItem
+                    enabled: !upsellPlansAccess.onlyProFlexiAvailable
 
                     onCheckedChanged: {
-                        upsellComponentAccess.billedRadioButtonClicked(false);
+                        if (billedYearlyRadioButton.enabled) {
+                            upsellComponentAccess.billedRadioButtonClicked(false);
+                        }
                     }
                 }
             }

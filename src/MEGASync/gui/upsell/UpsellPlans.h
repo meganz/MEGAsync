@@ -20,6 +20,8 @@ class UpsellPlans: public QObject
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
     Q_PROPERTY(int plansCount READ size NOTIFY sizeChanged)
+    Q_PROPERTY(
+        bool onlyProFlexiAvailable READ isOnlyProFlexiAvailable NOTIFY onlyProFlexiAvailableChanged)
 
 public:
     enum class ViewMode
@@ -92,6 +94,7 @@ public:
         friend class UpsellPlans;
         friend class UpsellController;
 
+        void setProLevel(int newProLevel);
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
@@ -131,6 +134,7 @@ public:
     QString getCurrencyName() const;
     QString getTransferRemainingTime() const;
     long long getTransferFinishTime() const;
+    bool isOnlyProFlexiAvailable() const;
 
 signals:
     void viewModeChanged();
@@ -140,6 +144,7 @@ signals:
     void isCurrencyBillingChanged();
     void remainingTimeChanged();
     void sizeChanged();
+    void onlyProFlexiAvailableChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
@@ -150,6 +155,7 @@ private:
     int mCurrentDiscount;
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
+    bool mIsOnlyProFlexiAvailable;
 
     friend class UpsellController;
 
@@ -160,6 +166,7 @@ private:
     void setTransferRemainingTime(const QString& time);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);
+    void setOnlyProFlexiAvailable(bool onlyProFlexiAvailable);
 };
 
 #endif // UPSELL_PLANS_H

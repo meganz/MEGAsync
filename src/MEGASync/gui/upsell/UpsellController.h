@@ -89,8 +89,12 @@ private:
     bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
     float calculateTotalPriceWithoutDiscount(float monthlyPrice) const;
     float calculateMonthlyPriceWithDiscount(float yearlyPrice) const;
-    bool isOnlyProFlexiIsAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool isOnlyProFlexiAvailable(
+        const std::shared_ptr<UpsellPlans::Data>& data,
+        int proLevel = mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI) const;
     bool storageFitsUnderStorageOQConditions(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool isOnlyProFlexiAvailable(const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const;
+    void reviewPlansToCheckProFlexi(const QList<std::shared_ptr<UpsellPlans::Data>>& plans);
 };
 
 #endif // UPSELL_CONTROLLER_H

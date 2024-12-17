@@ -26,13 +26,14 @@ constexpr QLatin1Char BILLING_CURRENCY_REMARK('*');
 constexpr const char* DEFAULT_PRO_URL("mega://#pro");
 constexpr const char* PERIOD_SUFFIX_URL("?m=");
 const std::map<int, const char*> PRO_LEVEL_TO_URL = {
-    {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1" },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2" },
-    {Preferences::AccountType::ACCOUNT_TYPE_PROIII,    "mega://#propay_3" },
-    {Preferences::AccountType::ACCOUNT_TYPE_LITE,      "mega://#propay_4" },
-    {Preferences::AccountType::ACCOUNT_TYPE_STARTER,   "mega://#propay_11"},
-    {Preferences::AccountType::ACCOUNT_TYPE_BASIC,     "mega://#propay_12"},
-    {Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL, "mega://#propay_13"}
+    {Preferences::AccountType::ACCOUNT_TYPE_PROI,      "mega://#propay_1"  },
+    {Preferences::AccountType::ACCOUNT_TYPE_PROII,     "mega://#propay_2"  },
+    {Preferences::AccountType::ACCOUNT_TYPE_PROIII,    "mega://#propay_3"  },
+    {Preferences::AccountType::ACCOUNT_TYPE_LITE,      "mega://#propay_4"  },
+    {Preferences::AccountType::ACCOUNT_TYPE_STARTER,   "mega://#propay_11" },
+    {Preferences::AccountType::ACCOUNT_TYPE_BASIC,     "mega://#propay_12" },
+    {Preferences::AccountType::ACCOUNT_TYPE_ESSENTIAL, "mega://#propay_13" },
+    {Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI, "mega://#propay_101"}
   // BUSINESS and PRO_FLEXI are not supported
 };
 const std::vector<int> ACCOUNT_TYPES_IN_ORDER = {Preferences::AccountType::ACCOUNT_TYPE_FREE,
@@ -71,7 +72,13 @@ UpsellController::~UpsellController()
 
 void UpsellController::updateStorageElements()
 {
-    // Force update of the plans based on the current storage conditions.
+    if (mPlans->plans().isEmpty())
+    {
+        return;
+    }
+
+    reviewPlansToCheckProFlexi(mPlans->plans());
+
     emit dataChanged(0,
                      mPlans->size() - 1,
                      QVector<int>() << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
@@ -130,7 +137,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::BUTTON_NAME_ROLE:
             {
-                if (isOnlyProFlexiIsAvailable(data))
+                if (isOnlyProFlexiAvailable(data))
                 {
                     // For Pro III, if the storage is full, only the Pro Flexi plan is available.
                     // We check if the storage if the plan offered is enough for the current used
@@ -148,7 +155,7 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::RECOMMENDED_ROLE:
             {
-                if (isOnlyProFlexiIsAvailable(data))
+                if (isOnlyProFlexiAvailable(data))
                 {
                     // For Pro III, only Pro III and/or Pro Flexi are available.
                     // Override recommended to show the border as for recommended plans.
@@ -194,7 +201,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::CURRENT_PLAN_ROLE:
             {
-                field = data->proLevel() == Preferences::instance()->accountType();
+                field = data->proLevel() == Preferences::instance()->accountType() ||
+                        data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
                 break;
             }
             case UpsellPlans::AVAILABLE_ROLE:
@@ -204,12 +212,12 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::SHOW_PRO_FLEXI_MESSAGE:
             {
-                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII;
+                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
                 break;
             }
             case UpsellPlans::SHOW_ONLY_PRO_FLEXI:
             {
-                field = isOnlyProFlexiIsAvailable(data);
+                field = isOnlyProFlexiAvailable(data);
                 break;
             }
             default:
@@ -361,6 +369,8 @@ void UpsellController::process(mega::MegaPricing* pricing)
     {
         return;
     }
+
+    reviewPlansToCheckProFlexi(plans);
 
     emit beginInsertRows(0, plans.size() - 1);
 
@@ -631,13 +641,12 @@ float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) con
     return yearlyPrice / NUM_MONTHS_PER_PLAN;
 }
 
-bool UpsellController::isOnlyProFlexiIsAvailable(
-    const std::shared_ptr<UpsellPlans::Data>& data) const
+bool UpsellController::isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data,
+                                               int proLevel) const
 {
     int currentAccountType(Preferences::instance()->accountType());
     return currentAccountType == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
-           data->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
-           !storageFitsUnderStorageOQConditions(data);
+           data->proLevel() == proLevel && !storageFitsUnderStorageOQConditions(data);
 }
 
 bool UpsellController::storageFitsUnderStorageOQConditions(
@@ -647,4 +656,46 @@ bool UpsellController::storageFitsUnderStorageOQConditions(
     int64_t planStorage(mPlans->isMonthly() ? data->monthlyData().gBStorage() :
                                               data->yearlyData().gBStorage());
     return planFitsUnderStorageOQConditions(planStorage);
+}
+
+bool UpsellController::isOnlyProFlexiAvailable(
+    const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const
+{
+    auto it = std::find_if(
+        plans.cbegin(),
+        plans.cend(),
+        [this](const auto& plan)
+        {
+            return isOnlyProFlexiAvailable(plan, mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII);
+        });
+
+    return it != plans.cend();
+}
+
+void UpsellController::reviewPlansToCheckProFlexi(
+    const QList<std::shared_ptr<UpsellPlans::Data>>& plans)
+{
+    if (isOnlyProFlexiAvailable(plans))
+    {
+        // For Pro III, if the storage is full, only the Pro Flexi plan is available.
+        // We check if the storage if the plan offered is enough for the current used
+        // one. Override the pro level name to redirect to Pro Flexi propay link.
+        // Pro flexi is only available monthly.
+        auto it(std::find_if(plans.cbegin(),
+                             plans.cend(),
+                             [this](const auto& plan)
+                             {
+                                 return plan->proLevel() ==
+                                        mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII;
+                             }));
+        if (it == plans.cend())
+        {
+            return;
+        }
+
+        auto proIIIPlan(*it);
+        proIIIPlan->setProLevel(mega::MegaAccountDetails::ACCOUNT_TYPE_PRO_FLEXI);
+        mPlans->setOnlyProFlexiAvailable(true);
+        setBilledPeriod(true);
+    }
 }
