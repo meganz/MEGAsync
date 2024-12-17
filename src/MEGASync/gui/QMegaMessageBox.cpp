@@ -115,6 +115,12 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
             msgBox->setCheckBox(checkbox);
         }
 
+        // Prevent showing context menu in texts
+        for (auto childLabel: msgBox->findChildren<QLabel*>())
+        {
+            childLabel->setContextMenuPolicy(Qt::PreventContextMenu);
+        }
+
         DialogOpener::showMessageBox(msgBox, info);
     };
 
