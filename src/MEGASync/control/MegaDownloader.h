@@ -39,7 +39,7 @@ public:
         struct
         {
             unsigned long long appId = TransferMetaData::INVALID_ID;
-            bool createAppId = false;
+            bool createAppId = true;
         } appIdInfo;
 
         bool checkLocalSpace = true;
