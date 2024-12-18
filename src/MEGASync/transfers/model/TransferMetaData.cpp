@@ -115,9 +115,8 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             value->id = id;
             TransferData::TransferState state(TransferData::TRANSFER_NONE);
 
-            if(transfer->getState() == mega::MegaTransfer::STATE_FAILED
-                 || e->getErrorCode() == mega::MegaError::API_EINCOMPLETE
-                 || e->getErrorCode() == mega::MegaError::API_EACCESS)
+            if (transfer->getState() == mega::MegaTransfer::STATE_FAILED ||
+                e->getErrorCode() != mega::MegaError::API_OK)
             {
                 state = TransferData::TRANSFER_FAILED;
                 value->failedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
