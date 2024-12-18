@@ -19,7 +19,6 @@ pipeline {
     }
 
     environment {
-        gitlab_token = credentials('jenkins_sdk_token')
         linux_sources_workspace = ''
         MEGASYNC_BRANCH = "${params.MEGASYNC_BRANCH}"
         SDK_BRANCH = "${params.SDK_BRANCH}"
