@@ -9,15 +9,16 @@ QtObject {
 
     property bool adaptableHeight: false
 
-    property real height: 36
+    property real height: 36.0
     property real maxHeight: 0.0
-    property real verticalContentMargin: 4
-    property real rightContentMargin: 2
-    property real heightContentAdjustment: 12
-    property real rightTextAreaMargin: 6
-    property real focusBorderRadius: 12
-    property real borderRadius: 8
-    property real hintTopMargin: 2
+    property real verticalContentMargin: 4.0
+    property real rightContentMargin: 2.0
+    property real heightContentAdjustment: 12.0
+    property real rightTextAreaMargin: 6.0
+    property real focusBorderRadius: 12.0
+    property real borderRadius: 8.0
+    property real hintTopMargin: 2.0
+    property real lineHeight: 6.0
     property int focusBorderWidth: Constants.focusBorderWidth
     property int borderWidth: 1
     property int textSize: Texts.Text.Size.NORMAL

@@ -113,7 +113,6 @@ QmlItem {
                                 textSize: Text.Size.MEDIUM
                             }
                             maxCharLength: surveysAccess ? surveysAccess.commentMaxLength : 0
-                            allowLineBreaks: false
                             placeholderText: SurveyStrings.tellUsMore
                             visible: rateScale.score >= 1 && rateScale.score <= 2
                         }
