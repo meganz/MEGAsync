@@ -520,6 +520,8 @@ private:
     static QString obfuscateIpv6Address(const QHostAddress& ipAddress);
     static QStringList explodeIpv6(const QHostAddress &ipAddress);
 
+    static bool mightBeCaseSensitivityIssue(const QString& folderPath);
+
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
@@ -608,6 +610,7 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
+    void onOpenLinkError(const QString& path, const int errorCode);
 };
 
 #endif // MEGAAPPLICATION_H

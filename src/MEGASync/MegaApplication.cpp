@@ -704,6 +704,11 @@ void MegaApplication::initialize()
 
     mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
 
+    connect(mLinkProcessor,
+            &LinkProcessor::linkDownloadErrorDetected,
+            this,
+            &MegaApplication::onOpenLinkError);
+
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
     connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
@@ -6249,6 +6254,34 @@ void MegaApplication::onScheduledExecution()
     onGlobalSyncStateChangedImpl();
 }
 
+void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
+{
+    const QString title = tr("Folder download error");
+
+    QString message;
+    if (errorCode == MegaError::API_EWRITE)
+    {
+        if (mightBeCaseSensitivityIssue(path))
+        {
+            message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
+                         "casing mismatch. Ensure the folders match exactly and try again.");
+        }
+        else
+        {
+            message =
+                tr("The folder %1 can't be downloaded. Check the download destination folder.");
+        }
+    }
+    else
+    {
+        const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
+        message =
+            tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
+    }
+
+    showErrorMessage(message, title);
+}
+
 void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
 {
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
@@ -6309,4 +6342,10 @@ void MegaApplication::requestFetchSetFromLink(const QString& link)
         mSetManager->requestFetchSetFromLink(link);
     }
 
+}
+
+bool MegaApplication::mightBeCaseSensitivityIssue(const QString& folderPath)
+{
+    QFileInfo info(folderPath);
+    return info.exists();
 }

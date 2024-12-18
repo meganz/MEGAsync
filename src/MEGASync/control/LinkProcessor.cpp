@@ -655,8 +655,12 @@ void LinkProcessor::startDownload(MegaNodeSPtr linkNode, const QString &localPat
 void LinkProcessor::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* error)
 {
     (void) api;
-    (void) transfer;
-    (void) error;
+
+    if (error->getErrorCode() != MegaError::API_OK)
+    {
+        const QString path = QString::fromUtf8(transfer->getPath());
+        emit linkDownloadErrorDetected(path, error->getErrorCode());
+    }
 
     processNextTransfer();
 }
@@ -690,6 +694,3 @@ void LinkProcessor::refreshLinkInfo()
         sendLinkInfoAvailableSignal(i);
     }
 }
-
-
-
