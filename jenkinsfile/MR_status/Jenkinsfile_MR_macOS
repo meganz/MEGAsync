@@ -105,7 +105,7 @@ pipeline {
             environment{
                 PATH = "/usr/local/bin:${env.PATH}"
                 BUILD_DIR = "build_dir"
-                MEGAQTPATH= "${env.HOME}/Qt-build/5.15.13/5.15.13/arm64"
+                MEGAQTPATH= "${env.HOME}/Qt-build/5.15.16/5.15.16/arm64"
             }
             steps{
                 dir(macos_sources_workspace){
@@ -134,7 +134,7 @@ pipeline {
                     }
                     environment{
                         VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
-                        QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
+                        QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.16/5.15.16"
                     }
                     steps {
                         dir(macos_sources_workspace){

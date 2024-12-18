@@ -2,7 +2,7 @@
 
 MEGA_QT_MAJ_VER=5
 MEGA_QT_MIN_VER=15
-MEGA_QT_DOT_VER=13
+MEGA_QT_DOT_VER=16
 MEGA_QT_VER=$MEGA_QT_MAJ_VER.$MEGA_QT_MIN_VER.$MEGA_QT_DOT_VER
 
 MEGA_PATCHES_DIR="${PWD}/../patches/${MEGA_QT_VER}"
@@ -32,11 +32,21 @@ for patch_directory in ${MEGA_PATCHES_DIR}/*; do
 done
 
 cd "../${MEGA_QT_BUILD_DIR}-arm64"
-../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=arm64 --prefix="${PWD}/../${MEGA_QT_VER}/arm64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release QMAKE_LFLAGS="-Wl,-ld_classic"
+../${MEGA_QT_SOURCES_DIR}/configure \
+  QMAKE_APPLE_DEVICE_ARCHS=arm64 --prefix="${PWD}/../${MEGA_QT_VER}/arm64" \
+  -opensource -confirm-license \
+  -nomake examples -nomake tests \
+  -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard \
+  -force-debug-info -separate-debug-info -debug-and-release 
 make -j`sysctl -n hw.ncpu`
 make install
 
 cd "../${MEGA_QT_BUILD_DIR}-x86_64"
-../${MEGA_QT_SOURCES_DIR}/configure QMAKE_APPLE_DEVICE_ARCHS=x86_64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" -opensource -confirm-license -nomake examples -nomake tests -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard  -force-debug-info -separate-debug-info -debug-and-release QMAKE_LFLAGS="-Wl,-ld_classic"
+../${MEGA_QT_SOURCES_DIR}/configure \
+  QMAKE_APPLE_DEVICE_ARCHS=x86_64 --prefix="${PWD}/../${MEGA_QT_VER}/x86_64" \
+  -opensource -confirm-license \
+  -nomake examples -nomake tests \
+  -skip qtwebview -skip qtwebengine -skip qtwebchannel -skip qtconnectivity -skip qt3d -skip qtlocation -skip qtvirtualkeyboard \
+  -force-debug-info -separate-debug-info -debug-and-release 
 make -j`sysctl -n hw.ncpu`
 make install
