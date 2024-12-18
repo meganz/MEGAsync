@@ -6,11 +6,7 @@
 #include "QTMegaTransferListener.h"
 #include "SetTypes.h"
 
-#include <QList>
-#include <QMutex>
-#include <QObject>
-
-#include <memory>
+class MegaDownloader;
 
 namespace mega
 {
@@ -47,6 +43,8 @@ struct ActionParams
     MegaNodeSPtr importParentNode;
 };
 
+class WrappedNode;
+
 class SetManager: public QObject, public mega::MegaTransferListener, public AsyncHandler<bool>
 {
     Q_OBJECT
@@ -59,10 +57,6 @@ public:
 
 signals:
     void onFetchSetFromLink(const AlbumCollection& collection);
-    void onSetDownloadFinished(const QString& setName,
-                               const QStringList& succeededDownloadedElements,
-                               const QStringList& failedDownloadedElements,
-                               const QString& destinationPath);
     void onSetImportFinished(const QString& setName,
                              const QStringList& succeededImportElements,
                              const QStringList& failedImportElements,
@@ -108,18 +102,22 @@ private:
     AlbumCollection filterSet(const AlbumCollection& srcSet, const QList<mega::MegaHandle>& elementHandleList);
     void reset();
     void resetAndHandleStates();
-    void startDownload(mega::MegaNode* linkNode, const QString& localPath);
-    bool copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode);
+    void startDownload(QQueue<WrappedNode>& nodes, const QString& localPath);
+    bool copyNode(mega::MegaNode* linkNode, MegaNodeSPtr importParentNode);
     void checkandHandleFinishedImport();
+
+    // AppId for notifications
+    void setAppId();
+    void resetAppId();
 
 private:
     mega::MegaApi* mMegaApi;
     mega::MegaApi* mMegaApiFolders;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
 
     AlbumCollection mCurrentSet;
     QList<mega::MegaHandle> mCurrentElementHandleList;
+    int mDownloadedCounter;
     QString mCurrentDownloadPath;
     MegaNodeSPtr mCurrentImportParentNode;
 
@@ -128,6 +126,9 @@ private:
     QStringList mFailedImportElements;
     QStringList mSucceededImportElements;
     QStringList mAlreadyExistingImportElements;
+
+    unsigned long long mAppId;
+    std::shared_ptr<MegaDownloader> mDownloader;
 
     // State machine
     QMutex mSetManagerStateMutex;

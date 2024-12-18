@@ -95,7 +95,7 @@ class HTTPServer: public QTcpServer
 
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onExternalDownloadRequested(QQueue<WrappedNode *> files);
+        void onExternalDownloadRequested(QQueue<WrappedNode> files);
         void onExternalDownloadRequestFinished();
         void onExternalFileUploadRequested(mega::MegaHandle targetHandle);
         void onExternalFolderUploadRequested(mega::MegaHandle targetHandle);

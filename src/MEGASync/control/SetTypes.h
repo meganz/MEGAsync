@@ -5,6 +5,7 @@
 
 #include <QList>
 #include <QObject>
+#include <QQueue>
 #include <QString>
 
 #include <memory>
@@ -16,12 +17,14 @@ struct SetImportParams
     MegaNodeSPtr importParentNode;
 };
 
+class WrappedNode;
+
 struct AlbumCollection
 {
     QString link = QString::fromUtf8("");
     QString name = QString::fromUtf8("");
     QList<mega::MegaHandle> elementHandleList = {};
-    QList<MegaNodeSPtr> nodeList = {};
+    QQueue<WrappedNode> nodeList;
 
     // Default constructor
     AlbumCollection() = default;

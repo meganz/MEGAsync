@@ -31,6 +31,7 @@ public:
 protected:
     QString buildUploadTitle();
     QString buildDownloadTitle();
+    QString buildImportedLinkErrorTitle();
 
     QString buildSingleUploadMessage();
     QStringList buildSingleUploadActions();
@@ -49,11 +50,13 @@ protected:
     QString buildNonExistentItemsMessageUploads();
     QString buildNonExistentItemsMessageDownloads();
 
+    QString buildImportedLinkError();
+
     QString getImagePath();
 
     bool isFolder() const;
 
-    const std::shared_ptr<TransferMetaData> data;
+    const std::shared_ptr<TransferMetaData> mData;
 };
 
 #endif // TRANSFERNOTIFICATIONBUILDER_H

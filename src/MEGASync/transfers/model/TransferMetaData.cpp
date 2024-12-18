@@ -28,6 +28,8 @@ bool TransferMetaDataItemId::operator<(const TransferMetaDataItemId &item) const
 
 /////////////////////////////////
 
+const unsigned long long TransferMetaData::INVALID_ID = 0;
+
 TransferMetaData::TransferMetaData(int direction, unsigned long long id)
     : mInitialTopLevelTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mFinishedTopLevelTransfers(0), mStartedTopLevelTransfers(0), mTransferDirection(direction), mCreateRootFolder(false),
       mAppId(id), mCreatedFromOtherSession(false), mProcessCancelled(false),mTotalFileCount(0), mNotification(nullptr), mNonExistsFailAppId(0)
@@ -359,15 +361,23 @@ int TransferMetaData::getNonExistentCount() const
     return mFiles.nonExistFailedTransfers.size();
 }
 
-TransferMetaDataItemId TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
+std::shared_ptr<TransferMetaDataItem>
+    TransferMetaData::getFirstTransferByState(TransferData::TransferState state) const
 {
-    TransferMetaDataItemId id = mFiles.getFirstTransferIdByState(state);
-    if(!id.isValid())
+    auto item = mFiles.getFirstTransferByState(state);
+    if (!item || !item->id.isValid())
     {
-        id = mEmptyFolders.getFirstTransferIdByState(state);
+        item = mEmptyFolders.getFirstTransferByState(state);
     }
 
-    return id;
+    return item;
+}
+
+TransferMetaDataItemId
+    TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
+{
+    auto item = getFirstTransferByState(state);
+    return item ? item->id : TransferMetaDataItemId();
 }
 
 QList<TransferMetaDataItemId> TransferMetaData::getTransferIdsByState(TransferData::TransferState state) const
@@ -702,9 +712,10 @@ void TransferMetaData::retryAllPressed()
     }
 }
 
-DownloadTransferMetaData::DownloadTransferMetaData(unsigned long long appId, const QString &path)
-    : TransferMetaData(mega::MegaTransfer::TYPE_DOWNLOAD, appId),
-      mLocalTargetPath(QDir::toNativeSeparators(path))
+DownloadTransferMetaData::DownloadTransferMetaData(unsigned long long appId, const QString& path):
+    TransferMetaData(mega::MegaTransfer::TYPE_DOWNLOAD, appId),
+    mLocalTargetPath(QDir::toNativeSeparators(path)),
+    mIsImportedLink(false)
 {
 }
 
@@ -811,6 +822,16 @@ bool DownloadTransferMetaData::isNonExistTransfer(mega::MegaTransfer *transfer) 
     //    }
 
     //    return true;
+}
+
+bool DownloadTransferMetaData::isImportedLink() const
+{
+    return mIsImportedLink;
+}
+
+void DownloadTransferMetaData::setIsImportedLink()
+{
+    mIsImportedLink = true;
 }
 
 UploadTransferMetaData::UploadTransferMetaData(unsigned long long appId, const mega::MegaHandle handle)

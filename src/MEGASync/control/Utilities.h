@@ -508,10 +508,12 @@ class WrappedNode
 {
 public:
     // Enum used to record origin of transfer
-    enum TransferOrigin {
-        FROM_UNKNOWN   = 0,
-        FROM_APP       = 1,
+    enum TransferOrigin
+    {
+        FROM_UNKNOWN = 0,
+        FROM_APP = 1,
         FROM_WEBSERVER = 2,
+        FROM_LINK = 3,
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
@@ -521,23 +523,23 @@ public:
                 mega::MegaNode* node = nullptr,
                 bool undelete = false);
 
+    WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
+                std::shared_ptr<mega::MegaNode> node = nullptr,
+                bool undelete = false);
+
     // Destructor
-    ~WrappedNode()
-    {
-        // MEGA node should be deleted when this is deleted.
-        delete mNode;
-    }
+    ~WrappedNode() {}
 
     // Get the transfer origin
-    WrappedNode::TransferOrigin getTransferOrigin()
+    WrappedNode::TransferOrigin getTransferOrigin() const
     {
         return mTransfersFrom;
     }
 
     // Get the wrapped MEGA node pointer
-    mega::MegaNode* getMegaNode()
+    mega::MegaNode* getMegaNode() const
     {
-        return mNode;
+        return mNode.get();
     }
 
     bool getUndelete() const
@@ -550,11 +552,11 @@ private:
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
-    mega::MegaNode* mNode;
+    std::shared_ptr<mega::MegaNode> mNode;
 
     bool mUndelete;
 };
 
-Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+Q_DECLARE_METATYPE(QQueue<WrappedNode>)
 
 #endif // UTILITIES_H

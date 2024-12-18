@@ -1,17 +1,22 @@
 #include "SetManager.h"
 
+#include "MegaApplication.h"
+#include "MegaDownloader.h"
 #include "RequestListenerManager.h"
+#include "TransferMetaData.h"
 
 #include <QDir>
 
 using namespace mega;
 
-SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders)
-    : AsyncHandler()
-    , mMegaApi(megaApi)
-    , mMegaApiFolders(megaApiFolders)
-    , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
-    , mSetManagerState(SetManagerState::INIT)
+SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders):
+    AsyncHandler(),
+    mMegaApi(megaApi),
+    mMegaApiFolders(megaApiFolders),
+    mDownloadedCounter(0),
+    mAppId(TransferMetaData::INVALID_ID),
+    mDownloader(std::make_shared<MegaDownloader>(megaApi, this)),
+    mSetManagerState(SetManagerState::INIT)
 {
     // Register for SDK Request callbacks
     mDelegateListener = RequestListenerManager::instance().registerAndGetFinishListener(this);
@@ -353,7 +358,9 @@ void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const Act
         // A new Set Element node has been fetched
         if (!mCurrentSet.nodeList.isEmpty())
         {
-            startDownload(mCurrentSet.nodeList.last().get(), mCurrentDownloadPath);
+            setAppId();
+            startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
+            resetAppId();
         }
         break;
 
@@ -441,27 +448,15 @@ void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaErro
 {
     (void) api;
     (void) transfer;
+    (void)error;
 
-    if (error->getErrorCode() == MegaError::API_OK)
-    {
-        mSucceededDownloadedElements.push_back(QString::fromUtf8(transfer->getFileName()));
-    }
-    else
-    {
-        mFailedDownloadedElements.push_back(QString::fromUtf8(transfer->getFileName()));
-    }
+    mDownloadedCounter++;
 
     // Check if we are waiting for more Elements to download, or if we are done
-    int nrElementsToDownload = mCurrentSet.elementHandleList.size();
-    int nrDownloadedElements = mSucceededDownloadedElements.size() + mFailedDownloadedElements.size();
-
-    if (nrDownloadedElements == nrElementsToDownload)
+    if (mDownloadedCounter == mCurrentSet.elementHandleList.size())
     {
-        // Notify observers about the successful download: pass Set name and nr downloaded Elements
-        emit onSetDownloadFinished(mCurrentSet.name,
-                                   mSucceededDownloadedElements,
-                                   mFailedDownloadedElements,
-                                   mCurrentDownloadPath);
+        // Reset counter
+        mDownloadedCounter = 0;
 
         // End preview
         mMegaApi->stopPublicSetPreview();
@@ -500,10 +495,9 @@ bool SetManager::handleFetchPublicSetResponseToDownloadCollection()
     if (!createDirectory(mCurrentDownloadPath)) { return false; }
 
     // The requested Set has been put in preview, so download of (selected) Elements can start
-    for (MegaNodeSPtr node : mCurrentSet.nodeList)
-    {
-        startDownload(node.get(), mCurrentDownloadPath);
-    }
+    setAppId();
+    startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
+    resetAppId();
 
     return true;
 }
@@ -548,7 +542,7 @@ void SetManager::handleGetPreviewElementNodeResponse(MegaRequest* request, MegaE
 
     // Do not expose the raw pointer in a variable, to prevent 'double-free' vulnerability
     MegaNodeSPtr nodeSPtr(request->getPublicMegaNode());
-    mCurrentSet.nodeList.push_back(nodeSPtr);
+    mCurrentSet.nodeList.push_back(WrappedNode(WrappedNode::FROM_LINK, nodeSPtr, false));
 
     // Delegate to State Machine
     ActionParams action;
@@ -584,12 +578,13 @@ void SetManager::handleCreateFolderResponse(MegaRequest* request, MegaError* err
     }
 
     // Copy (import) all Elements to the Cloud Drive
-    for (const auto& node : mCurrentSet.nodeList)
+    for (const auto& wrappedNode: mCurrentSet.nodeList)
     {
-        if (!copyNode(node, createdNode))
+        if (!copyNode(wrappedNode.getMegaNode(), createdNode))
         {
             // The Element node already exists in the target destination
-            mAlreadyExistingImportElements.push_back(QString::fromUtf8(node->getName()));
+            mAlreadyExistingImportElements.push_back(
+                QString::fromUtf8(wrappedNode.getMegaNode()->getName()));
         }
     }
 
@@ -649,6 +644,18 @@ void SetManager::checkandHandleFinishedImport()
         // Return to INIT state
         resetAndHandleStates();
     }
+}
+
+void SetManager::setAppId()
+{
+    auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(
+        mCurrentDownloadPath);
+    mAppId = data->getAppId();
+}
+
+void SetManager::resetAppId()
+{
+    mAppId = TransferMetaData::INVALID_ID;
 }
 
 //!
@@ -770,21 +777,21 @@ void SetManager::resetAndHandleStates()
     handleStates();
 }
 
-void SetManager::startDownload(MegaNode* linkNode, const QString& localPath)
+void SetManager::startDownload(QQueue<WrappedNode>& nodes, const QString& localPath)
 {
-    if (!linkNode || localPath.isEmpty()) { return; }
+    if (nodes.isEmpty() || localPath.isEmpty())
+    {
+        return;
+    }
 
-    const bool startFirst = false;
-    QByteArray path = (localPath + QDir::separator()).toUtf8();
-    const char* name = nullptr;
-    const char* appData = nullptr;
-    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
-    const bool undelete = false;
-    mMegaApi->startDownload(linkNode, path.constData(), name, appData, startFirst, cancelToken,
-                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
-                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                            undelete,
-                            mDelegateTransferListener.get());
+    MegaDownloader::DownloadInfo info;
+    info.appIdInfo.appId = mAppId;
+    info.checkLocalSpace = false;
+    info.downloadQueue = nodes;
+    info.path = localPath + QDir::separator();
+    mDownloader->processDownloadQueue(info);
+
+    nodes.clear();
 }
 
 //!
@@ -795,13 +802,14 @@ void SetManager::startDownload(MegaNode* linkNode, const QString& localPath)
 //! \size doesn't already exist at the destination.
 //! \Returns true if a copy/import request was made to SDK, false otherwise
 //!
-bool SetManager::copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode)
+bool SetManager::copyNode(MegaNode* linkNode, MegaNodeSPtr importParentNode)
 {
     if (!linkNode || !importParentNode) { return false; }
 
     // Returns true if a similar node to @node, with the same name and size,
     // already exists in import folder @importNode. Returns false otherwise.
-    auto alreadyExists = [&](MegaNodeSPtr node, MegaNodeSPtr importNode) -> bool {
+    auto alreadyExists = [&](MegaNode* node, MegaNodeSPtr importNode) -> bool
+    {
         std::unique_ptr<MegaNodeList> children(mMegaApi->getChildren(importNode.get()));
         const char* srcName = node->getName();
         const long long srcSize = node->getSize();
@@ -821,7 +829,7 @@ bool SetManager::copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode)
 
     if (!alreadyExists(linkNode, importParentNode))
     {
-        mMegaApi->copyNode(linkNode.get(), importParentNode.get(), mDelegateListener.get());
+        mMegaApi->copyNode(linkNode, importParentNode.get(), mDelegateListener.get());
         return true;
     }
 
