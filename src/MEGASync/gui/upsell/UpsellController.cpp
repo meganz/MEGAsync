@@ -143,7 +143,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::BUTTON_NAME_ROLE:
             {
-                if (isOnlyProFlexiAvailable(data))
+                if (isOnlyProFlexiAvailable(data) &&
+                    data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI)
                 {
                     // For Pro III, if the storage is full, only the Pro Flexi plan is available.
                     // We check if the storage if the plan offered is enough for the current used
@@ -161,7 +162,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::RECOMMENDED_ROLE:
             {
-                if (isOnlyProFlexiAvailable(data))
+                if (isOnlyProFlexiAvailable(data) &&
+                    data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI)
                 {
                     // For Pro III, only Pro III and/or Pro Flexi are available.
                     // Override recommended to show the border as for recommended plans.
@@ -208,7 +210,9 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             case UpsellPlans::CURRENT_PLAN_ROLE:
             {
                 field = data->proLevel() == Preferences::instance()->accountType() ||
-                        data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
+                        (Preferences::instance()->accountType() ==
+                             Preferences::AccountType::ACCOUNT_TYPE_PROIII &&
+                         data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI);
                 break;
             }
             case UpsellPlans::AVAILABLE_ROLE:
@@ -218,7 +222,8 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::SHOW_PRO_FLEXI_MESSAGE:
             {
-                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
+                field = data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PROIII ||
+                        data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI;
                 break;
             }
             case UpsellPlans::SHOW_ONLY_PRO_FLEXI:
@@ -650,9 +655,7 @@ float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) con
 bool UpsellController::isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data,
                                                int proLevel) const
 {
-    int currentAccountType(Preferences::instance()->accountType());
-    return currentAccountType == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
-           data->proLevel() == proLevel && !storageFitsUnderStorageOQConditions(data);
+    return !storageFitsUnderStorageOQConditions(data);
 }
 
 bool UpsellController::storageFitsUnderStorageOQConditions(
