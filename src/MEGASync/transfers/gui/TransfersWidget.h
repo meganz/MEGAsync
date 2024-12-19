@@ -16,6 +16,8 @@ class TransfersWidget;
 }
 
 class MegaApplication;
+class TransferWidgetColumnsManager;
+
 class TransfersWidget : public QWidget
 {
     Q_OBJECT
@@ -72,8 +74,8 @@ public:
     struct HeaderInfo
     {
         QString headerTime;
-
         QString headerSpeed;
+        QString headerStatus;
     };
     void updateHeaders();
 
@@ -114,8 +116,7 @@ private:
     TransfersManagerSortFilterProxyModel *mProxyModel;
     MegaTransferDelegate *tDelegate;
     MegaDelegateHoverManager mDelegateHoverManager;
-    bool mClearMode;
-    MegaApplication *app;
+    std::unique_ptr<TransferWidgetColumnsManager> mColumnManager;
     TM_TAB mCurrentTab;
     bool mScanningIsActive;
     QList<int> mScrollToAfterMovingRow;
