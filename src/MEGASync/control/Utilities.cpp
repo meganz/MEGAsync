@@ -1,13 +1,15 @@
 #include "Utilities.h"
 
-#include "gzjoin.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MoveToMEGABin.h"
 #include "Platform.h"
 #include "Preferences.h"
 
-#include <iostream>
+// clang-format off
+#include "gzjoin.h"
+// clang-format on
+
 #include <QApplication>
 #include <QCryptographicHash>
 #include <QDateTime>
@@ -17,12 +19,15 @@
 #include <QScreen>
 #include <QTextStream>
 
+#include <iostream>
+
 #ifndef WIN32
 #include "megaapi.h"
+
 #include <utime.h>
 #else
-#include <windows.h>
 #include <shellapi.h>
+#include <windows.h>
 #endif
 
 using namespace std;
@@ -541,7 +546,7 @@ QString Utilities::getAvatarPath(QString email)
 }
 
 void Utilities::removeAvatars()
-{   
+{
     const QString avatarsPath = QString::fromUtf8("%1/avatars/").arg(Preferences::instance()->getDataPath());
     QDir avatarsDirectory(avatarsPath);
     avatarsDirectory.setNameFilters(QStringList() << QString::fromUtf8(::AVATARS_EXTENSION_FILTER));
@@ -668,7 +673,7 @@ QString Utilities::getSizeString(long long bytes)
 {
     QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
     QLocale locale(language);
-    
+
     if (bytes >= TB)
     {
         return locale.toString(toDoubleInUnit(bytes, TB)) + QString::fromLatin1(" ")
@@ -746,7 +751,7 @@ Utilities::ProgressSize Utilities::getProgressSizes(long long transferredBytes, 
     Q_ASSERT(totalBytes >= transferredBytes);
 
     if (transferredBytes >= 0 && totalBytes >= 0)
-    {    
+    {
         QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
         QLocale locale(language);
 
