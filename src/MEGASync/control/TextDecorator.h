@@ -44,6 +44,18 @@ public:
     explicit NewLine(QObject* parent = nullptr);
     void process(QString& input) const override;
 };
+
+class RichText: public Decorator
+{
+public:
+    explicit RichText(QObject* parent = nullptr);
+    explicit RichText(const QStringList& links, QObject* parent = nullptr);
+    explicit RichText(const QString& link, QObject* parent = nullptr);
+    void process(QString& input) const override;
+
+private:
+    QStringList mLinkAddresses;
+};
 }
 
 #endif // TEXTDECORATOR_H

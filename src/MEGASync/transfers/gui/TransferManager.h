@@ -78,8 +78,6 @@ private:
     QTimer mScanningTimer;
     int mScanningAnimationIndex;
 
-    QTimer mTransferQuotaTimer;
-
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
@@ -124,12 +122,8 @@ private:
 
     void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
-    void updateCurrentOverQuotaLink();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
-
-    void setStorageTextState(const QVariant& stateValue, const QString& text);
-    void updateStorageOQText();
 
 private slots:
     void on_tCompleted_clicked();
@@ -178,8 +172,6 @@ private slots:
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
-
-    void onTransferQuotaExceededUpdate();
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
 };

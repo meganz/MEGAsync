@@ -56,6 +56,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
+    gui/BannerWidget.h
     gui/ApiImageLabel.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
@@ -185,6 +186,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
+    gui/BannerWidget.cpp
     gui/ApiImageLabel.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
@@ -493,6 +495,10 @@ list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
 
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
+
+set (DESKTOP_APP_GUI_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+)
 
 target_sources(MEGAsync
     PRIVATE

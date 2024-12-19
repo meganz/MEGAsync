@@ -37,7 +37,7 @@ public:
     void checkImportLinksAlertDismissed(std::function<void(int)> func);
     void checkDownloadAlertDismissed(std::function<void(int)> func);
     void checkStreamingAlertDismissed(std::function<void (int)> func);
-    QTime getTransferQuotaDeadline();
+    QTime getRemainingTransferQuotaTime();
     void reset();
 
 private:

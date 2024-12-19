@@ -8281,11 +8281,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Scanning…</translation>
     </message>
     <message>
-        <source>All paused</source>
-        <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation>All paused</translation>
-    </message>
-    <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
         <translation>All</translation>
@@ -8343,23 +8338,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>%1 results found</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
-To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
-        <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation>You can’t continue downloading as you don’t have enough transfer quota left for this IP address.
-To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</translation>
-    </message>
-    <message>
-        <source>More about transfer quota</source>
-        <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation>More about transfer quota</translation>
-    </message>
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
@@ -8385,6 +8363,34 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
         <translation>Drop to upload</translation>
+    </message>
+</context>
+<context>
+    <name>TransferManagerStatusHeaderWidget</name>
+    <message>
+        <source>All transfers paused.</source>
+        <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
