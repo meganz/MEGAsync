@@ -8,7 +8,7 @@ QtObject {
     readonly property string continueText: /*qsTr*/("Continue")
     readonly property string choose: qsTr("Choose")
     readonly property string done: qsTr("Done")
-    readonly property string notNow: qsTr("Not now")
+    readonly property string dismiss: qsTr("Dismiss")
     readonly property string next: qsTr("Next")
     readonly property string skip: qsTr("Skip")
     readonly property string previous: qsTr("Previous")

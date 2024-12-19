@@ -28,7 +28,7 @@ FocusScope {
     signal editingFinished
 
     function getMaxLenghtCharsString(value) {
-        return qsTr("Maximum length is %n characters", "", value)
+        return qsTr("Maximum length is %n characters.", "", value)
     }
 
     height: contentRect.height + hintItem.height + sizes.hintTopMargin

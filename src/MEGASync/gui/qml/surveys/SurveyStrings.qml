@@ -10,6 +10,6 @@ QtObject {
     readonly property string submit: qsTr("Submit")
     readonly property string tellUsMore: qsTr("Tell us more")
     readonly property string title: qsTr("Thank you for your feedback")
-    readonly property string description: qsTr("You're helping to improve MEGA for you and everyone who uses it")
+    readonly property string description: qsTr("You’re helping to improve MEGA for you and everyone who uses it")
 
 }

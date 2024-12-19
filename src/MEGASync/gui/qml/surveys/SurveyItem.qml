@@ -147,7 +147,7 @@ QmlItem {
                                     right: parent.right
                                 }
                                 sizes.fillWidth: true
-                                text: Strings.notNow
+                                text: Strings.dismiss
                                 onClicked: {
                                     widgetAccess.close();
                                 }
