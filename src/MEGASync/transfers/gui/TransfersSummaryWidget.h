@@ -58,7 +58,6 @@ public:
     void setUploads(uint completed, uint total);
     void setDownloads(uint completed, uint total);
 
-    void initialize();
     void reset();
 
     void showAnimated();
@@ -152,7 +151,7 @@ private:
 
     int originalwidth = 0;
     int originalheight = 0;
-    int minwidth = 28;
+    int minwidth = 0;
     int upMaxWidthText = 0;
     int dlMaxWidthText = 0;
     int maxFontSize = 0;

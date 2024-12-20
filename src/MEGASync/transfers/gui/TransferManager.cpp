@@ -701,12 +701,6 @@ void TransferManager::onTransfersDataUpdated()
 {
     mTransfersCount = mModel->getTransfersCount();
 
-    auto processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    if (processedNumber == 0 && mModel->areAllPaused())
-    {
-        pauseResumeTransfers(!mModel->areAllPaused());
-    }
-
     // Refresh stats
     refreshTypeStats();
     refreshFileTypesStats();

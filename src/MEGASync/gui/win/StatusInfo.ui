@@ -66,14 +66,14 @@ border: none;
     <widget class="QPushButton" name="bIconState">
      <property name="minimumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>31</width>
+       <height>31</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>24</width>
-       <height>24</height>
+       <width>31</width>
+       <height>31</height>
       </size>
      </property>
      <property name="mouseTracking">

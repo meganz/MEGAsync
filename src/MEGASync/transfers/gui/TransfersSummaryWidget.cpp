@@ -9,6 +9,8 @@
 #include <QTimer>
 #include <QtMath>
 
+constexpr float ICON_SIZE = 28.0;
+
 TransfersSummaryWidget::TransfersSummaryWidget(QWidget* parent):
     QWidget(parent),
     ui(new Ui::TransfersSummaryWidget)
@@ -16,7 +18,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget* parent):
     ui->setupUi(this);
 
     status = Status::EXPANDED;
-    minwidth = 28;
+    minwidth = static_cast<int>(ICON_SIZE) * 2 /*TM icon + Pause/resume icon*/;
 
     animationTimeMS = 0.8*1000;
     acceleration = 0.35;
@@ -61,7 +63,7 @@ void TransfersSummaryWidget::setPaused(bool value)
     {
         paused = value;
         const char* iconFile = (paused) ? ":/images/resume.png" : ":/images/pause.png";
-        const int iconSize = static_cast<int>(minwidth / 28.0 * 20);
+        const int iconSize = static_cast<int>(ui->bpause->width() / ICON_SIZE * 20);
 
         QIcon icon(QString::fromLatin1(iconFile));
 
@@ -198,21 +200,6 @@ void TransfersSummaryWidget::showAnimated()
     QTimer::singleShot(10, this, SLOT(expand()));
 }
 
-void TransfersSummaryWidget::initialize()
-{
-    originalheight = this->height();
-    originalwidth = this->width();
-    minwidth = originalheight;
-    neverPainted = true;
-
-    calculateSpeed();
-
-    showAnimated();
-
-    updateSizes();
-    update();
-}
-
 void TransfersSummaryWidget::reset()
 {
     resetDownloads();
@@ -224,11 +211,6 @@ void TransfersSummaryWidget::reset()
 
 void TransfersSummaryWidget::resizeAnimation()
 {
-    if (originalwidth == -1) //first time here
-    {
-        initialize();
-    }
-
     if (status == Status::SHRINKING)
     {
         const int previousWidth = width();
@@ -683,23 +665,6 @@ void TransfersSummaryWidget::updateSizes()
 
     int minwidthheight = qMin(width(), height());
 
-    if (lastwidth != this->width())
-    {
-        if (this->width() < minwidthheight * 2)
-        {
-            ui->bpause->hide();
-        }
-        else
-        {
-            ui->bpause->show();
-        }
-    }
-
-    if(ui->bpause->isVisible() && (currentDownload == 0 && currentUpload == 0))
-    {
-         ui->bpause->hide();
-    }
-
     if (qMin(lastwidth, lastheigth) != minwidthheight)
     {
         wpen = qFloor(minwidthheight/28.0*1);
@@ -771,9 +736,8 @@ void TransfersSummaryWidget::updateSizes()
             const int minimumLayoutDimension = static_cast<int>(minwidthheight/28.0 * 2);
             layout()->setContentsMargins(minimumLayoutDimension, 0, minimumLayoutDimension, 0);
         }
-        const int iconSize = static_cast<int>(minwidth / 28.0 * 20);
+        const int iconSize = static_cast<int>(ui->bpause->width() / ICON_SIZE * 20);
         ui->bpause->setIconSize(QSize(iconSize, iconSize));
-
     }
 
     lastwidth = this->width();
