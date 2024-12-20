@@ -367,7 +367,7 @@ void TransfersWidget::updateHeaderItems()
 
     if (mCurrentTab == TransfersWidget::FAILED_TAB)
     {
-        mHeaderInfo.headerStatus = tr("Reason");
+        mHeaderInfo.headerStatus = tr("Details");
 
         info.columnExpanded = TransferWidgetColumnsManager::Columns::STATUS;
         info.visibility.insert(TransferWidgetColumnsManager::Columns::TIME, false);
