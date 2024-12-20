@@ -309,7 +309,7 @@ Rectangle {
                 onClicked: {
                     root.buyButtonClicked();
                 }
-                visible: root.recommended && root.enabled
+                visible: root.recommended && parent.enabled
             }
 
             OutlineButton {
@@ -328,6 +328,7 @@ Rectangle {
                     root.buyButtonClicked();
                 }
                 visible: !buyButton.visible
+                enabled: root.enabled && !root.showOnlyProFlexi
             }
 
         }

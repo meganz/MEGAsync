@@ -84,9 +84,10 @@ void UpsellController::updateStorageElements()
 
     emit dataChanged(0,
                      mPlans->size() - 1,
-                     QVector<int>() << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
-                                    << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
-                                    << UpsellPlans::SHOW_ONLY_PRO_FLEXI);
+                     QVector<int>()
+                         << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
+                         << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE << UpsellPlans::SHOW_ONLY_PRO_FLEXI
+                         << UpsellPlans::BUTTON_NAME_ROLE);
     mPlans->setPro(Preferences::instance()->accountType() !=
                    Preferences::AccountType::ACCOUNT_TYPE_FREE);
 }
@@ -148,8 +149,10 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::BUTTON_NAME_ROLE:
             {
-                if (isOnlyProFlexiAvailable(data) &&
-                    data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI)
+                if (data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
+                    (isOnlyProFlexiAvailable(data) ||
+                     Preferences::instance()->accountType() ==
+                         Preferences::AccountType::ACCOUNT_TYPE_PROIII))
                 {
                     // For Pro III, if the storage is full, only the Pro Flexi plan is available.
                     // We check if the storage if the plan offered is enough for the current used
@@ -233,7 +236,10 @@ QVariant UpsellController::data(std::shared_ptr<UpsellPlans::Data> data, int rol
             }
             case UpsellPlans::SHOW_ONLY_PRO_FLEXI:
             {
-                field = isOnlyProFlexiAvailable(data);
+                field = isOnlyProFlexiAvailable(data) ||
+                        (data->proLevel() == Preferences::AccountType::ACCOUNT_TYPE_PRO_FLEXI &&
+                         Preferences::instance()->accountType() ==
+                             Preferences::AccountType::ACCOUNT_TYPE_PROIII);
                 break;
             }
             default:
@@ -351,7 +357,7 @@ void UpsellController::onBilledPeriodChanged()
                          << UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE
                          << UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE
                          << UpsellPlans::CURRENT_PLAN_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
-                         << UpsellPlans::SHOW_ONLY_PRO_FLEXI);
+                         << UpsellPlans::SHOW_ONLY_PRO_FLEXI << UpsellPlans::BUTTON_NAME_ROLE);
 }
 
 void UpsellController::onTransferRemainingTimeElapsed()
@@ -612,7 +618,8 @@ int UpsellController::getRowForCurrentRecommended()
 
 bool UpsellController::isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
 {
-    return (!isPlanUnderCurrentProLevel(data->proLevel())) &&
+    return (data->proLevel() != Preferences::instance()->accountType() &&
+            !isPlanUnderCurrentProLevel(data->proLevel())) &&
            storageFitsUnderStorageOQConditions(data) &&
            (mPlans->isMonthly() ? data->monthlyData().isValid() : data->yearlyData().isValid());
 }
@@ -657,8 +664,7 @@ float UpsellController::calculateMonthlyPriceWithDiscount(float yearlyPrice) con
     return yearlyPrice / NUM_MONTHS_PER_PLAN;
 }
 
-bool UpsellController::isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data,
-                                               int proLevel) const
+bool UpsellController::isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const
 {
     return !storageFitsUnderStorageOQConditions(data);
 }
@@ -675,13 +681,12 @@ bool UpsellController::storageFitsUnderStorageOQConditions(
 bool UpsellController::isOnlyProFlexiAvailable(
     const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const
 {
-    auto it = std::find_if(
-        plans.cbegin(),
-        plans.cend(),
-        [this](const auto& plan)
-        {
-            return isOnlyProFlexiAvailable(plan, mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII);
-        });
+    auto it = std::find_if(plans.cbegin(),
+                           plans.cend(),
+                           [this](const auto& plan)
+                           {
+                               return isOnlyProFlexiAvailable(plan);
+                           });
 
     return it != plans.cend();
 }
