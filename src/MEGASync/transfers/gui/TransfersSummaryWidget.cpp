@@ -17,7 +17,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget* parent):
 {
     ui->setupUi(this);
 
-    status = Status::EXPANDED;
+    status = Status::RESIZED;
     minwidth = static_cast<int>(ICON_SIZE) * 2 /*TM icon + Pause/resume icon*/;
 
     animationTimeMS = 0.8*1000;
@@ -196,7 +196,7 @@ void TransfersSummaryWidget::setPercentDownloads(long long completedBytes, long 
 // This should only be called after width() and height() are valid
 void TransfersSummaryWidget::showAnimated()
 {
-    this->shrink(true);
+    this->shrink();
     QTimer::singleShot(10, this, SLOT(expand()));
 }
 
@@ -211,23 +211,7 @@ void TransfersSummaryWidget::reset()
 
 void TransfersSummaryWidget::resizeAnimation()
 {
-    if (status == Status::SHRINKING)
-    {
-        const int previousWidth = width();
-        const qreal step = computeAnimationStep();
-        const int newWidth = qMax(minwidth, qRound(originalwidth - step));
-
-        updateAnimation(previousWidth, newWidth, Status::SHRUNK);
-    }
-    else if (status == Status::EXPANDING)
-    {
-        const int previousWidth = width();
-        const qreal step = computeAnimationStep();
-        const int newWidth = qMin(originalwidth, qRound(minwidth + step));
-
-        updateAnimation(previousWidth, newWidth, Status::EXPANDED);
-    }
-    else if (status == Status::RESIZING)
+    if (status == Status::RESIZING)
     {
         const int previousWidth = width();
         const qreal step = computeAnimationStep();
@@ -286,8 +270,12 @@ qreal TransfersSummaryWidget::computeAnimationStep() const
 void TransfersSummaryWidget::updateAnimation(const int previousWidth, const int newWidth,
                                              const TransfersSummaryWidget::Status newStatus)
 {
-    setMaximumSize(newWidth, height());
-    setMinimumSize(newWidth, height());
+    if (newWidth == minimumWidth() && newWidth == maximumWidth())
+    {
+        setMaximumSize(newWidth, height());
+        setMinimumSize(newWidth, height());
+    }
+
     if (newWidth == minwidth)
     {
         status = newStatus;
@@ -385,39 +373,28 @@ void TransfersSummaryWidget::setAcceleration(const qreal &value)
     calculateSpeed();
 }
 
-void TransfersSummaryWidget::shrink(bool noAnimate)
+void TransfersSummaryWidget::shrink()
 {
     int goalwidth = minwidth;
-    return doResize(goalwidth, noAnimate);
+    return doResize(goalwidth);
 }
 
-
-void TransfersSummaryWidget::doResize(int futureWidth, bool noAnimate)
+void TransfersSummaryWidget::doResize(int futureWidth)
 {
-    if (noAnimate)
-    {
-        this->setMaximumSize(futureWidth, this->height());
-        this->setMinimumSize(futureWidth, this->height());
-        status = Status::RESIZED;
-        return;
-    }
     if (futureWidth == width())
     {
         status = Status::RESIZED;
         return;
     }
 
-    if (status != Status::RESIZING)
-    {
-        qe.start();
-        update();
+    update();
+    qe.start();
 
-        QTimer::singleShot(1, this, SLOT(resizeAnimation()));
-    }
     goalwidth = futureWidth;
     initialwidth = width();
     calculateSpeed(goalwidth, initialwidth);
-    status = Status::RESIZING;
+
+    QTimer::singleShot(1, this, SLOT(resizeAnimation()));
 }
 
 void TransfersSummaryWidget::adjustFontSizeToText(QFont *font, int maxWidth, QString uploadText, int fontsize)
@@ -514,7 +491,10 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
             upMaxWidthText = upEllipseWidth - (fontMarginXLeft + fontMarginXRight);
             if (prevUpEllipseWidth != upEllipseWidth)
             {
-                expand();
+                if (isVisible())
+                {
+                    expand();
+                }
             }
         }
     }
@@ -642,7 +622,7 @@ void TransfersSummaryWidget::resetDownloads()
     updateDownloads();
 }
 
-void TransfersSummaryWidget::expand(bool noAnimate)
+void TransfersSummaryWidget::expand()
 {
     int goalwidth = firstellipseX + upEllipseWidth + ((upEllipseWidth && dlEllipseWidth)?ellipsesMargin:0) + dlEllipseWidth + afterEllipsesMargin;
 
@@ -651,7 +631,9 @@ void TransfersSummaryWidget::expand(bool noAnimate)
         goalwidth = minwidth;
     }
 
-    return doResize(goalwidth, noAnimate);
+    status = Status::RESIZING;
+
+    return doResize(goalwidth);
 }
 
 void TransfersSummaryWidget::showEvent(QShowEvent*)

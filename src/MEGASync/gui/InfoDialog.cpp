@@ -386,7 +386,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
     isShown = false;
     if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
     {
-        ui->bTransferManager->shrink(true);
+        ui->bTransferManager->shrink();
     }
     QDialog::hideEvent(event);
 

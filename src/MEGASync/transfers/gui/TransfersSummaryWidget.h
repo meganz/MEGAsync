@@ -15,8 +15,11 @@ class TransfersSummaryWidget : public QWidget
     Q_OBJECT
 
 public:
-
-    enum class Status { EXPANDING, EXPANDED, SHRINKING, SHRUNK, RESIZING, RESIZED };
+    enum class Status
+    {
+        RESIZING,
+        RESIZED
+    };
 
     explicit TransfersSummaryWidget(QWidget *parent = 0);
     ~TransfersSummaryWidget();
@@ -84,9 +87,9 @@ private slots:
     void resizeAnimation();
 
 public slots:
-    void expand(bool noAnimate = false);
-    void shrink(bool noAnimate = false);
-    void doResize(int futureWidth, bool noAnimate = false);
+    void expand();
+    void shrink();
+    void doResize(int futureWidth);
 
 private:
 
