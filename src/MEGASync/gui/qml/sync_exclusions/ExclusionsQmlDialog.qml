@@ -76,6 +76,8 @@ QmlDialog {
                 text: ExclusionsStrings.manageExclusions
                 font.pixelSize: Texts.Text.Size.LARGE
                 font.weight: Font.DemiBold
+                wrapMode: Text.NoWrap
+                Layout.preferredWidth: parent.width
             }
 
             Texts.Text {
@@ -88,16 +90,6 @@ QmlDialog {
                 font.pixelSize: Texts.Text.Size.NORMAL
             }
         } //ColumnLayout: titleDescriptionLayout
-
-        Texts.RichText {
-            id: manageExclusionText
-
-            text: ExclusionsStrings.manageExclusions
-            anchors.left: parent.left
-            anchors.right: parent.right
-            font.pixelSize: Texts.Text.Size.LARGE
-            font.weight: Font.DemiBold
-        }
 
         Rectangle{
             id: horizontalLine
