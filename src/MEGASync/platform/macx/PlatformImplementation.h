@@ -48,6 +48,10 @@ public:
     void streamWithApp(const QString& app, const QString& url) override;
     DriveSpaceData getDriveData(const QString& path) override;
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    QString getGfxProviderPath() override;
+#endif
+
     void processSymLinks() override;
 
 private:

@@ -94,12 +94,18 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mTabFramesToggleGroup[TransfersWidget::COMPLETED_TAB]     = mUi->fCompleted;
     mTabFramesToggleGroup[TransfersWidget::FAILED_TAB]        = mUi->fFailed;
     mTabFramesToggleGroup[TransfersWidget::SEARCH_TAB]        = mUi->fSearchString;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_OTHER_TAB]    = mUi->fOther;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_AUDIO_TAB]    = mUi->fAudio;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_VIDEO_TAB]    = mUi->fVideos;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_ARCHIVE_TAB]  = mUi->fArchives;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_DOCUMENT_TAB] = mUi->fDocuments;
-    mTabFramesToggleGroup[TransfersWidget::TYPE_IMAGE_TAB]    = mUi->fImages;
+    mTabFramesToggleGroup[TransfersWidget::TYPE_OTHER_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_OTHER_TAB);
+    mTabFramesToggleGroup[TransfersWidget::TYPE_AUDIO_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_AUDIO_TAB);
+    mTabFramesToggleGroup[TransfersWidget::TYPE_VIDEO_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_VIDEO_TAB);
+    mTabFramesToggleGroup[TransfersWidget::TYPE_ARCHIVE_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_ARCHIVE_TAB);
+    mTabFramesToggleGroup[TransfersWidget::TYPE_DOCUMENT_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_DOCUMENT_TAB);
+    mTabFramesToggleGroup[TransfersWidget::TYPE_IMAGE_TAB] =
+        mUi->wMediaType->getFrame(TransfersWidget::TYPE_IMAGE_TAB);
 
     for (auto tabFrame : qAsConst(mTabFramesToggleGroup))
     {
@@ -130,12 +136,18 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
     mNumberLabelsGroup[TransfersWidget::UPLOADS_TAB]          = mUi->lUploads;
     mNumberLabelsGroup[TransfersWidget::COMPLETED_TAB]        = mUi->lCompleted;
     mNumberLabelsGroup[TransfersWidget::FAILED_TAB]           = mUi->lFailed;
-    mNumberLabelsGroup[TransfersWidget::TYPE_OTHER_TAB]       = mUi->lOtherNb;
-    mNumberLabelsGroup[TransfersWidget::TYPE_AUDIO_TAB]       = mUi->lAudioNb;
-    mNumberLabelsGroup[TransfersWidget::TYPE_VIDEO_TAB]       = mUi->lVideosNb;
-    mNumberLabelsGroup[TransfersWidget::TYPE_ARCHIVE_TAB]     = mUi->lArchivesNb;
-    mNumberLabelsGroup[TransfersWidget::TYPE_DOCUMENT_TAB]    = mUi->lDocumentsNb;
-    mNumberLabelsGroup[TransfersWidget::TYPE_IMAGE_TAB]       = mUi->lImagesNb;
+    mNumberLabelsGroup[TransfersWidget::TYPE_OTHER_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_OTHER_TAB);
+    mNumberLabelsGroup[TransfersWidget::TYPE_AUDIO_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_AUDIO_TAB);
+    mNumberLabelsGroup[TransfersWidget::TYPE_VIDEO_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_VIDEO_TAB);
+    mNumberLabelsGroup[TransfersWidget::TYPE_ARCHIVE_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_ARCHIVE_TAB);
+    mNumberLabelsGroup[TransfersWidget::TYPE_DOCUMENT_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_DOCUMENT_TAB);
+    mNumberLabelsGroup[TransfersWidget::TYPE_IMAGE_TAB] =
+        mUi->wMediaType->getLabel(TransfersWidget::TYPE_IMAGE_TAB);
 
     QMetaEnum tabs = QMetaEnum::fromType<TransfersWidget::TM_TAB>();
 
@@ -735,23 +747,14 @@ void TransferManager::refreshFileTypesStats()
             Utilities::FileType fileType = static_cast<Utilities::FileType>(value - TransfersWidget::TYPES_TAB_BASE);
             unsigned long long number (mModel->getNumberOfTransfersForFileType(fileType));
 
-            QString countLabelText(number > 0 ? QString::number(number) : QString());
-
             TransfersWidget::TM_TAB tab = static_cast<TransfersWidget::TM_TAB>(value);
-            QLabel* label (mNumberLabelsGroup[tab]);
             if (mUi->wTransfers->getCurrentTab() != tab && number == 0)
             {
-                if(label->parentWidget()->isVisible())
-                {
-                    label->parentWidget()->hide();
-                    label->clear();
-                }
+                mUi->wMediaType->resetCounter(tab);
             }
             else
             {
-                label->parentWidget()->show();
-                label->setVisible(number);
-                label->setText(countLabelText);
+                mUi->wMediaType->showIfGroupboxVisible(tab, number);
             }
         }
     }

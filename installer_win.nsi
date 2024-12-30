@@ -62,15 +62,19 @@ VIAddVersionKey "ProductName" "MEGAsync"
 !define MULTIUSER_EXECUTIONLEVEL_ALLUSERS
 !define MULTIUSER_INSTALLMODE_DEFAULT_CURRENTUSER
 
-!define VcRedistBasePath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Redist\MSVC\14.29.30133"
+!define VcRedistBasePath "C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Redist\MSVC\14.42.34433"
 !define VcRedist32BasePath "${VcRedistBasePath}\x86"
-!define VcRedist32Path "${VcRedist32BasePath}\Microsoft.VC142.CRT"
+!define VcRedist32Path "${VcRedist32BasePath}\Microsoft.VC143.CRT"
 !define VcRedist64BasePath "${VcRedistBasePath}\x64"
-!define VcRedist64Path "${VcRedist64BasePath}\Microsoft.VC142.CRT"
+!define VcRedist64Path "${VcRedist64BasePath}\Microsoft.VC143.CRT"
 
 !define WinRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\${WINKITVER}\ucrt\DLLs"
 !define WinRedist32BasePath "${winRedistBasePath}\x86"
 !define WinRedist64BasePath "${winRedistBasePath}\x64"
+
+!define D3DRedistBasePath "C:\Program Files (x86)\Windows Kits\10\Redist\D3D"
+!define D3DRedist32BasePath "${D3DRedistBasePath}\x86"
+!define D3DRedist64BasePath "${D3DRedistBasePath}\x64"
 
 
 ; Version info: get version directly from the binary
@@ -347,7 +351,7 @@ Function showHiDpi
     ${EndIf}
 
     strCpy $BITMAP_WELCOME "$BANNER_PATH\leftbanner\left_banner$0.bmp"
-	
+
     ${NSD_SetImage} $mui.WelcomePage.Image $BITMAP_WELCOME  $mui.WelcomePage.Image.Bitmap
     ${NSD_SetImage} $mui.FinishPage.Image $BITMAP_WELCOME $mui.FinishPage.Image.Bitmap
 
@@ -526,6 +530,7 @@ modeselected:
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM mega-desktop-app-gfxworker.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -600,7 +605,7 @@ modeselected:
     !insertmacro Install3264DLL "${VcRedist64Path}\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "${VcRedist64Path}\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "${VcRedist64BasePath}\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "${VcRedist64BasePath}\Microsoft.VC143.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -642,6 +647,7 @@ modeselected:
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist64BasePath}\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "${D3DRedist64BasePath}\d3dcompiler_47.dll"  "$INSTDIR\d3dcompiler_47.dll"
   !else
     !insertmacro Install3264DLL "${VcRedist32Path}\vcruntime140.dll" "$INSTDIR\vcruntime140.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\msvcp140.dll" "$INSTDIR\msvcp140.dll"
@@ -651,7 +657,7 @@ modeselected:
     !insertmacro Install3264DLL "${VcRedist32Path}\msvcp140_codecvt_ids.dll" "$INSTDIR\msvcp140_codecvt_ids.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\concrt140.dll"  "$INSTDIR\concrt140.dll"
     !insertmacro Install3264DLL "${VcRedist32Path}\vccorlib140.dll" "$INSTDIR\vccorlib140.dll"
-    !insertmacro Install3264DLL "${VcRedist32BasePath}\Microsoft.VC142.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
+    !insertmacro Install3264DLL "${VcRedist32BasePath}\Microsoft.VC143.OpenMP\vcomp140.dll"  "$INSTDIR\vcomp140.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\ucrtbase.dll"  "$INSTDIR\ucrtbase.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-utility-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-crt-time-l1-1-0.dll"  "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
@@ -693,6 +699,7 @@ modeselected:
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-debug-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-datetime-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
     !insertmacro Install3264DLL "${WinRedist32BasePath}\api-ms-win-core-console-l1-1-0.dll"  "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+    !insertmacro Install3264DLL "${D3DRedist32BasePath}\d3dcompiler_47.dll"  "$INSTDIR\d3dcompiler_47.dll"
   !endif
 
 !ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip files below
@@ -718,6 +725,10 @@ modeselected:
   File "${SRCDIR_UPDATER}\MEGAupdater.exe"
   AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\mega-desktop-app-gfxworker.exe"
+  AccessControl::SetFileOwner "$INSTDIR\mega-desktop-app-gfxworker.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\mega-desktop-app-gfxworker.exe" "$USERNAME" "GenericRead + GenericWrite"
 
   File "installer\qt.conf"
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
@@ -981,10 +992,13 @@ Section Uninstall
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
+  !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\d3dcompiler_47.dll"
 
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAupdater.exe"
+  Delete "$INSTDIR\mega-desktop-app-gfxworker.exe"
+
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libeay32.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\ssleay32.dll"
   !insertmacro UnInstallLib DLL SHARED REBOOT_NOTPROTECTED "$INSTDIR\libcurl.dll"

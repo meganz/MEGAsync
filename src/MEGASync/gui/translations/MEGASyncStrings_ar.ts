@@ -514,26 +514,6 @@
         <translation>تطبيق</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>معدل حد الترفيع:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>حد معدل التنزيل:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>عدد الاتصالات لكل عملية تراسل معطيات:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>تحديث</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>استخدم HTTPS لعمليات تراسل المعطيات التي لا تبدأ</translation>
@@ -2364,32 +2344,32 @@
     <message>
         <source>Terms of Service breach</source>
         <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>خرق شروط الخدمة</translation>
     </message>
     <message>
         <source>This link has expired</source>
         <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انتهت صلاحية هذا الرابط</translation>
     </message>
     <message>
         <source>Link owner terminated</source>
         <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>قام مالك الرابط بإنهاء</translation>
     </message>
     <message>
         <source>This link has been deleted</source>
         <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم حذف هذا الرابط</translation>
     </message>
     <message>
         <source>Copyright violation</source>
         <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>انتهاك حقوق الطبع والنشر</translation>
     </message>
     <message>
         <source>This link is invalid</source>
         <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>هذا الرابط غير صالح</translation>
     </message>
 </context>
 <context>
@@ -3220,11 +3200,6 @@ https://mega.co.nz/#sync</source>
         <translation>تم تعطيل مزامنة واحدة أو أكثر</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>سيستمر التطبيق في العمل ومع ذلك، لن يتم دعم التحديثات للإصدارات السابقة لنظام التشغيل ويندوز macOS Sierra.</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>شكرا لتعاونك</translation>
@@ -3292,26 +3267,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>فشل ترقية الأمان. خطأ: %1</translation>
     </message>
     <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>تم تعطيل واحد أو أكثر من النسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation>تم تعطيل مزامنة واحدة أو أكثر. انتقل إلى الإعدادات لإعادة تمكينها مرة أخرى.</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation>افتح الإعدادات</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>الإعدادات</translation>
@@ -3345,6 +3300,26 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation>تم تجاوز حجم التراسل المتاح</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>تم تعطيل بعض عمليات المزامنة والنسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>تم تعطيل واحد أو أكثر من النسخ الاحتياطية. انتقل إلى الإعدادات لتمكينها مرة أخرى.</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>تم تعطيل مزامنة واحدة أو أكثر. انتقل إلى الإعدادات لإعادة تمكينها مرة أخرى.</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>افتح الإعدادات</translation>
     </message>
 </context>
 <context>
@@ -4597,21 +4572,6 @@ Enter a different name</source>
         <translation>معلومات</translation>
     </message>
     <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>معلومات:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>جهات الاتصال:</translation>
-    </message>
-    <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>مشاركات:</translation>
-    </message>
-    <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
         <translation>إشعارات النظام:</translation>
@@ -4630,11 +4590,6 @@ Enter a different name</source>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
         <translation>عمليات الترفيع والتنزيل المكتملة</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>عمليات الترفيع والتنزيل:</translation>
     </message>
 </context>
 <context>
@@ -4683,16 +4638,6 @@ Enter a different name</source>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
         <translation>نسخ احتياطي إلى:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>إلغاء</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>اختر</translation>
     </message>
     <message>
         <source>Change folder</source>
@@ -4768,11 +4713,6 @@ Enter a different name</source>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>تأكيد كلمة المرور</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>تم</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4890,29 +4830,9 @@ Enter a different name</source>
         <translation>قم بتسجيل الدخول إلى [B]حساب ميغا MEGA[/B]</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>التالي</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>تخطى</translation>
-    </message>
-    <message>
-        <source>View in Settings</source>
-        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>عرض في الإعدادات</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>كلمة المرور</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>السابق</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5155,11 +5075,6 @@ Enter a different name</source>
         <translation>رمز مصادقة مزدوجة 2FA خاطئ</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>حاول مرة أخرى</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>تم إعداد النسخ الاحتياطي الخاصة بك وسيتم نسخ البيانات المحددة احتياطيًا تلقائيًا عندما يكون تطبيق الحاسوب المكتبي قيد التشغيل.</translation>
@@ -5170,11 +5085,6 @@ Enter a different name</source>
         <translation>يمكنك عرض النسخ الاحتياطية وحالاتها ضمن صفحة النسخ الاحتياطي في الإعدادات.</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>إعداد الاستبعادات</translation>
-    </message>
-    <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
         <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل مع جهازك المحلي.</translation>
@@ -5183,6 +5093,11 @@ Enter a different name</source>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
         <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاص بك مع جهازك المحلي.</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>عرض في الإعدادات</translation>
     </message>
 </context>
 <context>
@@ -5196,11 +5111,6 @@ Enter a different name</source>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>عرض في ميغا MEGA</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>مجلد النسخ الاحتياطي:</translation>
     </message>
 </context>
 <context>
@@ -5403,6 +5313,21 @@ Enter a different name</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>أذونات المالك:</translation>
     </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>الإذونات</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>تطبيق</translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -5541,12 +5466,27 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- We’ve improved the automatic and manual resolution of sync issues.
-- The MEGA account interface and the account upgrade process have both been revamped and enhanced.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.6.0.CON-1041</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- تحسين الاستقرار مع معالجة الرسومات المعزولة: لقد قمنا بترقية تطبيقنا لتشغيل معالج الرسومات (GFX) في عملية منفصلة. هذا يعني أنه في حالة مواجهة أي مكتبات رسومات تابعة لجهات خارجية مشكلات يظل التطبيق مستقرًا وغير متأثر مما يضمن تجربة أكثر سلاسة ودون انقطاع.
+- انتهاء الدعم لنظامي ماك أو إس macOS 10.13 و 10.14: لم يعد هذا التحديث يدعم macOS 10.13 و 10.14. لمتابعة تلقي التحديثات والدعم يرجى الترقية إلى إصدار أحدث من ماك أو إس macOS.
+- تمت إعادة تصميم مربع حوار الإعدادات.
+- تحسين اكتشاف مشكلات التطبيق وحلها.
+- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.
+</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>إلغاء</translation>
     </message>
 </context>
 <context>
@@ -5615,11 +5555,6 @@ Enter a different name</source>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
         <translation>الكشف التلقائي</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>تحديث</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6046,11 +5981,6 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
         <translation>إضافة</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>حذف</translation>
-    </message>
 </context>
 <context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
@@ -6106,11 +6036,6 @@ Do you want to delete it anyway?</source>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
         <translation>سيتم حذف المجلد من ميغا MEGA. لن يتم حذفها من جهاز الكمبيوتر الخاص بك. لا يمكن التراجع عن هذا الإجراء.</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>تأكيد</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6264,11 +6189,6 @@ Do you want to delete it anyway?</source>
         <translation>المساعدة</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>تبدأ عند بدء التشغيل</translation>
-    </message>
-    <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>التحديث تلقائياً</translation>
@@ -6302,16 +6222,6 @@ Do you want to delete it anyway?</source>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>مسح</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>اختر</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>المجلدات الافتراضية</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -6524,49 +6434,9 @@ Do you want to delete it anyway?</source>
         <translation>بروكسي</translation>
     </message>
     <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>فرض مسح كامل</translation>
-    </message>
-    <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
         <translation>تاريخ الجلسة</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>اللغة:</translation>
-    </message>
-    <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (ذاكرة التخزين المؤقت المحلية):</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (في ميغا MEGA):</translation>
-    </message>
-    <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>نسخ الملف:</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>تبليغ عن مشكلة:</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>مساحة التخزين:</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>تراسل المعطيات:</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -6657,11 +6527,6 @@ Do you want to delete it anyway?</source>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
         <translation>إعدادات وضع السكون</translation>
-    </message>
-    <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>وضع السكون</translation>
     </message>
     <message>
         <source>Sleep mode can&apos;t be setup</source>
@@ -7156,6 +7021,16 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
         <translation>المساعدة</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>إعادة تحميل</translation>
+    </message>
+    <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>تمت إعادة تسمية أحد المجلدات المتزامنة. قم بتحديث قائمة مشكلات المزامنة.</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
@@ -7375,6 +7250,69 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
         <translation>اختر العناصر</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>الحد الأقصى 32 محرفاً</translation>
+    </message>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>يوجد جهاز بهذا الاسم بالفعل. أدخل اسمًا مختلفًا.</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>أدخل اسم جهاز</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>المحارف التالية غير مسموح بها: %1</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>إلغاء</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>اختر</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>تم</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>التالي</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>تخطى</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>السابق</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>حاول مرة أخرى</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>إعداد الاستبعادات</translation>
     </message>
 </context>
 <context>
@@ -7784,17 +7722,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply</source>
         <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تطبيق</translation>
     </message>
     <message>
         <source>[B]Apply previous exclusion rules?[/B]</source>
         <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]هل تريد تطبيق قواعد الاستبعاد السابقة؟[/B]</translation>
     </message>
     <message>
         <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
         <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>سيتم تطبيق قواعد الاستبعاد التي قمت بإعدادها في إصدار سابق من التطبيق على جميع عمليات المزامنة والنسخ الاحتياطية. سيتم استبدال أي قواعد تم إنشاؤها منذ ذلك الحين.</translation>
     </message>
 </context>
 <context>
@@ -7888,12 +7826,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Apply rules</source>
         <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تطبيق القواعد</translation>
     </message>
     <message>
         <source>Apply previous exclusion rules</source>
         <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تطبيق قواعد الاستبعاد السابقة</translation>
     </message>
 </context>
 <context>
@@ -7919,14 +7857,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>توقيف مؤقتاً</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>إعادة سريعة للفحص</translation>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>مزامنة إعادة التشغيل Reboot</translation>
     </message>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>إعادة فحص عميق</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>النسخ الاحتياطي لإعادة التشغيل Reboot</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>إعادة المسح</translation>
     </message>
 </context>
 <context>
@@ -8238,12 +8181,12 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
     <message>
         <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مساحة التخزين ممتلئة تقريبًا. قم بالترقية الآن قبل امتلاء مساحة التخزين وإيقاف عمليات الترفيع والمزامنة والنسخ الاحتياطي.</translation>
     </message>
     <message>
         <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مساحة التخزين ممتلئة. تم تعطيل عمليات الترفيع والمزامنة والنسخ الاحتياطية مؤقتًا.</translation>
     </message>
 </context>
 <context>
@@ -9048,17 +8991,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Business</source>
@@ -9073,7 +9016,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 من %2</translation>
     </message>
 </context>
 <context>
@@ -9126,28 +9069,23 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>WhatsNewStrings</name>
     <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>ما الجديد</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>تحديثات</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>ما الجديد في ميغا MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>أداء أفضل</translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>تحكم أكبر</translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>فلاتر متقدمة</translation>
     </message>
     <message>
@@ -9156,14 +9094,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>تتم مزامنة الملفات الآن بسرعة تصل إلى 5 مرات أسرع من ذي قبل.</translation>
     </message>
     <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>نحن نقدم الآن رؤية كاملة لمشاكل المزامنة ونمنحك التحكم الكامل في كيفية حل التعارضات.</translation>
+        <translation>رؤية كاملة لمشكلات المزامنة والتحكم الكامل في كيفية حل التعارضات</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>قم بتخصيص عمليات المزامنة والنسخ الاحتياطي بواجهة جديدة تمامًا لاستبعاد الملفات والمجلدات. تسمح لك الإعدادات المتقدمة بكتابة قواعد الاستبعاد الخاصة بك لكل من عمليات المزامنة والنسخ الاحتياطي.</translation>
+        <translation>تسمح لك الإعدادات المتقدمة بكتابة قواعد الاستبعاد الخاصة بك لكل من عمليات المزامنة الخاصة بك</translation>
     </message>
     <message>
         <source>Got it</source>

@@ -1,19 +1,22 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
+// clang-format off
+#include "MegaSyncLogger.h"
+#include "ProgressIndicatorDialog.h"
+
 #include <QPointer>
 #include <QDialog>
-#include "megaapi.h"
-#include "QTMegaTransferListener.h"
-#include "MegaSyncLogger.h"
+// clang-format on
 
 class QProgressDialog;
+class BugReportController;
 
 namespace Ui {
 class BugReportDialog;
 }
 
-class BugReportDialog : public QDialog, public mega::MegaTransferListener
+class BugReportDialog: public QDialog
 {
     Q_OBJECT
 
@@ -21,51 +24,31 @@ public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
 
-    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
-    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error);
-    virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
+private slots:
+    void onReportStarted();
+    void onReportFinished();
+    void onReportFailed();
+    void onReportUploadedFinished();
 
-    void onRequestFinish(mega::MegaRequest *request, mega::MegaError* e);
+    void onReportUpdated(int value);
 
 private:
-    MegaSyncLogger& logger;
-    Ui::BugReportDialog *ui;
-    int currentTransfer;
-    QPointer<QProgressDialog> mSendProgress;
+    void closeProgressDialog();
+    void openProgressDialog();
 
-    long long totalBytes;
-    long long transferredBytes;
-    int lastpermil;
-
-    bool warningShown;
-    bool errorShown;
-    bool preparing = false;
-    bool mTransferFinished;
-    int mTransferError;
-    QString reportFileName;
-    bool mHadGlobalPause;
+    Ui::BugReportDialog* ui;
+    QPointer<ProgressIndicatorDialog> mProgressIndicatorDialog;
+    std::unique_ptr<BugReportController> mController;
 
     const static int mMaxDescriptionLength = 3000;
 
-protected:
-    mega::MegaApi *megaApi;
-    std::unique_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
-
-    void showErrorMessage(mega::MegaError* error = nullptr);
-    void postUpload();
-    void createSupportTicket();
-
-private:
-    void cancelCurrentReportUpload();
-
 private slots:
-    void on_bSubmit_clicked();
-    void on_bCancel_clicked();
+    void onSubmitClicked();
+    void onCancelClicked();
     void cancelSendReport();
     void onDescriptionChanged();
-    void onReadyForReporting();
-    void on_teDescribeBug_textChanged();
+    void onTitleChanged();
+    void onDescribeBugTextChanged();
 };
 
 #endif // BUGREPORTDIALOG_H

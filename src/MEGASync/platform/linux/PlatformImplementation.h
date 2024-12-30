@@ -49,6 +49,10 @@ public:
     void processSymLinks() override;
     DriveSpaceData getDriveData(const QString &path) override;
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    QString getGfxProviderPath() override;
+#endif
+
 private:
     QStringList getListRunningProcesses();
     static xcb_atom_t getAtom(xcb_connection_t * const connection, const char *name);

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1225</width>
-    <height>807</height>
+    <width>1200</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -77,13 +77,13 @@
   margin-right: 16px;
 }
 
-#wMediaType QFrame, #wTransferring QFrame, #wSearch QFrame
+#wTransferring QFrame, #wSearch QFrame
 {
     padding-right: 6px;
     padding-left: 6px;
 }
 
-#wMediaType QPushButton, #wTransferring QPushButton , #wSearch QPushButton
+#wTransferring QPushButton , #wSearch QPushButton
 {
     height: 34px;
 }
@@ -120,7 +120,7 @@ QGroupBox::title
     qProperty-iconSize: 24px;
 }
 
-#wMediaType QPushButton, #wSearch QPushButton
+#wSearch QPushButton
 {
     font-size: 14px;
     color: #15191F;
@@ -372,6 +372,46 @@ QToolButton
     font-weight: 400;
 }
 
+#wLeftPane QFrame &gt; QLabel
+{
+    color: #999999;
+     font-weight: bold;
+    font-size: 10px;
+	text-align: right;
+    border-radius: 12px;
+}
+
+#wLeftPane QFrame[itsOn=true] 
+{
+	border-radius: 4px;
+    background: solid white;
+}
+
+#wLeftPane QFrame[itsOn=true] &gt; QLabel
+{
+    border: 1px solid #F5F5F5; 
+    background-color: #FAFAFA;
+    color: #333333;
+}
+
+#wLeftPane QFrame[itsOn=false] 
+{
+	border-radius: none;
+    background-color: transparent;
+}
+
+#wLeftPane QFrame[itsOn=false]  QLabel
+{
+    border: 1px transparent #FAFAFA; 
+    background: transparent;
+    color: #999999;
+}
+
+#wLeftPane QFrame[itsOn=false] QPushButton
+{
+    font-weight: normal;
+}
+
 /* 
 * Storage OQ text
 */
@@ -559,46 +599,7 @@ QToolButton
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">#wLeftPane QFrame &gt; QLabel
-{
-    color: #999999;
-     font-weight: bold;
-    font-size: 10px;
-	text-align: right;
-    border-radius: 12px;
-}
-
-#wLeftPane QFrame[itsOn=true] 
-{
-	border-radius: 4px;
-    background: solid white;
-}
-
-#wLeftPane QFrame[itsOn=true] &gt; QLabel
-{
-    border: 1px solid #F5F5F5; 
-    background-color: #FAFAFA;
-    color: #333333;
-}
-
-#wLeftPane QFrame[itsOn=false] 
-{
-	border-radius: none;
-    background-color: transparent;
-}
-
-#wLeftPane QFrame[itsOn=false]  QLabel
-{
-    border: 1px transparent #FAFAFA; 
-    background: transparent;
-    color: #999999;
-}
-
-#wLeftPane QFrame[itsOn=false] QPushButton
-{
-    font-weight: normal;
-}
-</string>
+      <string notr="true"/>
      </property>
      <layout class="QVBoxLayout" name="wLeftPaneLayout">
       <property name="spacing">
@@ -1290,517 +1291,7 @@ QToolButton
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="wMediaType">
-          <property name="title">
-           <string>Media type</string>
-          </property>
-          <layout class="QVBoxLayout" name="wMediaTypeLayout">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <property name="leftMargin">
-            <number>4</number>
-           </property>
-           <property name="topMargin">
-            <number>24</number>
-           </property>
-           <property name="rightMargin">
-            <number>4</number>
-           </property>
-           <property name="bottomMargin">
-            <number>4</number>
-           </property>
-           <item>
-            <widget class="QFrame" name="fArchives">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bArchives">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Archives</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/compressed_default.png</normaloff>:/images/transfer_manager/sidebar/compressed_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/compressed_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lArchivesNb">
-                <property name="enabled">
-                 <bool>true</bool>
-                </property>
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="fDocuments">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bDocuments">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Documents</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/text_default.png</normaloff>:/images/transfer_manager/sidebar/text_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/text_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lDocumentsNb">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="fImages">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bImages">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Images</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/image_default.png</normaloff>:/images/transfer_manager/sidebar/image_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/image_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lImagesNb">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="fVideos">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bVideos">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Videos</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/video_default.png</normaloff>:/images/transfer_manager/sidebar/video_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/video_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lVideosNb">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="fAudio">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_6">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bAudio">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Audio</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/audio_default.png</normaloff>:/images/transfer_manager/sidebar/audio_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/audio_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lAudioNb">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="fOther">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>36</height>
-              </size>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <property name="spacing">
-               <number>3</number>
-              </property>
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="bOther">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Other</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../../gui/Resources_macx.qrc">
-                  <normaloff>:/images/transfer_manager/sidebar/generic_default.png</normaloff>:/images/transfer_manager/sidebar/generic_default.png</iconset>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-                <property name="autoDefault">
-                 <bool>false</bool>
-                </property>
-                <property name="default_icon" stdset="0">
-                 <string notr="true">qrc:/images/transfer_manager/sidebar/generic_default.png</string>
-                </property>
-               </widget>
-              </item>
-              <item alignment="Qt::AlignRight">
-               <widget class="QLabel" name="lOtherNb">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>24</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string notr="true"/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+         <widget class="MediaTypeFilterWidget" name="wMediaType" native="true"/>
         </item>
         <item>
          <widget class="QGroupBox" name="wSearch">
@@ -3497,6 +2988,12 @@ QToolButton
    <header location="global">TransfersAccountInfoWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>MediaTypeFilterWidget</class>
+   <extends>QWidget</extends>
+   <header>MediaTypeFilterWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bPause</tabstop>
@@ -3506,12 +3003,6 @@ QToolButton
   <tabstop>tUploads</tabstop>
   <tabstop>tCompleted</tabstop>
   <tabstop>tFailed</tabstop>
-  <tabstop>bArchives</tabstop>
-  <tabstop>bDocuments</tabstop>
-  <tabstop>bImages</tabstop>
-  <tabstop>bVideos</tabstop>
-  <tabstop>bAudio</tabstop>
-  <tabstop>bOther</tabstop>
   <tabstop>bOpenLinks</tabstop>
   <tabstop>bUpload</tabstop>
   <tabstop>bDownload</tabstop>

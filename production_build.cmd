@@ -22,8 +22,26 @@ IF EXIST build-x64-windows-mega (
 mkdir build-x64-windows-mega
 cd build-x64-windows-mega
 REM Overwrite C and CXX flags. We want debug info, with O2 and Ob2 level optimization.
-cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_VERBOSE_MAKEFILE="ON" -DENABLE_DESIGN_TOKENS_IMPORTER="OFF" -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" -DVCPKG_ROOT=%MEGA_VCPKGPATH% -DCMAKE_PREFIX_PATH=%MEGA_QTPATH% -S ".." -B . || exit 1 /b
-cmake --build .  --config RelWithDebInfo --target MEGAsync --target MEGAupdater --target MEGAShellExt -j%MEGA_CORES% || exit 1 /b
+cmake ^
+	-G "Visual Studio 17 2022" ^
+	-A x64 ^
+	-DCMAKE_VERBOSE_MAKEFILE="ON" ^
+	-DENABLE_DESIGN_TOKENS_IMPORTER="OFF" ^
+	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" ^
+	-DCMAKE_C_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" ^
+	-DVCPKG_ROOT=%MEGA_VCPKGPATH% ^
+	-DCMAKE_PREFIX_PATH=%MEGA_QTPATH% ^
+	-S ".." ^
+	-B . ^
+	|| exit 1 /b
+cmake ^
+	--build . ^
+	--config RelWithDebInfo ^
+	--target MEGAsync ^
+	--target MEGAupdater ^
+	--target MEGAShellExt ^
+	-j%MEGA_CORES% ^
+	|| exit 1 /b
 cd ..
 
 IF "%MEGA_SKIP_32_BIT_BUILD%" == "true" (
@@ -38,6 +56,24 @@ IF EXIST build-x86-windows-mega (
 mkdir build-x86-windows-mega
 cd build-x86-windows-mega
 REM Overwrite C and CXX flags. We want debug info, with O2 and Ob2 level optimization.
-cmake -G "Visual Studio 16 2019" -A Win32 -DCMAKE_VERBOSE_MAKEFILE="ON" -DENABLE_DESIGN_TOKENS_IMPORTER="OFF" -DCMAKE_CXX_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" -DCMAKE_C_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" -DVCPKG_ROOT=%MEGA_VCPKGPATH% -DCMAKE_PREFIX_PATH=%MEGA_QTPATH%\..\x86 -S ".." -B . || exit 1 /b
-cmake --build . --config RelWithDebInfo --target MEGAsync --target MEGAupdater --target MEGAShellExt -j%MEGA_CORES% || exit 1 /b
+cmake ^
+	-G "Visual Studio 17 2022" ^
+	-A Win32 ^
+	-DCMAKE_VERBOSE_MAKEFILE="ON" ^
+	-DENABLE_DESIGN_TOKENS_IMPORTER="OFF" ^
+	-DCMAKE_CXX_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" ^
+	-DCMAKE_C_FLAGS_RELWITHDEBINFO="/Zi /O2 /Ob2 /DNDEBUG" ^
+	-DVCPKG_ROOT=%MEGA_VCPKGPATH% ^
+	-DCMAKE_PREFIX_PATH=%MEGA_QTPATH%\..\x86 ^
+	-S ".." ^
+	-B . ^
+	|| exit 1 /b
+cmake ^
+	--build . ^
+	--config RelWithDebInfo ^
+	--target MEGAsync ^
+	--target MEGAupdater ^
+	--target MEGAShellExt ^
+	-j%MEGA_CORES% ^
+	|| exit 1 /b
 cd ..

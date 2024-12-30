@@ -3,7 +3,7 @@
 
 #include "QmlDialogWrapper.h"
 
-class Onboarding : public QMLComponent
+class Onboarding: public QMLComponent
 {
     Q_OBJECT
 
@@ -16,6 +16,7 @@ public:
     QString contextName() override;
 
     Q_INVOKABLE void openPreferences(int tabIndex) const;
+    Q_INVOKABLE bool deviceNameAlreadyExists(const QString& name) const;
 
 signals:
     void accountBlocked(int errorCode);

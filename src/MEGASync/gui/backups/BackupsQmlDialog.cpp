@@ -1,7 +1,8 @@
+
 #include "BackupsQmlDialog.h"
 
-#include "SettingsDialog.h"
 #include "DialogOpener.h"
+#include "SettingsDialog.h"
 
 #include <QEvent>
 

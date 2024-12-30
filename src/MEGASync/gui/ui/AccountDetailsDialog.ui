@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AccountDetailsDialog</class>
+ <widget class="QDialog" name="AccountDetailsDialog">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>560</width>
+    <height>397</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>560</width>
+    <height>397</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>560</width>
+    <height>397</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Account usage details</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="mega"/>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/*ColorTokenIcon;Button;bCloudDrive;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bCloudDrive;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVault;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bRubbish;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bAvailable;active;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;normal;off;colorToken.icon-secondary*/
+/*ColorTokenIcon;Button;bVersionIcon;active;off;colorToken.icon-secondary*/
+
+#wCircularStorage, #wCircularTransfer
+{
+qproperty-outerCircleBackgroundColor: #fff3f4f4; /*colorToken.surface-2*/
+qproperty-innerCircleBackgroundColor: #ffffffff; /*colorToken.page-background*/
+
+qproperty-lightOkProgressBarColors: #ff477ef7; /*colorToken.indicator-indigo*/
+qproperty-darkOkProgressBarColors: #ff477ef7; /*colorToken.indicator-indigo*/
+qproperty-lightWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-darkWarnProgressBarColors: #fffb6514; /*colorToken.indicator-orange*/
+qproperty-lightFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
+qproperty-darkFullProgressBarColors: #ffF63D6B; /*colorToken.indicator-pink*/
+
+qproperty-okStateTextColor: #ff303233; /*colorToken.text-primary*/
+}
+
+
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #headerBox #lUsedStorage
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #headerBox #lUsedStorage
+{
+color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #headerBox #lUsedStorage
+{
+color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[transferState=&quot;ok&quot;] #headerBox #lUsedTransfer
+{
+color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
+#AccountDetailsDialog[transferState=&quot;warning&quot;] #headerBox #lUsedTransfer
+{
+color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[transferState=&quot;full&quot;] #headerBox #lUsedTransfer
+{
+color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
+#AccountDetailsDialog[storageState=&quot;ok&quot;] #wDetailedUsage QProgressBar::chunk
+{
+background-color: #ff09bf5b; /*colorToken.indicator-green*/
+}
+
+#AccountDetailsDialog[storageState=&quot;warning&quot;] #wDetailedUsage QProgressBar::chunk
+{
+background-color: #fffb6514; /*colorToken.indicator-orange*/
+}
+
+#AccountDetailsDialog[storageState=&quot;full&quot;] #wDetailedUsage QProgressBar::chunk
+{
+background-color: #fff63d6b; /*colorToken.indicator-pink*/
+}
+
+#pLoading, #pStorageAndTransferUsage, #wStorageUsage, #wTransferUsage, #wStorageDetails, #wTransferDetails
+{
+background-color: transparent;
+}
+
+QGroupBox
+{
+margin-top: 10px;
+margin-right: 10px;
+margin-left: 10px;
+margin-bottom: 10px;
+border-radius: 15px;
+}
+
+#line
+{
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+border-style: none;
+}
+
+#headerBox
+{
+border-style:none;
+border-radius:20px;
+background-color: #fffafafa; /*colorToken.surface-1*/
+}
+
+QProgressBar
+{
+height: 4px;
+min-height: 4px;
+max-height: 4px;
+border:0px;
+border-radius: 2px;
+background-color: #fff3f4f4; /*colorToken.surface-2*/
+margin-bottom: 4px;
+}
+
+QProgressBar::chunk
+{
+background-color: #ff477EF7; /*colorToken.indicator-green*/
+border-radius: 2px;
+border:0px;
+}
+
+#wDetailedUsage QPushButton, #bVersionIcon
+{
+border-style: none;
+background-color: transparent;
+padding-left: 10px;
+padding-right: 10px;
+height: 22px;
+color: transparent;
+font-weight: bold;
+}
+
+#AccountDetailsDialog
+{
+border-radius: 0 0 4px 4px;
+}
+
+QLabel
+{
+background-color: transparent;
+color: #ff303233; /*colorToken.text-primary*/
+font-size: 13px;
+}
+
+#sHeader
+{
+    background-color: transparent;
+}
+
+#lCloudDrive, #lVault, #lRubbish, #lStorage, #lTransfer, #lAvailable
+{
+  font-weight: bold;
+}
+
+#lStorage, #lTransfer
+{
+  qproperty-alignment: 'AlignLeft | AlignVCenter';
+}
+
+#lCloudDrive, #lVault, #lRubbish, #lAvailable
+{
+    qproperty-alignment: 'AlignLeft | AlignBottom';
+}
+
+#wCloudDrive, #wRubbish, #wVault
+{
+    border: 0px;
+}
+
+#lStorage, #lTransfer, #lUsedStorage, #lUsedTransfer
+{
+    margin-left: 6px;
+}
+
+#lStorage, #lTransfer
+{
+    padding-bottom: 4px;
+}
+
+#lUsedCloudDrive, #lUsedVault,  #lUsedRubbish
+{
+    qproperty-alignment: 'AlignRight | AlignBottom';
+    padding-right: 4px;
+}
+
+#lUsedByVersions
+{
+    qproperty-alignment: 'AlignRight | AlignVCenter';
+    padding-right: 8px;
+}
+
+#wDetailedUsage
+{
+    min-height: 120px;
+}
+
+#bCloudDrive, #bVault, #bRubbish
+{
+    qproperty-iconSize: 24px;
+}
+
+#lLoading
+{
+    border-radius: 16px;
+    background-color: transparent;
+    height: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    min-width:10px;
+    font-size: 14px;
+    color: #ff303233; /*colorToken.text-primary*/
+    padding-left:24px;
+    padding-right:24px;
+    qproperty-alignment: 'AlignVCenter | AlignHCenter';
+}
+
+#pLoading, #pStorageAndTransferUsage
+{
+    height: 96px;
+    max-height: 96px;
+    min-height: 96px;
+}
+
+#AccountDetailsDialog[loading=true]  #sHeader
+{
+    /* Loading page */
+    qproperty-currentIndex: 0;
+}
+
+#AccountDetailsDialog[loading=false]  #sHeader
+{
+    /* Usage page */
+    qproperty-currentIndex: 1;
+}
+
+#AccountDetailsDialog[accountType=&quot;free&quot;] #pStorageAndTransferUsage QStackedWidget, #AccountDetailsDialog[accountType=&quot;pro&quot;] #pStorageAndTransferUsage QStackedWidget
+{
+    /* Business account pages */
+    qproperty-currentIndex: 0;
+}
+
+#AccountDetailsDialog[accountType=&quot;business&quot;]  #pStorageAndTransferUsage QStackedWidget
+{
+    /* Non-business account pages */
+    qproperty-currentIndex: 1;
+}
+
+#pStorageAndTransferUsage #sStorage, #sTransfer
+{
+height: 65px;
+width: 70px;
+min-height: 65px;
+min-width: 70px;
+max-height: 65px;
+max-width: 70px;
+background-color: transparent;
+}
+
+#sStorage
+{
+margin-left: 10px;
+}
+
+#sTransfer
+{
+margin-left: 5px;
+}
+
+#wStorageUsage, #wTransferUsage
+{
+height: 96px;
+width: 219px;
+max-height: 96px;
+min-height: 96px;
+min-width:219px;
+}
+
+#wStorageUsage
+{
+    border-right: 1px solid transparent;
+}
+
+#wTransferUsage
+{
+    border-left: 1px solid transparent;
+}
+
+#pStorageAndTransferUsage QPushButton
+{
+    qproperty-iconSize: 44px;
+    border:0px;
+}
+
+#AccountDetailsDialog[accountType=&quot;business&quot;] #bBusinessStorage
+{
+    qproperty-icon :url(:/images/storage_for_business.png);
+}
+
+#AccountDetailsDialog[accountType=&quot;business&quot;]  #bBusinessTransfer
+{
+    qproperty-icon :url(:/images/transfer_for_business.png);
+}
+</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,1">
+   <item>
+    <widget class="QGroupBox" name="headerBox">
+     <property name="title">
+      <string/>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QStackedWidget" name="sHeader">
+          <widget class="QWidget" name="pLoading">
+           <layout class="QGridLayout" name="gridLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item row="2" column="1">
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>103</width>
+                <height>16</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="0" column="1">
+             <spacer name="verticalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Orientation::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>103</width>
+                <height>16</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="1">
+             <widget class="QLabel" name="lLoading">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Loading...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <spacer name="horizontalSpacer_7">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item row="1" column="2">
+             <spacer name="horizontalSpacer_8">
+              <property name="orientation">
+               <enum>Qt::Orientation::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="pStorageAndTransferUsage">
+           <layout class="QHBoxLayout" name="horizontalLayout_22">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QWidget" name="wStorageUsage" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="0,1">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QStackedWidget" name="sStorage">
+                 <widget class="CircularUsageProgressBar" name="wCircularStorage"/>
+                 <widget class="QWidget" name="wBusinessStorage">
+                  <layout class="QHBoxLayout" name="horizontalLayout_24">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="bBusinessStorage"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QWidget" name="wStorageDetails" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_2">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lStorage">
+                    <property name="text">
+                     <string>Storage</string>
+                    </property>
+                    <property name="indent">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lUsedStorage">
+                    <property name="text">
+                     <string notr="true"/>
+                    </property>
+                    <property name="indent">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_2">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="wTransferUsage" native="true">
+              <layout class="QHBoxLayout" name="horizontalLayout_25" stretch="0,1">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QStackedWidget" name="sTransfer">
+                 <widget class="CircularUsageProgressBar" name="wCircularTransfer"/>
+                 <widget class="QWidget" name="wBusinessTransfer">
+                  <layout class="QHBoxLayout" name="horizontalLayout_26">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QPushButton" name="bBusinessTransfer"/>
+                   </item>
+                  </layout>
+                 </widget>
+                </widget>
+               </item>
+               <item>
+                <widget class="QWidget" name="wTransferDetails" native="true">
+                 <layout class="QVBoxLayout" name="verticalLayout_14">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>2</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <spacer name="verticalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lTransfer">
+                    <property name="text">
+                     <string>Transfer</string>
+                    </property>
+                    <property name="indent">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="lUsedTransfer">
+                    <property name="text">
+                     <string notr="true"/>
+                    </property>
+                    <property name="indent">
+                     <number>0</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_4">
+                    <property name="orientation">
+                     <enum>Qt::Orientation::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wDetailedUsage" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <property name="spacing">
+       <number>10</number>
+      </property>
+      <item>
+       <widget class="QWidget" name="wCloudDrive" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bCloudDrive">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/account_details/cloud.svg</normaloff>:/images/account_details/cloud.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lCloudDrive">
+               <property name="text">
+                <string>Cloud drive</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lUsedCloudDrive"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="pbCloudDrive">
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="textVisible">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="wVault" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_21">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bVault">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/account_details/database.svg</normaloff>:/images/account_details/database.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_20">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_30">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lVault">
+               <property name="text">
+                <string>Backups</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lUsedVault"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="pbVault">
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="textVisible">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="wRubbish" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bRubbish">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/account_details/trash.svg</normaloff>:/images/account_details/trash.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>4</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lRubbish">
+               <property name="text">
+                <string>Rubbish bin</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lUsedRubbish"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="pbRubbish">
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="textVisible">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="wAvailable" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bAvailable">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources.qrc">
+             <normaloff>:/images/account_details/pie.svg</normaloff>:/images/account_details/pie.svg</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_13">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>8</number>
+           </property>
+           <item alignment="Qt::AlignmentFlag::AlignVCenter">
+            <widget class="QLabel" name="lAvailable">
+             <property name="text">
+              <string>Available storage</string>
+             </property>
+            </widget>
+           </item>
+           <item alignment="Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignVCenter">
+            <widget class="QLabel" name="lAvailableStorage"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Shadow::Plain</enum>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QPushButton" name="bVersionIcon">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="icon">
+           <iconset resource="../Resources.qrc">
+            <normaloff>:/images/account_details/versions.svg</normaloff>:/images/account_details/versions.svg</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QLabel" name="lVersions">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Of that, size taken up by file versions:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lUsedByVersions"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CircularUsageProgressBar</class>
+   <extends>QWidget</extends>
+   <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="../Resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

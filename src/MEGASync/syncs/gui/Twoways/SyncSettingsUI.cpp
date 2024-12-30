@@ -1,27 +1,29 @@
 #include "SyncSettingsUI.h"
 
-#include "QmlDialogWrapper.h"
-#include "Onboarding.h"
-#include "DialogOpener.h"
-#include "SyncTableView.h"
-#include "SyncItemModel.h"
-#include "MegaApplication.h"
-#include "SyncsComponent.h"
 #include "CreateRemoveSyncsManager.h"
-#include "RemoveSyncConfirmationDialog.h"
+#include "DialogOpener.h"
+#include "MegaApplication.h"
+#include "Onboarding.h"
+#include "QmlDialogWrapper.h"
+#include "SyncItemModel.h"
+#include "SyncsComponent.h"
+#include "SyncTableView.h"
 
-SyncSettingsUI::SyncSettingsUI(QWidget *parent) :
+SyncSettingsUI::SyncSettingsUI(QWidget* parent):
     SyncSettingsUIBase(parent)
 {
     setSyncsTitle();
-    setTable<SyncTableView,SyncItemModel, SyncController>();
+    setTable<SyncTableView, SyncItemModel, SyncController>();
 
     mSyncElement.initElements(this);
 
-    connect(MegaSyncApp, &MegaApplication::storageStateChanged, this, &SyncSettingsUI::storageStateChanged);
+    connect(MegaSyncApp,
+            &MegaApplication::storageStateChanged,
+            this,
+            &SyncSettingsUI::storageStateChanged);
     storageStateChanged(MegaSyncApp->getAppliedStorageState());
 
-    //There was a problem with the sync height on Windows with large scales
+    // There was a problem with the sync height on Windows with large scales
 #ifdef Q_OS_WINDOWS
     adjustSize();
 #endif
@@ -51,26 +53,18 @@ void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 
 QString SyncSettingsUI::getFinishWarningIconString() const
 {
-#ifdef Q_OS_MACOS
-    return QString::fromUtf8("settings-syncs-error");
-#else
-    return QString::fromUtf8(":/images/settings-syncs-warn.png");
-#endif
+    return QString::fromUtf8(":/images/settings-sync-warn.svg");
 }
 
 QString SyncSettingsUI::getFinishIconString() const
 {
-#ifdef Q_OS_MACOS
-    return QString::fromUtf8("settings-syncs");
-#else
-    return QString::fromUtf8(":/images/settings-syncs.png");
-#endif
+    return QString::fromUtf8(":/images/settings-sync.svg");
 }
-
 
 QString SyncSettingsUI::disableString() const
 {
-    return tr("Some folders have not synchronised. For more information please hover over the red icon.");
+    return tr(
+        "Some folders have not synchronised. For more information please hover over the red icon.");
 }
 
 QString SyncSettingsUI::getOperationFailTitle() const
@@ -82,7 +76,8 @@ QString SyncSettingsUI::getOperationFailText(std::shared_ptr<SyncSettings> sync)
 {
     return tr("Operation on sync '%1' failed. Reason: %2")
         .arg(sync->name(),
-             QCoreApplication::translate("MegaSyncError", mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
+             QCoreApplication::translate("MegaSyncError",
+                                         mega::MegaSync::getMegaSyncErrorCode(sync->getError())));
 }
 
 QString SyncSettingsUI::getErrorAddingTitle() const
@@ -103,7 +98,7 @@ QString SyncSettingsUI::getErrorRemovingText(std::shared_ptr<mega::MegaError> er
 
 void SyncSettingsUI::removeSync(std::shared_ptr<SyncSettings> sync)
 {
-    CreateRemoveSyncsManager::removeSync(sync->getMegaHandle(), this);
+    CreateRemoveSyncsManager::removeSync(sync, this);
 }
 
 void SyncSettingsUI::setSyncsTitle()
@@ -113,7 +108,7 @@ void SyncSettingsUI::setSyncsTitle()
 
 void SyncSettingsUI::changeEvent(QEvent* event)
 {
-    if(event->type() == QEvent::LanguageChange)
+    if (event->type() == QEvent::LanguageChange)
     {
         mSyncElement.retranslateUi();
         setSyncsTitle();
@@ -124,6 +119,6 @@ void SyncSettingsUI::changeEvent(QEvent* event)
 
 void SyncSettingsUI::storageStateChanged(int newStorageState)
 {
-    mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED
-                                  || newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
+    mSyncElement.setOverQuotaMode(newStorageState == mega::MegaApi::STORAGE_STATE_RED ||
+                                  newStorageState == mega::MegaApi::STORAGE_STATE_PAYWALL);
 }

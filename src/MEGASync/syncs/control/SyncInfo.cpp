@@ -733,6 +733,12 @@ void SyncInfo::onSyncStatsUpdated(mega::MegaApi*, mega::MegaSyncStats *syncStats
     emit syncStatsUpdated(sp);
 }
 
+void SyncInfo::onSyncRemoteRootChanged(mega::MegaApi*, mega::MegaSync* sync)
+{
+    auto sc = updateSyncSettings(sync);
+    emit syncRemoteRootChanged(sc);
+}
+
 void SyncInfo::showSingleSyncDisabledNotification(std::shared_ptr<SyncSettings> syncSetting)
 {
     if (syncSetting)

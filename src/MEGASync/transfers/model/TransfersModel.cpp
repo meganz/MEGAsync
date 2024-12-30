@@ -1911,10 +1911,10 @@ void TransfersModel::showSyncCancelledWarning()
             {
                 //Do it in the following event loop to ensure dialog is correctly raised
                 QTimer::singleShot(0,
-                []()
-                {
-                    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
-                });
+                                   []()
+                                   {
+                                       MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+                                   });
             }
 
             resetSyncInRowsToCancel();

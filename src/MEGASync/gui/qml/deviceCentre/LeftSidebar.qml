@@ -2,6 +2,7 @@ import QtQuick 2.0
 
 import common 1.0
 
+import components.buttons 1.0
 import components.images 1.0
 import components.texts 1.0 as Texts
 
@@ -30,7 +31,7 @@ Item {
             leftMargin: titleMargins
         }
         wrapMode: Text.NoWrap
-        text: DeviceCentreStrings.deviceCentreWindowTitle
+        text: DeviceCentreStrings.windowTitle
         font {
             pixelSize: Texts.Text.Size.LARGE
             weight: Font.Bold
@@ -52,8 +53,48 @@ Item {
 
         spacing: 8
 
-        model: deviceCentreAccess.getDeviceModel()
+        model: deviceCentreAccess ? deviceCentreAccess.getDeviceModel() : null
         delegate: deviceListDelegate
+    }
+
+    ToolbarButton {
+        id: troubleshootButton
+
+        anchors {
+            left: parent.left
+            bottom: parent.bottom
+            leftMargin: 26
+            bottomMargin: 23
+        }
+
+        icons.source: Images.tool
+        text: DeviceCentreStrings.troubleshoot
+
+        TroubleshootDialog {
+            id: troubleshootDialog
+
+            visible: false
+
+            onApplyPreviousRulesClicked: {
+                deviceCentreAccess.applyPreviousExclusionRules();
+            }
+
+            onLearnMoreClicked: {
+                deviceCentreAccess.learnMore();
+            }
+
+            onSmartModeSelected: {
+                deviceCentreAccess.onSmartModeSelected();
+            }
+
+            onAdvancedModeSelected: {
+                deviceCentreAccess.onAdvancedModeSelected();
+            }
+        }
+
+        onClicked: {
+            troubleshootDialog.visible = true;
+        }
     }
 
     Component {
@@ -62,14 +103,16 @@ Item {
         Item {
             width: deviceList.width;
             height: itemHeight + 8
+
             Column {
+
                 Rectangle {
                     id: deviceComponent
 
                     width: 232
                     height: itemHeight
 
-                    color: colorStyle.surface1;
+                    color: ColorTheme.surface1;
                     radius: 6;
 
                     Rectangle {
@@ -78,12 +121,13 @@ Item {
                         width: 4
                         height: 24
                         radius: 2
-                        color: colorStyle.buttonBrand
+                        color: ColorTheme.buttonBrand
 
                         anchors.left: deviceComponent.left
                         anchors.verticalCenter: deviceComponent.verticalCenter
                         anchors.leftMargin: 4
                     }
+
                     SvgImage {
                         id: deviceIcon
 
@@ -94,6 +138,7 @@ Item {
                         source: Images.devices
                         sourceSize: Qt.size(16, 16)
                     }
+
                     Texts.RichText {
 
                         anchors.left: deviceIcon.right
@@ -105,7 +150,7 @@ Item {
                             pixelSize: Texts.Text.Size.NORMAL
                             weight: Font.DemiBold
                         }
-                        color: colorStyle.textPrimary
+                        color: ColorTheme.textPrimary
 
                         text: model ? model.name : ""
                     }

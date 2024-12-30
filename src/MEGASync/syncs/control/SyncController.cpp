@@ -6,11 +6,14 @@
 #include "MyBackupsHandle.h"
 #include "Platform.h"
 #include "RequestListenerManager.h"
+#include "StalledIssuesUtilities.h"
 
 #include <QStorageInfo>
 #include <QTemporaryFile>
 
 using namespace mega;
+
+const QLatin1String MEGA_IGNORE_FILE_NAME = QLatin1String(".megaignore");
 
 SyncController::SyncController(QObject* parent)
     : QObject(parent)
@@ -97,9 +100,12 @@ void SyncController::addSync(SyncConfig& sync)
     }
     syncCleanName.remove(Utilities::FORBIDDEN_CHARS_RX);
 
+    auto correctlyCreated = createMegaIgnoreUsingLegacyRules(sync.localFolder);
+
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest* request, MegaError* e) {
+        [sync, correctlyCreated, this](MegaRequest* request, MegaError* e)
+        {
             int errorCode = e->getErrorCode();
             int syncErrorCode = request->getNumDetails();
 
@@ -116,6 +122,13 @@ void SyncController::addSync(SyncConfig& sync)
                                  MegaSyncApp->getMegaApi()->getNodePath(remoteNode.get())),
                              getErrorString(errorCode, syncErrorCode));
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, logMsg.toUtf8().constData());
+
+                // Remove if legacy rules .megaignore was created
+                if (correctlyCreated.has_value() &&
+                    correctlyCreated.value() == mega::MegaError::API_OK)
+                {
+                    removeMegaIgnore(sync.localFolder);
+                }
             }
 
             emit syncAddStatus(errorCode, syncErrorCode, sync.localFolder);
@@ -214,7 +227,8 @@ void SyncController::setSyncToRun(std::shared_ptr<SyncSettings> syncSetting)
 
     auto listener = RequestListenerManager::instance().registerAndGetCustomFinishListener(
         this,
-        [=](MegaRequest*, MegaError* e) {
+        [=](MegaRequest*, MegaError* e)
+        {
             auto syncErrorCode(static_cast<MegaSync::Error>(e->getSyncError()));
             auto errorCode(e->getErrorCode());
 
@@ -396,7 +410,8 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
                      .constData());
 
     std::shared_ptr<mega::MegaError> error(nullptr);
-    auto processResult = [this, error, syncSetting]() {
+    auto processResult = [this, error, syncSetting]()
+    {
         if (error)
         {
             auto errorCode(error->getErrorCode());
@@ -443,13 +458,15 @@ void SyncController::resetSync(std::shared_ptr<SyncSettings> syncSetting,
     MegaApiSynchronizedRequest::runRequestWithResult(
         &mega::MegaApi::setSyncRunState,
         MegaSyncApp->getMegaApi(),
-        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e) {
+        [&error, syncSetting, processResult](mega::MegaRequest*, mega::MegaError* e)
+        {
             if (e->getErrorCode() == mega::MegaError::API_OK)
             {
                 MegaApiSynchronizedRequest::runRequestWithResult(
                     &mega::MegaApi::setSyncRunState,
                     MegaSyncApp->getMegaApi(),
-                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e) {
+                    [&error, processResult](mega::MegaRequest*, mega::MegaError* e)
+                    {
                         if (e->getErrorCode() != mega::MegaError::API_OK)
                         {
                             error.reset(e->copy());
@@ -699,6 +716,71 @@ QString SyncController::getRemoteFolderErrorMessage(int errorCode, int syncError
     }
 
     return message;
+}
+
+void SyncController::resetAllSyncsMegaIgnoreUsingLegacyRules()
+{
+    const auto syncsSettings = mSyncInfo->getAllSyncSettings();
+    for (const auto& sync: syncsSettings)
+    {
+        overwriteMegaIgnoreUsingLegacyRules(sync);
+    }
+}
+
+std::optional<int> SyncController::createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder)
+{
+    return performMegaIgnoreCreation(syncLocalFolder, mega::INVALID_HANDLE);
+}
+
+std::optional<int>
+    SyncController::overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync)
+{
+    return performMegaIgnoreCreation(sync->getLocalFolder(), sync->backupId());
+}
+
+std::optional<int> SyncController::performMegaIgnoreCreation(const QString& syncLocalFolder,
+                                                             mega::MegaHandle backupId)
+{
+    std::optional<int> result(std::nullopt);
+
+    if (Preferences::instance()->hasLegacyExclusionRules())
+    {
+        if (backupId != mega::INVALID_HANDLE)
+        {
+            removeMegaIgnore(syncLocalFolder, backupId);
+        }
+
+        std::unique_ptr<mega::MegaError> error(
+            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
+                syncLocalFolder.toStdString().c_str()));
+
+        if (error)
+        {
+            result = error->getErrorCode();
+        }
+    }
+
+    return result;
+}
+
+bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::MegaHandle backupId)
+{
+    QFile ignoreFile(syncLocalFolder + QString::fromUtf8("/") + MEGA_IGNORE_FILE_NAME);
+
+    if (ignoreFile.exists())
+    {
+        if (backupId != mega::INVALID_HANDLE)
+        {
+            StalledIssuesUtilities utilities;
+            utilities.removeLocalFile(ignoreFile.fileName(), backupId);
+        }
+        else
+        {
+            return ignoreFile.remove();
+        }
+    }
+
+    return false;
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)

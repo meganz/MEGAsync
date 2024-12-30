@@ -3,19 +3,16 @@
 #ifdef Q_OS_MACOS
 #include "CocoaHelpButton.h"
 #endif
+#include "MegaApplication.h"
 #include "Preferences.h"
+#include "StalledIssuesModel.h"
+#include "SyncController.h"
 #include "SyncInfo.h"
 #include "SyncSettingsUIBase.h"
 #include "TextDecorator.h"
 #include "ui_SyncAccountFullMessage.h"
 #include "ui_SyncStallModeSelector.h"
-
-#include <MegaApplication.h>
-#include <StalledIssuesModel.h>
-#include <Utilities.h>
-
-constexpr char MEGA_IGNORE_FILE_NAME[] = ".megaignore";
-constexpr char MEGA_IGNORE_DEFAULT_FILE_NAME[] = ".megaignore.default";
+#include "Utilities.h"
 
 SyncSettingsElements::SyncSettingsElements(QObject* parent):
     QObject(parent),
@@ -44,24 +41,13 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
     mSyncStallModeSelector = new QWidget();
     syncStallModeSelectorUI->setupUi(mSyncStallModeSelector);
 
-#ifdef Q_OS_MACOS
-    CocoaHelpButton* LearnMoreButton = new CocoaHelpButton();
-    syncStallModeSelectorUI->horizontalLayout_3->insertWidget(1, LearnMoreButton);
-    syncStallModeSelectorUI->bApplyLegacyExclusions->setAutoDefault(false);
-    connect(LearnMoreButton,
-            &CocoaHelpButton::clicked,
-            []()
-            {
-                Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
-            });
-#else
     connect(syncStallModeSelectorUI->LearnMoreButton,
             &QPushButton::clicked,
             []()
             {
                 Utilities::openUrl(QUrl(Utilities::SYNC_SUPPORT_URL));
             });
-#endif
+
     auto mode = Preferences::instance()->stalledIssuesMode();
     if (mode == Preferences::StalledIssuesModeType::Smart)
     {
@@ -74,14 +60,20 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
         syncStallModeSelectorUI->AdvanceSelector->setChecked(true);
     }
 
+    // If user doesn´t have legacy rules, we don´t show the button as it won´t do anything
+    syncStallModeSelectorUI->gBugReport->setVisible(
+        Preferences::instance()->hasLegacyExclusionRules());
+
     connect(syncStallModeSelectorUI->bApplyLegacyExclusions,
             &QPushButton::clicked,
             this,
             &SyncSettingsElements::applyPreviousExclusions);
+
     connect(syncStallModeSelectorUI->SmartSelector,
             &QRadioButton::toggled,
             this,
             &SyncSettingsElements::onSmartModeSelected);
+
     connect(syncStallModeSelectorUI->AdvanceSelector,
             &QRadioButton::toggled,
             this,
@@ -93,6 +85,8 @@ void SyncSettingsElements::initElements(SyncSettingsUIBase* syncSettingsUi)
             &SyncSettingsElements::onPreferencesValueChanged);
 
     syncSettingsUi->insertUIElement(mSyncStallModeSelector, 2);
+
+    emit MegaSyncApp->updateUserInterface();
 }
 
 void SyncSettingsElements::setOverQuotaMode(bool mode)
@@ -171,30 +165,8 @@ void SyncSettingsElements::applyPreviousExclusions()
     {
         if (msg->result() == QMessageBox::Ok)
         {
-            // Step 0: Remove old default ignore
-            const auto defaultIgnoreFolder = Preferences::instance()->getDataPath();
-            const auto defaultIgnorePath = defaultIgnoreFolder + QString::fromUtf8("/") +
-                                           QString::fromUtf8(::MEGA_IGNORE_DEFAULT_FILE_NAME);
-            QFile::remove(defaultIgnorePath);
-            // Step 1: Replace default ignore with one populated with legacy rules
-            MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
-                defaultIgnoreFolder.toStdString().c_str());
-            QFile::rename(defaultIgnoreFolder + QString::fromUtf8("/") +
-                              QString::fromUtf8(::MEGA_IGNORE_FILE_NAME),
-                          defaultIgnorePath);
-            // Step 2: Replace existing mega ignores files in all syncs
-            const auto syncsSettings = SyncInfo::instance()->getAllSyncSettings();
-            for (auto sync: syncsSettings)
-            {
-                QFile ignoreFile(sync->getLocalFolder() + QString::fromUtf8("/") +
-                                 QString::fromUtf8(::MEGA_IGNORE_FILE_NAME));
-                if (ignoreFile.exists())
-                {
-                    ignoreFile.moveToTrash();
-                }
-                MegaSyncApp->getMegaApi()->exportLegacyExclusionRules(
-                    sync->getLocalFolder().toStdString().c_str());
-            }
+            // Replace existing mega ignores files in all syncs
+            SyncController::instance().resetAllSyncsMegaIgnoreUsingLegacyRules();
         }
     };
     QMegaMessageBox::warning(msgInfo);

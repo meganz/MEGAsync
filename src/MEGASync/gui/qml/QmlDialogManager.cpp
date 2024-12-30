@@ -1,7 +1,6 @@
 #include "QmlDialogManager.h"
 
 #include "AccountStatusController.h"
-#include "Backups.h"
 #include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "GuestContent.h"
@@ -9,7 +8,6 @@
 #include "LoginController.h"
 #include "Onboarding.h"
 #include "OnboardingQmlDialog.h"
-#include "QmlManager.h"
 #include "WhatsNewWindow.h"
 
 std::shared_ptr<QmlDialogManager> QmlDialogManager::instance()
@@ -140,18 +138,4 @@ bool QmlDialogManager::openWhatsNewDialog()
         whatsNew->raise();
     }
     return true;
-}
-
-void QmlDialogManager::openDeviceCentreDialog()
-{
-    QPointer<QmlDialogWrapper<DeviceCentre>> deviceCentreDialog;
-    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<DeviceCentre>>())
-    {
-        deviceCentreDialog = dialog->getDialog();
-    }
-    else
-    {
-        deviceCentreDialog = new QmlDialogWrapper<DeviceCentre>();
-    }
-    DialogOpener::showDialog(deviceCentreDialog);
 }

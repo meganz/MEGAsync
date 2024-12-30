@@ -97,7 +97,7 @@ pipeline {
                     linux_sources_workspace = WORKSPACE
                 }
                 dir('src/MEGASync/mega'){
-                    sh "echo Cloning SDK branch ${SDK_BRANCH}"
+                    sh "echo Cloning SDK branch \"${SDK_BRANCH}\""
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: "${SDK_BRANCH}"]],
@@ -140,7 +140,7 @@ pipeline {
                             linux_sources_workspace = WORKSPACE
                         }
                         dir('src/MEGASync/mega'){
-                            sh "echo Cloning SDK branch ${SDK_BRANCH}"
+                            sh "echo Cloning SDK branch \"${SDK_BRANCH}\""
                             checkout([
                                 $class: 'GitSCM',
                                 branches: [[name: "${SDK_BRANCH}"]],

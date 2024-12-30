@@ -9,16 +9,15 @@ import QmlDialog 1.0
 QmlDialog {
     id: window
 
-    title: DeviceCentreStrings.deviceCentreWindowTitle
+    title: DeviceCentreStrings.windowTitle
     visible: true
     modality: Qt.NonModal
     width: 1024
     height: 720
-    maximumHeight: 720
-    maximumWidth: 1024
+
     minimumHeight: 720
     minimumWidth: 1024
-    color: colorStyle.pageBackground
+    color: ColorTheme.pageBackground
 
     Component.onCompleted: {
         x: Math.round((Screen.desktopAvailableWidth - width) / 2)

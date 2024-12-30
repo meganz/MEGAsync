@@ -216,6 +216,7 @@ signals:
     void pauseStateChanged();
     void addBackup();
     void shellNotificationsProcessed();
+    void updateUserInterface();
 
 public slots:
     void updateTrayIcon();
@@ -497,6 +498,8 @@ protected:
 
     std::unique_ptr<UserMessageController> mUserMessageController;
 
+    std::unique_ptr<mega::MegaGfxProvider> mGfxProvider;
+
 private:
     void loadSyncExclusionRules(QString email = QString());
 
@@ -535,6 +538,7 @@ private:
 
     bool dontAskForExitConfirmation(bool force);
     void exitApplication();
+    void openFirstActiveSync();
 
     QString getDefaultUploadPath();
 
@@ -597,6 +601,8 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+
+    void createGfxProvider(const QString& basePath);
 
 private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);

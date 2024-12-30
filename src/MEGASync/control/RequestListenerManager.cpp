@@ -1,6 +1,9 @@
 #include "RequestListenerManager.h"
-#include <QDir>
+
 #include "MegaApplication.h"
+
+#include <QDir>
+#include <QPointer>
 
 using namespace mega;
 
@@ -60,28 +63,31 @@ void ObserverRequestListener::onRequestTemporaryError(MegaApi*,
 
 RequestListenerManager::RequestListenerManager() {}
 
+RequestListenerManager::~RequestListenerManager()
+{
+    qDeleteAll(mListeners);
+}
+
 std::shared_ptr<QTMegaRequestListener> RequestListenerManager::registerAndGetListener(const ListenerCallbacks& callbacks)
 {
     QMutexLocker locker(&mListenerMutex);
-    auto listener = std::make_shared<ObserverRequestListener>(callbacks);
+
+    QPointer<ObserverRequestListener> listener(new ObserverRequestListener(callbacks));
     mListeners.push_back(listener);
-    connect(listener.get(), &ObserverRequestListener::removeListener, this, &RequestListenerManager::removeListener);
+    connect(listener,
+            &ObserverRequestListener::removeListener,
+            this,
+            &RequestListenerManager::removeListener);
+
     return listener->getDelegateListener();
 }
 
 void RequestListenerManager::removeListener(ObserverRequestListener *listener)
 {
     QMutexLocker locker(&mListenerMutex);
-    auto it = std::find_if(mListeners.begin(), mListeners.end(),
-                           [listener](const std::shared_ptr<ObserverRequestListener>& l) {
-                               return l.get() == listener;
-                           });
 
-    if (it != mListeners.end())
-    {
-        disconnect((*it).get(), &ObserverRequestListener::removeListener, this, &RequestListenerManager::removeListener);
-        mListeners.erase(it);
-    }
+    mListeners.removeOne(listener);
+    listener->deleteLater();
 }
 
 

@@ -1,18 +1,16 @@
 #include "SyncsComponent.h"
 
-#include "SyncsQmlDialog.h"
-#include "Syncs.h"
-#include "ChooseFolder.h"
 #include "AddExclusionRule.h"
-
+#include "ChooseFolder.h"
 #include "DialogOpener.h"
-#include "MegaApplication.h"
+#include "Syncs.h"
+#include "SyncsQmlDialog.h"
 
 static bool qmlRegistrationDone = false;
 
-SyncsComponent::SyncsComponent(QObject* parent)
-    : QMLComponent(parent)
-    , mRemoteFolder(QString())
+SyncsComponent::SyncsComponent(QObject* parent):
+    QMLComponent(parent),
+    mRemoteFolder(QString())
 {
     registerQmlModules();
 }
@@ -35,8 +33,12 @@ void SyncsComponent::registerQmlModules()
         qmlRegisterType<SyncsQmlDialog>("SyncsQmlDialog", 1, 0, "SyncsQmlDialog");
         qmlRegisterType<Syncs>("Syncs", 1, 0, "Syncs");
         qmlRegisterType<ChooseRemoteFolder>("ChooseRemoteFolder", 1, 0, "ChooseRemoteFolder");
-        qmlRegisterUncreatableType<Syncs>("Syncs", 1, 0, "SyncStatusCode",
-                                          QString::fromUtf8("Cannot register Syncs::SyncStatusCode in QML"));
+        qmlRegisterUncreatableType<Syncs>(
+            "Syncs",
+            1,
+            0,
+            "SyncStatusCode",
+            QString::fromUtf8("Cannot register Syncs::SyncStatusCode in QML"));
         qmlRegistrationDone = true;
     }
 }
@@ -69,10 +71,11 @@ void SyncsComponent::setComesFromSettings(bool value)
 
 void SyncsComponent::openExclusionsDialog(const QString& folder) const
 {
-    if(auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
+    if (auto dialog = DialogOpener::findDialog<QmlDialogWrapper<SyncsComponent>>())
     {
         QWidget* parentWidget = static_cast<QWidget*>(dialog->getDialog().data());
-        QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions = new QmlDialogWrapper<AddExclusionRule>(parentWidget, QStringList() << folder);
+        QPointer<QmlDialogWrapper<AddExclusionRule>> exclusions =
+            new QmlDialogWrapper<AddExclusionRule>(parentWidget, QStringList() << folder);
         DialogOpener::showDialog(exclusions);
     }
 }

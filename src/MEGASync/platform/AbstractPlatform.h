@@ -92,6 +92,10 @@ public:
     std::shared_ptr<AbstractShellNotifier> getShellNotifier();
     virtual DriveSpaceData getDriveData(const QString& path) = 0;
 
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    virtual QString getGfxProviderPath() = 0;
+#endif
+
 protected:
     std::shared_ptr<AbstractShellNotifier> mShellNotifier = nullptr;
 

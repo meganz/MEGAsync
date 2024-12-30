@@ -216,16 +216,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-    ui->wCircularQuota->setProgressBarGradient(QColor("#60D1FE"), QColor("#58B9F3"));
-
-#ifdef __APPLE__
-    auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) //Issues with mavericks and popup management
-    {
-        installEventFilter(this);
-    }
-#endif
-
 #ifdef Q_OS_LINUX
     installEventFilter(this);
 #endif
@@ -1272,16 +1262,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         }
     }
 
-#endif
-#ifdef __APPLE__
-    auto current = QOperatingSystemVersion::current();
-    if (current <= QOperatingSystemVersion::OSXMavericks) //manage spontaneus mouse press events
-    {
-        if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
-        {
-            return true;
-        }
-    }
 #endif
 
     return QDialog::eventFilter(obj, e);

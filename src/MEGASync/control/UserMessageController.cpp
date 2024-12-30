@@ -3,6 +3,8 @@
 #include "RequestListenerManager.h"
 #include "MegaApplication.h"
 
+const int USER_ALERT_PROCESS_DELAY_IN_SECONDS = 1;
+
 UserMessageController::UserMessageController(QObject* parent)
     : QObject(parent)
     , mMegaApi(MegaSyncApp->getMegaApi())
@@ -86,8 +88,21 @@ void UserMessageController::onUserAlertsUpdate(mega::MegaApi* api, mega::MegaUse
 
     if (list != nullptr)
     {
-        // Process synchronously if list is provided
-        populateUserAlerts(list);
+        std::shared_ptr<mega::MegaUserAlertList> auxList(list->copy());
+        ThreadPoolSingleton::getInstance()->push(
+            [this, auxList]()
+            {
+                // Sleep and wait for the shared folders to be undecrypted
+                QThread::sleep(USER_ALERT_PROCESS_DELAY_IN_SECONDS);
+
+                Utilities::queueFunctionInAppThread(
+                    [this, auxList]()
+                    {
+                        // Process synchronously if list is provided
+                        populateUserAlerts(auxList.get());
+                        auxList->clear();
+                    });
+            });
     }
     else
     {

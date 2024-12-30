@@ -3,15 +3,16 @@
 
 #include "SyncSettings.h"
 #include "SyncTableView.h"
+
 #include <QObject>
 #include <QTableView>
 
-class BackupTableView : public SyncTableView
+class BackupTableView: public SyncTableView
 {
     Q_OBJECT
 
 public:
-    BackupTableView(QWidget *parent = nullptr);
+    BackupTableView(QWidget* parent = nullptr);
     /* To call after model is set */
     void customize();
 
@@ -21,7 +22,7 @@ signals:
 protected:
     void initTable() override;
 
-    //Reimplemented methods for contextMenu
+    // Reimplemented methods for contextMenu
     QString getRemoveActionString() override;
 };
 

@@ -1,12 +1,13 @@
 ﻿#ifndef PROXYSETTINGS_H
 #define PROXYSETTINGS_H
 
-#include <QDialog>
-
-#include "Preferences.h"
-#include "MegaProgressCustomDialog.h"
-#include "MegaApplication.h"
 #include "ConnectivityChecker.h"
+#include "MegaApplication.h"
+#include "MegaProgressCustomDialog.h"
+#include "Preferences.h"
+
+#include <QDialog>
+#include <QRadioButton>
 
 namespace Ui {
 class ProxySettings;
@@ -35,6 +36,7 @@ private:
     std::shared_ptr<Preferences> mPreferences;
     ConnectivityChecker* mConnectivityChecker;
     QPointer<MegaProgressCustomDialog> mProgressDialog;
+    QRadioButton* mProxyAuto;
 };
 
 #endif // PROXYSETTINGS_H

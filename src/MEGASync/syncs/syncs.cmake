@@ -49,36 +49,21 @@ target_sources_conditional(MEGAsync
    FLAG WIN32
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/win/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/win/SyncAccountFullMessage.ui
-   syncs/gui/Twoways/win/SyncSettingsUIBase.ui
-   syncs/gui/Twoways/win/SyncStallModeSelector.ui
-   syncs/gui/Backups/win/RemoveBackupDialog.ui
-   syncs/gui/Backups/win/OpenBackupsFolder.ui
 )
 
 target_sources_conditional(MEGAsync
    FLAG APPLE
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/macx/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/macx/SyncAccountFullMessage.ui
-   syncs/gui/Twoways/macx/SyncSettingsUIBase.ui
-   syncs/gui/Twoways/macx/SyncStallModeSelector.ui
-   syncs/gui/Backups/macx/RemoveBackupDialog.ui
-   syncs/gui/Backups/macx/OpenBackupsFolder.ui
 )
 
 target_sources_conditional(MEGAsync
    FLAG UNIX AND NOT APPLE
    QT_AWARE
    PRIVATE
-   syncs/gui/Twoways/linux/RemoveSyncConfirmationDialog.ui
    syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
-   syncs/gui/Twoways/linux/SyncSettingsUIBase.ui
-   syncs/gui/Twoways/linux/SyncStallModeSelector.ui
-   syncs/gui/Backups/linux/RemoveBackupDialog.ui
-   syncs/gui/Backups/linux/OpenBackupsFolder.ui
 )
 
 if (WIN32)
@@ -112,8 +97,8 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/gui
     ${CMAKE_CURRENT_LIST_DIR}/gui/Backups
     ${CMAKE_CURRENT_LIST_DIR}/gui/Twoways
-    ${CMAKE_CURRENT_LIST_DIR}/model
     ${CMAKE_CURRENT_LIST_DIR}/control
+    ${CMAKE_CURRENT_LIST_DIR}/model
 )
 
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

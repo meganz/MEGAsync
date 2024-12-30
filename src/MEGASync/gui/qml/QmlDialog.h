@@ -1,5 +1,7 @@
-#ifndef QMLDIALOG_H
-#define QMLDIALOG_H
+#ifndef QML_DIALOG_H
+#define QML_DIALOG_H
+
+#include "QmlInstancesManager.h"
 
 #include <QQuickWindow>
 
@@ -8,14 +10,19 @@ class QmlDialog: public QQuickWindow
     Q_OBJECT
 
     Q_PROPERTY(QString iconSrc MEMBER mIconSrc WRITE setIconSrc)
+    Q_PROPERTY(QmlInstancesManager* instancesManager READ getInstancesManager NOTIFY
+                   instancesManagerChanged)
 
 public:
     explicit QmlDialog(QWindow* parent = nullptr);
     ~QmlDialog() = default;
 
-    Q_INVOKABLE void setIconSrc(const QString& iconSrc);
+public slots:
+    void setIconSrc(const QString& iconSrc);
+    QmlInstancesManager* getInstancesManager();
 
 signals:
+    void instancesManagerChanged();
     void accept();
     void reject();
     void finished();
@@ -30,6 +37,7 @@ protected:
 
 private:
     QString mIconSrc;
+    QPointer<QmlInstancesManager> mInstancesManager;
 };
 
-#endif // QMLDIALOG_H
+#endif // QML_DIALOG_H

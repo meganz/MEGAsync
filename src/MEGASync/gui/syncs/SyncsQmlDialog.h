@@ -3,7 +3,7 @@
 
 #include "QmlDialog.h"
 
-class SyncsQmlDialog : public QmlDialog
+class SyncsQmlDialog: public QmlDialog
 {
     Q_OBJECT
 
@@ -13,7 +13,6 @@ public:
 
 protected:
     bool event(QEvent*) override;
-
 };
 
 #endif // SYNCS_QML_DIALOG_H

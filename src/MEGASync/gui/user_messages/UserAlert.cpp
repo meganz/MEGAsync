@@ -1,6 +1,7 @@
 #include "UserAlert.h"
 
 #include "EmailRequester.h"
+#include "MegaApplication.h"
 
 #include <QDateTime>
 
@@ -22,20 +23,29 @@ void UserAlert::init()
 {
     assert(mMegaUserAlert != nullptr);
 
-    if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
-    {
-        auto requestInfo = EmailRequester::getRequest(mMegaUserAlert->getUserHandle(), QString::fromUtf8(mMegaUserAlert->getEmail()));
-
-        connect(requestInfo, &RequestInfo::emailChanged, this, &UserAlert::setEmail, Qt::QueuedConnection);
-    }
+    auto userHandle(mMegaUserAlert->getUserHandle());
 
     if (mMegaUserAlert->getEmail())
     {
         mEmail = QString::fromUtf8(mMegaUserAlert->getEmail());
     }
-    else if (mMegaUserAlert->getUserHandle() != mega::INVALID_HANDLE)
+
+    if (userHandle != mega::INVALID_HANDLE)
     {
-        mEmail = EmailRequester::instance()->getEmail(mMegaUserAlert->getUserHandle());
+        if (mEmail.isEmpty())
+        {
+            mEmail = EmailRequester::instance()->getEmail(mMegaUserAlert->getUserHandle());
+        }
+
+        auto requestInfo =
+            EmailRequester::getRequest(mMegaUserAlert->getUserHandle(),
+                                       QString::fromUtf8(mMegaUserAlert->getEmail()));
+
+        connect(requestInfo,
+                &RequestInfo::emailChanged,
+                this,
+                &UserAlert::setEmail,
+                Qt::QueuedConnection);
     }
 
     initAlertType();
@@ -129,7 +139,7 @@ void UserAlert::reset(mega::MegaUserAlert* alert)
     mMegaUserAlert.reset(alert);
     mId = mMegaUserAlert->getId();
     init();
-    emit dataChanged();
+    emit dataReset();
 }
 
 bool UserAlert::isSeen() const
@@ -180,6 +190,12 @@ const char* UserAlert::getTitle() const
 MessageType UserAlert::getMessageType() const
 {
     return mMessageType;
+}
+
+std::shared_ptr<mega::MegaNode> UserAlert::getAlertNode() const
+{
+    return std::shared_ptr<mega::MegaNode>(
+        MegaSyncApp->getMegaApi()->getNodeByHandle(mMegaUserAlert->getNodeHandle()));
 }
 
 bool UserAlert::sort(UserMessage* checkWith) const

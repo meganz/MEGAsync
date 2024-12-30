@@ -109,18 +109,6 @@ QtObject {
     readonly property string syncTitle: qsTr("Choose sync type")
     readonly property string sync: qsTr("Sync")
 
-    // Common
-    // Not moved to avoid change of context and generate new strings in the ts file
-    readonly property string choose: qsTr("Choose")
-    readonly property string cancel: qsTr("Cancel")
-    readonly property string done: qsTr("Done")
-    readonly property string next: qsTr("Next")
-    readonly property string skip: qsTr("Skip")
-    readonly property string previous: qsTr("Previous")
-    readonly property string tryAgain: qsTr("Try again")
-    readonly property string viewInSettings: qsTr("View in Settings")
-    readonly property string setExclusions: qsTr("Set Exclusions")
-
     // Two Factor Authentication
     // Not moved to avoid change of context and generate new strings in the ts file
     readonly property string incorrect2FACode: qsTr("Incorrect 2FA code")

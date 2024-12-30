@@ -3,7 +3,7 @@
 
 #include "QmlDialog.h"
 
-class BackupsQmlDialog : public QmlDialog
+class BackupsQmlDialog: public QmlDialog
 {
     Q_OBJECT
 
@@ -13,7 +13,6 @@ public:
 
 protected:
     bool event(QEvent*) override;
-
 };
 
 #endif // BACKUPSQMLDIALOG_H

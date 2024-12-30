@@ -8,7 +8,9 @@
 #include "CommonMessages.h"
 #include "CrashHandler.h"
 #include "CrashReportDialog.h"
+#include "CreateRemoveSyncsManager.h"
 #include "DateTimeFormatter.h"
+#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "DuplicatedNodeDialog.h"
 #include "EmailRequester.h"
@@ -39,6 +41,7 @@
 #include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
+#include "UpdatesModel.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
@@ -130,7 +133,8 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     mLoginController(nullptr),
     scanStageController(this),
     mDisableGfx(false),
-    mUserMessageController(nullptr)
+    mUserMessageController(nullptr),
+    mGfxProvider(nullptr)
 {
 #if defined Q_OS_MACX && !defined QT_DEBUG
     if (!qEnvironmentVariableIsSet("MEGA_DISABLE_RUN_MAC_RESTRICTION"))
@@ -138,15 +142,16 @@ MegaApplication::MegaApplication(int& argc, char** argv):
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it.");
-            msgInfo.buttons = QMessageBox::Ok;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-            {
-                ::exit(0);
-            };
-            QMegaMessageBox::information(msgInfo);
+            // Use regular QMessageBox with modal behaviour instead of QMegaMessageBox to avoid
+            // issues.
+            QMessageBox::warning(
+                nullptr,
+                QMegaMessageBox::errorTitle(),
+                QCoreApplication::translate("MegaSyncError",
+                                            "You can't run MEGA Desktop App from this location. "
+                                            "Move it into the Applications folder then run it."),
+                QMessageBox::Ok);
+            ::exit(0);
         }
     }
 #endif
@@ -187,33 +192,6 @@ MegaApplication::MegaApplication(int& argc, char** argv):
 #endif
 
     setQuitOnLastWindowClosed(false);
-
-#ifdef _WIN32
-    setStyleSheet(QString::fromUtf8(
-    "QRadioButton::indicator, QCheckBox::indicator, QAbstractItemView::indicator {width: 12px; height: 12px;}"
-    "QRadioButton::indicator:unchecked {image: url(:/images/rb_unchecked.svg);}"
-    "QRadioButton::indicator:unchecked:hover {image: url(:/images/rb_unchecked_hover.svg);}"
-    "QRadioButton::indicator:unchecked:pressed {image: url(:/images/rb_unchecked_pressed.svg);}"
-    "QRadioButton::indicator:unchecked:disabled {image: url(:/images/rb_unchecked_disabled.svg);}"
-    "QRadioButton::indicator:checked {image: url(:/images/rb_checked.svg);}"
-    "QRadioButton::indicator:checked:hover {image: url(:/images/rb_checked_hover.svg);}"
-    "QRadioButton::indicator:checked:pressed {image: url(:/images/rb_checked_pressed.svg);}"
-    "QRadioButton::indicator:checked:disabled {image: url(:/images/rb_checked_disabled.svg);}"
-    "QCheckBox::indicator:checked, QAbstractItemView::indicator:checked {image: url(:/images/cb_checked.svg);}"
-    "QCheckBox::indicator:checked:hover, QAbstractItemView::indicator:checked:hover {image: url(:/images/cb_checked_hover.svg);}"
-    "QCheckBox::indicator:checked:pressed, QAbstractItemView::indicator:checked:pressed {image: url(:/images/cb_checked_pressed.svg);}"
-    "QCheckBox::indicator:checked:disabled, QAbstractItemView::indicator:checked:disabled {image: url(:/images/cb_checked_disabled.svg);}"
-    "QCheckBox::indicator:unchecked, QAbstractItemView::indicator:unchecked {image: url(:/images/cb_unchecked.svg);}"
-    "QCheckBox::indicator:unchecked:hover, QAbstractItemView::indicator:unchecked:hover {image: url(:/images/cb_unchecked_hover.svg);}"
-    "QCheckBox::indicator:unchecked:pressed, QAbstractItemView::indicator:unchecked:pressed {image: url(:/images/cb_unchecked_pressed.svg);}"
-    "QCheckBox::indicator::unchecked:disabled, QAbstractItemView:indicator:unchecked:disabled {image: url(:/images/cb_unchecked_disabled.svg);}"
-    "QMessageBox QLabel {font-size: 13px;}"
-    "QMenu {font-size: 13px;}"
-    "QToolTip {color: #FAFAFA; background-color: #333333; border: 0px; margin-bottom: 2px;}"
-    "QPushButton {font-size: 12px; padding-right: 12px; padding-left: 12px; min-height: 22px;}"
-    "QFileDialog QWidget {font-size: 13px;}"
-                      ));
-#endif
 
     // For some reason this doesn't work on Windows (done in stylesheet above)
     // TODO: re-try with Qt > 5.12.15
@@ -483,19 +461,23 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
-    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
+    const QString basePath = QDir::toNativeSeparators(dataPath + QString::fromUtf8("/"));
+
+    createGfxProvider(basePath);
 
     QTMegaApiManager::createMegaApi(megaApi,
                                     Preferences::CLIENT_KEY,
+                                    mGfxProvider.get(),
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
     megaApi->disableGfxFeatures(mDisableGfx);
 
     QTMegaApiManager::createMegaApi(megaApiFolders,
                                     Preferences::CLIENT_KEY,
+                                    nullptr,
                                     basePath.toUtf8().constData(),
                                     Preferences::USER_AGENT.toUtf8().constData());
-    megaApiFolders->disableGfxFeatures(mDisableGfx);
+    megaApiFolders->disableGfxFeatures(true);
 
     model = SyncInfo::instance();
     connect(model, &SyncInfo::syncStateChanged, this, &MegaApplication::onSyncModelUpdated);
@@ -730,6 +712,8 @@ void MegaApplication::initialize()
     connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
 
     createUserMessageController();
+
+    TokenParserWidgetManager::instance();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1142,15 +1126,12 @@ void MegaApplication::start()
     applyProxySettings();
     Platform::getInstance()->startShellDispatcher(this);
 #ifdef Q_OS_MACX
-    auto current = QOperatingSystemVersion::current();
-    if (current > QOperatingSystemVersion::OSXMavericks) //FinderSync API support from 10.10+
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
     {
-        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA Finder Sync added to system database and enabled");
-            Platform::getInstance()->addFileManagerExtensionToSystem();
-            QTimer::singleShot(5000, this, SLOT(enableFinderExt()));
-        }
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO,
+                     "MEGA Finder Sync added to system database and enabled");
+        Platform::getInstance()->addFileManagerExtensionToSystem();
+        QTimer::singleShot(5000, this, SLOT(enableFinderExt()));
     }
 #endif
 
@@ -1219,11 +1200,12 @@ void MegaApplication::start()
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 
-    if(updated && !preferences->getSession().isEmpty())
+    static constexpr int FIRST_5_X_VERSION = 50000;
+    if (updated && !(preferences->getSession().isEmpty()) &&
+        (Preferences::lastVersionUponStartup < FIRST_5_X_VERSION))
     {
         QmlDialogManager::instance()->openWhatsNewDialog();
     }
-
     updateTrayIcon();
 }
 
@@ -1355,18 +1337,20 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled. Go to settings to enable them again.");
+            message = tr(
+                "Some syncs and backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveBackups)
         {
-            settingsTabToOpen = SettingsDialog::BACKUP_TAB;
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled. Go to settings to enable them again.");
+            message =
+                tr("One or more backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr("One or more syncs have been disabled. Go to settings to enable them again.");
+            message =
+                tr("One or more syncs have been disabled. Go to settings to enable them again.");
         }
 
         // Display the message if it has been set
@@ -1381,11 +1365,12 @@ if (!preferences->lastExecutionTime())
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg){
-                if(msg->result() == QMessageBox::Yes)
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg)
             {
-                openSettings(settingsTabToOpen);
-            }
+                if (msg->result() == QMessageBox::Yes)
+                {
+                    openSettings(settingsTabToOpen);
+                }
             };
             QMegaMessageBox::warning(msgInfo);
         }
@@ -1507,6 +1492,7 @@ void MegaApplication::onLogout()
                 mLoginController->deleteLater();
                 mLoginController = nullptr;
                 DialogOpener::closeAllDialogs();
+                mGfxProvider.reset();
                 mUserMessageController.reset();
                 createUserMessageController();
                 infoDialog->deleteLater();
@@ -2193,6 +2179,7 @@ void MegaApplication::cleanAll()
     mPricing.reset();
     mCurrency.reset();
 
+    mGfxProvider.reset();
     mUserMessageController.reset();
     infoDialog->deleteLater();
 
@@ -3569,31 +3556,6 @@ void MegaApplication::checkOperatingSystem()
         isOSdeprecated = true;
 #endif
 
-#ifdef __APPLE__
-        char releaseStr[256];
-        size_t size = sizeof(releaseStr);
-        if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
-        {
-            if (strchr(releaseStr,'.'))
-            {
-                char *token = strtok(releaseStr, ".");
-                if (token)
-                {
-                    errno = 0;
-                    char *endPtr = nullptr;
-                    long majorVersion = strtol(token, &endPtr, 10);
-                    if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
-                    {
-                        if((int)majorVersion < 14) // Older versions from 10.10 (yosemite)
-                        {
-                            isOSdeprecated = true;
-                        }
-                    }
-                }
-            }
-        }
-#endif
-
 #ifdef WIN32
 #pragma warning(push)
 #pragma warning(disable: 4996) // declared deprecated
@@ -3608,13 +3570,13 @@ void MegaApplication::checkOperatingSystem()
         {
             QMegaMessageBox::MessageBoxInfo msgInfo;
             msgInfo.title = getMEGAString();
-            QString message = tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
-#ifdef __APPLE__
-                              + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.");
-#elif defined(_WIN32)
-                              + tr("MEGAsync will continue to work, however, updates will no longer be supported for Windows Vista and older operating systems soon.");
+            QString message =
+                tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+#ifdef WIN32
+                + tr("MEGAsync will continue to work, however, updates will no longer be supported "
+                     "for Windows Vista and older operating systems soon.");
 #else
-                              + tr("MEGAsync will continue to work, however you might not receive new updates.");
+                + tr("MEGAsync will continue to work, however you might not receive new updates.");
 #endif
 
             msgInfo.text = message;
@@ -3964,7 +3926,10 @@ void MegaApplication::openDeviceCentre()
     {
         return;
     }
-
+    mStatsEventHandler->sendTrackedEvent(AppStatsEvents::EventType::MENU_DEVICE_CENTRE_CLICKED,
+                                         sender(),
+                                         deviceCentreAction,
+                                         true);
 #ifdef Q_OS_MACOS
     if (infoDialog)
     {
@@ -3972,7 +3937,7 @@ void MegaApplication::openDeviceCentre()
     }
 #endif
 
-    QmlDialogManager::instance()->openDeviceCentreDialog();
+    QMLComponent::openDialog<DeviceCentre>();
 }
 
 void MegaApplication::importLinks()
@@ -4506,6 +4471,34 @@ void MegaApplication::createUserMessageController()
                     mOsNotifications.get(), &DesktopNotifications::onUserAlertsUpdated);
         }
     }
+}
+
+void MegaApplication::createGfxProvider(const QString& basePath)
+{
+    MegaGfxProvider* provider = nullptr;
+
+#if defined(ENABLE_SDK_ISOLATED_GFX)
+    auto prefs(Preferences::instance());
+    auto endpoint = prefs->getGfxWorkerEndpointInGeneral();
+    if (endpoint.isEmpty())
+    {
+        endpoint = QUuid::createUuid().toString(QUuid::WithoutBraces);
+        prefs->setGfxWorkerEndpointInGeneral(endpoint);
+    }
+    const auto path = QDir::toNativeSeparators(Platform::getInstance()->getGfxProviderPath());
+    auto logdirParam = QString::fromUtf8("%1/%2").arg(basePath, LOGS_FOLDER_LEAFNAME_QSTRING);
+    logdirParam = QString::fromLatin1("-d=") + QDir::toNativeSeparators(logdirParam);
+
+    std::unique_ptr<MegaStringList> extraParams(MegaStringList::createInstance());
+    extraParams->add(logdirParam.toUtf8().constData());
+
+    provider = MegaGfxProvider::createIsolatedInstance(endpoint.toUtf8().constData(),
+                                                       path.toUtf8().constData(),
+                                                       Preferences::GFXWORKER_KEEPALIVE_S,
+                                                       extraParams.get());
+#endif
+
+    mGfxProvider.reset(provider ? provider : MegaGfxProvider::createInternalInstance());
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,
@@ -5059,6 +5052,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if (reason == QSystemTrayIcon::Trigger)
             {
+                mStatsEventHandler->sendTrackedEvent(
+                    AppStatsEvents::EventType::TRAY_ICON_TRIGGERED);
                 if (mStatusController->isAccountBlocked())
                 {
                     createInfoDialog();
@@ -5093,12 +5088,54 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         QmlDialogManager::instance()->raiseOrHideInfoGuestDialog(infoDialogTimer, 200);
 
     }
+#ifdef Q_OS_WINDOWS
+    else if (reason == QSystemTrayIcon::DoubleClick)
+    {
+        openFirstActiveSync();
+    }
+#endif
 #ifndef __APPLE__
     else if (reason == QSystemTrayIcon::MiddleClick)
     {
         showTrayMenu();
     }
 #endif
+}
+
+void MegaApplication::openFirstActiveSync()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    auto* syncInfo{SyncInfo::instance()};
+    if (syncInfo != nullptr)
+    {
+        const auto syncsSettings(syncInfo->getAllSyncSettings());
+        auto firstActiveSyncSettings(std::find_if(syncsSettings.cbegin(),
+                                                  syncsSettings.cend(),
+                                                  [](auto syncSettings)
+                                                  {
+                                                      return syncSettings->isActive();
+                                                  }));
+
+        if (firstActiveSyncSettings != syncsSettings.cend())
+        {
+            infoDialogTimer->stop();
+
+            if (infoDialog)
+            {
+                infoDialog->hide();
+            }
+
+            QString localFolderPath = (*firstActiveSyncSettings)->getLocalFolder();
+            if (!localFolderPath.isEmpty())
+            {
+                Utilities::openUrl(QUrl::fromLocalFile(localFolderPath));
+            }
+        }
+    }
 }
 
 void MegaApplication::onMessageClicked()
@@ -5200,7 +5237,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
         }
         else
         {
-            mSettingsDialog->addSyncFolder(megaFolderHandle);
+            CreateRemoveSyncsManager::addSync(megaFolderHandle);
         }
     }
 }
@@ -5394,11 +5431,11 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-    recreateMenuAction(&deviceCentreAction,
-                       infoDialogMenu,
-                       QString::fromLatin1("Device Center"),
-                       "://images/ico-cloud-drive.png",
-                       &MegaApplication::openDeviceCentre);
+    // recreateMenuAction(&deviceCentreAction,
+    //                    infoDialogMenu,
+    //                    tr("Device Centre"),
+    //                    "://images/ico-device-centre.svg",
+    //                    &MegaApplication::openDeviceCentre);
 
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)

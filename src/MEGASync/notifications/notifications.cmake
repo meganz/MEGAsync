@@ -19,15 +19,12 @@ target_sources_conditional(MEGAsync
    PRIVATE
    notifications/macx/NotificationHandler.mm
    notifications/macx/UNUserNotificationHandler.mm
-   notifications/macx/NSUserNotificationHandler.mm
-   notifications/macx/NSUserNotificationDelegate.mm
    notifications/macx/UNUserNotificationDelegate.mm
    notifications/macx/Notificator.cpp
    notifications/macx/Notificator.h
    notifications/macx/NotificationHandler.h
    notifications/macx/UNUserNotificationHandler.h
    notifications/macx/NotificationDelegate.h
-   notifications/macx/NSUserNotificationHandler.h
 )
 
 target_sources_conditional(MEGAsync
