@@ -48,7 +48,8 @@ std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
-const QString Utilities::SYNC_SUPPORT_URL = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing/sync-v2");
+const QString Utilities::SYNC_SUPPORT_URL =
+    QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
