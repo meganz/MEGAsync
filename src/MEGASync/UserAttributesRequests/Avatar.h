@@ -28,7 +28,7 @@ public:
     const QPixmap& getPixmap(const int& size) const;
 
     bool isAttributeReady() const override;
-
+    static constexpr char DEFAULT_AVATAR[] = ":/images/default-avatar.jpg";
 signals:
     void attributeReady();
 
