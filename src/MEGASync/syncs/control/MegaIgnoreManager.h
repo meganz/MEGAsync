@@ -45,9 +45,11 @@ public:
 
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinksRule();
     std::shared_ptr<MegaIgnoreNameRule> addIgnoreSymLinkRule(const QString& pattern);
-    std::shared_ptr<MegaIgnoreNameRule> addNameRule(MegaIgnoreNameRule::Class classType
-                                                    ,const QString& pattern
-                                                    ,MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE, MegaIgnoreNameRule::WildCardType wildCard = MegaIgnoreNameRule::WildCardType::EQUAL);
+    std::shared_ptr<MegaIgnoreNameRule> addNameRule(
+        MegaIgnoreNameRule::Class classType,
+        QString pattern,
+        MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE,
+        MegaIgnoreNameRule::WildCardType wildCard = MegaIgnoreNameRule::WildCardType::EQUAL);
     std::shared_ptr<MegaIgnoreExtensionRule> addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
     void restreDefaults();

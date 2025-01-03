@@ -28,6 +28,14 @@ SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
         "WildCard",
         QString::fromLatin1("WildCard is an uncreatable type"));
 
+    qmlRegisterUncreatableMetaObject(
+        ExclusionRulesModel::staticMetaObject,
+        "ExclusionRulesModel",
+        1,
+        0,
+        "ExclusionRulesModel",
+        QString::fromUtf8("ExclusionRulesModel is not meant to be created"));
+
     setFolder(path);
 }
 
