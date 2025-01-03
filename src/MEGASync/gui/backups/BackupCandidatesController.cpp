@@ -11,7 +11,7 @@
 #include <SyncSettings.h>
 #include <Utilities.h>
 
-static const int CHECK_DIRS_TIME = 1000;
+static const int CHECK_DIRS_TIME_IN_MS = 1000;
 
 BackupCandidatesController::BackupCandidatesController():
     DataController(),
@@ -37,7 +37,7 @@ BackupCandidatesController::BackupCandidatesController():
 
     QmlManager::instance()->setRootContextProperty(mBackupCandidates.get());
 
-    mCheckDirsTimer.setInterval(CHECK_DIRS_TIME);
+    mCheckDirsTimer.setInterval(CHECK_DIRS_TIME_IN_MS);
     mCheckDirsTimer.start();
 
     connect(mBackupCandidatesSizeRequester,
@@ -141,7 +141,7 @@ int BackupCandidatesController::insert(const QString& folder)
 
     checkSelectedAll();
 
-    return (mBackupCandidates->getSize() - 1);
+    return last;
 }
 
 void BackupCandidatesController::setAllSelected(bool selected)
@@ -160,12 +160,13 @@ void BackupCandidatesController::setAllSelected(bool selected)
 bool BackupCandidatesController::checkPermissions(const QString& inputPath)
 {
     QDir dir(inputPath);
-    dir.isEmpty(); // this triggers permission request on macOS, don´t remove
-    if (dir.exists() && !dir.isReadable()) // this didn´t trigger permission request
+    if (!dir.exists())
     {
         return false;
     }
-    return true;
+
+    dir.isEmpty(); // this triggers permission request on macOS, don´t remove
+    return dir.isReadable(); // this didn´t trigger permission request
 }
 
 void BackupCandidatesController::updateSelectedAndTotalSize()
@@ -496,8 +497,12 @@ bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data>
             if (checkPermissions(candidate->mFolder))
             {
                 candidate->mSelected = value.toBool();
-                checkSelectedAll();
             }
+            else
+            {
+                candidate->mSelected = false;
+            }
+            checkSelectedAll();
             break;
         }
         case BackupCandidates::DONE_ROLE:

@@ -68,7 +68,7 @@ public:
         return mController->data(index.row(), role);
     }
 
-    /////////DEFAULT BEHAVIOUR: LIST MODEL. OVERRIDE IT TO CREATE MORE COMPLEX MODELS/////////77
+    /////////DEFAULT BEHAVIOUR: LIST MODEL. OVERRIDE IT TO CREATE MORE COMPLEX MODELS///////////
     virtual QModelIndex index(int row,
                               int column,
                               const QModelIndex& = QModelIndex()) const override
