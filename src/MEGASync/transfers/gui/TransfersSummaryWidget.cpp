@@ -270,10 +270,14 @@ qreal TransfersSummaryWidget::computeAnimationStep() const
 void TransfersSummaryWidget::updateAnimation(const int previousWidth, const int newWidth,
                                              const TransfersSummaryWidget::Status newStatus)
 {
-    if (newWidth == minimumWidth() && newWidth == maximumWidth())
+    if (newWidth != minimumWidth())
+    {
+        setMinimumSize(newWidth, height());
+    }
+
+    if (newWidth != maximumWidth())
     {
         setMaximumSize(newWidth, height());
-        setMinimumSize(newWidth, height());
     }
 
     if (newWidth == minwidth)
