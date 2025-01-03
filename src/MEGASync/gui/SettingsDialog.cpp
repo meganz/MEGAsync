@@ -1548,8 +1548,6 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setUploadLimit(std::max(mPreferences->uploadLimitKB(), 0));
-
                 mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
                 mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
 

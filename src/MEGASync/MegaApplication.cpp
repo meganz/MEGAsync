@@ -1388,16 +1388,6 @@ if (!preferences->lastExecutionTime())
 
     createAppMenus();
 
-    //Set the upload limit
-    if (preferences->uploadLimitKB() > 0)
-    {
-        setUploadLimit(0);
-    }
-    else
-    {
-        setUploadLimit(preferences->uploadLimitKB());
-    }
-
     mThreadPool->push([=](){
     setMaxUploadSpeed(preferences->uploadLimitKB());
     setMaxDownloadSpeed(preferences->downloadLimitKB());
@@ -3279,24 +3269,6 @@ void MegaApplication::showNotificationMessage(QString message, QString title)
     {
         lastTrayMessage = message;
         mOsNotifications->sendInfoNotification(title, message);
-    }
-}
-
-//KB/s
-void MegaApplication::setUploadLimit(int limit)
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (limit < 0)
-    {
-        megaApi->setUploadLimit(-1);
-    }
-    else
-    {
-        megaApi->setUploadLimit(limit * 1024);
     }
 }
 
