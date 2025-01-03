@@ -215,24 +215,46 @@ void MegaIgnoreNameRule::setPattern(const QString &pattern)
 
 void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
 {
+    static const auto regexElements = QRegularExpression(QLatin1String("[?\\[\\]{}+()^$|\\\\]"));
+    const bool hasRegexElements = rightSidePart.contains(regexElements);
+    if (hasRegexElements)
+    {
+        mWildCardType = MegaIgnoreNameRule::WildCardType::WILDCARD;
+        return;
+    }
     const int asteriskCount = rightSidePart.count(QLatin1String("*"));
     if (asteriskCount == 0)
     {
         mWildCardType = MegaIgnoreNameRule::WildCardType::EQUAL;
     }
-    else if (asteriskCount > 1)
+    else if (asteriskCount == 1)
+    {
+        if (rightSidePart.startsWith(QLatin1String("*")))
+        {
+            mWildCardType = MegaIgnoreNameRule::WildCardType::ENDSWITH;
+        }
+        else if (rightSidePart.endsWith(QLatin1String("*")))
+        {
+            mWildCardType = MegaIgnoreNameRule::WildCardType::STARTSWITH;
+        }
+        else
+        {
+            mWildCardType = MegaIgnoreNameRule::WildCardType::WILDCARD;
+        }
+    }
+    else if ((asteriskCount == 2) && rightSidePart.startsWith(QLatin1String("*")) &&
+             rightSidePart.endsWith(QLatin1String("*")))
     {
         mWildCardType = MegaIgnoreNameRule::WildCardType::CONTAINS;
     }
-    else if (rightSidePart.startsWith(QLatin1String("*")))
-    {
-        mWildCardType = MegaIgnoreNameRule::WildCardType::ENDSWITH;
-    }
     else
     {
-        mWildCardType = MegaIgnoreNameRule::WildCardType::STARTSWITH;
+        mWildCardType = MegaIgnoreNameRule::WildCardType::WILDCARD;
     }
-    mPattern = mPattern.remove(asterisk);
+    if (mWildCardType != MegaIgnoreNameRule::WildCardType::WILDCARD)
+    {
+        mPattern = mPattern.remove(asterisk);
+    }
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE

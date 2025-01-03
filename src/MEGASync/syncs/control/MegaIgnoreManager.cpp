@@ -352,7 +352,11 @@ std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addIgnoreSymLinkRule(cons
     return rule;
 }
 
-std::shared_ptr<MegaIgnoreNameRule> MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType, const QString& pattern, MegaIgnoreNameRule::Target targetType, MegaIgnoreNameRule::WildCardType wildCard)
+std::shared_ptr<MegaIgnoreNameRule>
+    MegaIgnoreManager::addNameRule(MegaIgnoreNameRule::Class classType,
+                                   QString pattern,
+                                   MegaIgnoreNameRule::Target targetType,
+                                   MegaIgnoreNameRule::WildCardType wildCard)
 {
     auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, classType, targetType);
     rule->setWildCardType(wildCard);

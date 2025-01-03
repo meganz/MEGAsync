@@ -121,5 +121,6 @@
         <file>images/qml/multidevices@2x.png</file>
         <file>images/qml/multidevices@3x.png</file>
         <file>images/qml/power.svg</file>
+        <file>images/qml/sync_exclusions/folder-file.svg</file>
     </qresource>
 </RCC>

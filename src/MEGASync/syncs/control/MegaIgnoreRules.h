@@ -103,9 +103,10 @@ public:
     enum WildCardType
     {
         STARTSWITH = 0,
-        EQUAL = 3,
+        CONTAINS = 1,
         ENDSWITH = 2,
-        CONTAINS = 1
+        EQUAL = 3,
+        WILDCARD = 4
     };
     Q_ENUM(WildCardType)
 

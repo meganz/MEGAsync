@@ -1817,6 +1817,96 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
         <translation>Select the file you want to exclude</translation>
     </message>
+    <message>
+        <source>Files and folders</source>
+        <translatorcomment>Drop down entry for specifying files and folders as the exclusion rule target.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Matching wildcard</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>File and folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>wildcard</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
