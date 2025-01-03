@@ -1,15 +1,15 @@
 #include "AlertItem.h"
 
-#include "ui_AlertItem.h"
 #include "CommonMessages.h"
+#include "FullName.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "FullName.h"
+#include "ui_AlertItem.h"
 #include "UserAlert.h"
 
 #include <QDateTime>
-#include <QFutureWatcher>
 #include <QFuture>
+#include <QFutureWatcher>
 #include <QtConcurrent/QtConcurrent>
 
 using namespace mega;

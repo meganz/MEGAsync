@@ -1,6 +1,6 @@
 #include "TransferWidgetHeaderItem.h"
-#include "ui_TransferWidgetHeaderItem.h"
 
+#include "ui_TransferWidgetHeaderItem.h"
 #include "Utilities.h"
 
 TransferWidgetHeaderItem::TransferWidgetHeaderItem(QWidget *parent) :

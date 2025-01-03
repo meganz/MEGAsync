@@ -1,4 +1,5 @@
 #include "MegaInfoMessage.h"
+
 #include "ui_MegaInfoMessage.h"
 
 MegaInfoMessage::MegaInfoMessage(const QString &windowTitle, const QString &title, const QString &firstParagraph,

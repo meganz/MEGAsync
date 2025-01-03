@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QProcess>
 #include <QScreen>
+
 #include <stdexcept>
 
 const QString LINUX_OS_DEEPIN_20 = QString::fromUtf8("Deepin 20");

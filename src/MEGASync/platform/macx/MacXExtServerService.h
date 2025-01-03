@@ -1,9 +1,10 @@
 #ifndef MACXEXTSERVERSERVICE_H
 #define MACXEXTSERVERSERVICE_H
 
+#include "platform/macx/MacXExtServer.h"
+
 #include <QObject>
 #include <QPointer>
-#include "platform/macx/MacXExtServer.h"
 
 /**
  * @brief Service instance to manage communications with extension

@@ -1,4 +1,5 @@
 #include "AlertFilterType.h"
+
 #include "ui_AlertFilterType.h"
 
 AlertFilterType::AlertFilterType(QWidget* parent)

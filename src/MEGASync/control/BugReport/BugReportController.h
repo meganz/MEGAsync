@@ -1,10 +1,10 @@
 #ifndef BUGREPORTSENDER_H
 #define BUGREPORTSENDER_H
 
+#include "BugReportData.h"
+#include "MegaSyncLogger.h"
 #include "QTMegaTransferListener.h"
 
-#include <BugReportData.h>
-#include <MegaSyncLogger.h>
 #include <QObject>
 
 class BugReportController: public QObject, public mega::MegaTransferListener

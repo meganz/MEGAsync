@@ -1,11 +1,12 @@
-#include <platform/PowerOptions.h>
+// clang-format off
+#include "PowerOptions.h"
 
 #include "Preferences.h"
-#include "megaapi.h"
-
 #include <Windows.h>
 #include <WinBase.h>
+
 #include <powersetting.h>
+// clang-format on
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4996)

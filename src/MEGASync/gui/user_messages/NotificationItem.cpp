@@ -1,11 +1,10 @@
 #include "NotificationItem.h"
 
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
-#include "StatsEventHandler.h"
-#include "MegaApplication.h"
-
-#include "megaapi.h"
 
 #include <QDateTime>
 

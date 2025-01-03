@@ -4,7 +4,6 @@
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
-#include "Platform.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
 

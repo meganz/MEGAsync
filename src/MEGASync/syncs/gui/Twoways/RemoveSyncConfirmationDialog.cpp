@@ -1,4 +1,5 @@
 #include "RemoveSyncConfirmationDialog.h"
+
 #include "ui_RemoveSyncConfirmationDialog.h"
 
 RemoveSyncConfirmationDialog::RemoveSyncConfirmationDialog(QWidget *parent)

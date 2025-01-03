@@ -1,11 +1,11 @@
 #ifndef IMAGE_DOWNLOADER_H
 #define IMAGE_DOWNLOADER_H
 
+#include <QImage>
+#include <QMap>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QImage>
 #include <QObject>
-#include <QMap>
 
 #include <memory>
 

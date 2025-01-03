@@ -1,8 +1,7 @@
 #include "UserMessageProxyModel.h"
 
-#include "UserAlert.h"
-
 #include "megaapi.h"
+#include "UserMessage.h"
 
 #include <QDateTime>
 

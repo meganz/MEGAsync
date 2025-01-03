@@ -1,8 +1,8 @@
 #include "Avatar.h"
+
+#include "AvatarWidget.h"
 #include "FullName.h"
 #include "megaapi.h"
-#include "mega/types.h"
-#include "AvatarWidget.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
 

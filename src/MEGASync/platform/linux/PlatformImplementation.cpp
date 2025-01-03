@@ -1,19 +1,18 @@
 #include "PlatformImplementation.h"
 
-#include <QProgressBar>
-#include <QSet>
-#include <QX11Info>
-#include <QScreen>
-#include <QHostInfo>
-
-#include <cstdlib>
-#include <cstring>
-#include <map>
-#include <sys/statvfs.h>
-
 #include "DolphinFileManager.h"
 #include "NautilusFileManager.h"
 #include "QMegaMessageBox.h"
+
+#include <QHostInfo>
+#include <QProgressBar>
+#include <QScreen>
+#include <QSet>
+#include <QX11Info>
+#include <sys/statvfs.h>
+
+#include <cstdlib>
+#include <cstring>
 
 using namespace std;
 using namespace mega;

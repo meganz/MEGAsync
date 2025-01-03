@@ -1,14 +1,15 @@
 #ifndef STREAMINGFROMMEGADIALOG_H
 #define STREAMINGFROMMEGADIALOG_H
 
-#include <QDialog>
-#include <QPointer>
-#include <QClipboard>
-#include <QMessageBox>
-
-#include "megaapi.h"
 #include "LinkProcessor.h"
+#include "megaapi.h"
 #include "QTMegaTransferListener.h"
+
+#include <QClipboard>
+#include <QDialog>
+#include <QMessageBox>
+#include <QPointer>
+
 #include <memory>
 
 namespace Ui {

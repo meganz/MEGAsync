@@ -2,20 +2,14 @@
 
 #include "AccountDetailsDialog.h"
 #include "AccountDetailsManager.h"
-#include "assert.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
-#include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
-#include "QmlDialogManager.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "SyncsComponent.h"
-#include "TextDecorator.h"
 #include "TransferManager.h"
 #include "ui_InfoDialog.h"
 #include "UserMessageController.h"
@@ -34,6 +28,8 @@
 #include <QToolTip>
 #include <QUrl>
 #include <QVBoxLayout>
+
+#include <cassert>
 
 #ifdef _WIN32
 #include <chrono>

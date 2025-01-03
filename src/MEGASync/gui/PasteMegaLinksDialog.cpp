@@ -1,11 +1,11 @@
 #include "PasteMegaLinksDialog.h"
+
+#include "QMegaMessageBox.h"
 #include "ui_PasteMegaLinksDialog.h"
 
 #include <QClipboard>
 #include <QUrl>
-#include "QMegaMessageBox.h"
 
-#include<iostream>
 using namespace std;
 
 PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent)

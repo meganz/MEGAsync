@@ -1,13 +1,11 @@
 #ifndef BUGREPORTDIALOG_H
 #define BUGREPORTDIALOG_H
 
-// clang-format off
 #include "MegaSyncLogger.h"
 #include "ProgressIndicatorDialog.h"
 
-#include <QPointer>
 #include <QDialog>
-// clang-format on
+#include <QPointer>
 
 class QProgressDialog;
 class BugReportController;

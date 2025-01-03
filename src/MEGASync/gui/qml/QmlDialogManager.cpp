@@ -1,7 +1,6 @@
 #include "QmlDialogManager.h"
 
 #include "AccountStatusController.h"
-#include "DeviceCentre.h"
 #include "DialogOpener.h"
 #include "GuestContent.h"
 #include "GuestQmlDialog.h"

@@ -1,5 +1,7 @@
 #include "TransfersStatusWidget.h"
+
 #include "ui_TransfersStatusWidget.h"
+
 #include <QPainter>
 #include <QtMath>
 

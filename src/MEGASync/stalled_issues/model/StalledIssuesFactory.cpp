@@ -1,15 +1,12 @@
 #include "StalledIssuesFactory.h"
 
-#include <MegaApplication.h>
-
-#include <NameConflictStalledIssue.h>
-#include <LocalOrRemoteUserMustChooseStalledIssue.h>
-#include <IgnoredStalledIssue.h>
-#include <MoveOrRenameCannotOccurIssue.h>
-#include <FolderMatchedAgainstFileIssue.h>
-#include <StatsEventHandler.h>
-
-#include <mega/types.h>
+#include "FolderMatchedAgainstFileIssue.h"
+#include "IgnoredStalledIssue.h"
+#include "LocalOrRemoteUserMustChooseStalledIssue.h"
+#include "MegaApplication.h"
+#include "MoveOrRenameCannotOccurIssue.h"
+#include "NameConflictStalledIssue.h"
+#include "StatsEventHandler.h"
 
 StalledIssuesFactory::StalledIssuesFactory()
 {

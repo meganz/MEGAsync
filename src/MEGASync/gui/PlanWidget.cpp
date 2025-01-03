@@ -1,14 +1,14 @@
 #include "PlanWidget.h"
+
+#include "Preferences.h"
 #include "ui_PlanWidget.h"
 #include "Utilities.h"
-#include "Preferences.h"
-#include "megaapi.h"
-#include "MegaApplication.h"
 
-#include <QtConcurrent/QtConcurrent>
-#include <QUrl>
 #include <QDesktopServices>
 #include <QGraphicsOpacityEffect>
+#include <QStyle>
+#include <QtConcurrent/QtConcurrent>
+#include <QUrl>
 
 constexpr int NB_B_IN_1GB (1024 * 1024 * 1024);
 constexpr int NB_GB_IN_1TB (1024);

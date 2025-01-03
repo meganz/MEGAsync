@@ -1,7 +1,9 @@
-#pragma once
+#ifndef LOCKED_POP_OVER_H
+#define LOCKED_POP_OVER_H
+
+#include "ui_LockedPopOver.h"
 
 #include <QDialog>
-#include "ui_LockedPopOver.h"
 
 namespace Ui {
 class LockedPopOver;
@@ -24,5 +26,4 @@ protected:
 private:
     Ui::LockedPopOver *ui;
 };
-
-
+#endif

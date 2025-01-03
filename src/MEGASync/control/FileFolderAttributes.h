@@ -2,13 +2,13 @@
 #define FILEFOLDERATTRIBUTES_H
 
 #include "megaapi.h"
+
 #include <QDateTime>
+#include <QEventLoop>
 #include <QFutureWatcher>
 
 #include <functional>
 #include <memory>
-
-#include <QEventLoop>
 
 namespace UserAttributes{
 class FullName;

@@ -1,12 +1,10 @@
 #include "LocalOrRemoteUserMustChooseStalledIssue.h"
 
-#include <MegaApplication.h>
-#include <MegaUploader.h>
-#include <TransfersModel.h>
-#include <StalledIssuesUtilities.h>
+#include "MegaApplication.h"
+#include "MegaUploader.h"
+#include "StalledIssuesUtilities.h"
 #include "StatsEventHandler.h"
-#include <MegaApiSynchronizedRequest.h>
-#include <FileFolderAttributes.h>
+#include "TransfersModel.h"
 
 LocalOrRemoteUserMustChooseStalledIssue::LocalOrRemoteUserMustChooseStalledIssue(
     const mega::MegaSyncStall* stallIssue):

@@ -1,11 +1,9 @@
 #include "MegaDownloader.h"
 
 #include "EventUpdater.h"
-#include "LowDiskSpaceDialog.h"
-#include "MegaApplication.h"
-#include "Utilities.h"
 #include "TransferBatch.h"
 #include "TransferMetaData.h"
+#include "Utilities.h"
 
 #include <QDateTime>
 #include <QFileIconProvider>

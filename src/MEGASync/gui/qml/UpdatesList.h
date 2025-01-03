@@ -1,8 +1,9 @@
 #ifndef UPDATES_LIST_H
 #define UPDATES_LIST_H
 
-#include <functional>
 #include <QString>
+
+#include <functional>
 
 class UpdatesList
 {

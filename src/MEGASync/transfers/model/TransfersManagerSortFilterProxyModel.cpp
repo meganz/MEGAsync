@@ -1,12 +1,12 @@
 #include "TransfersManagerSortFilterProxyModel.h"
-#include "TransfersModel.h"
-#include "MegaTransferView.h"
-#include "MegaApplication.h"
-#include "TransferManagerDelegateWidget.h"
-#include <megaapi.h>
 
-#include <QMutexLocker>
+#include "MegaApplication.h"
+#include "MegaTransferView.h"
+#include "TransferManagerDelegateWidget.h"
+#include "TransfersModel.h"
+
 #include <QElapsedTimer>
+#include <QMutexLocker>
 #include <QRunnable>
 #include <QTimer>
 

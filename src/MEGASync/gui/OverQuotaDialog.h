@@ -1,8 +1,9 @@
-#pragma once
+#ifndef OVER_QUOTA_DIALOG_H
+#define OVER_QUOTA_DIALOG_H
+
+#include <QDebug>
 #include <QDialog>
 #include <QLabel>
-#include <memory>
-#include <QDebug>
 
 class CustomLabel : public QLabel
 {
@@ -46,3 +47,4 @@ private slots:
     void onUpgradeClicked();
     void onTitleLengthChanged();
 };
+#endif

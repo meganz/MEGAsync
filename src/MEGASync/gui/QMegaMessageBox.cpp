@@ -1,9 +1,10 @@
 #include "QMegaMessageBox.h"
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QDebug>
 
 #include "DialogOpener.h"
+
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 QString QMegaMessageBox::warningTitle()
 {

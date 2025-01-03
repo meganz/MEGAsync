@@ -1,6 +1,6 @@
 #include "StalledIssueChooseTitle.h"
-#include "ui_StalledIssueActionTitle.h"
 
+#include "ui_StalledIssueActionTitle.h"
 #include "Utilities.h"
 
 StalledIssueChooseTitle::StalledIssueChooseTitle(QWidget *parent)

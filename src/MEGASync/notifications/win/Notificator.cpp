@@ -4,22 +4,22 @@
 
 #include "Notificator.h"
 
+#include "MegaApplication.h"
+#include "platform/win/wintoastlib.h"
+#include "Utilities.h"
+
 #include <QApplication>
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
-#include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
 #include <QTemporaryFile>
 #include <QVariant>
+
 #include <memory>
 
-#include "MegaApplication.h"
-
-#include "platform/win/wintoastlib.h"
 using namespace WinToastLib;
 
 using namespace mega;

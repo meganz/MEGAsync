@@ -2,7 +2,6 @@
 #define IMPORTLISTWIDGETITEM_H
 
 #include <QListWidgetItem>
-#include "megaapi.h"
 
 namespace Ui {
 class ImportListWidgetItem;

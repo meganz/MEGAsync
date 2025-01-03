@@ -1,18 +1,17 @@
 #include "StalledIssueDelegate.h"
 
-#include "StalledIssueFilePath.h"
-#include "StalledIssueBaseDelegateWidget.h"
-#include "StalledIssueHeader.h"
-#include "StalledIssuesView.h"
+#include "DialogOpener.h"
 #include "MegaDelegateHoverManager.h"
 #include "StalledIssue.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
+#include "StalledIssueBaseDelegateWidget.h"
+#include "StalledIssueHeader.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesView.h"
 
-#include <QPainter>
-#include <QMouseEvent>
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QMouseEvent>
+#include <QPainter>
 #include <QPainterPath>
 
 #ifdef Q_OS_MACOS

@@ -1,8 +1,8 @@
 #ifndef NOTIFICATIONSSETTINGS_H
 #define NOTIFICATIONSSETTINGS_H
 
-#include <QWidget>
 #include <QCheckBox>
+#include <QWidget>
 
 #include <functional>
 

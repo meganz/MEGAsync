@@ -1,12 +1,11 @@
 #ifndef USER_MESSAGE_CONTROLLER_H
 #define USER_MESSAGE_CONTROLLER_H
 
-#include "UserMessageTypes.h"
-#include "UserMessageModel.h"
-#include "UserMessageProxyModel.h"
-
 #include "megaapi.h"
 #include "QTMegaGlobalListener.h"
+#include "UserMessageModel.h"
+#include "UserMessageProxyModel.h"
+#include "UserMessageTypes.h"
 
 #include <QAbstractItemModel>
 

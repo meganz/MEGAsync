@@ -2,11 +2,10 @@
 #define PSAWIDGET_H
 
 #include "Utilities.h"
-#include "ImageDownloader.h"
 
-#include <QWidget>
-#include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
+#include <QWidget>
 
 namespace Ui
 {

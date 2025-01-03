@@ -1,14 +1,14 @@
 #ifndef STALLEDISSUEBASEDELEGATEWIDGET_H
 #define STALLEDISSUEBASEDELEGATEWIDGET_H
 
-#include <StalledIssue.h>
-#include <StalledIssuesUtilities.h>
-#include <QMegaMessageBox.h>
+#include "QMegaMessageBox.h"
+#include "StalledIssue.h"
+#include "StalledIssuesUtilities.h"
 
-#include <QWidget>
-#include <QStyleOptionViewItem>
 #include <QStyledItemDelegate>
+#include <QStyleOptionViewItem>
 #include <QTimer>
+#include <QWidget>
 
 class StalledIssueBaseDelegateWidget : public QWidget
 {

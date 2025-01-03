@@ -1,7 +1,6 @@
 #include "TransferManagerLoadingItem.h"
-#include "ui_TransferManagerLoadingItem.h"
 
-#include <MegaTransferView.h>
+#include "ui_TransferManagerLoadingItem.h"
 
 #include <QScrollBar>
 

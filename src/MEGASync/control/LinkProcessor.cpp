@@ -1,9 +1,11 @@
 #include "LinkProcessor.h"
-#include "Preferences.h"
-#include "MegaApplication.h"
+
 #include "CommonMessages.h"
-#include <QDir>
+#include "MegaApplication.h"
+#include "Preferences.h"
 #include "RequestListenerManager.h"
+
+#include <QDir>
 
 using namespace mega;
 

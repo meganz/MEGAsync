@@ -1,4 +1,5 @@
 #include "MacXLocalServerPrivate.h"
+
 #include "ServerSide.h"
 
 MacXLocalServerPrivate::MacXLocalServerPrivate()

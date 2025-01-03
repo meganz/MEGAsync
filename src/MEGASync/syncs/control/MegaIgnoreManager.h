@@ -3,10 +3,11 @@
 
 #include "MegaIgnoreRules.h"
 
-#include <QString>
 #include <QFile>
 #include <QMap>
 #include <QMetaEnum>
+#include <QString>
+
 #include <memory>
 
 class MegaIgnoreManager

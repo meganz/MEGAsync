@@ -1,11 +1,10 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "Preferences.h"
-#include "Utilities.h"
-
-#include "SyncInfo.h"
 #include "megaapi.h"
+#include "Preferences.h"
+#include "SyncInfo.h"
+#include "Utilities.h"
 
 #include <QDialog>
 #include <QFuture>

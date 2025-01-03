@@ -1,14 +1,14 @@
 #include "WordWrapLabel.h"
 
+#include "Utilities.h"
+
+#include <QAbstractTextDocumentLayout>
+#include <QApplication>
 #include <QDebug>
 #include <QEvent>
-#include <QApplication>
 #include <QResizeEvent>
-#include <QAbstractTextDocumentLayout>
 #include <QTextBlock>
 #include <QTextLayout>
-
-#include <Utilities.h>
 
 const int MINIMUM_DOC_HEIGHT = 3;
 

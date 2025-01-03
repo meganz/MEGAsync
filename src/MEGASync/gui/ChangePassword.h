@@ -2,6 +2,7 @@
 #define CHANGEPASSWORD_H
 
 #include "megaapi.h"
+
 #include <QDialog>
 
 namespace Ui {

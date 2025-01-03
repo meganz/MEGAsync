@@ -23,8 +23,9 @@
 // TODO: Proper state machine, with state transition checks and so on.
 // TODO: Future states to consider: APP_FINISHED, LOGING_IN
 
-#include <memory>
 #include <QObject>
+
+#include <memory>
 
 class AppState: public QObject
 {

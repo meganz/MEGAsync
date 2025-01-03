@@ -3,10 +3,11 @@
 
 #include "megaapi.h"
 
-#include <memory>
 #include <QAbstractItemModel>
 #include <QCollator>
 #include <QSortFilterProxyModel>
+
+#include <memory>
 
 class SyncInfo;
 class SyncSettings;

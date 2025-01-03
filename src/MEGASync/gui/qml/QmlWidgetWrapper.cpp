@@ -1,5 +1,7 @@
 #include "QmlWidgetWrapper.h"
 
+#include "QmlManager.h"
+
 namespace
 {
 const QLatin1String NAMESPACE_SEPARATOR("::");

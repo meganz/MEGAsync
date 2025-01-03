@@ -1,18 +1,15 @@
 #include "StalledIssuesUtilities.h"
 
-#include <MegaApplication.h>
-#include <mega/types.h>
-#include <MegaDownloader.h>
-#include <QTMegaRequestListener.h>
-#include <MegaApiSynchronizedRequest.h>
-#include <QMegaMessageBox.h>
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <MoveToMEGABin.h>
+#include "DialogOpener.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MegaDownloader.h"
+#include "MoveToMEGABin.h"
+#include "QMegaMessageBox.h"
+#include "StalledIssuesDialog.h"
 
-
-#include <QFile>
 #include <QDir>
+#include <QFile>
 
 const Text::Decorator StalledIssuesBoldTextDecorator::boldTextDecorator = Text::Decorator(new Text::Bold());
 const Text::Decorator StalledIssuesNewLineTextDecorator::newLineTextDecorator = Text::Decorator(new Text::NewLine());

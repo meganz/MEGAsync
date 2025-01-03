@@ -1,11 +1,12 @@
 #ifndef STALLEDISSUEFILEPATH_H
 #define STALLEDISSUEFILEPATH_H
 
-#include "StalledIssueBaseDelegateWidget.h"
+#include "StalledIssue.h"
 
-#include <QWidget>
-#include <QLabel>
 #include <QEvent>
+#include <QIcon>
+#include <QLabel>
+#include <QWidget>
 
 namespace Ui {
 class StalledIssueFilePath;

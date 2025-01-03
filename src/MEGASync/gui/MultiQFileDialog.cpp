@@ -1,12 +1,13 @@
 #include "MultiQFileDialog.h"
+
 #include "CommonMessages.h"
 
 #include <QApplication>
-#include <QToolTip>
-#include <QListView>
-#include <QTreeView>
-#include <QLabel>
 #include <QDialogButtonBox>
+#include <QLabel>
+#include <QListView>
+#include <QToolTip>
+#include <QTreeView>
 
 MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, const QString &directory, bool multiSelect, const QString &filter)
     : QFileDialog(parent, caption, directory, filter),

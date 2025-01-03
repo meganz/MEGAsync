@@ -1,4 +1,5 @@
 #include "UpgradeDialog.h"
+
 #ifdef __APPLE__
 #include "macx/MacXFunctions.h"
 #endif

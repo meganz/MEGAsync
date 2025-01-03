@@ -4,8 +4,8 @@
 #include "ButtonIconManager.h"
 
 #include <QFrame>
-#include <QIcon>
 #include <QGraphicsOpacityEffect>
+#include <QIcon>
 #include <QPropertyAnimation>
 
 namespace Ui {

@@ -1,10 +1,13 @@
 #ifndef SETTYPES_H
 #define SETTYPES_H
 
+#include "megaapi.h"
+
+#include <QList>
 #include <QObject>
 #include <QString>
-#include <QList>
-#include "megaapi.h"
+
+#include <memory>
 
 using MegaNodeSPtr = std::shared_ptr<mega::MegaNode>;
 

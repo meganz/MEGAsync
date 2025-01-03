@@ -1,7 +1,7 @@
 #include "PSAwidget.h"
 
 #include "ui_PSAwidget.h"
-#include <Utilities.h>
+#include "Utilities.h"
 
 #include <QDesktopServices>
 #include <QPainter>

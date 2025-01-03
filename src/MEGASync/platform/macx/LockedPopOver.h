@@ -1,8 +1,9 @@
 #ifndef LOCKEDPOPOVER_H
 #define LOCKEDPOPOVER_H
 
-#include <QMacNativeWidget>
 #include "ui_LockedPopOver.h"
+
+#include <QMacNativeWidget>
 
 namespace Ui {
 class LockedPopOver;

@@ -1,7 +1,6 @@
 #ifndef EVENTUPDATER_H
 #define EVENTUPDATER_H
 
-
 class EventUpdater
 {
 public:
