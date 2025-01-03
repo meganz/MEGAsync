@@ -3472,6 +3472,11 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Transfer quota exceeded</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
         <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
@@ -3691,6 +3696,91 @@ You will not be able to regain access to your stored data or be authorised to si
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Destination storage is full</translation>
+    </message>
+    <message>
+        <source>An unknown error has occurred</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A critical error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your local storage is full</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error reading app system files</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to make more space available in your local storage to be able to run MEGA.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart MEGA</source>
+        <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check permissions</source>
+        <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Label of the button used to contact support for assistance when a fatal error occurs - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log out</source>
+        <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished">Log&#xa0;out</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Label of the button used to reload (fetch nodes) the account to try to resolve a fatal error - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error with sync configuration files</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6196,6 +6286,29 @@ Do you want to delete it anyway?</translation>
     </message>
 </context>
 <context>
+    <name>ReloadingEventHandler</name>
+    <message>
+        <source>MEGA is reloading</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an issue and is reloading your account. Please wait…</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA has reloaded</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RemoteItemUi</name>
     <message>
         <source>Permissions</source>
@@ -8435,16 +8548,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>Issue detected</numerusform>
             <numerusform>Issues detected</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
-    </message>
-    <message>
-        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
     </message>
 </context>
 <context>

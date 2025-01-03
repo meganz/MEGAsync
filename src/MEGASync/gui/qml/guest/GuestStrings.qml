@@ -15,5 +15,4 @@ QtObject {
     readonly property string logOut: qsTr("Log out")
     readonly property string loggedInOnboarding: qsTr("Setting up your account…")
     readonly property string statusWaitingForEmail: qsTr("Waiting for email confirmation…")
-
 }

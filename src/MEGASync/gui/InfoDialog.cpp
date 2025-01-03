@@ -2,6 +2,7 @@
 
 #include "AccountDetailsDialog.h"
 #include "AccountDetailsManager.h"
+#include "AppState.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
@@ -96,6 +97,20 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     qtBugFixer(this)
 {
     ui->setupUi(this);
+
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            [this](AppState::AppStates oldAppState, AppState::AppStates newAppState)
+            {
+                // We want to show the infodialog only in NOMINAL mode.
+                // Show Guest Dialog otherwise
+                if (newAppState != AppState::NOMINAL)
+                {
+                    hide();
+                    deleteLater();
+                }
+            });
 
     mSyncsMenus[ui->bAddSync] = nullptr;
     mSyncsMenus[ui->bAddBackup] = nullptr;

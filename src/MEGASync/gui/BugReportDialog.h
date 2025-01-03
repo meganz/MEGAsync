@@ -22,6 +22,9 @@ public:
     explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
 
+    void setReportObject(const QString& title);
+    void setReportText(const QString& desc);
+
 private slots:
     void onReportStarted();
     void onReportFinished();

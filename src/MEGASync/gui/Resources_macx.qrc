@@ -1231,6 +1231,9 @@
         <file>images/banner/warning.svg</file>
         <file>images/banner/error.svg</file>
         <file>images/banner/info.svg</file>
+        <file>images/alert-triangle-small.png</file>
+        <file>images/alert-triangle-small@2x.png</file>
+        <file>images/alert-triangle-small@3x.png</file>
         <file>images/default-avatar.jpg</file>
         <file>images/default-avatar@2x.jpg</file>
         <file>images/default-avatar@3x.jpg</file>
