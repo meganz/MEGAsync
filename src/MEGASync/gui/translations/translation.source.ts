@@ -9004,6 +9004,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
         <translation>Pause all transfers</translation>
     </message>
+    <message>
+        <source>Details</source>
+        <translatorcomment>Header name of the column displaying the error of failed transfer. CON-1197</translatorcomment>
+        <translation type="unfinished">Details</translation>
+    </message>
 </context>
 <context>
     <name>TwoWaySyncsMenu</name>
