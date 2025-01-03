@@ -104,6 +104,8 @@ private:
 
     int getIconSize();
 
+    bool isHoverWidget(QWidget* widget) const;
+
     Ui::TransfersSummaryWidget *ui;
     QElapsedTimer qe;
     QPen pengrey; //outer border

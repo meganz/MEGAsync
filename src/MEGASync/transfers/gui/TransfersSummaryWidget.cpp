@@ -295,6 +295,21 @@ void TransfersSummaryWidget::updateAnimation(const int previousWidth, const int 
     }
 }
 
+bool TransfersSummaryWidget::isHoverWidget(QWidget* widget) const
+{
+    QPoint mousePos = this->mapFromGlobal(QCursor::pos());
+
+    if (widget->testAttribute(Qt::WA_WState_Hidden))
+    {
+        return false;
+    }
+
+    auto actionGlobalPos = widget->mapTo(this, QPoint(0, 0));
+    QRect actionGeometry(actionGlobalPos, widget->size());
+
+    return actionGeometry.contains(mousePos);
+}
+
 void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint pos = this->mapFromGlobal(QCursor::pos());
@@ -309,33 +324,31 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
         this->setCursor(Qt::ArrowCursor);
     }
 #endif
-    int arcx = firstellipseX;
-
-    if (upEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  upEllipseWidth, diaminside))
+    if (isHoverWidget(ui->bTransfersStatus))
     {
-        emit upAreaHovered(event);
-        return;
+        emit generalAreaHovered(event);
     }
-
-    arcx = firstellipseX + upEllipseWidth + (upEllipseWidth?ellipsesMargin:0);
-    if (dlEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  dlEllipseWidth, diaminside))
+    else if (isHoverWidget(ui->bpause))
     {
-        emit dlAreaHovered(event);
-        return;
+        emit pauseResumeHovered(event);
     }
-
-    if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
+    else
     {
-        if ((!upEllipseWidth && !dlEllipseWidth) || sqrt(pow( pos.x() - (ui->bpause->x() + ui->bpause->size().width() / 2.0),2.0)
-                          + pow( pos.y() - (ui->bpause->y() + ui->bpause->size().height() / 2.0), 2.0))
-                          > (ui->bpause->iconSize().width()/2.0) )
+        int arcx = firstellipseX;
 
+        if (upEllipseWidth &&
+            isWithinPseudoEllipse(pos, arcx, margininside, upEllipseWidth, diaminside))
         {
-            emit generalAreaHovered(event);
+            emit upAreaHovered(event);
         }
         else
         {
-            emit pauseResumeHovered(event);
+            arcx = firstellipseX + upEllipseWidth + (upEllipseWidth ? ellipsesMargin : 0);
+            if (dlEllipseWidth &&
+                isWithinPseudoEllipse(pos, arcx, margininside, dlEllipseWidth, diaminside))
+            {
+                emit dlAreaHovered(event);
+            }
         }
     }
 }
