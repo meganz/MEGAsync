@@ -1,7 +1,9 @@
 #include "UpdateTask.h"
 
 #include "Utilities.h"
+#ifdef _WIN32
 #include "Platform.h"
+#endif
 
 #include <QAuthenticator>
 #include <QDesktopServices>

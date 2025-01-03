@@ -1,22 +1,20 @@
 #ifndef DIALOGOPENER_H
 #define DIALOGOPENER_H
 
-#include <HighDpiResize.h>
-#include <Platform.h>
-#include <QMegaMessageBox.h>
+#include "HighDpiResize.h"
+#include "Platform.h"
+#include "QMegaMessageBox.h"
+#include "TokenParserWidgetManager.h"
 
+#include <QApplication>
 #include <QDialog>
+#include <QMap>
 #include <QMessageBox>
 #include <QPointer>
+#include <QQueue>
 
 #include <functional>
 #include <memory>
-
-#include <QMap>
-#include <QQueue>
-#include <QApplication>
-
-#include "tokenizer/TokenParserWidgetManager.h"
 
 #ifdef Q_OS_WINDOWS
 class ExternalDialogOpener : public QWidget

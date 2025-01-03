@@ -1,11 +1,10 @@
 #include "NotificationItem.h"
 
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h"
 #include "ui_NotificationItem.h"
 #include "UserNotification.h"
-#include "StatsEventHandler.h"
-#include "MegaApplication.h"
-
-#include "megaapi.h"
 
 #include <QDateTime>
 
@@ -43,9 +42,13 @@ void NotificationItem::setData(UserMessage* data)
     if (notification)
     {
         setNotificationData(notification);
-        connect(notification, &UserMessage::dataChanged, this, [this, notification]() {
-            updateNotificationData(notification);
-        });
+        connect(notification,
+                &UserMessage::dataReset,
+                this,
+                [this, notification]()
+                {
+                    updateNotificationData(notification);
+                });
         mDisplayEventSent = false;
     }
 }
@@ -281,10 +284,7 @@ void NotificationItem::setImage()
     mUi->lImageLarge->setVisible(showImage);
     if (showImage)
     {
-        mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
-            mUi->lImageLarge->setPixmap(mNotificationData->getImagePixmap());
-        });
+        mUi->lImageLarge->setImageUrl(mNotificationData->getImageNamePath());
     }
 }
 
@@ -294,10 +294,7 @@ void NotificationItem::setIcon()
     mUi->lImageSmall->setVisible(showIcon);
     if (showIcon)
     {
-        mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        connect(mNotificationData, &UserNotification::imageChanged, this, [this]() {
-            mUi->lImageSmall->setPixmap(mNotificationData->getIconPixmap());
-        });
+        mUi->lImageSmall->setImageUrl(mNotificationData->getIconNamePath());
     }
     else
     {

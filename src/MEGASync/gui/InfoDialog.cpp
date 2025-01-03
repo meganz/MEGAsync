@@ -2,20 +2,14 @@
 
 #include "AccountDetailsDialog.h"
 #include "AccountDetailsManager.h"
-#include "assert.h"
 #include "CreateRemoveBackupsManager.h"
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
-#include "GuiUtilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
 #include "Platform.h"
-#include "QMegaMessageBox.h"
-#include "QmlDialogManager.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "SyncsComponent.h"
-#include "TextDecorator.h"
 #include "TransferManager.h"
 #include "ui_InfoDialog.h"
 #include "UserMessageController.h"
@@ -34,6 +28,8 @@
 #include <QToolTip>
 #include <QUrl>
 #include <QVBoxLayout>
+
+#include <cassert>
 
 #ifdef _WIN32
 #include <chrono>
@@ -1541,27 +1537,30 @@ void InfoDialog::on_bDismissSyncSettings_clicked()
 
 void InfoDialog::on_bOpenSyncSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
 }
 
 void InfoDialog::on_bDismissBackupsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bOpenBackupsSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_BACKUP);
 }
 
 void InfoDialog::on_bDismissAllSyncsSettings_clicked()
 {
-    mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 void InfoDialog::on_bOpenAllSyncsSettings_clicked()
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::SYNCS_TAB);
+    mSyncInfo->dismissUnattendedDisabledSyncs(SyncInfo::AllHandledSyncTypes);
 }
 
 int InfoDialog::getLoggedInMode() const

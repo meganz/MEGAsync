@@ -1,13 +1,11 @@
 #include "ChooseFolder.h"
 
-#include "NodeSelectorSpecializations.h"
-#include "Syncs.h"
-
-#include "Platform.h"
-#include "MegaApplication.h"
 #include "DialogOpener.h"
-
 #include "megaapi.h"
+#include "MegaApplication.h"
+#include "NodeSelectorSpecializations.h"
+#include "Platform.h"
+#include "Syncs.h"
 
 #include <QDir>
 

@@ -1,10 +1,10 @@
 #ifndef TRANSFERSSUMMARYWIDGET_H
 #define TRANSFERSSUMMARYWIDGET_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QPen>
 #include <QElapsedTimer>
+#include <QPen>
+#include <QPushButton>
+#include <QWidget>
 
 namespace Ui {
 class TransfersSummaryWidget;

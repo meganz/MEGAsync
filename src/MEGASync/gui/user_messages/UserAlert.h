@@ -1,12 +1,11 @@
 #ifndef USER_ALERT_H
 #define USER_ALERT_H
 
-#include "UserMessageTypes.h"
+#include "megaapi.h"
 #include "UserMessage.h"
+#include "UserMessageTypes.h"
 
 #include <memory>
-
-#include "megaapi.h"
 
 class UserAlert : public UserMessage
 {
@@ -38,6 +37,8 @@ public:
     virtual const char* getString(unsigned index) const;
     virtual const char* getTitle() const;
     virtual MessageType getMessageType() const;
+
+    std::shared_ptr<mega::MegaNode> getAlertNode() const;
 
 signals:
     void emailChanged();

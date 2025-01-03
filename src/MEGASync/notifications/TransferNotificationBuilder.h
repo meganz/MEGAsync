@@ -1,10 +1,9 @@
 #ifndef TRANSFERNOTIFICATIONBUILDER_H
 #define TRANSFERNOTIFICATIONBUILDER_H
 
-#include "TransferMetaData.h"
 #include "DesktopNotifications.h"
+#include "TransferMetaData.h"
 
-#include <megaapi.h>
 #include <QObject>
 
 class TransferNotificationBuilder : public QObject

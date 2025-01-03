@@ -2,6 +2,7 @@
 #define SCANNINGWIDGET_H
 
 #include "FolderTransferEvents.h"
+
 #include <QWidget>
 
 namespace Ui {

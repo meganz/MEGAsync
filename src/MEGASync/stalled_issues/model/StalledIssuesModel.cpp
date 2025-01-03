@@ -1,21 +1,19 @@
 #include "StalledIssuesModel.h"
 
+#include "DialogOpener.h"
 #include "FolderMatchedAgainstFileIssue.h"
+#include "IgnoredStalledIssue.h"
+#include "LocalOrRemoteUserMustChooseStalledIssue.h"
 #include "MegaApplication.h"
 #include "MegaIgnoreManager.h"
 #include "MoveOrRenameCannotOccurIssue.h"
 #include "NameConflictStalledIssue.h"
+#include "QMegaMessageBox.h"
+#include "QSortFilterProxyModel"
+#include "StalledIssuesDelegateWidgetsCache.h"
+#include "StalledIssuesDialog.h"
 #include "StatsEventHandler.h"
 #include "SyncController.h"
-
-#include <DialogOpener.h>
-#include <IgnoredStalledIssue.h>
-#include <LocalOrRemoteUserMustChooseStalledIssue.h>
-#include <MultiStepIssueSolver.h>
-#include <QMegaMessageBox.h>
-#include <QSortFilterProxyModel>
-#include <StalledIssuesDelegateWidgetsCache.h>
-#include <StalledIssuesDialog.h>
 
 StalledIssuesReceiver::StalledIssuesReceiver(QObject* parent) : QObject(parent), mega::MegaRequestListener()
 {

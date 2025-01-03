@@ -1,4 +1,5 @@
 #include "ServerSide.h"
+
 #include "MacXLocalSocketPrivate.h"
 
 #include <QThread>

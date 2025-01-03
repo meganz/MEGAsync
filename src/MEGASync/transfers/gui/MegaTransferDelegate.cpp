@@ -1,14 +1,9 @@
 #include "MegaTransferDelegate.h"
 
-#include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaDelegateHoverManager.h"
-#include "Platform.h"
-#include "QMegaMessageBox.h"
-#include "TransferManagerDelegateWidget.h"
+#include "TransferBaseDelegateWidget.h"
 #include "TransfersModel.h"
-#include "TransfersWidget.h"
-#include "Utilities.h"
 
 #include <QEvent>
 #include <QMouseEvent>
@@ -18,8 +13,6 @@
 #include <QToolTip>
 
 using namespace mega;
-
-//////
 
 MegaTransferDelegate::MegaTransferDelegate(TransfersSortFilterProxyBaseModel* model,  QAbstractItemView* view)
     : QStyledItemDelegate(view),

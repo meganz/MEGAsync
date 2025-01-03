@@ -1,25 +1,19 @@
 #include "LocalAndRemoteDifferentWidget.h"
-#include "TextDecorator.h"
-#include <QDialogButtonBox>
-#include "ui_LocalAndRemoteDifferentWidget.h"
-#include <QCheckBox>
 
+#include "LocalOrRemoteUserMustChooseStalledIssue.h"
 #include "MegaApplication.h"
-#include "StalledIssuesModel.h"
-#include "StalledIssueHeader.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <PlatformStrings.h>
-#include <QMegaMessageBox.h>
-#include <LocalOrRemoteUserMustChooseStalledIssue.h>
+#include "Preferences.h"
+#include "QMegaMessageBox.h"
 #include "StalledIssueChooseWidget.h"
-#include <Preferences/Preferences.h>
+#include "StalledIssueHeader.h"
+#include "StalledIssuesModel.h"
+#include "TextDecorator.h"
+#include "ui_LocalAndRemoteDifferentWidget.h"
 
-#include "mega/types.h"
-
-#include <QMessageBox>
+#include <QCheckBox>
+#include <QDialogButtonBox>
 #include <QFile>
-
+#include <QMessageBox>
 
 const QList<mega::MegaSyncStall::SyncStallReason> ReasonsToCheck
     = QList<mega::MegaSyncStall::SyncStallReason>() << mega::MegaSyncStall::LocalAndRemoteChangedSinceLastSyncedState_userMustChoose

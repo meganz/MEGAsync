@@ -1,27 +1,23 @@
 ﻿#include "MegaSyncLogger.h"
-#include "Utilities.h"
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <ctime>
-#include <assert.h>
+#include "megaapi.h"
 
-#include <QFileInfo>
-#include <QString>
 #include <QDesktopServices>
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
+#include <QString>
 
-
+#include <cassert>
 #include <chrono>
-#include <thread>
 #include <condition_variable>
-
-#include <zlib.h>
-
-#include <megaapi.h>
+#include <ctime>
+#include <fstream>
 #include <future>
+#include <iostream>
+#include <sstream>
+#include <thread>
+#include <zlib.h>
 
 #ifdef WIN32
 #include <windows.h>

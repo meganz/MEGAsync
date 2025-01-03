@@ -1,7 +1,6 @@
 #ifndef MEGATRANSFERDELEGATE_H
 #define MEGATRANSFERDELEGATE_H
 
-#include "TransferItem.h"
 #include "TransfersModel.h"
 
 #include <QStyledItemDelegate>

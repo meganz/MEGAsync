@@ -1,9 +1,10 @@
 #ifndef EXPORTPROCESSOR_H
 #define EXPORTPROCESSOR_H
 
+#include "megaapi.h"
+
 #include <QObject>
 #include <QStringList>
-#include <megaapi.h>
 
 class ExportProcessor :  public QObject
 {

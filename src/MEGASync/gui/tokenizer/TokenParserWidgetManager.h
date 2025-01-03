@@ -15,6 +15,7 @@ public:
 
     void applyCurrentTheme();
     void applyCurrentTheme(QWidget* dialog);
+    QColor getColor(const QString& colorToken, const QString& defaultValue);
 
 private:
     using ColorTokens = QMap<QString, QString>;

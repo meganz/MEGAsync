@@ -11,7 +11,7 @@ Changes that you make on your device will also be made on the MEGA Cloud Drive. 
 changes made in your MEGA Cloud Drive (such as renaming, moving and deleting) will also be
 made to the synced folders on your device.
 
-https://help.mega.io/installs-apps/desktop-syncing
+https://mega.io/syncing
 
 # Supported Platforms
 
@@ -33,9 +33,9 @@ https://mega.io/desktop
 # Source code
 
 Build instructions are provided in the distribution specific files:
-[Windows](README.win.md)
-[macOS](README.mac.md)
-[Linux](README.linux.md)
+- [Windows](README.win.md)
+- [macOS](README.mac.md)
+- [Linux](README.linux.md)
 
 # Issues
 

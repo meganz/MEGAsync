@@ -52,9 +52,12 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/SwitchButton.h
     gui/GuiUtilities.h
     gui/CancelConfirmWidget.h
+    gui/RemoteItemUi.h
     gui/WordWrapLabel.h
     gui/ThemeManager.h
     gui/AccountTypeWidget.h
+    gui/BannerWidget.h
+    gui/ApiImageLabel.h
     gui/NodeNameSetterDialog/NodeNameSetterDialog.h
     gui/NodeNameSetterDialog/NewFolderDialog.h
     gui/NodeNameSetterDialog/RenameNodeDialog.h
@@ -107,6 +110,7 @@ set(DESKTOP_APP_GUI_HEADERS
     gui/backups/BackupCandidatesFolderSizeRequester.h
     gui/SyncExclusions/AddExclusionRule.h
     gui/syncs/SyncsComponent.h
+    gui/syncs/SyncsQmlDialog.h
     gui/syncs/Syncs.h
     gui/user_messages/UserMessageCacheManager.h
     gui/user_messages/AlertFilterType.h
@@ -180,9 +184,12 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/SwitchButton.cpp
     gui/GuiUtilities.cpp
     gui/CancelConfirmWidget.cpp
+    gui/RemoteItemUi.cpp
     gui/WordWrapLabel.cpp
     gui/ThemeManager.cpp
     gui/AccountTypeWidget.cpp
+    gui/BannerWidget.cpp
+    gui/ApiImageLabel.cpp
     gui/NodeNameSetterDialog/NodeNameSetterDialog.cpp
     gui/NodeNameSetterDialog/NewFolderDialog.cpp
     gui/NodeNameSetterDialog/RenameNodeDialog.cpp
@@ -233,6 +240,7 @@ set(DESKTOP_APP_GUI_SOURCES
     gui/backups/BackupCandidatesFolderSizeRequester.cpp
     gui/SyncExclusions/AddExclusionRule.cpp
     gui/syncs/SyncsComponent.cpp
+    gui/syncs/SyncsQmlDialog.cpp
     gui/syncs/Syncs.cpp
     gui/user_messages/UserMessageCacheManager.cpp
     gui/user_messages/AlertFilterType.cpp
@@ -473,6 +481,9 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/NotificationsSettings.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/OpenBackupsFolder.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/ProgressIndicatorDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncSettingsUIBase.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
@@ -480,6 +491,7 @@ set (DESKTOP_APP_GUI_UI_FILES_ROOT
     ${CMAKE_CURRENT_LIST_DIR}/ui/AccountDetailsDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveBackupDialog.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoveSyncConfirmationDialog.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/DownloadFromMegaDialog.ui
 )
 
 list(JOIN DESKTOP_APP_GUI_UI_FILES "|" DESKTOP_APP_GUI_UI_FILES_TEMP )
@@ -488,6 +500,10 @@ list(JOIN DESKTOP_APP_GUI_UI_FILES_ROOT "|" DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP )
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES=\"${DESKTOP_APP_GUI_UI_FILES_TEMP}\"")
 target_compile_definitions(MEGAsync PRIVATE "DESKTOP_APP_GUI_UI_FILES_ROOT=\"${DESKTOP_APP_GUI_UI_FILES_ROOT_TEMP}\"")
 
+set (DESKTOP_APP_GUI_UI_FILES
+    ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+)
+
 target_sources(MEGAsync
     PRIVATE
     ${DESKTOP_APP_GUI_HEADERS}
@@ -495,10 +511,6 @@ target_sources(MEGAsync
     ${DESKTOP_APP_GUI_RESOURCES}
     ${DESKTOP_APP_QM_FILES}
     ${DESKTOP_APP_GUI_UI_FILES}
-)
-
-target_include_directories(MEGAsync PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}
 )
 
 set (INCLUDE_DIRECTORIES
@@ -515,6 +527,7 @@ set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}/ui
     ${CMAKE_CURRENT_LIST_DIR}/user_messages
     ${CMAKE_CURRENT_LIST_DIR}/DeviceCentre
+    ${CMAKE_CURRENT_LIST_DIR}/tokenizer
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})
 

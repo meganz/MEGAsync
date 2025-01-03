@@ -1,11 +1,10 @@
 #include "TransferManagerDelegateWidget.h"
-#include "ui_TransferManagerDelegateWidget.h"
 
-#include "MegaTransferView.h"
 #include "megaapi.h"
-#include "Utilities.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MegaTransferView.h"
+#include "ui_TransferManagerDelegateWidget.h"
+#include "Utilities.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>

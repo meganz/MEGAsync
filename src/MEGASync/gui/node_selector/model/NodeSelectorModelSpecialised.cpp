@@ -1,12 +1,8 @@
 #include "NodeSelectorModelSpecialised.h"
-#include "MegaApplication.h"
-#include "Utilities.h"
-#include "SyncInfo.h"
-#include "CameraUploadFolder.h"
-#include "MyChatFilesFolder.h"
-#include "MyBackupsHandle.h"
 
-#include "mega/types.h"
+#include "MegaApplication.h"
+#include "MyBackupsHandle.h"
+#include "Utilities.h"
 
 #include <QApplication>
 #include <QToolTip>

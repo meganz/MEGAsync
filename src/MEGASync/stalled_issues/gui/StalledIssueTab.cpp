@@ -1,9 +1,9 @@
 #include "StalledIssueTab.h"
-#include "ui_StalledIssueTab.h"
 
-#include "Utilities.h"
-#include "StalledIssuesModel.h"
 #include "MegaApplication.h"
+#include "StalledIssuesModel.h"
+#include "ui_StalledIssueTab.h"
+#include "Utilities.h"
 
 const char* StalledIssueTab::HOVER_PROPERTY = "itsHover";
 

@@ -68,6 +68,7 @@ FooterButtonsPage {
                     description: SyncsStrings.selectiveSyncDescription
                     imageSource: Images.selectiveSync
                     ButtonGroup.group: buttonGroup
+                    checked: true
                 }
             }
         }

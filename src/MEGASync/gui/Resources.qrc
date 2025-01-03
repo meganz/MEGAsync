@@ -21,6 +21,10 @@
         <file>images/themed/light/switch_off.svg</file>
         <file>images/themed/light/radio_unchecked.svg</file>
         <file>images/themed/light/radio_checked.svg</file>
+        <file>images/themed/light/chevron-up_default.svg</file>
+        <file>images/themed/light/chevron-up_disabled.svg</file>
+        <file>images/themed/light/chevron-up_hover.svg</file>
+        <file>images/themed/light/chevron-up_press.svg</file>
         <file>images/themed/dark/switch_on_pressed.svg</file>
         <file>images/themed/dark/switch_on_hover.svg</file>
         <file>images/themed/dark/switch_on.svg</file>
@@ -105,5 +109,7 @@
         <file>images/key_pass.png</file>
         <file>images/key_pass@2x.png</file>
         <file>images/key_pass@3x.png</file>
+        <file>images/themed/light/error_sync_icon.svg</file>
+        <file>images/themed/dark/error_sync_icon.svg</file>
     </qresource>
 </RCC>

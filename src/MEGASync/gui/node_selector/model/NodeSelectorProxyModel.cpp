@@ -1,8 +1,10 @@
 ﻿#include "NodeSelectorProxyModel.h"
+
 #include "megaapi.h"
-#include "NodeSelectorModel.h"
 #include "MegaApplication.h"
+#include "NodeSelectorModel.h"
 #include "QThread"
+
 #include <QDebug>
 
 NodeSelectorProxyModel::NodeSelectorProxyModel(QObject* parent) :

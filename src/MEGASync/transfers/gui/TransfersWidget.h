@@ -1,17 +1,15 @@
 #ifndef TRANSFERSWIDGET_H
 #define TRANSFERSWIDGET_H
 
-#include <QWidget>
+#include "ButtonIconManager.h"
+#include "MegaDelegateHoverManager.h"
 #include "MegaTransferDelegate.h"
 #include "TransfersManagerSortFilterProxyModel.h"
-#include "MegaDelegateHoverManager.h"
-#include "TransferManagerLoadingItem.h"
-#include "ViewLoadingScene.h"
-#include "ButtonIconManager.h"
 
-#include <QToolButton>
-#include <QStandardItemModel>
 #include <QMessageBox>
+#include <QStandardItemModel>
+#include <QToolButton>
+#include <QWidget>
 
 namespace Ui {
 class TransfersWidget;

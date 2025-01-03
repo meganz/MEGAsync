@@ -1,10 +1,10 @@
 #ifndef TRANSFERMENUITEMACTION_H
 #define TRANSFERMENUITEMACTION_H
 
-#include <QWidgetAction>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-#include <QHBoxLayout>
+#include <QWidgetAction>
 
 class MenuItemAction : public QWidgetAction
 {

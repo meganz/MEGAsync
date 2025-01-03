@@ -2,11 +2,11 @@
 #define LINKOBJECT_H
 
 #include "megaapi.h"
-#include <QList>
-#include <QString>
-#include <QObject>
-#include <memory>
 #include "SetTypes.h"
+
+#include <QList>
+#include <QObject>
+#include <QString>
 
 enum linkType { INVALID, NODE, SET };
 enum linkStatus { LOADING, CORRECT, WARNING, FAILED };

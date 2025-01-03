@@ -1,8 +1,8 @@
-#include "mega/types.h"
 #include "TransferQuota.h"
-#include "Platform.h"
-#include "OverQuotaDialog.h"
+
 #include "DialogOpener.h"
+#include "OverQuotaDialog.h"
+#include "Platform.h"
 #include "StatsEventHandler.h"
 
 TransferQuota::TransferQuota(std::shared_ptr<DesktopNotifications> desktopNotifications)
@@ -268,14 +268,18 @@ void TransferQuota::checkAlertDismissed(OverQuotaDialogType type, std::function<
     func(QDialog::Rejected);
 }
 
-QTime TransferQuota::getTransferQuotaDeadline()
+QTime TransferQuota::getRemainingTransferQuotaTime()
 {
-    auto seconds = std::chrono::duration_cast<std::chrono::seconds>(mWaitTimeUntil.time_since_epoch()).count();
-    auto now = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    auto timeToWait(seconds-now);
-    QDateTime dateTime;
-    dateTime = dateTime.addSecs(timeToWait);
-    return dateTime.time();
+    auto remainingDuration = std::chrono::duration_cast<std::chrono::seconds>(
+        mWaitTimeUntil - std::chrono::system_clock::now());
+    int remainingSeconds = static_cast<int>(remainingDuration.count());
+
+    if (remainingSeconds < 0)
+    {
+        remainingSeconds = 0;
+    }
+
+    return QTime(0, 0, 0).addSecs(remainingSeconds);
 }
 
 void TransferQuota::reset()

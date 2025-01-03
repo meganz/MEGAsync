@@ -1,13 +1,13 @@
 #ifndef STALLEDISSUEACTIONTITLE_H
 #define STALLEDISSUEACTIONTITLE_H
 
-#include <QWidget>
-#include <QMap>
-#include <QLabel>
-#include <QPointer>
-#include <QGraphicsOpacityEffect>
+#include "megaapi.h"
 
-#include <megaapi.h>
+#include <QGraphicsOpacityEffect>
+#include <QLabel>
+#include <QMap>
+#include <QPointer>
+#include <QWidget>
 
 #include <memory>
 

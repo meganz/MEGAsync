@@ -33,7 +33,7 @@ FooterButtonsPage {
 
     footerButtons {
         leftSecondary.visible: false
-        rightSecondary.text: Strings.viewInDeviceCentre
+        rightSecondary.text: Strings.viewInSettings
         rightPrimary {
             text: Strings.done
             icons: Icon {}

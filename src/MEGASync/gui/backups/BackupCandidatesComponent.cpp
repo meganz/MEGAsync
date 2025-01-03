@@ -55,9 +55,9 @@ void BackupCandidatesComponent::registerQmlModules()
     }
 }
 
-void BackupCandidatesComponent::openDeviceCentre() const
+void BackupCandidatesComponent::openBackupsTabInPreferences() const
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(SettingsDialog::BACKUP_TAB);
 }
 
 bool BackupCandidatesComponent::getComesFromSettings() const

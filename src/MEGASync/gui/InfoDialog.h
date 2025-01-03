@@ -1,27 +1,27 @@
 #ifndef INFODIALOG_H
 #define INFODIALOG_H
 
-#include <QDialog>
-#include <QTimer>
-#include <QProcess>
-#include <QDateTime>
-#include <QPainter>
-#include <QAbstractItemDelegate>
-
-#include "SettingsDialog.h"
+#include "FilterAlertWidget.h"
+#include "HighDpiResize.h"
+#include "MegaDelegateHoverManager.h"
 #include "MenuItemAction.h"
 #include "Preferences.h"
-#include "SyncInfo.h"
-#include <QGraphicsOpacityEffect>
-#include "TransferScanCancelUi.h"
-#include "HighDpiResize.h"
-#include "Utilities.h"
-#include "FilterAlertWidget.h"
 #include "QtPositioningBugFixer.h"
-#include "TransferQuota.h"
+#include "SettingsDialog.h"
 #include "StatusInfo.h"
+#include "SyncInfo.h"
 #include "SyncsMenu.h"
-#include "MegaDelegateHoverManager.h"
+#include "TransferQuota.h"
+#include "TransferScanCancelUi.h"
+#include "Utilities.h"
+
+#include <QAbstractItemDelegate>
+#include <QDateTime>
+#include <QDialog>
+#include <QGraphicsOpacityEffect>
+#include <QPainter>
+#include <QProcess>
+#include <QTimer>
 
 #include <memory>
 #ifdef _WIN32

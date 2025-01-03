@@ -1,4 +1,5 @@
 #include "NautilusFileManager.h"
+
 #include <QProcess>
 
 const QString NautilusFileManager::OpenNewWindowParam = QLatin1String("--new-window");

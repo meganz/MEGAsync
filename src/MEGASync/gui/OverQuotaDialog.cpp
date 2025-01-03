@@ -1,11 +1,11 @@
 #include "OverQuotaDialog.h"
-#include "ui_OverQuotaDialog.h"
-#include "mega/types.h"
-#include "Utilities.h"
-#include "Preferences.h"
 
-#include <QtConcurrent/QtConcurrent>
+#include "Preferences.h"
+#include "ui_OverQuotaDialog.h"
+#include "Utilities.h"
+
 #include <QDesktopServices>
+#include <QtConcurrent/QtConcurrent>
 
 OverQuotaDialog::OverQuotaDialog(OverQuotaDialogType type, QWidget *parent) :
     QDialog(parent),

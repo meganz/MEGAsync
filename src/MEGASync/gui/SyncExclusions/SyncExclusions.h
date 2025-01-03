@@ -1,8 +1,9 @@
 #ifndef SYNCEXCLUSIONS_H
 #define SYNCEXCLUSIONS_H
 
-#include "QmlDialogWrapper.h"
 #include "ExclusionRulesModel.h"
+#include "QmlDialogWrapper.h"
+
 #include <QScreen>
 
 class SyncExclusions : public QMLComponent

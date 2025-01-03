@@ -1,7 +1,6 @@
 #include "TransferRemainingTime.h"
 
 #include <algorithm>
-#include <functional>
 #include <vector>
 
 TransferRemainingTime::TransferRemainingTime()

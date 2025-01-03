@@ -3,25 +3,24 @@
 
 #include "megaapi.h"
 #include "ThreadPool.h"
-#include <QString>
-#include <QHash>
-#include <QPixmap>
-#include <QProgressDialog>
+
 #include <QDesktopServices>
-#include <QFuture>
 #include <QDir>
+#include <QEasingCurve>
+#include <QEventLoop>
+#include <QFuture>
+#include <QHash>
 #include <QIcon>
 #include <QLabel>
-#include <QQueue>
-#include <QEventLoop>
 #include <QMetaEnum>
+#include <QPixmap>
+#include <QProgressDialog>
+#include <QQueue>
+#include <QString>
 #include <QTimer>
-
-#include <QEasingCurve>
+#include <sys/stat.h>
 
 #include <functional>
-
-#include <sys/stat.h>
 
 #ifdef __APPLE__
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAsync", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \

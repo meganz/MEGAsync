@@ -1,11 +1,7 @@
 #include "IgnoredStalledIssue.h"
 
-#include <StalledIssuesUtilities.h>
-#include <MegaApplication.h>
+#include "MegaApplication.h"
 #include "MegaIgnoreManager.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <StalledIssuesModel.h>
 
 QMap<mega::MegaHandle, bool> IgnoredStalledIssue::mSymLinksIgnoredInSyncs = QMap<mega::MegaHandle, bool>();
 

@@ -1,10 +1,12 @@
 #ifndef VERIFYLOCKMESSAGE_H
 #define VERIFYLOCKMESSAGE_H
 
+#include "megaapi.h"
+
 #include <QDialog>
 #include <QMouseEvent>
+
 #include <memory>
-#include "megaapi.h"
 
 #ifdef __APPLE__
     #include "platform/macx/NativeMacPopover.h"

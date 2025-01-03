@@ -1,7 +1,6 @@
 #include "StalledIssueChooseWidget.h"
 
 #include "MegaApplication.h"
-#include "PlatformStrings.h"
 #include "StalledIssueHeader.h"
 #include "StalledIssuesModel.h"
 #include "ui_StalledIssueChooseWidget.h"

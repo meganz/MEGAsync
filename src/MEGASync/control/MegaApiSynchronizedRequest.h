@@ -1,10 +1,10 @@
 #ifndef MEGAAPISYNCHRONIZEDREQUEST_H
 #define MEGAAPISYNCHRONIZEDREQUEST_H
 
-#include <megaapi.h>
-#include <QTMegaRequestListener.h>
+#include "megaapi.h"
 #include "RequestListenerManager.h"
-#include <qeventloop.h>
+
+#include <QEventLoop>
 
 class MegaApiSynchronizedRequest
 {

@@ -1,15 +1,14 @@
 #ifndef TRANSFERBASEDELEGATEWIDGET
 #define TRANSFERBASEDELEGATEWIDGET
 
-#include "TransferRemainingTime.h"
 #include "Preferences.h"
 #include "TransferItem.h"
 
 #include <QModelIndex>
-#include <QWidget>
-#include <QToolButton>
-#include <QStyleOptionViewItem>
 #include <QSpacerItem>
+#include <QStyleOptionViewItem>
+#include <QToolButton>
+#include <QWidget>
 
 enum class TRANSFER_STATES
 {

@@ -1,4 +1,5 @@
 #include "CommonMessages.h"
+
 #include "Utilities.h"
 
 #include <QCoreApplication>

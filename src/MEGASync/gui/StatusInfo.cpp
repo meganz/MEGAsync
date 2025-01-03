@@ -1,4 +1,5 @@
 #include "StatusInfo.h"
+
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
 #include <MegaApplication.h>

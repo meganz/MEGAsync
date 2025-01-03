@@ -1396,9 +1396,6 @@
         <file>images/sync_context_menu/minus-circle.png</file>
         <file>images/sync_context_menu/minus-circle@2x.png</file>
         <file>images/sync_context_menu/minus-circle@3x.png</file>
-        <file>images/sync_context_menu/search-dark-small.png</file>
-        <file>images/sync_context_menu/search-dark-small@2x.png</file>
-        <file>images/sync_context_menu/search-dark-small@3x.png</file>
         <file>images/sync_context_menu/search-small.png</file>
         <file>images/sync_context_menu/search-small@2x.png</file>
         <file>images/sync_context_menu/search-small@3x.png</file>
@@ -1510,5 +1507,11 @@
         <file>images/StalledIssues/x-circle-solid@2x.png</file>
         <file>images/StalledIssues/x-circle-solid@3x.png</file>
         <file>images/star-spark.svg</file>
+        <file>images/banner/warning.svg</file>
+        <file>images/banner/error.svg</file>
+        <file>images/banner/info.svg</file>
+        <file>images/default-avatar.jpg</file>
+        <file>images/default-avatar@2x.jpg</file>
+        <file>images/default-avatar@3x.jpg</file>
     </qresource>
 </RCC>

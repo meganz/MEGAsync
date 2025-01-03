@@ -2,12 +2,12 @@
 #define QMLCOMPONENTWRAPPER_H
 
 #include "DialogOpener.h"
+#include "megaapi.h"
 #include "MegaApplication.h"
 #include "QmlDialog.h"
 #include "QmlManager.h"
 #include "StatsEventHandler.h"
 
-#include <megaapi.h>
 #include <QApplication>
 #include <QDebug>
 #include <QDialog>
@@ -17,7 +17,7 @@
 #include <QQmlContext>
 #include <QQmlEngine>
 #include <QQuickWindow>
-#include <QScreen> // Implicitly included
+#include <QScreen>
 
 template<class Type>
 class QmlDialogWrapper;

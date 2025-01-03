@@ -1,10 +1,9 @@
 #include "TransferBaseDelegateWidget.h"
-#include "QMegaMessageBox.h"
-#include <MegaTransferView.h>
+
 #include "MegaApplication.h"
 
-#include <QPointer>
 #include <QLayout>
+#include <QPointer>
 
 TransferBaseDelegateWidget::TransferBaseDelegateWidget(QWidget *parent)
     : QWidget(parent),

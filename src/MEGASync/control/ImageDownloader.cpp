@@ -24,16 +24,7 @@ ImageDownloader::ImageDownloader(unsigned int timeout, QObject* parent)
             this, &ImageDownloader::onRequestImgFinished);
 }
 
-void ImageDownloader::downloadImage(const QString& imageUrl,
-                                    QImage::Format format)
-{
-    downloadImage(imageUrl, 0, 0, format);
-}
-
-void ImageDownloader::downloadImage(const QString& imageUrl,
-                                    int width,
-                                    int height,
-                                    QImage::Format format)
+void ImageDownloader::downloadImage(const QString& imageUrl, QImage::Format format)
 {
     QUrl url(imageUrl);
     if (!url.isValid())
@@ -48,7 +39,7 @@ void ImageDownloader::downloadImage(const QString& imageUrl,
     QNetworkReply* reply = mManager->get(request);
     if (reply)
     {
-        auto imageData = std::make_shared<ImageData>(imageUrl, width, height, format);
+        auto imageData = std::make_shared<ImageData>(imageUrl, format);
         mReplies.insert(reply, imageData);
     }
     else
@@ -113,14 +104,9 @@ bool ImageDownloader::validateReply(QNetworkReply* reply,
 void ImageDownloader::processImageData(const QByteArray& bytes,
                                        const std::shared_ptr<ImageData>& imageData)
 {
-    QImage image(imageData->size, imageData->format);
+    QImage image(QSize(), imageData->format);
     if (image.loadFromData(bytes))
     {
-        if (imageData->size != QSize(0, 0) && image.size() != imageData->size)
-        {
-            image = image.scaled(imageData->size.width(),
-                                 imageData->size.height());
-        }
         emit downloadFinished(image, imageData->url);
     }
     else

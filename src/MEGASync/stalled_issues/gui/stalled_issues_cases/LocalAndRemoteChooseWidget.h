@@ -1,7 +1,8 @@
 #ifndef LOCALANDREMOTECHOOSEWIDGET_H
 #define LOCALANDREMOTECHOOSEWIDGET_H
 
-#include <StalledIssueChooseWidget.h>
+#include "LocalOrRemoteUserMustChooseStalledIssue.h"
+#include "StalledIssueChooseWidget.h"
 
 class StalledIssueChooseWidget;
 

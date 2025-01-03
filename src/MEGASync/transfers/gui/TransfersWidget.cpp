@@ -1,11 +1,12 @@
 #include "TransfersWidget.h"
-#include "ui_TransfersWidget.h"
+
 #include "MegaApplication.h"
 #include "QMegaMessageBox.h"
+#include "ui_TransfersWidget.h"
 
-#include <QTimer>
-#include <QtConcurrent/QtConcurrent>
 #include <QScrollBar>
+#include <QtConcurrent/QtConcurrent>
+#include <QTimer>
 
 TransfersWidget::TransfersWidget(QWidget* parent) :
     QWidget (parent),

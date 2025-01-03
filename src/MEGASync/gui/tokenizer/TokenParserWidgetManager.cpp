@@ -5,11 +5,10 @@
 #include "MegaApplication.h"
 #include "ThemeManager.h"
 
-#include <QtConcurrent/QtConcurrent>
-
 #include <QBitmap>
 #include <QComboBox>
 #include <QDir>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolButton>
 #include <QWidget>
 
@@ -183,6 +182,32 @@ void TokenParserWidgetManager::applyCurrentTheme()
             dialogsName << dialog->objectName();
         }
     }
+}
+
+QColor TokenParserWidgetManager::getColor(const QString& colorToken, const QString& defaultValue)
+{
+    QString color = defaultValue;
+
+    auto currentTheme = ThemeManager::instance()->getSelectedThemeString();
+
+    if (!mColorThemedTokens.contains(currentTheme))
+    {
+        qWarning() << __func__ << " Error theme not found : " << currentTheme;
+    }
+    else
+    {
+        const auto& colorTokens = mColorThemedTokens.value(currentTheme);
+        if (!colorTokens.contains(colorToken))
+        {
+            qWarning() << __func__ << " Error color token not found : " << colorToken;
+        }
+        else
+        {
+            color = colorTokens.value(colorToken);
+        }
+    }
+
+    return color;
 }
 
 void TokenParserWidgetManager::applyTheme(QWidget* widget)

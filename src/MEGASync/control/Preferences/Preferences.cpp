@@ -1,12 +1,13 @@
 #include "Preferences.h"
-#include "Version.h"
-#include "Platform.h"
+
 #include "FullName.h"
 #include "StatsEventHandler.h"
+#include "Version.h"
 
 #include <QDesktopServices>
 #include <QDir>
-#include <assert.h>
+
+#include <cassert>
 
 using namespace mega;
 
@@ -2715,6 +2716,12 @@ void Preferences::loadExcludedSyncNames()
 
     excludedSyncPaths.removeDuplicates();
     std::sort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
+}
+
+bool Preferences::hasLegacyExclusionRules()
+{
+    return (!getExcludedSyncNames().isEmpty() || !getExcludedSyncPaths().isEmpty() ||
+            lowerSizeLimit() || upperSizeLimit());
 }
 
 QMap<mega::MegaHandle, std::shared_ptr<SyncSettings> > Preferences::getLoadedSyncsMap() const

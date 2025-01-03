@@ -39,9 +39,9 @@ QString Onboarding::contextName()
     return QString::fromUtf8("onboardingAccess");
 }
 
-void Onboarding::openDeviceCentre() const
+void Onboarding::openPreferences(int tabIndex) const
 {
-    MegaSyncApp->openDeviceCentre();
+    MegaSyncApp->openSettings(tabIndex);
 }
 
 bool Onboarding::deviceNameAlreadyExists(const QString& name) const

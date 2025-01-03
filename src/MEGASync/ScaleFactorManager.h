@@ -1,8 +1,11 @@
-#pragma once
+#ifndef SCALE_FACTOR_MANAGER_H
+#define SCALE_FACTOR_MANAGER_H
+
 #include <QList>
 #include <QScreen>
 #include <QString>
 #include <QVector>
+
 #include <vector>
 
 struct ScreenInfo
@@ -58,3 +61,4 @@ private:
     bool computeScales();
     double computeScaleLinux(const ScreenInfo& screenInfo) const;
 };
+#endif

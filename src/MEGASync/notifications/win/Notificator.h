@@ -5,14 +5,14 @@
 #ifndef NOTIFICATOR_H
 #define NOTIFICATOR_H
 
+#include "NotificatorBase.h"
+
+#include <QHash>
 #include <QIcon>
+#include <QMutex>
 #include <QObject>
 #include <QPointer>
-#include <QMutex>
-#include <QHash>
 #include <QVariant>
-
-#include "NotificatorBase.h"
 
 /** Cross-platform desktop notification client. */
 class Notificator: public NotificatorBase

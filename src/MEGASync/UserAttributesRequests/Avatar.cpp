@@ -1,8 +1,8 @@
 #include "Avatar.h"
+
+#include "AvatarWidget.h"
 #include "FullName.h"
 #include "megaapi.h"
-#include "mega/types.h"
-#include "AvatarWidget.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
 
@@ -232,14 +232,16 @@ void Avatar::getLetterColor()
 const QPixmap& Avatar::getPixmap(const int& size) const
 {
     auto& icon = mIcon[size];
-    if(icon.isNull())
+    if (icon.isNull())
     {
-        if(!mUseImgFile)
+        if (!mUseImgFile)
         {
             // If the attribute is not ready, use the first char of the email as a placeholder.
-            icon = AvatarPixmap::createFromLetter(isAttributeReady() ? mLetterAvatarInfo.symbol
-                    : getEmail().at(0).toUpper(), mLetterAvatarInfo.primaryColor,
-                                                  mLetterAvatarInfo.secondaryColor, size);
+            icon = AvatarPixmap::createFromLetter(isAttributeReady() ? mLetterAvatarInfo.symbol :
+                                                                       getEmail().at(0).toUpper(),
+                                                  mLetterAvatarInfo.primaryColor,
+                                                  mLetterAvatarInfo.secondaryColor,
+                                                  size);
         }
         else
         {
@@ -249,6 +251,7 @@ const QPixmap& Avatar::getPixmap(const int& size) const
             if (icon.isNull())
             {
                 forceRequestAttribute();
+                icon = AvatarPixmap::maskFromImagePath(QString::fromUtf8(DEFAULT_AVATAR), size);
             }
         }
     }

@@ -1,14 +1,13 @@
 #include "StalledIssuesDelegateWidgetsCache.h"
 
-#include "LocalAndRemoteDifferentWidget.h"
 #include "FolderMatchedAgainstFileWidget.h"
+#include "IgnoredStalledIssue.h"
+#include "LocalAndRemoteDifferentWidget.h"
 #include "LocalAndRemoteNameConflicts.h"
+#include "MoveOrRenameCannotOccur.h"
 #include "OtherSideMissingOrBlocked.h"
 #include "StalledIssuesCaseHeaders.h"
-#include "MoveOrRenameCannotOccur.h"
 #include "StalledIssuesProxyModel.h"
-#include "IgnoredStalledIssue.h"
-
 #include "Utilities.h"
 
 const int StalledIssuesDelegateWidgetsCache::DELEGATEWIDGETS_CACHESIZE = 30;

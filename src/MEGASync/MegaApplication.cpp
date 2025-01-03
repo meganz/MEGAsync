@@ -36,21 +36,17 @@
 #include "QmlDialogWrapper.h"
 #include "QTMegaApiManager.h"
 #include "RequestListenerManager.h"
+#include "StalledIssuesDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
-#include "UpdatesModel.h"
 #include "UploadToMegaDialog.h"
 #include "UserAttributesManager.h"
 #include "UserMessageController.h"
 #include "Utilities.h"
 
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
-#include <DialogOpener.h>
 #include <QCheckBox>
 #include <QClipboard>
 #include <QDesktopWidget>
@@ -59,9 +55,11 @@
 #include <QNetworkProxy>
 #include <QScreen>
 #include <QSettings>
+#include <QtConcurrent/QtConcurrent>
 #include <QToolTip>
 #include <QTranslator>
-#include <StalledIssuesDialog.h>
+
+#include <cassert>
 
 #ifdef Q_OS_LINUX
 #include <condition_variable>
@@ -142,15 +140,16 @@ MegaApplication::MegaApplication(int& argc, char** argv):
         QString path = appBundlePath();
         if (path.compare(QStringLiteral("/Applications/MEGAsync.app")))
         {
-            QMegaMessageBox::MessageBoxInfo msgInfo;
-            msgInfo.title = QMegaMessageBox::errorTitle();
-            msgInfo.text = QCoreApplication::translate("MegaSyncError", "You can't run MEGA Desktop App from this location. Move it into the Applications folder then run it.");
-            msgInfo.buttons = QMessageBox::Ok;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox>)
-            {
-                ::exit(0);
-            };
-            QMegaMessageBox::information(msgInfo);
+            // Use regular QMessageBox with modal behaviour instead of QMegaMessageBox to avoid
+            // issues.
+            QMessageBox::warning(
+                nullptr,
+                QMegaMessageBox::errorTitle(),
+                QCoreApplication::translate("MegaSyncError",
+                                            "You can't run MEGA Desktop App from this location. "
+                                            "Move it into the Applications folder then run it."),
+                QMessageBox::Ok);
+            ::exit(0);
         }
     }
 #endif
@@ -703,6 +702,11 @@ void MegaApplication::initialize()
 
     mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
 
+    connect(mLinkProcessor,
+            &LinkProcessor::linkDownloadErrorDetected,
+            this,
+            &MegaApplication::onOpenLinkError);
+
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
     connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
@@ -1199,11 +1203,12 @@ void MegaApplication::start()
         QmlDialogManager::instance()->openOnboardingDialog();
     }
 
-    if(updated && !preferences->getSession().isEmpty())
+    static constexpr int FIRST_5_X_VERSION = 50000;
+    if (updated && !(preferences->getSession().isEmpty()) &&
+        (Preferences::lastVersionUponStartup < FIRST_5_X_VERSION))
     {
         QmlDialogManager::instance()->openWhatsNewDialog();
     }
-
     updateTrayIcon();
 }
 
@@ -1311,6 +1316,7 @@ if (!preferences->lastExecutionTime())
 
     if (preferences->getNotifyDisabledSyncsOnLogin())
     {
+        auto settingsTabToOpen = SettingsDialog::SYNCS_TAB;
         QString message;
         QVector<MegaSync::SyncType> syncsTypesToDismiss;
 
@@ -1334,20 +1340,20 @@ if (!preferences->lastExecutionTime())
         if (haveSyncs && haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY, MegaSync::TYPE_BACKUP};
-            message = tr("Some syncs and backups have been disabled. Go to device centre to enable "
-                         "them again.");
+            message = tr(
+                "Some syncs and backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveBackups)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_BACKUP};
-            message = tr("One or more backups have been disabled. Go to device centre to enable "
-                         "them again.");
+            message =
+                tr("One or more backups have been disabled. Go to settings to enable them again.");
         }
         else if (haveSyncs)
         {
             syncsTypesToDismiss = {MegaSync::TYPE_TWOWAY};
-            message = tr(
-                "One or more syncs have been disabled. Go to device centre to enable them again.");
+            message =
+                tr("One or more syncs have been disabled. Go to settings to enable them again.");
         }
 
         // Display the message if it has been set
@@ -1358,15 +1364,15 @@ if (!preferences->lastExecutionTime())
             msgInfo.text = message;
             msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
             QMap<QMessageBox::Button, QString> textsByButton;
-            textsByButton.insert(QMessageBox::Yes, tr("Open device centre"));
+            textsByButton.insert(QMessageBox::Yes, tr("Open settings"));
             textsByButton.insert(QMessageBox::No, tr("Dismiss"));
             msgInfo.buttonsText = textsByButton;
             msgInfo.defaultButton = QMessageBox::No;
-            msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
+            msgInfo.finishFunc = [this, settingsTabToOpen](QPointer<QMessageBox> msg)
             {
                 if (msg->result() == QMessageBox::Yes)
                 {
-                    openDeviceCentre();
+                    openSettings(settingsTabToOpen);
                 }
             };
             QMegaMessageBox::warning(msgInfo);
@@ -5224,6 +5230,7 @@ void MegaApplication::openSettingsAddSync(MegaHandle megaFolderHandle)
     }
     else
     {
+        openSettings(SettingsDialog::SYNCS_TAB);
         if (megaFolderHandle == ::mega::INVALID_HANDLE)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
@@ -5427,11 +5434,11 @@ void MegaApplication::createInfoDialogMenus()
                        "://images/ico_preferences.png", &MegaApplication::openSettings);
     recreateMenuAction(&myCloudAction, infoDialogMenu, tr("Cloud drive"), "://images/ico-cloud-drive.png", &MegaApplication::goToMyCloud);
 
-    recreateMenuAction(&deviceCentreAction,
-                       infoDialogMenu,
-                       tr("Device Centre"),
-                       "://images/ico-device-centre.svg",
-                       &MegaApplication::openDeviceCentre);
+    // recreateMenuAction(&deviceCentreAction,
+    //                    infoDialogMenu,
+    //                    tr("Device Centre"),
+    //                    "://images/ico-device-centre.svg",
+    //                    &MegaApplication::openDeviceCentre);
 
     bool previousEnabledState = exitAction->isEnabled();
     if (!mSyncs2waysMenu)
@@ -5486,7 +5493,7 @@ void MegaApplication::createInfoDialogMenus()
     }
 
     infoDialogMenu->addAction(myCloudAction);
-    infoDialogMenu->addAction(deviceCentreAction);
+    // infoDialogMenu->addAction(deviceCentreAction);
     infoDialogMenu->addSeparator();
     if (mSyncs2waysMenu)
         infoDialogMenu->addAction(mSyncs2waysMenu->getAction());
@@ -6245,6 +6252,34 @@ void MegaApplication::onScheduledExecution()
     onGlobalSyncStateChangedImpl();
 }
 
+void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
+{
+    const QString title = tr("Folder download error");
+
+    QString message;
+    if (errorCode == MegaError::API_EWRITE)
+    {
+        if (mightBeCaseSensitivityIssue(path))
+        {
+            message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
+                         "casing mismatch. Ensure the folders match exactly and try again.");
+        }
+        else
+        {
+            message =
+                tr("The folder %1 can't be downloaded. Check the download destination folder.");
+        }
+    }
+    else
+    {
+        const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
+        message =
+            tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
+    }
+
+    showErrorMessage(message, title);
+}
+
 void MegaApplication::onGlobalSyncStateChanged(MegaApi* api)
 {
     // Don't execute the "onGlobalSyncStateChangedImpl" function too often or the dialog locks up,
@@ -6305,4 +6340,10 @@ void MegaApplication::requestFetchSetFromLink(const QString& link)
         mSetManager->requestFetchSetFromLink(link);
     }
 
+}
+
+bool MegaApplication::mightBeCaseSensitivityIssue(const QString& folderPath)
+{
+    QFileInfo info(folderPath);
+    return info.exists();
 }

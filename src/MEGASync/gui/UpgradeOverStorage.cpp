@@ -1,11 +1,11 @@
 #include "UpgradeOverStorage.h"
+
+#include "AccountDetailsManager.h"
+#include "DialogOpener.h"
+#include "PlanWidget.h"
+#include "Preferences.h"
 #include "ui_UpgradeOverStorage.h"
 #include "Utilities.h"
-#include "Preferences.h"
-#include "PlanWidget.h"
-#include "MegaApplication.h"
-#include "DialogOpener.h"
-#include "AccountDetailsManager.h"
 
 using namespace mega;
 

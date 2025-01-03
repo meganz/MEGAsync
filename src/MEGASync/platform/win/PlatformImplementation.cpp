@@ -1,31 +1,30 @@
 #include "PlatformImplementation.h"
 
-#include <platform/win/WinAPIShell.h>
-#include <platform/win/RecursiveShellNotifier.h>
-#include <platform/win/ThreadedQueueShellNotifier.h>
-
-#include <QtPlatformHeaders/QWindowsWindowFunctions>
-
+#include "RecursiveShellNotifier.h"
+#include "ThreadedQueueShellNotifier.h"
+#include "WinAPIShell.h"
+#include "WinTrayReceiver.h"
+#include <AccCtrl.h>
+#include <Aclapi.h>
+#include <Sddl.h>
 #include <Shlobj.h>
 #include <Shlwapi.h>
-#include <tlhelp32.h>
-#include <tchar.h>
-#include <Aclapi.h>
-#include <AccCtrl.h>
-#include <comdef.h>
-#include <wincred.h>
-#include <taskschd.h>
-#include <Sddl.h>
-#include <time.h>
-#include <iostream>
-#include <dpapi.h>
-#include <shellapi.h>
 
-#include <QtWin>
-#include <QOperatingSystemVersion>
-#include <QScreen>
 #include <QDesktopWidget>
 #include <QHostInfo>
+#include <QOperatingSystemVersion>
+#include <QScreen>
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+#include <QtWin>
+
+#include <comdef.h>
+#include <dpapi.h>
+#include <shellapi.h>
+#include <taskschd.h>
+#include <tchar.h>
+#include <time.h>
+#include <tlhelp32.h>
+#include <wincred.h>
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4996)

@@ -2,9 +2,7 @@
 #define WINAPISHELL_H
 
 #include "ShellNotifier.h"
-
 #include <Shlobj.h>
-#include <string>
 
 class WindowsApiShellNotifier : public AbstractShellNotifier
 {

@@ -1,10 +1,10 @@
 #ifndef TransferScanCancelUi_H
 #define TransferScanCancelUi_H
 
-#include <QStackedWidget>
-
 #include "CancelConfirmWidget.h"
 #include "ScanningWidget.h"
+
+#include <QStackedWidget>
 
 class TransferScanCancelUi : public QObject
 {

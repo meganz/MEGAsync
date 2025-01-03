@@ -1,7 +1,7 @@
 #ifndef SYNCS_COMPONENT_H
 #define SYNCS_COMPONENT_H
 
-#include "qml/QmlDialogWrapper.h"
+#include "QmlDialogWrapper.h"
 
 class SyncsComponent : public QMLComponent
 {
@@ -18,7 +18,7 @@ public:
 
     static void registerQmlModules();
 
-    Q_INVOKABLE void openDeviceCentre() const;
+    Q_INVOKABLE void openSyncsTabInPreferences() const;
     Q_INVOKABLE void openExclusionsDialog(const QString& folder) const;
 
     void setComesFromSettings(bool value);

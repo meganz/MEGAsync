@@ -4,11 +4,11 @@
 #include "TransferItem.h"
 #include "TransfersSortFilterProxyBaseModel.h"
 
-#include <QSortFilterProxyModel>
-#include <QReadWriteLock>
 #include <QFutureWatcher>
 #include <QMutex>
 #include <QPointer>
+#include <QReadWriteLock>
+#include <QSortFilterProxyModel>
 
 class TransferBaseDelegateWidget;
 class TransfersModel;

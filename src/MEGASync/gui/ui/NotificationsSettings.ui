@@ -7,8 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>391</width>
-    <height>570</height>
+    <height>535</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>559</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
@@ -18,13 +30,13 @@
     <number>24</number>
    </property>
    <property name="leftMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>5</number>
+    <number>10</number>
    </property>
    <property name="rightMargin">
-    <number>20</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -38,6 +50,21 @@
       <string notr="true">mega</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>12</number>
+      </property>
+      <property name="topMargin">
+       <number>12</number>
+      </property>
+      <property name="rightMargin">
+       <number>6</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
       <item>
        <widget class="QLabel" name="GeneralSwithState">
         <property name="font">
@@ -58,7 +85,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>130</width>
+          <width>0</width>
           <height>20</height>
          </size>
         </property>
@@ -79,7 +106,7 @@
    </item>
    <item>
     <widget class="QWidget" name="NotificationSettingCheckboxes" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_6">
+     <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0,0,0">
       <property name="spacing">
        <number>24</number>
       </property>
@@ -87,7 +114,7 @@
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -104,8 +131,20 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="CompletedUploadsDownloadsCheck">
@@ -114,6 +153,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
@@ -141,6 +192,18 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
           <number>10</number>
          </property>
@@ -151,6 +214,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
@@ -174,6 +249,18 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -195,6 +282,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
@@ -222,6 +321,18 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>10</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
           <number>10</number>
          </property>
@@ -232,6 +343,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
@@ -255,6 +378,18 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -276,6 +411,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
@@ -303,8 +450,20 @@
          <string notr="true">mega</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
+         <property name="spacing">
+          <number>12</number>
+         </property>
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>12</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
          <property name="bottomMargin">
-          <number>10</number>
+          <number>12</number>
          </property>
          <item>
           <widget class="QCheckBox" name="DesktopCheck">
@@ -313,6 +472,18 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16</height>
+            </size>
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>

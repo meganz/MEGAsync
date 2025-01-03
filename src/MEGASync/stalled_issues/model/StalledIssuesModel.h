@@ -1,22 +1,21 @@
 #ifndef STALLEDISSUESMODEL_H
 #define STALLEDISSUESMODEL_H
 
-#include "QTMegaRequestListener.h"
-#include "QTMegaGlobalListener.h"
-#include "StalledIssue.h"
-#include "StalledIssuesUtilities.h"
-#include "ViewLoadingScene.h"
-#include <MoveOrRenameCannotOccurIssue.h>
-#include <StalledIssuesFactory.h>
-#include <DesktopNotifications.h>
+#include "MoveOrRenameCannotOccurIssue.h"
 #include "QMegaMessageBox.h"
+#include "QTMegaGlobalListener.h"
+#include "QTMegaRequestListener.h"
+#include "StalledIssue.h"
+#include "StalledIssuesFactory.h"
+#include "StalledIssuesUtilities.h"
 #include "TextDecorator.h"
+#include "ViewLoadingScene.h"
 
-#include <QObject>
-#include <QReadWriteLock>
 #include <QAbstractItemModel>
-#include <QTimer>
+#include <QObject>
 #include <QPointer>
+#include <QReadWriteLock>
+#include <QTimer>
 
 class LoadingSceneMessageHandler;
 class NameConflictedStalledIssue;

@@ -1,13 +1,12 @@
 #ifndef ASYNC_HANDLER
 #define ASYNC_HANDLER
 
-
-#include <mutex>
-#include <thread>
-#include <atomic>
-#include <condition_variable>
 #include "ProtectedQueue.h"
 
+#include <atomic>
+#include <condition_variable>
+#include <mutex>
+#include <thread>
 
 template<typename T>
 class AsyncHandler

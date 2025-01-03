@@ -1,22 +1,20 @@
 #ifndef TRANSFERMANAGER_H
 #define TRANSFERMANAGER_H
 
-#include "TransferScanCancelUi.h"
+#include "ButtonIconManager.h"
 #include "megaapi.h"
 #include "Preferences.h"
-#include "MenuItemAction.h"
-#include "Utilities.h"
-#include "TransferItem.h"
-#include "TransfersModel.h"
-#include "TransferQuota.h"
-#include "TransfersWidget.h"
 #include "StatusInfo.h"
-#include "ButtonIconManager.h"
+#include "TransferQuota.h"
+#include "TransferScanCancelUi.h"
+#include "TransfersModel.h"
+#include "TransfersWidget.h"
+#include "Utilities.h"
 
-#include <QGraphicsEffect>
-#include <QTimer>
 #include <QDialog>
+#include <QGraphicsEffect>
 #include <QMenu>
+#include <QTimer>
 
 namespace Ui {
 class TransferManager;
@@ -78,8 +76,6 @@ private:
     QTimer mScanningTimer;
     int mScanningAnimationIndex;
 
-    QTimer mTransferQuotaTimer;
-
     std::shared_ptr<Preferences> mPreferences;
     QPoint mDragPosition;
     QMap<TransfersWidget::TM_TAB, QFrame*> mTabFramesToggleGroup;
@@ -124,12 +120,8 @@ private:
 
     void updateCurrentSearchText();
     void updateCurrentCategoryTitle();
-    void updateCurrentOverQuotaLink();
 
     void filterByTab(TransfersWidget::TM_TAB tab);
-
-    void setStorageTextState(const QVariant& stateValue, const QString& text);
-    void updateStorageOQText();
 
 private slots:
     void on_tCompleted_clicked();
@@ -178,8 +170,6 @@ private slots:
 
     void updateTransferWidget(QWidget* widgetToShow);
     void onScanningAnimationUpdate();
-
-    void onTransferQuotaExceededUpdate();
 
     void onSortCriterionChanged(int sortBy, Qt::SortOrder order);
 };

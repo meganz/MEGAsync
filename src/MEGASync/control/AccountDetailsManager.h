@@ -1,15 +1,14 @@
 #ifndef ACCOUNT_DETAILS_MANAGER_H
 #define ACCOUNT_DETAILS_MANAGER_H
 
-#include "Utilities.h"
-
 #include "megaapi.h"
+#include "Utilities.h"
 
 #include <QObject>
 #include <QTimer>
 
-#include <memory>
 #include <functional>
+#include <memory>
 
 class Preferences;
 

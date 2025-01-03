@@ -1,4 +1,5 @@
 #include "LockedPopOver.h"
+
 #include "ui_LockedPopOver.h"
 
 #include <QMouseEvent>

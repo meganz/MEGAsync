@@ -1,20 +1,18 @@
 #include "StalledIssueHeader.h"
 
-#include "StalledIssuesModel.h"
-#include "StalledIssuesCaseHeaders.h"
+#include "DialogOpener.h"
 #include "IgnoredStalledIssue.h"
-
-#include <MegaApplication.h>
-
-#include <QDialogButtonBox>
+#include "MegaApplication.h"
+#include "QMegaMessageBox.h"
+#include "StalledIssuesCaseHeaders.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesModel.h"
 #include "Utilities.h"
-#include <DialogOpener.h>
-#include <StalledIssuesDialog.h>
-#include <QMegaMessageBox.h>
 
+#include <QCheckBox>
+#include <QDialogButtonBox>
 #include <QFile>
 #include <QMouseEvent>
-#include <QCheckBox>
 
 const int StalledIssueHeader::ARROW_INDENT = 6 + 16; //Left margin + arrow;
 const int StalledIssueHeader::ICON_INDENT = 8 + 48; // fileIcon + spacer;

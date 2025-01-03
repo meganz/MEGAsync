@@ -2,21 +2,17 @@
 #define WINDOWSPLATFORM_H
 
 #include "AbstractPlatform.h"
-
 #include "platform/win/WinShellDispatcherTask.h"
-#include "platform/win/WinTrayReceiver.h"
 
 #include <QApplication>
-#include <QString>
+#include <QDir>
 #include <QFile>
 #include <QHash>
-#include <QPixmap>
-#include <QThread>
-#include <QDir>
-#include <QProcess>
 #include <QMenu>
-
-#include <queue>
+#include <QPixmap>
+#include <QProcess>
+#include <QString>
+#include <QThread>
 
 class PlatformImplementation : public AbstractPlatform
 {

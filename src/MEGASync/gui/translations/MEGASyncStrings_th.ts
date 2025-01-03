@@ -514,26 +514,6 @@
         <translation>นำไปใช้</translation>
     </message>
     <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>จำกัดอัปโหลด:</translation>
-    </message>
-    <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>จำกัดดาวน์โหลด:</translation>
-    </message>
-    <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>จำนวนการเชื่อมต่อต่อการถ่ายโอน:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>อัปเดต</translation>
-    </message>
-    <message>
         <source>Use HTTPS for transfers that don&apos;t start</source>
         <translatorcomment>Checkbox label to set the option to use https for transfer connections.</translatorcomment>
         <translation>ใช้ HTTPS ในกรณีที่ยังไม่เริ่มการถ่ายโอน</translation>
@@ -2078,11 +2058,6 @@
         <translation>ตั้งค่า</translation>
     </message>
     <message>
-        <source>Upgrade to PRO</source>
-        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>อัปเกรดบัญชี</translation>
-    </message>
-    <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
         <translation>เปิดการจัดการถ่ายโอน</translation>
@@ -2362,6 +2337,39 @@
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>ติดตั้งเพียงแค่สำหรับฉัน</translation>
+    </message>
+</context>
+<context>
+    <name>LinkProcessor</name>
+    <message>
+        <source>Terms of Service breach</source>
+        <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>ละเมิดเงื่อนไขการให้บริการ</translation>
+    </message>
+    <message>
+        <source>This link has expired</source>
+        <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>ลิงก์นี้หมดอายุแล้ว</translation>
+    </message>
+    <message>
+        <source>Link owner terminated</source>
+        <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>บัญชีเจ้าของลิงก์ถูกระงับ</translation>
+    </message>
+    <message>
+        <source>This link has been deleted</source>
+        <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>ลิงก์นี้ถูกลบออกแล้ว</translation>
+    </message>
+    <message>
+        <source>Copyright violation</source>
+        <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>ละเมิดลิขสิทธิ์</translation>
+    </message>
+    <message>
+        <source>This link is invalid</source>
+        <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>ลิงก์นี้ไม่ถูกต้อง</translation>
     </message>
 </context>
 <context>
@@ -3191,11 +3199,6 @@ https://mega.co.nz/#sync</source>
         <translation>รายการซิงค์บางรายการถูกปิดใช้งาน</translation>
     </message>
     <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>แอปจะยังทำงานต่อไปได้ แต่การอัปเดตจะไม่สนับสนุนเวอร์ชันก่อน macOS Sierra อีกต่อไป</translation>
-    </message>
-    <message>
         <source>Thank you for your collaboration</source>
         <translatorcomment>Informative message shown when a user makes a report to thank for his help.</translatorcomment>
         <translation>ขอบคุณสำหรับความร่วมมือของคุณ</translation>
@@ -3258,26 +3261,6 @@ Transfer will automatically resume when you re-open the app.</source>
         <translation>ไม่สามารถอัปเกรดความปลอดภัยได้ ข้อผิดพลาด: %1</translation>
     </message>
     <message>
-        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>การซิงค์และการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation>รายการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
-        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
-    </message>
-    <message>
-        <source>Open settings</source>
-        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation>เปิดการตั้งค่า</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translatorcomment>This is the string used to refer to settings.</translatorcomment>
         <translation>ตั้งค่า</translation>
@@ -3311,6 +3294,26 @@ Transfer will automatically resume when you re-open the app.</source>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Label to indicate that the current account transfer quota has been exceeded (tray icon tooltip). CON-561</translatorcomment>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
+    </message>
+    <message>
+        <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>การซิงค์และการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>One or more backups have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
+        <translation>รายการสำรองข้อมูลบางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
+        <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
+        <translation>รายการซิงค์บางอย่างถูกปิดใช้งาน ไปที่การตั้งค่าเพื่อเปิดใช้งานอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Open settings</source>
+        <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
+        <translation>เปิดการตั้งค่า</translation>
     </message>
 </context>
 <context>
@@ -4561,21 +4564,6 @@ Enter a different name</source>
         <translation>ข้อมูล</translation>
     </message>
     <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>ข้อมูล:</translation>
-    </message>
-    <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>ผู้ติดต่อ:</translation>
-    </message>
-    <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>การแชร์:</translation>
-    </message>
-    <message>
         <source>System notifications:</source>
         <translatorcomment>Title of a checkbox for disconnectig all notifications</translatorcomment>
         <translation>การแจ้งเตือนของระบบ:</translation>
@@ -4594,11 +4582,6 @@ Enter a different name</source>
         <source>Completed uploads and downloads</source>
         <translatorcomment>Title of a checkbox for disconnectig completed transfer notifications</translatorcomment>
         <translation>อัปโหลดและดาวน์โหลดเสร็จเรียบร้อย</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>อัปโหลดและดาวน์โหลด</translation>
     </message>
 </context>
 <context>
@@ -4647,16 +4630,6 @@ Enter a different name</source>
         <source>Backup to:</source>
         <translatorcomment>Text indicating where the selected folders are going to be backed up CON-468</translatorcomment>
         <translation>สำรองข้อมูลไปที่:</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>ยกเลิก</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>เลือก</translation>
     </message>
     <message>
         <source>Change folder</source>
@@ -4732,11 +4705,6 @@ Enter a different name</source>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>ยืนยันรหัสผ่าน</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>เรียบร้อย</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4854,29 +4822,9 @@ Enter a different name</source>
         <translation>เข้าสู่ระบบ[B]บัญชี MEGA[/B] ของคุณ</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>ต่อไป</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>ข้าม</translation>
-    </message>
-    <message>
-        <source>View in Settings</source>
-        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation>ดูในการตั้งค่า</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>รหัสผ่าน</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>ก่อนหน้า</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5119,11 +5067,6 @@ Enter a different name</source>
         <translation>รหัส 2FA ไม่ถูกต้อง</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>ลองอีกครั้ง</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>การสำรองข้อมูลของคุณได้รับการตั้งค่าเรียบร้อยแล้ว ข้อมูลที่เลือกไว้จะถูกสำรองข้อมูลโดยอัตโนมัติทุกครั้งที่แอปเดสก์ท็อปทำงานอยู่</translation>
@@ -5134,11 +5077,6 @@ Enter a different name</source>
         <translation>คุณสามารถดูข้อมูลสำรองและสถานะของข้อมูลสำรองได้ที่แท็บ ข้อมูลสำรอง ในเมนูการตั้งค่า</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>ตั้งค่าข้อยกเว้น</translation>
-    </message>
-    <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
         <translation>ซิงค์ไฟล์ทั้งหมดใน MEGA คลาวด์ของคุณกับอุปกรณ์ของคุณ</translation>
@@ -5147,6 +5085,11 @@ Enter a different name</source>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
         <translation>ซิงค์โฟลเดอร์ที่เลือกไว้ในคลาวด์ MEGA ของคุณกับอุปกรณ์ของคุณ</translation>
+    </message>
+    <message>
+        <source>View in Settings</source>
+        <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
+        <translation>ดูในการตั้งค่า</translation>
     </message>
 </context>
 <context>
@@ -5160,11 +5103,6 @@ Enter a different name</source>
         <source>View in MEGA</source>
         <translatorcomment>Button in settings to open the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>ดูใน MEGA</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>โฟลเดอร์สำรองข้อมูล:</translation>
     </message>
 </context>
 <context>
@@ -5367,6 +5305,21 @@ Enter a different name</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>สิทธิ์ระดับเจ้าของ:</translation>
     </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>สิทธิ์</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>นำไปใช้</translation>
+    </message>
 </context>
 <context>
     <name>PermissionsWidget</name>
@@ -5505,18 +5458,27 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
-- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
-- An installation issue which caused some Windows .dll files to be deleted has been resolved.
-- Third-party libraries have been updated.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation>- คุณสามารถเลือกไฟล์และโฟลเดอร์หลายรายการเพื่อลบออกจากคลาวด์ไดรฟ์ขณะดาวน์โหลดได้แล้ว
-- การสร้างการซิงค์และสำรองข้อมูลจากเมนูการตั้งค่าทำได้ง่ายกว่าเดิมด้วยอินเทอร์เฟซที่ได้รับการปรับปรุงใหม่
-- ปัญหาการติดตั้งที่ทำให้ไฟล์ .dll ของ Windows บางไฟล์ถูกลบได้ถูกแก้ไขแล้ว
-- ไลบรารี่ของบุคคลที่สามได้รับการอัปเดต
-- มีการแก้ไขบั๊กอื่น ๆ และมีการปรับปรุงเพิ่มเติมอีกมากมาย </translation>
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- เสถียรภาพที่ดียิ่งขึ้นด้วยการแยกการประมวลผลกราฟิก: เราได้อัปเกรดแอปของเราให้ทำงานส่วนของการประมวลผลกราฟิก (GFX) แยกออกมาเป็นกระบวนการอิสระ ซึ่งหมายความว่า หากไลบรารีกราฟิกของบุคคลที่สามเกิดปัญหา แอปจะยังคงทำงานได้อย่างเสถียรและไม่กระทบต่อประสบการณ์การใช้งาน ทำให้การใช้งานของคุณราบรื่นและไม่สะดุด
+- ยุติการสนับสนุน macOS 10.13 และ 10.14: อัปเดตครั้งนี้ไม่รองรับ macOS เวอร์ชัน 10.13 และ 10.14 อีกต่อไป เพื่อให้ได้รับการอัปเดตและการสนับสนุนอย่างต่อเนื่อง กรุณาอัปเกรด macOS ของคุณเป็นเวอร์ชันที่ใหม่กว่า
+- ออกแบบหน้าต่างตั้งค่าใหม่
+- ตรวจพบและแก้ไขปัญหาแอปได้ดียิ่งขึ้น
+- แก้ไขข้อผิดพลาดอื่น ๆ และปรับปรุงประสิทธิภาพในหลายด้าน
+</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
@@ -5585,11 +5547,6 @@ Enter a different name</source>
         <source>Auto-detect</source>
         <translatorcomment>Radio button to select auto detection for proxy configuration.</translatorcomment>
         <translation>ตรวจหาอัตโนมัติ</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>อัปเดต</translation>
     </message>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
@@ -6016,11 +5973,6 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Button to add new syncs or backups from settings window.SNC-2565</translatorcomment>
         <translation>เพิ่ม</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>ลบ</translation>
-    </message>
 </context>
 <context>
     <name>RemoteMoveOrRenameCannotOccurChooseWidget</name>
@@ -6076,11 +6028,6 @@ Do you want to delete it anyway?</source>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
         <translation>โฟลเดอร์จะถูกลบออกจาก MEGA แต่จะไม่ถูกลบออกจากคอมพิวเตอร์ของคุณ การดำเนินการนี้ไม่สามารถยกเลิกได้</translation>
-    </message>
-    <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>ยืนยัน</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6234,11 +6181,6 @@ Do you want to delete it anyway?</source>
         <translation>ช่วยเหลือ</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>ทำงานทันทีเมื่อเริ่มต้นระบบ</translation>
-    </message>
-    <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
         <translation>อัปเดตอัตโนมัติ</translation>
@@ -6272,16 +6214,6 @@ Do you want to delete it anyway?</source>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>ล้าง</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>เลือก</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
-        <translation>โฟลเดอร์เริ่มต้น</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -6494,49 +6426,9 @@ Do you want to delete it anyway?</source>
         <translation>พร็อกซี</translation>
     </message>
     <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>บังคับให้มีการสแกนแบบเต็ม</translation>
-    </message>
-    <message>
         <source>Session history</source>
         <translatorcomment>Button label text for opening account login history in MEGA online app in Security pane. Keep as short as possible.</translatorcomment>
         <translation>ประวัติการเข้าสู่ระบบ</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>ภาษา:</translation>
-    </message>
-    <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (ไฟล์แคชในเครื่อง):</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (ใน MEGA):</translation>
-    </message>
-    <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>ไฟล์เวอร์ชัน:</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>รายงานปัญหา:</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>พื้นที่เก็บข้อมูล:</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>โควต้าการถ่ายโอน:</translation>
     </message>
     <message>
         <source>Your account security depends on the strength of your password. Passwords should be unique and impossible to guess. We recommend using a password manager.</source>
@@ -6626,11 +6518,6 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
-        <translation>โหมดสลีป</translation>
-    </message>
-    <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
         <translation>โหมดสลีป</translation>
     </message>
     <message>
@@ -7126,6 +7013,16 @@ Do you want to delete it anyway?</source>
         <translatorcomment>Button label for Help in the lower left section of the dialog with link. to sync stall help page.SAT-199</translatorcomment>
         <translation>ช่วยเหลือ</translation>
     </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>รีเฟรช</translation>
+    </message>
+    <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>มีการเปลี่ยนแปลงชื่อโฟลเดอร์ที่ซิงค์ของคุณ รีเฟรชรายการปัญหาการซิงค์</translation>
+    </message>
 </context>
 <context>
     <name>StalledIssuesModel</name>
@@ -7345,6 +7242,69 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
         <source>Select items</source>
         <translatorcomment>Window title for node selector when is openned in stream mode</translatorcomment>
         <translation>เลือกรายการ</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>สูงสุด 32 ตัวอักษร</translation>
+    </message>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>มีอุปกรณ์ชื่อนี้อยู่แล้ว กรุณาใช้ชื่ออื่น</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>กรอกชื่ออุปกรณ์</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>ไม่อนุญาตให้ใช้อักขระต่อไปนี้: %1</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>ยกเลิก</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>เลือก</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>เสร็จแล้ว</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>ต่อไป</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>ข้าม</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>ก่อนหน้า</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>ลองอีกครั้ง</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>ตั้งค่าข้อยกเว้น</translation>
     </message>
 </context>
 <context>
@@ -7750,6 +7710,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsElements</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
+        <translation>นำไปใช้</translation>
+    </message>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
+        <translation>[B]ต้องการนำกฎการยกเว้นเดิมมาใช้หรือไม่[/B]</translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
+        <translation>กฎการยกเว้นที่คุณตั้งค่าไว้ในแอปเวอร์ชันก่อนหน้านี้ จะถูกนำมาใช้กับการซิงค์และสำรองข้อมูลทั้งหมดของคุณ กฎใหม่ที่สร้างขึ้นหลังจากนั้นจะถูกแทนที่</translation>
+    </message>
+</context>
+<context>
     <name>SyncSettingsUI</name>
     <message>
         <source>Synced Folders</source>
@@ -7837,6 +7815,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Underline link label to open a help.mega.io article.SNC-2565</translatorcomment>
         <translation>เรียนรู้เพิ่มเติม</translation>
     </message>
+    <message>
+        <source>Apply rules</source>
+        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
+        <translation>นำกฎมาใช้</translation>
+    </message>
+    <message>
+        <source>Apply previous exclusion rules</source>
+        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
+        <translation>การนำกฎการยกเว้นเดิมมาใช้</translation>
+    </message>
 </context>
 <context>
     <name>SyncTableView</name>
@@ -7861,14 +7849,19 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>พัก</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>สแกนแบบด่วน</translation>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>เริ่มการซิงค์ใหม่</translation>
     </message>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>สแกนแบบละเอียด</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>เริ่มการสำรองข้อมูลใหม่</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>สแกนใหม่</translation>
     </message>
 </context>
 <context>
@@ -8156,19 +8149,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation><numerusform>พบ %1 ผลลัพธ์</numerusform></translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>อัปเกรดตอนนี้</translation>
-    </message>
-    <message>
         <source>Transfer quota exceeded</source>
         <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
         <translation>เกินโควต้าการถ่ายโอนแล้ว</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>บัญชี MEGA ของคุณเต็มแล้ว</translation>
     </message>
     <message>
         <source>You can't continue downloading as you don't have enough transfer quota left for this IP address.
@@ -8186,6 +8169,16 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
         <translation><numerusform>พบปัญหาการซิงค์ข้อมูล</numerusform></translation>
+    </message>
+    <message>
+        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
+        <translation>พื้นที่จัดเก็บของคุณใกล้เต็มแล้ว ขอแนะนำให้คุณอัปเกรดแผนบริการก่อนที่พื้นที่จัดเก็บจะเต็ม เพื่อให้คุณยังคงสามารถอัปโหลดไฟล์ ซิงค์ข้อมูล และสำรองข้อมูลได้อย่างต่อเนื่อง</translation>
+    </message>
+    <message>
+        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
+        <translation>พื้นที่จัดเก็บเต็มแล้ว การอัปโหลดไฟล์ใหม่ถูกระงับชั่วคราว และการซิงค์ข้อมูลพร้อมกับการสำรองข้อมูลก็หยุดทำงานไปด้วย</translation>
     </message>
 </context>
 <context>
@@ -8990,17 +8983,17 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Business</source>
@@ -9011,6 +9004,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Pro Flexi</source>
         <translatorcomment>Text label indicating the Free tier of account type in Account pane, next to the shield icon indicating also the type of account. SNC-4555</translatorcomment>
         <translation>Pro Flexi</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
+        <translation>%1 จาก %2</translation>
     </message>
 </context>
 <context>
@@ -9063,28 +9061,23 @@ Please delete the folder sync from settings to cancel them.</source>
 <context>
     <name>WhatsNewStrings</name>
     <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>มีอะไรใหม่ ๆ บ้าง</translation>
-    </message>
-    <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>การอัปเดต</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>มีอะไรใหม่ใน MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>ประสิทธิภาพดีขึ้น</translation>
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation> ควบคุมได้มากขึ้น</translation>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>ควบคุมได้มากขึ้น</translation>
     </message>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>ตัวกรองขั้นสูง</translation>
     </message>
     <message>
@@ -9093,14 +9086,14 @@ Please delete the folder sync from settings to cancel them.</source>
         <translation>ซิงค์ไฟล์ได้เร็วขึ้นถึง 5 เท่า</translation>
     </message>
     <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>ตอนนี้เราให้คุณสามารถดูข้อมูลเกี่ยวกับปัญหาการซิงค์ทั้งหมดได้อย่างละเอียด และควบคุมวิธีการแก้ไขข้อขัดแย้งได้อย่างสมบูรณ์</translation>
+        <translation>มองเห็นปัญหาการซิงค์ได้อย่างชัดเจน และควบคุมวิธีการแก้ไขความขัดแย้งได้อย่างเต็มที่</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>ปรับแต่งการซิงค์และสำรองข้อมูลของคุณด้วยอินเทอร์เฟซใหม่ล่าสุดเพื่อแยกไฟล์และโฟลเดอร์ออก การตั้งค่าขั้นสูงช่วยให้คุณเขียนกฎการยกเว้นของคุณเองสำหรับการซิงค์และการสำรองข้อมูลแต่ละรายการได้</translation>
+        <translation>การตั้งค่าขั้นสูงเพื่อกำหนดกฎในการไม่รวมไฟล์สำหรับการซิงค์แต่ละครั้งได้เอง</translation>
     </message>
     <message>
         <source>Got it</source>

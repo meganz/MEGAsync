@@ -1,6 +1,8 @@
 #include "SetManager.h"
-#include <QDir>
+
 #include "RequestListenerManager.h"
+
+#include <QDir>
 
 using namespace mega;
 

@@ -1,12 +1,14 @@
-#pragma once
-
-#include "SyncSettings.h"
-#include "SyncInfo.h"
+#ifndef SYNC_CONTROLLER_H
+#define SYNC_CONTROLLER_H
 
 #include "megaapi.h"
+#include "SyncInfo.h"
+#include "SyncSettings.h"
 
-#include <QString>
 #include <QDir>
+#include <QString>
+
+#include <optional>
 
 /**
  * @brief Sync Controller class
@@ -82,6 +84,13 @@ public:
     QString getErrorString(int errorCode, int syncErrorCode) const;
     QString getRemoteFolderErrorMessage(int errorCode, int syncErrorCode);
 
+    // Create legacy rules megaignore
+    void resetAllSyncsMegaIgnoreUsingLegacyRules();
+    std::optional<int> createMegaIgnoreUsingLegacyRules(const QString& syncLocalFolder);
+    std::optional<int> overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync);
+    bool removeMegaIgnore(const QString& syncLocalFolder,
+                          mega::MegaHandle backupId = mega::INVALID_HANDLE);
+
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
     void syncRemoveStatus(int errorCode);
@@ -97,8 +106,12 @@ protected:
 private:
     void updateSyncSettings(const mega::MegaError& e, std::shared_ptr<SyncSettings> syncSetting);
     void createPendingBackups(SyncInfo::SyncOrigin origin);
+    std::optional<int> performMegaIgnoreCreation(const QString& syncLocalFolder,
+                                                 mega::MegaHandle backupId);
+
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
+
     QMap<QString, QString> mPendingBackups;
 
     //Sync/Backup operation signals
@@ -113,3 +126,4 @@ private:
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
 Q_DECLARE_METATYPE(mega::MegaSync::Error)
+#endif

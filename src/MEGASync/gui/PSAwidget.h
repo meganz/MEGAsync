@@ -2,11 +2,10 @@
 #define PSAWIDGET_H
 
 #include "Utilities.h"
-#include "ImageDownloader.h"
 
-#include <QWidget>
-#include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
+#include <QWidget>
 
 namespace Ui
 {
@@ -37,11 +36,6 @@ private slots:
     void on_bDismiss_clicked();
 
     void onAnimationFinished();
-    void onDownloadFinished(const QImage& image,
-                            const QString& imageUrl);
-    void onDownloadError(const QString& imageUrl,
-                         ImageDownloader::Error error,
-                         QNetworkReply::NetworkError networkError);
 
 private:
     Ui::PSAwidget* ui;
@@ -54,9 +48,7 @@ private:
     QPropertyAnimation* maxHeightAnimation;
     QParallelAnimationGroup* animationGroup;
 
-    std::unique_ptr<ImageDownloader> mDownloader;
-
-    void setPSAImage(QImage image = QImage());
+    void setPSAImage(bool isValid);
 };
 
 #endif // PSAWIDGET_H

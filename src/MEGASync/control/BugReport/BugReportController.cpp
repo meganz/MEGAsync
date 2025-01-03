@@ -1,10 +1,10 @@
 #include "BugReportController.h"
 
-#include <MegaApplication.h>
-#include <Preferences.h>
-#include <QTMegaApiManager.h>
-#include <RequestListenerManager.h>
-#include <Utilities.h>
+#include "MegaApplication.h"
+#include "Preferences.h"
+#include "QTMegaApiManager.h"
+#include "RequestListenerManager.h"
+#include "Utilities.h"
 
 const int BugReportData::MAXIMUM_PERMIL_VALUE = 1010;
 

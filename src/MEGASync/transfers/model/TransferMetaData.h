@@ -1,14 +1,15 @@
 #ifndef TRANSFERMETADATA_H
 #define TRANSFERMETADATA_H
 
-#include <memory>
-#include <QVariant>
-#include <QPair>
-#include <QPointer>
-#include <QMutex>
-
 #include "Preferences.h"
 #include "TransferItem.h"
+
+#include <QMutex>
+#include <QPair>
+#include <QPointer>
+#include <QVariant>
+
+#include <memory>
 
 namespace mega
 {

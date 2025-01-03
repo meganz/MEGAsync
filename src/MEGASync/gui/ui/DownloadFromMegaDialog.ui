@@ -41,6 +41,18 @@ font-weight: 600;
    <property name="spacing">
     <number>15</number>
    </property>
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>10</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>10</number>
+   </property>
    <item>
     <widget class="QLabel" name="infoLabel">
      <property name="minimumSize">
@@ -59,7 +71,7 @@ font-weight: 600;
       <string>Please select the download folder for your files:</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
+      <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
      </property>
     </widget>
    </item>
@@ -174,7 +186,7 @@ font-weight: 600;
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

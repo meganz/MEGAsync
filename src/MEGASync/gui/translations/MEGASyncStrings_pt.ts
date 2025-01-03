@@ -494,11 +494,6 @@
         <translation>Limite de velocidade para downloads</translation>
     </message>
     <message>
-        <source>Download rate limit:</source>
-        <translatorcomment>Label to indicate the limit of download rate on macOS.</translatorcomment>
-        <translation>Limite de velocidade para downloads:</translation>
-    </message>
-    <message>
         <source>Downloads:</source>
         <translatorcomment>Label to indicate the limit of download connections per transfer.</translatorcomment>
         <translation>Downloads:</translation>
@@ -524,29 +519,14 @@
         <translation>Número de conexões por transferência</translation>
     </message>
     <message>
-        <source>Number of connections per transfer:</source>
-        <translatorcomment>Label to indicate the number con connections per transfer on macOS.</translatorcomment>
-        <translation>Número de conexões por transferência:</translation>
-    </message>
-    <message>
         <source>Only enable this option if tranfers don&apos;t start. Under all other circumstances, using HTTP is satisfactory as MEGA already encrypts all data.</source>
         <translatorcomment>Description label about the option Use HTTPS for transfers that don&apos;t start checkbox.</translatorcomment>
         <translation>Ative essa opção somente se as transferências não começarem. Em qualquer outro caso, usar HTTP é suficiente, pois todos os dados já estão criptografados pelo MEGA.</translation>
     </message>
     <message>
-        <source>Update</source>
-        <translatorcomment>Button label for apply and confirm the bandwidth changes (macOS)</translatorcomment>
-        <translation>Atualizar</translation>
-    </message>
-    <message>
         <source>Upload rate limit</source>
         <translatorcomment>Section title for upload rate limit details.</translatorcomment>
         <translation>Limite de velocidade para uploads</translation>
-    </message>
-    <message>
-        <source>Upload rate limit:</source>
-        <translatorcomment>Label to indicate the limit of upload rate on macOS.</translatorcomment>
-        <translation>Limite de velocidade para uploads:</translation>
     </message>
     <message>
         <source>Uploads:</source>
@@ -978,7 +958,7 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Relatório de erro</translation>
+        <translation>Informe de erro</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -988,12 +968,12 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Enviar relatório</translation>
+        <translation>Enviar informe</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Você pode nos ajudar a melhorar o aplicativo do MEGA para desktop enviando este relatório de erro, que não contém nenhuma informação pessoal. Se você quiser nos dar mais detalhes, escreva-os abaixo:</translation>
+        <translation>Você pode nos ajudar a melhorar o aplicativo do MEGA para desktop enviando este informe de erro, que não contém nenhuma informação pessoal. Se você quiser nos dar mais detalhes, escreva-os abaixo:</translation>
     </message>
 </context>
 <context>
@@ -2303,11 +2283,6 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <translation>Upgrade</translation>
     </message>
     <message>
-        <source>Upgrade to PRO</source>
-        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation>Upgrade</translation>
-    </message>
-    <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation>Faça um upgrade antes de superar o seu limite de armazenamento, e assim os seus uploads ao MEGA não serão interrompidos.</translation>
@@ -2431,6 +2406,39 @@ Estes arquivos podem conter detalhes sobre os seus dados, como nomes de arquivos
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
         <translation>Selecione se deseja instalar $(^NameDA) apenas para você, ou para todos os usuários neste computador. $(^ClickNext)</translation>
+    </message>
+</context>
+<context>
+    <name>LinkProcessor</name>
+    <message>
+        <source>Copyright violation</source>
+        <translatorcomment>String for a link that cannot be loaded, because of copyright violation - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Infração direitos autorais</translation>
+    </message>
+    <message>
+        <source>Link owner terminated</source>
+        <translatorcomment>String for a link that cannot be loaded, because the account was suspended - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Criador do link suspenso</translation>
+    </message>
+    <message>
+        <source>Terms of Service breach</source>
+        <translatorcomment>String for a link that cannot be loaded, because of Emergency and Terms Of Service Takedowns (ETD and TOS) reasons - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Infração Termos de serviço</translation>
+    </message>
+    <message>
+        <source>This link has been deleted</source>
+        <translatorcomment>String for a link that cannot be loaded, because it was deleted - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Este link foi deletado</translation>
+    </message>
+    <message>
+        <source>This link has expired</source>
+        <translatorcomment>String for a link that cannot be loaded, because it has expired - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Este link expirou</translation>
+    </message>
+    <message>
+        <source>This link is invalid</source>
+        <translatorcomment>String for a link that cannot be loaded, because the URL is invalid - Character limit: 23 characters - SNC-4807</translatorcomment>
+        <translation>Este link é inválido</translation>
     </message>
 </context>
 <context>
@@ -3016,7 +3024,7 @@ Espere que o upload seja finalizado.</translation>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Procurando por atualizações…</translation>
+        <translation>Procurando atualizações…</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -3132,11 +3140,6 @@ Espere que o upload seja finalizado.</translation>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
         <translation>O aplicativo está sendo executado. Clique aqui para abrir a janela do status.</translation>
-    </message>
-    <message>
-        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Yosemite soon.</source>
-        <translatorcomment>Informative message box shown if user is running an old OSX version (previous than Yosemite), informing that app updates for such systems will cease soon.</translatorcomment>
-        <translation>O aplicativo vai continuar funcionando, porém já não serão oferecidas atualizações para versões anteriores ao macOS Sierra.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -4655,11 +4658,6 @@ Digite um nome diferente.
         <translation>Contatos</translation>
     </message>
     <message>
-        <source>Contacts:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Contatos:</translation>
-    </message>
-    <message>
         <source>Info</source>
         <translatorcomment>Notification category for non-critical info notifications</translatorcomment>
         <translation>Info</translation>
@@ -4668,11 +4666,6 @@ Digite um nome diferente.
         <source>Info notifications</source>
         <translatorcomment>Title of a checkbox for disconnectig secondary info notifications</translatorcomment>
         <translation>Notificações informativas</translation>
-    </message>
-    <message>
-        <source>Info:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Info:</translation>
     </message>
     <message>
         <source>New contact request</source>
@@ -4695,11 +4688,6 @@ Digite um nome diferente.
         <translation>Compartilhamentos</translation>
     </message>
     <message>
-        <source>Shares:</source>
-        <translatorcomment>Notification category for non-critical info notifications (macx)</translatorcomment>
-        <translation>Compartilhamentos:</translation>
-    </message>
-    <message>
         <source>Someone has accepted your contact request</source>
         <translatorcomment>Title of a checkbox for disconnectig notifications (SNC-3341) </translatorcomment>
         <translation>Alguém aceitou a sua solicitação de contato</translation>
@@ -4713,11 +4701,6 @@ Digite um nome diferente.
         <source>Uploads and downloads</source>
         <translatorcomment>Notification category for completed transfers notifications</translatorcomment>
         <translation>Uploads e downloads</translation>
-    </message>
-    <message>
-        <source>Uploads and downloads:</source>
-        <translatorcomment>Notification category for completed transfers notifications (macx)</translatorcomment>
-        <translation>Uploads e downloads:</translation>
     </message>
 </context>
 <context>
@@ -4788,11 +4771,6 @@ Digite um nome diferente.
         <translation>Backup: Seleção de pastas</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Cancelar</translation>
-    </message>
-    <message>
         <source>Cancel account</source>
         <translatorcomment>Dialog accept button text. This dialog appears if the user is creating an account and he wants to close the window CON-466</translatorcomment>
         <translation>Cancelar criação</translation>
@@ -4811,11 +4789,6 @@ Digite um nome diferente.
         <source>Change your email address</source>
         <translatorcomment>Change email window title CON-466</translatorcomment>
         <translation>Alterar email</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Choose sync type</source>
@@ -4881,11 +4854,6 @@ Digite um nome diferente.
         <source>Device name</source>
         <translatorcomment>Device name window title CON-467</translatorcomment>
         <translation>Nome do dispositivo</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>OK</translation>
     </message>
     <message>
         <source>Don’t cancel</source>
@@ -5018,11 +4986,6 @@ Digite um nome diferente.
         <translation>Nomes com mais de 32 caracteres não são aceitos</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Seguinte</translation>
-    </message>
-    <message>
         <source>Once confirmed, your account will be activated.</source>
         <translatorcomment>Page secondary title for new accounts in login page CON-465</translatorcomment>
         <translation>Depois de confirmada, a sua conta será ativada.</translation>
@@ -5056,11 +5019,6 @@ Digite um nome diferente.
         <source>Please enter your name</source>
         <translatorcomment>Name text input title CON-466</translatorcomment>
         <translation>Digite o seu primeiro nome</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Anterior</translation>
     </message>
     <message>
         <source>Problem with two-factor authentication?</source>
@@ -5105,17 +5063,12 @@ Digite um nome diferente.
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>As pastas selecionadas farão o backup automaticamente no MEGA quando o aplicativo para desktop estiver em execução.</translation>
+        <translation>O backup das pastas selecionadas será feito automaticamente no MEGA com permissão de somente leitura quando o aplicativo para desktop estiver em execução. As alterações só podem ser feitas nos backups no seu dispositivo local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
         <translatorcomment>Selective sync button title text CON-467</translatorcomment>
         <translation>Sincronização seletiva</translation>
-    </message>
-    <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Definir exclusões</translation>
     </message>
     <message>
         <source>Set up MEGA</source>
@@ -5131,11 +5084,6 @@ Digite um nome diferente.
         <source>Sign up</source>
         <translatorcomment>Sign up button text CON-465</translatorcomment>
         <translation>Fazer cadastro</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Pular</translation>
     </message>
     <message>
         <source>Stop Loggin in</source>
@@ -5160,7 +5108,7 @@ Digite um nome diferente.
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sincronize pastas específicas na sua Nuvem de arquivos no MEGA com o seu dispositivo local.</translation>
+        <translation>Sincronize as pastas selecionadas na sua Nuvem de arquivos MEGA com o seu dispositivo local. As pastas permanecerão atualizadas com as edições feitas localmente ou no MEGA.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5175,7 +5123,7 @@ Digite um nome diferente.
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sincronize toda a sua Nuvem de arquivos do MEGA com o seu dispositivo local.</translation>
+        <translation>Sincronização bidirecional de toda a sua Nuvem do MEGA com um dispositivo local. As pastas permanecerão atualizadas com as edições feitas localmente ou no MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>
@@ -5196,11 +5144,6 @@ Digite um nome diferente.
         <source>To activate your account, you need to verify your email address. We&apos;ve sent you an email with a confirmation link. Click on the link to verify your email address, then you will be able to log in.</source>
         <translatorcomment>Text that describes how to confirm the account. CON-466</translatorcomment>
         <translation>Para ativar sua conta, você precisa verificar seu endereço de e-mail. Enviamos a você um e-mail com um link de confirmação. Clique no link para verificar seu endereço de e-mail e, em seguida, você poderá fazer login.</translation>
-    </message>
-    <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Tente novamente</translation>
     </message>
     <message>
         <source>Upper and lower case letters</source>
@@ -5274,11 +5217,6 @@ Digite um nome diferente.
         <source>Backup Folder</source>
         <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
         <translation>Pasta de backup</translation>
-    </message>
-    <message>
-        <source>Backup folder:</source>
-        <translatorcomment>Label for the path showing the backups folder in the cloud.SNC-2565</translatorcomment>
-        <translation>Pasta de backup:</translation>
     </message>
     <message>
         <source>View in MEGA</source>
@@ -5450,6 +5388,16 @@ Digite um nome diferente.
 <context>
     <name>PermissionsDialog</name>
     <message>
+        <source>Apply</source>
+        <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
+        <translation>Aplicar</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
         <source>Files</source>
         <translatorcomment>Header for the section that allows to set the default permissions for new files created by MEGAsync. Please keep the first capital letter</translatorcomment>
         <translation>Arquivos</translation>
@@ -5478,6 +5426,11 @@ Digite um nome diferente.
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation>Permissões do proprietário:</translation>
+    </message>
+    <message>
+        <source>Permissions</source>
+        <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
+        <translation>Permissão</translation>
     </message>
     <message>
         <source>Permissions for new folders and files</source>
@@ -5630,18 +5583,27 @@ Digite um nome diferente.
 <context>
     <name>Preferences</name>
     <message>
-        <source>- You can now select multiple files and folders to remove from the Cloud drive when using the Download option.
-- Creating syncs and backups from the Settings menu is easier than ever with our revamped interface.
-- An installation issue which caused some Windows .dll files to be deleted has been resolved.
-- Third-party libraries have been updated.
+        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translatorcomment>Change log for version 5.5.0.CON-958</translatorcomment>
-        <translation>- Possibilidade de selecionar vários arquivos e pastas para remover da Nuvem de arquivos ao usar a opção Download.
-- Interface renovada, com mais facilidade para criar sincronizações e backups no menu Configurações.
-- Resolução de um problema de instalação que fazia com que alguns arquivos.dll do Windows fossem excluídos.
-- Atualização das bibliotecas de terceiros foram atualizadas.
-- Correção de bugs e melhorias variadas.</translation>
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- Melhor estabilidade com processamento gráfico isolado: atualizamos o nosso aplicativo para executar o processador gráfico (GFX) em um processo separado, o que significa que, se alguma biblioteca gráfica de terceiros encontrar problemas, o aplicativo permanecerá estável e inalterado, garantindo uma experiência sem interrupções.
+- Fim do suporte para macOS 10.13 e 10.14: esta atualização já não é compatível com macOS 10.13 e 10.14. Para continuar recebendo atualizações e assistência, atualize o seu sistema operacional para uma versão mais recente do macOS.
+- Novo design do diálogo de Configurações.
+- Aprimoramento da detecção e resolução de problemas no aplicativo.
+- Correção de bugs e melhorias variadas foram feitas.
+</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressIndicatorDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -5705,11 +5667,6 @@ Digite um nome diferente.
         <source>Server:</source>
         <translatorcomment>Label to indicate the server name/ip of the proxy that is being configured.</translatorcomment>
         <translation>Servidor:</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translatorcomment>Button text for Update option. (macOS)</translatorcomment>
-        <translation>Atualizar</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -6137,11 +6094,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Adicionar</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translatorcomment>Button to delete syncs or backups from settings window.SNC-2565</translatorcomment>
-        <translation>Deletar</translation>
-    </message>
-    <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
         <translation>Permissão</translation>
@@ -6168,11 +6120,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Alterar</translation>
     </message>
     <message>
-        <source>Confirm</source>
-        <translatorcomment>Button text that accepts</translatorcomment>
-        <translation>Confirmar</translation>
-    </message>
-    <message>
         <source>Delete folder permanently</source>
         <translatorcomment>Radio button option text</translatorcomment>
         <translation>Apagar a pasta permanentemente</translation>
@@ -6180,7 +6127,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Folder will be deleted from MEGA. It won&apos;t be deleted from your computer. This action cannot be undone.</source>
         <translatorcomment>Informative label displayed when user delete a backup. This options comes from &quot;delete folder permanently&quot; option.</translatorcomment>
-        <translation>A pasta será apagada do MEGA. Ela não será apagada do seu computador. Essa ação não pode ser desfeita.</translation>
+        <translation>A pasta será deletada do MEGA, mas não do seu computador. Esta ação não pode ser desfeita.</translation>
     </message>
     <message>
         <source>Move folder</source>
@@ -6355,11 +6302,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>%1 (cache local)</translation>
     </message>
     <message>
-        <source>%1 (local cache):</source>
-        <translatorcomment>Section label name for local cache summary and actions. Keep %1 placeholder, which is used to fill in the platform specific name for local sync cache (debris) (macOS)</translatorcomment>
-        <translation>%1 (cache local):</translation>
-    </message>
-    <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
         <translation>Conta</translation>
@@ -6415,11 +6357,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Procurar atualizações</translation>
     </message>
     <message>
-        <source>Choose</source>
-        <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Selecionar</translation>
-    </message>
-    <message>
         <source>Clear</source>
         <translatorcomment>Label for button to let the user clear the debris or file versions cache. Keep capital letter.</translatorcomment>
         <translation>Deletar</translation>
@@ -6442,11 +6379,6 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Default Folders</source>
         <translatorcomment>Section title text for Upload and Download folder defaults in Folders pane.</translatorcomment>
-        <translation>Pastas predeterminadas</translation>
-    </message>
-    <message>
-        <source>Default folders</source>
-        <translatorcomment>Label to indicate the default path section for Uploads and Downloads.</translatorcomment>
         <translation>Pastas predeterminadas</translation>
     </message>
     <message>
@@ -6525,11 +6457,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Versões de arquivos</translation>
     </message>
     <message>
-        <source>File versions:</source>
-        <translatorcomment>Label for File versions settings in General pane.(macOS)</translatorcomment>
-        <translation>Versões de arquivos:</translation>
-    </message>
-    <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hovering remote SyncDebris label.</translatorcomment>
         <translation>Pasta no MEGA com um backup dos arquivos deletados da pasta sincronizada local (no computador)</translation>
@@ -6538,11 +6465,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>Folders</source>
         <translatorcomment>Title for the Settings -&gt; Folders pane tab button. Keep as short as possible.</translatorcomment>
         <translation>Pastas</translation>
-    </message>
-    <message>
-        <source>Force a Full Scan</source>
-        <translatorcomment>Button label text for allowing the user to initiate a full scan of synchronized folders, after restarting MEGA Desktop Application. Keep as short as possible.</translatorcomment>
-        <translation>Forçar uma análise completa</translation>
     </message>
     <message>
         <source>General</source>
@@ -6567,22 +6489,12 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Issue report</source>
         <translatorcomment>Section title label for Issue reporting in General pane.</translatorcomment>
-        <translation>Informe sobre problema</translation>
-    </message>
-    <message>
-        <source>Issue report:</source>
-        <translatorcomment>Label for Issue reporting in General pane.(macOS)</translatorcomment>
-        <translation>Informe sobre problema:</translation>
+        <translation>Informe sobre um problema</translation>
     </message>
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application using a dropdown menu.</translatorcomment>
         <translation>Idioma</translation>
-    </message>
-    <message>
-        <source>Language:</source>
-        <translatorcomment>Form text label shown next to the language change drop down menu, on macOS. Keep as short as possible.</translatorcomment>
-        <translation>Idioma:</translation>
     </message>
     <message>
         <source>Launch at login</source>
@@ -6652,7 +6564,7 @@ Você quer deletá-lo mesmo assim?</translation>
     <message>
         <source>Prevent the computer from going to sleep when transfers or syncs are in progress.</source>
         <translatorcomment>Sleep/Active mode: Feature description label for keeping the pc awake when there are active transfers</translatorcomment>
-        <translation>Evitar que o computador entre em suspensão enquanto houver transferências ou sincronizações em andamento.</translation>
+        <translation>Evitar que o computador entre em suspensão com transferências ou sincronizações em andamento.</translation>
     </message>
     <message>
         <source>Proxies</source>
@@ -6700,11 +6612,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Não foi possível configurar o modo de suspensão</translation>
     </message>
     <message>
-        <source>Sleep mode:</source>
-        <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (macOS)</translatorcomment>
-        <translation>Modo de suspensão:</translation>
-    </message>
-    <message>
         <source>Sleep settings</source>
         <translatorcomment>Sleep/Active mode: Settings dialog groupbox title for keeping the pc awake when there are active transfers (WIndows and Linux)</translatorcomment>
         <translation>Modo de suspensão</translation>
@@ -6715,19 +6622,9 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Espaço usado:</translation>
     </message>
     <message>
-        <source>Start on startup</source>
-        <translatorcomment>Label to let the user start MEGAsync on startup of the operating system with a checkbox.</translatorcomment>
-        <translation>Iniciar ao ligar</translation>
-    </message>
-    <message>
         <source>Storage Space</source>
         <translatorcomment>Section title for account storage details.</translatorcomment>
         <translation>Espaço de armazenamento</translation>
-    </message>
-    <message>
-        <source>Storage space:</source>
-        <translatorcomment>Label for account storage details.(macOS)</translatorcomment>
-        <translation>Espaço de armazenamento:</translation>
     </message>
     <message>
         <source>Sync</source>
@@ -6738,11 +6635,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>SyncDebris (remote cache)</source>
         <translatorcomment>Section label name for remote cache summary and clear action.</translatorcomment>
         <translation>SyncDebris (no MEGA)</translation>
-    </message>
-    <message>
-        <source>SyncDebris (remote cache):</source>
-        <translatorcomment>Section label name for remote cache summary and clear action.(macOS)</translatorcomment>
-        <translation>SyncDebris (no MEGA):</translation>
     </message>
     <message>
         <source>Synchronizations and backups will stop working.</source>
@@ -6758,11 +6650,6 @@ Você quer deletá-lo mesmo assim?</translation>
         <source>Transfer Quota</source>
         <translatorcomment>Section title for account transfer quota details.</translatorcomment>
         <translation>Cota de transferência</translation>
-    </message>
-    <message>
-        <source>Transfer quota:</source>
-        <translatorcomment>Label for account transfer quota details.(macOS)</translatorcomment>
-        <translation>Cota de transferência:</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -7275,6 +7162,16 @@ Você quer deletá-lo mesmo assim?</translation>
         <translation>Não há problemas</translation>
     </message>
     <message>
+        <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
+        <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
+        <translation>Uma de suas pastas sincronizadas foi renomeada. Atualize a lista de problemas de sincronização.</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
+        <translation>Recarregar</translation>
+    </message>
+    <message>
         <source>Stalled Issues</source>
         <translatorcomment>Window tittle of sync stalls window.DNS-1388</translatorcomment>
         <translation>Problemas</translation>
@@ -7518,6 +7415,69 @@ Atualize a lista.</translation>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
         <translation>O link foi copiado para a área de transferência</translation>
+    </message>
+</context>
+<context>
+    <name>Strings</name>
+    <message>
+        <source>A device with this name already exists. Enter a different name.</source>
+        <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
+        <translation>Já existe um dispositivo com este nome. Digite outro nome.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
+        <translation>Selecionar</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Enter a device name</source>
+        <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
+        <translation>Digite um nome de dispositivo</translation>
+    </message>
+    <message>
+        <source>Maximum 32 characters</source>
+        <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
+        <translation>Máximo de 32 caracteres</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
+        <translation>Seguinte</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
+        <translation>Anterior</translation>
+    </message>
+    <message>
+        <source>Set Exclusions</source>
+        <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
+        <translation>Definir exclusões</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
+        <translation>Pular</translation>
+    </message>
+    <message>
+        <source>The following characters are not allowed: %1</source>
+        <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
+        <translation>Os seguintes caracteres não são permitidos: %1</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
+        <translation>Tente novamente</translation>
     </message>
 </context>
 <context>
@@ -7923,6 +7883,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>SyncSettingsElements</name>
+    <message>
+        <source>Apply</source>
+        <translatorcomment>Button to confirm applying legacy exclusion rules to all syncs.con-1054</translatorcomment>
+        <translation>Aplicar</translation>
+    </message>
+    <message>
+        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
+        <translatorcomment>Body text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs.con-1054</translatorcomment>
+        <translation>As regras de exclusão que você configurou em uma versão anterior do aplicativo serão aplicadas a todas as suas sincronizações e backups. Todas as regras criadas desde então serão sobrescritas.</translation>
+    </message>
+    <message>
+        <source>[B]Apply previous exclusion rules?[/B]</source>
+        <translatorcomment>Title text of the confirmation message displayed when the user tries to force apply legacy exculsion rules on all syncs [B] is for bold.con-1054</translatorcomment>
+        <translation>[B]Aplicar as regras de exclusão anteriores?[/B]</translation>
+    </message>
+</context>
+<context>
     <name>SyncSettingsUI</name>
     <message>
         <source>Error adding sync</source>
@@ -7986,6 +7964,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Avançado</translation>
     </message>
     <message>
+        <source>Apply previous exclusion rules</source>
+        <translatorcomment>Title for the settings section responible for applying legacy exclusion rules to sync folders.con-1054</translatorcomment>
+        <translation>Aplicar as regras de exclusão anteriores</translation>
+    </message>
+    <message>
+        <source>Apply rules</source>
+        <translatorcomment>Button used to force apply legacy exclusion rules to syncs.con-1054</translatorcomment>
+        <translation>Aplicar regras</translation>
+    </message>
+    <message>
         <source>Get full control of the sync issues</source>
         <translatorcomment>Description for the advanced solve mode of stalled issues.SNC-2565</translatorcomment>
         <translation>Tenha o controle total dos problemas de sincronização</translation>
@@ -8014,11 +8002,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 <context>
     <name>SyncTableView</name>
     <message>
-        <source>Deep Rescan</source>
-        <translatorcomment>Menu action to do deep scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Análise detalhada</translation>
-    </message>
-    <message>
         <source>Open in MEGA</source>
         <translatorcomment>Context menu option that opens the folder in MEGA webclient.SNC-2565</translatorcomment>
         <translation>Abrir no MEGA</translation>
@@ -8029,14 +8012,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pausar</translation>
     </message>
     <message>
-        <source>Quick Rescan</source>
-        <translatorcomment>Menu action to do quick scan for a sync or backup folder form settings.SNC-2565</translatorcomment>
-        <translation>Nova análise rápida</translation>
+        <source>Reboot backup</source>
+        <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
+        <translation>Reiniciar o backup</translation>
+    </message>
+    <message>
+        <source>Reboot sync</source>
+        <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
+        <translation>Reiniciar a sincronização</translation>
     </message>
     <message>
         <source>Remove synced folder</source>
         <translatorcomment>Context menu option that removes the sync.SNC-2565</translatorcomment>
         <translation>Remover sincronização</translation>
+    </message>
+    <message>
+        <source>Rescan</source>
+        <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
+        <translation>Analisar novamente</translation>
     </message>
     <message>
         <source>Run</source>
@@ -8310,6 +8303,16 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Pesquisar:</translation>
     </message>
     <message>
+        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
+        <translation>O seu armazenamento está quase cheio. Faça um upgrade antes de superar o seu limite de armazenamento, e evite que os seus uploads, sincronizações e backups sejam interrompidos.</translation>
+    </message>
+    <message>
+        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
+        <translation>O seu armazenamento está cheio. Os uploads foram desativados, e as sincronizações e os backups foram interrompidos.</translation>
+    </message>
+    <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation>Gestor de transferências</translation>
@@ -8335,11 +8338,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Atualizado</translation>
     </message>
     <message>
-        <source>Upgrade now</source>
-        <translatorcomment>Button to open web explorer to see MEGA paid plans</translatorcomment>
-        <translation>Upgrade</translation>
-    </message>
-    <message>
         <source>Upload</source>
         <translatorcomment>Label of the button to start a new upload</translatorcomment>
         <translation>Upload</translation>
@@ -8360,11 +8358,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
         <translation>Não é possível continuar o download porque não há cota de transferência suficiente disponível para este IP.
 Para obter mais cota, faça o upgrade a uma conta Pro ou espere [A] para que mais cota gratuita seja disponibilizada para o seu IP.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Message shown when the MEGA account is full</translatorcomment>
-        <translation>A sua conta no MEGA está cheia.</translation>
     </message>
 </context>
 <context>
@@ -9083,6 +9076,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>String controlling the formatting of the seconds count for time intervals. It is used in the [MINUTES] [SECONDS] string, replacing the [SECONDS] tag. %1 will be replaced by the value. [A] and [/A] tags need to remain in the string around the letter/word that is used to designate the seconds. The space needs to be non-breaking.</translatorcomment>
         <translation>%1 [A]s[/A]</translation>
     </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the amount of used and total space available. Keep %1 (used space) and %2 (total space) substitution placeholders because they will be filled with the required amounts of storage space dynamically including the unit (e.g. 1KB, 5MB, 8GB...). CON-944</translatorcomment>
+        <translation>%1 do %2</translation>
+    </message>
     <message numerus="yes">
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1. SNC-3429</translatorcomment>
@@ -9152,7 +9150,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Basic</source>
         <translatorcomment>Label to refer to MEGA Basic account type in short form CON-719</translatorcomment>
-        <translation>MEGA Basic</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Business</source>
@@ -9167,7 +9165,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Essential</source>
         <translatorcomment>Label to refer to MEGA Essential account type in short form CON-719</translatorcomment>
-        <translation>MEGA Essential</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Free</source>
@@ -9232,7 +9230,7 @@ Please delete the folder sync from settings to cancel them.</source>
     <message>
         <source>Starter</source>
         <translatorcomment>Label to refer to MEGA Starter account type in short form CON-719</translatorcomment>
-        <translation>MEGA Starter</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TB</source>
@@ -9306,23 +9304,28 @@ Acesse o seu email para saber como desbloquear a sua conta e receber dicas sobre
     <name>WhatsNewStrings</name>
     <message>
         <source>Advanced filters</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Filtros avançados</translation>
     </message>
     <message>
-        <source>Better Performance</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
-        <translation>Melhor desempenho</translation>
+        <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Configurações avançadas que permitem que você escreva as suas próprias regras de exclusão para cada uma das sincronizações</translation>
     </message>
     <message>
-        <source>Customise your sync with a whole new interface to exclude files and folders. Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Personalize as suas sincronizações e os seus backups com uma interface totalmente nova para excluir arquivos e pastas: as configurações avançadas permitem que você escreva as suas próprias regras de exclusão para cada uma das suas sincronizações e backups.</translation>
+        <source>Better Performance</source>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translation>Melhor desempenho</translation>
     </message>
     <message>
         <source>Files now sync up to 5x faster than before</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
         <translation>A sincronização de arquivos agora é até 5 vezes mais rápida.</translation>
+    </message>
+    <message>
+        <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
+        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
+        <translation>Visibilidade total dos problemas de sincronização e controle total sobre como os conflitos são solucionados.</translation>
     </message>
     <message>
         <source>Got it</source>
@@ -9331,23 +9334,13 @@ Acesse o seu email para saber como desbloquear a sua conta e receber dicas sobre
     </message>
     <message>
         <source>Greater control</source>
-        <translatorcomment>Text of a new improvement shown in whats new dialog. con-703</translatorcomment>
+        <translatorcomment>Title of a new improvement shown in whats new dialog. con-703</translatorcomment>
         <translation>Mais controle</translation>
     </message>
     <message>
-        <source>Updates</source>
-        <translatorcomment>Title in the window diplaying whats new in the recently installed update.con-703</translatorcomment>
-        <translation>Atualizações</translation>
-    </message>
-    <message>
-        <source>We now provide full visibility into sync issues and give you total control over how conflicts are resolved</source>
-        <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation>Visibilidade dos problemas de sincronização e controle total sobre como os conflitos são solucionados.</translation>
-    </message>
-    <message>
-        <source>What&apos;s new</source>
-        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.con-703</translatorcomment>
-        <translation>Novidades</translation>
+        <source>What&apos;s new in MEGA</source>
+        <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
+        <translation>O que tem de novo no MEGA</translation>
     </message>
 </context>
 <context>

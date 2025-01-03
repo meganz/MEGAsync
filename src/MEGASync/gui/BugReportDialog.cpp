@@ -1,16 +1,13 @@
 #include "BugReportDialog.h"
 
-// clang-format off
 #include "DialogOpener.h"
 #include "ui_BugReportDialog.h"
-#include "ui_ProgressIndicatorDialog.h"
-
 #include <BugReportController.h>
+#include <TransfersModel.h>
+
 #include <QCloseEvent>
 #include <QMegaMessageBox.h>
 #include <QRegExp>
-#include <TransfersModel.h>
-// clang-format on
 
 using namespace mega;
 

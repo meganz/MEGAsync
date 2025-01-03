@@ -1,9 +1,7 @@
 #include "UserMessageCacheManager.h"
 
 #include "AlertItem.h"
-#include "UserAlert.h"
 #include "NotificationItem.h"
-#include "UserNotification.h"
 
 namespace
 {
@@ -55,12 +53,15 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
                                                               UserMessage* data,
                                                               QWidget* parent)
 {
+    bool newDataInWidget(false);
+
     UserMessageWidget* widget = getWidgetFromCache(cacheIndex);
     if(dynamic_cast<Item*>(widget))
     {
         if(!widget->getData() || !data->hasSameId(widget->getData()->id()))
         {
             widget->setData(data);
+            newDataInWidget = true;
         }
     }
     else
@@ -68,9 +69,10 @@ UserMessageWidget* UserMessageCacheManager::createOrGetWidget(int cacheIndex,
         widget = new Item(parent);
         widget->setData(data);
         mUserMessageItems.insert(cacheIndex, widget);
+        newDataInWidget = true;
     }
 
-    if(widget)
+    if (widget && newDataInWidget)
     {
         widget->show();
         widget->hide();

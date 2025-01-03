@@ -1,15 +1,11 @@
 #ifndef NAMECONFLICTSTALLEDISSUE_H
 #define NAMECONFLICTSTALLEDISSUE_H
 
-#include <StalledIssue.h>
-#include <MegaApplication.h>
-#include <FileFolderAttributes.h>
-#include <StalledIssuesUtilities.h>
-#include <Utilities.h>
-#include <MoveToMEGABin.h>
-#include <MegaNodeNames.h>
-#include <MergeMEGAFolders.h>
-#include <TextDecorator.h>
+#include "FileFolderAttributes.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "StalledIssue.h"
+#include "Utilities.h"
 
 class NameConflictedStalledIssue : public StalledIssue
 {

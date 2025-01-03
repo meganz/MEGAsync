@@ -1,6 +1,7 @@
 #ifndef REMOVEBACKUPDIALOG_H
 #define REMOVEBACKUPDIALOG_H
 
+#include "AppStatsEvents.h"
 #include "SyncSettings.h"
 
 #include <QDialog>
@@ -30,6 +31,9 @@ private slots:
     void OnChangeButtonClicked();
 
 private:
+    void OnOptionSelected(const AppStatsEvents::EventType eventType,
+                          const bool enableMoveContainer);
+
     mega::MegaApi* mMegaApi;
     Ui::RemoveBackupDialog *mUi;
     std::shared_ptr<SyncSettings> mBackup;

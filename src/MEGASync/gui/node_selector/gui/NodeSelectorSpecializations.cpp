@@ -1,12 +1,13 @@
 #include "NodeSelectorSpecializations.h"
 
+#include "megaapi.h"
 #include "NodeSelectorTreeViewWidgetSpecializations.h"
+#include "QMegaMessageBox.h"
 #include "SyncInfo.h"
 #include "ui_NodeSelector.h"
 
-#include "megaapi.h"
-
-#include "QMegaMessageBox.h"
+#include <QMessageBox>
+#include <QPointer>
 
 UploadNodeSelector::UploadNodeSelector(QWidget *parent) : NodeSelector(parent)
 {

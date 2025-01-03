@@ -1,13 +1,13 @@
 Name:		qt-mega
-Version:	5.15.13
+Version:	5.15.16
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
-Summary:	TODO
+Summary:	Qt5 LTS
 License:	TODO
 Group:		Applications/Others
 Url:		https://mega.nz
 Source0:	qt-mega_%{version}.tar.gz
-Vendor:		TODO
-Packager:	TODO
+Vendor:		Qt Company
+Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: autoconf, automake, libtool, gcc-c++, unzip, rsync, wayland-devel, libxkbcommon-devel, libxkbcommon-x11-devel, wget
 BuildRequires: fontconfig-devel, libxkbcommon-devel, libxkbcommon-x11-devel
@@ -31,7 +31,7 @@ BuildRequires: extra-cmake-modules
 %endif
 
 %description
-TODO
+Qt5 LTS
 
 %prep
 

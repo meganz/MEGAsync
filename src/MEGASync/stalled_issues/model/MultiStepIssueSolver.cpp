@@ -1,6 +1,7 @@
-#include <MultiStepIssueSolver.h>
+#include "MultiStepIssueSolver.h"
 
-#include <StalledIssuesModel.h>
+#include "MegaApplication.h"
+#include "StalledIssuesModel.h"
 
 int MultiStepIssueSolverBase::mSolversFixedInTheSameNotification = 0;
 int MultiStepIssueSolverBase::mSolversFailedInTheSameNotification = 0;

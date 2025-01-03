@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>530</height>
+    <height>551</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>530</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>16777215</width>
-    <height>530</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>10</number>
+    <number>24</number>
    </property>
    <property name="leftMargin">
     <number>20</number>
@@ -48,54 +48,61 @@
     <number>20</number>
    </property>
    <property name="bottomMargin">
-    <number>20</number>
+    <number>10</number>
    </property>
    <item>
-    <widget class="QLabel" name="lPermissionsTitle">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>12</number>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>20</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Permissions for new folders and files</string>
-     </property>
-     <property name="type" stdset="0">
-      <string notr="true">title</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="lPermissionsDesc">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>90</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>90</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don't need to change them, please leave them as default for security reasons.</string>
-     </property>
-     <property name="wordWrap">
-      <bool>true</bool>
-     </property>
-    </widget>
+     <item>
+      <widget class="QLabel" name="lPermissionsTitle">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Permissions for new folders and files</string>
+       </property>
+       <property name="type" stdset="0">
+        <string notr="true">title</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lPermissionsDesc">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>90</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>90</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don't need to change them, please leave them as default for security reasons.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="QGroupBox" name="wFolderPermissions">
@@ -115,6 +122,9 @@
       <string notr="true">mega</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
+      <property name="verticalSpacing">
+       <number>12</number>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lGroupFolders">
         <property name="text">
@@ -219,6 +229,9 @@
       <string notr="true">mega</string>
      </property>
      <layout class="QFormLayout" name="formLayout_2">
+      <property name="verticalSpacing">
+       <number>12</number>
+      </property>
       <item row="0" column="0">
        <widget class="QLabel" name="lOwnerFiles">
         <property name="styleSheet">
@@ -320,19 +333,6 @@
      <zorder>lOwnerFiles</zorder>
      <zorder>wFileOwner</zorder>
     </widget>
-   </item>
-   <item>
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">

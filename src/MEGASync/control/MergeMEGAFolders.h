@@ -1,10 +1,11 @@
 #ifndef MERGEMEGAFOLDERS_H
 #define MERGEMEGAFOLDERS_H
 
-#include <megaapi.h>
-#include <memory>
+#include "megaapi.h"
 
 #include <QObject>
+
+#include <memory>
 
 //FOLDER MERGE LOGIC
 /*

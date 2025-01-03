@@ -1,6 +1,6 @@
 #include "NotificationDelayer.h"
+
 #include "megaapi.h"
-#include "mega/types.h"
 
 constexpr auto alertClusterMaxElapsedTime = std::chrono::minutes(10);
 

@@ -1,9 +1,10 @@
 #include "QMegaMessageBox.h"
-#include <QDialogButtonBox>
-#include <QPushButton>
-#include <QDebug>
 
 #include "DialogOpener.h"
+
+#include <QDebug>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 QString QMegaMessageBox::warningTitle()
 {
@@ -69,6 +70,10 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         QDialogButtonBox* buttonBox = msgBox->findChild<QDialogButtonBox*>();
         Q_ASSERT(buttonBox != 0);
 
+#ifdef Q_OS_LINUX
+        buttonBox->setStyleSheet(QLatin1String("background: rgb(246, 245, 244);"));
+#endif
+
         uint mask = FirstButton;
         while(mask <= LastButton)
         {
@@ -109,6 +114,12 @@ void QMegaMessageBox::showNewMessageBox(Icon icon, const MessageBoxInfo& info)
         {
             QCheckBox* checkbox = new QCheckBox(info.checkboxText);
             msgBox->setCheckBox(checkbox);
+        }
+
+        // Prevent showing context menu in texts
+        for (auto childLabel: msgBox->findChildren<QLabel*>())
+        {
+            childLabel->setContextMenuPolicy(Qt::PreventContextMenu);
         }
 
         DialogOpener::showMessageBox(msgBox, info);

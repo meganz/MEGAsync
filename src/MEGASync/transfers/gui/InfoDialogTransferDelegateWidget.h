@@ -1,13 +1,14 @@
 #ifndef INFODIALOGTRANSFERDELEGATEWIDGET_H
 #define INFODIALOGTRANSFERDELEGATEWIDGET_H
 
-#include <QWidget>
-#include <QFileInfo>
-#include <QDateTime>
-#include <QMenu>
 #include "megaapi.h"
-#include "TransferRemainingTime.h"
 #include "TransferBaseDelegateWidget.h"
+#include "TransferRemainingTime.h"
+
+#include <QDateTime>
+#include <QFileInfo>
+#include <QMenu>
+#include <QWidget>
 
 namespace Ui {
 class InfoDialogTransferDelegateWidget;

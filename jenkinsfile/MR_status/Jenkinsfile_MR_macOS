@@ -105,7 +105,7 @@ pipeline {
             environment{
                 PATH = "/usr/local/bin:${env.PATH}"
                 BUILD_DIR = "build_dir"
-                MEGAQTPATH= "${env.HOME}/Qt-build/5.15.13/5.15.13/arm64"
+                MEGAQTPATH= "${env.HOME}/Qt-build/5.15.16/5.15.16/arm64"
             }
             steps{
                 dir(macos_sources_workspace){
@@ -134,7 +134,7 @@ pipeline {
                     }
                     environment{
                         VCPKGPATH = "${env.HOME}/jenkins/vcpkg"
-                        QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.13/5.15.13"
+                        QT_BASE_PATH = "${env.HOME}/Qt-build/5.15.16/5.15.16"
                     }
                     steps {
                         dir(macos_sources_workspace){
@@ -164,13 +164,41 @@ pipeline {
                     steps {
                         dir(macos_sources_workspace){
                             script{
-                                if (env.ARCHITECTURE == "arm64"){
-                                    sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64"
-                                    sh "cd Release_arm64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64/"                       
-                                }
-                                if (env.ARCHITECTURE == "x86_64"){
-                                    sh "jf rt del MEGAsync-sprints/$MEGASYNC_TEAM/macos/x86_64"
-                                    sh "cd Release_x86_64 && jf rt upload --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64/"
+                                withCredentials([string(credentialsId: 'MEGASYNC_ARTIFACTORY_TOKEN', variable: 'MEGASYNC_ARTIFACTORY_TOKEN')]) {
+                                    if (env.ARCHITECTURE == "arm64"){
+                                        sh """
+                                          jf rt del \
+                                             --url ${REPO_URL} \
+                                             --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                             MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64
+                                        """
+                                        dir("Release_arm64"){
+                                            sh """
+                                                jf rt upload \
+                                                    --url ${REPO_URL} \
+                                                    --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                    --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' \
+                                                    MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/arm64/
+                                            """
+                                        }
+                                    }
+                                    if (env.ARCHITECTURE == "x86_64"){
+                                        sh """
+                                            jf rt del \
+                                                --url ${REPO_URL} \
+                                                --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64
+                                        """
+                                        dir("Release_x86_64"){
+                                            sh """
+                                                jf rt upload \
+                                                    --url ${REPO_URL} \
+                                                    --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
+                                                    --regexp '(MEGAsync.*dmg|MEGAsync.*zip)' \
+                                                    MEGAsync-sprints/$MEGASYNC_TEAM/${env.gitlabMergeRequestIid}/macos/x86_64/
+                                            """
+                                        }
+                                    }
                                 }
                                 uploadPackagesExecuted = true
                             }

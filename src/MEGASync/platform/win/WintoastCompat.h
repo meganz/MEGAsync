@@ -1,7 +1,8 @@
-#include <Windows.h>
-#include <WinUser.h>
 #include <ShObjIdl.h>
+#include <Windows.h>
 #include <windows.ui.notifications.h>
+#include <WinUser.h>
+
 #include <functional>
 
 #ifndef WINTOASTCOMPAT_H

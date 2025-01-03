@@ -1,10 +1,10 @@
 #include "SyncExclusions.h"
 
-#include "Platform.h"
 #include "Preferences.h"
 
-#include <cmath>
 #include <QQmlEngine>
+
+#include <cmath>
 
 using namespace mega;
 

@@ -2,6 +2,7 @@
 #define MEGAAPPLICATION_H
 
 #include "BlockingStageProgressController.h"
+#include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
 #include "HTTPServer.h"
 #include "InfoDialog.h"
@@ -10,7 +11,6 @@
 #include "MegaDownloader.h"
 #include "MegaSyncLogger.h"
 #include "MegaUploader.h"
-#include "notifications/DesktopNotifications.h"
 #include "PasteMegaLinksDialog.h"
 #include "Preferences.h"
 #include "QTMegaListener.h"
@@ -25,7 +25,6 @@
 #include "UpgradeOverStorage.h"
 #include "Utilities.h"
 
-#include <memory>
 #include <QAction>
 #include <QApplication>
 #include <QDataStream>
@@ -37,6 +36,8 @@
 #include <QNetworkInterface>
 #include <QQueue>
 #include <QSystemTrayIcon>
+
+#include <memory>
 
 class IntervalExecutioner;
 class TransfersModel;
@@ -520,6 +521,8 @@ private:
     static QString obfuscateIpv6Address(const QHostAddress& ipAddress);
     static QStringList explodeIpv6(const QHostAddress &ipAddress);
 
+    static bool mightBeCaseSensitivityIssue(const QString& folderPath);
+
     void reconnectIfNecessary(const bool disconnected, const QList<QNetworkInterface>& newNetworkInterfaces);
     bool isIdleForTooLong() const;
 
@@ -608,6 +611,7 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
+    void onOpenLinkError(const QString& path, const int errorCode);
 };
 
 #endif // MEGAAPPLICATION_H
