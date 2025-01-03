@@ -57,13 +57,18 @@ void TransfersSummaryWidget::drawEllipse(int x, int y,  int diam, int width, QPa
     painter->drawPie(  x + width - diam ,y,  diam, diam, 360*12, 360*8 );
 }
 
+int TransfersSummaryWidget::getIconSize()
+{
+    return static_cast<int>(static_cast<float>(ui->bpause->width()) / ICON_SIZE * 20);
+}
+
 void TransfersSummaryWidget::setPaused(bool value)
 {
     if (value != paused)
     {
         paused = value;
         const char* iconFile = (paused) ? ":/images/resume.png" : ":/images/pause.png";
-        const int iconSize = static_cast<int>(ui->bpause->width() / ICON_SIZE * 20);
+        const int iconSize(getIconSize());
 
         QIcon icon(QString::fromLatin1(iconFile));
 
@@ -722,7 +727,7 @@ void TransfersSummaryWidget::updateSizes()
             const int minimumLayoutDimension = static_cast<int>(minwidthheight/28.0 * 2);
             layout()->setContentsMargins(minimumLayoutDimension, 0, minimumLayoutDimension, 0);
         }
-        const int iconSize = static_cast<int>(ui->bpause->width() / ICON_SIZE * 20);
+        const int iconSize(getIconSize());
         ui->bpause->setIconSize(QSize(iconSize, iconSize));
     }
 

@@ -92,7 +92,6 @@ public slots:
     void doResize(int futureWidth);
 
 private:
-
     void updateUploadsText(bool force = false);
     void updateDownloadsText(bool force = false);
     void updateUploads();
@@ -102,6 +101,8 @@ private:
     void resetUploads();
 
     void drawEllipse(int x, int y,  int diam, int width, QPainter *painter);
+
+    int getIconSize();
 
     Ui::TransfersSummaryWidget *ui;
     QElapsedTimer qe;
