@@ -4851,7 +4851,7 @@ Nhập một tên khác.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Các thư mục đã chọn sẽ tự động sao lưu lên MEGA khi ứng dụng cho máy tính đang chạy.</translation>
+        <translation>Các thư mục đã chọn sẽ tự động sao lưu lên MEGA dưới dạng chỉ-được-đọc khi ứng dụng cho máy tính đang chạy. Các thay đổi bên trong chỉ có thể ghi vào sao lưu tại thiết bị cục bộ của bạn.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5081,12 +5081,12 @@ Nhập một tên khác.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Đồng bộ hóa toàn bộ Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+        <translation>Đồng bộ hai chiều toàn bộ Ổ Mây MEGA của bạn với thiết bị cục bộ. Các thư mục sẽ được cập nhật với các chỉnh sửa được thực hiện tại cục bộ hoặc trên MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Đồng bộ hóa các thư mục đã chọn ra trong Ổ Mây MEGA của bạn với thiết bị cục bộ của bạn.</translation>
+        <translation>Đồng bộ các thư mục được chọn trên Ổ Mây MEGA của bạn với thiết bị cục bộ. Các thư mục sẽ được cập nhật với các chỉnh sửa được thực hiện tại cục bộ hoặc trên MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>

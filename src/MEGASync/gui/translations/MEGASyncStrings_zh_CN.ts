@@ -4852,7 +4852,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>当桌面应用程序运行时，所选文件夹将自动备份到MEGA。</translation>
+        <translation>当桌面应用程序运行时，所选文件夹将自动以只读文件夹的形式备份到MEGA。只能对本地设备上的备份进行更改。</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5082,12 +5082,12 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>将您的整个MEGA云盘与本地设备同步。</translation>
+        <translation>将您的整个MEGA云盘与本地设备双向同步。对本地或MEGA编辑的文件夹将保持最新状态。</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>将您MEGA云盘中的选定文件夹与您的本地设备同步。</translation>
+        <translation>将您的MEGA云盘中的选定文件夹与本地设备同步。对本地或MEGA编辑的文件夹将保持最新状态。</translation>
     </message>
     <message>
         <source>View in Settings</source>
