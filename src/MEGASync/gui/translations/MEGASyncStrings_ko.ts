@@ -4854,7 +4854,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>데스크톱 앱이 실행 중일 때 선택된 폴더가 자동으로 MEGA에 백업됩니다.</translation>
+        <translation>데스크톱 앱이 실행 중일 때 선택된 폴더가 자동으로 MEGA에 읽기 전용 폴더로 백업됩니다. 백업에 대한 변경은 로컬 장치에서만 할 수 있습니다.</translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5084,12 +5084,12 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>MEGA 클라우드 드라이브 전체를 로컬 장치와 동기화</translation>
+        <translation>양방향 동기화는 MEGA 클라우드 전체를 로컬 장치와 동기화합니다. 폴더는 로컬에서 또는 MEGA에서 수정할 수 있는 상태로 최신 상태를 유지합니다.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>MEGA 클라우드 드라이브의 선택한 폴더를 로컬 장치와 동기화</translation>
+        <translation>MEGA 클라우드 드라이브의 선택한 폴더를 로컬 장치와 동기화합니다. 폴더는 로컬 또는 MEGA에서 수정할 수 있는 상태로 최신 상태를 유지합니다.</translation>
     </message>
     <message>
         <source>View in Settings</source>

@@ -5062,7 +5062,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Se hará el backup en MEGA de las carpetas seleccionadas de forma automática cuando se ejecute la aplicación de escritorio.</translation>
+        <translation>Se hará el backup en MEGA de las carpetas seleccionadas de forma automática como carpetas de solo lectura cuando la aplicación de escritorio esté en funcionamiento. Los cambios solo se podrán hacer en los backups en tu dispositivo local.</translation>
     </message>
     <message>
         <source>Selective sync</source>
@@ -5107,7 +5107,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sincroniza las carpetas seleccionadas de tu nube de MEGA con tu dispositivo.</translation>
+        <translation>Sincroniza las carpetas seleccionadas de tu nube de MEGA con tu dispositivo local. Las carpetas se mantendrán actualizadas con las ediciones realizadas localmente o en MEGA.</translation>
     </message>
     <message>
         <source>Sync set up</source>
@@ -5122,7 +5122,7 @@ Introduzca un nombre diferente.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sincroniza toda tu nube de MEGA con tu dispositivo.</translation>
+        <translation>Sincroniza bidireccionalmente toda tu nube de MEGA con un dispositivo local. Las carpetas se mantendrán actualizadas con las ediciones realizadas localmente o en MEGA.</translation>
     </message>
     <message>
         <source>Sync your files between your computers with MEGA cloud, any change from one side will apply to another side.</source>

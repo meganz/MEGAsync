@@ -4854,7 +4854,7 @@ Voer een andere naam in.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Van geselecteerde mappen wordt automatisch een back-up gemaakt naar MEGA wanneer de desktop-applicatie actief is.</translation>
+        <translation>Geselecteerde mappen zullen automatisch een back-up maken naar MEGA als mappen die alleen kunnen worden gelezen wanneer de desktop-applicatie actief is. Wijzigingen kunnen alleen worden aangebracht in de backup op uw lokale apparaat. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5084,12 +5084,12 @@ Voer een andere naam in.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Synchroniseer uw volledige MEGA Cloud-schijf met uw lokale apparaat.</translation>
+        <translation>Uw volledige MEGA Cloud in twee richtingen synchroniseren met een lokaal apparaat. Mappen blijven up-to-date met wijzigingen die lokaal of in MEGA zijn gemaakt.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Synchroniseer geselecteerde mappen op uw MEGA Cloud-schijf met uw lokale apparaat.</translation>
+        <translation>Synchroniseer geselecteerde mappen op uw MEGA Cloud-schijf met uw lokale apparaat. Mappen blijven up-to-date met wijzigingen die lokaal of in MEGA zijn gemaakt.</translation>
     </message>
     <message>
         <source>View in Settings</source>
