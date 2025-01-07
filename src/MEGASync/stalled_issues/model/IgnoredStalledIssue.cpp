@@ -156,7 +156,9 @@ StalledIssue::AutoSolveIssueResult IgnoredStalledIssue::autoSolveIssue()
                         }
 
                         ignoreManager.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
-                            dir.relativeFilePath(ignoredPath.path), ignoredPath.target);
+                                                  dir.relativeFilePath(ignoredPath.path),
+                                                  MegaIgnoreNameRule::Target::NONE,
+                                                  MegaIgnoreNameRule::Type::p);
                     }
                 }
 
