@@ -383,6 +383,7 @@ void ExclusionRulesModel::addNewRule(int targetType, int wildCard, QString ruleV
         mMegaIgnoreManager->addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
                                         value,
                                         target,
+                                        MegaIgnoreNameRule::Type::NONE,
                                         static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         ruleAdded = true;
         endInsertRows();

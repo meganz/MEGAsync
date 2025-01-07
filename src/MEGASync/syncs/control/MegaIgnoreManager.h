@@ -49,6 +49,7 @@ public:
         MegaIgnoreNameRule::Class classType,
         QString pattern,
         MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE,
+        MegaIgnoreNameRule::Type type = MegaIgnoreNameRule::Type::NONE,
         MegaIgnoreNameRule::WildCardType wildCard = MegaIgnoreNameRule::WildCardType::EQUAL);
     std::shared_ptr<MegaIgnoreExtensionRule> addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
