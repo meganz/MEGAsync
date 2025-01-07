@@ -339,11 +339,6 @@ UpsellPlans::ViewMode UpsellController::viewMode() const
     return mPlans->getViewMode();
 }
 
-UpsellPlans::ViewMode UpsellController::viewMode() const
-{
-    return mPlans->getViewMode();
-}
-
 void UpsellController::onBilledPeriodChanged()
 {
     updatePlans();
