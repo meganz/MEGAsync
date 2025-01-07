@@ -8431,16 +8431,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>Issues detected</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
-    </message>
-    <message>
-        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
-    </message>
 </context>
 <context>
     <name>TransferManagerDragBackDrop</name>
