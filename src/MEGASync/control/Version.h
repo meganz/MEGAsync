@@ -12,7 +12,7 @@
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
 #define VER_INTERNALNAME_STR        "MEGAsync.exe\0"
-#define VER_LEGALCOPYRIGHT_STR      "Mega Limited 2024\0"
+#define VER_LEGALCOPYRIGHT_STR "Mega Limited 2025\0"
 #define VER_LEGALTRADEMARKS1_STR    "All Rights Reserved"
 #define VER_ORIGINALFILENAME_STR    "MEGAsync.exe\0"
 #define VER_PRODUCTNAME_STR         "MEGAsync\0"
