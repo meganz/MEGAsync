@@ -88,6 +88,7 @@ FocusScope {
                 }
                 text: UpsellStrings.billedSaveUpText.arg(upsellPlansAccess.currentDiscount)
                 visible: upsellPlansAccess.currentDiscount > 0
+                            && !upsellPlansAccess.onlyProFlexiAvailable
             }
 
         } // Row: topRow

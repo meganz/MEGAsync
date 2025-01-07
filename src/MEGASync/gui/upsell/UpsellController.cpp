@@ -676,12 +676,15 @@ bool UpsellController::storageFitsUnderStorageOQConditions(
 bool UpsellController::isOnlyProFlexiAvailable(
     const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const
 {
-    auto it = std::find_if(plans.cbegin(),
-                           plans.cend(),
-                           [this](const auto& plan)
-                           {
-                               return isOnlyProFlexiAvailable(plan);
-                           });
+    auto it =
+        std::find_if(plans.cbegin(),
+                     plans.cend(),
+                     [this](const auto& plan)
+                     {
+                         bool isOnlyProFlexi(isOnlyProFlexiAvailable(plan));
+                         return plan->proLevel() == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII &&
+                                isOnlyProFlexi;
+                     });
 
     return it != plans.cend();
 }
@@ -689,7 +692,9 @@ bool UpsellController::isOnlyProFlexiAvailable(
 void UpsellController::reviewPlansToCheckProFlexi(
     const QList<std::shared_ptr<UpsellPlans::Data>>& plans)
 {
-    if (isOnlyProFlexiAvailable(plans))
+    int currentAccountType(Preferences::instance()->accountType());
+    if (currentAccountType == mega::MegaAccountDetails::ACCOUNT_TYPE_PROIII ||
+        isOnlyProFlexiAvailable(plans))
     {
         // For Pro III, if the storage is full, only the Pro Flexi plan is available.
         // We check if the storage if the plan offered is enough for the current used
