@@ -2293,11 +2293,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>No notifications</translation>
     </message>
     <message>
-        <source>Pause/Resume</source>
-        <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pause or resume</translation>
-    </message>
-    <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
         <translation>Open downloads</translation>

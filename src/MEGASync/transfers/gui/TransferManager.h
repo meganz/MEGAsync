@@ -44,6 +44,9 @@ public:
     void toggleTab(TransfersWidget::TM_TAB newTab);
     void toggleTab(int newTab);
 
+    static QString getResumeAllTransfersTooltip();
+    static QString getPauseAllTransfersTooltip();
+
 public slots:
     void onTransferQuotaStateChanged(QuotaState transferQuotaState);
     void onStorageStateChanged(int storageState);

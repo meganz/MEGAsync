@@ -15,8 +15,11 @@ class TransfersSummaryWidget : public QWidget
     Q_OBJECT
 
 public:
-
-    enum class Status { EXPANDING, EXPANDED, SHRINKING, SHRUNK, RESIZING, RESIZED };
+    enum class Status
+    {
+        RESIZING,
+        RESIZED
+    };
 
     explicit TransfersSummaryWidget(QWidget *parent = 0);
     ~TransfersSummaryWidget();
@@ -58,7 +61,6 @@ public:
     void setUploads(uint completed, uint total);
     void setDownloads(uint completed, uint total);
 
-    void initialize();
     void reset();
 
     void showAnimated();
@@ -85,12 +87,11 @@ private slots:
     void resizeAnimation();
 
 public slots:
-    void expand(bool noAnimate = false);
-    void shrink(bool noAnimate = false);
-    void doResize(int futureWidth, bool noAnimate = false);
+    void expand();
+    void shrink();
+    void doResize(int futureWidth);
 
 private:
-
     void updateUploadsText(bool force = false);
     void updateDownloadsText(bool force = false);
     void updateUploads();
@@ -100,6 +101,10 @@ private:
     void resetUploads();
 
     void drawEllipse(int x, int y,  int diam, int width, QPainter *painter);
+
+    int getIconSize();
+
+    bool isHoverWidget(QWidget* widget) const;
 
     Ui::TransfersSummaryWidget *ui;
     QElapsedTimer qe;
@@ -152,7 +157,7 @@ private:
 
     int originalwidth = 0;
     int originalheight = 0;
-    int minwidth = 28;
+    int minwidth = 0;
     int upMaxWidthText = 0;
     int dlMaxWidthText = 0;
     int maxFontSize = 0;

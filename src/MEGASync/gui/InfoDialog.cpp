@@ -67,7 +67,13 @@ void InfoDialog::upAreaClicked()
 
 void InfoDialog::pauseResumeHovered(QMouseEvent *event)
 {
-    QToolTip::showText(event->globalPos(), tr("Pause/Resume"));
+    if (mPreferences->logged())
+    {
+        QString tooltip(mPreferences->getGlobalPaused() ?
+                            TransferManager::getResumeAllTransfersTooltip() :
+                            TransferManager::getPauseAllTransfersTooltip());
+        QToolTip::showText(event->globalPos(), tooltip);
+    }
 }
 
 void InfoDialog::generalAreaHovered(QMouseEvent *event)
@@ -401,7 +407,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
     isShown = false;
     if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
     {
-        ui->bTransferManager->shrink(true);
+        ui->bTransferManager->shrink();
     }
     QDialog::hideEvent(event);
 

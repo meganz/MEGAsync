@@ -456,11 +456,21 @@ void TransferManager::on_tFailed_clicked()
     }
 }
 
+QString TransferManager::getResumeAllTransfersTooltip()
+{
+    return tr("Resume all transfers");
+}
+
+QString TransferManager::getPauseAllTransfersTooltip()
+{
+    return tr("Pause all transfers");
+}
+
 void TransferManager::onUpdatePauseState(bool isPaused)
 {
     if (isPaused)
     {
-        mUi->bPause->setToolTip(tr("Resume all transfers"));
+        mUi->bPause->setToolTip(getResumeAllTransfersTooltip());
 
         if(!mUi->bPause->isChecked())
         {
@@ -471,7 +481,7 @@ void TransferManager::onUpdatePauseState(bool isPaused)
     }
     else
     {
-        mUi->bPause->setToolTip(tr("Pause all transfers"));
+        mUi->bPause->setToolTip(getPauseAllTransfersTooltip());
 
         if(mUi->bPause->isChecked())
         {
@@ -700,12 +710,6 @@ void TransferManager::refreshFileTypesStats()
 void TransferManager::onTransfersDataUpdated()
 {
     mTransfersCount = mModel->getTransfersCount();
-
-    auto processedNumber = mTransfersCount.pendingDownloads + mTransfersCount.pendingUploads;
-    if (processedNumber == 0 && mModel->areAllPaused())
-    {
-        pauseResumeTransfers(!mModel->areAllPaused());
-    }
 
     // Refresh stats
     refreshTypeStats();
