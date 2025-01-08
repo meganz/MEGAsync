@@ -149,6 +149,7 @@ void BackupCandidatesController::setAllSelected(bool selected)
     foreach(auto& candidate, mBackupCandidates->getBackupCandidates())
     {
         changeSelectedState(candidate, selected);
+        updateModel(BackupCandidates::SELECTED_ROLE, candidate);
     }
 
     updateSelectedAndTotalSize();
