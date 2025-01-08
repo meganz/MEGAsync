@@ -6,6 +6,8 @@
 #include "QTMegaTransferListener.h"
 #include "SetTypes.h"
 
+#include <QMutex>
+
 class MegaDownloader;
 
 namespace mega
@@ -81,11 +83,11 @@ private:
 
     // State Machine
     void handleStates();
-    void handleStateINIT(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(const ActionParams& action);
+    void handleStateInit(const ActionParams& action);
+    void handleStateWaitForPreviewSetToGetData(const ActionParams& action);
+    void handleStateWaitForPreviewSetToDownloadFromLink(const ActionParams& action);
+    void handleStateWaitForPreviewSetToDownloadCollection(const ActionParams& action);
+    void handleStateWaitForPreviewSetToImportCollection(const ActionParams& action);
 
     void handleFetchPublicSetResponse(mega::MegaRequest* request, mega::MegaError* error);
     bool handleFetchPublicSetResponseToGetData();

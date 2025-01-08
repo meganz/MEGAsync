@@ -160,7 +160,7 @@ void SetManager::handleStates()
 
         // Get the first action in the queue
         mRequestQueue.pop(action);
-        handleStateINIT(action);
+        handleStateInit(action);
         break;
     }
 
@@ -168,7 +168,7 @@ void SetManager::handleStates()
     {
         if (processInternalQueue(action))
         {
-            handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(action);
+            handleStateWaitForPreviewSetToGetData(action);
         }
         break;
     }
@@ -177,7 +177,7 @@ void SetManager::handleStates()
     {
         if (processInternalQueue(action))
         {
-            handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(action);
+            handleStateWaitForPreviewSetToDownloadFromLink(action);
         }
         break;
     }
@@ -186,7 +186,7 @@ void SetManager::handleStates()
     {
         if (processInternalQueue(action))
         {
-            handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(action);
+            handleStateWaitForPreviewSetToDownloadCollection(action);
         }
         break;
     }
@@ -195,7 +195,7 @@ void SetManager::handleStates()
     {
         if (processInternalQueue(action))
         {
-            handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(action);
+            handleStateWaitForPreviewSetToImportCollection(action);
         }
         break;
     }
@@ -206,10 +206,10 @@ void SetManager::handleStates()
 }
 
 //!
-//! \brief SetManager::handleStateINIT
+//! \brief SetManager::handleStateInit
 //! \param action: Set of action parameters to handle INIT state
 //!
-void SetManager::handleStateINIT(const ActionParams& action)
+void SetManager::handleStateInit(const ActionParams& action)
 {
     if (mSetManagerState != SetManagerState::INIT) { return; }
 
@@ -294,10 +294,10 @@ void SetManager::handleStateINIT(const ActionParams& action)
 }
 
 //!
-//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA
+//! \brief SetManager::handleStateWaitForPreviewSetToGetData
 //! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_GET_DATA state
 //!
-void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(const ActionParams& action)
+void SetManager::handleStateWaitForPreviewSetToGetData(const ActionParams& action)
 {
     if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_GET_DATA)
     {
@@ -334,10 +334,11 @@ void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(const ActionParams&
 }
 
 //!
-//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK
-//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK state
+//! \brief SetManager::handleStateWaitForPreviewSetToDownloadFromLink
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK
+//! state
 //!
-void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const ActionParams& action)
+void SetManager::handleStateWaitForPreviewSetToDownloadFromLink(const ActionParams& action)
 {
     if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK)
     {
@@ -370,10 +371,11 @@ void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const Act
 }
 
 //!
-//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION
-//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION state
+//! \brief SetManager::handleStateWaitForPreviewSetToDownloadCollection
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION
+//! state
 //!
-void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(const ActionParams& action)
+void SetManager::handleStateWaitForPreviewSetToDownloadCollection(const ActionParams& action)
 {
     if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION)
     {
@@ -389,10 +391,11 @@ void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(const Ac
 }
 
 //!
-//! \brief SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION
-//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION state
+//! \brief SetManager::handleStateWaitForPreviewSetToImportCollection
+//! \param action: Set of action parameters to handle WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION
+//! state
 //!
-void SetManager::handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(const ActionParams& action)
+void SetManager::handleStateWaitForPreviewSetToImportCollection(const ActionParams& action)
 {
     if (mSetManagerState != SetManagerState::WAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION)
     {
