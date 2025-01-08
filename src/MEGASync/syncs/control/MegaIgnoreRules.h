@@ -96,7 +96,9 @@ public:
     {
         NONE,
         g,
-        r
+        G,
+        r,
+        R
     };
     Q_ENUM(Strategy)
 

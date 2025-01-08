@@ -1,17 +1,17 @@
 #include "MegaIgnoreManager.h"
 
+#include "MegaApplication.h"
+#include "Preferences.h"
+#include "SyncController.h"
 #include <Utilities.h>
 
-#include "Preferences.h"
-#include "MegaApplication.h"
-
-#include <QDir>
-#include <QChar>
-#include <QTextStream>
-#include <QDebug>
 #include <QApplication>
-#include <QTemporaryFile>
+#include <QChar>
+#include <QDebug>
+#include <QDir>
 #include <QFileInfo>
+#include <QTemporaryFile>
+#include <QTextStream>
 
 MegaIgnoreManager::MegaIgnoreManager(const QString& syncLocalFolder, bool createDefaultIfNotExist)
 {
@@ -359,11 +359,13 @@ std::shared_ptr<MegaIgnoreNameRule>
                                    MegaIgnoreNameRule::Type type,
                                    MegaIgnoreNameRule::WildCardType wildCard)
 {
+    MegaIgnoreNameRule::Strategy strategy(mIsCaseSensitive ? MegaIgnoreNameRule::Strategy::G :
+                                                             MegaIgnoreNameRule::Strategy::NONE);
     auto rule = std::make_shared<MegaIgnoreNameRule>(pattern,
                                                      classType,
                                                      targetType,
                                                      type,
-                                                     MegaIgnoreNameRule::Strategy::NONE,
+                                                     strategy,
                                                      wildCard);
     addRule(rule);
     return rule;
@@ -391,6 +393,8 @@ void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool create
         mMegaIgnoreFile = Preferences::instance()->getDataPath() + QDir::separator() + QString::fromUtf8(MEGA_IGNORE_DEFAULT_FILE_NAME);
     }
     parseIgnoresFile();
+
+    mIsCaseSensitive = SyncController::instance().isSyncCaseSensitive(inputDirPath);
 }
 
 bool MegaIgnoreManager::hasChanged() const

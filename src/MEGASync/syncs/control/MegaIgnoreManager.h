@@ -109,6 +109,8 @@ private:
     std::shared_ptr<MegaIgnoreNameRule> mIgnoreSymLinkRule;
     
     QString mIgnoreCRC;
+
+    bool mIsCaseSensitive;
 };
 
 #endif // MEGAIGNOREMANAGER_H

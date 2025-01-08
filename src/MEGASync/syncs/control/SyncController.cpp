@@ -790,6 +790,35 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     return false;
 }
 
+bool SyncController::isSyncCaseSensitive(const QString& syncFolder)
+{
+    bool isCaseSensitive(false);
+
+    QDir tempPath(syncFolder);
+    if (tempPath.mkpath(QLatin1String(".CASE_SENS")))
+    {
+        tempPath.cd(QLatin1String(".CASE_SENS"));
+
+        QFile file_lower_case(tempPath.path());
+        file_lower_case.setFileName(QLatin1String("mega"));
+
+        QFile file_upper_case(tempPath.path());
+        file_upper_case.setFileName(QLatin1String("MEGA"));
+
+        if (file_lower_case.open(QFile::ReadWrite))
+        {
+            if (file_upper_case.open(QFile::ReadWrite))
+            {
+                isCaseSensitive = true;
+            }
+        }
+
+        tempPath.removeRecursively();
+    }
+
+    return isCaseSensitive;
+}
+
 QString SyncController::getSyncNameFromPath(const QString& path)
 {
     QDir dir (path);
