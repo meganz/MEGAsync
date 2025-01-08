@@ -105,6 +105,26 @@ FocusScope {
                 Qml.TextArea {
                     id: textArea
 
+                    function ensureCursorVisible() {
+                        // Calculation based on the number of line breaks.
+                        var cursorPos = textArea.cursorPosition;
+                        var textBeforeCursor = textArea.text.substring(0, cursorPos);
+
+                        // Current line (0-indexed).
+                        var currentLine = textBeforeCursor.split("\n").length;
+
+                        // Total height to current line.
+                        var lineHeight = sizes.textSize + sizes.lineHeight;
+                        var cursorHeight = (currentLine + 1) * lineHeight;
+
+                        if (cursorHeight > flickableItem.contentY + flickableItem.height) {
+                            flickableItem.contentY = cursorHeight - flickableItem.height + lineHeight;
+                        }
+                        else if (cursorHeight < flickableItem.contentY) {
+                            flickableItem.contentY = Math.max(cursorHeight - lineHeight, 0);
+                        }
+                    }
+
                     anchors {
                         left: parent.left
                         top: parent.top
@@ -140,10 +160,6 @@ FocusScope {
                             error = false;
                             hintItem.visible = false;
                         }
-
-                        if (flickableItem.contentHeight > flickableItem.height) {
-                            flickableItem.contentY = flickableItem.contentHeight - flickableItem.height;
-                        }
                     }
 
                     Keys.onPressed: {
@@ -156,8 +172,9 @@ FocusScope {
                         else if (event.key === Qt.Key_Return) {
                             if (!root.allowLineBreaks) {
                                 event.accepted = true;
-                                root.returnPressed();
                             }
+                            root.returnPressed();
+                            textArea.ensureCursorVisible();
                         }
                         else if (event.key === Qt.Key_Up) {
                             if (root.autoScrollOnArrows) {

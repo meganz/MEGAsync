@@ -13,7 +13,7 @@ QtObject {
     property real maxHeight: 0.0
     property real verticalContentMargin: 4.0
     property real rightContentMargin: 2.0
-    property real heightContentAdjustment: 12.0
+    property real heightContentAdjustment: 6.0
     property real rightTextAreaMargin: 6.0
     property real focusBorderRadius: 12.0
     property real borderRadius: 8.0
