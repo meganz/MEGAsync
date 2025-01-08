@@ -177,9 +177,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
-
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
     connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
+
+    // React to AppState changes
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            &SettingsDialog::onAppStateChanged);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -256,6 +261,12 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     {
         loadSettings();
     }
+}
+
+void SettingsDialog::onAppStateChanged(AppState::AppStates oldAppState,
+                                       AppState::AppStates newAppState)
+{
+    setProxyOnly(newAppState != AppState::NOMINAL);
 }
 
 void SettingsDialog::showGuestMode()
@@ -1548,8 +1559,6 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setUploadLimit(std::max(mPreferences->uploadLimitKB(), 0));
-
                 mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
                 mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
 

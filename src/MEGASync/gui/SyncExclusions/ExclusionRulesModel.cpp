@@ -157,11 +157,10 @@ QString ExclusionRulesModel::getTargetTypeString(std::shared_ptr<MegaIgnoreRule>
         return QCoreApplication::translate("ExclusionsStrings", "file name");
     case ExclusionRulesModel::TargetType::FOLDER:
         return QCoreApplication::translate("ExclusionsStrings", "folder name");
-        break;
+    case ExclusionRulesModel::TargetType::FILES_AND_FOLDERS:
     default:
-        break;
+        return QCoreApplication::translate("ExclusionsStrings", "File and folder name");
     }
-    return QString();
 }
 
 ExclusionRulesModel::TargetType ExclusionRulesModel::getTargetType(std::shared_ptr<MegaIgnoreRule> rule) const
@@ -183,13 +182,9 @@ ExclusionRulesModel::TargetType ExclusionRulesModel::getTargetType(std::shared_p
             {
                 return ExclusionRulesModel::TargetType::FOLDER;
             }
-            else if (rule->getDisplayText().contains(QString::fromUtf8(".")))
-            {
-                return ExclusionRulesModel::TargetType::FILE;
-            }
             else
             {
-                return ExclusionRulesModel::TargetType::FOLDER;
+                return ExclusionRulesModel::TargetType::FILES_AND_FOLDERS;
             }
         }
     }
@@ -215,13 +210,9 @@ QString ExclusionRulesModel::getIconName(std::shared_ptr<MegaIgnoreRule> rule) c
             {
                 return QString::fromUtf8("folder");
             }
-            else if (rule->getDisplayText().contains(QString::fromUtf8(".")))
-            {
-                return QString::fromUtf8("file");
-            }
             else
             {
-                return QString::fromUtf8("folder");
+                return QString::fromUtf8("folder-file");
             }
         }
     }
@@ -249,6 +240,8 @@ QString ExclusionRulesModel::getWildCardType(std::shared_ptr<MegaIgnoreRule> rul
                 return QCoreApplication::translate("ExclusionsStrings", "begins with");
             case MegaIgnoreNameRule::WildCardType::EQUAL:
                 return QCoreApplication::translate("ExclusionsStrings", "is equal");
+            case MegaIgnoreNameRule::WildCardType::WILDCARD:
+                return QCoreApplication::translate("ExclusionsStrings", "wildcard");
             default:
                 break;
             } 
@@ -315,8 +308,20 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
         // We should not change target of rules targeted to soft links, as we are not supporting this target on UI
         if (rule->getTarget() != MegaIgnoreNameRule::Target::s)
         {
-            rule->setTarget((targetType != TargetType::FOLDER) ? (MegaIgnoreNameRule::Target::f)
-                                                               : (MegaIgnoreNameRule::Target::d));
+            switch (targetType)
+            {
+                case TargetType::FOLDER:
+                    rule->setTarget(MegaIgnoreNameRule::Target::d);
+                    break;
+                case TargetType::FILE:
+                    rule->setTarget(MegaIgnoreNameRule::Target::f);
+                    break;
+                case TargetType::FILES_AND_FOLDERS:
+                    rule->setTarget(MegaIgnoreNameRule::Target::a);
+                    break;
+                default:
+                    break;
+            }
         }
         rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         rule->setPattern(splitted[0]);
@@ -359,11 +364,26 @@ void ExclusionRulesModel::addNewRule(int targetType, int wildCard, QString ruleV
             endInsertRows();
             continue;
         }
+        MegaIgnoreNameRule::Target target = MegaIgnoreNameRule::Target::a;
+        switch (targetType)
+        {
+            case TargetType::FILE:
+                target = MegaIgnoreNameRule::Target::f;
+                break;
+            case TargetType::FOLDER:
+                target = MegaIgnoreNameRule::Target::d;
+                break;
+            case TargetType::FILES_AND_FOLDERS:
+                target = MegaIgnoreNameRule::Target::a;
+                break;
+            default:
+                target = MegaIgnoreNameRule::Target::a;
+                break;
+        }
         mMegaIgnoreManager->addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
                                         value,
-                                        targetType == TargetType::FILE
-                                            ? (MegaIgnoreNameRule::Target::f)
-                                            : (MegaIgnoreNameRule::Target::d),
+                                        target,
+                                        MegaIgnoreNameRule::Type::NONE,
                                         static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         ruleAdded = true;
         endInsertRows();

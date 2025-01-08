@@ -67,6 +67,7 @@ private:
     static bool isRelatedFolder(const QString& folder, const QString& existingPath);
 
     void setAllSelected(bool selected);
+    void changeSelectedState(std::shared_ptr<BackupCandidates::Data> candidate, bool selected);
     bool checkPermissions(const QString& inputPath);
     QStringList checkIfFoldersAreSyncable();
     void checkDuplicatedBackups(const QStringList& candidateList);

@@ -38,34 +38,59 @@ QmlDialog{
             if(targetComboBox.currentText === ExclusionsStrings.files){
                 result = ExclusionsStrings.filesContaining
             }
-            else{
+            else if(targetComboBox.currentText === ExclusionsStrings.folders){
                 result = ExclusionsStrings.foldersContaining;
+            }
+            else
+            {
+                result = ExclusionsStrings.filesOrFoldersContaining;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.endingWith){
             if(targetComboBox.currentText === ExclusionsStrings.files){
                 result = ExclusionsStrings.filesEndingWith;
             }
-            else{
+            else if(targetComboBox.currentText === ExclusionsStrings.folders){
                 result = ExclusionsStrings.foldersEndingWith;
+            }
+            else{
+                result = ExclusionsStrings.filesOrFoldersEndingWith;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.beginningWith){
             if(targetComboBox.currentText === ExclusionsStrings.files){
                 result = ExclusionsStrings.filesBeginningWith
             }
-            else{
+            else if(targetComboBox.currentText === ExclusionsStrings.folders){
                 result = ExclusionsStrings.foldersBeginningWith;
+            }
+            else{
+                result = ExclusionsStrings.filesOrFoldersBeginningWith;
             }
         }
         else if (valueTypeCombo.currentText === ExclusionsStrings.equalTo){
             if(targetComboBox.currentText === ExclusionsStrings.files){
                 result = ExclusionsStrings.filesEqualTo;
             }
-            else{
+            else if(targetComboBox.currentText === ExclusionsStrings.folders){
                 result = ExclusionsStrings.foldersEqualTo;
             }
+            else{
+                result = ExclusionsStrings.filesOrFoldersEqualTo;
+            }
         }
+        else if (valueTypeCombo.currentText === ExclusionsStrings.matchingWildcard){
+            if(targetComboBox.currentText === ExclusionsStrings.files){
+                result = ExclusionsStrings.filesMatchingWildCard;
+            }
+            else if(targetComboBox.currentText === ExclusionsStrings.folders){
+                result = ExclusionsStrings.foldersMatchingWildCard;
+            }
+            else{
+                result = ExclusionsStrings.filesOrFoldersMatchingWildCard;
+            }
+        }
+
         return result;
     }
 
@@ -169,7 +194,7 @@ QmlDialog{
                     id: targetComboBox
 
                     implicitWidth: 210
-                    model: [ExclusionsStrings.files, ExclusionsStrings.folders, ExclusionsStrings.extensions]
+                    model: [ExclusionsStrings.files, ExclusionsStrings.folders, ExclusionsStrings.filesOrFolders, ExclusionsStrings.extensions]
                     onActivated:
                     {
                         valueTypeCombo.enabled = currentText != ExclusionsStrings.extensions;
@@ -184,7 +209,8 @@ QmlDialog{
                         ExclusionsStrings.beginningWith,
                         ExclusionsStrings.containing,
                         ExclusionsStrings.endingWith,
-                        ExclusionsStrings.equalTo]
+                        ExclusionsStrings.equalTo,
+                        ExclusionsStrings.matchingWildcard]
                     onActivated: {
                         valueTextField.title = getTextFieldTitle();
                     }
@@ -201,7 +227,7 @@ QmlDialog{
                     top: comboBoxesLayout.bottom
                     topMargin: 24
                 }
-                rightIconVisible: valueTypeCombo.currentText === ExclusionsStrings.equalTo && targetComboBox.currentText !== ExclusionsStrings.extensions
+                rightIconVisible: valueTypeCombo.currentText === ExclusionsStrings.equalTo && targetComboBox.currentText !== ExclusionsStrings.extensions && targetComboBox.currentText !== ExclusionsStrings.filesOrFolders
                 title: ExclusionsStrings.filesBeginningWith
                 placeholderText: ExclusionsStrings.rulePlaceholder
                 rightIconSource: Images.plus

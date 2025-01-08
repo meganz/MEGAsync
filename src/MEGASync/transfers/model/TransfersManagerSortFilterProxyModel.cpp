@@ -4,22 +4,25 @@
 #include "MegaTransferView.h"
 #include "TransferManagerDelegateWidget.h"
 #include "TransfersModel.h"
+#include "TransferWidgetColumnsManager.h"
 
 #include <QElapsedTimer>
 #include <QMutexLocker>
 #include <QRunnable>
 #include <QTimer>
 
-TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent)
-    : TransfersSortFilterProxyBaseModel(parent),
-      mTransferStates (TransferData::STATE_MASK),
-      mTransferTypes (TransferData::TYPE_MASK),
-      mFileTypes (~Utilities::FileTypes()),
-      mNextTransferStates (mTransferStates),
-      mNextTransferTypes (mTransferTypes),
-      mNextFileTypes (mFileTypes),
-      mSortCriterion (SortCriterion::PRIORITY),
-      mThreadPool (ThreadPoolSingleton::getInstance())
+#include <megaapi.h>
+
+TransfersManagerSortFilterProxyModel::TransfersManagerSortFilterProxyModel(QObject* parent):
+    TransfersSortFilterProxyBaseModel(parent),
+    mTransferStates(TransferData::STATE_MASK),
+    mTransferTypes(TransferData::TYPE_MASK),
+    mFileTypes(~Utilities::FileTypes()),
+    mNextTransferStates(mTransferStates),
+    mNextTransferTypes(mTransferTypes),
+    mNextFileTypes(mFileTypes),
+    mSortCriterion(SortCriterion::PRIORITY),
+    mThreadPool(ThreadPoolSingleton::getInstance())
 {
     connect(&mFilterWatcher, &QFutureWatcher<void>::finished,
             this, &TransfersManagerSortFilterProxyModel::onModelSortedFiltered);
@@ -166,6 +169,12 @@ void TransfersManagerSortFilterProxyModel::onModelSortedFiltered()
     emit searchNumbersChanged();
 }
 
+void TransfersManagerSortFilterProxyModel::setColumnManager(
+    QPointer<TransferWidgetColumnsManager> newColumnManager)
+{
+    mColumnManager = newColumnManager;
+}
+
 void TransfersManagerSortFilterProxyModel::setFilters(const TransferData::TransferTypes transferTypes,
                                                const TransferData::TransferStates transferStates,
                                                const Utilities::FileTypes fileTypes)
@@ -224,6 +233,10 @@ void TransfersManagerSortFilterProxyModel::resetTransfersStateCounters()
 TransferBaseDelegateWidget *TransfersManagerSortFilterProxyModel::createTransferManagerItem(QWidget*)
 {
     auto item = new TransferManagerDelegateWidget(nullptr);
+    if (mColumnManager)
+    {
+        item->setColumnManager(mColumnManager);
+    }
 
     connect(item, &TransferManagerDelegateWidget::cancelClearTransfer,
             this, &TransfersManagerSortFilterProxyModel::onCancelClearTransfer);

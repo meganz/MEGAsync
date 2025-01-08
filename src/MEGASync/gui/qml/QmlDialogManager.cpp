@@ -1,6 +1,7 @@
 #include "QmlDialogManager.h"
 
 #include "AccountStatusController.h"
+#include "AppState.h"
 #include "DialogOpener.h"
 #include "GuestContent.h"
 #include "GuestQmlDialog.h"
@@ -62,8 +63,9 @@ bool QmlDialogManager::openOnboardingDialog()
 bool QmlDialogManager::raiseGuestDialog()
 {
     bool raisedGuestDialog = false;
-    if(MegaSyncApp->getAccountStatusController()->isAccountBlocked()
-        || MegaSyncApp->getLoginController()->getState() != LoginController::FETCH_NODES_FINISHED)
+    if (MegaSyncApp->getAccountStatusController()->isAccountBlocked() ||
+        MegaSyncApp->getLoginController()->getState() != LoginController::FETCH_NODES_FINISHED ||
+        AppState::instance()->getAppState() != AppState::NOMINAL)
     {
         openGuestDialog();
         raisedGuestDialog = true;

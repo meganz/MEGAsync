@@ -16,7 +16,8 @@ public:
     enum TargetType {
         FILE = 0,
         FOLDER = 1,
-        EXTENSION = 2,
+        FILES_AND_FOLDERS = 2,
+        EXTENSION = 3
     };
     Q_ENUM(TargetType)
 

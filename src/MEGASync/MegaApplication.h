@@ -1,6 +1,7 @@
 #ifndef MEGAAPPLICATION_H
 #define MEGAAPPLICATION_H
 
+#include "AppState.h"
 #include "BlockingStageProgressController.h"
 #include "DesktopNotifications.h"
 #include "DownloadFromMegaDialog.h"
@@ -107,8 +108,7 @@ public:
     void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e) override;
     void onAccountUpdate(mega::MegaApi *api) override;
     void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users) override;
-    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes) override;
-    void onReloadNeeded(mega::MegaApi* api) override;
+    void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes) override;
     void onGlobalSyncStateChanged(mega::MegaApi *api) override;
 
     void onGlobalSyncStateChangedImpl();
@@ -134,7 +134,6 @@ public:
     void showWarningMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showErrorMessage(QString message, QString title = MegaSyncApp->getMEGAString());
     void showNotificationMessage(QString message, QString title = MegaSyncApp->getMEGAString());
-    void setUploadLimit(int limit);
     void setMaxUploadSpeed(int limit);
     void setMaxDownloadSpeed(int limit);
     void setMaxConnections(int direction, int connections);
@@ -218,6 +217,7 @@ signals:
     void addBackup();
     void shellNotificationsProcessed();
     void updateUserInterface();
+    void requestAppState(AppState::AppStates newAppState);
 
 public slots:
     void updateTrayIcon();
@@ -302,6 +302,7 @@ public slots:
     void enableFinderExt();
 #endif
     void requestFetchSetFromLink(const QString& link);
+    void onAppStateChanged(AppState::AppStates, AppState::AppStates);
 
 private slots:
     void openFolderPath(QString path);

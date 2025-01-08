@@ -1,6 +1,7 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
+#include "AppState.h"
 #include "megaapi.h"
 #include "Preferences.h"
 #include "SyncInfo.h"
@@ -67,6 +68,9 @@ signals:
     void userActivity();
 
 public slots:
+    // React to AppState change
+    void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
+
     // Network
     void showGuestMode();
 

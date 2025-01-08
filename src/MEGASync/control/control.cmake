@@ -13,6 +13,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/ProxyStatsEventHandler.h
     control/ExportProcessor.h
     control/FileFolderAttributes.h
+    control/FatalEventHandler.h
     control/HTTPServer.h
     control/ImageDownloader.h
     control/IntervalExecutioner.h
@@ -47,6 +48,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/UserMessageTypes.h
     control/DataBaseClasses/DataModel.h
     control/DataBaseClasses/DataController.h
+    control/ReloadingEventHandler.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -61,6 +63,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/ProxyStatsEventHandler.cpp
     control/ExportProcessor.cpp
     control/FileFolderAttributes.cpp
+    control/FatalEventHandler.cpp
     control/HTTPServer.cpp
     control/ImageDownloader.cpp
     control/IntervalExecutioner.cpp
@@ -92,6 +95,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/BugReport/BugReportController.h
     control/BugReport/BugReportController.cpp
     control/BugReport/BugReportData.h
+    control/ReloadingEventHandler.cpp
 )
 
 target_sources(MEGAsync

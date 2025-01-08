@@ -6,6 +6,7 @@ set(DESKTOP_APP_TRANSFERS_HEADERS
     transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.h
     transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.h
     transfers/gui/InfoDialogTransferLoadingItem.h
+    transfers/gui/TransferWidgetColumnsManager.h
     transfers/model/TransfersManagerSortFilterProxyModel.h
     transfers/model/TransfersSortFilterProxyBaseModel.h
     transfers/model/TransfersModel.h
@@ -37,6 +38,7 @@ set(DESKTOP_APP_TRANSFERS_SOURCES
     transfers/gui/DuplicatedNodeDialogs/DuplicatedNodeItem.cpp
     transfers/gui/DuplicatedNodeDialogs/DuplicatedUploadChecker.cpp
     transfers/gui/InfoDialogTransferLoadingItem.cpp
+    transfers/gui/TransferWidgetColumnsManager.cpp
     transfers/model/InfoDialogTransfersProxyModel.cpp
     transfers/model/TransfersManagerSortFilterProxyModel.cpp
     transfers/gui/SomeIssuesOccurredMessage.cpp

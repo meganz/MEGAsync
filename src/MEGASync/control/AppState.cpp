@@ -59,6 +59,8 @@ void AppState::setAppState(AppStates newState)
                 break;
             }
             case AppState::NOMINAL:
+            // Fallthrough
+            case AppState::FINISHED:
             {
                 break;
             }

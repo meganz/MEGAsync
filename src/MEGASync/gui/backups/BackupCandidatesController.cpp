@@ -148,13 +148,25 @@ void BackupCandidatesController::setAllSelected(bool selected)
 {
     foreach(auto& candidate, mBackupCandidates->getBackupCandidates())
     {
-        if (candidate->mSelected != selected && (!selected || checkPermissions(candidate->mFolder)))
-        {
-            setData(candidate, selected, BackupCandidates::SELECTED_ROLE);
-        }
+        changeSelectedState(candidate, selected);
     }
 
     updateSelectedAndTotalSize();
+}
+
+void BackupCandidatesController::changeSelectedState(std::shared_ptr<BackupCandidates::Data> candidate, bool selected)
+{
+    if (candidate->mSelected != selected)
+    {
+        if(selected)
+        {
+            candidate->mSelected = checkPermissions(candidate->mFolder) ? true : false;
+        }
+        else
+        {
+            candidate->mSelected = false;
+        }
+    }
 }
 
 bool BackupCandidatesController::checkPermissions(const QString& inputPath)
@@ -494,14 +506,7 @@ bool BackupCandidatesController::setData(std::shared_ptr<BackupCandidates::Data>
             break;
         case BackupCandidates::SELECTED_ROLE:
         {
-            if (checkPermissions(candidate->mFolder))
-            {
-                candidate->mSelected = value.toBool();
-            }
-            else
-            {
-                candidate->mSelected = false;
-            }
+            changeSelectedState(candidate, value.toBool());
             checkSelectedAll();
             break;
         }
