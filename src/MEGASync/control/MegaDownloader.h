@@ -26,8 +26,8 @@ class MegaDownloader : public QObject
 public:
     // If you want to manage public transfers in a different MegaApi object,
     // provide megaApiGuest
-    MegaDownloader(mega::MegaApi* _megaApi, std::shared_ptr<mega::MegaTransferListener> _listener);
-    MegaDownloader(mega::MegaApi* _megaApi, mega::MegaTransferListener* _listener);
+    MegaDownloader(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaTransferListener> listener);
+    MegaDownloader(mega::MegaApi* megaApi, mega::MegaTransferListener* listener);
     virtual ~MegaDownloader() = default;
 
     struct DownloadInfo
@@ -35,12 +35,8 @@ public:
         QQueue<WrappedNode> downloadQueue;
         BlockingBatch* downloadBatches = nullptr;
         QString path;
-
-        struct
-        {
-            unsigned long long appId = TransferMetaData::INVALID_ID;
-            bool createAppId = true;
-        } appIdInfo;
+        unsigned long long appId = TransferMetaData::INVALID_ID;
+        bool createAppId = true;
 
         bool checkLocalSpace = true;
     };

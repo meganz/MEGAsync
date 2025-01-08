@@ -13,14 +13,14 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi* _megaApi,
-                               std::shared_ptr<mega::MegaTransferListener> _listener):
+MegaDownloader::MegaDownloader(MegaApi* megaApi,
+                               std::shared_ptr<mega::MegaTransferListener> listener):
     QObject(),
-    megaApi(_megaApi),
-    mTransferListener(_listener),
+    megaApi(megaApi),
+    mTransferListener(listener),
     mTransferListenerDelegate(
         std::make_shared<QTMegaTransferListener>(megaApi, mTransferListener.get())),
-    mQueueData(_megaApi, pathMap)
+    mQueueData(megaApi, pathMap)
 {
     // In case the MegaDownloader is used in a separate thread, we need this method to be direct
     connect(&mQueueData,
@@ -30,11 +30,11 @@ MegaDownloader::MegaDownloader(MegaApi* _megaApi,
             Qt::DirectConnection);
 }
 
-MegaDownloader::MegaDownloader(MegaApi* _megaApi, mega::MegaTransferListener* _listener):
+MegaDownloader::MegaDownloader(MegaApi* megaApi, mega::MegaTransferListener* listener):
     QObject(),
-    megaApi(_megaApi),
-    mTransferListenerDelegate(std::make_shared<QTMegaTransferListener>(megaApi, _listener)),
-    mQueueData(_megaApi, pathMap)
+    megaApi(megaApi),
+    mTransferListenerDelegate(std::make_shared<QTMegaTransferListener>(megaApi, listener)),
+    mQueueData(megaApi, pathMap)
 {
     // In case the MegaDownloader is used in a separate thread, we need this method to be direct
     connect(&mQueueData,
@@ -56,17 +56,14 @@ void MegaDownloader::processDownloadQueue(DownloadInfo& info)
 
     mNoTransferStarted = true;
 
-    if (info.appIdInfo.appId == TransferMetaData::INVALID_ID && info.appIdInfo.createAppId)
+    if (info.appId == TransferMetaData::INVALID_ID && info.createAppId)
     {
         auto data =
             TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(info.path);
-        info.appIdInfo.appId = data->getAppId();
+        info.appId = data->getAppId();
     }
 
-    mQueueData.initialize(info.downloadQueue,
-                          info.downloadBatches,
-                          info.appIdInfo.appId,
-                          info.path);
+    mQueueData.initialize(info.downloadQueue, info.downloadBatches, info.appId, info.path);
 
     if (info.checkLocalSpace)
     {
@@ -124,7 +121,7 @@ void MegaDownloader::onAvailableSpaceCheckFinished(bool isDownloadPossible)
         std::shared_ptr<TransferBatch> batch(nullptr);
         std::shared_ptr<DownloadTransferMetaData> appData(nullptr);
 
-        if (mQueueData.getCurrentAppDataId() > TransferMetaData::INVALID_ID)
+        if (mQueueData.getCurrentAppDataId() != TransferMetaData::INVALID_ID)
         {
             appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(mQueueData.getCurrentAppDataId());
             if(appData)

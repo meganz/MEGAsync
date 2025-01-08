@@ -446,9 +446,9 @@ void SetManager::onRequestFinish(MegaRequest* request, MegaError* error)
 //!
 void SetManager::onTransferFinish(MegaApi* api, MegaTransfer* transfer, MegaError* error)
 {
-    (void) api;
-    (void) transfer;
-    (void)error;
+    Q_UNUSED(api);
+    Q_UNUSED(transfer);
+    Q_UNUSED(error);
 
     mDownloadedCounter++;
 
@@ -781,11 +781,29 @@ void SetManager::startDownload(QQueue<WrappedNode>& nodes, const QString& localP
 {
     if (nodes.isEmpty() || localPath.isEmpty())
     {
+        if (nodes.isEmpty())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                         QString::fromUtf8("Download set %1 failed. Nodes not available.")
+                             .arg(localPath)
+                             .toUtf8()
+                             .constData());
+        }
+        else if (localPath.isEmpty())
+        {
+            MegaApi::log(
+                MegaApi::LOG_LEVEL_ERROR,
+                QString::fromUtf8("Download set failed. Local path not available. Nodes number: %1")
+                    .arg(QString::number(nodes.size()))
+                    .toUtf8()
+                    .constData());
+        }
+
         return;
     }
 
     MegaDownloader::DownloadInfo info;
-    info.appIdInfo.appId = mAppId;
+    info.appId = mAppId;
     info.checkLocalSpace = false;
     info.downloadQueue = nodes;
     info.path = localPath + QDir::separator();

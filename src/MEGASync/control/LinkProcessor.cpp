@@ -601,14 +601,13 @@ void LinkProcessor::startDownload(const QQueue<WrappedNode>& nodes)
     }
 
     MegaDownloader::DownloadInfo info;
-    info.appIdInfo.appId = mAppId;
+    info.appId = mAppId;
     info.checkLocalSpace = false;
     info.downloadQueue = nodes;
     info.path = mDownloadPath;
     mDownloader->processDownloadQueue(info);
 
-    auto appData =
-        TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(info.appIdInfo.appId);
+    auto appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(info.appId);
     if (appData)
     {
         appData->setIsImportedLink();
