@@ -132,10 +132,10 @@ int BackupCandidatesController::insert(const QString& folder)
     }
 
     auto last(mBackupCandidates->getSize());
-    emit beginInsertRows(last, last);
-
     auto data =
         createData(inputPath, BackupsController::instance().getSyncNameFromPath(inputPath), true);
+
+    emit beginInsertRows(last, last);
     mBackupCandidates->addBackupCandidate(data);
     emit endInsertRows();
 
