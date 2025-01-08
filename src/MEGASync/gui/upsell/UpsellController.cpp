@@ -270,10 +270,7 @@ void UpsellController::openPlanUrl(int index)
 
 void UpsellController::setBilledPeriod(bool isMonthly)
 {
-    if (mPlans->isMonthly() != isMonthly)
-    {
-        mPlans->setMonthly(isMonthly);
-    }
+    mPlans->setMonthly(isMonthly);
 }
 
 void UpsellController::setViewMode(UpsellPlans::ViewMode mode)

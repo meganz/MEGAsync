@@ -91,9 +91,7 @@ Rectangle {
     onMonthlyChanged: {
         // When the component is disabled, the text is not being updated.
         // Force to update the text when the component is disabled.
-        if (root.monthly && !root.enabled) {
-            billedPeriodInfoText.text = getBilledPeriodInfoText();
-        }
+        billedPeriodInfoText.text = getBilledPeriodInfoText();
     }
 
     Column {
