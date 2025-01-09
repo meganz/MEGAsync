@@ -168,7 +168,7 @@ pipeline {
                                             jf rt del \
                                                 --url ${REPO_URL} \
                                                 --access-token ${MEGASYNC_ARTIFACTORY_TOKEN} \
-                                                MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO"
+                                                MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/linux/$DISTRO
                                         """
                                         dir ("${env.INTERNAL_REPO_PATH}/repo/private/$DISTRO") {
                                             sh """
