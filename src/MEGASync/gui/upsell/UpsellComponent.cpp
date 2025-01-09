@@ -64,11 +64,20 @@ void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
 void UpsellComponent::buyButtonClicked(int index)
 {
     mController->openPlanUrl(index);
+
+    auto plan{mController->getPlans()->getPlan(index)};
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+        AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,
+        {getViewModeString(), QString::number(plan->proLevel()), plan->name()});
 }
 
 void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
 {
     mController->setBilledPeriod(isMonthly);
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+        isMonthly ? AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED :
+                    AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED,
+        {getViewModeString()});
 }
 
 void UpsellComponent::linkInDescriptionClicked()
@@ -80,11 +89,16 @@ void UpsellComponent::linkInDescriptionClicked()
         case UpsellPlans::ViewMode::STORAGE_FULL:
         {
             urlString = URL_RUBBISH;
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+                AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,
+                {getViewModeString()});
             break;
         }
         case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
         {
             urlString = URL_ABOUT_TRANSFER_QUOTA;
+            MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED);
             break;
         }
         default:
@@ -102,4 +116,12 @@ void UpsellComponent::linkInDescriptionClicked()
 void UpsellComponent::linkTryProFlexiClicked()
 {
     Utilities::openUrl(QUrl(URL_PRO_FLEXI));
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEventArg(
+        AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,
+        {getViewModeString()});
+}
+
+QString UpsellComponent::getViewModeString() const
+{
+    return QString::number(static_cast<int>(viewMode()));
 }

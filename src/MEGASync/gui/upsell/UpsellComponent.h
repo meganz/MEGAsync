@@ -35,6 +35,8 @@ public slots:
 private:
     std::shared_ptr<UpsellController> mController;
     std::shared_ptr<UpsellModel> mModel;
+
+    QString getViewModeString() const;
 };
 
 #endif // UPSELL_COMPONENT_H
