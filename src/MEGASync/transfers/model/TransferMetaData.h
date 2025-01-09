@@ -53,7 +53,20 @@ struct TransferMetaDataItem
     TransferData::TransferState state;
     std::shared_ptr<mega::MegaTransfer> failedTransfer;
 
-    virtual TransferData::TransferState getState(){return state;}
+    virtual TransferData::TransferState getState()
+    {
+        return state;
+    }
+
+    int getErrorCode()
+    {
+        if (failedTransfer)
+        {
+            return failedTransfer->getLastError().getErrorCode();
+        }
+
+        return mega::MegaError::API_OK;
+    }
 };
 
 template <class Type>
@@ -383,7 +396,7 @@ public:
     bool hasBeenPreviouslyCompleted(mega::MegaTransfer* transfer) const override;
 
     void setIsImportedLink();
-    bool isImportedLink() const;
+    std::shared_ptr<TransferMetaDataItem> containsAFailedImportedLink() const;
 
 protected:
     std::shared_ptr<TransferMetaData> createNonExistData() override;

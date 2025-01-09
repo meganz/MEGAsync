@@ -50,7 +50,7 @@ protected:
     QString buildNonExistentItemsMessageUploads();
     QString buildNonExistentItemsMessageDownloads();
 
-    QString buildImportedLinkError();
+    QString buildImportedLinkError(std::shared_ptr<TransferMetaDataItem> failedItem);
 
     QString getImagePath();
 

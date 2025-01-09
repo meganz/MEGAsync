@@ -824,14 +824,24 @@ bool DownloadTransferMetaData::isNonExistTransfer(mega::MegaTransfer *transfer) 
     //    return true;
 }
 
-bool DownloadTransferMetaData::isImportedLink() const
-{
-    return mIsImportedLink;
-}
-
 void DownloadTransferMetaData::setIsImportedLink()
 {
     mIsImportedLink = true;
+}
+
+std::shared_ptr<TransferMetaDataItem> DownloadTransferMetaData::containsAFailedImportedLink() const
+{
+    if (mIsImportedLink)
+    {
+        auto item = getFirstTransferByState(TransferData::TRANSFER_FAILED);
+
+        if (item && item->getErrorCode() != mega::MegaError::API_OK)
+        {
+            return item;
+        }
+    }
+
+    return nullptr;
 }
 
 UploadTransferMetaData::UploadTransferMetaData(unsigned long long appId, const mega::MegaHandle handle)

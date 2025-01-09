@@ -44,17 +44,16 @@ DesktopNotifications::NotificationInfo TransferNotificationBuilder::buildNotific
     {
         if (auto downloadData = std::dynamic_pointer_cast<DownloadTransferMetaData>(mData))
         {
-            auto destinationPath = DownloadTransferMetaData::getDestinationNodePathByData(mData);
-
-            if (downloadData->isImportedLink())
+            if (auto failedItem = downloadData->containsAFailedImportedLink())
             {
                 info.title = buildImportedLinkErrorTitle();
-                info.message = buildImportedLinkError();
+                info.message = buildImportedLinkError(failedItem);
             }
-
-            // No imported link failed, so it is a normal download
-            if (info.message.isEmpty())
+            else
             {
+                auto destinationPath =
+                    DownloadTransferMetaData::getDestinationNodePathByData(mData);
+
                 info.title = buildDownloadTitle();
 
                 if (mData->isSingleTransfer())
@@ -456,16 +455,15 @@ QString TransferNotificationBuilder::buildNonExistentItemsMessageDownloads()
     return tr("%n item no longer exist.", "", mData->getNonExistentCount());
 }
 
-QString TransferNotificationBuilder::buildImportedLinkError()
+QString TransferNotificationBuilder::buildImportedLinkError(
+    std::shared_ptr<TransferMetaDataItem> failedItem)
 {
     QString message;
 
-    auto item = mData->getFirstTransferByState(TransferData::TRANSFER_FAILED);
-
-    if (item)
+    if (failedItem)
     {
-        auto errorCode(item->failedTransfer->getLastError().getErrorCode());
-        auto path(item->id.path);
+        auto errorCode(failedItem->getErrorCode());
+        auto path(failedItem->id.path);
 
         if (errorCode == mega::MegaError::API_EWRITE)
         {
