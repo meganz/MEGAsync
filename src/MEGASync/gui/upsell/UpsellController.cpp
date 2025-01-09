@@ -82,12 +82,7 @@ void UpsellController::updateStorageElements()
 
     reviewPlansToCheckProFlexi(mPlans->plans());
 
-    emit dataChanged(0,
-                     mPlans->size() - 1,
-                     QVector<int>()
-                         << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::CURRENT_PLAN_ROLE
-                         << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE << UpsellPlans::SHOW_ONLY_PRO_FLEXI
-                         << UpsellPlans::BUTTON_NAME_ROLE);
+    emit dataChanged(0, mPlans->size() - 1);
     mPlans->setPro(Preferences::instance()->accountType() !=
                    Preferences::AccountType::ACCOUNT_TYPE_FREE);
 }
@@ -340,16 +335,7 @@ void UpsellController::onBilledPeriodChanged()
 {
     updatePlans();
 
-    emit dataChanged(0,
-                     mPlans->size() - 1,
-                     QVector<int>()
-                         << Qt::DisplayRole << UpsellPlans::STORAGE_ROLE
-                         << UpsellPlans::TRANSFER_ROLE << UpsellPlans::PRICE_ROLE
-                         << UpsellPlans::AVAILABLE_ROLE << UpsellPlans::RECOMMENDED_ROLE
-                         << UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE
-                         << UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE
-                         << UpsellPlans::CURRENT_PLAN_ROLE << UpsellPlans::SHOW_PRO_FLEXI_MESSAGE
-                         << UpsellPlans::SHOW_ONLY_PRO_FLEXI << UpsellPlans::BUTTON_NAME_ROLE);
+    emit dataChanged(0, mPlans->size() - 1);
 }
 
 void UpsellController::onTransferRemainingTimeElapsed()
@@ -530,7 +516,7 @@ void UpsellController::updatePlans()
 {
     int currentRecommendedRow(getRowForCurrentRecommended());
     int row(getRowForNextRecommendedPlan());
-    if (row != -1 && currentRecommendedRow != row)
+    if (row > -1 && currentRecommendedRow != row)
     {
         resetRecommended();
 

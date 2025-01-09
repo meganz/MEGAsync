@@ -17,12 +17,13 @@ UpsellPlans::UpsellPlans(QObject* parent):
 
 void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
 {
-    auto currentSize = size();
-    mPlans.append(plans);
-    if (size() != currentSize)
+    if (plans.isEmpty())
     {
-        emit sizeChanged();
+        return;
     }
+
+    mPlans.append(plans);
+    emit sizeChanged();
 }
 
 std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlan(int index) const

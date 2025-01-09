@@ -55,7 +55,7 @@ signals:
     void dataReady();
     void beginInsertRows(int first, int last);
     void endInsertRows();
-    void dataChanged(int rowStart, int rowFinal, QVector<int> roles);
+    void dataChanged(int rowStart, int rowFinal, QVector<int> roles = QVector<int>());
 
 private slots:
     void onTransferRemainingTimeElapsed();

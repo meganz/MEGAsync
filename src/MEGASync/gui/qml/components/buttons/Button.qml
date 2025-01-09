@@ -110,7 +110,7 @@ Qml.RoundButton {
             id: buttonText
 
             // Make the text fill the full available width if no images or indicators are visible.
-            width: !sizes.fillWidth ? implicitWidth : parent.width
+            width: sizes.fillWidth ? parent.width : implicitWidth
             anchors.verticalCenter: parent.verticalCenter
             text: root.text
             color: getTextColor()

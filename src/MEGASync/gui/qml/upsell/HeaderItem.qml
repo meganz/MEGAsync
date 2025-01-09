@@ -14,6 +14,7 @@ FocusScope {
     readonly property real titleLineHeight: 30
     readonly property real textLineHeight: 18
     readonly property real textPadding: 12
+    readonly property real textNumberOfPaddings: 2
 
     height: content.height
 
@@ -26,8 +27,8 @@ FocusScope {
             right: parent.right
             margins: root.textPadding
         }
-        width: parent.width - 2 * root.textPadding
-        height: columnContent.height + 2 * root.textPadding
+        width: parent.width - root.textNumberOfPaddings * root.textPadding
+        height: columnContent.height + root.textNumberOfPaddings * root.textPadding
 
         Column {
             id: columnContent
