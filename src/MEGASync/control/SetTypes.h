@@ -2,6 +2,7 @@
 #define SETTYPES_H
 
 #include "megaapi.h"
+#include "TransferMetaData.h"
 
 #include <QList>
 #include <QObject>
@@ -25,6 +26,7 @@ struct AlbumCollection
     QString name = QString::fromUtf8("");
     QList<mega::MegaHandle> elementHandleList = {};
     QQueue<WrappedNode> nodeList;
+    unsigned long long appDataId = TransferMetaData::INVALID_ID;
 
     // Default constructor
     AlbumCollection() = default;

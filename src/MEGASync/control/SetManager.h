@@ -104,13 +104,14 @@ private:
     AlbumCollection filterSet(const AlbumCollection& srcSet, const QList<mega::MegaHandle>& elementHandleList);
     void reset();
     void resetAndHandleStates();
-    void startDownload(QQueue<WrappedNode>& nodes, const QString& localPath);
+    void startDownload(QQueue<WrappedNode>& nodes,
+                       const QString& localPath,
+                       unsigned long long appDataId);
     bool copyNode(mega::MegaNode* linkNode, MegaNodeSPtr importParentNode);
     void checkandHandleFinishedImport();
 
     // AppId for notifications
-    void setAppId();
-    void resetAppId();
+    unsigned long long getAppDataId();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -129,7 +130,6 @@ private:
     QStringList mSucceededImportElements;
     QStringList mAlreadyExistingImportElements;
 
-    unsigned long long mAppId;
     std::shared_ptr<MegaDownloader> mDownloader;
 
     // State machine

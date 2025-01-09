@@ -14,7 +14,6 @@ SetManager::SetManager(MegaApi* megaApi, MegaApi* megaApiFolders):
     mMegaApi(megaApi),
     mMegaApiFolders(megaApiFolders),
     mDownloadedCounter(0),
-    mAppId(TransferMetaData::INVALID_ID),
     mDownloader(std::make_shared<MegaDownloader>(megaApi, this)),
     mSetManagerState(SetManagerState::INIT)
 {
@@ -220,6 +219,7 @@ void SetManager::handleStateInit(const ActionParams& action)
         // If elementHandleList is empty, ALL Set Elements will be downloaded
         mCurrentElementHandleList = action.elementHandleList;
         mCurrentSet = filterSet(action.set, mCurrentElementHandleList);
+        mCurrentSet.appDataId = getAppDataId();
 
         if (!mCurrentSet.link.isEmpty() && mCurrentSet.isComplete())
         {
@@ -257,6 +257,7 @@ void SetManager::handleStateInit(const ActionParams& action)
         // Request to put a new Set in preview; reset current values
         mCurrentSet.reset();
         mCurrentSet.link = action.link;
+        mCurrentSet.appDataId = getAppDataId();
 
         if (!mCurrentSet.link.isEmpty())
         {
@@ -359,9 +360,7 @@ void SetManager::handleStateWaitForPreviewSetToDownloadFromLink(const ActionPara
         // A new Set Element node has been fetched
         if (!mCurrentSet.nodeList.isEmpty())
         {
-            setAppId();
-            startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
-            resetAppId();
+            startDownload(mCurrentSet.nodeList, mCurrentDownloadPath, mCurrentSet.appDataId);
         }
         break;
 
@@ -498,9 +497,7 @@ bool SetManager::handleFetchPublicSetResponseToDownloadCollection()
     if (!createDirectory(mCurrentDownloadPath)) { return false; }
 
     // The requested Set has been put in preview, so download of (selected) Elements can start
-    setAppId();
-    startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
-    resetAppId();
+    startDownload(mCurrentSet.nodeList, mCurrentDownloadPath, mCurrentSet.appDataId);
 
     return true;
 }
@@ -649,16 +646,11 @@ void SetManager::checkandHandleFinishedImport()
     }
 }
 
-void SetManager::setAppId()
+unsigned long long SetManager::getAppDataId()
 {
     auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(
         mCurrentDownloadPath);
-    mAppId = data->getAppId();
-}
-
-void SetManager::resetAppId()
-{
-    mAppId = TransferMetaData::INVALID_ID;
+    return data->getAppId();
 }
 
 //!
@@ -780,7 +772,9 @@ void SetManager::resetAndHandleStates()
     handleStates();
 }
 
-void SetManager::startDownload(QQueue<WrappedNode>& nodes, const QString& localPath)
+void SetManager::startDownload(QQueue<WrappedNode>& nodes,
+                               const QString& localPath,
+                               unsigned long long appDataId)
 {
     if (nodes.isEmpty() || localPath.isEmpty())
     {
@@ -806,7 +800,7 @@ void SetManager::startDownload(QQueue<WrappedNode>& nodes, const QString& localP
     }
 
     MegaDownloader::DownloadInfo info;
-    info.appId = mAppId;
+    info.appId = appDataId;
     info.checkLocalSpace = false;
     info.downloadQueue = nodes;
     info.path = localPath + QDir::separator();
