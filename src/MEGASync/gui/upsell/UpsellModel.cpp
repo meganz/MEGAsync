@@ -48,11 +48,6 @@ int UpsellModel::rowCount(const QModelIndex& parent) const
     return parent.isValid() ? 0 : mController->getPlans()->size();
 }
 
-bool UpsellModel::setData(const QModelIndex& index, const QVariant& value, int role)
-{
-    return mController->setData(index.row(), value, role);
-}
-
 QVariant UpsellModel::data(const QModelIndex& index, int role) const
 {
     return mController->data(index.row(), role);

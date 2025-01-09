@@ -8,6 +8,7 @@ namespace
 const QLatin1String
     URL_ABOUT_TRANSFER_QUOTA("https://help.mega.io/plans-storage/space-storage/transfer-quota");
 const QLatin1String URL_RUBBISH("mega://#fm/rubbish");
+const QLatin1String URL_PRO_FLEXI("mega://#pro?tab=flexi");
 }
 
 static bool qmlRegistrationDone = false;
@@ -60,9 +61,9 @@ void UpsellComponent::setViewMode(UpsellPlans::ViewMode mode)
     mController->setViewMode(mode);
 }
 
-void UpsellComponent::buyButtonClicked()
+void UpsellComponent::buyButtonClicked(int index)
 {
-    mController->openSelectedPlanUrl();
+    mController->openPlanUrl(index);
 }
 
 void UpsellComponent::billedRadioButtonClicked(bool isMonthly)
@@ -96,4 +97,9 @@ void UpsellComponent::linkInDescriptionClicked()
     {
         Utilities::openUrl(QUrl(urlString));
     }
+}
+
+void UpsellComponent::linkTryProFlexiClicked()
+{
+    Utilities::openUrl(QUrl(URL_PRO_FLEXI));
 }

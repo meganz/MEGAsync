@@ -9,18 +9,30 @@ UpsellPlans::UpsellPlans(QObject* parent):
     mViewMode(ViewMode::NONE),
     mIsMonthly(false),
     mIsBillingCurrency(true),
-    mCurrentPlanSelected(-1),
     mCurrentDiscount(-1),
-    mTransferFinishTime(0ll)
+    mTransferFinishTime(0ll),
+    mIsOnlyProFlexiAvailable(false),
+    mIsPro(false)
 {}
 
 void UpsellPlans::addPlans(const QList<std::shared_ptr<Data>>& plans)
 {
+    if (plans.isEmpty())
+    {
+        return;
+    }
+
     mPlans.append(plans);
+    emit sizeChanged();
 }
 
 std::shared_ptr<UpsellPlans::Data> UpsellPlans::getPlan(int index) const
 {
+    if (index < 0 || index >= mPlans.size())
+    {
+        return nullptr;
+    }
+
     return mPlans.at(index);
 }
 
@@ -44,11 +56,6 @@ QString UpsellPlans::getCurrencyName() const
     return mCurrency.currencyName();
 }
 
-QString UpsellPlans::getCurrentPlanName() const
-{
-    return mCurrentPlanName;
-}
-
 QString UpsellPlans::getTransferRemainingTime() const
 {
     return mTransferRemainingTime;
@@ -66,9 +73,37 @@ void UpsellPlans::setTransferFinishTime(long long newTime)
     mTransferFinishTime = newTime;
 }
 
+void UpsellPlans::setOnlyProFlexiAvailable(bool onlyProFlexiAvailable)
+{
+    if (mIsOnlyProFlexiAvailable != onlyProFlexiAvailable)
+    {
+        mIsOnlyProFlexiAvailable = onlyProFlexiAvailable;
+        emit onlyProFlexiAvailableChanged();
+    }
+}
+
+void UpsellPlans::setPro(bool isPro)
+{
+    if (mIsPro != isPro)
+    {
+        mIsPro = isPro;
+        emit isProChanged();
+    }
+}
+
 long long UpsellPlans::getTransferFinishTime() const
 {
     return mTransferFinishTime;
+}
+
+bool UpsellPlans::isOnlyProFlexiAvailable() const
+{
+    return mIsOnlyProFlexiAvailable;
+}
+
+bool UpsellPlans::isPro() const
+{
+    return mIsPro;
 }
 
 bool UpsellPlans::isMonthly() const
@@ -82,14 +117,6 @@ void UpsellPlans::setMonthly(bool monthly)
     {
         mIsMonthly = monthly;
         emit monthlyChanged();
-    }
-}
-
-void UpsellPlans::setCurrentPlanSelected(int row)
-{
-    if (mCurrentPlanSelected != row)
-    {
-        mCurrentPlanSelected = row;
     }
 }
 
@@ -111,15 +138,6 @@ void UpsellPlans::setCurrentDiscount(int discount)
     }
 }
 
-void UpsellPlans::setCurrentPlanName(const QString& name)
-{
-    if (mCurrentPlanName != name)
-    {
-        mCurrentPlanName = name;
-        emit currentPlanNameChanged();
-    }
-}
-
 void UpsellPlans::setTransferRemainingTime(const QString& time)
 {
     if (mTransferRemainingTime != time)
@@ -127,11 +145,6 @@ void UpsellPlans::setTransferRemainingTime(const QString& time)
         mTransferRemainingTime = time;
         emit remainingTimeChanged();
     }
-}
-
-int UpsellPlans::getCurrentPlanSelected() const
-{
-    return mCurrentPlanSelected;
 }
 
 void UpsellPlans::setViewMode(ViewMode viewMode)
@@ -165,20 +178,25 @@ QList<std::shared_ptr<UpsellPlans::Data>> UpsellPlans::plans() const
 UpsellPlans::Data::Data(int proLevel, const QString& name):
     mProLevel(proLevel),
     mRecommended(false),
-    mSelected(false),
     mName(name)
 {}
 
 QHash<int, QByteArray> UpsellPlans::Data::roleNames()
 {
     static QHash<int, QByteArray> roles{
-        {UpsellPlans::NAME_ROLE,        "name"       },
-        {UpsellPlans::RECOMMENDED_ROLE, "recommended"},
-        {UpsellPlans::STORAGE_ROLE,     "gbStorage"  },
-        {UpsellPlans::TRANSFER_ROLE,    "gbTransfer" },
-        {UpsellPlans::PRICE_ROLE,       "price"      },
-        {UpsellPlans::SELECTED_ROLE,    "selected"   },
-        {UpsellPlans::AVAILABLE_ROLE,   "available"  }
+        {Qt::DisplayRole,                                "display"                  },
+        {UpsellPlans::NAME_ROLE,                         "name"                     },
+        {UpsellPlans::BUTTON_NAME_ROLE,                  "buttonName"               },
+        {UpsellPlans::RECOMMENDED_ROLE,                  "recommended"              },
+        {UpsellPlans::STORAGE_ROLE,                      "gbStorage"                },
+        {UpsellPlans::TRANSFER_ROLE,                     "gbTransfer"               },
+        {UpsellPlans::PRICE_ROLE,                        "price"                    },
+        {UpsellPlans::TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE, "totalPriceWithoutDiscount"},
+        {UpsellPlans::MONTHLY_PRICE_WITH_DISCOUNT_ROLE,  "monthlyPriceWithDiscount" },
+        {UpsellPlans::CURRENT_PLAN_ROLE,                 "currentPlan"              },
+        {UpsellPlans::AVAILABLE_ROLE,                    "available"                },
+        {UpsellPlans::SHOW_PRO_FLEXI_MESSAGE,            "showProFlexiMessage"      },
+        {UpsellPlans::SHOW_ONLY_PRO_FLEXI,               "showOnlyProFlexi"         }
     };
 
     return roles;
@@ -209,19 +227,19 @@ const UpsellPlans::Data::AccountBillingPlanData& UpsellPlans::Data::yearlyData()
     return mYearlyData;
 }
 
+void UpsellPlans::Data::setProLevel(int newProLevel)
+{
+    mProLevel = newProLevel;
+}
+
 void UpsellPlans::Data::setYearlyData(const AccountBillingPlanData& newYearlyData)
 {
     mYearlyData = newYearlyData;
 }
 
-bool UpsellPlans::Data::selected() const
+void UpsellPlans::Data::setName(const QString& name)
 {
-    return mSelected;
-}
-
-void UpsellPlans::Data::setSelected(bool newChecked)
-{
-    mSelected = newChecked;
+    mName = name;
 }
 
 void UpsellPlans::Data::setRecommended(bool newRecommended)

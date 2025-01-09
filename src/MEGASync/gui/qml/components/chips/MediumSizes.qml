@@ -20,6 +20,6 @@ QtObject {
 
     property int iconWidth: 16
     property int pixelSize: Texts.Text.Size.MEDIUM
-    property int fontWeight: root.isThin ? Font.Thin : Font.DemiBold
+    property int fontWeight: root.isThin ? Font.Thin : Font.Normal
 
 }

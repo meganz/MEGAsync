@@ -17,9 +17,12 @@ class UpsellPlans: public QObject
     Q_PROPERTY(bool billingCurrency READ isBillingCurrency NOTIFY isCurrencyBillingChanged)
     Q_PROPERTY(int currentDiscount READ getCurrentDiscount NOTIFY currentDiscountChanged)
     Q_PROPERTY(QString currencyName READ getCurrencyName NOTIFY currencyChanged)
-    Q_PROPERTY(QString currentPlanName READ getCurrentPlanName NOTIFY currentPlanNameChanged)
     Q_PROPERTY(
         QString transferRemainingTime READ getTransferRemainingTime NOTIFY remainingTimeChanged)
+    Q_PROPERTY(int plansCount READ size NOTIFY sizeChanged)
+    Q_PROPERTY(
+        bool onlyProFlexiAvailable READ isOnlyProFlexiAvailable NOTIFY onlyProFlexiAvailableChanged)
+    Q_PROPERTY(bool isProAccount READ isPro NOTIFY isProChanged)
 
 public:
     enum class ViewMode
@@ -31,15 +34,20 @@ public:
     };
     Q_ENUM(ViewMode)
 
-    enum BackupFolderRoles
+    enum UpsellPlanRoles
     {
         NAME_ROLE = Qt::UserRole + 1,
+        BUTTON_NAME_ROLE,
         RECOMMENDED_ROLE,
         STORAGE_ROLE,
         TRANSFER_ROLE,
         PRICE_ROLE,
-        SELECTED_ROLE,
-        AVAILABLE_ROLE
+        TOTAL_PRICE_WITHOUT_DISCOUNT_ROLE,
+        MONTHLY_PRICE_WITH_DISCOUNT_ROLE,
+        CURRENT_PLAN_ROLE,
+        AVAILABLE_ROLE,
+        SHOW_PRO_FLEXI_MESSAGE,
+        SHOW_ONLY_PRO_FLEXI
     };
 
     explicit UpsellPlans(QObject* parent = nullptr);
@@ -72,7 +80,6 @@ public:
         static QHash<int, QByteArray> roleNames();
 
         int proLevel() const;
-        bool selected() const;
         bool isRecommended() const;
         const QString& name() const;
         const AccountBillingPlanData& monthlyData() const;
@@ -81,7 +88,6 @@ public:
     private:
         int mProLevel;
         bool mRecommended;
-        bool mSelected;
         QString mName;
         AccountBillingPlanData mMonthlyData;
         AccountBillingPlanData mYearlyData;
@@ -89,10 +95,11 @@ public:
         friend class UpsellPlans;
         friend class UpsellController;
 
-        void setSelected(bool newChecked);
+        void setProLevel(int newProLevel);
         void setRecommended(bool newRecommended);
         void setMonthlyData(const AccountBillingPlanData& newMonthlyData);
         void setYearlyData(const AccountBillingPlanData& newYearlyData);
+        void setName(const QString& name);
     };
 
     class CurrencyData
@@ -126,10 +133,10 @@ public:
     int getCurrentDiscount() const;
     QString getCurrencySymbol() const;
     QString getCurrencyName() const;
-    QString getCurrentPlanName() const;
     QString getTransferRemainingTime() const;
-    int getCurrentPlanSelected() const;
     long long getTransferFinishTime() const;
+    bool isOnlyProFlexiAvailable() const;
+    bool isPro() const;
 
 signals:
     void viewModeChanged();
@@ -137,8 +144,10 @@ signals:
     void monthlyChanged();
     void currentDiscountChanged();
     void isCurrencyBillingChanged();
-    void currentPlanNameChanged();
     void remainingTimeChanged();
+    void sizeChanged();
+    void onlyProFlexiAvailableChanged();
+    void isProChanged();
 
 private:
     QList<std::shared_ptr<Data>> mPlans;
@@ -146,11 +155,11 @@ private:
     ViewMode mViewMode;
     bool mIsMonthly;
     bool mIsBillingCurrency;
-    int mCurrentPlanSelected;
     int mCurrentDiscount;
-    QString mCurrentPlanName;
     QString mTransferRemainingTime;
     long long mTransferFinishTime; // Seconds since epoch.
+    bool mIsOnlyProFlexiAvailable;
+    bool mIsPro;
 
     friend class UpsellController;
 
@@ -158,11 +167,11 @@ private:
     void setMonthly(bool monthly);
     void setBillingCurrency(bool isCurrencyBilling);
     void setCurrentDiscount(int discount);
-    void setCurrentPlanName(const QString& name);
     void setTransferRemainingTime(const QString& time);
-    void setCurrentPlanSelected(int row);
     void setCurrency(const QString& symbol, const QString& name);
     void setTransferFinishTime(long long newTime);
+    void setOnlyProFlexiAvailable(bool onlyProFlexiAvailable);
+    void setPro(bool isPro);
 };
 
 #endif // UPSELL_PLANS_H

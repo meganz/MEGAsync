@@ -34,6 +34,8 @@ public:
 
     virtual QList<QObject*> getInstancesFromContext();
 
+    QString contextName() const;
+
     template<typename DialogType, typename... A>
     static auto showDialog(A&&... args)
     {
@@ -154,11 +156,7 @@ public:
     {
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
 
-        mWrapper = new Type(parent, std::forward<A>(args)...);
-        if (!parent)
-        {
-            mWrapper->setParent(this);
-        }
+        mWrapper = new Type(nullptr, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
@@ -172,6 +170,7 @@ public:
 
             if (mWindow)
             {
+                mWrapper->setParent(mWindow);
                 mWindow->getInstancesManager()->initInstances(mWrapper);
             }
 
@@ -224,12 +223,7 @@ public:
         }
     }
 
-    ~QmlDialogWrapper(){
-        if(mWrapper && !mWrapper->parent())
-        {
-            mWrapper->deleteLater();
-        }
-    }
+    ~QmlDialogWrapper() = default;
 
     inline Type* wrapper()
     {

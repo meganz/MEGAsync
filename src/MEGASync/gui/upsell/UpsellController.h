@@ -35,12 +35,10 @@ public:
 
     void requestPricingData();
 
-    bool setData(int row, const QVariant& value, int role);
-    bool setData(std::shared_ptr<UpsellPlans::Data> data, QVariant value, int role);
     QVariant data(int row, int role) const;
     QVariant data(std::shared_ptr<UpsellPlans::Data> data, int role) const;
 
-    void openSelectedPlanUrl();
+    void openPlanUrl(int index);
 
     std::shared_ptr<UpsellPlans> getPlans() const;
     QString getMinProPlanNeeded(long long usedStorage) const;
@@ -57,7 +55,7 @@ signals:
     void dataReady();
     void beginInsertRows(int first, int last);
     void endInsertRows();
-    void dataChanged(int rowStart, int rowFinal, QVector<int> roles);
+    void dataChanged(int rowStart, int rowFinal, QVector<int> roles = QVector<int>());
 
 private slots:
     void onTransferRemainingTimeElapsed();
@@ -79,14 +77,20 @@ private:
                                                                            int transfer,
                                                                            int price) const;
     int calculateDiscount(float monthlyPrice, float yearlyPrice) const;
+    int getRowForNextRecommendedPlan() const;
+    int getRowForCurrentRecommended();
     void updatePlans();
     void updatePlansAt(const std::shared_ptr<UpsellPlans::Data>& data, int row);
-    int getRowForNextRecommendedPlan() const;
-    void resetSelectedAndRecommended();
-    int getRowForCurrentRecommended();
+    void resetRecommended();
     bool isAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
     bool isPlanUnderCurrentProLevel(int proLevel) const;
     bool planFitsUnderStorageOQConditions(int64_t planGbStorage) const;
+    float calculateTotalPriceWithoutDiscount(float monthlyPrice) const;
+    float calculateMonthlyPriceWithDiscount(float yearlyPrice) const;
+    bool isOnlyProFlexiAvailable(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool storageFitsUnderStorageOQConditions(const std::shared_ptr<UpsellPlans::Data>& data) const;
+    bool isOnlyProFlexiAvailable(const QList<std::shared_ptr<UpsellPlans::Data>>& plans) const;
+    void reviewPlansToCheckProFlexi(const QList<std::shared_ptr<UpsellPlans::Data>>& plans);
 };
 
 #endif // UPSELL_CONTROLLER_H

@@ -12,23 +12,42 @@ QmlDialog {
     id: window
 
     readonly property int contentMargin: 24
+    readonly property int numberOfMargins: 2
 
-    property int maxWidth: Math.max(712, columnItem.width + 2 * window.contentMargin)
-    property int maxHeight: Math.max(543, columnItem.height + 2 * window.contentMargin)
+    property int totalWidth: Math.max(544, columnItem.width + window.numberOfMargins * window.contentMargin)
+    property int totalHeight: columnItem.height + window.numberOfMargins * window.contentMargin
 
     visible: false
     modality: Qt.NonModal
-    width: window.maxWidth
-    height: window.maxHeight
-    maximumWidth: window.maxWidth
-    maximumHeight: window.maxHeight
-    minimumWidth: window.maxWidth
-    minimumHeight: window.maxHeight
+    width: window.totalWidth
+    height: window.totalHeight
+    maximumWidth: window.totalWidth
+    maximumHeight: window.totalHeight
+    minimumWidth: window.totalWidth
+    minimumHeight: window.totalHeight
+
+    onTotalHeightChanged: {
+        // Force to change height depending on the billed period selected.
+        // Maintain this order to resize the window.
+        window.minimumHeight = window.totalHeight;
+        window.maximumHeight = window.totalHeight;
+        window.height = window.totalHeight;
+    }
+
+    onHeightChanged: {
+        // Force to change height depending on the billed period selected.
+        // Maintain this order to resize the window.
+        if (window.height < window.totalHeight) {
+            window.height = window.totalHeight;
+        }
+    }
+
+    Component.onCompleted: {
+        header.forceActiveFocus();
+    }
 
     Column {
         id: columnItem
-
-        readonly property int columnSpacing: 12
 
         anchors {
             left: parent.left
@@ -36,11 +55,11 @@ QmlDialog {
             topMargin: window.contentMargin
             leftMargin: window.contentMargin
             rightMargin: window.contentMargin
-            bottomMargin: window.contentMargin - Constants.focusBorderWidth
+            bottomMargin: window.contentMargin
         }
         width: content.width
-        height: header.height + content.height + columnItem.spacing
-        spacing: columnItem.columnSpacing
+        height: header.height + content.height + window.contentMargin
+        spacing: window.contentMargin
 
         HeaderItem {
             id: header
@@ -51,10 +70,6 @@ QmlDialog {
         ContentItem {
             id: content
         }
-    }
-
-    Component.onCompleted: {
-        header.forceActiveFocus();
     }
 
 }
