@@ -5777,19 +5777,15 @@ Enter a different name.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
-- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
-- The Settings dialogue has been redesigned.
-- Improved app issue detection and resolution.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- UI and UX enhancements on transfer manager feature.
+- Support of wildcard exclusions in the exclusion dialog.
+- Upgrade Qt third party dependency.
+- New releases for Raspberry Pi OS.
+- Fixed crashes due to missing or broken OpenGL drivers on Windows.
+- Bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
-        <translation>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
-- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
-- The Settings dialogue has been redesigned.
-- Improved app issue detection and resolution.
-- Other bugs have been fixed and numerous improvements made.
-</translation>
+        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
