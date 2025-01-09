@@ -3,7 +3,6 @@
 
 #include "AsyncHandler.h"
 #include "megaapi.h"
-#include "QTMegaTransferListener.h"
 #include "SetTypes.h"
 
 #include <QMutex>

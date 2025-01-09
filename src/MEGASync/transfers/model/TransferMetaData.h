@@ -275,7 +275,7 @@ struct TransferMetaDataFolderItem : public TransferMetaDataItem
 class TransferMetaData
 {
 public:
-    static const unsigned long long INVALID_ID;
+    static const unsigned long long INVALID_ID = 0ull;
 
     TransferMetaData(int direction, unsigned long long id);
     TransferMetaData();

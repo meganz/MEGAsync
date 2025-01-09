@@ -27,9 +27,6 @@ bool TransferMetaDataItemId::operator<(const TransferMetaDataItemId &item) const
 }
 
 /////////////////////////////////
-
-const unsigned long long TransferMetaData::INVALID_ID = 0;
-
 TransferMetaData::TransferMetaData(int direction, unsigned long long id)
     : mInitialTopLevelTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mFinishedTopLevelTransfers(0), mStartedTopLevelTransfers(0), mTransferDirection(direction), mCreateRootFolder(false),
       mAppId(id), mCreatedFromOtherSession(false), mProcessCancelled(false),mTotalFileCount(0), mNotification(nullptr), mNonExistsFailAppId(0)
