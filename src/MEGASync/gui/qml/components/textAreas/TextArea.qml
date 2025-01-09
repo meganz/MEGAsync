@@ -179,47 +179,37 @@ FocusScope {
                         else if (event.key === Qt.Key_Up) {
                             if (root.autoScrollOnArrows) {
                                 var currentCursorPos = textArea.cursorPosition;
-                                var currentText = textArea.text;
+                                var textBeforeCursor = textArea.text.substring(0, currentCursorPos);
 
-                                // Find the start of the current line
-                                var currentLineStart = currentText.lastIndexOf('\n', currentCursorPos - 1) + 1;
-                                var previousLineStart = currentText.lastIndexOf('\n', currentLineStart - 2) + 1;
+                                // Find the start and end of the current line.
+                                var currentLineStart = textBeforeCursor.lastIndexOf('\n') + 1;
+                                var previousLineStart = textBeforeCursor.lastIndexOf('\n', currentLineStart - 2) + 1;
 
-                                // If there is a previous line
+                                // If there's a previous line.
                                 if (previousLineStart >= 0) {
-                                    var currentLineEnd = currentText.indexOf('\n', currentLineStart);
-                                    if (currentLineEnd === -1) {
-                                        currentLineEnd = currentText.length; // Last line of text
-                                    }
-
-                                    // Calculate the relative position within the current line
                                     var relativePos = currentCursorPos - currentLineStart;
 
-                                    // Adjust the cursor to move exactly to the previous line
-                                    var targetPos = Math.min(previousLineStart + relativePos, currentLineEnd - 1);
-
-                                    // Get the size of the previous line
-                                    var previousLineText = currentText.substring(previousLineStart, currentLineStart - 1);
-                                    var previousLineSize = previousLineText.length;
-
-                                    // If the previous line is smaller and the cursor position is outside the line,
-                                    // move the cursor to the last character of the previous line
-                                    if (previousLineSize < relativePos) {
-                                        targetPos = previousLineStart + previousLineSize;
+                                    // Find the end of the previous line.
+                                    var previousLineEnd = currentLineStart - 1;
+                                    if (previousLineEnd < 0) {
+                                        previousLineEnd = 0;
                                     }
 
+                                    var previousLineLength = previousLineEnd - previousLineStart;
+
+                                    // Adjust the cursor to the same relative position or the end of the previous line.
+                                    var targetPos = previousLineStart + Math.min(relativePos, previousLineLength);
                                     textArea.cursorPosition = targetPos;
 
-                                    // Ensure the upper line is visible
-                                    var cursorRect = textArea.cursorRectangle;
-                                    var cursorYInFlickable = textArea.mapToItem(flickableItem, cursorRect.x, cursorRect.y).y;
+                                    // Calculate the line height and adjust the scroll.
+                                    // Approximate height of a line.
+                                    var lineHeight = sizes.textSize + sizes.lineHeight;
+                                    var targetLine = textBeforeCursor.substring(0, targetPos).split('\n').length - 1;
 
-                                    var lineHeight = sizes.textSize + sizes.lineHeight; // Adjust line height
-
-                                    // Move only when the cursor is out of view at the top
-                                    if (cursorYInFlickable < flickableItem.contentY) {
-                                        flickableItem.contentY = Math.max(flickableItem.contentY - lineHeight, 0);
-                                    }
+                                    // Ensure contentY is within allowed bounds.
+                                    var targetY = targetLine * lineHeight - flickableItem.height / 2;
+                                    flickableItem.contentY = Math.min(Math.max(targetY, 0),
+                                                                      flickableItem.contentHeight - flickableItem.height);
                                 }
                             }
                             event.accepted = true;
@@ -227,148 +217,94 @@ FocusScope {
                         else if (event.key === Qt.Key_Down) {
                             if (root.autoScrollOnArrows) {
                                 var currentCursorPosDown = textArea.cursorPosition;
-                                var currentTextDown = textArea.text;
+                                var textBeforeCursorDown = textArea.text.substring(0, currentCursorPosDown);
 
-                                // Find the end of the current line
-                                var currentLineEndDown = currentTextDown.indexOf('\n', currentCursorPosDown);
-                                if (currentLineEndDown === -1) {
-                                    currentLineEndDown = currentTextDown.length; // Last line of text
+                                // Find the end of the current line.
+                                var currentLineEnd = textArea.text.indexOf('\n', currentCursorPosDown);
+                                if (currentLineEnd === -1) {
+                                    currentLineEnd = textArea.text.length;
                                 }
 
-                                // Find the start of the next line
-                                var nextLineStartDown = currentLineEndDown + 1;
-                                if (nextLineStartDown >= currentTextDown.length) {
-                                    nextLineStartDown = currentTextDown.length; // No more lines
-                                }
+                                var nextLineStart = currentLineEnd + 1;
+                                if (nextLineStart < textArea.text.length) {
+                                    var relativePosDown = currentCursorPosDown - (textBeforeCursorDown.lastIndexOf('\n') + 1);
 
-                                // If there is a next line
-                                if (nextLineStartDown < currentTextDown.length) {
-                                    var currentLineStartDown = currentTextDown.lastIndexOf('\n', currentCursorPosDown - 1) + 1;
-                                    // Calculate the relative position within the current line
-                                    var relativePosDown = currentCursorPosDown - currentLineStartDown;
-
-                                    // Get the text of the next line (excluding the newline character)
-                                    var nextLineTextDown = currentTextDown.substring(nextLineStartDown); // Gets the text of the next line
-                                    var nextLineSizeDown = nextLineTextDown.indexOf('\n') === -1 ? nextLineTextDown.length : nextLineTextDown.indexOf('\n'); // Avoid counting the newline
-
-                                    // If the next line is smaller and the cursor position is outside the line,
-                                    // move the cursor to the last character of the next line
-                                    var targetPosDown = 0;
-                                    if (nextLineSizeDown < relativePosDown) {
-                                        // If the size of the next line is smaller than the relative position, move to the end of the next line
-                                        targetPosDown = nextLineStartDown + nextLineSizeDown;
-                                    }
-                                    else {
-                                        // Otherwise, adjust the cursor to the relative position within the new line
-                                        targetPosDown = nextLineStartDown + relativePosDown;
+                                    // Find the end of the next line.
+                                    var nextLineEnd = textArea.text.indexOf('\n', nextLineStart);
+                                    if (nextLineEnd === -1) {
+                                        nextLineEnd = textArea.text.length;
                                     }
 
-                                    // Update the cursor position
+                                    var nextLineLength = nextLineEnd - nextLineStart;
+
+                                    // Adjust the cursor to the same relative position or the end of the next line
+                                    var targetPosDown = nextLineStart + Math.min(relativePosDown, nextLineLength);
                                     textArea.cursorPosition = targetPosDown;
 
-                                    // Ensure the next line is visible
-                                    var cursorRectDown = textArea.cursorRectangle;
-                                    var cursorYInFlickableDown = textArea.mapToItem(flickableItem, cursorRectDown.x, cursorRectDown.y).y;
+                                    // Calculate the line height and adjust the scroll.
+                                    var lineHeightDown = sizes.textSize + sizes.lineHeight; // Approximate height of a line
+                                    var targetLineDown = textBeforeCursorDown.substring(0, targetPosDown).split('\n').length - 1;
 
-                                    var lineHeightDown = sizes.textSize + sizes.lineHeight; // Adjust line height
-
-                                    // Move only when the cursor is out of view at the bottom
-                                    if (cursorYInFlickableDown > flickableItem.contentY) {
-                                        flickableItem.contentY = Math.min(flickableItem.contentY + lineHeightDown,
-                                                                          flickableItem.contentHeight - flickableItem.height);
-                                    }
+                                    // Ensure contentY is within allowed bounds.
+                                    var targetYDown = targetLineDown * lineHeightDown - flickableItem.height / 2;
+                                    flickableItem.contentY = Math.min(Math.max(targetYDown, 0),
+                                                                      flickableItem.contentHeight - flickableItem.height);
                                 }
                             }
                             event.accepted = true;
                         }
                         else if (event.key === Qt.Key_Right) {
                             if (root.autoScrollOnArrows) {
-                                var currentCursorPosRight = textArea.cursorPosition;
-                                var currentTextRight = textArea.text;
-
-                                // Find the end of the current line
-                                var currentLineEndRight = currentTextRight.indexOf('\n', currentCursorPosRight);
-                                if (currentLineEndRight === -1) {
-                                    currentLineEndRight = currentTextRight.length; // End of text if no newline
+                                // Move the cursor to the right if we're not at the end of the text.
+                                if (textArea.cursorPosition < textArea.text.length) {
+                                    textArea.cursorPosition += 1;
                                 }
 
-                                // Check if the cursor is at the end of the current line
-                                if (currentCursorPosRight === currentLineEndRight) {
-                                    // Move to the next line
-                                    var nextLineStartRight = currentLineEndRight + 1;
-                                    if (nextLineStartRight >= currentTextRight.length) {
-                                        nextLineStartRight = currentTextRight.length; // No more lines
-                                    }
+                                // Adjust scroll based on cursor position.
+                                var currentCursorPosRight = textArea.cursorPosition;
+                                var textBeforeCursorRight = textArea.text.substring(0, currentCursorPosRight);
 
-                                    // If there is a next line, move the cursor to the start of the next line
-                                    if (nextLineStartRight < currentTextRight.length) {
-                                        var nextLineTextRight = currentTextRight.substring(nextLineStartRight);
-                                        var nextLineSizeRight = nextLineTextRight.indexOf('\n') === -1 ? nextLineTextRight.length : nextLineTextRight.indexOf('\n');
+                                // Calculate the current line based on line breaks.
+                                var currentLineRight = textBeforeCursorRight.split("\n").length - 1;
 
-                                        // Set the target position to the start of the next line
-                                        var targetPosRight = nextLineStartRight;
+                                // Calculate line height and adjustment.
+                                var lineHeightRight = sizes.textSize + sizes.lineHeight;
+                                var cursorYRight = currentLineRight * lineHeightRight;
 
-                                        textArea.cursorPosition = targetPosRight;
-
-                                        // Ensure the next line is visible (scroll down if needed)
-                                        var cursorRectRight = textArea.cursorRectangle;
-                                        var cursorYInFlickableRight = textArea.mapToItem(flickableItem, cursorRectRight.x, cursorRectRight.y).y;
-
-                                        var lineHeightRight = sizes.textSize + sizes.lineHeight;
-
-                                        // Scroll only if the cursor is below the visible area
-                                        if (cursorYInFlickableRight > flickableItem.contentY) {
-                                            flickableItem.contentY = Math.min(flickableItem.contentY + lineHeightRight,
-                                                                              flickableItem.contentHeight - flickableItem.height);
-                                        }
-                                    }
-                                } else {
-                                    // Default right arrow behavior: just move the cursor one character to the right
-                                    textArea.cursorPosition = currentCursorPosRight + 1;
+                                // Ensure the scroll does not exceed available content.
+                                var maxContentY = flickableItem.contentHeight - flickableItem.height;
+                                if (cursorYRight + lineHeightRight > flickableItem.contentY + flickableItem.height) {
+                                    flickableItem.contentY = Math.min(cursorYRight + lineHeightRight - flickableItem.height, maxContentY);
+                                } else if (cursorYRight < flickableItem.contentY) {
+                                    flickableItem.contentY = Math.max(0, cursorYRight);
                                 }
                             }
                             event.accepted = true;
                         }
                         else if (event.key === Qt.Key_Left) {
                             if (root.autoScrollOnArrows) {
+                                // Move the cursor to the left if we're not at the beginning.
+                                if (textArea.cursorPosition > 0) {
+                                    textArea.cursorPosition -= 1;
+                                }
+
+                                // Adjust scroll based on cursor position.
                                 var currentCursorPosLeft = textArea.cursorPosition;
-                                var currentTextLeft = textArea.text;
+                                var textBeforeCursorLeft = textArea.text.substring(0, currentCursorPosLeft);
 
-                                // Find the start of the current line
-                                var currentLineStartLeft = currentTextLeft.lastIndexOf('\n', currentCursorPosLeft - 1) + 1;
+                                // Calculate the current line based on line breaks.
+                                var currentLineLeft = textBeforeCursorLeft.split("\n").length - 1;
 
-                                // Check if the cursor is at the start of the current line
-                                if (currentCursorPosLeft === currentLineStartLeft) {
-                                    // Move to the previous line
-                                    var previousLineEndLeft = currentTextLeft.lastIndexOf('\n', currentLineStartLeft - 2) + 1;
-                                    if (previousLineEndLeft === -1) {
-                                        previousLineEndLeft = 0; // No more previous lines
-                                    }
+                                // Calculate line height and adjustment.
+                                var lineHeightLeft = sizes.textSize + sizes.lineHeight;
+                                var cursorYLeft = currentLineLeft * lineHeightLeft;
 
-                                    // If there is a previous line, move the cursor to the last character of the previous line
-                                    if (previousLineEndLeft >= 0) {
-                                        var previousLineTextLeft = currentTextLeft.substring(previousLineEndLeft, currentLineStartLeft - 1);
-                                        var previousLineSizeLeft = previousLineTextLeft.length;
-
-                                        // Set the target position to the last character of the previous line
-                                        var targetPosLeft = previousLineEndLeft + previousLineSizeLeft;
-
-                                        textArea.cursorPosition = targetPosLeft;
-
-                                        // Ensure the previous line is visible (scroll up if needed)
-                                        var cursorRectLeft = textArea.cursorRectangle;
-                                        var cursorYInFlickableLeft = textArea.mapToItem(flickableItem, cursorRectLeft.x, cursorRectLeft.y).y;
-
-                                        var lineHeightLeft = sizes.textSize + sizes.lineHeight;
-
-                                        // Scroll only if the cursor is above the visible area
-                                        if (cursorYInFlickableLeft < flickableItem.contentY) {
-                                            flickableItem.contentY = Math.max(flickableItem.contentY - lineHeightLeft, 0);
-                                        }
-                                    }
-                                } else {
-                                    // Default left arrow behavior: just move the cursor one character to the left
-                                    textArea.cursorPosition = currentCursorPosLeft - 1;
+                                // Ensure the scroll does not exceed the content limits.
+                                var maxContentYLeft = flickableItem.contentHeight - flickableItem.height;
+                                if (cursorYLeft + lineHeightLeft > flickableItem.contentY + flickableItem.height) {
+                                    flickableItem.contentY = Math.min(cursorYLeft + lineHeightLeft - flickableItem.height, maxContentYLeft);
+                                } else if (cursorYLeft < flickableItem.contentY) {
+                                    flickableItem.contentY = Math.max(0, cursorYLeft);
                                 }
                             }
                             event.accepted = true;
