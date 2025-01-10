@@ -55,6 +55,8 @@ const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
+const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
+
 const long long KB = 1024;
 const long long MB = 1024 * KB;
 const long long GB = 1024 * MB;
@@ -1427,6 +1429,33 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
         return QString::fromUtf8(transfer->getPath());
     }
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
+}
+
+Qt::CaseSensitivity Utilities::useCaseSensitiveLogicInThisFolder(const QString& folder)
+{
+    Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
+
+    QDir tempPath(folder);
+    // Creates the folder if it does not exist but it also returns true if it already exists
+    if (tempPath.mkpath(QLatin1String(CASE_SENSITIVE_FOLDER)))
+    {
+        tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
+
+        QFile file_lower_case(tempPath.path());
+        file_lower_case.setFileName(QLatin1String("mega"));
+
+        QFile file_upper_case(tempPath.path());
+        file_upper_case.setFileName(QLatin1String("MEGA"));
+
+        caseSensitivity =
+            file_lower_case.open(QFile::ReadWrite) && file_upper_case.open(QFile::ReadWrite) ?
+                Qt::CaseSensitive :
+                Qt::CaseInsensitive;
+
+        tempPath.removeRecursively();
+    }
+
+    return caseSensitivity;
 }
 
 bool Utilities::isBusinessAccount()

@@ -128,14 +128,17 @@ public:
     WildCardType getWildCardType();
     void setWildCardType(WildCardType wildCard);
     virtual void setPattern(const QString &pattern);
+    void setStrategy(Strategy newStrategy);
+    Strategy getStrategy() const;
 
 protected:
     QString mPattern;
 
 private:
     void fillWildCardType(const QString& rightSide);
-    template <class EnumType>
-    bool detectValue(QString character, EnumType* value, Qt::CaseSensitivity caseSensitive)
+
+    template<class EnumType>
+    bool detectValue(QString character, EnumType* value)
     {
         if (static_cast<int>((*value)) > 0)
         {
@@ -146,7 +149,7 @@ private:
         for (int i = 0; i < e.keyCount(); i++)
         {
             QString s(QString::fromUtf8(e.key(i))); // enum name as string
-            if (s.compare(character, caseSensitive) == 0)
+            if (s.compare(character, Qt::CaseSensitive) == 0)
             {
                 (*value) = static_cast<EnumType>(i);
                 return true;

@@ -790,33 +790,18 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     return false;
 }
 
-bool SyncController::isSyncCaseSensitive(const QString& syncFolder)
+Qt::CaseSensitivity SyncController::isSyncCaseSensitive(mega::MegaHandle backupId)
 {
-    bool isCaseSensitive(false);
-
-    QDir tempPath(syncFolder);
-    if (tempPath.mkpath(QLatin1String(".CASE_SENS")))
+    if (auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(backupId))
     {
-        tempPath.cd(QLatin1String(".CASE_SENS"));
-
-        QFile file_lower_case(tempPath.path());
-        file_lower_case.setFileName(QLatin1String("mega"));
-
-        QFile file_upper_case(tempPath.path());
-        file_upper_case.setFileName(QLatin1String("MEGA"));
-
-        if (file_lower_case.open(QFile::ReadWrite))
-        {
-            if (file_upper_case.open(QFile::ReadWrite))
-            {
-                isCaseSensitive = true;
-            }
-        }
-
-        tempPath.removeRecursively();
+        return Utilities::isCaseSensitive(syncSettings->getLocalFolder());
     }
 
-    return isCaseSensitive;
+#ifdef Q_OS_LINUX
+    return Qt::CaseSensitive;
+#else
+    return Qt::CaseInsensitive;
+#endif
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)

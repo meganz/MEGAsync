@@ -92,7 +92,7 @@ public:
                           mega::MegaHandle backupId = mega::INVALID_HANDLE);
 
     // Check is sync folder is case sensitive
-    static bool isSyncCaseSensitive(const QString& syncFolder);
+    Qt::CaseSensitivity isSyncCaseSensitive(mega::MegaHandle backupId);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);

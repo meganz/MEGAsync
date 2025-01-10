@@ -394,6 +394,9 @@ public:
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
 
+    // Folder is on a case sensitive drive/OS
+    static Qt::CaseSensitivity useCaseSensitiveLogicInThisFolder(const QString& folder);
+
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();
     static QFuture<bool> openUrl(QUrl url);

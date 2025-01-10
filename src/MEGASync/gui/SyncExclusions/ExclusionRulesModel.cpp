@@ -325,11 +325,12 @@ void ExclusionRulesModel::editRule(int targetType, int wildCard, QString ruleVal
         }
         rule->setWildCardType(static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         rule->setPattern(splitted[0]);
+        mMegaIgnoreManager->updateNameRuleStrategyAcordingToCaseSensitive(rule);
     }
     emit dataChanged(createIndex(index, 0), createIndex(index, 0));
     // Remove the first value and add the rest
     splitted.pop_front();
-    for(const auto& value: splitted)
+    for (const auto& value: qAsConst(splitted))
     {
         addNewRule(targetType, wildCard, value);
     }

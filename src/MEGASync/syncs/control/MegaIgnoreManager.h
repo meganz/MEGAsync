@@ -51,6 +51,7 @@ public:
         MegaIgnoreNameRule::Target targetType = MegaIgnoreNameRule::Target::NONE,
         MegaIgnoreNameRule::Type type = MegaIgnoreNameRule::Type::NONE,
         MegaIgnoreNameRule::WildCardType wildCard = MegaIgnoreNameRule::WildCardType::EQUAL);
+    void updateNameRuleStrategyAcordingToCaseSensitive(std::shared_ptr<MegaIgnoreNameRule> rule);
     std::shared_ptr<MegaIgnoreExtensionRule> addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern);
 
     void restreDefaults();
@@ -110,7 +111,7 @@ private:
     
     QString mIgnoreCRC;
 
-    bool mIsCaseSensitive;
+    Qt::CaseSensitivity mIsCaseSensitive;
 };
 
 #endif // MEGAIGNOREMANAGER_H

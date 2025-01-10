@@ -367,8 +367,24 @@ std::shared_ptr<MegaIgnoreNameRule>
                                                      type,
                                                      strategy,
                                                      wildCard);
+    updateNameRuleStrategyAcordingToCaseSensitive(rule);
     addRule(rule);
     return rule;
+}
+
+void MegaIgnoreManager::updateNameRuleStrategyAcordingToCaseSensitive(
+    std::shared_ptr<MegaIgnoreNameRule> rule)
+{
+    if (rule->getStrategy() == MegaIgnoreNameRule::Strategy::NONE)
+    {
+        // If the OS is case insensitive, the SDK uses a "g" strategy when the strategy field is
+        // empty (Strategy::NONE) That´s why we use "G" when we detect that the OS is case
+        // sensitive, to use the same strategy as the SDK but case sensitive
+        MegaIgnoreNameRule::Strategy strategy(mIsCaseSensitive == Qt::CaseSensitive ?
+                                                  MegaIgnoreNameRule::Strategy::G :
+                                                  MegaIgnoreNameRule::Strategy::NONE);
+        rule->setStrategy(strategy);
+    }
 }
 
 std::shared_ptr<MegaIgnoreExtensionRule> MegaIgnoreManager::addExtensionRule(MegaIgnoreNameRule::Class classType, const QString& pattern)
@@ -394,7 +410,8 @@ void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool create
     }
     parseIgnoresFile();
 
-    mIsCaseSensitive = SyncController::instance().isSyncCaseSensitive(inputDirPath);
+    // Used for the name rules strategy
+    mIsCaseSensitive = Utilities::useCaseSensitiveLogicInThisFolder(inputDirPath);
 }
 
 bool MegaIgnoreManager::hasChanged() const
