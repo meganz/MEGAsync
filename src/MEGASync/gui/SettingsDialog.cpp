@@ -769,7 +769,7 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     mPreferences->setAwakeIfActive(checked);
 
     PowerOptions options;
-    auto result = options.keepAwake(MegaSyncApp->getTransfersModel()->hasActiveTransfers() > 0);
+    auto result = options.keepAwake(checked);
 
     if (checked && !result)
     {
