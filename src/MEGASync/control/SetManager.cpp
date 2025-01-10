@@ -219,7 +219,6 @@ void SetManager::handleStateInit(const ActionParams& action)
         // If elementHandleList is empty, ALL Set Elements will be downloaded
         mCurrentElementHandleList = action.elementHandleList;
         mCurrentSet = filterSet(action.set, mCurrentElementHandleList);
-        mCurrentSet.appDataId = getAppDataId();
 
         if (!mCurrentSet.link.isEmpty() && mCurrentSet.isComplete())
         {
@@ -257,7 +256,6 @@ void SetManager::handleStateInit(const ActionParams& action)
         // Request to put a new Set in preview; reset current values
         mCurrentSet.reset();
         mCurrentSet.link = action.link;
-        mCurrentSet.appDataId = getAppDataId();
 
         if (!mCurrentSet.link.isEmpty())
         {
@@ -360,7 +358,7 @@ void SetManager::handleStateWaitForPreviewSetToDownloadFromLink(const ActionPara
         // A new Set Element node has been fetched
         if (!mCurrentSet.nodeList.isEmpty())
         {
-            startDownload(mCurrentSet.nodeList, mCurrentDownloadPath, mCurrentSet.appDataId);
+            startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
         }
         break;
 
@@ -497,7 +495,7 @@ bool SetManager::handleFetchPublicSetResponseToDownloadCollection()
     if (!createDirectory(mCurrentDownloadPath)) { return false; }
 
     // The requested Set has been put in preview, so download of (selected) Elements can start
-    startDownload(mCurrentSet.nodeList, mCurrentDownloadPath, mCurrentSet.appDataId);
+    startDownload(mCurrentSet.nodeList, mCurrentDownloadPath);
 
     return true;
 }
@@ -648,8 +646,7 @@ void SetManager::checkandHandleFinishedImport()
 
 unsigned long long SetManager::getAppDataId()
 {
-    auto data = TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(
-        mCurrentDownloadPath);
+    auto data = TransferMetaDataContainer::createImportedLinkTransferMetaData(mCurrentDownloadPath);
     return data->getAppId();
 }
 
@@ -772,9 +769,7 @@ void SetManager::resetAndHandleStates()
     handleStates();
 }
 
-void SetManager::startDownload(QQueue<WrappedNode>& nodes,
-                               const QString& localPath,
-                               unsigned long long appDataId)
+void SetManager::startDownload(QQueue<WrappedNode>& nodes, const QString& localPath)
 {
     if (nodes.isEmpty() || localPath.isEmpty())
     {
@@ -800,7 +795,7 @@ void SetManager::startDownload(QQueue<WrappedNode>& nodes,
     }
 
     MegaDownloader::DownloadInfo info;
-    info.appId = appDataId;
+    info.appId = getAppDataId();
     info.checkLocalSpace = false;
     info.downloadQueue = nodes;
     info.path = localPath + QDir::separator();

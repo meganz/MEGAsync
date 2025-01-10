@@ -520,6 +520,15 @@ public:
         return transferData;
     }
 
+    template<typename... A>
+    static std::shared_ptr<DownloadTransferMetaData> createImportedLinkTransferMetaData(A&&... args)
+    {
+        auto transferData =
+            createTransferMetaData<DownloadTransferMetaData>(std::forward<A>(args)...);
+        transferData->setIsImportedLink();
+        return transferData;
+    }
+
     template <typename TYPE, typename... A>
     static std::shared_ptr<TYPE> createTransferMetaDataWithappDataId(unsigned long long transferId, A &&...args)
     {

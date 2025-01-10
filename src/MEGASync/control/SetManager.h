@@ -103,9 +103,7 @@ private:
     AlbumCollection filterSet(const AlbumCollection& srcSet, const QList<mega::MegaHandle>& elementHandleList);
     void reset();
     void resetAndHandleStates();
-    void startDownload(QQueue<WrappedNode>& nodes,
-                       const QString& localPath,
-                       unsigned long long appDataId);
+    void startDownload(QQueue<WrappedNode>& nodes, const QString& localPath);
     bool copyNode(mega::MegaNode* linkNode, MegaNodeSPtr importParentNode);
     void checkandHandleFinishedImport();
 

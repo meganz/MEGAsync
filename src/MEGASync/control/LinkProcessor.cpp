@@ -22,7 +22,6 @@ LinkProcessor::LinkProcessor(const QStringList& linkList,
     mLinkList(linkList),
     mImportParentFolder(mega::INVALID_HANDLE),
     mDownloader(std::make_shared<MegaDownloader>(megaApi, this)),
-    mAppId(TransferMetaData::INVALID_ID),
     mCurrentIndex(0)
 {
     resetAndSetLinkList(linkList);
@@ -174,16 +173,10 @@ QString LinkProcessor::getReasonForExpiredLink(MegaRequest* request, MegaError* 
     }
 }
 
-void LinkProcessor::setAppId()
+unsigned long long LinkProcessor::getAppDataId()
 {
-    auto data =
-        TransferMetaDataContainer::createTransferMetaData<DownloadTransferMetaData>(mDownloadPath);
-    mAppId = data->getAppId();
-}
-
-void LinkProcessor::resetAppId()
-{
-    mAppId = TransferMetaData::INVALID_ID;
+    auto data = TransferMetaDataContainer::createImportedLinkTransferMetaData(mDownloadPath);
+    return data->getAppId();
 }
 
 void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
@@ -336,7 +329,6 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
 
 void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transferType)
 {
-    setAppId();
     for (int i = 0; i < mLinkObjects.size(); i++)
     {
         if (isSelected(i))
@@ -345,7 +337,6 @@ void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transfe
             processNextTransfer();
         }
     }
-    resetAppId();
 }
 
 void LinkProcessor::requestLinkInfo()
@@ -601,7 +592,7 @@ void LinkProcessor::startDownload(const QQueue<WrappedNode>& nodes)
     }
 
     MegaDownloader::DownloadInfo info;
-    info.appId = mAppId;
+    info.appId = getAppDataId();
     info.checkLocalSpace = false;
     info.downloadQueue = nodes;
     info.path = mDownloadPath;

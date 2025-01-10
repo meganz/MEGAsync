@@ -101,8 +101,7 @@ private:
     QString getReasonForExpiredLink(mega::MegaRequest* request, mega::MegaError* e);
 
     // AppId for notifications
-    void setAppId();
-    void resetAppId();
+    unsigned long long getAppDataId();
 
 private:
     mega::MegaApi* mMegaApi;
@@ -114,7 +113,6 @@ private:
     QString mDownloadPath;
     std::shared_ptr<MegaDownloader> mDownloader;
     QQueue<WrappedNode> mNodesToDownload;
-    unsigned long long mAppId;
     uint32_t mRequestCounter;
     int mCurrentIndex;
     QQueue<LinkTransfer> mTransferQueue;
