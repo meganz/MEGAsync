@@ -2178,17 +2178,16 @@ void MegaApplication::periodicTasks()
             }
 
             checkMemoryUsage();
-            mThreadPool->push([=]()
-            {//thread pool function
-                megaApi->update();
-
-                Utilities::queueFunctionInAppThread([=]()
-                {//queued function
-                    checkOverStorageStates();
-                    checkOverQuotaStates();
-                });//end of queued function
-
-            });// end of thread pool function
+            mThreadPool->push(
+                [=]()
+                {
+                    Utilities::queueFunctionInAppThread(
+                        [=]()
+                        {
+                            checkOverStorageStates();
+                            checkOverQuotaStates();
+                        });
+                });
         }
 
         onGlobalSyncStateChanged(megaApi);

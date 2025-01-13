@@ -65,7 +65,12 @@ void ExportProcessor::requestLinks()
         {
             node = megaApi->getNodeByHandle(handleList[i]);
         }
-        megaApi->exportNode(node, RequestListenerManager::instance().registerAndGetFinishListener(this, true).get());
+        megaApi->exportNode(
+            node,
+            0,
+            false,
+            false,
+            RequestListenerManager::instance().registerAndGetFinishListener(this, true).get());
         delete node;
     }
 }

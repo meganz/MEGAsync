@@ -294,8 +294,8 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::rename(mega::MegaNode* nodeTo
 
 QString MergeMEGAFolders::getNodeName(mega::MegaNode* node)
 {
-    QString nodeName =
-        QString::fromUtf8(MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName()));
+    QString nodeName = QString::fromUtf8(
+        MegaSyncApp->getMegaApi()->unescapeFsIncompatible(node->getName(), nullptr));
 
     if (mCaseSensitivity == Qt::CaseInsensitive)
     {

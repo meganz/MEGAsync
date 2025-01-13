@@ -1062,7 +1062,7 @@ void NodeSelectorTreeViewWidget::onGenMEGALinkClicked()
     {
         return;
     }
-    mMegaApi->exportNode(node.get());
+    mMegaApi->exportNode(node.get(), 0, false, false, nullptr);
 }
 
 void NodeSelectorTreeViewWidget::Navigation::removeFromForward(const mega::MegaHandle &handle)
