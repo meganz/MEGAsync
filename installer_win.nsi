@@ -529,8 +529,7 @@ currentuser:
 modeselected:
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
-  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM mega-desktop-app-gfxworker.exe"
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGAsync.exe"
   Sleep 1000
 
   !insertmacro DEBUG_MSG "Installing files"
@@ -864,9 +863,9 @@ Function un.UninstallSyncs
 FunctionEnd
 
 Section Uninstall
-  ExecDos::exec /DETAILED "taskkill /f /IM MEGASync.exe"
-
+  ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /t /IM MEGASync.exe"
   Sleep 1000
+
   ${UAC.CallFunctionAsUser} un.UninstallSyncs
   Sleep 1000
 
