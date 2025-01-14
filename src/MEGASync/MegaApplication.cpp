@@ -4534,32 +4534,6 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
         dialogInfo = QMLComponent::addDialog<UpsellComponent>(nullptr, viewMode);
         dialogInfo->getDialog()->setShowWhenCreated();
     }
-
-    switch (viewMode)
-    {
-        case UpsellPlans::ViewMode::STORAGE_FULL:
-        {
-            mStatsEventHandler->sendEvent(
-                AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_FULL_SHOWN);
-            break;
-        }
-        case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
-        {
-            mStatsEventHandler->sendEvent(
-                AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_ALMOST_FULL_SHOWN);
-            break;
-        }
-        case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
-        {
-            mStatsEventHandler->sendEvent(
-                AppStatsEvents::EventType::UPSELL_DIALOG_TX_QUOTA_EXCEEDED_SHOWN);
-            break;
-        }
-        default:
-        {
-            break;
-        }
-    }
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,

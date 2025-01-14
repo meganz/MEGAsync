@@ -5,18 +5,19 @@
 
 namespace
 {
-constexpr const char* DEFAULT_RES_MEGA_ICON(":/images/app_ico.ico");
-constexpr const char* DEFAULT_TITLE("MEGA");
+const QLatin1String DEFAULT_RES_MEGA_ICON(":/images/app_ico.ico");
+const QLatin1String DEFAULT_TITLE("MEGA");
+constexpr double CENTERING_FACTOR(0.5);
 }
 
 QmlDialog::QmlDialog(QWindow* parent):
     QQuickWindow(parent),
-    mIconSrc(QString::fromUtf8(DEFAULT_RES_MEGA_ICON)),
+    mIconSrc(DEFAULT_RES_MEGA_ICON),
     mInstancesManager(new QmlInstancesManager())
 {
     setFlags(flags() | Qt::Dialog);
 
-    setTitle(QString::fromUtf8(DEFAULT_TITLE));
+    setTitle(DEFAULT_TITLE);
 
     connect(this,
             &QmlDialog::requestPageFocus,
@@ -57,8 +58,10 @@ void QmlDialog::centerAndRaise()
     // multiple screen we will need add the current screen offset(topleft) to the calculated central
     // position.
     const auto& geometry(QmlDialog::screen()->geometry());
-    int xPos(geometry.x() + static_cast<int>(geometry.width() * 0.5 - width() * 0.5));
-    int yPos(geometry.y() + static_cast<int>(geometry.height() * 0.5 - height() * 0.5));
+    int xPos(geometry.x() +
+             static_cast<int>(geometry.width() * CENTERING_FACTOR - width() * CENTERING_FACTOR));
+    int yPos(geometry.y() +
+             static_cast<int>(geometry.height() * CENTERING_FACTOR - height() * CENTERING_FACTOR));
 
     hide();
     QmlDialog::setPosition(xPos, yPos);

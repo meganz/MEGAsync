@@ -19,8 +19,9 @@ FocusScope {
     readonly property real chipSpacing: 12
     readonly property real plansRowSpacing: 8
 
+    property real totalPlansRowSpacing: root.plansRowSpacing * (upsellPlansAccess.plansCount - 1)
     property real plansWidth: root.planDefaultWidth * upsellPlansAccess.plansCount
-                                + root.plansRowSpacing * (upsellPlansAccess.plansCount - 1)
+                                + root.totalPlansRowSpacing
 
     height: columnItem.height
     width: Math.max(root.minimumWidth, root.plansWidth)

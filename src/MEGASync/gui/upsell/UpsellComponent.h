@@ -37,6 +37,7 @@ private:
     std::shared_ptr<UpsellModel> mModel;
 
     QString getViewModeString() const;
+    void sendStats() const;
 };
 
 #endif // UPSELL_COMPONENT_H

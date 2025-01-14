@@ -13,6 +13,7 @@ Rectangle {
     readonly property real cardRadius: 8
     readonly property real contentMargin: 12
     readonly property real contentSpacing: 8
+    readonly property real totalNumContentSpacing: 4
     readonly property real titleLineHeight: 20
     readonly property real priceLineHeight: 30
     readonly property real pricePeriodLineHeight: 18
@@ -205,8 +206,12 @@ Rectangle {
                 left: parent.left
                 right: parent.right
             }
-            height: parent.height - titleText.height - recommendedChip.height
-                        - priceColumn.height - buyButtonContainer.height - 4 * root.contentSpacing
+            height: parent.height
+                        - titleText.height
+                        - recommendedChip.height
+                        - priceColumn.height
+                        - buyButtonContainer.height
+                        - root.totalNumContentSpacing * root.contentSpacing
             spacing: root.bottomTextsSpacing
 
             Item {

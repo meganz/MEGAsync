@@ -13,8 +13,10 @@ QmlDialog {
 
     readonly property int contentMargin: 24
     readonly property int numberOfMargins: 2
+    readonly property int defaultMinimumWidth: 544
 
-    property int totalWidth: Math.max(544, columnItem.width + window.numberOfMargins * window.contentMargin)
+    property int totalWidth: Math.max(window.defaultMinimumWidth,
+                                      columnItem.width + window.numberOfMargins * window.contentMargin)
     property int totalHeight: columnItem.height + window.numberOfMargins * window.contentMargin
 
     visible: false

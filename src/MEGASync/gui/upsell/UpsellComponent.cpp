@@ -20,6 +20,8 @@ UpsellComponent::UpsellComponent(QObject* parent, UpsellPlans::ViewMode mode):
 {
     registerQmlModules();
     mController->setViewMode(mode);
+    sendStats();
+
     mController->registerQmlRootContextProperties();
 
     connect(mController.get(), &UpsellController::dataReady, this, &UpsellComponent::dataReady);
@@ -124,4 +126,33 @@ void UpsellComponent::linkTryProFlexiClicked()
 QString UpsellComponent::getViewModeString() const
 {
     return QString::number(static_cast<int>(viewMode()));
+}
+
+void UpsellComponent::sendStats() const
+{
+    switch (viewMode())
+    {
+        case UpsellPlans::ViewMode::STORAGE_FULL:
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_FULL_SHOWN);
+            break;
+        }
+        case UpsellPlans::ViewMode::STORAGE_ALMOST_FULL:
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_ALMOST_FULL_SHOWN);
+            break;
+        }
+        case UpsellPlans::ViewMode::TRANSFER_EXCEEDED:
+        {
+            MegaSyncApp->getStatsEventHandler()->sendEvent(
+                AppStatsEvents::EventType::UPSELL_DIALOG_TX_QUOTA_EXCEEDED_SHOWN);
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
