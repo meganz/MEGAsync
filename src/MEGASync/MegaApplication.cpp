@@ -6284,12 +6284,14 @@ void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
         if (mightBeCaseSensitivityIssue(path))
         {
             message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
-                         "casing mismatch. Ensure the folders match exactly and try again.");
+                         "casing mismatch. Ensure the folders match exactly and try again.")
+                          .arg(path);
         }
         else
         {
             message =
-                tr("The folder %1 can't be downloaded. Check the download destination folder.");
+                tr("The folder %1 can't be downloaded. Check the download destination folder.")
+                    .arg(path);
         }
     }
     else
