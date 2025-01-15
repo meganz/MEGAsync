@@ -1,5 +1,6 @@
 #include "SyncReminderNotificationManager.h"
 
+#include "CreateRemoveSyncsManager.h"
 #include "MegaApplication.h"
 #include "Preferences.h"
 
@@ -113,7 +114,16 @@ QPair<QString, QString> SyncReminderNotificationManager::getMessageForState() co
 void SyncReminderNotificationManager::showNotification()
 {
     auto [title, message] = getMessageForState();
-    MegaSyncApp->showInfoMessage(message, title);
+
+    DesktopNotifications::NotificationInfo reminder;
+    reminder.title = title;
+    reminder.message = message;
+    reminder.activatedFunction = [](DesktopAppNotificationBase::Action)
+    {
+        CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN);
+    };
+
+    MegaSyncApp->showInfoMessage(reminder);
 }
 
 int SyncReminderNotificationManager::calculateMsecsToNextReminder(const QDateTime& lastTime,
