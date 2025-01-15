@@ -3492,13 +3492,13 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Open settings</translation>
     </message>
     <message>
-        <source>The folder %1 can&apos;t be downloaded. Error received : %2.</source>
-        <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic error. SNC-2549.</translatorcomment>
+        <source>Folder download error</source>
+        <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Folder download error</source>
-        <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
+        <source>The folder %1 can&apos;t be downloaded. Error received : %2.</source>
+        <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic error. SNC-2549.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3509,6 +3509,26 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
         <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic write error. SNC-2549.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link import error</source>
+        <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported, your storage is full</source>
+        <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported, invalid key or decryption error</source>
+        <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported: %1</source>
+        <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

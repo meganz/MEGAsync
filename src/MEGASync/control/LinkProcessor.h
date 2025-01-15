@@ -69,6 +69,7 @@ signals:
                              long long size,
                              bool isFolder);
     void linkDownloadErrorDetected(const QString& path, const int errorCode);
+    void linkCopyErrorDetected(const QString& nodeName, const int errorCode);
 
 public slots:
     void onFetchSetFromLink(const AlbumCollection& collection);

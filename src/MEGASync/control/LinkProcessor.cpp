@@ -225,8 +225,17 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
     }
 
     case MegaRequest::TYPE_COPY:
+    {
+        if (error != MegaError::API_OK)
+        {
+            MegaNode* node = request->getPublicMegaNode();
+            QString nodeName =
+                (node) ? QString::fromUtf8(node->getName()) : QString::fromUtf8("Invalid Node");
+            emit linkCopyErrorDetected(nodeName, error);
+        }
         processNextTransfer();
         break;
+    }
 
     case MegaRequest::TYPE_LOGIN:
     {
