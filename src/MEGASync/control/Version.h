@@ -1,11 +1,11 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION 5, 7, 1, 0
+#define VER_FILEVERSION 5, 7, 1, 1
 #define VER_FILEVERSION_CODE 50701
-#define VER_PRODUCTVERSION 5, 7, 1, 0
+#define VER_PRODUCTVERSION 5, 7, 1, 1
 // Update scripts relying on this value if you move it
-#define VER_PRODUCTVERSION_STR "5.7.1.0\0"
+#define VER_PRODUCTVERSION_STR "5.7.1.1\0"
 
 #define VER_BUILD_ID 1
 
