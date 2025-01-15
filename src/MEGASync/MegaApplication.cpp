@@ -727,7 +727,11 @@ void MegaApplication::initialize()
     connect(mLinkProcessor,
             &LinkProcessor::linkDownloadErrorDetected,
             this,
-            &MegaApplication::onOpenLinkError);
+            &MegaApplication::onDownloadLinkError);
+    connect(mLinkProcessor,
+            &LinkProcessor::linkCopyErrorDetected,
+            this,
+            &MegaApplication::onCopyLinkError);
 
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
@@ -6274,7 +6278,7 @@ void MegaApplication::onScheduledExecution()
     onGlobalSyncStateChangedImpl();
 }
 
-void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
+void MegaApplication::onDownloadLinkError(const QString& path, const int errorCode)
 {
     const QString title = tr("Folder download error");
 
@@ -6299,6 +6303,27 @@ void MegaApplication::onOpenLinkError(const QString& path, const int errorCode)
         const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
         message =
             tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
+    }
+    showErrorMessage(message, title);
+}
+
+void MegaApplication::onCopyLinkError(const QString& nodeName, const int errorCode)
+{
+    const QString title = tr("Link import error");
+
+    QString message;
+    if (errorCode == MegaError::API_EOVERQUOTA)
+    {
+        message = tr("Link can't be imported, your storage is full");
+    }
+    else if (errorCode == MegaError::API_EKEY)
+    {
+        message = tr("Link can't be imported, invalid key or decryption error");
+    }
+    else
+    {
+        const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
+        message = tr("Link can't be imported: %1").arg(errorString);
     }
 
     showErrorMessage(message, title);

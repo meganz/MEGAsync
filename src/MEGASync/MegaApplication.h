@@ -612,7 +612,8 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-    void onOpenLinkError(const QString& path, const int errorCode);
+    void onDownloadLinkError(const QString& path, const int errorCode);
+    void onCopyLinkError(const QString& nodeName, const int errorCode);
 };
 
 #endif // MEGAAPPLICATION_H
