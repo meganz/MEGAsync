@@ -4857,7 +4857,7 @@ Enter a different name</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>سيتم نسخ المجلدات المحددة تلقائيًا إلى ميغا MEGA عند تشغيل تطبيق الحاسوب المكتبي.</translation>
+        <translation>سيتم نسخ المجلدات المحددة تلقائيًا إلى ميغا MEGA كمجلدات للقراءة فقط عند تشغيل تطبيق الحاسوب المكتبي. يمكن إجراء التغييرات فقط على النسخ الاحتياطية على جهازك المحلي. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5087,12 +5087,12 @@ Enter a different name</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل مع جهازك المحلي.</translation>
+        <translation>قم بمزامنة سواقة ميغا MEGA السحابية بالكامل في اتجاهين مع جهاز محلي. سيتم تحديث المجلدات بالتعديلات التي يتم إجراؤها محليًا أو في ميغا MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاص بك مع جهازك المحلي.</translation>
+        <translation>قم بمزامنة المجلدات المحددة في سواقة ميغا MEGA السحابية الخاصة بك مع جهازك المحلي. سيتم تحديث المجلدات بالتعديلات التي يتم إجراؤها محليًا أو في ميغا MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>

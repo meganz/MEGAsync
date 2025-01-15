@@ -4854,7 +4854,7 @@ Introdu un alt nume.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Folderele selectate vor backup automat la MEGA atunci când aplicația desktop rulează.</translation>
+        <translation>Folderele selectate vor face automat o copie de rezervă la MEGA ca foldere numai citire atunci când aplicația desktop rulează. Modificările pot fi făcute numai la backup-urile de pe dispozitivul dvs. local. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5084,12 +5084,12 @@ Introdu un alt nume.</translation>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sincronizați întreaga unitate MEGA Cloud cu dispozitivul dvs. local.</translation>
+        <translation>Sincronizați în două sensuri întregul MEGA Cloud cu un dispozitiv local. Dosarele vor rămâne la curent cu modificările făcute local sau în MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sincronizați folderele selectate din unitatea MEGA Cloud cu dispozitivul dvs. local.</translation>
+        <translation>Sincronizați folderele selectate din unitatea MEGA Cloud cu dispozitivul local. Dosarele vor rămâne la curent cu modificările făcute local sau în MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>
