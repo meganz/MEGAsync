@@ -13,7 +13,7 @@ Button {
         background: ColorTheme.buttonSecondary
         border: colors.background
         text: ColorTheme.textSecondary
-        textPressed: ColorTheme.buttonSecondaryPressed
+        textPressed: ColorTheme.textSecondary
         textHover: ColorTheme.textSecondary
         textDisabled: ColorTheme.textDisabled
         pressed: ColorTheme.buttonSecondaryPressed
