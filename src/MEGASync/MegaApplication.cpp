@@ -1162,7 +1162,6 @@ void MegaApplication::start()
     if (updated)
     {
         showInfoMessage(tr("MEGAsync has been updated"));
-        preferences->setFirstSyncDone();
         preferences->setFirstFileSynced();
         preferences->setFirstBackupDone();
         preferences->setFirstFileBackedUp();
@@ -1479,6 +1478,7 @@ if (!preferences->lastExecutionTime())
     {
         mSyncReminderNotificationManager =
             std::make_unique<SyncReminderNotificationManager>(nullptr);
+        mSyncReminderNotificationManager->update(!fastLogin);
     }
 }
 

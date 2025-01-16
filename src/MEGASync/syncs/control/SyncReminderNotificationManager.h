@@ -11,7 +11,7 @@ public:
     SyncReminderNotificationManager(QObject* parent = nullptr);
     ~SyncReminderNotificationManager();
 
-    void update();
+    void update(bool isFirstTime = false);
 
 private:
     enum class ReminderState

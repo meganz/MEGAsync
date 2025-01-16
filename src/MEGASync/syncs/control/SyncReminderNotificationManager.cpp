@@ -23,8 +23,6 @@ SyncReminderNotificationManager::SyncReminderNotificationManager(QObject* parent
     // First reminder is shown after the remaining time to the next time only once,
     // then the timer is triggered every day (see onTimeout).
     mTimer.setSingleShot(true);
-
-    update();
 }
 
 SyncReminderNotificationManager::~SyncReminderNotificationManager()
@@ -35,23 +33,29 @@ SyncReminderNotificationManager::~SyncReminderNotificationManager()
     }
 }
 
-void SyncReminderNotificationManager::update()
+void SyncReminderNotificationManager::update(bool isFirstTime)
 {
     auto lastTime(Preferences::instance()->lastSyncReminderTime());
+    auto lastSyncReminderTime(QDateTime::fromSecsSinceEpoch(lastTime));
     auto currentTime(QDateTime::currentDateTime());
     if (lastTime == 0 || lastTime > currentTime.currentSecsSinceEpoch())
     {
-        // If it is the first time the app is started after onboarding or the time is invalid
-        // (for example when the system time is changed), then show the first reminder.
-        mState = ReminderState::FIRST_REMINDER;
-        Preferences::instance()->setSyncReminderTime(
-            QDateTime::currentDateTime().toSecsSinceEpoch());
-        mTimer.start(TIME_TO_FIRST_REMINDER_MS);
+        Preferences::instance()->setSyncReminderTime(currentTime.toSecsSinceEpoch());
+        if (isFirstTime)
+        {
+            // If it is the first time the app is started after onboarding or the time is invalid
+            // (for example when the system time is changed), then show the first reminder.
+            mState = ReminderState::FIRST_REMINDER;
+            mTimer.start(TIME_TO_FIRST_REMINDER_MS);
+        }
+        else
+        {
+            // For existing users, we will skip the first notification.
+            update(lastSyncReminderTime, currentTime);
+        }
     }
     else
     {
-        auto lastSyncReminderTime(
-            QDateTime::fromSecsSinceEpoch(Preferences::instance()->lastSyncReminderTime()));
         if (lastSyncReminderTime.isValid())
         {
             update(lastSyncReminderTime, currentTime);
