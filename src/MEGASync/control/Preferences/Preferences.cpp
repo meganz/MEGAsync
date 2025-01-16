@@ -264,6 +264,7 @@ const QString Preferences::lastDailyStatTimeKey = QString::fromLatin1("lastDaily
 const QString Preferences::askOnExclusionRemove = QString::fromLatin1("askOnExclusionRemove");
 const QString Preferences::themeKey = QString::fromLatin1("themeType");
 const QString Preferences::lastSyncReminderTimeKey = QString::fromLatin1("lastSyncReminderTime");
+const QString Preferences::lastSyncReminderStateKey = QString::fromLatin1("lastSyncReminderState");
 #if defined(ENABLE_SDK_ISOLATED_GFX)
 const QString Preferences::gfxWorkerEndpointKey = QString::fromLatin1("gfxWorkerEndpoint");
 #endif
@@ -1921,6 +1922,16 @@ long long Preferences::lastSyncReminderTime()
 void Preferences::setSyncReminderTime(long long time)
 {
     setValueConcurrently(lastSyncReminderTimeKey, time);
+}
+
+int Preferences::lastSyncReminderState()
+{
+    return getValueConcurrent<int>(lastSyncReminderStateKey, 0);
+}
+
+void Preferences::setLastSyncReminderState(int state)
+{
+    setValueConcurrently(lastSyncReminderStateKey, state);
 }
 
 void Preferences::setLastExecutionTime(long long time)

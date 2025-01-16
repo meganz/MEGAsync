@@ -16,22 +16,34 @@ public:
 private:
     enum class ReminderState
     {
-        FIRST_REMINDER = 0,
-        SECOND_REMINDER = 1,
-        MONTHLY = 2,
-        BIMONTHLY = 3
+        UNDEFINED = 0,
+        FIRST_REMINDER = 1,
+        SECOND_REMINDER = 2,
+        MONTHLY = 3,
+        BIMONTHLY = 4
     };
 
     ReminderState mState;
     QTimer mTimer;
 
-    QPair<QString, QString> getMessageForState() const;
+    void init(bool isFirstTime, const QDateTime& lastTime, const QDateTime& currentTime);
+    void continuePeriodicProcess(const QDateTime& lastTime, const QDateTime& currentTime);
+    void startNextReminder(const QDateTime& lastTime, const QDateTime& currentTime);
+
+    void updateState();
+    void updatePreferences();
+
     void showNotification();
-    int calculateMsecsToNextReminder(const QDateTime& lastTime,
-                                     const QDateTime& currentTime,
-                                     quint64 daysToCurrentTime) const;
-    void update(const QDateTime& lastSyncReminderTime, const QDateTime& currentTime);
-    bool showReminder(const QDateTime& currentTime);
+
+    bool isNotificationRequired();
+    bool isPendingNotificationRequired();
+    bool isPendingNotificationRequiredUndefined(ReminderState lastState);
+
+    int calculateMsecsToNextReminder(const QDateTime& lastTime, const QDateTime& currentTime) const;
+    QPair<QString, QString> getMessageForState() const;
+    quint64 getDaysToNextReminder() const;
+
+    ReminderState getNextState(ReminderState state) const;
 
 private slots:
     void onTimeout();
