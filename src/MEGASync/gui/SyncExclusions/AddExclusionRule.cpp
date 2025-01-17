@@ -50,12 +50,18 @@ void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString
             {
                 value = getRelative(folder, value);
             }
-
+            MegaIgnoreNameRule::Target target = MegaIgnoreNameRule::Target::a;
+            if (targetType == ExclusionRulesModel::TargetType::FILE)
+            {
+                target = MegaIgnoreNameRule::Target::f;
+            }
+            else if (targetType == ExclusionRulesModel::TargetType::FOLDER)
+            {
+                target = MegaIgnoreNameRule::Target::d;
+            }
             megaIgnoreLoader.addNameRule(MegaIgnoreNameRule::Class::EXCLUDE,
                                          value,
-                                         targetType == ExclusionRulesModel::TargetType::FILE ?
-                                             (MegaIgnoreNameRule::Target::f) :
-                                             (MegaIgnoreNameRule::Target::d),
+                                         target,
                                          MegaIgnoreNameRule::Type::NONE,
                                          static_cast<MegaIgnoreNameRule::WildCardType>(wildCard));
         }
