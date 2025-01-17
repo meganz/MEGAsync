@@ -47,6 +47,7 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/UserMessageController.h
     control/UserMessageTypes.h
     control/ReloadingEventHandler.h
+    control/UsersUpdateListener.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -94,6 +95,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/BugReport/BugReportController.cpp
     control/BugReport/BugReportData.h
     control/ReloadingEventHandler.cpp
+    control/UsersUpdateListener.cpp
 )
 
 target_sources(MEGAsync

@@ -87,9 +87,17 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
     mRemoteCacheSize(-1),
-    mDebugCounter(0)
+    mDebugCounter(0),
+    usersUpdateListener(std::make_unique<UsersUpdateListener>())
 {
     mUi->setupUi(this);
+
+    connect(usersUpdateListener.get(),
+            &UsersUpdateListener::userEmailUpdated,
+            this,
+            &SettingsDialog::onUserEmailChanged);
+    mMegaApi->addListener(usersUpdateListener.get());
+
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
@@ -192,6 +200,8 @@ SettingsDialog::~SettingsDialog()
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
     AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
     AccountDetailsManager::instance()->dettachAccountObserver(*this);
+
+    mMegaApi->removeListener(usersUpdateListener.get());
 
     delete mUi;
 }
@@ -1517,6 +1527,21 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 void SettingsDialog::onShellNotificationsProcessed()
 {
     setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
+}
+
+void SettingsDialog::onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail)
+{
+    if (!mPreferences->logged())
+    {
+        return;
+    }
+
+    MegaHandle myHandle = mMegaApi->getMyUserHandleBinary();
+    if (userHandle == myHandle)
+    {
+        mPreferences->setEmail(newEmail);
+        mUi->lEmail->setText(newEmail);
+    }
 }
 
 // Network -----------------------------------------------------------------------------------------
