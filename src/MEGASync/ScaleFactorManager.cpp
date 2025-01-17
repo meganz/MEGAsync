@@ -66,6 +66,29 @@ ScreensInfo createScreensInfo(OsType osType, const QString& desktopName)
             linuxDpi *= getWindowScalingFactorOnXcfe();
         }
     }
+    else if (osType == OsType::WIN)
+    {
+        // Set QT_SCALE_FACTOR_ROUNDING_POLICY to PassThrough, but do not override user setting
+        // Note: Qt5 default value is Round, but Qt6 default value is PassThrough
+        const auto scaleFactorRoundingPolicyFromEnv =
+            qEnvironmentVariable("QT_SCALE_FACTOR_ROUNDING_POLICY");
+        const auto scaleFactorRoundingPolicyFromQt =
+            QGuiApplication::highDpiScaleFactorRoundingPolicy();
+
+        const auto targetPolicy = Qt::HighDpiScaleFactorRoundingPolicy::PassThrough;
+
+        if (scaleFactorRoundingPolicyFromEnv.isEmpty() &&
+            scaleFactorRoundingPolicyFromQt != targetPolicy)
+        {
+            QGuiApplication::setHighDpiScaleFactorRoundingPolicy(targetPolicy);
+            qDebug() << "Setting QT scale factor rounding policy to " << targetPolicy;
+        }
+        else
+        {
+            qDebug() << "QT scale factor rounding policy already set to "
+                     << scaleFactorRoundingPolicyFromQt;
+        }
+    }
 
     // QGuiApplication needs to be created, even if screens() is static.
     // Otherwise, the screens are not detected.
@@ -255,14 +278,19 @@ bool ScaleFactorManager::checkEnvironmentVariables() const
     return false;
 }
 
-double adjustScaleValueToSuitableIncrement(double scale, double maxScale, double pixelRatio)
+double adjustScaleValueToSuitableIncrement(double scale, double maxScale)
 {
-    auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
-    dpiScreensSuitableIncrement /= pixelRatio;
-    scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
-    if(scale > maxScale)
+    scale = std::min(scale, maxScale);
+    if (maxScale > 1.)
     {
-        scale -= dpiScreensSuitableIncrement;
+        auto dpiScreensSuitableStep = 0.25; // Move by .25 steps
+        scale =
+            qRound(scale / dpiScreensSuitableStep) * dpiScreensSuitableStep; // Set to nearest step
+
+        while (scale > maxScale)
+        {
+            scale -= dpiScreensSuitableStep;
+        }
     }
     return scale;
 }
@@ -273,7 +301,7 @@ double calculateMaxScale(const ScreenInfo& screenInfo, bool multiScreen)
     constexpr auto maxDialogHeight = 810;
 
     // We use different env vars to set scaling depending on the number of screens:
-    // It seems the scling as not the same effect depending on the variable used...
+    // It seems the scaling has not the same effect depending on the variable used...
     // So we compute the scale differently.
     // TODO: revamp all scaling code
     return screenInfo.availableHeightPixels * (multiScreen ? screenInfo.devicePixelRatio : 1.)
@@ -283,16 +311,16 @@ double calculateMaxScale(const ScreenInfo& screenInfo, bool multiScreen)
 bool ScaleFactorManager::computeScales()
 {
     bool needsRescaling = false;
+    const bool multiScreen = mScreensInfo.size() > 1;
     for(auto& screenInfo : mScreensInfo)
     {
-        auto scale = screenInfo.devicePixelRatio;
+        auto scale = multiScreen ? screenInfo.devicePixelRatio : 1.;
         if(mOsType == OsType::LINUX)
         {
             scale = computeScaleLinux(screenInfo);
         }
-        const auto maxScale = calculateMaxScale(screenInfo, mScreensInfo.size() > 1);
-        scale = std::min(scale, maxScale);
-        scale = adjustScaleValueToSuitableIncrement(scale, maxScale, screenInfo.devicePixelRatio);
+        const auto maxScale = calculateMaxScale(screenInfo, multiScreen);
+        scale = adjustScaleValueToSuitableIncrement(scale, maxScale);
 
         const bool hdpiAutoEnabled{screenInfo.devicePixelRatio > 1.0};
         const bool scaleNeedsToBeAdjusted{scale < 1.0 && !hdpiAutoEnabled};
@@ -301,9 +329,10 @@ bool ScaleFactorManager::computeScales()
             scale = 1.0;
         }
 
-        if(scale != 1.0)
+        if ((!multiScreen && scale != 1.0) || (multiScreen && scale != screenInfo.devicePixelRatio))
         {
             needsRescaling = true;
+            qDebug() << "Screen " << screenInfo.name << " needs rescaling: " << scale;
         }
         mCalculatedScales.push_back(scale);
     }
