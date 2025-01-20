@@ -20,7 +20,6 @@ public:
     ~BackupCandidatesComponent();
 
     QUrl getQmlUrl() override;
-    QString contextName() override;
 
     static void registerQmlModules();
 

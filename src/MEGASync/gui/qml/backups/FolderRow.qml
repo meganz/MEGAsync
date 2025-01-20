@@ -350,7 +350,7 @@ Item {
                         target: folderDialog
 
                         function onFolderChoosen(folderPath) {
-                            backupsComponentAccess.change(folder, folderPath);
+                            backupCandidatesComponentAccess.change(folder, folderPath);
                         }
                     }
                 }
@@ -367,7 +367,7 @@ Item {
                     sizes: Buttons.SmallSizes {}
 
                     onClicked: {
-                        backupsComponentAccess.remove(folder);
+                        backupCandidatesComponentAccess.remove(folder);
                     }
                 }
 
@@ -385,7 +385,7 @@ Item {
 
             function doneAction() {
                 editTextField.hint.visible = false;
-                var error = backupsComponentAccess.rename(folder, editTextField.text);
+                var error = backupCandidatesComponentAccess.rename(folder, editTextField.text);
                 switch(error) {
                     case BackupCandidates.NONE:
                     case BackupCandidates.SYNC_CONFLICT:
