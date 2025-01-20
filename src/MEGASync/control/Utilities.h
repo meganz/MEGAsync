@@ -395,7 +395,7 @@ public:
     static QString getNodePath(mega::MegaTransfer* transfer);
 
     // Folder is on a case sensitive drive/OS
-    static Qt::CaseSensitivity useCaseSensitiveLogicInThisFolder(const QString& folder);
+    static Qt::CaseSensitivity isCaseSensitive(const QString& folder);
 
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();

@@ -1431,7 +1431,7 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
-Qt::CaseSensitivity Utilities::useCaseSensitiveLogicInThisFolder(const QString& folder)
+Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
 {
     Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
 

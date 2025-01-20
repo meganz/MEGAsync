@@ -411,7 +411,7 @@ void MegaIgnoreManager::setInputDirPath(const QString& inputDirPath, bool create
     parseIgnoresFile();
 
     // Used for the name rules strategy
-    mIsCaseSensitive = Utilities::useCaseSensitiveLogicInThisFolder(inputDirPath);
+    mIsCaseSensitive = Utilities::isCaseSensitive(inputDirPath);
 }
 
 bool MegaIgnoreManager::hasChanged() const
