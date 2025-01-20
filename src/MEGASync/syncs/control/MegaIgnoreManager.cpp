@@ -359,8 +359,12 @@ std::shared_ptr<MegaIgnoreNameRule>
                                    MegaIgnoreNameRule::Type type,
                                    MegaIgnoreNameRule::WildCardType wildCard)
 {
-    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern, classType, targetType, type);
-    rule->setWildCardType(wildCard);
+    auto rule = std::make_shared<MegaIgnoreNameRule>(pattern,
+                                                     classType,
+                                                     targetType,
+                                                     type,
+                                                     MegaIgnoreNameRule::Strategy::NONE,
+                                                     wildCard);
     addRule(rule);
     return rule;
 }

@@ -109,16 +109,21 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
     }
 }
 
-MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern, Class classType, Target target, Type type, Strategy strategy) :
+MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern,
+                                       Class classType,
+                                       Target target,
+                                       Type type,
+                                       Strategy strategy,
+                                       WildCardType wildcard):
     MegaIgnoreRule(QString(), false),
     mPattern(pattern),
     mClass(classType),
     mTarget(target),
     mType(type),
-    mStrategy(strategy)
+    mStrategy(strategy),
+    mWildCardType(wildcard)
 {
     markAsDirty();
-    fillWildCardType(pattern);
 }
 
 QString MegaIgnoreNameRule::getModifiedRule() const
