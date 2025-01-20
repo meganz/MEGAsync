@@ -13,6 +13,10 @@ FullSyncPageForm {
     localFolderChooser.folderField.hint.visible : root.syncs.localError.length !== 0
     localFolderChooser.folderField.error : root.syncs.localError.length !== 0
 
+    localFolderChooser.folderField.secondaryHint.text : root.syncs.remoteError
+    localFolderChooser.folderField.secondaryHint.visible : root.syncs.remoteError.length !== 0
+    localFolderChooser.folderField.secondaryError : root.syncs.remoteError.length !== 0
+
     function enableScreen() {
         root.enabled = true;
         footerButtons.rightPrimary.icons.busyIndicatorVisible = false;
@@ -35,10 +39,6 @@ FullSyncPageForm {
 
             root.syncs.addSync(window.syncOrigin, localFolderChooser.choosenPath);
         }
-    }
-
-    ChooseLocalFolder {
-        id: localFolder
     }
 
     Connections {
