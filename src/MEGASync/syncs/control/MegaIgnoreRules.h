@@ -112,11 +112,12 @@ public:
 
     MegaIgnoreNameRule() = default;
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    explicit MegaIgnoreNameRule(const QString& pattern
-                                ,Class classType
-                                ,Target target = Target::NONE
-                                ,Type type = Type::NONE
-                                ,Strategy strategy = Strategy::NONE);
+    explicit MegaIgnoreNameRule(const QString& pattern,
+                                Class classType,
+                                Target target = Target::NONE,
+                                Type type = Type::NONE,
+                                Strategy strategy = Strategy::NONE,
+                                WildCardType wildcard = WildCardType::EQUAL);
     QString getModifiedRule() const override;
     QString getDisplayText() const override { return mPattern; }
     RuleType ruleType() const override { return RuleType::NAMERULE;}
