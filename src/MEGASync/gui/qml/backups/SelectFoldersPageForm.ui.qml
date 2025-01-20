@@ -5,13 +5,10 @@ import common 1.0
 import components.pages 1.0
 import components.texts 1.0 as Texts
 
-import BackupsProxyModel 1.0
-import BackupsModel 1.0
+import BackupCandidatesProxyModel 1.0
 
 FooterButtonsPage {
     id: root
-
-    required property BackupsProxyModel backupsProxyModelRef
 
     readonly property int spacing: 24
 
@@ -21,7 +18,7 @@ FooterButtonsPage {
         rightPrimary {
             text: Strings.next
             icons.source: Images.arrowRight
-            enabled: backupsModelAccess.checkAllState !== Qt.Unchecked
+            enabled: backupCandidatesAccess.checkAllState !== Qt.Unchecked
         }
     }
 
@@ -49,7 +46,6 @@ FooterButtonsPage {
             topMargin: root.spacing
             bottomMargin: root.spacing
         }
-        backupsProxyModelRef: root.backupsProxyModelRef
     }
 
 }

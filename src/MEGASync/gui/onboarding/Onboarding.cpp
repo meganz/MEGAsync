@@ -1,7 +1,7 @@
 #include "Onboarding.h"
 
 #include "AccountStatusController.h"
-#include "Backups.h"
+#include "BackupCandidatesComponent.h"
 #include "MegaApplication.h"
 #include "OnboardingQmlDialog.h"
 #include "PasswordStrengthChecker.h"
@@ -22,8 +22,8 @@ Onboarding::Onboarding(QObject* parent):
     qmlRegisterUncreatableType<SettingsDialog>("SettingsDialog", 1, 0, "SettingsDialog",
                                                QString::fromUtf8("Warning SettingsDialog : not allowed to be instantiated"));
 
-    Backups::registerQmlModules();
     SyncsComponent::registerQmlModules();
+    BackupCandidatesComponent::registerQmlModules();
 
     // Makes the Guest window transparent (macOS)
     QQuickWindow::setDefaultAlphaBuffer(true);

@@ -2,34 +2,32 @@ import QtQuick 2.15
 
 import common 1.0
 
-import BackupsModel 1.0
-
 ConfirmFoldersPageForm {
     id: root
 
+    signal openExclusionsDialog
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
+    signal createBackups(int origin)
 
     footerButtons {
         leftSecondary.onClicked: {
-            var folderPaths = backupsProxyModelRef.getSelectedFolders();
-            backupsAccess.openExclusionsDialog(folderPaths);
+            root.openExclusionsDialog();
         }
 
         rightSecondary.onClicked: {
-            backupsModelAccess.clean(true);
             root.confirmFoldersMoveToSelect();
         }
 
         rightPrimary.onClicked: {
             footerButtons.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups(window.syncOrigin);
+            root.createBackups(window.syncOrigin);
         }
     }
 
     Connections {
-        target: backupsModelAccess
+        target: backupCandidatesAccess
 
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect();
@@ -37,7 +35,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsProxyModelRef
+        target: backupsComponentAccess
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;
