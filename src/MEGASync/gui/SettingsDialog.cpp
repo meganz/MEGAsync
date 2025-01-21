@@ -726,8 +726,19 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
 {
     if (mLoadingSettings)
         return;
-    if (!checked)
+
+    if (checked)
     {
+        // This is actually saved to Preferences after the MegaApi call succeeds;
+        // Warning: the parameter is actually "disable".
+        mMegaApi->setFileVersionsOption(false);
+    }
+    else
+    {
+        // Restore the check while the user has not answered the warning dialog
+        mUi->cFileVersioning->blockSignals(true);
+        mUi->cFileVersioning->setChecked(true);
+
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = tr("Disabling file versioning will prevent"
@@ -736,26 +747,22 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
-            if (msg->result() == QMessageBox::No)
+            // We want to make changes only if the answer is Yes.
+            // If the user clicks No or closes the dialog with he X button, we don't want to disable
+            // the feature.
+            if (msg->result() == QMessageBox::Yes)
             {
-                mUi->cFileVersioning->blockSignals(true);
-                mUi->cFileVersioning->setChecked(true);
-                mUi->cFileVersioning->blockSignals(false);
+                // This is actually saved to Preferences after the MegaApi call succeeds;
+                // Warning: the parameter is actually "disable".
+                mMegaApi->setFileVersionsOption(true);
+                mUi->cFileVersioning->setChecked(false);
             }
-            else
-            {
-                mMegaApi->setFileVersionsOption(!checked);
-            }
+            mUi->cFileVersioning->blockSignals(false);
         };
 
         QMegaMessageBox::warning(msgInfo);
-    }
-    else
-    {
-        // This is actually saved to Preferences after the MegaApi call succeeds;
-        mMegaApi->setFileVersionsOption(!checked);
     }
 }
 
