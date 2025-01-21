@@ -6,30 +6,21 @@
 #include "BugReportDialog.h"
 #include "ChangePassword.h"
 #include "CommonMessages.h"
+#include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "FullName.h"
-#include "GuiUtilities.h"
-#include "mega/types.h"
 #include "MegaApplication.h"
-#include "MyBackupsHandle.h"
 #include "NodeSelectorSpecializations.h"
 #include "Platform.h"
 #include "PowerOptions.h"
 #include "ProxySettings.h"
 #include "QMegaMessageBox.h"
 #include "RemoveBackupDialog.h"
-#include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
-#include "TextDecorator.h"
 #include "ThemeManager.h"
 #include "ui_SettingsDialog.h"
 #include "Utilities.h"
-#include "CreateRemoveSyncsManager.h"
 
-#include <QtConcurrent/QtConcurrent>
-
-#include <assert.h>
-#include <memory>
 #include <QApplication>
 #include <QButtonGroup>
 #include <QDesktopServices>
@@ -38,8 +29,12 @@
 #include <QMessageBox>
 #include <QRect>
 #include <QShortcut>
+#include <QtConcurrent/QtConcurrent>
 #include <QTranslator>
 #include <QUrl>
+
+#include <cassert>
+#include <memory>
 
 #ifdef Q_OS_WINDOWS
 extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
@@ -93,9 +88,17 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
     mRemoteCacheSize(-1),
-    mDebugCounter(0)
+    mDebugCounter(0),
+    usersUpdateListener(std::make_unique<UsersUpdateListener>())
 {
     mUi->setupUi(this);
+
+    connect(usersUpdateListener.get(),
+            &UsersUpdateListener::userEmailUpdated,
+            this,
+            &SettingsDialog::onUserEmailChanged);
+    mMegaApi->addListener(usersUpdateListener.get());
+
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
@@ -183,9 +186,14 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
             &SettingsDialog::onShellNotificationsProcessed);
     setOverlayCheckboxEnabled(!mApp->isShellNotificationProcessingOngoing(),
                               mUi->cOverlayIcons->isChecked());
-
     connect(mUi->bBackup, &QPushButton::clicked, this, &SettingsDialog::on_bBackup_clicked);
     connect(mUi->bSyncs, &QPushButton::clicked, this, &SettingsDialog::on_bSyncs_clicked);
+
+    // React to AppState changes
+    connect(AppState::instance().get(),
+            &AppState::appStateChanged,
+            this,
+            &SettingsDialog::onAppStateChanged);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -193,6 +201,8 @@ SettingsDialog::~SettingsDialog()
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
     AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
     AccountDetailsManager::instance()->dettachAccountObserver(*this);
+
+    mMegaApi->removeListener(usersUpdateListener.get());
 
     delete mUi;
 }
@@ -262,6 +272,12 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
     {
         loadSettings();
     }
+}
+
+void SettingsDialog::onAppStateChanged(AppState::AppStates oldAppState,
+                                       AppState::AppStates newAppState)
+{
+    setProxyOnly(newAppState != AppState::NOMINAL);
 }
 
 void SettingsDialog::showGuestMode()
@@ -764,7 +780,7 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     mPreferences->setAwakeIfActive(checked);
 
     PowerOptions options;
-    auto result = options.keepAwake(MegaSyncApp->getTransfersModel()->hasActiveTransfers() > 0);
+    auto result = options.keepAwake(checked);
 
     if (checked && !result)
     {
@@ -1460,7 +1476,7 @@ void SettingsDialog::on_bUploadFolder_clicked()
                 if (node)
                 {
                     std::unique_ptr<const char[]> nPath(mMegaApi->getNodePath(node.get()));
-                    if (nPath && std::strlen(nPath.get()))
+                    if (nPath && strlen(nPath.get()))
                     {
                         mHasDefaultUploadOption = nodeSelector->getDefaultUploadOption();
                         mUi->eUploadFolder->setText(QString::fromUtf8(nPath.get()));
@@ -1513,6 +1529,21 @@ void SettingsDialog::onShellNotificationsProcessed()
     setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
 }
 
+void SettingsDialog::onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail)
+{
+    if (!mPreferences->logged())
+    {
+        return;
+    }
+
+    MegaHandle myHandle = mMegaApi->getMyUserHandleBinary();
+    if (userHandle == myHandle)
+    {
+        mPreferences->setEmail(newEmail);
+        mUi->lEmail->setText(newEmail);
+    }
+}
+
 // Network -----------------------------------------------------------------------------------------
 void SettingsDialog::on_bNetwork_clicked()
 {
@@ -1553,8 +1584,6 @@ void SettingsDialog::on_bOpenBandwidthSettings_clicked()
         {
             if (bandwidthSettings->result() == QDialog::Accepted)
             {
-                mApp->setUploadLimit(std::max(mPreferences->uploadLimitKB(), 0));
-
                 mApp->setMaxUploadSpeed(mPreferences->uploadLimitKB());
                 mApp->setMaxDownloadSpeed(mPreferences->downloadLimitKB());
 

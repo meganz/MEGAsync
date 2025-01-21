@@ -1,6 +1,7 @@
+#include "ViewLoadingScene.h"
+
 #include "ui_ViewLoadingScene.h"
 #include "ViewLoadingMessage.h"
-#include <ViewLoadingScene.h>
 
 #include <QKeyEvent>
 

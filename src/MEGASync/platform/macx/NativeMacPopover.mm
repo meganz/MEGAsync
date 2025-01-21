@@ -1,4 +1,5 @@
 #include "NativeMacPopover.h"
+
 #include "NativeMacPopoverPrivate.h"
 
 NativeMacPopover::NativeMacPopover()

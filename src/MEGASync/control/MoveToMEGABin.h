@@ -1,10 +1,11 @@
 #ifndef MOVETOMEGABIN_H
 #define MOVETOMEGABIN_H
 
-#include <megaapi.h>
+#include "megaapi.h"
 
-#include <QString>
 #include <QObject>
+#include <QString>
+
 #include <memory>
 
 //This class is used to move a handle to the MEGA bin

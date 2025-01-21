@@ -13,6 +13,7 @@ import components.comboBoxes 1.0
 import components.textFields 1.0
 
 import QmlDialog 1.0
+import ExclusionRulesModel 1.0
 
 QmlDialog {
     id: root
@@ -38,16 +39,16 @@ QmlDialog {
     }
 
     AddRuleDialog {
-        id: addExlcusionRule
+        id: addExclusionRule
 
         visible: false
 
         onAccepted: {
             if(rulesTable.editIndex === -1){
-                syncExclusionsAccess.rulesModel.addNewRule( addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue);
+                syncExclusionsAccess.rulesModel.addNewRule( addExclusionRule.targetType, addExclusionRule.valueType,  addExclusionRule.ruleValue);
             }
             else{
-                syncExclusionsAccess.rulesModel.editRule(addExlcusionRule.targetType, addExlcusionRule.valueType,  addExlcusionRule.ruleValue, rulesTable.editIndex);
+                syncExclusionsAccess.rulesModel.editRule(addExclusionRule.targetType, addExclusionRule.valueType,  addExclusionRule.ruleValue, rulesTable.editIndex);
             }
         }
     }
@@ -76,6 +77,8 @@ QmlDialog {
                 text: ExclusionsStrings.manageExclusions
                 font.pixelSize: Texts.Text.Size.LARGE
                 font.weight: Font.DemiBold
+                wrapMode: Text.NoWrap
+                Layout.preferredWidth: parent.width
             }
 
             Texts.Text {
@@ -88,16 +91,6 @@ QmlDialog {
                 font.pixelSize: Texts.Text.Size.NORMAL
             }
         } //ColumnLayout: titleDescriptionLayout
-
-        Texts.RichText {
-            id: manageExclusionText
-
-            text: ExclusionsStrings.manageExclusions
-            anchors.left: parent.left
-            anchors.right: parent.right
-            font.pixelSize: Texts.Text.Size.LARGE
-            font.weight: Font.DemiBold
-        }
 
         Rectangle{
             id: horizontalLine
@@ -228,7 +221,8 @@ QmlDialog {
                 id: lowLimitValue
 
                 anchors {
-                    verticalCenter: parent.verticalCenter
+                    bottom: sizeLimitComboBox.bottom
+                    bottomMargin: 1
                     left: sizeLimitComboBox.right
                     leftMargin: 8 - sizeLimitComboBox.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
@@ -263,7 +257,7 @@ QmlDialog {
                 id: lowLimitUnit
 
                 anchors {
-                    verticalCenter: parent.verticalCenter
+                    bottom: sizeLimitComboBox.bottom
                     left: lowLimitValue.right
                     leftMargin: 8 - lowLimitUnit.sizes.focusBorderWidth - lowLimitValue.sizes.focusBorderWidth
                 }
@@ -301,7 +295,8 @@ QmlDialog {
                 id: upperLimitValue
 
                 anchors {
-                    verticalCenter: parent.verticalCenter
+                    bottom: sizeLimitComboBox.bottom
+                    bottomMargin: 1
                     left: andText.right
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth
                 }
@@ -334,7 +329,7 @@ QmlDialog {
                 id: upperLimitUnit
 
                 anchors {
-                    verticalCenter: parent.verticalCenter
+                    bottom: sizeLimitComboBox.bottom
                     left: upperLimitValue.right
                     leftMargin: 8 - upperLimitValue.sizes.focusBorderWidth - upperLimitUnit.sizes.focusBorderWidth
                 }
@@ -458,20 +453,20 @@ QmlDialog {
                 topMargin: 8
             }
             onEditRuleClicked: {
-                addExlcusionRule.targetType = rulesTable.editRuleTarget
-                addExlcusionRule.valueType = rulesTable.editRuleProperty;
-                addExlcusionRule.ruleValue = rulesTable.editRuleValue;
-                addExlcusionRule.targetEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
-                addExlcusionRule.valueTypeEnabled = (rulesTable.editRuleTarget !== 2); // Replace with enum
-                addExlcusionRule.visible = true;
+                addExclusionRule.targetType = rulesTable.editRuleTarget
+                addExclusionRule.valueType = rulesTable.editRuleProperty;
+                addExclusionRule.ruleValue = rulesTable.editRuleValue;
+                addExclusionRule.targetEnabled = (rulesTable.editRuleTarget !== ExclusionRulesModel.EXTENSION);
+                addExclusionRule.valueTypeEnabled = (rulesTable.editRuleTarget !== ExclusionRulesModel.EXTENSION);
+                addExclusionRule.visible = true;
 
                 if(rulesTable.editIndex === -1) {
-                    addExlcusionRule.title = ExclusionsStrings.addExclusion;
-                    addExlcusionRule.headTitle = ExclusionsStrings.addExclusion;
+                    addExclusionRule.title = ExclusionsStrings.addExclusion;
+                    addExclusionRule.headTitle = ExclusionsStrings.addExclusion;
                 }
                 else {
-                    addExlcusionRule.title = ExclusionsStrings.editExclusion;
-                    addExlcusionRule.headTitle = ExclusionsStrings.editExclusion;
+                    addExclusionRule.title = ExclusionsStrings.editExclusion;
+                    addExclusionRule.headTitle = ExclusionsStrings.editExclusion;
                 }
             }
         }

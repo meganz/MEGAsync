@@ -1,6 +1,7 @@
 #ifndef NODESELECTORMODEL_H
 #define NODESELECTORMODEL_H
 
+#include "megaapi.h"
 #include "NodeSelectorModelItem.h"
 #include "Utilities.h"
 #include <MegaApplication.h>

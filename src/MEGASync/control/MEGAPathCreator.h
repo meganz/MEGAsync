@@ -1,11 +1,12 @@
 #ifndef MEGAPATHCREATOR_H
 #define MEGAPATHCREATOR_H
 
-#include <megaapi.h>
+#include "megaapi.h"
+
+#include <QObject>
+#include <QStringList>
 
 #include <memory>
-#include <QStringList>
-#include <QObject>
 
 //This class is used to create complex paths in MEGA
 class MEGAPathCreator : QObject

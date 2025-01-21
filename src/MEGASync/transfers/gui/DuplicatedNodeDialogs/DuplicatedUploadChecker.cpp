@@ -1,9 +1,8 @@
 #include "DuplicatedUploadChecker.h"
 
 #include "DuplicatedNodeDialog.h"
+#include "MegaApplication.h"
 #include "Preferences.h"
-
-#include <MegaApplication.h>
 
 #include <QDir>
 #include <QFileInfo>

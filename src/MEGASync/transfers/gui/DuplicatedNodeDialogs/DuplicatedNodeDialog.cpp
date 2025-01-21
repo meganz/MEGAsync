@@ -1,13 +1,13 @@
 #include "DuplicatedNodeDialog.h"
-#include "ui_DuplicatedNodeDialog.h"
 
 #include "DuplicatedNodeItem.h"
 #include "EventUpdater.h"
-#include <MegaApplication.h>
+#include "MegaApplication.h"
+#include "ui_DuplicatedNodeDialog.h"
 #include "WordWrapLabel.h"
-#include "QScreen"
 
 #include <QFileInfo>
+#include <QScreen>
 
 DuplicatedNodeDialog::DuplicatedNodeDialog(QWidget* parent) :
     QDialog(parent),

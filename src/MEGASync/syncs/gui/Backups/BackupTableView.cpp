@@ -1,14 +1,10 @@
 #include "BackupTableView.h"
 
 #include "BackupItemModel.h"
-#include "MenuItemAction.h"
-#include "Platform.h"
-#include "PlatformStrings.h"
-
-#include <QtConcurrent/QtConcurrent>
 
 #include <QHeaderView>
 #include <QMenu>
+#include <QtConcurrent/QtConcurrent>
 
 BackupTableView::BackupTableView(QWidget* parent):
     SyncTableView(parent)

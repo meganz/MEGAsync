@@ -1,5 +1,6 @@
 #include "MoveOrRenameCannotOccurChooseWidget.h"
 
+#include "MegaApplication.h"
 #include "ui_StalledIssueChooseWidget.h"
 
 //BASE CLASS

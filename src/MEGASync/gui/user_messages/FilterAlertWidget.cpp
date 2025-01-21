@@ -1,4 +1,5 @@
 #include "FilterAlertWidget.h"
+
 #include "ui_FilterAlertWidget.h"
 
 namespace

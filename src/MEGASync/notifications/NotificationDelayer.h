@@ -1,8 +1,11 @@
-#pragma once
+#ifndef NOTIFICATION_DELAYED_H
+#define NOTIFICATION_DELAYED_H
+
 #include "UserAlertTimedClustering.h"
-#include <queue>
-#include <memory>
+
 #include <QObject>
+
+#include <memory>
 
 namespace mega {
 class MegaUserAlert;
@@ -24,3 +27,4 @@ private:
 
     void removeObsoleteAlertClusters();
 };
+#endif

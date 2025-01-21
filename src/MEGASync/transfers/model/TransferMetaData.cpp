@@ -1,17 +1,14 @@
-#include <TransferMetaData.h>
+#include "TransferMetaData.h"
+
+#include "megaapi.h"
+#include "MegaApplication.h"
+#include "MegaNodeNames.h"
+#include "Notificator.h"
+#include "Preferences.h"
 
 #include <QDir>
 
-#include <MegaApplication.h>
-#include "Preferences.h"
-#include <Notificator.h>
-#include <MegaNodeNames.h>
-
-#include <megaapi.h>
-#include <mega/types.h>
-
-
-//CLASS TRANSFERMETADATAITEMID
+// CLASS TRANSFERMETADATAITEMID
 bool TransferMetaDataItemId::operator==(const TransferMetaDataItemId& item) const
 {
     if((item.tag < 0) && (item.handle == mega::INVALID_HANDLE))
@@ -30,7 +27,6 @@ bool TransferMetaDataItemId::operator<(const TransferMetaDataItemId &item) const
 }
 
 /////////////////////////////////
-
 TransferMetaData::TransferMetaData(int direction, unsigned long long id)
     : mInitialTopLevelTransfers(-1), mInitialPendingFolderTransfersFromOtherSession(0), mFinishedTopLevelTransfers(0), mStartedTopLevelTransfers(0), mTransferDirection(direction), mCreateRootFolder(false),
       mAppId(id), mCreatedFromOtherSession(false), mProcessCancelled(false),mTotalFileCount(0), mNotification(nullptr), mNonExistsFailAppId(0)
@@ -115,9 +111,8 @@ bool TransferMetaData::finish(mega::MegaTransfer *transfer, mega::MegaError* e)
             value->id = id;
             TransferData::TransferState state(TransferData::TRANSFER_NONE);
 
-            if(transfer->getState() == mega::MegaTransfer::STATE_FAILED
-                 || e->getErrorCode() == mega::MegaError::API_EINCOMPLETE
-                 || e->getErrorCode() == mega::MegaError::API_EACCESS)
+            if (transfer->getState() == mega::MegaTransfer::STATE_FAILED ||
+                e->getErrorCode() != mega::MegaError::API_OK)
             {
                 state = TransferData::TRANSFER_FAILED;
                 value->failedTransfer = std::shared_ptr<mega::MegaTransfer>(transfer->copy());
@@ -363,15 +358,23 @@ int TransferMetaData::getNonExistentCount() const
     return mFiles.nonExistFailedTransfers.size();
 }
 
-TransferMetaDataItemId TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
+std::shared_ptr<TransferMetaDataItem>
+    TransferMetaData::getFirstTransferByState(TransferData::TransferState state) const
 {
-    TransferMetaDataItemId id = mFiles.getFirstTransferIdByState(state);
-    if(!id.isValid())
+    auto item = mFiles.getFirstTransferByState(state);
+    if (!item || !item->id.isValid())
     {
-        id = mEmptyFolders.getFirstTransferIdByState(state);
+        item = mEmptyFolders.getFirstTransferByState(state);
     }
 
-    return id;
+    return item;
+}
+
+TransferMetaDataItemId
+    TransferMetaData::getFirstTransferIdByState(TransferData::TransferState state) const
+{
+    auto item = getFirstTransferByState(state);
+    return item ? item->id : TransferMetaDataItemId();
 }
 
 QList<TransferMetaDataItemId> TransferMetaData::getTransferIdsByState(TransferData::TransferState state) const
@@ -706,9 +709,10 @@ void TransferMetaData::retryAllPressed()
     }
 }
 
-DownloadTransferMetaData::DownloadTransferMetaData(unsigned long long appId, const QString &path)
-    : TransferMetaData(mega::MegaTransfer::TYPE_DOWNLOAD, appId),
-      mLocalTargetPath(QDir::toNativeSeparators(path))
+DownloadTransferMetaData::DownloadTransferMetaData(unsigned long long appId, const QString& path):
+    TransferMetaData(mega::MegaTransfer::TYPE_DOWNLOAD, appId),
+    mLocalTargetPath(QDir::toNativeSeparators(path)),
+    mIsImportedLink(false)
 {
 }
 
@@ -815,6 +819,26 @@ bool DownloadTransferMetaData::isNonExistTransfer(mega::MegaTransfer *transfer) 
     //    }
 
     //    return true;
+}
+
+void DownloadTransferMetaData::setIsImportedLink()
+{
+    mIsImportedLink = true;
+}
+
+std::shared_ptr<TransferMetaDataItem> DownloadTransferMetaData::containsAFailedImportedLink() const
+{
+    if (mIsImportedLink)
+    {
+        auto item = getFirstTransferByState(TransferData::TRANSFER_FAILED);
+
+        if (item && item->getErrorCode() != mega::MegaError::API_OK)
+        {
+            return item;
+        }
+    }
+
+    return nullptr;
 }
 
 UploadTransferMetaData::UploadTransferMetaData(unsigned long long appId, const mega::MegaHandle handle)

@@ -1,8 +1,9 @@
 #ifndef GUIUTILITIES_H
 #define GUIUTILITIES_H
 
-#include <QProgressBar>
 #include "megaapi.h"
+
+#include <QProgressBar>
 
 class GuiUtilities
 {

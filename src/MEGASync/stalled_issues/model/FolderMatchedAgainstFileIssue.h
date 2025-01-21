@@ -1,7 +1,7 @@
 #ifndef FOLDERMATCHEDAGAINSTFILEISSUE_H
 #define FOLDERMATCHEDAGAINSTFILEISSUE_H
 
-#include <StalledIssue.h>
+#include "StalledIssue.h"
 #include "StalledIssuesUtilities.h"
 
 class FolderMatchedAgainstFileIssue : public StalledIssue

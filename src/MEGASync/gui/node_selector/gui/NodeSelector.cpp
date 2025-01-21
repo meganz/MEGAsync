@@ -1,6 +1,7 @@
 #include "NodeSelector.h"
 
 #include "DialogOpener.h"
+#include "DuplicatedNodeDialog.h"
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
@@ -10,13 +11,14 @@
 #include "QMegaMessageBox.h"
 #include "ui_NodeSelector.h"
 #include "Utilities.h"
-#include "DuplicatedNodeDialog.h"
+#include "ViewLoadingScene.h"
 
-#include <optional>
 #include <QKeyEvent>
 #include <QMessageBox>
 #include <QPointer>
 #include <QShortcut>
+
+#include <optional>
 
 using namespace mega;
 

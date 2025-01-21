@@ -1,4 +1,5 @@
 #include "ImportListWidgetItem.h"
+
 #include "ui_ImportListWidgetItem.h"
 #include "Utilities.h"
 

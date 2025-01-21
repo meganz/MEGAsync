@@ -1,7 +1,6 @@
 #ifndef FOLDERTRANSFEREVENT_H
 #define FOLDERTRANSFEREVENT_H
 
-#include <megaapi.h>
 #include <QString>
 
 struct FolderTransferUpdateEvent

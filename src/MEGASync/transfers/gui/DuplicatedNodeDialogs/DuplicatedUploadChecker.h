@@ -2,7 +2,6 @@
 #define DUPLICATEDUPLOADFILE_H
 
 #include "DuplicatedNodeInfo.h"
-#include <megaapi.h>
 
 #include <QObject>
 

@@ -2,9 +2,8 @@
 #define STATSEVENTHANDLER_H
 
 #include "AppStatsEvents.h"
-#include "MegaApplication.h"
-
 #include "megaapi.h"
+#include "MegaApplication.h"
 
 #include <QEvent>
 

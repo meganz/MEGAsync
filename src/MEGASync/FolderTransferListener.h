@@ -2,12 +2,12 @@
 #define TRANSFERLISTENER_H
 
 #include "FolderTransferEvents.h"
-#include <megaapi.h>
+#include "megaapi.h"
 
-#include <QTimer>
 #include <QMap>
-#include <QObject>
 #include <QMutex>
+#include <QObject>
+#include <QTimer>
 
 class FolderTransferListener : public QObject, public mega::MegaTransferListener
 {

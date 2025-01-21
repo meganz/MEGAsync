@@ -1,10 +1,10 @@
 #include "SyncExclusions.h"
 
-#include "Platform.h"
 #include "Preferences.h"
 
-#include <cmath>
 #include <QQmlEngine>
+
+#include <cmath>
 
 using namespace mega;
 
@@ -27,6 +27,14 @@ SyncExclusions::SyncExclusions(QWidget *parent, const QString& path)
         0,
         "WildCard",
         QString::fromLatin1("WildCard is an uncreatable type"));
+
+    qmlRegisterUncreatableMetaObject(
+        ExclusionRulesModel::staticMetaObject,
+        "ExclusionRulesModel",
+        1,
+        0,
+        "ExclusionRulesModel",
+        QString::fromUtf8("ExclusionRulesModel is not meant to be created"));
 
     setFolder(path);
 }

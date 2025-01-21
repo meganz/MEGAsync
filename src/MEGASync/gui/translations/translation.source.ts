@@ -411,6 +411,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
+    </message>
     <message numerus="yes">
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
@@ -418,11 +423,6 @@
             <numerusform>Folder wasn’t backed up. Try again.</numerusform>
             <numerusform>These folders weren’t backed up. Try again.</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
@@ -1836,6 +1836,96 @@ In some cases they may contain details about your data, such as file or folder n
         <translatorcomment>Title for dialog to choose file to be used in sync exclusion rule.SAT-449</translatorcomment>
         <translation>Select the file you want to exclude</translation>
     </message>
+    <message>
+        <source>Files and folders</source>
+        <translatorcomment>Drop down entry for specifying files and folders as the exclusion rule target.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Matching wildcard</source>
+        <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders beginning with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders containing:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders ending with:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders equal to:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files or folders matching wildcard:</source>
+        <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders beginning with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders containing “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders ending with “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders equal to “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Folders matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
+        <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>File and folder name</source>
+        <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
+    <message>
+        <source>wildcard</source>
+        <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>FastLoginController</name>
@@ -2220,11 +2310,6 @@ In some cases they may contain details about your data, such as file or folder n
         <source>No notifications</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
         <translation>No notifications</translation>
-    </message>
-    <message>
-        <source>Pause/Resume</source>
-        <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation>Pause or resume</translation>
     </message>
     <message>
         <source>Open Downloads</source>
@@ -3405,24 +3490,69 @@ Transfers will automatically resume when you re-open the app.</numerusform>
         <translation>Transfer quota exceeded</translation>
     </message>
     <message>
+        <source>Alert</source>
+        <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished">Open settings</translation>
+        <translation>Open settings</translation>
+    </message>
+    <message>
+        <source>Folder download error</source>
+        <translatorcomment>Title of the error message when there is an error downloading a MEGA link. SNC-2549.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 can&apos;t be downloaded. Error received : %2.</source>
+        <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic error. SNC-2549.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 can&apos;t be downloaded. The download may have failed due to a casing mismatch. Ensure the folders match exactly and try again.</source>
+        <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is probably caused by case sensitivity of the filesystem (on Windows for example). SNC-2549.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The folder %1 can&apos;t be downloaded. Check the download destination folder.</source>
+        <translatorcomment>Error message when there is an error downloading a MEGA link, and this error is a generic write error. SNC-2549.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link import error</source>
+        <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported, your storage is full</source>
+        <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported, invalid key or decryption error</source>
+        <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported: %1</source>
+        <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3604,6 +3734,91 @@ You will not be able to regain access to your stored data or be authorised to si
         <source>Destination storage is full.</source>
         <translatorcomment>Label to indicate that the remote shared storage is full. CON-561</translatorcomment>
         <translation>Destination storage is full</translation>
+    </message>
+    <message>
+        <source>An unknown error has occurred</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A critical error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your local storage is full</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error reading app system files</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You need to make more space available in your local storage to be able to run MEGA.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart MEGA</source>
+        <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check permissions</source>
+        <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact support</source>
+        <translatorcomment>Label of the button used to contact support for assistance when a fatal error occurs - CON-844</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log out</source>
+        <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
+        <translation type="unfinished">Log&#xa0;out</translation>
+    </message>
+    <message>
+        <source>Reload</source>
+        <translatorcomment>Label of the button used to reload (fetch nodes) the account to try to resolve a fatal error - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error with sync configuration files</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An error has been detected</source>
+        <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
+        <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5058,7 +5273,7 @@ Would you like to proceed?</source>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Selected folders will automatically back up to MEGA when the desktop app is running.</translation>
+        <translation>Selected folders will automatically back up to MEGA as read-only folders when the desktop app is running. Changes can only be made to backups on your local device. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5288,17 +5503,17 @@ Would you like to proceed?</source>
     <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with your local device.</translation>
+        <translation>Two-way sync your entire MEGA Cloud with a local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+        <translation>Sync selected folders in your MEGA Cloud drive with your local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>View in Settings</translation>
     </message>
 </context>
 <context>
@@ -5520,17 +5735,17 @@ Would you like to proceed?</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
+        <translation>Permissions</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Apply</translation>
+        <translation>Apply</translation>
     </message>
 </context>
 <context>
@@ -5673,13 +5888,14 @@ Would you like to proceed?</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
-- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
-- The Settings dialogue has been redesigned.
-- Improved app issue detection and resolution.
-- Other bugs have been fixed and numerous improvements made.
+        <source>- UI and UX enhancements on transfer manager feature.
+- Support of wildcard exclusions in the exclusion dialog.
+- Upgrade Qt third party dependency.
+- New releases for Raspberry Pi OS.
+- Fixed crashes due to missing or broken OpenGL drivers on Windows.
+- Bug fixes and performance improvements.
 </source>
-        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5688,7 +5904,7 @@ Would you like to proceed?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -6169,6 +6385,29 @@ Do you want to delete it anyway?</translation>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button in message boxes</translatorcomment>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>ReloadingEventHandler</name>
+    <message>
+        <source>MEGA is reloading</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has detected an issue and is reloading your account. Please wait…</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
+        <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA has reloaded</source>
+        <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7263,12 +7502,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Refresh</source>
         <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
-        <translation type="unfinished">Refresh</translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
         <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One of your synced folders has been renamed. Refresh the list of sync issues.</translation>
     </message>
 </context>
 <context>
@@ -7511,62 +7750,62 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Maximum 32 characters</source>
         <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum 32 characters</translation>
     </message>
     <message>
         <source>A device with this name already exists. Enter a different name.</source>
         <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A device with this name already exists. Enter a different name.</translation>
     </message>
     <message>
         <source>Enter a device name</source>
         <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
-        <translation type="unfinished">Enter a device name</translation>
+        <translation>Enter a device name</translation>
     </message>
     <message>
         <source>The following characters are not allowed: %1</source>
         <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The following characters are not allowed: %1</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Choose</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Done</translation>
+        <translation>Done</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Next</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Skip</translation>
+        <translation>Skip</translation>
     </message>
     <message>
         <source>Previous</source>
         <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Previous</translation>
+        <translation>Previous</translation>
     </message>
     <message>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Try again</translation>
+        <translation>Try again</translation>
     </message>
     <message>
         <source>Set Exclusions</source>
         <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Set exclusions</translation>
+        <translation>Set exclusions</translation>
     </message>
 </context>
 <context>
@@ -8113,17 +8352,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Reboot sync</source>
         <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot sync</translation>
     </message>
     <message>
         <source>Reboot backup</source>
         <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot backup</translation>
     </message>
     <message>
         <source>Rescan</source>
         <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rescan</translation>
     </message>
 </context>
 <context>
@@ -8351,11 +8590,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>Scanning…</translation>
     </message>
     <message>
-        <source>All paused</source>
-        <translatorcomment>Message which shows that the global pause is set</translatorcomment>
-        <translation>All paused</translation>
-    </message>
-    <message>
         <source>All</source>
         <translatorcomment>Title for all searched transfers by text</translatorcomment>
         <translation>All</translation>
@@ -8413,23 +8647,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
             <numerusform>%1 results found</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Subtitle Transfer Quota exceeded state message</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>You can&apos;t continue downloading as you don&apos;t have enough transfer quota left for this IP address.
-To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</source>
-        <translatorcomment>Message which shows that the user reachs the overquota. [A] is the time to wait until the quota is reset in hh:mm:ss</translatorcomment>
-        <translation>You can’t continue downloading as you don’t have enough transfer quota left for this IP address.
-To get more quota, upgrade to a Pro account or wait for [A] until more free quota becomes available on your IP address.</translation>
-    </message>
-    <message>
-        <source>More about transfer quota</source>
-        <translatorcomment>Link button to send the user to the transfer quota information blog website</translatorcomment>
-        <translation>More about transfer quota</translation>
-    </message>
     <message numerus="yes">
         <source>Issue found</source>
         <translatorcomment>Message shown when there are some failed transfers/syncs/backups</translatorcomment>
@@ -8438,16 +8655,6 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
             <numerusform>Issues detected</numerusform>
         </translation>
     </message>
-    <message>
-        <source>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</source>
-        <translatorcomment>Message to indicate that the storage is in almost overquota status to indicate that it is recommended to upgrade the account type before the space is full. CON-944</translatorcomment>
-        <translation>Storage almost full. Upgrade now before your storage becomes full and your uploads, syncs and backups stop.</translation>
-    </message>
-    <message>
-        <source>Storage full. Uploads are disabled and sync and backups are paused.</source>
-        <translatorcomment>Message to indicate that the storage is in full status overquota to indicate that uploads are disabled and sync and backups are paused. CON-944</translatorcomment>
-        <translation>Storage full. Uploads are disabled and sync and backups are paused.</translation>
-    </message>
 </context>
 <context>
     <name>TransferManagerDragBackDrop</name>
@@ -8455,6 +8662,34 @@ To get more quota, upgrade to a Pro account or wait for [A] until more free quot
         <source>Drop to Upload</source>
         <translatorcomment>Let the user know that files can be dropped there</translatorcomment>
         <translation>Drop to upload</translation>
+    </message>
+</context>
+<context>
+    <name>TransferManagerStatusHeaderWidget</name>
+    <message>
+        <source>All transfers paused.</source>
+        <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded for pro users. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
+        <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
+        <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
+        <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8978,6 +9213,11 @@ Please delete the folder sync from settings to cancel them.</source>
         <translatorcomment>Tooltip for Pause button when the user is in the all transfers category</translatorcomment>
         <translation>Pause all transfers</translation>
     </message>
+    <message>
+        <source>Details</source>
+        <translatorcomment>Header name of the column displaying the error of failed transfer. CON-1197</translatorcomment>
+        <translation type="unfinished">Details</translation>
+    </message>
 </context>
 <context>
     <name>TwoWaySyncsMenu</name>
@@ -9386,7 +9626,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>What&apos;s new in MEGA</source>
         <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>What’s new in MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
@@ -9411,12 +9651,12 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Full visibility into sync issues and total control over how conflicts are resolved</translation>
     </message>
     <message>
         <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Advanced settings allow you to write your own exclusion rules for each of your syncs</translation>
     </message>
     <message>
         <source>Got it</source>

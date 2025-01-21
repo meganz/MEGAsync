@@ -131,7 +131,7 @@ The MEGA SDK is fetched recursively from https://github.com/meganz/sdk.git
 Run CMake to configure the project. We will build in a separate directory, outside of the source tree.
 ```
 cd ~/mega/
-cmake -DCMAKE_PREFIX_PATH='~/Qt-build/5.15.13/5.15.13/arm64' -DVCPKG_ROOT='~/mega/vcpkg' -S '~/mega/desktop' -B '~/mega/build-arm64'
+cmake -DCMAKE_PREFIX_PATH='~/Qt-build/5.15.16/5.15.16/arm64' -DVCPKG_ROOT='~/mega/vcpkg' -S '~/mega/desktop' -B '~/mega/build-arm64'
 ```
 Adapt the parameters to suit your needs:
 ```
@@ -143,7 +143,7 @@ The dependencies will be built at this stage from VCPKG.
 The instructions above are to build for an arm64 target. If you want to build for x86_64, use:
 ```
 cd ~/mega/
-cmake -DCMAKE_OSX_ARCHITECTURES:UNINITIALIZED=x86_64 -DCMAKE_PREFIX_PATH='~/Qt-build/5.15.13/5.15.13/x86_64'  -DVCPKG_ROOT='~/mega/vcpkg' -S '~/mega/desktop' -B '~/mega/build-x64'
+cmake -DCMAKE_OSX_ARCHITECTURES:UNINITIALIZED=x86_64 -DCMAKE_PREFIX_PATH='~/Qt-build/5.15.16/5.15.16/x86_64'  -DVCPKG_ROOT='~/mega/vcpkg' -S '~/mega/desktop' -B '~/mega/build-x64'
 ```
 
 ## Build the Desktop App

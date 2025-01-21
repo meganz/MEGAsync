@@ -2,16 +2,15 @@
 #define NODESELECTOR_H
 
 #include "ButtonIconManager.h"
-#include "NewFolderDialog.h"
 #include "NodeSelectorTreeViewWidget.h"
 
 #include <QDialog>
+#include <QFrame>
+#include <QGraphicsDropShadowEffect>
 #include <QItemSelection>
 #include <QTimer>
-#include <QGraphicsDropShadowEffect>
 
 #include <memory>
-
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;

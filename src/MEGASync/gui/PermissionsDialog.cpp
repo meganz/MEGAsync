@@ -1,6 +1,8 @@
 #include "PermissionsDialog.h"
+
 #include "ui_PermissionsDialog.h"
-#include <qdebug.h>
+
+#include <QDebug>
 
 PermissionsDialog::PermissionsDialog(QWidget *parent) :
     QDialog(parent),

@@ -1,8 +1,8 @@
 #include "MoveToMEGABin.h"
 
-#include <MEGAPathCreator.h>
-#include <MegaApiSynchronizedRequest.h>
-#include <MegaApplication.h>
+#include "MegaApiSynchronizedRequest.h"
+#include "MegaApplication.h"
+#include "MEGAPathCreator.h"
 
 #include <QDate>
 

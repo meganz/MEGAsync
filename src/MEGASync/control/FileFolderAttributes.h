@@ -2,13 +2,13 @@
 #define FILEFOLDERATTRIBUTES_H
 
 #include "megaapi.h"
+
 #include <QDateTime>
+#include <QEventLoop>
 #include <QFutureWatcher>
 
 #include <functional>
 #include <memory>
-
-#include <QEventLoop>
 
 namespace UserAttributes{
 class FullName;
@@ -129,7 +129,7 @@ class LocalFileFolderAttributes : public FileFolderAttributes
     Q_OBJECT
 
 public:
-    LocalFileFolderAttributes(const QString& path, QObject* parent);
+    LocalFileFolderAttributes(const QString& path, QObject* parent = nullptr);
     ~LocalFileFolderAttributes() override = default;
 
     void requestSize(QObject* caller, std::function<void(qint64)> func) override;
@@ -138,6 +138,7 @@ public:
     void requestCRC(QObject* caller, std::function<void(const QString&)> func) override;
 
     void setPath(const QString &newPath);
+    const QString& getPath() const;
 
 private slots:
     void onModifiedTimeCalculated();

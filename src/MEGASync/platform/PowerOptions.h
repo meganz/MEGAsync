@@ -2,7 +2,6 @@
 #define POWEROPTIONS_H
 
 #include <memory>
-#include <mega/types.h>
 
 class PowerOptionsImpl;
 class PowerOptions

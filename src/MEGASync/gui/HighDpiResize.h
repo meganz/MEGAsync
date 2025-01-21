@@ -1,11 +1,11 @@
 #ifndef HIGHDPIRESIZE_H
 #define HIGHDPIRESIZE_H
 
-#include <QDialog>
-#include <QPointer>
-#include <QEvent>
-#include <QTimer>
 #include <QDebug>
+#include <QDialog>
+#include <QEvent>
+#include <QPointer>
+#include <QTimer>
 
 class HighDpiResizeBase : public QObject
 {

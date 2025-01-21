@@ -1,11 +1,12 @@
 #include "CrashHandler.h"
-#include <QtCore/QDir>
-#include <QtCore/QProcess>
-#include <QtCore/QCoreApplication>
-#include <QString>
-#include <QDateTime>
-#include <sstream>
+
 #include "MegaApplication.h"
+
+#include <QCoreApplication>
+#include <QDateTime>
+#include <QDir>
+#include <QProcess>
+#include <QString>
 
 using namespace mega;
 using namespace std;
@@ -19,15 +20,16 @@ using namespace std;
 #endif
 
 #ifndef WIN32
-    #ifndef CREATE_COMPATIBLE_MINIDUMPS
+#ifndef CREATE_COMPATIBLE_MINIDUMPS
 
-    #include <signal.h>
-    #include <execinfo.h>
-    #include <sys/utsname.h>
+#include <sys/utsname.h>
 
+#include <execinfo.h>
+#include <signal.h>
+#include <sstream>
 
 #ifdef __linux__
-    #include <fstream>
+#include <fstream>
 
 string &ltrimEtcProperty(string &s, const char &c)
 {

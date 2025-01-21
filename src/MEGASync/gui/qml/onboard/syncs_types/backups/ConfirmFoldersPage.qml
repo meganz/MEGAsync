@@ -1,14 +1,16 @@
 import QtQuick 2.15
 
 import common 1.0
-
-import BackupsModel 1.0
+import BackupsComponent 1.0
 
 ConfirmFoldersPageForm {
     id: root
 
+    required property BackupsComponent backupsComponentAccessRef
+
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
+    signal createBackups(int syncOrigin)
 
     footerButtons {
         leftPrimary.text: Strings.skip
@@ -17,7 +19,6 @@ ConfirmFoldersPageForm {
         }
 
         rightSecondary.onClicked: {
-            backupsModelAccess.clean(true);
             root.confirmFoldersMoveToSelect();
         }
 
@@ -25,12 +26,12 @@ ConfirmFoldersPageForm {
             footerButtons.enabled = false;
             enableConfirmHeader = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            backupsProxyModelRef.createBackups(window.syncOrigin);
+            root.createBackups(window.syncOrigin);
         }
     }
 
     Connections {
-        target: backupsModelAccess
+        target: backupsComponentAccessRef.data
 
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect();
@@ -38,7 +39,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsProxyModelRef
+        target: backupsComponentAccessRef
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;

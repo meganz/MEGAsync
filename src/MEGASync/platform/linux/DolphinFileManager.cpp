@@ -1,4 +1,5 @@
 #include "DolphinFileManager.h"
+
 #include <QProcess>
 
 const QString DolphinFileManager::ShowSelectedInFolderParam = QLatin1String("--select");

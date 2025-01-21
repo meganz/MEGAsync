@@ -1,20 +1,18 @@
 #ifndef HTTPSERVER_H
 #define HTTPSERVER_H
 
-#include <QTcpServer>
-#include <QSslSocket>
-#include <QSslKey>
-#include <QFile>
-#include <QStringList>
+#include "megaapi.h"
+#include "Utilities.h"
+
 #include <QDateTime>
-#include <QQueue>
+#include <QFile>
 #include <QFutureWatcher>
 #include <QPointer>
-
-#include <megaapi.h>
-
-#include "Utilities.h"
-#include "SetManager.h"
+#include <QQueue>
+#include <QSslKey>
+#include <QSslSocket>
+#include <QStringList>
+#include <QTcpServer>
 
 class RequestData
 {
@@ -97,7 +95,7 @@ class HTTPServer: public QTcpServer
 
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onExternalDownloadRequested(QQueue<WrappedNode *> files);
+        void onExternalDownloadRequested(QQueue<WrappedNode> files);
         void onExternalDownloadRequestFinished();
         void onExternalFileUploadRequested(mega::MegaHandle targetHandle);
         void onExternalFolderUploadRequested(mega::MegaHandle targetHandle);

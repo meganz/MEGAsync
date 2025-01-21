@@ -1,11 +1,11 @@
 #include "TransferManagerDelegateWidget.h"
-#include "ui_TransferManagerDelegateWidget.h"
 
-#include "MegaTransferView.h"
 #include "megaapi.h"
-#include "Utilities.h"
 #include "MegaApplication.h"
-#include "QMegaMessageBox.h"
+#include "MegaTransferView.h"
+#include "TransferWidgetColumnsManager.h"
+#include "ui_TransferManagerDelegateWidget.h"
+#include "Utilities.h"
 
 #include <QMouseEvent>
 #include <QPainterPath>
@@ -40,6 +40,7 @@ TransferManagerDelegateWidget::TransferManagerDelegateWidget(QWidget *parent) :
     mUi->lItemStatus->installEventFilter(this);
     mUi->lDone->installEventFilter(this);
     mUi->lTotal->installEventFilter(this);
+    mUi->sStatus->installEventFilter(this);
 }
 
 TransferManagerDelegateWidget::~TransferManagerDelegateWidget()
@@ -209,7 +210,11 @@ void TransferManagerDelegateWidget::updateTransferState()
                 mUi->tItemRetry->setToolTip(getState(TRANSFER_STATES::STATE_RETRY));
                 mUi->wProgressBar->setVisible(false);
                 cancelClearTooltip = MegaTransferView::cancelActionText(1); //Use singular form
-                mUi->lItemFailed->setText(getState(TRANSFER_STATES::STATE_FAILED));
+                mUi->lItemFailed->setText(
+                    (mColumnManager &&
+                     mColumnManager->getCurrentTab() == TransfersWidget::TM_TAB::FAILED_TAB) ?
+                        getErrorText() :
+                        getState(TRANSFER_STATES::STATE_FAILED));
                 mUi->lItemFailed->setToolTip(getErrorText());
                 showTPauseResume = false;
             }
@@ -375,6 +380,23 @@ void TransferManagerDelegateWidget::adjustFileName()
     mUi->lTransferName->parentWidget()->layout()->activate();
 }
 
+void TransferManagerDelegateWidget::setColumnManager(
+    QPointer<TransferWidgetColumnsManager> columnManager)
+{
+    mColumnManager = columnManager;
+
+    TransferWidgetColumnsManager::ColumnsWidget info;
+    info.insert(TransferWidgetColumnsManager::Columns::NAME, mUi->wName);
+    info.insert(TransferWidgetColumnsManager::Columns::SIZE, mUi->wSize);
+    info.insert(TransferWidgetColumnsManager::Columns::SPEED, mUi->cSpeedItem);
+    info.insert(TransferWidgetColumnsManager::Columns::STATUS, mUi->sStatus);
+    info.insert(TransferWidgetColumnsManager::Columns::TIME, mUi->lItemTime);
+    info.insert(TransferWidgetColumnsManager::Columns::CLEAR_CANCEL, mUi->wClearCancel);
+    info.insert(TransferWidgetColumnsManager::Columns::PAUSE_RESUME, mUi->wPauseResume);
+
+    mColumnManager->addColumnsWidget(this, info);
+}
+
 TransferBaseDelegateWidget::ActionHoverType TransferManagerDelegateWidget::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
     bool update(false);
@@ -519,7 +541,6 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
         {
            adjustFileName();
         }
-
         else if(watched == mUi->lItemPausedQueued_1)
         {
             mUi->lItemPausedQueued_1->setText(mUi->lItemPausedQueued_1->fontMetrics().elidedText(mUi->lItemPausedQueued_1->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
@@ -531,9 +552,17 @@ bool TransferManagerDelegateWidget::eventFilter(QObject *watched, QEvent *event)
         }
         else if(watched == mUi->lItemFailed)
         {
-            mUi->lItemFailed->setText(mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(), Qt::ElideMiddle,mUi->lItemPausedQueued_1->width()
-                                          ));
+            mUi->lItemFailed->setText(
+                mUi->lItemFailed->fontMetrics().elidedText(mUi->lItemFailed->text(),
+                                                           Qt::ElideMiddle,
+                                                           mUi->lItemFailed->width()));
             mUi->lItemFailed->parentWidget()->adjustSize();
+        }
+        // Adapt manually stack page (just failed as, for the moment, is the only one bigger than
+        // its original size)
+        else if (watched == mUi->sStatus)
+        {
+            mUi->pFailed->setFixedWidth(mUi->sStatus->width());
         }
         else if(auto label = dynamic_cast<QWidget*>(watched))
         {

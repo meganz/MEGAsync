@@ -1,7 +1,6 @@
 #include "TransferBatch.h"
 
-#include <MegaApplication.h>
-#include <TransferMetaData.h>
+#include "TransferMetaData.h"
 
 #include <QDir>
 

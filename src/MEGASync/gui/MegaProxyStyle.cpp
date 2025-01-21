@@ -1,14 +1,14 @@
 #include "MegaProxyStyle.h"
-#include "MegaTransferView.h"
-#include "MegaApplication.h"
-#include "StatsEventHandler.h"
 
-#include <EventHelper.h>
-#include <QStyleOption>
-#include <QHeaderView>
-#include <QSpinBox>
+#include "EventHelper.h"
+#include "MegaApplication.h"
+#include "StatsEventHandler.h" // used in cast in function polish
+
 #include <QComboBox>
+#include <QHeaderView>
 #include <QOperatingSystemVersion>
+#include <QSpinBox>
+#include <QStyleOption>
 #include <QWindow>
 
 const int TOOLTIP_DELAY = 250;

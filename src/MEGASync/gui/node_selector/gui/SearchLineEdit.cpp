@@ -1,17 +1,15 @@
+#include "SearchLineEdit.h"
+
 #include "EventHelper.h"
 #include "ui_SearchLineEdit.h"
 
-#include "SearchLineEdit.h"
+#include <QDebug>
 #include <QEvent>
 #include <QKeyEvent>
-#include <QDebug>
 
-#include <functional>
-
-
-SearchLineEdit::SearchLineEdit(QWidget *parent)
-    : QFrame(parent),
-      ui(new Ui::SearchLineEdit)
+SearchLineEdit::SearchLineEdit(QWidget* parent):
+    QFrame(parent),
+    ui(new Ui::SearchLineEdit)
 {
     ui->setupUi(this);
     ui->tSearchCancel->setVisible(false);

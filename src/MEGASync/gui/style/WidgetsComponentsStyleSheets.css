@@ -83,6 +83,26 @@ image: url(:/images/themed/light/checkbox_off_disabled.svg); /*replaceThemeToken
 }
 
 /*
+    QScrollBar
+*/
+QScrollBar:vertical
+{
+width: 10px;
+}
+
+QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical, QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical
+{
+border-style: none;
+}
+
+QScrollBar::handle:vertical
+{
+border-style: none;
+border-radius: 5px;
+background: #ff04101e; /*colorToken.selection-control*/
+}
+
+/*
     QHeaderView
 */
 QHeaderView
@@ -106,6 +126,23 @@ QHeaderView::section:last
 {
 border-right: 0px;
 }
+
+QHeaderView::up-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+image: url(:/images/themed/light/spinbox_up_arrow.svg); /*replaceThemeToken*/
+padding-right: 5px;
+}
+
+QHeaderView::down-arrow
+{
+subcontrol-origin: padding;
+subcontrol-position: center right;
+image: url(:/images/themed/light/spinbox_down_arrow.svg); /*replaceThemeToken*/
+padding-right: 5px;
+}
+
 
 /*
     QComboBox

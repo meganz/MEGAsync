@@ -1,12 +1,13 @@
 #include "Login2FA.h"
-#include "ui_Login2FA.h"
+
 #include "Preferences.h"
+#include "ui_Login2FA.h"
 #include "Utilities.h"
 
-#include <QRegExp>
 #include <QDesktopServices>
-#include <QUrl>
+#include <QRegExp>
 #include <QtConcurrent/QtConcurrent>
+#include <QUrl>
 
 Login2FA::Login2FA(QWidget *parent) :
     QDialog(parent),

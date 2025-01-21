@@ -1,12 +1,10 @@
 #ifndef STALLEDISSUECHOOSEWIDGET_H
 #define STALLEDISSUECHOOSEWIDGET_H
 
-#include "StalledIssueBaseDelegateWidget.h"
-#include "LocalOrRemoteUserMustChooseStalledIssue.h"
-
-#include <QWidget>
+#include <QFrame>
 #include <QGraphicsOpacityEffect>
 #include <QPointer>
+#include <QWidget>
 
 namespace Ui {
 class StalledIssueChooseWidget;

@@ -1271,24 +1271,6 @@ In some cases they may contain details about your data, such as file or folder n
     </message>
 </context>
 <context>
-    <name>DeviceCentre</name>
-    <message>
-        <source>[B]Apply previous exclusion rules?[/B]</source>
-        <translatorcomment>Title of the confirmation dialog to apply exclusion rules. SAT-1816.</translatorcomment>
-        <translation type="unfinished">[B]Apply previous exclusion rules?[/B]</translation>
-    </message>
-    <message>
-        <source>The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</source>
-        <translatorcomment>Informative text about the Apply rules action. SAT-1816.</translatorcomment>
-        <translation type="unfinished">The exclusion rules you set up in a previous version of the app will be applied to all of your syncs and backups. Any rules created since then will be overwritten.</translation>
-    </message>
-    <message>
-        <source>Apply</source>
-        <translatorcomment>Label for the Apply button, to apply the previous exclusion rules. SAT-1816.</translatorcomment>
-        <translation type="unfinished">Apply</translation>
-    </message>
-</context>
-<context>
     <name>DownloadFromMegaDialog</name>
     <message>
         <source>Download from MEGA</source>
@@ -3402,22 +3384,22 @@ Transfers will automatically resume when you re-open the app.</numerusform>
     <message>
         <source>Some syncs and backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups and syncs are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Some syncs and backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more backups have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when some backups are disabled. Tell the userto go to settings to solve the issue.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more backups have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>One or more syncs have been disabled. Go to settings to enable them again.</source>
         <translatorcomment>Warning message shown when logging into MEGAsync to inform the user that some syncs have been disabled and need to go to settings to enable them again.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One or more syncs have been disabled. Go to settings to enable them again.</translation>
     </message>
     <message>
         <source>Open settings</source>
         <translatorcomment>Button label to open MEGAsync settings dialog.</translatorcomment>
-        <translation type="unfinished">Open settings</translation>
+        <translation>Open settings</translation>
     </message>
 </context>
 <context>
@@ -4768,16 +4750,6 @@ Enter a different name.</translation>
         <translation>Back up to:</translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translatorcomment>Cancel button text, cancels the current action CON-466</translatorcomment>
-        <translation>Cancel</translation>
-    </message>
-    <message>
-        <source>Choose</source>
-        <translatorcomment>Button text o choose a folder to backup CON-467</translatorcomment>
-        <translation>Choose</translation>
-    </message>
-    <message>
         <source>Change folder</source>
         <translatorcomment>Button text to change the selected folder CON-467</translatorcomment>
         <translation>Change folder</translation>
@@ -4851,11 +4823,6 @@ Enter a different name.</translation>
         <source>Confirm password</source>
         <translatorcomment>Label indicating that the password should be confirmed CON-466</translatorcomment>
         <translation>Confirm password</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translatorcomment>Button text that closes onboarding CON-467</translatorcomment>
-        <translation>Done</translation>
     </message>
     <message>
         <source>Email</source>
@@ -4973,24 +4940,9 @@ Enter a different name.</translation>
         <translation>Log in to your [B]MEGA account[/B]</translation>
     </message>
     <message>
-        <source>Next</source>
-        <translatorcomment>Button text, forwards the user to the next window CON-465</translatorcomment>
-        <translation>Next</translation>
-    </message>
-    <message>
-        <source>Skip</source>
-        <translatorcomment>Skips the onboarding by closing the window CON-467</translatorcomment>
-        <translation>Skip</translation>
-    </message>
-    <message>
         <source>Password</source>
         <translatorcomment>Password input field title CON-465</translatorcomment>
         <translation>Password</translation>
-    </message>
-    <message>
-        <source>Previous</source>
-        <translatorcomment>Button text, backwards the user to the previous page CON-467</translatorcomment>
-        <translation>Previous</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -5015,7 +4967,7 @@ Enter a different name.</translation>
     <message>
         <source>Selected folders will automatically back up to the cloud when the desktop app is running.</source>
         <translatorcomment>Descriptive text in backups CON-466</translatorcomment>
-        <translation>Selected folders will automatically back up to MEGA when the desktop app is running.</translation>
+        <translation>Selected folders will automatically back up to MEGA as read-only folders when the desktop app is running. Changes can only be made to backups on your local device. </translation>
     </message>
     <message>
         <source>Select a local folder</source>
@@ -5233,11 +5185,6 @@ Enter a different name.</translation>
         <translation>Incorrect 2FA code</translation>
     </message>
     <message>
-        <source>Try again</source>
-        <translatorcomment>Label text that indicates the user to try again the action CON-465</translatorcomment>
-        <translation>Try again</translation>
-    </message>
-    <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
         <translatorcomment>Text indicating that the backup was successfully configured CON-738</translatorcomment>
         <translation>Your backup has been set up and selected data will automatically back up whenever the desktop app is running.</translation>
@@ -5248,24 +5195,19 @@ Enter a different name.</translation>
         <translation>You can view your backups and their statuses under the Backup tab in Settings.</translation>
     </message>
     <message>
-        <source>Set Exclusions</source>
-        <translatorcomment>Button to allow users to set the exclusions rules for new backups CON-738</translatorcomment>
-        <translation>Set exclusions</translation>
-    </message>
-    <message>
         <source>Sync your entire MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the full sync action. CON-833</translatorcomment>
-        <translation>Sync your entire MEGA Cloud drive with your local device.</translation>
+        <translation>Two-way sync your entire MEGA Cloud with a local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>Sync selected folders in your MEGA Cloud drive with your local device.</source>
         <translatorcomment>Button description for the selective sync action. CON-833</translatorcomment>
-        <translation>Sync selected folders in your MEGA Cloud drive with your local device.</translation>
+        <translation>Sync selected folders in your MEGA Cloud drive with your local device. Folders will stay up to date with edits made locally or in MEGA.</translation>
     </message>
     <message>
         <source>View in Settings</source>
         <translatorcomment>Button text that opens the settings dialog CON-467</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>View in Settings</translation>
     </message>
 </context>
 <context>
@@ -5487,17 +5429,17 @@ Enter a different name.</translation>
     <message>
         <source>Permissions</source>
         <translatorcomment>Window title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.SNC-4933</translatorcomment>
-        <translation type="unfinished">Permissions</translation>
+        <translation>Permissions</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Apply</source>
         <translatorcomment>Button text for Apply option.SNC-4933</translatorcomment>
-        <translation type="unfinished">Apply</translation>
+        <translation>Apply</translation>
     </message>
 </context>
 <context>
@@ -5646,7 +5588,13 @@ Enter a different name.</translation>
 - Improved app issue detection and resolution.
 - Other bugs have been fixed and numerous improvements made.
 </source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Change log for version 5.7.0. CON-1108</translatorcomment>
+        <translation>- Enhanced stability with isolated graphics processing: We’ve upgraded our app to run the graphics processor (GFX) in a separate process. This means that if any third-party graphics libraries encounter issues, the app remains stable and unaffected, ensuring a smoother, uninterrupted experience.
+- End of support for macOS 10.13 and 10.14: This update no longer supports macOS 10.13 and 10.14. To continue receiving updates and support, please upgrade to a more recent version of macOS.
+- The Settings dialogue has been redesigned.
+- Improved app issue detection and resolution.
+- Other bugs have been fixed and numerous improvements made.
+</translation>
     </message>
 </context>
 <context>
@@ -5654,7 +5602,7 @@ Enter a different name.</translation>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text for cancel option. SNC-4958</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
 </context>
 <context>
@@ -7225,12 +7173,12 @@ Do you want to delete it anyway?</translation>
     <message>
         <source>Refresh</source>
         <translatorcomment>Button to accept the messagebox, accepting it refreshes the list of issues. CON-1104</translatorcomment>
-        <translation type="unfinished">Refresh</translation>
+        <translation>Refresh</translation>
     </message>
     <message>
         <source>One of your synced folders has been renamed. Refresh the list of sync issues.</source>
         <translatorcomment>Messagebox text explaining that the user needs to update the list of issues due a change on a sync. CON-1104</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>One of your synced folders has been renamed. Refresh the list of sync issues.</translation>
     </message>
 </context>
 <context>
@@ -7473,72 +7421,62 @@ Verify the permissions of the .megaignore file in your local sync folder locatio
     <message>
         <source>Maximum 32 characters</source>
         <translatorcomment>Error message when trying to rename a device with too long name. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Maximum 32 characters</translation>
     </message>
     <message>
         <source>A device with this name already exists. Enter a different name.</source>
         <translatorcomment>Error message when trying to rename a device with the same name as an existing device. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A device with this name already exists. Enter a different name.</translation>
     </message>
     <message>
         <source>Enter a device name</source>
         <translatorcomment>Error message when trying to rename a device with an empty name. SAT-1523.</translatorcomment>
-        <translation type="unfinished">Enter a device name</translation>
+        <translation>Enter a device name</translation>
     </message>
     <message>
         <source>The following characters are not allowed: %1</source>
         <translatorcomment>Error message when trying to rename a device with a forbidden character. %1 will be replaced by the forbidden characters list. SAT-1523.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>The following characters are not allowed: %1</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Label for Choose buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Choose</translation>
+        <translation>Choose</translation>
     </message>
     <message>
         <source>Done</source>
         <translatorcomment>Label for Done buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Done</translation>
+        <translation>Done</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Label for Next buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Next</translation>
+        <translation>Next</translation>
     </message>
     <message>
         <source>Skip</source>
         <translatorcomment>Label for Skip buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Skip</translation>
+        <translation>Skip</translation>
     </message>
     <message>
         <source>Previous</source>
         <translatorcomment>Label for Previous buttons. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Previous</translation>
+        <translation>Previous</translation>
     </message>
     <message>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Try again</translation>
+        <translation>Try again</translation>
     </message>
     <message>
         <source>Set Exclusions</source>
         <translatorcomment>Label for the button to open the Exclusions dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Set exclusions</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translatorcomment>Label for the Ok button of the Sync/Backup error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">OK</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translatorcomment>Label for Continue buttons. Con-1063</translatorcomment>
-        <translation type="unfinished">Continue</translation>
+        <translation>Set exclusions</translation>
     </message>
 </context>
 <context>
@@ -7930,34 +7868,6 @@ If this doesn’t resolve the issue, contact support@mega.nz.</translation>
     </message>
 </context>
 <context>
-    <name>SyncModel</name>
-    <message>
-        <source>Sync</source>
-        <translatorcomment>Name of the type of Sync for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Sync</translation>
-    </message>
-    <message>
-        <source>Backup</source>
-        <translatorcomment>Name of the type of backup for the &quot;path unavailable&quot; error in the Error dialog. SAT-1678.</translatorcomment>
-        <translation type="unfinished">Backup</translation>
-    </message>
-    <message>
-        <source>%1 was stopped because you logged out. Resume the %1 to re-enable.</source>
-        <translatorcomment>Error message of the Error Dialog when the cause is a logout. %1 stands for the type name (Sync or Backup). SAT-1678.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We can&apos;t find the folder you&apos;re trying to sync. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
-        <translatorcomment>Error message displayed when the sync has been moved/renamed/deleted. SAT-1856.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>We can&apos;t find the folder you&apos;re trying to back up. Make sure the folder hasn&apos;t been moved, renamed, or deleted and try again.</source>
-        <translatorcomment>Error message displayed when the backup has been moved/renamed/deleted. SAT-1856.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SyncNodeSelector</name>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -8113,17 +8023,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Reboot sync</source>
         <translatorcomment>Context menu action for rebooting sync.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot sync</translation>
     </message>
     <message>
         <source>Reboot backup</source>
         <translatorcomment>Context menu action for rebooting backup.CON-1036</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Reboot backup</translation>
     </message>
     <message>
         <source>Rescan</source>
         <translatorcomment>Menu action to do a scan for a sync or backup folder form settings.CON-1140</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Rescan</translation>
     </message>
 </context>
 <context>
@@ -9394,7 +9304,7 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>What&apos;s new in MEGA</source>
         <translatorcomment>Window title for the dialog shown when a new Megasync update is installed.SAT-1670</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>What’s new in MEGA</translation>
     </message>
     <message>
         <source>Better Performance</source>
@@ -9419,12 +9329,12 @@ Check your email inbox for instructions on unlocking your account and tips on ho
     <message>
         <source>Full visibility into sync issues and total control over how conflicts are resolved</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Full visibility into sync issues and total control over how conflicts are resolved</translation>
     </message>
     <message>
         <source>Advanced settings allow you to write your own exclusion rules for each of your syncs</source>
         <translatorcomment>Description of a new improvement shown in whats new dialog .con-703</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Advanced settings allow you to write your own exclusion rules for each of your syncs</translation>
     </message>
     <message>
         <source>Got it</source>

@@ -12,13 +12,13 @@ import components.images 1.0
 import components.buttons 1.0 as Buttons
 import components.dialogs 1.0
 import WildCardEnum 1.0
+import ExclusionRulesModel 1.0
 
 Rectangle {
     id: root
 
     readonly property int tableRadius: 6
     readonly property int filesTargetIndex: 0
-    readonly property int extensionsTargetIndex: 2
 
     property int  editRuleTarget: 0
     property int  editRuleProperty: 0
@@ -26,42 +26,43 @@ Rectangle {
     property int editIndex: -1
     property int removedIndex: -1
 
-
     function getConfirmationMessage(target, wildcard, value) {
-        if (target === root.extensionsTargetIndex){
+        if (target === ExclusionRulesModel.EXTENSION) {
             return ExclusionsStrings.removeExtension.arg(value);
-        }else if (wildcard === WildCard.CONTAINS){
-            if(target === filesTargetIndex){
-                return ExclusionsStrings.removeFilesContaining.arg(value)
-            }
-            else{
-                return ExclusionsStrings.removeFoldersContaining.arg(value)
-            }
         }
-        else if (wildcard === WildCard.ENDSWITH){
-            if(target === filesTargetIndex){
-                return ExclusionsStrings.removeFilesEnding.arg(value)
+
+        const messageMap = {
+            [WildCard.CONTAINS]: {
+                [ExclusionRulesModel.FILE]: ExclusionsStrings.removeFilesContaining,
+                [ExclusionRulesModel.FOLDER]: ExclusionsStrings.removeFoldersContaining,
+                [ExclusionRulesModel.FILES_AND_FOLDERS]: ExclusionsStrings.removeFilesFoldersContaining
+            },
+            [WildCard.ENDSWITH]: {
+                [ExclusionRulesModel.FILE]: ExclusionsStrings.removeFilesEnding,
+                [ExclusionRulesModel.FOLDER]: ExclusionsStrings.removeFoldersEnding,
+                [ExclusionRulesModel.FILES_AND_FOLDERS]: ExclusionsStrings.removeFilesFoldersEnding
+            },
+            [WildCard.STARTSWITH]: {
+                [ExclusionRulesModel.FILE]: ExclusionsStrings.removeFilesBeginning,
+                [ExclusionRulesModel.FOLDER]: ExclusionsStrings.removeFoldersBeginning,
+                [ExclusionRulesModel.FILES_AND_FOLDERS]: ExclusionsStrings.removeFilesFoldersBeginning
+            },
+            [WildCard.EQUAL]: {
+                [ExclusionRulesModel.FILE]: ExclusionsStrings.removeFilesEqual,
+                [ExclusionRulesModel.FOLDER]: ExclusionsStrings.removeFoldersEqual,
+                [ExclusionRulesModel.FILES_AND_FOLDERS]: ExclusionsStrings.removeFilesFoldersEqual
+            },
+            [WildCard.WILDCARD]: {
+                [ExclusionRulesModel.FILE]: ExclusionsStrings.removeFilesMatchingWildcard,
+                [ExclusionRulesModel.FOLDER]: ExclusionsStrings.removeFoldersMatchingWildcard,
+                [ExclusionRulesModel.FILES_AND_FOLDERS]: ExclusionsStrings.removeFilesFoldersMatchingWildcard
             }
-            else{
-                return ExclusionsStrings.removeFoldersEnding.arg(value)
-            }
+        };
+        const targetMap = messageMap[wildcard];
+        if(targetMap){
+            return targetMap[target].arg(value);
         }
-        else if (wildcard === WildCard.STARTSWITH){
-            if(target === filesTargetIndex){
-                return ExclusionsStrings.removeFilesBeginning.arg(value)
-            }
-            else{
-                return ExclusionsStrings.removeFoldersBeginning.arg(value)
-            }
-        }
-        else if (wildcard === WildCard.EQUAL){
-            if(target === filesTargetIndex){
-                return ExclusionsStrings.removeFilesEqual.arg(value)
-            }
-            else{
-                return ExclusionsStrings.removeFoldersEqual.arg(value)
-            }
-        }
+        return "";
     }
 
     signal editRuleClicked
@@ -121,7 +122,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.top: parent.top
             height: parent.height
-            width: 190
+            width: 196
 
             CheckBox {
                 id: enableAll
@@ -181,7 +182,7 @@ Rectangle {
             id:  propertyColumnHeaderItem
 
             height: parent.height
-            width: 180
+            width: 172
             anchors{
                 top: parent.top
                 left: typeColumnHeaderItem.right

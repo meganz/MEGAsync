@@ -1,18 +1,15 @@
 #ifndef MEGAUPLOADER_H
 #define MEGAUPLOADER_H
 
-#include <TransferBatch.h>
-#include "megaapi.h"
-#include <ThreadPool.h>
-
-#include <QFutureWatcher>
-#include <QString>
-#include <QFileInfo>
-#include <QDir>
-#include <QQueue>
 #include "FolderTransferListener.h"
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
+#include "TransferBatch.h"
+
+#include <QDir>
+#include <QFileInfo>
+#include <QFutureWatcher>
+#include <QQueue>
 
 class MegaUploader : public QObject
 {

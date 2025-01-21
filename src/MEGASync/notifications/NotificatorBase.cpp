@@ -1,24 +1,21 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-
 #include "NotificatorBase.h"
-#include "Notificator.h"
+
+#include "MegaApplication.h"
+#include "QMegaMessageBox.h"
+#include "Utilities.h"
 
 #include <QApplication>
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
-#include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
 #include <QTemporaryFile>
 #include <QVariant>
-#include <memory>
-
-#include "MegaApplication.h"
 
 using namespace mega;
 

@@ -2,7 +2,6 @@
 
 #include "SyncController.h"
 #include "SyncTooltipCreator.h"
-#include "Utilities.h"
 
 #include <QCoreApplication>
 #include <QFileInfo>

@@ -1,10 +1,9 @@
 #ifndef TRANSFERNOTIFICATIONBUILDER_H
 #define TRANSFERNOTIFICATIONBUILDER_H
 
-#include "TransferMetaData.h"
 #include "DesktopNotifications.h"
+#include "TransferMetaData.h"
 
-#include <megaapi.h>
 #include <QObject>
 
 class TransferNotificationBuilder : public QObject
@@ -32,6 +31,7 @@ public:
 protected:
     QString buildUploadTitle();
     QString buildDownloadTitle();
+    QString buildImportedLinkErrorTitle();
 
     QString buildSingleUploadMessage();
     QStringList buildSingleUploadActions();
@@ -50,11 +50,13 @@ protected:
     QString buildNonExistentItemsMessageUploads();
     QString buildNonExistentItemsMessageDownloads();
 
+    QString buildImportedLinkError(std::shared_ptr<TransferMetaDataItem> failedItem);
+
     QString getImagePath();
 
     bool isFolder() const;
 
-    const std::shared_ptr<TransferMetaData> data;
+    const std::shared_ptr<TransferMetaData> mData;
 };
 
 #endif // TRANSFERNOTIFICATIONBUILDER_H

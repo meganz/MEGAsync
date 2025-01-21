@@ -1,10 +1,12 @@
 #include "ExtServer.h"
 
-#include <sys/types.h>
-#include <pwd.h>
-#include <unistd.h>
 #include "CommonMessages.h"
 #include "Utilities.h"
+
+#include <sys/types.h>
+
+#include <pwd.h>
+#include <unistd.h>
 
 using namespace mega;
 using namespace std;

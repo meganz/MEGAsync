@@ -1,9 +1,9 @@
 #include "QRWidget.h"
 
+#include "qrcodegen.h"
+
 #include <QPainter>
 #include <QPainterPath>
-
-#include "qrcodegen.h"
 
 QRWidget::QRWidget(QWidget *parent) : QWidget(parent)
 {

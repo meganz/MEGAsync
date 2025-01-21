@@ -1,14 +1,13 @@
-﻿#pragma once
-
-#include <atomic>
-#include <memory>
-#include <mutex>
-
-#include <QLocalSocket>
-#include <QLocalServer>
-#include <QXmlStreamWriter>
+﻿#ifndef MEGA_SYNC_LOGGER_H
+#define MEGA_SYNC_LOGGER_H
 
 #include "megaapi.h"
+
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QXmlStreamWriter>
+
+#include <memory>
 
 #define LOGS_FOLDER_LEAFNAME_QSTRING QString::fromUtf8("logs")
 
@@ -54,3 +53,4 @@ private:
 };
 
 extern MegaSyncLogger *g_megaSyncLogger;   // for crash report flush
+#endif

@@ -1,13 +1,12 @@
 #ifndef SYNCSMENU_H
 #define SYNCSMENU_H
 
+#include "megaapi.h"
 #include "MenuItemAction.h"
 #include "SyncSettings.h"
 
-#include "megaapi.h"
-
-#include <QObject>
 #include <QMenu>
+#include <QObject>
 #include <QPointer>
 
 #include <memory>

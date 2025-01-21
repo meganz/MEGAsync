@@ -1,10 +1,14 @@
 #ifndef SETTYPES_H
 #define SETTYPES_H
 
-#include <QObject>
-#include <QString>
-#include <QList>
 #include "megaapi.h"
+
+#include <QList>
+#include <QObject>
+#include <QQueue>
+#include <QString>
+
+#include <memory>
 
 using MegaNodeSPtr = std::shared_ptr<mega::MegaNode>;
 
@@ -13,12 +17,14 @@ struct SetImportParams
     MegaNodeSPtr importParentNode;
 };
 
+class WrappedNode;
+
 struct AlbumCollection
 {
     QString link = QString::fromUtf8("");
     QString name = QString::fromUtf8("");
     QList<mega::MegaHandle> elementHandleList = {};
-    QList<MegaNodeSPtr> nodeList = {};
+    QQueue<WrappedNode> nodeList;
 
     // Default constructor
     AlbumCollection() = default;

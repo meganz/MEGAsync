@@ -2,11 +2,11 @@
 #define LINKOBJECT_H
 
 #include "megaapi.h"
-#include <QList>
-#include <QString>
-#include <QObject>
-#include <memory>
 #include "SetTypes.h"
+
+#include <QList>
+#include <QObject>
+#include <QString>
 
 enum linkType { INVALID, NODE, SET };
 enum linkStatus { LOADING, CORRECT, WARNING, FAILED };
@@ -34,8 +34,6 @@ public:
     virtual bool isSelected() const;
     virtual void setImportNode(MegaNodeSPtr node);
     virtual MegaNodeSPtr getImportNode() const;
-    virtual void setDownloadPath(const QString& path);
-    virtual QString getDownloadPath() const;
     virtual bool showFolderIcon() const;
     virtual bool readyForProcessing() const;
     virtual void reset();
@@ -46,7 +44,6 @@ protected:
     MegaNodeSPtr mNode;
     MegaNodeSPtr mImportNode;
     QString mName;
-    QString mDownloadPath;
     bool mIsSelected;
     linkType mLinkType;
     linkStatus mLinkStatus;

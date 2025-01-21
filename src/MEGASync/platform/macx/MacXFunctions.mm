@@ -1,4 +1,5 @@
 #include "MacXFunctions.h"
+
 #include <Cocoa/Cocoa.h>
 #include <QFileInfo>
 #include <QCoreApplication>

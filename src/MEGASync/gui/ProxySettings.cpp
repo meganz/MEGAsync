@@ -1,11 +1,11 @@
 ﻿#include "ProxySettings.h"
+
+#include "DialogOpener.h"
+#include "megaapi.h"
+#include "QMegaMessageBox.h"
 #include "ui_ProxySettings.h"
 
-#include "megaapi.h"
-#include "DialogOpener.h"
-
 #include <QNetworkProxy>
-#include "QMegaMessageBox.h"
 
 using namespace mega;
 

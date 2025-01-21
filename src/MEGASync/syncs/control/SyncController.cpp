@@ -4,7 +4,6 @@
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MyBackupsHandle.h"
-#include "Platform.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
 
@@ -635,6 +634,14 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
     // We no longer check if the local folder has the correct rights, the SDK does.
 
     return (syncability);
+}
+
+SyncController::Syncability
+    SyncController::isLocalFolderSyncable(const QString& path,
+                                          const mega::MegaSync::SyncType& syncType)
+{
+    QString message;
+    return isLocalFolderSyncable(path, syncType, message);
 }
 
 // Returns wether the remote path is syncable.

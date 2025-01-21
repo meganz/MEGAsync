@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TRANSFER_REMAINING_TIME_H
+#define TRANSFER_REMAINING_TIME_H
+
 #include <array>
 #include <chrono>
 
@@ -22,3 +24,4 @@ private:
     std::array<long long, REMAINING_SECONDS_BUFFER_SIZE> mRemainingTimesBuffer;
     void calculateMedian();
 };
+#endif

@@ -1,11 +1,12 @@
 ﻿#ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "Preferences.h"
-#include "Utilities.h"
-
-#include "SyncInfo.h"
+#include "AppState.h"
 #include "megaapi.h"
+#include "Preferences.h"
+#include "SyncInfo.h"
+#include "UsersUpdateListener.h"
+#include "Utilities.h"
 
 #include <QDialog>
 #include <QFuture>
@@ -68,6 +69,9 @@ signals:
     void userActivity();
 
 public slots:
+    // React to AppState change
+    void onAppStateChanged(AppState::AppStates oldAppState, AppState::AppStates newAppState);
+
     // Network
     void showGuestMode();
 
@@ -137,6 +141,7 @@ protected:
 
 private slots:
     void onShellNotificationsProcessed();
+    void onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail);
 
 private:
     void loadSettings();
@@ -167,5 +172,6 @@ private:
     QStringList mSyncNames;
     bool mHasDefaultUploadOption;
     bool mHasDefaultDownloadOption;
+    std::unique_ptr<UsersUpdateListener> usersUpdateListener;
 };
 #endif // SETTINGSDIALOG_H

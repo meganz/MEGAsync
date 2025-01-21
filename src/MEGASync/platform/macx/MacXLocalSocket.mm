@@ -1,7 +1,9 @@
 #include "MacXLocalSocket.h"
+
 #include "MacXLocalSocketPrivate.h"
 #include "megaapi.h"
 #include "MacXFunctions.h"
+
 #import <Cocoa/Cocoa.h>
 
 using namespace mega;

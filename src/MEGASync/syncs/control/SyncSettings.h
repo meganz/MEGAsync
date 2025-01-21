@@ -1,9 +1,10 @@
-#pragma once
-
-#include <QString>
-#include <QDataStream>
+#ifndef SYNC_SETTINGS_H
+#define SYNC_SETTINGS_H
 
 #include "megaapi.h"
+
+#include <QDataStream>
+#include <QString>
 
 #include <memory>
 
@@ -74,3 +75,4 @@ public:
 Q_DECLARE_METATYPE(SyncSettings)
 Q_DECLARE_SMART_POINTER_METATYPE(std::shared_ptr)
 Q_DECLARE_METATYPE(std::shared_ptr<SyncSettings>)
+#endif

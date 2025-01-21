@@ -1,14 +1,13 @@
 #ifndef SET_MANAGER_H
 #define SET_MANAGER_H
 
-#include <QObject>
-#include <QList>
-#include <QMutex>
-#include <memory>
-#include "megaapi.h"
-#include "QTMegaTransferListener.h"
 #include "AsyncHandler.h"
+#include "megaapi.h"
 #include "SetTypes.h"
+
+#include <QMutex>
+
+class MegaDownloader;
 
 namespace mega
 {
@@ -45,6 +44,8 @@ struct ActionParams
     MegaNodeSPtr importParentNode;
 };
 
+class WrappedNode;
+
 class SetManager: public QObject, public mega::MegaTransferListener, public AsyncHandler<bool>
 {
     Q_OBJECT
@@ -57,10 +58,6 @@ public:
 
 signals:
     void onFetchSetFromLink(const AlbumCollection& collection);
-    void onSetDownloadFinished(const QString& setName,
-                               const QStringList& succeededDownloadedElements,
-                               const QStringList& failedDownloadedElements,
-                               const QString& destinationPath);
     void onSetImportFinished(const QString& setName,
                              const QStringList& succeededImportElements,
                              const QStringList& failedImportElements,
@@ -85,11 +82,11 @@ private:
 
     // State Machine
     void handleStates();
-    void handleStateINIT(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_GET_DATA(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_FROM_LINK(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_DOWNLOAD_COLLECTION(const ActionParams& action);
-    void handleStateWAIT_FOR_PREVIEW_SET_TO_IMPORT_COLLECTION(const ActionParams& action);
+    void handleStateInit(const ActionParams& action);
+    void handleStateWaitForPreviewSetToGetData(const ActionParams& action);
+    void handleStateWaitForPreviewSetToDownloadFromLink(const ActionParams& action);
+    void handleStateWaitForPreviewSetToDownloadCollection(const ActionParams& action);
+    void handleStateWaitForPreviewSetToImportCollection(const ActionParams& action);
 
     void handleFetchPublicSetResponse(mega::MegaRequest* request, mega::MegaError* error);
     bool handleFetchPublicSetResponseToGetData();
@@ -106,18 +103,21 @@ private:
     AlbumCollection filterSet(const AlbumCollection& srcSet, const QList<mega::MegaHandle>& elementHandleList);
     void reset();
     void resetAndHandleStates();
-    void startDownload(mega::MegaNode* linkNode, const QString& localPath);
-    bool copyNode(MegaNodeSPtr linkNode, MegaNodeSPtr importParentNode);
+    void startDownload(QQueue<WrappedNode>& nodes, const QString& localPath);
+    bool copyNode(mega::MegaNode* linkNode, MegaNodeSPtr importParentNode);
     void checkandHandleFinishedImport();
+
+    // AppId for notifications
+    unsigned long long getAppDataId();
 
 private:
     mega::MegaApi* mMegaApi;
     mega::MegaApi* mMegaApiFolders;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
 
     AlbumCollection mCurrentSet;
     QList<mega::MegaHandle> mCurrentElementHandleList;
+    int mDownloadedCounter;
     QString mCurrentDownloadPath;
     MegaNodeSPtr mCurrentImportParentNode;
 
@@ -126,6 +126,8 @@ private:
     QStringList mFailedImportElements;
     QStringList mSucceededImportElements;
     QStringList mAlreadyExistingImportElements;
+
+    std::shared_ptr<MegaDownloader> mDownloader;
 
     // State machine
     QMutex mSetManagerStateMutex;

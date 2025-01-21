@@ -1,8 +1,7 @@
 #ifndef LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H
 #define LOCALORREMOTEUSERMUSTCHOOSESTALLEDISSUE_H
 
-#include <StalledIssue.h>
-#include <TransfersModel.h>
+#include "StalledIssue.h"
 
 class MegaUploader;
 

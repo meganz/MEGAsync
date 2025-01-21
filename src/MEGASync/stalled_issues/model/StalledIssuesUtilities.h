@@ -1,20 +1,18 @@
 #ifndef STALLEDISSUESUTILITIES_H
 #define STALLEDISSUESUTILITIES_H
 
+#include "megaapi.h"
+#include "MegaDownloader.h"
+#include "MegaUploader.h"
 #include "StalledIssue.h"
+#include "TextDecorator.h"
 
-#include <megaapi.h>
-#include <MegaApplication.h>
-#include <Utilities.h>
-#include "SyncInfo.h"
-#include <TextDecorator.h>
-
-#include <QObject>
-#include <QString>
-#include <QFutureWatcher>
-#include <QFileInfo>
-#include <QReadWriteLock>
 #include <QEventLoop>
+#include <QFileInfo>
+#include <QFutureWatcher>
+#include <QObject>
+#include <QReadWriteLock>
+#include <QString>
 
 #include <memory>
 

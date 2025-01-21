@@ -1,17 +1,19 @@
 #ifndef LINKPROCESSOR_H
 #define LINKPROCESSOR_H
 
-#include <QObject>
-#include <QStringList>
-#include <QPointer>
-#include <memory>
+#include "LinkObject.h"
 #include "megaapi.h"
 #include "QTMegaTransferListener.h"
-#include <QSharedPointer>
-#include <QQueue>
-#include <QList>
-#include "LinkObject.h"
 #include "SetTypes.h"
+
+#include <QList>
+#include <QObject>
+#include <QPointer>
+#include <QQueue>
+#include <QSharedPointer>
+#include <QStringList>
+
+#include <memory>
 
 namespace mega
 {
@@ -30,6 +32,8 @@ struct LinkTransfer
     std::shared_ptr<LinkObject> linkObject = nullptr;
     LinkTransferType transferType = LinkTransferType::UNKNOWN;
 };
+
+class MegaDownloader;
 
 class LinkProcessor: public QObject, public mega::MegaTransferListener
 {
@@ -66,18 +70,10 @@ signals:
                              int status,
                              long long size,
                              bool isFolder);
+    void linkCopyErrorDetected(const QString& nodeName, const int errorCode);
 
 public slots:
     void onFetchSetFromLink(const AlbumCollection& collection);
-    void onSetDownloadFinished(const QString& setName,
-                               const QStringList& succeededDownloadedElements,
-                               const QStringList& failedDownloadedElements,
-                               const QString& destinationPath);
-    void onSetImportFinished(const QString& setName,
-                             const QStringList& succeededImportElements,
-                             const QStringList& failedImportElements,
-                             const QStringList& alreadyExistingImportElements,
-                             const SetImportParams& sip);
     void onLinkSelected(int index, bool selected);
     void refreshLinkInfo();
 
@@ -88,11 +84,8 @@ private:
         return (index >= 0 && index < container.size());
     }
 
-    void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error) override;
-
     // Download
-    void setDownloadPaths(const QString& downloadPath);
-    void startDownload(MegaNodeSPtr linkNode, const QString& localPath);
+    void startDownload(const QQueue<WrappedNode>& nodes);
 
     // Import
     void setImportParentNode(MegaNodeSPtr importParentNode);
@@ -107,6 +100,9 @@ private:
     void processNextTransfer();
     QString getReasonForExpiredLink(mega::MegaRequest* request, mega::MegaError* e);
 
+    // AppId for notifications
+    unsigned long long getAppDataId();
+
 private:
     mega::MegaApi* mMegaApi;
     mega::MegaApi* mMegaApiFolders;
@@ -114,7 +110,9 @@ private:
     QList<std::shared_ptr<LinkObject>> mLinkObjects;
     mega::MegaHandle mImportParentFolder;
     std::shared_ptr<mega::QTMegaRequestListener> mDelegateListener;
-    std::shared_ptr<mega::QTMegaTransferListener> mDelegateTransferListener;
+    QString mDownloadPath;
+    std::shared_ptr<MegaDownloader> mDownloader;
+    QQueue<WrappedNode> mNodesToDownload;
     uint32_t mRequestCounter;
     int mCurrentIndex;
     QQueue<LinkTransfer> mTransferQueue;

@@ -1,4 +1,5 @@
 #include "PermissionsWidget.h"
+
 #include "ui_PermissionsWidget.h"
 
 PermissionsWidget::PermissionsWidget(QWidget *parent) :

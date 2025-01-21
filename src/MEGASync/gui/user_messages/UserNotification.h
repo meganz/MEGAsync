@@ -2,7 +2,6 @@
 #define USER_NOTIFICATION_H
 
 #include "UserMessage.h"
-#include "ImageDownloader.h"
 
 #include <QPixmap>
 #include <QUrl>

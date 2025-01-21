@@ -11,14 +11,12 @@ import components.buttons 1.0 as Buttons
 import components.textFields 1.0
 import components.busyIndicator 1.0
 
-import BackupsProxyModel 1.0
-import BackupsModel 1.0
+import BackupCandidatesProxyModel 1.0
+import BackupCandidates 1.0
 import ChooseLocalFolder 1.0
 
 Item {
     id: root
-
-    property BackupsProxyModel backupsProxyModelRef
 
     readonly property int totalHeight: 34
     readonly property int horizontalMargin: 8
@@ -54,15 +52,15 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.fill: parent
             sourceComponent: {
-                if(!backupsProxyModelRef.selectedFilterEnabled
-                        || error === backupsModelAccess.BackupErrorCode.NONE) {
+                if(!backupCandidatesProxyModelAccess.selectedFilterEnabled
+                        || error === BackupCandidates.NONE) {
                     return selectContent;
                 }
                 else {
-                    if(error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
-                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
-                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
-                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
+                    if(error === BackupCandidates.SYNC_CONFLICT
+                        || error === BackupCandidates.PATH_RELATION
+                        || error === BackupCandidates.UNAVAILABLE_DIR
+                        || error === BackupCandidates.SDK_CREATION) {
                         return conflictContent;
                     }
                     else {
@@ -115,9 +113,9 @@ Item {
                         verticalCenter: parent.verticalCenter
                         topMargin: Constants.focusAdjustment + 1
                     }
-                    width: backupsProxyModelRef.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
+                    width: backupCandidatesProxyModelAccess.selectedFilterEnabled ? 0 : selectRoot.checkboxWidth
                     checked: selected
-                    visible: !backupsProxyModelRef.selectedFilterEnabled
+                    visible: !backupCandidatesProxyModelAccess.selectedFilterEnabled
                     manageChecked: true
 
                     Keys.onPressed: {
@@ -188,7 +186,7 @@ Item {
                 text: size
                 font.pixelSize: Texts.Text.Size.SMALL
                 color: ColorTheme.textSecondary
-                visible: backupsProxyModelRef.selectedFilterEnabled && sizeReady
+                visible: backupCandidatesProxyModelAccess.selectedFilterEnabled && sizeReady
             }
 
             BusyIndicator {
@@ -200,18 +198,18 @@ Item {
                 }
                 imageSize: Qt.size(12, 12)
                 color: ColorTheme.textAccent
-                visible: backupsProxyModelRef.selectedFilterEnabled && !sizeReady
+                visible: backupCandidatesProxyModelAccess.selectedFilterEnabled && !sizeReady
             }
 
             MouseArea {
                 anchors.fill: parent
-                cursorShape: backupsProxyModelRef.selectedFilterEnabled
+                cursorShape: backupCandidatesProxyModelAccess.selectedFilterEnabled
                              ? Qt.ArrowCursor
                              : Qt.PointingHandCursor
                 onClicked: {
                     selected = !selected;
                 }
-                enabled: !backupsProxyModelRef.selectedFilterEnabled
+                enabled: !backupCandidatesProxyModelAccess.selectedFilterEnabled
             }
 
         } // Item: selectRoot
@@ -230,10 +228,10 @@ Item {
             readonly property int textWidth: 248
             readonly property int sizeTextWidth: 50
 
-            property bool showChange: error === backupsModelAccess.BackupErrorCode.SYNC_CONFLICT
-                                        || error === backupsModelAccess.BackupErrorCode.PATH_RELATION
-                                        || error === backupsModelAccess.BackupErrorCode.UNAVAILABLE_DIR
-                                        || error === backupsModelAccess.BackupErrorCode.SDK_CREATION
+            property bool showChange: error === BackupCandidates.SYNC_CONFLICT
+                                        || error === BackupCandidates.PATH_RELATION
+                                        || error === BackupCandidates.UNAVAILABLE_DIR
+                                        || error === BackupCandidates.SDK_CREATION
 
             Row {
                 id: imageText
@@ -252,11 +250,11 @@ Item {
                     id: conflictImage
 
                     anchors.verticalCenter: parent.verticalCenter
-                    source: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
+                    source: error === BackupCandidates.SDK_CREATION
                             ? Images.alertCircle
                             : Images.alertTriangle
                     sourceSize: Qt.size(conflictRoot.imageWidth, conflictRoot.imageWidth)
-                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
+                    color: error === BackupCandidates.SDK_CREATION
                            ? ColorTheme.textError
                            : ColorTheme.textWarning
                 }
@@ -272,7 +270,7 @@ Item {
                             - buttonRow.width - conflictRoot.contentMargin
                     font.pixelSize: Texts.Text.Size.SMALL
                     text: name
-                    color: error === backupsModelAccess.BackupErrorCode.SDK_CREATION
+                    color: error === BackupCandidates.SDK_CREATION
                            ? ColorTheme.textError
                            : ColorTheme.textWarning
                     showTooltip: false
@@ -352,7 +350,7 @@ Item {
                         target: folderDialog
 
                         function onFolderChoosen(folderPath) {
-                            backupsModelAccess.change(folder, folderPath);
+                            backupsComponentAccess.change(folder, folderPath);
                         }
                     }
                 }
@@ -369,7 +367,7 @@ Item {
                     sizes: Buttons.SmallSizes {}
 
                     onClicked: {
-                        backupsModelAccess.remove(folder);
+                        backupsComponentAccess.remove(folder);
                     }
                 }
 
@@ -387,18 +385,18 @@ Item {
 
             function doneAction() {
                 editTextField.hint.visible = false;
-                var error = backupsModelAccess.rename(folder, editTextField.text);
+                var error = backupsComponentAccess.rename(folder, editTextField.text);
                 switch(error) {
-                    case backupsModelAccess.BackupErrorCode.NONE:
-                    case backupsModelAccess.BackupErrorCode.SYNC_CONFLICT:
-                    case backupsModelAccess.BackupErrorCode.PATH_RELATION:
-                    case backupsModelAccess.BackupErrorCode.SDK_CREATION:
+                    case BackupCandidates.NONE:
+                    case BackupCandidates.SYNC_CONFLICT:
+                    case BackupCandidates.PATH_RELATION:
+                    case BackupCandidates.SDK_CREATION:
                         break;
-                    case backupsModelAccess.BackupErrorCode.EXISTS_REMOTE:
+                    case BackupCandidates.EXISTS_REMOTE:
                         editTextField.hint.visible = true;
                         editTextField.hint.text = BackupsStrings.confirmBackupErrorRemote;
                         break;
-                    case backupsModelAccess.BackupErrorCode.DUPLICATED_NAME:
+                    case BackupCandidates.DUPLICATED_NAME:
                         editTextField.hint.visible = true;
                         editTextField.hint.text = BackupsStrings.confirmBackupErrorDuplicated;
                         break;

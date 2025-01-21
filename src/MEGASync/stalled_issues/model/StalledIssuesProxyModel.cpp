@@ -1,6 +1,5 @@
 #include "StalledIssuesProxyModel.h"
 
-
 #include "StalledIssuesModel.h"
 
 #include <QElapsedTimer>

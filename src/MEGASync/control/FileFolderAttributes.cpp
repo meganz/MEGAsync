@@ -1,16 +1,15 @@
 #include "FileFolderAttributes.h"
 
-#include <MegaApplication.h>
 #include "FullName.h"
+#include "MegaApplication.h"
+#include "RequestListenerManager.h"
 
 #include <QEventLoop>
-#include "RequestListenerManager.h"
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif
-
 
 #ifdef WIN32
 #define stat _stat
@@ -343,6 +342,11 @@ qint64 LocalFileFolderAttributes::calculateSize()
     }
 
     return newSize;
+}
+
+const QString& LocalFileFolderAttributes::getPath() const
+{
+    return mPath;
 }
 
 void LocalFileFolderAttributes::setPath(const QString &newPath)

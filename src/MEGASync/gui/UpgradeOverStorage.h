@@ -1,12 +1,12 @@
 #ifndef UPGRADEOVERSTORAGE_H
 #define UPGRADEOVERSTORAGE_H
 
-#include <megaapi.h>
+#include "megaapi.h"
+#include "Utilities.h"
 
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QMovie>
-#include "Utilities.h"
 
 #include <memory>
 

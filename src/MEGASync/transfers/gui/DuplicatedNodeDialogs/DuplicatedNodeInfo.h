@@ -1,11 +1,11 @@
 #ifndef DUPLICATEDNODEINFO_H
 #define DUPLICATEDNODEINFO_H
 
-#include <megaapi.h>
+#include "megaapi.h"
 
+#include <QDateTime>
 #include <QObject>
 #include <QString>
-#include <QDateTime>
 
 #include <memory>
 

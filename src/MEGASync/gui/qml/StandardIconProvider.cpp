@@ -1,9 +1,7 @@
 #include "StandardIconProvider.h"
 
-#include "Utilities.h"
-
-#include <QStyle>
 #include <QApplication>
+#include <QStyle>
 
 StandardIconProvider::StandardIconProvider()
     : QQuickImageProvider(QQuickImageProvider::Pixmap)

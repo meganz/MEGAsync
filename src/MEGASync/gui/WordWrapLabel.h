@@ -23,6 +23,9 @@ public:
     //Try not to use maxLines/maxHeight with rich text strings, as it could potentially remove the hmtl tags when eliding
     void setTextFormat(Qt::TextFormat format);
 
+    void setKeepParentCursor(bool newValue);
+    void setAutoManageUrl(bool newValue);
+
 protected:
     void resizeEvent(QResizeEvent *e) override;
     bool eventFilter(QObject* obj, QEvent* event) override;
@@ -44,6 +47,8 @@ private:
     QTimer mAdaptHeightTimer;
     int mParentHeight;
     QTextDocument mTextDocument; // This is only to remove html tags from tooltips
+    bool mKeepParentCursor;
+    bool mAutoManageUrl;
 };
 
 #endif // WORDWRAPLABEL_H

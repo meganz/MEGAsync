@@ -1,17 +1,15 @@
 #ifndef STALLEDISSUE_H
 #define STALLEDISSUE_H
 
-#include <FileFolderAttributes.h>
+#include "FileFolderAttributes.h"
+#include "megaapi.h"
 
-#include <megaapi.h>
-
-#include <QSharedData>
-#include <QObject>
-#include <QFileInfo>
-#include <QSize>
 #include <QDebug>
-
+#include <QFileInfo>
 #include <QFileSystemWatcher>
+#include <QObject>
+#include <QSharedData>
+#include <QSize>
 
 #include <memory>
 

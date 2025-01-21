@@ -13,8 +13,7 @@
 static const int AVATAR_DIAMETER (60);
 static const int AVATAR_LETTER_SIZE_PT_FULL (60);
 static const int LETTER_PIXMAP_SIZE (150);
-static const int LATO_FONT_ADJUST (-4);
-
+static const int LATO_FONT_ADJUST(-4);
 
 AvatarWidget::AvatarWidget(QWidget* parent) :
     QWidget(parent)
@@ -52,13 +51,14 @@ QSize AvatarWidget::sizeHint() const
 void AvatarWidget::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event)
-
-    if (mAvatarRequest && mAvatarRequest->isAttributeReady())
-    {
-        QPainter painter(this);
-        painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
-        painter.drawPixmap(rect(), mAvatarRequest->getPixmap(width()));
-    }
+    const QPixmap avatarPixmap = (mAvatarRequest && mAvatarRequest->isAttributeReady()) ?
+                                     (mAvatarRequest->getPixmap(width())) :
+                                     (AvatarPixmap::maskFromImagePath(
+                                         QString::fromUtf8(UserAttributes::Avatar::DEFAULT_AVATAR),
+                                         width()));
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    painter.drawPixmap(rect(), avatarPixmap);
 }
 
 void AvatarWidget::mousePressEvent(QMouseEvent *event)

@@ -1,13 +1,15 @@
 #include "NodeSelectorModel.h"
+
 #include "CameraUploadFolder.h"
+#include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MegaNodeNames.h"
+#include "MergeMEGAFolders.h"
 #include "MyChatFilesFolder.h"
 #include "NodeSelectorModelSpecialised.h"
 #include "RequestListenerManager.h"
 #include "Utilities.h"
-#include "MegaApiSynchronizedRequest.h"
-#include "MergeMEGAFolders.h"
+#include "ViewLoadingScene.h"
 
 #include <QApplication>
 #include <QToolTip>

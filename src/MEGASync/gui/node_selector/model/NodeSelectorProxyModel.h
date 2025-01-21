@@ -11,7 +11,6 @@
 
 #include <memory>
 
-
 namespace mega{
 class MegaNode;
 }

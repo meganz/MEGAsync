@@ -2,9 +2,9 @@
 #define MULTIQFILEDIALOG_H
 
 #include <QFileDialog>
+#include <QKeyEvent>
 #include <QLineEdit>
 #include <QPushButton>
-#include <QKeyEvent>
 
 class MultiQFileDialog : public QFileDialog
 {

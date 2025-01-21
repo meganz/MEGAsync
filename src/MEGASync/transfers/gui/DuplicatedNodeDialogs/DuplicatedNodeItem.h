@@ -1,18 +1,17 @@
 #ifndef DUPLICATEDNODEITEM_H
 #define DUPLICATEDNODEITEM_H
 
-#include <megaapi.h>
 #include "DuplicatedNodeInfo.h"
 #include "FileFolderAttributes.h"
+#include "megaapi.h"
+#include "QTMegaRequestListener.h"
 
-#include <QTMegaRequestListener.h>
+#include <QDateTime>
+#include <QFutureWatcher>
+#include <QPointer>
+#include <QWidget>
 
 #include <memory>
-
-#include <QWidget>
-#include <QFutureWatcher>
-#include <QDateTime>
-#include <QPointer>
 
 namespace Ui {
 class DuplicatedNodeItem;

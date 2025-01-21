@@ -1,14 +1,15 @@
 #ifndef TRANSFERMETADATA_H
 #define TRANSFERMETADATA_H
 
-#include <memory>
-#include <QVariant>
-#include <QPair>
-#include <QPointer>
-#include <QMutex>
-
 #include "Preferences.h"
 #include "TransferItem.h"
+
+#include <QMutex>
+#include <QPair>
+#include <QPointer>
+#include <QVariant>
+
+#include <memory>
 
 namespace mega
 {
@@ -52,7 +53,20 @@ struct TransferMetaDataItem
     TransferData::TransferState state;
     std::shared_ptr<mega::MegaTransfer> failedTransfer;
 
-    virtual TransferData::TransferState getState(){return state;}
+    virtual TransferData::TransferState getState()
+    {
+        return state;
+    }
+
+    int getErrorCode()
+    {
+        if (failedTransfer)
+        {
+            return failedTransfer->getLastError().getErrorCode();
+        }
+
+        return mega::MegaError::API_OK;
+    }
 };
 
 template <class Type>
@@ -69,13 +83,20 @@ struct TransferMetaDataItemsByState
 
     TransferMetaDataItemId getFirstTransferIdByState(TransferData::TransferState state) const
     {
+        auto item = getFirstTransferByState(state);
+        return item ? item->id : TransferMetaDataItemId();
+    }
+
+    std::shared_ptr<TransferMetaDataItem>
+        getFirstTransferByState(TransferData::TransferState state) const
+    {
         switch(state)
         {
             case TransferData::TRANSFER_COMPLETED:
             {
                 if(!completedTransfers.isEmpty())
                 {
-                    return completedTransfers.first()->id;
+                    return completedTransfers.first();
                 }
                 break;
             }
@@ -83,7 +104,7 @@ struct TransferMetaDataItemsByState
             {
                 if(!cancelledTransfers.isEmpty())
                 {
-                    return cancelledTransfers.first()->id;
+                    return cancelledTransfers.first();
                 }
                 break;
             }
@@ -91,11 +112,11 @@ struct TransferMetaDataItemsByState
             {
                 if(!failedTransfers.isEmpty())
                 {
-                    return failedTransfers.first()->id;
+                    return failedTransfers.first();
                 }
                 if(!nonExistFailedTransfers.isEmpty())
                 {
-                    return nonExistFailedTransfers.first()->id;
+                    return nonExistFailedTransfers.first();
                 }
                 break;
             }
@@ -103,14 +124,15 @@ struct TransferMetaDataItemsByState
             {
                 if(!pendingTransfers.isEmpty())
                 {
-                    return pendingTransfers.first()->id;
+                    return pendingTransfers.first();
                 }
                 break;
             }
         }
 
-        return TransferMetaDataItemId();
+        return nullptr;
     }
+
     QList<TransferMetaDataItemId> getTransferIdsByState(TransferData::TransferState state) const
     {
         QList<TransferMetaDataItemId> ids;
@@ -253,6 +275,8 @@ struct TransferMetaDataFolderItem : public TransferMetaDataItem
 class TransferMetaData
 {
 public:
+    static const unsigned long long INVALID_ID = 0ull;
+
     TransferMetaData(int direction, unsigned long long id);
     TransferMetaData();
     virtual ~TransferMetaData() = default;
@@ -288,6 +312,8 @@ public:
     int getTotaTransfersCancelled() const;
     int getNonExistentCount() const;
 
+    std::shared_ptr<TransferMetaDataItem>
+        getFirstTransferByState(TransferData::TransferState state) const;
     TransferMetaDataItemId getFirstTransferIdByState(TransferData::TransferState state) const;
     QList<TransferMetaDataItemId> getTransferIdsByState(TransferData::TransferState state) const;
 
@@ -369,12 +395,16 @@ public:
 
     bool hasBeenPreviouslyCompleted(mega::MegaTransfer* transfer) const override;
 
+    void setIsImportedLink();
+    std::shared_ptr<TransferMetaDataItem> containsAFailedImportedLink() const;
+
 protected:
     std::shared_ptr<TransferMetaData> createNonExistData() override;
     bool isNonExistTransfer(mega::MegaTransfer *transfer) const override;
 
 private:
     QString mLocalTargetPath;
+    bool mIsImportedLink;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<DownloadTransferMetaData>)
@@ -487,6 +517,15 @@ public:
         unsigned long long transferId = Preferences::instance()->transferIdentifier();
         std::shared_ptr<TYPE> transferData =  std::make_shared<TYPE>(transferId, std::forward<A>(args)...);
         addAppData(transferId, transferData);
+        return transferData;
+    }
+
+    template<typename... A>
+    static std::shared_ptr<DownloadTransferMetaData> createImportedLinkTransferMetaData(A&&... args)
+    {
+        auto transferData =
+            createTransferMetaData<DownloadTransferMetaData>(std::forward<A>(args)...);
+        transferData->setIsImportedLink();
         return transferData;
     }
 

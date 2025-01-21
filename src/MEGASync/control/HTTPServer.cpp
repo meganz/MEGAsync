@@ -1,14 +1,13 @@
 #include "HTTPServer.h"
-#include "Preferences.h"
-#include "Utilities.h"
+
 #include "MegaApplication.h"
+#include "Preferences.h"
 #include "StatsEventHandler.h"
+#include "Utilities.h"
 
 #include <QtConcurrent/QtConcurrent>
 
-
 #include <algorithm>
-
 
 using namespace mega;
 
@@ -465,7 +464,7 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
 
         if (privateAuth.size() || publicAuth.size())
         {
-            QQueue<WrappedNode *> downloadQueue;
+            QQueue<WrappedNode> downloadQueue;
 
             int end;
             bool firstnode = true;
@@ -476,7 +475,6 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 if (end < 0)
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");
-                    qDeleteAll(downloadQueue);
                     downloadQueue.clear();
                     break;
                 }
@@ -488,8 +486,8 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 long long type = Utilities::extractJSONNumber(file, QString::fromUtf8("t"));
                 if (type < 0)
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without type in webclient request");
-                    qDeleteAll(downloadQueue);
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                 "Node without type in webclient request");
                     downloadQueue.clear();
                     break;
                 }
@@ -497,8 +495,8 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 QString handle = Utilities::extractJSONString(file, QString::fromUtf8("h"));
                 if (handle.isEmpty())
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without handle in webclient request");
-                    qDeleteAll(downloadQueue);
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                 "Node without handle in webclient request");
                     downloadQueue.clear();
                     break;
                 }
@@ -509,8 +507,8 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                 name = QString::fromUtf8(QByteArray::fromBase64(name.toUtf8().constData()).constData());
                 if (name.isEmpty())
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Node without name in webclient request");
-                    qDeleteAll(downloadQueue);
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                 "Node without name in webclient request");
                     downloadQueue.clear();
                     break;
                 }
@@ -542,7 +540,8 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                     MegaNode *node = megaApi->createForeignFolderNode(h, nameArray.constData(), p,
                                                                      privateAuthArray.constData(),
                                                                      publicAuthArray.constData());
-                    downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
+                    downloadQueue.append(
+                        WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
                 }
                 else
                 {
@@ -563,7 +562,10 @@ void HTTPServer::externalDownloadRequest(QString &response, const HTTPRequest& r
                                                          p, privateAuthArray.constData(),
                                                          publicAuthArray.constData(),
                                                          chatAuth.isEmpty() ? nullptr :  chatAuthArray.constData());
-                        downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER, node, undelete));
+                        downloadQueue.append(
+                            WrappedNode(WrappedNode::TransferOrigin::FROM_WEBSERVER,
+                                        node,
+                                        undelete));
                         QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                         if (it != webTransferStateRequests.end())
                         {

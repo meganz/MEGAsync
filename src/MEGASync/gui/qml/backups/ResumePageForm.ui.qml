@@ -15,7 +15,7 @@ FooterButtonsPage {
         leftPrimary.visible: false
         rightSecondary {
             text: Strings.viewInSettings
-            visible: backupsAccess != null ? !backupsAccess.comesFromSettings : false
+            visible: backupsComponentAccess != null ? !backupsComponentAccess.comesFromSettings : false
         }
         rightPrimary {
             text: Strings.done
@@ -74,7 +74,7 @@ FooterButtonsPage {
             wrapMode: Text.Wrap
             lineHeight: 20
             lineHeightMode: Text.FixedHeight
-            visible: backupsAccess != null ? !backupsAccess.comesFromSettings : false
+            visible: backupsComponentAccess != null ? !backupsComponentAccess.comesFromSettings : false
         }
 
     } // ColumnLayout: mainLayout

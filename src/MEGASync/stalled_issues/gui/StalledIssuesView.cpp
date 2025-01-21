@@ -1,11 +1,11 @@
 #include "StalledIssuesView.h"
 
-#include <MegaApplication.h>
-#include <StalledIssuesModel.h>
+#include "MegaApplication.h"
+#include "StalledIssuesModel.h"
 
+#include <QApplication>
 #include <QHeaderView>
 #include <QScrollBar>
-#include <QApplication>
 
 const int SCROLL_STOP_THRESHOLD = 50;
 

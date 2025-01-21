@@ -1,8 +1,8 @@
 #ifndef NODENAMESETTERDIALOG_H
 #define NODENAMESETTERDIALOG_H
 
+#include "megaapi.h"
 #include "QTMegaRequestListener.h"
-#include <megaapi.h>
 
 #include <QDialog>
 #include <QTimer>

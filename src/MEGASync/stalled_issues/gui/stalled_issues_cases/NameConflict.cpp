@@ -1,21 +1,18 @@
 #include "NameConflict.h"
-#include "ui_NameConflict.h"
 
-#include "StalledIssueHeader.h"
-
-#include "MegaApplication.h"
-#include "StalledIssuesModel.h"
-#include "RenameNodeDialog.h"
-#include "QMegaMessageBox.h"
 #include "DialogOpener.h"
-#include "StalledIssuesDialog.h"
+#include "megaapi.h"
+#include "MegaApplication.h"
 #include "MegaNodeNames.h"
-#include "DateTimeFormatter.h"
+#include "QMegaMessageBox.h"
+#include "RenameNodeDialog.h"
+#include "StalledIssuesDialog.h"
+#include "StalledIssuesModel.h"
 #include "StalledIssuesUtilities.h"
 #include "StatsEventHandler.h"
 #include "TextDecorator.h"
+#include "ui_NameConflict.h"
 
-#include <megaapi.h>
 #include <QDialogButtonBox>
 #include <QPainter>
 

@@ -2,7 +2,6 @@
 #define EXTSERVER_H
 
 #include "MegaApplication.h"
-#include "megaapi.h"
 
 typedef enum {
    STRING_UPLOAD = 0,

@@ -1,23 +1,18 @@
 #ifndef WINSHELLDISPATCHERTASK_H
 #define WINSHELLDISPATCHERTASK_H
 
+#include "MegaApplication.h"
+#include <Shlobj.h>
+#include <Shobjidl.h>
+
 #include <QString>
 #include <QThread>
 
-#include "MegaApplication.h"
-#include "megaapi.h"
-
-#include <windows.h>
-#include <winbase.h>
-#include <Shlobj.h>
-#include <objbase.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
 #include <commctrl.h>
-#include <iostream>
-#include <Shobjidl.h>
-#include <wchar.h>
+#include <objbase.h>
+#include <stdlib.h>
+#include <winbase.h>
+#include <windows.h>
 
 #define CONNECTING_STATE 0
 #define READING_STATE 1

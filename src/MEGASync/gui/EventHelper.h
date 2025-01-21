@@ -1,12 +1,11 @@
 #ifndef EVENTHELPER_H
 #define EVENTHELPER_H
 
-#include <QObject>
 #include <QEvent>
+#include <QObject>
 #include <QPointer>
 
 #include <functional>
-
 
 class EventHelper : public QObject
 {

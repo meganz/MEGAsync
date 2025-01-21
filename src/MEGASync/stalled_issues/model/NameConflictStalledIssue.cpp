@@ -1,12 +1,12 @@
 #include "NameConflictStalledIssue.h"
 
-#include "mega/types.h"
-#include "Utilities.h"
-#include "StatsEventHandler.h"
-#include "StalledIssuesModel.h"
+#include "MegaApiSynchronizedRequest.h"
+#include "MergeMEGAFolders.h"
+#include "MoveToMEGABin.h"
 #include "RenameNodeDialog.h"
-
-#include <MegaApiSynchronizedRequest.h>
+#include "StalledIssuesModel.h"
+#include "StatsEventHandler.h"
+#include "Utilities.h"
 
 NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
     : StalledIssue(stallIssue)

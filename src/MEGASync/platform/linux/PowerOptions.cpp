@@ -1,24 +1,22 @@
-#include <platform/PowerOptions.h>
+#include "PowerOptions.h"
 
 #include "Preferences.h"
-#include "megaapi.h"
 
 #include <QString>
 #include <QTimer>
 
-#ifdef USE_DBUS
-    #include <QDBusConnection>
-    #include <QDBusConnectionInterface>
-    #include <QDBusInterface>
-    #include <QDBusReply>
-    #include <QDBusUnixFileDescriptor>
+#ifndef QT_NO_DBUS
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QDBusInterface>
+#include <QDBusReply>
+#include <QDBusUnixFileDescriptor>
 #endif
 
 #include <unistd.h>
 
 class PowerOptionsImpl
 {
-    const int MAX_SERVICES = 2;
     const uint INHIBIT_SUSPEND_GNOME = 4;
 
     const QString GNOME_SERVICE = QLatin1String("org.gnome.SessionManager");
@@ -63,7 +61,7 @@ public:
     {
         bool result(false);
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
         //This check is not neccesary, but just in case...this slot is only called when the boolean is true
         QDBusConnection bus = QDBusConnection::sessionBus();
 
@@ -106,7 +104,7 @@ public:
     }
 
 private:
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     bool runForGnome(const QDBusConnection& bus)
     {
         auto result(false);
@@ -151,7 +149,7 @@ private:
     }
 #endif
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     bool runForFreedesktopScreenSaver(const QDBusConnection& bus)
     {
         auto result(false);
@@ -168,7 +166,7 @@ private:
     }
 #endif
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     bool runForFreedesktopPowerManagement(const QDBusConnection& bus)
     {
         auto result(false);
@@ -185,7 +183,7 @@ private:
     }
 #endif
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     bool runForFreeDesktop(QDBusInterface& interface)
     {
         bool result(false);
@@ -221,7 +219,7 @@ private:
     }
 #endif
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     bool runForSystemD(const QDBusConnection& bus)
     {
         bool result(false);
@@ -262,7 +260,7 @@ private:
     }
 #endif
 
-#ifdef USE_DBUS
+#ifndef QT_NO_DBUS
     template <class ReturnType>
     void log(const QString& service, const QString operation
              ,const QDBusReply<ReturnType>& reply)

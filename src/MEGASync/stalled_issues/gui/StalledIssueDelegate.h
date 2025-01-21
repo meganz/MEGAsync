@@ -1,14 +1,14 @@
 #ifndef STALLEDISSUEDELEGATE_H
 #define STALLEDISSUEDELEGATE_H
 
-#include "StalledIssuesProxyModel.h"
-#include "StalledIssuesModel.h"
 #include "StalledIssuesDelegateWidgetsCache.h"
+#include "StalledIssuesModel.h"
+#include "StalledIssuesProxyModel.h"
 
-#include <QStyledItemDelegate>
-#include <QSortFilterProxyModel>
-#include <QTreeView>
 #include <QPointer>
+#include <QSortFilterProxyModel>
+#include <QStyledItemDelegate>
+#include <QTreeView>
 
 class StalledIssueBaseDelegateWidget;
 class StalledIssuesView;

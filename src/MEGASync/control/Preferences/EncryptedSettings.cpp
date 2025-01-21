@@ -1,4 +1,5 @@
 #include "EncryptedSettings.h"
+
 #include "Platform.h"
 
 EncryptedSettings::EncryptedSettings(QString file) :

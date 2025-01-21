@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SYNC_CONTROLLER_H
+#define SYNC_CONTROLLER_H
 
 #include "megaapi.h"
 #include "SyncInfo.h"
@@ -69,6 +70,8 @@ public:
     QString getIsLocalFolderAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     Syncability isLocalFolderAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
     Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    Syncability isLocalFolderSyncable(const QString& path,
+                                      const mega::MegaSync::SyncType& syncType);
 
     // Remote folder check
     Syncability isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message);
@@ -123,3 +126,4 @@ private:
 
 Q_DECLARE_METATYPE(std::shared_ptr<mega::MegaError>)
 Q_DECLARE_METATYPE(mega::MegaSync::Error)
+#endif

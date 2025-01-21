@@ -1,8 +1,9 @@
 #ifndef SHELLNOTIFIER_H
 #define SHELLNOTIFIER_H
 
-#include <memory>
 #include <QObject>
+
+#include <memory>
 
 class AbstractShellNotifier : public QObject
 {

@@ -1,8 +1,6 @@
 #include "UserNotification.h"
 
-#include "ImageDownloader.h"
 #include "megaapi.h"
-#include "MegaApplication.h"
 
 #include <cstring>
 

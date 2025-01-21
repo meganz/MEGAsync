@@ -14,6 +14,9 @@
 #include "ui_NodeSelector.h"
 #include "UploadToMegaDialog.h"
 
+#include <QMessageBox>
+#include <QPointer>
+
 UploadNodeSelector::UploadNodeSelector(QWidget* parent):
     NodeSelector(SelectTypeSPtr(new UploadType), parent)
 {

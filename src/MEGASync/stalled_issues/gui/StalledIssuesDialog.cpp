@@ -1,5 +1,6 @@
 #include "StalledIssuesDialog.h"
 
+#include "DialogOpener.h"
 #include "MegaApplication.h"
 #include "StalledIssue.h"
 #include "StalledIssueDelegate.h"
@@ -7,8 +8,6 @@
 #include "StalledIssuesProxyModel.h"
 #include "ui_StalledIssuesDialog.h"
 #include "Utilities.h"
-
-#include <DialogOpener.h>
 
 const char* MODE_SELECTED = "SELECTED";
 

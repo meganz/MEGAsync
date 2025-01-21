@@ -1,10 +1,10 @@
 #ifndef MEGANODENAMES_H
 #define MEGANODENAMES_H
 
-#include <QObject>
-#include <QCoreApplication>
+#include "megaapi.h"
 
-#include <megaapi.h>
+#include <QCoreApplication>
+#include <QObject>
 
 class MegaNodeNames : public QObject
 {

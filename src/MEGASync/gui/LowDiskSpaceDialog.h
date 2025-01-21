@@ -1,9 +1,10 @@
 #ifndef LOWDISKSPACEDIALOG_H
 #define LOWDISKSPACEDIALOG_H
 
+#include "drivedata.h"
+
 #include <QDialog>
 #include <QFileIconProvider>
-#include "drivedata.h"
 
 namespace Ui {
 class LowDiskSpaceDialog;

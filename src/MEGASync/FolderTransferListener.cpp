@@ -2,7 +2,6 @@
 
 #include "Utilities.h"
 
-
 FolderTransferListener::FolderTransferListener()
     : QObject(nullptr)
 {

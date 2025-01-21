@@ -1,13 +1,12 @@
 #include "RenameNodeDialog.h"
 
-#include <Utilities.h>
-#include <MegaApplication.h>
-#include <mega/types.h>
-#include <TextDecorator.h>
+#include "MegaApplication.h"
+#include "TextDecorator.h"
+#include "Utilities.h"
 
 #include <QFileInfo>
-#include <memory>
 
+#include <memory>
 
 namespace RenameNodeDecorator
 {

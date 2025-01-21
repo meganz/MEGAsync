@@ -15,7 +15,6 @@ pipeline {
         string(name: 'SDK_BRANCH', defaultValue: ' ', description: 'Optionally, define a custom SDK branch.')
     }
     environment {
-        gitlab_token = credentials('jenkins_sdk_token')
         MEGASYNC_BRANCH = "${params.MEGASYNC_BRANCH}"
         SDK_BRANCH = "${params.SDK_BRANCH}"
     }
@@ -69,7 +68,7 @@ pipeline {
             environment{
                 MEGA_VCPKGPATH  = "${windows_sources_workspace}\\..\\vcpkg"
                 //QT path is automatically changed to x86 with nsis when needed
-                MEGAQTPATH = "C:\\Qt\\Qt5.15.13\\5.15.13\\x64"
+                MEGAQTPATH = "C:\\Qt\\Qt5.15.16\\5.15.16\\x64"
             }
             steps {
                 gitlabCommitStatus (name: 'Build windows packages'){

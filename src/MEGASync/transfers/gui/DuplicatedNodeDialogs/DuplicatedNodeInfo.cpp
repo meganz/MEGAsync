@@ -1,9 +1,9 @@
 #include "DuplicatedNodeInfo.h"
-#include "DuplicatedUploadChecker.h"
 
-#include <Utilities.h>
-#include <MegaApplication.h>
-#include <EventUpdater.h>
+#include "DuplicatedUploadChecker.h"
+#include "EventUpdater.h"
+#include "MegaApplication.h"
+#include "Utilities.h"
 
 DuplicatedNodeInfo::DuplicatedNodeInfo(DuplicatedUploadBase* checker)
     : mSolution(NodeItemType::UPLOAD),

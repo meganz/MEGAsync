@@ -1,13 +1,12 @@
 #include "Utilities.h"
 
+// clang-format off
+#include "Platform.h"
+#include "gzjoin.h"
 #include "MegaApiSynchronizedRequest.h"
 #include "MegaApplication.h"
 #include "MoveToMEGABin.h"
-#include "Platform.h"
 #include "Preferences.h"
-
-// clang-format off
-#include "gzjoin.h"
 // clang-format on
 
 #include <QApplication>
@@ -53,7 +52,9 @@ std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
 const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
-const QString Utilities::SYNC_SUPPORT_URL = QString::fromLatin1("https://help.mega.io/installs-apps/desktop-syncing/sync-v2");
+const QString Utilities::SYNC_SUPPORT_URL =
+    QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
+const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
@@ -1441,6 +1442,11 @@ QFuture<bool> Utilities::openUrl(QUrl url)
     return QtConcurrent::run(QDesktopServices::openUrl, url);
 }
 
+void Utilities::openAppDataPath()
+{
+    Platform::getInstance()->showInFolder(MegaApplication::applicationDataPath());
+}
+
 void Utilities::openInMega(MegaHandle handle)
 {
     auto api (MegaSyncApp->getMegaApi());
@@ -1856,10 +1862,16 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
 }
 
-WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
-    : mTransfersFrom(from), mNode(node), mUndelete(undelete)
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode* node, bool undelete):
+    WrappedNode(from, std::shared_ptr<MegaNode>(node), undelete)
+{}
+
+WrappedNode::WrappedNode(TransferOrigin from, std::shared_ptr<MegaNode> node, bool undelete):
+    mTransfersFrom(from),
+    mNode(node),
+    mUndelete(undelete)
 {
-    qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
+    qRegisterMetaType<QQueue<WrappedNode>>("QQueue<WrappedNode>");
 }
 
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)
