@@ -839,7 +839,6 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     else
     {
         Platform::getInstance()->removeAllSyncsFromLeftPane();
-        return;
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
