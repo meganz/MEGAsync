@@ -23,7 +23,7 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
-#include "UpgradeOverStorage.h"
+#include "UpsellPlans.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -184,9 +184,6 @@ public:
 
     void updateTrayIconMenu();
 
-    std::shared_ptr<mega::MegaPricing> getPricing() const;
-
-    QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
 
     int getAppliedStorageState() const;
@@ -201,6 +198,7 @@ public:
     AccountStatusController* getAccountStatusController();
 
     void updateUsedStorage(const bool sendEvent = false);
+    void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
 signals:
     void startUpdaterThread();
@@ -267,7 +265,7 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
-    void checkOverStorageStates();
+    void checkOverStorageStates(bool isOnboardingAboutClosing = false);
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
@@ -416,9 +414,6 @@ protected:
     long long receivedStorageSum;
     unsigned long long mMaxMemoryUsage;
     int exportOps;
-    std::shared_ptr<mega::MegaPricing> mPricing;
-    std::shared_ptr<mega::MegaCurrency> mCurrency;
-    QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -601,6 +596,7 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+    void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
 

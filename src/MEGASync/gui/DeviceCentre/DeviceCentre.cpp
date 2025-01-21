@@ -154,11 +154,6 @@ QUrl DeviceCentre::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/deviceCentre/DeviceCentreDialog.qml"));
 }
 
-QString DeviceCentre::contextName()
-{
-    return QString::fromUtf8("deviceCentreAccess");
-}
-
 void DeviceCentre::registerQmlModules()
 {
     if (!qmlRegistrationDone)

@@ -227,7 +227,7 @@ TransferManager::TransferManager(TransfersWidget::TM_TAB tab, MegaApi *megaApi) 
 
     // Init state
     auto storageState = MegaSyncApp->getAppliedStorageState();
-    auto transferQuotaState = MegaSyncApp->getTransferQuotaState();
+    auto transferQuotaState = MegaSyncApp->getTransferQuota()->quotaState();
     onStorageStateChanged(storageState);
     onTransferQuotaStateChanged(transferQuotaState);
 

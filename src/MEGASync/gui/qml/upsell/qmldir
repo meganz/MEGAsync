@@ -1,0 +1,3 @@
+module upsell
+singleton UpsellStrings 1.0 UpsellStrings.qml
+UpsellDialog 1.0 UpsellDialog.qml

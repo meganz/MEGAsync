@@ -3,23 +3,45 @@
 #include <QQmlProperty>
 #include <QWindow>
 
-QMLComponent::QMLComponent(QObject *parent)
-    : QObject(parent)
+namespace
 {
+const QLatin1String NAMESPACE_SEPARATOR("::");
 }
 
-QMLComponent::~QMLComponent()
-{
+// ************************************************************************************************
+// * QMLComponent
+// ************************************************************************************************
 
+QList<QObject*> QMLComponent::getInstancesFromContext()
+{
+    return QList<QObject*>();
 }
 
-QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget *parent)
-    : QWidget(parent)
-    , mWindow(nullptr)
-    , mResult(QDialog::Rejected)
+QString QMLComponent::contextName() const
 {
+    // Get Child class name.
+    QString className(QString::fromLatin1(metaObject()->className()));
 
+    // Remove namespace prefix if necessary.
+    int index(className.lastIndexOf(NAMESPACE_SEPARATOR));
+    if (index != -1)
+    {
+        // Ignore namespace separator.
+        className = className.mid(index + NAMESPACE_SEPARATOR.size());
+    }
+
+    return className;
 }
+
+// ************************************************************************************************
+// * QmlDialogWrapperBase
+// ************************************************************************************************
+
+QmlDialogWrapperBase::QmlDialogWrapperBase(QWidget* parent):
+    QWidget(parent),
+    mWindow(nullptr),
+    mResult(QDialog::Rejected)
+{}
 
 QmlDialogWrapperBase::~QmlDialogWrapperBase()
 {

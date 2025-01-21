@@ -35,7 +35,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsComponentAccess
+        target: backupCandidatesComponentAccess
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;

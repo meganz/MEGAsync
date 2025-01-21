@@ -125,7 +125,16 @@ QMap<AppStatsEvents::EventType, int> AppStatsEvents::mTypeMap = {
     {AppStatsEvents::EventType::DELETE_REMOVED_BAKCUP_CLICKED,              600017},
     {AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER,                 600018},
     {AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP,                      600019},
-    {AppStatsEvents::EventType::DEVICE_CENTRE_SYNC_ROW_DOUBLE_CLICKED,      600020}
+    {AppStatsEvents::EventType::DEVICE_CENTRE_SYNC_ROW_DOUBLE_CLICKED,      600020},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_FULL_SHOWN,           600021},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_ALMOST_FULL_SHOWN,    600022},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_TX_QUOTA_EXCEEDED_SHOWN,      600023},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED,  600024},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,    600025},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,        600026},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED,       600027},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED,        600028},
+    {AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,          600029}
 };
 
 // Deprecated are not displayed
@@ -255,7 +264,24 @@ QMap<AppStatsEvents::EventType, const char*> AppStatsEvents::mMessageMap = {
     {AppStatsEvents::EventType::MOVE_REMOVED_BACKUP_FOLDER,                 "Move removed backup folder"               },
     {AppStatsEvents::EventType::CONFIRM_REMOVE_BACKUP,                      "Confirm remove backup"                    },
     {AppStatsEvents::EventType::DEVICE_CENTRE_SYNC_ROW_DOUBLE_CLICKED,
-     "Sync table row double clicked (from Device centre wizar)"                                                        }
+     "Sync table row double clicked (from Device centre wizar)"                                                        },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_FULL_SHOWN,           "Storage full dialog shown"                },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_STORAGE_ALMOST_FULL_SHOWN,
+     "Storage almost full dialog shown"                                                                                },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_TX_QUOTA_EXCEEDED_SHOWN,
+     "Transfer quota exceeded dialog shown"                                                                            },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_LEARN_MORE_TX_QUOTA_CLICKED,
+     "Link learn more about transfer quota clicked"                                                                    },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_EMPTY_RUBBISH_BIN_CLICKED,
+     "Link empty your rubbish bin clicked - view mode: %1"                                                             },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_TRY_PRO_FLEXI_CLICKED,
+     "Link try pro flexi clicked - view mode: %1"                                                                      },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_MONTHLY_CLICKED,
+     "Radio button billed monthly clicked - view mode: %1"                                                             },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_BILLED_YEARLY_CLICKED,
+     "Radio button billed yearly clicked - view mode: %1"                                                              },
+    {AppStatsEvents::EventType::UPSELL_DIALOG_PLAN_BUTTON_CLICKED,
+     "Button buy plan clicked  - view mode: %1 - plan id: %2 - plan name: %3"                                          }
 };
 
 QString AppStatsEvents::getEventMessage(EventType event,

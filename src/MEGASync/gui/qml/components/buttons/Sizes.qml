@@ -8,6 +8,7 @@ QtObject {
     id: root
 
     property bool borderLess: false
+    property bool fillWidth: false
 
     // Medium sizes
     property int horizontalPadding: borderLess ? 8 : 16

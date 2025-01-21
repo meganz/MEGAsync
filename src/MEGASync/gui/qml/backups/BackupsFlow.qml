@@ -56,7 +56,7 @@ Item {
         }
 
         function onSelectFolderMoveToConfirm() {
-            backupsComponentAccess.selectFolderMoveToConfirm();
+            backupCandidatesComponentAccess.selectFolderMoveToConfirm();
             root.state = root.confirmBackup;
         }
     }
@@ -68,12 +68,12 @@ Item {
         ignoreUnknownSignals: true
 
         function onConfirmFoldersMoveToSelect() {
-            backupsComponentAccess.confirmFoldersMoveToSelect();
+            backupCandidatesComponentAccess.confirmFoldersMoveToSelect();
             root.state = root.selectBackup;
         }
 
         function onOpenExclusionsDialog() {
-            backupsComponentAccess.openExclusionsDialog();
+            backupCandidatesComponentAccess.openExclusionsDialog();
         }
 
         function onConfirmFoldersMoveToFinal(success) {
@@ -81,7 +81,7 @@ Item {
         }
 
         function onCreateBackups(syncOrigin) {
-            backupsComponentAccess.createBackups(syncOrigin);
+            backupCandidatesComponentAccess.createBackups(syncOrigin);
         }
     }
 }

@@ -15,7 +15,7 @@ QtObject {
     property color colorDisabled: ColorTheme.textDisabled
     property color colorHovered: ColorTheme.textInverseAccent
     property color colorPressed: ColorTheme.textInverseAccent
-    property string source
+    property string source: ""
     property int position: Icon.Position.RIGHT
     property int busyIndicatorPosition: Icon.Position.RIGHT
     property bool busyIndicatorVisible: false

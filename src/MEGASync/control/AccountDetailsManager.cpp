@@ -267,11 +267,6 @@ void AccountDetailsManager::processStorageFlag(const std::shared_ptr<mega::MegaA
     }
 
     notifyStorageObservers();
-
-    if (auto dialog = DialogOpener::findDialog<UpgradeOverStorage>())
-    {
-        dialog->getDialog()->refreshStorageDetails();
-    }
 }
 
 void AccountDetailsManager::processTransferFlag(const std::shared_ptr<mega::MegaAccountDetails>& details)

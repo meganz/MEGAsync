@@ -1080,36 +1080,6 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
-QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long long usedStorage)
-{
-    if (!pricing)
-    {
-        return QString::fromUtf8("Pro");
-    }
-
-    int planNeeded = -1;
-    int amountPlanNeeded = 0;
-    int products = pricing->getNumProducts();
-    for (int i = 0; i < products; i++)
-    {
-        //Skip business & non monthly plans to offer
-        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
-        {
-            if (usedStorage < (pricing->getGBStorage(i) * (long long)GB))
-            {
-                int currentAmountMonth = pricing->getAmountMonth(i);
-                if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
-                {
-                    planNeeded = i;
-                    amountPlanNeeded = currentAmountMonth;
-                }
-            }
-        }
-    }
-
-    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
-}
-
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
 {
     if (!list || !list->size())

@@ -131,6 +131,8 @@ const QString Preferences::usedBandwidthKey         = QString::fromLatin1("usedB
 
 const QString Preferences::overStorageDialogExecutionKey = QString::fromLatin1("overStorageDialogExecution");
 const QString Preferences::overStorageNotificationExecutionKey = QString::fromLatin1("overStorageNotificationExecution");
+const QString Preferences::almostOverStorageDialogExecutionKey =
+    QString::fromLatin1("almostOverStorageDialogExecution");
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromLatin1("almostOverStorageNotificationExecution");
 const QString Preferences::payWallNotificationExecutionKey = QString::fromLatin1("payWallNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromLatin1("almostOverStorageDismissExecution");
@@ -832,6 +834,18 @@ void Preferences::setOverStorageNotificationExecution(long long timestamp)
 {
     assert(logged());
     setValueConcurrently(overStorageNotificationExecutionKey, timestamp);
+}
+
+long long Preferences::getAlmostOverStorageDialogExecution()
+{
+    assert(logged());
+    return getValueConcurrent<long long>(almostOverStorageDialogExecutionKey, defaultTimeStamp);
+}
+
+void Preferences::setAlmostOverStorageDialogExecution(long long timestamp)
+{
+    assert(logged());
+    setValueConcurrently(almostOverStorageDialogExecutionKey, timestamp);
 }
 
 long long Preferences::getAlmostOverStorageNotificationExecution()

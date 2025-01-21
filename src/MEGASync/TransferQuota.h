@@ -4,7 +4,6 @@
 #include "DesktopNotifications.h"
 #include "OverQuotaDialog.h"
 #include "Preferences.h"
-#include "UpgradeDialog.h"
 
 #include <QObject>
 
@@ -32,22 +31,18 @@ public:
     bool isOverQuota();
     bool isQuotaWarning();
     bool isQuotaFull();
-    void setOverQuotaDialogPricing(std::shared_ptr<mega::MegaPricing> pricing, std::shared_ptr<mega::MegaCurrency> currency);
-    void closeDialog();
     void checkQuotaAndAlerts();
     void checkImportLinksAlertDismissed(std::function<void(int)> func);
     void checkDownloadAlertDismissed(std::function<void(int)> func);
     void checkStreamingAlertDismissed(std::function<void (int)> func);
     QTime getRemainingTransferQuotaTime();
     void reset();
+    QuotaState quotaState() const;
 
 private:
     mega::MegaApi* mMegaApi;
-    std::shared_ptr<mega::MegaPricing> mPricing;
-    std::shared_ptr<mega::MegaCurrency> mCurrency;
     std::shared_ptr<Preferences> mPreferences;
     std::shared_ptr<DesktopNotifications> mOsNotifications;
-    QPointer<UpgradeDialog> mUpgradeDialog;
     QuotaState mQuotaState;
     std::chrono::system_clock::time_point mWaitTimeUntil;
     bool overQuotaAlertVisible;
@@ -62,6 +57,7 @@ private:
     void checkExecuteWarningUiMessage();
     void checkExecuteAlerts();
     void checkAlertDismissed(OverQuotaDialogType type, std::function<void (int)> func);
+    void closeUpsellTransferDialog();
 
 public slots:
     void onTransferOverquotaVisibilityChange(bool messageShown);

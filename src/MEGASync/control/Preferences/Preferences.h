@@ -108,6 +108,8 @@ public:
     void setOverStorageDialogExecution(long long timestamp);
     long long getOverStorageNotificationExecution();
     void setOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageDialogExecution();
+    void setAlmostOverStorageDialogExecution(long long timestamp);
     long long getAlmostOverStorageNotificationExecution();
     void setAlmostOverStorageNotificationExecution(long long timestamp);
     long long getPayWallNotificationExecution();
@@ -655,6 +657,7 @@ protected:
     static const QString usedBandwidthIntervalKey;
     static const QString overStorageDialogExecutionKey;
     static const QString overStorageNotificationExecutionKey;
+    static const QString almostOverStorageDialogExecutionKey;
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString payWallNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;

@@ -36,11 +36,6 @@ QUrl BackupCandidatesComponent::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/backups/BackupsDialog.qml"));
 }
 
-QString BackupCandidatesComponent::contextName()
-{
-    return QString::fromUtf8("backupsComponentAccess");
-}
-
 void BackupCandidatesComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)
