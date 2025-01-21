@@ -14,13 +14,15 @@ LinkProcessor::LinkProcessor(MegaApi* megaApi, MegaApi* megaApiFolders)
 {
 }
 
-LinkProcessor::LinkProcessor(const QStringList& linkList, MegaApi* megaApi, MegaApi* megaApiFolders)
-    : mMegaApi(megaApi)
-    , mMegaApiFolders(megaApiFolders)
-    , mLinkList(linkList)
-    , mImportParentFolder(mega::INVALID_HANDLE)
-    , mDelegateTransferListener(std::make_shared<QTMegaTransferListener>(megaApi, this))
-    , mCurrentIndex(0)
+LinkProcessor::LinkProcessor(const QStringList& linkList,
+                             MegaApi* megaApi,
+                             MegaApi* megaApiFolders):
+    mMegaApi(megaApi),
+    mMegaApiFolders(megaApiFolders),
+    mLinkList(linkList),
+    mImportParentFolder(mega::INVALID_HANDLE),
+    mDownloader(std::make_shared<MegaDownloader>(megaApi, this)),
+    mCurrentIndex(0)
 {
     resetAndSetLinkList(linkList);
 
@@ -169,6 +171,12 @@ QString LinkProcessor::getReasonForExpiredLink(MegaRequest* request, MegaError* 
         default:
             return tr("This link is invalid");
     }
+}
+
+unsigned long long LinkProcessor::getAppDataId()
+{
+    auto data = TransferMetaDataContainer::createImportedLinkTransferMetaData(mDownloadPath);
+    return data->getAppId();
 }
 
 void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
@@ -321,20 +329,13 @@ void LinkProcessor::onRequestFinish(MegaRequest* request, MegaError* e)
 
 void LinkProcessor::addTransfersAndStartIfNotStartedYet(LinkTransferType transferType)
 {
-    bool noTransferInProgress = mTransferQueue.isEmpty();
-
     for (int i = 0; i < mLinkObjects.size(); i++)
     {
         if (isSelected(i))
         {
             mTransferQueue.push_back({mLinkObjects[i], transferType});
+            processNextTransfer();
         }
-    }
-
-    if (noTransferInProgress)
-    {
-        // Start transfers
-        processNextTransfer();
     }
 }
 
@@ -378,36 +379,6 @@ void LinkProcessor::onFetchSetFromLink(const AlbumCollection& collection)
 
     sendLinkInfoAvailableSignal(mCurrentIndex - 1);
     continueOrFinishLinkInfoReq();
-}
-
-void LinkProcessor::onSetDownloadFinished(const QString& setName,
-                                          const QStringList& succeededDownloadedElements,
-                                          const QStringList& failedDownloadedElements,
-                                          const QString& destinationPath)
-{
-    (void) setName;
-    (void) succeededDownloadedElements;
-    (void) failedDownloadedElements;
-    (void) destinationPath;
-
-    // A public link (to a Set) has been downloaded, proceed to the next one
-    processNextTransfer();
-}
-
-void LinkProcessor::onSetImportFinished(const QString& setName,
-                                        const QStringList& succeededImportElements,
-                                        const QStringList& failedImportElements,
-                                        const QStringList& alreadyExistingImportElements,
-                                        const SetImportParams& sip)
-{
-    (void) setName;
-    (void) succeededImportElements;
-    (void) failedImportElements;
-    (void) alreadyExistingImportElements;
-    (void) sip;
-
-    // A public link (to a Set) has been imported, proceed to the next one
-    processNextTransfer();
 }
 
 // ----------------------------------------------------------------------------
@@ -459,7 +430,7 @@ void LinkProcessor::setImportParentNode(MegaNodeSPtr importParentNode)
 {
     if (!importParentNode) { return; }
 
-    for (const auto& linkObjectPtr : mLinkObjects)
+    for (const auto& linkObjectPtr: qAsConst(mLinkObjects))
     {
         // Verify that linkObjectPtr is selected and without errors
         if (!linkObjectPtr ||
@@ -530,45 +501,8 @@ MegaHandle LinkProcessor::getImportParentFolder()
 //!
 void LinkProcessor::downloadLinks(const QString& localPath)
 {
-    setDownloadPaths(localPath);
+    mDownloadPath = localPath + QDir::separator();
     addTransfersAndStartIfNotStartedYet(LinkTransferType::DOWNLOAD);
-}
-
-//!
-//! \brief LinkProcessor::setDownloadPaths
-//! \param downloadPath: download destination folder on local pc
-//! \Iterates over all LinkObjects and sets the download path for every NODE or SET:
-//! \In case of a SET, a directory with the name of the set is created.
-//!
-void LinkProcessor::setDownloadPaths(const QString& downloadPath)
-{
-    for (int i = 0; i < mLinkObjects.size(); i++)
-    {
-        if (!isSelected(i)) { continue; }
-
-        auto linkObject = mLinkObjects[i];
-
-        switch (linkObject->getLinkType())
-        {
-        case linkType::NODE:
-            linkObject->setDownloadPath(downloadPath);
-            break;
-
-        case linkType::SET:
-        {
-            auto set = std::dynamic_pointer_cast<LinkSet>(linkObject);
-            if (set)
-            {
-                QString setDownloadPath = downloadPath + QDir::separator() + set->getName();
-                set->setDownloadPath(setDownloadPath);
-            }
-            break;
-        }
-
-        default:
-            break;
-        }
-    }
 }
 
 void LinkProcessor::processNextTransfer()
@@ -590,7 +524,15 @@ void LinkProcessor::processNextTransfer()
         {
             if (firstItem.transferType == LinkTransferType::DOWNLOAD)
             {
-                startDownload(linkNodePtr->getMegaNode(), linkNodePtr->getDownloadPath());
+                mNodesToDownload.append(WrappedNode(WrappedNode::TransferOrigin::FROM_LINK,
+                                                    linkNodePtr->getMegaNode(),
+                                                    false));
+
+                if (mTransferQueue.isEmpty())
+                {
+                    startDownload(mNodesToDownload);
+                    mNodesToDownload.clear();
+                }
                 return;
             }
             else if ((firstItem.transferType == LinkTransferType::IMPORT) &&
@@ -610,9 +552,10 @@ void LinkProcessor::processNextTransfer()
             if (firstItem.transferType == LinkTransferType::DOWNLOAD)
             {
                 // Request to put this set in preview and download all its elements
-                emit requestDownloadSet(set->getSet(),
-                                        set->getDownloadPath(),
-                                        QList<mega::MegaHandle>()); // Empty list, request all Elements
+                emit requestDownloadSet(
+                    set->getSet(),
+                    mDownloadPath,
+                    QList<mega::MegaHandle>()); // Empty list, request all Elements
                 return;
             }
             else if (firstItem.transferType == LinkTransferType::IMPORT)
@@ -641,39 +584,25 @@ void LinkProcessor::processNextTransfer()
 //! \param localPath: download destination folder on local pc
 //! \Requests the SDK to download @linkNode to @localPath
 //!
-void LinkProcessor::startDownload(MegaNodeSPtr linkNode, const QString &localPath)
+void LinkProcessor::startDownload(const QQueue<WrappedNode>& nodes)
 {
-    if (!linkNode || localPath.isEmpty()) { return; }
-
-    const bool startFirst = false;
-    QByteArray path = (localPath + QDir::separator()).toUtf8();
-    const char* name = nullptr;
-    const char* appData = nullptr;
-    MegaCancelToken* cancelToken = nullptr; // No cancellation possible
-    const bool undelete = false;
-
-    mMegaApi->startDownload(linkNode.get(), path.constData(), name, appData, startFirst, cancelToken,
-                            MegaTransfer::COLLISION_CHECK_FINGERPRINT,
-                            MegaTransfer::COLLISION_RESOLUTION_NEW_WITH_N,
-                            undelete,
-                            mDelegateTransferListener.get());
-}
-
-//!
-//! \brief LinkProcessor::onTransferFinish
-//! \Callback after downloading a folder, file or set element
-//!
-void LinkProcessor::onTransferFinish(MegaApi* api, MegaTransfer *transfer, MegaError* error)
-{
-    (void) api;
-
-    if (error->getErrorCode() != MegaError::API_OK)
+    if (nodes.isEmpty())
     {
-        const QString path = QString::fromUtf8(transfer->getPath());
-        emit linkDownloadErrorDetected(path, error->getErrorCode());
+        return;
     }
 
-    processNextTransfer();
+    MegaDownloader::DownloadInfo info;
+    info.appId = getAppDataId();
+    info.checkLocalSpace = false;
+    info.downloadQueue = nodes;
+    info.path = mDownloadPath;
+    mDownloader->processDownloadQueue(info);
+
+    auto appData = TransferMetaDataContainer::getAppDataById<DownloadTransferMetaData>(info.appId);
+    if (appData)
+    {
+        appData->setIsImportedLink();
+    }
 }
 
 // ----------------------------------------------------------------------------

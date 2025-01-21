@@ -26,15 +26,28 @@ class MegaDownloader : public QObject
 public:
     // If you want to manage public transfers in a different MegaApi object,
     // provide megaApiGuest
-    MegaDownloader(mega::MegaApi* _megaApi, std::shared_ptr<FolderTransferListener> _listener);
+    MegaDownloader(mega::MegaApi* megaApi, std::shared_ptr<mega::MegaTransferListener> listener);
+    MegaDownloader(mega::MegaApi* megaApi, mega::MegaTransferListener* listener);
     virtual ~MegaDownloader() = default;
 
-    bool processDownloadQueue(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                              const QString &path);
-    bool processTempDownloadQueue(QQueue<WrappedNode*>* downloadQueue, const QString &path = QString());
+    struct DownloadInfo
+    {
+        QQueue<WrappedNode> downloadQueue;
+        BlockingBatch* downloadBatches = nullptr;
+        QString path;
+        unsigned long long appId = TransferMetaData::INVALID_ID;
+        bool createAppId = true;
+
+        bool checkLocalSpace = true;
+    };
+
+    void processDownloadQueue(DownloadInfo& info);
 
 protected:
-    void download(WrappedNode *parent, QFileInfo info, const std::shared_ptr<DownloadTransferMetaData>& data, mega::MegaCancelToken *cancelToken);
+    void download(const WrappedNode& parent,
+                  QFileInfo info,
+                  const std::shared_ptr<DownloadTransferMetaData>& data,
+                  mega::MegaCancelToken* cancelToken);
 
     mega::MegaApi *megaApi;
     QMap<mega::MegaHandle, QString> pathMap;
@@ -46,11 +59,10 @@ private slots:
     void onAvailableSpaceCheckFinished(bool isDownloadPossible);
 
 private:
-    bool processDownloadQueueImpl(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                                  const QString &path, bool createAppDataId);
-
-    void startDownload(WrappedNode* parent, const QString &appData,
-                       const QString &currentPathWithSep, mega::MegaCancelToken* cancelToken);
+    void startDownload(const WrappedNode& parent,
+                       const QString& appData,
+                       const QString& currentPathWithSep,
+                       mega::MegaCancelToken* cancelToken);
     void downloadForeignDir(mega::MegaNode *node, const std::shared_ptr<DownloadTransferMetaData>& data, const QString &currentPathWithSep);
 
     QString buildEscapedPath(const char* nodeName, QString currentPathWithSep);
@@ -60,8 +72,8 @@ private:
     static QString createPathWithSeparator(const QString& path);
 
     bool mNoTransferStarted = true;
-    std::shared_ptr<FolderTransferListener> mFolderTransferListener;
-    std::shared_ptr<mega::QTMegaTransferListener> mFolderTransferListenerDelegate;
+    std::shared_ptr<mega::MegaTransferListener> mTransferListener;
+    std::shared_ptr<mega::QTMegaTransferListener> mTransferListenerDelegate;
     DownloadQueueController mQueueData;
 };
 

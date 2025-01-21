@@ -248,7 +248,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
-    void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
+    void externalDownload(QQueue<WrappedNode> newDownloadQueue);
     void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(mega::MegaHandle targetFolder);
     void externalFolderUpload(mega::MegaHandle targetFolder);
@@ -292,10 +292,6 @@ public slots:
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
-    void setDownloadFinished(const QString& setName,
-                             const QStringList& succeededDownloadedElements,
-                             const QStringList& failedDownloadedElements,
-                             const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
@@ -403,7 +399,7 @@ protected:
     mega::MegaHandle folderUploadTarget;
 
     QQueue<QString> uploadQueue;
-    QQueue<WrappedNode *> downloadQueue;
+    QQueue<WrappedNode> downloadQueue;
     BlockingBatch mBlockingBatch;
 
     ThreadPool* mThreadPool;
@@ -612,7 +608,6 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-    void onDownloadLinkError(const QString& path, const int errorCode);
     void onCopyLinkError(const QString& nodeName, const int errorCode);
 };
 

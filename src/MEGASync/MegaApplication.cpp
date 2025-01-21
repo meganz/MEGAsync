@@ -720,14 +720,8 @@ void MegaApplication::initialize()
     //! NOTE! Create a raw pointer, as the lifetime of this object needs to be carefully managed:
     //! mSetManager needs to be manually deleted, as the SDK needs to be destroyed first
     mSetManager = new SetManager(megaApi, megaApiFolders);
-    connect(mSetManager, &SetManager::onSetDownloadFinished, this, &MegaApplication::setDownloadFinished);
 
     mLinkProcessor = new LinkProcessor(megaApi, megaApiFolders);
-
-    connect(mLinkProcessor,
-            &LinkProcessor::linkDownloadErrorDetected,
-            this,
-            &MegaApplication::onDownloadLinkError);
     connect(mLinkProcessor,
             &LinkProcessor::linkCopyErrorDetected,
             this,
@@ -735,10 +729,14 @@ void MegaApplication::initialize()
 
     connect(mLinkProcessor, &LinkProcessor::requestFetchSetFromLink, mSetManager, &SetManager::requestFetchSetFromLink);
     connect(mSetManager, &SetManager::onFetchSetFromLink, mLinkProcessor, &LinkProcessor::onFetchSetFromLink);
-    connect(mLinkProcessor, &LinkProcessor::requestDownloadSet, mSetManager, &SetManager::requestDownloadSet);
-    connect(mSetManager, &SetManager::onSetDownloadFinished, mLinkProcessor, &LinkProcessor::onSetDownloadFinished);
-    connect(mLinkProcessor, &LinkProcessor::requestImportSet, mSetManager, &SetManager::requestImportSet);
-    connect(mSetManager, &SetManager::onSetImportFinished, mLinkProcessor, &LinkProcessor::onSetImportFinished);
+    connect(mLinkProcessor,
+            &LinkProcessor::requestDownloadSet,
+            mSetManager,
+            &SetManager::requestDownloadSet);
+    connect(mLinkProcessor,
+            &LinkProcessor::requestImportSet,
+            mSetManager,
+            &SetManager::requestImportSet);
 
     createUserMessageController();
 
@@ -1725,21 +1723,30 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromUtf8(".")))
     {
-        QQueue<WrappedNode *>::iterator it;
+        QQueue<WrappedNode>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(),
+            HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
                                              MegaTransfer::STATE_CANCELLED,
-                                             0, 0, 0, QString());
+                                             0,
+                                             0,
+                                             0,
+                                             QString());
         }
 
-        qDeleteAll(downloadQueue);
         downloadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
         return;
     }
 
-    downloader->processDownloadQueue(&downloadQueue, mBlockingBatch, path);
+    MegaDownloader::DownloadInfo info;
+    info.downloadQueue = downloadQueue;
+    downloadQueue.clear();
+
+    info.downloadBatches = &mBlockingBatch;
+    info.path = path;
+
+    downloader->processDownloadQueue(info);
 }
 
 void MegaApplication::createTransferManagerDialog(TransfersWidget::TM_TAB tab)
@@ -3108,9 +3115,15 @@ void MegaApplication::clearDownloadAndPendingLinks()
 {
     if (downloadQueue.size() || pendingLinks.size())
     {
-        for (QQueue<WrappedNode *>::iterator it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+        for (QQueue<WrappedNode>::iterator it = downloadQueue.begin(); it != downloadQueue.end();
+             ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+            HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
+                                             MegaTransfer::STATE_CANCELLED,
+                                             0,
+                                             0,
+                                             0,
+                                             QString());
         }
 
         for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3121,7 +3134,6 @@ void MegaApplication::clearDownloadAndPendingLinks()
                                              MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
         }
 
-        qDeleteAll(downloadQueue);
         downloadQueue.clear();
         pendingLinks.clear();
         showInfoMessage(tr("Transfer canceled"));
@@ -3135,8 +3147,7 @@ void MegaApplication::unlink(bool keepLogs)
         return;
     }
 
-    //Reset fields that will be initialized again upon login
-    qDeleteAll(downloadQueue);
+    // Reset fields that will be initialized again upon login
     downloadQueue.clear();
     mRootNode.reset();
     mRubbishNode.reset();
@@ -3632,20 +3643,6 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     if (mOsNotifications)
     {
         mOsNotifications->sendFinishedTransferNotification(appDataId);
-    }
-}
-
-void MegaApplication::setDownloadFinished(const QString& setName,
-                                          const QStringList& succeededDownloadedElements,
-                                          const QStringList& failedDownloadedElements,
-                                          const QString& destinationPath)
-{
-    if (mOsNotifications)
-    {
-        mOsNotifications->sendFinishedSetDownloadNotification(setName,
-                                                              succeededDownloadedElements,
-                                                              failedDownloadedElements,
-                                                              destinationPath);
     }
 }
 
@@ -4163,7 +4160,8 @@ void MegaApplication::downloadActionClicked()
                         MegaNode *selectedNode = megaApi->getNodeByHandle(selectedMegaFolderHandle);
                         if (selectedNode)
                         {
-                            downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
+                            downloadQueue.append(
+                                WrappedNode(WrappedNode::TransferOrigin::FROM_APP, selectedNode));
                         }
                     }
                     processDownloads();
@@ -4596,14 +4594,18 @@ void MegaApplication::onDownloadFromMegaFinished(QPointer<DownloadFromMegaDialog
         }
         else
         {
-            QQueue<WrappedNode *>::iterator it;
+            QQueue<WrappedNode>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getMegaNode()->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
+                HTTPServer::onTransferDataUpdate((*it).getMegaNode()->getHandle(),
+                                                 MegaTransfer::STATE_CANCELLED,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 QString());
             }
 
-            //If the dialog is rejected, cancel uploads
-            qDeleteAll(downloadQueue);
+            // If the dialog is rejected, cancel uploads
             downloadQueue.clear();
         }
     }
@@ -4731,7 +4733,7 @@ void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extr
     exportOps++;
 }
 
-void MegaApplication::externalDownload(QQueue<WrappedNode *> newDownloadQueue)
+void MegaApplication::externalDownload(QQueue<WrappedNode> newDownloadQueue)
 {
     if (appfinished)
     {
@@ -5949,7 +5951,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     node->setPrivateAuth(auth.toUtf8().constData());
                 }
 
-                downloadQueue.append(new WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
+                downloadQueue.append(WrappedNode(WrappedNode::TransferOrigin::FROM_APP, node));
                 processDownloads();
                 break;
             }
@@ -6276,35 +6278,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 void MegaApplication::onScheduledExecution()
 {
     onGlobalSyncStateChangedImpl();
-}
-
-void MegaApplication::onDownloadLinkError(const QString& path, const int errorCode)
-{
-    const QString title = tr("Folder download error");
-
-    QString message;
-    if (errorCode == MegaError::API_EWRITE)
-    {
-        if (mightBeCaseSensitivityIssue(path))
-        {
-            message = tr("The folder %1 can't be downloaded. The download may have failed due to a "
-                         "casing mismatch. Ensure the folders match exactly and try again.")
-                          .arg(path);
-        }
-        else
-        {
-            message =
-                tr("The folder %1 can't be downloaded. Check the download destination folder.")
-                    .arg(path);
-        }
-    }
-    else
-    {
-        const QString errorString = QString::fromUtf8(MegaError::getErrorString(errorCode));
-        message =
-            tr("The folder %1 can't be downloaded. Error received : %2.").arg(path, errorString);
-    }
-    showErrorMessage(message, title);
 }
 
 void MegaApplication::onCopyLinkError(const QString& nodeName, const int errorCode)

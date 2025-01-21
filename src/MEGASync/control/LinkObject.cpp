@@ -1,18 +1,19 @@
 #include "LinkObject.h"
 
+#include "Utilities.h"
+
 #include <QCoreApplication>
 
-LinkObject::LinkObject(mega::MegaApi* megaApi, MegaNodeSPtr node, const QString& link)
-    : mMegaApi(megaApi)
-    , mLink(link)
-    , mNode(node)
-    , mImportNode(nullptr)
-    , mName(getDefaultName())
-    , mDownloadPath(DEFAULT_STR)
-    , mIsSelected(false)
-    , mLinkType(linkType::INVALID)
-    , mLinkStatus(linkStatus::FAILED)
-    , mShowFolderIcon(false)
+LinkObject::LinkObject(mega::MegaApi* megaApi, MegaNodeSPtr node, const QString& link):
+    mMegaApi(megaApi),
+    mLink(link),
+    mNode(node),
+    mImportNode(nullptr),
+    mName(getDefaultName()),
+    mIsSelected(false),
+    mLinkType(linkType::INVALID),
+    mLinkStatus(linkStatus::FAILED),
+    mShowFolderIcon(false)
 {}
 
 LinkObject::~LinkObject() {}
@@ -46,10 +47,6 @@ void LinkObject::setImportNode(MegaNodeSPtr node) { mImportNode = node; }
 
 MegaNodeSPtr LinkObject::getImportNode() const { return mImportNode; }
 
-void LinkObject::setDownloadPath(const QString& path) { mDownloadPath = path; }
-
-QString LinkObject::getDownloadPath() const { return mDownloadPath; }
-
 bool LinkObject::showFolderIcon() const { return mShowFolderIcon; }
 
 bool LinkObject::readyForProcessing() const { return false; }
@@ -59,7 +56,6 @@ void LinkObject::reset()
     mNode = nullptr;
     mImportNode = nullptr;
     mName = getDefaultName();
-    mDownloadPath = DEFAULT_STR;
     mIsSelected = false;
     mLinkType = linkType::INVALID;
     mLinkStatus = linkStatus::FAILED;
@@ -117,9 +113,9 @@ LinkSet::LinkSet(mega::MegaApi* megaApi, const AlbumCollection& set)
 
 linkStatus LinkSet::getLinkStatus() const
 {
-    for (const auto& linkNodePtr : mSet.nodeList)
+    for (const auto& wrappedNode: mSet.nodeList)
     {
-        if (!linkNodePtr->isNodeKeyDecrypted())
+        if (!wrappedNode.getMegaNode()->isNodeKeyDecrypted())
         {
             return linkStatus::WARNING;
         }
@@ -143,9 +139,10 @@ int64_t LinkSet::getSize() const
 {
     int64_t totalValue = 0;
 
-    for (const auto& linkNodePtr : mSet.nodeList)
+    for (const auto& wrappedNode: mSet.nodeList)
     {
-        totalValue += (linkNodePtr ? mMegaApi->getSize(linkNodePtr.get()) : 0);
+        auto node(wrappedNode.getMegaNode());
+        totalValue += (node ? mMegaApi->getSize(node) : 0);
     }
 
     return totalValue;

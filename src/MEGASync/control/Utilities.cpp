@@ -1774,10 +1774,16 @@ void MegaListenerFuncExecuter::onRequestFinish(MegaApi *api, MegaRequest *reques
     }
 }
 
-WrappedNode::WrappedNode(TransferOrigin from, MegaNode *node, bool undelete)
-    : mTransfersFrom(from), mNode(node), mUndelete(undelete)
+WrappedNode::WrappedNode(TransferOrigin from, MegaNode* node, bool undelete):
+    WrappedNode(from, std::shared_ptr<MegaNode>(node), undelete)
+{}
+
+WrappedNode::WrappedNode(TransferOrigin from, std::shared_ptr<MegaNode> node, bool undelete):
+    mTransfersFrom(from),
+    mNode(node),
+    mUndelete(undelete)
 {
-    qRegisterMetaType<QQueue<WrappedNode*>>("QQueue<WrappedNode*>");
+    qRegisterMetaType<QQueue<WrappedNode>>("QQueue<WrappedNode>");
 }
 
 TimeInterval::TimeInterval(long long secs, bool secondPrecision)
