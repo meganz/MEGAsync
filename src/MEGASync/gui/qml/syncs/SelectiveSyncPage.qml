@@ -38,10 +38,6 @@ SelectiveSyncPageForm {
         }
     }
 
-    ChooseLocalFolder {
-        id: localFolder
-    }
-
     Connections {
         target: root.syncs
 
@@ -51,11 +47,11 @@ SelectiveSyncPageForm {
             root.selectiveSyncMoveToSuccess();
         }
 
-        function onLocalErrorChanged(message) {
+        function onLocalErrorChanged() {
             enableScreen();
         }
 
-        function onRemoteErrorChanged(message) {
+        function onRemoteErrorChanged() {
             enableScreen();
         }
     }
