@@ -485,6 +485,7 @@ set (DESKTOP_APP_GUI_UI_FILES
     ${CMAKE_CURRENT_LIST_DIR}/ui/RemoteItemUi.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/SyncStallModeSelector.ui
     ${CMAKE_CURRENT_LIST_DIR}/ui/BannerWidget.ui
+    ${CMAKE_CURRENT_LIST_DIR}/ui/SyncAccountFullMessage.ui
 )
 
 set (DESKTOP_APP_GUI_UI_FILES_ROOT
