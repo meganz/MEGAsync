@@ -45,27 +45,6 @@ set(DESKTOP_APP_SYNCS_SOURCES
     syncs/control/CreateRemoveBackupsManager.cpp
 )
 
-target_sources_conditional(MEGAsync
-   FLAG WIN32
-   QT_AWARE
-   PRIVATE
-   syncs/gui/Twoways/win/SyncAccountFullMessage.ui
-)
-
-target_sources_conditional(MEGAsync
-   FLAG APPLE
-   QT_AWARE
-   PRIVATE
-   syncs/gui/Twoways/macx/SyncAccountFullMessage.ui
-)
-
-target_sources_conditional(MEGAsync
-   FLAG UNIX AND NOT APPLE
-   QT_AWARE
-   PRIVATE
-   syncs/gui/Twoways/linux/SyncAccountFullMessage.ui
-)
-
 if (WIN32)
     set_property(TARGET MEGAsync
         APPEND PROPERTY AUTOUIC_SEARCH_PATHS
