@@ -297,8 +297,8 @@ QmlDialog{
                 enabled: valueTextField.text.trim().length !== 0
                 icons.position: Icon.Position.LEFT
                 onClicked: {
-                    if(typeof addRuleDialogAccess !== "undefined" && addRuleDialogAccess !== null) {
-                        addRuleDialogAccess.appendRuleToFolders(root.targetType, root.valueType, root.ruleValue);
+                    if(typeof addExclusionRuleAccess !== "undefined" && addExclusionRuleAccess !== null) {
+                        addExclusionRuleAccess.appendRuleToFolders(root.targetType, root.valueType, root.ruleValue);
                     }
                     root.accepted();
                     root.close();

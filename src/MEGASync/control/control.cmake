@@ -46,7 +46,10 @@ set(DESKTOP_APP_CONTROL_HEADERS
     control/AccountDetailsManager.h
     control/UserMessageController.h
     control/UserMessageTypes.h
+    control/DataBaseClasses/DataModel.h
+    control/DataBaseClasses/DataController.h
     control/ReloadingEventHandler.h
+    control/UsersUpdateListener.h
 )
 
 set(DESKTOP_APP_CONTROL_SOURCES
@@ -94,6 +97,7 @@ set(DESKTOP_APP_CONTROL_SOURCES
     control/BugReport/BugReportController.cpp
     control/BugReport/BugReportData.h
     control/ReloadingEventHandler.cpp
+    control/UsersUpdateListener.cpp
 )
 
 target_sources(MEGAsync
@@ -104,7 +108,8 @@ target_sources(MEGAsync
 
 set (INCLUDE_DIRECTORIES
     ${CMAKE_CURRENT_LIST_DIR}
-    ${CMAKE_CURRENT_LIST_DIR}/Preferences
     ${CMAKE_CURRENT_LIST_DIR}/BugReport
+    ${CMAKE_CURRENT_LIST_DIR}/DataBaseClasses
+    ${CMAKE_CURRENT_LIST_DIR}/Preferences
 )
 target_include_directories(MEGAsync PRIVATE ${INCLUDE_DIRECTORIES})

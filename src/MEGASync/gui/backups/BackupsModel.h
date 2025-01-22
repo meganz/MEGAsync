@@ -8,12 +8,11 @@
 #include <QSortFilterProxyModel>
 #include <QTimer>
 
-class BackupFolder : public QObject
+class BackupFolder: public QObject
 {
     Q_OBJECT
 
 public:
-
     // Front (with role)
     QString mName;
     QString mSize;
@@ -33,13 +32,19 @@ public:
 
     BackupFolder(const QString& folder,
                  const QString& displayName,
-                 bool selected = true, QObject* parent = nullptr);
+                 bool selected = true,
+                 QObject* parent = nullptr);
 
     LocalFileFolderAttributes* mFolderAttr;
     void setSize(long long size);
     void setFolder(const QString& folder);
     void setError(int error);
-    QString getFolder() const {return mFolder;}
+
+    QString getFolder() const
+    {
+        return mFolder;
+    }
+
     void calculateFolderSize();
 
 private:
@@ -47,29 +52,19 @@ private:
     QString mFolder;
 };
 
-class BackupsModel : public QAbstractListModel
+class BackupsModel: public QAbstractListModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString totalSize
-               READ getTotalSize
-               NOTIFY totalSizeChanged)
-    Q_PROPERTY(bool totalSizeReady
-               READ getIsTotalSizeReady
-               NOTIFY totalSizeReadyChanged)
-    Q_PROPERTY(Qt::CheckState checkAllState
-               READ getCheckAllState
-               WRITE setCheckAllState
-               NOTIFY checkAllStateChanged)
-    Q_PROPERTY(QString conflictsNotificationText
-               READ getConflictsNotificationText
-               NOTIFY globalErrorChanged)
-    Q_PROPERTY(int globalError
-               READ getGlobalError
-               NOTIFY globalErrorChanged)
+    Q_PROPERTY(QString totalSize READ getTotalSize NOTIFY totalSizeChanged)
+    Q_PROPERTY(bool totalSizeReady READ getIsTotalSizeReady NOTIFY totalSizeReadyChanged)
+    Q_PROPERTY(Qt::CheckState checkAllState READ getCheckAllState WRITE setCheckAllState NOTIFY
+                   checkAllStateChanged)
+    Q_PROPERTY(QString conflictsNotificationText READ getConflictsNotificationText NOTIFY
+                   globalErrorChanged)
+    Q_PROPERTY(int globalError READ getGlobalError NOTIFY globalErrorChanged)
 
 public:
-
     enum BackupFolderRoles
     {
         NAME_ROLE = Qt::UserRole + 1,
@@ -97,10 +92,10 @@ public:
     explicit BackupsModel(QObject* parent = nullptr);
     ~BackupsModel();
 
-    QHash<int,QByteArray> roleNames() const override;
-    int rowCount(const QModelIndex & parent = QModelIndex()) const override;
-    bool setData(const QModelIndex &index, const QVariant &value, int role) override;
-    QVariant data(const QModelIndex & index, int role = NAME_ROLE) const override;
+    QHash<int, QByteArray> roleNames() const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+    QVariant data(const QModelIndex& index, int role = NAME_ROLE) const override;
     QString getTotalSize() const;
     bool getIsTotalSizeReady() const;
     Qt::CheckState getCheckAllState() const;
@@ -151,14 +146,12 @@ private:
     bool selectIfExistsInsertion(const QString& inputPath);
     QList<QList<BackupFolder*>::const_iterator> getRepeatedNameItList(const QString& name);
 
-    bool folderContainsOther(const QString& folder,
-                             const QString& other) const;
-    bool isRelatedFolder(const QString& folder,
-                         const QString& existingPath) const;
+    bool folderContainsOther(const QString& folder, const QString& other) const;
+    bool isRelatedFolder(const QString& folder, const QString& existingPath) const;
     QModelIndex getModelIndex(QList<BackupFolder*>::iterator item);
     void setAllSelected(bool selected);
     bool checkPermissions(const QString& inputPath);
-    void checkDuplicatedBackups(const QStringList &candidateList);
+    void checkDuplicatedBackups(const QStringList& candidateList);
     void reviewConflicts();
     void changeConflictsNotificationText(const QString& text);
     bool existOtherRelatedFolder(const int currentRow);
@@ -172,15 +165,14 @@ private slots:
     void onSyncRemoved(std::shared_ptr<SyncSettings> syncSettings);
     void onBackupsCreationFinished(bool success);
     void onBackupFinished(const QString& folder, int errorCode, int syncErrorCode);
-
 };
 
-class BackupsProxyModel : public QSortFilterProxyModel
+class BackupsProxyModel: public QSortFilterProxyModel
 {
     Q_OBJECT
 
-    Q_PROPERTY(bool selectedFilterEnabled READ selectedFilterEnabled
-               WRITE setSelectedFilterEnabled NOTIFY selectedFilterEnabledChanged)
+    Q_PROPERTY(bool selectedFilterEnabled READ selectedFilterEnabled WRITE setSelectedFilterEnabled
+                   NOTIFY selectedFilterEnabledChanged)
 
 public:
     explicit BackupsProxyModel(QObject* parent = nullptr);
@@ -197,7 +189,7 @@ signals:
     void backupsCreationFinished(bool success);
 
 protected:
-    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+    bool filterAcceptsRow(int source_row, const QModelIndex& source_parent) const;
 
 private:
     bool mSelectedFilterEnabled;

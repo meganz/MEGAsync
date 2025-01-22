@@ -390,10 +390,11 @@ bool MoveOrRenameCannotOccurIssue::solveLocalGenericIssues(StalledIssueSPtr issu
                 {
                     // Don´t handle error, if it fails, we will have a name conflict, but nothing
                     // important
-                    MergeMEGAFolders::merge(
-                        targetNode.get(),
-                        nullptr,
-                        MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
+                    MergeMEGAFolders foldersMerger(
+                        MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin,
+                        SyncController::instance().isSyncCaseSensitive(firstSyncId()));
+
+                    foldersMerger.merge(targetNode.get(), nullptr);
                 }
 
                 mUndoSuccessful--;

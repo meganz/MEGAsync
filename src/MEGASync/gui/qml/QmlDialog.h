@@ -20,6 +20,7 @@ public:
 public slots:
     void setIconSrc(const QString& iconSrc);
     QmlInstancesManager* getInstancesManager();
+    void centerAndRaise();
 
 signals:
     void instancesManagerChanged();

@@ -237,6 +237,11 @@ pipeline {
             }
         }
     }                 
+    post {
+        always {
+            deleteDir()
+        }
+    }
 }
             
 def getVersionFromHeader(String versionFilePath) {

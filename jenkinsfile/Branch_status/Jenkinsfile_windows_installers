@@ -135,6 +135,9 @@ pipeline {
                         echo "Installers successfully uploaded. URL: [${env.REPO_URL}/MEGAsync-releases/$MEGASYNC_VERSION/$RELEASE_CANDIDATE_NAME/windows]"    
                     }
                 }
+                always {
+                    deleteDir()
+                }
             }
         }
     }

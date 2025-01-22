@@ -5,20 +5,24 @@ import backups 1.0
 import onboard 1.0
 import onboard.syncs_types 1.0
 
-import BackupsModel 1.0
+import BackupsComponent 1.0
+import BackupCandidates 1.0
 
 BackupsFlow {
     id: root
 
     required property StepPanel stepPanelRef
 
+    BackupsComponent
+    {
+        id: backupCandidatesComponentAccess
+    }
+
     selectFoldersPage: Component {
         id: selectFoldersPageComponent
 
         SelectFoldersPage {
             id: selectFoldersPageItem
-
-            backupsProxyModelRef: root.backupsProxyModel
         }
     }
 
@@ -27,8 +31,7 @@ BackupsFlow {
 
         ConfirmFoldersPage {
             id: confirmFoldersPageItem
-
-            backupsProxyModelRef: root.backupsProxyModel
+            backupCandidatesComponentAccessRef: backupCandidatesComponentAccess
         }
     }
 
@@ -53,8 +56,8 @@ BackupsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: {
-                        if(backupsModelAccess.globalError !== backupsModelAccess.BackupErrorCode.NONE) {
-                            if(backupsModelAccess.globalError === backupsModelAccess.BackupErrorCode.SDK_CREATION) {
+                        if(backupCandidatesComponentAccess.data.globalError !== BackupCandidates.NONE) {
+                            if(backupCandidatesComponentAccess.data.globalError === BackupCandidates.SDK_CREATION) {
                                 return root.stepPanelRef.step4Error;
                             }
                             else {

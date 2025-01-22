@@ -84,17 +84,17 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
                 }
                 else
                 {
-                    if (detectValue(chr, &mTarget, Qt::CaseSensitive))
+                    if (detectValue(chr, &mTarget))
                     {
                         continue;
                     }
 
-                    if (detectValue(chr, &mType, Qt::CaseSensitive))
+                    if (detectValue(chr, &mType))
                     {
                         continue;
                     }
 
-                    if (detectValue(chr, &mStrategy, Qt::CaseInsensitive))
+                    if (detectValue(chr, &mStrategy))
                     {
                         continue;
                     }
@@ -109,16 +109,21 @@ MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& rule, bool isCommented)
     }
 }
 
-MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern, Class classType, Target target, Type type, Strategy strategy) :
+MegaIgnoreNameRule::MegaIgnoreNameRule(const QString& pattern,
+                                       Class classType,
+                                       Target target,
+                                       Type type,
+                                       Strategy strategy,
+                                       WildCardType wildcard):
     MegaIgnoreRule(QString(), false),
     mPattern(pattern),
     mClass(classType),
     mTarget(target),
     mType(type),
-    mStrategy(strategy)
+    mStrategy(strategy),
+    mWildCardType(wildcard)
 {
     markAsDirty();
-    fillWildCardType(pattern);
 }
 
 QString MegaIgnoreNameRule::getModifiedRule() const
@@ -255,6 +260,16 @@ void MegaIgnoreNameRule::fillWildCardType(const QString& rightSidePart)
     {
         mPattern = mPattern.remove(asterisk);
     }
+}
+
+MegaIgnoreNameRule::Strategy MegaIgnoreNameRule::getStrategy() const
+{
+    return mStrategy;
+}
+
+void MegaIgnoreNameRule::setStrategy(Strategy newStrategy)
+{
+    mStrategy = newStrategy;
 }
 
 ////////////////MEGA IGNORE EXTENSION RULE

@@ -1,5 +1,5 @@
-#ifndef QMLMANAGER_H
-#define QMLMANAGER_H
+#ifndef QML_MANAGER_H
+#define QML_MANAGER_H
 
 #include <QQmlEngine>
 
@@ -19,6 +19,8 @@ public:
     void setRootContextProperty(const QString& name, QObject* value);
     void setRootContextProperty(const QString& name, const QVariant& value);
 
+    bool isRootContextPropertySet(QObject* value);
+
     void addImageProvider(const QString& id, QQmlImageProviderBase*);
     void removeImageProvider(const QString& id);
 
@@ -31,7 +33,7 @@ private:
 
     QmlManager();
     void registerCommonQmlElements();
-
+    QString getObjectRootContextName(QObject* value);
 };
 
-#endif // QMLMANAGER_H
+#endif // QML_MANAGER_H

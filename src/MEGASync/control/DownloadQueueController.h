@@ -18,8 +18,10 @@ class DownloadQueueController : public QObject
 public:
     DownloadQueueController(mega::MegaApi* _megaApi, const QMap<mega::MegaHandle, QString>& pathMap);
 
-    void initialize(QQueue<WrappedNode*>* downloadQueue, BlockingBatch& downloadBatches,
-                    unsigned long long appDataId, const QString& path);
+    void initialize(QQueue<WrappedNode> downloadQueue,
+                    BlockingBatch* downloadBatches,
+                    unsigned long long appDataId,
+                    const QString& path);
 
     void startAvailableSpaceChecking();
 
@@ -29,7 +31,7 @@ public:
     int getDownloadQueueSize();
     bool isDownloadQueueEmpty();
     void clearDownloadQueue();
-    WrappedNode* dequeueDownloadQueue();
+    WrappedNode dequeueDownloadQueue();
 
     unsigned long long getCurrentAppDataId() const;
     const QString& getCurrentTargetPath() const;
@@ -56,7 +58,7 @@ private:
     unsigned long long mCurrentAppDataId;
     QString mCurrentTargetPath;
     BlockingBatch* mDownloadBatches;
-    QQueue<WrappedNode*>* mDownloadQueue;
+    QQueue<WrappedNode> mDownloadQueue;
 
     DriveSpaceData mCachedDriveData;
 };

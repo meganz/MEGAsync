@@ -1,7 +1,5 @@
 import common 1.0
 
-import BackupsModel 1.0
-
 SelectFoldersPageForm {
     id: root
 
@@ -14,7 +12,6 @@ SelectFoldersPageForm {
 
         rightPrimary.onClicked: {
             root.selectFolderMoveToConfirm();
-            backupsModelAccess.check();
         }
     }
 

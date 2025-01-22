@@ -23,9 +23,16 @@
 #include <functional>
 
 #ifdef __APPLE__
-#define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAsync", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
-                             chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+#define MEGA_SET_PERMISSIONS \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAsync", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/MacOS/mega-desktop-app-gfxworker", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/" \
+      "MEGAShellExtFinder", \
+      S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
 
 #define MegaSyncApp (static_cast<MegaApplication *>(QCoreApplication::instance()))
@@ -362,8 +369,7 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
-    static void adjustToScreenFunc(QPoint position, QWidget *what);
-    static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
+    static void adjustToScreenFunc(QPoint position, QWidget* what);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
@@ -386,6 +392,9 @@ public:
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    // Folder is on a case sensitive drive/OS
+    static Qt::CaseSensitivity isCaseSensitive(const QString& folder);
 
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();
@@ -501,10 +510,12 @@ class WrappedNode
 {
 public:
     // Enum used to record origin of transfer
-    enum TransferOrigin {
-        FROM_UNKNOWN   = 0,
-        FROM_APP       = 1,
+    enum TransferOrigin
+    {
+        FROM_UNKNOWN = 0,
+        FROM_APP = 1,
         FROM_WEBSERVER = 2,
+        FROM_LINK = 3,
     };
 
     // Constructor with origin and pointer to MEGA node. Default to unknown/nullptr
@@ -514,23 +525,23 @@ public:
                 mega::MegaNode* node = nullptr,
                 bool undelete = false);
 
+    WrappedNode(TransferOrigin from = WrappedNode::TransferOrigin::FROM_UNKNOWN,
+                std::shared_ptr<mega::MegaNode> node = nullptr,
+                bool undelete = false);
+
     // Destructor
-    ~WrappedNode()
-    {
-        // MEGA node should be deleted when this is deleted.
-        delete mNode;
-    }
+    ~WrappedNode() {}
 
     // Get the transfer origin
-    WrappedNode::TransferOrigin getTransferOrigin()
+    WrappedNode::TransferOrigin getTransferOrigin() const
     {
         return mTransfersFrom;
     }
 
     // Get the wrapped MEGA node pointer
-    mega::MegaNode* getMegaNode()
+    mega::MegaNode* getMegaNode() const
     {
-        return mNode;
+        return mNode.get();
     }
 
     bool getUndelete() const
@@ -543,11 +554,11 @@ private:
     WrappedNode::TransferOrigin  mTransfersFrom;
 
     // Wrapped MEGA node
-    mega::MegaNode* mNode;
+    std::shared_ptr<mega::MegaNode> mNode;
 
     bool mUndelete;
 };
 
-Q_DECLARE_METATYPE(QQueue<WrappedNode*>)
+Q_DECLARE_METATYPE(QQueue<WrappedNode>)
 
 #endif // UTILITIES_H

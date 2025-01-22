@@ -87,9 +87,17 @@ SettingsDialog::SettingsDialog(MegaApplication* app, bool proxyOnly, QWidget* pa
     mThreadPool(ThreadPoolSingleton::getInstance()),
     mCacheSize(-1),
     mRemoteCacheSize(-1),
-    mDebugCounter(0)
+    mDebugCounter(0),
+    usersUpdateListener(std::make_unique<UsersUpdateListener>())
 {
     mUi->setupUi(this);
+
+    connect(usersUpdateListener.get(),
+            &UsersUpdateListener::userEmailUpdated,
+            this,
+            &SettingsDialog::onUserEmailChanged);
+    mMegaApi->addListener(usersUpdateListener.get());
+
     // override whatever indexes might be set in .ui files (frequently checked in by mistake)
     mUi->wStack->setCurrentWidget(mUi->pGeneral);
     mUi->wStackFooter->setCurrentWidget(mUi->wGeneralFooter);
@@ -192,6 +200,8 @@ SettingsDialog::~SettingsDialog()
     AccountDetailsManager::instance()->dettachStorageObserver(*this);
     AccountDetailsManager::instance()->dettachBandwidthObserver(*this);
     AccountDetailsManager::instance()->dettachAccountObserver(*this);
+
+    mMegaApi->removeListener(usersUpdateListener.get());
 
     delete mUi;
 }
@@ -726,8 +736,19 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
 {
     if (mLoadingSettings)
         return;
-    if (!checked)
+
+    if (checked)
     {
+        // This is actually saved to Preferences after the MegaApi call succeeds;
+        // Warning: the parameter is actually "disable".
+        mMegaApi->setFileVersionsOption(false);
+    }
+    else
+    {
+        // Restore the check while the user has not answered the warning dialog
+        mUi->cFileVersioning->blockSignals(true);
+        mUi->cFileVersioning->setChecked(true);
+
         QMegaMessageBox::MessageBoxInfo msgInfo;
         msgInfo.title = MegaSyncApp->getMEGAString();
         msgInfo.text = tr("Disabling file versioning will prevent"
@@ -736,26 +757,22 @@ void SettingsDialog::on_cFileVersioning_toggled(bool checked)
         msgInfo.buttons = QMessageBox::Yes | QMessageBox::No;
         msgInfo.defaultButton = QMessageBox::No;
         msgInfo.parent = this;
-        msgInfo.finishFunc = [this, checked](QPointer<QMessageBox> msg)
+        msgInfo.finishFunc = [this](QPointer<QMessageBox> msg)
         {
-            if (msg->result() == QMessageBox::No)
+            // We want to make changes only if the answer is Yes.
+            // If the user clicks No or closes the dialog with he X button, we don't want to disable
+            // the feature.
+            if (msg->result() == QMessageBox::Yes)
             {
-                mUi->cFileVersioning->blockSignals(true);
-                mUi->cFileVersioning->setChecked(true);
-                mUi->cFileVersioning->blockSignals(false);
+                // This is actually saved to Preferences after the MegaApi call succeeds;
+                // Warning: the parameter is actually "disable".
+                mMegaApi->setFileVersionsOption(true);
+                mUi->cFileVersioning->setChecked(false);
             }
-            else
-            {
-                mMegaApi->setFileVersionsOption(!checked);
-            }
+            mUi->cFileVersioning->blockSignals(false);
         };
 
         QMegaMessageBox::warning(msgInfo);
-    }
-    else
-    {
-        // This is actually saved to Preferences after the MegaApi call succeeds;
-        mMegaApi->setFileVersionsOption(!checked);
     }
 }
 
@@ -769,7 +786,7 @@ void SettingsDialog::on_cbSleepMode_toggled(bool checked)
     mPreferences->setAwakeIfActive(checked);
 
     PowerOptions options;
-    auto result = options.keepAwake(MegaSyncApp->getTransfersModel()->hasActiveTransfers() > 0);
+    auto result = options.keepAwake(checked);
 
     if (checked && !result)
     {
@@ -829,7 +846,6 @@ void SettingsDialog::on_cFinderIcons_toggled(bool checked)
     else
     {
         Platform::getInstance()->removeAllSyncsFromLeftPane();
-        return;
     }
     mPreferences->disableLeftPaneIcons(!checked);
 }
@@ -1517,6 +1533,21 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 void SettingsDialog::onShellNotificationsProcessed()
 {
     setOverlayCheckboxEnabled(true, mUi->cOverlayIcons->isChecked());
+}
+
+void SettingsDialog::onUserEmailChanged(mega::MegaHandle userHandle, const QString& newEmail)
+{
+    if (!mPreferences->logged())
+    {
+        return;
+    }
+
+    MegaHandle myHandle = mMegaApi->getMyUserHandleBinary();
+    if (userHandle == myHandle)
+    {
+        mPreferences->setEmail(newEmail);
+        mUi->lEmail->setText(newEmail);
+    }
 }
 
 // Network -----------------------------------------------------------------------------------------

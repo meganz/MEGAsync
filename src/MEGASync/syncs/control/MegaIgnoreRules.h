@@ -96,7 +96,9 @@ public:
     {
         NONE,
         g,
-        r
+        G,
+        r,
+        R
     };
     Q_ENUM(Strategy)
 
@@ -112,11 +114,12 @@ public:
 
     MegaIgnoreNameRule() = default;
     explicit MegaIgnoreNameRule(const QString& rule, bool isCommented);
-    explicit MegaIgnoreNameRule(const QString& pattern
-                                ,Class classType
-                                ,Target target = Target::NONE
-                                ,Type type = Type::NONE
-                                ,Strategy strategy = Strategy::NONE);
+    explicit MegaIgnoreNameRule(const QString& pattern,
+                                Class classType,
+                                Target target = Target::NONE,
+                                Type type = Type::NONE,
+                                Strategy strategy = Strategy::NONE,
+                                WildCardType wildcard = WildCardType::EQUAL);
     QString getModifiedRule() const override;
     QString getDisplayText() const override { return mPattern; }
     RuleType ruleType() const override { return RuleType::NAMERULE;}
@@ -125,14 +128,17 @@ public:
     WildCardType getWildCardType();
     void setWildCardType(WildCardType wildCard);
     virtual void setPattern(const QString &pattern);
+    void setStrategy(Strategy newStrategy);
+    Strategy getStrategy() const;
 
 protected:
     QString mPattern;
 
 private:
     void fillWildCardType(const QString& rightSide);
-    template <class EnumType>
-    bool detectValue(QString character, EnumType* value, Qt::CaseSensitivity caseSensitive)
+
+    template<class EnumType>
+    bool detectValue(QString character, EnumType* value)
     {
         if (static_cast<int>((*value)) > 0)
         {
@@ -143,7 +149,7 @@ private:
         for (int i = 0; i < e.keyCount(); i++)
         {
             QString s(QString::fromUtf8(e.key(i))); // enum name as string
-            if (s.compare(character, caseSensitive) == 0)
+            if (s.compare(character, Qt::CaseSensitive) == 0)
             {
                 (*value) = static_cast<EnumType>(i);
                 return true;

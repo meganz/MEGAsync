@@ -70,6 +70,8 @@ public:
     QString getIsLocalFolderAllowedForSyncMsg(const QString& path, const mega::MegaSync::SyncType& syncType);
     Syncability isLocalFolderAllowedForSync(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
     Syncability isLocalFolderSyncable(const QString& path, const mega::MegaSync::SyncType& syncType, QString& message);
+    Syncability isLocalFolderSyncable(const QString& path,
+                                      const mega::MegaSync::SyncType& syncType);
 
     // Remote folder check
     Syncability isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message);
@@ -88,6 +90,9 @@ public:
     std::optional<int> overwriteMegaIgnoreUsingLegacyRules(std::shared_ptr<SyncSettings> sync);
     bool removeMegaIgnore(const QString& syncLocalFolder,
                           mega::MegaHandle backupId = mega::INVALID_HANDLE);
+
+    // Check is sync folder is case sensitive
+    Qt::CaseSensitivity isSyncCaseSensitive(mega::MegaHandle backupId);
 
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);

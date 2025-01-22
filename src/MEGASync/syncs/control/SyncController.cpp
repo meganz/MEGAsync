@@ -636,6 +636,14 @@ SyncController::Syncability SyncController::isLocalFolderSyncable(const QString&
     return (syncability);
 }
 
+SyncController::Syncability
+    SyncController::isLocalFolderSyncable(const QString& path,
+                                          const mega::MegaSync::SyncType& syncType)
+{
+    QString message;
+    return isLocalFolderSyncable(path, syncType, message);
+}
+
 // Returns wether the remote path is syncable.
 // The message to display to the user is stored in <message>.
 SyncController::Syncability SyncController::isRemoteFolderSyncable(std::shared_ptr<mega::MegaNode> node, QString& message)
@@ -780,6 +788,20 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     }
 
     return false;
+}
+
+Qt::CaseSensitivity SyncController::isSyncCaseSensitive(mega::MegaHandle backupId)
+{
+    if (auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(backupId))
+    {
+        return Utilities::isCaseSensitive(syncSettings->getLocalFolder());
+    }
+
+#ifdef Q_OS_LINUX
+    return Qt::CaseSensitive;
+#else
+    return Qt::CaseInsensitive;
+#endif
 }
 
 QString SyncController::getSyncNameFromPath(const QString& path)

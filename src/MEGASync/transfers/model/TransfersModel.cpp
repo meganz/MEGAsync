@@ -1,6 +1,7 @@
 #include "TransfersModel.h"
 
 #include "EventUpdater.h"
+#include "mega/types.h"
 #include "MegaApplication.h"
 #include "MegaTransferView.h"
 #include "Platform.h"
@@ -12,6 +13,7 @@
 #include "TransferMetaData.h"
 #include "Utilities.h"
 
+#include <QMegaMessageBox.h>
 #include <QSharedData>
 
 #include <algorithm>
@@ -1416,7 +1418,6 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
     {
         QMutexLocker lock(&mModelMutex);
         QStringList urlsOpened;
-
         for (auto row : rows)
         {
             auto node = getParentNodeToOpenByRow(row);
@@ -1427,8 +1428,22 @@ void TransfersModel::openInMEGA(const QList<int> &rows)
                 std::unique_ptr<char[]> key(node->getBase64Key());
                 if (handle && key)
                 {
-                    QString url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
-                    if(!urlsOpened.contains(url))
+                    QString url;
+                    std::unique_ptr<MegaError> err(
+                        MegaSyncApp->getMegaApi()->isNodeSyncableWithError(node.get()));
+                    if (err->getSyncError() == SyncError::ACTIVE_SYNC_SAME_PATH ||
+                        err->getSyncError() == SyncError::ACTIVE_SYNC_BELOW_PATH ||
+                        err->getSyncError() == SyncError::ACTIVE_SYNC_ABOVE_PATH)
+                    {
+                        auto deviceID = QString::fromUtf8(MegaSyncApp->getMegaApi()->getDeviceId());
+                        url = QString::fromUtf8("mega://#fm/device-centre/") + deviceID +
+                              QString::fromUtf8("/") + QString::fromUtf8(handle.get());
+                    }
+                    else
+                    {
+                        url = QString::fromUtf8("mega://#fm/") + QString::fromUtf8(handle.get());
+                    }
+                    if (!urlsOpened.contains(url))
                     {
                         urlsOpened.append(url);
                         Utilities::openUrl(QUrl(url));

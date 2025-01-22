@@ -1,5 +1,5 @@
-#ifndef QMLCOMPONENTWRAPPER_H
-#define QMLCOMPONENTWRAPPER_H
+#ifndef QML_COMPONENT_WRAPPER_H
+#define QML_COMPONENT_WRAPPER_H
 
 #include "DialogOpener.h"
 #include "megaapi.h"
@@ -22,34 +22,50 @@
 template<class Type>
 class QmlDialogWrapper;
 
-class QMLComponent : public QObject
+class QMLComponent: public QObject
 {
+    Q_OBJECT
+
 public:
-    QMLComponent(QObject* parent = 0);
-    ~QMLComponent();
+    using QObject::QObject;
+    virtual ~QMLComponent() = default;
 
     virtual QUrl getQmlUrl() = 0;
 
-    virtual QString contextName()
-    {
-        return QString();
-    }
+    virtual QList<QObject*> getInstancesFromContext();
 
-    struct OpenDialogInfo
-    {
-        bool ignoreCloseAllAction;
-
-        OpenDialogInfo():
-            ignoreCloseAllAction(false)
-        {}
-    };
+    QString contextName() const;
 
     template<typename DialogType, typename... A>
-    static QPointer<QmlDialogWrapper<DialogType>> openDialog(OpenDialogInfo info = OpenDialogInfo(),
-                                                             A&&... args)
+    static auto showDialog(A&&... args)
+    {
+        return getDialog<DialogType>(
+            [](auto& dialog)
+            {
+                return DialogOpener::showDialog(dialog);
+            },
+            std::forward<A>(args)...);
+    }
+
+    template<typename DialogType, typename... A>
+    static auto addDialog(A&&... args)
+    {
+        return getDialog<DialogType>(
+            [](auto& dialog)
+            {
+                return DialogOpener::addDialog(dialog);
+            },
+            std::forward<A>(args)...);
+    }
+
+signals:
+    void dataReady();
+
+private:
+    template<typename DialogType, typename... A>
+    static QPointer<QmlDialogWrapper<DialogType>> createOrGetDialog(A&&... args)
     {
         QPointer<QmlDialogWrapper<DialogType>> dialog(nullptr);
-
         if (auto dialogInfo = DialogOpener::findDialog<QmlDialogWrapper<DialogType>>())
         {
             dialog = dialogInfo->getDialog();
@@ -59,15 +75,14 @@ public:
             dialog = new QmlDialogWrapper<DialogType>(std::forward<A>(args)...);
         }
 
-        auto dialogInfo = DialogOpener::showDialog(dialog);
-        dialogInfo->setIgnoreCloseAllAction(info.ignoreCloseAllAction);
-
-        return dialogInfo->getDialog();
+        return dialog;
     }
 
-    virtual QList<QObject*> getInstancesFromContext()
+    template<typename DialogType, typename Operation, typename... A>
+    static auto getDialog(Operation operation, A&&... args)
     {
-        return QList<QObject*>();
+        auto dialog(createOrGetDialog<DialogType>(std::forward<A>(args)...));
+        return operation(dialog);
     }
 };
 
@@ -141,11 +156,7 @@ public:
     {
         Q_ASSERT((std::is_base_of<QMLComponent, Type>::value));
 
-        mWrapper = new Type(parent, std::forward<A>(args)...);
-        if (!parent)
-        {
-            mWrapper->setParent(this);
-        }
+        mWrapper = new Type(nullptr, std::forward<A>(args)...);
         QQmlEngine* engine = QmlManager::instance()->getEngine();
         QQmlComponent qmlComponent(engine);
         qmlComponent.loadUrl(mWrapper->getQmlUrl());
@@ -153,15 +164,13 @@ public:
         if (qmlComponent.isReady())
         {
             QQmlContext* context = new QQmlContext(engine->rootContext(), this);
-            if(!mWrapper->contextName().isEmpty())
-            {
-                context->setContextProperty(mWrapper->contextName(), mWrapper);
-            }
+            QmlManager::instance()->setRootContextProperty(mWrapper);
             mWindow = dynamic_cast<QmlDialog*>(qmlComponent.create(context));
             Q_ASSERT(mWindow);
 
             if (mWindow)
             {
+                mWrapper->setParent(mWindow);
                 mWindow->getInstancesManager()->initInstances(mWrapper);
             }
 
@@ -214,17 +223,28 @@ public:
         }
     }
 
-    ~QmlDialogWrapper(){
-        if(mWrapper && !mWrapper->parent())
-        {
-            mWrapper->deleteLater();
-        }
+    ~QmlDialogWrapper() = default;
+
+    inline Type* wrapper()
+    {
+        return mWrapper;
     }
 
-    Type* wrapper(){ return mWrapper;}
+    void setShowWhenCreated()
+    {
+        connect(
+            mWrapper,
+            &Type::dataReady,
+            this,
+            [this]()
+            {
+                mWindow->centerAndRaise();
+            },
+            Qt::UniqueConnection);
+    }
 
 private:
     QPointer<Type> mWrapper;
 };
 
-#endif // QMLCOMPONENTWRAPPER_H
+#endif // QML_COMPONENT_WRAPPER_H

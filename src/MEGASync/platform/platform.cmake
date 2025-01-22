@@ -109,11 +109,12 @@ elseif (APPLE)
         "-framework IOKit"
     )
 else ()
-    find_package(Qt5 REQUIRED COMPONENTS X11Extras)
+    find_package(Qt5 REQUIRED COMPONENTS X11Extras DBus)
     target_link_libraries(MEGAsync
         PRIVATE
         Qt5::X11Extras
         xcb
+        Qt5::DBus
     )
 endif()
 

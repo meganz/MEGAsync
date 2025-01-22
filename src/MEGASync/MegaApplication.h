@@ -23,7 +23,7 @@
 #include "TransferManager.h"
 #include "TransferQuota.h"
 #include "UpdateTask.h"
-#include "UpgradeOverStorage.h"
+#include "UpsellPlans.h"
 #include "Utilities.h"
 
 #include <QAction>
@@ -184,9 +184,6 @@ public:
 
     void updateTrayIconMenu();
 
-    std::shared_ptr<mega::MegaPricing> getPricing() const;
-
-    QuotaState getTransferQuotaState() const;
     std::shared_ptr<TransferQuota> getTransferQuota() const;
 
     int getAppliedStorageState() const;
@@ -201,6 +198,7 @@ public:
     AccountStatusController* getAccountStatusController();
 
     void updateUsedStorage(const bool sendEvent = false);
+    void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
 signals:
     void startUpdaterThread();
@@ -248,7 +246,7 @@ public slots:
     void shellViewOnMega(QByteArray localPath, bool versions);
     void shellViewOnMega(mega::MegaHandle handle, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
-    void externalDownload(QQueue<WrappedNode *> newDownloadQueue);
+    void externalDownload(QQueue<WrappedNode> newDownloadQueue);
     void externalLinkDownload(QString megaLink, QString auth);
     void externalFileUpload(mega::MegaHandle targetFolder);
     void externalFolderUpload(mega::MegaHandle targetFolder);
@@ -267,7 +265,7 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
-    void checkOverStorageStates();
+    void checkOverStorageStates(bool isOnboardingAboutClosing = false);
     void checkOverQuotaStates();
     void periodicTasks();
     void cleanAll();
@@ -292,10 +290,6 @@ public slots:
     int getPrevVersion();
     void onDismissStorageOverquota(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
-    void setDownloadFinished(const QString& setName,
-                             const QStringList& succeededDownloadedElements,
-                             const QStringList& failedDownloadedElements,
-                             const QString& destinationPath);
     void transferBatchFinished(unsigned long long appDataId, bool fromCancellation);
     void updateStatesAfterTransferOverQuotaTimeHasExpired();
 #ifdef __APPLE__
@@ -403,7 +397,7 @@ protected:
     mega::MegaHandle folderUploadTarget;
 
     QQueue<QString> uploadQueue;
-    QQueue<WrappedNode *> downloadQueue;
+    QQueue<WrappedNode> downloadQueue;
     BlockingBatch mBlockingBatch;
 
     ThreadPool* mThreadPool;
@@ -420,9 +414,6 @@ protected:
     long long receivedStorageSum;
     unsigned long long mMaxMemoryUsage;
     int exportOps;
-    std::shared_ptr<mega::MegaPricing> mPricing;
-    std::shared_ptr<mega::MegaCurrency> mCurrency;
-    QPointer<UpgradeOverStorage> mStorageOverquotaDialog;
     mega::QTMegaListener *delegateListener;
     MegaUploader *uploader;
     MegaDownloader *downloader;
@@ -605,6 +596,7 @@ private:
     void sendPeriodicStats() const;
 
     void createUserMessageController();
+    void closeUpsellStorageDialog();
 
     void createGfxProvider(const QString& basePath);
 
@@ -612,7 +604,7 @@ private slots:
     void onFolderTransferUpdate(FolderTransferUpdateEvent event);
     void onNotificationProcessed();
     void onScheduledExecution();
-    void onOpenLinkError(const QString& path, const int errorCode);
+    void onCopyLinkError(const QString& nodeName, const int errorCode);
 };
 
 #endif // MEGAAPPLICATION_H

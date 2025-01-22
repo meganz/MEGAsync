@@ -411,6 +411,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -436,11 +441,6 @@
             <numerusform>Folder wasn’t backed up. Try again.</numerusform>
             <numerusform>These folders weren’t backed up. Try again.</numerusform>
         </translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>You can’t back up folders with the same name. Rename them to continue with the backup. Folder names won’t change on your computer.</translation>
     </message>
 </context>
 <context>
@@ -5804,6 +5804,7 @@ Enter a different name.</translation>
 - Qt has been upgraded to a newer version.
 - Other bugs have been fixed and numerous improvements made.
 </source>
+        <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9199,42 +9200,42 @@ Please delete the folder sync from settings to cancel them.</source>
     <name>UpsellStrings</name>
     <message>
         <source>Billed monthly</source>
+        <translatorcomment>Button to display plans with monthly subscription. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save up to %1% with yearly billing</source>
+        <translatorcomment>Label with information about the discount of the annual subscription compared to the monthly subscription for the plan selected in the window. The placeholder %1 shall be replaced by the discount percentage. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Billed yearly</source>
+        <translatorcomment>Button to display plans with yearly subscription. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Buy %1</source>
+        <translatorcomment>Button that redirects to the website to purchase the selected plan. The placeholder %1 shall be replaced by the name of the plan selected in the window. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translatorcomment>Billing clarification message according to currency. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 per month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the monthly price of the plan including the currency (e.g. NZD per month). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>per month</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(%1 per month)</source>
+        <translatorcomment>Text to indicate the monthly price of the plan without including the currency. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Recommended</source>
+        <translatorcomment>Label to indicate which is the recommended plan. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9243,38 +9244,57 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
     <message>
         <source>%1 storage</source>
+        <translatorcomment>Text to show the total amount of space available for the plan. The placeholder %1 shall be replaced by the amount of storage including the units (e.g. 1TB storage). CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your MEGA cloud storage is almost full</source>
+        <translatorcomment>Title indicating that the storage is almost full. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Your MEGA cloud storage is full</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Title indicating that the storage is full. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>%1 transfer</source>
+        <translatorcomment>Text to show the transfer amount for the plan. The placeholder %1 shall be replaced by the amount of transfer including the units (e.g. 1TB transfer). CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Transfer quota exceeded</source>
+        <translatorcomment>Title of the window showing that the transfer quota has been exceeded. CON-945</translatorcomment>
         <translation type="unfinished">Transfer quota exceeded</translation>
     </message>
     <message>
-        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <source>(%1 per month)</source>
+        <translatorcomment>Price per month with yealy billing. The placeholder %1 shall be replaced by the monthly price (e.g. 49.9€ transfer). CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 billed yearly</source>
+        <translatorcomment>Text to indicate the currency (e.g. NZD billed yearly). The placeholder %1 shall be replaced by the currency symbol in text format. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translatorcomment>Text to offer Pro flexi plan if the user needs more quota. The symbol [BR] is to break into a new line. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translatorcomment>Message prompting users to either upgrade their account for more storage or free up space by deleting files. The [BR] is for line break. The symbols [A] and [/A] delimit the web link to which the user is redirected. The symbols [B] and [/B] delimit the bold text format. Please keep them all. CON-945</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing free users they have reached their download limit, offering options to upgrade or wait. The placeholder %1 shall be replaced by the remaining time to reset the transfer quota (e.g. 13m 34s or 6h). The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translatorcomment>Explanatory message informing pro users they have reached their download limit, offering options to paid for another pro plan. The symbols [B] and [/B] indicate that the text is shown in bold. The symbols [A] and [/A] delimit the web link to which the user is redirected. Please keep them all. CON-945 AP-2131</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
