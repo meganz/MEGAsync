@@ -1,6 +1,9 @@
 #include "SurveyComponent.h"
 
 #include "SurveyController.h"
+#include "Surveys.h"
+
+#include <QUrl>
 
 SurveyComponent::SurveyComponent(QObject* parent, int type):
     QMLWidgetComponent(parent),
@@ -21,7 +24,11 @@ QUrl SurveyComponent::getQmlUrl()
 QList<QObject*> SurveyComponent::getInstancesFromContext()
 {
     QList<QObject*> instances;
-    instances.append(mController->surveys().get());
+    QObject* surveysObject = qobject_cast<QObject*>(mController->surveys().get());
+    if (surveysObject)
+    {
+        instances.append(surveysObject);
+    }
     return instances;
 }
 

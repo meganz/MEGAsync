@@ -1,7 +1,7 @@
 #ifndef SURVEY_CONTROLLER_H
 #define SURVEY_CONTROLLER_H
 
-#include "Surveys.h"
+#include <QObject>
 
 #include <memory>
 
@@ -10,6 +10,8 @@ namespace mega
 class MegaRequest;
 class MegaError;
 }
+
+class Surveys;
 
 class SurveyController: public QObject
 {

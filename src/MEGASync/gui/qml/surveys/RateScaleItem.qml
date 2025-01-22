@@ -20,6 +20,7 @@ Item {
         width: parent.width
 
         readonly property real defaultLineHeight: 20
+        readonly property size defaultIconSize: Qt.size(34, 33)
 
         Row {
             width: parent.width
@@ -48,11 +49,11 @@ Item {
                         sourceEnabled: Images.starEmpty
                     }
                     colors.pressed: "transparent"
-                    sizes.iconSize: Qt.size(34, 33)
+                    sizes.iconSize: content.defaultIconSize
                     onClicked: {
                         score = index + 1;
                         for (let i = 0; i < root.numRateItems; i++) {
-                            rateRepeater.itemAt(i).checked = i <= (score - 1);
+                            rateRepeater.itemAt(i).checked = i <= index;
                         }
                     }
 

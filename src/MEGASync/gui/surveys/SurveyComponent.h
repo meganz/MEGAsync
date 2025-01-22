@@ -3,6 +3,9 @@
 
 #include "QmlWidgetWrapper.h"
 
+#include <QList>
+#include <QObject>
+
 #include <memory>
 
 class SurveyController;

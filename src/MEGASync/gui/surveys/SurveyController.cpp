@@ -3,6 +3,7 @@
 #include "megaapi.h"
 #include "MegaApplication.h"
 #include "QmlManager.h"
+#include "Surveys.h"
 
 SurveyController::SurveyController(int type, QObject* parent):
     QObject(parent),

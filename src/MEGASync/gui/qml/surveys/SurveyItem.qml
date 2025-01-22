@@ -20,7 +20,7 @@ QmlItem {
     Rectangle {
 
         anchors.fill: parent
-        color: "#88555555"
+        color: ColorTheme.backgroundBlur
 
         Rectangle {
             id: content
@@ -28,12 +28,13 @@ QmlItem {
             readonly property string inputDataView: "inputDataView"
             readonly property string finalView: "finalView"
             readonly property int contentBorderWidth: 1
-            readonly property real contentMargin: 24
-            readonly property real contentRadius: 8
-            readonly property real contentWidth: 250
-            readonly property real contentSpacing: 20
-            readonly property real titleLineHeight: 24
-            readonly property real descriptionLineHeight: 20
+            readonly property real contentMargin: 24.0
+            readonly property real contentRadius: 8.0
+            readonly property real contentWidth: 250.0
+            readonly property real contentSpacing: 20.0
+            readonly property real titleLineHeight: 24.0
+            readonly property real descriptionLineHeight: 20.0
+            readonly property real commentItemMaxHeight: 60.0
 
             anchors.centerIn: parent
             width: stackViewItem.width + 2 * content.contentMargin
@@ -109,7 +110,7 @@ QmlItem {
                             }
                             sizes {
                                 adaptableHeight: true
-                                maxHeight: 60.0
+                                maxHeight: content.commentItemMaxHeight
                                 textSize: Text.Size.MEDIUM
                             }
                             maxCharLength: surveysAccess ? surveysAccess.commentMaxLength : 0
