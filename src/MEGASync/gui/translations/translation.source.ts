@@ -3207,6 +3207,26 @@ Wait for the upload to complete.</translation>
         <translation>Your Business account has been deactivated due to payment failure. You won’t be able to access the data stored in your account until you’ve made a payment and reactivated your subscription.</translation>
     </message>
     <message>
+        <source>Link can&apos;t be imported, invalid key or decryption error</source>
+        <translatorcomment>Error message when there is a decryption error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation>Link can’t be imported, invalid key or decryption error</translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported, your storage is full</source>
+        <translatorcomment>Error message when there is an error importing a MEGA link because the storage quota is exceeded. SNC-3673.</translatorcomment>
+        <translation>Link can’t be imported, your storage is full</translation>
+    </message>
+    <message>
+        <source>Link can&apos;t be imported: %1</source>
+        <translatorcomment>Error message when there is a generic error importing a MEGA link. %1 the error message coming from the SDK. SNC-3673.</translatorcomment>
+        <translation>Link can’t be imported: %1</translation>
+    </message>
+    <message>
+        <source>Link import error</source>
+        <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
+        <translation>Link import error</translation>
+    </message>
+    <message>
         <source>Locked account</source>
         <translatorcomment>Title of the system notification when the account is locked</translatorcomment>
         <translation>Locked account</translation>
@@ -9117,82 +9137,6 @@ Please delete the folder sync from settings to cancel them.</source>
     </message>
 </context>
 <context>
-    <name>UpgradeDialog</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over quota state.</translatorcomment>
-        <translation>Choose annual billing and get 12 months for the price of 10</translation>
-    </message>
-    <message>
-        <source>Depleted transfer quota</source>
-        <translatorcomment>Label to indicate that transfer quota has been depleted.</translatorcomment>
-        <translation>Depleted transfer quota</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free</source>
-        <translatorcomment>Warning label shown when user reaches over transfer quota situation. The user can upgrade Plan or wait %1 time until new free quota is allowed.</translatorcomment>
-        <translation>Upgrade your account to continue immediately, or wait %1 to continue for free</translation>
-    </message>
-    <message>
-        <source>This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translatorcomment>Informative label about how the transfer quota limit works when user reaches over transfer situation.</translatorcomment>
-        <translation>This limit is dynamic and depends on the amount of unused bandwidth we have available.</translation>
-    </message>
-    <message>
-        <source>Transfer quota exceeded</source>
-        <translatorcomment>Label shown to inform the user about over transfer quota situation.</translatorcomment>
-        <translation>Transfer quota exceeded</translation>
-    </message>
-    <message>
-        <source>Your download could not proceed because it exceeds your free transfer allowance.</source>
-        <translatorcomment>Informative message to inform users that downloads could not continue because user has reached over transfer situation.</translatorcomment>
-        <translation>Your download could not proceed because it exceeds your free transfer allowance.</translation>
-    </message>
-</context>
-<context>
-    <name>UpgradeOverStorage</name>
-    <message>
-        <source>* The local currency price is an estimate only. All transactions shown charged in Euros.</source>
-        <translatorcomment>Informative label to inform users about billing currency used for non Euro payments.</translatorcomment>
-        <translation>* Estimated price in your local currency. You will be charged in euros for all transactions.</translation>
-    </message>
-    <message>
-        <source>100% of the %1 available used on your account.</source>
-        <translatorcomment>Informative message for the user when it is in over storage situation, letting know about the %1 space used and reaching the 100% limit of his current storage amount.</translatorcomment>
-        <translation>100% of the %1 available used on your account.</translation>
-    </message>
-    <message>
-        <source>Choose annual billing and get 12 months for the price of 10</source>
-        <translatorcomment>Informative label to inform the user about offer purchasing one-year Pro plan within upgrade dialog when user reaches over storage state.</translatorcomment>
-        <translation>Choose annual billing and get 12 months for the price of 10</translation>
-    </message>
-    <message>
-        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation>Upgrade your account to enjoy more storage space (your uploads will automatically resume).</translation>
-    </message>
-    <message>
-        <source>Storage full</source>
-        <translatorcomment>Title of the over storage dialog</translatorcomment>
-        <translation>Storage full</translation>
-    </message>
-    <message>
-        <source>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</source>
-        <translatorcomment>Informative message shown when user reaches over storage situation, encouraging to upgrade and get more extra storage space.</translatorcomment>
-        <translation>To increase this limit, you can upgrade your account, which will give you ample extra storage space.</translation>
-    </message>
-    <message>
-        <source>Your MEGA account is full</source>
-        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation>Your MEGA account is full.</translation>
-    </message>
-</context>
-<context>
     <name>UploadIssueHeader</name>
     <message>
         <source>Cannot reach the destination folder.</source>
@@ -9249,6 +9193,89 @@ Please delete the folder sync from settings to cancel them.</source>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
         <translation>Upload to MEGA</translation>
+    </message>
+</context>
+<context>
+    <name>UpsellStrings</name>
+    <message>
+        <source>Billed monthly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save up to %1% with yearly billing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Billed yearly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>* Estimated price in your local currency. Your account will be billed in Euros for all transactions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 per month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 billed yearly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>per month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%1 per month)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recommended</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current plan</source>
+        <translation type="unfinished">Current plan</translation>
+    </message>
+    <message>
+        <source>%1 storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is almost full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your MEGA cloud storage is full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upgrade your account to get more storage quota.[BR][BR]Or delete some files and [B][A]empty your rubbish bin[/A][/B] to free up storage space.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translation type="unfinished">Transfer quota exceeded</translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]Upgrade your account to get more transfer quota or you can wait for [B]%1[/B] until more free quota becomes available for you.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Need more storage?[BR][B][A]Try Pro Flexi[/A][/B]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can’t continue downloading as you’ve used all of the transfer quota available to you.[BR][BR]To get more quota, purchase another paid plan.[BR][BR][B][A]Learn more about transfer quota.[/A][/B]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
