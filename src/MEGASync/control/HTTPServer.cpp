@@ -693,26 +693,40 @@ void HTTPServer::externalFolderUploadRequest(QString &response, const HTTPReques
     }
 }
 
-void HTTPServer::externalFolderSyncRequest(QString &response, const HTTPRequest& request)
+void HTTPServer::externalFolderSyncRequest(QString& response, const HTTPRequest& request)
 {
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Sync command received from the webclient");
+    const QString userString = Utilities::extractJSONString(request.data, QLatin1String("u"));
+    MegaHandle userHandle = userString.size() ?
+                                MegaApi::base64ToUserHandle(userString.toLatin1().constData()) :
+                                INVALID_HANDLE;
+
     QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
     MegaHandle handle = ::mega::INVALID_HANDLE;
     if (targetHandle.size())
     {
         handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
     }
-
-    MegaNode *targetNode = megaApi->getNodeByHandle(handle);
-    if (!targetNode)
+    if (userHandle == ::mega::INVALID_HANDLE)
     {
-        response = QString::number(MegaError::API_ENOENT);
+        response = QString::number(MegaError::API_EARGS);
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                     "Add sync command received from the webclient: invalid user handle");
     }
     else
     {
-        delete targetNode;
-        emit onExternalFolderSyncRequested(handle);
-        response = QString::number(MegaError::API_OK);
+        MegaHandle appUser(megaApi->getMyUserHandleBinary());
+        if (userHandle != appUser)
+        {
+            response = QString::number(MegaError::API_EACCESS);
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                         "Add sync command received from the webclient: user mismatch");
+        }
+        else
+        {
+            emit onExternalFolderSyncRequested(handle);
+            response = QString::number(MegaError::API_OK);
+        }
     }
 }
 
