@@ -129,6 +129,7 @@ private slots:
     void onUiBlocked(bool state);
     void processCachedNodesUpdated();
     void removeItemByHandle(mega::MegaHandle handle);
+    void deselectIndex(const QModelIndex& index);
 
 private:
     bool mManuallyResizedColumn;
@@ -155,6 +156,7 @@ private:
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
     void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
+    void selectIndex(const mega::MegaHandle& handle, bool setCurrent, bool exclusiveSelect = false);
 
     ButtonIconManager mButtonIconManager;
     bool first;
@@ -173,7 +175,8 @@ private:
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QList<mega::MegaHandle> mRemovedNodesByHandle;
-    QList<mega::MegaHandle> mMovedNodesByHandle;
+    QList<mega::MegaHandle> mRemovePreviousMovedNodesByHandle;
+    QList<mega::MegaHandle> mMovedNodesByHandleToSelect;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;

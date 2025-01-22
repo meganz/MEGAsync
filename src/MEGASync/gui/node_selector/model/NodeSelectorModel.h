@@ -232,6 +232,7 @@ public:
 
     void loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node, const QModelIndex& parent);
+    QModelIndex getIndexFromHandle(const mega::MegaHandle& handle, const QModelIndex& parent);
     QModelIndex findIndexByNodeHandle(const mega::MegaHandle& handle, const QModelIndex& parent);
 
     static NodeSelectorModelItem *getItemByIndex(const QModelIndex& index);
@@ -260,6 +261,8 @@ public:
         return mIsBeingModified;
     }
 
+    bool moveProcessed(const mega::MegaHandle& handle);
+
     void setIsModelBeingModified(bool state);
 
     void setAcceptDragAndDrop(bool newAcceptDragAndDrop);
@@ -277,6 +280,8 @@ public:
 
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 
+    void sendBlockUiSignal(bool state);
+
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
     void requestChildNodes(NodeSelectorModelItem* parent, const QModelIndex& parentIndex);
@@ -285,13 +290,14 @@ signals:
     void removeItem(NodeSelectorModelItem* items);
     void removeRootItem(NodeSelectorModelItem* items);
     void deleteWorker();
-    void blockUi(bool state);
+    void blockUi(bool state, QPrivateSignal);
     void forceFilter();
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
     void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
+    void itemDroppedOn(const QModelIndex& indexDropped);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -337,6 +343,10 @@ private:
 
     void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
 
+    bool checkMoveProcessing();
+    void startMovingNodes();
+    bool isMovingNodes() const;
+
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
 
@@ -344,12 +354,16 @@ private:
 
     QThread* mNodeRequesterThread;
     bool mIsBeingModified; //Used to know if the model is being modified in order to avoid nesting beginInsertRows and any other begin* methods
+    bool mIsProcessingMoves; // Used to know if the user moved nodes
     bool mAcceptDragAndDrop;
 
     // Variables related to move (including moving to rubbish bin or remove)
     QMap<mega::MegaHandle, int> mRequestByHandle;
     QMap<mega::MegaHandle, int> mRequestFailedByHandle;
     MovedItemsTypes mMovedItemsType;
+
+    // Move nodes
+    QSet<mega::MegaHandle> mRequestByHandleCounter;
 
     // Add nodes secuentially, not all at the same time
     AddNodesQueue mAddNodesQueue;

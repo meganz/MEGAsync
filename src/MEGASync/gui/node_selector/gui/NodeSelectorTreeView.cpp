@@ -536,7 +536,7 @@ void NodeSelectorTreeView::onNavigateReady(const QModelIndex &index)
     if(index.isValid())
     {
         //Loading finished
-        emit proxyModel()->getMegaModel()->blockUi(false);
+        proxyModel()->getMegaModel()->sendBlockUiSignal(false);
 
         QPoint point = visualRect(index).center();
         QMouseEvent mouseEvent(QEvent::MouseButtonDblClick, point, Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);

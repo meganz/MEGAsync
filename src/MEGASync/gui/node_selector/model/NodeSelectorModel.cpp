@@ -491,6 +491,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mDisplayFiles(false),
     mSyncSetupMode(false),
     mIsBeingModified(true),
+    mIsProcessingMoves(false),
     mAcceptDragAndDrop(false),
     mAddNodesQueue(this)
 {
@@ -778,6 +779,7 @@ bool NodeSelectorModel::dropMimeData(
                                                                                      targetNode));
                 }
 
+                emit itemDroppedOn(targetIndex);
                 return moveNodesAndCheckConflicts(nodesToMove, sourceNode);
             }
         }
@@ -789,6 +791,10 @@ bool NodeSelectorModel::dropMimeData(
 void NodeSelectorModel::moveNodesAfterConflictCheck(
     std::shared_ptr<ConflictTypes> conflicts)
 {
+    startMovingNodes();
+
+    qDebug() << "START MOVING" << conflicts->mResolvedConflicts.size();
+
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
         if (auto resolvedMoveConflict = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
@@ -799,6 +805,7 @@ void NodeSelectorModel::moveNodesAfterConflictCheck(
             {
                 auto decision = resolvedMoveConflict->getSolution();
                 mRequestByHandle.insert(nodeToMove->getHandle(), mega::MegaRequest::TYPE_MOVE);
+                mRequestByHandleCounter.insert(nodeToMove->getHandle());
 
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
@@ -907,6 +914,54 @@ Qt::DropActions NodeSelectorModel::supportedDropActions() const
 bool NodeSelectorModel::showFiles() const
 {
     return mNodeRequesterWorker->showFiles();
+}
+
+bool NodeSelectorModel::checkMoveProcessing()
+{
+    if (mIsProcessingMoves && mRequestByHandleCounter.isEmpty())
+    {
+        mIsProcessingMoves = false;
+
+        qDebug() << "MOVE FINISHED";
+
+        sendBlockUiSignal(false);
+
+        return true;
+    }
+
+    return false;
+}
+
+bool NodeSelectorModel::moveProcessed(const mega::MegaHandle& handle)
+{
+    qDebug() << "Move Processed" << handle;
+    if (mRequestByHandleCounter.remove(handle))
+    {
+        auto value = checkMoveProcessing();
+        qDebug() << "Successful" << handle << value;
+
+        return value;
+    }
+
+    return false;
+}
+
+void NodeSelectorModel::startMovingNodes()
+{
+    mIsProcessingMoves = true;
+    mRequestByHandleCounter.clear();
+    sendBlockUiSignal(true);
+}
+
+bool NodeSelectorModel::isMovingNodes() const
+{
+    return mIsProcessingMoves;
+}
+
+void NodeSelectorModel::sendBlockUiSignal(bool state)
+{
+    qDebug() << "BLOCK UI" << state;
+    emit blockUi(state, QPrivateSignal());
 }
 
 QModelIndex NodeSelectorModel::index(int row, int column, const QModelIndex &parent) const
@@ -1113,7 +1168,8 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
         emit dataChanged(index, index);
     }
 
-    if (!childrenItem.empty())
+    // If we are moving nodes, the loading view is visible
+    if (!childrenItem.empty() && !isMovingNodes())
     {
         emit levelsAdded({}, false);
     }
@@ -1132,7 +1188,7 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
 
             if(itemStatus != item->getStatus())
             {
-                emit blockUi(true);
+                sendBlockUiSignal(true);
                 QtConcurrent::run([this, item, sync](){
 
                     //Update its children
@@ -1152,7 +1208,7 @@ void NodeSelectorModel::onSyncStateChanged(std::shared_ptr<SyncSettings> sync)
                         parent = parent->getParent();
                     }
 
-                    emit blockUi(false);
+                    sendBlockUiSignal(false);
                 });
             }
         }
@@ -1191,7 +1247,7 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 
 void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
-    emit blockUi(true);
+    startMovingNodes();
     //It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {
         foreach(auto handle, nodeHandles)
@@ -1200,6 +1256,8 @@ void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, 
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if (node)
             {
+                mRequestByHandleCounter.insert(handle);
+
                 int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
 
                 mRequestByHandle.insert(handle, mega::MegaRequest::TYPE_REMOVE);
@@ -1354,7 +1412,7 @@ void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveF
         [this, moveFile, targetParentFolder, conflictTargetFile]()
         {
             auto e = Utilities::removeRemoteFile(conflictTargetFile.get());
-            if (e && e->getErrorCode() == mega::MegaError::API_OK)
+            if (!e || e->getErrorCode() == mega::MegaError::API_OK)
             {
                 MegaSyncApp->getMegaApi()->moveNode(moveFile.get(),
                                                     targetParentFolder.get(),
@@ -1393,8 +1451,13 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
     if (type == mega::MegaRequest::TYPE_MOVE || type == mega::MegaRequest::TYPE_REMOVE)
     {
         auto handle(request->getNodeHandle());
-
         checkFinishedRequest(handle, e->getErrorCode());
+
+        if (e && e->getErrorCode() != mega::MegaError::API_OK ||
+            type == mega::MegaRequest::TYPE_REMOVE)
+        {
+            moveProcessed(handle);
+        }
     }
 }
 
@@ -1523,8 +1586,6 @@ void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorC
 
         // Reset values for next move action
         mMovedItemsType = MovedItemsType::NONE;
-        emit blockUi(false);
-
         emit allNodeRequestsFinished();
     }
 }
@@ -1619,7 +1680,10 @@ bool NodeSelectorModel::canBeDeleted() const
 void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
 {
     //First, we set the loading view as it can take long to load the tree path to the node
-    emit blockUi(true);
+    if(!isMovingNodes())
+    {
+        sendBlockUiSignal(true);
+    }
 
     mNodesToLoad.clear();
     mNodesToLoad.append(node);
@@ -1640,7 +1704,10 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
 
     if(!fetchMoreRecursively(QModelIndex()))
     {
-        emit blockUi(false);
+        if(!isMovingNodes())
+        {
+            sendBlockUiSignal(false);
+        }
         mNodesToLoad.clear();
     }
 }
@@ -1694,6 +1761,13 @@ QModelIndex NodeSelectorModel::getIndexFromNode(const std::shared_ptr<mega::Mega
     return QModelIndex();
 }
 
+QModelIndex NodeSelectorModel::getIndexFromHandle(const mega::MegaHandle& handle,
+                                                  const QModelIndex& parent)
+{
+    std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+    return getIndexFromNode(node, parent);
+}
+
 void NodeSelectorModel::rootItemsLoaded()
 {
     endResetModel();
@@ -1701,7 +1775,7 @@ void NodeSelectorModel::rootItemsLoaded()
 
 void NodeSelectorModel::addRootItems()
 {
-    emit blockUi(true);
+    sendBlockUiSignal(true);
     beginResetModel();
     createRootNodes();
 }
@@ -1735,7 +1809,7 @@ bool NodeSelectorModel::isRequestingNodes() const
 
 void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
 {
-    emit blockUi(true);
+    sendBlockUiSignal(true);
 
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(!item->areChildrenInitialized() && !item->requestingChildren())
@@ -1753,12 +1827,12 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
         }
         else
         {
-            emit blockUi(false);
+            sendBlockUiSignal(false);
         }
     }
     else
     {
-        emit blockUi(false);
+        sendBlockUiSignal(false);
     }
 }
 

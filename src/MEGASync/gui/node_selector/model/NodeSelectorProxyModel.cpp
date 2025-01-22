@@ -33,7 +33,8 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
     mSortColumn = column;
 
     //If it is already blocked, it is ignored.
-    emit getMegaModel()->blockUi(true);
+    getMegaModel()->sendBlockUiSignal(true);
+
     emit layoutAboutToBeChanged();
     if(mFilterWatcher.isFinished())
     {
@@ -277,7 +278,7 @@ void NodeSelectorProxyModel::onModelSortedFiltered()
                                                    mapFromSource(mItemsToMap.first()));
         mExpandMapped = true;
     }
-    emit getMegaModel()->blockUi(false);
+    getMegaModel()->sendBlockUiSignal(false);
     mItemsToMap.clear();
 
     emit modelSorted();
@@ -296,10 +297,10 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
         return;
     }
 
-    emit getMegaModel()->blockUi(true);
+    getMegaModel()->sendBlockUiSignal(true);
     mMode = mode;
     invalidateFilter();
-    emit getMegaModel()->blockUi(false);
+    getMegaModel()->sendBlockUiSignal(false);
 }
 
 bool NodeSelectorProxyModelSearch::isNotAProtectedModel() const
