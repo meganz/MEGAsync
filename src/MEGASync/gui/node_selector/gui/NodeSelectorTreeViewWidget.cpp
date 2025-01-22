@@ -981,6 +981,11 @@ bool NodeSelectorTreeViewWidget::shouldUpdateImmediately()
     {
         return true;
     }
+    totalSize += mRemovePreviousMovedNodesByHandle.size();
+    if (totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
+    {
+        return true;
+    }
     totalSize += mRenamedNodesByHandle.size();
     if(totalSize > IMMEDIATE_CHECK_UPDATES_NODES_THRESHOLD)
     {
@@ -997,7 +1002,8 @@ bool NodeSelectorTreeViewWidget::shouldUpdateImmediately()
 bool NodeSelectorTreeViewWidget::areThereNodesToUpdate()
 {
     return !mUpdatedNodesByPreviousHandle.isEmpty() || !mRemovedNodesByHandle.isEmpty() ||
-           !mRenamedNodesByHandle.isEmpty() || !mAddedNodesByParentHandle.isEmpty();
+           !mRenamedNodesByHandle.isEmpty() || !mAddedNodesByParentHandle.isEmpty() ||
+           !mRemovePreviousMovedNodesByHandle.isEmpty();
 }
 
 void NodeSelectorTreeViewWidget::selectIndex(const mega::MegaHandle& handle,
@@ -1114,11 +1120,9 @@ void NodeSelectorTreeViewWidget::processCachedNodesUpdated()
 
                 foreach(auto node, finalNodes)
                 {
-                    qDebug() << "ADDED NODES" << node->getName();
                     mMovedNodesByHandleToSelect.append(node->getHandle());
                     if(mModel->moveProcessed(node->getHandle()))
                     {
-                        qDebug() << "Select indexes";
                         //Only true in the last moved handle
                         for (auto handle: qAsConst(mMovedNodesByHandleToSelect))
                         {

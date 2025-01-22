@@ -793,8 +793,6 @@ void NodeSelectorModel::moveNodesAfterConflictCheck(
 {
     startMovingNodes();
 
-    qDebug() << "START MOVING" << conflicts->mResolvedConflicts.size();
-
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
         if (auto resolvedMoveConflict = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
@@ -922,8 +920,6 @@ bool NodeSelectorModel::checkMoveProcessing()
     {
         mIsProcessingMoves = false;
 
-        qDebug() << "MOVE FINISHED";
-
         sendBlockUiSignal(false);
 
         return true;
@@ -934,13 +930,9 @@ bool NodeSelectorModel::checkMoveProcessing()
 
 bool NodeSelectorModel::moveProcessed(const mega::MegaHandle& handle)
 {
-    qDebug() << "Move Processed" << handle;
     if (mRequestByHandleCounter.remove(handle))
     {
-        auto value = checkMoveProcessing();
-        qDebug() << "Successful" << handle << value;
-
-        return value;
+        return checkMoveProcessing();
     }
 
     return false;
@@ -960,7 +952,6 @@ bool NodeSelectorModel::isMovingNodes() const
 
 void NodeSelectorModel::sendBlockUiSignal(bool state)
 {
-    qDebug() << "BLOCK UI" << state;
     emit blockUi(state, QPrivateSignal());
 }
 
@@ -1377,30 +1368,14 @@ void NodeSelectorModel::moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveF
     QtConcurrent::run(
         [this, moveFolder, targetParentFolder, conflictTargetFolder]()
         {
-            MegaApiSynchronizedRequest::runRequestLambdaWithResult(
-                [](mega::MegaNode* node,
-                   mega::MegaNode* targetNode,
-                   mega::MegaRequestListener* listener)
-                {
-                    MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
-                },
-                MegaSyncApp->getMegaApi(),
-                [this, moveFolder, targetParentFolder, conflictTargetFolder](mega::MegaRequest*,
-                                                                             mega::MegaError* e)
-                {
-                    if (e->getErrorCode() == mega::MegaError::API_OK)
-                    {
-                        e = MergeMEGAFolders::merge(moveFolder.get(),
-                                                    conflictTargetFolder.get(),
-                                                    MergeMEGAFolders::ActionForDuplicates::Rename)
-                                .get();
-                    }
+            MergeMEGAFolders foldersMerger(MergeMEGAFolders::ActionForDuplicates::Rename,
+                                           // Remote is always case sensitive
+                                           Qt::CaseSensitive);
 
-                    checkFinishedRequest(moveFolder->getHandle(),
-                                         e ? e->getErrorCode() : mega::MegaError::API_OK);
-                },
-                moveFolder.get(),
-                targetParentFolder.get());
+            auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get()).get();
+
+            checkFinishedRequest(moveFolder->getHandle(),
+                                 e ? e->getErrorCode() : mega::MegaError::API_OK);
         });
 }
 
@@ -1453,7 +1428,7 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
         auto handle(request->getNodeHandle());
         checkFinishedRequest(handle, e->getErrorCode());
 
-        if (e && e->getErrorCode() != mega::MegaError::API_OK ||
+        if ((e && e->getErrorCode() != mega::MegaError::API_OK) ||
             type == mega::MegaRequest::TYPE_REMOVE)
         {
             moveProcessed(handle);
