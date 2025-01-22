@@ -790,6 +790,20 @@ bool SyncController::removeMegaIgnore(const QString& syncLocalFolder, mega::Mega
     return false;
 }
 
+Qt::CaseSensitivity SyncController::isSyncCaseSensitive(mega::MegaHandle backupId)
+{
+    if (auto syncSettings = SyncInfo::instance()->getSyncSettingByTag(backupId))
+    {
+        return Utilities::isCaseSensitive(syncSettings->getLocalFolder());
+    }
+
+#ifdef Q_OS_LINUX
+    return Qt::CaseSensitive;
+#else
+    return Qt::CaseInsensitive;
+#endif
+}
+
 QString SyncController::getSyncNameFromPath(const QString& path)
 {
     QDir dir (path);

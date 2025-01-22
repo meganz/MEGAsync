@@ -30,42 +30,40 @@ public:
         IgnoreAndMoveToBin,
     };
 
-    static std::shared_ptr<mega::MegaError> merge(mega::MegaNode* folderTarget,
-                                                  mega::MegaNode* folderToMerge,
-                                                  ActionForDuplicates action);
+    MergeMEGAFolders(ActionForDuplicates action, Qt::CaseSensitivity sensitivity);
+
+    std::shared_ptr<mega::MegaError> merge(mega::MegaNode* folderTarget,
+                                           mega::MegaNode* folderToMerge);
 
 private:
-    MergeMEGAFolders() = default;
-
-    static std::shared_ptr<mega::MegaError> performMerge(mega::MegaNode* folderTarget,
-                                                         mega::MegaNode* folderToMerge,
-                                                         ActionForDuplicates action);
-    static std::shared_ptr<mega::MegaError> mergeTwoFolders(ActionForDuplicates action);
-    static std::shared_ptr<mega::MegaError> mergeByName(ActionForDuplicates action);
+    std::shared_ptr<mega::MegaError> performMerge(mega::MegaNode* folderTarget,
+                                                  mega::MegaNode* folderToMerge);
+    std::shared_ptr<mega::MegaError> mergeTwoFolders();
+    std::shared_ptr<mega::MegaError> mergeByName();
 
     // Preparation methods
-    static void readTargetFolder(
+    void readTargetFolder(
         mega::MegaNode* folderTarget,
         QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict,
         QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict);
-    static std::shared_ptr<mega::MegaError> fixTargetFolderNameConflicts(
-        const QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict,
-        ActionForDuplicates action);
-    static std::shared_ptr<mega::MegaError> mergeNestedNodesIntoTargetFolder(
+    std::shared_ptr<mega::MegaError> fixTargetFolderNameConflicts(
+        const QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithNameConflict);
+    std::shared_ptr<mega::MegaError> mergeNestedNodesIntoTargetFolder(
         mega::MegaNode* folderTarget,
         mega::MegaNode* folderToMerge,
-        QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict,
-        ActionForDuplicates action);
-    static std::shared_ptr<mega::MegaError> finishMerge(mega::MegaNode* folderTarget,
-                                                        mega::MegaNode* folderToMerge,
-                                                        ActionForDuplicates action);
+        QMap<QString, std::shared_ptr<mega::MegaNode>>& targetNodeWithoutNameConflict);
+    std::shared_ptr<mega::MegaError> finishMerge(mega::MegaNode* folderTarget,
+                                                 mega::MegaNode* folderToMerge);
 
     // Utilities
-    static void logError(std::shared_ptr<mega::MegaError> error);
-    static std::shared_ptr<mega::MegaError> rename(mega::MegaNode* nodeToRename,
-                                                   mega::MegaNode* parentNode,
-                                                   QStringList& itemsBeingRenamed);
-    static QString getNodeName(mega::MegaNode* node);
+    void logError(std::shared_ptr<mega::MegaError> error);
+    std::shared_ptr<mega::MegaError> rename(mega::MegaNode* nodeToRename,
+                                            mega::MegaNode* parentNode,
+                                            QStringList& itemsBeingRenamed);
+    QString getNodeName(mega::MegaNode* node);
+
+    Qt::CaseSensitivity mCaseSensitivity;
+    ActionForDuplicates mAction;
 };
 
 #endif // MERGEMEGAFOLDERS_H
