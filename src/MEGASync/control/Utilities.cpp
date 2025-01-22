@@ -50,7 +50,7 @@ QHash<QString, QString> Utilities::languageNames;
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
-const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/device-centre");
 const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
@@ -1454,10 +1454,12 @@ void Utilities::openInMega(MegaHandle handle)
         std::unique_ptr<MegaNode> node (api->getNodeByHandle(handle));
         if (node)
         {
+            auto deviceID = QString::fromUtf8(api->getDeviceId());
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm/") + QString::fromLatin1(h.get())));
+                openUrl(QUrl(QLatin1String("mega://#fm//device-centre/") + deviceID +
+                             QString::fromUtf8("/") + QString::fromLatin1(h.get())));
             }
         }
     }
