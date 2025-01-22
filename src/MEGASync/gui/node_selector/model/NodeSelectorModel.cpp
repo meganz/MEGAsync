@@ -713,13 +713,11 @@ bool NodeSelectorModel::canDropMimeData(const QMimeData* data,
     int column,
     const QModelIndex& parent) const
 {
+    Q_UNUSED(data);
     Q_UNUSED(action);
     Q_UNUSED(row);
     Q_UNUSED(parent);
     Q_UNUSED(column);
-
-    if (!data->hasFormat(MIME_DATA_INTERNAL_MOVE))
-        return false;
 
     return true;
 }
