@@ -92,7 +92,7 @@ Qml.RoundButton {
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: !root.icons.busyIndicatorVisible
+            visible: root.icons.source !== "" && !root.icons.busyIndicatorVisible
                         && (root.icons.position === Icon.Position.LEFT
                             || root.icons.position === Icon.Position.BOTH)
         }
@@ -109,12 +109,15 @@ Qml.RoundButton {
         Texts.Text {
             id: buttonText
 
+            // Make the text fill the full available width if no images or indicators are visible.
+            width: sizes.fillWidth ? parent.width : implicitWidth
             anchors.verticalCenter: parent.verticalCenter
             text: root.text
             color: getTextColor()
             lineHeight: sizes.textLineHeight
             lineHeightMode: Text.FixedHeight
             verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
             font {
                 pixelSize: sizes.textFontSize
                 weight: Font.DemiBold
@@ -128,7 +131,7 @@ Qml.RoundButton {
             source: root.icons.source
             color: getIconColor()
             sourceSize: sizes.iconSize
-            visible: !root.icons.busyIndicatorVisible
+            visible: root.icons.source !== "" && !root.icons.busyIndicatorVisible
                         && (root.icons.position === Icon.Position.RIGHT
                             || root.icons.position === Icon.Position.BOTH)
         }

@@ -15,7 +15,7 @@ BackupsFlow {
 
     BackupsComponent
     {
-        id: backupsComponentAccess
+        id: backupCandidatesComponentAccess
     }
 
     selectFoldersPage: Component {
@@ -31,7 +31,7 @@ BackupsFlow {
 
         ConfirmFoldersPage {
             id: confirmFoldersPageItem
-            backupsComponentAccessRef: backupsComponentAccess
+            backupCandidatesComponentAccessRef: backupCandidatesComponentAccess
         }
     }
 
@@ -56,8 +56,8 @@ BackupsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: {
-                        if(backupsComponentAccess.data.globalError !== BackupCandidates.NONE) {
-                            if(backupsComponentAccess.data.globalError === BackupCandidates.SDK_CREATION) {
+                        if(backupCandidatesComponentAccess.data.globalError !== BackupCandidates.NONE) {
+                            if(backupCandidatesComponentAccess.data.globalError === BackupCandidates.SDK_CREATION) {
                                 return root.stepPanelRef.step4Error;
                             }
                             else {

@@ -9,6 +9,7 @@
         <file>common/Strings.qml</file>
         <file>common/OS.qml</file>
         <file>common/FontStyles.qml</file>
+        <file>common/Utilities.qml</file>
         <file>common/themes/light/Colors.qml</file>
         <file>common/themes/dark/Colors.qml</file>
         <file>components/accountData/qmldir</file>
@@ -32,11 +33,21 @@
         <file>components/buttons/LargeSizes.qml</file>
         <file>components/buttons/LinkButton.qml</file>
         <file>components/buttons/TextButton.qml</file>
+        <file>components/buttons/RadioButton.qml</file>
+        <file>components/buttons/RadioButtonSizes.qml</file>
+        <file>components/buttons/RadioButtonColors.qml</file>
         <file>components/checkBoxes/qmldir</file>
         <file>components/checkBoxes/CheckBox.qml</file>
         <file>components/checkBoxes/Colors.qml</file>
         <file>components/checkBoxes/Icons.qml</file>
         <file>components/checkBoxes/Sizes.qml</file>
+        <file>components/chips/qmldir</file>
+        <file>components/chips/Colors.qml</file>
+        <file>components/chips/MediumSizes.qml</file>
+        <file>components/chips/LargeSizes.qml</file>
+        <file>components/chips/SmallSizes.qml</file>
+        <file>components/chips/Chip.qml</file>
+        <file>components/chips/OutlineChip.qml</file>
         <file>components/comboBoxes/qmldir</file>
         <file>components/comboBoxes/ComboBox.qml</file>
         <file>components/comboBoxes/Sizes.qml</file>
@@ -53,6 +64,7 @@
         <file>components/steps/qmldir</file>
         <file>components/steps/Step.qml</file>
         <file>components/steps/SubStep.qml</file>
+        <file>components/steps/StepPanel.qml</file>
         <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
@@ -82,6 +94,12 @@
         <file>components/views/StackViewBase.qml</file>
         <file>components/dialogs/qmldir</file>
         <file>components/dialogs/ConfirmCloseDialog.qml</file>
+        <file>components/menus/MenuItem.qml</file>
+        <file>components/menus/qmldir</file>
+        <file>components/menus/ContextMenuItem.qml</file>
+        <file>components/menus/ContextMenu.qml</file>
+        <file>components/menus/Colors.qml</file>
+        <file>components/menus/Sizes.qml</file>
         <file>onboard/qmldir</file>
         <file>onboard/LoginPage.qml</file>
         <file>onboard/LoginPageForm.ui.qml</file>
@@ -134,6 +152,7 @@
         <file>syncs/SyncTypePage.qml</file>
         <file>syncs/SyncTypePageForm.ui.qml</file>
         <file>syncs/SyncsFlow.qml</file>
+        <file>syncs/SyncsPage.qml</file>
         <file>syncs/ResumeSyncsPageForm.ui.qml</file>
         <file>syncs/ResumeSyncsPage.qml</file>
         <file>guest/qmldir</file>
@@ -141,6 +160,12 @@
         <file>guest/GuestFlow.qml</file>
         <file>guest/GuestDialog.qml</file>
         <file>guest/GuestStrings.qml</file>
+        <file>upsell/qmldir</file>
+        <file>upsell/UpsellDialog.qml</file>
+        <file>upsell/UpsellStrings.qml</file>
+        <file>upsell/PlanCard.qml</file>
+        <file>upsell/ContentItem.qml</file>
+        <file>upsell/HeaderItem.qml</file>
         <file>sync_exclusions/qmldir</file>
         <file>sync_exclusions/ExclusionsQmlDialog.qml</file>
         <file>sync_exclusions/ExclusionsStrings.qml</file>
@@ -165,9 +190,6 @@
         <file>backups/ResumePageForm.ui.qml</file>
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
-        <file>common/Utilities.qml</file>
-        <file>components/steps/StepPanel.qml</file>
-        <file>syncs/SyncsPage.qml</file>
         <file>deviceCentre/DeviceCentreDialog.qml</file>
         <file>deviceCentre/DeviceCentreStrings.qml</file>
         <file>deviceCentre/qmldir</file>

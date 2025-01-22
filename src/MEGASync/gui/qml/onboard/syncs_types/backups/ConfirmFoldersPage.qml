@@ -6,7 +6,7 @@ import BackupsComponent 1.0
 ConfirmFoldersPageForm {
     id: root
 
-    required property BackupsComponent backupsComponentAccessRef
+    required property BackupsComponent backupCandidatesComponentAccessRef
 
     signal confirmFoldersMoveToSelect
     signal confirmFoldersMoveToFinal(bool success)
@@ -31,7 +31,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsComponentAccessRef.data
+        target: backupCandidatesComponentAccessRef.data
 
         function onNoneSelected() {
             root.confirmFoldersMoveToSelect();
@@ -39,7 +39,7 @@ ConfirmFoldersPageForm {
     }
 
     Connections {
-        target: backupsComponentAccessRef
+        target: backupCandidatesComponentAccessRef
 
         function onBackupsCreationFinished(success) {
             footerButtons.enabled = true;

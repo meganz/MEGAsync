@@ -50,9 +50,9 @@ Item {
     }
 
     Connections {
-        id: backupsComponentAccessConnection
+        id: backupCandidatesComponentAccessConnection
 
-        target: backupsComponentAccess
+        target: backupCandidatesComponentAccess
 
         function onInsertFolderAdded(newFolderIndex) {
             backupsListView.positionViewAtIndex(newFolderIndex, ListView.Center)
@@ -101,7 +101,7 @@ Item {
                     enabled: backupsListView.count > 0
                     onCheckStateChanged: {
                         if (!selectAll.fromModel) {
-                            backupsComponentAccess.selectAllFolders(checkState, selectAll.fromModel);
+                            backupCandidatesComponentAccess.selectAllFolders(checkState, selectAll.fromModel);
                         }
                         selectAll.fromModel = false;
                     }
@@ -222,7 +222,7 @@ Item {
             target: folderDialog
 
             function onFolderChoosen(folderPath) {
-                backupsComponentAccess.insertFolder(folderPath);
+                backupCandidatesComponentAccess.insertFolder(folderPath);
             }
         }
 

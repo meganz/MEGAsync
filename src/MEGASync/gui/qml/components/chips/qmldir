@@ -1,0 +1,7 @@
+module components.chips
+Colors 1.0 Colors.qml
+Sizes 1.0 Sizes.qml
+LargeSizes 1.0 LargeSizes.qml
+SmallSizes 1.0 SmallSizes.qml
+Chip 1.0 Chip.qml
+OutlineChip 1.0 OutlineChip.qml

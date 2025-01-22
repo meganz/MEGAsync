@@ -93,8 +93,15 @@ QString QmlManager::getObjectRootContextName(QObject* value)
         return QString();
     }
 
+    if (!name.isEmpty())
+    {
+        name.replace(0, 1, name.at(0).toLower());
+    }
+
     // Example: "LoginController" -> "loginControllerAccess"
-    name.replace(0, 1, name.at(0).toLower()).append(DEFAULT_QML_INSTANCES_SUFFIX);
+    name.append(DEFAULT_QML_INSTANCES_SUFFIX);
+    mEngine->rootContext()->setContextProperty(name, value);
+
     return name;
 }
 

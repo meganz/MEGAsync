@@ -49,8 +49,3 @@ QUrl GuestContent::getQmlUrl()
 {
     return QUrl(QString::fromUtf8("qrc:/guest/GuestDialog.qml"));
 }
-
-QString GuestContent::contextName()
-{
-    return QString::fromUtf8("guestContentAccess");
-}

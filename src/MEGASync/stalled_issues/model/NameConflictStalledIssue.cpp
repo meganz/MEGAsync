@@ -6,10 +6,12 @@
 #include "RenameNodeDialog.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
+#include "SyncController.h"
 #include "Utilities.h"
 
-NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall *stallIssue)
-    : StalledIssue(stallIssue)
+NameConflictedStalledIssue::NameConflictedStalledIssue(const mega::MegaSyncStall* stallIssue):
+    StalledIssue(stallIssue),
+    mCloudConflictedNames(this)
 {}
 
 void NameConflictedStalledIssue::fillIssue(const mega::MegaSyncStall *stall)
@@ -996,10 +998,12 @@ NameConflictedStalledIssue::CloudConflictedNames::mergeFolders()
             std::unique_ptr<mega::MegaNode> folderToMerge(MegaSyncApp->getMegaApi()->getNodeByHandle(conflictedFolder->mHandle));
             if(folderToMerge && folderToMerge->isFolder())
             {
-                auto error = MergeMEGAFolders::merge(
-                    targetFolder.get(),
-                    folderToMerge.get(),
-                    MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin);
+                MergeMEGAFolders foldersMerger(
+                    MergeMEGAFolders::ActionForDuplicates::IgnoreAndMoveToBin,
+                    SyncController::instance().isSyncCaseSensitive(mIssue->firstSyncId()));
+
+                auto error = foldersMerger.merge(targetFolder.get(), folderToMerge.get());
+
                 if(error)
                 {
                     errorInfo.conflictIndex = index;

@@ -369,8 +369,7 @@ public:
     static void getPROurlWithParameters(QString &url);
     static QString joinLogZipFiles(mega::MegaApi *megaApi, const QDateTime *timestampSince = nullptr, QString appendHashReference = QString());
 
-    static void adjustToScreenFunc(QPoint position, QWidget *what);
-    static QString minProPlanNeeded(std::shared_ptr<mega::MegaPricing> pricing, long long usedStorage);
+    static void adjustToScreenFunc(QPoint position, QWidget* what);
     static QString getReadableStringFromTs(mega::MegaIntegerList* list);
     static QString getReadablePlanFromId(int identifier, bool shortPlan = false);
     static void animateFadeout(QWidget *object, int msecs = 700);
@@ -393,6 +392,9 @@ public:
 
     //get mega transfer nodepath
     static QString getNodePath(mega::MegaTransfer* transfer);
+
+    // Folder is on a case sensitive drive/OS
+    static Qt::CaseSensitivity isCaseSensitive(const QString& folder);
 
     //Check is current account is business (either business or flexi pro)
     static bool isBusinessAccount();

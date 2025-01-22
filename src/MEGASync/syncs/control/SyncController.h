@@ -91,6 +91,9 @@ public:
     bool removeMegaIgnore(const QString& syncLocalFolder,
                           mega::MegaHandle backupId = mega::INVALID_HANDLE);
 
+    // Check is sync folder is case sensitive
+    Qt::CaseSensitivity isSyncCaseSensitive(mega::MegaHandle backupId);
+
 signals:
     void syncAddStatus(int errorCode, int syncErrorCode, QString name);
     void syncRemoveStatus(int errorCode);

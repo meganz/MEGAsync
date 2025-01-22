@@ -51,10 +51,12 @@ QHash<QString, QString> Utilities::languageNames;
 std::unique_ptr<ThreadPool> ThreadPoolSingleton::instance = nullptr;
 
 const QString Utilities::SUPPORT_URL = QString::fromUtf8("https://mega.nz/contact");
-const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/devices");
+const QString Utilities::BACKUP_CENTER_URL = QString::fromLatin1("mega://#fm/device-centre");
 const QString Utilities::SYNC_SUPPORT_URL =
     QString::fromLatin1("https://help.mega.io/installs-apps/desktop/how-does-syncing-work");
 const QString Utilities::DESKTOP_APP_URL = QString::fromLatin1("https://mega.io/desktop#download");
+
+const QLatin1String CASE_SENSITIVE_FOLDER = QLatin1String(".case_sensitive");
 
 const long long KB = 1024;
 const long long MB = 1024 * KB;
@@ -1081,36 +1083,6 @@ void Utilities::adjustToScreenFunc(QPoint position, QWidget *what)
     }
 }
 
-QString Utilities::minProPlanNeeded(std::shared_ptr<MegaPricing> pricing, long long usedStorage)
-{
-    if (!pricing)
-    {
-        return QString::fromUtf8("Pro");
-    }
-
-    int planNeeded = -1;
-    int amountPlanNeeded = 0;
-    int products = pricing->getNumProducts();
-    for (int i = 0; i < products; i++)
-    {
-        //Skip business & non monthly plans to offer
-        if (!pricing->isBusinessType(i) && pricing->getMonths(i) == 1)
-        {
-            if (usedStorage < (pricing->getGBStorage(i) * (long long)GB))
-            {
-                int currentAmountMonth = pricing->getAmountMonth(i);
-                if (planNeeded == -1 || currentAmountMonth < amountPlanNeeded)
-                {
-                    planNeeded = i;
-                    amountPlanNeeded = currentAmountMonth;
-                }
-            }
-        }
-    }
-
-    return getReadablePlanFromId(pricing->getProLevel(planNeeded));
-}
-
 QString Utilities::getReadableStringFromTs(MegaIntegerList *list)
 {
     if (!list || !list->size())
@@ -1430,6 +1402,33 @@ QString Utilities::getNodePath(MegaTransfer* transfer)
     return QString::fromUtf8(transfer->getParentPath()) + QString::fromUtf8(transfer->getFileName());
 }
 
+Qt::CaseSensitivity Utilities::isCaseSensitive(const QString& folder)
+{
+    Qt::CaseSensitivity caseSensitivity(Qt::CaseInsensitive);
+
+    QDir tempPath(folder);
+    // Creates the folder if it does not exist but it also returns true if it already exists
+    if (tempPath.mkpath(QLatin1String(CASE_SENSITIVE_FOLDER)))
+    {
+        tempPath.cd(QLatin1String(CASE_SENSITIVE_FOLDER));
+
+        QFile file_lower_case(tempPath.path());
+        file_lower_case.setFileName(QLatin1String("mega"));
+
+        QFile file_upper_case(tempPath.path());
+        file_upper_case.setFileName(QLatin1String("MEGA"));
+
+        caseSensitivity =
+            file_lower_case.open(QFile::ReadWrite) && file_upper_case.open(QFile::ReadWrite) ?
+                Qt::CaseSensitive :
+                Qt::CaseInsensitive;
+
+        tempPath.removeRecursively();
+    }
+
+    return caseSensitivity;
+}
+
 bool Utilities::isBusinessAccount()
 {
     int accountType = Preferences::instance()->accountType();
@@ -1455,10 +1454,12 @@ void Utilities::openInMega(MegaHandle handle)
         std::unique_ptr<MegaNode> node (api->getNodeByHandle(handle));
         if (node)
         {
+            auto deviceID = QString::fromUtf8(api->getDeviceId());
             std::unique_ptr<char[]> h (node->getBase64Handle());
             if(h)
             {
-                openUrl(QUrl(QLatin1String("mega://#fm/") + QString::fromLatin1(h.get())));
+                openUrl(QUrl(QLatin1String("mega://#fm//device-centre/") + deviceID +
+                             QString::fromUtf8("/") + QString::fromLatin1(h.get())));
             }
         }
     }

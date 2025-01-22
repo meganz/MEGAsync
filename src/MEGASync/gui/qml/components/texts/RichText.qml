@@ -10,11 +10,15 @@ Text {
 
     property url url: defaultUrl
     property bool manageMouse: false
-    property bool hovered: false
     property bool manageHover: false
+    property bool manageClick: false
+    property bool hovered: false
     property bool visited: false
+    property bool underlineLink: false
     property color urlColor: ColorTheme.linkPrimary
     property string rawText: ""
+
+    signal linkClicked
 
     function updateLinkColor() {
         var color = ColorTheme.linkPrimary;
@@ -130,18 +134,37 @@ Text {
     // refreshed internally. We cannot assign other variable and change it here at the
     // same time. For more info, please see SNC-3917.
     onRawTextChanged: {
-        var copyText = rawText;
-        copyText = copyText.replace("[B]","<b>");
-        copyText = copyText.replace("[/B]","</b>");
-        copyText = copyText.replace("[A]", "<a style=\"text-decoration:none\"
-                                            style=\"color:" + urlColor + ";\" href=\"" + url + "\">");
-        copyText = copyText.replace("[/A]","</a>");
+        let decoration = root.underlineLink ? "underline" : "none";
+        let copyText = rawText;
+
+        const replacements = [
+            { pattern: /\[B\]/g, replacement: "<b>" },
+            { pattern: /\[\/B\]/g, replacement: "</b>" },
+            {
+                pattern: /\[A\]/g,
+                replacement: "<a style=\"text-decoration:" + decoration
+                             + "\" style=\"color:" + urlColor
+                             + ";\" href=\"" + url + "\">"
+            },
+            { pattern: /\[\/A\]/g, replacement: "</a>" },
+            { pattern: /\[BR\]/g, replacement: "<br>" }
+        ];
+
+        replacements.forEach(replacement => {
+            copyText = copyText.replace(replacement.pattern, replacement.replacement);
+        });
+
         root.text = copyText;
     }
 
     onLinkActivated: {
-        if(url != defaultUrl) {
-            Qt.openUrlExternally(url);
+        if(url != defaultUrl || manageClick) {
+            if(!manageClick) {
+                Qt.openUrlExternally(url);
+            }
+            else {
+                linkClicked();
+            }
             visited = true;
             updateLinkColor();
         }

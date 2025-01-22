@@ -20,11 +20,6 @@ QUrl SyncsComponent::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/syncs/SyncsDialog.qml"));
 }
 
-QString SyncsComponent::contextName()
-{
-    return QString::fromUtf8("syncsComponentAccess");
-}
-
 void SyncsComponent::registerQmlModules()
 {
     if (!qmlRegistrationDone)

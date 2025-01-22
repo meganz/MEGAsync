@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
+
     readonly property url megaNZ: "https://mega.nz/"
     readonly property url recovery: megaNZ + "recovery"
 
@@ -13,4 +14,5 @@ QtObject {
     readonly property url installAppsDesktop: helpMegaIO + "installs-apps/desktop/"
     readonly property url createBackup: installAppsDesktop + "create-backup"
     readonly property url setUpSyncs: installAppsDesktop + "set-up-syncs"
+
 }

@@ -14,11 +14,6 @@ QUrl AddExclusionRule::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/sync_exclusions/AddRuleDialog.qml"));
 }
 
-QString AddExclusionRule::contextName()
-{
-    return QString::fromUtf8("addRuleDialogAccess");
-}
-
 void AddExclusionRule::appendRuleToFolders(int targetType, int wildCard, QString ruleValue)
 {
     if(ruleValue.trimmed().isEmpty())

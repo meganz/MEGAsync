@@ -48,11 +48,6 @@ QUrl SyncExclusions::getQmlUrl()
     return QUrl(QString::fromUtf8("qrc:/sync_exclusions/ExclusionsQmlDialog.qml"));
 }
 
-QString SyncExclusions::contextName()
-{
-    return QString::fromUtf8("syncExclusionsAccess");
-}
-
 void SyncExclusions::setMaximumAllowedSize(double maximumSize)
 {
     if(isEqual(maximumSize, mMaximumAllowedSize))
