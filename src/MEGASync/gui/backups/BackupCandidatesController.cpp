@@ -5,11 +5,12 @@
 #include <BackupCandidatesModel.h>
 #include <BackupsController.h>
 #include <FileFolderAttributes.h>
-#include <QApplication>
-#include <QmlManager.h>
 #include <StandardIconProvider.h>
 #include <SyncSettings.h>
 #include <Utilities.h>
+
+#include <QApplication>
+#include <QmlManager.h>
 
 static const int CHECK_DIRS_TIME_IN_MS = 1000;
 
@@ -155,11 +156,13 @@ void BackupCandidatesController::setAllSelected(bool selected)
     updateSelectedAndTotalSize();
 }
 
-void BackupCandidatesController::changeSelectedState(std::shared_ptr<BackupCandidates::Data> candidate, bool selected)
+void BackupCandidatesController::changeSelectedState(
+    std::shared_ptr<BackupCandidates::Data> candidate,
+    bool selected)
 {
     if (candidate->mSelected != selected)
     {
-        if(selected)
+        if (selected)
         {
             candidate->mSelected = checkPermissions(candidate->mFolder) ? true : false;
         }

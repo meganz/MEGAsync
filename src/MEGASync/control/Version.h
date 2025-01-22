@@ -29,12 +29,14 @@ Format: 1 item by line, starting from line following the #define
 "- item n\n"
 )*/
 #define VER_CHANGES_NOTES \
-QT_TRANSLATE_NOOP("Preferences", \
-                  "- UI and UX enhancements on transfer manager feature.\n" \
-                  "- Support of wildcard exclusions in the exclusion dialog.\n" \
-                  "- Upgrade Qt third party dependency.\n" \
-                  "- New releases for Raspberry Pi OS.\n" \
-                  "- Fixed crashes due to missing or broken OpenGL drivers on Windows.\n" \
-                  "- Bug fixes and performance improvements.\n")
+QT_TRANSLATE_NOOP( \
+    "Preferences", \
+    "- We’ve enhanced the interface and behaviour of the transfer manager feature.\n" \
+    "- You can now create sync exclusions using wildcards.\n" \
+    "- There are new releases available now for the Raspberry Pi OS.\n" \
+    "- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on " \
+    "Windows.\n" \
+    "- Qt has been upgraded to a newer version.\n" \
+    "- Other bugs have been fixed and numerous improvements made.\n")
 
 #endif // VERSION_H
