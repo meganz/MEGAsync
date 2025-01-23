@@ -363,7 +363,7 @@ private:
     MovedItemsTypes mMovedItemsType;
 
     // Move nodes
-    QSet<mega::MegaHandle> mRequestByHandleCounter;
+    uint mMoveRequestsCounter;
 
     // Add nodes secuentially, not all at the same time
     AddNodesQueue mAddNodesQueue;

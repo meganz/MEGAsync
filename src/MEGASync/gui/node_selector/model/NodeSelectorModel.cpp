@@ -490,9 +490,10 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     mRequiredRights(mega::MegaShare::ACCESS_READ),
     mDisplayFiles(false),
     mSyncSetupMode(false),
-    mIsBeingModified(true),
+    mIsBeingModified(false),
     mIsProcessingMoves(false),
     mAcceptDragAndDrop(false),
+    mMoveRequestsCounter(0),
     mAddNodesQueue(this)
 {
     mCameraFolderAttribute = UserAttributes::CameraUploadFolder::requestCameraUploadFolder();
@@ -801,7 +802,8 @@ void NodeSelectorModel::moveNodesAfterConflictCheck(
             {
                 auto decision = resolvedMoveConflict->getSolution();
                 mRequestByHandle.insert(nodeToMove->getHandle(), mega::MegaRequest::TYPE_MOVE);
-                mRequestByHandleCounter.insert(nodeToMove->getHandle());
+
+                mMoveRequestsCounter++;
 
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
@@ -914,7 +916,7 @@ bool NodeSelectorModel::showFiles() const
 
 bool NodeSelectorModel::checkMoveProcessing()
 {
-    if (mIsProcessingMoves && mRequestByHandleCounter.isEmpty())
+    if (mIsProcessingMoves && mMoveRequestsCounter == 0)
     {
         mIsProcessingMoves = false;
 
@@ -926,10 +928,11 @@ bool NodeSelectorModel::checkMoveProcessing()
     return false;
 }
 
-bool NodeSelectorModel::moveProcessed(const mega::MegaHandle& handle)
+bool NodeSelectorModel::moveProcessed(const mega::MegaHandle&)
 {
-    if (mRequestByHandleCounter.remove(handle))
+    if (mMoveRequestsCounter > 0)
     {
+        mMoveRequestsCounter--;
         return checkMoveProcessing();
     }
 
@@ -939,7 +942,8 @@ bool NodeSelectorModel::moveProcessed(const mega::MegaHandle& handle)
 void NodeSelectorModel::startMovingNodes()
 {
     mIsProcessingMoves = true;
-    mRequestByHandleCounter.clear();
+
+    mMoveRequestsCounter = 0;
     sendBlockUiSignal(true);
 }
 
@@ -1245,7 +1249,7 @@ void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, 
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if (node)
             {
-                mRequestByHandleCounter.insert(handle);
+                mMoveRequestsCounter++;
 
                 int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
 

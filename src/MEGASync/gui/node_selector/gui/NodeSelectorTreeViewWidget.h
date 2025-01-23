@@ -102,14 +102,21 @@ protected:
     virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
     QModelIndex getRootIndexFromIndex(const QModelIndex& index);
 
+    enum class NodeState
+    {
+        EXISTS,
+        EXISTS_BUT_INVISIBLE,
+        ADD,
+        DOESNT_EXIST
+    };
+
+    virtual NodeState getNodeOnModelState(mega::MegaNode* node);
+
     Ui::NodeSelectorTreeViewWidget *ui;
     std::unique_ptr<NodeSelectorProxyModel> mProxyModel;
     std::unique_ptr<NodeSelectorModel> mModel;
     Navigation mNavigationInfo;
     mega::MegaApi* mMegaApi;
-
-protected slots:
-    virtual bool containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle& parentHandle);
 
 private slots:
     void onbNewFolderClicked();
@@ -174,9 +181,10 @@ private:
     QList<UpdateNodesInfo> mRenamedNodesByHandle;
     QList<UpdateNodesInfo> mUpdatedNodesByPreviousHandle;
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
-    QList<mega::MegaHandle> mRemovedNodesByHandle;
-    QList<mega::MegaHandle> mRemovePreviousMovedNodesByHandle;
-    QList<mega::MegaHandle> mMovedNodesByHandleToSelect;
+    QSet<mega::MegaHandle> mRemovedNodes;
+    QSet<mega::MegaHandle> mRemoveMovedNodes;
+    mega::MegaHandle mMovedNodesParentToSelect;
+    QSet<mega::MegaHandle> mUpdatedButInvisibleNodes;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;

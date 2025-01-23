@@ -271,23 +271,19 @@ QModelIndex NodeSelectorTreeViewWidgetSearch::getAddedNodeParent(mega::MegaHandl
     return QModelIndex();
 }
 
-bool NodeSelectorTreeViewWidgetSearch::containsIndexToAddOrUpdate(mega::MegaNode* node, const mega::MegaHandle&)
+NodeSelectorTreeViewWidget::NodeState
+    NodeSelectorTreeViewWidgetSearch::getNodeOnModelState(mega::MegaNode* node)
 {
-    if(mHasRows && node)
-    {
-        auto index = mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex());
-        if(index.isValid())
-        {
-            return true;
-        }
-        else
-        {
-            return newNodeCanBeAdded(node);
-        }
+    NodeState result(NodeState::DOESNT_EXIST);
 
+    if (mHasRows && node &&
+        (newNodeCanBeAdded(node) ||
+         mModel->findIndexByNodeHandle(node->getHandle(), QModelIndex()).isValid()))
+    {
+        result = NodeState::EXISTS;
     }
 
-    return false;
+    return result;
 }
 
 void NodeSelectorTreeViewWidgetSearch::onBackupsSearchClicked()
