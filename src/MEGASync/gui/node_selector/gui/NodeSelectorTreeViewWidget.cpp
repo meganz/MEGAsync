@@ -885,8 +885,6 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                     {
                         auto existenceType(getNodeOnModelState(node));
 
-                        qDebug() << "EXISTENCE" << static_cast<int>(existenceType) << this;
-
                         if (parentNode->isFile() && existenceType == NodeState::EXISTS)
                         {
                             updatedVersions.insert(parentNode->getHandle(), node->getHandle());
