@@ -274,8 +274,14 @@ int SyncReminderNotificationManager::calculateMsecsToNextReminder(
         // Increment the days to the next reminder if the current time is closer to the next
         // reminder than to the current time or use the days to the next reminder.
         auto daysToCurrentTime(lastTime.daysTo(currentTime));
-        daysToCurrentTime =
-            (daysToCurrentTime < remainingDays) ? daysToCurrentTime++ : remainingDays;
+        if (daysToCurrentTime < remainingDays)
+        {
+            daysToCurrentTime++;
+        }
+        else
+        {
+            daysToCurrentTime = remainingDays;
+        }
 
         // Calculate the time to the next reminder.
         nextReminderTime = lastTime.addDays(daysToCurrentTime);
@@ -311,7 +317,7 @@ quint64 SyncReminderNotificationManager::getDaysToNextReminder() const
     if (lastTime.isValid())
     {
         auto currentTime(QDateTime::currentDateTime());
-        daysCount = lastTime.daysTo(currentTime);
+        daysCount = static_cast<quint64>(lastTime.daysTo(currentTime));
     }
     return daysCount;
 }
