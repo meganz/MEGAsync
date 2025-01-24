@@ -42,6 +42,7 @@
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
 #include "StreamingFromMegaDialog.h"
+#include "SyncReminderNotificationManager.h"
 #include "SyncsMenu.h"
 #include "TransferMetaData.h"
 #include "UploadToMegaDialog.h"
@@ -135,6 +136,7 @@ MegaApplication::MegaApplication(int& argc, char** argv):
     scanStageController(this),
     mDisableGfx(false),
     mUserMessageController(nullptr),
+    mSyncReminderNotificationManager(nullptr),
     mGfxProvider(nullptr),
     misSyncingStateWrongLogged(false)
 {
@@ -1472,6 +1474,12 @@ if (!preferences->lastExecutionTime())
     preferences->monitorUserAttributes();
 
     checkOverStorageStates(true);
+
+    if (!preferences->isFirstSyncDone())
+    {
+        mSyncReminderNotificationManager =
+            std::make_unique<SyncReminderNotificationManager>(nullptr);
+    }
 }
 
 void MegaApplication::onLoginFinished()
@@ -1538,6 +1546,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
+                mSyncReminderNotificationManager.reset();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2244,6 +2253,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
+    mSyncReminderNotificationManager.reset();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
