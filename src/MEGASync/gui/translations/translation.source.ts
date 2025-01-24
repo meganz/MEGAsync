@@ -7712,6 +7712,49 @@ Refresh the list.</translation>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Try again</translation>
     </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
+    </message>
+</context>
+<context>
+    <name>SurveyStrings</name>
+    <message>
+        <source>Excellent</source>
+        <translatorcomment>Label to indicate the highest score of the survey. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK, got it</source>
+        <translatorcomment>Label for the button of the final view after the end of the survey. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <translatorcomment>Label to indicate the lowest score of the survey. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Label for the button to submit the answers to the survey. CON-942</translatorcomment>
+        <translation type="unfinished">Submit</translation>
+    </message>
+    <message>
+        <source>Tell us more</source>
+        <translatorcomment>Placeholder text to request comments to the user. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translatorcomment>Title text of the final view after sending the survey responses thanking the user for his/her participation. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You’re helping to improve MEGA for you and everyone who uses it</source>
+        <translatorcomment>Description text of the final view after sending the survey responses. CON-942</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SwitchButton</name>
@@ -8312,6 +8355,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Add sync</source>
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>Add sync</translation>
+    </message>
+</context>
+<context>
+    <name>TextArea</name>
+    <message numerus="yes">
+        <source>Maximum length is %n characters.</source>
+        <translatorcomment>Label to indicate the maximum number of characters in the text area. The %n placeholder indicates the number of characters, please keep it. CON-942</translatorcomment>
+        <translation type="unfinished">
+            <numerusform>Maximum length is %n character.</numerusform>
+            <numerusform>Maximum length is %n characters.</numerusform>
+        </translation>
     </message>
 </context>
 <context>
