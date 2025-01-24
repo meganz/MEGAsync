@@ -275,8 +275,10 @@ MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(const QString& rule, bool isCom
     }
 }
 
-MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension)
-    :MegaIgnoreNameRule(QString::fromUtf8("*.") + extension, classType)
+MegaIgnoreExtensionRule::MegaIgnoreExtensionRule(Class classType, const QString& extension):
+    MegaIgnoreNameRule(extension.startsWith(QLatin1String(".")) ? (extension) :
+                                                                  (QLatin1String(".") + extension),
+                       classType)
 {
     mRuleType = RuleType::EXTENSIONRULE;
     mExtension = extension;
