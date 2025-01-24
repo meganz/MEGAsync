@@ -7711,6 +7711,7 @@ Refresh the list.</translation>
         <source>Try again</source>
         <translatorcomment>Label for Try Again button when wrong 2FA code was entered. SAT-1678.</translatorcomment>
         <translation>Try again</translation>
+    </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide the survey. CON-942</translatorcomment>
