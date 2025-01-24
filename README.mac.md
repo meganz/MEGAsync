@@ -120,7 +120,11 @@ git clone https://github.com/microsoft/vcpkg
 Open macOS Terminal and clone the Desktop repository:
 ```
 cd ~/mega/
-git clone --recursive https://github.com/meganz/MEGAsync.git desktop
+mkdir desktop
+cd desktop
+git clone https://github.com/meganz/MEGAsync.git .
+git submodule update --init src/MEGASync/mega
+cd ..
 ```
 
 The MEGA SDK is fetched recursively from https://github.com/meganz/sdk.git
