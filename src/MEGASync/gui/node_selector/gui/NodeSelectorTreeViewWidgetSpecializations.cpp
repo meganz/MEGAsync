@@ -16,34 +16,6 @@ NodeSelectorTreeViewWidgetCloudDrive::NodeSelectorTreeViewWidgetCloudDrive(Selec
     ui->searchEmptyInfoWidget->hide();
 }
 
-void NodeSelectorTreeViewWidgetCloudDrive::itemsRestored(const QList<mega::MegaHandle>& handles)
-{
-    QList<mega::MegaHandle> handlesToSelect(handles);
-
-    this->setAcceptDrops(true);
-    ui->tMegaFolders->setAcceptDrops(true);
-
-    for (auto& handle: qAsConst(handles))
-    {
-        std::shared_ptr<mega::MegaNode> node(MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-        // In case the restored items were merged (and the final folder was already on the model)
-        if (!node)
-        {
-            auto mergedSibling(findMergedSibling(node));
-            if (mergedSibling != mega::INVALID_HANDLE)
-            {
-                handlesToSelect.removeOne(handle);
-                handlesToSelect.append(mergedSibling);
-            }
-        }
-    }
-
-    for (auto& handle: qAsConst(handles))
-    {
-        setSelectedNodeHandle(handle);
-    }
-}
-
 void NodeSelectorTreeViewWidgetCloudDrive::setShowEmptyView(bool newShowEmptyView)
 {
     mShowEmptyView = newShowEmptyView;
@@ -253,8 +225,10 @@ std::unique_ptr<NodeSelectorProxyModel> NodeSelectorTreeViewWidgetSearch::create
 {
     auto proxy =  std::unique_ptr<NodeSelectorProxyModelSearch>(new NodeSelectorProxyModelSearch);
     //The search view is the only one with a real proxy model (in terms on filterAcceptsRow)
-    connect(proxy.get(), &QAbstractItemModel::rowsInserted, this, &NodeSelectorTreeViewWidget::onRowsInserted);
-    connect(proxy.get(), &QAbstractItemModel::rowsRemoved, this, &NodeSelectorTreeViewWidget::onRowsRemoved);
+    connect(proxy.get(),
+            &QAbstractItemModel::rowsInserted,
+            this,
+            &NodeSelectorTreeViewWidget::checkViewOnModelChange);
     return proxy;
 }
 
@@ -415,24 +389,11 @@ bool NodeSelectorTreeViewWidgetRubbish::isEmpty() const
     return mModel->rowCount(rootIndex) == 0;
 }
 
-void NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished()
-{
-    emit itemsRestored(mRestoredItems);
-
-    disconnect(mModel.get(),
-               &NodeSelectorModel::allNodeRequestsFinished,
-               this,
-               &NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished);
-}
+void NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished() {}
 
 void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandle>& handles)
 {
     mRestoredItems = handles;
-
-    connect(mModel.get(),
-            &NodeSelectorModel::allNodeRequestsFinished,
-            this,
-            &NodeSelectorTreeViewWidgetRubbish::onRestoreItemsFinished);
 
     QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> moveHandles;
 
@@ -448,7 +409,9 @@ void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandl
         }
     }
 
-    mModel->moveNodesAndCheckConflicts(moveHandles, MegaSyncApp->getRubbishNode());
+    mModel->processNodesAndCheckConflicts(moveHandles,
+                                          MegaSyncApp->getRubbishNode(),
+                                          NodeSelectorModel::ActionType::MOVE);
 }
 
 void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()

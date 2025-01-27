@@ -2,11 +2,12 @@
 #define NODESELECTORTREEVIEW_H
 
 #include "megaapi.h"
-#include "ViewLoadingScene.h"
 #include "NodeSelectorLoadingDelegate.h"
+#include "ViewLoadingScene.h"
 
-#include <QTreeView>
 #include <QHeaderView>
+#include <QShortcut>
+#include <QTreeView>
 
 class NodeSelectorProxyModel;
 class NodeSelectorModel;
@@ -37,19 +38,22 @@ protected:
     void dropEvent(QDropEvent *event) override;
 
 signals:
-    void removeNodeClicked(const QList<MegaHandle>& handles, bool permanently);
+    void deleteNodeClicked(const QList<MegaHandle>& handles, bool permanently);
     void renameNodeClicked();
-    void moveNodeClicked(const QList<MegaHandle>& handles, const QModelIndex& parent);
+    void copyNodesClicked(const QList<MegaHandle>& handles);
+    void pasteNodesClicked();
     void getMegaLinkClicked();
     void restoreClicked(const QList<MegaHandle>& handles);
     void nodeSelected();
 
 private slots:
-    void removeNode(const QList<MegaHandle>& handles, bool permanently);
+    void deleteNode(const QList<MegaHandle>& handles, bool permanently);
     void renameNode();
     void getMegaLink();
     void restore(const QList<MegaHandle>& handles);
     void onNavigateReady(const QModelIndex& index);
+    void onCopyShortcutActivated();
+    void onPasteShortcutActivated();
 
 private:
     friend class NodeSelectorDelegate;
@@ -60,9 +64,16 @@ private:
     NodeSelectorProxyModel* proxyModel() const;
     std::shared_ptr<MegaNode> getDropNode(const QModelIndex& dropIndex);
 
-    bool areAllEligibleForMove(const QList<mega::MegaHandle>& handles, const QModelIndex& targetIndex) const;
+    bool areAllEligibleForCopy(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForDeletion(const QList<mega::MegaHandle>& handles) const;
     bool areAllEligibleForRestore(const QList<MegaHandle> &handles) const;
+
+    // Shortcuts
+    QShortcut* mCopyShortcut;
+    QShortcut* mPasteShortcut;
+
+    // Copied items
+    QList<mega::MegaHandle> mCopiedItems;
 
     MegaApi* mMegaApi;
 };

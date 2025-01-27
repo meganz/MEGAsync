@@ -223,23 +223,38 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles)
 {
-    auto rubbishViewContainer =
-        dynamic_cast<NodeSelectorTreeViewWidgetRubbish*>(ui->stackedWidget->widget(RUBBISH));
-    if (rubbishViewContainer)
+    if (handles.isEmpty())
     {
-        rubbishViewContainer->restoreItems(handles);
+        return;
     }
-}
 
-void NodeSelector::onItemsRestored(const QList<mega::MegaHandle>& handles)
-{
-    auto cloudDriveViewContainer = dynamic_cast<NodeSelectorTreeViewWidgetCloudDrive*>(ui->stackedWidget->widget(CLOUD_DRIVE));
-    if(cloudDriveViewContainer)
+    bool foundSource(false);
+    bool foundTarget(false);
+
+    auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
+
+    for (int index = 0; index < ui->stackedWidget->count(); ++index)
     {
-        cloudDriveViewContainer->itemsRestored(handles);
-        onbShowCloudDriveClicked();
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        {
+            if (!foundTarget && wid->getProxyModel()->getMegaModel() == senderModel)
+            {
+                foundTarget = true;
+                wid->initMovingNodes(handles.size());
+            }
+            else if (!foundSource &&
+                     wid->areItemsAboutToBeMovedFromHere(handles.first(), handles.size()))
+            {
+                foundSource = true;
+            }
+
+            if (foundSource && foundTarget)
+            {
+                break;
+            }
+        }
     }
 }
 
@@ -415,14 +430,18 @@ void NodeSelector::initSpecialisedWidgets()
             connect(viewContainer, &NodeSelectorTreeViewWidget::onCustomBottomButtonClicked, this, &NodeSelector::onCustomBottomButtonClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::okBtnClicked, this, &NodeSelector::onbOkClicked, Qt::UniqueConnection);
             connect(viewContainer, &NodeSelectorTreeViewWidget::cancelBtnClicked, this, &NodeSelector::reject, Qt::UniqueConnection);
-            connect(viewContainer, &NodeSelectorTreeViewWidget::onSearch, this, &NodeSelector::onSearch, Qt::UniqueConnection);
-            if(auto rubbishWidget = qobject_cast<NodeSelectorTreeViewWidgetRubbish*>(viewContainer))
-            {
-                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestoreRequested, this, &NodeSelector::onItemsRestoreRequested, Qt::UniqueConnection);
-                connect(rubbishWidget, &NodeSelectorTreeViewWidgetRubbish::itemsRestored, this, &NodeSelector::onItemsRestored, Qt::UniqueConnection);
-            }
+            connect(viewContainer,
+                    &NodeSelectorTreeViewWidget::onSearch,
+                    this,
+                    &NodeSelector::onSearch,
+                    Qt::UniqueConnection);
 
             model = viewContainer->getProxyModel()->getMegaModel();
+
+            connect(model,
+                    &NodeSelectorModel::itemsAboutToBeMoved,
+                    this,
+                    &NodeSelector::onItemsAboutToBeMoved);
 
             connect(model,
                     &NodeSelectorModel::updateLoadingMessage,
@@ -440,18 +459,21 @@ void NodeSelector::initSpecialisedWidgets()
             connect(model,
                     &NodeSelectorModel::showDuplicatedNodeDialog,
                     this,
-                    [this, model](std::shared_ptr<ConflictTypes> conflicts)
+                    [this, model](std::shared_ptr<ConflictTypes> conflicts,
+                                  NodeSelectorModel::ActionType type)
                     {
                         auto checkUploadNameDialog = new DuplicatedNodeDialog(this);
                         checkUploadNameDialog->setConflicts(conflicts);
 
                         DialogOpener::showDialog<DuplicatedNodeDialog>(
                             checkUploadNameDialog,
-                            [model, conflicts]()
+                            [model, conflicts, type]()
                             {
-                                model->moveNodesAfterConflictCheck(conflicts);
+                                model->processNodesAfterConflictCheck(conflicts, type);
                             });
                     });
+
+            doCustomConnections(viewContainer);
         }
     }
 
@@ -490,7 +512,8 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
         {
             option = BACKUPS;
         }
-        else if (mMegaApi->isInShare(node.get()))
+        // Check if the owner is not me, so it is an inshare
+        else if (node->getOwner() != MegaSyncApp->getMegaApi()->getMyUserHandleBinary())
         {
             option = SHARES;
         }
@@ -505,11 +528,13 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 
 void NodeSelector::onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList* nodes)
 {
-    mCloudDriveWidget->onNodesUpdate(api, nodes);
-    mIncomingSharesWidget->onNodesUpdate(api, nodes);
-    mBackupsWidget->onNodesUpdate(api, nodes);
-    mSearchWidget->onNodesUpdate(api, nodes);
-    mRubbishWidget->onNodesUpdate(api, nodes);
+    for (int index = 0; index < ui->stackedWidget->count(); ++index)
+    {
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
+        {
+            wid->onNodesUpdate(api, nodes);
+        }
+    }
 }
 
 void NodeSelector::addCloudDrive()

@@ -69,7 +69,6 @@ protected:
     void initSpecialisedWidgets();
     bool eventFilter(QObject *obj, QEvent *event) override;
 
-
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
@@ -85,25 +84,32 @@ protected:
     NodeSelectorTreeViewWidgetSearch* mSearchWidget;
     void addRubbish();
     NodeSelectorTreeViewWidgetRubbish* mRubbishWidget;
+
+    virtual void doCustomConnections(NodeSelectorTreeViewWidget*) {}
+
     mega::MegaApi* mMegaApi;
     Ui::NodeSelector *ui;
     SelectTypeSPtr mSelectType;
 
 protected slots:
-    virtual void onCustomBottomButtonClicked(uint id){Q_UNUSED(id)}
+
+    virtual void onCustomBottomButtonClicked(uint id)
+    {
+        Q_UNUSED(id)
+    }
+
+    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles);
+    void onbShowCloudDriveClicked();
+    void onbShowIncomingSharesClicked();
 
 private slots:
     void onbShowSearchClicked();
     void onbOkClicked();
-    void onbShowIncomingSharesClicked();
-    void onbShowCloudDriveClicked();
     void onbShowRubbishClicked();
     void onbShowBackupsFolderClicked();
     void onOptionSelected(int index);
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
-    void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-    void onItemsRestored(const QList<mega::MegaHandle>& handles);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);

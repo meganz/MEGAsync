@@ -51,6 +51,7 @@ void NodeSelectorProxyModel::sort(int column, Qt::SortOrder order)
                     auto proxyIndex = mapFromSource((*it));
                     hasChildren(proxyIndex);
                 }
+                mItemsToMap.clear();
                 if(mForceInvalidate)
                 {
                     invalidate();
@@ -96,11 +97,11 @@ std::shared_ptr<mega::MegaNode> NodeSelectorProxyModel::getNode(const QModelInde
     return qvariant_cast<std::shared_ptr<mega::MegaNode>>(index.data(toInt(NodeSelectorModelRoles::NODE_ROLE)));
 }
 
-void NodeSelectorProxyModel::removeNode(const QModelIndex& item)
+void NodeSelectorProxyModel::deleteNode(const QModelIndex& item)
 {
     if(NodeSelectorModel* megaModel = getMegaModel())
     {
-        megaModel->removeNodeFromModel(mapToSource(item));
+        megaModel->deleteNodeFromModel(mapToSource(item));
     }
 }
 
@@ -238,14 +239,13 @@ bool NodeSelectorProxyModel::isModelProcessing() const
     return mFilterWatcher.isRunning();
 }
 
-bool NodeSelectorProxyModel::isNotAProtectedModel() const
+int NodeSelectorProxyModel::canBeDeleted() const
 {
     return dynamic_cast<NodeSelectorModel*>(sourceModel())->canBeDeleted();
 }
 
 void NodeSelectorProxyModel::invalidateModel(const QList<QPair<mega::MegaHandle,QModelIndex>>& parents, bool force)
 {
-    mItemsToMap.clear();
     foreach(auto parent, parents)
     {
         mItemsToMap.append(parent.second);
@@ -303,13 +303,13 @@ void NodeSelectorProxyModelSearch::setMode(NodeSelectorModelItemSearch::Types mo
     getMegaModel()->sendBlockUiSignal(false);
 }
 
-bool NodeSelectorProxyModelSearch::isNotAProtectedModel() const
+int NodeSelectorProxyModelSearch::canBeDeleted() const
 {
     if(mMode & NodeSelectorModelItemSearch::Type::BACKUP)
     {
-        return false;
+        return NodeSelectorModel::RemoveType::NO_REMOVE;
     }
-    return NodeSelectorProxyModel::isNotAProtectedModel();
+    return NodeSelectorProxyModel::canBeDeleted();
 }
 
 bool NodeSelectorProxyModelSearch::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const

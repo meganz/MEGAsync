@@ -5,9 +5,12 @@
 #include "MoveToMEGABin.h"
 #include "Utilities.h"
 
-MergeMEGAFolders::MergeMEGAFolders(ActionForDuplicates action, Qt::CaseSensitivity sensitivity):
+MergeMEGAFolders::MergeMEGAFolders(ActionForDuplicates action,
+                                   Qt::CaseSensitivity sensitivity,
+                                   Strategy strategy):
     mCaseSensitivity(sensitivity),
-    mAction(action)
+    mAction(action),
+    mStrategy(strategy)
 {}
 
 std::shared_ptr<mega::MegaError> MergeMEGAFolders::merge(mega::MegaNode* folderTarget,
@@ -78,7 +81,9 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::performMerge(mega::MegaNode* 
         return error;
     }
 
-    return finishMerge(folderTarget, folderToMerge);
+    auto result = finishMerge(folderTarget, folderToMerge);
+    emit finished();
+    return result;
 }
 
 void MergeMEGAFolders::readTargetFolder(
@@ -141,21 +146,24 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::finishMerge(mega::MegaNode* f
         remove = folderChild->size() == 0;
     }
 
-    if (mAction == ActionForDuplicates::IgnoreAndRemove || remove)
+    if (mStrategy == Strategy::MOVE)
     {
-        error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
-                                                       MegaSyncApp->getMegaApi(),
-                                                       folderToMerge);
-    }
-    else if (mAction == ActionForDuplicates::IgnoreAndMoveToBin)
-    {
-        error =
-            MoveToMEGABin()(folderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
-    }
-    else if (mAction == ActionForDuplicates::Rename)
-    {
-        QStringList itemsBeingRenamed;
-        error = rename(folderToMerge, folderTarget, itemsBeingRenamed);
+        if (mAction == ActionForDuplicates::IgnoreAndRemove || remove)
+        {
+            error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
+                                                           MegaSyncApp->getMegaApi(),
+                                                           folderToMerge);
+        }
+        else if (mAction == ActionForDuplicates::IgnoreAndMoveToBin)
+        {
+            error =
+                MoveToMEGABin()(folderToMerge->getHandle(), QLatin1String("FoldersMerge"), true);
+        }
+        else if (mAction == ActionForDuplicates::Rename)
+        {
+            QStringList itemsBeingRenamed;
+            error = rename(folderToMerge, folderTarget, itemsBeingRenamed);
+        }
     }
 
     return error;
@@ -188,9 +196,13 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeNestedNodesIntoTargetFol
                 auto targetNodeFp(QString::fromUtf8(targetNode->getFingerprint()));
                 if (nodeToMoveFp == targetNodeFp)
                 {
-                    error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
-                                                                   MegaSyncApp->getMegaApi(),
-                                                                   nestedNodeToMerge);
+                    // If it is a copy merge, we don´t need to remove the source node
+                    if (mStrategy == Strategy::MOVE)
+                    {
+                        error = MegaApiSynchronizedRequest::runRequest(&mega::MegaApi::remove,
+                                                                       MegaSyncApp->getMegaApi(),
+                                                                       nestedNodeToMerge);
+                    }
                 }
                 else
                 {
@@ -210,11 +222,20 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::mergeNestedNodesIntoTargetFol
         else
         {
             error = MegaApiSynchronizedRequest::runRequestLambda(
-                [](mega::MegaNode* node,
-                   mega::MegaNode* targetNode,
-                   mega::MegaRequestListener* listener)
+                [this](mega::MegaNode* node,
+                       mega::MegaNode* targetNode,
+                       mega::MegaRequestListener* listener)
                 {
-                    MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+                    emit nestedItemMerged();
+
+                    if (mStrategy == Strategy::MOVE)
+                    {
+                        MegaSyncApp->getMegaApi()->moveNode(node, targetNode, listener);
+                    }
+                    else
+                    {
+                        MegaSyncApp->getMegaApi()->copyNode(node, targetNode, listener);
+                    }
                 },
                 MegaSyncApp->getMegaApi(),
                 nestedNodeToMerge,
@@ -263,12 +284,21 @@ std::shared_ptr<mega::MegaError> MergeMEGAFolders::rename(mega::MegaNode* nodeTo
                                                           itemsBeingRenamed);
 
     auto error = MegaApiSynchronizedRequest::runRequestLambda(
-        [](mega::MegaNode* node,
-           mega::MegaNode* targetNode,
-           const char* newName,
-           mega::MegaRequestListener* listener)
+        [this](mega::MegaNode* node,
+               mega::MegaNode* targetNode,
+               const char* newName,
+               mega::MegaRequestListener* listener)
         {
-            MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
+            emit nestedItemMerged();
+
+            if (mStrategy == Strategy::MOVE)
+            {
+                MegaSyncApp->getMegaApi()->moveNode(node, targetNode, newName, listener);
+            }
+            else
+            {
+                MegaSyncApp->getMegaApi()->copyNode(node, targetNode, newName, listener);
+            }
         },
         MegaSyncApp->getMegaApi(),
         nodeToRename,

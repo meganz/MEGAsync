@@ -20,8 +20,10 @@
             i.  We run this algorithm recursively but updating the main and the secondary folders pointer.
         d. If the secondary folder has a folder which is not in the main folder, we move it directly
 */
-class MergeMEGAFolders
+class MergeMEGAFolders: public QObject
 {
+    Q_OBJECT
+
 public:
     enum ActionForDuplicates
     {
@@ -30,10 +32,22 @@ public:
         IgnoreAndMoveToBin,
     };
 
-    MergeMEGAFolders(ActionForDuplicates action, Qt::CaseSensitivity sensitivity);
+    enum Strategy
+    {
+        MOVE,
+        COPY
+    };
+
+    MergeMEGAFolders(ActionForDuplicates action,
+                     Qt::CaseSensitivity sensitivity,
+                     Strategy strategy = Strategy::MOVE);
 
     std::shared_ptr<mega::MegaError> merge(mega::MegaNode* folderTarget,
                                            mega::MegaNode* folderToMerge);
+
+signals:
+    void nestedItemMerged();
+    void finished();
 
 private:
     std::shared_ptr<mega::MegaError> performMerge(mega::MegaNode* folderTarget,
@@ -64,6 +78,7 @@ private:
 
     Qt::CaseSensitivity mCaseSensitivity;
     ActionForDuplicates mAction;
+    Strategy mStrategy;
 };
 
 #endif // MERGEMEGAFOLDERS_H

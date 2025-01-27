@@ -72,14 +72,21 @@ public:
 
 protected:
     void createSpecialisedWidgets() override;
+    void doCustomConnections(NodeSelectorTreeViewWidget* item) override;
 
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
+    void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles) override;
+
+private slots:
+    void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
+    void onItemsDeleteRequested(const QList<mega::MegaHandle>& handles);
 
 private:
     void checkSelection() override {}
 
     QWidget* mDragBackDrop;
+    bool mRestoreRequested;
 };
 
 //////////////////

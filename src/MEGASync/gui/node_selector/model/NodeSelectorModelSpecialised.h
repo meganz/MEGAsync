@@ -49,10 +49,10 @@ public:
     bool showsSyncStates() override {return true;}
 
     bool canDropMimeData(const QMimeData* data,
-        Qt::DropAction action,
-        int row,
-        int column,
-        const QModelIndex& parent) const override;
+                         Qt::DropAction action,
+                         int row,
+                         int column,
+                         const QModelIndex& parent) const override;
 
 public slots:
     void onItemInfoUpdated(int role);
@@ -83,7 +83,13 @@ public:
     void fetchMore(const QModelIndex &parent) override;
     void firstLoad() override;
 
-    bool canBeDeleted() const override;
+    NodeSelectorModel::RemoveType canBeDeleted() const override;
+
+    bool canDropMimeData(const QMimeData*,
+                         Qt::DropAction,
+                         int,
+                         int,
+                         const QModelIndex&) const override;
 
 signals:
     void requestBackupsRootCreation(mega::MegaHandle backupHandle);
@@ -149,6 +155,13 @@ public:
     void firstLoad() override;
 
     bool isNodeAccepted(mega::MegaNode* node) override;
+
+    NodeSelectorModel::RemoveType canBeDeleted() const override;
+    bool canDropMimeData(const QMimeData*,
+                         Qt::DropAction action,
+                         int,
+                         int,
+                         const QModelIndex& parent) const override;
 
 public slots:
     void onItemInfoUpdated(int role);

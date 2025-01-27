@@ -234,7 +234,8 @@ void StreamNodeSelector::checkSelection()
 
 /////////////////////////////////////////////////////////////
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
-    NodeSelector(SelectTypeSPtr(new CloudDriveType), parent)
+    NodeSelector(SelectTypeSPtr(new CloudDriveType), parent),
+    mRestoreRequested(false)
 {
     setWindowTitle(MegaNodeNames::getCloudDriveName());
 
@@ -262,6 +263,27 @@ void CloudDriveNodeSelector::createSpecialisedWidgets()
     addRubbish();
 
     enableDragAndDrop(true);
+}
+
+void CloudDriveNodeSelector::doCustomConnections(NodeSelectorTreeViewWidget* item)
+{
+    if (item->getProxyModel()->canBeDeleted())
+    {
+        connect(item,
+                &NodeSelectorTreeViewWidget::itemsDeleteRequested,
+                this,
+                &CloudDriveNodeSelector::onItemsDeleteRequested,
+                Qt::UniqueConnection);
+    }
+
+    if (item == mRubbishWidget)
+    {
+        connect(mRubbishWidget,
+                &NodeSelectorTreeViewWidgetRubbish::itemsRestoreRequested,
+                this,
+                &CloudDriveNodeSelector::onItemsRestoreRequested,
+                Qt::UniqueConnection);
+    }
 }
 
 void CloudDriveNodeSelector::enableDragAndDrop(bool enable)
@@ -313,6 +335,40 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
             }
         };
         QMegaMessageBox::warning(msgInfo);
+    }
+}
+
+void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles)
+{
+    if (mRestoreRequested)
+    {
+        if (!handles.isEmpty())
+        {
+            mCloudDriveWidget->initMovingNodes(handles.size());
+            onbShowCloudDriveClicked();
+        }
+
+        mRestoreRequested = false;
+    }
+
+    NodeSelector::onItemsAboutToBeMoved(handles);
+}
+
+void CloudDriveNodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
+{
+    mRestoreRequested = true;
+
+    if (mRubbishWidget)
+    {
+        mRubbishWidget->restoreItems(handles);
+    }
+}
+
+void CloudDriveNodeSelector::onItemsDeleteRequested(const QList<mega::MegaHandle>& handles)
+{
+    if (mRubbishWidget)
+    {
+        mRubbishWidget->initMovingNodes(handles.size());
     }
 }
 

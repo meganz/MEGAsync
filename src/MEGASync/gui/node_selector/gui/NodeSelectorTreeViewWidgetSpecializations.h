@@ -18,8 +18,7 @@ class NodeSelectorTreeViewWidgetCloudDrive : public NodeSelectorTreeViewWidget
     Q_OBJECT
 
 public:
-    explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget *parent = nullptr);
-    void itemsRestored(const QList<mega::MegaHandle>& handles);
+    explicit NodeSelectorTreeViewWidgetCloudDrive(SelectTypeSPtr mode, QWidget* parent = nullptr);
 
     void setShowEmptyView(bool newShowEmptyView);
 
@@ -119,7 +118,6 @@ public:
 
 signals:
     void itemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-    void itemsRestored(const QList<mega::MegaHandle>& handles);
 
 protected:
     void makeCustomConnections() override;

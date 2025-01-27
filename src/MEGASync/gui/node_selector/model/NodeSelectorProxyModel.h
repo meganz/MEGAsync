@@ -32,14 +32,14 @@ public:
     QModelIndex getIndexFromHandle(const mega::MegaHandle& handle);
     QModelIndex getIndexFromNode(const std::shared_ptr<mega::MegaNode> node);
     QModelIndex findIndexInParentList(const std::shared_ptr<mega::MegaNode> node);
-    void removeNode(const QModelIndex &item);
+    void deleteNode(const QModelIndex& item);
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
     void setSourceModel(QAbstractItemModel *sourceModel) override;
     void setExpandMapped(bool value){mExpandMapped = value;}
     NodeSelectorModel* getMegaModel();
     bool isModelProcessing() const;
 
-    virtual bool isNotAProtectedModel() const;
+    virtual int canBeDeleted() const;
 
 signals:
     void expandReady();
@@ -69,7 +69,7 @@ class NodeSelectorProxyModelSearch : public NodeSelectorProxyModel
 public:
     explicit NodeSelectorProxyModelSearch(QObject* parent = nullptr);
     void setMode(NodeSelectorModelItemSearch::Types mode);
-    bool isNotAProtectedModel() const override;
+    int canBeDeleted() const override;
 
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex& sourceParent) const override;

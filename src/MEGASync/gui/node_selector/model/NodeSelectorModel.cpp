@@ -729,68 +729,87 @@ QStringList NodeSelectorModel::mimeTypes() const
     return types;
 }
 
-bool NodeSelectorModel::dropMimeData(
-    const QMimeData* data, Qt::DropAction action, int, int, const QModelIndex& parent)
+bool NodeSelectorModel::dropMimeData(const QMimeData* data,
+                                     Qt::DropAction action,
+                                     int row,
+                                     int column,
+                                     const QModelIndex& parent)
 {
-    if(action == Qt::DropAction::CopyAction)
+    if (action == Qt::CopyAction)
     {
-        auto targetIndex(parent.isValid() ? parent : index(0,0,QModelIndex()));
+        return startProcessingNodes(data, parent, ActionType::MOVE);
+    }
 
-        if(targetIndex.isValid())
+    return QAbstractItemModel::dropMimeData(data, action, row, column, parent);
+}
+
+bool NodeSelectorModel::startProcessingNodes(const QMimeData* data,
+                                             const QModelIndex& parent,
+                                             ActionType type)
+{
+    auto targetIndex(parent.isValid() ? parent : index(0, 0, QModelIndex()));
+
+    if (targetIndex.isValid())
+    {
+        if (NodeSelectorModelItem* chkItem =
+                static_cast<NodeSelectorModelItem*>(targetIndex.internalPointer()))
         {
-            if(NodeSelectorModelItem* chkItem = static_cast<NodeSelectorModelItem*>(targetIndex.internalPointer()))
+            QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
+            QDataStream stream(&encodedData, QIODevice::ReadOnly);
+
+            // We use this struct as it is the struct accepted by the Conflict manager
+            QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
+
+            auto sourceNode = chkItem->getNode();
+
+            mega::MegaHandle targetFolder(mega::INVALID_HANDLE);
+            if (sourceNode->isFile())
             {
-                QByteArray encodedData = data->data(MIME_DATA_INTERNAL_MOVE);
-                QDataStream stream(&encodedData, QIODevice::ReadOnly);
-
-                QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
-
-                auto sourceNode = chkItem->getNode();
-
-                mega::MegaHandle targetFolder(mega::INVALID_HANDLE);
-                if (sourceNode->isFile())
-                {
-                    targetFolder = sourceNode->getParentHandle();
-                }
-                else
-                {
-                    targetFolder = sourceNode->getHandle();
-                }
-
-                while (!stream.atEnd())
-                {
-                    quint64 handle;
-                    stream >> handle;
-
-                    std::unique_ptr<mega::MegaNode> moveNode(
-                        MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
-
-                    if (moveNode->getParentHandle() == targetFolder ||
-                        moveNode->getHandle() == targetFolder)
-                    {
-                        continue;
-                    }
-
-                    std::shared_ptr<mega::MegaNode> targetNode(
-                        MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
-                    nodesToMove.append(
-                        qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle,
-                                                                                     targetNode));
-                }
-
-                emit itemDroppedOn(targetIndex);
-                return moveNodesAndCheckConflicts(nodesToMove, sourceNode);
+                targetFolder = sourceNode->getParentHandle();
             }
+            else
+            {
+                targetFolder = sourceNode->getHandle();
+            }
+
+            std::shared_ptr<mega::MegaNode> targetNode(
+                MegaSyncApp->getMegaApi()->getNodeByHandle(targetFolder));
+
+            while (!stream.atEnd())
+            {
+                quint64 handle;
+                stream >> handle;
+
+                std::unique_ptr<mega::MegaNode> moveNode(
+                    MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
+
+                if (moveNode->getParentHandle() == targetFolder ||
+                    moveNode->getHandle() == targetFolder)
+                {
+                    continue;
+                }
+
+                nodesToMove.append(
+                    qMakePair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>(handle,
+                                                                                 targetNode));
+            }
+
+            return processNodesAndCheckConflicts(nodesToMove, sourceNode, type);
         }
     }
 
     return false;
 }
 
-void NodeSelectorModel::moveNodesAfterConflictCheck(
-    std::shared_ptr<ConflictTypes> conflicts)
+void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts,
+                                                       ActionType type)
 {
-    startMovingNodes();
+    if (conflicts->mResolvedConflicts.isEmpty())
+    {
+        return;
+    }
+
+    QList<mega::MegaHandle> handlesToMove;
 
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
@@ -803,38 +822,74 @@ void NodeSelectorModel::moveNodesAfterConflictCheck(
                 auto decision = resolvedMoveConflict->getSolution();
                 mRequestByHandle.insert(nodeToMove->getHandle(), mega::MegaRequest::TYPE_MOVE);
 
-                mMoveRequestsCounter++;
-
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
-                    moveFolderAndMerge(nodeToMove,
-                                       resolvedMoveConflict->getConflictNode(),
-                                       resolvedMoveConflict->getParentNode());
+                    mergeFolders(nodeToMove,
+                                 resolvedMoveConflict->getConflictNode(),
+                                 resolvedMoveConflict->getParentNode(),
+                                 type);
                 }
-                else if (decision == NodeItemType::FILE_UPLOAD_AND_REPLACE)
+                else
                 {
-                    moveFileAndReplace(nodeToMove,
-                                       resolvedMoveConflict->getConflictNode(),
-                                       resolvedMoveConflict->getParentNode());
-                }
-                else if (decision == NodeItemType::UPLOAD_AND_RENAME)
-                {
-                    moveNodeAndRename(nodeToMove,
-                                      resolvedMoveConflict->getNewName(),
-                                      resolvedMoveConflict->getParentNode());
-                }
-                else if (decision == NodeItemType::UPLOAD)
-                {
-                    moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
+                    handlesToMove.append(nodeToMove->getHandle());
+
+                    if (decision == NodeItemType::FILE_UPLOAD_AND_REPLACE)
+                    {
+                        if (type == ActionType::COPY)
+                        {
+                            copyFileAndReplace(nodeToMove,
+                                               resolvedMoveConflict->getConflictNode(),
+                                               resolvedMoveConflict->getParentNode());
+                        }
+                        else
+                        {
+                            moveFileAndReplace(nodeToMove,
+                                               resolvedMoveConflict->getConflictNode(),
+                                               resolvedMoveConflict->getParentNode());
+                        }
+                    }
+                    else if (decision == NodeItemType::UPLOAD_AND_RENAME)
+                    {
+                        if (type == ActionType::COPY)
+                        {
+                            copyNodeAndRename(nodeToMove,
+                                              resolvedMoveConflict->getNewName(),
+                                              resolvedMoveConflict->getParentNode());
+                        }
+                        else
+                        {
+                            moveNodeAndRename(nodeToMove,
+                                              resolvedMoveConflict->getNewName(),
+                                              resolvedMoveConflict->getParentNode());
+                        }
+                    }
+                    else if (decision == NodeItemType::UPLOAD)
+                    {
+                        if (type == ActionType::COPY)
+                        {
+                            copyNode(nodeToMove, resolvedMoveConflict->getParentNode());
+                        }
+                        else
+                        {
+                            moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
+                        }
+                    }
                 }
             }
         }
     }
+
+    // Set loading view in the source model where the move started
+    if (type == ActionType::MOVE)
+    {
+        emit itemsAboutToBeMoved(handlesToMove);
+    }
 }
 
-bool NodeSelectorModel::moveNodesAndCheckConflicts(
+bool NodeSelectorModel::processNodesAndCheckConflicts(
     const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
-    std::shared_ptr<mega::MegaNode> sourceNode)
+    std::shared_ptr<mega::MegaNode> sourceNode,
+    ActionType type)
 {
     if (handleAndTarget.isEmpty())
     {
@@ -845,11 +900,11 @@ bool NodeSelectorModel::moveNodesAndCheckConflicts(
 
     if (!conflicts->isEmpty())
     {
-        emit showDuplicatedNodeDialog(conflicts);
+        emit showDuplicatedNodeDialog(conflicts, type);
     }
     else
     {
-        moveNodesAfterConflictCheck(conflicts);
+        processNodesAfterConflictCheck(conflicts, type);
     }
 
     return true;
@@ -922,13 +977,15 @@ bool NodeSelectorModel::checkMoveProcessing()
 
         sendBlockUiSignal(false);
 
+        emit itemsMoved();
+
         return true;
     }
 
     return false;
 }
 
-bool NodeSelectorModel::moveProcessed(const mega::MegaHandle&)
+bool NodeSelectorModel::moveProcessed()
 {
     if (mMoveRequestsCounter > 0)
     {
@@ -950,6 +1007,17 @@ void NodeSelectorModel::startMovingNodes()
 bool NodeSelectorModel::isMovingNodes() const
 {
     return mIsProcessingMoves;
+}
+
+void NodeSelectorModel::increaseMovingNodes()
+{
+    mMoveRequestsCounter++;
+}
+
+void NodeSelectorModel::initMovingNodes(int number)
+{
+    startMovingNodes();
+    mMoveRequestsCounter += number;
 }
 
 void NodeSelectorModel::sendBlockUiSignal(bool state)
@@ -1162,9 +1230,13 @@ void NodeSelectorModel::onNodesAdded(QList<QPointer<NodeSelectorModelItem>> chil
     }
 
     // If we are moving nodes, the loading view is visible
-    if (!childrenItem.empty() && !isMovingNodes())
+    if (isMovingNodes())
     {
-        emit levelsAdded({}, false);
+        foreach(auto child, childrenItem)
+        {
+            Q_UNUSED(child);
+            moveProcessed();
+        }
     }
 }
 
@@ -1238,10 +1310,11 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
     return node;
 }
 
-void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
+void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
-    startMovingNodes();
-    //It will be unblocked when all requestFinish calls are received (check onRequestFinish)
+    emit itemsAboutToBeMoved(nodeHandles);
+    // startMovingNodes();
+    // It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {
         foreach(auto handle, nodeHandles)
         {
@@ -1249,7 +1322,7 @@ void NodeSelectorModel::removeNodes(const QList<mega::MegaHandle>& nodeHandles, 
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if (node)
             {
-                mMoveRequestsCounter++;
+                // increaseMovingNodes();
 
                 int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
 
@@ -1309,7 +1382,7 @@ bool NodeSelectorModel::areAllNodesEligibleForRestore(const QList<mega::MegaHand
     return restorableItems == 0;
 }
 
-void NodeSelectorModel::removeNodeFromModel(const QModelIndex &index)
+void NodeSelectorModel::deleteNodeFromModel(const QModelIndex& index)
 {
     if(!index.isValid())
     {
@@ -1363,16 +1436,30 @@ int NodeSelectorModel::getNodeAccess(mega::MegaNode* node)
     }
 }
 
-void NodeSelectorModel::moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveFolder,
-    std::shared_ptr<mega::MegaNode> conflictTargetFolder,
-    std::shared_ptr<mega::MegaNode> targetParentFolder)
+void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
+                                     std::shared_ptr<mega::MegaNode> conflictTargetFolder,
+                                     std::shared_ptr<mega::MegaNode> targetParentFolder,
+                                     ActionType type)
 {
     QtConcurrent::run(
-        [this, moveFolder, targetParentFolder, conflictTargetFolder]()
+        [this, moveFolder, targetParentFolder, conflictTargetFolder, type]()
         {
             MergeMEGAFolders foldersMerger(MergeMEGAFolders::ActionForDuplicates::Rename,
                                            // Remote is always case sensitive
-                                           Qt::CaseSensitive);
+                                           Qt::CaseSensitive,
+                                           type == ActionType::COPY ?
+                                               MergeMEGAFolders::Strategy::COPY :
+                                               MergeMEGAFolders::Strategy::MOVE);
+
+            connect(&foldersMerger,
+                    &MergeMEGAFolders::nestedItemMerged,
+                    this,
+                    &NodeSelectorModel::increaseMovingNodes);
+
+            connect(&foldersMerger,
+                    &MergeMEGAFolders::finished,
+                    this,
+                    &NodeSelectorModel::moveProcessed);
 
             auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get()).get();
 
@@ -1402,6 +1489,27 @@ void NodeSelectorModel::moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveF
         });
 }
 
+void NodeSelectorModel::copyFileAndReplace(std::shared_ptr<mega::MegaNode> copyItem,
+                                           std::shared_ptr<mega::MegaNode> conflictTargetFile,
+                                           std::shared_ptr<mega::MegaNode> targetParentFolder)
+{
+    QtConcurrent::run(
+        [this, copyItem, targetParentFolder, conflictTargetFile]()
+        {
+            auto e = Utilities::removeRemoteFile(conflictTargetFile.get());
+            if (!e || e->getErrorCode() == mega::MegaError::API_OK)
+            {
+                MegaSyncApp->getMegaApi()->copyNode(copyItem.get(),
+                                                    targetParentFolder.get(),
+                                                    mListener.get());
+            }
+            else
+            {
+                checkFinishedRequest(copyItem->getHandle(), e->getErrorCode());
+            }
+        });
+}
+
 void NodeSelectorModel::moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode,
     const QString& newName,
     std::shared_ptr<mega::MegaNode> targetParentFolder)
@@ -1413,6 +1521,16 @@ void NodeSelectorModel::moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNo
         mListener.get());
 }
 
+void NodeSelectorModel::copyNodeAndRename(std::shared_ptr<mega::MegaNode> copyNode,
+                                          const QString& newName,
+                                          std::shared_ptr<mega::MegaNode> targetParentFolder)
+{
+    MegaSyncApp->getMegaApi()->copyNode(copyNode.get(),
+                                        targetParentFolder.get(),
+                                        newName.toUtf8(),
+                                        mListener.get());
+}
+
 void NodeSelectorModel::moveNode(std::shared_ptr<mega::MegaNode> moveNode, std::shared_ptr<mega::MegaNode> targetParentFolder)
 {
     MegaSyncApp->getMegaApi()->moveNode(
@@ -1421,19 +1539,26 @@ void NodeSelectorModel::moveNode(std::shared_ptr<mega::MegaNode> moveNode, std::
         mListener.get());
 }
 
+void NodeSelectorModel::copyNode(std::shared_ptr<mega::MegaNode> copyNode,
+                                 std::shared_ptr<mega::MegaNode> targetParentFolder)
+{
+    MegaSyncApp->getMegaApi()->copyNode(copyNode.get(), targetParentFolder.get(), mListener.get());
+}
+
 void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaError* e)
 {
     auto type(request->getType());
 
-    if (type == mega::MegaRequest::TYPE_MOVE || type == mega::MegaRequest::TYPE_REMOVE)
+    if (type == mega::MegaRequest::TYPE_MOVE || type == mega::MegaRequest::TYPE_REMOVE ||
+        type == mega::MegaRequest::TYPE_COPY)
     {
         auto handle(request->getNodeHandle());
         checkFinishedRequest(handle, e->getErrorCode());
 
-        if ((e && e->getErrorCode() != mega::MegaError::API_OK) ||
-            type == mega::MegaRequest::TYPE_REMOVE)
+        if ((e && e->getErrorCode() != mega::MegaError::API_OK)/* ||
+            type == mega::MegaRequest::TYPE_REMOVE*/)
         {
-            moveProcessed(handle);
+            moveProcessed();
         }
     }
 }
@@ -1649,9 +1774,9 @@ void NodeSelectorModel::abort()
     mNodeRequesterWorker->cancelCurrentRequest();
 }
 
-bool NodeSelectorModel::canBeDeleted() const
+NodeSelectorModel::RemoveType NodeSelectorModel::canBeDeleted() const
 {
-    return true;
+    return RemoveType::MOVE_TO_RUBBISH;
 }
 
 void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> node)
@@ -1681,10 +1806,7 @@ void NodeSelectorModel::loadTreeFromNode(const std::shared_ptr<mega::MegaNode> n
 
     if(!fetchMoreRecursively(QModelIndex()))
     {
-        if(!isMovingNodes())
-        {
-            sendBlockUiSignal(false);
-        }
+        sendBlockUiSignal(false);
         mNodesToLoad.clear();
     }
 }
@@ -1786,14 +1908,14 @@ bool NodeSelectorModel::isRequestingNodes() const
 
 void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
 {
-    sendBlockUiSignal(true);
-
     NodeSelectorModelItem* item = static_cast<NodeSelectorModelItem*>(parent.internalPointer());
     if(!item->areChildrenInitialized() && !item->requestingChildren())
     {
         int itemNumChildren = item->getNumChildren();
         if(itemNumChildren > 0)
         {
+            sendBlockUiSignal(true);
+
             blockSignals(true);
             beginInsertRows(parent, 0, itemNumChildren-1);
             blockSignals(false);
@@ -1801,15 +1923,10 @@ void NodeSelectorModel::fetchItemChildren(const QModelIndex& parent)
             info->message = QLatin1String("Requesting nodes...");
             emit updateLoadingMessage(info);
             emit requestChildNodes(item, parent);
+
+            // Unblock UI when children are added async
+            return;
         }
-        else
-        {
-            sendBlockUiSignal(false);
-        }
-    }
-    else
-    {
-        sendBlockUiSignal(false);
     }
 }
 
@@ -1820,7 +1937,7 @@ void NodeSelectorModel::onChildNodesReady(NodeSelectorModelItem* parent)
     emit updateLoadingMessage(info);
 
     auto index = parent->property(INDEX_PROPERTY).value<QModelIndex>();
-    mIndexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
+    // mIndexesToBeExpanded.append(qMakePair(parent->getNode()->getHandle(), index));
     continueWithNextItemToLoad(index);
 }
 
@@ -1831,11 +1948,15 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     if(!mNodesToLoad.isEmpty())
     {
         //The last one has been already processed
-        mNodesToLoad.removeLast();
+        auto lastNode = mNodesToLoad.takeLast();
         if(!mNodesToLoad.isEmpty())
         {
             result = fetchMoreRecursively(parentIndex);
-            if(!result && !mNodesToLoad.isEmpty())
+            if (result)
+            {
+                mIndexesToBeExpanded.append(qMakePair(lastNode->getHandle(), parentIndex));
+            }
+            else if (!mNodesToLoad.isEmpty())
             {
                 //The last node is empty
                 mNodesToLoad.removeLast();
@@ -1847,6 +1968,7 @@ bool NodeSelectorModel::continueWithNextItemToLoad(const QModelIndex& parentInde
     {
         loadLevelFinished();
     }
+
     return result;
 }
 

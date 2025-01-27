@@ -51,6 +51,8 @@ void NodeSelectorModelCloudDrive::onRootItemCreated()
     if(canFetchMore(rootIndex))
     {
         fetchItemChildren(rootIndex);
+        mIndexesToBeExpanded.append(qMakePair(MegaSyncApp->getRootNode()->getHandle(), rootIndex));
+        loadLevelFinished();
     }
     else
     {
@@ -148,8 +150,11 @@ bool NodeSelectorModelIncomingShares::rootNodeUpdated(mega::MegaNode* node)
     return false;
 }
 
-bool NodeSelectorModelIncomingShares::canDropMimeData(
-    const QMimeData* data, Qt::DropAction action, int row, int column, const QModelIndex& parent) const
+bool NodeSelectorModelIncomingShares::canDropMimeData(const QMimeData* data,
+                                                      Qt::DropAction action,
+                                                      int row,
+                                                      int column,
+                                                      const QModelIndex& parent) const
 {
     if(action == Qt::CopyAction)
     {
@@ -162,16 +167,16 @@ bool NodeSelectorModelIncomingShares::canDropMimeData(
                 if(node)
                 {
                     auto access = Utilities::getNodeAccess(node->getHandle());
-                    if (access < MegaShare::ACCESS_READWRITE)
+                    if (access >= MegaShare::ACCESS_READWRITE)
                     {
-                        return false;
+                        return true;
                     }
                 }
             }
         }
     }
 
-    return NodeSelectorModel::canDropMimeData(data, action, row, column, parent);
+    return false;
 }
 
 void NodeSelectorModelIncomingShares::onRootItemsCreated()
@@ -272,7 +277,16 @@ void NodeSelectorModelBackups::firstLoad()
     }
 }
 
-bool NodeSelectorModelBackups::canBeDeleted() const
+NodeSelectorModel::RemoveType NodeSelectorModelBackups::canBeDeleted() const
+{
+    return RemoveType::NO_REMOVE;
+}
+
+bool NodeSelectorModelBackups::canDropMimeData(const QMimeData*,
+                                               Qt::DropAction,
+                                               int,
+                                               int,
+                                               const QModelIndex&) const
 {
     return false;
 }
@@ -326,6 +340,11 @@ void NodeSelectorModelBackups::onRootItemCreated()
     //Add the item of the Backups Drive
     if(canFetchMore(rootIndex))
     {
+        auto backupItem(getItemByIndex(rootIndex));
+        if (backupItem)
+        {
+            mIndexesToBeExpanded.append(qMakePair(backupItem->getNode()->getHandle(), rootIndex));
+        }
         fetchItemChildren(rootIndex);
     }
     else
@@ -523,6 +542,11 @@ void NodeSelectorModelRubbish::onRootItemsCreated()
     if(canFetchMore(rootIndex))
     {
         fetchItemChildren(rootIndex);
+        auto rubbishItem(getItemByIndex(rootIndex));
+        if (rubbishItem)
+        {
+            mIndexesToBeExpanded.append(qMakePair(rubbishItem->getNode()->getHandle(), rootIndex));
+        }
     }
     else
     {
@@ -568,4 +592,38 @@ void NodeSelectorModelRubbish::firstLoad()
 bool NodeSelectorModelRubbish::isNodeAccepted(MegaNode* node)
 {
     return MegaSyncApp->getMegaApi()->isInRubbish(node);
+}
+
+NodeSelectorModel::RemoveType NodeSelectorModelRubbish::canBeDeleted() const
+{
+    return RemoveType::PERMANENT_REMOVE;
+}
+
+bool NodeSelectorModelRubbish::canDropMimeData(const QMimeData*,
+                                               Qt::DropAction action,
+                                               int,
+                                               int,
+                                               const QModelIndex& parent) const
+{
+    if (action == Qt::CopyAction)
+    {
+        if (parent.isValid())
+        {
+            auto item = getItemByIndex(parent);
+            if (item)
+            {
+                auto node = item->getNode();
+                if (node)
+                {
+                    auto access = Utilities::getNodeAccess(node->getHandle());
+                    if (access == MegaShare::ACCESS_OWNER)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
 }

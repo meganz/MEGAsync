@@ -50,33 +50,38 @@ public:
 
     explicit NodeSelectorTreeViewWidget(SelectTypeSPtr mode, QWidget *parent = nullptr);
     ~NodeSelectorTreeViewWidget();
-    mega::MegaHandle getSelectedNodeHandle();
+
     void init();
+
+    mega::MegaHandle getSelectedNodeHandle();
     QList<mega::MegaHandle> getMultiSelectionNodeHandle();
     void setSelectedNodeHandle(const mega::MegaHandle& selectedHandle);
-    void setFutureSelectedNodeHandle(const mega::MegaHandle &selectedHandle);
+
     void setDefaultUploadOption(bool value);
     bool getDefaultUploadOption();
     void showDefaultUploadOption(bool show);
+
     void setSearchText(const QString& text);
     void setTitleText(const QString& nodeName);
+
     void clearSearchText();
     void clearSelection();
+
     void abort();
     NodeSelectorModelItem* rootItem();
     NodeSelectorProxyModel* getProxyModel();
     bool isInRootView() const;
 
-    bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList *nodes);
-
+    bool onNodesUpdate(mega::MegaApi*, mega::MegaNodeList* nodes);
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
 
     void enableDragAndDrop(bool enable);
 
+    void initMovingNodes(int number);
+    bool areItemsAboutToBeMovedFromHere(mega::MegaHandle firstHandleMoved, int handlesMoved);
+
 public slots:
-    virtual void onRowsInserted();
-    void onRowsRemoved();
-    void onProxyModelSorted();
+    virtual void checkViewOnModelChange();
     void setLoadingSceneVisible(bool visible);
 
 signals:
@@ -84,6 +89,7 @@ signals:
     void cancelBtnClicked();
     void onSearch(const QString& text);
     void onCustomBottomButtonClicked(uint id);
+    void itemsDeleteRequested(const QList<mega::MegaHandle>& handles);
 
 protected:
     void showEvent(QShowEvent* ) override;
@@ -101,12 +107,17 @@ protected:
     virtual bool newNodeCanBeAdded(mega::MegaNode*){return true;}
     virtual QModelIndex getAddedNodeParent(mega::MegaHandle parentHandle);
     QModelIndex getRootIndexFromIndex(const QModelIndex& index);
+    void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
+    void selectIndex(const mega::MegaHandle& handle, bool setCurrent, bool exclusiveSelect = false);
 
     enum class NodeState
     {
         EXISTS,
         EXISTS_BUT_INVISIBLE,
         ADD,
+        REMOVE,
+        MOVED,
+        MOVED_OUT_OF_VIEW,
         DOESNT_EXIST
     };
 
@@ -124,7 +135,8 @@ private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void onModelDataChanged(const QModelIndex& first, const QModelIndex& last, const QVector<int> &roles = QVector<int>());
     void onDeleteClicked(const QList<mega::MegaHandle> &handles, bool permanently);
-    void onMoveClicked(const QList<mega::MegaHandle>& handles, const QModelIndex& parent);
+    void onPasteClicked();
+    void onCopyClicked(const QList<mega::MegaHandle>& handles);
     void onRenameClicked();
     void onGenMEGALinkClicked();
     virtual void onItemDoubleClick(const QModelIndex &index);
@@ -136,7 +148,8 @@ private slots:
     void onUiBlocked(bool state);
     void processCachedNodesUpdated();
     void removeItemByHandle(mega::MegaHandle handle);
-    void deselectIndex(const QModelIndex& index);
+    void onItemsMoved();
+    void onProxyModelRowsInserted(const QModelIndex& parent, int first, int last);
 
 private:
     bool mManuallyResizedColumn;
@@ -162,13 +175,10 @@ private:
     void checkOkButton(const QModelIndexList& selected);
     bool shouldUpdateImmediately();
     bool areThereNodesToUpdate();
-    void selectIndex(const QModelIndex& index, bool setCurrent, bool exclusiveSelect = false);
-    void selectIndex(const mega::MegaHandle& handle, bool setCurrent, bool exclusiveSelect = false);
 
     ButtonIconManager mButtonIconManager;
     bool first;
     bool mUiBlocked;
-    mega::MegaHandle mNodeHandleToSelect;
     SelectTypeSPtr mSelectType;
 
     struct UpdateNodesInfo
@@ -183,12 +193,15 @@ private:
     QMultiMap<mega::MegaHandle, std::shared_ptr<mega::MegaNode>> mAddedNodesByParentHandle;
     QSet<mega::MegaHandle> mRemovedNodes;
     QSet<mega::MegaHandle> mRemoveMovedNodes;
-    mega::MegaHandle mMovedNodesParentToSelect;
-    QSet<mega::MegaHandle> mUpdatedButInvisibleNodes;
+    QList<mega::MegaHandle> mUpdatedButInvisibleNodes;
+    QList<mega::MegaHandle> mMovedHandlesToSelect;
 
     QTimer mNodesUpdateTimer;
     mega::MegaHandle mNewFolderHandle;
     bool mNewFolderAdded;
+
+    // Copied handles are common for all views
+    static QList<mega::MegaHandle> mCopiedHandles;
 
     friend class DownloadType;
     friend class SyncType;

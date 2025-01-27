@@ -198,30 +198,50 @@ public:
     void setSyncSetupMode(bool value);
 
     virtual void addNodes(QList<std::shared_ptr<mega::MegaNode>> node, const QModelIndex &parent);
-    void removeNodeFromModel(const QModelIndex& index);
+    void deleteNodeFromModel(const QModelIndex& index);
 
     int getNodeAccess(mega::MegaNode* node);
 
     std::shared_ptr<mega::MegaNode> getNodeToRemove(mega::MegaHandle handle);
-    void removeNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently);
+    void deleteNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently);
     bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
     bool areAllNodesEligibleForRestore(const QList<mega::MegaHandle> &handles) const;
 
-    void moveFolderAndMerge(std::shared_ptr<mega::MegaNode> moveFolder,
-                            std::shared_ptr<mega::MegaNode> conflictTargetFolder,
-                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+    enum class ActionType
+    {
+        MOVE,
+        COPY
+    };
+    bool startProcessingNodes(const QMimeData* data, const QModelIndex& parent, ActionType type);
+    void processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
+    bool processNodesAndCheckConflicts(
+        const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
+        std::shared_ptr<mega::MegaNode> sourceNode,
+        ActionType type);
+    void increaseMovingNodes();
+    void initMovingNodes(int number);
+    bool isMovingNodes() const;
+
+    void mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
+                      std::shared_ptr<mega::MegaNode> conflictTargetFolder,
+                      std::shared_ptr<mega::MegaNode> targetParentFolder,
+                      ActionType type);
     void moveFileAndReplace(std::shared_ptr<mega::MegaNode> moveFile,
+                            std::shared_ptr<mega::MegaNode> conflictTargetFile,
+                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void copyFileAndReplace(std::shared_ptr<mega::MegaNode> copyItem,
                             std::shared_ptr<mega::MegaNode> conflictTargetFile,
                             std::shared_ptr<mega::MegaNode> targetParentFolder);
     void moveNodeAndRename(std::shared_ptr<mega::MegaNode> moveNode,
                            const QString& newName,
                            std::shared_ptr<mega::MegaNode> targetParentFolder);
+    void copyNodeAndRename(std::shared_ptr<mega::MegaNode> copyNode,
+                           const QString& newName,
+                           std::shared_ptr<mega::MegaNode> targetParentFolder);
     void moveNode(std::shared_ptr<mega::MegaNode> moveNode,
                   std::shared_ptr<mega::MegaNode> targetParentFolder);
-    void moveNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts);
-    bool moveNodesAndCheckConflicts(
-        const QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>>& handleAndTarget,
-        std::shared_ptr<mega::MegaNode> sourceNode);
+    void copyNode(std::shared_ptr<mega::MegaNode> copyNode,
+                  std::shared_ptr<mega::MegaNode> targetParentFolder);
 
     void showFiles(bool show);
     void showReadOnlyFolders(bool show);
@@ -249,7 +269,14 @@ public:
 
     void abort();
 
-    virtual bool canBeDeleted() const;
+    enum RemoveType
+    {
+        NO_REMOVE = 0,
+        MOVE_TO_RUBBISH,
+        PERMANENT_REMOVE
+    };
+
+    virtual RemoveType canBeDeleted() const;
     virtual bool rootNodeUpdated(mega::MegaNode*){return false;}
     virtual bool isNodeAccepted(mega::MegaNode* node){return !MegaSyncApp->getMegaApi()->isInRubbish(node);}
     virtual bool showsSyncStates() {return false;}
@@ -261,8 +288,6 @@ public:
         return mIsBeingModified;
     }
 
-    bool moveProcessed(const mega::MegaHandle& handle);
-
     void setIsModelBeingModified(bool state);
 
     void setAcceptDragAndDrop(bool newAcceptDragAndDrop);
@@ -271,7 +296,11 @@ public:
     QMimeData* mimeData(const QModelIndexList& indexes) const override;
     QMimeData* mimeData(const QList<mega::MegaHandle>& handles) const;
 
-    bool dropMimeData(const QMimeData *data, Qt::DropAction action, int, int, const QModelIndex &parent) override;
+    bool dropMimeData(const QMimeData* data,
+                      Qt::DropAction action,
+                      int row,
+                      int column,
+                      const QModelIndex& parent) override;
     virtual bool canDropMimeData(const QMimeData* data,
         Qt::DropAction action,
         int row,
@@ -281,6 +310,9 @@ public:
     void onRequestFinish(mega::MegaRequest* request, mega::MegaError* e);
 
     void sendBlockUiSignal(bool state);
+
+public slots:
+    bool moveProcessed();
 
 signals:
     void levelsAdded(const QList<QPair<mega::MegaHandle, QModelIndex>>& parent, bool force = false);
@@ -294,10 +326,11 @@ signals:
     void forceFilter();
     void updateLoadingMessage(std::shared_ptr<MessageInfo> message);
     void showMessageBox(QMegaMessageBox::MessageBoxInfo info) const;
-    void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts);
+    void showDuplicatedNodeDialog(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
-    void itemDroppedOn(const QModelIndex& indexDropped);
+    void itemsMoved();
+    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -345,7 +378,6 @@ private:
 
     bool checkMoveProcessing();
     void startMovingNodes();
-    bool isMovingNodes() const;
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
@@ -363,7 +395,7 @@ private:
     MovedItemsTypes mMovedItemsType;
 
     // Move nodes
-    uint mMoveRequestsCounter;
+    int mMoveRequestsCounter;
 
     // Add nodes secuentially, not all at the same time
     AddNodesQueue mAddNodesQueue;
