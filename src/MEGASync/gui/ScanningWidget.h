@@ -43,6 +43,8 @@ private:
 
     static QString formattedNode(const QString& name);
 
+    QString getScanningFileName() const;
+
     int mPreviousStage;
     Ui::ScanningWidget *mUi;
     QMovie *mMovie = nullptr;

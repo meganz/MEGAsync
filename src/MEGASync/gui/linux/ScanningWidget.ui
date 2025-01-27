@@ -44,6 +44,12 @@
      </item>
      <item>
       <widget class="QLabel" name="lAnimation">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>128</height>
+        </size>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -178,7 +184,7 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Fixed</enum>
+      <enum>QSizePolicy::Minimum</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
