@@ -43,6 +43,11 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
     connect(ui->bRubbish, &QPushButton::clicked, this, &NodeSelector::onbShowRubbishClicked);
 
+    connect(ui->stackedWidget,
+            &QStackedWidget::currentChanged,
+            this,
+            &NodeSelector::onCurrentWidgetChanged);
+
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
         button->installEventFilter(this);
@@ -513,16 +518,30 @@ void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
             option = BACKUPS;
         }
         // Check if the owner is not me, so it is an inshare
-        else if (node->getOwner() != MegaSyncApp->getMegaApi()->getMyUserHandleBinary())
+        else if (mMegaApi->isInShare(node.get()))
         {
             option = SHARES;
         }
 
         if (option.has_value())
         {
-            onOptionSelected(option.value());
             mNodeToBeSelected = node->getHandle();
+            onOptionSelected(option.value());
         }
+    }
+}
+
+void NodeSelector::onCurrentWidgetChanged(int)
+{
+    if (mNodeToBeSelected != mega::INVALID_HANDLE)
+    {
+        auto treeViewWidget = getCurrentTreeViewWidget();
+        if (treeViewWidget)
+        {
+            treeViewWidget->setSelectedNodeHandle(mNodeToBeSelected);
+        }
+
+        mNodeToBeSelected = mega::INVALID_HANDLE;
     }
 }
 

@@ -110,6 +110,7 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
+    void onCurrentWidgetChanged(int);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
