@@ -8366,6 +8366,18 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Page title to add syncs. CON-833</translatorcomment>
         <translation>Add sync</translation>
     </message>
+    <message>
+        <source>Sync folders in your local device with MEGA.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sync: Select folders</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select folders to sync</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TextArea</name>

@@ -19,9 +19,7 @@ SyncsFlow {
 
     isOnboarding: true
 
-    state: navInfoRef.fullSyncDone || navInfoRef.typeSelected === Constants.SyncType.SELECTIVE_SYNC
-           ? root.selectiveSync
-           : root.syncType
+    state: root.selectiveSync
 
     Item {
         id: stepPanelStateWrapper
@@ -45,8 +43,8 @@ SyncsFlow {
                 PropertyChanges {
                     target: root.stepPanelRef;
                     state: root.stepPanelRef.step4;
-                    step3Text: OnboardingStrings.syncChooseType;
-                    step4Text: SyncsStrings.selectiveSync;
+                    step3Text: SyncsStrings.selectiveSync;
+                    step4Text: OnboardingStrings.confirm;
                 }
             },
             State {

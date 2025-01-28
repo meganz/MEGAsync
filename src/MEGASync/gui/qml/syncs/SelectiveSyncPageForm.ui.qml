@@ -42,7 +42,7 @@ FooterButtonsPage {
             id: header
 
             Layout.preferredWidth: parent.width
-            title: SyncsStrings.selectiveSync
+            title: SyncsStrings.selectiveSyncTitle
             description: SyncsStrings.selectiveSyncDescription
         }
 

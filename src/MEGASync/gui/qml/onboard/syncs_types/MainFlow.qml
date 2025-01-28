@@ -56,7 +56,7 @@ Rectangle {
             name: root.syncsFlow
             StateChangeScript {
                 script: {
-                    root.navInfo.typeSelected = Constants.SyncType.SYNC;
+                    root.navInfo.typeSelected = Constants.SyncType.SELECTIVE_SYNC;
                     rightPanel.replace(syncsFlowPage);
                 }
             }
@@ -238,11 +238,8 @@ Rectangle {
                         root.navInfo.typeSelected = root.navInfo.previousTypeSelected;
                         root.state = root.resume;
                     }
-                    else if(fromSelectType) {
-                        root.state = root.syncType;
-                    }
                     else {
-                        syncsFlowPageItem.state = syncsFlowPageItem.syncType;
+                        root.state = root.syncType;
                     }
                 }
             }

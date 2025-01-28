@@ -26,28 +26,6 @@ Item {
     readonly property string availableStorage: qsTr("Available storage:")
     readonly property string storageSpace: qsTr("Storage space:")
 
-    function getAccountTypeImage() {
-        switch(AccountInfoData.type) {
-            case AccountInfoData.ACCOUNT_TYPE_FREE:
-                return Images.shield_account_free;
-            case AccountInfoData.ACCOUNT_TYPE_PROI:
-                return Images.shield_account_proI;
-            case AccountInfoData.ACCOUNT_TYPE_PROII:
-                return Images.shield_account_proII;
-            case AccountInfoData.ACCOUNT_TYPE_PROIII:
-                return Images.shield_account_proIII;
-            case AccountInfoData.ACCOUNT_TYPE_LITE:
-                return Images.shield_account_lite;
-            case AccountInfoData.ACCOUNT_TYPE_BUSINESS:
-                return Images.building;
-            case AccountInfoData.ACCOUNT_TYPE_PRO_FLEXI:
-                return Images.infinity;
-            default:
-                // No image displayed for starter, basic and essential accounts
-                return "";
-        }
-    }
-
     function getAccountTypeText() {
         switch(AccountInfoData.type) {
             case AccountInfoData.ACCOUNT_TYPE_FREE:
@@ -106,19 +84,6 @@ Item {
                 Layout.alignment: Qt.AlignLeft
                 Layout.leftMargin: 20
                 spacing: 7
-
-                SvgImage {
-                    id: typeImage
-
-                    source: getAccountTypeImage()
-                    height: 16
-                    width: 16
-                    sourceSize: Qt.size(width, height)
-                    opacity: enabled ? 1.0 : 0.2
-                    visible: AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_STARTER
-                             && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_BASIC
-                             && AccountInfoData.type !== AccountInfoData.ACCOUNT_TYPE_ESSENTIAL
-                }
 
                 Texts.Text {
                     id: typeText
