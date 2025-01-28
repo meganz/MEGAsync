@@ -72,6 +72,11 @@ protected:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e) override{}
     void onNodesUpdate(mega::MegaApi *api, mega::MegaNodeList *nodes) override;
 
+    void performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
+                               int,
+                               bool blockSource,
+                               bool blockTarget);
+
     //Create specialised widgets
     virtual void createSpecialisedWidgets() = 0;
     void addCloudDrive();
@@ -98,7 +103,7 @@ protected slots:
         Q_UNUSED(id)
     }
 
-    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles);
+    virtual void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType);
     void onbShowCloudDriveClicked();
     void onbShowIncomingSharesClicked();
 
@@ -110,7 +115,7 @@ private slots:
     void onOptionSelected(int index);
     void updateNodeSelectorTabs(); void onSearch(const QString& text);
     void on_tClearSearchResultNS_clicked();
-    void onCurrentWidgetChanged(int);
+    void onCurrentWidgetChanged(int index);
 
 private:
     QModelIndex getParentIncomingShareByIndex(QModelIndex idx);
@@ -118,6 +123,9 @@ private:
     void setAllFramesItsOnProperty();
     virtual void checkSelection() = 0;
     void shortCutConnects(int ignoreThis);
+
+    void performNodeSelection();
+
     ButtonIconManager mButtonIconManager;
     QGraphicsDropShadowEffect* mShadowTab;
     QMap<TabItem, QFrame*> mTabFramesToggleGroup;
@@ -130,7 +138,7 @@ private:
     bool mManuallyResizedColumn;
     bool mInitialised;
 
-    mega::MegaHandle mNodeToBeSelected;
+    std::shared_ptr<mega::MegaNode> mNodeToBeSelected;
 };
 
 #endif // NODESELECTOR_H

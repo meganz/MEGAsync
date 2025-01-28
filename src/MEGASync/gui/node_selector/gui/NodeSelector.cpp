@@ -30,8 +30,7 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     ui(new Ui::NodeSelector),
     mSelectType(selectType),
     mDelegateListener(std::make_unique<QTMegaListener>(mMegaApi, this)),
-    mInitialised(false),
-    mNodeToBeSelected(mega::INVALID_HANDLE)
+    mInitialised(false)
 {
     ui->setupUi(this);
 
@@ -42,11 +41,6 @@ NodeSelector::NodeSelector(SelectTypeSPtr selectType, QWidget* parent):
     connect(ui->bShowBackups, &QPushButton::clicked, this, &NodeSelector::onbShowBackupsFolderClicked);
     connect(ui->bSearchNS, &QPushButton::clicked, this, &NodeSelector::onbShowSearchClicked);
     connect(ui->bRubbish, &QPushButton::clicked, this, &NodeSelector::onbShowRubbishClicked);
-
-    connect(ui->stackedWidget,
-            &QStackedWidget::currentChanged,
-            this,
-            &NodeSelector::onCurrentWidgetChanged);
 
     foreach(auto& button, ui->wLeftPaneNS->findChildren<QAbstractButton*>())
     {
@@ -228,15 +222,24 @@ void NodeSelector::onUpdateLoadingMessage(std::shared_ptr<MessageInfo> message)
     }
 }
 
-void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles)
+void NodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int actionType)
+{
+    performItemsToBeMoved(handles, actionType, true, true);
+}
+
+void NodeSelector::performItemsToBeMoved(const QList<mega::MegaHandle>& handles,
+                                         int,
+                                         bool blockSource,
+                                         bool blockTarget)
 {
     if (handles.isEmpty())
     {
         return;
     }
 
-    bool foundSource(false);
-    bool foundTarget(false);
+    // IF we want to block the source or target, set values to false in order to look for them
+    bool foundSource(blockSource ? false : true);
+    bool foundTarget(blockTarget ? false : true);
 
     auto senderModel(dynamic_cast<NodeSelectorModel*>(sender()));
 
@@ -482,12 +485,12 @@ void NodeSelector::initSpecialisedWidgets()
         }
     }
 
-    auto treeViewWidget = getCurrentTreeViewWidget();
-    if (treeViewWidget && mNodeToBeSelected != mega::INVALID_HANDLE)
-    {
-        treeViewWidget->setSelectedNodeHandle(mNodeToBeSelected);
-        mNodeToBeSelected = mega::INVALID_HANDLE;
-    }
+    connect(ui->stackedWidget,
+            &QStackedWidget::currentChanged,
+            this,
+            &NodeSelector::onCurrentWidgetChanged);
+
+    performNodeSelection();
 }
 
 bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
@@ -505,43 +508,53 @@ bool NodeSelector::eventFilter(QObject* obj, QEvent* event)
 
 void NodeSelector::setSelectedNodeHandle(std::shared_ptr<MegaNode> node)
 {
-    if (node)
+    mNodeToBeSelected = node;
+}
+
+void NodeSelector::performNodeSelection()
+{
+    if (mNodeToBeSelected)
     {
         std::optional<TabItem> option;
 
-        if (mMegaApi->isInCloud(node.get()))
+        if (mMegaApi->isInCloud(mNodeToBeSelected.get()))
         {
             option = CLOUD_DRIVE;
         }
-        else if (mMegaApi->isInVault(node.get()))
+        else if (mMegaApi->isInVault(mNodeToBeSelected.get()))
         {
             option = BACKUPS;
         }
-        // Check if the owner is not me, so it is an inshare
-        else if (mMegaApi->isInShare(node.get()))
+        // If it is not in the cloud drive or the vault, it is a backup
+        else
         {
             option = SHARES;
         }
 
         if (option.has_value())
         {
-            mNodeToBeSelected = node->getHandle();
-            onOptionSelected(option.value());
+            auto optionValue(option.value());
+            if (ui->stackedWidget->currentIndex() == optionValue)
+            {
+                onCurrentWidgetChanged(optionValue);
+            }
+            else
+            {
+                onOptionSelected(optionValue);
+            }
         }
     }
 }
 
-void NodeSelector::onCurrentWidgetChanged(int)
+void NodeSelector::onCurrentWidgetChanged(int index)
 {
-    if (mNodeToBeSelected != mega::INVALID_HANDLE)
+    if (mNodeToBeSelected)
     {
-        auto treeViewWidget = getCurrentTreeViewWidget();
-        if (treeViewWidget)
+        if (auto wid = dynamic_cast<NodeSelectorTreeViewWidget*>(ui->stackedWidget->widget(index)))
         {
-            treeViewWidget->setSelectedNodeHandle(mNodeToBeSelected);
+            wid->setSelectedNodeHandle(mNodeToBeSelected->getHandle());
+            mNodeToBeSelected.reset();
         }
-
-        mNodeToBeSelected = mega::INVALID_HANDLE;
     }
 }
 

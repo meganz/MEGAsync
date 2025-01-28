@@ -484,6 +484,7 @@ void NodeRequester::abort()
 
 const int NodeSelectorModel::ROW_HEIGHT = 25;
 const QString MIME_DATA_INTERNAL_MOVE = QLatin1String("application/node_move");
+const int PROTECTION_INTERVAL = 10000; /*10 seconds*/
 
 NodeSelectorModel::NodeSelectorModel(QObject* parent):
     QAbstractItemModel(parent),
@@ -531,6 +532,7 @@ NodeSelectorModel::NodeSelectorModel(QObject* parent):
     qRegisterMetaType<mega::MegaHandle>("mega::MegaHandle");
 
     protectModelWhenPerformingActions();
+    protectModelAgainstUpdateBlockingState();
 
     mListener = RequestListenerManager::instance().registerAndGetFinishListener(this, false);
 }
@@ -565,6 +567,16 @@ void NodeSelectorModel::protectModelWhenPerformingActions()
     connect(this, &NodeSelectorModel::rowsRemoved, unprotectModel);
     connect(this, &NodeSelectorModel::modelReset, unprotectModel);
     connect(this, &NodeSelectorModel::rowsMoved, unprotectModel);
+}
+
+void NodeSelectorModel::protectModelAgainstUpdateBlockingState()
+{
+    mProtectionAgainstBlockedStateWhileUpdating.setInterval(PROTECTION_INTERVAL);
+    mProtectionAgainstBlockedStateWhileUpdating.setSingleShot(true);
+    connect(&mProtectionAgainstBlockedStateWhileUpdating,
+            &QTimer::timeout,
+            this,
+            &NodeSelectorModel::resetMoveProcessing);
 }
 
 int NodeSelectorModel::columnCount(const QModelIndex &) const
@@ -811,6 +823,25 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
 
     QList<mega::MegaHandle> handlesToMove;
 
+    QMap<mega::MegaHandle, mega::MegaHandle> handlesToMerge;
+
+    // Look for merges -> first we merge, then we move
+    if (type == ActionType::RESTORE)
+    {
+        foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
+        {
+            if (auto resolvedMoveConflict =
+                    std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
+            {
+                if (resolvedMoveConflict->getSolution() == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
+                {
+                    handlesToMerge.insert(resolvedMoveConflict->getConflictNode()->getHandle(),
+                                          resolvedMoveConflict->getSourceItemHandle());
+                }
+            }
+        }
+    }
+
     foreach(auto resolvedConflict, conflicts->mResolvedConflicts)
     {
         if (auto resolvedMoveConflict = std::dynamic_pointer_cast<DuplicatedMoveNodeInfo>(resolvedConflict))
@@ -824,6 +855,11 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
 
                 if (decision == NodeItemType::FOLDER_UPLOAD_AND_MERGE)
                 {
+                    if (type != ActionType::RESTORE)
+                    {
+                        handlesToMove.append(nodeToMove->getHandle());
+                    }
+
                     mergeFolders(nodeToMove,
                                  resolvedMoveConflict->getConflictNode(),
                                  resolvedMoveConflict->getParentNode(),
@@ -871,7 +907,17 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
                         }
                         else
                         {
-                            moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
+                            if (type == ActionType::RESTORE &&
+                                handlesToMerge.contains(nodeToMove->getHandle()))
+                            {
+                                mMoveAfterMergeWhileRestoring.insert(
+                                    handlesToMerge.value(nodeToMove->getHandle()),
+                                    resolvedMoveConflict->getParentNode()->getHandle());
+                            }
+                            else
+                            {
+                                moveNode(nodeToMove, resolvedMoveConflict->getParentNode());
+                            }
                         }
                     }
                 }
@@ -880,10 +926,7 @@ void NodeSelectorModel::processNodesAfterConflictCheck(std::shared_ptr<ConflictT
     }
 
     // Set loading view in the source model where the move started
-    if (type == ActionType::MOVE)
-    {
-        emit itemsAboutToBeMoved(handlesToMove);
-    }
+    emit itemsAboutToBeMoved(handlesToMove, type);
 }
 
 bool NodeSelectorModel::processNodesAndCheckConflicts(
@@ -969,11 +1012,19 @@ bool NodeSelectorModel::showFiles() const
     return mNodeRequesterWorker->showFiles();
 }
 
+void NodeSelectorModel::resetMoveProcessing()
+{
+    mMoveRequestsCounter = 0;
+    checkMoveProcessing();
+}
+
 bool NodeSelectorModel::checkMoveProcessing()
 {
     if (mIsProcessingMoves && mMoveRequestsCounter == 0)
     {
         mIsProcessingMoves = false;
+
+        mProtectionAgainstBlockedStateWhileUpdating.stop();
 
         sendBlockUiSignal(false);
 
@@ -985,23 +1036,21 @@ bool NodeSelectorModel::checkMoveProcessing()
     return false;
 }
 
+void NodeSelectorModel::restartProtectionAgainstUpdateBlockingState()
+{
+    mProtectionAgainstBlockedStateWhileUpdating.start(PROTECTION_INTERVAL);
+}
+
 bool NodeSelectorModel::moveProcessed()
 {
     if (mMoveRequestsCounter > 0)
     {
+        restartProtectionAgainstUpdateBlockingState();
         mMoveRequestsCounter--;
         return checkMoveProcessing();
     }
 
     return false;
-}
-
-void NodeSelectorModel::startMovingNodes()
-{
-    mIsProcessingMoves = true;
-
-    mMoveRequestsCounter = 0;
-    sendBlockUiSignal(true);
 }
 
 bool NodeSelectorModel::isMovingNodes() const
@@ -1012,12 +1061,15 @@ bool NodeSelectorModel::isMovingNodes() const
 void NodeSelectorModel::increaseMovingNodes()
 {
     mMoveRequestsCounter++;
+    restartProtectionAgainstUpdateBlockingState();
 }
 
 void NodeSelectorModel::initMovingNodes(int number)
 {
-    startMovingNodes();
-    mMoveRequestsCounter += number;
+    mIsProcessingMoves = true;
+    mMoveRequestsCounter = number;
+    restartProtectionAgainstUpdateBlockingState();
+    sendBlockUiSignal(true);
 }
 
 void NodeSelectorModel::sendBlockUiSignal(bool state)
@@ -1312,8 +1364,9 @@ std::shared_ptr<mega::MegaNode> NodeSelectorModel::getNodeToRemove(mega::MegaHan
 
 void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, bool permanently)
 {
-    emit itemsAboutToBeMoved(nodeHandles);
-    // startMovingNodes();
+    emit itemsAboutToBeMoved(nodeHandles,
+                             permanently ? ActionType::DELETE_PERMANENTLY : ActionType::DELETE);
+
     // It will be unblocked when all requestFinish calls are received (check onRequestFinish)
     QtConcurrent::run([this, nodeHandles, permanently]() {
         foreach(auto handle, nodeHandles)
@@ -1322,8 +1375,6 @@ void NodeSelectorModel::deleteNodes(const QList<mega::MegaHandle>& nodeHandles, 
                 MegaSyncApp->getMegaApi()->getNodeByHandle(handle));
             if (node)
             {
-                // increaseMovingNodes();
-
                 int access = MegaSyncApp->getMegaApi()->getAccess(node.get());
 
                 mRequestByHandle.insert(handle, mega::MegaRequest::TYPE_REMOVE);
@@ -1463,8 +1514,30 @@ void NodeSelectorModel::mergeFolders(std::shared_ptr<mega::MegaNode> moveFolder,
 
             auto e = foldersMerger.merge(conflictTargetFolder.get(), moveFolder.get()).get();
 
+            if (type == ActionType::RESTORE)
+            {
+                if (!e || e->getErrorCode() == mega::MegaError::API_OK)
+                {
+                    auto moveToParentHandle(
+                        mMoveAfterMergeWhileRestoring.take(moveFolder->getHandle()));
+                    if (moveToParentHandle != mega::INVALID_HANDLE)
+                    {
+                        std::shared_ptr<mega::MegaNode> targetNode(
+                            MegaSyncApp->getMegaApi()->getNodeByHandle(moveToParentHandle));
+                        QList<QPair<mega::MegaHandle, std::shared_ptr<mega::MegaNode>>> nodesToMove;
+                        nodesToMove.append(
+                            qMakePair(conflictTargetFolder->getHandle(), targetNode));
+
+                        processNodesAndCheckConflicts(nodesToMove,
+                                                      MegaSyncApp->getRubbishNode(),
+                                                      type);
+                    }
+                }
+            }
+
             checkFinishedRequest(moveFolder->getHandle(),
                                  e ? e->getErrorCode() : mega::MegaError::API_OK);
+
         });
 }
 
@@ -1555,8 +1628,7 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
         auto handle(request->getNodeHandle());
         checkFinishedRequest(handle, e->getErrorCode());
 
-        if ((e && e->getErrorCode() != mega::MegaError::API_OK)/* ||
-            type == mega::MegaRequest::TYPE_REMOVE*/)
+        if ((e && e->getErrorCode() != mega::MegaError::API_OK))
         {
             moveProcessed();
         }
@@ -1565,6 +1637,8 @@ void NodeSelectorModel::onRequestFinish(mega::MegaRequest* request, mega::MegaEr
 
 void NodeSelectorModel::checkFinishedRequest(mega::MegaHandle handle, int errorCode)
 {
+    QMutexLocker d(&mCheckFinishedMutex);
+
     auto requestType = mRequestByHandle.take(handle);
 
     if (errorCode != mega::MegaError::API_OK)

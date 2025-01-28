@@ -76,17 +76,15 @@ protected:
 
 protected slots:
     void onCustomBottomButtonClicked(uint id) override;
-    void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles) override;
+    void onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type) override;
 
 private slots:
     void onItemsRestoreRequested(const QList<mega::MegaHandle>& handles);
-    void onItemsDeleteRequested(const QList<mega::MegaHandle>& handles);
 
 private:
     void checkSelection() override {}
 
     QWidget* mDragBackDrop;
-    bool mRestoreRequested;
 };
 
 //////////////////

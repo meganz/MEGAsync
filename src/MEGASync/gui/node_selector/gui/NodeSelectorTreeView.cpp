@@ -159,17 +159,6 @@ void NodeSelectorTreeView::mouseDoubleClickEvent(QMouseEvent *event)
 {
     if(event->button() != Qt::RightButton)
     {
-        QModelIndex clickedIndex = indexAt(event->pos());
-        if(clickedIndex.isValid())
-        {
-            auto sourceIndexToEnter = proxyModel()->mapToSource(clickedIndex);
-            if(proxyModel()->sourceModel()->canFetchMore(sourceIndexToEnter))
-            {
-                proxyModel()->setExpandMapped(false);
-                proxyModel()->sourceModel()->fetchMore(sourceIndexToEnter);
-                return;
-            }
-        }
         QTreeView::mouseDoubleClickEvent(event);
     }
 }

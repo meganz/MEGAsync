@@ -411,7 +411,7 @@ void NodeSelectorTreeViewWidgetRubbish::restoreItems(const QList<mega::MegaHandl
 
     mModel->processNodesAndCheckConflicts(moveHandles,
                                           MegaSyncApp->getRubbishNode(),
-                                          NodeSelectorModel::ActionType::MOVE);
+                                          NodeSelectorModel::ActionType::RESTORE);
 }
 
 void NodeSelectorTreeViewWidgetRubbish::makeCustomConnections()

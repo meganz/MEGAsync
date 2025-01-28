@@ -89,7 +89,6 @@ signals:
     void cancelBtnClicked();
     void onSearch(const QString& text);
     void onCustomBottomButtonClicked(uint id);
-    void itemsDeleteRequested(const QList<mega::MegaHandle>& handles);
 
 protected:
     void showEvent(QShowEvent* ) override;

@@ -234,8 +234,7 @@ void StreamNodeSelector::checkSelection()
 
 /////////////////////////////////////////////////////////////
 CloudDriveNodeSelector::CloudDriveNodeSelector(QWidget* parent):
-    NodeSelector(SelectTypeSPtr(new CloudDriveType), parent),
-    mRestoreRequested(false)
+    NodeSelector(SelectTypeSPtr(new CloudDriveType), parent)
 {
     setWindowTitle(MegaNodeNames::getCloudDriveName());
 
@@ -267,15 +266,6 @@ void CloudDriveNodeSelector::createSpecialisedWidgets()
 
 void CloudDriveNodeSelector::doCustomConnections(NodeSelectorTreeViewWidget* item)
 {
-    if (item->getProxyModel()->canBeDeleted())
-    {
-        connect(item,
-                &NodeSelectorTreeViewWidget::itemsDeleteRequested,
-                this,
-                &CloudDriveNodeSelector::onItemsDeleteRequested,
-                Qt::UniqueConnection);
-    }
-
     if (item == mRubbishWidget)
     {
         connect(mRubbishWidget,
@@ -338,9 +328,9 @@ void CloudDriveNodeSelector::onCustomBottomButtonClicked(uint id)
     }
 }
 
-void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles)
+void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>& handles, int type)
 {
-    if (mRestoreRequested)
+    if (type == NodeSelectorModel::ActionType::RESTORE)
     {
         if (!handles.isEmpty())
         {
@@ -348,27 +338,32 @@ void CloudDriveNodeSelector::onItemsAboutToBeMoved(const QList<mega::MegaHandle>
             onbShowCloudDriveClicked();
         }
 
-        mRestoreRequested = false;
+        performItemsToBeMoved(handles, type, true, false);
     }
-
-    NodeSelector::onItemsAboutToBeMoved(handles);
+    else if (type == NodeSelectorModel::ActionType::DELETE)
+    {
+        mRubbishWidget->initMovingNodes(handles.size());
+        performItemsToBeMoved(handles, type, true, false);
+    }
+    else if (type == NodeSelectorModel::ActionType::DELETE_PERMANENTLY)
+    {
+        performItemsToBeMoved(handles, type, true, false);
+    }
+    else if (type == NodeSelectorModel::ActionType::COPY)
+    {
+        performItemsToBeMoved(handles, type, false, true);
+    }
+    else
+    {
+        NodeSelector::onItemsAboutToBeMoved(handles, type);
+    }
 }
 
 void CloudDriveNodeSelector::onItemsRestoreRequested(const QList<mega::MegaHandle>& handles)
 {
-    mRestoreRequested = true;
-
     if (mRubbishWidget)
     {
         mRubbishWidget->restoreItems(handles);
-    }
-}
-
-void CloudDriveNodeSelector::onItemsDeleteRequested(const QList<mega::MegaHandle>& handles)
-{
-    if (mRubbishWidget)
-    {
-        mRubbishWidget->initMovingNodes(handles.size());
     }
 }
 

@@ -207,10 +207,13 @@ public:
     bool areAllNodesEligibleForDeletion(const QList<mega::MegaHandle>& handles);
     bool areAllNodesEligibleForRestore(const QList<mega::MegaHandle> &handles) const;
 
-    enum class ActionType
+    enum ActionType
     {
         MOVE,
-        COPY
+        COPY,
+        RESTORE,
+        DELETE,
+        DELETE_PERMANENTLY
     };
     bool startProcessingNodes(const QMimeData* data, const QModelIndex& parent, ActionType type);
     void processNodesAfterConflictCheck(std::shared_ptr<ConflictTypes> conflicts, ActionType type);
@@ -330,7 +333,7 @@ signals:
     void allNodeRequestsFinished();
     void modelIsBeingModifiedChanged(bool status);
     void itemsMoved();
-    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles);
+    void itemsAboutToBeMoved(const QList<mega::MegaHandle> handles, int actionType);
 
 protected:
     Qt::ItemFlags flags(const QModelIndex &index) const override;
@@ -363,6 +366,7 @@ private slots:
     void onChildNodesReady(NodeSelectorModelItem *parent);
     void onNodesAdded(QList<QPointer<NodeSelectorModelItem> > childrenItem);
     void onSyncStateChanged(std::shared_ptr<SyncSettings> sync);
+    void resetMoveProcessing();
 
 private:
     virtual void createRootNodes() = 0;
@@ -370,14 +374,16 @@ private:
     virtual bool addToLoadingList(const std::shared_ptr<mega::MegaNode> node);
     void createChildItems(std::shared_ptr<mega::MegaNodeList> childNodes, const QModelIndex& index, NodeSelectorModelItem* parent);
     void protectModelWhenPerformingActions();
+    void protectModelAgainstUpdateBlockingState();
 
     QIcon getFolderIcon(NodeSelectorModelItem* item) const;
     bool fetchMoreRecursively(const QModelIndex& parentIndex);
 
+    QMutex mCheckFinishedMutex;
     void checkFinishedRequest(mega::MegaHandle handle, int errorCode);
 
     bool checkMoveProcessing();
-    void startMovingNodes();
+    void restartProtectionAgainstUpdateBlockingState();
 
     std::shared_ptr<const UserAttributes::CameraUploadFolder> mCameraFolderAttribute;
     std::shared_ptr<const UserAttributes::MyChatFilesFolder> mMyChatFilesFolderAttribute;
@@ -396,6 +402,8 @@ private:
 
     // Move nodes
     int mMoveRequestsCounter;
+    QTimer mProtectionAgainstBlockedStateWhileUpdating;
+    QMap<mega::MegaHandle, mega::MegaHandle> mMoveAfterMergeWhileRestoring;
 
     // Add nodes secuentially, not all at the same time
     AddNodesQueue mAddNodesQueue;

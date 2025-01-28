@@ -767,7 +767,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
             {
                 if (msg->result() == QMessageBox::Yes)
                 {
-                    emit itemsDeleteRequested(QList<mega::MegaHandle>() << node->getHandle());
                     mModel->deleteNodes(QList<mega::MegaHandle>{node->getHandle()}, permanently);
                 }
                 else
@@ -806,7 +805,6 @@ void NodeSelectorTreeViewWidget::onDeleteClicked(const QList<mega::MegaHandle> &
                     }
                 }
 
-                emit itemsDeleteRequested(handlesToRemove);
                 mModel->deleteNodes(handlesToRemove, permanently);
             }
             else
@@ -943,7 +941,7 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                             info.node = std::shared_ptr<mega::MegaNode>(node->copy());
                             updatedNodes.append(info);
 
-                            if (existenceType == NodeState::ADD)
+                            if (existenceType == NodeState::MOVED)
                             {
                                 mRemoveMovedNodes.insert(node->getHandle());
                             }
@@ -952,6 +950,11 @@ bool NodeSelectorTreeViewWidget::onNodesUpdate(mega::MegaApi*, mega::MegaNodeLis
                                  existenceType == NodeState::MOVED_OUT_OF_VIEW)
                         {
                             mUpdatedButInvisibleNodes.append(node->getHandle());
+
+                            if (existenceType == NodeState::MOVED_OUT_OF_VIEW)
+                            {
+                                mRemoveMovedNodes.insert(node->getHandle());
+                            }
                         }
                     }
                 }
