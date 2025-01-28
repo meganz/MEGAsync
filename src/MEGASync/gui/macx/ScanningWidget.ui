@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>424</width>
-    <height>463</height>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,12 +20,12 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>50</height>
+       <height>25</height>
       </size>
      </property>
     </spacer>
@@ -47,6 +47,12 @@
      </item>
      <item>
       <widget class="QLabel" name="lAnimation">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -84,7 +90,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>5</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
@@ -110,7 +116,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>8</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
@@ -136,7 +142,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>12</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
@@ -187,12 +193,12 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Minimum</enum>
+      <enum>QSizePolicy::Preferred</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>30</height>
+       <height>0</height>
       </size>
      </property>
     </spacer>
@@ -276,10 +282,13 @@ font: 12pt
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>107</height>
+       <height>60</height>
       </size>
      </property>
     </spacer>
