@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>같은 이름을 가진 폴더는 백업할 수 없습니다. 백업을 진행하려면 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>이 폴더들은 백업되지 않았습니다. 다시 시도하세요.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>같은 이름을 가진 폴더는 백업할 수 없습니다. 백업을 진행하려면 이름을 바꾸세요. 컴퓨터의 폴더 이름은 바뀌지 않습니다.</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>파일과 폴더 이름</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”(으)로 시작하는 파일과 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”을/를 포함하는 파일과 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”(으)로 끝나는 파일과 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>“%1”과/와 동일한 파일과 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드 “%1”과/와 일치하는 파일과 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드 “%1”과/와 일치하는 파일이 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드와 일치하는 파일:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음으로 시작하는 파일 또는 폴더:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음을 포함하는 파일 또는 폴더:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음으로 끝나는 파일 또는 폴더:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>다음과 같은 파일 또는 폴더:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드와 일치하는 파일 또는 폴더:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드 “%1”과/와 일치하는 폴더가 이 동기화에 포함됩니다.</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드와 일치하는 폴더:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드와 일치</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>와일드카드</translation>
     </message>
 </context>
 <context>
@@ -3026,7 +3026,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>경고</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3146,7 +3146,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>링크 들여오기 오류</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3452,12 +3452,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>심각한 오류가 감지됨</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 소프트웨어 또는 이 장치와 MEGA 사이의 연결에서 중대한 문제가 감지되었습니다. [A]mega.io/desktop[/A]에서 앱을 재설치하고 만약 이것으로 문제가 해결되지 않는다면 추가 도움을 위해 지원으로 연락하세요.</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3472,17 +3472,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>오류가 감지됨</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>오류가 MEGA와의 연결을 실패하게 만들고 있습니다. 당신의 동기화와 백업이 업데이트 되지 않으며, 재시작 없이 앱을 계속 사용하면 더 많은 문제가 있을 수 있습니다. 이 문제를 해결하기 위해 앱을 재시작할 것을 강력히 권장합니다.</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>알 수 없는 오류가 발생함</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3497,7 +3497,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>권한 확인</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3517,7 +3517,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>이 앱에서 필요한 중요한 시스템 파일에 접근할 수 없으며, 이것은 아마 폴더 권한 때문일 것입니다. 앱을 다시 시작하고 시스템 폴더 권한을 확인하세요. 만약 문제가 계속 되면, [A]지원으로 연락[/A]하세요.</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3532,12 +3532,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱 시스템 파일 읽던 중 오류</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>동기화 설정 파일 오류</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3632,7 +3632,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA 재시작</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3657,12 +3657,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱이 오류를 감지하여 다시 불러오기가 필요합니다. 만약 이 문제를 한번 이상 경험하였다면, 지원 팀에 연락하세요.</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱이 동기화 설정 데이터에 오류를 감지하였습니다. 이 문제를 해결하기 위해 MEGA에서 로그아웃 하여야 합니다. 만약 다시 로그인 했는데도 문제가 계속된다면, 지원 팀에 문제를 보고하세요.</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3687,7 +3687,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA를 실행하려면 로컬 저장소에 여유 공간이 필요합니다.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3710,7 +3710,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>로컬 저장소가 가득 찼습니다</translation>
     </message>
 </context>
 <context>
@@ -5678,15 +5678,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- 전송 관리자 기능의 인터페이스와 작동 방식을 향상하였습니다.
+- 이제 와일드카드를 이용하여 동기화 예외를 만들 수 있습니다.
+- Raspberry Pi OS를 위한 새 릴리즈가 이용 가능합니다.
+- Windows에서 OpenGL 드라이버가 손실되어 발생하는 충돌을 해결하였습니다.
+- Qt가 새로운 버전으로 업그레이드 되었습니다.
+- 기타 버그를 수정하였고 다양한 향상을 하였습니다.
+</translation>
     </message>
 </context>
 <context>
@@ -6182,22 +6188,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA를 다시 불러왔습니다</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>MEGA를 다시 불러오고 있습니다</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱이 문제를 감지하여 계정을 다시 불러오고 있습니다. 기다려주세요...</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>앱을 다시 불러왔습니다. 추가적인 문제를 경험한다면, 지원으로 연락하세요.</translation>
     </message>
 </context>
 <context>
@@ -8401,7 +8407,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>모든 동기화 일시정지됨</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8411,17 +8417,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]저장소가 거의 가득 참[/B][BR]저장소가 가득 차서 업로드, 동기화 그리고 백업이 중단되기 전에 [A]지금 업그레이드[/A] 하세요.</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]저장소가 가득 참[/B][BR]업로드가 비활성화되었고, 동기화와 백업이 일시 정지 되었습니다.</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]전송 할당량 초과됨[/B][BR]이 IP 주소에 남은 전송 할당량이 충분하지 않아서 다운로드를 계속할 수 없습니다. 더 많은 할당량을 받으려면 계정을 업그레이드 하거나 IP 주소에 무료 할당량이 이용 가능해질 때까지 %1 동안 기다리세요. 전송 할당량에 대해 [A]더 알아보기[/A].</translation>
     </message>
 </context>
 <context>

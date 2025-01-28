@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>您无法备份同名文件夹。请重命名它们以继续备份。文件夹名在您的电脑上不会改变。</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>这些文件夹没有备份。请再试一次。</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>您无法备份同名文件夹。请重命名它们以继续备份。文件夹名在您的电脑上不会改变。</translation>
     </message>
 </context>
 <context>
@@ -2509,7 +2509,7 @@ Would you like to install the necessary components now?</source>
     <message>
         <source>Installing notification area icon...</source>
         <translatorcomment>This is the text for the Notification Area Icon installation progress bar which provide the feedback to the user about SNC-2270</translatorcomment>
-        <translation>正在安装通知区域图标&amp;#8230;</translation>
+        <translation>正在安装通知区域图标...</translation>
     </message>
     <message>
         <source>The notification area icon installation was cancelled.</source>
@@ -3457,7 +3457,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>已在MEGA软件，或此设备与MEGA之间的连接中检测到严重问题。请从[A]mega.io/desktop[/A]重新安装应用程序，如果这不能解决问题，请联系客服支持部门寻求进一步的帮助。</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3477,7 +3477,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>一个错误导致与MEGA的通信失败。您的同步和备份无法更新，如果您在不重新启动的情况下继续使用此应用程序，可能会出现更多问题。我们强烈建议立即重启应用程序以解决此问题。</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
@@ -3512,12 +3512,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Contact support</source>
         <translatorcomment>Label of the button used to contact support for assistance when a fatal error occurs - CON-844</translatorcomment>
-        <translation>联系支持</translation>
+        <translation>联系客服支持</translation>
     </message>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>无法访问此应用程序所需的关键系统文件，这可能是由于文件夹权限所致。尝试重新启动应用程序并检查系统文件夹权限。如果问题仍然存在，请[A]请联系客服支持[/A]。</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3582,7 +3582,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Log out</source>
         <translatorcomment>Label of the button used to log out of the account to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation>登出</translation>
+        <translation>登 出</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3662,7 +3662,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>该应用程序在您的同步配置数据中检测到错误。您需要登出MEGA才能解决这个问题。如果重新登录后问题仍然存在，请将问题报告给我们的客服支持团队。</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3772,7 +3772,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Backup externally modified</source>
         <translatorcomment>SDK error to inform the user that the backup was modified using another client. CON-537</translatorcomment>
-        <translation>由于MEGA文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
+        <translation>由于MEGA文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服支持。</translation>
     </message>
     <message>
         <source>Could not get the filesystem&apos;s ID.</source>
@@ -3852,7 +3852,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Mismatch on sync root FSID.</source>
         <translatorcomment>SDK error shown when the sync's root FSID changed meaning it is a different folder, and we can't identify the old sync db as the name depends on this. SAT-815</translatorcomment>
-        <translation>由于本地文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
+        <translation>由于本地文件夹发生变动，同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服支持。</translation>
     </message>
     <message>
         <source>No error</source>
@@ -3902,7 +3902,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Session closed</source>
         <translatorcomment>SDK error to inform the user that local state of a sync is invalid due to the session was closed. CON-537</translatorcomment>
-        <translation>由于您登出，同步或备份已停止。若要恢复同步，请从设置 中重新启用同步或备份。</translation>
+        <translation>由于您登出，同步或备份已停止。若要恢复同步，请从设置中重新启用同步或备份。</translation>
     </message>
     <message>
         <source>Share without full access</source>
@@ -3932,7 +3932,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Unable to open state cache database.</source>
         <translatorcomment>SDK error indicating that state cache chouldn´t be opened. CON-537</translatorcomment>
-        <translation>同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服。</translation>
+        <translation>同步或备份此文件夹时出现问题。停止同步或备份，并尝试在设置中重新进行设置，或联系客服支持。</translation>
     </message>
     <message>
         <source>Unable to read sync configs from disk.</source>
@@ -5272,7 +5272,7 @@ Enter a different name</source>
     <message>
         <source>You can view your backups and their statuses under the Backup tab in Settings.</source>
         <translatorcomment>Text indicating that the user can view the backups in settings' backups tab CON-738</translatorcomment>
-        <translation>您可以在“设置”中的“备份”选项卡下查看您的备份及其状态。</translation>
+        <translation>您可以在设置中的备份选项卡下查看您的备份及其状态。</translation>
     </message>
     <message>
         <source>Your backup has been set up and selected data will automatically backup whenever the desktop app is running.</source>
@@ -5676,15 +5676,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>－我们增强了传输管理器功能的界面和行为。
+－您现在可以使用通配符创建同步排除。
+－树莓派操作系统现在有新版本可用。
+－我们修复了由于Windows上OpenGL驱动程序缺失或损坏而导致的崩溃。
+－Qt已升级到较新版本。
+－修复了其它错误，并进行了诸多改进。
+</translation>
     </message>
 </context>
 <context>
@@ -6948,17 +6954,17 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Loading size</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在加载大小&amp;#8230;</translation>
+        <translation>正在加载大小...</translation>
     </message>
     <message>
         <source>Loading time…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在加载时间戳&amp;#8230;</translation>
+        <translation>正在加载时间戳...</translation>
     </message>
     <message>
         <source>Loading user…</source>
         <translatorcomment>Place holder till the info is loaded. SNC-2565</translatorcomment>
-        <translation>正在获取用户&amp;#8230;</translation>
+        <translation>正在获取用户...</translation>
     </message>
     <message>
         <source>Size:</source>
@@ -7162,7 +7168,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Being solved</source>
         <translatorcomment>Stalled issue state shown on the right side of the stalled issue header. We are actively working on the issue and it is not still solved. SAT-1140</translatorcomment>
-        <translation>正在解决&amp;#8230;</translation>
+        <translation>正在解决...</translation>
     </message>
     <message>
         <source>Failed</source>
@@ -7293,7 +7299,7 @@ Do you want to delete it anyway?</source>
     <message>
         <source>Fixing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解决问题&amp;#8230;</translation>
+        <translation>正在解决问题...</translation>
     </message>
     <message>
         <source>Issues can't be fixed.
@@ -7305,7 +7311,7 @@ Verify the permissions of the .megaignore on file your local sync folder locatio
     <message>
         <source>Processing issues</source>
         <translatorcomment>Status in loading scene displayed while smart mode (auto solve) is in progress.SNC-2565</translatorcomment>
-        <translation>正在解决问题&amp;#8230;</translation>
+        <translation>正在解决问题...</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -8017,7 +8023,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Saving synchronised folders…</source>
         <translatorcomment>Temporary text label shown while saving changes to Synchronized folders on Windows\Linux. Keep the 3 suspense periods, indicating to the user that the action is in in progress.SNC-4208</translatorcomment>
-        <translation>正在保存同步文件夹&amp;#8230;</translation>
+        <translation>正在保存同步文件夹...</translation>
     </message>
 </context>
 <context>
@@ -8419,7 +8425,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]已超过传输流量配额[/B][BR]您无法继续下载，因为您没有足够的传输流量供此IP地址使用。要获得更多配额，请升级您的帐户或等待%1，直到您的IP地址有更多免费配额可用。[A]了解更多[/A]关于传输流量。</translation>
     </message>
 </context>
 <context>
