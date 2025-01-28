@@ -15,9 +15,9 @@ bool SyncsQmlDialog::event(QEvent* event)
             dialog->getDialog()->setSyncAddButtonEnabled(event->type() == QEvent::Close);
         }
 
-        if (event->type() == QEvent::Close)
+        if (event->type() == QEvent::Close && MegaSyncApp->getSyncReminderNotificationManager())
         {
-            MegaSyncApp->getSyncReminderNotificationManager()->resetClickedTime();
+            MegaSyncApp->getSyncReminderNotificationManager()->resetClickedInfo();
         }
     }
 

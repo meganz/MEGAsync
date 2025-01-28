@@ -202,6 +202,7 @@ public:
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
     SyncReminderNotificationManager* getSyncReminderNotificationManager();
+    void destroySyncReminderNotificationManager();
 
 signals:
     void startUpdaterThread();

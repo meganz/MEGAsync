@@ -104,6 +104,8 @@ private:
 
     QString getLocalErrorMessage(std::optional<LocalErrors> error, const QString& path) const;
 
+    void executeSyncReminderIfNeeded() const;
+
 private slots:
     void onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString name);
     void onRequestFinish(mega::MegaApi* api, mega::MegaRequest* request, mega::MegaError* e) override;

@@ -14,7 +14,7 @@ public:
     void update(bool isFirstTime = false);
 
     void sendEventsIfNeeded();
-    void resetClickedTime();
+    void resetClickedInfo();
 
 private:
     enum class ReminderState
@@ -28,7 +28,8 @@ private:
 
     ReminderState mState;
     QTimer mTimer;
-    qint64 mClickedTime;
+    qint64 mLastShowedTime;
+    bool mClicked;
 
     void init(bool isFirstTime, const QDateTime& lastTime, const QDateTime& currentTime);
     void continuePeriodicProcess(const QDateTime& lastTime, const QDateTime& currentTime);

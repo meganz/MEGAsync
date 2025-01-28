@@ -21,7 +21,8 @@ constexpr quint64 DAYS_TO_BIMONTHLY_REMINDER = 60;
 SyncReminderNotificationManager::SyncReminderNotificationManager(QObject* parent):
     QObject(parent),
     mState(ReminderState::FIRST_REMINDER),
-    mClickedTime(-1)
+    mLastShowedTime(-1),
+    mClicked(false)
 {
     connect(&mTimer, &QTimer::timeout, this, &SyncReminderNotificationManager::onTimeout);
 
@@ -63,17 +64,16 @@ void SyncReminderNotificationManager::sendEventsIfNeeded()
     }
 
     int reminderID(static_cast<int>(mState));
-    if (mClickedTime != -1)
+    if (mClicked)
     {
         MegaSyncApp->getStatsEventHandler()->sendEvent(
             AppStatsEvents::EventType::SYNC_CREATED_AFTER_CLICKING_NOTIFICATION,
             {QString::number(reminderID)});
-        resetClickedTime();
     }
     else
     {
-        int currentTime(QDateTime::currentDateTime().toSecsSinceEpoch());
-        int maxTime(mClickedTime + FIFTEEN_MINS_S);
+        int currentTime(static_cast<int>(QDateTime::currentDateTime().toSecsSinceEpoch()));
+        int maxTime(static_cast<int>(mLastShowedTime) + FIFTEEN_MINS_S);
         if (currentTime <= maxTime)
         {
             MegaSyncApp->getStatsEventHandler()->sendEvent(
@@ -81,11 +81,13 @@ void SyncReminderNotificationManager::sendEventsIfNeeded()
                 {QString::number(reminderID)});
         }
     }
+    resetClickedInfo();
 }
 
-void SyncReminderNotificationManager::resetClickedTime()
+void SyncReminderNotificationManager::resetClickedInfo()
 {
-    mClickedTime = -1;
+    mLastShowedTime = -1;
+    mClicked = false;
 }
 
 void SyncReminderNotificationManager::init(bool isFirstTime,
@@ -178,11 +180,13 @@ void SyncReminderNotificationManager::showNotification()
     reminder.message = message;
     reminder.activatedFunction = [this](DesktopAppNotificationBase::Action)
     {
-        mClickedTime = QDateTime::currentDateTime().toSecsSinceEpoch();
+        mClicked = true;
         CreateRemoveSyncsManager::addSync(SyncInfo::SyncOrigin::OS_NOTIFICATION_ORIGIN);
     };
 
     MegaSyncApp->showInfoMessage(reminder);
+
+    mLastShowedTime = QDateTime::currentDateTime().toSecsSinceEpoch();
 
     sendShownEvents();
 }

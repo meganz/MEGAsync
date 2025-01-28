@@ -1546,7 +1546,7 @@ void MegaApplication::onLogout()
                 DialogOpener::closeAllDialogs();
                 mGfxProvider.reset();
                 mUserMessageController.reset();
-                mSyncReminderNotificationManager.reset();
+                destroySyncReminderNotificationManager();
                 createUserMessageController();
                 infoDialog->deleteLater();
                 infoDialog = nullptr;
@@ -2253,7 +2253,7 @@ void MegaApplication::cleanAll()
 
     mGfxProvider.reset();
     mUserMessageController.reset();
-    mSyncReminderNotificationManager.reset();
+    destroySyncReminderNotificationManager();
     infoDialog->deleteLater();
 
     // Delete menus and menu items
@@ -4566,6 +4566,11 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
 SyncReminderNotificationManager* MegaApplication::getSyncReminderNotificationManager()
 {
     return mSyncReminderNotificationManager.get();
+}
+
+void MegaApplication::destroySyncReminderNotificationManager()
+{
+    mSyncReminderNotificationManager.reset();
 }
 
 void MegaApplication::processSetDownload(const QString& publicLink,

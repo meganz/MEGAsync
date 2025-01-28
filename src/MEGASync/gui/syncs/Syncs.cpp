@@ -266,7 +266,7 @@ void Syncs::onSyncAddRequestStatus(int errorCode, int syncErrorCode, QString nam
     else
     {
         emit syncSetupSuccess();
-        MegaSyncApp->getSyncReminderNotificationManager()->sendEventsIfNeeded();
+        executeSyncReminderIfNeeded();
     }
 }
 
@@ -394,4 +394,14 @@ QString Syncs::getLocalErrorMessage(std::optional<LocalErrors> error, const QStr
     }
 
     return QString();
+}
+
+void Syncs::executeSyncReminderIfNeeded() const
+{
+    auto syncReminderManager(MegaSyncApp->getSyncReminderNotificationManager());
+    if (syncReminderManager)
+    {
+        syncReminderManager->sendEventsIfNeeded();
+        MegaSyncApp->destroySyncReminderNotificationManager();
+    }
 }
