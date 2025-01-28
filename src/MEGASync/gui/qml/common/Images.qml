@@ -70,7 +70,7 @@ QtObject {
     readonly property url folder: imagesOnboardingPath + "folder.svg"
     readonly property url fullSync: imagesOnboardingPath + "full_sync.svg"
     readonly property url infinity: imagesOnboardingPath + "infinity.svg"
-    readonly property url installationTypeBackups: imagesOnboardingPath + "installation_type_backups.svg"
+    readonly property url installationTypeBackups: imagesOnboardingPath + "backup.png"
     readonly property url key: imagesOnboardingPath + "key.svg"
     readonly property url login: imagesOnboardingPath + "login.png"
     readonly property url pc: imagesOnboardingPath + "pc.svg"
@@ -84,7 +84,7 @@ QtObject {
     readonly property url shield_account_proI: imagesOnboardingPath + "shield_account_proI.svg"
     readonly property url shield_account_proII: imagesOnboardingPath + "shield_account_proII.svg"
     readonly property url shield_account_proIII: imagesOnboardingPath + "shield_account_proIII.svg"
-    readonly property url sync: imagesOnboardingPath + "sync.svg"
+    readonly property url sync: imagesOnboardingPath + "sync.png"
     readonly property url syncIcon: imagesOnboardingPath + "syncb.svg"
 
     readonly property url exit: imagesGuestPath + "exit.svg"

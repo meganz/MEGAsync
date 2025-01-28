@@ -18,7 +18,6 @@
         <file>images/qml/onboarding/folder.svg</file>
         <file>images/qml/onboarding/full_sync.svg</file>
         <file>images/qml/onboarding/infinity.svg</file>
-        <file>images/qml/onboarding/installation_type_backups.svg</file>
         <file>images/qml/onboarding/key.svg</file>
         <file>images/qml/onboarding/login.png</file>
         <file>images/qml/onboarding/login@2x.png</file>
@@ -69,7 +68,6 @@
         <file>images/qml/guest/warning@2x.png</file>
         <file>images/qml/guest/warning@3x.png</file>
         <file>images/qml/onboarding/syncb.svg</file>
-        <file>images/qml/onboarding/sync.svg</file>
         <file>images/qml/guest/setting_up.png</file>
         <file>images/qml/guest/setting_up@2x.png</file>
         <file>images/qml/guest/setting_up@3x.png</file>
@@ -133,5 +131,11 @@
         <file>images/qml/onboarding/multidevices@3x.png</file>
         <file>images/qml/onboarding/multidevices@2x.png</file>
         <file>images/qml/onboarding/multidevices.png</file>
+        <file>images/qml/onboarding/sync@3x.png</file>
+        <file>images/qml/onboarding/sync@2x.png</file>
+        <file>images/qml/onboarding/backup@3x.png</file>
+        <file>images/qml/onboarding/backup@2x.png</file>
+        <file>images/qml/onboarding/backup.png</file>
+        <file>images/qml/onboarding/sync.png</file>
     </qresource>
 </RCC>
