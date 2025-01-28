@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>لا يمكنك إجراء نسخ احتياطي للمجلدات التي تحمل الاسم نفسه. أعد تسميتها لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ المجلد احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform><numerusform>لم يتم نسخ هذه المجلدات احتياطيًا. حاول مرة أخرى.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>لا يمكنك إجراء نسخ احتياطي للمجلدات التي تحمل الاسم نفسه. أعد تسميتها لمتابعة النسخ الاحتياطي. لن تتغير أسماء المجلدات على جهاز الكمبيوتر الخاص بك.</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@
     <message>
         <source>File and folder name</source>
         <translatorcomment>Label in exclusions table specifying the target for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اسم الملف والمجلد</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1561,27 +1561,27 @@
     <message>
         <source>Files and folders beginning with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات والمجلدات التي تبدأ بـ «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files and folders containing “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات والمجلدات التي تحتوي على «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files and folders ending with “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات والمجلدات التي تنتهي بـ «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files and folders equal to “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ملفات ومجلدات تساوي «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files and folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file or folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات والمجلدات التي تطابق حرف البدل «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files beginning with “%1” will be included on this sync.</source>
@@ -1626,37 +1626,37 @@
     <message>
         <source>Files matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for file name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>ملفات المطابقة لرموز البحث «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Files matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات التي تطابق رموز البحث:</translation>
     </message>
     <message>
         <source>Files or folders beginning with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات أو المجلدات التي تبدأ بـ:</translation>
     </message>
     <message>
         <source>Files or folders containing:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات أو المجلدات التي تحتوي على:</translation>
     </message>
     <message>
         <source>Files or folders ending with:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات أو المجلدات التي تنتهي بـ:</translation>
     </message>
     <message>
         <source>Files or folders equal to:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات أو المجلدات التي تساوي:</translation>
     </message>
     <message>
         <source>Files or folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>الملفات أو المجلدات التي تطابق رموز البحث:</translation>
     </message>
     <message>
         <source>Files with extension:</source>
@@ -1716,12 +1716,12 @@
     <message>
         <source>Folders matching wildcard “%1” will be included on this sync.</source>
         <translatorcomment>Body for confirmation dialog before removing sync exclusion rule, variable is for folder name.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المجلدات التي تطابق رموز البحث «%1» سيتم تضمينها في هذه المزامنة.</translation>
     </message>
     <message>
         <source>Folders matching wildcard:</source>
         <translatorcomment>Title for text filed where the user adds the value of an exclusion rule.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>المجلدات التي تطابق رموز البحث:</translation>
     </message>
     <message>
         <source>Here you can exclude files and folders from being synced with your cloud drive. This can be useful for large files, files that you don&apos;t need on all of your devices,or certain file types that need not be synced.</source>
@@ -1736,7 +1736,7 @@
     <message>
         <source>Matching wildcard</source>
         <translatorcomment>Wild card type to be used for the new exclusion rule.Con-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>رموز البحث المطابقة</translation>
     </message>
     <message>
         <source>Outside of</source>
@@ -1851,7 +1851,7 @@
     <message>
         <source>wildcard</source>
         <translatorcomment>Label in exclusions table specifying the property for files exclusion rule in a sync.CON-1188</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>رموز البحث</translation>
     </message>
 </context>
 <context>
@@ -3026,7 +3026,7 @@ Please wait for the upload to complete.</source>
     <message>
         <source>Alert</source>
         <translatorcomment>Title of the warning dialog shown when the SDK reports a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تنبيه</translation>
     </message>
     <message>
         <source>An update will be applied during the next application restart</source>
@@ -3457,12 +3457,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A critical error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم اكتشاف خطأ فادح</translation>
     </message>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم اكتشاف مشكلة خطيرة في برنامج ميغا MEGA أو الاتصال بين هذا الجهاز و ميغا MEGA. أعد تثبيت التطبيق من [A]mega.io/desktop[/A] وإذا لم يؤد ذلك إلى حل المشكلة فتواصل مع الدعم للحصول على مزيد من المساعدة.</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3477,17 +3477,17 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>An error has been detected</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم اكتشاف خطأ</translation>
     </message>
     <message>
         <source>An error is causing the communication with MEGA to fail. Your syncs and backups are unable to update, and there may be further issues if you continue using this app without restarting. We strongly recommend immediately restarting the app to resolve this problem.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ يتسبب في فشل الاتصال مع ميغا MEGA. يتعذر تحديث عمليات المزامنة والنسخ الاحتياطية وقد تكون هناك مشكلات أخرى إذا واصلت استخدام هذا التطبيق دون إعادة التشغيل. نوصي بشدة بإعادة تشغيل التطبيق على الفور لحل هذه المشكلة.</translation>
     </message>
     <message>
         <source>An unknown error has occurred</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: unknown - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ غير معروف</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -3502,7 +3502,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Check permissions</source>
         <translatorcomment>Label of the button used to open the application data folder for the user to check that the read/write permissions are good on that folder and the files inside - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تحقق من الأذونات</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -3522,7 +3522,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>لا يمكن الوصول إلى ملفات النظام الهامة التي يتطلبها هذا التطبيق، ربما بسبب أذونات المجلد. حاول إعادة تشغيل التطبيق والتحقق من أذونات مجلد النظام. إذا استمرت المشكلة يرجى [A]التواصل مع الدعم[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3537,12 +3537,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error reading app system files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ أثناء قراءة ملفات نظام التطبيق</translation>
     </message>
     <message>
         <source>Error with sync configuration files</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>حدث خطأ في مزامنة ملفات التهيئة</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -3637,7 +3637,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Restart MEGA</source>
         <translatorcomment>Label of the button used to restart the app to try to resolve a fatal error - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>أعد تشغيل ميغا MEGA</translation>
     </message>
     <message>
         <source>SSL verification failed</source>
@@ -3662,12 +3662,12 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>The app has detected an error and needs to reload. If you experience this issue more than once, contact our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: DB index overflow - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اكتشف التطبيق خطأ ويحتاج إلى إعادة التحميل. إذا واجهت هذه المشكلة أكثر من مرة، فتواصل مع فريق الدعم.</translation>
     </message>
     <message>
         <source>The app has detected an error in your sync configuration data. You need to log out of MEGA to resolve this issue. If the problem persists after logging back in, report the issue to our Support team.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: JSCD atribute missing - CON-1023</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اكتشف التطبيق خطأ في بيانات تهيئة المزامنة. تحتاج إلى تسجيل الخروج من ميغا MEGA لحل هذه المشكلة. إذا استمرت المشكلة بعد تسجيل الدخول مرة أخرى فأبلغ فريق الدعم بالمشكلة.</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3692,7 +3692,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تحتاج إلى توفير المزيد من المساحة الحرة في التخزين المحلي لتتمكن من تشغيل ميغا MEGA.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -3715,7 +3715,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Your local storage is full</source>
         <translatorcomment>Title of the message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>مساحة التخزين المحلية ممتلئة</translation>
     </message>
 </context>
 <context>
@@ -5681,15 +5681,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- لقد قمنا بتحسين واجهة وسلوك ميزة مدير تراسل المعطيات.
+- يمكنك الآن إنشاء استبعادات المزامنة باستخدام رموز البحث.
+- هناك إصدارات جديدة متاحة الآن لنظام التشغيل Raspberry Pi OS.
+- لقد أصلحنا الأعطال التي كانت تحدث بسبب برامج تشغيل OpenGL المفقودة أو التالفة على ويندوز Windows.
+- تمت ترقية Qt إلى إصدار أحدث.
+- تم إصلاح الأخطاء الأخرى وإجراء العديد من التحسينات.
+</translation>
     </message>
 </context>
 <context>
@@ -6185,22 +6191,22 @@ Do you want to delete it anyway?</source>
     <message>
         <source>MEGA has reloaded</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 2nd notification: reloading done. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إعادة تحميل ميغا MEGA</translation>
     </message>
     <message>
         <source>MEGA is reloading</source>
         <translatorcomment>Title for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تقوم ميغا MEGA بإعادة التحميل</translation>
     </message>
     <message>
         <source>The app has detected an issue and is reloading your account. Please wait…</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 1st notification: reloading in progress. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>اكتشف التطبيق مشكلة ويقوم بإعادة تحميل حسابك. يرجى الانتظار...</translation>
     </message>
     <message>
         <source>The app has reloaded. If you experience any further issues, please contact Support.</source>
         <translatorcomment>Text for the desktop notification when receiving a RELOADING EVENT from API. 12nd notification: reloading completed. CON-1009</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إعادة تحميل التطبيق. إذا واجهت أي مشاكل أخرى يرجى التواصل مع الدعم.</translation>
     </message>
 </context>
 <context>
@@ -8404,7 +8410,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>All transfers paused.</source>
         <translatorcomment>Information text indicating that all transfers are paused. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>تم إيقاف عمليات التراسل مؤقتاً</translation>
     </message>
     <message>
         <source>Transfer quota exceeded.</source>
@@ -8414,17 +8420,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Storage almost full[/B][BR][A]Upgrade now[/A] before your storage becomes full and your uploads, syncs and backups stop.</source>
         <translatorcomment>Warning text indicating that the storage quota is almost full. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]مساحة التخزين ممتلئة تقريبًا[/B][BR][A]قم بالترقية الآن[/A] قبل امتلاء مساحة التخزين الخاصة بك وإيقاف الترفيعات والمزامنة والنسخ الاحتياطية.</translation>
     </message>
     <message>
         <source>[B]Storage full[/B][BR]Uploads are disabled and sync and backups are paused.</source>
         <translatorcomment>Error text indicating that the storage quota is full. Please, keep the [BR] placeholder for breaking the line and [B][/B] used for formatting the bold text. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]مساحة التخزين ممتلئة[/B][BR]تم تعطيل الترفيعات والمزامنة والنسخ الاحتياطية مؤقتًا.</translation>
     </message>
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]تم تجاوز حجم تراسل المعطيات[/B][BR]لا يمكنك متابعة التنزيل نظرًا لعدم وجود حجم تراسل المعطيات كافية للعنوان الشبكي IP هذا. للحصول على المزيد من الحجم قم بترقية حسابك أو انتظر حتى %1 لتوفر المزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك. [A]اعرف المزيد[/A] عن حجم تراسل المعطيات.</translation>
     </message>
 </context>
 <context>

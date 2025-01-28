@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Nu poți face backup folderelor cu același nume. Redenumește-le pentru a continua cu backupul. Numele folderelor nu se vor schimba pe calculator.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Folderul nu a fost făcut backup-uit. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform><numerusform>Aceste foldere nu au fost backup. Încercați din nou.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Nu poți face backup folderelor cu același nume. Redenumește-le pentru a continua cu backupul. Numele folderelor nu se vor schimba pe calculator.</translation>
     </message>
 </context>
 <context>
@@ -3146,7 +3146,7 @@ Așteptați finalizarea încărcării.</translation>
     <message>
         <source>Link import error</source>
         <translatorcomment>Title of the error message when there is an error importing a MEGA link. SNC-3673.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Eroare la importarea linkului</translation>
     </message>
     <message>
         <source>Locked account</source>
@@ -3459,7 +3459,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>A serious issue has been detected in the MEGA software or the connection between this device and MEGA. Reinstall the app from [A]mega.io/desktop[/A] or contact support for further assistance.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: failure to unserialize node - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>O problemă gravă a fost detectată în software-ul MEGA sau în conexiunea dintre acest dispozitiv și MEGA. Reinstalați aplicația din [A]mega.io/desktop[/A] și dacă acest lucru nu rezolvă problema, contactați Asistența pentru asistență suplimentară.</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -3519,7 +3519,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Critical system files which are required by this app are unable to be reached. This may be the permissions of the folder the system files are in. You can also try restarting the app to see if this resolves the issue. If the folder permissions have been checked and the app restarted, please [A]contact support[/A].</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database I/O failure - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Fișierele critice de sistem solicitate de această aplicație nu pot fi accesate, posibil din cauza permisiunilor de folder. Încercați să reporniți aplicația și să verificați permisiunile folderului de sistem. Dacă problema persistă, vă rugăm [A]contact Asistență[/A].</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3689,7 +3689,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>You need to make more space available in your local storage to be able to run MEGA.</source>
         <translatorcomment>Message show in a warning dialog (and guest widget) shown when the SDK reports a fatal error with reason: database full (storage full) - CON-844</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Trebuie să faceți mai mult spațiu liber disponibil în spațiul de stocare local pentru a putea rula MEGA.</translation>
     </message>
     <message>
         <source>Your account has been suspended due to copyright violations. Please check your email inbox.</source>
@@ -5678,15 +5678,21 @@ Introdu un alt nume.</translation>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>- Am îmbunătățit interfața și comportamentul funcției de manager de transfer.
+- Acum puteți crea excluderi de sincronizare folosind wildcard-uri.
+- Există noi versiuni disponibile acum pentru sistemul de operare Raspberry Pi.
+- Am remediat blocările care au apărut din cauza driverelor OpenGL lipsă sau rupte pe Windows.
+- Qt a fost actualizat la o versiune mai nouă.
+- Alte erori au fost remediate și s-au făcut numeroase îmbunătățiri.
+</translation>
     </message>
 </context>
 <context>
@@ -8421,7 +8427,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>[B]Transfer quota exceeded[/B][BR]You can’t continue downloading as you don’t have enough transfer quota left for this IP address. To get more quota, upgrade to a Pro account or wait for %1 until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.</source>
         <translatorcomment>Error text indicating that the transfer quota has been exceeded free users and it is necessary to wait for a certain time. Please, keep the [BR] placeholder for breaking the line, [B][/B] used for formatting the bold text, and [A][/A] used for the link. Also, keep the %1 as it is the placeholder for the remaining time in hh:mm:ss format. CON-1061</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>[B]Cota de transfer depășită[/B][BR]Nu puteți continua descărcarea, deoarece nu aveți suficientă cotă de transfer pentru această adresă IP. Pentru a obține mai multă cotă, actualizează-ți contul sau așteaptă %1 până când mai multă cotă gratuită devine disponibilă pe adresa dvs. IP. [A]Aflați mai multe[/A] despre cota de transfer.</translation>
     </message>
 </context>
 <context>
