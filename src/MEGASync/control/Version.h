@@ -1,13 +1,13 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-#define VER_FILEVERSION 5, 8, 0, 1
+#define VER_FILEVERSION 5, 8, 0, 2
 #define VER_FILEVERSION_CODE 50800
-#define VER_PRODUCTVERSION 5, 8, 0, 1
+#define VER_PRODUCTVERSION 5, 8, 0, 2
 // Update scripts relying on this value if you move it
-#define VER_PRODUCTVERSION_STR "5.8.0.1\0"
+#define VER_PRODUCTVERSION_STR "5.8.0.2\0"
 
-#define VER_BUILD_ID 1
+#define VER_BUILD_ID 2
 
 #define VER_COMPANYNAME_STR         "Mega Limited\0"
 #define VER_FILEDESCRIPTION_STR     "MEGAsync\0"
