@@ -13,6 +13,9 @@ public:
 
     void update(bool isFirstTime = false);
 
+    void sendEventsIfNeeded();
+    void resetClickedTime();
+
 private:
     enum class ReminderState
     {
@@ -25,6 +28,7 @@ private:
 
     ReminderState mState;
     QTimer mTimer;
+    qint64 mClickedTime;
 
     void init(bool isFirstTime, const QDateTime& lastTime, const QDateTime& currentTime);
     void continuePeriodicProcess(const QDateTime& lastTime, const QDateTime& currentTime);
@@ -44,6 +48,8 @@ private:
     quint64 getDaysToNextReminder() const;
 
     ReminderState getNextState(ReminderState state) const;
+
+    void sendShownEvents() const;
 
 private slots:
     void onTimeout();

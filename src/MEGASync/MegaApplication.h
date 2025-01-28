@@ -201,6 +201,8 @@ public:
     void updateUsedStorage(const bool sendEvent = false);
     void showUpsellDialog(UpsellPlans::ViewMode viewMode);
 
+    SyncReminderNotificationManager* getSyncReminderNotificationManager();
+
 signals:
     void startUpdaterThread();
     void tryUpdate();

@@ -4563,6 +4563,11 @@ void MegaApplication::showUpsellDialog(UpsellPlans::ViewMode viewMode)
     }
 }
 
+SyncReminderNotificationManager* MegaApplication::getSyncReminderNotificationManager()
+{
+    return mSyncReminderNotificationManager.get();
+}
+
 void MegaApplication::processSetDownload(const QString& publicLink,
                                          const QList<MegaHandle>& elementHandleList)
 {
