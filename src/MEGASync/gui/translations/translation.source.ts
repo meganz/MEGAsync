@@ -4946,11 +4946,6 @@ Enter a different name.</translation>
         <translation>Complete signup</translation>
     </message>
     <message>
-        <source>Add device name</source>
-        <translatorcomment>Device name text input box title CON-467</translatorcomment>
-        <translation>Add device name</translation>
-    </message>
-    <message>
         <source>Add folder</source>
         <translatorcomment>Button text to add a new folder to the backups table CON-468</translatorcomment>
         <translation>Add folder</translation>

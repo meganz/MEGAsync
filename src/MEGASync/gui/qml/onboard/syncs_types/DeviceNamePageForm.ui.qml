@@ -39,10 +39,9 @@ FooterButtonsPage {
         SvgImage {
             id: image
 
-            Layout.topMargin: 20
+            Layout.topMargin: 24
             source: Images.pcMega
-            sourceSize: Qt.size(48, 48)
-            color: ColorTheme.textPrimary
+            sourceSize: Qt.size(64, 64)
         }
 
         TextField {

@@ -24,7 +24,6 @@
         <file>images/qml/onboarding/login@2x.png</file>
         <file>images/qml/onboarding/login@3x.png</file>
         <file>images/qml/onboarding/pc.svg</file>
-        <file>images/qml/onboarding/pc_mega.svg</file>
         <file>images/qml/onboarding/person.svg</file>
         <file>images/qml/onboarding/resume.svg</file>
         <file>images/qml/onboarding/selective_sync.svg</file>
@@ -131,5 +130,8 @@
         <file>images/icons/log-out-01.svg</file>
         <file>images/qml/sync_exclusions/folder-file.svg</file>
         <file>images/icon_plus.svg</file>
+        <file>images/qml/onboarding/multidevices@3x.png</file>
+        <file>images/qml/onboarding/multidevices@2x.png</file>
+        <file>images/qml/onboarding/multidevices.png</file>
     </qresource>
 </RCC>
