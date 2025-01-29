@@ -186,7 +186,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
 #elif defined(_WIN32)
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
 #else // OS X
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    setWindowFlags(Qt::FramelessWindowHint);
 #endif
 
 #ifdef _WIN32
@@ -236,7 +236,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-#ifdef Q_OS_LINUX
+#if defined(__APPLE__) || defined(Q_OS_LINUX)
     installEventFilter(this);
 #endif
 
@@ -353,6 +353,7 @@ void InfoDialog::showEvent(QShowEvent *event)
     app->getNotificationController()->requestNotifications();
 
     repositionInfoDialog();
+
     QDialog::showEvent(event);
 }
 
@@ -1330,6 +1331,26 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         }
     }
 
+#endif
+
+#ifdef __APPLE__
+    if (obj == this)
+    {
+        if (QOperatingSystemVersion::current() <=
+            QOperatingSystemVersion::OSXMavericks) // manage spontaneus mouse press events
+        {
+            if (e->type() == QEvent::MouseButtonPress && e->spontaneous())
+            {
+                return true;
+            }
+        }
+
+        if (e->type() == QEvent::WindowDeactivate)
+        {
+            hide();
+            return true;
+        }
+    }
 #endif
 
     return QDialog::eventFilter(obj, e);

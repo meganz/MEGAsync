@@ -8,6 +8,7 @@ QtObject {
     readonly property string continueText: /*qsTr*/("Continue")
     readonly property string choose: qsTr("Choose")
     readonly property string done: qsTr("Done")
+    readonly property string dismiss: qsTr("Dismiss")
     readonly property string next: qsTr("Next")
     readonly property string skip: qsTr("Skip")
     readonly property string previous: qsTr("Previous")
@@ -19,4 +20,5 @@ QtObject {
     readonly property string deviceNameExistErr: qsTr("A device with this name already exists. Enter a different name.")
     readonly property string deviceNameEmptyErr: qsTr("Enter a device name")
     readonly property string ok: /*qsTr*/("Ok")
+
 }

@@ -65,6 +65,10 @@
         <file>components/steps/Step.qml</file>
         <file>components/steps/SubStep.qml</file>
         <file>components/steps/StepPanel.qml</file>
+        <file>components/textAreas/qmldir</file>
+        <file>components/textAreas/TextArea.qml</file>
+        <file>components/textAreas/MediumSizes.qml</file>
+        <file>components/textAreas/Colors.qml</file>
         <file>components/textFields/qmldir</file>
         <file>components/textFields/EmailTextField.qml</file>
         <file>components/textFields/IconTextField.qml</file>
@@ -190,6 +194,10 @@
         <file>backups/ResumePageForm.ui.qml</file>
         <file>backups/ResumePage.qml</file>
         <file>backups/BackupsPage.qml</file>
+        <file>surveys/qmldir</file>
+        <file>surveys/SurveyStrings.qml</file>
+        <file>surveys/SurveyItem.qml</file>
+        <file>surveys/RateScaleItem.qml</file>
         <file>deviceCentre/DeviceCentreDialog.qml</file>
         <file>deviceCentre/DeviceCentreStrings.qml</file>
         <file>deviceCentre/qmldir</file>

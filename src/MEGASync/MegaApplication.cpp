@@ -2330,15 +2330,16 @@ void MegaApplication::raiseInfoDialog()
     if (infoDialog)
     {
         infoDialog->updateDialogState();
-        infoDialog->show();
         DialogOpener::raiseAllDialogs();
 
 #ifdef __APPLE__
         Platform::getInstance()->raiseFileFolderSelectors();
 #endif
 
+        infoDialog->show();
         infoDialog->raise();
         infoDialog->activateWindow();
+        infoDialog->setFocus();
         infoDialog->highDpiResize.queueRedraw();
     }
 }
