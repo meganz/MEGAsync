@@ -93,6 +93,33 @@ background-color: #00D7C2;
 #bUpgrade::disabled
 {
 background-color: #00BFA54D;
+}
+
+#bCreateSync
+{
+font-family: Inter;
+font-size: 12px;
+line-height: 18px;
+border: 1px solid #CDCDCD;
+border-radius: 4px;
+padding: 4px 8px;
+image-position: right;
+text-align: left;
+}
+
+#bCreateSync::hover
+{
+background-color:  #FAFAFA;
+}
+
+#bCreateSync::pressed
+{
+background-color: #FFFFFF;
+}
+
+#bCreateSync::disabled
+{
+background-color: #FFFFFF;
 }</string>
   </property>
   <property name="sizeGripEnabled">
@@ -252,7 +279,7 @@ background-color: #F4F6F8;
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout">
                <property name="spacing">
-                <number>16</number>
+                <number>8</number>
                </property>
                <property name="leftMargin">
                 <number>15</number>
@@ -277,17 +304,33 @@ background-color: #F4F6F8;
                 </widget>
                </item>
                <item>
+                <spacer name="horizontalSpacer_16">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeType">
+                  <enum>QSizePolicy::Fixed</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>8</width>
+                   <height>20</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
                 <widget class="QPushButton" name="bUpgrade">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>30</height>
+                   <height>24</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>30</height>
+                   <height>24</height>
                   </size>
                  </property>
                  <property name="cursor">
@@ -302,9 +345,40 @@ background-color: #F4F6F8;
                  <property name="text">
                   <string/>
                  </property>
+                 <property name="flat">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="bCreateSync">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>24</height>
+                  </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="mouseTracking">
+                  <bool>true</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
+                 </property>
+                 <property name="text">
+                  <string notr="true"/>
+                 </property>
                  <property name="icon">
                   <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/star-spark.svg</normaloff>:/images/star-spark.svg</iconset>
+                   <normaloff>:/images/icon_plus.svg</normaloff>:/images/icon_plus.svg</iconset>
                  </property>
                  <property name="flat">
                   <bool>true</bool>
@@ -323,105 +397,6 @@ background-color: #F4F6F8;
                   </size>
                  </property>
                 </spacer>
-               </item>
-               <item>
-                <widget class="QPushButton" name="bAddBackup">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Add Backup</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/icons/ico_backup.png</normaloff>:/images/icons/ico_backup.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="flat">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="bAddSync">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Add Sync</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/icons/ico_sync.png</normaloff>:/images/icons/ico_sync.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="bUpload">
-                 <property name="minimumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                 <property name="toolTip">
-                  <string>Upload</string>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_macx.qrc">
-                   <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                </widget>
                </item>
                <item>
                 <widget class="QPushButton" name="bSettings">

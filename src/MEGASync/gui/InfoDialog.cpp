@@ -7,7 +7,6 @@
 #include "CreateRemoveSyncsManager.h"
 #include "DialogOpener.h"
 #include "MegaApplication.h"
-#include "MenuItemAction.h"
 #include "Platform.h"
 #include "StalledIssuesModel.h"
 #include "StatsEventHandler.h"
@@ -120,9 +119,6 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
                 }
             });
 
-    mSyncsMenus[ui->bAddSync] = nullptr;
-    mSyncsMenus[ui->bAddBackup] = nullptr;
-
     filterMenu = new FilterAlertWidget(this);
     connect(filterMenu, SIGNAL(filterClicked(MessageType)),
             this, SLOT(applyFilterOption(MessageType)));
@@ -159,7 +155,9 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
                 }
             });
 
-    //Set window properties
+    connect(ui->bCreateSync, &QAbstractButton::clicked, this, &InfoDialog::onAddSyncClicked);
+
+    // Set window properties
 #ifdef Q_OS_LINUX
     doNotActAsPopup = Platform::getInstance()->getValue("USE_MEGASYNC_AS_REGULAR_WINDOW", false);
 
@@ -313,6 +311,7 @@ InfoDialog::InfoDialog(MegaApplication* app, QWidget* parent, InfoDialog* olddia
             &InfoDialog::updateUsageAndAccountType);
 
     updateUpgradeButtonText();
+    updateCreateSyncButtonText();
 }
 
 InfoDialog::~InfoDialog()
@@ -756,14 +755,7 @@ void InfoDialog::setAccountType(int accType)
     }
 
     actualAccountType = accType;
-    if (Utilities::isBusinessAccount())
-    {
-         ui->bUpgrade->hide();
-    }
-    else
-    {
-         ui->bUpgrade->show();
-    }
+    ui->bUpgrade->setVisible(accType == Preferences::ACCOUNT_TYPE_FREE);
 }
 
 void InfoDialog::updateBlockedState()
@@ -845,7 +837,7 @@ void InfoDialog::onAddSync(mega::MegaSync::SyncType type)
         case mega::MegaSync::TYPE_TWOWAY:
         {
             MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::MENU_ADD_SYNC_CLICKED, true);
-            addSync();
+            addSync(SyncInfo::MAIN_APP_ORIGIN);
             break;
         }
         case mega::MegaSync::TYPE_BACKUP:
@@ -1117,9 +1109,9 @@ void InfoDialog::openFolder(QString path)
     Utilities::openUrl(QUrl::fromLocalFile(path));
 }
 
-void InfoDialog::addSync(mega::MegaHandle handle)
+void InfoDialog::addSync(SyncInfo::SyncOrigin origin, mega::MegaHandle handle)
 {
-    CreateRemoveSyncsManager::addSync(handle);
+    CreateRemoveSyncsManager::addSync(origin, handle);
 }
 
 void InfoDialog::addBackup()
@@ -1143,30 +1135,12 @@ void InfoDialog::on_bTransferManager_clicked()
     MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::OPEN_TRANSFER_MANAGER_CLICKED, true);
 }
 
-void InfoDialog::on_bAddSync_clicked()
+void InfoDialog::onAddSyncClicked()
 {
-    showSyncsMenu(ui->bAddSync, MegaSync::TYPE_TWOWAY);
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_SYNC_CLICKED, true);
-}
-
-void InfoDialog::on_bAddBackup_clicked()
-{
-    showSyncsMenu(ui->bAddBackup, MegaSync::TYPE_BACKUP);
-    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(AppStatsEvents::EventType::ADD_BACKUP_CLICKED, true);
-}
-
-void InfoDialog::showSyncsMenu(QPushButton* b, mega::MegaSync::SyncType type)
-{
-    if (mPreferences->logged())
-    {
-        auto* menu (mSyncsMenus.value(b, nullptr));
-        if (!menu)
-        {
-            menu = initSyncsMenu(type, ui->bUpload->isEnabled());
-            mSyncsMenus.insert(b, menu);
-        }
-        if (menu) menu->callMenu(b->mapToGlobal(QPoint(b->width() - 100, b->height() + 3)));
-    }
+    MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+        AppStatsEvents::EventType::INFO_DIALOG_ADD_SYNC_CLICKED,
+        true);
+    addSync(SyncInfo::INFODIALOG_BUTTON_ORIGIN);
 }
 
 SyncsMenu* InfoDialog::initSyncsMenu(mega::MegaSync::SyncType type, bool isEnabled)
@@ -1273,12 +1247,7 @@ void InfoDialog::changeEvent(QEvent* event)
     {
         ui->retranslateUi(this);
         updateUpgradeButtonText();
-        // if (mPreferences->logged())
-        // {
-        //     setUsage();
-        //     mState = StatusInfo::TRANSFERS_STATES::STATE_STARTING;
-        //     updateDialogState();
-        // }
+        updateCreateSyncButtonText();
     }
     QDialog::changeEvent(event);
 }
@@ -1616,6 +1585,13 @@ void InfoDialog::updateUpgradeButtonText()
     ui->bUpgrade->setText(QCoreApplication::translate("SettingsDialog", "Upgrade"));
 }
 
+void InfoDialog::updateCreateSyncButtonText()
+{
+    // We add a space to keep a distance from the button icon
+    const QString label = QString::fromLatin1(" ") + tr("Add sync");
+    ui->bCreateSync->setText(label);
+}
+
 void InfoDialog::on_bDismissSyncSettings_clicked()
 {
     mSyncInfo->dismissUnattendedDisabledSyncs(mega::MegaSync::TYPE_TWOWAY);
@@ -1689,28 +1665,7 @@ void InfoDialog::enableUserActions(bool newState)
 {
     ui->bAvatar->setEnabled(newState);
     ui->bUpgrade->setEnabled(newState);
-    ui->bUpload->setEnabled(newState);
-
-    // To set the state of the Syncs and Backups button,
-    // we have to first create them if they don't exist
-    auto buttonIt (mSyncsMenus.begin());
-    while (buttonIt != mSyncsMenus.end())
-    {
-        auto* syncMenu (buttonIt.value());
-        if (!syncMenu)
-        {
-            auto type (buttonIt.key() == ui->bAddSync ? MegaSync::TYPE_TWOWAY : MegaSync::TYPE_BACKUP);
-            syncMenu = initSyncsMenu(type, newState);
-            *buttonIt = syncMenu;
-        }
-        if (syncMenu)
-        {
-            syncMenu->setEnabled(newState);
-            buttonIt.key()->setEnabled(syncMenu->getAction()->isEnabled());
-        }
-
-        *buttonIt++;
-    }
+    ui->bCreateSync->setEnabled(newState);
 }
 
 void InfoDialog::changeStatusState(StatusInfo::TRANSFERS_STATES newState,

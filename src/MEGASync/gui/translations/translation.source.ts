@@ -2198,16 +2198,6 @@ In some cases they may contain details about your data, such as file or folder n
 <context>
     <name>InfoDialog</name>
     <message>
-        <source>Add Backup</source>
-        <translatorcomment>Tooltip message shown while hovering backups button.</translatorcomment>
-        <translation>Add backup</translation>
-    </message>
-    <message>
-        <source>Add Sync</source>
-        <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Add sync</translation>
-    </message>
-    <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
         <translation>All file uploads are currently disabled.</translation>
@@ -2373,11 +2363,6 @@ In some cases they may contain details about your data, such as file or folder n
         <translation>Upgrade now before your account becomes full and your uploads to MEGA stop.</translation>
     </message>
     <message>
-        <source>Upload</source>
-        <translatorcomment>Label to indicate an upload.</translatorcomment>
-        <translation>Upload</translation>
-    </message>
-    <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
         <translation>Upload to MEGA now</translation>
@@ -2435,6 +2420,11 @@ In some cases they may contain details about your data, such as file or folder n
         <source>Your queued transfers exceed the current quota available for your IP address.</source>
         <translatorcomment>Informative label to indicate that your queued transfers exceed the current quota available for IP. Applies to free users.</translatorcomment>
         <translation>Your queued transfers exceed the current quota available for your IP address.</translation>
+    </message>
+    <message>
+        <source>Add sync</source>
+        <translatorcomment>Label for the &quot;Add Sync&quot; button added in the InfoDialog (Max 20 characters). SNC-5182.</translatorcomment>
+        <translation type="unfinished">Add sync</translation>
     </message>
 </context>
 <context>
