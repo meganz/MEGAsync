@@ -115,6 +115,8 @@ private:
     static QString getSyncAPIErrorMsg(int megaError);
     static QString getSyncTypeString(const mega::MegaSync::SyncType& syncType);
 
+    static QString getDescription(SyncInfo::SyncOrigin origin);
+
     QMap<QString, QString> mPendingBackups;
 
     //Sync/Backup operation signals

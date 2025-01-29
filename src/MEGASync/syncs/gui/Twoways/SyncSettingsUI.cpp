@@ -49,7 +49,7 @@ SyncSettingsUI::SyncSettingsUI(QWidget* parent):
 
 void SyncSettingsUI::addButtonClicked(mega::MegaHandle megaFolderHandle)
 {
-    CreateRemoveSyncsManager::addSync(megaFolderHandle, true);
+    CreateRemoveSyncsManager::addSync(SyncInfo::MAIN_APP_ORIGIN, megaFolderHandle, true);
 }
 
 QString SyncSettingsUI::getFinishWarningIconString() const

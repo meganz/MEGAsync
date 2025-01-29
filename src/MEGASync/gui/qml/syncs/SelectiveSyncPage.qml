@@ -2,6 +2,7 @@ import QtQuick 2.15
 
 import Syncs 1.0
 import ChooseLocalFolder 1.0
+import SyncInfo 1.0
 
 SelectiveSyncPageForm {
     id: root
@@ -34,7 +35,7 @@ SelectiveSyncPageForm {
         rightPrimary.onClicked: {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
-            root.syncs.addSync(window.syncOrigin, localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
+            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin, localFolderChooser.choosenPath, remoteFolderChooser.choosenPath);
         }
     }
 

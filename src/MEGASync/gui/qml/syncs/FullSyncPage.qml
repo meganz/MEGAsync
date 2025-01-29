@@ -2,6 +2,7 @@ import QtQuick 2.15
 
 import Syncs 1.0
 import ChooseLocalFolder 1.0
+import SyncInfo 1.0
 
 FullSyncPageForm {
     id: root
@@ -37,7 +38,7 @@ FullSyncPageForm {
             root.enabled = false;
             footerButtons.rightPrimary.icons.busyIndicatorVisible = true;
 
-            root.syncs.addSync(window.syncOrigin, localFolderChooser.choosenPath);
+            root.syncs.addSync(isOnboarding ?  SyncInfo.ONBOARDING_ORIGIN : syncsComponentAccess.origin, localFolderChooser.choosenPath);
         }
     }
 

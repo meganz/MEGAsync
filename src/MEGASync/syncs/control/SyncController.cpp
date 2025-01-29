@@ -6,6 +6,7 @@
 #include "MyBackupsHandle.h"
 #include "RequestListenerManager.h"
 #include "StalledIssuesUtilities.h"
+#include "StatsEventHandler.h"
 
 #include <QStorageInfo>
 #include <QTemporaryFile>
@@ -127,6 +128,31 @@ void SyncController::addSync(SyncConfig& sync)
                     correctlyCreated.value() == mega::MegaError::API_OK)
                 {
                     removeMegaIgnore(sync.localFolder);
+                }
+            }
+            else
+            {
+                switch (sync.origin)
+                {
+                    case SyncInfo::NONE:
+                    // Fallthrough
+                    case SyncInfo::MAIN_APP_ORIGIN:
+                    // Fallthrough
+                    case SyncInfo::ONBOARDING_ORIGIN:
+                    // Fallthrough
+                    case SyncInfo::EXTERNAL_ORIGIN:
+                    // Fallthrough
+                    default:
+                    {
+                        break;
+                    }
+                    case SyncInfo::INFODIALOG_BUTTON_ORIGIN:
+                    {
+                        MegaSyncApp->getStatsEventHandler()->sendTrackedEvent(
+                            AppStatsEvents::EventType::SYNC_ADDED_ADD_SYNC_BUTTON,
+                            true);
+                        break;
+                    }
                 }
             }
 

@@ -76,7 +76,6 @@ QtObject {
     readonly property url pc: imagesOnboardingPath + "pc.svg"
     readonly property url pcMega: imagesOnboardingPath + "pc_mega.svg"
     readonly property url person: imagesOnboardingPath + "person.svg"
-    readonly property url plus: imagesOnboardingPath + "plus.svg"
     readonly property url resume: imagesOnboardingPath + "resume.svg"
     readonly property url mail: imagesOnboardingPath + "mail.svg"
     readonly property url selectiveSync: imagesOnboardingPath + "selective_sync.svg"
@@ -122,6 +121,8 @@ QtObject {
 
     readonly property url starFilled: imagesSurveysPath + "star_filled.svg"
     readonly property url starEmpty: imagesSurveysPath + "star_empty.svg"
+
+    readonly property url plus: imagesPath + "icon_plus.svg"
 
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //   Standard Icons
