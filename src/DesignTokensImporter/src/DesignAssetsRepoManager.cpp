@@ -1,3 +1,4 @@
+// clang-format off
 #include "DesignAssetsRepoManager.h"
 
 #include "Utilities.h"
@@ -15,10 +16,11 @@ static const QString CoreMain = QString::fromLatin1("Core/Main");
 static const QString CoreColors = QString::fromLatin1("Colors");
 static const QString SemanticTokens = QString::fromLatin1("Semantic tokens");
 static const QString ColorTokenStart = QString::fromLatin1("color-");
-
 static const QString RepoAttributeValue = QString::fromLatin1("value");
 static const QString RepoAttributeType = QString::fromLatin1("type");
 static const QString RepoAttributeColorId = QString::fromLatin1("color");
+static const QRegularExpression CORE_COLOR_TOKEN_REGULAR_EXPRESSION{
+    QString("^#([a-f,0-9]{6}|[a-f,0-9]{8})$")};
 
 std::optional<DesignAssets> DesignAssetsRepoManager::getDesignAssets()
 {
@@ -161,8 +163,12 @@ ThemedColorData DesignAssetsRepoManager::parseTheme(QFile& designTokensFile, con
     return themedColorData;
 }
 
-void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& coreColors, CoreData& coreData)
+void DesignAssetsRepoManager::recurseCore(QString category,
+                                          const QJsonObject& coreColors,
+                                          CoreData& coreData)
 {
+    const QString errorPrefix = __func__ + QString(" Warning : parsing core colors, ");
+
     const QStringList tokenKeys = coreColors.keys();
 
     if (tokenKeys.contains(RepoAttributeValue) && tokenKeys.contains(RepoAttributeType))
@@ -170,19 +176,40 @@ void DesignAssetsRepoManager::recurseCore(QString category, const QJsonObject& c
         QJsonValue jType = coreColors[RepoAttributeType];
         QJsonValue jValue = coreColors[RepoAttributeValue];
 
-        if (!jType.isNull() && jValue.isString())
+        if (!jType.isNull() && jType.isString() && !jValue.isNull() && jValue.isString())
         {
             QString type = jType.toString();
 
             if (type == RepoAttributeColorId)
             {
-                /*
-                 * Core color hex value format is #RRGGBBAA,
-                 * but we need to convert it to AARRGGBB.
-                */
-                QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(jValue.toString());
-                coreData.insert(category, coreColorHex);
+                QString value = jValue.toString();
+
+                auto match = CORE_COLOR_TOKEN_REGULAR_EXPRESSION.match(value);
+                if (match.hasMatch())
+                {
+                    /*
+                     * Core color hex value format is #RRGGBBAA,
+                     * but we need to convert it to AARRGGBB.
+                     */
+                    QString coreColorHex = Utilities::normalizeHexColoursForQtFormat(value);
+                    coreData.insert(category, coreColorHex);
+                }
+                else
+                {
+                    qWarning() << errorPrefix << "invalid core color " << value << " for category "
+                               << category;
+                }
             }
+            else
+            {
+                qWarning() << errorPrefix << "unknown color type " << type << " for category "
+                           << category;
+            }
+        }
+        else
+        {
+            qWarning() << errorPrefix << "unknown error on get " << RepoAttributeType << " or "
+                       << RepoAttributeValue << " for category " << category;
         }
     }
     else
