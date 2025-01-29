@@ -402,6 +402,11 @@
 </context>
 <context>
     <name>BackupsModel</name>
+    <message>
+        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
+        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
+        <translation>Вы не можете создавать резервные копии папок с одинаковыми названиями. Переименуйте их, чтобы продолжить резервное копирование. Названия папок не изменятся на вашем компьютере.</translation>
+    </message>
     <message numerus="yes">
         <source>A folder with the same name already exists in your Backups. Rename the new folder to continue with the backup. Folder name will not change on your computer.</source>
         <translatorcomment>Warning message stating that the user already has a backup created with that name. CON-468</translatorcomment>
@@ -421,11 +426,6 @@
         <source>Folder wasn&apos;t backed up. Try again.</source>
         <translatorcomment>Warning message indicating that the folder was not backed up. CON-468</translatorcomment>
         <translation><numerusform>Папка не была скопирована. Попробуйте ещё раз.</numerusform><numerusform>Папки не были скопированы. Попробуйте ещё раз.</numerusform><numerusform>Папки не были скопированы. Попробуйте ещё раз.</numerusform><numerusform>Папки не были скопированы. Попробуйте ещё раз.</numerusform></translation>
-    </message>
-    <message>
-        <source>You can&apos;t back up folders with the same name. Rename them to continue with the backup. Folder names won&apos;t change on your computer.</source>
-        <translatorcomment>Warning message stating that the user can´t create backups with repeated names. CON-468</translatorcomment>
-        <translation>Вы не можете создавать резервные копии папок с одинаковыми названиями. Переименуйте их, чтобы продолжить резервное копирование. Названия папок не изменятся на вашем компьютере.</translation>
     </message>
 </context>
 <context>
@@ -5679,20 +5679,21 @@ Enter a different name</source>
 <context>
     <name>Preferences</name>
     <message>
-        <source>- UI and UX enhancements on transfer manager feature.
-- Support of wildcard exclusions in the exclusion dialog.
-- Upgrade Qt third party dependency.
-- New releases for Raspberry Pi OS.
-- Fixed crashes due to missing or broken OpenGL drivers on Windows.
-- Bug fixes and performance improvements.
+        <source>- We’ve enhanced the interface and behaviour of the transfer manager feature.
+- You can now create sync exclusions using wildcards.
+- There are new releases available now for the Raspberry Pi OS.
+- We’ve fixed crashes that were occurring due to missing or broken OpenGL drivers on Windows.
+- Qt has been upgraded to a newer version.
+- Other bugs have been fixed and numerous improvements made.
 </source>
         <translatorcomment>Change log for version 5.8.0. CON-1205</translatorcomment>
-        <translation>- Улучшен пользовательский интерфейс и взаимодействие с менеджером передач.
-- В диалоговом окне исключений добавлена поддержка подстановочных знаков.
-- Обновлены сторонние зависимости Qt.
-- Новые выпуски для Raspberry Pi OS.
-- Исправлены сбои из-за отсутствующих или неисправных драйверов OpenGL в Windows.
-- Исправлены ошибки и улучшена производительность.</translation>
+        <translation>- Улучшен интерфейс и поведение менеджера передач.
+- Теперь можно создавать исключения синхронизации с помощью подстановочных знаков.
+- Доступны новые версии для Raspberry Pi OS.
+- Исправлены сбои, которые возникали из-за отсутствующих или неисправных драйверов OpenGL в Windows.
+- Qt был обновлён.
+- Исправлены другие ошибки и внесено множество улучшений.
+</translation>
     </message>
 </context>
 <context>
